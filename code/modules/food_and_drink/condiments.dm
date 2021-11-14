@@ -11,7 +11,7 @@
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
-		if (!src.reagents || src.qdeled || src.pooled) return //how
+		if (!src.reagents || src.qdeled || src.disposed) return //how
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/))
 			user.visible_message("<span class='notice'>[user] adds [src] to \the [target].</span>", "<span class='notice'>You add [src] to \the [target].</span>")
@@ -50,6 +50,8 @@
 	name = "mayonnaise"
 	desc = "The subject of many a tiresome innuendo."
 	icon_state = "mayonnaise" //why the fuck was this icon state called cookie
+	initial_volume = 5
+	initial_reagents = "mayo"
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	name = "hot sauce"

@@ -12,7 +12,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
 	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
@@ -57,10 +57,6 @@
 		healthbar.onStart()
 		healthbar.onUpdate()
 
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Entered(src)
-
 		SPAWN_DBG(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
@@ -81,7 +77,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
@@ -168,9 +164,6 @@
 				gen_rate_value = 0
 			overmind.spread_mitigation -= spread_value
 		var/turf/T = get_turf(src)
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Exited(src)
 		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
@@ -304,7 +297,7 @@
 		return
 
 	proc/create_chunk(var/turf/T)
-		var/obj/item/material_piece/wad/BC = unpool(/obj/item/material_piece/wad)
+		var/obj/item/material_piece/wad/BC = new /obj/item/material_piece/wad
 		BC.set_loc(T)
 		BC.setMaterial(copyMaterial(material))
 		BC.name = "chunk of blob"
@@ -334,9 +327,10 @@
 				amount *= fire_coefficient
 				//search for ectothermids.
 				if (amount)
-					for (var/obj/blob/ectothermid/T in range(3, src))
-						if (T && amount > 0)
-							amount = 0
+					for_by_tcl(T, /obj/blob/ectothermid)
+						if (IN_RANGE(src, T, T.protect_range) && amount > 0)
+							amount *= T.absorb(min(amount * damage_mult, src.health))
+							break
 			if ("laser")
 				ignore_armor = 1
 			if ("poison","self_poison")
@@ -588,9 +582,9 @@
 	anim_overlay = "nucleus_blink"
 	special_icon = 1
 	desc = "The core of the blob. Destroying all nuclei effectively stops the organism dead in its tracks."
-	armor = 3
-	health_max = 250
-	health = 250
+	armor = 1.5
+	health_max = 500
+	health = 500
 	temp_tolerance = 1200
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
@@ -1060,6 +1054,7 @@
 	opacity = 1
 	health = 85
 	health_max = 85
+	gas_impermeable = TRUE
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY)
@@ -1072,13 +1067,20 @@
 	name = "ectothermid"
 	state_overlay = "ectothermid"
 	special_icon = 1
-	desc = "It's a giant energy converting cell. It seems to disperse matter using heat energy."
+	desc = "It's a giant energy converting cell. It seems to store heat energy."
 	armor = 0
 	gen_rate_value = 1
 	can_absorb = 0
 	runOnLife = 1
 	var/protect_range = 3
+	var/temptemp = 0
+	var/absorbed_temp = 0
 	var/removed = 0
+	var/dead = 0
+
+	New()
+		. = ..()
+		START_TRACKING
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (temperature > T20C)
@@ -1092,6 +1094,7 @@
 
 	disposing()
 		..()
+		STOP_TRACKING
 		if (overmind)
 			overmind.gen_rate_bonus += removed
 			removed = 0
@@ -1099,11 +1102,30 @@
 	Life()
 		if (..())
 			return 1
+		absorbed_temp += temptemp * 0.25 + 50
+		temptemp *= 0.75
+		temptemp -= 50
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
 			if (air.temperature > T20C)
 				air.temperature /= 2
 				air.temperature -= 100
+				if(air.temperature > T20C)
+					absorbed_temp += log(2, air.temperature)
+
+	proc/absorb(amount)
+		if(!dead)
+			temptemp += amount
+			return clamp(0.0005 * (temptemp - 100), 0, 1)
+		else
+			return 1
+
+	onKilled()
+		. = ..()
+		dead = 1
+		if(absorbed_temp > 1000)
+			fireflash_s(get_turf(src), protect_range + 1, absorbed_temp, absorbed_temp/protect_range)
+
 
 /obj/blob/plasmaphyll
 	name = "plasmaphyll"
@@ -1196,6 +1218,7 @@
 	health = 75
 	health_max = 75
 	can_absorb = 0
+	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
@@ -1217,6 +1240,7 @@
 	special_icon = 1
 	armor = 1
 	can_absorb = 0
+	gas_impermeable = TRUE
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")

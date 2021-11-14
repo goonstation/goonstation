@@ -15,7 +15,7 @@
 
 	make_my_stuff() //Let's spawn the backpack/satchel in random colours!
 		. = ..()
-		if (. == 1) //if we've not spawned stuff before
+		if (. == 1 && length(spawn_contents)) //if we've not spawned stuff before (also empty lockers get no backpack)
 			var/backwear = pick(/obj/item/storage/backpack,/obj/item/storage/backpack/blue,/obj/item/storage/backpack/red,/obj/item/storage/backpack/green)
 			new backwear(src)
 			backwear = pick(/obj/item/storage/backpack/satchel,/obj/item/storage/backpack/satchel/blue,/obj/item/storage/backpack/satchel/red,/obj/item/storage/backpack/satchel/green)
@@ -121,6 +121,7 @@
 	/obj/item/clothing/shoes/brown,
 	/obj/item/gun/implanter,
 	/obj/item/gun/reagent/syringe/NT,
+	/obj/item/reagent_containers/mender/both,
 	/obj/item/gun/kinetic/dart_rifle,
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
@@ -144,6 +145,7 @@
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical/yellow_tools,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/storage/box/clothing/chief_engineer,
 	/obj/item/clothing/gloves/yellow,
 	/obj/item/clothing/shoes/brown,
@@ -188,20 +190,22 @@
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
 	/obj/item/device/flash,
+	/obj/item/storage/backpack/security,
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/security/forensics
 	name = "Forensics equipment locker"
 	req_access = list(access_forensics_lockers)
 	spawn_contents = list(/obj/item/storage/box/clothing/detective,
-	/obj/item/clothing/suit/wintercoat/security,
+	/obj/item/clothing/suit/wintercoat/detective,
+	/obj/item/clothing/head/deerstalker,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/clothing/glasses/spectro,
 	/obj/item/storage/box/spy_sticker_kit/radio_only/detective,
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/head/det_hat/gadget,
 	/obj/item/device/detective_scanner/detective,
-	/obj/item/bloodtracker,
+	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit)
@@ -225,6 +229,7 @@
 /obj/storage/secure/closet/brig/automatic
 	name = "\improper Automatic Locker"
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
+	anchored = 1
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 
@@ -391,6 +396,10 @@
 	icon_state = "medical_clothes"
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
+	/obj/item/storage/backpack/robotics,
+	/obj/item/storage/backpack/genetics,
+	/obj/item/storage/backpack/satchel/robotics,
+	/obj/item/storage/backpack/satchel/genetics,
 	/obj/item/storage/box/clothing/medical,
 	/obj/item/storage/box/clothing/geneticist,
 	/obj/item/storage/box/clothing/roboticist,
@@ -456,6 +465,7 @@
 /obj/storage/secure/closet/research/uniform
 	name = "science uniform locker"
 	spawn_contents = list(/obj/item/tank/air,
+	/obj/item/storage/backpack/research,
 	/obj/item/storage/box/clothing/research,
 	/obj/item/clothing/suit/wintercoat/research,
 	/obj/item/clothing/gloves/latex,
@@ -521,6 +531,7 @@
 	name = "\improper Mechanic's locker"
 	req_access = list(access_engineering_mechanic)
 	spawn_contents = list(/obj/item/storage/toolbox/electrical,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/device/accessgun/lite,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/storage/box/clothing/mechanic,
@@ -551,6 +562,7 @@
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
 	/obj/item/storage/box/clothing/engineer,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/clothing/suit/wintercoat/engineering,
 	/obj/item/clothing/mask/gas,
 	/obj/item/old_grenade/oxygen,
@@ -558,13 +570,16 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/suit/hi_vis)
+	/obj/item/clothing/suit/hi_vis,
+	/obj/item/lamp_manufacturer/organic,
+	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
 	req_access = list(access_mining)
 	spawn_contents = list(/obj/item/storage/box/clothing/miner,
 	/obj/item/clothing/suit/wintercoat/engineering,
+	/obj/item/storage/backpack/engineering,
 	/obj/item/breaching_charge/mining/light = 3,
 	/obj/item/satchel/mining = 2,
 	/obj/item/oreprospector,
@@ -572,7 +587,8 @@
 	/obj/item/mining_tool/power_pick,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/storage/belt/mining,
-	/obj/item/device/geiger)
+	/obj/item/device/geiger,
+	/obj/item/device/appraisal)
 
 /obj/storage/secure/closet/engineering/cargo
 	name = "\improper Quartermaster's locker"
@@ -582,7 +598,8 @@
 	/obj/item/paper_bin,
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
-	/obj/item/cargotele)
+	/obj/item/cargotele,
+	/obj/item/device/appraisal)
 
 /* ==================== */
 /* ----- Civilian ----- */
@@ -613,13 +630,15 @@
 	/obj/item/plantanalyzer,
 	/obj/item/device/reagentscanner,
 	/obj/item/reagent_containers/glass/wateringcan,
-	/obj/item/paper/book/from_file/hydroponicsguide)
+	/obj/item/paper/book/from_file/hydroponicsguide,
+	/obj/item/device/appraisal)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
 	req_access = list(access_kitchen)
 	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
 	/obj/item/storage/box/clothing/souschef,\
+	/obj/item/clothing/head/chefhatpuffy,\
 	/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\

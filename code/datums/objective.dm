@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/datum/objective)
 				// 1) Wizard marked as another wizard's target.
 				// 2) Presence of wizard is revealed to other antagonists at round start.
 				// Both are bad.
-				if (possible_target.special_role == "wizard")
+				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
 					continue
@@ -144,6 +144,11 @@ proc/create_fluff(datum/mind/target)
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill",
 		"much coveted Gooncode")
 
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
+
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
@@ -180,6 +185,11 @@ proc/create_fluff(datum/mind/target)
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -452,9 +462,7 @@ proc/create_fluff(datum/mind/target)
 			for (var/obj/item/spacecash/C in L)
 				current_cash += C.amount
 
-		for (var/datum/data/record/Ba in data_core.bank)
-			if (Ba.fields["name"] == owner.current.real_name)
-				current_cash += Ba.fields["current_money"]
+		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
 
 		if (current_cash >= target_cash)
 			return 1
@@ -1065,7 +1073,7 @@ proc/create_fluff(datum/mind/target)
 
 		for(var/datum/mind/possible_target in ticker.minds)
 			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
-				if (possible_target.special_role == "wizard")
+				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (!possible_target.current.client)
 					continue
@@ -1140,9 +1148,6 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy/technology
 	explanation_text = "Rid the station of any sort of advanced technology and promote an austere and simple lifestyle."
 
-/datum/objective/conspiracy/cluwne
-	explanation_text = "Floor cluwnes are real."
-
 /datum/objective/conspiracy/curfew
 	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
 
@@ -1196,6 +1201,48 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 
 /datum/objective/conspiracy/spacelaw
 	explanation_text = "Establish and enforce a set of station protocols and policies."
+
+/datum/objective/conspiracy/framemurder
+	var/datum/mind/target
+	var/targetname
+
+	set_up()
+		var/list/possible_targets = list()
+		for(var/datum/mind/possible_target in ticker.minds)
+			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
+				if (possible_target.special_role == ROLE_CONSPIRATOR)
+					continue
+				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
+					continue
+				if (!possible_target.current.client)
+					continue
+				possible_targets += possible_target
+
+		if(possible_targets.len > 0)
+			target = pick(possible_targets)
+			target.current.mind.is_target = 1
+
+		create_objective_string(target)
+
+		return target
+
+	proc/find_target_by_role(role)
+		for(var/datum/mind/possible_target in ticker.minds)
+			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
+				target = possible_target
+				break
+
+		create_objective_string(target)
+		return target
+
+	proc/create_objective_string(datum/mind/target)
+		if(!(target?.current))
+			explanation_text = "Be dastardly as heck!"
+			return
+		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
+		explanation_text = objective_text
+		targetname = target.current.real_name
+
 
 /*/datum/objective/conspiracy/escape
 	explanation_text = "Survive and ensure more living conspirators escape to Centcom than non-conspirators."

@@ -235,6 +235,7 @@
 	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
+	O.UpdateName()
 	if (src.client)
 		O.lastKnownIP = src.client.address
 		src.client.mob = O
@@ -394,6 +395,33 @@
 		return make_blob()
 	return 0
 
+/mob/proc/slasherize()
+	if(src.mind || src.client)
+		var/mob/living/carbon/human/slasher/W = new/mob/living/carbon/human/slasher(src)
+		var/turf/T = get_turf(src)
+		if(!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
+			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
+			if (ASLoc)
+				W.set_loc(ASLoc)
+			else
+				W.set_loc(locate(1, 1, 1))
+		else
+			W.set_loc(T)
+		SHOW_SLASHER_TIPS(src)
+		if(src.mind)
+			src.mind.transfer_to(W)
+			src.mind.special_role = "slasher"
+		else
+			var/key = src.client.key
+			if (src.client)
+				src.client.mob = W
+			W.mind = new /datum/mind()
+			ticker.minds += W.mind
+			W.mind.ckey = ckey
+			W.mind.key = key
+			W.mind.current = W
+		qdel(src)
+
 /mob/proc/machoize(var/shitty = 0)
 	if (src.mind || src.client)
 		if (shitty)
@@ -460,7 +488,8 @@
 					/mob/living/carbon/human/machoman/verb/macho_soulsteal,\
 					/mob/living/carbon/human/machoman/verb/macho_stare,\
 					/mob/living/carbon/human/machoman/verb/macho_heartpunch,\
-					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal and the arena thing
+					/mob/living/carbon/human/machoman/verb/macho_summon_arena,\
+					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal
 				W.verbs -= dangerousVerbs //this is just diabolical
 				W.reagents.add_reagent("anti_fart", 800) //as is this
 				boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
@@ -550,8 +579,6 @@
 
 	dispose()
 	return O
-
-
 
 /mob/dead/observer/verb/enter_ghostdrone_queue()
 	set name = "Enter Ghostdrone Queue"
@@ -664,6 +691,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 			if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/critter_respawn))
 				var/datum/bank_purchaseable/critter_respawn/critter_respawn = selfmob.mind.purchased_bank_item
 				C = selfmob.make_critter(pick(critter_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
+			else if (selfmob.mind && istype(selfmob.mind.purchased_bank_item, /datum/bank_purchaseable/bird_respawn))
+				var/datum/bank_purchaseable/bird_respawn/bird_respawn = selfmob.mind.purchased_bank_item
+				C = selfmob.make_critter(pick(bird_respawn.respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 			else
 				C = selfmob.make_critter(pick(respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 

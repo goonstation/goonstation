@@ -2,8 +2,8 @@
 	name = "vampire"
 	config_tag = "vampire"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("vampire")
-	traitor_types = list("vampire")
+	latejoin_antag_roles = list(ROLE_VAMPIRE)
+	traitor_types = list(ROLE_VAMPIRE)
 
 
 	has_wizards = 0

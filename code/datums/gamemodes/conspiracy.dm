@@ -25,7 +25,7 @@
 
 	var/numConspirators = max(2, min(round(numPlayers / 5), maxConspirators)) // Selects number of conspirators
 
-	var/list/potentialAntags = getPotentialAntags(numConspirators)
+	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators)
 	if (!potentialAntags.len)
 		return 0
 
@@ -39,10 +39,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
-	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = "conspirator", amount = numConspirators, recordChosen = 1)
+	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = ROLE_CONSPIRATOR, amount = numConspirators, recordChosen = 1)
 	traitors |= chosen_conspirator
 	for (var/datum/mind/conspirator in traitors)
-		conspirator.special_role = "conspirator"
+		conspirator.special_role = ROLE_CONSPIRATOR
 		potentialAntags.Remove(conspirator)
 
 	agent_radiofreq = random_radio_frequency()
@@ -72,36 +72,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/conspiracy/proc/getPotentialAntags(minimum_conspirators=2)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_conspirator)
-				candidates += player.mind
-
-	if(candidates.len < minimum_conspirators)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_conspirator set to yes were ready. We need [minimum_conspirators] conspirators so including players who don't want to be traitors in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_conspirators > 1) && (candidates.len >= minimum_conspirators))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()
 	var/list/blacklisted = list(0, 1451, 1457)

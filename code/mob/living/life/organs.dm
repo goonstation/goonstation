@@ -62,34 +62,34 @@
 	else if (oH.brain.loc != src)
 		oH.brain = null
 
-	if (!oH.heart && !src.nodamage)
-		if (!ischangeling(src))
+	if (!oH.heart)
+		if (!ischangeling(src) && !src.nodamage)
 			if (src.get_oxygen_deprivation())
-				src.take_brain_damage(3)
+				src.take_brain_damage(3 * mult)
 			else if (prob(10))
-				src.take_brain_damage(1)
+				src.take_brain_damage(1 * mult)
 
-			src.changeStatus("weakened", 5 SECONDS)
-			src.losebreath += 20
-			src.take_oxygen_deprivation(20)
+			src.changeStatus("weakened", 5 * mult SECONDS)
+			src.losebreath += 20 * mult
+			src.take_oxygen_deprivation(20 * mult)
 	else
 		if (oH.heart.loc != src)
 			oH.heart = null
 		else if (oH.heart.robotic && oH.heart.emagged && !oH.heart.broken)
-			src.drowsyness = max (src.drowsyness - 8, 0)
+			src.changeStatus("drowsy", -20 SECONDS)
 			if (src.sleeping) src.sleeping = 0
 		else if (oH.heart.robotic && !oH.heart.broken)
-			src.drowsyness = max (src.drowsyness - 4, 0)
+			src.changeStatus("drowsy", -10 SECONDS)
 			if (src.sleeping) src.sleeping = 0
 		else if (oH.heart.broken)
 			if (src.get_oxygen_deprivation())
-				src.take_brain_damage(3)
+				src.take_brain_damage(3 * mult)
 			else if (prob(10))
-				src.take_brain_damage(1)
+				src.take_brain_damage(1 * mult)
 
-			changeStatus("weakened", 2 SECONDS)
-			src.losebreath += 20
-			src.take_oxygen_deprivation(20)
+			changeStatus("weakened", 2 * mult SECONDS)
+			src.losebreath += 20 * mult
+			src.take_oxygen_deprivation(20 * mult)
 		else if (src.organHolder.heart.get_damage() > 100)
 			src.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 

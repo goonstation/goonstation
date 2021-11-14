@@ -1690,7 +1690,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "dS" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -5100,7 +5100,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/engine{
@@ -5146,7 +5146,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "kY" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	icon_state = "power";
 	name = "Engine Output Monitoring"

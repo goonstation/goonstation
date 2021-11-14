@@ -13,7 +13,7 @@
 	/// the tiles its connected to
 	var/list/turf/simulated/floor/feather/connectedto = list()
 
-	event_handler_flags = USE_CANPASS //needed for passthrough
+ //needed for passthrough
 	// drones can pass through this, might change this later, as balance point
 	passthrough = TRUE
 

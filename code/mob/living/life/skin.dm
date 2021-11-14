@@ -9,7 +9,7 @@
 			//gives patches a way to heal quickly if you slap on a whole bunch, but at the cost of flinging chems into nothingness
 
 			var/use_volume = 0.5 * mult //amount applied via touch
-			var/waste_volume = use_volume * min(length(owner.skin_process) * 0.75, 1) //amount that gets removed from the patch. Half of this gets transferred into the body
+			var/waste_volume = use_volume * max(length(owner.skin_process) * 0.75, 1) //amount that gets removed from the patch. Half of this gets transferred into the body
 
 			for (var/atom/A as anything in owner.skin_process)
 

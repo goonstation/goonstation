@@ -200,7 +200,7 @@
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
 					O.implanted = 1
-					bad_traitorify(M.current)
+					antagify(M.current, null, 1)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")

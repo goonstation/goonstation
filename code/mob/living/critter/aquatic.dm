@@ -5,6 +5,7 @@
 //	-etc
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
 	real_name = "aquatic mobcritter"
@@ -522,7 +523,7 @@
 		return
 
 	if (!istype(user))
-		target.attack_hand(user, params, location, control)
+		target.Attackhand(user, params, location, control)
 		return
 
 	if (isobj(target))

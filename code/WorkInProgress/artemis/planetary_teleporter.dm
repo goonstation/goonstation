@@ -1,4 +1,4 @@
-/obj/lrteleporter/planetary_teleporter
+/obj/machinery/lrteleporter/planetary_teleporter
 	name = "Planetary Teleporter"
 	desc = "A pad used for teleportation to nearby bodies"
 	var/ship_id = "artemis"
@@ -92,13 +92,13 @@
 	anchored = 0.0
 	w_class = W_CLASS_SMALL
 	var/ship_id = "artemis"
-	var/obj/lrteleporter/planetary_teleporter/my_teleporter = null
+	var/obj/machinery/lrteleporter/planetary_teleporter/my_teleporter = null
 	var/busy = 0
 
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
-			for(var/obj/lrteleporter/planetary_teleporter/P in world)
+			for(var/obj/machinery/lrteleporter/planetary_teleporter/P in world)
 				if(P.ship_id == src.ship_id)
 					src.my_teleporter = P
 					return

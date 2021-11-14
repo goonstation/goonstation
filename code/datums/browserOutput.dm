@@ -334,6 +334,7 @@ var/global
 	if (!isicon(icon)) return 0
 
 	iconCache[iconKey] << icon
+	iconCache[iconKey + "_ts"] << world.time
 	var/iconData = iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
 	return copytext(partial[2], 3, -5)
@@ -355,8 +356,10 @@ var/global
 		var/iconData
 
 		//See if key already exists in savefile
+		var/iconTimestamp
+		iconCache["[iconKey]_ts"] >> iconTimestamp
 		iconData = iconCache.ExportText(iconKey)
-		if (iconData)
+		if (iconData && iconTimestamp && (world.time - iconTimestamp) < 1 WEEK)
 			//It does! Ok, parse out the base64
 			var/list/partial = splittext(iconData, "{")
 

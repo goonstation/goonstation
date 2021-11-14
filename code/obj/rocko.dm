@@ -25,7 +25,9 @@ obj/item/rocko
 		src.vis_contents += src.chat_text
 
 		src.icon_state = "rock[pick(1,3)]"
-		src.transform = matrix()*1.2
+		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
+		src.color = "#CCC" // Darken slightly to allow lighter colors to be more visibile
+
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
 		update_icon()

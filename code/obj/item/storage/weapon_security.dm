@@ -33,8 +33,8 @@
 /obj/item/storage/box/robustdonuts
 	name = "robust donuts box"
 	icon_state = "box"
-	desc = "Contains two robust donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2)
+	desc = "Contains two robust donuts and two robusted donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -222,6 +222,12 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
 
+/obj/item/storage/box/stun_landmines
+	name = "non-lethal landmine box"
+	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
+
 /* -------------------- Traitor Gear -------------------- */
 
 /obj/item/storage/bowling
@@ -352,6 +358,20 @@
 	desc = "Just a regular ordinary box. It smells like almonds a little bit. Probably some chef kept their cooking supplies there."
 	icon_state = "box"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
+
+
+/obj/item/storage/box/blowgun
+	name = "instrument case"
+	desc = "A hardshell case for musical instruments."
+	icon_state = "briefcase_black"
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
+	/obj/item/storage/pouch/poison_dart = 2)
+
+/obj/item/storage/box/chameleonbomb
+	name = "chameleon bomb case"
+	desc = "A case that contains 2 syndicate chameleon bombs"
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

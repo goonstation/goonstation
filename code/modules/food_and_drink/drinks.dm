@@ -244,6 +244,7 @@
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
+	can_chug = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
 	var/is_sealed = 1 //can you drink out of it?
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
@@ -264,6 +265,7 @@
 		if (src.is_sealed)
 			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
+			can_chug = 1
 			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
 			return
 		if (!src.reagents || !src.reagents.total_volume)
@@ -337,7 +339,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
-	var/canbequilty = 1
+	var/canberandom = 1
 
 	var/image/fluid_image
 
@@ -361,11 +363,11 @@
 
 	New()
 		..()
-		if(canbequilty == 1)
-			if( prob(10))
-				name = "Quilty Farms Milk"
-				desc = "For ages 1[pick("0","8")] and under."
-				icon_state = "milk_quilty"
+		if(canberandom == 1)
+			if(prob(10))
+				name = "Mootimer's Calcium Drink"
+				desc = "Blue-ribbon winning secret family recipe."
+				icon_state = "milk_calcium"
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
@@ -382,7 +384,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
-	canbequilty = 0
+	canberandom = 0
 
 /obj/item/reagent_containers/food/drinks/milk/cluwnespider
 	name = "Honkey Gibbersons - Cluwnespider Milk"
@@ -391,7 +393,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
-	canbequilty = 0
+	canberandom = 0
 
 /obj/item/reagent_containers/food/drinks/milk/soy
 	name = "Creaca's Space Soy Milk"

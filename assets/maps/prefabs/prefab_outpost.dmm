@@ -24,7 +24,7 @@
 "ax" = (/obj/machinery/door/airlock/pyro/classic,/turf/simulated/floor/sanitary/white,/area/mining/miningoutpost)
 "ay" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/carpet/grime,/area/mining/miningoutpost)
 "az" = (/turf/simulated/floor/plating,/area/mining/miningoutpost)
-"aA" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/cable{d2 = 4; icon_state = "0-4"},/obj/machinery/power/monitor,/turf/simulated/floor/plating,/area/mining/miningoutpost)
+"aA" = (/obj/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/obj/cable{d2 = 4; icon_state = "0-4"},/obj/machinery/computer/power_monitor,/turf/simulated/floor/plating,/area/mining/miningoutpost)
 "aB" = (/obj/stool/chair/yellow,/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
 "aC" = (/obj/machinery/vending/snack,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)
 "aD" = (/obj/machinery/vending/cola/blue,/turf/simulated/floor/specialroom/medbay,/area/mining/miningoutpost)

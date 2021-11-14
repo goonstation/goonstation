@@ -56,7 +56,7 @@
 			last_dispense_time = TIME 	//gotta go before the update_icon
 			src.update_icon()
 			var/obj/item/I = new src.withdraw_type
-			boutput(user, "<span class='notice'>You put \the [I] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
+			boutput(user, "<span class='notice'>You take \the [I] from \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			user.put_in_hand_or_drop(I)
 
 			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
@@ -76,8 +76,8 @@
 					src.icon_state = src.filled_icon_state
 				else
 					src.icon_state = src.empty_icon_state
-				
-			else 
+
+			else
 				src.icon_state = src.filled_icon_state
 
 ///////////////////
@@ -108,16 +108,16 @@
 	deposit_type = /obj/item/clothing/mask/medical
 	withdraw_type = /obj/item/clothing/mask/medical
 
-/obj/item_dispenser/perscription_glasses
-	name = "perscription glasses dispenser"
-	desc = "A storage container that easily dispenses perscription glasses."
+/obj/item_dispenser/prescription_glasses
+	name = "prescription glasses dispenser"
+	desc = "A storage container that easily dispenses prescription glasses."
 	icon_state = "dispenser_glasses"
 	filled_icon_state = "dispenser_glasses"
 	deposit_type = /obj/item/clothing/glasses/regular
 	withdraw_type = /obj/item/clothing/glasses/regular
 
 /obj/item_dispenser/idcarddispenser
-	name = "ID card dispenser"
+	name = "\improper ID card dispenser"
 	desc = "A storage container that easily dispenses fresh ID cards. It can be refilled with paper."
 	icon_state = "dispenser_id"
 	filled_icon_state = "dispenser_id"

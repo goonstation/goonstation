@@ -32,23 +32,19 @@ THROWING DARTS
 	var/uses_radio = 0
 	var/list/mailgroups = null
 	var/net_id = null
-	var/pda_alert_frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/pda_alert_frequency = FREQ_PDA
 
 	New()
 		..()
 		if (uses_radio)
-			SPAWN_DBG(10 SECONDS)
-				if (radio_controller)
-					radio_connection = radio_controller.add_object(src, "[pda_alert_frequency]")
-				if (!src.net_id)
-					src.net_id = generate_net_id(src)
+			if (!src.net_id)
+				src.net_id = generate_net_id(src)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
 
 	disposing()
 		owner = null
 		former_implantee = null
 		if (uses_radio)
-			radio_controller.remove_object(src, "[pda_alert_frequency]")
 			mailgroups.Cut()
 		. = ..()
 
@@ -134,11 +130,8 @@ THROWING DARTS
 
 	proc/send_message(var/message, var/alertgroup, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
-		if(!radio_connection)
-			return
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = sender_name
 		newsignal.data["message"] = "[message]"
@@ -147,7 +140,7 @@ THROWING DARTS
 		newsignal.data["group"] = mailgroups + alertgroup
 		newsignal.data["sender"] = src.net_id
 
-		radio_connection.post_signal(src, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (!istype(src, /obj/item/implant/projectile))
@@ -276,13 +269,9 @@ THROWING DARTS
 		if (!H.mini_health_hud)
 			H.mini_health_hud = 1
 
-		var/datum/data/record/probably_my_record = null
-		for (var/datum/data/record/R in data_core.medical)
-			if (R.fields["name"] == H.real_name)
-				probably_my_record = R
-				break
+		var/datum/db_record/probably_my_record = data_core.medical.find_record("id", H.datacore_id)
 		if (probably_my_record)
-			probably_my_record.fields["h_imp"] = "[src.sensehealth()]"
+			probably_my_record["h_imp"] = "[src.sensehealth()]"
 		..()
 
 	on_crit()
@@ -380,7 +369,7 @@ THROWING DARTS
 	uses_radio = 1
 	mailgroups = list(MGD_SECURITY)
 	var/id = 1.0
-	var/frequency = 1451		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
+	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
 	New()
 		..()
@@ -654,7 +643,7 @@ THROWING DARTS
 			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
-		if (H.mind && ((H.mind.special_role == "vampthrall") || (H.mind.special_role == "spyslave")))
+		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyslave")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being enslaved!</b>", "red")
 			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
 			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindslave them at [log_loc(H)].")
@@ -677,7 +666,7 @@ THROWING DARTS
 			if (!istype(MS))
 				continue
 			if (!MS.expire || (MS.expire && (MS.expired != 1)))
-				if (H.mind && (H.mind.special_role == "mindslave"))
+				if (H.mind && (H.mind.special_role == ROLE_MINDSLAVE))
 					remove_mindslave_status(H, "mslave", "override")
 				else if (H.mind && H.mind.master)
 					remove_mindslave_status(H, "otherslave", "override")
@@ -713,7 +702,7 @@ THROWING DARTS
 
 		if (M.mind && ticker.mode)
 			if (!M.mind.special_role)
-				M.mind.special_role = "mindslave"
+				M.mind.special_role = ROLE_MINDSLAVE
 			if (!(M.mind in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks += M.mind
 			M.mind.master = I.ckey
@@ -734,7 +723,7 @@ THROWING DARTS
 					return
 				if (!src || !owner || (M != owner) || src.expired)
 					return
-				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
+				boutput(M, "<h3><span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span></h3>")
 
 				// 1 minute left
 				sleep(1 MINUTE)
@@ -744,7 +733,7 @@ THROWING DARTS
 				if (!src || !owner || (M != owner) || src.expired)
 					return
 				// There's a proc for this now (Convair880).
-				if (M.mind && M.mind.special_role == "mindslave")
+				if (M.mind && M.mind.special_role == ROLE_MINDSLAVE)
 					remove_mindslave_status(M, "mslave", "expired")
 				else if (M.mind && M.mind.master)
 					remove_mindslave_status(M, "otherslave", "expired")
@@ -844,6 +833,11 @@ THROWING DARTS
 		desc = "A small hollow dart."
 		icon_state = "syringeproj"
 
+	blowdart
+		name = "blowdart"
+		desc = "a sharp little dart with a little poison reservoir."
+		icon_state = "blowdart"
+
 	flintlock
 		name= "flintlock round"
 		desc = "Rather unperfect round ball. Looks very old."
@@ -852,6 +846,10 @@ THROWING DARTS
 	bullet_50
 		name = ".50AE round"
 		desc = "Ouch."
+
+	rakshasa
+		name = "\improper Rakshasa round"
+		desc = "..."
 
 /obj/item/implant/projectile/implanted(mob/living/carbon/C, var/mob/I, var/bleed_time = 60)
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, C)

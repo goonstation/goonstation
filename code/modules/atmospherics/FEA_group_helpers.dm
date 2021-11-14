@@ -9,13 +9,13 @@
 	var/turf/simulated/floor/west = get_step(src,WEST)
 
 	//Clear those we do not have access to
-	if(!CanPass(null, north, null, 1) || !istype(north))
+	if(!gas_cross(north) || !istype(north))
 		north = null
-	if(!CanPass(null, south, null, 1) || !istype(south))
+	if(!gas_cross(south) || !istype(south))
 		south = null
-	if(!CanPass(null, east, null, 1) || !istype(east))
+	if(!gas_cross(east) || !istype(east))
 		east = null
-	if(!CanPass(null, west, null, 1) || !istype(west))
+	if(!gas_cross(west) || !istype(west))
 		west = null
 
 	var/new_group_possible = 0

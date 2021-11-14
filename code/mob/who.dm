@@ -12,8 +12,14 @@
 		if (C.holder)
 			if (usr.client.holder) //The viewer is an admin, we can show them stuff
 				var/thisW = "<a href='?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='adminooc text-normal'>"
-				if (C.stealth || C.alt_key)
-					thisW += "[C.key] <i>(as [C.fakekey])</i>"
+				if (C.stealth)
+					if (C.fakekey)
+						thisW += "<i>[C.key] (stealthed as [C.fakekey])</i>"
+					else
+						thisW += "<i>[C.key] (hidden)</i>"
+
+				else if (C.alt_key)
+					thisW += "[C.key] (as [C.fakekey])"
 				else
 					thisW += C.key
 
@@ -25,7 +31,9 @@
 					thisW += "[C.fakekey]</span>"
 					whoAdmins += thisW
 				else if (C.stealth) // no you fucks don't show us as an admin anyway!!
-					whoNormies += "<span class='ooc text-normal'>[C.fakekey]</span>"
+					if (C.fakekey)
+						// Only show them if they have a key to show. Shhhh.
+						whoNormies += "<span class='ooc text-normal'>[C.fakekey]</span>"
 				else
 					thisW += "[C.key]</span>"
 					whoAdmins += thisW

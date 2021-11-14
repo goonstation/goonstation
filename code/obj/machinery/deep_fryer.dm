@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 1
 	flags = NOSPLASH
+	status = REQ_PHYSICAL_ACCESS
 	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/item/fryitem = null

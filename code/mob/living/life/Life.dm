@@ -79,9 +79,11 @@
 	last_life_tick = TIME
 
 /mob/living/disposing()
-	..()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
+	lifeprocesses.len = 0
+	lifeprocesses = null
+	..()
 
 /mob/living/carbon/human
 	var/list/heartbeatOverlays = list()
@@ -148,21 +150,19 @@
 
 /mob/living/silicon/hivebot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
@@ -171,12 +171,11 @@
 
 /mob/living/silicon/drone/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
+	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -542,6 +541,8 @@
 			L.process()
 
 	force_laydown_standup() //immediately force a laydown
+		if(!lifeprocesses)
+			return
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.process()
@@ -719,16 +720,7 @@
 	get_deflection()
 		if (!src)
 			return 0
-
-		var/protection = 0
-
-		// Resistance from Clothing
-		for (var/obj/item/C as anything in src.get_equipped_items())
-			if(C.hasProperty("deflection"))
-				var/curr = C.getProperty("deflection")
-				protection += curr
-
-		return min(protection, 90-STAMINA_BLOCK_CHANCE)
+		return min(GET_MOB_PROPERTY(src, PROP_DISARM_RESIST), 90)
 
 
 	get_heat_protection()

@@ -399,15 +399,15 @@
 	body_parts_covered = TORSO
 
 /obj/item/clothing/suit/armor/NT_alt
-	name = "NT-SO armor"
-	desc = "Durable armor used by NanoTrasen's corporate operatives."
+	name = "old armored vest"
+	desc = "A grungy surplus armored vest. Smelly and not very clean."
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
 	setupProperties()
 		..()
-		setProperty("meleeprot", 8)
-		setProperty("rangedprot", 1.5)
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/armor/EOD
 	name = "bomb disposal suit"

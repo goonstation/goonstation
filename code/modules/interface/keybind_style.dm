@@ -80,6 +80,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"EAST" = KEY_RIGHT,
 	"B" = KEY_POINT,
 	"T" = "say",
+	";" = "say_main_radio",
 	"Y" = "say_radio",
 	"ALT+W" = "whisper",
 	"O" = "ooc",

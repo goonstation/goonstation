@@ -4,7 +4,7 @@
 
 #error =======================================================================================
 #error Please update your BYOND to the version in /buildByond.conf in order to build the game.
-#error Yes, this means the BYOND 514 beta.
+#error Yes, this means the BYOND 514 stable version.
 #error =======================================================================================
 
 #else

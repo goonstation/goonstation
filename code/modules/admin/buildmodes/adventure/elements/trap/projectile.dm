@@ -2,15 +2,15 @@
 	name = "AB CREATE: Projectile trap"
 	var/turf/target = null
 	var/proj_type = 5
-	var/invisibility = 20
+	var/invisibility = INVIS_ADVENTURE
 
 	var/selection
 
 	initialize()
 		..()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		if ((input("Is this trap invisible?", "Invisibility", "yes") in list("yes", "no")) == "no")
-			invisibility = 0
+			invisibility = INVIS_NONE
 		proj_type = input("Projectile type?", "Projectile type", null) in childrentypesof(/datum/projectile)
 		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
 		boutput(usr, "<span class='notice'>Special note: If no target is set, the projectile will launch at a random mob in view.</span>")
@@ -19,7 +19,7 @@
 		if (target)
 			target.overlays -= selection
 		if (selection)
-			pool(selection)
+			qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -54,7 +54,7 @@
 
 /obj/adventurepuzzle/triggerable/targetable/projectiletrap
 	name = "projectile trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/randompuzzles.dmi'
 	icon_state = "projectiletrap"
 	density = 0

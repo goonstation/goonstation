@@ -543,9 +543,9 @@ var/global/list/module_editors = list()
 
 	if (remove == 1)
 		if (src.mind.special_role && src.mind.master) // Synthetic thralls are a thing, somehow.
-			if (src.mind.special_role == "mindslave")
+			if (src.mind.special_role == ROLE_MINDSLAVE)
 				remove_mindslave_status(src, "mslave", "death")
-			else if (src.mind.special_role == "vampthrall")
+			else if (src.mind.special_role == ROLE_VAMPTHRALL)
 				remove_mindslave_status(src, "vthrall", "death")
 			else if (src.mind.master)
 				remove_mindslave_status(src, "otherslave", "death")
@@ -559,15 +559,15 @@ var/global/list/module_editors = list()
 			var/role = ""
 			var/persistent = 0
 			if (src.emagged)
-				role = "emagged robot"
+				role = ROLE_EMAGGED_ROBOT
 			else if (src.syndicate && !src.emagged)
-				role = "Syndicate robot"
+				role = ROLE_SYNDICATE_ROBOT
 
 			var/mob/M
 			if (source && ismob(source))
 				M = source
 
-			if (src.mind.special_role == "emagged robot" || src.mind.special_role == "syndicate robot")
+			if (src.mind.special_role == ROLE_EMAGGED_ROBOT || src.mind.special_role == ROLE_SYNDICATE_ROBOT)
 				var/copy = src.mind.special_role
 				remove_antag(src, null, 1, 0)
 				if (!src.mind.former_antagonist_roles.Find(copy))
@@ -626,7 +626,7 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = "emagged robot"
+				src.mind.special_role = ROLE_EMAGGED_ROBOT
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 
@@ -647,7 +647,7 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = "syndicate robot"
+				src.mind.special_role = ROLE_SYNDICATE_ROBOT
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 

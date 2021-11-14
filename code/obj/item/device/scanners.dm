@@ -62,22 +62,22 @@ Contains:
 				if(O.level != 1)
 					continue
 
-				if(O.invisibility == 101)
-					O.invisibility = 0
+				if(O.invisibility == INVIS_ALWAYS)
+					O.invisibility = INVIS_NONE
 					O.alpha = 128
 					SPAWN_DBG(1 SECOND)
 						if(O && isturf(O.loc))
 							var/turf/U = O.loc
 							if(U.intact)
-								O.invisibility = 101
+								O.invisibility = INVIS_ALWAYS
 								O.alpha = 255
 
 			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
+			if(M?.invisibility == INVIS_CLOAK)
+				M.invisibility = INVIS_NONE
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
-						M.invisibility = 2
+						M.invisibility = INVIS_CLOAK
 
 
 
@@ -107,11 +107,11 @@ Contains:
 				continue
 
 			var/mob/living/M = locate() in T
-			if(M?.invisibility == 2)
-				M.invisibility = 0
+			if(M?.invisibility == INVIS_CLOAK)
+				M.invisibility = INVIS_NONE
 				SPAWN_DBG(0.6 SECONDS)
 					if(M)
-						M.invisibility = 2
+						M.invisibility = INVIS_CLOAK
 
 		for(var/obj/O in range(2, loc_to_check) )
 			if(O.interesting)
@@ -149,14 +149,14 @@ that cannot be itched
 		search = copytext(sanitize(search), 1, 200)
 		search = lowertext(search)
 
-		for (var/datum/data/record/R in data_core.general)
-			if (search == lowertext(R.fields["dna"]) || search == lowertext(R.fields["fingerprint"]) || search == lowertext(R.fields["name"]))
+		for (var/datum/db_record/R as anything in data_core.general.records)
+			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
 				var/data = "--------------------------------<br>\
-				<font color='blue'>Match found in security records:<b> [R.fields["name"]]</b> ([R.fields["rank"]])</font><br>\
+				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
 				<br>\
-				<i>Fingerprint:</i><font color='blue'> [R.fields["fingerprint"]]</font><br>\
-				<i>Blood DNA:</i><font color='blue'> [R.fields["dna"]]</font>"
+				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
 				boutput(user, data)
 				return
@@ -560,14 +560,18 @@ that cannot be itched
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
 	var/mode = 1
-	var/datum/data/record/active1 = null
-	var/datum/data/record/active2 = null
+	var/datum/db_record/active1 = null
+	var/datum/db_record/active2 = null
 	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 
 	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+		if (!istype(M))
+			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
@@ -575,70 +579,69 @@ that cannot be itched
 		//	return
 		boutput(user, "<span class='notice'>You scan in [M]</span>")
 		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
-		for(var/datum/data/record/R in data_core.general)
-			if (lowertext(R.fields["name"]) == lowertext(M.name))
+		for(var/datum/db_record/R as anything in data_core.general.records)
+			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
-				R.fields["name"] = M.name
-				R.fields["sex"] = M.gender
-				R.fields["age"] = M.bioHolder.age
+				R["name"] = M.name
+				R["sex"] = M.gender
+				R["age"] = M.bioHolder.age
 				if (M.gloves)
-					R.fields["fingerprint"] = "Unknown"
+					R["fingerprint"] = "Unknown"
 				else
-					R.fields["fingerprint"] = M.bioHolder.uid_hash
-				R.fields["p_stat"] = "Active"
-				R.fields["m_stat"] = "Stable"
+					R["fingerprint"] = M.bioHolder.uid_hash
+				R["p_stat"] = "Active"
+				R["m_stat"] = "Stable"
 				src.active1 = R
 				found = 1
 
 		if(found == 0)
-			src.active1 = new /datum/data/record()
-			src.active1.fields["id"] = num2hex(rand(1, 1.6777215E7),6)
-			src.active1.fields["rank"] = "Unassigned"
+			src.active1 = new /datum/db_record()
+			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
+			src.active1["rank"] = "Unassigned"
 			//Update Information
-			src.active1.fields["name"] = M.name
-			src.active1.fields["sex"] = M.gender
-			src.active1.fields["age"] = M.bioHolder.age
+			src.active1["name"] = M.name
+			src.active1["sex"] = M.gender
+			src.active1["age"] = M.bioHolder.age
 			/////Fingerprint record update
 			if (M.gloves)
-				src.active1.fields["fingerprint"] = "Unknown"
+				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1.fields["fingerprint"] = M.bioHolder.uid_hash
-			src.active1.fields["p_stat"] = "Active"
-			src.active1.fields["m_stat"] = "Stable"
-			data_core.general += src.active1
+				src.active1["fingerprint"] = M.bioHolder.uid_hash
+			src.active1["p_stat"] = "Active"
+			src.active1["m_stat"] = "Stable"
+			data_core.general.add_record(src.active1)
 			found = 0
 
 		////Security Records
-		for(var/datum/data/record/E in data_core.security)
-			if (E.fields["name"] == src.active1.fields["name"])
-				if(src.mode == 1)
-					E.fields["criminal"] = "Incarcerated"
-				else if(src.mode == 2)
-					E.fields["criminal"] = "Parolled"
-				else if(src.mode == 3)
-					E.fields["criminal"] = "Released"
-				else
-					E.fields["criminal"] = "None"
-				return
+		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
+		if(E)
+			if(src.mode == 1)
+				E["criminal"] = "Incarcerated"
+			else if(src.mode == 2)
+				E["criminal"] = "Parolled"
+			else if(src.mode == 3)
+				E["criminal"] = "Released"
+			else
+				E["criminal"] = "None"
+			return
 
-		src.active2 = new /datum/data/record()
-		src.active2.fields["name"] = src.active1.fields["name"]
-		src.active2.fields["id"] = src.active1.fields["id"]
-		src.active2.name = text("Security Record #[]", src.active1.fields["id"])
+		src.active2 = new /datum/db_record()
+		src.active2["name"] = src.active1["name"]
+		src.active2["id"] = src.active1["id"]
 		if(src.mode == 1)
-			src.active2.fields["criminal"] = "Incarcerated"
+			src.active2["criminal"] = "Incarcerated"
 		else if(src.mode == 2)
-			src.active2.fields["criminal"] = "Parolled"
+			src.active2["criminal"] = "Parolled"
 		else if(src.mode == 3)
-			src.active2.fields["criminal"] = "Released"
+			src.active2["criminal"] = "Released"
 		else
-			src.active2.fields["criminal"] = "None"
-		src.active2.fields["mi_crim"] = "None"
-		src.active2.fields["mi_crim_d"] = "No minor crime convictions."
-		src.active2.fields["ma_crim"] = "None"
-		src.active2.fields["ma_crim_d"] = "No major crime convictions."
-		src.active2.fields["notes"] = "No notes."
-		data_core.security += src.active2
+			src.active2["criminal"] = "None"
+		src.active2["mi_crim"] = "None"
+		src.active2["mi_crim_d"] = "No minor crime convictions."
+		src.active2["ma_crim"] = "None"
+		src.active2["ma_crim_d"] = "No major crime convictions."
+		src.active2["notes"] = "No notes."
+		data_core.security.add_record(src.active2)
 
 		return
 
@@ -716,10 +719,100 @@ that cannot be itched
 		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
 		SPAWN_DBG(3 SECONDS)
-			var/obj/item/paper/p = unpool(/obj/item/paper)
+			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
 			p.icon_state = "paper_caution"
 
 		return T.target_byond_key
+
+
+
+
+/obj/item/device/appraisal
+	name = "cargo appraiser"
+	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
+	flags = FPRINT|ONBELT|TABLEPASS
+	w_class = W_CLASS_SMALL
+	m_amt = 150
+	mats = 5
+	icon_state = "fs"
+	item_state = "electronic"
+
+	attack(mob/M as mob, mob/user as mob)
+		return
+
+	// attack_self
+	// would be neat to maybe add an option to print a receipt or invoice?
+	// like if you wanna buy botany's stuff, this can print out what's inside
+	// and the cargo value, and then
+	// i dunno, who knows. at least you'd be able to take stock easier.
+
+	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+		if (get_dist(A,user) > 1)
+			return
+
+		var/datum/artifact/art = null
+		if (isobj(A))
+			var/obj/O = A
+			art = O.artifact
+		else
+			// objs only
+			return
+
+		var/sell_value = 0
+		var/out_text = ""
+		if (art)
+			// TODO: Artifact valuation
+			// shippingmarket.sell_artifact(AM, art)
+			boutput(user, "<span class='alert'>Artifact appraisal not yet available. Coming Soon&trade;!</span>")
+			return
+
+		else if (istype(A, /obj/storage/crate))
+			sell_value = -1
+			var/obj/storage/crate/C = A
+			if (C.delivery_destination)
+				for (var/datum/trader/T in shippingmarket.active_traders)
+					if (T.crate_tag == C.delivery_destination)
+						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
+						out_text = "<strong>Prices from [T.name]</strong><br>"
+
+			if (sell_value == -1)
+				// no trader on the crate
+				sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
+
+		else if (istype(A, /obj/storage))
+			var/obj/storage/S = A
+			if (S.welded)
+				// you cant do this
+				boutput(user, "<span class='alert'>\The [A] is welded shut and can't be scanned.</span>")
+				return
+			if (S.locked)
+				// you cant do this either
+				boutput(user, "<span class='alert'>\The [A] is locked closed and can't be scanned.</span>")
+				return
+
+			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
+			sell_value = shippingmarket.appraise_value(S.contents, sell = 0)
+
+		else if (istype(A, /obj/item/satchel))
+			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
+			sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
+
+		else if (istype(A, /obj/item))
+			sell_value = shippingmarket.appraise_value(list( A ), sell = 0)
+
+		// replace with boutput
+		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
+		if (sell_value > 0)
+			playsound(src, "sound/machines/chime.ogg", 10, 1)
+
+		if (user.client && !user.client.preferences?.flying_chat_hidden)
+			var/image/chat_maptext/chat_text = null
+			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
+			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
+			if (chat_text)
+				// don't bother bumping up other things
+				chat_text.show_to(user.client)
+

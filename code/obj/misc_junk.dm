@@ -82,7 +82,7 @@
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
 			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
-			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+			playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 			last_laugh = world.time
 
 	process()
@@ -107,7 +107,7 @@
 			return
 		container = pick(eligible_containers)
 
-		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 		src.set_loc(container)
 /obj/item/c_tube
 	name = "cardboard tube"
@@ -167,7 +167,7 @@
 
 /obj/item/dummy
 	name = "dummy"
-	invisibility = 101.0
+	invisibility = INVIS_ALWAYS
 	anchored = 1.0
 	flags = TABLEPASS
 	burn_possible = 0

@@ -28,7 +28,7 @@
 
 		src.resistances += /datum/ailment/disease/lycanthropy
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_WEREWOLF_TIPS(src)
 
 	else return
@@ -77,7 +77,7 @@
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
-			M.drowsyness = 0
+			M.delStatus("drowsy")
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
@@ -377,7 +377,7 @@
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
 		.= list()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == "werewolf")
+		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_WEREWOLF)
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 

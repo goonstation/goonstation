@@ -50,7 +50,7 @@
 		return 0
 
 	emp_act()
-		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY, TRUE)
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		src.update_icon()
 		return
 
@@ -79,10 +79,8 @@
 
 	canshoot()
 		if(src.current_projectile)
-			var/list/ret = list()
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-				if(ret["charge"] >= current_projectile.cost)
-					return 1
+			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, current_projectile.cost) & CELL_SUFFICIENT_CHARGE)
+				return 1
 		return 0
 
 	process_ammo(var/mob/user)
@@ -94,9 +92,9 @@
 					return 1
 			return 0
 		else
-			if(src.current_projectile)
-				if(SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost) & CELL_SUFFICIENT_CHARGE)
-					return 1
+			if(canshoot())
+				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
+				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
 				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
@@ -1018,7 +1016,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
@@ -1409,7 +1407,7 @@
 			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
 			// 	user.changeStatus("weakened", 4 SECONDS)
-			// 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
 			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
@@ -1519,6 +1517,7 @@
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
 	w_class = W_CLASS_NORMAL		//for clarity
+	object_flags = NO_ARM_ATTACH
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer

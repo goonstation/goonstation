@@ -9,7 +9,7 @@
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see update_icon.dm for the place where this change happens)
 
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
 
 	var/dump_contents_chance = 20
@@ -485,8 +485,8 @@
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
 
-/mob/living/carbon/human/proc/is_vampiric_zombie()
-	return get_ability_holder(/datum/abilityHolder/vampiric_zombie)
+/mob/living/carbon/human/proc/is_vampiric_thrall()
+	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
@@ -514,16 +514,19 @@
 	if(health_mon)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
+		health_mon = null
 	if(health_implant)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_implant)
 		health_implant.dispose()
+		health_implant = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
+		arrestIcon = null
 
 	src.chest_item = null
 
-	src.organs.len = 0
+	src.organs?.len = 0
 	src.organs = null
 
 	if (mutantrace)
@@ -653,16 +656,16 @@
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
 			SPAWN_DBG(0)
-				var/datum/mind/M = src.mind
 				emote("deathgasp")
-				src.visible_message("<span class='alert'><B>[src]</B> begins to grow another head!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				sleep(20 SECONDS)
+				var/datum/mind/M = src.mind
 				if(!M || M.disposed)
 					return
 				if (M?.current)
 					M.current.show_text("<b>We released a headspider, using up some of our DNA reserves.</b>", "blue")
-				src.visible_message("<span class='alert'><B>[src]</B> grows a head, which sprouts legs and wanders off, looking for food!</span>")
+				src.visible_message("<span class='alert'><B>[src]</B> head detaches, sprouts legs and wanders off looking for food!</span>")
 				//make a headspider, have it crawl to find a host, give the host the disease, hand control to the player again afterwards
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(get_turf(src))
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
@@ -681,6 +684,24 @@
 				HS.changeling.transferOwnership(HS)
 				HS.changeling.owner = HS
 				HS.changeling.reassign_hivemind_target_mob()
+				if(src.wear_mask)
+					var/obj/item/dropped_mask = src.wear_mask
+					src.u_equip(dropped_mask)
+					dropped_mask.set_loc(src.loc)
+				if(src.glasses)
+					var/obj/item/dropped_glasses = src.glasses
+					src.u_equip(dropped_glasses)
+					dropped_glasses.set_loc(src.loc)
+				if(src.head)
+					var/obj/item/dropped_headwear = src.head
+					src.u_equip(dropped_headwear)
+					dropped_headwear.set_loc(src.loc)
+				if(src.ears)
+					var/obj/item/dropped_earwear = src.ears
+					src.u_equip(dropped_earwear)
+					dropped_earwear.set_loc(src.loc)
+				var/obj/item/organ/head/organ_head = src.organHolder.drop_organ("head")
+				qdel(organ_head)
 
 				//HS.process() //A little kickstart to get you out into the big world (and some chump), li'l guy! O7
 
@@ -695,6 +716,8 @@
 
 	src.canmove = 0
 	src.lying = 1
+	src.last_sleep = 0
+	src.UpdateOverlays(null, "sleep_bubble")
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
@@ -711,9 +734,9 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == "mindslave")
+		if (src.mind.special_role == ROLE_MINDSLAVE)
 			remove_mindslave_status(src, "mslave", "death")
-		else if (src.mind.special_role == "vampthrall")
+		else if (src.mind.special_role == ROLE_VAMPTHRALL)
 			remove_mindslave_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindslave_status(src, "otherslave", "death")
@@ -989,6 +1012,8 @@
 	..()
 	var/turf/thrown_from = get_turf(src)
 	src.throw_mode_off()
+	if (HAS_MOB_PROPERTY(src, PROP_CANTTHROW))
+		return
 	if (src.stat)
 		return
 
@@ -1179,23 +1204,30 @@
 		see_face = 0
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		see_face = 0
+	var/id_name = src.wear_id?:registered
 	if (!see_face)
-		if (istype(src.wear_id) && src.wear_id:registered)
-			src.name = "[src.name_prefix(null, 1)][src.wear_id:registered][src.name_suffix(null, 1)]"
+		if (id_name)
+			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
+			src.update_name_tag(id_name)
 		else
 			src.unlock_medal("Suspicious Character", 1)
 			src.name = "[src.name_prefix(null, 1)]Unknown[src.name_suffix(null, 1)]"
+			src.update_name_tag("")
 	else
-		if (istype(src.wear_id) && src.wear_id:registered != src.real_name)
+		if (id_name != src.real_name)
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(id_name)
 			else
-				src.name = "[src.name_prefix(null, 1)][src.real_name][src.wear_id:registered ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(src.real_name)
 		else
 			if (src.decomp_stage > 2)
-				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [src.wear_id:registered])" : ""][src.name_suffix(null, 1)]"
+				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
+				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
+				src.update_name_tag(src.real_name)
 
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
@@ -1272,6 +1304,8 @@
 /mob/living/carbon/human/restrained()
 	if (src.hasStatus("handcuffed"))
 		return 1
+	if (src.hasStatus("incorporeal"))
+		return 1
 	if (src.wear_suit && src.wear_suit.restrain_wearer)
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
@@ -1336,7 +1370,8 @@
 
 // called when something steps onto a human
 // this could be made more general, but for now just handle mulebot
-/mob/living/carbon/human/HasEntered(var/atom/movable/AM)
+/mob/living/carbon/human/Crossed(atom/movable/AM)
+	..()
 	var/obj/machinery/bot/mulebot/MB = AM
 	if (istype(MB))
 		MB.RunOver(src)
@@ -1480,13 +1515,12 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
+	var/sayverb = null
 	if (src.mutantrace)
 		if (src.mutantrace.voice_message)
 			src.voice_name = src.mutantrace.voice_name
 			src.voice_message = src.mutantrace.voice_message
-		if (text == "" || !text)
-			return src.mutantrace.say_verb()
-		return "[src.mutantrace.say_verb()], \"[text]\""
+		sayverb = src.mutantrace.say_verb()
 	else
 		src.voice_name = initial(src.voice_name)
 		src.voice_message = initial(src.voice_message)
@@ -1497,7 +1531,7 @@
 	if (src.oxyloss > 10)
 		special = "gasp_whisper"
 
-	return ..(text,special)
+	return ..(text, special, sayverb)
 
 //Lallander was here
 /mob/living/carbon/human/whisper(message as text, forced=FALSE)
@@ -1541,7 +1575,7 @@
 		return
 
 	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (Whispered)")
+	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -1690,8 +1724,10 @@
 	//mbc FUCK why doesn't this have any parent to call
 	speech_bubble.icon_state = "speech"
 	UpdateOverlays(speech_bubble, "speech_bubble")
+	var/speech_bubble_time = src.last_typing
 	SPAWN_DBG(1.5 SECONDS)
-		UpdateOverlays(null, "speech_bubble")
+		if(speech_bubble_time == src.last_typing)
+			UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
 	slot_back = 1
@@ -1727,10 +1763,10 @@
 			hud.set_visible(hud.twohandr, 0)
 
 	if (W == src.wear_suit)
+		src.update_hair_layer()
 		src.wear_suit = null
 		W.unequipped(src)
 		src.update_clothing()
-		src.update_hair_layer()
 	else if (W == src.w_uniform)
 		W.unequipped(src)
 		W = src.r_store
@@ -1773,9 +1809,9 @@
 		src.update_clothing()
 	else if (W == src.head)
 		W.unequipped(src)
+		src.update_hair_layer()
 		src.head = null
 		src.update_clothing()
-		src.update_hair_layer()
 	else if (W == src.ears)
 		W.unequipped(src)
 		src.ears = null
@@ -1784,6 +1820,9 @@
 		W.unequipped(src)
 		src.shoes = null
 		src.update_clothing()
+		var/turf/T = get_turf(src)
+		if(T?.active_liquid)
+			T.active_liquid.Crossed(src)
 	else if (W == src.belt)
 		W.unequipped(src)
 		src.belt = null
@@ -2124,6 +2163,7 @@
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
 		src.update_clothing()
+	return equipped
 
 
 /mob/living/carbon/human/proc/update_equipment_screen_loc()
@@ -2248,8 +2288,7 @@
 
 /mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
 	if (can_equip(I, slot))
-		force_equip(I, slot)
-		return 1
+		return force_equip(I, slot)
 	else
 		return 0
 
@@ -2371,7 +2410,6 @@
 				boutput(src, "[I] falls out of you!")
 				I.on_remove(src)
 				implant.Remove(I)
-				//del(I)
 				I.set_loc(get_turf(src))
 				continue
 
@@ -2411,7 +2449,7 @@
 			src.cured(PA)
 
 		// and get the new one instead
-		var/datum/pathogen/Q = unpool(/datum/pathogen)
+		var/datum/pathogen/Q = new /datum/pathogen
 		Q.setup(0, P, 1)
 		pathogen_controller.mob_infected(Q, src)
 		src.pathogens += Q.pathogen_uid
@@ -2422,12 +2460,12 @@
 	else
 		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
 		if (C.generation < P.generation)
-			var/datum/pathogen/Q = unpool(/datum/pathogen)
+			var/datum/pathogen/Q = new /datum/pathogen
 			Q.setup(0, P, 1)
 			logTheThing("pathology", src, null, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
 			pathogen_controller.mob_infected(Q, src)
 			Q.stage = min(C.stage, Q.stages)
-			pool(C)
+			qdel(C)
 			src.pathogens[Q.pathogen_uid] = Q
 			Q.infected = src
 			return 1
@@ -2442,7 +2480,7 @@
 		var/datum/microbody/M = P.body_type
 		if (M.auto_immunize)
 			immunity(P)
-		pool(Q)
+		qdel(Q)
 		logTheThing("pathology", src, null, "is cured of [pname].")
 
 /mob/living/carbon/human/remission(var/datum/pathogen/P)
@@ -2877,7 +2915,9 @@
 
 	for(var/slot in valid_slots)
 		var/obj/item/slot_item = src.get_slot(slot)
-		if(slot_item?.flags & HAS_EQUIP_CLICK && slot_item.equipment_click(src, target, params, location, control, origParams, slot))
+		if (slot_item?.flags & HAS_EQUIP_CLICK &&\
+		 	src.in_real_view_range(get_turf(target)) &&\
+		 	slot_item.equipment_click(src, target, params, location, control, origParams, slot))
 			return
 
 	if (src.lying)
@@ -2886,6 +2926,11 @@
 	.=..()
 
 /mob/living/carbon/human/attack_hand(mob/M)
+	if(ishuman(M) && M == src && M.a_intent == "harm")
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
@@ -2894,6 +2939,11 @@
 	if (isghostcritter(M) && src.health < 80) //there's another one of these in attack_hand(). Same file. see, the quality of my code doens't matter as long as i leave a very helpful comment!!!
 		boutput(M, "Your spectral conscience refuses to damage this human any further.")
 		return
+	if(ishuman(M) && M == src && (W.force > 0))
+		var/mob/living/carbon/human/H = M
+		if(HAS_MOB_PROPERTY(H, PROP_NO_SELF_HARM))
+			boutput(H, "You can't bring yourself to attack yourself!")
+			return
 	..()
 	if (!surgeryCheck(src, M))
 		src.activate_chest_item_on_attack(M)
@@ -2914,7 +2964,7 @@
 		return 1
 	return .
 
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj, yes)
+/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj)
 	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
@@ -3309,7 +3359,7 @@
 		if (!src.limbs.r_leg) missing_legs++
 		if (!src.limbs.l_arm) missing_arms++
 		if (!src.limbs.r_arm) missing_arms++
-	if (src.lying)
+	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
@@ -3370,7 +3420,7 @@
 				src.changeStatus("stunned", 3 SECONDS)
 
 		else
-			AM.attack_hand(src)	// nice catch, hayes. don't ever fuckin do it again
+			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
 			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()
@@ -3424,3 +3474,19 @@
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
 		H?.bioHolder?.mobAppearance.UpdateMob()
+
+/mob/living/carbon/human/get_pronouns()
+	RETURN_TYPE(/datum/pronouns)
+	if(isabomination(src))
+		return get_singleton(/datum/pronouns/abomination)
+	if(src.wear_id)
+		// not using get_id() because we don't want held IDs
+		var/obj/item/card/id/id = null
+		if(istype(src.wear_id, /obj/item/card/id))
+			id = src.wear_id
+		else if(istype(src.wear_id, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = src.wear_id
+			id = pda.ID_card
+		. = id?.pronouns
+	if(isnull(.))
+		return ..()

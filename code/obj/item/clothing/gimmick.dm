@@ -693,6 +693,7 @@
 	icon_state = "adeptus"
 	item_state = "adeptus"
 	permeability_coefficient = 0.50
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 
@@ -852,6 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "monkey"
 	item_state = "monkey"
+	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
 
@@ -888,6 +890,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	over_hair = TRUE
 	see_face = 0.0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
@@ -1266,6 +1269,35 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "tuxjacket"
 
+/obj/item/clothing/suit/guards_coat
+	name = "guard's coat"
+	desc = "A formal double breasted overcoat of British origin."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "guardscoat"
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+
+/obj/item/clothing/under/gimmick/black_wcoat
+	name = "dress shirt and waistcoat"
+	desc = "A formal waistcoat meant to be worn alongside an overcoat."
+	icon_state = "black_wcoat"
+	item_state = "black_wcoat"
+
+/obj/item/clothing/under/gimmick/red_wcoat
+	name = "dress shirt and red waistcoat"
+	desc = "A formal red waistcoat meant to be worn alongside an overcoat."
+	icon_state = "red_wcoat"
+	item_state = "red_wcoat"
+
+/obj/item/clothing/under/gimmick/blue_wcoat
+	name = "dress shirt and blue waistcoat"
+	desc = "A formal blue waistcoat meant to be worn alongside an overcoat."
+	icon_state = "blue_wcoat"
+	item_state = "blue_wcoat"
+
 /obj/item/clothing/under/rank/bartender/tuxedo // look I really want to make the clothes vendor just produce clothing directly and not have to spawn this in a box with a custom name or something
 	name = "dress shirt and bowtie"
 	desc = "A nice, crisp shirt, dress pants and a black bowtie. Fancy."
@@ -1330,6 +1362,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	over_hair = TRUE
 
 /obj/item/clothing/head/rando
 	name = "red skull mask and cowl"
@@ -1478,6 +1511,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
 	icon_state = "hotdogsuit"
+	over_hair = TRUE
 
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
@@ -1698,3 +1732,58 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	desc = "What kind of hero would wear this dumb thing?"
 	icon_state = "link"
 	item_state = "link"
+
+//Western Coats
+
+/obj/item/clothing/suit/gimmick/guncoat
+	name = "Shotgun Coat"
+	desc = "A coat that does not hinder you when shooting from horseback, how neat!"
+	icon_state = "guncoat"
+	item_state = "guncoat"
+
+/obj/item/clothing/suit/gimmick/guncoat/black
+	name = "Black Shotgun Coat"
+	icon_state = "guncoat_black"
+	item_state = "guncoat_black"
+
+/obj/item/clothing/suit/gimmick/guncoat/tan
+	name = "Tan Shotgun Coat"
+	icon_state = "guncoat_tan"
+	item_state = "guncoat_tan"
+
+/obj/item/clothing/suit/gimmick/guncoat/dirty
+	name = "Dirty Shotgun Coat"
+	icon_state = "guncoat_dirty"
+	item_state = "guncoat_dirty"
+
+//western Ponchos
+
+/obj/item/clothing/suit/poncho/flower
+	name = "Flower Poncho"
+	desc = "A handwoven poncho, it has an insignia of a flower!"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "westflower"
+
+/obj/item/clothing/suit/poncho/leaf
+	name = "Leaf Poncho"
+	desc = "A handwoven poncho, it has the pattern of multiple leaves!"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "westleaf"
+
+//Witchy Capes
+
+/obj/item/clothing/suit/witchcape_purple
+	name = "Purple Witch Cape"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "witchcape_purple"
+
+/obj/item/clothing/suit/witchcape_mint
+	name = "Mint Witch Cape"
+	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "witchcape_mint"

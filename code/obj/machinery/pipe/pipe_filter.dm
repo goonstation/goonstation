@@ -4,23 +4,23 @@
 	..()
 	p_dir = (NORTH|SOUTH|EAST|WEST) ^ turn(dir, 180)
 
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
-	f_gas = unpool(/datum/gas_mixture)
-	f_ngas = unpool(/datum/gas_mixture)
+	f_gas = new /datum/gas_mixture
+	f_ngas = new /datum/gas_mixture
 
 	gasflowlist += src
 
 /obj/machinery/pipefilter/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	if(f_gas)
-		pool(f_gas)
+		qdel(f_gas)
 	if(f_ngas)
-		pool(f_ngas)
+		qdel(f_ngas)
 	..()
 
 /obj/machinery/pipefilter/buildnodes()
@@ -159,12 +159,12 @@
 		src.overlays += image('pipes2.dmi', "filter-spark")
 		sleep(0.6 SECONDS)
 		src.updateicon()
-		return src.attack_hand(user)
-	return src.attack_hand(user)
+		return src.Attackhand(user)
+	return src.Attackhand(user)
 
 // pipefilter interact/topic
 /obj/machinery/pipefilter/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/pipefilter/attack_hand(mob/user as mob)
 /*	if(status & NOPOWER)

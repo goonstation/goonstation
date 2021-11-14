@@ -23,7 +23,10 @@ module.exports = function (grunt) {
   };
 
   var rev = grunt.file.read('revision') || '1';
-  var cdn = 'http://cdn.goonhub.com';
+  rev = rev.replace(/(\r\n|\n|\r)/gm, '');
+	var serverType = grunt.option('servertype') || '';
+	if (serverType === 'main') serverType = '';
+  var cdn = 'https://cdn'+serverType+'.goonhub.com';
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -122,8 +125,8 @@ module.exports = function (grunt) {
         options: {
           replacements: [{
             pattern: /\{\{resource\(\"(.*?)\"\)\}\}/ig,
-            //replacement: cdn + '/$1' + '?cdnrev=' + rev
-            replacement: cdn + '/$1'
+            replacement: cdn + '/$1' + '?v=' + rev
+            //replacement: cdn + '/$1'
           }]
         }
       },
@@ -137,8 +140,8 @@ module.exports = function (grunt) {
         options: {
           replacements: [{
             pattern: /\{\{resource\(\"(.*?)\"\)\}\}/ig,
-            //replacement: cdn + '/$1' + '?cdnrev=' + rev
-            replacement: cdn + '/$1'
+            replacement: cdn + '/$1' + '?v=' + rev
+            //replacement: cdn + '/$1'
           }]
         }
       },
@@ -152,8 +155,8 @@ module.exports = function (grunt) {
         options: {
           replacements: [{
             pattern: /\{\{resource\(\"(.*?)\"\)\}\}/ig,
-            //replacement: cdn + '/$1' + '?cdnrev=' + rev
-            replacement: cdn + '/$1'
+            replacement: cdn + '/$1' + '?v=' + rev
+            //replacement: cdn + '/$1'
           }]
         }
       }

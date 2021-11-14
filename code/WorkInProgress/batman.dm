@@ -346,3 +346,31 @@
 				T.throw_at(tturf, 4, 2)
 		sleep(0.1 SECONDS)
 
+obj/item/batarang
+	name = "Batarang"
+	desc = "A metal boomerang in the shape of a bat, it looks sharp."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "batarang"
+
+	force = 5
+	contraband = 4
+
+	throwforce = 8
+	throw_range = 10
+	throw_speed = 1
+	throw_return = 1
+	hitsound = "sound/impact_sounds/Flesh_Stab_3.ogg"
+	hit_type = DAMAGE_CUT
+
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if (ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			H.changeStatus("weakened", 1 SECONDS)
+			H.force_laydown_standup()
+			take_bleeding_damage(H, null, 10)
+			playsound(src, hitsound, 60, 1)
+
+		else
+			return

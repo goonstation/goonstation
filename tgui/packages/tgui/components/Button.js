@@ -9,7 +9,6 @@ import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
 import { Box } from './Box';
-import { ColorBox } from './ColorBox';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
@@ -27,7 +26,6 @@ export const Button = props => {
     selected,
     tooltip,
     tooltipPosition,
-    tooltipOverrideLong,
     ellipsis,
     compact,
     circular,
@@ -48,7 +46,7 @@ export const Button = props => {
   }
   // IE8: Use a lowercase "onclick" because synthetic events are fucked.
   // IE8: Use an "unselectable" prop because "user-select" doesn't work.
-  return (
+  let buttonContent = (
     <Box
       className={classes([
         'Button',
@@ -96,14 +94,18 @@ export const Button = props => {
       )}
       {content}
       {children}
-      {tooltip && (
-        <Tooltip
-          content={tooltip}
-          overrideLong={tooltipOverrideLong}
-          position={tooltipPosition} />
-      )}
     </Box>
   );
+
+  if (tooltip) {
+    buttonContent = (
+      <Tooltip content={tooltip} position={tooltipPosition}>
+        {buttonContent}
+      </Tooltip>
+    );
+  }
+
+  return buttonContent;
 };
 
 Button.defaultHooks = pureComponentHooks;
@@ -224,14 +226,13 @@ export class ButtonInput extends Component {
       iconSpin,
       tooltip,
       tooltipPosition,
-      tooltipOverrideLong,
       color = 'default',
       placeholder,
       maxLength,
       ...rest
     } = this.props;
 
-    return (
+    let buttonContent = (
       <Box
         className={classes([
           'Button',
@@ -271,29 +272,22 @@ export class ButtonInput extends Component {
             }
           }}
         />
-        {tooltip && (
-          <Tooltip
-            content={tooltip}
-            overrideLong={tooltipOverrideLong}
-            position={tooltipPosition}
-          />
-        )}
       </Box>
     );
+
+    if (tooltip) {
+      buttonContent = (
+        <Tooltip
+          content={tooltip}
+          position={tooltipPosition}
+        >
+          {buttonContent}
+        </Tooltip>
+      );
+    }
+
+    return buttonContent;
   }
 }
 
 Button.Input = ButtonInput;
-
-export const ButtonColor = (props) => {
-  const { color, ...rest } = props;
-
-  return (
-    <Button {...rest}>
-      <ColorBox color={color} mr="5px" />
-      <Box as="code">{color}</Box>
-    </Button>
-  );
-};
-
-Button.Color = ButtonColor;

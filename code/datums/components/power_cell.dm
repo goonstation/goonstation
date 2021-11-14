@@ -4,14 +4,24 @@
 	var/max_charge
 	var/recharge_rate
 	var/cycle = 0
+	var/can_be_recharged
 
-/datum/component/power_cell/Initialize(max = 200, start_charge = 200, recharge = 0)
+TYPEINFO(/datum/component/power_cell)
+	initialization_args = list(
+		ARG_INFO("max", "num", "Maximum cell charge", 200),
+		ARG_INFO("start_charge", "num", "Initial cell charge", 200),
+		ARG_INFO("recharge_rate", "num", "Recharge rate of cell (approx per 5.8 seconds)", 0),
+		ARG_INFO("rechargable", "num", "If the cell can recharged in a recharger", TRUE)
+	)
+
+/datum/component/power_cell/Initialize(max = 200, start_charge = 200, recharge = 0, rechargable = TRUE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 	src.max_charge = max
 	src.charge = start_charge
 	src.recharge_rate = recharge
+	src.can_be_recharged = rechargable
 	if(charge < max_charge && recharge_rate)
 		processing_items |= parent
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
@@ -23,7 +33,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/process)
 
 
-/datum/component/power_cell/InheritComponent(datum/component/power_cell/C, i_am_original, max, start_charge, recharge)
+/datum/component/power_cell/InheritComponent(datum/component/power_cell/C, i_am_original, max, start_charge, recharge, rechargable)
 	if(C)
 		src.max_charge = C.max_charge
 		src.charge = C.charge
@@ -37,13 +47,18 @@
 			src.charge = start_charge
 		if(isnum_safe(recharge))
 			src.recharge_rate = recharge
+		if(isnum_safe(rechargable))
+			src.can_be_recharged = rechargable
 
 
 /datum/component/power_cell/proc/attackby(source, obj/item/I, mob/user)
 	SEND_SIGNAL(I, COMSIG_CELL_TRY_SWAP, parent, user)
 
 /datum/component/power_cell/proc/can_charge()
-	. = CELL_CHARGEABLE
+	if(src.can_be_recharged)
+		. = CELL_CHARGEABLE
+	else
+		. = CELL_UNCHARGEABLE
 
 /datum/component/power_cell/proc/charge(source, amount)
 	if (amount > 0)
@@ -55,16 +70,16 @@
 		. = CELL_FULL
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 
-/datum/component/power_cell/proc/use(source, amount, bypass)
-	if(src.charge >= amount)
+/datum/component/power_cell/proc/use(source, amount)
+	src.charge = max(src.charge - amount, 0)
+	if(src.recharge_rate && amount > 0)
+		processing_items |= parent
+
+
+	if(src.charge > 0) //return sufficient charge if cell is non-empty after drain, insufficient if cell was emptied by the drain
 		. = CELL_SUFFICIENT_CHARGE
 	else
 		. = CELL_INSUFFICIENT_CHARGE
-
-	if(. == CELL_SUFFICIENT_CHARGE || bypass)
-		src.charge = max(src.charge - amount, 0)
-		if(src.recharge_rate && amount > 0)
-			processing_items |= parent
 
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 

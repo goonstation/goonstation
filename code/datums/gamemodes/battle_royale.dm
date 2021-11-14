@@ -41,7 +41,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
-				player.mind.special_role = "battler"
+				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
 	storm = new /datum/random_event/special/battlestorm()

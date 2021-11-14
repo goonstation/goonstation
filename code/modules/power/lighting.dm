@@ -55,7 +55,7 @@
 	#define LIGHTING_POWER_FACTOR 40
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -660,7 +660,7 @@
 	if (issilicon(user) && !isghostdrone(user))
 		return
 		/*if (isghostdrone(user))
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 		else
 			return*/
 
@@ -670,7 +670,7 @@
 	if (istype(W, /obj/item/magtractor))
 		mag = W
 		if (!mag.holding)
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 		else
 			W = mag.holding
 
