@@ -1396,6 +1396,7 @@
 		boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
 
 	attachee.set_body_icon_dirty()
+	attachee.hud.update_hands()
 
 	//qdel(src)
 
@@ -1512,7 +1513,7 @@
 	if (!istype(M)) return
 	var/turf/simulated/simulated = T
 
-	var/msg = "[constructTarget(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
+	var/msg = "[thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
 	if (istype(simulated) && simulated.air.toxins)
 		msg += " Turf contains <b>plasma gas</b>."

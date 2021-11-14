@@ -1295,8 +1295,9 @@
 		..() //spawn the flyers
 
 		for(var/obj/item/gang_flyer/flyer in contents)
-			flyer.name = "[gang.gang_name] recruitment flyer"
-			flyer.desc = "A flyer offering membership in the [gang.gang_name] gang."
+			var/gang_name = gang?.gang_name || "C0D3R"
+			flyer.name = "[gang_name] recruitment flyer"
+			flyer.desc = "A flyer offering membership in the [gang_name] gang."
 			flyer.gang = gang
 
 proc/get_gang_gear(var/mob/living/carbon/human/user)

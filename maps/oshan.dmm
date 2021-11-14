@@ -39702,7 +39702,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bUm" = (
-/obj/table/glass/auto,
+/obj/table/auto,
 /obj/machinery/light/incandescent/warm,
 /obj/item/storage/toolbox/emergency,
 /obj/item/crowbar,

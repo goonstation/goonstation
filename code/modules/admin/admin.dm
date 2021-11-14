@@ -315,7 +315,10 @@ var/global/noir = 0
 					src.auto_alt_key_name = null
 					boutput(usr, "<span class='notice'>Auto Alt Key removed.</span>")
 					return
-
+		if ("set_auto_alias_global_save")
+			if (src.level >= LEVEL_SA)
+				usr.client.holder.auto_alias_global_save = !usr.client.holder.auto_alias_global_save
+				src.show_pref_window(usr)
 		if ("refreshoptions")
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
@@ -4332,9 +4335,6 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
-
-	if (mapSwitcher.locked)
-		return alert("The map switcher is currently compiling the map for next round. You must wait until it finishes.")
 
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")

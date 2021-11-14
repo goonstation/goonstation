@@ -1,6 +1,10 @@
 /datum/component/sniper_wallpierce
 	var/pierces_left = 1 //default to 1 wall
 
+TYPEINFO(/datum/component/sniper_wallpierce)
+	initialization_args = list(
+		ARG_INFO("num_pierces", "num", "number of walls/etc to pierce", 1)
+	)
 /datum/component/sniper_wallpierce/Initialize(var/num_pierces)
 	if(!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE

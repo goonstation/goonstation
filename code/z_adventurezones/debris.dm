@@ -24,7 +24,7 @@
 	icon_state = "wall1"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 
 	var/health = 40
 

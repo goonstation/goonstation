@@ -198,6 +198,8 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/random_api_phrase(category)
 		if(!length(src.cached_api_phrases[category]))
 			var/list/data = apiHandler.queryAPI("random-entries", list("type"=category, "count"=src.api_cache_size), 1, 1, 1)
+			if(!data)
+				return .
 			var/list/new_phrases = list()
 			for(var/list/entry in data["entries"])
 				switch(category)
