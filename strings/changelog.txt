@@ -1,5 +1,9 @@
 
 (t)sun nov 14 21
+(u)Flappybat
+(p)6675
+(e)🐛|bug
+(+)Most damaged and richest escapee now only tracks humans.
 (u)Azrun
 (p)5645
 (e)🎨|sprites
