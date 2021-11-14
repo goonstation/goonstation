@@ -73186,9 +73186,10 @@
 "deQ" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "deR" = (
@@ -75904,11 +75905,6 @@
 "dkI" = (
 /turf/simulated/floor/bot,
 /area/research_outpost/chamber)
-"dkJ" = (
-/obj/machinery/light/runway_light/delay4,
-/obj/lattice,
-/turf/space,
-/area/space)
 "dkK" = (
 /obj/cable{
 	d1 = 1;
@@ -78093,8 +78089,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "dwo" = (
-/obj/machinery/light/runway_light/delay5,
 /obj/lattice,
+/obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
 "dHM" = (
@@ -78335,8 +78331,9 @@
 "frf" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
+/obj/access_spawn/research,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
 "fuP" = (
@@ -78744,9 +78741,10 @@
 "iNK" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/access_spawn/research,
 /turf/simulated/floor,
 /area/research_outpost)
 "iPv" = (
@@ -79738,8 +79736,9 @@
 "pOS" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/research_outpost)
 "pTS" = (
@@ -80037,7 +80036,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
 "sEu" = (
@@ -80223,8 +80222,9 @@
 "twN" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	req_access_txt = "31"
+	req_access_txt = null
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/station/hangar/science)
 "tAc" = (
@@ -80249,11 +80249,10 @@
 /turf/simulated/floor/bot,
 /area/station/science/teleporter)
 "tAg" = (
-/obj/machinery/light/runway_light/delay2,
+/obj/machinery/light/runway_light/delay3,
 /obj/lattice{
 	dir = 6;
-	icon_state = "lattice-dir";
-	tag = "icon-lattice-dir (SOUTHEAST)"
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/space)
@@ -80316,17 +80315,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"tHB" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir-b"
-	},
-/obj/machinery/light/runway_light/delay2,
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "tHH" = (
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
@@ -89607,12 +89595,12 @@ dii
 aab
 tAg
 qgX
+dhc
+dhv
+aef
+adw
 qgX
-qgX
-qgX
-qgX
-qgX
-dbt
+szZ
 aaa
 aaa
 aaa
@@ -91417,14 +91405,14 @@ dlZ
 dmn
 dii
 aab
-bps
+bpt
 qgX
+dhc
+dhv
+aef
+adw
 qgX
-qgX
-qgX
-qgX
-qgX
-dbt
+szZ
 aaa
 aaa
 aaa
@@ -106471,14 +106459,14 @@ del
 deN
 dfv
 dfN
-dkJ
+dwo
+adw
+qgX
+dhc
+dhv
 aef
-aef
-aef
-aef
-aef
-aef
-aef
+adw
+qgX
 szZ
 aaa
 aaa
@@ -108284,13 +108272,13 @@ den
 deP
 dfP
 dwo
+adw
+qgX
+dhc
+dhv
 aef
 adw
-tHB
-aef
-aef
-aef
-aef
+qgX
 szZ
 aaa
 aaa
