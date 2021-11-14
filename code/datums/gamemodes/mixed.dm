@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF)
+	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF)
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -50,6 +50,7 @@
 	var/num_blobs = 0
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
+	var/num_arcfiends = 0
 #ifdef XMAS
 	src.traitor_types += ROLE_GRINCH
 	src.latejoin_antag_roles += ROLE_GRINCH
@@ -74,6 +75,11 @@
 				if(ROLE_GRINCH) num_grinches++
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
+				if(ROLE_ARCFIEND)
+					if(num_arcfiends < 2)
+						num_arcfiends++
+					else
+						num_traitors++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -119,6 +125,10 @@
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_WEREWOLF
+			if(ROLE_ARCFIEND)
+				traitors += tplayer
+				token_players.Remove(tplayer)
+				tplayer.special_role = ROLE_ARCFIEND
 
 		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
@@ -195,6 +205,14 @@
 			traitors += wolf
 			wolf.special_role = ROLE_WEREWOLF
 			possible_werewolves.Remove(wolf)
+
+	if(num_arcfiends)
+		var/list/possible_arcfiends = get_possible_enemies(ROLE_ARCFIEND,num_arcfiends)
+		var/list/chosen_arcfiends = antagWeighter.choose(pool = possible_arcfiends, role = ROLE_ARCFIEND, amount = num_arcfiends, recordChosen = 1)
+		for (var/datum/mind/arcfiend in chosen_arcfiends)
+			traitors += arcfiend
+			arcfiend.special_role = ROLE_ARCFIEND
+			possible_arcfiends.Remove(arcfiend)
 
 	if(!traitors) return 0
 
@@ -300,6 +318,14 @@
 				objective_set_path = /datum/objective_set/werewolf
 				traitor.current.make_werewolf()
 
+			if (ROLE_ARCFIEND) // TODO: EV objectives
+			#ifdef RP_MODE
+				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+			#else
+				objective_set_path = pick(typesof(/datum/objective_set/traitor))
+			#endif
+				traitor.current.make_arcfiend()
+
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)
 		var/obj_count = 1
@@ -309,56 +335,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/mixed/proc/get_possible_enemies(type,number)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			switch(type)
-				if(ROLE_WIZARD)
-					if(player.client.preferences.be_wizard) candidates += player.mind
-				if(ROLE_TRAITOR)
-					if(player.client.preferences.be_traitor) candidates += player.mind
-				if(ROLE_CHANGELING)
-					if(player.client.preferences.be_changeling) candidates += player.mind
-				if(ROLE_VAMPIRE)
-					if(player.client.preferences.be_vampire) candidates += player.mind
-				if(ROLE_WRAITH)
-					if(player.client.preferences.be_wraith) candidates += player.mind
-				if(ROLE_BLOB)
-					if(player.client.preferences.be_blob) candidates += player.mind
-				if(ROLE_SPY_THIEF)
-					if(player.client.preferences.be_spy) candidates += player.mind
-				if(ROLE_WEREWOLF)
-					if(player.client.preferences.be_werewolf) candidates += player.mind
-				else
-					if(player.client.preferences.be_misc) candidates += player.mind
-
-	if(candidates.len < number)
-		if(type in list(ROLE_WIZARD, ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH, ROLE_BLOB, ROLE_WEREWOLF))
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
-		else
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
-
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-				if ((number > 1) && (candidates.len >= number))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/mixed/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

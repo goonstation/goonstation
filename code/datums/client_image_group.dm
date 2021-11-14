@@ -1,6 +1,3 @@
-#define CLIENT_IMAGE_GROUP_ARREST_ICONS "arrest_icons"
-#define CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS "health_mon_icons"
-
 var/global/list/datum/client_image_group/client_image_groups
 
 /datum/client_image_group
@@ -43,8 +40,8 @@ var/global/list/datum/client_image_group/client_image_groups
 	proc/add_mob(mob/added_mob)
 		subscribed_mobs_with_subcount[added_mob] += 1
 		if (subscribed_mobs_with_subcount[added_mob] == 1) // mob added for the first time, adding images to client and registering signals
-			for (var/image/I in images)
-				if (!I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
+			for (var/image/I as() in images)
+				if (I.loc && !I.loc.invisibility || (I.loc == added_mob) || istype(added_mob, /mob/dead/observer))
 					added_mob.client?.images.Add(I)
 
 			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/add_images_to_client_of_mob)
@@ -64,8 +61,8 @@ var/global/list/datum/client_image_group/client_image_groups
 	/// Registered on MOB_LOGIN, when a client enters the mob adds the images to it.
 	proc/add_images_to_client_of_mob(mob/target_mob)
 		PRIVATE_PROC(TRUE)
-		for (var/image/I in images)
-			if (!I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
+		for (var/image/I as() in images)
+			if (I.loc && !I.loc.invisibility || (I.loc == target_mob) || istype(target_mob, /mob/dead/observer))
 				target_mob.client?.images.Add(I)
 
 	/// Registered on MOB_LOGOUT, when a client leaves the mob removes the images from it.

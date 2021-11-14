@@ -954,7 +954,7 @@ CONTAINS:
 
 			else if (istype(tool, /obj/item/material_piece/cloth))
 				ownerMob.u_equip(tool)
-				pool(tool)
+				qdel(tool)
 
 /* =================================================== */
 /* -------------------- Blood Bag -------------------- */
@@ -1184,7 +1184,7 @@ CONTAINS:
 			src.overlays -= src.open_image
 			src.icon_state = "bodybag"
 			src.w_class = W_CLASS_TINY
-			src.attack_hand(usr)
+			src.Attackhand(usr)
 
 	proc/open()
 		playsound(src, src.sound_zipper, 100, 1, , 6)

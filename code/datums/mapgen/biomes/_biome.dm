@@ -11,12 +11,21 @@
 	///list of type paths of mobs that can be spawned when the turf spawns fauna. Syntax: list(type = weight)
 	var/list/fauna_types = list()
 
+var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
+
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf)
 	gen_turf.ReplaceWith(turf_type)
+
 	if(length(fauna_types) && prob(fauna_density))
 		var/mob/fauna = weighted_pick(fauna_types)
 		new fauna(gen_turf)
+
+	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
+	if(gen_turf.z == Z_LEVEL_STATION)
+		for(var/bad_area in blacklist_flora_gen)
+			if(istype(gen_turf.loc, bad_area))
+				return
 
 	if(length(flora_types) && prob(flora_density))
 		var/obj/structure/flora = weighted_pick(flora_types)
@@ -25,6 +34,33 @@
 /datum/biome/mudlands
 	turf_type = /turf/unsimulated/floor/auto/dirt
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_density = 3
+
+/datum/biome/desert
+	turf_type = /turf/unsimulated/floor/auto/sand
+	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
+	flora_density = 1
+
+/datum/biome/snow
+	turf_type = /turf/unsimulated/floor/auto/snow
+	flora_types = list(/obj/stone/snow/random = 100, /obj/decal/fakeobjects/smallrocks = 100, /obj/shrub/snow/random = 100, /obj/stone/random = 5)
+	flora_density = 2
+
+/datum/biome/snow/rocky
+	turf_type = /turf/unsimulated/floor/auto/snow
+	flora_types = list(/obj/stone/snow/random = 100, /obj/stone/random = 20, /obj/decal/fakeobjects/smallrocks = 20)
+	flora_density = 5
+
+/datum/biome/snow/forest
+	flora_types = list(/obj/tree1/snow_random = 50, /obj/shrub/snow/random = 100, /obj/stone/snow/random = 10, /obj/decal/fakeobjects/smallrocks = 5)
+	flora_density = 20
+
+/datum/biome/snow/forest/thick
+	flora_density = 30
+
+/datum/biome/snow/rough
+	turf_type = /turf/unsimulated/floor/auto/snow/rough
+	flora_types = list(/obj/stone/snow/random = 100, /obj/decal/fakeobjects/smallrocks = 50, /obj/stone/random = 5)
 	flora_density = 3
 
 /datum/biome/plains
@@ -45,6 +81,15 @@
 
 /datum/biome/water
 	turf_type = /turf/unsimulated/floor/auto/swamp
+
+/datum/biome/water/clear
+	turf_type = /turf/unsimulated/floor/auto/water
+
+/datum/biome/water/ice
+	turf_type = /turf/unsimulated/floor/auto/water/ice
+
+/datum/biome/water/ice/rough
+	turf_type = /turf/unsimulated/floor/auto/water/ice/rough
 
 /datum/biome/mountain
 	turf_type = /turf/simulated/wall/asteroid/mountain

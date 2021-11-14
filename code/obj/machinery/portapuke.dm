@@ -146,9 +146,11 @@
 				return
 
 			if (L.pulling == target)
-				L.pulling = null
+				L.remove_pulling()
 
 			src.add_fingerprint(user)
+			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
+			logTheThing("combat", user, target, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
 			src.update_icon()
 			qdel(G)

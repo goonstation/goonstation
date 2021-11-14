@@ -22,7 +22,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend")
 		if (!type)
 			return
 		else
@@ -170,7 +170,6 @@
 		var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 		var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-		var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
 		var/failed = 0
 
 		switch (src.antagonist_type)
@@ -219,7 +218,7 @@
 				if (R && istype(R))
 					M3 = R
 					R.unequip_all(1)
-					equip_wizard(R)
+					equip_wizard(R, 1)
 					send_to = 2
 					role = ROLE_WIZARD
 					objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
@@ -313,10 +312,22 @@
 				else
 					failed = 1
 
+			if ("Arcfiend")
+				var/mob/living/L = M3.humanize()
+				if (istype(L))
+					L.make_arcfiend()
+					role = ROLE_ARCFIEND
+#ifdef RP_MODE
+					objective_path = /datum/objective_set/traitor/rp_friendly
+#else
+					objective_path = /datum/objective_set/traitor
+#endif
+				else
+					failed = 1
 			else
 				failed = 1
 
-		if (!ASLoc && !WSLoc)
+		if (!ASLoc)
 			failed = 1
 
 		if (failed != 0)
@@ -353,10 +364,11 @@
 				else
 					M3.set_loc(ASLoc)
 			if (2)
-				if (!WSLoc)
+				if (!job_start_locations["wizard"])
+					boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 					M3.set_loc(ASLoc)
 				else
-					M3.set_loc(WSLoc)
+					M3.set_loc(pick(job_start_locations["wizard"]))
 			if (3)
 				M3.set_loc(ASLoc)
 		//nah

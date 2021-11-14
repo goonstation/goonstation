@@ -2,15 +2,16 @@
 	name = "Throw"
 	desc = "Spin a grabbed opponent around and throw them."
 	icon_state = "throw"
-	targeted = 1
-	target_anything = 0
-	target_nodamage_check = 0
-	target_selection_check = 0
+	targeted = TRUE
+	target_anything = FALSE
+	target_nodamage_check = FALSE
+	target_selection_check = FALSE
 	max_range = 1
 	cooldown = 300
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	when_stunned = FALSE
+	not_when_handcuffed = TRUE
+	werewolf_only = TRUE
 	//throw mostly stolen from macho man. Doesn't spin as fast and doesn't deal with grabs, it's just a targetable ability.
 	cast(mob/target)
 		if (!holder)

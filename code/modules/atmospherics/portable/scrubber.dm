@@ -26,7 +26,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/removed)
 	//Filter it
-	var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 	if (filtered_out && removed)
 		filtered_out.temperature = removed.temperature
 		#define _FILTER_OUT_GAS(GAS, ...) \
@@ -133,7 +133,7 @@
 /obj/machinery/portable_atmospherics/scrubber/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
 

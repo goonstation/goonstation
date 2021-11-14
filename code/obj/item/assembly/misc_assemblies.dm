@@ -222,7 +222,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
@@ -439,7 +439,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
@@ -616,7 +616,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state()
 		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")

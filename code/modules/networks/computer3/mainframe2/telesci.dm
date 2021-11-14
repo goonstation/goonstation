@@ -1000,7 +1000,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				if (updateReadout)
 					M << output(url_encode(src.readout), "t_computer.browser:updateReadout")
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr) || isAIeye(usr))
 			if (!(usr in nearby))

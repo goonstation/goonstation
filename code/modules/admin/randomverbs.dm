@@ -379,8 +379,8 @@
 		// More info would be nice (Convair880).
 		var/dat = ""
 		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(whois_ckey_to_mob_reference(S.mind.master)))
-				dat += "<br>[S] is a vampire's thrall, only obeying [whois_ckey_to_mob_reference(S.mind.master)]."
+			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(ckey_to_mob(S.mind.master)))
+				dat += "<br>[S] is a vampire's thrall, only obeying [ckey_to_mob(S.mind.master)]."
 			else
 				if (isAI(S)) continue // Rogue AIs modify the global lawset.
 				if (S.mind && !S.dependent)
@@ -685,6 +685,14 @@
 	admin_only
 
 	src.holder.viewPlayerNotes(ckey(target))
+
+/client/proc/cmd_admin_set_loginnotice(target as text)
+	set name = "Set Player LoginNotice"
+	set desc = "Change a player's login notice."
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+
+	src.holder.setLoginNotice(ckey(target))
 
 /client/proc/cmd_admin_polymorph(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1144,18 +1152,18 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!adventure_view || mob.see_invisible < 21)
+	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
-		mob.see_invisible = 21
+		mob.see_invisible = INVIS_ADVENTURE
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = 16 // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
-			mob.see_invisible = 0 // it'll sort itself out on the next Life() tick anyway
+			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
@@ -1477,7 +1485,7 @@
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1)
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P
@@ -2296,7 +2304,7 @@ var/global/night_mode_enabled = 0
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
 		return 0
 	if(isdead(M))
-		M.invisibility = 0
+		M.invisibility = INVIS_NONE
 	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
 
 	var/turf/targetLoc = src.mob.loc
@@ -2451,16 +2459,19 @@ var/global/night_mode_enabled = 0
 		if (!medal)
 			return
 
+	var/revoke = (alert(src, "Mass grant or revoke medals?", "Mass grant/revoke", "Grant", "Revoke") == "Revoke")
 	var/key = input("Enter player key", "Player key", null) as null|text
-	var/mob/M = new /mob
 	while(key)
-		M.key = key
-		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
+		var/player = ckey(key)
+		var/result
+		if (revoke)
+			result = world.ClearMedal(medal, player, config.medal_hub, config.medal_password)
+		else
+			result = world.SetMedal(medal, player, config.medal_hub, config.medal_password)
 		if (isnull(result))
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
 		key = input("Enter player key", "Player key", null) as null|text
-	qdel(M)
 
 /client/proc/copy_medals(var/old_key as null|text, var/new_key as null|text)
 	set name = "Copy Medals"
@@ -2718,125 +2729,6 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 
 			if("No")
 				return
-	else
-		boutput(src, "You must be at least an Administrator to use this command.")
-
-
-/client/proc/cmd_swampify_station()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Swampify"
-	set desc = "Turns space into a swamp"
-	admin_only
-	var/const/ambient_light = "#222222"
-#ifdef UNDERWATER_MAP
-	//to prevent tremendous lag from the entire map flooding from a single ocean tile.
-	boutput(src, "You cannot use this command on underwater maps. Sorry!")
-	return
-#else
-	if(src.holder.level >= LEVEL_ADMIN)
-		switch(alert("Turn space into a swamp? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
-			if("Yes")
-				var/rain = alert("Should it be raining?",,"Yes", "No", "Particles!")
-				rain = (rain == "No") ? null : rain
-				var/image/weather = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				weather.alpha = 200
-				weather.plane = PLANE_NOSHADOW_ABOVE
-				var/image/I = new /image/ambient
-				var/datum/map_generator/jungle_generator/map_generator = new
-				var/list/space = list()
-				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-					space += S
-				map_generator.generate_terrain(space)
-				for (var/turf/S in space)
-					if(rain)
-						if(istype(S,/turf/unsimulated/floor/auto/swamp))
-							S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
-						if(rain == "Yes")
-							S.UpdateOverlays(weather, "rain")
-						else
-							new /obj/effects/rain/sideways/tile(S)
-					I.color = ambient_light
-					S.UpdateOverlays(I, "ambient")
-				shippingmarket.clear_path_to_market()
-
-				logTheThing("admin", src, null, "turned space into a swamp.")
-				logTheThing("diary", src, null, "turned space into a swamp.", "admin")
-				message_admins("[key_name(src)] turned space into a swamp.")
-	else
-		boutput(src, "You must be at least an Administrator to use this command.")
-#endif
-
-/client/proc/cmd_trenchify_station()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Trenchify"
-	set desc = "Generates trench caves on the station Z"
-	admin_only
-	if(src.holder.level >= LEVEL_ADMIN)
-		switch(alert("Generate a trench on the station Z level? This is probably going to lag a bunch when it happens and there's no easy undo!",,"Yes","No"))
-			if("Yes")
-				var/hostile_mob_toggle = FALSE
-				if(alert("Include hostile mobs?",,"Yes","No")=="Yes") hostile_mob_toggle = TRUE
-
-				boutput(src, "Now generating trench, pleast wait.")
-
-				var/turf/T1 = locate(1 + AST_MAPBORDER, 1 + AST_MAPBORDER, Z_LEVEL_STATION)
-				var/turf/T2 = locate(world.maxx - AST_MAPBORDER, world.maxy - AST_MAPBORDER, Z_LEVEL_STATION)
-
-				var/datum/mapGenerator/seaCaverns/seaCaverns = new()
-				seaCaverns.generate(block(T1, T2), Z_LEVEL_STATION, FALSE)
-
-				for(var/turf/space/space_turf in block(T1, T2))
-					if (istype(space_turf.loc, /area/shuttle)) continue
-					space_turf.ReplaceWith(/turf/space/fluid/trench)
-
-					if (prob(1))
-						new /obj/item/seashell(space_turf)
-
-					if (prob(8))
-						var/obj/plant = pick(childrentypesof(/obj/sea_plant))
-						var/obj/sea_plant/P = new plant(space_turf)
-						P.initialize()
-
-					if(hostile_mob_toggle)
-						if (prob(1) && prob(2))
-							new /obj/critter/gunbot/drone/buzzdrone/fish(space_turf)
-						else if (prob(1) && prob(4))
-							new /obj/critter/gunbot/drone/gunshark(space_turf)
-						else if (prob(1) && prob(20))
-							var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
-							new fish(space_turf)
-						else if (prob(1) && prob(9) && prob(90))
-							var/obj/naval_mine/O = 0
-							if (prob(20))
-								if (prob(70))
-									O = new /obj/naval_mine/standard(space_turf)
-								else
-									O = new /obj/naval_mine/vandalized(space_turf)
-							else
-								O = new /obj/naval_mine/rusted(space_turf)
-							if (O)
-								O.initialize()
-
-						if (prob(2) && prob(25))
-							new /obj/overlay/tile_effect/cracks/spawner/trilobite(space_turf)
-						if (prob(2) && prob(25))
-							new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
-
-						if (prob(1) && prob(16))
-							new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
-						else if (prob(1) && prob(18))
-							new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
-
-					if (prob(1) && prob(9))
-						var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
-						var/obj/storage/crate/trench_loot/created_loot = new C(space_turf)
-						created_loot.initialize()
-
-					LAGCHECK(LAG_MED)
-				shippingmarket.clear_path_to_market()
-				logTheThing("admin", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
-				logTheThing("diary", src, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
-				message_admins("[key_name(src)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 

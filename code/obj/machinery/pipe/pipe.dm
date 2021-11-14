@@ -7,16 +7,16 @@ var/linenums = 0
 /obj/machinery/pipeline/New()
 	..()
 
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
 	gasflowlist += src
 
 /obj/machinery/pipeline/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 // find the pipeline that contains the /obj/machine (including pipe)
@@ -344,11 +344,11 @@ var/linenums = 0
 		is += "-b"
 
 	if ((src.level == 1 && isturf(src.loc) && T.intact))
-		src.invisibility = 101
+		src.invisibility = INVIS_ALWAYS
 		is += "-f"
 
 	else
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 
 	src.icon_state = is
 
@@ -686,11 +686,11 @@ var/linenums = 0
 
 /obj/machinery/circulator/New()
 	..()
-	gas1 = unpool(/datum/gas_mixture)
-	gas2 = unpool(/datum/gas_mixture)
+	gas1 = new /datum/gas_mixture
+	gas2 = new /datum/gas_mixture
 
-	ngas1 = unpool(/datum/gas_mixture)
-	ngas2 = unpool(/datum/gas_mixture)
+	ngas1 = new /datum/gas_mixture
+	ngas2 = new /datum/gas_mixture
 
 	gasflowlist += src
 
@@ -700,13 +700,13 @@ var/linenums = 0
 
 /obj/machinery/circulator/disposing()
 	if(gas1)
-		pool(gas1)
+		qdel(gas1)
 	if(gas2)
-		pool(gas2)
+		qdel(gas2)
 	if(ngas1)
-		pool(ngas1)
+		qdel(ngas1)
 	if(ngas2)
-		pool(ngas2)
+		qdel(ngas2)
 	..()
 
 /obj/machinery/circulator/buildnodes()
@@ -1113,15 +1113,15 @@ var/linenums = 0
 
 	..()
 	p_dir = dir
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 	gasflowlist += src
 
 /obj/machinery/vent/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/vent/buildnodes()
@@ -1205,15 +1205,15 @@ var/linenums = 0
 	..()
 
 	p_dir = dir
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 	gasflowlist += src
 
 /obj/machinery/inlet/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/inlet/buildnodes()
@@ -1582,7 +1582,7 @@ var/linenums = 0
 		flow_to_turf(gas2, ngas2, T)
 
 /obj/machinery/valve/dvalve/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/valve/dvalve/attack_hand(mob/user)
 	..()
@@ -1729,14 +1729,14 @@ var/linenums = 0
 
 /obj/machinery/inlet/filter/New()
 	..()
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
 /obj/machinery/inlet/filter/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/inlet/filter/buildnodes()

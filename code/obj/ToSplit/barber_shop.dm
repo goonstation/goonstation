@@ -328,7 +328,7 @@
 		return
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & BROKEN)
@@ -401,7 +401,7 @@
 			src.add_fingerprint(usr)
 			for(var/mob/M in viewers(1, src))
 				if (M.using_dialog_of(src))
-					src.attack_hand(M)
+					src.Attackhand(M)
 		else
 			usr.Browse(null, "window=dye_dispenser")
 			return

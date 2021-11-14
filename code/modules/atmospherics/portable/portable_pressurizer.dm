@@ -159,7 +159,7 @@
 		else if(material_progress < 100)
 			process_materials = PROCESS_ACTIVE
 			var/progress = min(src.process_rate * 5,100-material_progress)
-			var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/GM = new /datum/gas_mixture
 			GM.temperature = T20C
 			if(target_material.material?.name in src.whitelist)
 				switch(target_material.material.name)
@@ -291,20 +291,22 @@
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))
 			if(T.air)
+				// Use temporary gas mixture to not dispose air_contents through merge
+				var/datum/gas_mixture/temp = air_contents.remove_ratio(1)
 				if(T.parent?.group_processing)
-					T.parent.air.merge(src.air_contents)
+					T.parent.air.merge(temp)
 				else
 					var/count = length(T.parent?.members)
 					if(count)
 						if(count>1)
-							src.air_contents = src.air_contents.remove_ratio(count-1/count)
+							temp = temp.remove_ratio(1/count)
 						var/datum/gas_mixture/GM
 						for(var/turf/simulated/MT as() in T.parent.members)
-							GM = unpool(/datum/gas_mixture)
-							GM.copy_from(src.air_contents)
+							GM = new /datum/gas_mixture
+							GM.copy_from(temp)
 							MT.assume_air(GM)
 					else
-						T.assume_air(src.air_contents)
+						T.assume_air(temp)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
 				for(var/mob/living/HH in range(8, src))

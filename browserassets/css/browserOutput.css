@@ -145,6 +145,41 @@ img.emoji {
 }
 #options .decreaseFont {border-top: 0;}
 
+/* TOOLTIPS */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 50%;
+	white-space: nowrap;
+}
+
+.tooltip .tooltiptext::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color:#555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
 /* POPUPS */
 .popup {
 	position: fixed;
@@ -290,6 +325,7 @@ img.emoji {
 .medal {color: #808000;}
 .combat {color: #ff0000;}
 .say {}
+.sing {color: #B87AB8;}
 .blobsay {color: #226622;}
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
@@ -423,6 +459,7 @@ body.theme-dark .gfartooc {color: #60c4e6;}
 body.theme-dark .gfartlooc {color: #92cbdf;}
 body.theme-dark .gfartadmin {color: #c2953c;}
 body.theme-dark .combat {color: #e20000;}
+body.theme-dark .sing {color: #D8BFD8;}
 body.theme-dark .blobsay {color: #4ec44e;}
 body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}

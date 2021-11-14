@@ -12,10 +12,14 @@
 	var/see_mentor_pms = 1
 	/// to make sure that they cant escape being shamecubed by just reconnecting
 	var/shamecubed = 0
-	/// how many rounds theyve declared ready and joined, null with to differentiate between not set and no participation
+	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
 	var/rounds_participated = null
-	/// how many rounds theyve joined to at least the lobby in, null to differentiate between not set and not seen
+	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
+	var/rounds_participated_rp = null
+	/// how many rounds (total) theyve joined to at least the lobby in, null to differentiate between not set and not seen
 	var/rounds_seen = null
+	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
+	var/rounds_seen_rp = null
 	/// a list of cooldowns that has to persist between connections
 	var/list/cooldowns = null
 	/// position of client in in global.clients
@@ -65,32 +69,37 @@
 		if (!response)
 			return 0
 		src.rounds_participated = text2num(response["participated"])
+		src.rounds_participated_rp= text2num(response["participated_rp"])
 		src.rounds_seen = text2num(response["seen"])
+		src.rounds_seen_rp = text2num(response["seen_rp"])
 		return 1
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats()
-		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen))) //if the stats havent been cached yet
+		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp))) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		else
-			return list("participated" = src.rounds_participated, "seen" = src.rounds_seen)
+		return list("participated" = src.rounds_participated, "seen" = src.rounds_seen, "participated_rp" = src.rounds_participated_rp, "seen_rp" = src.rounds_seen_rp)
 
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
 		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		else
-			return src.rounds_participated
+		return src.rounds_participated
+
+	proc/get_rounds_participated_rp()
+		if (isnull(src.rounds_participated_rp)) //if the stats havent been cached yet
+			if (!src.cache_round_stats()) //if trying to set them fails
+				return null
+		return src.rounds_participated_rp
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
 		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		else
-			return src.rounds_seen
+		return src.rounds_seen
 
 	/// sets the join time to the current server time, in 1/10ths of a second
 	proc/log_join_time()
@@ -115,10 +124,18 @@
 			return FALSE
 		clouddata[key] = "[value]"
 
+#ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
 		request.begin_async()
+#else
+		// dev server, save to a local save file instead to simulate clouddata
+		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+		// need to wrap the clouddata within index named cdata
+		var/list/wrapper = list(cdata = clouddata)
+		simulated_cloud["[ckey]"] << json_encode(wrapper)
+#endif
 		return TRUE // I guess
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
@@ -128,10 +145,16 @@
 			return FALSE
 		data[key] = "[value]"
 
+#ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
 		request.begin_async()
+#else
+		// dev server, save to a local save file instead to simulate clouddata
+		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+		simulated_cloud["[ckey(target)]"] << json_encode(data)
+#endif
 		return TRUE // I guess
 
 	/// Returns some cloud data on the client
@@ -169,12 +192,13 @@
 
 	/// Returns cloud data and saves from goonhub for the target ckey in list form
 	proc/cloud_fetch_target_ckey(target)
+#ifdef LIVE_SERVER
 		if(!cdn) return
 		target = ckey(target)
 		if (!target) return
 
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[target]&api_key=[config.ircbot_api]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -189,6 +213,18 @@
 			return
 		else
 			return ret
+#else
+		// local dev server, use a save file to simulate cloud
+		if (!target) return
+		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+		var/data
+		simulated_cloud["[ckey(target)]"] >> data
+		if (data)
+			return json_decode(data)
+		else
+			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
+			return list(cdata = list())
+#endif
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

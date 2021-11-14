@@ -91,9 +91,14 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		if (prob(50))
 			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
 			qdel(src)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
 
 	proc/speak(var/message)
 		if (!message)
@@ -124,3 +129,8 @@
 	name = "cardboard box - 'Clown'"
 	desc = "Much like a real clown car, it's more spacious on the inside. Must be, to fit the clown."
 	face = "clown"
+
+/obj/item/clothing/suit/cardboard_box/ai
+	name = "cardboard box - 'AI'"
+	desc = "It can probably still open doors!"
+	face = "ai"

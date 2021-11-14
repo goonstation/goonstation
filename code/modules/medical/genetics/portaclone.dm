@@ -52,4 +52,4 @@
 				src.add_fingerprint(user)
 
 	attack_hand(mob/user as mob)
-		return computer.attack_hand(user)
+		return computer.Attackhand(user)

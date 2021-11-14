@@ -2,6 +2,7 @@
 	name = "turtle"
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon_state = "turtle"
+	var/base_icon_state = "turtle"		//I added this in a poor attempt to add costumes for sylvester and decided not to go with it, but it could be useful for handling other turtle types later on so I'll leave it.
 	density = 1
 	health = 100
 	aggressive = 0
@@ -22,10 +23,18 @@
 	var/rigged = FALSE
 	var/rigger = null
 	var/exploding = FALSE
+	var/costume_name = null
+	var/image/costume_alive = null
+	var/image/costume_shell = null
+	var/image/costume_dead = null
 
 	New(loc)
 		. = ..()
 		START_TRACKING
+		if (costume_name)
+			costume_alive = image(src.icon, "[costume_name]")
+			costume_shell = image(src.icon, "[costume_name]-shell")
+			costume_dead = image(src.icon, "[costume_name]-dead")
 
 	disposing()
 		. = ..()
@@ -148,7 +157,11 @@
 
 		brutevuln = 0.2
 		firevuln = 0.5
-		icon_state = "turtle-shell"
+
+		icon_state = "[base_icon_state]-shell"
+		if (costume_name)
+			src.UpdateOverlays(costume_shell, "costume")
+
 		density = 0
 
 		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
@@ -162,7 +175,10 @@
 
 		brutevuln = 0.7
 		firevuln = 1
-		icon_state = "turtle"
+		icon_state = base_icon_state
+		if (costume_name)
+			src.UpdateOverlays(costume_alive, "costume")
+
 		density = 1
 
 		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
@@ -217,7 +233,13 @@
 	var/obj/item/wearing_beret = 0	//Don't really need this var, but I like it better than checking contents every time we wanna see if he's got the beret
 	var/search_frequency = 30	//number of cycles between searches
 	var/preferred_hat = /obj/item/clothing/head/hos_hat 	//if this is not null then the only hat type he will wear is this path.
+	#ifdef HALLOWEEN
+	costume_name = "sylv_costume_1"
+	#endif
 
+	New()
+		..()
+		update_icon()
 	ai_think()
 		..()
 		//find clown
@@ -242,6 +264,9 @@
 			. += "<br>[src] is wearing an adorable beret!."
 		else
 			. += "<br>[src] looks cold without some sort of hat on."
+
+		if (src.costume_name)
+			. += "And he's wearing an adorable costume! Wow!"
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, preferred_hat))
@@ -280,18 +305,18 @@
 	CritterDeath()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-dead-beret"
+			src.icon_state = "[base_icon_state]-dead-beret"
 		else
-			src.icon_state = "turtle-dead"
+			src.icon_state = "[base_icon_state]-dead"
 
 		update_icon()
 
 	on_revive()
 		..()
 		if (src.wearing_beret)
-			src.icon_state = "turtle-beret"
+			src.icon_state = "[base_icon_state]-beret"
 		else
-			src.icon_state = "turtle"
+			src.icon_state = base_icon_state
 
 		update_icon()
 
@@ -381,21 +406,26 @@
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-beret"
+					src.icon_state = "[base_icon_state]-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-beret-com"
+					src.icon_state = "[base_icon_state]-beret-com"
 
 			else
-				src.icon_state = "turtle"
+				src.icon_state = base_icon_state
+			if (costume_name)
+				src.UpdateOverlays(costume_alive, "costume")
+
 		else
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))
-					src.icon_state = "turtle-dead-beret"
+					src.icon_state = "[base_icon_state]-dead-beret"
 				else if (istype(wearing_beret, /obj/item/clothing/head/NTberet/commander))
-					src.icon_state = "turtle-dead-beret-com"
+					src.icon_state = "[base_icon_state]-dead-beret-com"
 
 			else
-				src.icon_state = "turtle-dead"
+				src.icon_state = "[base_icon_state]-dead"
+			if (costume_name)
+				src.UpdateOverlays(costume_dead, "costume")
 
 //Starts with the beret on!
 /obj/critter/turtle/sylvester/HoS
@@ -417,6 +447,7 @@
 
 /obj/critter/turtle/sylvester/Commander
 	icon_state = "turtle-beret-com"
+
 	preferred_hat = /obj/item/clothing/head/NTberet/commander 	//if this is not null then the only hat type he will wear is this path.
 
 	New()

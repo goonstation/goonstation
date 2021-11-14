@@ -53,15 +53,19 @@
 			if (owner.hand)
 				arm_type = owner.limbs.r_arm.type
 				owner.limbs.r_arm.delete()
+				owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 			else
 				arm_type = owner.limbs.l_arm.type
 				owner.limbs.l_arm.delete()
+				owner.changeStatus("c_regrow-l_arm", 75 SECONDS)
 		else if (owner.limbs.l_arm)
 			arm_type = owner.limbs.l_arm.type
 			owner.limbs.l_arm.delete()
+			owner.changeStatus("c_regrow-l_arm", 75 SECONDS)
 		else
 			arm_type = owner.limbs.r_arm.type
 			owner.limbs.r_arm.delete()
+			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
@@ -152,12 +156,16 @@
 		if (owner.organHolder.left_eye && owner.organHolder.right_eye) // if both eyes are available, pick one at random
 			if (prob(50))
 				qdel(owner.drop_organ("left_eye"))
+				owner.changeStatus("c_regrow-l_eye", 40 SECONDS)
 			else
 				qdel(owner.drop_organ("right_eye"))
+				owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 		else if (owner.organHolder.left_eye)
 			qdel(owner.drop_organ("left_eye"))
+			owner.changeStatus("c_regrow-l_eye", 40 SECONDS)
 		else
 			qdel(owner.drop_organ("right_eye"))
+			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
@@ -245,12 +253,16 @@
 		if (owner.limbs.l_leg && owner.limbs.r_leg) //remove leg opposite of active hand
 			if (owner.hand)
 				owner.limbs.r_leg.delete()
+				owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 			else
 				owner.limbs.l_leg.delete()
+				owner.changeStatus("c_regrow-l_leg", 75 SECONDS)
 		else if (owner.limbs.l_leg)
 			owner.limbs.l_leg.delete()
+			owner.changeStatus("c_regrow-l_leg", 75 SECONDS)
 		else
 			owner.limbs.r_leg.delete()
+			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
@@ -323,7 +335,7 @@
 			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the eyespider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = input("Select the mind to transfer into the buttspider: ", "Select Mind", null) as null|anything in eligible
 		if (!use_mob_name)
 			boutput(holder.owner, __blue("We change our mind."))
 			return 1
@@ -335,6 +347,7 @@
 			return 1
 
 		qdel(owner.drop_organ("butt"))
+		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
 		logTheThing("combat", holder.owner, use_mob, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")

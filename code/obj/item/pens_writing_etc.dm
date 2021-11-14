@@ -89,7 +89,7 @@
 			drawing.setMaterial(src.material)
 			src.material_uses--
 			if(src.material_uses <= 0)
-				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
 				src.removeMaterial()
 			return TRUE
 		return FALSE
@@ -770,6 +770,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
+		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
 			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)

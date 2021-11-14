@@ -269,6 +269,81 @@
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
 	return ret.Join()
 
+/datum/genetic_prescan
+	var/list/activeDna = null
+	var/list/poolDna = null
+
+	var/list/activeDnaKnown = null
+	var/list/activeDnaUnknown = null
+	var/list/poolDnaKnown = null
+	var/list/poolDnaUnknown = null
+
+	proc/generate_known_unknown(ignoreRestrictions = FALSE)
+		if (ignoreRestrictions)
+			src.activeDnaKnown = src.activeDna
+			src.poolDnaKnown = src.poolDna
+			return
+		src.activeDnaKnown = list()
+		src.activeDnaUnknown = list()
+		src.poolDnaKnown = list()
+		src.poolDnaUnknown = list()
+		for (var/datum/bioEffect/BE in src.activeDna)
+			var/datum/bioEffect/GBE = BE.get_global_instance()
+			if (!GBE.scanner_visibility)
+				continue
+			if (GBE.secret && !genResearch.see_secret)
+				continue
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
+				src.activeDnaUnknown += BE
+				continue
+			src.activeDnaKnown += BE
+		for (var/datum/bioEffect/BE in src.poolDna)
+			var/datum/bioEffect/GBE = BE.get_global_instance()
+			if (!GBE.scanner_visibility)
+				continue
+			if (GBE.secret && !genResearch.see_secret)
+				continue
+			if (GBE.research_level < EFFECT_RESEARCH_DONE)
+				src.poolDnaUnknown += BE
+				continue
+			src.poolDnaKnown += BE
+
+/proc/scan_genetic(mob/M as mob, datum/genetic_prescan/prescan = null, visible = FALSE)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+	if (visible)
+		animate_scanning(M, "#9eee80")
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</span>"
+	var/list/data = list()
+	var/datum/bioHolder/BH = M.bioHolder
+	data += "<span class='notice'>Genetic Stability: [BH.genetic_stability]</span>"
+	var/datum/genetic_prescan/GP = prescan
+	if (!GP)
+		GP = new /datum/genetic_prescan
+		GP.activeDna = list()
+		GP.poolDna = list()
+		for (var/bioEffectId in BH.effects)
+			GP.activeDna += BH.GetEffect(bioEffectId)
+		for (var/bioEffectId in BH.effectPool)
+			GP.poolDna += BH.GetEffect(bioEffectId)
+		GP.generate_known_unknown()
+	data += "<span class='notice'>Potential Genetic Effects:</span>"
+	for (var/datum/bioEffect/BE in GP.poolDnaKnown)
+		data += BE.name
+	if (length(GP.poolDnaUnknown))
+		data += "<span class='alert'>Unknown: [length(GP.poolDnaUnknown)]</span>"
+	else if (!length(GP.poolDnaKnown))
+		data += "-- None --"
+	data += "<span class='notice'>Active Genetic Effects:</span>"
+	for (var/datum/bioEffect/BE in GP.activeDnaKnown)
+		data += BE.name
+	if (length(GP.activeDnaUnknown))
+		data += "<span class='alert'>Unknown: [length(GP.activeDnaUnknown)]</span>"
+	else if (!length(GP.activeDnaKnown))
+		data += "-- None --"
+	return data.Join("<br>")
+
 /proc/update_medical_record(var/mob/living/carbon/human/M)
 	if (!M || !ishuman(M))
 		return
@@ -277,28 +352,26 @@
 	if (M:wear_id && M:wear_id:registered)
 		patientname = M.wear_id:registered
 
-	for (var/datum/data/record/E in data_core.general)
-		if (E.fields["name"] == patientname)
-			switch (M.stat)
-				if (0)
-					if (M.bioHolder && M.bioHolder.HasEffect("strong"))
-						E.fields["p_stat"] = "Very Active"
-					else
-						E.fields["p_stat"] = "Active"
-				if (1)
-					E.fields["p_stat"] = "*Unconscious*"
-				if (2)
-					E.fields["p_stat"] = "*Deceased*"
-			for (var/datum/data/record/R in data_core.medical)
-				if ((R.fields["id"] == E.fields["id"]))
-					R.fields["bioHolder.bloodType"] = M.bioHolder.bloodType
-					R.fields["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
-					if (M.ailments.len)
-						R.fields["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
-					else
-						R.fields["cdi_d"] = "No notes."
-					break
-			break
+	var/datum/db_record/E = data_core.general.find_record("name", patientname)
+	if(E)
+		switch (M.stat)
+			if (0)
+				if (M.bioHolder && M.bioHolder.HasEffect("strong"))
+					E["p_stat"] = "Very Active"
+				else
+					E["p_stat"] = "Active"
+			if (1)
+				E["p_stat"] = "*Unconscious*"
+			if (2)
+				E["p_stat"] = "*Deceased*"
+		var/datum/db_record/R = data_core.medical.find_record("id", E["id"])
+		if(R)
+			R["bioHolder.bloodType"] = M.bioHolder.bloodType
+			R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
+			if (M.ailments.len)
+				R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
+			else
+				R["cdi_d"] = "No notes."
 	return
 
 // output a health pop-up overhead thing to the client
@@ -334,8 +407,8 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/mob/living/carbon/human/H = M
-	var/datum/data/record/GR = FindRecordByFieldValue(data_core.general, "name", H.name)
-	var/datum/data/record/MR = FindRecordByFieldValue(data_core.medical, "name", H.name)
+	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
+	var/datum/db_record/MR = data_core.medical.find_record("name", H.name)
 	if (!MR)
 		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
 

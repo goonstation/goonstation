@@ -342,7 +342,7 @@
 			new bucket_type_on_destruction(T)
 			new /obj/item/device/prox_sensor(T)
 			if (prob(50))
-				new /obj/item/parts/robot_parts/arm/left(T)
+				new /obj/item/parts/robot_parts/arm/left/standard(T)
 
 		qdel(src)
 		return
@@ -416,7 +416,7 @@
 
 			if (T.active_liquid)
 				if (T.active_liquid.group)
-					T.active_liquid.group.drain(T.active_liquid,1,master)
+					T.active_liquid.group.drain(T.active_liquid, 1)
 
 			master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
 			ON_COOLDOWN(master, CLEANBOT_CLEAN_COOLDOWN, master.idle_delay)
@@ -424,8 +424,3 @@
 		..()
 
 #undef CLEANBOT_MOVE_SPEED
-
-/mob/living/critter/bot/cleanbot
-	name = "cleanbot"
-
-	emagged

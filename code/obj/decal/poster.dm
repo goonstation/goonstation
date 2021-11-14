@@ -348,6 +348,24 @@
 			icon = 'icons/obj/stationobjs.dmi'
 			icon_state = "barsign"
 
+		neonicecream
+			name = "Ice-Cream"
+			desc = "A neon sign shaped like ice cream!"
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_ice"
+
+		neonsparkle
+			name = "sparkle neon sign"
+			desc = "A neon sign shaped like cute sparkles."
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_sparkle"
+
+		neonretro
+			name = "retro neon sign"
+			desc = "A relic from the past, or a grim prediction of the future."
+			icon = 'icons/misc/walp_decor.dmi'
+			icon_state = "neonsign_80s"
+
 		coffee
 			name ="Coffee Shop"
 			desc = "A cute little coffee cup poster."
@@ -721,6 +739,12 @@
 						user << link("https://github.com/goonstation/goonstation")
 					if("edit_wiki")
 						user << link("https://wiki.ss13.co/")
+
+		lesb_flag //lesbeean prefab thingy - subtle environmental storytelling, you know?
+			name = "lesbian pride flag"
+			desc = "Neat!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "lesb"
 
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"

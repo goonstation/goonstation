@@ -79,8 +79,8 @@ change the direction of created objects.<br>
 		if(!isnull(T) && objpath)
 			switch(cinematic)
 				if("Telepad")
-					var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-					var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+					var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+					var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 					swirl.mouse_opacity = 0
 					pad.mouse_opacity = 0
 					pad.loc = T
@@ -102,8 +102,8 @@ change the direction of created objects.<br>
 						sleep(0.5 SECONDS)
 						swirl.mouse_opacity = 1
 						pad.mouse_opacity = 1
-						pool(swirl)
-						pool(pad)
+						qdel(swirl)
+						qdel(pad)
 				if("Blink")
 					spawn_gift(T)
 					blink(T)
@@ -135,8 +135,8 @@ change the direction of created objects.<br>
 			for (var/turf/Q in block(first_corner,second_corner))
 				switch(cinematic)
 					if("Telepad")
-						var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-						var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+						var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+						var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 						swirl.mouse_opacity = 0
 						pad.mouse_opacity = 0
 						pad.loc = Q
@@ -158,8 +158,8 @@ change the direction of created objects.<br>
 							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
-							pool(swirl)
-							pool(pad)
+							qdel(swirl)
+							qdel(pad)
 					if("Blink")
 						spawn_gift(Q)
 						blink(Q)

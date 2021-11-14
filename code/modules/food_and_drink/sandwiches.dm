@@ -9,18 +9,21 @@
 	custom_food = 0
 	initial_volume = 30
 	food_effects = list("food_refreshed")
+	meal_time_flags = MEAL_TIME_LUNCH
 
 	meat_h
 		name = "manwich"
 		desc = "Human meat between two slices of bread."
 		icon_state = "sandwich_m"
 		food_effects = list("food_refreshed", "food_energized_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	meat_m
 		name = "monkey sandwich"
 		desc = "Meat between two slices of bread."
 		icon_state = "sandwich_m"
 		food_effects = list("food_refreshed", "food_energized")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	pb
 		name = "peanut butter sandwich"
@@ -50,6 +53,7 @@
 		icon_state = "elviswich_m"
 		initial_reagents = list("essenceofelvis"=25)
 		food_effects = list("food_refreshed", "food_energized_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	elvis_meat_m
 		name = "monkey elviswich"
@@ -57,6 +61,7 @@
 		icon_state = "elviswich_m"
 		initial_reagents = list("essenceofelvis"=25)
 		food_effects = list("food_refreshed", "food_energized")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	elvis_pb
 		name = "peanut butter elviswich"
@@ -90,6 +95,7 @@
 		icon_state = "scarewich_c"
 		initial_reagents = list("ectoplasm"=15,"cheese"=10)
 		food_effects = list("food_energized","food_hp_up")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	spooky_pb
 		name = "peanut butter and jelly meet breadula"
@@ -97,6 +103,7 @@
 		icon_state = "scarewich_pb"
 		initial_reagents = list("ectoplasm"=15,"eyeofnewt"=10)
 		food_effects = list("food_energized","food_hp_up")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	spooky_pbh
 		name = "killer beenut butter sandwich"
@@ -104,6 +111,7 @@
 		icon_state = "scarewich_pb"
 		initial_reagents = list("ectoplasm"=10,"tongueofdog"=5,"honey"=10)
 		food_effects = list("food_energized","food_hp_up")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	spooky_meat_h
 		name = "murderwich"
@@ -111,6 +119,7 @@
 		icon_state = "scarewich_m"
 		initial_reagents = list("ectoplasm"=15,"blood"=10)
 		food_effects = list("food_hp_up_big","food_energized_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	spooky_meat_m
 		name = "scare wich project"
@@ -118,6 +127,7 @@
 		icon_state = "scarewich_m"
 		initial_reagents = list("ectoplasm"=15,"blood"=10)
 		food_effects = list("food_hp_up_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	spooky_meat_s
 		name = "synthmeat steinwich"
@@ -125,6 +135,7 @@
 		icon_state = "scarewich_m"
 		initial_reagents = list("ectoplasm"=15,"synthflesh"=10)
 		food_effects = list("food_hp_up_big")
+		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	meatball
 		name = "meatball sub"
@@ -174,6 +185,7 @@
 	icon_state = "assburger"
 	initial_reagents = list("fartonium"=10)
 	food_effects = list("food_sweaty_big")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 	New()
 		..()
 		if(prob(10))
@@ -185,6 +197,7 @@
 	desc = "A hearty meal, made with Love."
 	icon_state = "heartburger"
 	food_effects = list("food_sweaty_big", "food_hp_up_big")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	New()
 		..()
@@ -196,6 +209,7 @@
 	icon_state = "brainburger"
 	initial_reagents = list("cholesterol"=5,"prions"=10)
 	food_effects = list("food_sweaty_big", "food_hp_up_big")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/humanburger
 	name = "burger"
@@ -203,12 +217,14 @@
 	desc = "A bloody burger."
 	icon_state = "hburger"
 	food_effects = list("food_energized_big", "food_brute")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/monkeyburger
 	name = "monkeyburger"
 	desc = "The cornerstone of every nutritious breakfast."
 	icon_state = "hburger"
 	food_effects = list("food_energized", "food_brute")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/butterburger
 	name = "butter burger"
@@ -216,12 +232,14 @@
 	icon_state = "butterburger"
 	initial_reagents = list("cholesterol"=5,"butter"=10)
 	food_effects = list("food_all", "food_sweaty")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/fishburger
 	name = "Fish-Fil-A"
 	desc = "A delicious alternative to heart-grinding beef patties."
 	icon_state = "fishburger"
 	food_effects = list("food_energized", "food_burn")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/moldy
 	name = "moldy burger"
@@ -303,6 +321,7 @@
 	icon_state = "hburger"
 	amount = 5
 	heal_amt = 2
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/baconburger
 	name = "baconatrix"
@@ -313,6 +332,7 @@
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=5,"porktonium"=45)
 	food_effects = list("food_hp_up_big", "food_sweaty")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	heal(var/mob/M)
 		if(prob(25))
@@ -326,6 +346,7 @@
 	amount = 5
 	heal_amt = 2
 	food_effects = list("food_hp_up_big", "food_sweaty")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	heal(var/mob/M)
 		if(prob(20))
@@ -372,6 +393,7 @@
 	amount = 6
 	heal_amt = 2
 	food_effects = list("food_brute", "food_burn")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 	name = "monkey cheese burger"
@@ -379,6 +401,7 @@
 	icon_state = "cburger"
 	amount = 6
 	heal_amt = 2
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	heal(var/mob/M)
 		if(prob(3) && ishuman(M))
@@ -402,6 +425,7 @@
 	initial_volume = 100
 	initial_reagents = list("cholesterol"=50)
 	food_effects = list("food_hp_up_big", "food_sweaty_big")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/monsterburger
 	name = "THE MONSTER"
@@ -414,6 +438,7 @@
 	initial_reagents = list("cholesterol"=200)
 	unlock_medal_when_eaten = "That's no moon, that's a GOURMAND!"
 	food_effects = list("food_hp_up_big", "food_sweaty_big", "food_bad_breath", "food_warm")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/vr
 	icon = 'icons/effects/VR.dmi'
@@ -427,6 +452,7 @@
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("cholesterol"=1)
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
 /obj/item/reagent_containers/food/snacks/macguffin
 	name = "sausage macguffin"
@@ -436,32 +462,38 @@
 	amount = 4
 	heal_amt = 1
 	initial_reagents = list("cholesterol"=1)
+	meal_time_flags = MEAL_TIME_BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/burger/luauburger
 	name = "luau burger"
 	desc = "You can already taste the fresh, sweet pineapple."
 	icon_state = "luauburger"
 	food_effects = list("food_refreshed_big", "food_hp_up")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/tikiburger
 	name = "tiki burger"
 	desc = "A burger straight out of Hawaii"
 	icon_state = "tikiburger"
 	food_effects = list("food_refreshed_big", "food_hp_up")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/coconutburger
 	name = "coconut burger"
 	desc = "Wait a minute... this has no real meat in it."
 	icon_state = "coconutburger"
 	food_effects = list("food_refreshed_big", "food_hp_up")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/chicken
 	name = "chicken sandwich"
 	desc = "A delicious chicken sandwich."
 	icon_state = "chickenburger"
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 /obj/item/reagent_containers/food/snacks/burger/chicken/spicy
 	name = "spicy chicken sandwich"
 	desc = "A delicious chicken sandwich with a bit of a kick."
 	icon_state = "chickenburger-spicy"
 	initial_reagents = list("capsaicin"=15)
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER

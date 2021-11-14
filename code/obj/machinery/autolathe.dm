@@ -172,7 +172,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.attack_hand(M)
+			src.Attackhand(M)
 	return
 
 /obj/machinery/autolathe/New()

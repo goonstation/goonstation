@@ -769,7 +769,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
+				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > INVIS_NONE)
 					FOUND_NEAT(NT_CLOAKER)
 						speak_with_maptext("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
 						END_NEAT
@@ -1238,9 +1238,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 				wired_connection.post_signal(src, signal)
 
 		else
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(radio_connection)
-				return radio_connection.post_signal(src, signal, 100)
+			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 100)
 
 	initialize()
 		..()
@@ -1253,7 +1251,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			new_prog.do_setup(setup_string)
 
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!signal || signal.encryption)
 			return
 
@@ -1577,7 +1575,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
@@ -1741,7 +1739,7 @@ datum/computer/file/embedded_program/maintpanel
 
 		return
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if (signal.data["sender"] in src.sessions)
 			var/datum/maintpanel_device_entry/entry = src.sessions[signal.data["sender"]]
 			src.sessions -= signal.data["sender"]

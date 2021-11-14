@@ -339,7 +339,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
-	var/canbequilty = 1
+	var/canberandom = 1
 
 	var/image/fluid_image
 
@@ -363,11 +363,11 @@
 
 	New()
 		..()
-		if(canbequilty == 1)
-			if( prob(10))
-				name = "Quilty Farms Milk"
-				desc = "For ages 1[pick("0","8")] and under."
-				icon_state = "milk_quilty"
+		if(canberandom == 1)
+			if(prob(10))
+				name = "Mootimer's Calcium Drink"
+				desc = "Blue-ribbon winning secret family recipe."
+				icon_state = "milk_calcium"
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
@@ -384,7 +384,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
-	canbequilty = 0
+	canberandom = 0
 
 /obj/item/reagent_containers/food/drinks/milk/cluwnespider
 	name = "Honkey Gibbersons - Cluwnespider Milk"
@@ -393,7 +393,7 @@
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
-	canbequilty = 0
+	canberandom = 0
 
 /obj/item/reagent_containers/food/drinks/milk/soy
 	name = "Creaca's Space Soy Milk"

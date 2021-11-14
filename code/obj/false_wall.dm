@@ -2,7 +2,7 @@
 	name = "wall"
 	icon = 'icons/obj/doors/Doorf.dmi'
 	icon_state = "door1"
-	blocks_air = 0
+	gas_impermeable = 0
 	var/operating = null
 	var/visible = 1
 	var/floorname
@@ -30,7 +30,7 @@
 		..()
 		//Hide the wires or whatever THE FUCK
 		src.levelupdate()
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
 		SPAWN_DBG(0)
 			src.find_icon_state()
@@ -150,7 +150,7 @@
 				return ..(S, user)
 			else return
 		else
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 
 	proc/open()
 		if (src.operating)
@@ -162,7 +162,7 @@
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
-			src.blocks_air = 0
+			src.gas_impermeable = 0
 			src.pathable = 1
 			src.update_air_properties()
 			src.RL_SetOpacity(0)
@@ -181,7 +181,7 @@
 		src.name = "wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
@@ -208,15 +208,14 @@
 				var/turf/T = get_step(src, dir)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					// neither of us are reinforced
-					if (!istype(W, r_wall_path) && !istype(src, /turf/simulated/wall/false_wall/reinforced))
-						dirs |= dir
-					// both of us are reinforced
-					else if (istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced))
+					if (istype(W, /turf/simulated/wall/false_wall) || \
+							istype(W, wall_path) || \
+							istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced)
+						)
 						dirs |= dir
 					if (W.light_mod) //If the walls have a special light overlay, apply it.
 						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
-			var/turf/simulated/wall/auto/T = wall_path
+			var/turf/simulated/wall/auto/T = istype(src, /turf/simulated/wall/false_wall/reinforced) ? r_wall_path : wall_path
 			mod = initial(T.mod)
 			src.icon_state = "[mod][num2text(dirs)]"
 		return src.icon_state
@@ -239,7 +238,7 @@
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.icon_state = "door1"
 		src.set_density(1)
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)

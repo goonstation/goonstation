@@ -71,7 +71,7 @@ datum
 			id = "werewolf_serum"
 			description = "A mutagenic substance associated with a mythical beast."
 			reagent_state = LIQUID
-			minimum_to_infect = 0
+			minimum_to_infect = 3
 			fluid_r = 173
 			fluid_g = 65
 			fluid_b = 133
@@ -125,7 +125,7 @@ datum
 			transparency = 150
 			disease = /datum/ailment/disease/gbs
 
-		disease/banana_peel // Jungle Fever
+		disease/banana_peel // Monkey Madness
 			name = "banana peel"
 			id = "banana peel"
 			description = "Banana peel crushed up to a liquid."
@@ -134,7 +134,7 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 150
-			disease = /datum/ailment/disease/jungle_fever
+			disease = /datum/ailment/disease/monkey_madness
 
 		disease/liquid_plasma // Plasmatoid
 			name = "liquid plasma"
@@ -156,6 +156,7 @@ datum
 			fluid_g = 87
 			fluid_b = 44
 			transparency = 80
+			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/hootonium
 
 		disease/nanites // Robot Transformation
@@ -284,6 +285,7 @@ datum
 			fluid_g = 220
 			fluid_b = 200
 			transparency = 170
+			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
 
 		disease/viral_curative // Panacaea

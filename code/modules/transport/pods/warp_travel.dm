@@ -109,7 +109,7 @@
 	density = 0
 	var/obj/target = null
 	anchored = 1.0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
 	SPAWN_DBG(0)
@@ -117,11 +117,10 @@
 		return
 	return
 
-/obj/warp_portal/HasEntered(AM as mob|obj)
+/obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
+	..()
 	SPAWN_DBG(0)
 		src.teleport(AM)
-		return
-	return
 
 /obj/warp_portal/New()
 	..()
@@ -139,7 +138,8 @@
 	if (istype(M, /mob/dead/aieye))
 		return
 	if (!( src.target ))
-		qdel(src)
+		animate(src, time=0.2 SECONDS, transform=matrix(1.25, 0, 0, 0, 1.25, 0), alpha=100, easing=SINE_EASING)
+		animate(time=0.2 SECONDS, transform=null, alpha=initial(src.alpha), easing=SINE_EASING)
 		return
 	if (ismob(M))
 		var/mob/T = M
@@ -147,6 +147,7 @@
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
+			logTheThing("combat", T, null, "entered [src] at [log_loc(src)] and gibbed")
 			return
 		else
 			T.changeStatus("radiation", rand(5,25) SECONDS, 2)
@@ -156,6 +157,7 @@
 					H:bioHolder:RandomEffect("bad")
 				else
 					H:bioHolder:RandomEffect("good")
+			logTheThing("combat", T, null, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)

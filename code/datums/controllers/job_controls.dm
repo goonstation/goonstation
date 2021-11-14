@@ -111,21 +111,21 @@ var/datum/job_controller/job_controls
 		dat += "<BR>"
 		if (ispath(src.job_creator.mob_type, /mob/living/carbon/human))
 			dat += "<A href='?src=\ref[src];EditMutantrace=1'>Mutantrace:</A> [src.job_creator.starting_mutantrace]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [src.job_creator.slot_head]<br>"
-			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [src.job_creator.slot_mask]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [src.job_creator.slot_ears]<br>"
-			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [src.job_creator.slot_eyes]<br>"
-			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [src.job_creator.slot_suit]<br>"
-			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [src.job_creator.slot_jump]<br>"
+			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [english_list(src.job_creator.slot_head)]<br>"
+			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [english_list(src.job_creator.slot_mask)]<br>"
+			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [english_list(src.job_creator.slot_ears)]<br>"
+			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [english_list(src.job_creator.slot_eyes)]<br>"
+			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [english_list(src.job_creator.slot_suit)]<br>"
+			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [english_list(src.job_creator.slot_jump)]<br>"
 			dat += "<A href='?src=\ref[src];EditIDCard=1'>Starting ID Card:</A> [src.job_creator.slot_card]<br>"
-			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [src.job_creator.slot_glov]<br>"
-			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [src.job_creator.slot_foot]<br>"
-			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [src.job_creator.slot_back]<br>"
-			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [src.job_creator.slot_belt]<br>"
-			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [src.job_creator.slot_poc1]<br>"
-			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [src.job_creator.slot_poc2]<br>"
-			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [src.job_creator.slot_lhan]<br>"
-			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [src.job_creator.slot_rhan]<br>"
+			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [english_list(src.job_creator.slot_glov)]<br>"
+			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [english_list(src.job_creator.slot_foot)]<br>"
+			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [english_list(src.job_creator.slot_back)]<br>"
+			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [english_list(src.job_creator.slot_belt)]<br>"
+			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [english_list(src.job_creator.slot_poc1)]<br>"
+			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
+			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
+			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
 			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.recieves_implant]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [src.job_creator.items_in_backpack.len >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
@@ -307,7 +307,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No headgear matching that name", "red")
 						return
 
-					src.job_creator.slot_head = picker
+					src.job_creator.slot_head = list(picker)
 
 			src.job_creator()
 
@@ -334,7 +334,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No mask matching that name", "red")
 						return
 
-					src.job_creator.slot_mask = picker
+					src.job_creator.slot_mask = list(picker)
 
 			src.job_creator()
 
@@ -361,7 +361,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No headset matching that name", "red")
 						return
 
-					src.job_creator.slot_ears = picker
+					src.job_creator.slot_ears = list(picker)
 
 			src.job_creator()
 
@@ -388,7 +388,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No glasses matching that name", "red")
 						return
 
-					src.job_creator.slot_eyes = picker
+					src.job_creator.slot_eyes = list(picker)
 
 			src.job_creator()
 
@@ -415,7 +415,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No exosuit matching that name", "red")
 						return
 
-					src.job_creator.slot_suit = picker
+					src.job_creator.slot_suit = list(picker)
 
 			src.job_creator()
 
@@ -442,7 +442,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No jumpsuit matching that name", "red")
 						return
 
-					src.job_creator.slot_jump = picker
+					src.job_creator.slot_jump = list(picker)
 
 			src.job_creator()
 
@@ -498,7 +498,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No gloves matching that name", "red")
 						return
 
-					src.job_creator.slot_glov = picker
+					src.job_creator.slot_glov = list(picker)
 
 			src.job_creator()
 
@@ -525,7 +525,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No shoes matching that name", "red")
 						return
 
-					src.job_creator.slot_foot = picker
+					src.job_creator.slot_foot = list(picker)
 
 			src.job_creator()
 
@@ -563,7 +563,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_back = picker
+					src.job_creator.slot_back = list(picker)
 
 			src.job_creator()
 
@@ -599,7 +599,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_belt = picker
+					src.job_creator.slot_belt = list(picker)
 
 			src.job_creator()
 
@@ -635,7 +635,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_poc1 = picker
+					src.job_creator.slot_poc1 = list(picker)
 
 			src.job_creator()
 
@@ -671,7 +671,7 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_poc2 = picker
+					src.job_creator.slot_poc2 = list(picker)
 
 			src.job_creator()
 
@@ -698,7 +698,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No item matching that name", "red")
 						return
 
-					src.job_creator.slot_lhan = picker
+					src.job_creator.slot_lhan = list(picker)
 
 			src.job_creator()
 
@@ -749,7 +749,7 @@ var/datum/job_controller/job_controls
 					else if (L.len > 1)
 						picker = input(usr,"Select implant:","Job Creator",null) as null|anything in L
 					else
-						usr.show_text("No shoes implant that name", "red")
+						usr.show_text("No implant matching that name", "red")
 						return
 
 					src.job_creator.recieves_implant = picker

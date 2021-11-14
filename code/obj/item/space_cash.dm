@@ -43,18 +43,6 @@
 		src.amount = max(amt,default_amount)
 		src.update_stack_appearance()
 
-	unpooled()
-		..()
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
-		src.amount = max(1, default_amount) //take higher
-		src.update_stack_appearance()
-
-	pooled()
-		if (usr)
-			usr.u_equip(src) //wonder if that will work?
-		amount = 1
-		..()
-
 	update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
@@ -103,9 +91,9 @@
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				change_stack_amount( 0 - amt )
-				var/obj/item/spacecash/young_money = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/young_money = new /obj/item/spacecash
 				young_money.setup(user.loc, amt)
-				young_money.attack_hand(user)
+				young_money.Attackhand(user)
 		else
 			..(user)
 
@@ -140,6 +128,10 @@
 	default_min_amount = 1000
 	default_max_amount = 1000
 
+/obj/item/spacecash/hundredthousand
+	default_min_amount = 100000
+	default_max_amount = 100000
+
 /obj/item/spacecash/million
 	default_min_amount = 1000000
 	default_max_amount = 1000000
@@ -168,14 +160,6 @@
 	icon_state = "cashblue"
 
 	New()
-		..()
-		processing_items |= src
-
-	pooled()
-		processing_items -= src
-		..()
-
-	unpooled()
 		..()
 		processing_items |= src
 
@@ -230,19 +214,6 @@
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	unpooled()
-		..()
-		amount = rand(1,10000)
-		name = "money bag"
-		desc = "Loadsamoney!"
-		icon = 'icons/obj/items/items.dmi'
-		icon_state = "moneybag"
-		item_state = "moneybag"
-		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-
-	pooled()
-		..()
-
 
 
 /obj/item/spacebux // Not space cash. Actual spacebux. Wow.
@@ -287,19 +258,6 @@
 		tooltip_rebuild = 1
 		src.amount = amt
 		src.update_stack_appearance()
-
-	unpooled()
-		..()
-		src.amount = 0
-		src.spent = 0
-		src.update_stack_appearance()
-
-	pooled()
-		if (usr)
-			usr.u_equip(src) //wonder if that will work?
-		src.amount = 0
-		src.spent = 0
-		..()
 
 	update_stack_appearance()
 		src.UpdateName()

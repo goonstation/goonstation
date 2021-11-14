@@ -714,7 +714,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			var/obj/decal/D = new/obj/decal(get_turf(src))
 			D.name = null
 			D.icon = null
-			D.invisibility = 101
+			D.invisibility = INVIS_ALWAYS
 			D.create_reagents(5)
 			src.reagents.trans_to(D, 5)
 
@@ -1341,7 +1341,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/cat
 	name = "Rideable Cat"
 	desc = "He looks happy... how odd!"
-	icon_state = "segwaycat-norider"
+	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
@@ -1423,6 +1423,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
+	src.icon_state = initial(src.icon_state)
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
@@ -1477,6 +1478,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
+	src.icon_state = "[src.icon_state]1"
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1642,7 +1644,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 // the adminbus has a pressurized cabin!
 /obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	var/oxygen = MOLES_O2STANDARD
 	var/nitrogen = MOLES_N2STANDARD

@@ -41,8 +41,6 @@
 	heat_capacity = 0
 	turf_flags = MOB_STEP
 
-	attackby()
-	attack_hand()
 	hitby()
 		. = ..()
 	reagent_act()
@@ -62,8 +60,6 @@
 	icon = 'icons/turf/shuttle.dmi'
 	turf_flags = MOB_STEP
 
-	attackby()
-	attack_hand()
 	hitby()
 		. = ..()
 	reagent_act()
@@ -189,7 +185,7 @@
 	var/icon_style = "wall"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 	pathable = 0
 
 	New()
