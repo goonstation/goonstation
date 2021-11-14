@@ -23,7 +23,7 @@
 		M = src
 
 	var/current_time = TIME
-	if (M)
+	if (M && isalive(M))
 		M.speech_bubble.icon_state = "typing"
 		UpdateOverlays(M.speech_bubble, "speech_bubble")
 		M.last_typing = current_time

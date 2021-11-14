@@ -1,8 +1,5 @@
 //This file contains stuff that is still *mostly* my code.
 
-#define LINEMODE_SEGMENT 1
-#define LINEMODE_STRETCH 2
-#define LINEMODE_MOVE 3
 /*
 Proc: drawLine
 Arguments:
@@ -34,37 +31,38 @@ Returns:
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
-	if(!islist(render_source_line))
-		if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
-			if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
-			addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_line), "*[render_source_line]")
-		if(copytext(render_source_line,1,2) != "*") render_source_line = "*[render_source_line]"
-	else
-		for(var/X in render_source_line)
-			var/current = X
-			if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
-				if(copytext(current,1,2) == "*") current = copytext(current,2,0)
-				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
-			if(copytext(X,1,2) != "*")
-				current = "*[current]"
-			render_source_line -= X
-			render_source_line += current
+	if(mode != LINEMODE_SIMPLE && mode != LINEMODE_SIMPLE_REVERSED)
+		if(!islist(render_source_line))
+			if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
+				if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
+				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_line), "*[render_source_line]")
+			if(copytext(render_source_line,1,2) != "*") render_source_line = "*[render_source_line]"
+		else
+			for(var/X in render_source_line)
+				var/current = X
+				if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
+					if(copytext(current,1,2) == "*") current = copytext(current,2,0)
+					addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
+				if(copytext(X,1,2) != "*")
+					current = "*[current]"
+				render_source_line -= X
+				render_source_line += current
 
-	if(!islist(render_source_cap))
-		if(render_source_cap != null && !getGlobalRenderSource((copytext(render_source_cap,1,2) == "*" ? render_source_cap : "*[render_source_cap]")))
-			if(copytext(render_source_cap,1,2) == "*") render_source_cap = copytext(render_source_cap,2,0)
-			addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_cap), "*[render_source_cap]")
-		if(copytext(render_source_cap,1,2) != "*") render_source_cap = "*[render_source_cap]"
-	else
-		for(var/X in render_source_cap)
-			var/current = X
-			if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
-				if(copytext(current,1,2) == "*") current = copytext(current,2,0)
-				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
-			if(copytext(X,1,2) != "*")
-				current = "*[current]"
-			render_source_cap -= X
-			render_source_cap += current
+		if(!islist(render_source_cap))
+			if(render_source_cap != null && !getGlobalRenderSource((copytext(render_source_cap,1,2) == "*" ? render_source_cap : "*[render_source_cap]")))
+				if(copytext(render_source_cap,1,2) == "*") render_source_cap = copytext(render_source_cap,2,0)
+				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_cap), "*[render_source_cap]")
+			if(copytext(render_source_cap,1,2) != "*") render_source_cap = "*[render_source_cap]"
+		else
+			for(var/X in render_source_cap)
+				var/current = X
+				if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
+					if(copytext(current,1,2) == "*") current = copytext(current,2,0)
+					addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
+				if(copytext(X,1,2) != "*")
+					current = "*[current]"
+				render_source_cap -= X
+				render_source_cap += current
 
 	var/iconWidth = 64
 	var/dx = ((target.x * world.icon_size) + trg_off_x) - ((source.x * world.icon_size) + src_off_x)
@@ -95,6 +93,20 @@ Returns:
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE_REVERSED)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
@@ -614,6 +626,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		AM.set_loc(locate(src.x, src.y, src.targetZ))
@@ -2076,7 +2089,7 @@ Returns:
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	var/image/oimage = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
@@ -2088,7 +2101,7 @@ Returns:
 		del(oimage)
 		..()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!istype(A,/mob/dead/hhghost)) return
 		var/mob/dead/hhghost/M = A
 		M.adventure_variables.hh_soul += 1
@@ -2110,9 +2123,9 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!ismob(A) || !isliving(A)) return
 		qdel(src)
 		var/mob/living/M = A
@@ -2260,6 +2273,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/O)
+		..()
 		if(!canTrigger) return
 		canTrigger = 0
 		SPAWN_DBG(procCooldown) canTrigger = 1
@@ -2506,6 +2520,7 @@ Returns:
 
 /obj/line_obj/elec
 	name = "electricity"
+	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
 	anchored = 1
 	density = 0
@@ -2805,19 +2820,20 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_from)
 		if (!istype(source))
 			qdel(src)
 			return
 		var/turf/trg = source.loc
-
-		var/area/trgar = trg.loc
-		trgar.Entered(AM, AM.loc)
-
 		AM.set_loc(trg)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/dfissure_from
 	name = "dimensional fissure"
@@ -2829,9 +2845,6 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_to)
 		if (!istype(source))
 			boutput(AM, "<span class='combat'>You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!</span>")
@@ -3251,9 +3264,9 @@ Returns:
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (mover?.throwing)
 			return 1
 		return ..()
@@ -3792,7 +3805,6 @@ var/list/lag_list = new/list()
 	attack_hand(mob/user as mob)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
-				user.loc.loc.Exited(user)
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return

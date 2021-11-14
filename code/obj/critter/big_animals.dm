@@ -503,7 +503,7 @@ obj/critter/bear/care
 
 	CritterDeath()
 		..()
-		src.reagents.add_reagent("woolofbat", 50, null)
+		src.reagents?.add_reagent("woolofbat", 50, null)
 		return
 
 	CritterAttack(mob/M)

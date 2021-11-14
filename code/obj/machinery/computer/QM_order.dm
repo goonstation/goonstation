@@ -14,11 +14,7 @@
 	New()
 		..()
 		console_location = get_area(src)
-		return
-
-	disposing()
-		radio_controller.remove_object(src, "1149")
-		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -166,12 +162,9 @@
 					shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits from personal account.<BR>"
 
 					// pda alert ////////
-					var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 					var/datum/signal/pdaSignal = get_free_signal()
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [O.object] ordered by [O.orderedby] using personal account at [O.console_location].")
-					pdaSignal.transmission_method = TRANSMISSION_RADIO
-					if(transmit_connection != null)
-						transmit_connection.post_signal(src, pdaSignal)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 					//////////////////
 			else
 				O.object = P
@@ -181,12 +174,9 @@
 				boutput(usr, "Request for [P.name] sent to Supply Console. The Quartermasters will process your request as soon as possible.")
 
 				// pda alert ////////
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////////////
 		else
 			boutput(usr, "Communications error with central supply console. Please notify a Certified Service Technician.")
@@ -257,12 +247,9 @@
 				wagesystem.shipping_budget += transaction
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 			else

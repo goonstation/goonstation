@@ -128,6 +128,10 @@
 	default_min_amount = 1000
 	default_max_amount = 1000
 
+/obj/item/spacecash/hundredthousand
+	default_min_amount = 100000
+	default_max_amount = 100000
+
 /obj/item/spacecash/million
 	default_min_amount = 1000000
 	default_max_amount = 1000000

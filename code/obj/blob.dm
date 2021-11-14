@@ -12,7 +12,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
 	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
@@ -36,7 +36,6 @@
 	var/poison_depletion = 1
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
-	var/gas_impermeable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
@@ -58,10 +57,6 @@
 		healthbar.onStart()
 		healthbar.onUpdate()
 
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Entered(src)
-
 		SPAWN_DBG(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
@@ -82,11 +77,9 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
-		if((!mover || air_group) && src.gas_impermeable)
-			return 0
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
 			if (P.proj_data.type == /datum/projectile/slime)
 				return 1
@@ -171,9 +164,6 @@
 				gen_rate_value = 0
 			overmind.spread_mitigation -= spread_value
 		var/turf/T = get_turf(src)
-		if (istype(src.loc,/turf))
-			if (istype(src.loc.loc,/area))
-				src.loc.loc.Exited(src)
 		healthbar?.onDelete()
 		qdel(healthbar)
 		healthbar = null
@@ -1281,7 +1271,7 @@
 		var/image/ov = image('icons/mob/blob_organs.dmi')
 		ov.appearance_flags |= RESET_COLOR
 		ov.plane = PLANE_SELFILLUM + 1
-		ov.color = overmind.organ_color
+		ov.color = overmind?.organ_color
 		ov.icon_state = "deposit-material"
 		UpdateOverlays(ov, name)
 

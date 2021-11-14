@@ -660,6 +660,12 @@
 	desc = "Subject is proficent at haggling."
 	id = "training_quartermaster"
 
+/obj/trait/job/chef
+	name = "Kitchen Training"
+	cleanName = "Kitchen Training"
+	desc = "Subject is experienced in foodstuffs and their effects."
+	id = "training_chef"
+
 // bartender, detective, HoS
 /obj/trait/job/drinker
 	name = "Professional Drinker"
