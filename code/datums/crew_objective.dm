@@ -330,10 +330,7 @@ ABSTRACT_TYPE(/datum/objective/crew/janitor)
 					return 0
 			return 1
 
-#define DRINK_OBJ_DONE 7
-#define DRINK_OBJ_1 1
-#define DRINK_OBJ_2 2
-#define DRINK_OBJ_3 4
+#define DRINK_OBJ_COUNT 3
 ABSTRACT_TYPE(/datum/objective/crew/bartender)
 /datum/objective/crew/bartender
 	shotgun
@@ -344,8 +341,8 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 			else
 				return FALSE
 	drinks
-		var/completed = 0
-		var/ids[3]
+		var/completed = FALSE
+		var/ids[DRINK_OBJ_COUNT]
 		New()
 			..()
 			var/list/cocktails = concrete_typesof(/datum/reagent/fooddrink/alcoholic)
@@ -372,16 +369,25 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 				/datum/reagent/fooddrink/alcoholic/wine/white
 			)
 			cocktails -= blacklist
-			var/list/names[3]
-			for(var/i = 1, i <= 3, i++)
+			var/list/names[DRINK_OBJ_COUNT]
+			for(var/i = 1, i <= DRINK_OBJ_COUNT, i++)
 				var/choiceType = pick(cocktails)
 				var/datum/reagent/fooddrink/instance =  new choiceType
 				names[i] = instance.name
 				ids[i] = instance.id
-			explanation_text = "Mix a [names[1]], [names[2]], and [names[3]] using your cocktail shaker."
-		check_completion()
-			return completed == DRINK_OBJ_DONE //Uses bit flags
+			explanation_text = "Mix a "
+			for (var/ingredient in names)
+				if (ingredient != names[DRINK_OBJ_COUNT])
+					explanation_text += "[ingredient], "
+				else
+					explanation_text += "and [ingredient] "
+			explanation_text += "using your cocktail shaker."
 
+		check_completion()
+			return completed == 2**DRINK_OBJ_COUNT-1 //Uses bit flags
+
+#define CAKE_OBJ_COUNT 3
+#define PIZZA_OBJ_COUNT 3
 ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef
 	var/list/blacklist = list(
@@ -398,16 +404,16 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
 	)
 	cake
-		var/choices[3]
-		var/completed = 0
+		var/choices[CAKE_OBJ_COUNT]
+		var/completed = FALSE
 		New()
 			..()
 			//Result is cached so it should just access the list after the first time
 			var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)
 			ingredients -= src.blacklist
 			ingredients -= concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
-			var/list/names[3]
-			for(var/i = 1, i <= 3, i++)
+			var/list/names[CAKE_OBJ_COUNT]
+			for(var/i = 1, i <= CAKE_OBJ_COUNT, i++)
 				choices[i] = pick(ingredients)
 				var/choiceType = choices[i]
 				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
@@ -415,20 +421,26 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 					i--
 					continue
 				names[i] = instance.name
-			explanation_text = "Create a custom, three-tier cake with layers of [names[1]], [names[2]], and [names[3]] infused cake in any order."
+			explanation_text = "Create a custom, three-tier cake with layers of "
+			for (var/ingredient in names)
+				if (ingredient != names[CAKE_OBJ_COUNT])
+					explanation_text += "[ingredient], "
+				else
+					explanation_text += "and [ingredient] "
+			explanation_text += "infused cake in any order."
 		check_completion()
 			return completed
 
 	pizza
-		var/choices[3]
-		var/completed = 0
+		var/choices[PIZZA_OBJ_COUNT]
+		var/completed = FALSE
 		New()
 			..()
 			var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)
 			ingredients -= src.blacklist
 			ingredients -= concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
-			var/list/names[3]
-			for(var/i = 1, i <= 3, i++)
+			var/list/names[PIZZA_OBJ_COUNT]
+			for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)
 				choices[i] = pick(ingredients)
 				var/choiceType = choices[i]
 				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
@@ -436,7 +448,13 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 					i--
 					continue
 				names[i] = instance.name
-			explanation_text = "Create a custom pizza with [names[1]], [names[2]], and [names[3]] toppings."
+			explanation_text = "Create a custom pizza with "
+			for (var/ingredient in names)
+				if (ingredient != names[PIZZA_OBJ_COUNT])
+					explanation_text += "[ingredient], "
+				else
+					explanation_text += "and [ingredient] "
+			explanation_text += "toppings."
 		check_completion()
 			return completed
 

@@ -298,8 +298,8 @@
 		if (user.mind && user.mind.objectives)
 			for (var/datum/objective/crew/chef/cake/O in user.mind.objectives)
 				var/list/matching_types = src.cake_types & O.choices
-				if(matching_types.len >= 3)
-					O.completed = 1
+				if(matching_types.len >= CAKE_OBJ_COUNT)
+					O.completed = TRUE
 		qdel(c)
 
 
