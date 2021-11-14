@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, LabeledList, Box, Knob, Input } from '../components';
+import { Box, Button, Flex, Input, Knob, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {
