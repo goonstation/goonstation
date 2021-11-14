@@ -38,7 +38,7 @@ export const MusicInstrument = (_props, context) => {
   const playNote = (index: number) => {
     if (keyIndexWithinRange(index) && !activeKeys[index]) {
       act('play_note', { note: index + transpose + 1, volume: volume });
-      const newKeys = activeKeys;
+      const newKeys = [...activeKeys];
       newKeys[index] = true;
       setActiveKeys(newKeys);
     }
