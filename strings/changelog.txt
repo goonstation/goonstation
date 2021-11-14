@@ -1,5 +1,9 @@
 
 (t)sun nov 14 21
+(u)Flappybat
+(p)6682
+(e)🐛⚖|bug, balance
+(+)Battle Royale tweaks: Fixed the bugged Battle Storm ended message in BR. Raised and set storm warning period at 60 seconds. Removed security lockers.
 (u)BatElite
 (p)5884
 (e)🆕🎨|feature, sprites
