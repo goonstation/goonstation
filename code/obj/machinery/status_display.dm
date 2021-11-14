@@ -58,13 +58,7 @@
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")
 
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[frequency]")
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	// timed process
 	process()
