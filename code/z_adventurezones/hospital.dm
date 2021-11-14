@@ -512,7 +512,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "thermal_paper"
 	desc = "It's burnt badly, but some of the characters are still readable."
-		info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Датчик корабля 3151</h3>
+	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Датчик корабля 3151</h3>
 			<tt>
 			<br>Позиция: Сетка VE 31 2
 			<br>Массивный всплеск энергии от Космарского роя "ИХОП". Его орбита повернула, чтобы перехватить Новый Ростов. Штаб флота уведомлен, 3151 будет следить за любыми другими подобными новыми действиями из Кошмара. 3151 движется к сенсорному кораблю 3412 и 3100, а эсминец 2999 образует вахтовую группу 92.
@@ -524,7 +524,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "thermal_paper"
 	desc = "It's covered in blood in some spots, but some of the characters are still readable."
-		info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Датчик корабля 3151</h3>
+	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Датчик корабля 3151</h3>
 			<tt>
 			<br>Должность: НЕИЗВЕСТНО
 			<br>Навигация отказывается работать. Мы дрейфуем, направляясь к Голубой Звезде. Коммс пошел ко дну, экипаж собирается в выход в открытый космос починить, а затем попытаться экстренно сменить орбиту обратно в Новый Ростов. Космар рой все еще сохраняет курс, и он, вероятно, достигнет Нового Ростова в ближайшие 2-4 дня. Мы не знаем, откуда взялась эта способность, так как предыдущее поведение не наблюдало даже способности маневрировать, кроме как сокрушительным ожогом к месту назначения. Это развитие событий вызывает беспокойство, если они могут эффективно маневрировать в нашем пространстве, в то время как мы не можем даже использовать наши самые тяжелые корабли в их пространстве.
