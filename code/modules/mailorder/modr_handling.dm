@@ -25,7 +25,7 @@
 					package.name = "mail-order box ([orderedby])"
 				package.mail_dest = src.dest_tag
 				package.yeetself()
-		shippingmarket.supply_history += "Mail-order by [src.orderedby] fulfilled by [src.order_catalogue]. Recipient billed [src.order_cost].<BR>"
+		shippingmarket.supply_history += "Mail-order by [src.orderedby] fulfilled by [src.order_catalogue]. Destination: [src.dest_tag].<BR>"
 		if(notify_netid)
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"=notify_netid, "command"="text_message", "sender_name"="CARGO-MAILBOT", "sender"="00000000", "message"="Notification: Your mail order has been approved. Destination: [dest_tag]")
