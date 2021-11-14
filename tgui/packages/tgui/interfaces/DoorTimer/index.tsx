@@ -1,5 +1,12 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { useBackend } from '../../backend';
-import { Box, Button, Knob, LabeledControls, LabeledList, Section, Stack, TimeDisplay } from '../../components';
+import { Button, Knob, LabeledControls, Section, Stack, TimeDisplay } from '../../components';
 import { formatTime } from '../../format';
 import { Window } from '../../layouts';
 import { DoorTimerData } from './type';
@@ -41,7 +48,9 @@ export const DoorTimer = (_props, context) => {
           {!!data.flasher && (
             <Stack.Item>
               <Section title="Flasher" fill>
-                <Button onClick={() => act('activate-flasher')} backgroundColor={data.recharging ? 'orange' : undefined}>
+                <Button
+                  onClick={() => act('activate-flasher')}
+                  backgroundColor={data.recharging ? 'orange' : undefined}>
                   Flash Cell {!!data.recharging && '(Recharging)'}
                 </Button>
               </Section>

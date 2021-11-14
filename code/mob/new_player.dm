@@ -5,6 +5,7 @@ mob/new_player
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
+	var/is_respawned_player = 0
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -316,7 +317,8 @@ mob/new_player
 			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.add_latejoin_to_team(character.mind, JOB)
-
+			else if (istype(JOB, /datum/job/special/syndicate_operative))
+				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
@@ -640,7 +642,7 @@ a.latejoin-card:hover {
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
 					var/livingtraitor = 0
 
@@ -880,14 +882,16 @@ a.latejoin-card:hover {
 			observer.observe_round = 1
 			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
 				client.preferences.randomize_name()
-			observer.name = client.preferences.real_name
+			observer.real_name = client.preferences.real_name
+			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+			observer.gender = observer.bioHolder.mobAppearance.gender
+			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
 
 			//src.mind.dnr=1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
-			observer.real_name = observer.name
 			if(observer?.client)
 				observer.client.loadResources()
 
