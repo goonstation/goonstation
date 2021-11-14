@@ -9556,12 +9556,8 @@
 	},
 /area/moon/museum)
 "aHz" = (
-/obj/decal/fakeobjects{
-	desc = "There's alot of buttons and switches on here. Best not to touch it";
-	icon = "icons/obj/sovietcomp.dmi";
-	icon_state = "soveitnuclearconsole";
-	interesting = "The forensic scanner picks up some unknow energy traces. Huh";
-	name = "Soviet Consoles"
+/obj/soviet/setpiece/console/nuclearcontrol{
+	interesting = "The forensic scanner picks up some unknow energy traces. Huh"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -67946,6 +67942,7 @@
 	pixel_x = 10;
 	pixel_y = 1
 	},
+/obj/indestructible/invisible_block,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -74978,6 +74975,13 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/ne,
 /area/centcom/offices/sovexe)
+"fie" = (
+/obj/indestructible/invisible_block,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "fiv" = (
 /obj/table/auto,
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding,
@@ -74994,11 +74998,11 @@
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
-	desc = "Some kind of machine that is assuredly important.  It is also assuredly covered in words you cannot read.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "neutinj";
-	layer = 3.1;
-	name = "soviet shuttle doodad"
+	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovmachine1";
+	name = "broken computer"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -75938,6 +75942,10 @@
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"icK" = (
+/obj/indestructible/invisible_block,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "icM" = (
 /obj/critter/zombie/meatmonaut{
 	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
@@ -76576,13 +76584,10 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_north,
 /area/centcom/offices/rodney)
 "jQH" = (
-/obj/decal/fakeobjects{
-	desc = "A large bank of consoles and dials.";
-	dir = 6;
-	icon = "icons/obj/sovietcomp.dmi";
-	icon_state = "soveitnuclearconsole";
-	name = "Soviet Consoles";
-	pixel_x = 5
+/obj/indestructible/invisible_block,
+/obj/soviet/setpiece/console/nuclearcontrol{
+	dir = 1;
+	interesting = "The forensic scanner picks up some unknow energy traces. Huh"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -77957,6 +77962,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
 "ndc" = (
+/obj/indestructible/invisible_block,
 /obj/soviet/setpiece/console/bank2,
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
@@ -78276,19 +78282,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"nIy" = (
-/obj/decal/fakeobjects{
-	desc = "A large bank of consoles and dials, probably for that reactor";
-	dir = 6;
-	icon = "icons/obj/sovietcomp.dmi";
-	icon_state = "soveitnuclearconsole";
-	name = "Soviet Consoles"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "nJE" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -80223,6 +80216,7 @@
 	icon_state = "blue"
 	})
 "rQu" = (
+/obj/indestructible/invisible_block,
 /obj/soviet/setpiece/console/bank1{
 	pixel_x = 17;
 	pixel_y = 1
@@ -81576,6 +81570,41 @@
 	name = "Ship Armor"
 	},
 /area/prefab/threeonefiveone/level_two)
+"vtP" = (
+/obj/decal/cleanable/ash,
+/obj/decal/cleanable/ash{
+	pixel_y = -9
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/decal/cleanable/ash{
+	layer = 3;
+	pixel_x = 8
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/obj/item/paper/thermal{
+	desc = "It's burnt badly, but the characters are still somewhat readable.";
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/paper/thermal{
+	desc = "It's burnt badly, but the characters are still somewhat readable.";
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/paper/thermal{
+	desc = "It's burnt badly, but some of the characters are still somewhat readable.";
+	info = "Sensor Ship 3151Position: Grid UA 21 1Channel emissions detected approximately 100000 Kilometers from current position. Tight Beam shot to New Rostov Front Headquarters notifying them. 3151 will be moving to track until handing off its duties to patrol ship 2315.";
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "vum" = (
 /obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
@@ -81759,6 +81788,10 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"vZA" = (
+/obj/item/paper/abandonedai/A,
+/turf/space,
+/area/space)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -162817,7 +162850,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+vZA
 cnw
 cnw
 cnw
@@ -164026,7 +164059,7 @@ kcV
 kcV
 naA
 wgW
-pTX
+vtP
 pey
 wGq
 cgP
@@ -165534,7 +165567,7 @@ aaa
 kcV
 naA
 jsn
-pTX
+icK
 pTX
 pTX
 pTX
@@ -166439,7 +166472,7 @@ kmt
 aaa
 kcV
 fjD
-cki
+fie
 lDg
 lTJ
 dLP
@@ -166741,14 +166774,14 @@ kmt
 aaa
 kcV
 fjD
-cki
+fie
 gPB
 mtp
-cki
+dEJ
 lDg
 joy
 uFU
-cki
+fie
 fjD
 kcV
 aaa
@@ -167043,14 +167076,14 @@ mnh
 jhk
 kcV
 fjD
-cki
-cki
+fie
+fie
 nfJ
-dEJ
+cki
 cki
 fnX
-cki
-cki
+fie
+fie
 fjD
 kcV
 aaa
@@ -170064,12 +170097,12 @@ aaa
 kcV
 kcV
 fjD
-cki
+fie
 aHz
 lDg
 lDg
 cki
-nIy
+jQH
 fjD
 kcV
 kcV
@@ -170366,12 +170399,12 @@ aaa
 kcV
 kcV
 fjD
-cki
+fie
 ojb
 hVQ
 cki
 fSx
-cki
+fie
 fjD
 kcV
 kcV
@@ -170668,12 +170701,12 @@ aaa
 kcV
 naA
 jsn
+fie
+fie
 cki
 cki
 cki
-cki
-cki
-cki
+fie
 efG
 cgP
 kcV

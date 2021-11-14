@@ -157,5 +157,5 @@
 		name = "glow - soviet battle"
 		brightness = 2
 		color_r = 0.85
-		color_g = 0.65
+		color_g = 0.55
 		color_b = 0.3
