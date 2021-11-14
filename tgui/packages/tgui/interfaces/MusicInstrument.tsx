@@ -116,7 +116,7 @@ export const MusicInstrument = (_props, context) => {
                     stepPixelSize={1}
                     minValue={0}
                     maxValue={100}
-                    title={'Volume'}
+                    title="Volume"
                     value={volume}
                     onDrag={(e, v) => setVolume(v)}
                   />
