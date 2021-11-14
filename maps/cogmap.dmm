@@ -58324,6 +58324,7 @@
 "kSf" = (
 /obj/table/auto,
 /obj/item/platestack{
+	icon_state = "platestack4";
 	pixel_x = -3;
 	pixel_y = 8;
 	platenum = 5
