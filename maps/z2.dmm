@@ -74947,6 +74947,10 @@
 /area/moon/museum)
 "fbL" = (
 /obj/decal/cleanable/blood/tracks,
+/obj/item/match{
+	pixel_x = -16;
+	pixel_y = -10
+	},
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
 "fen" = (
@@ -76883,6 +76887,7 @@
 	pixel_x = -2;
 	pixel_y = 9
 	},
+/obj/item/paper/thermal/sovietreport4,
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
@@ -77468,6 +77473,13 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/lab)
+"lXM" = (
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "lYt" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
@@ -79897,6 +79909,14 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"rhX" = (
+/obj/map/light/sovietbattle,
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "rih" = (
 /obj/tombstone{
 	dir = 10
@@ -81587,21 +81607,33 @@
 	pixel_x = 6;
 	pixel_y = -7
 	},
-/obj/item/paper/thermal{
-	desc = "It's burnt badly, but the characters are still somewhat readable.";
-	pixel_x = -2;
-	pixel_y = -3
+/obj/item/paper/thermal/sovietreport1{
+	pixel_x = -4;
+	pixel_y = -5
 	},
-/obj/item/paper/thermal{
-	desc = "It's burnt badly, but the characters are still somewhat readable.";
+/obj/item/paper/thermal/sovietreport2{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/paper/thermal/sovietreport3{
 	pixel_x = 2;
-	pixel_y = -2
+	pixel_y = -7
 	},
-/obj/item/paper/thermal{
-	desc = "It's burnt badly, but some of the characters are still somewhat readable.";
-	info = "Sensor Ship 3151Position: Grid UA 21 1Channel emissions detected approximately 100000 Kilometers from current position. Tight Beam shot to New Rostov Front Headquarters notifying them. 3151 will be moving to track until handing off its duties to patrol ship 2315.";
-	pixel_x = 6;
-	pixel_y = -9
+/obj/decal/cleanable/ash{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = -9;
+	pixel_y = -7
 	},
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
@@ -81730,6 +81762,7 @@
 	pixel_x = 8;
 	pixel_y = 24
 	},
+/obj/decal/cleanable/blood/splatter/extra,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -81788,10 +81821,10 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"vZA" = (
-/obj/item/paper/abandonedai/A,
-/turf/space,
-/area/space)
+"wec" = (
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -162850,7 +162883,7 @@ cnw
 cnw
 cnw
 cnw
-vZA
+cnw
 cnw
 cnw
 cnw
@@ -164964,7 +164997,7 @@ kcV
 kcV
 fjD
 ndc
-pTX
+wec
 pTX
 pTX
 omY
@@ -166473,7 +166506,7 @@ aaa
 kcV
 fjD
 fie
-lDg
+rhX
 lTJ
 dLP
 cki
@@ -167080,7 +167113,7 @@ fie
 fie
 nfJ
 cki
-cki
+lXM
 fnX
 fie
 fie
@@ -169494,11 +169527,11 @@ kcV
 wGq
 jsn
 uAx
-cki
+lXM
 rQF
 cki
 dEJ
-cki
+lXM
 efG
 wgW
 kcV
@@ -170101,7 +170134,7 @@ fie
 aHz
 lDg
 lDg
-cki
+lXM
 jQH
 fjD
 kcV
@@ -170703,7 +170736,7 @@ naA
 jsn
 fie
 fie
-cki
+lXM
 cki
 cki
 fie

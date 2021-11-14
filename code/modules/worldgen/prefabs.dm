@@ -243,12 +243,12 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 30
 		prefabSizeY = 30
 
-	ship3151 // Eagle's soviet ship with a lot of lore stuff. And blood.
+	ship3151 // Eagle's soviet ship with a lot of lore stuff. And blood. Also dust.
 		maxNum = 1
-		prefabPath = "assets/maps/prefabs/prefab_lostship.dmm"
+		prefabPath = "assets/maps/prefabs/prefab_lost_ship.dmm"
 		probability = 100
 		prefabSizeX = 34
-		prefabSizeY = 19
+		prefabSizeY = 20
 
 	secbot_academy // Danger Noodle's elite securitron school
 		maxNum = 1
