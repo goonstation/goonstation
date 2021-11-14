@@ -5,6 +5,7 @@ mob/new_player
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
+	var/is_respawned_player = 0
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -151,21 +152,7 @@ mob/new_player
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
-/*
-		var/output = "<HR><B>New Player Options</B><BR>"
-		output += "<HR><br><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A><BR><BR>"
-		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
-			if(!ready)
-				output += "<a href='byond://?src=\ref[src];ready=1'>Declare Ready</A><BR>"
-			else
-				output += "You are ready.<BR>"
-		else
-			output += "<a href='byond://?src=\ref[src];late_join=1'>Join Game!</A><BR>"
 
-		output += "<BR><a href='byond://?src=\ref[src];observe=1'>Observe</A><BR>"
-
-		src.Browse(output,"window=playersetup;size=250x200;can_close=0")
-*/
 	Stat()
 		..()
 		if(current_state <= GAME_STATE_PREGAME)
@@ -184,6 +171,7 @@ mob/new_player
 						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
+
 		if(href_list["show_preferences"])
 			client.preferences.ShowChoices(src)
 			return 1
@@ -329,7 +317,8 @@ mob/new_player
 			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.add_latejoin_to_team(character.mind, JOB)
-
+			else if (istype(JOB, /datum/job/special/syndicate_operative))
+				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
@@ -424,7 +413,7 @@ mob/new_player
 
 			//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
-				c = limit
+				c = max(c, limit)
 
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
@@ -653,7 +642,7 @@ a.latejoin-card:hover {
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
 					var/livingtraitor = 0
 
@@ -792,6 +781,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".ready_antag"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if(!(!ticker || current_state <= GAME_STATE_PREGAME))
 			src.show_text("Round has already started. You can't redeem tokens now. (You have [src.client.antag_tokens].)", "red")
 		else if(src.client.antag_tokens > 0)
@@ -806,6 +798,9 @@ a.latejoin-card:hover {
 	verb/declare_ready()
 		set hidden = 1
 		set name = ".ready"
+
+		if (src.client.has_login_notice_pending(TRUE))
+			return
 
 		if (ticker)
 			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
@@ -838,6 +833,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".cancel_ready"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if (ticker)
 			if(ticker.pregame_timeleft <= 3)
 				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
@@ -863,6 +861,9 @@ a.latejoin-card:hover {
 		set hidden = 1
 		set name = ".observe_round"
 
+		if (src.client.has_login_notice_pending(TRUE))
+			return
+
 		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new()
@@ -881,14 +882,16 @@ a.latejoin-card:hover {
 			observer.observe_round = 1
 			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
 				client.preferences.randomize_name()
-			observer.name = client.preferences.real_name
+			observer.real_name = client.preferences.real_name
+			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+			observer.gender = observer.bioHolder.mobAppearance.gender
+			observer.UpdateName()
 
 			if(!src.mind) src.mind = new(src)
 
 			//src.mind.dnr=1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
-			observer.real_name = observer.name
 			if(observer?.client)
 				observer.client.loadResources()
 

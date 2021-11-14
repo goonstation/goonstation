@@ -72,8 +72,14 @@
 			owner.set_density(!owner.lying)
 
 			if (owner.lying && !owner.buckled)
-				if (human_owner)
-					playsound(owner.loc, 'sound/misc/body_thud.ogg', 40, 1, 0.3)
-				else
-					playsound(owner.loc, 'sound/misc/body_thud.ogg', 15, 1, 0.3)
+				var/turf/T = get_turf(owner)
+				var/sound_to_play = 'sound/misc/body_thud.ogg'
+				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
+					T.active_liquid.Crossed(owner)
+					boutput(src, "<span class='notice'>You splash into [T.active_liquid].</span>")
+					sound_to_play = 'sound/misc/splash_2.ogg'
+				else if(T.active_liquid)
+					sound_to_play = null
+				if(sound_to_play)
+					playsound(owner.loc, sound_to_play, human_owner ? 40 : 15, 1, 0.3)
 		..()

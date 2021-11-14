@@ -1063,8 +1063,8 @@
 			return FALSE
 
 //red captain medal, after all this time!
-/datum/achievementReward/centcom_administrator
-	title = "(Skin Set) CENTCOM Administrator Uniform"
+/datum/achievementReward/centcom_executive
+	title = "(Skin Set) CENTCOM Executive Uniform"
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = 0
@@ -1078,7 +1078,7 @@
 				if (istype(M, /obj/item/clothing/under/rank/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom uniform"
-					M.desc = "A uniform specifically for CENTCOM execuitives. (Base Item: [prev])"
+					M.desc = "A uniform specifically for CENTCOM executives. (Base Item: [prev])"
 					if (istype(M, /obj/item/clothing/under/rank/captain/fancy))
 						M.icon_state = "captain-fancy-red"
 						M.item_state = "captain-fancy-red"
@@ -1094,7 +1094,7 @@
 				else if (istype(M, /obj/item/clothing/under/suit/captain))
 					var/prev = M.name
 					M.name = "\improper CentCom suit"
-					M.desc = "A uniform specifically for CENTCOM execuitives. (Base Item: [prev])"
+					M.desc = "A uniform specifically for CENTCOM executives. (Base Item: [prev])"
 					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
 						M.icon_state = "suit-capR-dress"
 						M.item_state = "suit-capR-dress"
@@ -1111,7 +1111,7 @@
 					M.icon_state = "centcom-red"
 					M.item_state = "centcom-red"
 					M.name = "\improper CentCom armor"
-					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM execuitives. (Base Item: [prev])"
+					M.desc = "A suit of protective formal armor. It is made specifically for CENTCOM executives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1121,7 +1121,7 @@
 					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
-					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM execuitives.(Base Item: [prev])"
+					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1130,7 +1130,7 @@
 					M.icon_state = "spacecap-red"
 					M.item_state = "spacecap-red"
 					M.name = "\improper CentCom space suit"
-					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM execuitives. (Base Item: [prev])"
+					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM executives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1141,7 +1141,7 @@
 					M.icon_state = "centcom-red"
 					M.item_state = "centcom-red"
 					M.name = "\improper CentCom hat"
-					M.desc = "A fancy hat specifically for CENTCOM execuitives. (Base Item: [prev])"
+					M.desc = "A fancy hat specifically for CENTCOM executives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 

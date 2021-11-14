@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
+	event_handler_flags =  IMMUNE_MANTA_PUSH | USE_FLUID_ENTER //maybe?
 	density = 0
 	canmove = 1
 	blinded = 0
@@ -144,7 +144,7 @@
 
 
 //#ifdef HALLOWEEN
-/mob/dead/observer/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
@@ -223,6 +223,7 @@
 /mob/dead/observer/New(mob/corpse)
 	. = ..()
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, ghost_invisibility)
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
@@ -232,7 +233,9 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.name = corpse.real_name
+		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		src.gender = src.bioHolder.mobAppearance.gender
+		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
 
 	hud = new(src)
@@ -263,6 +266,7 @@
 		if (src.hibernating == 1)
 			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
 			if(confirm == "Yes")
+				respawn_controller.subscribeNewRespawnee(src.ckey)
 				src.ghostize()
 				qdel(src)
 			else
@@ -286,22 +290,13 @@
 		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
 		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
 			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		if (client) client.color = null  //needed for mesons dont kill me thx - ZeWaka
-		if (src.client && src.client.holder && src.stat !=2)
-			// genuinely not sure what this is here for since we're setting the
-			// alive/dead status of the *ghost*.
-			// this seems to have made bizarre issues where
-			// some parts would think you were still alive even as a ghost
-			setalive(O)
-
-		// so, fuck that, you're dead, shithead. get over it.
-		setdead(O)
 
 		src.mind?.transfer_to(O)
 		src.ghost = O
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
+		respawn_controller.subscribeNewRespawnee(O.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
 		if(istype(respawnee))
 			respawnee.update_time_display()
@@ -813,3 +808,26 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	set_loc(newobs)
 	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
 		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+
+mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
+	newobs.attach_hud(hud)
+	newobs.set_observe_target(target)
+	newobs.name = src.name
+	newobs.real_name = src.real_name
+	newobs.corpse = src.corpse
+	newobs.my_ghost = src
+	delete_on_logout_reset = delete_on_logout
+	delete_on_logout = 0
+	if (target?.invisibility)
+		newobs.see_invisible = target.invisibility
+	if (src.corpse)
+		corpse.ghost = newobs
+	if (src.mind)
+		mind.transfer_to(newobs)
+	else if (src.client)
+		src.client.mob = newobs
+	set_loc(newobs)
+	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
+		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+	return newobs

@@ -19,6 +19,7 @@
 	#endif
 
 	area = /area/space
+	movement_mode = TILE_MOVEMENT_MODE
 
 	view = "15x15"
 
@@ -111,7 +112,7 @@ var/global/mob/twitch_mob = 0
 
 			var/pos = findtext(line, " - ", 1, null)
 			if (pos)
-				var/m_key = copytext(line, 1, pos)
+				var/m_key = ckey(copytext(line, 1, pos))
 				var/a_lev = copytext(line, pos + 3, length(line) + 1)
 				admins[m_key] = a_lev
 				logDiary("ADMIN: [m_key] = [a_lev]")
@@ -203,6 +204,9 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+#ifdef LIVE_SERVER
+		world.log = file("data/errors.log")
+#endif
 		enable_auxtools_debugger()
 #ifdef REFERENCE_TRACKING
 		enable_reference_tracking()
@@ -227,6 +231,8 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		radio_controller = new /datum/controller/radio()
+
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -243,6 +249,7 @@ var/f_color_selector_handler/F_Color_Selector
 			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
+			logLength += 4
 
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
@@ -261,6 +268,9 @@ var/f_color_selector_handler/F_Color_Selector
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
 
+		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
+
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
 		Z_LOG_DEBUG("Preload", "Creating named color list...")
@@ -273,8 +283,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 		Z_LOG_DEBUG("Preload", "Starting controllers")
 		Z_LOG_DEBUG("Preload", "  radio")
-
-		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
@@ -396,11 +404,6 @@ var/f_color_selector_handler/F_Color_Selector
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
-
-	// Load in the current commit SHA from TGS if avail, by MCterra10
-	if(TgsAvailable())
-		var/datum/tgs_revision_information/rev = TgsRevision()
-		vcs_revision = rev.commit
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
@@ -533,9 +536,6 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/area/Ar in world)
 			Ar.build_sims_score()
 
-	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
-
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
 	src.update_status()
@@ -609,8 +609,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
-	aiDirty = 2
-	world.updateCameraVisibility()
+	world.updateCameraVisibility(TRUE)
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
 	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
@@ -672,20 +671,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
-	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
-	if (mapSwitcher.locked)
-		//we're already holding and in the reboot retry loop, do nothing
-		if (mapSwitcher.holdingReboot && !retry) return
-
-		out(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
-		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
-
-		mapSwitcher.holdingReboot = 1
-		SPAWN_DBG(mapSwitcher.rebootRetryDelay)
-			mapSwitcher.attemptReboot()
-
-		return
-
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY) || !defined(SERVER_SIDE_PROFILING_PREGAME)
 	// This is a profiler dump of only the in-game part of the round
@@ -1331,7 +1316,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1372,7 +1357,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
@@ -1626,28 +1611,6 @@ var/f_color_selector_handler/F_Color_Selector
 						Reboot_server()
 
 					return ircbot.response(ircmsg)
-
-			if ("mapSwitchDone")
-				if (!plist["data"] || !mapSwitcher.locked) return 0
-
-				var/map = plist["data"]
-				var/ircmsg[] = new()
-				var/msg
-
-				var/attemptedMap = mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current
-				if (map == "FAILED")
-					msg = "Compilation of [attemptedMap] failed! Falling back to previous setting of [mapSwitcher.nextPrior ? mapSwitcher.nextPrior : mapSwitcher.current]"
-				else
-					msg = "Compilation of [attemptedMap] succeeded!"
-
-				logTheThing("admin", null, null, msg)
-				logTheThing("diary", null, null, msg, "admin")
-				message_admins(msg)
-				ircmsg["msg"] = msg
-
-				mapSwitcher.unlock(map)
-
-				return ircbot.response(ircmsg)
 
 			if ("triggerMapSwitch")
 				if (!plist["nick"] || !plist["map"])
