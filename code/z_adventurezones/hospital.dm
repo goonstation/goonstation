@@ -461,6 +461,29 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	mat_changename = 0
 	mat_changedesc = 0
 
+/obj/soviet/setpiece/console/nuclearcontrol //fuck you, its 133 at night and I'm tired cause it wont compile so this goes here. Fuck.
+	name = "Control Consoles"
+	icon = 'icons/obj/large/64x96.dmi'
+	icon_state = "sovietconsolelarge"
+	desc = "A huge console with many buttons and dials and levers, all turned off in a hurry. You feel like you shouldn't mess with any of it."
+
+/obj/soviet/setpiece/console/smallcontrol
+	name = "Control Consoles"
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "sovconsole1"
+	desc = "A console with many buttons and dials and levers, all turned off in a hurry. You feel like you shouldn't mess with any of it."
+
+obj/soviet/setpiece/console/bank1 //thank you cogs for the sprites
+	name = "Plotting Thing"
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state "sovbank2"
+	desc = "Some sort of plotting chart. Could also be one of those graph things you see in the pictures. You know the ones."
+
+obj/soviet/setpiece/console/bank2 //again, thank you cog so very much for the sprites
+	name = "Monitor Bank"
+	icon = 'icons/obj/large/64x64.dmi'
+	icon_state = "sovbank1"
+	desc = "A wall of monitors, used for something. It doesnt matter much anymore though."
 
 /obj/machinery/bot/guardbot/soviet
 	name = "Evgeny-12"
