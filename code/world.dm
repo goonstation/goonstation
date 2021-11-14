@@ -661,7 +661,7 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
