@@ -152,3 +152,10 @@
 		color_r = 0.7
 		color_g = 0.4
 		color_b = 0.9
+
+	sovietbattle
+		name = "glow - soviet battle"
+		brightness = 2
+		color_r = 0.85
+		color_g = 0.65
+		color_b = 0.3

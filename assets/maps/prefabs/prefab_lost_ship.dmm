@@ -42,20 +42,18 @@
 	},
 /turf/variableTurf/clear,
 /area/prefab/threeonefiveone/level_one)
-"dO" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/stool/chair/comfy/shuttle{
-	dir = 1
-	},
+"cV" = (
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveone/level_one)
-"fd" = (
+"dO" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/map/light/secretblue,
-/obj/decal/cleanable/dirt/jen,
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -72,6 +70,7 @@
 "ga" = (
 /obj/item/storage/toilet,
 /obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -90,8 +89,8 @@
 	},
 /area/prefab/threeonefiveone/level_one)
 "ik" = (
-/obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -100,6 +99,15 @@
 "ju" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
+"jU" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -140,6 +148,15 @@
 	},
 /turf/variableTurf/clear,
 /area/prefab/threeonefiveone/level_one)
+"nH" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_one)
 "nI" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
@@ -162,7 +179,7 @@
 /obj/storage/closet/wardrobe,
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
-/obj/map/light/secretblue,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -193,7 +210,7 @@
 /area/prefab/threeonefiveone/level_one)
 "rf" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/map/light/secretblue,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -213,15 +230,6 @@
 	icon = 'icons/turf/walls_tempus-white.dmi';
 	icon_state = "9";
 	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_one)
-"rJ" = (
-/obj/map/light/secretblue,
-/obj/decal/cleanable/dirt/dirt4,
-/obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveone/level_one)
 "rS" = (
@@ -271,8 +279,8 @@
 /area/prefab/threeonefiveone/level_one)
 "yd" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -314,9 +322,9 @@
 /area/prefab/threeonefiveone/level_one)
 "yW" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -338,14 +346,6 @@
 	name = "radiator pipe"
 	},
 /turf/variableTurf/clear,
-/area/prefab/threeonefiveone/level_one)
-"zY" = (
-/obj/map/light/secretblue,
-/obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
 /area/prefab/threeonefiveone/level_one)
 "Al" = (
 /obj/rack,
@@ -383,8 +383,8 @@
 	interesting = "The scanner displays another unknown chemical. A readout of some of it's basic properites look strangly like a ore...if only you could remember what that ore is.";
 	name = "Operating Bed"
 	},
-/obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/jen,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -514,21 +514,12 @@
 	icon_state = "floor3"
 	},
 /area/prefab/threeonefiveone/level_one)
-"II" = (
-/obj/map/light/secretblue,
-/obj/decal/cleanable/dirt/jen,
-/obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_one)
 "IL" = (
 /obj/storage/closet/wardrobe,
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
-/obj/map/light/secretblue,
 /obj/decal/cleanable/dirt/dirt4,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -885,7 +876,7 @@ bC
 fO
 yL
 yd
-rf
+KK
 mS
 Kr
 NM
@@ -1016,8 +1007,8 @@ Kr
 Ts
 Ts
 fO
-yS
-II
+cV
+ju
 Kr
 Ts
 Ts
@@ -1124,7 +1115,7 @@ KY
 MU
 IA
 AF
-rJ
+jU
 GO
 HY
 Wd
@@ -1190,11 +1181,11 @@ KY
 MU
 FN
 AF
-zY
+rf
 ju
 KK
 Se
-rJ
+jU
 KK
 OA
 bv
@@ -1282,7 +1273,7 @@ KK
 KK
 MU
 KK
-zY
+rf
 QA
 MU
 KY
@@ -1300,7 +1291,7 @@ zD
 zD
 zD
 MU
-fd
+ju
 KK
 MU
 SL
@@ -1322,7 +1313,7 @@ zD
 qD
 bC
 rx
-Wd
+nH
 AF
 rg
 Qe
@@ -1349,7 +1340,7 @@ ju
 AF
 OA
 KK
-zY
+KK
 YV
 MU
 nG
@@ -1371,7 +1362,7 @@ BL
 KK
 MU
 KK
-AF
+jU
 GC
 MU
 cy

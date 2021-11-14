@@ -71194,6 +71194,7 @@
 	icon_state = "????";
 	name = "????"
 	},
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -75070,7 +75071,6 @@
 	interesting = "The scanner picks up some unknow energy traces. Huh";
 	name = "Soviet Consoles"
 	},
-/obj/map/light/secretblue,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -75239,7 +75239,6 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/obj/map/light/secretblue,
 /obj/decal/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
@@ -76829,7 +76828,6 @@
 	icon_state = "floor5";
 	pixel_x = 10
 	},
-/obj/map/light/secretblue,
 /obj/item/gun/kinetic/knn29{
 	ammo = 0;
 	pixel_x = -2;
@@ -76842,6 +76840,7 @@
 	name = "corpse";
 	pixel_x = -10
 	},
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
 "kvr" = (
@@ -77245,6 +77244,13 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
 /area/diner/cow)
+"lDg" = (
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "lEt" = (
 /turf/space,
 /turf/unsimulated/floor/plating/scorched,
@@ -77304,7 +77310,7 @@
 	icon_state = "body9";
 	name = "corpse"
 	},
-/obj/map/light/secretblue,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
 "lLo" = (
@@ -78359,14 +78365,6 @@
 /obj/item/paper/book/from_file/syndies_guide,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
-"nYa" = (
-/obj/decal/cleanable/blood/tracks,
-/obj/map/light/secretblue,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "nYR" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -78481,7 +78479,6 @@
 	pixel_x = 2;
 	pixel_y = 14
 	},
-/obj/map/light/secretblue,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -80343,7 +80340,7 @@
 /area/centcom/lobby)
 "sva" = (
 /obj/table/folding,
-/obj/map/light/secretblue,
+/obj/map/light/sovietbattle,
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)
 "sxQ" = (
@@ -81483,13 +81480,6 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"wcC" = (
-/obj/map/light/secretblue,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -166175,7 +166165,7 @@ lTJ
 dLP
 cki
 qmd
-wcC
+cki
 jQH
 fjD
 kcV
@@ -166475,7 +166465,7 @@ cki
 gPB
 mtp
 cki
-cki
+lDg
 joy
 uFU
 cki
@@ -167379,11 +167369,11 @@ naA
 wgW
 dEJ
 pdY
-cki
+lDg
 cki
 tZB
 cki
-cki
+lDg
 cki
 wGq
 cgP
@@ -167982,12 +167972,12 @@ jhk
 fjD
 chQ
 dHj
-nYa
+usz
 usz
 cki
 cki
 dEJ
-wcC
+cki
 sqw
 qFF
 fjD
@@ -168591,7 +168581,7 @@ dLP
 vJk
 rQF
 cki
-cki
+lDg
 sqw
 qFF
 fjD
@@ -169796,8 +169786,8 @@ kcV
 fjD
 cki
 aHz
-cki
-cki
+lDg
+lDg
 cki
 nIy
 fjD
@@ -170702,8 +170692,8 @@ efG
 vtu
 myA
 myA
-cki
-cki
+myA
+myA
 myA
 myA
 vtu
