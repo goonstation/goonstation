@@ -198,9 +198,7 @@
 
 		if (href_list["clearcart"])
 			if(length(src.cart) > 0)
-				src.cartsize = 0
-				src.cartcost = 0
-				src.cart.Cut()
+				src.voidCart()
 
 		if (href_list["add_to_cart"])
 			var/datum/mail_order/F = src.canbuy[href_list["add_to_cart"]]
@@ -237,22 +235,18 @@
 				break
 			if(!spawn_package_at || !fire_package_to)
 			//tried to QM-ship without map support (???), fail gracefully without paying
-				src.cartsize = 0
-				src.cartcost = 0
-				src.cart.Cut()
+				src.voidCart()
 				return 0
 			success_style = DELIVERED_TO_QM
 		else
 			if(!pick_landmark(LANDMARK_MAILORDER_SPAWN) || !pick_landmark(LANDMARK_MAILORDER_TARGET))
 			//tried to mail-ship without map support, fail gracefully without paying
-				src.cartsize = 0
-				src.cartcost = 0
-				src.cart.Cut()
+				src.voidCart()
 				return 0
 			success_style = DELIVERED_TO_MAIL
 
 		for(var/datum/mail_order/F in src.cart)
-			boxstick += F.order_items
+			boxstock += F.order_items
 
 		if(success_style == DELIVERED_TO_MAIL) //set up for direct yeet
 			var/obj/item/storage/box/mailorder/package = new /obj/item/storage/box/mailorder()
@@ -269,15 +263,16 @@
 			package.launch_procedure()
 			shippingmarket.receive_crate(package)
 		else //how did we fail here? not sure, but fail gracefully without paying.
-			src.cartsize = 0
-			src.cartcost = 0
-			src.cart.Cut()
+			src.voidCart()
 			return 0
 		//successful purchase, clear out the cart and let purchase proc know
+		src.voidCart()
+		return success_style
+
+	proc/voidCart()
 		src.cartsize = 0
 		src.cartcost = 0
 		src.cart.Cut()
-		return success_style
 
 	proc/authCard(var/mob/user as mob) //handles clearance requirements and payment check
 		if(!src.master.ID_card)

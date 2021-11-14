@@ -36,9 +36,6 @@
 	desc = "A crate that holds mail-ordered items."
 	personal = 1
 
-	New()
-		..()
-
 	proc/launch_procedure()
 		if(src.registered)
 			src.name = "\improper [src.registered]'s mail-order crate"
