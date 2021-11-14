@@ -84,7 +84,7 @@ export const MusicInstrument = (_props, context) => {
                   <Button
                     className="instrument__toggle-keyboard-button"
                     title="Toggle keyboard support (toggle with ctrl)"
-                    onClick={() => toggleKeybind()}
+                    onClick={toggleKeybind}
                     icon="keyboard"
                   />
                   <Box
