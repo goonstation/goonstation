@@ -1,0 +1,3 @@
+nouns@=station@,captain@,doctor@,assistant@,chef@,chaplain@,security@,bee@,robot@,cyborg@,rubbish@,engine@,human@,nonhuman@,unknown@,monkey@,equipment@,employee@,power
+verbs@=eat@,wash hands@,repair@,clean@,move@,vacate@,be kind
+sentences@=Warning ...@,Beware ...@,Sorry ...@,... ahead!@,Remember to ...@,Employees must ...@, ... and ...@, Praise the ...

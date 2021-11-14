@@ -1,8 +1,5 @@
 //AI HOLOGRAMS
 
-#define CHARS_PER_HOLOGRAM_POINT 4
-#define CHARS_PER_HOLOGRAM (CHARS_PER_HOLOGRAM_POINT*3)
-#define MAX_TILES_PER_HOLOGRAM 3
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
 
@@ -21,28 +18,43 @@
 		if (!deployed_to_eyecam)
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
-		if (src.holograms >= max_holograms)
-			boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
-			return
+
 		if (!istype(T) || !istype(T.cameras) || T.cameras.len == 0)
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 
 		if(holo_type=="write")
-			var/t = input(usr, "What do you want to write?", "Hologram Text", null) as null|text
-			var/hologram_value = round((length(t) + (CHARS_PER_HOLOGRAM_POINT-1)) / CHARS_PER_HOLOGRAM_POINT)
-			if (!t)
-				return
-			if(length(t) > (CHARS_PER_HOLOGRAM))
-				boutput(eyecam, "Too many characters for a single hologram. Limited to [CHARS_PER_HOLOGRAM].")
+			if (src.text_holograms >= src.max_text_holograms)
+				boutput(eyecam, "Not enough SRAM to project more text holograms. Delete others to make room.")
 				return
 
-			if (hologram_value > (max_holograms - src.holograms) )
-				boutput(eyecam, "Not enough RAM to project that many characters. Delete others holograms to make room.")
-				return
+			var/list/holo_setences
+			var/list/holo_actions
+			var/list/holo_nouns
+			holo_setences = sortList(strings("hologram.txt", "sentences"))
+			var/t = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_setences, allowIllegal=TRUE)
 
+			switch(t)
+				if("Remember to ...")
+				if("Employees must ...")
+					holo_actions = sortList(strings("hologram.txt", "verbs"))
+					var/selection = tgui_input_list(usr, "Select a word:", t, holo_actions, allowIllegal=TRUE)
+					t = replacetext(t, "...", selection)
+				else
+					holo_nouns = sortList(strings("hologram.txt", "nouns"))
+					var/blank_found = findtext(t,"...")
+					while(blank_found)
+						var/selection = tgui_input_list(usr, "Select a word:", t, holo_nouns, allowIllegal=TRUE)
+						t = replacetext(t, "...", selection, blank_found, blank_found+3)
+						blank_found = findtext(t,"...")
+
+			//t = capitalize(t)
+			t = uppertext(t)
 			new /obj/hologram/text(T, owner=src,msg=t)
 		else
+			if (src.holograms >= max_holograms)
+				boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
+				return
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
@@ -113,6 +125,9 @@
 		icon_state = "write"
 		holo_type = "write"
 
+#define HOLOGRAM_PICTURE 1
+#define HOLOGRAM_TEXT 2
+
 /obj/hologram
 	name = "hologram"
 	desc = "A hologram projected by an AI. Usually lasts about 30 seconds."
@@ -125,6 +140,7 @@
 	var/duration = 30 SECONDS
 	var/mob/living/silicon/ai/owner
 	var/hologram_value = 1
+	var/hologram_type = HOLOGRAM_PICTURE
 
 
 	New(var/mob/living/silicon/ai/owner, var/holo_type)
@@ -132,7 +148,11 @@
 		if (istype(owner))
 			src.owner = owner
 			src.color = owner.faceColor
-			owner.holograms += src.hologram_value
+			switch(hologram_type)
+				if(HOLOGRAM_PICTURE)
+					owner.holograms += src.hologram_value
+				if(HOLOGRAM_TEXT)
+					owner.text_holograms += src.hologram_value
 
 		name = "[replacetext(holo_type, "_", " ")] hologram"
 		icon_state = holo_type
@@ -166,7 +186,11 @@
 
 	disposing()
 		if (owner)
-			owner.holograms = max(owner.holograms - hologram_value,0)
+			switch(hologram_type)
+				if(HOLOGRAM_PICTURE)
+					owner.holograms = max(owner.holograms - hologram_value,0)
+				if(HOLOGRAM_TEXT)
+					owner.text_holograms = max(owner.text_holograms - hologram_value,0)
 			owner = null
 		..()
 
@@ -186,18 +210,19 @@
 				icon_state = pick("d_glitch2", "d_glitch3")
 				distort_size = 10
 
+#define MAX_TILES_PER_HOLOGRAM 3
 /obj/hologram/text
 	var/message
 	var/original_color
 	var/hsv
 	var/obj/effect/distort/hologram/E
+	hologram_type = HOLOGRAM_TEXT
 
 	New(loc, owner, msg)
-		src.hologram_value = round((length(msg) + (CHARS_PER_HOLOGRAM_POINT-1)) / CHARS_PER_HOLOGRAM_POINT)
 		..(owner, null)
 		if(msg)
 			phrase_log.log_phrase("holograms", msg)
-			message = copytext(adminscrub(msg), 1, src.owner?.max_holograms * CHARS_PER_HOLOGRAM_POINT)
+			message = copytext(adminscrub(msg), 1)
 
 		var/original_color = src.color ? src.color : "#fff"
 		var/rgb = hex_to_rgb_list(original_color)

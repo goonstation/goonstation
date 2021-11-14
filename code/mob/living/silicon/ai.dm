@@ -118,6 +118,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/deployed_to_eyecam = 0
 	var/holograms
 	var/const/max_holograms = 8
+	var/text_holograms
+	var/const/max_text_holograms = 3
 	var/list/hologramContextActions
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
