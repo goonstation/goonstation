@@ -1,5 +1,9 @@
 
 (t)sun nov 14 21
+(u)BatElite
+(p)5884
+(e)🆕🎨|feature, sprites
+(*)Added the engineering materiel vacuum, a hand-or-back-or-belt item which allows them to collect loose debris and construction materials as well as place floor tiles by simply walking around with it!
 (u)Flappybat
 (p)6675
 (e)🐛|bug
