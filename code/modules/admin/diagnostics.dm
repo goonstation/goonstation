@@ -825,12 +825,6 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
-	checkingcanpass
-		name = "checkingcanpass"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingcanpass ? "#0f0" : "#f00"
-
 	checkingexit
 		name = "checkingexit"
 		help = "Green = yes."

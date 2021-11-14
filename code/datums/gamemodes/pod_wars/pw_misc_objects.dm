@@ -220,7 +220,7 @@
 	var/team_num = 0		//1 = NT, 2 = SY
 	gas_impermeable = TRUE
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		if (ismob(A))
 			var/mob/M = A
 			if (team_num == get_pod_wars_team_num(M))
@@ -568,10 +568,12 @@
 	secure_classes = list(RADIOCL_COMMAND)
 	secure_colors = list("#0099cc")
 	icon_override = "nt"
+	icon_tooltip = "NanoTrasen"
 	team = TEAM_NANOTRASEN
 
 	commander
 		icon_override = "cap"	//get better thingy
+		icon_tooltip = "NanoTrasen Commander"
 
 /obj/item/device/radio/headset/pod_wars/syndicate
 	name = "Radio Headset"
@@ -582,10 +584,12 @@
 	secure_colors = list("#ff69b4")
 	protected_radio = 1
 	icon_override = "syndie"
+	icon_tooltip = "Syndicate"
 	team = TEAM_SYNDICATE
 
 	commander
 		icon_override = "syndieboss"
+		icon_tooltip = "Syndicate Commander"
 
 
 /////////shit//////////////
@@ -726,7 +730,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 
@@ -746,7 +750,7 @@
 
 		return
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else

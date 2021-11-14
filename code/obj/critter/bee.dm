@@ -618,7 +618,7 @@
 		else
 			return ..()
 
-	CanPass(atom/mover, turf/target)
+	Cross(atom/mover)
 		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else

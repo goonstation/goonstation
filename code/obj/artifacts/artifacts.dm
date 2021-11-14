@@ -291,7 +291,10 @@
 
 	New(var/loc)
 		..()
-		Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		if(length(types))
+			Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		else
+			CRASH("No artifact types provided.")
 		qdel(src)
 		return
 

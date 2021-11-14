@@ -134,7 +134,6 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			msg += " It will end in [duration / 10] seconds."
 		msg += "</span><br><br>"
 		out(world, msg)
-		world << csound("sound/voice/mapvote_[pick("hufflaw","spyguy","readster","bill","cirr","pope","wonk","dions")].ogg")
 
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
