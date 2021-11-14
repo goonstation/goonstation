@@ -580,6 +580,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "2_welded"
 	req_access = null
 
+/obj/machinery/door/airlock/soviet
+	name = "soviet airlock"
+	icon = "icons/obj/doors/sovairlocks.dmi"
+	icon_state = "sov_closed"
+	icon_base = "sov"
+
 /obj/machinery/door/airlock/gannets
 	name = "airlock"
 	icon = 'icons/obj/doors/destiny.dmi'

@@ -65102,10 +65102,9 @@
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "dvw" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/soviet{
 	dir = 4;
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
+	name = "airlock"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -77593,10 +77592,9 @@
 	},
 /area/hospital/samostrel)
 "mvS" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/soviet{
 	dir = 4;
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
+	name = "airlock"
 	},
 /turf/unsimulated/floor/carpet/office,
 /area/prefab/threeonefiveone/level_two)

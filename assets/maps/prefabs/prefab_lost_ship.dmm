@@ -267,10 +267,9 @@
 	},
 /area/prefab/threeonefiveone/level_one)
 "xs" = (
-/obj/machinery/door/unpowered/shuttle{
+/obj/machinery/door/airlock/soviet{
 	dir = 4;
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
+	name = "airlock"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -586,9 +585,8 @@
 	},
 /area/prefab/threeonefiveone/level_one)
 "OA" = (
-/obj/machinery/door/unpowered/shuttle{
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
+/obj/machinery/door/airlock/soviet{
+	name = "airlock"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -605,12 +603,11 @@
 /area/prefab/threeonefiveone/level_one)
 "Pm" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/door/unpowered/shuttle{
-	dir = 4;
-	icon = 'icons/Testing/newicons/obj/NEWdoors/door_command.dmi';
-	icon_state = "sdoor"
-	},
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/door/airlock/soviet{
+	dir = 4;
+	name = "airlock"
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -1226,7 +1223,7 @@ KY
 rg
 Qe
 Ts
-xs
+yS
 Qe
 Ts
 Ts
