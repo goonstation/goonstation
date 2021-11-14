@@ -133,8 +133,8 @@
 
 		qdel(src)
 
-	proc/reset_to_random_pos()
-		src.reset_to_aim_at(locate(rand(1, world.maxx), rand(1, world.maxy), 1))
+	proc/reset_to_random_pos(dir=null)
+		src.reset_to_aim_at(locate(rand(1, world.maxx), rand(1, world.maxy), 1), dir)
 
 	proc/reset_to_aim_at(turf/target, new_dir=null)
 		if(!new_dir)
@@ -143,12 +143,12 @@
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.loc = start
 
-proc/launch_with_missile(atom/movable/thing, turf/target)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
 	if(!target)
 		missile.reset_to_random_pos()
 	else
-		missile.reset_to_aim_at(target)
+		missile.reset_to_aim_at(target, dir)
 		missile.target = target
 	missile.lunch(thing)
 	return missile

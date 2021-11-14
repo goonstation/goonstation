@@ -1,4 +1,3 @@
-
 /datum/component/loctargeting
 	var/list/signals = list()
 	var/proctype // = .proc/pass
