@@ -582,7 +582,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/soviet
 	name = "soviet airlock"
-	icon = "icons/obj/doors/sovairlocks.dmi"
+	icon = 'icons/obj/doors/sovairlock.dmi'
 	icon_state = "sov_closed"
 	icon_base = "sov"
 
