@@ -551,12 +551,8 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_suit = list(/obj/item/clothing/suit/det_suit)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
-<<<<<<< HEAD
 	rounds_needed_to_play = 15 // bit less then sec but not by much
 	map_can_autooverride = 0
-=======
-	map_can_autooverride = 0
->>>>>>> master
 
 	New()
 		..()
