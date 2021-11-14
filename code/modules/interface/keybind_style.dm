@@ -297,29 +297,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/instrument_keyboard
 	name = "instrument_keyboard"
 	changed_keys = list(
-<<<<<<< HEAD
-=======
-		"W" = "",
-		"A" = "",
-		"S" = "",
-		"D" = "",
-		"E" = "",
-		"Q" = "",
-		"B" = "",
-		"T" = "",
-		"Y" = "",
-		"O" = "",
-		"Z" = "",
-		"F" = "",
-		"R" = "",
-		"M" = "",
-		"I" = "",
-		"K" = "",
-		"J" = "",
-		"L" = "",
-		"P" = "",
-		"G" = "",
->>>>>>> 37b1a2846... Cleaned up instrument code, additional UI, etc
 		"1" = "",
 		"2" = "",
 		"3" = "",
@@ -330,7 +307,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"8" = "",
 		"9" = "",
 		"0" = "",
-<<<<<<< HEAD
 		"Q" = "",
 		"W" = "",
 		"E" = "",
@@ -356,12 +332,6 @@ var/global/list/datum/keybind_style/keybind_styles = null
 		"B" = "",
 		"N" = "",
 		"M" = "",
-=======
-		"V" = "",
-		"Q" = "",
-		"E" = "",
-		"C" = "",
->>>>>>> 37b1a2846... Cleaned up instrument code, additional UI, etc
 	)
 
 /datum/keybind_style/pod
