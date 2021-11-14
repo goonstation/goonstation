@@ -29,6 +29,10 @@
 #define COMPONENT_NOTRANSFER 2
 
 
+/// arginfo handling TODO: document
+#define ARG_INFO(name, type, desc, default...)\
+	list(name, type, desc, ##default)
+
 // How multiple components of the exact same type are handled in the same datum
 
 /// old component is deleted (default)
