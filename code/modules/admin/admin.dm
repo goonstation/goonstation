@@ -194,6 +194,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_attack_messages()
 				src.show_pref_window(usr)
+		if ("toggle_adminwho_alerts")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_adminwho_alerts()
+				src.show_pref_window(usr)
 		if ("toggle_rp_word_filtering")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
@@ -315,7 +319,10 @@ var/global/noir = 0
 					src.auto_alt_key_name = null
 					boutput(usr, "<span class='notice'>Auto Alt Key removed.</span>")
 					return
-
+		if ("set_auto_alias_global_save")
+			if (src.level >= LEVEL_SA)
+				usr.client.holder.auto_alias_global_save = !usr.client.holder.auto_alias_global_save
+				src.show_pref_window(usr)
 		if ("refreshoptions")
 			var/mob/M = locate(href_list["target"])
 			if (!M) return

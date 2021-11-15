@@ -1451,6 +1451,18 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
 
+/datum/supply_packs/complex/status_display
+	name = "Disassembled Status Displays"
+	desc = "Contains four disassembled status display panels as they have not yet been installed on all NanoTrasen space objects."
+	category = "Engineering Department"
+	frames = list(/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display)
+	cost = 6000
+	containertype = /obj/storage/crate
+	containername = "Status Display Kit"
+
 /datum/supply_packs/complex/eppd_kit
 	name = "Emergency Pressurzation Kit"
 	desc = "Frames: 1x Extreme-Pressure Pressurization Device"

@@ -346,7 +346,6 @@ img.emoji {
 h1.alert, h2.alert {color: #000000;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
-.highlight {background: yellow;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 
 .rstandard {color: #008000;}
@@ -378,6 +377,11 @@ h1.alert, h2.alert {color: #000000;}
 .who-list span, .who-list a {
 	display: inline-block;
 	margin-right: 10px;
+}
+.highlight {
+	background: yellow;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */
