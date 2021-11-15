@@ -1,5 +1,9 @@
 
 (t)sun nov 14 21
+(u)Mr. Moriarty
+(p)6470
+(e)🐛🗺|bug, mapping
+(+)The NSS Clarion now trusts Security Assistants enough to allow them to retrieve their own gear without supervision from a superior officer.
 (u)anonymous
 (p)6631
 (e)🗺|mapping
