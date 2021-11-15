@@ -2,6 +2,15 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/datum/light/light
 
+TYPEINFO(/datum/component/holdertargeting/light)
+	initialization_args = list(
+		ARG_INFO("r", "num", "Value of red component \[0-1\]", 1),
+		ARG_INFO("g", "num", "Value of green component \[0-1\]", 1),
+		ARG_INFO("b", "num", "Value of blue component \[0-1\]", 1),
+		ARG_INFO("brightness", "num", "Brightness of the light", 1.5),
+		ARG_INFO("height", "num", "Height of the light", 1)
+	)
+
 /datum/component/holdertargeting/light/Initialize(r = 1.0, g = 1.0, b = 1.0, brightness = 1.5, height = 1.0)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)

@@ -99,8 +99,9 @@
 		count_healths()
 
 		SPAWN_DBG(0)
-			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-			src.attach_hud(zone_sel)
+			if(!src.disposed)
+				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -1209,7 +1210,7 @@
 	proc/on_wake()
 		return
 
-/mob/living/critter/Bump(atom/A, yes)
+/mob/living/critter/Bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
 		return

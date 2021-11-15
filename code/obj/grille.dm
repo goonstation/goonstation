@@ -21,7 +21,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	New()
 		..()
@@ -75,6 +75,7 @@
 		auto = FALSE
 		connects_to_turf = null
 		connects_to_turf = null
+		event_handler_flags = 0
 
 		update_icon(special_icon_state)
 			if (ruined)
@@ -516,7 +517,7 @@
 
 		return src.electrocute(user, prb, net, ignore_gloves)
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			if (density)
 				return prob(50)
@@ -527,14 +528,14 @@
 
 		return ..()
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (src.shock_when_entered)
 			if (ismob(AM))
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

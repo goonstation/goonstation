@@ -8,7 +8,7 @@
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | USE_HASENTERED
+	event_handler_flags = USE_FLUID_ENTER 
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
 
@@ -23,15 +23,10 @@
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 
-/obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
+/obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor) || istype(AM,/obj/hologram))
+	if(AM.flags & UNCRUSHABLE)
 		return
-
-	if(istype(AM,/mob/wraith))
-		var/mob/wraith/W = AM
-		if(!W.haunting)
-			return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)

@@ -332,7 +332,6 @@
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.host.owner

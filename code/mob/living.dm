@@ -1,7 +1,7 @@
 // living
 
 /mob/living
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
 
 	// this is a read only variable. do not set it directly.
@@ -35,6 +35,7 @@
 	var/is_npc = 0
 
 	var/move_laying = null
+	var/last_typing = null
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
@@ -275,6 +276,10 @@
 	else
 		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
 
+/mob/living/Logout()
+	. = ..()
+	src.UpdateOverlays(null, "speech_bubble")
+
 /mob/living/Login()
 	..()
 	// If...
@@ -426,6 +431,8 @@
 		if ("togglepoint")
 			src.toggle_point_mode()
 		if ("say_radio")
+			src.say_radio()
+		if ("say_main_radio")
 			src.say_radio()
 		else
 			. = ..()
@@ -645,6 +652,21 @@
 			else
 				src.emote("handpuppet")
 
+/// returns true if first letter of things that person says should be capitalized
+/mob/living/proc/capitalize_speech()
+	if (!client)
+		return FALSE
+	if (!client.preferences)
+		return FALSE
+	. = src.client.preferences.auto_capitalization
+
+/// special behavior for AIs to make sure it still works in eyecam form
+/mob/living/silicon/ai/capitalize_speech()
+	if (!client)
+		if (src?.eyecam?.client?.preferences)
+			return src.eyecam.client.preferences
+	. = ..()
+
 /mob/living/say(var/message, ignore_stamina_winded)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
@@ -799,7 +821,7 @@
 	if (!message)
 		return
 
-	if(src?.client?.preferences.auto_capitalization)
+	if(src.capitalize_speech())
 		message = capitalize(message)
 
 	if (src.voice_type && world.time > last_voice_sound + 8)
@@ -900,8 +922,10 @@
 				message = stutter(message)
 
 	UpdateOverlays(speech_bubble, "speech_bubble")
+	var/speech_bubble_time = src.last_typing
 	SPAWN_DBG(1.5 SECONDS)
-		UpdateOverlays(null, "speech_bubble")
+		if(speech_bubble_time == src.last_typing)
+			UpdateOverlays(null, "speech_bubble")
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
@@ -1318,10 +1342,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	var/turf/T = get_turf(src)
 	if (T.active_liquid && src.lying)
-		T.active_liquid.HasEntered(src, T)
+		T.active_liquid.Crossed(src)
 		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
 
-	if (!src.restrained())
+	if (!src.restrained() && isalive(src)) //isalive returns false for both dead and unconcious, which is what we want
 		var/struggled_grab = 0
 		if (src.canmove)
 			if(src.grabbed_by.len > 0)
@@ -1365,7 +1389,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/atom/oldloc = src.loc
 	. = ..()
 	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text.vis_locs.len)
+		if(src.chat_text?.vis_locs?.len)
 			var/atom/movable/AM = src.chat_text.vis_locs[1]
 			AM.vis_contents -= src.chat_text
 		if(istype(src.loc, /turf))
@@ -1724,7 +1748,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.ai.was_harmed(weapon,M)
 		if(src.is_hibernating)
 			if (src.registered_area)
-				src.registered_area.wake_critters()
+				src.registered_area.wake_critters(M)
 			else
 				src.wake_from_hibernation()
 	..()

@@ -6,8 +6,9 @@ var/datum/explosion_controller/explosions
 	var/list/queued_turfs_blame = list()
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
+	var/next_turf_safe = FALSE
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -66,21 +67,21 @@ var/datum/explosion_controller/explosions
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
 				for (var/obj/O in T)
-					if(istype(O, /obj/overlay))
+					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window))
 						continue
 					O.ex_act(1, last_touched, p)
 					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
 			else if (p > 3)
 				for (var/obj/O in T)
-					if(istype(O, /obj/overlay))
+					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window))
 						continue
 					O.ex_act(2, last_touched, p)
 					if (istype(O, /obj/cable))
 						needrebuild = 1
 			else
 				for (var/obj/O in T)
-					if(istype(O, /obj/overlay))
+					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window))
 						continue
 					O.ex_act(3, last_touched, p)
 
@@ -104,12 +105,13 @@ var/datum/explosion_controller/explosions
 				T.maptext = "<span style='color: #00ff00;' class='pixel c sh'>[p]</span>"
 
 #else
-			if (p >= 6)
-				T.ex_act(1, last_touched)
-			else if (p > 3)
-				T.ex_act(2, last_touched)
-			else
-				T.ex_act(3, last_touched)
+			var/severity = p >= 6 ? 1 : p > 3 ? 2 : 3
+			if(next_turf_safe)
+				if(istype(T, /turf/simulated/wall))
+					continue // they can break even on severity 3
+				else if(istype(T, /turf/simulated))
+					severity = max(severity, 3)
+			T.ex_act(severity, last_touched)
 #endif
 		LAGCHECK(LAG_HIGH)
 
@@ -124,6 +126,7 @@ var/datum/explosion_controller/explosions
 
 		rebuild_camera_network()
 		world.updateCameraVisibility()
+		next_turf_safe = FALSE
 
 	proc/process()
 		if (exploding)
@@ -136,6 +139,7 @@ var/datum/explosion_controller/explosions
 				E = queued_explosions[1]
 				queued_explosions -= E
 				E.explode()
+				next_turf_safe |= E.turf_safe
 
 /datum/explosion
 	var/atom/source
@@ -145,8 +149,9 @@ var/datum/explosion_controller/explosions
 	var/angle
 	var/width
 	var/user
+	var/turf_safe
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -155,20 +160,23 @@ var/datum/explosion_controller/explosions
 		src.angle = angle
 		src.width = width
 		src.user = user
+		src.turf_safe = turf_safe
 
 	proc/logMe(var/power)
-		//I do not give a flying FUCK about what goes on in the colosseum. =I
-		if(!istype(get_area(epicenter), /area/colosseum) && istype(src.source))
-			// Cannot read null.name
-			var/logmsg = "Explosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
-			if(power > 10)
-				message_admins(logmsg)
-			if (source?.fingerprintslast)
-				logTheThing("bombing", source.fingerprintslast, null, logmsg)
-				logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
-			else
-				logTheThing("bombing", user, null, logmsg)
-				logTheThing("diary", user, null, logmsg, "combat")
+		if(istype(src.source))
+			//I do not give a flying FUCK about what goes on in the colosseum and sims. =I
+			var/area/A = get_area(epicenter)
+			if(!A.dont_log_combat)
+				// Cannot read null.name
+				var/logmsg = "[turf_safe ? "Turf-safe e" : "E"]xplosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				if(power > 10)
+					message_admins(logmsg)
+				if (source?.fingerprintslast)
+					logTheThing("bombing", source.fingerprintslast, null, logmsg)
+					logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
+				else
+					logTheThing("bombing", user, null, logmsg)
+					logTheThing("diary", user, null, logmsg, "combat")
 
 	proc/explode()
 		logMe(power)
@@ -195,17 +203,23 @@ var/datum/explosion_controller/explosions
 
 		var/list/nodes = list()
 		var/list/blame = list()
+		var/index_open = 1
 		var/list/open = list(epicenter)
+		var/list/next_open = list()
 		nodes[epicenter] = radius
-		while (open.len)
-			if(length(nodes) % 100 == 0)
+		var/i = 0
+		while (index_open <= length(open) || length(next_open))
+			if(i++ % 500 == 0)
 				LAGCHECK(LAG_HIGH)
-			var/turf/T = open[1]
-			open.Cut(1, 2)
+			if(index_open > length(open))
+				open = next_open
+				next_open = list()
+				index_open = 1
+			var/turf/T = open[index_open++]
 			var/value = nodes[T] - 1 - T.explosion_resistance
 			var/value2 = nodes[T] - 1.4 - T.explosion_resistance
-			for (var/atom/A in T.contents)
-				if (A.density/* && !A.CanPass(null, target)*/) // nothing actually used the CanPass check
+			for (var/atom/A as anything in T)
+				if (A.density/* && !A.Cross(null, target)*/) // nothing actually used the Cross check
 					value -= A.explosion_resistance
 					value2 -= A.explosion_resistance
 			if (value < 0)
@@ -224,7 +238,7 @@ var/datum/explosion_controller/explosions
 				if ((nodes[target] && nodes[target] >= new_value))
 					continue
 				nodes[target] = new_value
-				open |= target
+				next_open[target] = 1
 
 		radius += 1 // avoid a division by zero
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun

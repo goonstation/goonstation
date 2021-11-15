@@ -379,8 +379,8 @@
 		// More info would be nice (Convair880).
 		var/dat = ""
 		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(whois_ckey_to_mob_reference(S.mind.master)))
-				dat += "<br>[S] is a vampire's thrall, only obeying [whois_ckey_to_mob_reference(S.mind.master)]."
+			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(ckey_to_mob(S.mind.master)))
+				dat += "<br>[S] is a vampire's thrall, only obeying [ckey_to_mob(S.mind.master)]."
 			else
 				if (isAI(S)) continue // Rogue AIs modify the global lawset.
 				if (S.mind && !S.dependent)
@@ -685,6 +685,14 @@
 	admin_only
 
 	src.holder.viewPlayerNotes(ckey(target))
+
+/client/proc/cmd_admin_set_loginnotice(target as text)
+	set name = "Set Player LoginNotice"
+	set desc = "Change a player's login notice."
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+
+	src.holder.setLoginNotice(ckey(target))
 
 /client/proc/cmd_admin_polymorph(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

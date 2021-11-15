@@ -45,10 +45,9 @@ var/list/ban_from_airborne_fluid = list()
 
 	done_init()
 		var/i = 0
-		for(var/atom/A in range(0,src))
+		for(var/atom/movable/A in range(0,src))
 			if (src.disposed) return
-			//var/atom/A = atom
-			src.HasEntered(A,A.loc)
+			src.Crossed(A)
 			i++
 			if (i > 40)
 				break
@@ -110,13 +109,13 @@ var/list/ban_from_airborne_fluid = list()
 		src.group.reagents.trans_to(M, react_volume)
 
 	//incorporate touch_modifier?
-	HasEntered(atom/A, atom/oldloc)
+	Crossed(atom/movable/A)
+		..()
 		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
 			return
+		A.EnteredAirborneFluid(src, A.last_turf)
 
-		A.EnteredAirborneFluid(src,oldloc)
-
-	HasExited(atom/movable/AM, atom/newloc)
+	Uncrossed(atom/movable/AM, atom/newloc)
 		return
 		//if (AM.event_handler_flags & USE_FLUID_ENTER)
 		//	AM.ExitedFluid(src,newloc)
@@ -225,6 +224,11 @@ var/list/ban_from_airborne_fluid = list()
 									step_away(I,src)
 						else
 							step_away(push_thing,src)
+
+					for(var/atom/A in F.loc)
+						if (A.event_handler_flags & USE_FLUID_ENTER)
+							A.EnteredAirborneFluid(F, F.loc)
+					F.loc.EnteredAirborneFluid(F, F.loc)
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/effects/smoke_tile_spread.ogg', 30,1,7)

@@ -6,14 +6,27 @@
 /datum/computer/file/pda_program/pingtool
 	name = "Ping Tool"
 	size = 8
-	var/send_freq = 1149 //Frequency signal is sent at, should be kept within normal radio ranges.
+	var/send_freq = FREQ_PDA //Frequency signal is sent at, should be kept within normal radio ranges.
 	var/range = 32
 	var/mode = 0
 	var/tmp/list/result
 
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(
+			/datum/component/packet_connected/radio, \
+			"ping",\
+			send_freq, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
 
-	init()
-		radio_controller.add_object(master, "[send_freq]")
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "ping"))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
 	return_text()
 		if(..())
@@ -69,13 +82,12 @@
 				if(result) result.Cut()
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
-				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["address_1"] = "ping"
 				signal.data["sender"] = master.net_id
 
 				mode = 1
 				master.updateSelfDialog()
-				src.post_signal(signal,"[send_freq]")
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, range, "ping")
 				sleep(2 SECONDS)
 				mode = 0
 				master.updateSelfDialog()
@@ -109,41 +121,41 @@
 		return
 
 
-	receive_signal(datum/signal/signal)
-
-		//boutput(world, "[master.net_id] Recieved signal from [signal.source] ([get_dist(master,signal.source)])")
-		//
-		//for(var/x in signal.data)
-		//	boutput(world, "[x] = [signal.data[x]]")
-		//boutput(world, "---------------")
-
-		if(..())
-			return
-
-
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
 		if(signal.data["address_1"] == master.net_id && signal.data["command"] == "ping_reply")
 			if(!result)
 				result = new/list()
-			if(get_dist(master,signal.source) <= range)
-				result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"
+			result += "[signal.data["device"]] \[[signal.data["netid"]]\] [signal.data["data"]]<BR>"
 
 	proc/adjust_frequency(var/old_freq, var/new_freq)
-		if (old_freq != 1149) // don't unregister the PDA itself
-			radio_controller.remove_object(master, "[old_freq]")
-		radio_controller.add_object(master, "[new_freq]")
+		get_radio_connection_by_id(src.master, "ping").update_frequency(new_freq)
 
 
 
 /datum/computer/file/pda_program/packet_sniffer
 	name = "Packet Sniffer"
 	size = 16
-	var/scan_freq = 1149
+	var/scan_freq = FREQ_PDA
 	var/range = 32
 	var/mode = 0
 	var/tmp/list/result
 
-	init()
-		radio_controller.add_object(master, "[scan_freq]")
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(
+			/datum/component/packet_connected/radio, \
+			"sniffer",\
+			scan_freq, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			TRUE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "sniffer"))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
 	return_text()
 		if(..())
@@ -229,35 +241,16 @@
 				if(64)
 					range = 32
 
-
-
-
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
 
-	network_hook(datum/signal/signal, rx_method, rx_freq)
-
-		if(!mode)
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!mode || connection_id != "sniffer")
 			return
 
-
-		/////
-		//boutput(world, "[master.net_id] Recieved signal @[rx_freq] from [signal.source] ([get_dist(master,signal.source)])")
-		//for(var/x in signal.data)
-		//	boutput(world, "[x] = [signal.data[x]]")
-		//boutput(world, "----")
-		/////
-
-		if(rx_freq != "[scan_freq]")
+		if(!IN_RANGE(master, signal.source, src.range))
 			return
-
-
-		if(get_dist(master, signal.source) > range)
-			return
-
-		//boutput(world, "====")
-
 
 		if(!result)
 			result = new/list()
@@ -286,24 +279,32 @@
 
 
 	proc/adjust_frequency(var/old_freq, var/new_freq)
-		if (old_freq != 1149) // don't unregister the PDA itself
-			radio_controller.remove_object(master, "[old_freq]")
-		radio_controller.add_object(master, "[new_freq]")
-
-
+		get_radio_connection_by_id(src.master, "sniffer").update_frequency(new_freq)
 
 /datum/computer/file/pda_program/packet_sender
 	name = "Packet Sender"
 	size = 8
-	var/send_freq = 1149
+	var/send_freq = FREQ_PDA
 	var/range = 32
 	var/tmp/list/keyval
 	var/mode = 0
 
 #define MAX_PACKET_KEYS 10
 
-	init()
-		radio_controller.add_object(master, "[send_freq]")
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(
+			/datum/component/packet_connected/radio, \
+			"sender",\
+			send_freq, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			TRUE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "sender"))
 
 	return_text()
 		if(..())
@@ -354,11 +355,13 @@
 
 		if (href_list["adj_freq"])
 			send_freq = sanitize_frequency_diagnostic(send_freq + text2num(href_list["adj_freq"]))
+			get_radio_connection_by_id(src.master, "sender").update_frequency(send_freq)
 
 		else if (href_list["set_freq"])
 			var/new_freq = input(usr,"Target frequency (1141-1489):","Enter target frequency",send_freq) as num
 			new_freq = sanitize_frequency_diagnostic(new_freq)
 			send_freq = new_freq
+			get_radio_connection_by_id(src.master, "sender").update_frequency(send_freq)
 
 
 		else if(href_list["edit"])
@@ -432,15 +435,14 @@
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
-				signal.transmission_method = TRANSMISSION_RADIO
 
 				for(var/key in keyval)
 					signal.data[key] = keyval[key]
 
-				if ((send_freq == 1149) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
+				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
 					logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
 
-				src.post_signal(signal,"[send_freq]")
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "sender")
 				master.updateSelfDialog()
 				sleep(1 SECOND)
 				mode = 0
