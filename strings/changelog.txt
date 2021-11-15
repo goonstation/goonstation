@@ -1,4 +1,9 @@
 
+(t)mon nov 15 21
+(u)Nexusuxen
+(p)6537
+(e)|
+(*)AIs may now text people directly from examine text if their PDA (or PDAs) is visible and their messenger active, except if the AI is piloting a shell.
 (t)sun nov 14 21
 (u)Mr. Moriarty
 (p)6470
