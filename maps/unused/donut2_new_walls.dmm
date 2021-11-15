@@ -14024,9 +14024,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
 "aHr" = (
@@ -40427,6 +40424,17 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"hOB" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/north)
 "hOE" = (
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
@@ -42227,7 +42235,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
@@ -42272,6 +42280,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"nCu" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/north)
 "nDi" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -44640,6 +44654,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
+"umC" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/north)
 "umD" = (
 /obj/cable{
 	d1 = 2;
@@ -74605,7 +74625,7 @@ aBP
 aBP
 aBP
 nps
-aBP
+umC
 eAg
 eAg
 aaa
@@ -74907,7 +74927,7 @@ aCx
 aFM
 aGy
 aHq
-aBP
+nCu
 aaa
 adQ
 aaa
@@ -75209,7 +75229,7 @@ aEU
 aFN
 aGz
 aHr
-aBP
+nCu
 aaa
 adQ
 aaa
@@ -75511,7 +75531,7 @@ aDZ
 aFO
 aGA
 aGA
-aGA
+hOB
 aGC
 aGC
 aGC
