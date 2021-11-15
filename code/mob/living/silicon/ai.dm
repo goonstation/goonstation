@@ -676,7 +676,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.textToPlayer("--- [termid] is disconnected!")
 			return
 
-		t = copytext(adminscrub(t), 1, 300)
+		t = copytext(adminscrub(t), 1, 301)
 		src.textToPlayer("<b>Replied to [termid] with:</b> \"<i>[t]</i>\"")
 
 		//Send the actual message signal
