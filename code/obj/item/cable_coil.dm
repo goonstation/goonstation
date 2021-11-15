@@ -185,9 +185,6 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			M.move_laying = src
 			boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
 
-/obj/proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
-	return
-
 /proc/find_half_cable(var/turf/T, var/ignore_dir)
 	for (var/obj/cable/C in T)
 		if (!C.d1 && C.d2 != ignore_dir)
