@@ -29,9 +29,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 			if("strange_reagent")
 				if (prob(50))
 					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/killer)
-			if("nicotine")
-				if (prob(80))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/tomacco)
 
 /datum/plant/fruit/grape
 	name = "Grape"

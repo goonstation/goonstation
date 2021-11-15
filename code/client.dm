@@ -522,10 +522,14 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
+#ifdef LIVE_SERVER
 		if (cdn)
 			if(!cloud_available())
 				src.player.cloud_fetch()
-
+#else
+		// dev server, uses local save file to simulate clouddata
+		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
+#endif
 			if(cloud_available())
 				src.load_antag_tokens()
 				src.load_persistent_bank()
@@ -648,6 +652,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(istype(composite))
 		for(var/datum/abilityHolder/inner_holder in composite.holders)
 			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.color = "#AAAAAA"
+
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
@@ -959,7 +969,7 @@ var/global/curr_day = null
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
-		M = whois_ckey_to_mob_reference(targetCkey)
+		M = ckey_to_mob(targetCkey)
 
 	switch(href_list["action"])
 		if ("priv_msg_irc")
@@ -1038,7 +1048,7 @@ var/global/curr_day = null
 
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
-					M = whois_ckey_to_mob_reference(href_list["target"])
+					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
 					t = strip_html(t, 1500)
 				if (!( t ))

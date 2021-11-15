@@ -12,7 +12,7 @@
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	flags = NOSPLASH
+	flags = NOSPLASH | FLUID_SUBMERGE
 	var/health = 100
 	var/mode = "ready"
 	var/error = null
@@ -65,8 +65,7 @@
 	var/list/text_bad_output_adjective = list("janky","crooked","warped","shoddy","shabby","lousy","crappy","shitty")
 	var/obj/item/card/id/scan = null
 	var/temp = null
-	var/frequency = 1149
-	var/datum/radio_frequency/transmit_connection = null
+	var/frequency = FREQ_PDA
 	var/net_id = null
 
 	var/datum/action/action_bar = null
@@ -81,7 +80,7 @@
 		..()
 		var/area/area = get_area(src)
 		src.area_name = area?.name
-		src.transmit_connection = radio_controller.add_object(src,"[frequency]")
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 		src.net_id = generate_net_id(src)
 
 		if (istype(manuf_controls,/datum/manufacturing_controller))
@@ -122,8 +121,6 @@
 		src.sound_beginwork = null
 		src.sound_damaged = null
 		src.sound_destroyed = null
-		radio_controller.remove_object(src,"[frequency]")
-		src.transmit_connection = null
 
 		for (var/obj/O in src.contents)
 			O.set_loc(src.loc)
@@ -508,10 +505,10 @@
 		// This is not re-formatted yet just b/c i don't wanna mess with it
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<br>"
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<br>"
 		dat+= src.temp
 		dat += "<HR><B>Ores Available for Purchase:</B><br><small>"
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
@@ -791,7 +788,7 @@
 				if (src.scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 					return
-				var/datum/data/record/account = null
+				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
 					var/quantity = 1
@@ -804,23 +801,19 @@
 						var/sum_taxes = round(taxes * quantity)
 						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
 						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account.fields["current_money"] >= total)
-							account.fields["current_money"] -= total
+						if(account["current_money"] >= total)
+							account["current_money"] -= total
 							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
 							 // This next bit is stolen from PTL Code
-							var/list/accounts = list()
-							for(var/datum/data/record/t in data_core.bank)
-								if(t.fields["job"] == "Chief Engineer")
-									accounts += t
-									accounts += t //fuck it x2
-								else if(t.fields["job"] == "Miner")
-									accounts += t
+							var/list/accounts = \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Chief Engineer") + \
+								data_core.bank.find_records("job", "Engineer")
 
 
 							var/datum/signal/minerSignal = get_free_signal()
 							minerSignal.source = src
-							minerSignal.transmission_method = TRANSMISSION_RADIO
 							//any non-divisible amounts go to the shipping budget
 							var/leftovers = 0
 							if(length(accounts))
@@ -828,14 +821,14 @@
 								var/divisible_amount = subtotal - leftovers
 								if(divisible_amount)
 									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/data/record/t in accounts)
-										t.fields["current_money"] += amount_per_account
-									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+									for(var/datum/db_record/t as anything in accounts)
+										t["current_money"] += amount_per_account
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
 							else
 								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGO_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
 							wagesystem.shipping_budget += (leftovers + sum_taxes)
-							transmit_connection.post_signal(src, minerSignal)
+							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 
 							src.temp = {"Enjoy your purchase!<BR>"}
 						else
@@ -1074,7 +1067,7 @@
 		if (istype(I, /obj/item/card/id))
 			var/obj/item/card/id/ID = I
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
 				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num

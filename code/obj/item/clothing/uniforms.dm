@@ -5,8 +5,6 @@
 	desc = "A serviceable and comfortable jumpsuit used by nearly everyone on the station."
 	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js.dmi'
-	var/image/wear_image_fat = null
-	var/image/wear_image_fat_icon = 'icons/mob/jumpsuits/worn_js_fat.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
@@ -28,11 +26,6 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
-
-/obj/item/clothing/under/New()
-	wear_image_fat = image(wear_image_fat_icon)
-	wear_image_fat.icon_state = icon_state
-	..()
 
 // Experimental composite jumpsuit
 
@@ -182,6 +175,10 @@
 		name = "pink jumpsuit"
 		icon_state = "pink"
 		item_state = "pink"
+
+	unremovable
+		cant_self_remove = 1
+		cant_other_remove = 1
 //PRIDE
 /obj/item/clothing/under/pride
 	name = "LGBT pride jumpsuit"

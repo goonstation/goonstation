@@ -173,6 +173,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = 1
 			maxradius = INFINITY
+			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
+			message_admins("[src] has become loose at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -768,7 +770,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
 	var/delay = 5
@@ -874,7 +876,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
+/obj/machinery/containment_field/Cross(atom/movable/O as mob|obj)
 	if(iscarbon(O) && prob(80))
 		shock(O)
 	..()

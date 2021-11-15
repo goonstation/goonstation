@@ -739,16 +739,22 @@ var/datum/action_controller/actions
 	border_icon_state = "border-private"
 	onStart()
 		..()
-		bar.icon = null
-		border.icon = null
-		owner << bar.img
-		owner << border.img
+		if (ismob(owner))
+			var/mob/M = owner
+			bar.icon = null
+			border.icon = null
+			M.client?.images += bar.img
+			M.client?.images += border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		qdel(bar.img)
-		qdel(border.img)
+		if (ismob(owner))
+			var/mob/M = owner
+			M.client?.images -= bar.img
+			M.client?.images -= border.img
+			qdel(bar.img)
+			qdel(border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -768,9 +774,14 @@ var/datum/action_controller/actions
 			icon_image.plane = icon_plane
 
 			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			owner << icon_image
+			if (ismob(owner))
+				var/mob/M = owner
+				M.client?.images += icon_image
 
 	onDelete()
+		if (ismob(owner))
+			var/mob/M = owner
+			M.client?.images -= icon_image
 		qdel(icon_image)
 		..()
 
@@ -837,7 +848,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(issilicon(source))
+			if(issilicon(source) || item.cant_drop) //Fix for putting item arm objects into others' inventory
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
@@ -1521,7 +1532,7 @@ var/datum/action_controller/actions
 
 			var/turf/T = get_turf(M)
 			if (T.active_liquid)
-				T.active_liquid.HasEntered(M, T)
+				T.active_liquid.Crossed(M)
 
 		else
 			interrupt(INTERRUPT_ALWAYS)

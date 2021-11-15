@@ -1,6 +1,13 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { KEY_LEFT, KEY_RIGHT } from 'common/keycodes';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs, Tooltip } from '../../components';
+import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
@@ -70,13 +77,13 @@ export const CharacterPreferences = (_props: any, context: any) => {
           <Stack.Item grow="1">
             {menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character ? (
               <Stack fill>
-                <Stack.Item grow="1">
+                <Stack.Item basis={0} grow="1">
                   <Section scrollable fill>
                     {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
                     {menu === CharacterPreferencesTabKeys.Character && <CharacterTab />}
                   </Section>
                 </Stack.Item>
-                <Stack.Item ml="5px">
+                <Stack.Item>
                   <Section fill>
                     <ByondUi
                       params={{
@@ -123,7 +130,7 @@ const SavesAndProfile = (_props: any, context: any) => {
       <Stack.Item>
         <Stack>
           {data.profiles.map((profile, index) => (
-            <Stack.Item key={index} ml={index === 0 ? '0' : '5px'} width={`${100 / data.profiles.length}%`}>
+            <Stack.Item key={index} basis={0} grow={1}>
               <Profile profile={profile} index={index} />
             </Stack.Item>
           ))}

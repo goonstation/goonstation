@@ -54,6 +54,11 @@
 	message_admins("<span class='internal'>[key_name(src.owner.mob)] added a login notice for <a href='?src=%admin_ref%;action=notes&target=[target_key]'>[target_key]</A>:<br><div style='whitespace: pre-wrap;'>[message_text]</div></span>")
 	tgui_alert(src.owner.mob, "Login notice for '[target_key]' has been set. They should see it next time they connect.")
 
+	ircbot.export("admin", list(
+		"key" = src.owner.ckey,
+		"name" = src.owner.mob.name,
+		"msg" = "added an admin notice for `[target_key]`:\n[message_text]"))
+
 
 /// Returns 1 if a login message is pending, 0 otherwise
 /client/proc/has_login_notice_pending(var/show_again = 0)
@@ -121,4 +126,8 @@
 		src.mob.Browse(null, "window=loginnotice")
 		src << csound("sound/machines/futurebuddy_beep.ogg")
 		alert("You have acknowledged the admin notice and can now play.")
+		ircbot.export("admin", list(
+			"key" = src.ckey,
+			"name" = src.mob.name,
+			"msg" = "Acknowledged their admin notice."))
 
