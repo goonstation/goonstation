@@ -19,6 +19,8 @@
 	var/mob/passenger = null
 	var/num_loops = 0 // how many times we missed 😰
 	var/turf/target = null // if set this overrides default landing as is *the only place* where we can stop
+	var/missile_z = Z_LEVEL_STATION
+
 	New()
 		..()
 		src.ion_trail = new /datum/effects/system/ion_trail_follow()
@@ -46,6 +48,7 @@
 			for(var/mob/M in sent)
 				passenger = M
 				break
+		src.missile_z = src.z
 		sent.set_loc(src)
 		if(d)
 			src.update_dir(d)
@@ -128,8 +131,8 @@
 					moved_on_flooring++
 			if(T == src.target)
 				break
-			if(T.z != 1)
-				src.z = 1
+			if(T.z != missile_z)
+				src.z = missile_z
 
 		qdel(src)
 
