@@ -158,7 +158,7 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location.assume_air(gas)  // vent all gas to turf
+		location?.assume_air(gas)  // vent all gas to turf
 		gas = null
 		return
 
@@ -887,7 +887,6 @@
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-					newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
@@ -989,7 +988,6 @@
 	throwforce = 0
 	initial_volume = 1000
 	var/loaf_factor = 1
-	var/loaf_recursion = 1
 	var/processing = 0
 
 	New()

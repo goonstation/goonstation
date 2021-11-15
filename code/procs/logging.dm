@@ -23,6 +23,7 @@ var/global/logLength = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
+	var/forceNonDiaryLoggingToo = FALSE
 
 	if (source)
 		source = constructName(source, type)
@@ -68,6 +69,7 @@ var/global/logLength = 0
 				logs["audit"] += ingameLog
 				diaryLogging = 1
 				diaryType = "audit"
+				forceNonDiaryLoggingToo = TRUE
 			if ("admin") logs["admin"] += ingameLog
 			if ("admin_help") logs["admin_help"] += ingameLog
 			if ("mentor_help") logs["mentor_help"] += ingameLog
@@ -108,7 +110,7 @@ var/global/logLength = 0
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-		if (!diaryLogging && config.allowRotatingFullLogs)
+		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
 	return

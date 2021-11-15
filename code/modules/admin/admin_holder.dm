@@ -11,6 +11,7 @@
 	var/servertoggles_toggle = 0
 	var/animtoggle = 1
 	var/attacktoggle = 1
+	var/adminwho_alerts = 1
 	var/rp_word_filtering = 0
 	var/auto_stealth = 0
 	/// toogle that determines whether or not clouddata for auto alt key and stealth is per server or global
@@ -132,6 +133,7 @@
 		if (src.owner:holder:level >= LEVEL_PA)
 			HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
@@ -187,6 +189,13 @@
 		if (saved_attacktoggle == 0 && attacktoggle != 0)
 			src.owner:toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
+
+		var/saved_adminwho_alerts = AP["adminwho_alerts"]
+		if (isnull(saved_adminwho_alerts))
+			saved_adminwho_alerts = 1
+		if (saved_adminwho_alerts == 0 && adminwho_alerts != 0)
+			src.owner:toggle_adminwho_alerts()
+		adminwho_alerts = saved_adminwho_alerts
 
 		var/saved_rp_word_filtering = AP["rp_word_filtering"]
 		if (isnull(saved_rp_word_filtering))
@@ -302,6 +311,7 @@
 		AP["animtoggle"] = animtoggle
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
+		AP["adminwho_alerts"] = adminwho_alerts
 		AP["hear_prayers"] = hear_prayers
 		AP["audible_prayers"] = audible_prayers
 		AP["atags"] = see_atags
