@@ -86,6 +86,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 
 				H.unequip_all()
 				var/mob/living/critter/C = H.make_critter(pick(animal_spell_critter_paths))
+				C.butcherable = 1 // we would like the brain to be recoverable, please
 				if (istype(C, /mob/living/critter/small_animal/bee))
 					var/mob/living/critter/small_animal/bee/B = C
 					B.non_admin_bee_allowed = 1

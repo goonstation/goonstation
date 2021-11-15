@@ -29,21 +29,18 @@
 			safe_areas.Add(safe_locations[temp])
 			safe_locations[temp].icon_state = "blue"
 
-		var/timetoreachsec = rand(30,45)
-		var/actualtime = timetoreachsec * 10
-
 		for (var/mob/N in mobs) // why N?  why not M?
 			N.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
-		siren.repeat = 0
+		siren.repeat = TRUE
 		siren.channel = 5
 		siren.volume = 50 // wire note: lets not deafen players with an air raid siren
 		world << siren
-		command_alert("A BATTLE STORM is approaching the [station_or_ship()]! Impact in [timetoreachsec] seconds. You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]!", "BATTLE STORM INCOMING")
+		command_alert("A BATTLE STORM is approaching the [station_or_ship()]! Impact in 60 seconds. You will take large amounts of damage unless you are standing in [get_battle_area_names(safe_area_names)]!", "BATTLE STORM INCOMING")
 
-		SPAWN_DBG(actualtime)
+		SPAWN_DBG(60 SECONDS)
 
-			siren.repeat = 0
+			siren.repeat = FALSE
 			siren.channel = 5
 			siren.volume = 50
 
