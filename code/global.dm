@@ -14,7 +14,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf')
+var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf', 'code/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 

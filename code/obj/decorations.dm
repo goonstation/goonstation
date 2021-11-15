@@ -280,7 +280,7 @@
 		. = ..()
 		var/turf/T = get_turf(src.loc)
 		var/obj/machinery/power/data_terminal/link = locate() in T
-		link.master = src
+		link?.master = src
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
