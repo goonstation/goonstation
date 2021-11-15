@@ -45,6 +45,7 @@ var/list/popup_verbs_to_toggle = list(\
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
+/client/proc/toggle_adminwho_alerts,\
 /client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
@@ -176,6 +177,15 @@ var/global/IP_alerts = 1
 
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
+
+/client/proc/toggle_adminwho_alerts()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Who/Adminwho alerts"
+	set desc = "Toggles the alerts for players using Who/Adminwho"
+	admin_only
+
+	src.holder.adminwho_alerts = !src.holder.adminwho_alerts
+	boutput(usr, "<span class='notice'>Toggled who/adminwho alerts [src.holder.adminwho_alerts ?"on":"off"]!</span>")
 
 /client/proc/toggle_rp_word_filtering()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)

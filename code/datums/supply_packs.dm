@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/office
 	name = "Office Supply Crate"
-	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
+	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors, x2 Canvas"
 	contains = list(/obj/item/paper_bin = 4,
 		/obj/item/clipboard = 2,
 		/obj/item/item_box/postit,
@@ -673,6 +673,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		/obj/item/storage/box/crayon,
 		/obj/item/staple_gun/red,
 		/obj/item/scissors,
+		/obj/item/canvas = 2,
 		/obj/item/stamp = 2)
 	cost = 250
 	containername = "Office Supply Crate"
@@ -1449,6 +1450,18 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
+
+/datum/supply_packs/complex/status_display
+	name = "Disassembled Status Displays"
+	desc = "Contains four disassembled status display panels as they have not yet been installed on all NanoTrasen space objects."
+	category = "Engineering Department"
+	frames = list(/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display)
+	cost = 6000
+	containertype = /obj/storage/crate
+	containername = "Status Display Kit"
 
 /datum/supply_packs/complex/eppd_kit
 	name = "Emergency Pressurzation Kit"

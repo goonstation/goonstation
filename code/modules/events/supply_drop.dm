@@ -22,6 +22,11 @@
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in battle_pass_holders)
 			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
+		SPAWN_DBG(20 SECONDS)
+			for(var/datum/mind/M in ticker.minds)
+				if (M in battle_pass_holders)
+					continue
+				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
 
 /obj/effect/supplymarker
 	name = ""

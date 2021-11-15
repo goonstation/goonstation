@@ -1210,7 +1210,7 @@
 	proc/on_wake()
 		return
 
-/mob/living/critter/Bump(atom/A, yes)
+/mob/living/critter/Bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
 		return

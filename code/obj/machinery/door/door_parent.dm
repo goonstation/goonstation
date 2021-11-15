@@ -6,7 +6,7 @@
 	opacity = 1
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	object_flags = BOTS_DIRBLOCK
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
@@ -117,8 +117,7 @@
 				return 1
 	return 0
 
-/obj/machinery/door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	//if(air_group) return 0
+/obj/machinery/door/Cross(atom/movable/mover)
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		if(P.proj_data.window_pass)

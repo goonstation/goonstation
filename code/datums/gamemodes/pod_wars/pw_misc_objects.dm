@@ -220,7 +220,7 @@
 	var/team_num = 0		//1 = NT, 2 = SY
 	gas_impermeable = TRUE
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		if (ismob(A))
 			var/mob/M = A
 			if (team_num == get_pod_wars_team_num(M))
@@ -730,7 +730,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 
@@ -750,7 +750,7 @@
 
 		return
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else
