@@ -522,10 +522,14 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
+#ifdef LIVE_SERVER
 		if (cdn)
 			if(!cloud_available())
 				src.player.cloud_fetch()
-
+#else
+		// dev server, uses local save file to simulate clouddata
+		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
+#endif
 			if(cloud_available())
 				src.load_antag_tokens()
 				src.load_persistent_bank()

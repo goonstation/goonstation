@@ -13,6 +13,7 @@ var/list/magnet_locations = list()
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	New()
 		..()
@@ -30,16 +31,12 @@ var/list/magnet_locations = list()
 	proc/mechcompsend(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/place = special_places[input.signal]
-		if(place)
-			lrtsend(place)
+		lrtsend(input.signal)
 
 	proc/mechcomprecieve(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		var/place = special_places[input.signal]
-		if(place)
-			lrtrecieve(place)
+		lrtrecieve(input.signal)
 
 	proc/is_good_location(var/place)
 		if(special_places.len)

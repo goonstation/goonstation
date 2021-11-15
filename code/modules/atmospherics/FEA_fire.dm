@@ -114,8 +114,9 @@
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 		light.disable(queued_run = 1)
 #endif
-		if (loc)
-			loc:active_hotspot = null
+		var/turf/simulated/floor/location = loc
+		if (istype(location))
+			location.active_hotspot = null
 		..()
 
 	// now this is ss13 level code
