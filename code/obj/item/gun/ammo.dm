@@ -475,6 +475,12 @@
 	five_shots
 		amount_left = 5.0
 
+	smg
+		name = "9mm SMG magazine"
+		amount_left = 30.0
+		max_amount = 30.0
+		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
+
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm NATO"
 	name = "9mm magazine"
