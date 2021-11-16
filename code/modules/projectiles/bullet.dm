@@ -330,11 +330,6 @@ toxic - poisons
 	caliber = 0.355
 	icon_turf_hit = "bhole-small"
 
-	smg
-		power = 20
-		cost = 3
-		shot_number = 3
-
 /datum/projectile/bullet/nine_mm_NATO
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'

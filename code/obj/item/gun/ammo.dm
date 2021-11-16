@@ -475,12 +475,6 @@
 	five_shots
 		amount_left = 5.0
 
-	smg
-		name = "9mm SMG magazine"
-		amount_left = 30.0
-		max_amount = 30.0
-		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
-
 /obj/item/ammo/bullets/nine_mm_NATO
 	sname = "9mm NATO"
 	name = "9mm magazine"
@@ -1161,17 +1155,6 @@
 	name = "Power Cell - Atomic Slowcharge"
 	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
 	recharge_rate = 2.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
-
-/obj/item/ammo/power_cell/self_charging/disruptor
-	name = "Power Cell - Disruptor Charger"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "recharger_cell"
-	m_amt = 18000
-	g_amt = 38000
-	charge = 100.0
-	max_charge = 100.0
-	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
