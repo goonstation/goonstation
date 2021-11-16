@@ -278,6 +278,7 @@
 					ends -= T
 		else if(current_turf in ends)
 			reached_target_goals = ends[current_turf]
+			ends -= current_turf
 
 		if(length(reached_target_goals))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
@@ -352,6 +353,7 @@
 					ends -= T
 		else if(current_turf in ends)
 			reached_target_goals = ends[current_turf]
+			ends -= current_turf
 
 		if(length(reached_target_goals))
 			newnode = new(current_turf, parent_node, steps_taken)
