@@ -409,59 +409,24 @@
 	. = TRUE
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
+	var/direction = get_dir(source, T)
+	if(!direction)
+		return FALSE
+	if(!is_cardinal(direction))
+		var/turf/corner_1 = get_step(source, turn(direction, 45))
+		var/turf/corner_2 = get_step(source, turn(direction, -45))
+		return jpsTurfPassable(corner_1, source, passer, id) && jpsTurfPassable(T, corner_1, passer, id) || \
+				jpsTurfPassable(corner_2, source, passer, id) && jpsTurfPassable(T, corner_2, passer, id)
 	if(isnull(id) && istype(passer, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = passer
 		id = bot.botcard
 	// if a source turf was included check for directional blocks between the two turfs
 	if (source && (T.blocked_dirs || source.blocked_dirs))
-		var/direction = get_dir(source, T)
-
 		// do either of these turfs explicitly block entry or exit to the other?
 		if (HAS_FLAG(T.blocked_dirs, turn(direction, 180)))
 			return FALSE
 		else if (source && HAS_FLAG(source.blocked_dirs, direction))
 			return FALSE
-
-		if (direction in ordinal) // ordinal? That complicates things...
-			if (source.blocked_dirs && T.blocked_dirs)
-				// check for "wall" blocks
-				// ex. trying to move NE source blocking north exit and destination (T) blocking south entry
-				if (HAS_FLAG(source.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
-					return FALSE
-				else if (HAS_FLAG(source.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
-					return FALSE
-
-			var/turf/corner_1 = get_step(source, turn(direction, 45))
-			var/turf/corner_2 = get_step(source, turn(direction, -45))
-
-			// check for potential blocks form the two corners
-			if (corner_1.blocked_dirs && corner_2.blocked_dirs)
-				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)))
-					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
-						return FALSE // entry to dest blocked by corners
-					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
-						// check for "wall" blocks
-						// ex. trying to move NE with C1 blocking south entry and C2 blocking north exit
-						return FALSE
-				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)))
-					if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)))
-						return FALSE // exit from source blocked by corners
-					else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)))
-						return FALSE // "wall" block
-
-			// we got past the combinations of the two corners ok, but what about the corners combined with the source and destination?
-			// entry blocked by an object in destination and in one or more of the corners
-			if (T.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
-				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -45)) && HAS_FLAG(T.blocked_dirs, turn(direction, -135)))
-					return FALSE
-				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 45)) && HAS_FLAG(T.blocked_dirs, turn(direction, 135)))
-					return FALSE
-			// entry blocked by an object in source and in one or more of the corners
-			if (source.blocked_dirs && (corner_1.blocked_dirs || corner_2.blocked_dirs))
-				if (HAS_FLAG(corner_1.blocked_dirs, turn(direction, -135)) && HAS_FLAG(source.blocked_dirs, turn(direction, -45)))
-					return FALSE
-				else if (HAS_FLAG(corner_2.blocked_dirs, turn(direction, 135)) && HAS_FLAG(source.blocked_dirs, turn(direction, 45)))
-					return FALSE
 	for(var/atom/A in T.contents)
 		if (isobj(A))
 			var/obj/O = A
