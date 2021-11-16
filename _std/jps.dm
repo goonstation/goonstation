@@ -17,17 +17,17 @@
  * * simulated_only: Whether we consider turfs without atmos simulation (AKA do we want to ignore space)
  * * exclude: If we want to avoid a specific turf, like if we're a mulebot who already got blocked by some turf
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
- * * lateral_only: Whether to find only paths consisting of lateral steps.
+ * * cardinal_only: Whether to find only paths consisting of cardinal steps.
  * * required_goals: How many goals to find to succeed. Null for all.
  */
-/proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, lateral_only=FALSE, required_goals=null)
+/proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=FALSE, required_goals=null)
 	var/single_end = !islist(ends)
 	if(single_end)
 		ends = list(ends)
 	if(!caller || !length(ends))
 		return
 
-	var/datum/pathfind/pathfind_datum = new(caller, ends, id, max_distance, mintargetdist, simulated_only, exclude, lateral_only)
+	var/datum/pathfind/pathfind_datum = new(caller, ends, id, max_distance, mintargetdist, simulated_only, exclude, cardinal_only)
 	if(!isnull(required_goals))
 		pathfind_datum.n_target_goals = required_goals
 	pathfind_datum.search()
@@ -82,7 +82,7 @@
 	jumps = jumps_taken
 	if(incoming_goals) // if we have the goal argument, this must be the first/starting node
 		node_goals = incoming_goals
-	else if(incoming_previous_node) // if we have the parent, this is from a direct lateral/diagonal scan, we can fill it all out now
+	else if(incoming_previous_node) // if we have the parent, this is from a direct cardinal/diagonal scan, we can fill it all out now
 		previous_node = incoming_previous_node
 		number_tiles = previous_node.number_tiles + jumps
 		node_goals = previous_node.node_goals
@@ -90,7 +90,7 @@
 		for(var/turf/goal as anything in node_goals)
 			heuristic = min(heuristic, GET_DIST(tile, goal))
 		f_value = number_tiles + heuristic
-	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
+	// otherwise, no parent node means this is from a subscan cardinal scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
 
 /datum/jps_node/disposing()
 	previous_node = null
@@ -138,10 +138,10 @@
 	var/simulated_only
 	/// A specific turf we're avoiding, like if a mulebot is being blocked by someone t-posing in a doorway we're trying to get through
 	var/turf/avoid
-	/// Whether we only want lateral steps
-	var/lateral_only = FALSE
+	/// Whether we only want cardinal steps
+	var/cardinal_only = FALSE
 
-/datum/pathfind/New(atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, lateral_only=FALSE)
+/datum/pathfind/New(atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, cardinal_only=FALSE)
 	..()
 	src.caller = caller
 	ends = list()
@@ -159,7 +159,7 @@
 	src.mintargetdist = mintargetdist
 	src.simulated_only = simulated_only
 	src.avoid = avoid
-	src.lateral_only = lateral_only
+	src.cardinal_only = cardinal_only
 	src.paths = list()
 
 /**
@@ -202,7 +202,7 @@
 
 		var/turf/current_turf = current_processed_node.tile
 		for(var/scan_direction in list(EAST, WEST, NORTH, SOUTH))
-			lateral_scan_spec(current_turf, scan_direction, current_processed_node)
+			cardinal_scan_spec(current_turf, scan_direction, current_processed_node)
 
 		for(var/scan_direction in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
 			diag_scan_spec(current_turf, scan_direction, current_processed_node)
@@ -230,7 +230,7 @@
 
 		for(var/i = 1 to unwind_node.jumps)
 			var/turf/next_turf = get_step(iter_turf,dir_goal)
-			if(lateral_only && !is_cardinal(dir_goal))
+			if(cardinal_only && !is_cardinal(dir_goal))
 				var/candidate_dir = dir_goal & (prob(50) ? (NORTH | SOUTH) : (EAST | WEST))
 				var/turf/candidate_turf = get_step(iter_turf, candidate_dir)
 				if(CAN_STEP(next_turf, candidate_turf) && CAN_STEP(candidate_turf, iter_turf))
@@ -242,19 +242,19 @@
 		unwind_node = unwind_node.previous_node
 
 /**
- * For performing lateral scans from a given starting turf.
+ * For performing cardinal scans from a given starting turf.
  *
  * These scans are called from both the main search loop, as well as subscans for diagonal scans, and they treat finding interesting turfs slightly differently.
- * If we're doing a normal lateral scan, we already have a parent node supplied, so we just create the new node and immediately insert it into the heap, ezpz.
+ * If we're doing a normal cardinal scan, we already have a parent node supplied, so we just create the new node and immediately insert it into the heap, ezpz.
  * If we're part of a subscan, we still need for the diagonal scan to generate a parent node, so we return a node datum with just the turf and let the diag scan
  * proc handle transferring the values and inserting them into the heap.
  *
  * Arguments:
  * * original_turf: What turf did we start this scan at?
  * * heading: What direction are we going in? Obviously, should be cardinal
- * * parent_node: Only given for normal lateral scans, if we don't have one, we're a diagonal subscan.
+ * * parent_node: Only given for normal cardinal scans, if we don't have one, we're a diagonal subscan.
 */
-/datum/pathfind/proc/lateral_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
+/datum/pathfind/proc/cardinal_scan_spec(turf/original_turf, heading, datum/jps_node/parent_node)
 	var/steps_taken = 0
 
 	var/turf/current_turf = original_turf
@@ -284,7 +284,7 @@
 
 		if(length(reached_target_goals))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
-			if(parent_node) // if this is a direct lateral scan we can wrap up, if it's a subscan from a diag, we need to let the diag make their node first, then finish
+			if(parent_node) // if this is a direct cardinal scan we can wrap up, if it's a subscan from a diag, we need to let the diag make their node first, then finish
 				open.insert(final_node)
 				var/list/path = unwind_path(final_node)
 				for(var/goal in reached_target_goals)
@@ -319,8 +319,8 @@
 /**
  * For performing diagonal scans from a given starting turf.
  *
- * Unlike lateral scans, these only are called from the main search loop, so we don't need to worry about returning anything,
- * though we do need to handle the return values of our lateral subscans of course.
+ * Unlike cardinal scans, these only are called from the main search loop, so we don't need to worry about returning anything,
+ * though we do need to handle the return values of our cardinal subscans of course.
  *
  * Arguments:
  * * original_turf: What turf did we start this scan at?
@@ -375,22 +375,22 @@
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, NORTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHWEST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (lateral_scan_spec(current_turf, WEST) || lateral_scan_spec(current_turf, NORTH))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, WEST) || cardinal_scan_spec(current_turf, NORTH))
 			if(NORTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, NORTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, SOUTH, SOUTHEAST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (lateral_scan_spec(current_turf, EAST) || lateral_scan_spec(current_turf, NORTH))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, EAST) || cardinal_scan_spec(current_turf, NORTH))
 			if(SOUTHWEST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, EAST, SOUTHEAST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHWEST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (lateral_scan_spec(current_turf, SOUTH) || lateral_scan_spec(current_turf, WEST))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH) || cardinal_scan_spec(current_turf, WEST))
 			if(SOUTHEAST)
 				if(STEP_NOT_HERE_BUT_THERE(current_turf, WEST, SOUTHWEST) || STEP_NOT_HERE_BUT_THERE(current_turf, NORTH, NORTHEAST))
 					interesting = TRUE
 				else
-					possible_child_node_pair = (lateral_scan_spec(current_turf, SOUTH) || lateral_scan_spec(current_turf, EAST))
+					possible_child_node_pair = (cardinal_scan_spec(current_turf, SOUTH) || cardinal_scan_spec(current_turf, EAST))
 
 		if(interesting || possible_child_node_pair)
 			if(isnull(newnode))

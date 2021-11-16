@@ -123,7 +123,7 @@
 		if(doText)
 			boutput(usr, "You are on a different z-level!")
 		return
-	client.GPS_Path = get_path_to(src, dest, max_distance = 120, id=src.get_id(), skip_first=FALSE, lateral_only=cardinal_only)
+	client.GPS_Path = get_path_to(src, dest, max_distance = 120, id=src.get_id(), skip_first=FALSE, cardinal_only=cardinal_only)
 	if(length(client.GPS_Path))
 		if(doText)
 			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
