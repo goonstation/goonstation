@@ -130,6 +130,10 @@
 /// Make disguiser devices turn off
 #define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
+// ---- drone beacon signal ----
+/// Triggers on destruction of a drone beacon
+#define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
