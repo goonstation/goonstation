@@ -129,8 +129,7 @@
 		if(length(priority_turfs))
 			for(var/turf/simulated/PT in priority_turfs)
 				// if we can get a valid path to the target, include it for consideration
-				if(get_path_to(holder.owner, PT, 80, 1))
-					. += PT
+				. += PT
 
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
@@ -140,7 +139,7 @@
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
 			. += T
-	. = get_path_to(holder.owner, ., 40, 1)
+	. = get_path_to(holder.owner, ., 60, 1)
 
 ////////
 
