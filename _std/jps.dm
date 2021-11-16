@@ -194,9 +194,6 @@
 		if(!caller)
 			return
 		current_processed_node = open.pop() //get the lower f_value turf in the open list
-		//current_processed_node.tile.maptext = "[current_processed_node.jumps]"
-		current_processed_node.tile.color = "#ffaaaa"
-		animate(current_processed_node.tile, color=null, time=10 SECONDS)
 		if(max_distance && (current_processed_node.number_tiles > max_distance))//if too many steps, don't process that path
 			continue
 
@@ -404,23 +401,9 @@
 				for(var/goal in possible_child_node_pair[2])
 					src.paths[goal] = path.Copy()
 
-/proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
-	. = _jpsTurfPassable(T, source, passer, id)
-	if(!usr)
-		return
-	var/obj/ov = new
-	ov.icon = 'icons/misc/air_debug.dmi'
-	ov.icon_state = "space"
-	var/dir = get_dir(source, T)
-	ov.dir = dir
-	ov.plane = 100
-	ov.color = . ? "#00ff00" : "#ff0000"
-	ov.alpha = 80
-	source.vis_contents += ov
-
 /// this is a slight modification of /proc/checkTurfPassable to avoid indirect proc call overhead
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
-/proc/_jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
+/proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
 	. = TRUE
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
