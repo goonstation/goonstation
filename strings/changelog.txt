@@ -1,5 +1,9 @@
 
 (t)tue nov 16 21
+(u)Skeletonman0
+(p)6643
+(e)|
+(*)Made Strange Reagent require an electric shock to restart people's hearts.
 (u)Danger Noodles
 (p)6618
 (e)🗺🎨|mapping, sprites
