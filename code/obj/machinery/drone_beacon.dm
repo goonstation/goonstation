@@ -1,5 +1,6 @@
-#define PLAYER_SEEK_RANGE 12
+#define PLAYER_SEEK_RANGE 15
 #define DRONE_SEEK_RANGE 25
+#define DRONE_SUMMON_RANGE 15
 
 /obj/machinery/drone_beacon
 	name = "Mysterious Beacon"
@@ -8,7 +9,7 @@
 	icon_state = "beacon_synd"
 	anchored = TRUE
 	density = TRUE
-	processing_tier = PROCESSING_EIGHTH
+	processing_tier = PROCESSING_SIXTEENTH
 	_max_health = 500
 	_health = 500
 
@@ -25,27 +26,27 @@
 		summon_drones()
 		..()
 
-	disposing()
-		UnregisterSignal(src, COMSIG_ATOM_HITBY_PROJ)
-		..()
-
 	process()
 		var/list/target_list = list()
-		for(var/mob/M in range(PLAYER_SEEK_RANGE, src))
-			if(M.stat == 2) //this feels like there should be a define for .stat
+		for(var/mob/living/M in mobs)
+			if(isdead(M))
 				continue
-			if(istype(M.loc, /obj/machinery/vehicle))
+			if(istype(M.loc, /obj/machinery/vehicle) || !IN_RANGE(src, M, PLAYER_SEEK_RANGE))
 				continue
 			target_list += M
 		if(!length(target_list))
-			for(var/obj/machinery/vehicle/V in range(PLAYER_SEEK_RANGE, src))
+			for(var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				if(V.health <= 0)
+					continue
+				if(!IN_RANGE(src, M, PLAYER_SEEK_RANGE))
 					continue
 				target_list += V
 		if(!length(target_list))
 			return
-		for(var/obj/critter/gunbot/drone/D in range(DRONE_SEEK_RANGE, src))
+		for_by_tcl(D, /obj/critter/gunbot/drone)
 			if(D.dying || D.health <= 0)
+				continue
+			if(!IN_RANGE(src, D, DRONE_SEEK_RANGE))
 				continue
 			var/atom/target_pick = pick(target_list)
 			D.select_target(target_pick)
@@ -67,7 +68,7 @@
 			if(ON_COOLDOWN(src, "drone_summon", 15 SECONDS))
 				return
 		var/list/turf/space_list = list()
-		for(var/turf/space/T in range(15, src))
+		for(var/turf/space/T in range(DRONE_SUMMON_RANGE, src))
 			space_list += T
 		for(var/i in 1 to amount)
 			var/drone = pick(/obj/critter/gunbot/drone/cutterdrone, /obj/critter/gunbot/drone/buzzdrone, /obj/critter/gunbot/drone/minigundrone, /obj/critter/gunbot/drone/heavydrone)
@@ -78,3 +79,4 @@
 
 #undef PLAYER_SEEK_RANGE
 #undef DRONE_SEEK_RANGE
+#undef DRONE_SUMMON_RANGE
