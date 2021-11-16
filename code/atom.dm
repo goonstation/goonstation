@@ -796,18 +796,19 @@
 
 // use this instead of Bump
 /atom/movable/proc/bump(atom/A)
-	SPAWN_DBG( 0 )
-		if (A)
-			A.last_bumped = world.timeofday
-			A.Bumped(src)
+	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(!(src.flags & ON_BORDER))
+	if(!(src.flags & ON_BORDER) && ismovable(A))
 		for(var/atom/other in A.loc)
 			if((other.flags & ON_BORDER) && !other.Cross(src))
 				return
 	bump(A)
+	SPAWN_DBG( 0 )
+		if (A)
+			A.last_bumped = world.timeofday
+			A.Bumped(src)
 	..()
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
