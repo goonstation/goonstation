@@ -37,6 +37,8 @@
 
 	var/list/hidden_categories = null
 
+	var/mob/respawn_as_self_mob = null
+
 	New()
 		..()
 		src.hidden_categories = list()

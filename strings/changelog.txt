@@ -1,4 +1,13 @@
 
+(t)mon nov 15 21
+(u)Merlin1230
+(p)6188
+(e)📄|tgui
+(+)The rockbox UI has been updated, and now you can see the stats of ore from the menu!
+(u)Nexusuxen
+(p)6537
+(e)|
+(*)AIs may now text people directly from examine text if their PDA (or PDAs) is visible and their messenger active, except if the AI is piloting a shell.
 (t)sun nov 14 21
 (u)Mr. Moriarty
 (p)6470

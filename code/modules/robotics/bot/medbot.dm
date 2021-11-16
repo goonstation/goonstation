@@ -126,6 +126,12 @@
 	treatment_virus = "chickensoup"
 	no_camera = 1
 
+/obj/machinery/bot/medbot/medass
+	name = "MedicalAssistant"
+	desc = "A little medical robot. This one looks very busy."
+	skin = "medicalassistant"
+	no_camera = 1
+
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
