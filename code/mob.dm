@@ -890,7 +890,7 @@
 	else if (!config || !config.medal_hub || !config.medal_password)
 		return
 
-	var/key = src.key
+	var/key = src.mind.displayed_key
 	SPAWN_DBG(0)
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
