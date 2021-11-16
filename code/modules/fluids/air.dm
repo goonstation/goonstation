@@ -225,6 +225,11 @@ var/list/ban_from_airborne_fluid = list()
 						else
 							step_away(push_thing,src)
 
+					for(var/atom/A in F.loc)
+						if (A.event_handler_flags & USE_FLUID_ENTER)
+							A.EnteredAirborneFluid(F, F.loc)
+					F.loc.EnteredAirborneFluid(F, F.loc)
+
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/effects/smoke_tile_spread.ogg', 30,1,7)
 

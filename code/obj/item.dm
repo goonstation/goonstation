@@ -304,6 +304,10 @@
 	else
 		..()
 
+/obj/item/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+	..()
+	src.tooltip_rebuild = 1
+
 //set up object properties on the block when blocking with the item. if overriding this proc, add the BLOCK_SETUP macro to new() to register for the signal and to get tooltips working right
 /obj/item/proc/block_prop_setup(var/source, var/obj/item/grab/block/B)
 	SHOULD_CALL_PARENT(1)
@@ -1513,7 +1517,7 @@
 	if (!istype(M)) return
 	var/turf/simulated/simulated = T
 
-	var/msg = "[constructTarget(M)] [thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
+	var/msg = "[thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
 	if (istype(simulated) && simulated.air.toxins)
 		msg += " Turf contains <b>plasma gas</b>."

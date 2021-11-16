@@ -188,18 +188,8 @@
 	check_nextstate()
 
 /obj/machinery/door/firedoor/border_only
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group)
-			var/direction = get_dir(src,target)
-			return (dir != direction)
-		else if(density)
-			if(!height)
-				var/direction = get_dir(src,target)
-				return (dir != direction)
-			else
-				return 0
-
-		return 1
+	gas_cross(turf/target)
+		return (dir != get_dir(src,target))
 
 	update_nearby_tiles(need_rebuild)
 		if(!air_master) return 0

@@ -20,7 +20,7 @@
 	var/image/fluid_icon
 
 	New(var/datum/custom_soup/S)
-		if(!S)
+		if(!S || !istype(S))
 			qdel(src)
 			return
 		src.name = S.name

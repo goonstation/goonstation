@@ -539,7 +539,17 @@
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["ReplaceExplosive"])
-			O.replace_with_explosive()
+			if(alert("Bad old explosive or fancy new explosive?", "Explosive Object", "Old", "New") == "Old")
+				O.replace_with_explosive()
+			else
+				var/explosion_size = input(src, "Enter the size of the explosion.", "Explosion size", 5) as null|num
+				var/gib = alert("Gib the person?", "Gib?", "Yes", "No") == "Yes"
+				var/limbs_to_remove = input(src, "Enter the number of limbs to remove.", "Limbs to remove", 0) as null|num
+				var/delete_object = alert("Delete the object?", "Delete?", "Yes", "No") == "Yes"
+				var/turf_safe_explosion = FALSE
+				if(explosion_size > 0)
+					turf_safe_explosion = alert("Should the explosion be safe for turfs?", "Safe?", "Yes", "No") == "Yes"
+				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return

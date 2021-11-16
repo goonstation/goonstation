@@ -774,7 +774,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			t2 = get_step(t1, NORTH)
 			t3 = get_step(t1, SOUTH)
 
-	if (!t1 || !t2 || !t3 || !t1.CanPass(src, t1) || !t2.CanPass(src, t2) || !t3.CanPass(src, t3))
+	if (!t1 || !t2 || !t3 || !t1.Cross(src) || !t2.Cross(src) || !t3.Cross(src))
 		if (t1) Bump(t1)
 		if (t2) Bump(t2)
 		if (t3) Bump(t3)

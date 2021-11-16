@@ -586,7 +586,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
 			clone_generation = toCopy.clone_generation
-			genetic_stability = toCopy.genetic_stability
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)

@@ -93,6 +93,13 @@
 	proc/getTooltip()
 		. = desc
 
+/**
+ 	* Used to generate text specifically for the chef examining food. Otherwise fallbacks to getTooltip().
+ 	*/
+	proc/getChefHint()
+		. = getTooltip()
+
+
 	/**
 		* Information that should show up when an object has this effect and is examined.
 		*/

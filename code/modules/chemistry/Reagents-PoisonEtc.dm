@@ -455,18 +455,18 @@ datum
 			fluid_b = 5
 			transparency = 255
 			depletion_rate = 0.1 //per 3 sec
+			var/ticks = 0
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!data) data = 1
-				else data += 1 * mult
+				ticks += mult
 
-				var/col = min(data * 5, 255)
+				var/col = min(ticks * 5, 255)
 				M.color = rgb(255, 255, 255 - col)
 				M.take_toxin_damage(1 * mult)
 
-				switch(data)
+				switch(ticks)
 					if (1 to 8)
 						if (prob(33))
 							boutput(M, "<span class='alert'>You feel weak.</span>")
@@ -516,21 +516,21 @@ datum
 			fluid_b = 5
 			transparency = 255
 			depletion_rate = 0.2
+			var/ticks = 0
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!data) data = 1
-				else data += 1  * mult
+				ticks += mult
 
-				var/col = min(data * 5, 255)
+				var/col = min(ticks * 5, 255)
 				M.color = rgb(255, 255, 255 - col)
 				M.take_toxin_damage(1)
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder && H.organHolder.heart) // you can't barf up a bee heart if you ain't got no heart to barf
-						switch (data)
+						switch (ticks)
 							if (1 to 4)
 								if (prob(33))
 									boutput(H, "<span class='alert'>You feel weak.</span>")
@@ -596,21 +596,21 @@ datum
 			fluid_b = 255
 			transparency = 255
 			depletion_rate = 0.2
+			var/ticks = 0
 
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 
-				if (!data) data = 1
-				else data+= 1 * mult
+				ticks += mult
 
-				var/col = min(data * 5, 255)
+				var/col = min(ticks * 5, 255)
 				M.color = rgb(255, 255, 255 - col)
 				M.take_toxin_damage(1 * mult)
 
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder && H.organHolder.heart) // you can't barf up a bee heart if you ain't got no heart to barf
-						switch(data)
+						switch(ticks)
 							if (1 to 4)
 								if (prob(33))
 									boutput(H, "<span class='alert'>You feel weak.</span>")
@@ -1568,7 +1568,7 @@ datum
 			fluid_g = 206
 			fluid_b = 69
 			transparency = 255
-			data = 0
+			var/ticks = 0
 			depletion_rate = 0.1
 			var/spooksounds = list('sound/effects/ghost.ogg' = 80,'sound/effects/ghost2.ogg' = 20,'sound/effects/ghostbreath.ogg' = 60, \
 					'sound/effects/ghostlaugh.ogg' = 40,'sound/effects/ghostvoice.ogg' = 90)
@@ -1595,22 +1595,22 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (!istype(H)) return
 
-				data+=(1 * mult)
+				ticks += mult
 
-				if (t1 && data >= t1)
+				if (t1 && ticks >= t1)
 					if (probmult(33))
 						H.changeStatus("drowsy", 6 SECONDS)
 						H.show_text(pick_string("chemistry_reagent_messages.txt", "madness0"), "red")
 					if (probmult(10)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e0"))
 
-				if (t2 && data >= t2)
+				if (t2 && ticks >= t2)
 					t1 = 0
 					if (probmult(33))
 						H.changeStatus("drowsy", 15 SECONDS)
 						H.show_text(pick_string("chemistry_reagent_messages.txt", "madness1"), "blue")
 					if (probmult(10)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e1"))
 
-				if (t3 && data >= t3)
+				if (t3 && ticks >= t3)
 					t2 = 0
 					if (probmult(33))
 						H.changeStatus("drowsy", 15 SECONDS)
@@ -1624,12 +1624,12 @@ datum
 
 					if (probmult(15)) H.emote(pick_string("chemistry_reagent_messages.txt", "madness_e2"))
 
-				if (t4 && data >= t4)
+				if (t4 && ticks >= t4)
 					t3 = 0
 					H.show_text("<B>Your mind feels clearer.<B>", "blue")
 					H.delStatus("drowsy")
 
-				if (t5 && data >= t5)
+				if (t5 && ticks >= t5)
 					t4 = 0
 					H.show_text("<font size=+2><B>IT HURTS!!</B></font>","red")
 					H.emote("scream")
@@ -1641,7 +1641,7 @@ datum
 					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
 					lastSpook = world.time
 
-				if (t6 && data >= t6)
+				if (t6 && ticks >= t6)
 					t5 = 0
 					if (probmult(33))
 						H.make_jittery(600)
@@ -1656,12 +1656,12 @@ datum
 
 
 					//POWER UP!!
-				if (t7 && data >= t7)
+				if (t7 && ticks >= t7)
 					t6 = 0
 					APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id, 100) //Buff
 					H.show_text("You feel very buff!", "red")
 
-				if (t8 && data >= t8)
+				if (t8 && ticks >= t8)
 					t7 = 0
 
 					if (prob(20)) //The AI is in control now.
@@ -1675,12 +1675,12 @@ datum
 						H.delStatus("paralysis")
 						H.delStatus("disorient")
 
-				if (t9 && data >= t9)
+				if (t9 && ticks >= t9)
 					t8 = 0
 					H.ai_suicidal = 1
 					H.show_text("Death... I can only stop this by dying...", "red")
 
-				if (t10 && data > t10)
+				if (t10 && ticks > t10)
 					t9 = 0
 					if (probmult(33))
 						H.make_jittery(600)
@@ -1719,7 +1719,7 @@ datum
 					H.ai_aggressive = initial(H.ai_aggressive)
 					H.ai_calm_down = initial(H.ai_calm_down)
 					H.ai_suicidal = 0
-					if (data >= 30)
+					if (ticks >= 30)
 						REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, src.id) //Not so buff
 						logTheThing("combat", H, null, "has their AI disabled by [src.id]")
 						H.show_text("It's okay... it's okay... breathe... calm... it's okay...", "blue")
@@ -1736,13 +1736,14 @@ datum
 			fluid_b = 244
 			transparency = 255
 			depletion_rate = 0.2
+			var/ticks = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
 				var/mob/living/carbon/human/H = M
 				if (!istype(H)) return
 
-				switch(data+=(1 * mult))
+				switch(ticks+=(1 * mult))
 
 					if(2) //Just started out. Everything's cool
 						H.add_stam_mod_max(src.id, 75)
@@ -1758,7 +1759,7 @@ datum
 					if(26 to 35)
 						if(prob(30)) do_stuff(2, H, mult)
 					if(36 to INFINITY)
-						if(prob(min(data, 100))) //Start at 30% chance of bad stuff, increase until death
+						if(prob(min(ticks, 100))) //Start at 30% chance of bad stuff, increase until death
 							do_stuff(3, H, mult)
 
 				..()
@@ -1814,7 +1815,7 @@ datum
 						if(prob(30))
 							H.make_jittery(15)
 				if(severity > 2)
-					if(prob(min(data+10, 100))) //Stun, twitch, 50% chance ramps up to 100 after
+					if(prob(min(ticks+10, 100))) //Stun, twitch, 50% chance ramps up to 100 after
 						H.make_jittery(50)
 
 						H.changeStatus("weakened", 2 SECONDS)
@@ -1826,7 +1827,7 @@ datum
 							H.emote("scream") //It REALLY hurts
 							H.TakeDamage(zone="All", brute=rand(2,5) * mult)
 
-					if(prob(clamp(data/1.5, 100, 30))) //At least 30% risk of oxy damage
+					if(prob(clamp(ticks/1.5, 100, 30))) //At least 30% risk of oxy damage
 						if(probmult(50))H.emote(pick("gasp", "choke", "cough"))
 						H.losebreath += rand(1,3) * mult
 

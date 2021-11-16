@@ -1,3 +1,12 @@
+(t)tue nov 16 21
+(u)pali
+(*)remove-self now stores your mob, when you next use respawn-as-self the mob will be reused. If you explicitly want a new mob you can use the respawn-as-new-self verb.
+(t)mon nov 13 21
+(u)TTerc
+(*)You can now toggle admin alerts for Who/Adminwho in Admin Preferences and Self tab.
+(t)mon nov 08 21
+(u)Sovexe
+(*)Admin preferences have been converted to use clouddata instead of local server saves. You will need to re-set your preferences once and they will then persist.
 (t)sat oct 31 21
 (u)pali
 (*)Incoming mainframe commands are now logged (usually) in a new <i>computers</i> log cateogry

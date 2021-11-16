@@ -51,6 +51,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 		if (!istype(H))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
+		if(!IN_RANGE(target, holder.owner, max_range))
+			return 1
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 		if (do_mob(holder.owner, target, 20))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
@@ -84,6 +86,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 
 				H.unequip_all()
 				var/mob/living/critter/C = H.make_critter(pick(animal_spell_critter_paths))
+				C.butcherable = 1 // we would like the brain to be recoverable, please
 				if (istype(C, /mob/living/critter/small_animal/bee))
 					var/mob/living/critter/small_animal/bee/B = C
 					B.non_admin_bee_allowed = 1
