@@ -1119,6 +1119,9 @@
 	if(src.pulling)
 		src.remove_pulling()
 
+	if(!can_reach(src, A))
+		return
+
 	pulling = A
 
 	if(ismob(pulling))
