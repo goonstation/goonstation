@@ -22,7 +22,6 @@
 
 //insert and place at its position a new node in the heap
 /datum/heap/proc/insert(atom/A)
-
 	L.Add(A)
 	swim(length(L))
 
