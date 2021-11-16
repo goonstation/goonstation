@@ -3432,8 +3432,8 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "aoB" = (
-/obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/cola/random,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "aoC" = (
@@ -9610,7 +9610,7 @@
 	},
 /area/marsoutpost)
 "aIn" = (
-/obj/table/reinforced/auto,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "aIo" = (
@@ -34611,12 +34611,12 @@
 	},
 /area/sim/racing_track)
 "bXh" = (
-/obj/table/reinforced/auto,
 /obj/item/clipboard,
 /obj/item/paper{
 	pixel_x = -13;
 	pixel_y = -5
 	},
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "bXi" = (
@@ -48371,8 +48371,8 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cGV" = (
-/obj/table/reinforced/auto,
 /obj/item/device/camera_viewer,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cGW" = (
@@ -48606,15 +48606,15 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cHA" = (
-/obj/table/reinforced/auto,
 /obj/item/cigpacket,
 /obj/item/matchbook,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "cHB" = (
-/obj/table/reinforced/auto,
 /obj/item/device/audio_log/radioship/small,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cHC" = (
@@ -49448,9 +49448,9 @@
 	},
 /area/owlery/gangzone)
 "cJw" = (
-/obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /obj/machinery/light/small/floor,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cJx" = (
@@ -50762,8 +50762,8 @@
 /turf/space,
 /area/shuttle/john/owlery)
 "cMS" = (
-/obj/table/reinforced/auto,
 /obj/item/decoration/ashtray,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "cMT" = (
@@ -81146,8 +81146,8 @@
 	},
 /area/shuttle/escape/centcom/cogmap2)
 "wNz" = (
-/obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/coffee,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "wOC" = (
