@@ -115,7 +115,6 @@
 #include "datum.dm"
 #include "filters.dm"
 #include "heap.dm"
-#include "jps.dm"
 #include "machinery.dm"
 #include "map.dm"
 #include "math.dm"
