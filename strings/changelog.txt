@@ -1,4 +1,65 @@
 
+(t)tue nov 16 21
+(u)Skeletonman0
+(p)6643
+(e)|
+(*)Made Strange Reagent require an electric shock to restart people's hearts.
+(u)Danger Noodles
+(p)6618
+(e)🗺🎨|mapping, sprites
+(+)Added a new table type, it can be found on the cairngorm.
+(u)Walpvrgis
+(p)6671
+(e)🎨|sprites
+(*)Added a couple of new floor styles/sprites to the Floor and Wall Planner. Station renovating grows ever more powerful.
+(u)Walpvrgis
+(p)6672
+(e)🆕🎨|feature, sprites
+(*)Two new furniture crates are available from Cargo for 20000 credits each; a neon table and chair set, and a scrap/junk table and chair set.
+(u)Arborinus
+(p)6649
+(e)🎨|sprites
+(+)In an effort to appeal to new consumers, Discount Dan has updated the burrito extruders in their factories.
+(t)mon nov 15 21
+(u)Merlin1230
+(p)6188
+(e)📄|tgui
+(+)The rockbox UI has been updated, and now you can see the stats of ore from the menu!
+(u)Nexusuxen
+(p)6537
+(e)|
+(*)AIs may now text people directly from examine text if their PDA (or PDAs) is visible and their messenger active, except if the AI is piloting a shell.
+(t)sun nov 14 21
+(u)Mr. Moriarty
+(p)6470
+(e)🐛🗺|bug, mapping
+(+)The NSS Clarion now trusts Security Assistants enough to allow them to retrieve their own gear without supervision from a superior officer.
+(u)anonymous
+(p)6631
+(e)🗺|mapping
+(+)Atlas got a bunch of small improvements
+(u)zjdtmkhzt
+(p)6642
+(e)⚖|balance
+(+)Long range teleporters are now deconstructable, and their mechcomp integration should now work.
+(u)Flappybat
+(p)6682
+(e)🐛⚖|bug, balance
+(+)Battle Royale tweaks: Fixed the bugged Battle Storm ended message in BR. Raised and set storm warning period at 60 seconds. Removed security lockers.
+(u)BatElite
+(p)5884
+(e)🆕🎨|feature, sprites
+(*)Added the engineering materiel vacuum, a hand-or-back-or-belt item which allows them to collect loose debris and construction materials as well as place floor tiles by simply walking around with it!
+(u)Flappybat
+(p)6675
+(e)🐛|bug
+(+)Most damaged and richest escapee now only tracks humans.
+(u)Azrun
+(p)5645
+(e)🎨|sprites
+(*)Status Displays are back (but as of right now not placed on all maps). But you can order a crate of them from cargo for now.
+(u)tarmunora
+(+)prismatic spray spell now hits targets once/burst, and has full ground-hit-chance
 (t)fri nov 12 21
 (u)Azrun, Gannets & Aquario
 (p)6646

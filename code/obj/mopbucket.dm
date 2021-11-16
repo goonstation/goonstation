@@ -75,24 +75,15 @@
 	if (O == user)
 		//check to see if the user is trying to go through walls, etc.
 		var/turf/T = get_turf(src)
-		var/no_go = 0
-		if (T.density)
-			no_go = T //can''t pass through walls
-		else
-			for (var/obj/thingy in T)
-				if (thingy == src)
-					continue
-				if (thingy.density) //can't pass through dense objects
-					no_go = thingy
+		var/no_go = !T.Enter(user) ? T : null
+		if(isnull(no_go))
+			for(var/atom/A in T)
+				if(A != src && !A.Cross(user))
+					no_go = A
 					break
-		if (no_go)
-			user.visible_message("<span class='alert'><b>[user]</b> scoots around [src], right into [no_go]!</span>",\
-			"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
-			if (!user.hasStatus("weakened"))
-				user.changeStatus("weakened", 4 SECONDS)
-			if (prob(25))
-				user.show_text("You hit your head on [no_go]!", "red")
-				user.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT) //emotional harm. I guess.
+		if(no_go)
+			user.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			user.Bump(no_go)
 			return
 
 		if (iscarbon(O))

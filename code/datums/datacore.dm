@@ -293,7 +293,7 @@
 		if(rank == "Radio Show Host" || rank == "Talk Show Host")
 			Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
 #endif
-		continue
+			continue
 		Unassigned += "[staff_record["name"]] - [staff_record["rank"]]<br>"
 
 	sorted_manifest += "<b><u>Station Command:</b></u><br>"
