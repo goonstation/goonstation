@@ -1,5 +1,9 @@
 
 (t)tue nov 16 21
+(u)Walpvrgis
+(p)6672
+(e)🆕🎨|feature, sprites
+(*)Two new furniture crates are available from Cargo for 20000 credits each; a neon table and chair set, and a scrap/junk table and chair set.
 (u)Arborinus
 (p)6649
 (e)🎨|sprites
