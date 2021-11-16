@@ -5777,11 +5777,7 @@
 /obj/item/football,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/balaclava,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amH" = (
@@ -6441,15 +6437,11 @@
 /obj/item/chair/folded,
 /obj/item/chair/folded,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/secondary/construction)
 "aom" = (
@@ -13140,14 +13132,10 @@
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/compostbag,
 /obj/item/reagent_containers/glass/compostbag,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/catering)
 "aDs" = (
@@ -46581,12 +46569,8 @@
 /obj/item/clothing/under/jersey,
 /obj/item/basketball,
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/pill/crank,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/damaged1,
 /turf/simulated/floor/plating/damaged2,
 /area/station/routing/depot)

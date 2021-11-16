@@ -15457,17 +15457,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "aEV" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aEW" = (
