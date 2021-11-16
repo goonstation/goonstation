@@ -808,7 +808,6 @@
 		for(var/atom/other in get_turf(src))
 			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
 				return
-	for(var/atom)
 	bump(A)
 	SPAWN_DBG( 0 )
 		if (A)
