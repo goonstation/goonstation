@@ -68,6 +68,14 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 		name = "fire-resistant blob"
 		frame_path = /obj/blob/firewall
 
+/datum/manufacture/mechanics/blob_overmind
+	name = "blob overmind"
+	item_paths = list("blob")
+	item_amounts = list(10)
+	time = 1 MINUTE
+	create = 1
+	frame_path = /mob/living/intangible/blob_overmind/ai/start_here
+
 /obj/machinery/manufacturer/blob
 	name = "Blob Fabricator"
 	desc = "A manufacturing unit designed to create blobs. What."
@@ -92,6 +100,10 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 		/datum/manufacture/mechanics/blob/replicator,
 		/datum/manufacture/mechanics/blob/reclaimer
 		)
+
+	hidden = list(
+		/datum/manufacture/mechanics/blob_overmind
+	)
 
 	New()
 		..()
