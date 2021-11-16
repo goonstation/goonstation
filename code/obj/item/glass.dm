@@ -233,7 +233,7 @@ SHARDS
 	stamina_cost = 15
 	stamina_crit_chance = 35
 
-/obj/item/shard/Bump()
+/obj/item/shard/bump()
 
 	SPAWN_DBG( 0 )
 		if (prob(20))

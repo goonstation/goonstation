@@ -152,7 +152,7 @@
 		..()
 		src.flags |= TABLEPASS
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		var/turf/T = get_turf(A)
 		if (T)
 			set_loc(T)

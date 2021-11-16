@@ -438,7 +438,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(1)
 		return .

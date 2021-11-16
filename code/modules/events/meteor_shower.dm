@@ -216,7 +216,7 @@ var/global/meteor_shower_active = 0
 		last_tile = null
 		..()
 
-	Bump(atom/A)
+	bump(atom/A)
 		SPAWN_DBG(0)
 			if (A)
 				A.meteorhit(src)

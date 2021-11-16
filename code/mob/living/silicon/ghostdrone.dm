@@ -399,7 +399,7 @@
 		else
 			stat("No Cell Inserted!")
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
 			if ( src.now_pushing)
 				return

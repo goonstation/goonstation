@@ -555,7 +555,7 @@
 	proc/get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
 
-	Bump(var/atom/target)
+	bump(var/atom/target)
 		if (get_move_velocity_magnitude() > 5)
 			var/power = get_move_velocity_magnitude()
 

@@ -3963,7 +3963,7 @@ datum
 		SPAWN_DBG(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
+	bump(M as turf|obj|mob)
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.

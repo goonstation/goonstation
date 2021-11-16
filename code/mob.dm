@@ -160,7 +160,7 @@
 	var/speechverb_stammer = "stammers"
 	var/speechverb_gasp = "gasps"
 	var/speech_void = 0
-	var/now_pushing = null //temp. var used for Bump()
+	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
@@ -584,7 +584,7 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/A)
+/mob/bump(atom/A)
 	if (src.now_pushing)
 		return
 
@@ -758,7 +758,7 @@
 
 		step(src,t)
 		AM.OnMove(src)
-		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
+		//src.OnMove(src) //dont do this here - this bump() is called from a process_move which sould be calling onmove for us already
 		AM.glide_size = src.glide_size
 
 		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior

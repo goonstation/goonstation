@@ -85,7 +85,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		..()
 		return
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if (src.stance == "offensive")
 			if ( src.now_pushing)
 				return
