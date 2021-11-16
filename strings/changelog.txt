@@ -1,5 +1,9 @@
 
 (t)tue nov 16 21
+(u)Danger Noodles
+(p)6618
+(e)🗺🎨|mapping, sprites
+(+)Added a new table type, it can be found on the cairngorm.
 (u)Walpvrgis
 (p)6671
 (e)🎨|sprites
