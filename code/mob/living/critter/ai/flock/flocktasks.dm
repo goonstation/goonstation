@@ -675,9 +675,8 @@
 		if(F == holder.owner)
 			continue
 		if(isdead(F))
-			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, 40))
-				. += F
+			. += F
+	. = get_path_to(holder.owner, ., 40, 1)
 
 ////////
 
