@@ -891,6 +891,7 @@
 		return
 
 	var/key = src.key
+	var/displayed_key = src.mind.displayed_key
 	SPAWN_DBG(0)
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
@@ -902,7 +903,7 @@
 
 		if (result == 1)
 			if (announce)
-				boutput(world, "<span class=\"medal\">[key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
 				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
 
