@@ -155,7 +155,6 @@
 
 		var/datum/abilityHolder/changeling/C = devour.holder
 		if (istype(C))
-			C.addDna(target)
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(target)
 			originalBHolder.CopyOther(target.bioHolder)
 			C.absorbed_dna[target.real_name] = originalBHolder
