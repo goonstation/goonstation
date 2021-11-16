@@ -1,3 +1,6 @@
+(t)tue nov 16 21
+(u)pali
+(*)remove-self now stores your mob, when you next use respawn-as-self the mob will be reused. If you explicitly want a new mob you can use the respawn-as-new-self verb.
 (t)mon nov 13 21
 (u)TTerc
 (*)You can now toggle admin alerts for Who/Adminwho in Admin Preferences and Self tab.
