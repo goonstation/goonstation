@@ -77,7 +77,7 @@
 	set name = "say_main_radio"
 	set hidden = 1
 	var/text = input("", "Speaking on the main radio frequency") as null|text
-	if (client.preferences.auto_capitalization)
+	if (src.capitalize_speech())
 		var/i = 1
 		while (copytext(text, i, i+1) == " ")
 			i++
@@ -129,8 +129,7 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-
-			if(src?.client?.preferences.auto_capitalization)
+			if (src.capitalize_speech())
 				text = capitalize(text)
 
 			src.say_verb(token + " " + text)
@@ -166,7 +165,7 @@
 			token = ":" + R.secure_frequencies[choice_index - 1]
 
 		var/text = input("", "Speaking to [choice] frequency") as null|text
-		if (client.preferences.auto_capitalization)
+		if (src.capitalize_speech())
 			var/i = 1
 			while (copytext(text, i, i+1) == " ")
 				i++

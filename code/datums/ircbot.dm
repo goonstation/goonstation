@@ -7,7 +7,6 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 /datum/ircbot
 	var/interface = null
-	var/apikey = null
 	var/loaded = 0
 	var/loadTries = 0
 	var/list/queue = list()

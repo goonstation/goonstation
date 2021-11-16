@@ -232,10 +232,10 @@
 	SPAWN_DBG(10 SECONDS)
 		for(var/obj/flock_screen/F in orange(5, src))
 			screen = F
-		screen.trader = src
+		screen?.trader = src
 		for(var/obj/flock_reclaimer/R in orange(5, src))
 			reclaimer = R
-		reclaimer.trader = src
+		reclaimer?.trader = src
 		for(var/obj/machinery/door/feather/trader/D in orange(5, src))
 			door = D
 

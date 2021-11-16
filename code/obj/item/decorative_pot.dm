@@ -7,8 +7,6 @@
 		density = 1
 		mats = list("ALL" = 1)
 
-		CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-				return 0
 		attackby(obj/item/weapon as obj,mob/user as mob)
 				if((iswrenchingtool(weapon)) || isscrewingtool(weapon))
 						if(!src.anchored)

@@ -250,7 +250,11 @@ ABSTRACT_TYPE(/datum/artifact/art)
 // for use with the wizard spell prismatic_spray
 /datum/projectile/artifact/prismatic_projectile
 	is_magical = 1
-	hit_ground_chance = 10
+
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(ismob(hit) && ON_COOLDOWN(hit, "prismaticed", 1.5 SECONDS))
+			. = TRUE
 
 	New()
 		..()

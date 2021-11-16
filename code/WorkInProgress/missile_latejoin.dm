@@ -19,6 +19,8 @@
 	var/mob/passenger = null
 	var/num_loops = 0 // how many times we missed 😰
 	var/turf/target = null // if set this overrides default landing as is *the only place* where we can stop
+	var/missile_z = Z_LEVEL_STATION
+
 	New()
 		..()
 		src.ion_trail = new /datum/effects/system/ion_trail_follow()
@@ -46,6 +48,7 @@
 			for(var/mob/M in sent)
 				passenger = M
 				break
+		src.missile_z = src.z
 		sent.set_loc(src)
 		if(d)
 			src.update_dir(d)
@@ -128,13 +131,13 @@
 					moved_on_flooring++
 			if(T == src.target)
 				break
-			if(T.z != 1)
-				src.z = 1
+			if(T.z != missile_z)
+				src.z = missile_z
 
 		qdel(src)
 
-	proc/reset_to_random_pos()
-		src.reset_to_aim_at(locate(rand(1, world.maxx), rand(1, world.maxy), 1))
+	proc/reset_to_random_pos(dir=null)
+		src.reset_to_aim_at(locate(rand(1, world.maxx), rand(1, world.maxy), 1), dir)
 
 	proc/reset_to_aim_at(turf/target, new_dir=null)
 		if(!new_dir)
@@ -143,12 +146,12 @@
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.loc = start
 
-proc/launch_with_missile(atom/movable/thing, turf/target)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
 	if(!target)
 		missile.reset_to_random_pos()
 	else
-		missile.reset_to_aim_at(target)
+		missile.reset_to_aim_at(target, dir)
 		missile.target = target
 	missile.lunch(thing)
 	return missile

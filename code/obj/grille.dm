@@ -21,7 +21,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	New()
 		..()
@@ -517,7 +517,7 @@
 
 		return src.electrocute(user, prb, net, ignore_gloves)
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			if (density)
 				return prob(50)

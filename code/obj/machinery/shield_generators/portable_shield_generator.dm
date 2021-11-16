@@ -427,8 +427,9 @@
 	desc = "A force field that can block various states of matter."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/powerlevel //Stores the power level of the deployer
+	density = 0
 
 	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/deployer = null
@@ -450,7 +451,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF33FF" //change colour for different power levels
 			src.powerlevel = 4
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 		else if(deployer != null && deployer.power_level == 1)
 			src.name = "Atmospheric Forcefield"
 			src.desc = "A force field that prevents gas from passing through it."
@@ -458,20 +459,23 @@
 			src.color = "#3333FF" //change colour for different power levels
 			src.powerlevel = 1
 			flags = 0
+			gas_impermeable = TRUE
 		else if(deployer != null && deployer.power_level == 2)
 			src.name = "Atmospheric/Liquid Forcefield"
 			src.desc = "A force field that prevents gas and liquids from passing through it."
 			src.icon_state = "shieldw"
 			src.color = "#33FF33"
 			src.powerlevel = 2
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
+			gas_impermeable = TRUE
 		else if(deployer != null)
 			src.name = "Energy Forcefield"
 			src.desc = "A force field that prevents matter from passing through it."
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
-			flags = ALWAYS_SOLID_FLUID | USEDELAY
+			flags = ALWAYS_SOLID_FLUID | USEDELAY | FLUID_DENSE
+			density = 1
 
 	disposing()
 		if(update_tiles)
@@ -486,41 +490,6 @@
 			return source.update_nearby_tiles(need_rebuild)
 
 		return 1
-
-	CanPass(atom/A, turf/T)
-		var/level = 0
-		if(deployer == null)
-			level = powerlevel
-		else
-			level = deployer.power_level
-
-		switch(level)
-			if(0)
-				return 1
-			//power level one, atmos shield. Only atmos is blocked by this forcefield
-			if(1)
-				if(ismob(A)) return 1
-				if(isobj(A)) return 1
-				//Has a liquid check in IS_SOLID_TO_FLUID
-
-			//power level 2, liquid shield. Only liquids are blocked by this forcefield
-			if(2)
-				if(ismob(A)) return 1
-				if(isobj(A)) return 1
-				//Has a liquid check in IS_SOLID_TO_FLUID
-
-			//power level 3, solid shield. Nothing can pass by this shield
-			if(3)
-				return 0
-
-			// liquid-only shield, allows atmos etc
-			if(4)
-				return 1
-
-		if(level == 1 || level == 2)
-			if(ismob(A)) return 1
-			if(isobj(A)) return 1
-		else return 0
 
 	attackby(obj/item/W, mob/user)
 		. = ..()
@@ -622,17 +591,21 @@
 	powerlevel = 2
 	layer = 2.5 //sits under doors if we want it to
 	flags = ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
 		if(a)
 			icon_state = "shieldw"
 			powerlevel = 2
 			invisibility = INVIS_NONE
+			flags |= FLUID_DENSE
+			gas_impermeable = TRUE
 		else
 			icon_state = ""
 			powerlevel = 0
 			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
+			flags &= ~FLUID_DENSE
+			gas_impermeable = FALSE
 
 	meteorhit(obj/O as obj)
 		return
@@ -647,7 +620,7 @@
 	name = "Permanent Vehicular Forcefield"
 	desc = "A permanent force field that prevents gas, liquids, and vehicles from passing through it."
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
 /obj/forcefield/energyshield/perma/doorlink
