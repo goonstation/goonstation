@@ -70,8 +70,8 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 
 /datum/manufacture/mechanics/blob_overmind
 	name = "blob overmind"
-	item_paths = list("blob")
-	item_amounts = list(10)
+	item_paths = list("blob", "ectoplasm")
+	item_amounts = list(10, 10)
 	time = 1 MINUTE
 	create = 1
 	frame_path = /mob/living/intangible/blob_overmind/ai/start_here
