@@ -31,8 +31,6 @@
 		for(var/mob/M in view(PLAYER_SEEK_RANGE, src))
 			if(isdead(M))
 				continue
-			if(istype(M.loc, /obj/machinery/vehicle))
-				continue
 			target_list += M
 		if(!length(target_list))
 			for(var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
