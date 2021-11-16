@@ -1,6 +1,10 @@
 
 (t)tue nov 16 21
 (u)Walpvrgis
+(p)6671
+(e)🎨|sprites
+(*)Added a couple of new floor styles/sprites to the Floor and Wall Planner. Station renovating grows ever more powerful.
+(u)Walpvrgis
 (p)6672
 (e)🆕🎨|feature, sprites
 (*)Two new furniture crates are available from Cargo for 20000 credits each; a neon table and chair set, and a scrap/junk table and chair set.
