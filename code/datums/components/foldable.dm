@@ -91,9 +91,10 @@ TYPEINFO(/datum/component/foldable)
 	New(var/loc, var/obj/object)
 		..(loc)
 		src.set_loc(loc)
-		src.thingInside = object
-		src.name = "foldable [object.name]"
-		src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
+		if(object)
+			src.thingInside = object
+			src.name = "foldable [object.name]"
+			src.desc = "A briefcase with a [object.name] inside. A breakthrough in briefcase technology!"
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	attack_self(mob/user)

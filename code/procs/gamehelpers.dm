@@ -143,6 +143,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 
 var/obj/item/dummy/click_dummy = new
 /proc/test_click(turf/from, turf/target)
+	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
@@ -151,6 +152,7 @@ var/obj/item/dummy/click_dummy = new
 		if (A.flags & ON_BORDER)
 			if (!A.Cross(click_dummy))
 				return 0
+	click_dummy.set_loc(null)
 	return 1
 
 /proc/can_reach(mob/user, atom/target)

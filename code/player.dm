@@ -124,10 +124,18 @@
 			return FALSE
 		clouddata[key] = "[value]"
 
+#ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
 		request.begin_async()
+#else
+		// dev server, save to a local save file instead to simulate clouddata
+		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+		// need to wrap the clouddata within index named cdata
+		var/list/wrapper = list(cdata = clouddata)
+		simulated_cloud["[ckey]"] << json_encode(wrapper)
+#endif
 		return TRUE // I guess
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
@@ -137,10 +145,16 @@
 			return FALSE
 		data[key] = "[value]"
 
+#ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
 		request.begin_async()
+#else
+		// dev server, save to a local save file instead to simulate clouddata
+		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+		simulated_cloud["[ckey(target)]"] << json_encode(data)
+#endif
 		return TRUE // I guess
 
 	/// Returns some cloud data on the client
@@ -178,12 +192,13 @@
 
 	/// Returns cloud data and saves from goonhub for the target ckey in list form
 	proc/cloud_fetch_target_ckey(target)
+#ifdef LIVE_SERVER
 		if(!cdn) return
 		target = ckey(target)
 		if (!target) return
 
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -198,6 +213,18 @@
 			return
 		else
 			return ret
+#else
+		// local dev server, use a save file to simulate cloud
+		if (!target) return
+		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+		var/data
+		simulated_cloud["[ckey(target)]"] >> data
+		if (data)
+			return json_decode(data)
+		else
+			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
+			return list(cdata = list())
+#endif
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

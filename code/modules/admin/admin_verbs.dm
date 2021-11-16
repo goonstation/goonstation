@@ -49,6 +49,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_popup_verbs,
 		/client/proc/toggle_server_toggles_tab,
 		/client/proc/toggle_attack_messages,
+		/client/proc/toggle_adminwho_alerts,
 		/client/proc/toggle_rp_word_filtering,
 		/client/proc/toggle_hear_prayers,
 		/client/proc/cmd_admin_plain_message,
@@ -151,6 +152,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_mute,
 		/client/proc/cmd_admin_mute_temp,
 		/client/proc/respawn_as_self,
+		/client/proc/respawn_as_new_self,
 		/datum/admins/proc/toggletraitorscaling,
 		/client/proc/toggle_flourish,
 
@@ -740,9 +742,13 @@ var/list/special_pa_observing_verbs = list(
 			if (length(new_key) >= 50)
 				new_key = copytext(new_key, 1, 50)
 			src.owner:fakekey = new_key
+		if(src.owner.fakekey)
+			src.owner.mob.mind.displayed_key = src.owner.fakekey
+
 	else
 		src.owner:fakekey = null
 		src.owner:stealth_hide_fakekey = 0
+		src.owner.mob.mind.displayed_key = src.owner.key
 		if (src.auto_alt_key)
 			src.set_alt_key(src.auto_alt_key_name)
 
@@ -976,12 +982,27 @@ var/list/fun_images = list()
 	H.JobEquipSpawned("Staff Assistant", 1)
 	H.update_colorful_parts()
 
-
-/client/proc/respawn_as_self()
-	set name = "Respawn As Self"
+/client/proc/respawn_as_new_self()
+	set name = "Respawn As New Self"
 	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
+	admin_only
+
+	respawn_as_self_internal(new_self=TRUE)
+
+
+/client/proc/respawn_as_self()
+	set name = "Respawn As Self"
+	set desc = "Respawn yourself as your currenly loaded character or the character you removed with remove-self. Instantly. Right where you stand."
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set popup_menu = 0
+	admin_only
+
+	respawn_as_self_internal(new_self=FALSE)
+
+
+/client/proc/respawn_as_self_internal(new_self=FALSE)
 	admin_only
 
 	if (!src.preferences)
@@ -992,9 +1013,16 @@ var/list/fun_images = list()
 			return
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc, src.preferences.AH)
-	//H.set_loc(mymob.loc)
-	src.preferences.copy_to(H,src.mob,1)
+	var/mob/living/carbon/human/H
+	var/new_mob = FALSE
+	if(src.holder.respawn_as_self_mob && !new_self)
+		H = src.holder.respawn_as_self_mob
+		H.set_loc(mymob.loc)
+		src.holder.respawn_as_self_mob = null
+	else
+		H = new(mymob.loc, src.preferences.AH)
+		src.preferences.copy_to(H,src.mob,1)
+		new_mob = TRUE
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
 		mymob.mind.ckey = ckey
@@ -1002,9 +1030,10 @@ var/list/fun_images = list()
 		mymob.mind.current = mymob
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
+	if(new_mob)
+		H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.update_colorful_parts()
 	qdel(mymob)
-	H.Equip_Rank("Staff Assistant", 2) //ZeWaka: joined_late is 2 so you don't get announced.
-	H.update_colorful_parts()
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(H)))
 			M.apply_flash(animation_duration = 30, weak = 5, uncloak_prob = 0, stamina_damage = 250)
@@ -1608,7 +1637,10 @@ var/list/fun_images = list()
 
 	var/mob/O = src.mob
 	src.mob.ghostize()
-	qdel(O)
+	O.set_loc(null)
+	if(src.holder.respawn_as_self_mob)
+		qdel(src.holder.respawn_as_self_mob)
+	src.holder.respawn_as_self_mob = O
 
 /client/proc/removeOther(var/mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)

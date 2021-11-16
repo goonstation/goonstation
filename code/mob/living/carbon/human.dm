@@ -770,7 +770,7 @@
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
 
-	ticker.mode.check_win()
+	ticker.mode?.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -2964,7 +2964,7 @@
 		return 1
 	return .
 
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj)
+/mob/living/carbon/human/bump(atom/movable/AM as mob|obj)
 	if (wearing_football_gear())
 		src.tackle(AM)
 	..()

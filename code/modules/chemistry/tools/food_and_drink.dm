@@ -1720,9 +1720,9 @@
 		if (src.reagents)
 			src.reagents.reaction(M)
 			qdel(src)
-		else
-			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+	else
+		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 /obj/item/reagent_containers/food/drinks/carafe/medbay
 	icon_state = "carafe-med"

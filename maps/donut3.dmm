@@ -11312,7 +11312,6 @@
 /area/station/crew_quarters/market)
 "cZx" = (
 /obj/railing/orange{
-	dir = 6;
 	layer = 4
 	},
 /obj/decal/cleanable/dirt/jen,
@@ -15170,9 +15169,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "efz" = (
-/obj/railing/orange{
-	dir = 10
-	},
+/obj/railing/orange,
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency{
 	pixel_x = -2;
@@ -17369,9 +17366,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "eOa" = (
-/obj/railing/orange{
-	dir = 6
-	},
+/obj/railing/orange,
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
 	dir = 4
@@ -30823,7 +30818,6 @@
 	},
 /obj/decal/cleanable/rust/jen,
 /obj/railing/orange{
-	dir = 6;
 	layer = 4
 	},
 /turf/simulated/floor/plating/jen,
@@ -36072,11 +36066,11 @@
 "kut" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
-	pixel_x = -13;
+	pixel_x = -8;
 	pixel_y = 5
 	},
 /obj/machinery/recharger{
-	pixel_x = 6;
+	pixel_x = 10;
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
@@ -69349,6 +69343,8 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/firedoor_spawn,
+/obj/decal/mule/dropoff,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ucZ" = (

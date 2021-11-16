@@ -659,6 +659,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		//Might as well log what they said too!
 		logTheThing("diary", src, null, ": [t]", "say")
 
+	if (href_list["net_id"]) // this is triggered by examine() in atom.dm, though you should be able to use this from elsewhere!
+		var/id = href_list["net_id"]
+		var/owner = href_list["owner"]
+		var/message = input(usr, "Please enter message", owner, null)
+		internal_pda.host_program.pda_message(id, owner, message)
+
 	return
 
 /mob/living/silicon/ai/Stat()

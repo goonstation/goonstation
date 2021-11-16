@@ -125,10 +125,12 @@
 		icon_state = "heart+"
 		unique = 1
 		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
-
 		getTooltip()
 			. = "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
-
+		onAdd(optional=null) // added so strange reagent can be triggered by shocking someone's heart to restart it
+			..()
+			var/mob/M = owner
+			SEND_SIGNAL(M, COMSIG_MOB_SHOCKED_DEFIB)
 	staminaregen
 		id = "staminaregen"
 		name = ""

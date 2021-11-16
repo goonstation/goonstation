@@ -225,7 +225,7 @@
 		if(ismob(A))
 			walk(src, get_dir(A, src), 1)
 
-	Bump(atom/O)
+	bump(atom/O)
 		walk(src, 0)
 
 	ex_act(severity)

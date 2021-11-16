@@ -5,12 +5,12 @@
 var/global/area/current_battle_spawn = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
-#define TIME_BETWEEN_SHUTTLE_MOVES 50
-#define MAX_TIME_ON_SHUTTLE 1 * 60 * 10
-#define MIN_TIME_BETWEEN_STORMS 4 * 60 * 10
-#define MAX_TIME_BETWEEN_STORMS 8 * 60 * 10
-#define MIN_TIME_BETWEEN_SUPPLY_DROPS 1 * 60 * 10
-#define MAX_TIME_BETWEEN_SUPPLY_DROPS 3 * 60 * 10
+#define TIME_BETWEEN_SHUTTLE_MOVES 5 SECONDS
+#define MAX_TIME_ON_SHUTTLE 60 SECONDS
+#define MIN_TIME_BETWEEN_STORMS 240 SECONDS
+#define MAX_TIME_BETWEEN_STORMS 480 SECONDS
+#define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
+#define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
 
 
 /datum/game_mode/battle_royale
@@ -139,7 +139,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	// Is it time for a storm
 	if(src.next_storm < world.time)
 		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-		SPAWN_DBG(storm.event_effect())
+		storm.event_effect()
+		SPAWN_DBG(85 SECONDS)
 			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
 			for(var/datum/mind/M in recently_deceased)
 				you_died_good_work += " [M.current.name],"
@@ -155,6 +156,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 // Does what it says on the tin
 proc/hide_weapons_everywhere()
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
+	// Kill sec lockers because it's free armor that makes them too much of a no brainer
+	for_by_tcl(S, /obj/storage)
+		if(istype(S, /obj/storage/secure/closet/security/equipment))
+			qdel(S)
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()
