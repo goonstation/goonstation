@@ -268,7 +268,7 @@
 			if(checkTurfPassable(T))
 				return T
 
-/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=120)
 	var/target_turf = get_pathable_turf(the_target)
 	if(src.bot_mover?.the_target == target_turf)
 		return
