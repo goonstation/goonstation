@@ -1,5 +1,9 @@
 
 (t)mon nov 15 21
+(u)Merlin1230
+(p)6188
+(e)📄|tgui
+(+)The rockbox UI has been updated, and now you can see the stats of ore from the menu!
 (u)Nexusuxen
 (p)6537
 (e)|
