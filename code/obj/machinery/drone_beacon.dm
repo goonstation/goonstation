@@ -28,17 +28,17 @@
 
 	process()
 		var/list/target_list = list()
-		for(var/mob/living/M in mobs)
+		for(var/mob/M in view(PLAYER_SEEK_RANGE, src))
 			if(isdead(M))
 				continue
-			if(istype(M.loc, /obj/machinery/vehicle) || !IN_RANGE(src, M, PLAYER_SEEK_RANGE))
+			if(istype(M.loc, /obj/machinery/vehicle))
 				continue
 			target_list += M
 		if(!length(target_list))
 			for(var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				if(V.health <= 0)
 					continue
-				if(!IN_RANGE(src, M, PLAYER_SEEK_RANGE))
+				if(!IN_RANGE(src, V, PLAYER_SEEK_RANGE))
 					continue
 				target_list += V
 		if(!length(target_list))
