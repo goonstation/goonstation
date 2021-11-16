@@ -93,7 +93,7 @@
 
 /obj/item/device/ship_radio_control
 	name = "Ship Radio Control"
-	var/frequency = 1142
+	var/frequency = FREQ_DOOR_CONTROL
 	var/net_id = null
 	var/obj/item/shipcomponent/communications/com = null
 

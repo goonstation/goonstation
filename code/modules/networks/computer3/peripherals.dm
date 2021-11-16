@@ -138,7 +138,7 @@
 
 		pda
 			frequency = FREQ_PDA //Standard PDA comm frequency.
-			range = 0
+			range = null
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
@@ -163,7 +163,7 @@
 
 		var/broadcast_range = src.range //No range in network mode!!
 		if(setup_netmode_norange && src.net_mode)
-			broadcast_range = 0
+			broadcast_range = null
 
 		switch(command)
 			if("transmit")
@@ -592,7 +592,7 @@
 						newsignal.data["sender"] = src.net_id
 					newsignal.source = src
 
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? 0 : src.wireless_range, "wireless")
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? null : src.wireless_range, "wireless")
 					return 0
 
 				else

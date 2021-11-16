@@ -1470,6 +1470,16 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	New()
 		. = ..()
 		pump_infos = new/list()
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			frequency, \
+			null, \
+			"receive_signal", \
+			FALSE, \
+			"pumpcontrol", \
+			FALSE \
+		)
 
 	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
@@ -1615,10 +1625,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			signal.source = src
 			signal.data["command"] = "broadcast_status"
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-	initialize()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 #undef PUMP_POWERLEVEL_1
 #undef PUMP_POWERLEVEL_2

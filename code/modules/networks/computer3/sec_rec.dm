@@ -24,7 +24,7 @@
 #define FIELDNUM_NOTES 13
 
 #define FIELDNUM_DELETE "d"
-#define FIELDNUM_NEWREC 99
+#define FIELDNUM_NEWREC "new"
 
 /datum/computer/file/terminal_program/secure_records
 	name = "SecMate"
@@ -212,14 +212,8 @@
 
 
 			if (MENU_INDEX)
-				var/index_number = round( max( text2num(command), 0) )
-				if (index_number == 0)
-					src.menu = MENU_MAIN
-					src.master.temp = null
-					src.print_text(mainmenu_text())
-					return
 
-				else if (index_number == 99)
+				if (lowertext(command) == FIELDNUM_NEWREC)
 					var/datum/db_record/G = new /datum/db_record(  )
 					G["name"] = "New Record"
 					G["full_name"] = "New Record"
@@ -238,6 +232,13 @@
 					if (src.print_active_record())
 						src.menu = MENU_IN_RECORD
 
+					return
+
+				var/index_number = round( max( text2num(command), 0) )
+				if (index_number == 0)
+					src.menu = MENU_MAIN
+					src.master.temp = null
+					src.print_text(mainmenu_text())
 					return
 
 				if (!istype(record_database) || index_number > record_database.records.len)
@@ -284,6 +285,27 @@
 
 						return
 
+					if (FIELDNUM_NEWREC)
+						if (src.active_secure)
+							return
+
+						var/datum/db_record/R = new /datum/db_record(  )
+						R["name"] = src.active_general["name"]
+						R["full_name"] = src.active_general["full_name"]
+						R["id"] = src.active_general["id"]
+						R["criminal"] = "None"
+						R["mi_crim"] = "None"
+						R["mi_crim_d"] = "No minor crime convictions."
+						R["ma_crim"] = "None"
+						R["ma_crim_d"] = "No major crime convictions."
+						R["notes"] = "No notes."
+						data_core.security.add_record(R)
+						src.active_secure = R
+
+						src.print_active_record()
+						src.menu = MENU_IN_RECORD
+						return
+
 				var/field_number = round( max( text2num(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
@@ -310,27 +332,6 @@
 					if (FIELDNUM_CRIMSTAT)
 						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
 						src.menu = MENU_FIELD_INPUT
-						return
-
-					if (FIELDNUM_NEWREC)
-						if (src.active_secure)
-							return
-
-						var/datum/db_record/R = new /datum/db_record(  )
-						R["name"] = src.active_general["name"]
-						R["full_name"] = src.active_general["full_name"]
-						R["id"] = src.active_general["id"]
-						R["criminal"] = "None"
-						R["mi_crim"] = "None"
-						R["mi_crim_d"] = "No minor crime convictions."
-						R["ma_crim"] = "None"
-						R["ma_crim_d"] = "No major crime convictions."
-						R["notes"] = "No notes."
-						data_core.security.add_record(R)
-						src.active_secure = R
-
-						src.print_active_record()
-						src.menu = MENU_IN_RECORD
 						return
 
 			if (MENU_FIELD_INPUT)
@@ -664,7 +665,7 @@
 				<br>\[13]<b>Important Notes:</b> [src.active_secure["notes"]]"}
 			else
 				view_string += "<br><br><b>Security Record Lost!</b>"
-				view_string += "<br>\[99] Create New Security Record.<br>"
+				view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Security Record.<br>"
 
 			view_string += "<br>Enter field number to edit a field<br>(R) Redraw (D) Delete (P) Print (0) Return to index."
 
@@ -676,7 +677,7 @@
 			var/dat = ""
 			if(!src.record_database || !length(src.record_database.records))
 				src.print_text("<b>Error:</b> No records found in database.")
-				dat += "<br><b>\[99]</b> Create New Record.<br>"
+				dat += "<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.<br>"
 
 			else
 				dat = "Please select a record:"
@@ -689,7 +690,7 @@
 
 					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b>[R["id"]]: [R["name"]]"
 
-				dat += "<br><b>\[[add_zero("99",leadingZeroCount)]]</b> Create New Record.<br>"
+				dat += "<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.<br>"
 			dat += "<br><br>Enter record number, or 0 to return."
 
 			src.print_text(dat)

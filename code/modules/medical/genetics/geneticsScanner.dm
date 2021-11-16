@@ -257,10 +257,6 @@ var/list/genetek_hair_styles = list()
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	proc/update_occupant()
 		var/mob/living/carbon/human/H = src.occupant

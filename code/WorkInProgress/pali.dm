@@ -2,6 +2,7 @@
 
 //bonk
 
+
 // Pill of sheltestgrog for my office
 
 /obj/item/reagent_containers/pill/sheltestgrog
@@ -146,7 +147,7 @@
 		. = ..()
 		src.fix_pulling_sprite()
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	Bump(atom/movable/AM as mob|obj)
 		. = ..()
 		src.fix_pulling_sprite()
 
@@ -297,7 +298,7 @@
 		access.uses = -1
 		access.implanted = 1
 
-	Bump(atom/movable/AM, yes)
+	Bump(atom/movable/AM, yes = 1)
 		. = ..()
 		if(src.contents && !istype(AM, /obj/table) && !ON_COOLDOWN(src, "bump_attack", 0.5 SECONDS))
 			var/obj/item/I = pick(src.contents)

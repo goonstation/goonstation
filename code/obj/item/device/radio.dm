@@ -32,6 +32,7 @@
 	mats = 3
 
 	var/icon_override = 0
+	var/icon_tooltip = null // null = use name, "" = no tooltip
 
 	var/const
 		WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
@@ -53,7 +54,6 @@ var/list/headset_channel_lookup
 
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
-	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
 
@@ -229,7 +229,12 @@ var/list/headset_channel_lookup
 	if(.)
 		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
 	else
-		return bicon(src)
+		. = bicon(src)
+	var/tooltip = src.icon_tooltip
+	if(isnull(tooltip))
+		tooltip = src.name
+	if(tooltip)
+		. = {"<div class='tooltip'>[.]<span class="tooltiptext">[tooltip]</span></div>"}
 
 /obj/item/device/radio/talk_into(mob/M as mob, messages, secure, real_name, lang_id)
 	if (length(by_cat[TR_CAT_RADIO_JAMMERS]) && check_for_radio_jammers(src))
@@ -484,7 +489,7 @@ var/list/headset_channel_lookup
 		// Secure channel lookup when R.frequency != src.frequency. According to DEBUG calls set up for testing,
 		// this meant the receiving radio would decline the message even though both share a secure channel.
 		else if (src.secure_connections && istype(src.secure_connections) && src.secure_connections.len && freq && istype(freq))
-			if(get_radio_connection_by_id("f[freq.frequency]"))
+			if(get_radio_connection_by_id(src, "f[freq.frequency]"))
 				return TRUE
 
 			// Sender didn't use a secure channel prefix, giving us the 145.9 radio frequency datum.
@@ -610,7 +615,7 @@ var/list/headset_channel_lookup
 	var/code = 2.0
 	var/on = 0.0
 //	var/e_pads = 0.0
-	frequency = 1451
+	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
@@ -759,7 +764,7 @@ Code:
 	item_state = "signaler"
 	var/code = 30.0
 	w_class = W_CLASS_TINY
-	frequency = 1457
+	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."

@@ -30,12 +30,12 @@
 			!isnull(connection_id) && connection_id == src.connection_id
 	if(.)
 		src.network?.unregister(src)
-		src.address = C.address
-		src.net_tags = C.net_tags
-		src.all_hearing = C.all_hearing
-		src.receive_packet_proc = C.receive_packet_proc
-		src.network = C.network
-		src.send_only = send_only
+		src.address = C?.address || address
+		src.net_tags = C?.net_tags || net_tags
+		src.all_hearing = C?.all_hearing || all_hearing
+		src.receive_packet_proc = C?.receive_packet_proc || receive_packet_proc
+		src.network = C?.network || network
+		src.send_only = C?.send_only || send_only
 		if(src.send_only)
 			src.network?.register(src)
 
@@ -91,7 +91,8 @@
 	if(!src.send_only) src.network?.register(src)
 
 /datum/component/packet_connected/disposing()
-	src.network?.unregister(src)
+	if(!src.send_only)
+		src.network?.unregister(src)
 	src.network = null
 	..()
 
@@ -101,6 +102,8 @@
 		call(src.parent, src.receive_packet_proc)(signal, transmission_method, params, connection_id)
 
 /datum/component/packet_connected/proc/post_packet(datum/signal/signal, params=null)
+	if(!("sender" in signal.data))
+		signal.data["sender"] = src.address
 	src.network?.post_packet(src, signal, params)
 
 

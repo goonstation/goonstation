@@ -369,7 +369,7 @@ THROWING DARTS
 	uses_radio = 1
 	mailgroups = list(MGD_SECURITY)
 	var/id = 1.0
-	var/frequency = 1451		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
+	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
 	New()
 		..()
@@ -723,7 +723,7 @@ THROWING DARTS
 					return
 				if (!src || !owner || (M != owner) || src.expired)
 					return
-				boutput(M, "<span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span>")
+				boutput(M, "<h3><span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span></h3>")
 
 				// 1 minute left
 				sleep(1 MINUTE)

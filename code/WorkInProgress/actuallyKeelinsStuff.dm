@@ -626,6 +626,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		AM.set_loc(locate(src.x, src.y, src.targetZ))
@@ -2088,7 +2089,7 @@ Returns:
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	var/image/oimage = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
@@ -2100,7 +2101,7 @@ Returns:
 		del(oimage)
 		..()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!istype(A,/mob/dead/hhghost)) return
 		var/mob/dead/hhghost/M = A
 		M.adventure_variables.hh_soul += 1
@@ -2122,9 +2123,9 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!ismob(A) || !isliving(A)) return
 		qdel(src)
 		var/mob/living/M = A
@@ -2272,6 +2273,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/O)
+		..()
 		if(!canTrigger) return
 		canTrigger = 0
 		SPAWN_DBG(procCooldown) canTrigger = 1
@@ -2518,6 +2520,7 @@ Returns:
 
 /obj/line_obj/elec
 	name = "electricity"
+	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
 	anchored = 1
 	density = 0
@@ -2817,19 +2820,20 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_from)
 		if (!istype(source))
 			qdel(src)
 			return
 		var/turf/trg = source.loc
-
-		var/area/trgar = trg.loc
-		trgar.Entered(AM, AM.loc)
-
 		AM.set_loc(trg)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/dfissure_from
 	name = "dimensional fissure"
@@ -2841,9 +2845,6 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_to)
 		if (!istype(source))
 			boutput(AM, "<span class='combat'>You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!</span>")
@@ -3263,9 +3264,9 @@ Returns:
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (mover?.throwing)
 			return 1
 		return ..()
@@ -3804,7 +3805,6 @@ var/list/lag_list = new/list()
 	attack_hand(mob/user as mob)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
-				user.loc.loc.Exited(user)
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return

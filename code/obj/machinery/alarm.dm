@@ -10,7 +10,7 @@
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
-	var/control_frequency = "1439"
+	var/control_frequency = FREQ_AIR_ALARM_CONTROL
 	var/id
 	var/locked = 1
 

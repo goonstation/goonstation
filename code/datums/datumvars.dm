@@ -28,22 +28,19 @@
 		<tbody>
 	"}
 
-	var/V = global.vars[S]
-	if (V == logs || V == logs["audit"])
-		src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
-		boutput(usr, "<span class='alert'>Yeah, no.</span>")
-		return
-	if (V)
+	try
+		var/V = global.vars[S]
+		if (V == logs || V == logs["audit"])
+			src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
+			boutput(usr, "<span class='alert'>Yeah, no.</span>")
+			return
 		body += debug_variable(S, V, "GLOB", 0)
-	else
-		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
-		return
-	body += "</tbody></table>"
+		body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
+		var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
 
-	//stole this from view_variables below
-	var/html = {"
+		//stole this from view_variables below
+		var/html = {"
 <html>
 <head>
 	<title>[title]</title>
@@ -61,7 +58,10 @@
 </html>
 "}
 
-	usr.Browse(html, "window=variables\ref[V];size=600x400")
+		usr.Browse(html, "window=variables\ref[V];size=600x400")
+	catch
+		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
+		return
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -539,7 +539,17 @@
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["ReplaceExplosive"])
-			O.replace_with_explosive()
+			if(alert("Bad old explosive or fancy new explosive?", "Explosive Object", "Old", "New") == "Old")
+				O.replace_with_explosive()
+			else
+				var/explosion_size = input(src, "Enter the size of the explosion.", "Explosion size", 5) as null|num
+				var/gib = alert("Gib the person?", "Gib?", "Yes", "No") == "Yes"
+				var/limbs_to_remove = input(src, "Enter the number of limbs to remove.", "Limbs to remove", 0) as null|num
+				var/delete_object = alert("Delete the object?", "Delete?", "Yes", "No") == "Yes"
+				var/turf_safe_explosion = FALSE
+				if(explosion_size > 0)
+					turf_safe_explosion = alert("Should the explosion be safe for turfs?", "Safe?", "Yes", "No") == "Yes"
+				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return

@@ -158,7 +158,7 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location.assume_air(gas)  // vent all gas to turf
+		location?.assume_air(gas)  // vent all gas to turf
 		gas = null
 		return
 
@@ -887,7 +887,6 @@
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-					newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
@@ -989,7 +988,6 @@
 	throwforce = 0
 	initial_volume = 1000
 	var/loaf_factor = 1
-	var/loaf_recursion = 1
 	var/processing = 0
 
 	New()
@@ -1620,6 +1618,46 @@
 			return dir
 		else
 			return 0
+
+/obj/disposalpipe/trunk/zlevel
+	icon_state = "pipe-v"
+
+	getlinked()
+		return
+
+	welded()
+		return
+
+	ex_act(severity)
+		return
+
+	// test health for brokenness
+	healthcheck()
+		return
+
+	transfer(var/obj/disposalholder/H)
+		if(H.dir == DOWN)		// we just entered from a disposer
+			return ..()		// so do base transfer proc
+
+		// otherwise, go to the linked object
+		var/turf/T = get_turf(src)
+		var/obj/disposalpipe/P
+
+		P = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_DISPOSAL, /obj/disposalpipe/trunk)
+		if(P)
+			H.set_dir(DOWN)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.set_loc(P)
+		else			// if wasn't a pipe, then set loc to turf
+			H.set_loc(T)
+			return null
+
+		return P
+
 
 // a broken pipe
 /obj/disposalpipe/broken

@@ -198,6 +198,8 @@ obj/machinery/atmospherics/mixer
 				RESET_SIGNAL_MIXTURE(out)
 				signal.data["outtg"] = 0
 
+			signal.data["address_tag"] = "mixercontrol"
+
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	process()

@@ -167,9 +167,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	New()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
-		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	proc/CopyOther(var/datum/appearanceHolder/toCopy, no_mutantrace)
+	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
 
@@ -223,8 +222,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_oversuit_1_color_ref = toCopy.mob_oversuit_1_color_ref
 		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
 
-		if(!no_mutantrace)
-			mutant_race = toCopy.mutant_race
+		mutant_race = toCopy.mutant_race
 
 		e_color = toCopy.e_color
 		e_icon = toCopy.e_icon
@@ -329,6 +327,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
 
@@ -576,17 +576,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		return newUid
 
-	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1, noMutantrace = 0)
+	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1)
 		//Copies the settings of another given holder. Used for syringes, the dna spread virus and such things.
 		if(copyAppearance)
-			mobAppearance.CopyOther(toCopy.mobAppearance, noMutantrace)
+			mobAppearance.CopyOther(toCopy.mobAppearance)
 			mobAppearance.UpdateMob()
 
 			age = toCopy.age
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
 			clone_generation = toCopy.clone_generation
-			genetic_stability = toCopy.genetic_stability
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)

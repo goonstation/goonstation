@@ -8,7 +8,7 @@
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
-	var/frequency = 1475
+	var/frequency = FREQ_MAIL_CHUTE
 	var/last_inquire = 0 //No signal spamming etc
 	var/autoname = 0
 
@@ -231,7 +231,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 	qm
 		name = "QM"
@@ -528,7 +528,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGO_MINING
+		mailgroup = MGD_MINING
 		message = 1
 
 		north

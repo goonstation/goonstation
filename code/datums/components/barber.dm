@@ -10,6 +10,7 @@
 #define TOP_DETAIL 3
 #define ALL_HAIR 4
 
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))

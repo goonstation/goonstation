@@ -1354,7 +1354,7 @@
 	density = 1
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
-	//var/freq = 1219
+	//var/freq = FREQ_BUDDY
 	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/list/frequencies = list()
@@ -1516,7 +1516,7 @@
 						var/datum/signal/rsignal = get_free_signal()
 						rsignal.source = src
 						rsignal.data = list("address_1"=target, "command"="ping_reply", "device"=src.device_tag, "netid"=src.net_id, "net"="[net_number]", "sender" = src.net_id)
-						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, connection_id)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, null, connection_id)
 					else
 						src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 				return
@@ -1642,7 +1642,7 @@
 				rsignal.data["sender"] = src.net_id
 
 				SPAWN_DBG(0)
-					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, transmission_range, "f[newFreq]")
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rsignal, transmission_range, "f[newFreq]")
 					flick("net_radio-blink", src)
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 
@@ -2517,8 +2517,8 @@
 		switch (src.state)
 			if (0)
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 			if (1)
 				if (!src.scan_beam)
 					var/turf/beamTurf = get_step(src, src.dir)
@@ -2665,8 +2665,8 @@
 				light.disable()
 				icon_state = "secdetector-p"
 				if (src.scan_beam)
-					//qdel(src.scan_beam)
-					src.scan_beam.dispose()
+					qdel(src.scan_beam)
+					src.scan_beam = null
 				src.state = src.online
 				return
 
@@ -2730,11 +2730,11 @@
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	anchored = 1.0
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		if (src.next)
-			src.next.dispose()
+			qdel(src.next)
 			src.next = null
 		..()
 
@@ -2742,8 +2742,9 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
-		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration) || isobserver(AM) || isintangible(AM))
 			return
 		SPAWN_DBG( 0 )
 			src.hit(AM)
@@ -2785,7 +2786,7 @@
 	//var/limit = 24
 	anchored = 1.0
 	flags = TABLEPASS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New(location, newLimit)
 		..()
@@ -2808,7 +2809,8 @@
 		..()
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(isobserver(AM) || isintangible(AM)) return
 		if (istype(AM, /obj/beam))
 			return
@@ -3255,7 +3257,7 @@
 		src.hit()
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (istype(AM, /obj/beam) || istype(AM, /obj/critter/aberration))
 			return
 		SPAWN_DBG( 0 )
@@ -3331,9 +3333,6 @@
 						if (!source)
 							telehop(AM, 5, 1)
 							return
-
-						var/area/sourceArea = get_area(source)
-						sourceArea.Entered(AM, AM.loc)
 
 						AM.set_loc(get_turf(source))
 						return

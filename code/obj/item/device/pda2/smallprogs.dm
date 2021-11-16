@@ -59,10 +59,15 @@
 
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
-
-		for (var/datum/db_record/t as anything in data_core.general.records)
-			dat += "[t["name"]] - [t["rank"]]<br>"
+		dat += get_manifest()
 		dat += "<br>"
+
+		var/stored = ""
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		dat += "<b>In Cryogenic Storage:</b><hr>[stored]<br>"
 
 		return dat
 
@@ -171,7 +176,7 @@
 /datum/computer/file/pda_program/signaler
 	name = "Signalix 5"
 	size = 8
-	var/send_freq = 1457 //Frequency signal is sent at, should be kept within normal radio ranges.
+	var/send_freq = FREQ_SIGNALER //Frequency signal is sent at, should be kept within normal radio ranges.
 	var/send_code = 30
 	var/last_transmission = 0 //No signal spamming etc
 

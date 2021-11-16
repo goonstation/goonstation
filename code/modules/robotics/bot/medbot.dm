@@ -92,6 +92,14 @@
 	access_lookup = "Head Surgeon"
 	text2speech = 1
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 
@@ -116,6 +124,12 @@
 	treatment_fire = "LSD"
 	treatment_tox = "hugs"
 	treatment_virus = "chickensoup"
+	no_camera = 1
+
+/obj/machinery/bot/medbot/medass
+	name = "MedicalAssistant"
+	desc = "A little medical robot. This one looks very busy."
+	skin = "medicalassistant"
 	no_camera = 1
 
 /obj/item/firstaid_arm_assembly
