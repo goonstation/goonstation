@@ -145,6 +145,41 @@ img.emoji {
 }
 #options .decreaseFont {border-top: 0;}
 
+/* TOOLTIPS */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 50%;
+	white-space: nowrap;
+}
+
+.tooltip .tooltiptext::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color:#555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
 /* POPUPS */
 .popup {
 	position: fixed;
@@ -311,7 +346,6 @@ img.emoji {
 h1.alert, h2.alert {color: #000000;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
-.highlight {background: yellow;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 
 .rstandard {color: #008000;}
@@ -343,6 +377,11 @@ h1.alert, h2.alert {color: #000000;}
 .who-list span, .who-list a {
 	display: inline-block;
 	margin-right: 10px;
+}
+.highlight {
+	background: yellow;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */

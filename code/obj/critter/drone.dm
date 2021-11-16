@@ -52,6 +52,7 @@
 		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
 		task = "chasing"
 
+
 	New()
 		..()
 		name = "Drone SC-[rand(1,999)]"
@@ -61,7 +62,7 @@
 		STOP_TRACKING
 		..()
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				for(var/type in do_not_smash)

@@ -4,7 +4,8 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atmos_field"
 	layer = OBJ_LAYER+0.5
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
+	gas_impermeable = TRUE
 
 	New()
 		..()
@@ -13,11 +14,6 @@
 	disposing()
 		..()
 		update_nearby_tiles()
-
-	CanPass(atom/movable/mover, turf/target)
-		if (!mover)
-			return 0 // completely opaque to air
-		return 1
 
 	Crossed(atom/movable/A)
 		..()

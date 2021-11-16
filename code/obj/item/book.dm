@@ -41,7 +41,6 @@ Custom Books
 		user.suiciding = 0
 		return 1
 
-
 /obj/item/paper/book/from_file //books from txt strings
 	var/file_path = null
 

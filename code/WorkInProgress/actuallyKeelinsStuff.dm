@@ -2574,7 +2574,7 @@ Returns:
 			return
 		return
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if(!state)
 			..()
 			return
@@ -3264,9 +3264,9 @@ Returns:
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (mover?.throwing)
 			return 1
 		return ..()

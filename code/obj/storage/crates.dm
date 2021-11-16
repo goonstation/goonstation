@@ -9,7 +9,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -24,7 +24,7 @@
 			src.UpdateOverlays(null, "barcode")
 
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
 		return ..()
@@ -592,13 +592,13 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
-		name = "Class Crate - Rocker"
+		name = "Class Crate - Bard"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
 		/obj/item/storage/fanny/syndie,
-		/obj/item/clothing/suit/space/syndicate/specialist/firebrand, // Gannets should make a cool suit
-		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator) // Gannet should make cool helm
+		/obj/item/clothing/suit/space/syndicate/specialist/bard,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"

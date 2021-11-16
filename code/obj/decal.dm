@@ -409,14 +409,14 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
+	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) == dir)
 
 			return !density
 		else
@@ -437,7 +437,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
 
 	rotatable = 0
 	foldable = 0
@@ -458,12 +458,12 @@ obj/decal/fakeobjects/teleport_pad
 			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 			buckle_in(M, user, 1)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
+	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) == dir)
 
 			return !density
 		else

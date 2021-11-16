@@ -736,7 +736,9 @@ datum
 
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(800 * volume_mult)
@@ -764,7 +766,9 @@ datum
 				if (istype(T))
 					if (T.wet >= 3) return
 					if (visible)
-						var/wet = image('icons/effects/water.dmi',"wet_floor")
+						var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+						wet.blend_mode = BLEND_ADD
+						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 3
 					SPAWN_DBG(80 SECONDS)
@@ -1166,7 +1170,9 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T)) //Wire: fix for Undefined variable /turf/space/var/wet (&& T.wet)
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
@@ -3316,7 +3322,9 @@ datum
 				var/turf/simulated/T = target
 				if (istype(T))
 					if (T.wet >= 2) return
-					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					SPAWN_DBG(80 SECONDS)
@@ -3629,17 +3637,17 @@ datum
 			value = 4
 
 			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
 					return
 				holder.my_atom.SafeScale(4,1.5)
-				holder.my_atom.flags |= IS_BUBSIUM_SCALED
+				holder.my_atom.temp_flags |= IS_BUBSIUM_SCALED
 
 
 			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
 					return
 				holder.my_atom.SafeScale(1/4,1/1.5)
-				holder.my_atom.flags &= ~IS_BUBSIUM_SCALED
+				holder.my_atom.temp_flags &= ~IS_BUBSIUM_SCALED
 
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -3955,7 +3963,7 @@ datum
 		SPAWN_DBG(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
+	bump(M as turf|obj|mob)
 		M:density = 0
 		SPAWN_DBG(0.4 SECONDS)
 			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
