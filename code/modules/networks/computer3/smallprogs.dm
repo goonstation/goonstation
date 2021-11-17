@@ -481,7 +481,7 @@ file_save - Save file to local disk."}
 
 				var/datum/computer/file/record/udat = new // what name, assignment, and access do we have??
 				if (issilicon(usr) || isAI(usr)) // silicons dont have IDs and we want them to override any inserted ID
-					udat.fields["registered"] = isAI(usr) ? "AI" : "CYBORG" // should probably make all logins use the actual name of the silicon at some point
+					udat.fields["registered"] = isAI(usr) ? "AIUSR" : "CYBORG" // should probably make all logins use the actual name of the silicon at some point
 					udat.fields["assignment"] = "AI"
 					udat.fields["access"] = "34"
 				else
@@ -492,8 +492,7 @@ file_save - Save file to local disk."}
 						udat.fields["access"] = scansignal.data["access"]
 				if (!udat.fields["registered"] || !udat.fields["assignment"] || !udat.fields["access"])
 					udat.dispose()
-					src.print_text("Login failed: One or more sections of provided login credentials are null. Please verify that your ID card does not have blank data.")
-					// having no error message is weird, even if this should almost never happen
+					src.print_text("Error: User credential validity error.")
 					return
 
 				var/datum/signal/termsignal = get_free_signal()
