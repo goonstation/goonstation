@@ -33,7 +33,7 @@ proc/get_moving_lights_stats()
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
 			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add ; \
-			src.vis_contents |= src.RL_AddOverlay ; \
+			src.RL_AddOverlay.set_loc(src) ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
 		src.RL_AddOverlay.color = list( \
@@ -628,11 +628,6 @@ proc
 	layer = LIGHTING_LAYER_BASE
 	anchored = 2
 
-	disposing()
-		for(var/turf/T in src.vis_locs)
-			T.vis_contents -= src
-		..()
-
 /obj/overlay/tile_effect/lighting/mul
 	plane = PLANE_LIGHTING
 	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
@@ -778,7 +773,7 @@ turf
 			if (!fullbright && !loc:force_fullbright)
 				if(!src.RL_MulOverlay)
 					src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
-					src.vis_contents |= src.RL_MulOverlay
+					src.RL_MulOverlay.set_loc(src)
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
