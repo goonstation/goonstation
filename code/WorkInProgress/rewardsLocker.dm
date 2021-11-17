@@ -687,7 +687,7 @@
 			var/mob/living/carbon/human/H = activator
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
-				if (istype(M, /obj/item/clothing/under/rank/head_of_securityold))
+				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
 					M.icon_state = "hos-old"
 					H.set_clothing_icon_dirty()
 					return 1
