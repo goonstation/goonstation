@@ -462,7 +462,7 @@
 		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
