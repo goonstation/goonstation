@@ -43245,10 +43245,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
-"ces" = (
-/obj/machinery/vending/coffee,
-/turf/simulated/floor/white,
-/area/station/medical/medbay/lobby)
 "cet" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -44638,7 +44634,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
 "cib" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
 "cic" = (
@@ -102126,8 +102122,8 @@ bLG
 cfJ
 cbQ
 cde
-ces
 etN
+cev
 fgO
 fKg
 cev
