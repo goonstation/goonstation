@@ -1,5 +1,52 @@
 //AI HOLOGRAMS
 
+#define HOLOGRAM_PICTURE 1
+#define HOLOGRAM_TEXT 2
+
+/datum/ai_hologram_data
+	var/image_expansion
+	var/holograms = 0
+	var/const/max_holograms = 8
+	var/text_expansion
+	var/text_holograms = 0
+	var/const/max_text_holograms = 3
+
+	proc/reserve(obj/hologram/H)
+		if(!istype(H))
+			return
+		switch(H.hologram_type)
+			if(HOLOGRAM_PICTURE)
+				src.holograms += H.hologram_value
+			if(HOLOGRAM_TEXT)
+				src.text_holograms += H.hologram_value
+
+	proc/free(obj/hologram/H)
+		if(!istype(H))
+			return
+		switch(H.hologram_type)
+			if(HOLOGRAM_PICTURE)
+				src.holograms = max(src.holograms - H.hologram_value, 0)
+			if(HOLOGRAM_TEXT)
+				src.text_holograms = max(src.text_holograms - H.hologram_value, 0)
+
+	proc/check(holotype_string, mob/dead/aieye/E)
+		. = TRUE
+		if(!istype(E))
+			. = FALSE
+		switch(holotype_string)
+			if("write")
+				if (src.text_holograms >= src.max_text_holograms)
+					boutput(E, "Not enough T-RAM to project more text holograms. Delete others to make room.")
+					. = FALSE
+			else
+				if (src.holograms >= src.max_holograms)
+					boutput(E, "Not enough V-RAM to project more holograms. Delete others to make room.")
+					. = FALSE
+
+	proc/expansion(string)
+		text_expansion = string
+
+
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
 
@@ -7,14 +54,11 @@
 		if (!deployed_to_eyecam)
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
-		if (holograms >= max_holograms)
-			boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
-			return
 
 		var/turf/T = get_turf(src.eyecam)
 		src.show_hologram_context(T)
 
-	proc/create_hologram_at_turf(var/turf/T, var/holo_type)
+	proc/create_hologram_at_turf(turf/T, holo_type)
 		if (!deployed_to_eyecam)
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
@@ -23,38 +67,44 @@
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 
+		if(!src.holoHolder.check(holo_type, eyecam))
+			return
+
 		if(holo_type=="write")
-			if (src.text_holograms >= src.max_text_holograms)
-				boutput(eyecam, "Not enough SRAM to project more text holograms. Delete others to make room.")
+			var/list/holo_setences = list()
+			var/list/holo_actions = list()
+			var/list/holo_nouns = list()
+			holo_setences += strings("hologram.txt", "sentences")
+			if(src.holoHolder.text_expansion)
+				holo_setences += strings("hologram.txt", "sentences_[src.holoHolder.text_expansion]")
+			holo_setences = sortList(holo_setences)
+			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_setences, allowIllegal=TRUE)
+			if(!text)
 				return
 
-			var/list/holo_setences
-			var/list/holo_actions
-			var/list/holo_nouns
-			holo_setences = sortList(strings("hologram.txt", "sentences"))
-			var/t = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_setences, allowIllegal=TRUE)
-
-			switch(t)
-				if("Remember to ...")
-				if("Employees must ...")
-					holo_actions = sortList(strings("hologram.txt", "verbs"))
-					var/selection = tgui_input_list(usr, "Select a word:", t, holo_actions, allowIllegal=TRUE)
-					t = replacetext(t, "...", selection)
+			switch(text)
+				if("Remember to ...", "Employees must ...")
+					holo_actions += strings("hologram.txt", "verbs")
+					if(src.holoHolder.text_expansion)
+						holo_actions += strings("hologram.txt", "verbs_[src.holoHolder.text_expansion]")
+					holo_actions = sortList(holo_actions)
+					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
+					text = replacetext(text, "...", selection)
 				else
 					holo_nouns = sortList(strings("hologram.txt", "nouns"))
-					var/blank_found = findtext(t,"...")
+					if(src.holoHolder.text_expansion)
+						holo_nouns += strings("hologram.txt", "nouns_[src.holoHolder.text_expansion]")
+					holo_nouns = sortList(holo_nouns)
+					var/blank_found = findtext(text,"...")
 					while(blank_found)
-						var/selection = tgui_input_list(usr, "Select a word:", t, holo_nouns, allowIllegal=TRUE)
-						t = replacetext(t, "...", selection, blank_found, blank_found+3)
-						blank_found = findtext(t,"...")
+						var/selection = tgui_input_list(usr, "Select a word:", text, holo_nouns, allowIllegal=TRUE)
+						text = replacetext(text, "...", selection, blank_found, blank_found+3)
+						blank_found = findtext(text,"...")
 
 			//t = capitalize(t)
-			t = uppertext(t)
-			new /obj/hologram/text(T, owner=src,msg=t)
+			text = uppertext(text)
+			new /obj/hologram/text(T, owner=src,msg=text)
 		else
-			if (src.holograms >= max_holograms)
-				boutput(eyecam, "Not enough RAM to project more holograms. Delete others to make room.")
-				return
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
@@ -125,8 +175,7 @@
 		icon_state = "write"
 		holo_type = "write"
 
-#define HOLOGRAM_PICTURE 1
-#define HOLOGRAM_TEXT 2
+
 
 /obj/hologram
 	name = "hologram"
@@ -148,11 +197,7 @@
 		if (istype(owner))
 			src.owner = owner
 			src.color = owner.faceColor
-			switch(hologram_type)
-				if(HOLOGRAM_PICTURE)
-					owner.holograms += src.hologram_value
-				if(HOLOGRAM_TEXT)
-					owner.text_holograms += src.hologram_value
+			src.owner.holoHolder.reserve(src)
 
 		name = "[replacetext(holo_type, "_", " ")] hologram"
 		icon_state = holo_type
@@ -186,11 +231,7 @@
 
 	disposing()
 		if (owner)
-			switch(hologram_type)
-				if(HOLOGRAM_PICTURE)
-					owner.holograms = max(owner.holograms - hologram_value,0)
-				if(HOLOGRAM_TEXT)
-					owner.text_holograms = max(owner.text_holograms - hologram_value,0)
+			owner.holoHolder.free(src)
 			owner = null
 		..()
 
@@ -236,6 +277,8 @@
 		// Add displacement filter for scanline/glitch
 		SPAWN_DBG(1) //delayed to resolve issue where color didn't settle yet
 			E = new
+			if(length(msg) > 11)
+				E.icon_state = "d_fast"
 			src.vis_contents += E
 			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
 
