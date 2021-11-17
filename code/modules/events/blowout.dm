@@ -33,7 +33,7 @@
 			for (var/area/A in world)
 				LAGCHECK(LAG_LOW)
 				var/turf/a_turf = locate(/turf) in A
-				if (a_turf.z != Z_LEVEL_STATION)
+				if (a_turf?.z != Z_LEVEL_STATION)
 					continue
 				if (A.do_not_irradiate)
 					continue
