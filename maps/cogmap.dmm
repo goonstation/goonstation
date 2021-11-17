@@ -44209,6 +44209,7 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "cgU" = (
@@ -49240,6 +49241,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "csW" = (
@@ -53580,6 +53582,7 @@
 /obj/access_spawn/research,
 /obj/decal/garland/ephemeral,
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "diC" = (
