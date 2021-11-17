@@ -287,9 +287,10 @@
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)
-		O.was_built_from_frame(user, 1)
-	//O.mats = "Built"
-	O.deconstruct_flags |= DECON_BUILT
+		if(istype(O))
+			O.was_built_from_frame(user, 1)
+	if(istype(O))
+		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
 	return

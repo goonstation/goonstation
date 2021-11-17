@@ -1002,7 +1002,7 @@
 					qdel (src.cell)
 					src.cell = null
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
 			if ( src.now_pushing)
 				return

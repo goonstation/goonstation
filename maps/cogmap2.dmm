@@ -5777,11 +5777,7 @@
 /obj/item/football,
 /obj/item/clothing/mask/balaclava,
 /obj/item/clothing/mask/balaclava,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/damaged3,
 /area/station/crew_quarters/quartersB)
 "amH" = (
@@ -6441,15 +6437,11 @@
 /obj/item/chair/folded,
 /obj/item/chair/folded,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/secondary/construction)
 "aom" = (
@@ -13140,14 +13132,10 @@
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/compostbag,
 /obj/item/reagent_containers/glass/compostbag,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/catering)
 "aDs" = (
@@ -46581,12 +46569,8 @@
 /obj/item/clothing/under/jersey,
 /obj/item/basketball,
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/pill/crank,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/damaged1,
 /turf/simulated/floor/plating/damaged2,
 /area/station/routing/depot)
@@ -72668,6 +72652,10 @@
 /area/station/hangar/science)
 "ddB" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/decal/tile_edge/floorguide/science,
+/obj/decal/tile_edge/floorguide{
+	dir = 4
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "ddC" = (
@@ -72936,12 +72924,16 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
 "del" = (
-/obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	name = "EMERGENCY DISPOSAL";
+	nameOverride = 0
+	},
+/turf/simulated/floor/airless/engine/caution/westeast,
 /area/station/hangar/science)
 "dem" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Research Outpost";
+	nameOverride = 0;
 	req_access_txt = "24"
 	},
 /turf/simulated/floor/delivery,
@@ -73415,6 +73407,7 @@
 /area/station/medical/medbay)
 "dfv" = (
 /obj/machinery/mass_driver{
+	id = "to_outpost";
 	name = "cargo driver"
 	},
 /turf/simulated/floor/plating,
@@ -73569,7 +73562,9 @@
 /obj/machinery/mass_driver{
 	name = "cargo driver"
 	},
-/obj/machinery/door/poddoor/pyro,
+/obj/machinery/door/poddoor/pyro{
+	id = "to_outpost"
+	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -78204,6 +78199,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"ecJ" = (
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "efy" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -78389,6 +78388,16 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"gvX" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "gGV" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
@@ -78447,6 +78456,10 @@
 	icon_state = "12"
 	},
 /area/station/crew_quarters/arcade)
+"hJl" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/science)
 "hJC" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
@@ -78683,6 +78696,12 @@
 /obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"iTG" = (
+/obj/machinery/launcher_loader/south{
+	id = "ejector_medsci"
+	},
+/turf/simulated/floor/airless/engine/caution/westeast,
+/area/station/hangar/science)
 "iYX" = (
 /obj/cable{
 	d1 = 1;
@@ -78834,6 +78853,12 @@
 /obj/window/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"kcr" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/science)
 "kkQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
 	explosion_resistance = 15;
@@ -78852,6 +78877,20 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/podbay)
+"kqH" = (
+/obj/machinery/mass_driver{
+	name = "cargo driver"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ejector_medsci"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/airless/engine/caution/misc,
+/area/station/hangar/science)
 "kBU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79782,6 +79821,12 @@
 	dir = 4
 	},
 /area/station/ranch)
+"sdR" = (
+/obj/machinery/launcher_loader/south{
+	id = "to_outpost"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/science)
 "sfG" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -79799,6 +79844,12 @@
 /obj/item/old_grenade/oxygen,
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"shU" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/science)
 "sng" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -80352,6 +80403,16 @@
 /obj/potted_plant,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"wSP" = (
+/obj/decal/tile_edge/floorguide/evac{
+	name = "EMERGENCY EJECTOR"
+	},
+/obj/decal/tile_edge/floorguide{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/grey/blackgrime,
+/area/station/hangar/science)
 "xcB" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -80388,6 +80449,13 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
+"xqh" = (
+/obj/machinery/mass_driver{
+	id = "ejector_medsci";
+	name = "cargo driver"
+	},
+/turf/simulated/floor/airless/engine/caution/westeast,
+/area/station/hangar/science)
 "xxj" = (
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
@@ -105818,8 +105886,8 @@ dbx
 dcm
 ddz
 dek
-dbw
-dbw
+shU
+shU
 dbw
 aaa
 aaa
@@ -106118,11 +106186,11 @@ cZx
 cOR
 dby
 dcn
-dcm
+wSP
 del
-deN
-dfv
-dfN
+iTG
+xqh
+kqH
 aaa
 aaa
 aaa
@@ -106422,9 +106490,9 @@ dbz
 dco
 ddA
 dbw
-dbw
-dbw
-dbw
+kcr
+kcr
+hJl
 aaa
 aaa
 aaa
@@ -106724,7 +106792,7 @@ dbA
 dcp
 ddB
 dem
-deN
+sdR
 dfv
 dfN
 aaa
@@ -110960,7 +111028,7 @@ aaS
 aaS
 aaF
 aaF
-aaA
+gvX
 aaF
 aaF
 aaF
@@ -113963,7 +114031,7 @@ cQI
 cSt
 dhs
 cVp
-cVp
+ecJ
 cXM
 cVp
 cZN

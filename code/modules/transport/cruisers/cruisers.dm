@@ -304,7 +304,7 @@
 				boutput(usr, "<span class='alert'>Fire mode now: Simultaneous</span>")
 		return
 
-	Bump(atom/O)
+	bump(atom/O)
 		..(O)
 		if(ramming)
 			ramming--
