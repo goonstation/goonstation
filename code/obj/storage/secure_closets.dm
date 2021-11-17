@@ -205,7 +205,7 @@
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/head/det_hat/gadget,
 	/obj/item/device/detective_scanner/detective,
-	/obj/item/bloodtracker,
+	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit)
@@ -229,6 +229,7 @@
 /obj/storage/secure/closet/brig/automatic
 	name = "\improper Automatic Locker"
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
+	anchored = 1
 	var/obj/machinery/door_timer/our_timer = null
 	var/id = null
 
@@ -560,6 +561,7 @@
 	name = "\improper Engineer's locker"
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+	/obj/item/engivac,
 	/obj/item/storage/box/clothing/engineer,
 	/obj/item/storage/backpack/engineering,
 	/obj/item/clothing/suit/wintercoat/engineering,
@@ -570,7 +572,8 @@
 	/obj/item/pen/infrared,
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/suit/hi_vis,
-	/obj/item/lamp_manufacturer/organic)
+	/obj/item/lamp_manufacturer/organic,
+	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
@@ -636,6 +639,7 @@
 	req_access = list(access_kitchen)
 	spawn_contents = list(/obj/item/storage/box/clothing/chef,\
 	/obj/item/storage/box/clothing/souschef,\
+	/obj/item/clothing/head/chefhatpuffy,\
 	/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\

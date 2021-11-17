@@ -266,6 +266,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
+	else if (total_clients() >= SEMIOVERLOAD_PLAYERCOUNT)
+		world.tick_lag = SEMIOVERLOADED_WORLD_TICKLAG
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
@@ -559,7 +561,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				allComplete = 0
 				crewMind.all_objs = 0
 		if (allComplete && count)
-			successfulCrew += "[crewMind.current.real_name] ([crewMind.key])"
+			successfulCrew += "[crewMind.current.real_name] ([crewMind.displayed_key])"
 		boutput(crewMind.current, "<br>")
 #endif
 
@@ -605,8 +607,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if(!miscreantMind.objectives.len)
 			continue
 
-		var/miscreant_info = "[miscreantMind.key]"
-		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.key])"
+		var/miscreant_info = "[miscreantMind.displayed_key]"
+		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.displayed_key])"
 
 		boutput(world, "<B>[miscreant_info] was a miscreant!</B>")
 		for (var/datum/objective/miscreant/O in miscreantMind.objectives)

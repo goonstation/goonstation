@@ -1425,6 +1425,17 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+/obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
+	if(!istype(W,/obj/item/mechanics))
+		..()
+		return
+	for(var/datum/data/vending_product/product in product_list)
+		if(W.type == product.product_path)
+			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
+			product.product_amount += 1
+			qdel(W)
+			generate_HTML(1)
+			return
 
 /obj/machinery/vending/computer3
 	name = "CompTech"
@@ -2035,7 +2046,7 @@
 		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if (inp && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+			if (!isnull(inp) && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)

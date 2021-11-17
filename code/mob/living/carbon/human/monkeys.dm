@@ -241,15 +241,19 @@
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
 			if(prob(ai_poke_thing_chance))
-				var/list/atom/things_to_pick = list(src)
+				var/list/atom/things_to_pick = list()
 				for(var/obj/O in range(1, get_turf(src)))
 					if(istype(O, /obj/overlay) || istype(O, /obj/effect) || O.invisibility > 0 || !O.mouse_opacity)
+						continue
+					if(istype(O, /obj/machinery/light) && prob(90)) // don't break lights too often pls
 						continue
 					things_to_pick += O
 				if(prob(15))
 					for(var/mob/M in range(1, get_turf(src)))
 						things_to_pick += M
-				if(src.equipped())
+				if(!length(things_to_pick))
+					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
+				else if(src.equipped())
 					var/atom/thing_to_poke = pick(things_to_pick)
 					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
 				else

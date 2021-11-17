@@ -28,7 +28,7 @@
 	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
 	var/obj/machinery/conveyor/next_conveyor = null
 	var/obj/machinery/conveyor_switch/owner = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 
 /obj/machinery/conveyor/north
@@ -126,7 +126,7 @@
 		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		A.glide_size = (32 / move_lag) * world.tick_lag
 
-/obj/machinery/conveyor/HasEntered(var/atom/movable/AM, atom/oldloc)
+/obj/machinery/conveyor/Crossed(atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -136,7 +136,7 @@
 		return
 	move_thing(AM)
 
-/obj/machinery/conveyor/HasExited(var/atom/movable/AM, var/atom/newloc)
+/obj/machinery/conveyor/Uncrossed(var/atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -145,7 +145,7 @@
 	if(!loc)
 		return
 
-	if(src.next_conveyor && src.next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
 		//Ok, they will soon walk() according to the new conveyor
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
@@ -360,8 +360,8 @@
 	set_divert()
 
 // don't allow movement into the 'backwards' direction if deployed
-/obj/machinery/diverter/CanPass(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Cross(atom/movable/O)
+	var/direct = get_dir(O, src)
 	if(direct == divert_to)	// prevent movement through body of diverter
 		return 0
 	if(!deployed)
@@ -554,7 +554,7 @@
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."
 	density = 1
 	anchored = 1
-	event_handler_flags = USE_CANPASS | USE_FLUID_ENTER
+	event_handler_flags =  USE_FLUID_ENTER
 
 	var/icon_base = "battery-"
 	var/icon_levels = 6 //there are 7 icons of power levels (6 + 1 for unpowered)

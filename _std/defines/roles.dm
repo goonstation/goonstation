@@ -35,3 +35,4 @@
 #define ROLE_OMNITRAITOR "omnitraitor"
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"
+#define ROLE_SLASHER "slasher"

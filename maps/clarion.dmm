@@ -15457,17 +15457,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "aEV" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aEW" = (
@@ -44363,24 +44359,6 @@
 	icon_state = "blue1"
 	},
 /area/station/hallway/secondary/central)
-"chw" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Locker Room";
-	req_access = null
-	},
-/obj/access_spawn/sec_lockers,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/security/main)
 "chL" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -46573,7 +46551,7 @@
 	},
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new /obj/item/captaingun();
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -48096,6 +48074,24 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"lXI" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/pyro/glass/security{
+	name = "Locker Room";
+	req_access = null
+	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/security/main)
 "mct" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/poster/wallsign/fire,
@@ -80760,7 +80756,7 @@ aQR
 bRg
 rSK
 kCY
-chw
+lXI
 eFS
 tbZ
 ban

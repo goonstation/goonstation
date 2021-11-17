@@ -271,6 +271,24 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.icon = initial(theTurf.loc.icon)
 			img.app.icon_state = initial(theTurf.loc.icon_state)
 
+	active_areas
+		name = "active areas"
+		help = "Active areas (with a player in them) in green-ish, rest in red-ish."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/area = theTurf.loc
+			img.app.desc = "Area: [area.name]<br/>Type: [area.type]"
+			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
+			var/color_factor = 4
+			if(area.active)
+				lcolor[1] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[2] = 255 - (255 - lcolor[2]) / color_factor
+			else
+				lcolor[2] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[1] = 255 - (255 - lcolor[2]) / color_factor
+			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+
 	area_power
 		name = "area power"
 		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level."
@@ -807,23 +825,11 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
-	checkingcanpass
-		name = "checkingcanpass"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingcanpass ? "#0f0" : "#f00"
-
 	checkingexit
 		name = "checkingexit"
 		help = "Green = yes."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
-
-	checkinghasentered
-		name = "checkinghasentered"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasentered ? "#0f0" : "#f00"
 
 	blocked_dirs
 		name = "blocked dirs"
@@ -870,6 +876,58 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+	RL_lights
+		name = "RL lights"
+		help = "Displays number of RL lights on theach turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/n_lights = length(theTurf.RL_Lights)
+			if (n_lights)
+				img.app.overlays = list(src.makeText(n_lights))
+				switch(n_lights)
+					if(1) img.app.color = "#00ff00"
+					if(2) img.app.color = "#ffff00"
+					else img.app.color = "#ff0000"
+			else
+				img.app.alpha = 0
+
+	RL_lights_range
+		name = "RL lights range"
+		help = "Displays range of RL lights on each turf"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!length(theTurf.RL_Lights))
+				img.app.alpha = 0
+				return
+			var/radius = 0
+			for(var/datum/light/light in theTurf.RL_Lights)
+				if(!light.enabled)
+					continue
+				radius = max(radius, light.radius)
+			img.app.icon_state = "circle"
+			img.app.transform = matrix(2 * radius, 2 * radius, MATRIX_SCALE)
+
+
+	navbeacons
+		name = "navbeacons"
+		help = "Displays navbeacons and how they link up to each other."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/obj/machinery/navbeacon/beacon = locate() in theTurf
+			img.app.overlays = null
+			if(isnull(beacon))
+				img.app.alpha = 0
+				return
+			img.app.overlays += src.makeText("[beacon.codes[1]]<br>[beacon.location]", align_left=TRUE)
+			try
+				var/next_id = beacon.codes["next_patrol"] || beacon.codes["next_tour"]
+				var/datum/packet_network/net = get_radio_connection_by_id(beacon, "navbeacon").network
+				var/datum/component/packet_connected/next_device = net.devices_by_tag[next_id][1]
+				var/datum/lineResult/R1 = drawLine(theTurf, get_turf(next_device.parent), "triangle", getCrossed = 0, mode = LINEMODE_SIMPLE)
+				R1.lineImage.color = debug_color_of(beacon.freq)
+				img.app.overlays += R1.lineImage
+				R1.lineImage.loc = null
+				img.app.color = null
+			catch
+				img.app.color = "#f00"
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	process_cell_operations
 		name = "process cell stats"
@@ -899,6 +957,27 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
 			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
 #endif
+	gangturf
+		name = "gang turf"
+		help = "Displays the name of gang that owns an area"
+		var/list/area/processed_areas
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/A = get_area(theTurf)
+			img.app.desc = "Area: [A.name]<br/>Owner: [A.gang_owners?.gang_name]"
+			img.app.color = debug_color_of(A.gang_owners?.gang_name)
+
+			if (!A.gang_owners || (A in processed_areas))
+				return
+			else
+				img.app.overlays = list(src.makeText(A.gang_owners.gang_name, align_left=TRUE))
+				processed_areas += A
+
+		OnStartRendering(client/C)
+			if (isnull(processed_areas))
+				processed_areas = list()
+			else
+				processed_areas.len = 0
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
@@ -943,6 +1022,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.maptext = initial(src.maptext)
 		src.alpha = initial(src.alpha)
 		src.appearance_flags = initial(src.appearance_flags)
+		src.transform = initial(src.transform)
 
 
 /client/proc/RenderOverlay()
