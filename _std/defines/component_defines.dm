@@ -160,7 +160,6 @@
 // ---- human signals ----
 
 // ---- mob signals ----
-
 /// When a client logs into a mob
 #define COMSIG_MOB_LOGIN "mob_login"
 /// When a client logs out of a mob
@@ -184,10 +183,11 @@
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+/// sent when defibbed status is added to a mob
+#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
-
 // ---- mob property signals ----
 /// When invisibility of a mob gets updated (old_value)
 #define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"

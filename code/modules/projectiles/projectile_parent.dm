@@ -5,7 +5,7 @@
 
 /obj/projectile
 	name = "projectile"
-	flags = TABLEPASS
+	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
 	anchored = 1
 

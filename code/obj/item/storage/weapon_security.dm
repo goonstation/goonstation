@@ -30,9 +30,9 @@
 	desc = "Contains four morphine autoinjectors, for security use"
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
 
-/obj/item/storage/box/robustdonuts
-	name = "robust donuts box"
-	icon_state = "box"
+/obj/item/storage/lunchbox/robustdonuts
+	name = "robust donuts lunchbox"
+	icon_state = "lunchbox"
 	desc = "Contains two robust donuts and two robusted donuts, for security use"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
 

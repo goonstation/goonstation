@@ -800,9 +800,13 @@
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(!(src.flags & ON_BORDER))
+	if(!(A.flags & ON_BORDER))
 		for(var/atom/other in get_turf(A))
 			if((other.flags & ON_BORDER) && !other.Cross(src))
+				return
+	if(!(src.flags & ON_BORDER))
+		for(var/atom/other in get_turf(src))
+			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
 				return
 	bump(A)
 	SPAWN_DBG( 0 )

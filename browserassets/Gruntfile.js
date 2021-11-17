@@ -16,6 +16,8 @@ module.exports = function (grunt) {
   // Automatically load required grunt tasks
   require('jit-grunt')(grunt);
 
+	var os = require('os');
+
   // Configurable paths
   var config = {
     app: '.',
@@ -94,6 +96,9 @@ module.exports = function (grunt) {
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
+        options: {
+          concurrency: Math.max(1, Math.round(os.cpus().length / 2))
+        },
         files: [{
           expand: true,
           cwd: '<%= config.app %>/images',
