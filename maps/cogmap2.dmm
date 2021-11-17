@@ -71630,6 +71630,11 @@
 	tag = ""
 	},
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "dby" = (
@@ -72004,16 +72009,16 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "dcv" = (
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "dcw" = (
@@ -72591,7 +72596,6 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/mining/magnet)
 "ddz" = (
-/obj/machinery/light/small,
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
@@ -72823,10 +72827,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "del" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Research Outpost";
-	req_access_txt = "24"
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	name = "EMERGENCY DISPOSAL";
 	nameOverride = 0
@@ -79355,6 +79355,10 @@
 /obj/machinery/launcher_loader/south{
 	id = "ejector_medsci"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/airless/engine/caution/westeast,
 /area/station/hangar/science)
 "nCq" = (
@@ -80344,6 +80348,19 @@
 /obj/decal/poster/wallsign/stencil/right/i,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
+"tYy" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/hangar/science)
 "ucI" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/monster_manual_revised{
@@ -80378,6 +80395,10 @@
 "ula" = (
 /obj/machinery/launcher_loader/south{
 	id = "to_outpost"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
@@ -106230,7 +106251,7 @@ cOR
 dbx
 dcm
 ddz
-dbw
+xNg
 ujM
 ujM
 oID
@@ -109248,7 +109269,7 @@ cYM
 cZB
 daA
 cTD
-dcu
+tYy
 pQh
 den
 den
