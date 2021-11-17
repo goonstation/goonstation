@@ -32,7 +32,7 @@ datum/pump_ui/Topic(href, href_list)
 		else if(href_list["ui_action"] == "toggle_power")
 			toggle_power()
 		else if(href_list["ui_action"] == "bump_value")
-			set_value(clamp(get_value() + text2num(href_list["bump_value"]), min_value, max_value))
+			set_value(clamp(get_value() + text2num_safe(href_list["bump_value"]), min_value, max_value))
 	show_ui(usr)
  // Displays the UI
 datum/pump_ui/proc/show_ui(mob/user)

@@ -116,7 +116,7 @@
 					if (lowertext(command) == "a")
 						src.selected_printer = "!all!"
 					else
-						var/printerNumber = round(text2num(command))
+						var/printerNumber = round(text2num_safe(command))
 						if (printerNumber == 0)
 							src.mode = MODE_CONFIG
 							src.master.temp = null
@@ -250,7 +250,7 @@
 					return
 
 				else
-					var/line_num = round( text2num( copytext(command, 2) ) )
+					var/line_num = round( text2num_safe( copytext(command, 2) ) )
 					if(isnull(line_num))
 						src.print_text("Unknown command.")
 						return

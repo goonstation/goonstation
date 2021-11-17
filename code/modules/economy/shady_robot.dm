@@ -274,8 +274,8 @@
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Back</A>"
 
 		if (href_list["access"] && href_list["allowed"])
-			var/access_type = text2num(href_list["access"])
-			var/access_allowed = text2num(href_list["allowed"])
+			var/access_type = text2num_safe(href_list["access"])
+			var/access_allowed = text2num_safe(href_list["allowed"])
 
 			if(access_type == 37)
 				src.card_access -= access_type
@@ -291,7 +291,7 @@
 			src.Topic(href, params2list(href))
 
 		if(href_list["timer"])
-			src.card_timer = text2num(href_list["timer"])
+			src.card_timer = text2num_safe(href_list["timer"])
 
 			updatecardprice()
 			href = "temp_card=1"

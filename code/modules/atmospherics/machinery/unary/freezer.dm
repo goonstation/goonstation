@@ -102,7 +102,7 @@
 				src.on = !src.on
 				update_icon()
 			if(href_list["temp"])
-				var/amount = text2num(href_list["temp"])
+				var/amount = text2num_safe(href_list["temp"])
 				if(amount > 0)
 					src.current_temperature = min(T20C, src.current_temperature+amount)
 				else

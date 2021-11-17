@@ -690,7 +690,7 @@
 					src.generate_HTML(1)
 
 		if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num(href_list["cutwire"])
+			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -700,7 +700,7 @@
 				src.cut(twire)
 
 		if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
+			var/twire = text2num_safe(href_list["pulsewire"])
 			if (! (usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
 				boutput(usr, "You need a multitool or similar!")
 				return

@@ -1096,14 +1096,14 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		if (href_list["decreaseX"])
-			var/change = text2num(href_list["decreaseX"])
+			var/change = text2num_safe(href_list["decreaseX"])
 			xtarget = min(max(0, xtarget-change),500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseX"])
-			var/change = text2num(href_list["increaseX"])
+			var/change = text2num_safe(href_list["increaseX"])
 			xtarget = min(max(0, xtarget+change),500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
@@ -1119,14 +1119,14 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		else if (href_list["decreaseY"])
-			var/change = text2num(href_list["decreaseY"])
+			var/change = text2num_safe(href_list["decreaseY"])
 			ytarget = min(max(0, ytarget-change),500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseY"])
-			var/change = text2num(href_list["increaseY"])
+			var/change = text2num_safe(href_list["increaseY"])
 			ytarget = min(max(0, ytarget+change),500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
@@ -1142,14 +1142,14 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		else if (href_list["decreaseZ"])
-			var/change = text2num(href_list["decreaseZ"])
+			var/change = text2num_safe(href_list["decreaseZ"])
 			ztarget = min(max(0, ztarget-change),14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseZ"])
-			var/change = text2num(href_list["increaseZ"])
+			var/change = text2num_safe(href_list["increaseZ"])
 			ztarget = min(max(0, ztarget+change),14)
 			coord_update_flag = 1
 			src.updateUsrDialog()

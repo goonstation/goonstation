@@ -339,7 +339,7 @@
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 
-			var/ops = text2num(href_list["repair"])
+			var/ops = text2num_safe(href_list["repair"])
 
 			if (ops == 1 && R.compborg_get_total_damage(1) > 0)
 				if (src.reagents.get_reagent_amount("fuel") < 1)

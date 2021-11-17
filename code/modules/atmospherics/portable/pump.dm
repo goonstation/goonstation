@@ -166,7 +166,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
+			var/diff = text2num_safe(href_list["pressure_adj"])
 			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
 
 		else if (href_list["pressure_set"])

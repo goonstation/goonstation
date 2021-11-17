@@ -227,11 +227,11 @@ Code:
 				return
 
 		else if (href_list["adj_freq"])
-			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			src.send_freq = sanitize_frequency(src.send_freq + text2num_safe(href_list["adj_freq"]))
 			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
-			src.send_code += text2num(href_list["adj_code"])
+			src.send_code += text2num_safe(href_list["adj_code"])
 			src.send_code = round(src.send_code)
 			src.send_code = min(100, src.send_code)
 			src.send_code = max(1, src.send_code)
@@ -308,7 +308,7 @@ Code:
 			return
 
 		if (href_list["adj_volume"])
-			var/adjust_num = text2num(href_list["adj_volume"])
+			var/adjust_num = text2num_safe(href_list["adj_volume"])
 			src.honk_volume += adjust_num
 			if(src.honk_volume < 1)
 				src.honk_volume = 1
@@ -762,7 +762,7 @@ Code:
 			return
 
 		if (href_list["alert"])
-			confirm_menu = text2num(href_list["alert"])
+			confirm_menu = text2num_safe(href_list["alert"])
 
 		else if (href_list["confirm"])
 			if (href_list["confirm"] == "y")

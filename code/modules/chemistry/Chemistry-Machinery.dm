@@ -114,14 +114,14 @@
 			return
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
-			var/change = text2num(href_list["adjustM"])
+			var/change = text2num_safe(href_list["adjustM"])
 			target_temp = min(max(0, target_temp-change),1000)
 			src.update_icon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
-			var/change = text2num(href_list["adjustP"])
+			var/change = text2num_safe(href_list["adjustP"])
 			target_temp = min(max(0, target_temp+change),1000)
 			src.update_icon()
 			src.updateUsrDialog()
@@ -1176,7 +1176,7 @@ datum/chemicompiler_core/stationaryCore
 			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
-			var/ops = text2num(href_list["page"])
+			var/ops = text2num_safe(href_list["page"])
 			switch(ops)
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "transference"
