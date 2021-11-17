@@ -55439,10 +55439,10 @@
 /obj/machinery/conveyor/south{
 	operating = 1
 	},
-/obj/railing{
+/obj/decal/cleanable/rust/jen,
+/obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "fCU" = (
@@ -60563,10 +60563,10 @@
 /obj/machinery/conveyor/west{
 	operating = 1
 	},
-/obj/railing{
+/obj/decal/cleanable/generic,
+/obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/decal/cleanable/generic,
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "pgN" = (
