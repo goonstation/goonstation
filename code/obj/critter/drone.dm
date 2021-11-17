@@ -52,7 +52,17 @@
 		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
 		task = "chasing"
 
-	Bump(atom/movable/AM)
+
+	New()
+		..()
+		name = "Drone SC-[rand(1,999)]"
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				for(var/type in do_not_smash)
@@ -438,11 +448,6 @@
 			..()
 			name = "Dr~n³ *§#-[rand(1,999)]"
 			return
-
-	New()
-		..()
-		name = "Drone SC-[rand(1,999)]"
-		return
 
 	heavydrone
 		name = "Syndicate Hunter-Killer Drone"

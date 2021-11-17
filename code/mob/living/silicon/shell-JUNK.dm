@@ -106,7 +106,7 @@
 			return null
 		return active_tools[active_tool]
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
 			if (src.now_pushing)
 				return

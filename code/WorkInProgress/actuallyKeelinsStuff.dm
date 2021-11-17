@@ -2574,7 +2574,7 @@ Returns:
 			return
 		return
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if(!state)
 			..()
 			return

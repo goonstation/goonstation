@@ -63971,14 +63971,10 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "rie" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/decal/cleanable/dirt,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/hydroponics)
 "rij" = (

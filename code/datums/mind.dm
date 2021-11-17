@@ -1,6 +1,7 @@
 datum/mind
 	var/key
 	var/ckey
+	var/displayed_key
 	var/mob/current
 	var/mob/virtual
 
@@ -77,6 +78,7 @@ datum/mind
 			current = M
 			key = M.key
 			ckey = M.ckey
+			displayed_key = M.key
 			src.handwriting = pick(handwriting_styles)
 		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
