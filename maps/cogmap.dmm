@@ -40544,6 +40544,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bWX" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
 "bWY" = (
