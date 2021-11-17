@@ -171,7 +171,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 
 		else if (href_list["pressure_set"])
 			var/change = input(usr,"Target Pressure (0-[10*ONE_ATMOSPHERE]):","Enter target pressure",target_pressure) as num
-			if(!isnum(change)) return
+			if(!isnum_safe(change)) return
 			target_pressure = min(10*ONE_ATMOSPHERE, max(0, change))
 
 		src.updateUsrDialog()

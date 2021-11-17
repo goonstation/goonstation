@@ -602,7 +602,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (!src.allowed(usr))
 					boutput(usr, "<span class='alert'>Access denied!</span>")
 					return 0
-				if (!isnum(change))
+				if (!isnum_safe(change))
 					return 0
 
 				amount = max(0, min(change, MAX_PRESSURE))

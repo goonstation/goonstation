@@ -1111,7 +1111,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		else if (href_list["setX"])
 			var/change = input(usr,"Target X:","Enter target X coordinate",xtarget) as num
-			if(!isnum(change))
+			if(!isnum_safe(change))
 				return
 			xtarget = min(max(0, change),500)
 			coord_update_flag = 1
@@ -1134,7 +1134,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		else if (href_list["setY"])
 			var/change = input(usr,"Target Y:","Enter target Y coordinate",ytarget) as num
-			if(!isnum(change))
+			if(!isnum_safe(change))
 				return
 			ytarget = min(max(0, change),500)
 			coord_update_flag = 1
@@ -1157,7 +1157,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		else if (href_list["setZ"])
 			var/change = input(usr,"Target Z:","Enter target Z coordinate",ztarget) as num
-			if(!isnum(change))
+			if(!isnum_safe(change))
 				return
 			ztarget = min(max(0, change),14)
 			coord_update_flag = 1

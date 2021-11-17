@@ -2046,6 +2046,8 @@
 		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
+			if(!isnum_safe(inp))
+				return
 			if (!isnull(inp) && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
@@ -2771,7 +2773,7 @@
 
 		if(href_list["changepressure"])
 			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
-			if(isnum(change))
+			if(isnum_safe(change))
 				target_pressure = min(max(10.1325, change),1013.25)
 				src.updateUsrDialog()
 
