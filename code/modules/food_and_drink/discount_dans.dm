@@ -207,11 +207,13 @@
 			if (2)
 				src.real_name = "Descuento Danito's Burritos - Strawberrito Churro Flavor"
 				src.desc = "There is no way anyone could possibly justify this."
+				src.icon_state = "burrito_churro"
 				src.initial_reagents["VHFCS"] = 8
 				src.initial_reagents["oil"] = 2
 
 			if (3)
 				src.real_name = "Descuento Danito's Burritos - Spicy Beans and Wieners Ole! Flavor"
+				src.icon_state = "burrito_spicy"
 				src.initial_reagents["lithium"] = 4
 				src.initial_reagents["capsaicin"] = 6
 				src.initial_reagents["refried_beans"] = 10
@@ -219,6 +221,7 @@
 			if (4)
 				src.real_name = "Descuento Danito's Burritos - Pancake Sausage Brunch Flavor"
 				src.desc = "A self-heating breakfast burrito with a buttermilk pancake in lieu of a tortilla. A little frightening."
+				src.icon_state = "burrito_pancake"
 				src.initial_reagents["porktonium"] = 4
 				src.initial_reagents["VHFCS"] = 2
 				src.initial_reagents["coffee"] = 4
@@ -226,6 +229,7 @@
 			if (5)
 				src.real_name = "Descuento Danito's Burritos - Homestyle Comfort Flavor"
 				src.desc = "A self-heating burrito just like Mom used to make, if your mother was a souless, automated burrito production line."
+				src.icon_state = "burrito_homestyle"
 				src.initial_reagents["mashedpotatoes"] = 5
 				src.initial_reagents["gravy"] = 3
 				src.initial_reagents["diethylamine"] = 2
@@ -233,6 +237,7 @@
 			if (6)
 				src.real_name = "Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor"
 				src.desc = "A self-heating burrito.  Isn't that concept scary enough on its own?"
+				src.icon_state = "burrito_texastoast"
 				src.initial_reagents["fakecheese"] = 3
 				src.initial_reagents["space_drugs"] = 3
 				src.initial_reagents["bloodc"] = 4
@@ -240,6 +245,7 @@
 			if (7)
 				src.real_name = "Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor"
 				src.desc = "A self-heating burrito that purports to contain elm-smoked meat. Of some sort. Probably from an animal."
+				src.icon_state = "burrito_elmmeat"
 				src.initial_reagents["beff"] = 3
 				src.initial_reagents["synthflesh"] = 2
 				src.initial_reagents["eyeofnewt"] = 5
@@ -247,6 +253,7 @@
 			if (8)
 				src.real_name = "Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor"
 				src.desc = "A self-heating pizza burrito."
+				src.icon_state = "burrito_pizza"
 				src.initial_reagents["fakecheese"] = 3
 				src.initial_reagents["cheese"] = 3
 				src.initial_reagents["pepperoni"] = 3

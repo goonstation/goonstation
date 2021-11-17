@@ -68,7 +68,7 @@
 			else
 				return
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		if (ismob(A))
 			flick("door_[door_type]_deny", src)
 
