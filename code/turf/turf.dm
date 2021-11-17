@@ -331,7 +331,7 @@ proc/generate_space_color()
 					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
 					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
 						if(!obstacle.CheckExit(mover, src))
-							mover.Bump(obstacle, 1)
+							mover.bump(obstacle, 1)
 							return 0
 
 	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
@@ -344,7 +344,7 @@ proc/generate_space_color()
 					if(!mover)	return 0
 					if ((forget != obstacle))
 						if(!obstacle.Cross(mover))
-							mover.Bump(obstacle)
+							mover.bump(obstacle)
 							return 0
 
 	return ..() //Nothing found to block so return success!

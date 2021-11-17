@@ -775,9 +775,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			t3 = get_step(t1, SOUTH)
 
 	if (!t1 || !t2 || !t3 || !t1.Cross(src) || !t2.Cross(src) || !t3.Cross(src))
-		if (t1) Bump(t1)
-		if (t2) Bump(t2)
-		if (t3) Bump(t3)
+		if (t1) bump(t1)
+		if (t2) bump(t2)
+		if (t3) bump(t3)
 		return 0
 
 	// set return value to default

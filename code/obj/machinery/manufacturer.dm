@@ -1308,6 +1308,8 @@
 
 		if (pattern == "ALL") // anything at all
 			return 1
+		if (pattern == "ORG|RUB")
+			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
 			var/secondpart = text2num(copytext(pattern, 5))

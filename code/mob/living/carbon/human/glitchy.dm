@@ -31,7 +31,7 @@
 			var/turf/T = get_turf(src)
 			src.glitch_up(T)
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		..()
 		src.glitch_up(AM)
 

@@ -5,7 +5,7 @@
 
 /obj/projectile
 	name = "projectile"
-	flags = TABLEPASS
+	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
 	anchored = 1
 
@@ -316,7 +316,7 @@
 		curr_t = 0
 		src.was_setup = 1
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)

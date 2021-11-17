@@ -119,6 +119,13 @@
 	icon_closed = "freezer"
 	weld_image_offset_Y = -1
 
+/obj/storage/crate/bloody
+	name = "dented crate"
+	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
+
 /obj/storage/crate/bartending
 	name = "bartending crate"
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
@@ -237,8 +244,10 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/misc/halloween.dmi'
-	icon_state = "crate"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 	var/triggered = 0
 
 	make_my_stuff()

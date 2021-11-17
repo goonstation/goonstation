@@ -907,7 +907,7 @@
 			var/mob/living/carbon/user = AM
 			src.shock(user)
 
-	Bump(atom/movable/AM as mob)
+	bump(atom/movable/AM as mob)
 		if(iscarbon(AM))
 			var/mob/living/carbon/user = AM
 			src.shock(user)
