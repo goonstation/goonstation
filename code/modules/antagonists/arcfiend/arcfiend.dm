@@ -442,7 +442,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	proc/activate()
 		active = TRUE
 		handle_move()
-		D = new/obj/dummy/voltron(holder.owner, get_turf(holder.owner))
+		D = new/obj/dummy/voltron(get_turf(holder.owner), holder.owner)
 		RegisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
 		pointCost = 0
 		var/atom/movable/screen/ability/topBar/B = src.object

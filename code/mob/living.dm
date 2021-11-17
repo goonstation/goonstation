@@ -1,7 +1,7 @@
 // living
 
 /mob/living
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | IS_FARTABLE
+	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
 
 	// this is a read only variable. do not set it directly.
@@ -652,6 +652,21 @@
 			else
 				src.emote("handpuppet")
 
+/// returns true if first letter of things that person says should be capitalized
+/mob/living/proc/capitalize_speech()
+	if (!client)
+		return FALSE
+	if (!client.preferences)
+		return FALSE
+	. = src.client.preferences.auto_capitalization
+
+/// special behavior for AIs to make sure it still works in eyecam form
+/mob/living/silicon/ai/capitalize_speech()
+	if (!client)
+		if (src?.eyecam?.client?.preferences)
+			return src.eyecam.client.preferences
+	. = ..()
+
 /mob/living/say(var/message, ignore_stamina_winded)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
@@ -806,7 +821,7 @@
 	if (!message)
 		return
 
-	if(src?.client?.preferences.auto_capitalization)
+	if(src.capitalize_speech())
 		message = capitalize(message)
 
 	if (src.voice_type && world.time > last_voice_sound + 8)
@@ -1920,7 +1935,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 	if (!wattage)
 		return 0
-
 	var/prot = 1
 
 	var/mob/living/carbon/human/H = null //ughhh sort this out with proper inheritance later
@@ -1963,7 +1977,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	else if (src.bioHolder.HasEffect("resist_electric"))
 		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return 0
-
+	src.setStatus("defibbed", sqrt(shock_damage) SECONDS)
 	switch(shock_damage)
 		if (0 to 25)
 			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)

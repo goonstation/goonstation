@@ -39,6 +39,9 @@
 	proc/RawClick(location,control,params)
 		return
 
+	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
+	var/gas_impermeable = FALSE
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -262,7 +265,7 @@
 
 //atom.event_handler_flags & USE_CHECKEXIT MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
 /atom/proc/CheckExit(atom/mover, turf/target)
-	//return !(src.flags & ON_BORDER) || src.CanPass(mover, target, 1, 0)
+	//return !(src.flags & ON_BORDER) || src.Cross(mover, target, 1, 0)
 	return 1 // fuck it
 
 /atom/Crossed(atom/movable/AM)
@@ -371,12 +374,7 @@
 		var/turf/T = src.loc
 		if (src.event_handler_flags & USE_CHECKEXIT)
 			T.checkingexit++
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/BT in bounds(src))
-					BT.checkingcanpass++
-			else
-				T.checkingcanpass++
+
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -487,21 +485,6 @@
 
 	if(last_turf == src.loc)
 		return
-
-	if(src.density || src.event_handler_flags & USE_CANPASS)
-		if (bound_width + bound_height > 64)
-			if(isturf(last_turf))
-				for(var/turf/T in bounds(last_turf.x*32, last_turf.y*32, bound_width/2, bound_height/2, last_turf.z))
-					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-			if(isturf(src.loc)) // ..() calls Crossed() which can change location to a non-turf for example in floor flushers
-				for(var/turf/BT in bounds(src))
-					BT.checkingcanpass++
-		else
-			if(isturf(last_turf))
-				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
-			if(isturf(src.loc))
-				var/turf/locturf = src.loc
-				locturf.checkingcanpass++
 
 	if (src.event_handler_flags & (USE_CHECKEXIT | USE_PROXIMITY))
 		if (isturf(last_turf))
@@ -624,6 +607,36 @@
 	var/extra = src.get_desc(dist, user)
 	if (extra)
 		. += " [extra]"
+
+	// handles PDA messaging shortcut for the AI
+	if (isAI(user) && ishuman(src))
+		var/mob/living/silicon/ai/mainframe
+		var/mob/living/carbon/human/person = src
+		if (isAIeye(user))
+			var/mob/dead/aieye/ai = user
+			mainframe = ai.mainframe
+		else
+			mainframe = user
+
+		// we need to check to see if any of these are PDAs so that we can render them to the ai.
+		// these are where pdas can be visible in an inventory - lets check to see whats in them!
+		var/list/inv_list = list()
+		inv_list += person.get_slot(SLOT_BELT)
+		inv_list += person.get_slot(SLOT_WEAR_ID)
+		inv_list += person.get_slot(SLOT_L_HAND)
+		inv_list += person.get_slot(SLOT_R_HAND)
+
+		var/hasPDA = FALSE
+		for (var/obj/item/device/pda2/pda in inv_list) // we only care about PDAs
+			var/textToAdd
+			if (pda.host_program.message_on && pda.owner) // is their messenger enabled, is their pda swiped in??
+				textToAdd += "<br>[bicon(pda)][pda.name] - <a href='byond://?src=\ref[mainframe];net_id=[pda.net_id];owner=[pda.owner]'><u>*MESSAGE*</u></a>" // see ai.dm under Topic() to continue from here!
+			else if (pda.owner) // ownerless PDAs will not render, but we'll tell the AI when someone's messenger is disabled!
+				textToAdd += "<br>[bicon(pda)][pda.name] - *MESSENGER DISABLED*"
+			. += textToAdd
+			if (pda.owner) hasPDA = TRUE // we need at least ONE pda to be visible, or else we add the text below
+		if (!hasPDA)
+			. += "<br>*No PDA detected!*"
 
 /atom/proc/MouseDrop_T()
 	return
@@ -781,14 +794,26 @@
 /atom/proc/Bumped(AM as mob|obj)
 	return
 
-/atom/movable/Bump(var/atom/A as mob|obj|turf|area, yes)
+// use this instead of Bump
+/atom/movable/proc/bump(atom/A)
+	return
+
+/atom/movable/Bump(var/atom/A as mob|obj|turf|area)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(!(A.flags & ON_BORDER))
+		for(var/atom/other in get_turf(A))
+			if((other.flags & ON_BORDER) && !other.Cross(src))
+				return
+	if(!(src.flags & ON_BORDER))
+		for(var/atom/other in get_turf(src))
+			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
+				return
+	bump(A)
 	SPAWN_DBG( 0 )
-		if ((A && yes)) //wtf
+		if (A)
 			A.last_bumped = world.timeofday
 			A.Bumped(src)
-		return
 	..()
-	return
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
 // flag is projectile type, can be:
@@ -861,17 +886,11 @@
 
 
 	// We only need to do any of these checks if one of the flags is set OR density = 1
-	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT | USE_CANPASS | USE_PROXIMITY)) || src.density == 1
+	var/do_checks = (src.event_handler_flags & (USE_CHECKEXIT  | USE_PROXIMITY)) || src.density == 1
 
 	if (do_checks && last_turf && isturf(last_turf))
 		if (src.event_handler_flags & USE_CHECKEXIT)
 			last_turf.checkingexit = max(last_turf.checkingexit-1, 0)
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/T in bounds(last_turf.x*32, last_turf.y*32, bound_width/2, bound_height/2, last_turf.z))
-					T.checkingcanpass = max(T.checkingcanpass-1, 0)
-			else
-				last_turf.checkingcanpass = max(last_turf.checkingcanpass-1, 0)
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
@@ -881,12 +900,6 @@
 		last_turf = src.loc
 		if (src.event_handler_flags & USE_CHECKEXIT)
 			last_turf.checkingexit++
-		if (src.event_handler_flags & USE_CANPASS || src.density)
-			if (bound_width + bound_height > 64)
-				for(var/turf/T in bounds(src))
-					T.checkingcanpass++
-			else
-				last_turf.checkingcanpass++
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity++
 			for (var/turf/T2 in range(1, last_turf))
@@ -906,28 +919,6 @@
 	src.density = newdensity
 
 /atom/movable/set_density(var/newdensity)
-	//BASICALLY : if we dont have the USE_CANPASS flag, turf's checkingcanpass value relies entirely on our density.
-	//It is probably important that we update this as density changes immediately. I don't think it breaks anything currently if we dont, but still important for future.
-	if (src.density != newdensity)
-		if (isturf(src.loc))
-			if (!(src.event_handler_flags & USE_CANPASS))
-				if(newdensity == 1)
-					var/turf/T = src.loc
-					if (T)
-						if (bound_width + bound_height > 64)
-							for(var/turf/BT in bounds(src))
-								BT.checkingcanpass++
-						else
-							T.checkingcanpass++
-
-				else
-					var/turf/T = src.loc
-					if (T)
-						if (bound_width + bound_height > 64)
-							for(var/turf/BT in bounds(src))
-								BT.checkingcanpass = max(BT.checkingcanpass-1, 0)
-						else
-							T.checkingcanpass = max(T.checkingcanpass-1, 0)
 	..()
 
 // standardized damage procs

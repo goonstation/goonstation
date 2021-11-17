@@ -3432,8 +3432,8 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "aoB" = (
-/obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/cola/random,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "aoC" = (
@@ -9610,7 +9610,7 @@
 	},
 /area/marsoutpost)
 "aIn" = (
-/obj/table/reinforced/auto,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "aIo" = (
@@ -34611,12 +34611,12 @@
 	},
 /area/sim/racing_track)
 "bXh" = (
-/obj/table/reinforced/auto,
 /obj/item/clipboard,
 /obj/item/paper{
 	pixel_x = -13;
 	pixel_y = -5
 	},
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "bXi" = (
@@ -48371,8 +48371,8 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cGV" = (
-/obj/table/reinforced/auto,
 /obj/item/device/camera_viewer,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cGW" = (
@@ -48606,15 +48606,15 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cHA" = (
-/obj/table/reinforced/auto,
 /obj/item/cigpacket,
 /obj/item/matchbook,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "cHB" = (
-/obj/table/reinforced/auto,
 /obj/item/device/audio_log/radioship/small,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cHC" = (
@@ -49448,9 +49448,9 @@
 	},
 /area/owlery/gangzone)
 "cJw" = (
-/obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /obj/machinery/light/small/floor,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "cJx" = (
@@ -50762,8 +50762,8 @@
 /turf/space,
 /area/shuttle/john/owlery)
 "cMS" = (
-/obj/table/reinforced/auto,
 /obj/item/decoration/ashtray,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "cMT" = (
@@ -65343,6 +65343,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 9
 	},
@@ -65363,6 +65364,7 @@
 /obj/cup_rack{
 	pixel_y = 24
 	},
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 1
 	},
@@ -65370,6 +65372,7 @@
 "dws" = (
 /obj/decal/lightshaft/rainbow,
 /obj/item/storage/firstaid/docbag,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 1
 	},
@@ -65377,6 +65380,7 @@
 "dwt" = (
 /obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/shoes/fuzzy,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 1
 	},
@@ -65511,19 +65515,23 @@
 /turf/unsimulated/floor/black,
 /area/centcom/offices/zewaka)
 "dwR" = (
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 8
 	},
 /area/centcom/offices/zewaka)
 "dwS" = (
 /obj/critter/parrot/macaw,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave,
 /area/centcom/offices/zewaka)
 "dwT" = (
 /obj/stool/chair/office/red,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave,
 /area/centcom/offices/zewaka)
 "dwU" = (
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 4
 	},
@@ -65625,16 +65633,21 @@
 	icon_state = "blue"
 	})
 "dxo" = (
+/obj/decal/cleanable/rust/jen,
+/obj/critter/crab/party,
 /turf/unsimulated/greek/cave/floor{
 	dir = 10
 	},
 /area/centcom/offices/zewaka)
 "dxp" = (
+/obj/decal/cleanable/rust/jen,
+/obj/critter/lavacrab,
 /turf/unsimulated/greek/cave/floor,
 /area/centcom/offices/zewaka)
 "dxq" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/energyshake,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor,
 /area/centcom/offices/zewaka)
 "dxr" = (
@@ -65643,6 +65656,7 @@
 /obj/item/clothing/head/fruithat,
 /obj/item/clothing/head/towel_hat,
 /obj/machinery/light,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 6
 	},
@@ -74585,6 +74599,11 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"ewi" = (
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/katzen)
 "ewK" = (
 /obj/storage/closet/dresser,
 /turf/space,
@@ -74821,6 +74840,23 @@
 /obj/item/paper/book/from_file/monster_manual,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
+"fll" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/item/clothing/head/pinwheel_hat{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/katzen)
 "fls" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -75266,6 +75302,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"gQD" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "gQE" = (
 /obj/cable{
 	d1 = 1;
@@ -76072,6 +76111,12 @@
 	icon_state = "shore-34"
 	},
 /area/titlescreen)
+"jtH" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border,
+/area/centcom/offices/katzen)
 "jup" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
@@ -78299,6 +78344,27 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"oVK" = (
+/obj/machinery/light,
+/obj/stool/bee_bed{
+	desc = "A soft little bed.";
+	name = "cat bed"
+	},
+/mob/living/critter/small_animal/cat{
+	desc = "A mentor cat???"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
+"oWJ" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/snacks/burger/monsterburger{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 9
+	},
+/area/centcom/offices/katzen)
 "oWW" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -79795,6 +79861,11 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/destiny)
+"szA" = (
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 6
+	},
+/area/centcom/offices/katzen)
 "sBm" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -79877,6 +79948,17 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/centcom)
+"sKM" = (
+/obj/admin_plaque{
+	name = "Katzen's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "sNn" = (
 /turf/unsimulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -80107,6 +80189,15 @@
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
+"tIu" = (
+/obj/decal/poster/wallsign/poster_clown{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "tJi" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -80561,6 +80652,15 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/cogmap2)
+"veg" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer3/generic/personal/meatland{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/centcom/offices/katzen)
 "vel" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -80902,6 +81002,19 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"wsk" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/sailormoon,
+/obj/item/gun/kinetic/pistol/empty{
+	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Seems not to work...";
+	icon_state = "silenced";
+	name = "Spy Pistol"
+	},
+/obj/item/clothing/shoes/sailormoon,
+/obj/item/clothing/head/sailormoon,
+/obj/item/clothing/gloves/sailormoon,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "wsA" = (
 /obj/machinery/bot/guardbot/soviet,
 /obj/machinery/guardbot_dock{
@@ -81033,8 +81146,8 @@
 	},
 /area/shuttle/escape/centcom/cogmap2)
 "wNz" = (
-/obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/coffee,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "wOC" = (
@@ -81186,6 +81299,13 @@
 	icon_state = "4"
 	},
 /area/shuttle/escape/centcom/donut3)
+"xxy" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "xyQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -81472,6 +81592,17 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/donut2)
+"ycX" = (
+/obj/item/toy/plush{
+	desc = "Ew, it's soggy.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "mouse-mentor-dead";
+	name = "Mentor mouse plush toy";
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "yeV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -156847,9 +156978,9 @@ nRU
 iyY
 fMq
 wel
-dvW
-dvW
-dCj
+oWJ
+ewi
+oVK
 wel
 dCs
 dDf
@@ -157148,10 +157279,10 @@ wel
 ezH
 vWb
 tGB
-wel
-dvW
-dvW
-dvW
+tIu
+veg
+jtH
+ycX
 wel
 dCt
 dDg
@@ -157451,9 +157582,9 @@ qMN
 fUa
 tGB
 wel
-dvX
-dvW
-dvW
+fll
+szA
+gQD
 wel
 dCu
 dDh
@@ -157753,9 +157884,9 @@ fqO
 kAr
 xqB
 wel
-dvW
-dvW
-dvW
+wsk
+gQD
+gQD
 wel
 dCv
 dDi
@@ -158056,7 +158187,7 @@ xzf
 wel
 wel
 wel
-kKw
+xxy
 wel
 wel
 wel
@@ -158357,7 +158488,7 @@ umN
 dvy
 dvy
 dvy
-rUQ
+sKM
 dvy
 dxa
 dvy

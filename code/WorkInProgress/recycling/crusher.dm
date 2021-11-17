@@ -8,7 +8,7 @@
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
 
@@ -17,11 +17,16 @@
 	var/last_sfx = 0
 
 /obj/machinery/crusher/Bumped(atom/AM)
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid))
+	if(AM.flags & UNCRUSHABLE)
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
+
+/obj/machinery/crusher/Cross(atom/movable/mover)
+	. = ..()
+	if(mover.flags & UNCRUSHABLE)
+		. = TRUE
 
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
@@ -41,7 +46,7 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		src.target = target
-		if (!ignore_z)
+		if (!ignore_z && T)
 			src.classic = isrestrictedz(T.z)
 		if(!ismob(target))
 			duration = rand(0, 20) DECI SECONDS

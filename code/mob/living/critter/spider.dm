@@ -299,6 +299,7 @@
 					var/turf/T = get_edge_target_turf(I, pick(alldirs))
 					if (T)
 						I.throw_at(T, 12, 3)
+			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
 
 	cluwne

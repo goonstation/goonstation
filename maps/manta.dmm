@@ -3055,22 +3055,22 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "akE" = (
-/turf/space/fluid/manta,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "akF" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "akG" = (
-/turf/space/fluid/manta,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
+/turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "akH" = (
 /turf/simulated/shuttle/wall{
@@ -3498,11 +3498,11 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alP" = (
-/turf/simulated/floor/red,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alQ" = (
 /obj/machinery/door/airlock/pyro/syndicate{
@@ -3516,11 +3516,11 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alR" = (
-/turf/simulated/floor/red,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alS" = (
 /obj/machinery/drainage/big,
@@ -3532,11 +3532,11 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alU" = (
-/turf/space/fluid/manta,
 /turf/simulated/shuttle/wall{
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
+/turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "alV" = (
 /obj/disposalpipe/segment{
@@ -3710,11 +3710,11 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amq" = (
-/turf/space/fluid/manta,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
+/turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "amr" = (
 /obj/cable{
@@ -17739,11 +17739,6 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYq" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -17765,6 +17760,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed,
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed,
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYr" = (

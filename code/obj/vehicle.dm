@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		src.UpdateOverlays(null, "rider")
 		src.underlays = null
 
-/obj/vehicle/segway/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -747,7 +747,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle/floorbuffer/is_open_container()
 	return 2
 
-/obj/vehicle/floorbuffer/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/floorbuffer/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -1088,7 +1088,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/clowncar/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -1293,7 +1293,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/vehicle/clowncar/cluwne/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/cluwne/bump(atom/AM as mob|obj|turf)
 	..(AM)
 	icon_state = "cluwnecar"
 	pixel_x = 0
@@ -1358,7 +1358,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	desc = "Arf arf arf!"
 	icon_state = "odie"
 
-/obj/vehicle/cat/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/cat/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -1765,7 +1765,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/adminbus/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/adminbus/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)

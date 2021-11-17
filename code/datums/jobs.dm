@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 
 #ifdef SUBMARINE_MAP
-	slot_jump = list(/obj/item/clothing/under/rank/head_of_securityold/fancy_alt)
+	slot_jump = list(/obj/item/clothing/under/rank/head_of_security/fancy_alt)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/requisition_token/security)
 	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
-	slot_jump = list(/obj/item/clothing/under/rank/head_of_securityold)
+	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_head = list(/obj/item/clothing/head/hos_hat)
@@ -551,6 +551,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_suit = list(/obj/item/clothing/suit/det_suit)
 	slot_ears = list(/obj/item/device/radio/headset/detective)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
+	map_can_autooverride = 0
 
 	New()
 		..()
@@ -874,6 +875,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
+		M.traitHolder.addTrait("training_chef")
 
 /datum/job/civilian/bartender
 	name = "Bartender"
@@ -1119,8 +1121,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		src.access = get_access("Head Surgeon")
-		return
+		src.access = get_access("Medical Director") - access_medical_director
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2244,6 +2245,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list()
 	slot_belt = list()
 	spawn_id = 0
+	radio_announcement = FALSE
+	var/leader = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2253,12 +2256,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			M.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 			ticker.mode:agent_number++
 		else
-			M.real_name = "Syndicate Agent"
+			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, "Syndicate Agent", 0)
-
-		equip_syndicate(M)
+		antagify(M, ROLE_NUKEOP, 0)
+		equip_syndicate(M, leader)
 		return
+
+/datum/job/special/syndicate_operative/leader
+	name = "Syndicate Commander"
+	leader = TRUE
 
 /datum/job/special/syndicate_weak
 	linkcolor = "#880000"

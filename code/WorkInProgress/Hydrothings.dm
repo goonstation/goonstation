@@ -827,7 +827,7 @@ obj/critter/madnessowl
 	scavenger = 1
 	var/turftarget = null
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		..()
 		if(isobj(AM))
 

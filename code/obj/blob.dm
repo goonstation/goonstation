@@ -12,7 +12,7 @@
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
 	var/armor = 1           // how much incoming damage gets divided by unless it bypasses armor
@@ -36,7 +36,6 @@
 	var/poison_depletion = 1
 	var/heat_divisor = 15
 	var/temp_tolerance = 40
-	var/gas_impermeable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
@@ -78,16 +77,47 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = ..()
 		var/obj/projectile/P = mover
-		if((!mover || air_group) && src.gas_impermeable)
-			return 0
 		if (istype(P) && P.proj_data) //Wire note: Fix for Cannot read null.type
 			if (P.proj_data.type == /datum/projectile/slime)
 				return 1
 		if (istype(mover, /obj/decal))
 			return 1
+
+	set_loc(newloc)
+		var/atom/old_loc = loc
+		. = ..()
+		if(!("anim_overlay" in overlay_refs))
+			update_overlays(overmind?.organ_color || src.color)
+		if(isturf(old_loc))
+			update_surrounding_blob_icons(old_loc)
+		update_icon()
+		if(isturf(newloc))
+			update_surrounding_blob_icons(newloc)
+
+	proc/update_overlays(organ_color)
+		if( state_overlay )
+			var/image/blob_image
+			if (special_icon)
+				blob_image = image('icons/mob/blob_organs.dmi')
+			else
+				blob_image = image('icons/mob/blob.dmi')
+			blob_image.appearance_flags |= RESET_COLOR
+			blob_image.plane = PLANE_SELFILLUM + 1
+
+			blob_image.color = organ_color
+			blob_image.icon_state = state_overlay
+			UpdateOverlays(blob_image,"overmind")
+		if ( anim_overlay )
+			var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
+			blob_anim_image.appearance_flags |= RESET_COLOR
+			blob_anim_image.plane = PLANE_SELFILLUM + 2
+
+			blob_anim_image.color = organ_color
+			blob_anim_image.icon_state = anim_overlay
+			UpdateOverlays(blob_anim_image,"anim_overlay")
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		if (overmind == O)
@@ -101,26 +131,7 @@
 			original_color = color
 			O.blobs |= src
 			onAttach(O)
-			if( state_overlay )
-				var/image/blob_image
-				if (special_icon)
-					blob_image = image('icons/mob/blob_organs.dmi')
-				else
-					blob_image = image('icons/mob/blob.dmi')
-				blob_image.appearance_flags |= RESET_COLOR
-				blob_image.plane = PLANE_SELFILLUM + 1
-
-				blob_image.color = O.organ_color
-				blob_image.icon_state = state_overlay
-				UpdateOverlays(blob_image,"overmind")
-			if ( anim_overlay )
-				var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
-				blob_anim_image.appearance_flags |= RESET_COLOR
-				blob_anim_image.plane = PLANE_SELFILLUM + 2
-
-				blob_anim_image.color = O.organ_color
-				blob_anim_image.icon_state = anim_overlay
-				UpdateOverlays(blob_anim_image,"anim_overlay")
+			update_overlays(O.organ_color)
 			if ( O.hat && istype(src,/obj/blob/nucleus))
 				O.hat.pixel_y += 5 //hat needs to match position of perspective nucleus
 				UpdateOverlays(O.hat,"hat")
@@ -300,7 +311,7 @@
 		return
 
 	proc/create_chunk(var/turf/T)
-		var/obj/item/material_piece/wad/BC = new /obj/item/material_piece/wad
+		var/obj/item/material_piece/wad/blob/BC = new
 		BC.set_loc(T)
 		BC.setMaterial(copyMaterial(material))
 		BC.name = "chunk of blob"
@@ -520,7 +531,8 @@
 			src.name = "[material.name] [initial(src.name)]"
 
 			// ARBITRARY MATH TIME! WOO!
-			var/om_tough = max(overmind.initial_material.getProperty("density"), 1) * max(overmind.initial_material.getProperty("hard"), 1)
+			var/datum/material/initial_mat = overmind?.initial_material || getMaterial("blob")
+			var/om_tough = max(initial_mat.getProperty("density"), 1) * max(initial_mat.getProperty("hard"), 1)
 			var/c_tough = max(material.getProperty("density"), 1) * max(material.getProperty("hard"), 1)
 			var/hm_orig = initial(health_max)
 			var/new_tough = (c_tough/om_tough)
@@ -533,14 +545,14 @@
 				health_max = hm_new
 				health *= perc_change
 
-			var/om_mp = overmind.initial_material.getProperty("thermal")
+			var/om_mp = initial_mat.getProperty("thermal")
 			var/c_mp = material.getProperty("thermal")
 			var/hd_orig = initial(heat_divisor)
 
 			var/mp_diff = max(0, c_mp - om_mp)
 			heat_divisor = hd_orig + mp_diff / 300
 
-			var/om_flame = overmind.initial_material.getProperty("flammable")
+			var/om_flame = initial_mat.getProperty("flammable")
 			var/c_flame = material.getProperty("flammable")
 			var/fc_orig = initial(fire_coefficient)
 
@@ -548,7 +560,7 @@
 				var/t = (100 / om_flame * c_flame) / 100
 				fire_coefficient = (0.25 + (t * 0.75)) * fc_orig
 
-			var/om_perme = overmind.initial_material.getProperty("permeable")
+			var/om_perme = initial_mat.getProperty("permeable")
 			var/c_perme = material.getProperty("permeable")
 			var/psc_orig = initial(poison_spread_coefficient)
 
@@ -556,7 +568,7 @@
 				var/t = (100 / om_perme * c_perme) / 100
 				poison_spread_coefficient = (0.5 + (t * 0.5)) * psc_orig
 
-			var/om_corr = overmind.initial_material.getProperty("corrosion")
+			var/om_corr = initial_mat.getProperty("corrosion")
 			var/c_corr = material.getProperty("corrosion")
 			var/pc_orig = initial(poison_coefficient)
 
@@ -1274,7 +1286,7 @@
 		var/image/ov = image('icons/mob/blob_organs.dmi')
 		ov.appearance_flags |= RESET_COLOR
 		ov.plane = PLANE_SELFILLUM + 1
-		ov.color = overmind.organ_color
+		ov.color = overmind?.organ_color
 		ov.icon_state = "deposit-material"
 		UpdateOverlays(ov, name)
 

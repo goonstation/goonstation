@@ -2,6 +2,7 @@
 	var/amount
 	var/price
 	var/for_sale
+	var/stats
 
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
@@ -212,7 +213,7 @@
 				user.u_equip(R)
 				R.dropped()
 			qdel(R)
-		update_ore_amount(R.material_name,amount_loaded)
+		update_ore_amount(R.material_name,amount_loaded,R)
 
 
 	proc/accept_loading(var/mob/user,var/allow_silicon = 0)
@@ -229,7 +230,7 @@
 			return 0
 		return 1
 
-	proc/update_ore_amount(var/material_name,var/delta)
+	proc/update_ore_amount(var/material_name,var/delta,var/obj/item/raw_material/ore)
 		if(ores[material_name])
 			var/datum/ore_cloud_data/OCD = ores[material_name]
 			OCD.amount += delta
@@ -239,7 +240,19 @@
 			OCD.amount += delta
 			OCD.for_sale = 0
 			OCD.price = 0
+			OCD.stats = get_ore_properties(ore)
 			ores[material_name] = OCD
+
+	proc/get_ore_properties(var/obj/item/raw_material/ore)
+		if (!ore?.material)
+			return
+		if (istype(ore, /obj/item/raw_material/gemstone)) return "varied levels of hardness and density"
+		var/list/stat_list = list()
+		for(var/datum/material_property/stat in ore.material.properties)
+			stat_list += stat.getAdjective(ore.material)
+		if (!stat_list.len) return "no properties"
+		return stat_list.Join(", ")
+
 
 	proc/update_ore_for_sale(var/material_name,var/new_for_sale)
 		if(ores[material_name])
@@ -256,81 +269,12 @@
 			OCD.price = max(0,new_price)
 		return
 
-	attack_hand(var/mob/user as mob)
-
-		src.add_dialog(user)
-
-		if (status & BROKEN || status & NOPOWER)
-			var/dat = "The screen is blank."
-			user.Browse(dat, "window=mining_dropbox;size=400x500")
-			onclose(user, "mining_dropbox")
-			return
-
-		var/list/dat = list({"<B>[src.name]</B>
-			<br><HR>
-			<B>Rockbox™ Ore Cloud Storage Service Settings:</B>
-			<br><small>
-			<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
-			<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>
-			<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>
-			</small><HR>"})
-
-		if(ores.len)
-			for(var/ore in ores)
-				var/sellable = 0
-				var/price = 0
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				price = OCD.price
-				sellable = OCD.for_sale
-				dat += "<B>[ore]:</B> [OCD.amount] (<A href='?src=\ref[src];sellable=[ore]'>[sellable ? "For Sale" : "Not For Sale"]</A>) (<A href='?src=\ref[src];price=[ore]'>$[price] per ore</A>) (<A href='?src=\ref[src];eject=[ore]'>Eject</A>)<br>"
-		else
-			dat += "No ores currently loaded.<br>"
-
-		user.Browse(dat.Join(), "window=mining_dropbox;size=500x500")
-		onclose(user, "mining_dropbox")
-
-
-
-	Topic(href, href_list)
-
-		if(status & BROKEN || status & NOPOWER)
-			return
-
-		if(usr.stat || usr.restrained())
-			return
-
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			src.add_dialog(usr)
-
-			if (href_list["eject"])
-				var/ore = href_list["eject"]
-				src.eject_ores(ore,null,0,0,usr)
-
-			if (href_list["price"])
-				var/ore = href_list["price"]
-				var/new_price = null
-				new_price = input(usr,"What price would you like to set? (Min 0)","Set Sale Price",null) as num
-				update_ore_price(ore,new_price)
-
-			if (href_list["sellable"])
-				var/ore = href_list["sellable"]
-				update_ore_for_sale(ore)
-
-			src.updateUsrDialog()
-		return
-
 	proc/eject_ores(var/ore, var/eject_location, var/ejectamt, var/transmit = 0, var/user as mob)
 		var/amount_ejected = 0
 		if(!eject_location)
 			eject_location = get_output_location()
 		for(var/obj/item/raw_material/R in src.contents)
 			if (R.material_name == ore)
-				if (!ejectamt)
-					ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
-				if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
-					break
-				if (!eject_location)
-					break
 				R.set_loc(eject_location)
 				ejectamt--
 				amount_ejected++
@@ -376,3 +320,48 @@
 			return src.output_target
 
 		return src.loc
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Rockbox")
+			ui.open()
+
+	ui_data(mob/user)
+		var/ore_list = list()
+		for(var/O as anything in ores)
+			var/datum/ore_cloud_data/OCD = ores[O]
+
+			ore_list += list(list(
+				"name" = O,
+				"amount" = OCD.amount,
+				"price" = OCD.price,
+				"forSale" = OCD.for_sale,
+				"stats" = OCD.stats
+			))
+
+		. = list(
+			"ores" = ore_list
+		)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("dispense-ore")
+				var/ore = params["ore"]
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				if (OCD && OCD.amount < params["take"])
+					return
+				eject_ores(ore, null, params["take"])
+				. = TRUE
+			if("toggle-ore-sell-status")
+				var/ore = params["ore"]
+				update_ore_for_sale(ore)
+				. = TRUE
+			if("set-ore-price")
+				var/ore = params["ore"]
+				var/price = params["newPrice"]
+				update_ore_price(ore, price)
+				. = TRUE
+

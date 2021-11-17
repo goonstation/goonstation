@@ -13,6 +13,8 @@
 	src.setHarmSpecial(sel)
 
 /proc/get_dir_alt(var/atom/source, var/atom/target) //Opposite of default get dir, only returns diagonal if target perfectly diagonal
+	if(!source || !target)
+		CRASH("Invalid Params:: Source:[source] Target:[target]")
 	if(abs(source.x-target.x) > abs(source.y-target.y)) //Mostly left/right with a little up or down
 		if(source.x > target.x) //Target left
 			return WEST
@@ -1916,7 +1918,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-		event_handler_flags = USE_CANPASS
+	
 
 		//mouse_opacity = 1
 		var/bump_count = 0

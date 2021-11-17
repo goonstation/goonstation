@@ -601,6 +601,30 @@ DEFINE_FLOORS(carpet/clowncarpet/innercorner,
 
 ////////////////////////////////////////
 
+DEFINE_FLOORS(twotone,
+	name = "two-tone checker floor";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "twotone_grey";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(twotone/red,
+	icon_state = "twotone_red")
+
+DEFINE_FLOORS(twotone/purple,
+	icon_state = "twotone_purple")
+
+DEFINE_FLOORS(twotone/green,
+	icon_state = "twotone_green")
+
+DEFINE_FLOORS(twotone/blue,
+	icon_state = "twotone_blue")
+
+DEFINE_FLOORS(twotone/yellow,
+	icon_state = "twotone_yellow")
+
+/////////////////////////////////////////
+
 DEFINE_FLOORS(terrazzo,
 	name = "terrazzo tiling";\
 	icon = 'icons/turf/floors.dmi';\
@@ -631,6 +655,34 @@ DEFINE_FLOORS(marble/border_bw,
 
 DEFINE_FLOORS(marble/border_wb,
 	icon_state = "marble_border_wb")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(glassblock,
+	name = "glass block tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "glass_small";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(glassblock/large,
+	icon_state = "glass_large")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(minitiles,
+	name = "mini tiles";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "minitiles_grey";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(minitiles/white,
+	icon_state = "minitiles_white")
+
+DEFINE_FLOORS(minitiles/black,
+	icon_state = "minitiles_black")
 
 /////////////////////////////////////////
 
@@ -1324,18 +1376,18 @@ DEFINE_FLOORS(grasslush/thin,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
-/turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
 	return ..()
 
-/turf/simulated/shuttle/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/shuttle/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		return 0
 	return ..()
 
-/turf/unsimulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
