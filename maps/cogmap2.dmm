@@ -73445,7 +73445,9 @@
 /obj/machinery/mass_driver{
 	name = "cargo driver"
 	},
-/obj/machinery/door/poddoor/pyro,
+/obj/machinery/door/poddoor/pyro{
+	id = "ejector_medsci"
+	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -78400,7 +78402,7 @@
 	name = "cargo driver"
 	},
 /obj/machinery/door/poddoor/pyro{
-	id = "ejector_medsci"
+	id = "to_outpost"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
