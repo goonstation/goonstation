@@ -1121,8 +1121,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		src.access = get_access("Head Surgeon")
-		return
+		src.access = get_access("Medical Director") - access_medical_director
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

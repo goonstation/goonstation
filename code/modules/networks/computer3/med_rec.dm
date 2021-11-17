@@ -116,7 +116,7 @@
 						return
 
 			if (MENU_INDEX)
-				var/index_number = round( max( text2num(command), 0) )
+				var/index_number = round( max( text2num_safe(command), 0) )
 				if (index_number == 0)
 					src.menu = MENU_MAIN
 					src.master.temp = null
@@ -203,7 +203,7 @@
 						src.print_text("Printing...")
 						return
 
-				var/field_number = round( max( text2num(command), 0) )
+				var/field_number = round( max( text2num_safe(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
 					src.print_index()
@@ -274,7 +274,7 @@
 							return
 
 					if (FIELDNUM_SEX)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								src.active_general["sex"] = "Female"
 							if (2)
@@ -288,7 +288,7 @@
 								return
 
 					if (FIELDNUM_AGE)
-						var/newAge = round( min( text2num(command), 99) )
+						var/newAge = round( min( text2num_safe(command), 99) )
 						if (newAge < 1)
 							src.print_text("Invalid age value. Please re-enter.")
 							return
@@ -327,7 +327,7 @@
 							src.menu = MENU_IN_RECORD
 							return
 
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								src.active_medical["bioHolder.bloodType"] = "A+"
 							if (2)

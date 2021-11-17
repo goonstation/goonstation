@@ -682,7 +682,7 @@ A Flamethrower in various states of assembly
 				playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 
 	if (href_list["mode"])
-		mode = text2num(href_list["mode"])
+		mode = text2num_safe(href_list["mode"])
 		playsound(src, "sound/effects/valve_creak.ogg", 15, 1)
 		src.current_projectile.fullauto_valid = 1
 		src.current_projectile.shot_number = 1
@@ -713,7 +713,7 @@ A Flamethrower in various states of assembly
 		if (href_list["temp"] == "reset")
 			src.base_temperature = FLAMER_DEFAULT_TEMP
 		else
-			var/tempnum = text2num(href_list["temp"])
+			var/tempnum = text2num_safe(href_list["temp"])
 			src.base_temperature = clamp(src.base_temperature += tempnum, src.min_temperature, src.max_temperature)
 		playsound(src, "sound/misc/lightswitch.ogg", 20, 1)
 
@@ -721,7 +721,7 @@ A Flamethrower in various states of assembly
 		if (href_list["c_amt"] == "reset")
 			src.amt_chem = FLAMER_DEFAULT_CHEM_AMT
 		else
-			var/tempnum = text2num(href_list["c_amt"])
+			var/tempnum = text2num_safe(href_list["c_amt"])
 			src.amt_chem = clamp(src.amt_chem += tempnum, FLAMER_MIN_CHEM_AMT, src.amt_chem_max)
 		playsound(src, "sound/effects/valve_creak.ogg", 10, 0.2)
 

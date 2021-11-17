@@ -1794,7 +1794,7 @@
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		var/newfreq = text2num(input.signal)
+		var/newfreq = text2num_safe(input.signal)
 		if(!newfreq) return
 		set_frequency(newfreq)
 		return
@@ -1880,7 +1880,7 @@
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
-				var/newfreq = text2num(signal.data["data"])
+				var/newfreq = text2num_safe(signal.data["data"])
 				if(!newfreq) return
 				set_frequency(newfreq)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -2486,7 +2486,7 @@
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		var/newfreq = text2num(input.signal)
+		var/newfreq = text2num_safe(input.signal)
 		if (!newfreq) return
 		set_frequency(newfreq)
 
@@ -2919,7 +2919,7 @@
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
 		LIGHT_UP_HOUSING
-		var/signum = text2num(input.signal)
+		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
 		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
@@ -2990,14 +2990,14 @@
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		if (!isnull(text2num(input.signal)))
-			A = text2num(input.signal)
+		if (!isnull(text2num_safe(input.signal)))
+			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		if (!isnull(text2num(input.signal)))
-			B = text2num(input.signal)
+		if (!isnull(text2num_safe(input.signal)))
+			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/evaluate()
 		switch(mode)

@@ -94,10 +94,10 @@
 		if (src.allowed(usr) || src.emagged && !(status & BROKEN))
 			if (href_list["tg"])	//someone modified the html so I added a check here
 				// toggle gas
-				src.f_mask ^= text2num(href_list["tg"])
+				src.f_mask ^= text2num_safe(href_list["tg"])
 				for(var/obj/machinery/inlet/filter/FI as anything in machine_registry[MACHINES_INLETS])
 					if(FI.control == src.control)
-						FI.f_mask ^= text2num(href_list["tg"])
+						FI.f_mask ^= text2num_safe(href_list["tg"])
 		else
 			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
