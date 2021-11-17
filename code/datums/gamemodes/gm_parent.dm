@@ -78,9 +78,9 @@
 			var/traitor_name
 
 			if (traitor.current)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
+				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else
-				traitor_name = "[traitor.key] (character destroyed)"
+				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
 			if (traitor.special_role == ROLE_MINDSLAVE)
 				stuff_to_output += "<B>[traitor_name]</B> was a mindslave!"
@@ -215,9 +215,9 @@
 			var/traitor_name
 
 			if (traitor.current)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
+				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else
-				traitor_name = "[traitor.key] (character destroyed)"
+				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)

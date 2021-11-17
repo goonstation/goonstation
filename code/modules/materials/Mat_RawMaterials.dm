@@ -149,6 +149,13 @@
 		name = "clump"
 		desc = "A clump of some kind of material."
 
+		blob
+			name = "chunk of blob"
+
+			setup_material()
+				src.setMaterial(getMaterial("blob"), setname = 0)
+				..()
+
 	sphere
 		// energy
 		icon_state = "sphere"

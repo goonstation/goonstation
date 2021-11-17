@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 
-	CanPass(atom/mover, turf/target, height=0, air_group=0)
+	Cross(atom/mover)
 		if (!src.density && istype(mover, /obj/projectile))
 			return prob(50)
 		else

@@ -9,7 +9,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -24,7 +24,7 @@
 			src.UpdateOverlays(null, "barcode")
 
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
 		return ..()
@@ -118,6 +118,13 @@
 	icon_opened = "freezeropen"
 	icon_closed = "freezer"
 	weld_image_offset_Y = -1
+
+/obj/storage/crate/bloody
+	name = "dented crate"
+	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 
 /obj/storage/crate/bartending
 	name = "bartending crate"
@@ -237,8 +244,10 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/misc/halloween.dmi'
-	icon_state = "crate"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 	var/triggered = 0
 
 	make_my_stuff()
@@ -592,13 +601,13 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
-		name = "Class Crate - Rocker"
+		name = "Class Crate - Bard"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
 		/obj/item/storage/fanny/syndie,
-		/obj/item/clothing/suit/space/syndicate/specialist/firebrand, // Gannets should make a cool suit
-		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator) // Gannet should make cool helm
+		/obj/item/clothing/suit/space/syndicate/specialist/bard,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"

@@ -146,10 +146,16 @@ RACK PARTS
 	furniture_type = /obj/table/clothred/auto
 
 /obj/item/furniture_parts/table/neon
-	name = "food court table parts"
-	desc = "A collection of parts that can be used to make a food court table."
+	name = "neon table parts"
+	desc = "A collection of parts that can be used to make a neon table."
 	icon = 'icons/obj/furniture/table_neon.dmi'
 	furniture_type = /obj/table/neon/auto
+
+/obj/item/furniture_parts/table/scrap
+	name = "scrap table parts"
+	desc = "A collection of trash that can be used to make a scrap table."
+	icon = 'icons/obj/furniture/table_scrap.dmi'
+	furniture_type = /obj/table/scrap/auto
 
 /obj/item/furniture_parts/table/folding
 	name = "folded folding table"
@@ -158,6 +164,12 @@ RACK PARTS
 	furniture_type = /obj/table/folding
 	furniture_name = "folding table"
 	build_duration = 15
+
+/obj/item/furniture_parts/table/syndicate
+	name = "crimson glass table parts"
+	desc = "A collection of parts that can be used to make a table with a sturdy red glass top."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	furniture_type = /obj/table/syndicate/auto
 
 /* ---------- Glass Table Parts ---------- */
 /obj/item/furniture_parts/table/glass
@@ -373,6 +385,12 @@ RACK PARTS
 	desc = "A collection of parts that can be used to make a regal chair."
 	icon_state = "regalchair_parts"
 	furniture_type = /obj/stool/chair/wooden/regal
+
+/obj/item/furniture_parts/wood_chair/scrap
+	name = "scrap chair parts"
+	desc = "A collection of trash that can be used to make a scrap chair."
+	icon_state = "scrapchair_parts"
+	furniture_type = /obj/stool/chair/wooden/scrap
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"

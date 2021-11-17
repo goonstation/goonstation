@@ -1267,6 +1267,11 @@
 				..()
 				setProperty("exploprot", 60)
 
+		bard
+			name = "road-worn stage uniform"
+			icon_state = "syndie_specialist-bard"
+			item_state = "syndie_specialist-bard"
+
 		unremovable
 			cant_self_remove = 1
 			cant_other_remove = 1

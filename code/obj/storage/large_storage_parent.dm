@@ -12,7 +12,7 @@
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
 	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
@@ -274,29 +274,15 @@
 		if(istype(L) && L.buckled)
 			return 0
 		var/turf/T = get_turf(src)
-		var/no_go = 0
-		if (T.density)
-			no_go = T
-		else
-			for (var/obj/thingy in T)
-				if (thingy == src)
-					continue
-				if (istype(thingy, /obj/storage) && thingy:is_short)
-					continue
-				if (thingy.density)
-					no_go = thingy
+		var/no_go = !T.Enter(L) ? T : null
+		if(isnull(no_go))
+			for(var/atom/A in T)
+				if(A != src && !A.Cross(L))
+					no_go = A
 					break
-
-		if (no_go) // no more scooting around walls and doors okay
-			if(!skip_penalty && istype(L))
-				L.visible_message("<span class='alert'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
-				"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
-				if (!L.hasStatus("weakened"))
-					L.changeStatus("weakened", 4 SECONDS)
-				if (prob(25))
-					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-
+		if(no_go)
+			L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			L.Bump(no_go)
 			. = 0
 		else
 			. = 1
@@ -425,10 +411,8 @@
 	alter_health()
 		. = get_turf(src)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = open
-		if (air_group || (height==0))
-			return 1
 		if (src.is_short)
 			return 0
 
