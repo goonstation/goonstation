@@ -38,7 +38,7 @@ proc/text2num_safe(x)
 	. = text2num(x)
 	if(isnull(.) ||  isnum_safe(.))
 		return
-	return 0
+	return null
 
 /// rand() but for floats, returns a random floating point number between L and H
 #define randfloat(L, H) (L + rand() * (H - L))
