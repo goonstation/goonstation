@@ -1,6 +1,6 @@
 /mob/dead
 	stat = 2
-	event_handler_flags =  IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
 // dead
 /mob/dead/New()

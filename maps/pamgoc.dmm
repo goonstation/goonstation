@@ -32666,15 +32666,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "bjA" = (
@@ -68387,7 +68383,6 @@
 /area/station/security/armory)
 "dcm" = (
 /obj/storage/crate/adventure,
-,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
