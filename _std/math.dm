@@ -36,7 +36,7 @@
 /// Parses a number except for NaNs and infinities
 proc/text2num_safe(x)
 	. = text2num(x)
-	if(isnull(.) ||  isnum_safe(.))
+	if(isnum_safe(.))
 		return
 	return null
 
