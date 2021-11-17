@@ -28,7 +28,7 @@
 #define isnan(x) ( (x) != (x) )
 
 /// Returns true if the number is infinity or -infinity
-#define isinf(x) (isnum((x)) && (((x) == text2num("inf")) || ((x) == text2num("-inf"))))
+#define isinf(x) (isnum((x)) && (((x) == INFINITY) || ((x) == -INFINITY)))
 
 /// NaN isn't a number, damn it. Infinity is a problem too.
 #define isnum_safe(x) ( isnum((x)) && !isnan((x)) && !isinf((x)) ) //By ike709
