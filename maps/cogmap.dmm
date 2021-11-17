@@ -43231,14 +43231,8 @@
 	},
 /obj/firedoor_spawn,
 /obj/machinery/door/window/northright,
-/obj/item/stamp{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/pen{
-	pixel_x = 7
-	},
 /obj/access_spawn/chemistry,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/five,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ceq" = (
@@ -56350,17 +56344,14 @@
 /area/space)
 "gIT" = (
 /obj/table/reinforced/auto,
-/obj/item/clipboard{
-	pixel_x = 7
-	},
-/obj/item/paper_bin{
-	pixel_x = -6;
-	pixel_y = -3
-	},
 /obj/item/hand_labeler{
-	pixel_x = -7;
+	pixel_x = -6;
 	pixel_y = -4;
 	rand_pos = 0
+	},
+/obj/item/folder{
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 5
