@@ -2032,11 +2032,6 @@
 	},
 /area/station/security/main)
 "fh" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/machinery/light_switch/auto,
 /obj/item/fish/bass,
 /obj/item/fish/bass,
@@ -2050,6 +2045,7 @@
 	},
 /obj/item/raw_material/ice,
 /obj/item/raw_material/ice,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "fi" = (

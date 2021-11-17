@@ -53,11 +53,11 @@
 	},
 /area/space)
 "aal" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
+/turf/simulated/floor/airless,
 /area/space)
 "aam" = (
 /obj/cable{
@@ -162,11 +162,11 @@
 /turf/space,
 /area/space)
 "aaz" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/airless,
 /area/space)
 "aaA" = (
 /obj/cable{
@@ -318,11 +318,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/west,
+/turf/space,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
 	},
-/turf/space,
 /area/station/solar/west)
 "aaV" = (
 /obj/grille/catwalk{
@@ -16405,11 +16405,11 @@
 /area/station/ai_monitored/armory)
 "aTv" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/research_outpost/indigo_rye)
 "aTw" = (
@@ -38059,11 +38059,11 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost/indigo_rye)
 "ciO" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/research_outpost/indigo_rye)
 "ciP" = (
@@ -49120,11 +49120,6 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "kSb" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/decal/cleanable/dirt,
@@ -49135,6 +49130,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "kSA" = (

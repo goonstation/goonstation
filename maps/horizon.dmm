@@ -470,10 +470,10 @@
 /area/station/wreckage)
 "abm" = (
 /obj/stool/bed,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/wreckage)
 "abn" = (
 /obj/decal/cleanable/dirt,
@@ -808,11 +808,11 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "abY" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
 /turf/simulated/shuttle/wall{
 	dir = 6
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -910,10 +910,10 @@
 	})
 "aci" = (
 /obj/item/raw_material/shard,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/wreckage)
 "acj" = (
 /obj/machinery/shuttle/engine/heater{
@@ -977,10 +977,10 @@
 /turf/space,
 /area/space)
 "acr" = (
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/wreckage)
 "acs" = (
 /obj/table/wood/auto,
@@ -1228,10 +1228,10 @@
 	})
 "acT" = (
 /obj/grille/steel,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/wreckage)
 "acU" = (
 /obj/stool/chair/comfy/shuttle/red{
@@ -1245,11 +1245,11 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "acV" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
 /turf/simulated/shuttle/wall{
 	dir = 9
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -2124,11 +2124,11 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge)
 "aeW" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
 /turf/simulated/shuttle/wall{
 	dir = 5
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
 	},
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
@@ -2865,11 +2865,11 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "agT" = (
-/turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
+/turf/simulated/floor/plating,
 /area/station/science/spectral)
 "agU" = (
 /obj/cable{
@@ -2881,11 +2881,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/spectral)
 "agW" = (
-/turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/plating,
 /area/station/science/spectral)
 "agX" = (
 /obj/cable{
@@ -4596,11 +4596,11 @@
 /turf/simulated/floor/plating,
 /area/station/science/spectral)
 "alQ" = (
-/turf/simulated/floor/plating,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/plating,
 /area/station/science/spectral)
 "alR" = (
 /turf/simulated/shuttle/wall{
@@ -14075,10 +14075,10 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/paper/horizon/HTSL,
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aKO" = (
 /obj/disposalpipe/junction/right/north,
@@ -14793,10 +14793,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aMx" = (
 /obj/cable{
@@ -24312,11 +24312,6 @@
 /area/station/engine/elect)
 "bhY" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
@@ -24328,6 +24323,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /obj/disposalpipe/segment/bent/north,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "bhZ" = (
@@ -25475,11 +25471,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "bks" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "bkt" = (
@@ -26081,17 +26073,13 @@
 /area/station/science/bot_storage)
 "blS" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/shipcomponent/mainweapon/rockdrills,
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "blT" = (
@@ -32184,11 +32172,6 @@
 /area/station/security/checkpoint/sec_foyer)
 "bCj" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/shaker/salt,
 /obj/cable{
 	d2 = 2;
@@ -32196,6 +32179,7 @@
 	},
 /obj/random_item_spawner/med_kit,
 /obj/item/cigpacket/nicofree,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bCk" = (
@@ -32286,15 +32270,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/machinery/light,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bCA" = (
@@ -45018,11 +44998,11 @@
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
 /obj/item/device/radio,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
 /turf/simulated/shuttle/wall/escape{
 	dir = 10
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/station/hallway/secondary/exit)
 "ciw" = (
@@ -45759,11 +45739,11 @@
 "ckd" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
 /turf/simulated/shuttle/wall/escape{
 	dir = 9
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/station/hallway/secondary/exit)
 "cke" = (
@@ -46649,15 +46629,11 @@
 	layer = 4;
 	pixel_y = 32
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "cmA" = (
@@ -47497,25 +47473,25 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/listeningpost/power)
 "coe" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bad{
 	on = 0
 	},
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/listeningpost/power)
 "cof" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/airless/plating,
 /turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cog" = (
 /obj/decal/cleanable/molten_item,
@@ -48377,10 +48353,10 @@
 	},
 /area/station/quartermaster/storage)
 "cqw" = (
-/turf/simulated/floor/plating,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
+/turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "cqA" = (
 /obj/machinery/manufacturer/general,
@@ -49318,11 +49294,11 @@
 /turf/simulated/floor/plating/airless/random,
 /area/space)
 "ctZ" = (
-/turf/simulated/floor/plating/random,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "cua" = (
 /obj/disposaloutlet/north,
@@ -49343,11 +49319,11 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "cud" = (
-/turf/simulated/floor/carpet/grime,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "cue" = (
 /obj/machinery/power/data_terminal,
@@ -50451,11 +50427,11 @@
 	},
 /area/space)
 "cwZ" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/airless,
 /area/space)
 "cxa" = (
 /obj/decal/poster/wallsign/space,
@@ -50774,11 +50750,11 @@
 /turf/simulated/floor/airless,
 /area/space)
 "cxM" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/airless,
 /area/space)
 "cxN" = (
 /obj/decal/fakeobjects{
@@ -58694,8 +58670,8 @@
 	anchored = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/grasstodirt,
 /turf/simulated/floor/grasstodirt,
+/turf/unsimulated/grasstodirt,
 /area/station/ranch)
 "rAF" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -59270,10 +59246,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
-"sQL" = (
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/space,
-/area/space)
 "sWl" = (
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/wood/two,
@@ -59637,11 +59609,6 @@
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/plating/random,
 /area/station/science/spectral)
-"tVk" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/space,
-/area/space)
 "tYg" = (
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor,
@@ -59694,10 +59661,10 @@
 /obj/machinery/plantpot{
 	anchored = 1
 	},
-/turf/unsimulated/grasstodirt{
+/turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/turf/simulated/floor/grasstodirt{
+/turf/unsimulated/grasstodirt{
 	dir = 1
 	},
 /area/station/ranch)
@@ -92991,9 +92958,9 @@ bmb
 bmb
 ala
 adk
-tVk
-tVk
-sQL
+adk
+adk
+ala
 aaa
 adk
 adk

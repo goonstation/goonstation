@@ -482,7 +482,7 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj)
+/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
 	SPAWN_DBG( 0 )
 		if (src.now_pushing)
 			return

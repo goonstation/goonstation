@@ -1149,6 +1149,13 @@
 		comfort_value = 7
 		parts_type = /obj/item/furniture_parts/wood_chair/regal
 
+	scrap
+		name = "scrap chair"
+		desc = "Hopefully you didn't pay actual money for this."
+		icon_state = "scrapchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+
 /* ============================================== */
 /* -------------------- Pews -------------------- */
 /* ============================================== */

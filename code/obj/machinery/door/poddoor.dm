@@ -34,7 +34,7 @@
 		SPAWN_DBG(5 SECONDS)
 			open()
 
-	Bump()
+	bump()
 		return
 
 	attack_hand()
@@ -48,7 +48,7 @@
 	desc = "This door guards the passage out of the gauntlet. It will not open while there are live players inside."
 	icon = 'icons/effects/VR.dmi'
 
-	Bump()
+	bump()
 		return
 
 	attack_hand()
