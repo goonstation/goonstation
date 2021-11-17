@@ -84,3 +84,6 @@ proc/text2num_safe(x)
 
 /// creates a binary number that is length bits long. all bits in the number are turned off
 #define CREATE_EMPTY_BINARY_NUM(length) (0)
+
+/// Linearly interpolates a and b based on t
+#define lerp(a, b, t) ((a) * (1 - (t)) + (b) * (t))
