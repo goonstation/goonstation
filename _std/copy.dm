@@ -20,7 +20,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 		return orig
 	if(isnum(orig) || istext(orig) || isnull(orig) || isclient(orig) || isicon(orig) || isfile(orig) || ispath(orig) || \
 			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency) || istype(orig, /datum/client_image_group) || \
-			istype(orig, /datum/component))
+			istype(orig, /datum/packet_network))
 		return orig
 	if(copy_flags & COPY_SKIP_EXPLOITABLE && (
 			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/spacebux) || istype(orig, /obj/item/chem_hint)))
