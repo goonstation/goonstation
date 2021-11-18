@@ -526,7 +526,6 @@ var/global/debug_messages = 0
 	// to prevent REALLY stupid deletions
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	var/hsbitem = get_one_match(typename, /atom)
-	//var/hsbitem = input("Enter atom path:","Delete",null) as null|text
 	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
 
 	for(var/V in blocked)
