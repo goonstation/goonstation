@@ -143,14 +143,14 @@
 				on = !on
 
 			if("set_direction")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				if(number > 0.5)
 					pump_direction = 1
 				else
 					pump_direction = 0
 
 			if("set_checks")
-				var/number = round(text2num(signal.data["parameter"]),1)
+				var/number = round(text2num_safe(signal.data["parameter"]),1)
 				pressure_checks = number
 
 			if("purge")
@@ -162,19 +162,19 @@
 				pump_direction = 1
 
 			if("set_input_pressure")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				number = min(max(number, 0), ONE_ATMOSPHERE*50)
 
 				input_pressure_min = number
 
 			if("set_output_pressure")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				number = min(max(number, 0), ONE_ATMOSPHERE*50)
 
 				output_pressure_max = number
 
 			if("set_external_pressure")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				number = min(max(number, 0), ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number

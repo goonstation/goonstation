@@ -544,7 +544,7 @@
 			//html = '<table><th><a href="#" onclick="sortAndDisplay('seq'); return false;">Sequence</a></th><th><a href="#" onclick="sortAndDisplay('stable'); return false;">Stable</a></th><th><a href="#" onclick="sortAndDisplay('trans'); return false;">Transient</a></th>' + html + '</table>';
 			usr.Browse(op, "window=pathology_ks;size=300x500")
 		if (href_list["setstate"])
-			var/state  = text2num(href_list["newstate"])
+			var/state  = text2num_safe(href_list["newstate"])
 			if(state != null && state >= 0 && state <= 5 && state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				//Received valid input, it's within bounds and it's not moving to or from a protected state (splicing in progress)
 				src.manip.machine_state = state
@@ -574,7 +574,7 @@
 			if (length(src.manip.analysis) >= 15)
 				return
 
-			var/id = text2num(href_list["analysisappend"])
+			var/id = text2num_safe(href_list["analysisappend"])
 			if(id != null && id >= 0)
 				id++ //JS sent a zero-based ID
 				if (id > 0 && src.manip.analysis_list.len >= id) //We want the index to be in bounds now.
@@ -691,7 +691,7 @@
 		if (href_list["exchange"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
 				var/swap = src.manip.loaded
-				var/slotid = text2num(href_list["exchange"])
+				var/slotid = text2num_safe(href_list["exchange"])
 				src.manip.loaded = src.manip.slots[slotid]
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
@@ -700,7 +700,7 @@
 
 		if (href_list["load"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["load"])
+				var/slotid = text2num_safe(href_list["load"])
 				src.manip.loaded = src.manip.slots[slotid]
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
@@ -712,7 +712,7 @@
 			gui.sendToSubscribers({"{"splice":{"source":[src.manip.splicesource]}}"}, "setUIState")
 		if (href_list["expose"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["expose"])
+				var/slotid = text2num_safe(href_list["expose"])
 				src.manip.exposed = slotid
 				if (src.manip.slots[src.manip.exposed])
 					src.manip.icon_state = "manipulatore"
@@ -720,13 +720,13 @@
 					src.manip.icon_state = "manipulator"
 				gui.sendToSubscribers({"{"exposed":[src.manip.exposed]}"}, "setUIState")
 		if (href_list["splice"])
-			var/slotid = clamp(text2num(href_list["splice"]), 1, src.manip.slots.len)
+			var/slotid = clamp(text2num_safe(href_list["splice"]), 1, src.manip.slots.len)
 			src.manip.splicesource = slotid
 			gui.sendToSubscribers({"{"splice":{"selected":[src.manip.splicesource]}}"}, "setUIState")
 
 		if (href_list["remove"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["remove"])
+				var/slotid = text2num_safe(href_list["remove"])
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
 				src.manip.slots[slotid] = null
@@ -734,7 +734,7 @@
 
 		if (href_list["save"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["save"])
+				var/slotid = text2num_safe(href_list["save"])
 				src.manip.slots[slotid] = src.manip.loaded
 				src.manip.loaded = null
 				SEND_SLOT_LOAD_INFO
@@ -759,7 +759,7 @@
 				else
 					return
 
-			var/dir = text2num(href_list["dir"])
+			var/dir = text2num_safe(href_list["dir"])
 			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(dir > 0 && totalPoints >= src.manip.loaded.reference.body_type.maxStats) && !(dir > 0 && points >= 50) && !(dir < 0 && points <= 0))
 				var/act = src.manip.loaded.manipulate(mut_type, dir)
 				var/out
@@ -791,7 +791,7 @@
 		/*Uses splicemod to insert
 		if (href_list["insert"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["insert"])
+				var/offset = text2num_safe(href_list["insert"])
 				var/seq = src.manip.cache_source[src.manip.sel_source]
 				for (var/i = src.manip.sel_source, i < src.manip.cache_source.len, i++)
 					src.manip.cache_source[i] = src.manip.cache_source[i+1]
@@ -807,9 +807,9 @@
 				predictive_analysis()
 		*/
 		if(href_list["splicesel"])
-			var/lptr_index = text2num(href_list["lptr_index"])
-			var/rptr_index = text2num(href_list["rptr_index"])
-			var/t = text2num(href_list["target"])
+			var/lptr_index = text2num_safe(href_list["lptr_index"])
+			var/rptr_index = text2num_safe(href_list["rptr_index"])
+			var/t = text2num_safe(href_list["target"])
 			if(t)
 				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_target.len)
 				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_target.len)
@@ -824,11 +824,11 @@
 				gui.sendToSubscribers({"{"splice":{"selSource":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
 
 		if(href_list["splicemod"])
-			var/direction = text2num(href_list["direction"]) //The operation to perform, 0 = remove, -1 = insert before, 1 = insert after
-			var/s_index = text2num(href_list["s_index"]) //The source index
-			var/s_len = text2num(href_list["s_len"]) //How much from the source we want to add
-			var/t_index = text2num(href_list["t_index"]) //The target index
-			var/t_len = text2num(href_list["t_len"]) //How much we want to remove from the target (if any)
+			var/direction = text2num_safe(href_list["direction"]) //The operation to perform, 0 = remove, -1 = insert before, 1 = insert after
+			var/s_index = text2num_safe(href_list["s_index"]) //The source index
+			var/s_len = text2num_safe(href_list["s_len"]) //How much from the source we want to add
+			var/t_index = text2num_safe(href_list["t_index"]) //The target index
+			var/t_len = text2num_safe(href_list["t_len"]) //How much we want to remove from the target (if any)
 
 			if(direction == null || t_index == null || (direction != 0 && (s_index == null || s_len == null)) || (direction == 0 && t_len == null))
 				return
@@ -875,7 +875,7 @@
 		/*
 		if (href_list["target"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["target"])
+				var/offset = text2num_safe(href_list["target"])
 				if (offset > 0)
 					if (src.manip.sel_target < src.manip.cache_target.len)
 						src.manip.sel_target++
@@ -885,7 +885,7 @@
 
 		if (href_list["source"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["source"])
+				var/offset = text2num_safe(href_list["source"])
 				if (offset > 0)
 					if (src.manip.sel_source < src.manip.cache_source.len)
 						src.manip.sel_source++
@@ -895,11 +895,11 @@
 
 		if (href_list["jumpt"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				src.manip.sel_target = text2num(href_list["jumpt"])
+				src.manip.sel_target = text2num_safe(href_list["jumpt"])
 
 		if (href_list["jumps"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				src.manip.sel_source = text2num(href_list["jumps"])
+				src.manip.sel_source = text2num_safe(href_list["jumps"])
 		*/
 		/* Uses splicemod
 		if (href_list["seqremove"])
@@ -1507,7 +1507,7 @@
 					M.master = null
 		else
 			if (href_list["eject"])
-				var/index = text2num(href_list["eject"])
+				var/index = text2num_safe(href_list["eject"])
 				//Arrays start at 0 -Byand
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
@@ -1529,7 +1529,7 @@
 					suppressant.master = null
 					suppressant = null
 			else if (href_list["vial"])
-				var/index = text2num(href_list["vial"])
+				var/index = text2num_safe(href_list["vial"])
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
 						sel_vial = index
@@ -1574,7 +1574,7 @@
 				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
 				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
-					var/count = text2num(confirm)
+					var/count = text2num_safe(confirm)
 					if (synthesize_pathogen_cost*count > wagesystem.research_budget)
 						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
 					else

@@ -341,22 +341,22 @@
 		return
 
 	if(href_list["dir"])
-		cdir = text2num(href_list["dir"])
+		cdir = text2num_safe(href_list["dir"])
 		SPAWN_DBG(1 DECI SECOND)
 			set_panels(cdir)
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = clamp((360+src.cdir+text2num(href_list["cdir"]))%360, 0, 359)
+			src.cdir = clamp((360+src.cdir+text2num_safe(href_list["cdir"]))%360, 0, 359)
 			SPAWN_DBG(1 DECI SECOND)
 				set_panels(cdir)
 		if(href_list["tdir"])
-			src.trackrate = clamp(src.trackrate+text2num(href_list["tdir"]), -7200,7200)
+			src.trackrate = clamp(src.trackrate+text2num_safe(href_list["tdir"]), -7200,7200)
 			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 
 	if(href_list["track"])
 		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
-		track = text2num(href_list["track"])
+		track = text2num_safe(href_list["track"])
 		if(track == 2)
 			var/obj/machinery/power/tracker/T = locate() in machine_registry[MACHINES_POWER]
 			if(T)

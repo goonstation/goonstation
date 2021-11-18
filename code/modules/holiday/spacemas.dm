@@ -649,7 +649,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	proc/change_light_pattern()
 		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
-		if (isnull(pattern))
+		if (!isnum_safe(pattern))
 			return
 		pattern = clamp(pattern, 0, 4)
 		src.light_pattern(pattern)

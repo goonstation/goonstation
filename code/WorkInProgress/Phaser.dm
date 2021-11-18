@@ -534,7 +534,7 @@ var/const/PHASER_SNIPER = 256
 		src.add_dialog(usr)
 		if (href_list["power"])
 			var/change = href_list["power"]
-			prop_power += text2num(change)
+			prop_power += text2num_safe(change)
 			if(prop_power < 0) prop_power = 0
 			if(prop_power > 50 && safeties) prop_power = 50
 			if(prop_power > 100) prop_power = 100
@@ -544,7 +544,7 @@ var/const/PHASER_SNIPER = 256
 			return
 		else if (href_list["focus"])
 			var/change = href_list["focus"]
-			prop_range += text2num(change)
+			prop_range += text2num_safe(change)
 			if(prop_range < 0) prop_range = 0
 			if(prop_range > prop_maxrange) prop_range = prop_maxrange
 			update_settings()

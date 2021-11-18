@@ -709,7 +709,7 @@
 				src.active_record_security["log"] += list( new_comment )
 
 			if ("del_comment")
-				var/comment_num = text2num(href_list["comment"])
+				var/comment_num = text2num_safe(href_list["comment"])
 				if (src.active_record_security && src.active_record_security["log"] && src.active_record_security["log"][comment_num])
 					src.active_record_security["log"][comment_num]["author"] = "Deleted"
 					src.active_record_security["log"][comment_num]["text"] = "<div style='text-align: center;'>Deleted at [time2text(world.realtime, "hh:mm:ss")]</div>"
