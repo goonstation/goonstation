@@ -2014,6 +2014,10 @@
 	pixel_x = 10;
 	pixel_y = 5
 	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
 /obj/item/storage/pill_bottle/cyberpunk{
 	pixel_x = -7;
 	pixel_y = 3
@@ -52108,6 +52112,10 @@
 	dir = 1
 	},
 /obj/item/peripheral/network/radio/locked,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "czS" = (

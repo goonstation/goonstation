@@ -20570,6 +20570,10 @@
 /obj/item/peripheral/videocard,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/clown)
 "aZq" = (
@@ -49624,6 +49628,10 @@
 /area/listeningpost)
 "cuT" = (
 /obj/table/wood/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /obj/item/bananapeel,
 /turf/simulated/floor/black,
 /area/listeningpost)

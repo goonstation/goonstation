@@ -14655,6 +14655,10 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "aCU" = (
@@ -42929,6 +42933,10 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/machinery/light,
 /obj/item/spacecash/thousand,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/yellow/side,
 /area/listeningpost)
 "bLq" = (

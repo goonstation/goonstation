@@ -2660,6 +2660,10 @@
 /obj/table/auto,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ajA" = (
@@ -32536,6 +32540,10 @@
 /area/listeningpost/syndicateassaultvessel)
 "bMy" = (
 /obj/table/reinforced/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},

@@ -16937,6 +16937,7 @@
 /area/station/medical/head)
 "eHQ" = (
 /obj/table/reinforced/auto,
+/obj/item/aiModule/hologram_expansion/clown,
 /obj/item/storage/goodybag{
 	pixel_y = -6
 	},
@@ -71973,6 +71974,10 @@
 /area/station/hangar/arrivals)
 "uRH" = (
 /obj/table/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /obj/item/clothing/gloves/yellow{
 	pixel_y = 6
 	},

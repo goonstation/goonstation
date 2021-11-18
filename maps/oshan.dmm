@@ -29,6 +29,10 @@
 	},
 /obj/table/glass/reinforced/auto,
 /obj/item/paper/telecrystal_update,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "aaf" = (
@@ -9191,6 +9195,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/goodybag,
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avv" = (

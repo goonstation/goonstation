@@ -14865,6 +14865,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "Ky" = (

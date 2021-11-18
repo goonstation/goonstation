@@ -17128,6 +17128,10 @@
 /obj/machinery/light/small,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "bAS" = (
@@ -37121,6 +37125,10 @@
 "lCc" = (
 /obj/table/auto,
 /obj/item/pen/crayon/rainbow,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
 /obj/item/storage/goodybag,
 /obj/machinery/light/incandescent{
 	dir = 1;
