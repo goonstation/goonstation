@@ -600,7 +600,7 @@
 			if (!E.can_make_injector)
 				return
 			genResearch.researchMaterial -= price
-			var/booth_effect_cost = text2num(params["price"])
+			var/booth_effect_cost = text2num_safe(params["price"])
 			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
 			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
@@ -1006,7 +1006,7 @@
 		.["subject"] = null
 
 	for(var/R as anything in genResearch.researchTreeTiered)
-		if (text2num(R) == 0)
+		if (text2num_safe(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
@@ -1033,8 +1033,8 @@
 					"ref" = "\ref[C]",
 				))
 
-		.["availableResearch"][text2num(R)] = availTier
-		.["finishedResearch"][text2num(R)] = finishedTier
+		.["availableResearch"][text2num_safe(R)] = availTier
+		.["finishedResearch"][text2num_safe(R)] = finishedTier
 
 	for(var/datum/geneticsResearchEntry/R as anything in genResearch.currentResearch)
 		.["currentResearch"] += list(list(

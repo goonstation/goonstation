@@ -223,7 +223,7 @@
 						//Pulses have a duration from 1 to 255.
 						var/duration = 1
 						if (initlist.len >= 2)
-							duration = text2num(initlist[2])
+							duration = text2num_safe(initlist[2])
 							if (isnum(duration))
 								duration = round(duration)
 								if (duration < 1 || duration > 255)
@@ -251,7 +251,7 @@
 
 								var/duration = 1
 								if (initlist.len >= 2)
-									duration = text2num(initlist[2])
+									duration = text2num_safe(initlist[2])
 									if (isnum(duration))
 										duration = round(duration)
 										if (duration < 1 || duration > 255)
@@ -515,7 +515,7 @@
 					//wip
 					DEBUG_OUT("Select = [datalist["select"]]")
 					if (mode == MODE_BASE_MENU)
-						var/selectedLine = round(text2num(datalist["select"]))
+						var/selectedLine = round(text2num_safe(datalist["select"]))
 						if (!isnum(selectedLine) || selectedLine < 0 || selectedLine > 7)
 							return
 
@@ -539,7 +539,7 @@
 							message_device("command=message&title=Devices&blank=1&data=[get_main_menu()]")
 							return
 
-						var/selectedLine = round(text2num(datalist["select"]))
+						var/selectedLine = round(text2num_safe(datalist["select"]))
 						if (!isnum(selectedLine) || selectedLine < 0 || selectedLine > 7)
 							return
 
@@ -554,7 +554,7 @@
 				else if (datalist["control"])
 					//wip
 					DEBUG_OUT("Control = [datalist["control"]]")
-					. = text2num(datalist["control"])
+					. = text2num_safe(datalist["control"])
 					switch (.)
 						if (0) //Back
 							switch (mode)
@@ -592,7 +592,7 @@
 
 
 							else if ((mode == MODE_DEVICE_ADJUST || mode == MODE_DEVICE_SUBADJ) && current_field && current_device_id)
-								var/valueToAdjust = text2num( current_device_known_fields[current_field] )
+								var/valueToAdjust = text2num_safe( current_device_known_fields[current_field] )
 								if (!isnum(valueToAdjust))
 									return
 
@@ -1045,7 +1045,7 @@
 								displayingAlertFlag = 0
 								src.entries[5] = ""
 
-							var/entryOffset = round(text2num( message_list["line"] ))
+							var/entryOffset = round(text2num_safe( message_list["line"] ))
 							var/wipeRemainingLines = isnull(entryOffset) || (message_list["blank"] == "1")
 
 							if (isnull(entryOffset) || entryOffset < 0 || entryOffset > 7)
@@ -1081,7 +1081,7 @@
 								src.updateUsrDialog(REASON_FIELDS|REASON_HIGHLIGHT)
 
 						if ("highlight")
-							var/lineToAdjust = round(text2num( message_list["line"] ))
+							var/lineToAdjust = round(text2num_safe( message_list["line"] ))
 							if (isnull(lineToAdjust) || lineToAdjust < 0 || lineToAdjust > 7)
 								return
 
@@ -1356,7 +1356,7 @@
 		src.add_dialog(usr)
 
 		if (href_list["button"])
-			. = round(text2num(href_list["button"]))
+			. = round(text2num_safe(href_list["button"]))
 			if (. < 0)
 				return
 

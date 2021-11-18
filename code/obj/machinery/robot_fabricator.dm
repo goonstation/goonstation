@@ -81,7 +81,7 @@ Please wait until completion...</TT><BR>
 
 	if (href_list["make"])
 		if (!src.operating)
-			var/part_type = text2num(href_list["make"])
+			var/part_type = text2num_safe(href_list["make"])
 
 			var/build_type = ""
 			var/build_time = 200

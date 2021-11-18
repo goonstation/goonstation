@@ -401,8 +401,8 @@
 		for(var/U in powerUse) //v FUCK BYOND. FUCK. DOUBLEFUCK. TRIPLEFUCK.
 			var/params = powerUse[U]
 			var/list/L = params2list(params)
-			var/usage = text2num(L[1])
-			var/rounds = text2num(L[L[1]])
+			var/usage = text2num_safe(L[1])
+			var/rounds = text2num_safe(L[L[1]])
 			power_used += usage
 			if(rounds > 0)
 				if((--rounds) <= 0) removePowerUse(U)

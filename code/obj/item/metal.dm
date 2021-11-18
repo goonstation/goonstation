@@ -40,7 +40,7 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
@@ -72,7 +72,7 @@ MATERIAL
 				var/makemetal = round(src.amount / 2)
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets of metal do you want to make?","Welding",1) as num
-				if (weldinput < 1) return
+				if (weldinput < 1 || !isnum_safe(weldinput)) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(user.loc)
 			if(src.material) M.setMaterial(src.material)
@@ -175,7 +175,7 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
@@ -255,7 +255,7 @@ MATERIAL
 					if (makerods > 50) makerods = 50
 					boutput(usr, "<span class='notice'>You could make up to [makerods] rods with the amount of metal you have.</span>")
 					var/rodsinput = input("How many rods do you want to make? (Minimum of 2)","Metal Crafting",1) as num
-					if (rodsinput < 2) return
+					if (rodsinput < 2 || !isnum_safe(rodsinput)) return
 					if (rodsinput > makerods) rodsinput = makerods
 
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
@@ -317,7 +317,7 @@ MATERIAL
 					if (maketiles > 80) maketiles = 80
 					boutput(usr, "<span class='notice'>You could make up to [maketiles] tiles with the amount of metal you have.</span>")
 					var/tileinput = input("How many tiles do you want to make? (Minimum of 4)","Metal Crafting",1) as num
-					if (tileinput < 4) return
+					if (tileinput < 4 || !isnum_safe(tileinput)) return
 					if (tileinput > maketiles) tileinput = maketiles
 
 					var/obj/item/tile/R = new /obj/item/tile( usr.loc )
@@ -435,7 +435,7 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")

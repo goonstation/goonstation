@@ -285,7 +285,7 @@ var/list/headset_channel_lookup
 				continue
 			//if we have signal_loss (solar flare), and the radio isn't hardened don't send message, then block general frequencies.
 			if (signal_loss && !src.hardened && !secure)
-				if (text2num(freq) >= R_FREQ_MINIMUM && text2num(freq) <= R_FREQ_MAXIMUM)
+				if (text2num_safe(freq) >= R_FREQ_MINIMUM && text2num_safe(freq) <= R_FREQ_MAXIMUM)
 					continue
 
 			if (R.accept_rad(src, messages, connection.network))
@@ -659,11 +659,11 @@ var/list/headset_channel_lookup
 	if (src in usr || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
-			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
+			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))
 			set_frequency(new_frequency)
 		else
 			if (href_list["code"])
-				src.code += text2num(href_list["code"])
+				src.code += text2num_safe(href_list["code"])
 				src.code = round(src.code)
 				src.code = min(100, src.code)
 				src.code = max(1, src.code)
@@ -917,10 +917,10 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
-			var/new_frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
+			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))
 			set_frequency(new_frequency)
 		else if (href_list["code"])
-			src.code += text2num(href_list["code"])
+			src.code += text2num_safe(href_list["code"])
 			src.code = round(src.code)
 			src.code = min(100, src.code)
 			src.code = max(1, src.code)
@@ -928,9 +928,9 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 			src.send_signal("ACTIVATE")
 			return
 		else if (href_list["listen"])
-			src.listening = text2num(href_list["listen"])
+			src.listening = text2num_safe(href_list["listen"])
 		else if (href_list["wires"])
-			//var/t1 = text2num(href_list["wires"])
+			//var/t1 = text2num_safe(href_list["wires"])
 			if (!(usr.find_tool_in_hand(TOOL_SNIPPING)))
 				return
 			if ((!( src.b_stat ) && !( src.master )))

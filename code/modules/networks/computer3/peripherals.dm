@@ -219,7 +219,7 @@
 
 			else
 				if(!src.setup_freq_locked)
-					var/new_freq = round(text2num(command))
+					var/new_freq = round(text2num_safe(command))
 					if(new_freq && (new_freq >= 1000 && new_freq <= 1500))
 						get_radio_connection_by_id(src, "wireless").update_frequency(new_freq)
 						src.frequency = new_freq
@@ -352,7 +352,7 @@
 			newsignal.data["address_1"] = "ping"
 			newsignal.data["sender"] = src.net_id
 			if (length(command) > 4)
-				var/new_net_number = text2num( copytext(command, 5) )
+				var/new_net_number = text2num_safe( copytext(command, 5) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					newsignal.data["net"] = "[new_net_number]"
 				else if (src.net_number)
@@ -367,7 +367,7 @@
 
 		else if (dd_hasprefix(command, "subnet"))
 			if (length(command) > 6)
-				var/new_net_number = text2num( copytext(command, 7) )
+				var/new_net_number = text2num_safe( copytext(command, 7) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					src.net_number = new_net_number
 			else
@@ -525,7 +525,7 @@
 					newsignal.data["sender"] = src.net_id
 
 					if (length(command) > 4)
-						var/new_net_number = text2num( copytext(command, 5) )
+						var/new_net_number = text2num_safe( copytext(command, 5) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							newsignal.data["net"] = "[new_net_number]"
 						else if (src.net_number)
@@ -539,7 +539,7 @@
 
 				else if (dd_hasprefix(command, "subnet"))
 					if (length(command) > 6)
-						var/new_net_number = text2num( copytext(command, 7) )
+						var/new_net_number = text2num_safe( copytext(command, 7) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							src.net_number = new_net_number
 					else
@@ -693,7 +693,7 @@
 					return 1
 
 				else if (copytext(command, 1, 7) == "subnet")
-					. = text2num( copytext(command, 7) )
+					. = text2num_safe( copytext(command, 7) )
 					if (. != null && . >= 0 && . <= 16)
 						src.subnet = .
 					else
@@ -702,7 +702,7 @@
 					return 0
 
 				else if (mode < 2)
-					. = text2num(command)
+					. = text2num_safe(command)
 					if (isnum(.))
 						. = round( max(1000, min(., 1500)) )
 						get_radio_connection_by_id(src, "wireless").update_frequency(.)
@@ -1024,7 +1024,7 @@
 					return "nocard"
 				var/new_access = 0
 				if(signal)
-					new_access = text2num(signal.data["access"])
+					new_access = text2num_safe(signal.data["access"])
 
 				if(!new_access || (new_access in src.authid.access))
 					var/datum/signal/newsignal = get_free_signal()
@@ -1042,12 +1042,12 @@
 					return "nocard"
 /*
 				//We need correct PIN numbers you jerks.
-				if(text2num(signal.data["pin"]) != src.authid.pin)
+				if(text2num_safe(signal.data["pin"]) != src.authid.pin)
 					SPAWN_DBG(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 */
-				var/charge_amount = text2num(signal.data["data"])
+				var/charge_amount = text2num_safe(signal.data["data"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
 					SPAWN_DBG(0.4 SECONDS)
 						send_command("card_bad_charge")
@@ -1061,7 +1061,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/new_access = text2num(signal.data["access"])
+				var/new_access = text2num_safe(signal.data["access"])
 				if(!new_access || (new_access <= 0))
 					return
 
@@ -1081,7 +1081,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/rem_access = text2num(signal.data["access"])
+				var/rem_access = text2num_safe(signal.data["access"])
 				if(!rem_access || (rem_access <= 0))
 					return 1
 

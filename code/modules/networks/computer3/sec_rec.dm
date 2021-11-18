@@ -194,7 +194,7 @@
 						return
 
 			if (MENU_SELECT_PRINTER)
-				var/printerNumber = round(text2num(command))
+				var/printerNumber = round(text2num_safe(command))
 				if (printerNumber == 0)
 					src.menu = MENU_SETTINGS
 					src.master.temp = null
@@ -234,7 +234,7 @@
 
 					return
 
-				var/index_number = round( max( text2num(command), 0) )
+				var/index_number = round( max( text2num_safe(command), 0) )
 				if (index_number == 0)
 					src.menu = MENU_MAIN
 					src.master.temp = null
@@ -306,7 +306,7 @@
 						src.menu = MENU_IN_RECORD
 						return
 
-				var/field_number = round( max( text2num(command), 0) )
+				var/field_number = round( max( text2num_safe(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
 					src.print_index()
@@ -355,7 +355,7 @@
 							return
 
 					if (FIELDNUM_SEX)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								src.active_general["sex"] = "Female"
 							if (2)
@@ -369,7 +369,7 @@
 								return
 
 					if (FIELDNUM_AGE)
-						var/newAge = round( min( text2num(command), 99) )
+						var/newAge = round( min( text2num_safe(command), 99) )
 						if (newAge < 1)
 							src.print_text("Invalid age value. Please re-enter.")
 							return
@@ -389,7 +389,7 @@
 							return
 
 					if (FIELDNUM_PHOTO)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1) // view
 								var/datum/computer/file/image/IMG = src.active_general["file_photo"]
 								if (!istype(IMG) || !IMG.ourIcon)
@@ -421,7 +421,7 @@
 							src.menu = MENU_IN_RECORD
 							return
 
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								if (src.active_secure["criminal"] != "*Arrest*")
 									src.report_arrest(src.active_general["name"])
