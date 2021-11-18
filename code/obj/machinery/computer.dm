@@ -22,17 +22,12 @@
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
-		if(isghostdrone(usr))
-			return 1
 		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
 		. = ..()
 		if (!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
-			return 1
-		if(isghostdrone(user))
-			boutput(user, "<span class='alert'>Your processors refuse to interact with this machine!</span>")
 			return 1
 		interact_particle(user,src)
 
