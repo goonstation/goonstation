@@ -149,7 +149,7 @@ obj/machinery/air_vendor
 
 			if(href_list["changepressure"])
 				var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
-				if(isnum(change))
+				if(isnum_safe(change))
 					target_pressure = min(max(10.1325, change),1013.25)
 
 			if(href_list["fill"])

@@ -260,7 +260,7 @@ Transponder Codes:<UL>"}
 				src.add_dialog(usr)
 
 				if (href_list["freq"])
-					freq = sanitize_frequency(freq + text2num(href_list["freq"]))
+					freq = sanitize_frequency(freq + text2num_safe(href_list["freq"]))
 					set_frequency(freq)
 					updateDialog()
 

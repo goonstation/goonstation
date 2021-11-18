@@ -1650,7 +1650,7 @@
 
 /obj/machinery/power/reactor_stats/Topic(href, href_list)
 	if(href_list["nav_h"])
-		src.curpage = text2num(href_list["nav_h"])
+		src.curpage = text2num_safe(href_list["nav_h"])
 	else if(href_list["avg_reset"])
 		avg_reset()
 	else if(href_list["refresh_toggle"])
