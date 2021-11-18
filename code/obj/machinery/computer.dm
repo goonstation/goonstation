@@ -22,7 +22,7 @@
 	Topic(href, href_list)
 		if (..(href, href_list))
 			return 1
-		if(isghostdrone(user))
+		if(isghostdrone(usr))
 			return 1
 		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
