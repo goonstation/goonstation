@@ -57,8 +57,8 @@
 							break
 				if(matchfound == 0)
 					src.piecelist.Add(list(list("position"=href_list["position"],"color"=href_list["color"])))
-				var offsetx = text2num(href_list["offsetx"])
-				var offsety = text2num(href_list["offsety"])
+				var offsetx = text2num_safe(href_list["offsetx"])
+				var offsety = text2num_safe(href_list["offsety"])
 				var color = href_list["color"]
 
 				if(!(src.GetOverlayImage("[href_list["position"]]")))

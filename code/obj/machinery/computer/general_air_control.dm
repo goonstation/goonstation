@@ -214,7 +214,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["adj_pressure"])
-				var/change = text2num(href_list["adj_pressure"])
+				var/change = text2num_safe(href_list["adj_pressure"])
 				pressure_setting = min(max(0, pressure_setting + change), 50*ONE_ATMOSPHERE)
 
 			SPAWN_DBG(0.7 SECONDS)
@@ -340,7 +340,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 			if(href_list["change_vol"])
-				var/amount = text2num(href_list["change_vol"])
+				var/amount = text2num_safe(href_list["change_vol"])
 				var/datum/signal/signal = get_free_signal()
 				var/volume_rate = device_info["volume_rate"]
 				signal.transmission_method = 1 //radio
@@ -590,7 +590,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			var/amount = 0
 			if (href_list["pressure_adj"])
-				var/diff = text2num(href_list["pressure_adj"])
+				var/diff = text2num_safe(href_list["pressure_adj"])
 				amount = max(0, min(pressure + diff, MAX_PRESSURE))
 
 			else if (href_list["pressure_set"])
@@ -602,7 +602,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (!src.allowed(usr))
 					boutput(usr, "<span class='alert'>Access denied!</span>")
 					return 0
-				if (!isnum(change))
+				if (!isnum_safe(change))
 					return 0
 
 				amount = max(0, min(change, MAX_PRESSURE))
@@ -611,7 +611,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			signal.data["parameter"] = num2text(amount)
 
 		if (href_list["ratio"])
-			var/amount = text2num(href_list["ratio"])
+			var/amount = text2num_safe(href_list["ratio"])
 			var/volume_rate = mixer_information["i1trans"]
 
 			signal.data["command"] = "set_ratio"

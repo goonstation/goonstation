@@ -53,7 +53,7 @@
 	attack_hand(mob/user as mob)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1)
+			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			var/obj/item/material_piece/new_stack = split_stack(splitnum)
