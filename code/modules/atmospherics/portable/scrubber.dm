@@ -178,7 +178,7 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 				holding = null
 
 		if (href_list["volume_adj"])
-			var/diff = text2num(href_list["volume_adj"])
+			var/diff = text2num_safe(href_list["volume_adj"])
 			inlet_flow = min(100, max(0, inlet_flow+diff))
 
 		else if (href_list["volume_set"])

@@ -114,14 +114,14 @@
 			return
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
-			var/change = text2num(href_list["adjustM"])
+			var/change = text2num_safe(href_list["adjustM"])
 			target_temp = min(max(0, target_temp-change),1000)
 			src.update_icon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
-			var/change = text2num(href_list["adjustP"])
+			var/change = text2num_safe(href_list["adjustP"])
 			target_temp = min(max(0, target_temp+change),1000)
 			src.update_icon()
 			src.updateUsrDialog()
@@ -129,7 +129,7 @@
 		else if (href_list["settemp"])
 			if (!beaker.reagents.total_volume) return
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
-			if(!change || !isnum(change)) return
+			if(!change || !isnum_safe(change)) return
 			target_temp = min(max(0, change),1000)
 			src.update_icon()
 			src.updateUsrDialog()
@@ -431,7 +431,7 @@
 				return
 			// get the pill volume from the user
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
-			if (!pillvol || !src.beaker || !R)
+			if (!pillvol || !src.beaker || !R || !isnum_safe(pillvol))
 				return
 			pillvol = clamp(pillvol, 5, 100)
 			// maths
@@ -526,7 +526,7 @@
 				return
 			// get the pill volume from the user
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
-			if (!patchvol || !src.beaker || !R)
+			if (!patchvol || !src.beaker || !R || !isnum_safe(patchvol))
 				return
 			patchvol = clamp(patchvol, 5, 30)
 			// maths
@@ -959,7 +959,7 @@ datum/chemicompiler_core/stationaryCore
 							phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
 
 						var/pillvol = input( user, "Volume:", "Volume of chemical per pill!", "5" ) as num
-						if( !pillvol || !isnum(pillvol) || pillvol < 5 )
+						if( !pillvol || !isnum_safe(pillvol) || pillvol < 5 )
 							pillvol = 5
 
 						var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
@@ -1176,7 +1176,7 @@ datum/chemicompiler_core/stationaryCore
 			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
-			var/ops = text2num(href_list["page"])
+			var/ops = text2num_safe(href_list["page"])
 			switch(ops)
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "transference"
@@ -1263,6 +1263,8 @@ datum/chemicompiler_core/stationaryCore
 			else if (G == T) boutput(usr, "<span class='alert'>Cannot transfer a container's contents to itself.</span>")
 			else
 				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
+				if(!isnum_safe(amt))
+					return
 				if(get_dist(usr, src) > 1) return
 				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
 				else G.reagents.trans_to(T,amt)

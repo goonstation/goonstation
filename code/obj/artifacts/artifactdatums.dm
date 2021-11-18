@@ -251,6 +251,17 @@ ABSTRACT_TYPE(/datum/artifact/art)
 /datum/projectile/artifact/prismatic_projectile
 	is_magical = 1
 
+	shot_volume = 66
+	projectile_speed = 54
+
+	randomise()
+		. = ..()
+		src.dissipation_rate = 0
+		src.max_range = 13
+		src.power = max(10, src.power)
+		if(prob(90))
+			src.ks_ratio = 1
+
 	on_pre_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
 		if(ismob(hit) && ON_COOLDOWN(hit, "prismaticed", 1.5 SECONDS))

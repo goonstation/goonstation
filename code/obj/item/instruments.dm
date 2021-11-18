@@ -515,10 +515,12 @@
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_2.ogg')
 	desc_verb = "doots"
 	desc_sound = list("spooky", "scary", "boney", "creepy", "squawking", "squeaky", "low-quality", "compressed")
+	note_time = 5 SECONDS
+	pick_random_note = TRUE
 	affect_fun = 200 //because come on this shit's hilarious
 
 	play(mob/user as mob)
-		if (next_play < TIME)
+		if (next_play > TIME)
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
