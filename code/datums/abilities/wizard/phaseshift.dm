@@ -33,7 +33,7 @@
 /proc/spell_invisibility(var/mob/H, var/time, var/check_for_watchers = 0, var/stop_burning = 0, var/dry_run_only = 0)
 	if (!H || !ismob(H))
 		return
-	if (!isturf(H.loc))
+	if (!isturf(H.loc)&&!istype(H.loc,/obj/dummy/spell_invis/))
 		H.show_text("You can't seem to turn incorporeal here.", "red")
 		return
 	if (H.stat || H.getStatusDuration("paralysis") > 0)
