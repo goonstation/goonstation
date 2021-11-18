@@ -767,7 +767,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
-			var/count = text2num(href_list["count"])
+			var/count = text2num_safe(href_list["count"])
 			var/cost = 0
 			switch (count)
 				if (1)

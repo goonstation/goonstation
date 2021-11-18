@@ -56,7 +56,7 @@
 
 	Topic(href, href_list)
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Attempt to Create Vaccine
 				if (src.datareagent == "N/A" || src.datareagent == "No virii detected")
 					for(var/mob/O in hearers(src, null))

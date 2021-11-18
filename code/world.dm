@@ -653,6 +653,9 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
+
+	AuxSort(by_type[/area], /proc/compareName)
+
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
