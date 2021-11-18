@@ -584,6 +584,10 @@
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
 
+	if(master_mode == "battle_royale")
+		boutput(usr, "You can't respawn as a ghost drone during Battle Royale!")
+		return
+
 	if (!src.can_respawn_as_ghost_critter())
 		return
 
