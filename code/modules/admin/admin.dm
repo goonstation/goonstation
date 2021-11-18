@@ -187,7 +187,7 @@ var/global/noir = 0
 				usr.client.toggle_server_toggles_tab()
 				src.show_pref_window(usr)
 		if ("toggle_atom_verbs")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_atom_verbs()
 				src.show_pref_window(usr)
 		if ("toggle_attack_messages")
