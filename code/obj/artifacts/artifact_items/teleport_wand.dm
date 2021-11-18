@@ -73,14 +73,14 @@
 
 	proc/can_teleport_here(var/turf/T,mob/user)
 		if(!istype(user.loc,/obj/dummy/spell_invis/))
-			return 0
+			return FALSE
 		if(isrestrictedz(T.z))
-			return 0
+			return FALSE
 		if (!istype(T,/turf/simulated/floor/))
-			return 0
+			return FALSE
 		if (T.density)
-			return 0
+			return FALSE
 		for(var/atom/X in T.contents)
 			if (X.density)
-				return 0
-		return 1
+				return FALSE
+		return TRUE

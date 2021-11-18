@@ -861,10 +861,10 @@
 
 	cast()
 		if (..())
-			return 1
-		if (istype(owner.loc,/obj/dummy/spell_invis/)) // stops biomass manipulation and dimension shift from messing with eachother.
+			return TRUE
+		if (istype(owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
 			boutput(owner, "<span class='alert'>You can't seem to turn incorporeal here.</span>")
-			return 1
+			return TRUE
 		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
 			if (!linked_power.safety)
 				// If unsynchronized, you don't get to keep anything you have on you.
@@ -880,10 +880,10 @@
 
 	cast_misfire()
 		if (..())
-			return 1
-		if (istype(owner.loc,/obj/dummy/spell_invis/))
+			return TRUE
+		if (istype(owner.loc, /obj/dummy/spell_invis))
 			boutput(owner, "<span class='alert'>You can't seem to turn incorporeal here.</span>")
-			return 1
+			return TRUE
 		// Misfires still transform you, but bad things happen.
 
 		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
@@ -1372,7 +1372,7 @@
 	OnRemove()
 		..()
 		if(active)
-			processing = 1
+			processing = TRUE
 			var/obj/dummy/spell_invis/invis_object
 			if (istype(owner.loc,/obj/dummy/spell_invis/))
 				invis_object = owner.loc
@@ -1400,26 +1400,26 @@
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 
 		if (!istype(linked_power,/datum/bioEffect/power/dimension_shift))
-			return 1
+			return TRUE
 		var/datum/bioEffect/power/dimension_shift/P = linked_power
 		if (!istype(owner.loc,/turf/) && !istype(owner.loc,/obj/dummy/spell_invis/))
 			boutput(owner, "<span class='alert'>That won't work here.</span>")
-			return 1
+			return TRUE
 		if (P.processing)
-			return 1
+			return TRUE
 
-		P.processing = 1
+		P.processing = TRUE
 
 		if (!P.active)
-			if (istype(owner.loc,/obj/dummy/spell_invis/)) // check for if theres a spell_invis object we havent placed (from biomass manipulation)
+			if (istype(owner.loc, /obj/dummy/spell_invis/)) // check for if theres a spell_invis object we havent placed (from biomass manipulation)
 				// before this, dimension shift and biomass manipulation resulted in strange behavior, including being sent to nullspace.
 				boutput(owner, "<span class='alert'>That won't work here.</span>")
-				P.processing = 0
-				return 1
-			P.active = 1
+				P.processing = FALSE
+				return TRUE
+			P.active = TRUE
 			P.last_loc = get_turf(owner)
 			owner.canmove = 0
 			owner.restrain_time = TIME + 0.7 SECONDS
@@ -1433,13 +1433,13 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = 0
-			return 1
+			P.processing = FALSE
+			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
 			if (istype(owner.loc,/obj/dummy/spell_invis/))
 				invis_object = owner.loc
-			if (P.last_loc == null)
+			if (isnull(P.last_loc))
 				owner.set_loc(get_turf(owner)) // better safe than sorry.
 			else // now it wont nullspace you if things go wrong.
 				owner.set_loc(P.last_loc)
