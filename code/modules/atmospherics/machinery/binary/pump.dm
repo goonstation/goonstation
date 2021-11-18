@@ -117,7 +117,7 @@ obj/machinery/atmospherics/binary/pump
 				on = !on
 
 			if("set_output_pressure")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				number = min(max(number, 0), ONE_ATMOSPHERE*50)
 
 				target_pressure = number

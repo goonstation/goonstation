@@ -970,7 +970,7 @@ var/zapLimiter = 0
 	if ((in_interact_range(src, usr) && istype(src.loc, /turf))||(issilicon(usr) || isAI(usr)))
 		src.add_dialog(usr)
 		if (href_list["apcwires"] && wiresexposed)
-			var/t1 = text2num(href_list["apcwires"])
+			var/t1 = text2num_safe(href_list["apcwires"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -980,7 +980,7 @@ var/zapLimiter = 0
 				src.cut(t1)
 
 		else if (href_list["bite"] && wiresexposed)
-			var/t1 = text2num(href_list["bite"])
+			var/t1 = text2num_safe(href_list["bite"])
 			switch(alert("Really bite the wire off?",,"Yes","No"))
 				if("Yes")
 					src.bite(t1)
@@ -988,7 +988,7 @@ var/zapLimiter = 0
 					return
 
 		else if (href_list["pulse"] && wiresexposed)
-			var/t1 = text2num(href_list["pulse"])
+			var/t1 = text2num_safe(href_list["pulse"])
 			if (!usr.find_tool_in_hand(TOOL_PULSING))
 				boutput(usr, "You need a multitool or similar!")
 				return
@@ -1031,7 +1031,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num(href_list["eqp"])), 3)
+			var/val = min(max(1, text2num_safe(href_list["eqp"])), 3)
 
 			// Fix for exploit that allowed synthetics to perma-stun intruders by cycling the APC
 			// ad infinitum (activating power/turrets for one tick) despite missing power cell (Convair880).
@@ -1053,7 +1053,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num(href_list["lgt"])), 3)
+			var/val = min(max(1, text2num_safe(href_list["lgt"])), 3)
 
 			// Same deal.
 			if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -1073,7 +1073,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num(href_list["env"])), 3)
+			var/val = min(max(1, text2num_safe(href_list["env"])), 3)
 
 			// Yep.
 			if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -1480,10 +1480,10 @@ var/zapLimiter = 0
 					src.post_status(src.host_id,"command","term_message","data","command=status&area=[ckey("[src.area]")]&charge=[cell ? round(cell.percent()) : "00"]&equip=[equipment]&light=[lighting]&environ=[environ]&cover=[coverlocked]")
 					return
 				if ("setmode")
-					var/newEquip = text2num(data["equip"])
-					var/newLight = text2num(data["light"])
-					var/newEnviron = text2num(data["environ"])
-					var/newCover = text2num(data["cover"])
+					var/newEquip = text2num_safe(data["equip"])
+					var/newLight = text2num_safe(data["light"])
+					var/newEnviron = text2num_safe(data["environ"])
+					var/newCover = text2num_safe(data["cover"])
 
 					if (!isnull(newEquip))
 						equipment = round(max(0, min(newEquip, 3)))

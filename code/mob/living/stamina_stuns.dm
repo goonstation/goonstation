@@ -119,7 +119,7 @@
 		percReduction = (x * (stam_mod_items / 100))
 
 	stamina = max(STAMINA_NEG_CAP, stamina - (x - percReduction) )
-	if(src.stamina_bar.last_update != TIME) src.stamina_bar?.update_value(src)
+	if(src.stamina_bar?.last_update != TIME) src.stamina_bar?.update_value(src)
 	return
 
 /mob/living/carbon/human/remove_stamina(var/x)
