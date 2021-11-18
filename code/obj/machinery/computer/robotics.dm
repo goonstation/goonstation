@@ -119,6 +119,8 @@
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	if(..())
 		return
+	if(isghostdrone(usr))
+		return
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
