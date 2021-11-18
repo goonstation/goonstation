@@ -561,7 +561,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				allComplete = 0
 				crewMind.all_objs = 0
 		if (allComplete && count)
-			successfulCrew += "[crewMind.current.real_name] ([crewMind.key])"
+			successfulCrew += "[crewMind.current.real_name] ([crewMind.displayed_key])"
 		boutput(crewMind.current, "<br>")
 #endif
 
@@ -607,8 +607,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if(!miscreantMind.objectives.len)
 			continue
 
-		var/miscreant_info = "[miscreantMind.key]"
-		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.key])"
+		var/miscreant_info = "[miscreantMind.displayed_key]"
+		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.displayed_key])"
 
 		boutput(world, "<B>[miscreant_info] was a miscreant!</B>")
 		for (var/datum/objective/miscreant/O in miscreantMind.objectives)

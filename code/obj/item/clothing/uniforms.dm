@@ -5,8 +5,6 @@
 	desc = "A serviceable and comfortable jumpsuit used by nearly everyone on the station."
 	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js.dmi'
-	var/image/wear_image_fat = null
-	var/image/wear_image_fat_icon = 'icons/mob/jumpsuits/worn_js_fat.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
@@ -28,11 +26,6 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
-
-/obj/item/clothing/under/New()
-	wear_image_fat = image(wear_image_fat_icon)
-	wear_image_fat.icon_state = icon_state
-	..()
 
 // Experimental composite jumpsuit
 
@@ -326,7 +319,7 @@
 	dress
 		icon_state = "hop-dress"
 
-/obj/item/clothing/under/rank/head_of_securityold
+/obj/item/clothing/under/rank/head_of_security
 	name = "head of security's uniform"
 	desc = "It's bright red and rather crisp, much like security's victims tend to be."
 	icon_state = "hos"
@@ -348,7 +341,7 @@
 		icon_state = "hos-fancy-alt"
 		item_state = "hos-fancy-alt"
 
-/obj/item/clothing/under/misc/head_of_security
+/obj/item/clothing/under/misc/dirty_vest //HoS uniform from the Elite Security era
 	name = "dirty vest"
 	desc = "This outfit has seen better days."
 	icon_state = "vest"

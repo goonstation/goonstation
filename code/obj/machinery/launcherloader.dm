@@ -364,7 +364,7 @@
 
 		if (href_list["amount"] && !printing)
 			var/amount = input(usr, "How many labels to print?", "[src.name]", 0) as null|num
-			if (!amount || amount < 0) return
+			if (!amount || amount < 0 || !isnum_safe(amount)) return
 			if (amount > 5) amount = 5
 			src.print_amount = amount
 			src.updateUsrDialog()

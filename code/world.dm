@@ -19,6 +19,7 @@
 	#endif
 
 	area = /area/space
+	movement_mode = TILE_MOVEMENT_MODE
 
 	view = "15x15"
 
@@ -652,6 +653,9 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
+
+	AuxSort(by_type[/area], /proc/compareName)
+
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
@@ -660,7 +664,7 @@ var/f_color_selector_handler/F_Color_Selector
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif
-#ifdef UNIT_TESTS
+#if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
 	SPAWN_DBG(10 SECONDS)
 		Reboot_server()
 #endif

@@ -654,7 +654,11 @@
 				random_brute_damage(chair_chump, 15)
 				playsound(chair_chump.loc, "swing_hit", 50, 1)
 
-			var/obj/item/chair/folded/C = new/obj/item/chair/folded(src.loc)
+			var/obj/item/chair/folded/C = null
+			if(istype(src, /obj/stool/chair/syndicate))
+				C = new/obj/item/chair/folded/syndicate(src.loc)
+			else
+				C = new/obj/item/chair/folded(src.loc)
 			if (src.material)
 				C.setMaterial(src.material)
 			if (src.icon_state)
@@ -895,22 +899,28 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 
+	syndicate
+		desc = "That chair is giving off some bad vibes."
+
 /obj/item/chair/folded/attack_self(mob/user as mob)
 	if(cant_drop == 1)
 		boutput(user, "You can't unfold the [src] when its attached to your arm!")
 		return
+	var/obj/stool/chair/C = null
+	if(istype(src, /obj/item/chair/folded/syndicate))
+		C = new/obj/stool/chair/syndicate(user.loc)
 	else
-		var/obj/stool/chair/C = new/obj/stool/chair(user.loc)
-		if (src.material)
-			C.setMaterial(src.material)
-		if (src.c_color)
-			C.icon_state = src.c_color
-		C.set_dir(user.dir)
-		ON_COOLDOWN(user, "chair_stand", 1 SECOND)
-		boutput(user, "You unfold [C].")
-		user.drop_item()
-		qdel(src)
-		return
+		C = new/obj/stool/chair(user.loc)
+	if (src.material)
+		C.setMaterial(src.material)
+	if (src.c_color)
+		C.icon_state = src.c_color
+	C.set_dir(user.dir)
+	ON_COOLDOWN(user, "chair_stand", 1 SECOND)
+	boutput(user, "You unfold [C].")
+	user.drop_item()
+	qdel(src)
+	return
 
 /obj/item/chair/folded/attack(atom/target, mob/user as mob)
 	var/oldcrit = src.stamina_crit_chance
@@ -1138,6 +1148,13 @@
 		icon_state = "regalchair"
 		comfort_value = 7
 		parts_type = /obj/item/furniture_parts/wood_chair/regal
+
+	scrap
+		name = "scrap chair"
+		desc = "Hopefully you didn't pay actual money for this."
+		icon_state = "scrapchair"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/wood_chair/scrap
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

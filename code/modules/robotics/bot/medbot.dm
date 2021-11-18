@@ -126,6 +126,12 @@
 	treatment_virus = "chickensoup"
 	no_camera = 1
 
+/obj/machinery/bot/medbot/medass
+	name = "MedicalAssistant"
+	desc = "A little medical robot. This one looks very busy."
+	skin = "medicalassistant"
+	no_camera = 1
+
 /obj/item/firstaid_arm_assembly
 	name = "first aid/robot arm assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
@@ -239,7 +245,7 @@
 		src.toggle_power()
 
 	else if ((href_list["adj_threshold"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_threshold"])
+		var/adjust_num = text2num_safe(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if (src.heal_threshold < 5)
 			src.heal_threshold = 5
@@ -247,7 +253,7 @@
 			src.heal_threshold = 75
 
 	else if ((href_list["adj_inject"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_inject"])
+		var/adjust_num = text2num_safe(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if (src.injection_amount < 5)
 			src.injection_amount = 5

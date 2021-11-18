@@ -690,7 +690,7 @@
 					src.generate_HTML(1)
 
 		if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num(href_list["cutwire"])
+			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -700,7 +700,7 @@
 				src.cut(twire)
 
 		if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
+			var/twire = text2num_safe(href_list["pulsewire"])
 			if (! (usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
 				boutput(usr, "You need a multitool or similar!")
 				return
@@ -2046,7 +2046,9 @@
 		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if (inp && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+			if(!isnum_safe(inp))
+				return
+			if (!isnull(inp) && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
@@ -2771,7 +2773,7 @@
 
 		if(href_list["changepressure"])
 			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
-			if(isnum(change))
+			if(isnum_safe(change))
 				target_pressure = min(max(10.1325, change),1013.25)
 				src.updateUsrDialog()
 

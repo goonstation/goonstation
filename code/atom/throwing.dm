@@ -21,7 +21,7 @@
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
-				if(!A.CanPass(src, src.loc))
+				if(!A.Cross(src))
 					src.throw_impact(A, thr)
 					. = TRUE
 
@@ -57,7 +57,7 @@
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 
-/atom/movable/Bump(atom/O)
+/atom/movable/bump(atom/O)
 	if(src.throwing)
 		var/found_any = FALSE
 		// can be optimized later by storing list on the atom itself if this ever becomes a problem (it won't)

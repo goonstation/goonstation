@@ -365,21 +365,22 @@ GAUNTLET CARDS
 		if (!user)
 			registered = "???"
 			assignment = "unknown phantom entity (no.. mob? this is awkward)"
-		if (istype(user, /mob/living/carbon/human/virtual))
-			var/mob/living/LI = user:body
-			if (LI)
-				registered = LI.real_name
+		else
+			if (istype(user, /mob/living/carbon/human/virtual))
+				var/mob/living/LI = user:body
+				if (LI)
+					registered = LI.real_name
+				else
+					registered = user.real_name
 			else
 				registered = user.real_name
-		else
-			registered = user.real_name
 
-		if (!user.client)
-			assignment = "literal meat shield (no client)"
-		else
-			assignment = "loading arena matches..."
-			tag = "gauntlet-id-[user.client.key]"
-			queryGauntletMatches(1, user.client.key)
+			if (!user.client)
+				assignment = "literal meat shield (no client)"
+			else
+				assignment = "loading arena matches..."
+				tag = "gauntlet-id-[user.client.key]"
+				queryGauntletMatches(1, user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)

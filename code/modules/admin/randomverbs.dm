@@ -1112,9 +1112,14 @@
 	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	for (var/mob/M in mobs)
-		M.name_suffixes = null
-		M.UpdateName()
+	for (var/atom/movable/A in world)
+		A.name_suffixes = null
+		A.UpdateName()
+
+	for (var/turf/T in world)
+		T.name_suffixes = null
+		T.UpdateName()
+
 	return
 
 /client/proc/cmd_admin_aview()

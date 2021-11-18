@@ -324,6 +324,7 @@ Obsidian Crown
 
 	equipped(var/mob/user, var/slot)
 		..()
+		logTheThing("combat", user, null, "equipped [src].")
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)

@@ -233,6 +233,8 @@ var/datum/score_tracker/score_tracker
 		richest_total = 0
 		//search mobs in centcom
 		for (var/mob/M in mobs)
+			if (!ishuman(M))
+				continue
 			if(in_centcom(M))
 				if (!most_damaged_escapee)
 					most_damaged_escapee = M

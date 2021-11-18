@@ -947,7 +947,7 @@
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
 	if (istype(W, /obj/item/clothing/suit/armor/vest))
-		if (istype(src, /obj/item/clothing/suit/fire/heavy) || istype(src, /obj/item/clothing/suit/fire/old))
+		if (istype(src, /obj/item/clothing/suit/fire/heavy))
 			return
 		else
 			new /obj/item/clothing/suit/fire/armored(T)
@@ -971,12 +971,6 @@
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 2)
 		setProperty("disorient_resist", 25)
-
-/obj/item/clothing/suit/fire/old
-	name = "old firesuit"
-	desc = "Just looking at this thing makes your eyes take burn damage."
-	icon_state = "fire_old"
-	item_state = "fire_old"
 
 // SWEATERS
 
@@ -1266,6 +1260,11 @@
 			setupProperties()
 				..()
 				setProperty("exploprot", 60)
+
+		bard
+			name = "road-worn stage uniform"
+			icon_state = "syndie_specialist-bard"
+			item_state = "syndie_specialist-bard"
 
 		unremovable
 			cant_self_remove = 1

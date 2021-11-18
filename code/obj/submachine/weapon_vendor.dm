@@ -168,6 +168,7 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 		materiel_stock += new/datum/materiel/loadout/knight
+		materiel_stock += new/datum/materiel/loadout/bard
 		materiel_stock += new/datum/materiel/loadout/custom
 /*
 		materiel_stock += new/datum/materiel/storage/rucksack
@@ -265,7 +266,7 @@
 
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
-	path = /obj/item/storage/box/robustdonuts
+	path = /obj/item/storage/lunchbox/robustdonuts
 	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
@@ -366,9 +367,14 @@
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/knight
-	name = "Knight (Prototype)"
+	name = "Knight"
 	path = /obj/storage/crate/classcrate/melee
-	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+
+/datum/materiel/loadout/bard
+	name = "Bard (Prototype)"
+	path = /obj/storage/crate/classcrate/bard
+	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
