@@ -1,4 +1,7 @@
 
+(t)thu nov 18 21
+(u)pali
+(+)You can now killswitch ghostdrones on the robotics console.
 (t)wed nov 17 21
 (u)pali
 (p)6707
