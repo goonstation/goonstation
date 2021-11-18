@@ -149,10 +149,16 @@
 
 		var/mob/ownerMob = owner
 		target.vamp_beingbitten = 1
-		ownerMob.show_message("<span class='notice'>We must hold still...</span>", 1)
 
 		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
+
+		var/datum/abilityHolder/changeling/C = devour.holder
+		if (istype(C))
+			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(target)
+			originalBHolder.CopyOther(target.bioHolder)
+			C.absorbed_dna[target.real_name] = originalBHolder
+			ownerMob.show_message("<span class='notice'>We can now transform into [target.real_name], we must hold still...</span>", 1)
 
 	onEnd()
 		..()

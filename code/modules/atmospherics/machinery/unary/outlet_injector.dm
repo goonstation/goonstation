@@ -102,7 +102,7 @@
 				SPAWN_DBG(0) inject()
 
 			if("set_volume_rate")
-				var/number = text2num(signal.data["parameter"])
+				var/number = text2num_safe(signal.data["parameter"])
 				number = min(max(number, 0), air_contents.volume)
 
 				volume_rate = number
