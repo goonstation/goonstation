@@ -47253,11 +47253,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21;
-	status = 2
-	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "coz" = (
