@@ -35,21 +35,21 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aag" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aah" = (
 /obj/naval_mine/syndicate{
@@ -90,11 +90,11 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/atmospherics)
 "aam" = (
 /obj/table/wood/auto,
@@ -108,11 +108,11 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 1;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aao" = (
 /obj/wingrille_spawn/auto,
@@ -221,8 +221,8 @@
 /obj/rack,
 /obj/item/clothing/under/misc/tourist,
 /obj/item/storage/belt/hunter,
-/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/damaged1,
 /area/space)
 "aaB" = (
 /obj/item/inner_tube/random,
@@ -244,13 +244,13 @@
 	on = 1
 	},
 /obj/item/pen/fancy,
-/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/damaged1,
 /area/space)
 "aaE" = (
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/damaged1,
 /area/space)
 "aaF" = (
 /obj/decal/cleanable/dirt,
@@ -268,8 +268,8 @@
 /area/station/crew_quarters/toilets)
 "aaG" = (
 /obj/item/a_gift,
-/turf/simulated/floor/airless/damaged2,
 /turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/damaged2,
 /area/space)
 "aaH" = (
 /obj/reagent_dispensers/fueltank,
@@ -19274,11 +19274,11 @@
 	},
 /area/abandonedmedicalship/robot_trader)
 "aUw" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/space)
 "aUx" = (
 /obj/storage/crate,
@@ -19358,14 +19358,14 @@
 	},
 /area/evilreaver/genetics)
 "aUH" = (
+/turf/simulated/martian/wall{
+	dir = 4;
+	icon_state = "diagonalWall"
+	},
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
 	name = "organic floor"
-	},
-/turf/simulated/martian/wall{
-	dir = 4;
-	icon_state = "diagonalWall"
 	},
 /area/space)
 "aUI" = (
@@ -19484,14 +19484,14 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVb" = (
+/turf/simulated/martian/wall{
+	dir = 5;
+	icon_state = "diagonalWall"
+	},
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
 	name = "organic floor"
-	},
-/turf/simulated/martian/wall{
-	dir = 5;
-	icon_state = "diagonalWall"
 	},
 /area/space)
 "aVc" = (
@@ -20062,11 +20062,11 @@
 /turf/simulated/martian/floor,
 /area/space)
 "aWH" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 1;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/space)
 "aWI" = (
 /obj/storage/closet/coffin,
@@ -20078,11 +20078,11 @@
 /turf/simulated/martian/floor,
 /area/space)
 "aWJ" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/space)
 "aWK" = (
 /turf/simulated/floor/plating/damaged3,
@@ -20188,12 +20188,12 @@
 	},
 /area/evilreaver/genetics)
 "aWY" = (
-/turf/simulated/martian/floor,
+/turf/simulated/floor/plating/damaged2,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/martian/floor,
 /area/evilreaver/genetics)
 "aWZ" = (
 /obj/decal/cleanable/blood/splatter{
@@ -20241,14 +20241,14 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aXf" = (
+/turf/simulated/martian/wall{
+	dir = 1;
+	icon_state = "diagonalWall"
+	},
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
 	name = "organic floor"
-	},
-/turf/simulated/martian/wall{
-	dir = 1;
-	icon_state = "diagonalWall"
 	},
 /area/space)
 "aXg" = (
@@ -20270,14 +20270,14 @@
 /turf/simulated/martian/floor,
 /area/space)
 "aXh" = (
+/turf/simulated/martian/wall{
+	dir = 8;
+	icon_state = "diagonalWall"
+	},
 /turf/simulated/floor/plating/airless/shuttlebay{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor2";
 	name = "organic floor"
-	},
-/turf/simulated/martian/wall{
-	dir = 8;
-	icon_state = "diagonalWall"
 	},
 /area/space)
 "aXi" = (
@@ -20335,8 +20335,8 @@
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
 "aXo" = (
-/turf/simulated/floor/plating/damaged1,
 /turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating/damaged1,
 /area/evilreaver/genetics)
 "aXp" = (
 /obj/overlay{
@@ -20524,11 +20524,11 @@
 /turf/simulated/martian/wall,
 /area/evilreaver/genetics)
 "aXR" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aXS" = (
 /obj/decal/cleanable/machine_debris,
@@ -20612,11 +20612,11 @@
 /turf/space/fluid,
 /area/space)
 "aYb" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aYc" = (
 /turf/simulated/martian/wall,
@@ -20696,18 +20696,18 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aYp" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aYq" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 6;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/atmospherics)
 "aYr" = (
 /obj/lattice,
@@ -21175,11 +21175,11 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZA" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZB" = (
 /turf/simulated/wall/r_wall{
@@ -21299,18 +21299,18 @@
 /turf/simulated/martian/wall,
 /area/evilreaver/bridge)
 "aZP" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 1;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZQ" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZR" = (
 /obj/overlay{
@@ -21365,18 +21365,18 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "aZY" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/security)
 "aZZ" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "baa" = (
 /obj/overlay{
@@ -21535,11 +21535,11 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bas" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bat" = (
 /turf/simulated/martian/wall,
@@ -21617,11 +21617,11 @@
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "baC" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/security)
 "baD" = (
 /obj/wingrille_spawn/flock,
@@ -21631,11 +21631,11 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "baE" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 1;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "baF" = (
 /obj/decal/fakeobjects/flock/wing/broken{
@@ -22240,10 +22240,10 @@
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "bcB" = (
-/turf/space/fluid,
 /turf/simulated/shuttle/wall/cockpit/flock{
 	dir = 8
 	},
+/turf/space/fluid,
 /area/space)
 "bcC" = (
 /obj/machinery/computer3/terminal/zeta{
@@ -23717,11 +23717,11 @@
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "bgV" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/security)
 "bgW" = (
 /turf/simulated/martian/floor,
@@ -23948,11 +23948,11 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "bhE" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bhF" = (
 /obj/overlay{
@@ -25117,11 +25117,11 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bky" = (
-/turf/simulated/martian/floor,
 /turf/simulated/martian/wall{
 	dir = 6;
 	icon_state = "diagonalWall"
 	},
+/turf/simulated/martian/floor,
 /area/evilreaver/bar)
 "bkz" = (
 /obj/decal/cleanable/molten_item,
@@ -27392,15 +27392,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "bqi" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/machinery/light/incandescent/cool/very,
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "bqj" = (
@@ -36949,8 +36945,8 @@
 /turf/simulated/floor/grass,
 /area/space)
 "bNJ" = (
-/turf/simulated/floor/damaged1,
 /turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/damaged1,
 /area/space)
 "bNK" = (
 /obj/machinery/vending/standard,
@@ -37078,10 +37074,10 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/se,
 /area/station/crew_quarters/radio/lab)
 "bNY" = (
+/turf/simulated/floor/airless/plating/damaged2,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "bNZ" = (
 /obj/decal/cleanable/dirt,

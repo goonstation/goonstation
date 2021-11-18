@@ -234,8 +234,8 @@
 						var/datum/computer/file/workfile = worklist[1]
 						if (istype(workfile))
 							var/newval = worklist[3]
-							if (isnum(text2num(newval)))
-								newval = text2num(newval)
+							if (isnum(text2num_safe(newval)))
+								newval = text2num_safe(newval)
 							workfile.metadata["[worklist[2]]"] = newval
 
 					to_adjust -= sessionid
@@ -639,17 +639,17 @@
 
 		switch (lowertext(data["command"]))
 			if ("set_coords")
-				var/new_x = text2num(data["x"])
+				var/new_x = text2num_safe(data["x"])
 				if (!isnum(new_x))
 					return ESIG_USR1
 				new_x = round(new_x, 0.01)
 
-				var/new_y = text2num(data["y"])
+				var/new_y = text2num_safe(data["y"])
 				if (!isnum(new_y))
 					return ESIG_USR1
 				new_y = round(new_y, 0.01)
 
-				var/new_z = text2num(data["z"])
+				var/new_z = text2num_safe(data["z"])
 				if (!isnum(new_z))
 					return ESIG_USR1
 				new_z = round(new_z, 0.01)
@@ -670,32 +670,32 @@
 				return .
 
 			if ("relay") //sshh
-				var/source_x = text2num(data["x1"])
+				var/source_x = text2num_safe(data["x1"])
 				if (!isnum(source_x))
 					return ESIG_USR1
 				source_x = round(source_x, 0.01)
 
-				var/source_y = text2num(data["y1"])
+				var/source_y = text2num_safe(data["y1"])
 				if (!isnum(source_y))
 					return ESIG_USR1
 				source_y = round(source_y, 0.01)
 
-				var/source_z = text2num(data["z1"])
+				var/source_z = text2num_safe(data["z1"])
 				if (!isnum(source_z))
 					return ESIG_USR1
 				source_z = round(source_z, 0.01)
 
-				var/dest_x = text2num(data["x2"])
+				var/dest_x = text2num_safe(data["x2"])
 				if (!isnum(dest_x))
 					return ESIG_USR1
 				dest_x = round(dest_x, 0.01)
 
-				var/dest_y = text2num(data["y2"])
+				var/dest_y = text2num_safe(data["y2"])
 				if (!isnum(dest_y))
 					return ESIG_USR1
 				dest_y = round(dest_y, 0.01)
 
-				var/dest_z = text2num(data["z2"])
+				var/dest_z = text2num_safe(data["z2"])
 				if (!isnum(dest_z))
 					return ESIG_USR1
 				dest_z = round(dest_z, 0.01)
@@ -783,7 +783,7 @@
 		driver_id &= ~ESIG_DATABIT
 		var/command = lowertext(initlist[1])
 		if (cmptext(command, "-p") && initlist.len > 2)
-			. = text2num(initlist[2])
+			. = text2num_safe(initlist[2])
 			if (isnum(.))
 				. = max(0, min(round(.), 64))
 				var/list/possibleDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="s_telepad"))
@@ -809,7 +809,7 @@
 							if ("x","X")
 								var/equalsPoint = findtext(initlist[i], "=", 2)
 								if (equalsPoint)
-									new_x = text2num(copytext(initlist[i], equalsPoint+1))
+									new_x = text2num_safe(copytext(initlist[i], equalsPoint+1))
 									if (!isnum(new_x))
 										state = 1
 										continue
@@ -820,7 +820,7 @@
 							if ("y","Y")
 								var/equalsPoint = findtext(initlist[i], "=", 2)
 								if (equalsPoint)
-									new_y = text2num(copytext(initlist[i], equalsPoint+1))
+									new_y = text2num_safe(copytext(initlist[i], equalsPoint+1))
 									if (!isnum(new_y))
 										state = 2
 										continue
@@ -831,7 +831,7 @@
 							if ("z","Z")
 								var/equalsPoint = findtext(initlist[i], "=", 2)
 								if (equalsPoint)
-									new_z = text2num(copytext(initlist[i], equalsPoint+1))
+									new_z = text2num_safe(copytext(initlist[i], equalsPoint+1))
 									if (!isnum(new_z))
 										state = 3
 										continue
@@ -843,7 +843,7 @@
 								continue
 
 							else
-								var/numIn = text2num(initlist[i])
+								var/numIn = text2num_safe(initlist[i])
 								if (isnum(numIn))
 									switch (state)
 										if (0)
@@ -901,7 +901,7 @@
 					var/state = 0
 
 					for (var/i = 2, i <= initlist.len, i++)
-						var/numIn = text2num(initlist[i])
+						var/numIn = text2num_safe(initlist[i])
 						if (isnum(numIn))
 							switch (state++)
 								if (0)
@@ -1128,7 +1128,7 @@
 				return
 
 			if ("n_status")
-				var/stat_time = text2num(datalist["timeleft"])
+				var/stat_time = text2num_safe(datalist["timeleft"])
 				if (!isnum(stat_time))
 					return
 
@@ -1254,7 +1254,7 @@
 
 			if ("time")
 				if (initlist.len >= 2)
-					var/newtime = text2num(initlist[2])
+					var/newtime = text2num_safe(initlist[2])
 					if (isnum(newtime) && (newtime <= MAX_NUKE_TIME) && (newtime >= MIN_NUKE_TIME))
 						var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
 						switch(success)
@@ -1483,7 +1483,7 @@
 							if (!istype(locatedTask))
 								return 1
 
-							var/model = (text2num(parsedFields["model"]) == 1 ? 1: 0)
+							var/model = (text2num_safe(parsedFields["model"]) == 1 ? 1: 0)
 
 							locatedTask.configure(parsedFields)
 							message_device("command=upload&overwrite=1&newmodel=[model]", locatedTask)
@@ -1616,10 +1616,10 @@
 				var/statmessage = "Status for Unit \[[lowertext(initlist[2])]]|n"
 				if (statrec.fields["id"] != "nobot")
 					statmessage += " Charge: "
-					if (!isnum(text2num(statrec.fields["charge"])))
+					if (!isnum(text2num_safe(statrec.fields["charge"])))
 						statmessage += "No cell!|n"
 					else
-						statmessage += "[text2num(statrec.fields["charge"])]%|n"
+						statmessage += "[text2num_safe(statrec.fields["charge"])]%|n"
 
 					statmessage += " Current Tool: [statrec.fields["tool"] ? statrec.fields["tool"] : "NONE"]|n"
 					statmessage += " Current Task: [statrec.fields["curtask"] ? statrec.fields["curtask"] : "NONE"]|n"
@@ -1938,7 +1938,7 @@
 			return 1
 
 		else if (istype(theFile, /datum/computer/folder))
-			var/newFreqName = text2num(theFile.name)
+			var/newFreqName = text2num_safe(theFile.name)
 			if (newFreqName < 1000 || newFreqName > 1500 || newFreqName != round(newFreqName))
 				theFile.dispose()
 				return 0
@@ -2149,10 +2149,10 @@
 				return
 
 			if ("status")
-				var/newEquip = text2num(datalist["equip"])
-				var/newLight = text2num(datalist["light"])
-				var/newEnviron = text2num(datalist["environ"])
-				var/newCover = text2num(datalist["cover"])
+				var/newEquip = text2num_safe(datalist["equip"])
+				var/newLight = text2num_safe(datalist["light"])
+				var/newEnviron = text2num_safe(datalist["environ"])
+				var/newCover = text2num_safe(datalist["cover"])
 
 				if (!isnull(newEquip))
 					apcEquip = round(max(0, min(newEquip, 3)))
@@ -2981,7 +2981,7 @@
 				return
 
 			if ("remove_report")
-				. = round( max(0, min(text2num(datalist["filenum"]),127 ) ))
+				. = round( max(0, min(text2num_safe(datalist["filenum"]),127 ) ))
 				if (!isnum(.))
 					return
 

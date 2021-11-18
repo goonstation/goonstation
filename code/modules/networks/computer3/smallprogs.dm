@@ -1071,7 +1071,7 @@ file_save - Save file to local disk."}
 			if("line") //Set working line to provided num.
 				var/target_line = 0
 				if(command_list.len)
-					target_line = round(text2num(command_list[1]))
+					target_line = round(text2num_safe(command_list[1]))
 				else
 					src.print_half_text("Line number required.")
 					return

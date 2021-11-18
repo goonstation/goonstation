@@ -100,7 +100,7 @@
 			src.state = STATE_VIEWMESSAGE
 			if (!src.currmsg)
 				if(href_list["message-num"])
-					src.currmsg = text2num(href_list["message-num"])
+					src.currmsg = text2num_safe(href_list["message-num"])
 				else
 					src.state = STATE_MESSAGELIST
 		if("delmessage")
@@ -156,7 +156,7 @@
 			src.aistate = STATE_VIEWMESSAGE
 			if (!src.aicurrmsg)
 				if(href_list["message-num"])
-					src.aicurrmsg = text2num(href_list["message-num"])
+					src.aicurrmsg = text2num_safe(href_list["message-num"])
 				else
 					src.aistate = STATE_MESSAGELIST
 		if("ai-delmessage")

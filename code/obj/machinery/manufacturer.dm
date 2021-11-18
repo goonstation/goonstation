@@ -577,7 +577,7 @@
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1)
+								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
 								break
@@ -619,7 +619,7 @@
 					src.build_icon()
 
 			if (href_list["removefromQ"])
-				var/operation = text2num(href_list["removefromQ"])
+				var/operation = text2num_safe(href_list["removefromQ"])
 				if (!isnum(operation) || src.queue.len < 1 || operation > src.queue.len)
 					boutput(usr, "<span class='alert'>Invalid operation.</span>")
 					return
@@ -633,7 +633,7 @@
 				begin_work(1)//pesky exploits
 
 			if (href_list["page"])
-				var/operation = text2num(href_list["page"])
+				var/operation = text2num_safe(href_list["page"])
 				src.page = operation
 
 			if (href_list["repeat"])
@@ -714,7 +714,7 @@
 				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
-				if (!howmuch || !B || B != src.beaker )
+				if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
 					return
 				src.reagents.trans_to(B,howmuch)
 
@@ -724,7 +724,7 @@
 				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
 				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
-				if (!howmuch)
+				if (!howmuch || !isnum_safe(howmuch))
 					return
 				B.reagents.trans_to(src,howmuch)
 
@@ -733,7 +733,7 @@
 				if (!istext(the_reagent))
 					return
 				var/howmuch = input("Flush how much [the_reagent]?","[src.name]",0) as null|num
-				if (!howmuch)
+				if (!howmuch || !isnum_safe(howmuch))
 					return
 				src.reagents.remove_reagent(the_reagent,howmuch)
 
@@ -741,7 +741,7 @@
 				if (src.electrified)
 					if (src.manuf_zap(usr, 100))
 						return
-				var/twire = text2num(href_list["cutwire"])
+				var/twire = text2num_safe(href_list["cutwire"])
 				if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 					boutput(usr, "You need a snipping tool!")
 					return
@@ -752,7 +752,7 @@
 				src.build_icon()
 
 			if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
-				var/twire = text2num(href_list["pulsewire"])
+				var/twire = text2num_safe(href_list["pulsewire"])
 				if ( !(usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
 					boutput(usr, "You need a multitool or similar!")
 					return
@@ -793,7 +793,8 @@
 				if (account)
 					var/quantity = 1
 					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
-
+					if(!isnum_safe(quantity))
+						return
 					////////////
 
 					if(OCD.amount >= quantity && quantity > 0)
@@ -1308,9 +1309,11 @@
 
 		if (pattern == "ALL") // anything at all
 			return 1
+		if (pattern == "ORG|RUB")
+			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
-			var/secondpart = text2num(copytext(pattern, 5))
+			var/secondpart = text2num_safe(copytext(pattern, 5))
 			switch(firstpart)
 				// this was kind of thrown together in a panic when i felt shitty so if its horrible
 				// go ahead and clean it up a bit

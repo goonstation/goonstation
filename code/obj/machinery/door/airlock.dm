@@ -189,6 +189,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/has_panel = 1
 	var/hackMessage = ""
 	var/net_access_code = null
+        /// Set nameOverride to FALSE to stop New() from overwriting door name with Area name
+	var/nameOverride = TRUE
 
 	var/no_access = 0
 
@@ -199,7 +201,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	New()
 		..()
-		if(!isrestrictedz(src.z))
+		if(!isrestrictedz(src.z) && nameOverride)
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
@@ -1593,7 +1595,7 @@ obj/machinery/door/airlock
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
 			return
 
-		var/sent_code = text2num(signal.data["access_code"])
+		var/sent_code = text2num_safe(signal.data["access_code"])
 		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
 			if(prob(20))
 				src.play_deny()
