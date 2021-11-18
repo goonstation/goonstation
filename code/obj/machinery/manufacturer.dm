@@ -32,7 +32,7 @@
 	// 0 is =>, 1 is ==
 	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/obj/item/manudrive = null
+	var/obj/item/disk/data/floppy/read_only/manudrive/manudrive = null
 	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
@@ -1039,14 +1039,14 @@
 					user.u_equip(W)
 					W.dropped()
 
-		else if (istype(W,/obj/item/manudrive))
+		else if (istype(W,/obj/item/disk/data/floppy/read_only/manudrive))
 			if (src.manudrive)
 				boutput(user, "<span class='alert'>There's already a drive in the machine. You need to remove it first.</span>")
 			else
 				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
 				src.manudrive = W
-				var/obj/item/manudrive/MD = W
+				var/obj/item/disk/data/floppy/read_only/manudrive/MD = W
 				src.drive_recipes = MD.drivestored
 				if (user && W)
 					user.u_equip(W)
@@ -1499,7 +1499,8 @@
 
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
-				var/obj/item/manudrive/MD = src.manudrive
+				var/obj/item/disk/data/floppy/read_only/manudrive/ManuD = src.manudrive
+				var/datum/computer/file/manudrive/MD = ManuD
 				if(MD.fablimit == 0)
 					src.mode = "halt"
 					src.error = "The inserted ManuDrive is unable to operate further."
@@ -1699,7 +1700,8 @@
 		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
 			"}
 
-			var/obj/item/manudrive/MD = src.manudrive
+			var/obj/item/disk/data/floppy/read_only/manudrive/ManuD = src.manudrive
+			var/datum/computer/file/manudrive/MD = ManuD
 			if(MD.fablimit >= 0)
 				dat += {"
 			<tr>
