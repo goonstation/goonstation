@@ -7,7 +7,7 @@
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/health = 400
-	mats = 30
+	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = list(
@@ -342,7 +342,7 @@
 						G.reagents += lowertext(reagent)
 						//Special amounts!
 						if (istext(reagentlist[reagent])) //Set a dispense amount
-							var/num = text2num(reagentlist[reagent])
+							var/num = text2num_safe(reagentlist[reagent])
 							if(!num) num = 10
 							G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
 						else //Default to 10 if no specific amount given

@@ -226,8 +226,8 @@
 			src.set_current_projectile(new /datum/projectile/laser)
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
-		src.update_icon()
 		..()
+		src.update_icon()
 
 	update_icon()
 		..()
@@ -487,8 +487,8 @@
 	New()
 		set_current_projectile(new/datum/projectile/disruptor)
 		projectiles = list(current_projectile,new/datum/projectile/disruptor/burst,new/datum/projectile/disruptor/high)
-		src.update_icon()
 		..()
+		src.update_icon()
 
 	update_icon()
 		..()
@@ -1016,7 +1016,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 

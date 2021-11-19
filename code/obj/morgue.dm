@@ -64,19 +64,29 @@
 	else
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		if (!connected)
-			src.connected = new /obj/m_tray(src.loc)
-		else
-			src.connected.set_loc(src.loc)
-		step(src.connected, src.dir)//EAST)
-		src.connected.layer = OBJ_LAYER
-		var/turf/T = get_step(src, src.dir)//EAST)
-		if (T.contents.Find(src.connected))
+			src.connected = new /obj/m_tray(src)
+			src.connected.set_dir(src.dir)
 			src.connected.connected = src
-			for(var/atom/movable/A as mob|obj in src)
-				A.set_loc(src.connected.loc)
-			src.connected.icon_state = "morguet"
-		else
-			src.connected.set_loc(src)
+			src.connected.layer = OBJ_LAYER - 0.02
+
+		var/turf/T_src = get_turf(src)
+		var/turf/T = get_step(src, src.dir)
+
+		//handle animation and ejection of contents
+		for(var/atom/movable/AM as anything in src)
+			AM.set_loc(T)
+			AM.pixel_x = 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle
+			AM.pixel_y = 28 * (T_src.y - T.y)
+
+			var/orig_layer = AM.layer
+			if (AM != src.connected)
+				AM.layer = OBJ_LAYER - 0.01
+
+			animate(AM, 1 SECOND, easing = BOUNCE_EASING, pixel_x = 0, pixel_y = 0)
+			animate(layer = orig_layer, easing = JUMP_EASING)
+
+		src.connected.icon_state = "morguet"
+
 	src.add_fingerprint(user)
 	src.update()
 	return
@@ -107,7 +117,6 @@
 	else
 		src.connected.set_loc(src.loc)
 	step(src.connected, src.dir)//EAST)
-	src.connected.layer = OBJ_LAYER
 	var/turf/T = get_step(src, src.dir)//EAST)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
@@ -128,7 +137,7 @@
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/morgue/connected = null
 	anchored = 1.0
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	disposing()
 		src.connected?.connected = null
@@ -136,7 +145,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/m_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/m_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else
@@ -371,7 +380,7 @@
 	var/obj/crematorium/connected = null
 	anchored = 1.0
 	var/datum/light/light //Only used for tanning beds.
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	disposing()
 		src.connected?.connected = null
@@ -380,7 +389,7 @@
 		src.connected = null
 		. = ..()
 
-/obj/c_tray/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/c_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else

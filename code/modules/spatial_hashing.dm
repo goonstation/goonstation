@@ -4,20 +4,18 @@
 
 #define CELL_POSITION(X,Y) clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1,1,hashmap.len)
 
-#define ADD_BUCKET(X,Y) do{\
-var/cellposition = CELL_POSITION(X,Y);\
-buckets_holding_atom[cellposition] = 1;\
-} while (false)
+#define ADD_BUCKET(X,Y) . |= CELL_POSITION(X, Y)
+#define SPATIAL_HASHMAP_CELL_SIZE 30
 
 var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
 /proc/init_spatial_maps()
 	. = new /list(world.maxz)
 	for (var/zlevel = 1; zlevel <= world.maxz; zlevel++)
-		.[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
+		.[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,SPATIAL_HASHMAP_CELL_SIZE,zlevel)
 
 /proc/init_spatial_map(zlevel)
-	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,60,zlevel)
+	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,SPATIAL_HASHMAP_CELL_SIZE,zlevel)
 
 /datum/spatial_hashmap
 	var/list/list/hashmap
@@ -59,9 +57,6 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
 		cellwidth = width/cellsize
 
-		buckets_holding_atom = list()
-		buckets_holding_atom.len = length(hashmap)
-
 		my_z = z
 	/* unused, could be useful later idk
 
@@ -94,6 +89,10 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		//but this is for our sounds system, where the shapes of collision actually resemble a diamond
 		//so : sample 8 points around the edges of the diamond shape created by our atom
 
+		. = list()
+
+		ADD_BUCKET(A.x, A.y)
+
 		//N,W,E,S
 		min_x = A.x - atomboundsize
 		min_y = A.y - atomboundsize
@@ -113,15 +112,6 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		ADD_BUCKET(min_x,max_y)
 		ADD_BUCKET(max_x,min_y)
 		ADD_BUCKET(max_x,max_y)
-
-		//why do the list stuff this way? i dont want to do `find element` checks on the buckets list, but it must not hold duplicate values.
-		//track collided cell IDs by flipping an index of the list from 0 to 1 in ADD_BUCKET.
-		.= list()
-		for (var/i in 1 to buckets_holding_atom.len)
-			if (buckets_holding_atom[i])
-				.+= i
-			buckets_holding_atom[i] = null
-
 
 		//lazy debug to see what cells we are searching in
 		/*

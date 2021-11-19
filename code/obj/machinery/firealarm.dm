@@ -10,7 +10,7 @@
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
-	var/alarm_frequency = "1437"
+	var/alarm_frequency = FREQ_ALARM
 	var/detecting = 1.0
 	var/working = 1.0
 	var/lockdownbyai = 0
@@ -19,7 +19,6 @@
 	var/net_id
 	var/ringlimiter = 0
 	var/dont_spam = 0
-	var/datum/radio_frequency/frequency
 	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
 	text = ""
@@ -38,13 +37,11 @@
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
-	SPAWN_DBG(1 SECOND)
-		frequency = radio_controller.return_frequency(alarm_frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
-		STOP_TRACKING
-		radio_controller.remove_object(src, alarm_frequency)
-		..()
+	STOP_TRACKING
+	..()
 
 /obj/machinery/firealarm/set_loc(var/newloc)
 	..()
@@ -168,16 +165,9 @@
 
 
 /obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target)
-//	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
-
-	LAGCHECK(LAG_LOW)
-
-	if(!frequency) return
-
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
-	alert_signal.transmission_method = TRANSMISSION_RADIO
-	alert_signal.data["zone"] = alarm_zone
+	alert_signal.data["address_tag"] = alarm_zone
 	alert_signal.data["type"] = "Fire"
 	alert_signal.data["netid"] = net_id
 	alert_signal.data["sender"] = net_id
@@ -189,10 +179,10 @@
 	else
 		alert_signal.data["alert"] = "reset"
 
-	frequency.post_signal(src, alert_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal)
 
 /obj/machinery/firealarm/receive_signal(datum/signal/signal)
-	if(status & NOPOWER || !src.frequency)
+	if(status & NOPOWER)
 		return
 
 	var/sender = signal.data["sender"]
@@ -208,11 +198,9 @@
 			if ("reset")
 				src.reset()
 
-
 	else if(signal.data["address_1"] == "ping")
 		var/datum/signal/reply = new
 		reply.source = src
-		reply.transmission_method = TRANSMISSION_RADIO
 		reply.data["address_1"] = sender
 		reply.data["command"] = "ping_reply"
 		reply.data["device"] = "WNET_FIREALARM"
@@ -221,7 +209,4 @@
 		reply.data["zone"] = alarm_zone
 		reply.data["type"] = "Fire"
 		SPAWN_DBG(0.5 SECONDS)
-			src.frequency.post_signal(src, reply)
-		return
-
-	return
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)

@@ -44,7 +44,6 @@
 				schedule_interval = 2 SECONDS
 				footstep_extrarange = 0
 				max_sound_range = MAX_SOUND_RANGE_NORMAL
-				ticker.timeDilationLowerBound = MIN_TICKLAG / 2
 			else
 				schedule_interval = 4 SECONDS
 				footstep_extrarange = 0

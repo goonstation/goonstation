@@ -130,6 +130,8 @@
 			L.bodytemperature = (2 * L.bodytemperature + temp) / 3
 		SPAWN_DBG(0)
 			for (var/obj/critter/C in T)
+				if(C.z != T.z)
+					continue
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				LAGCHECK(LAG_REALTIME)

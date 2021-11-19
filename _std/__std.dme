@@ -30,6 +30,8 @@
 #include "defines\dialogue.dm"
 #include "defines\dmm_suite.dm"
 #include "defines\door.dm"
+#include "defines\drawing.dm"
+#include "defines\economy.dm"
 #include "defines\ephemeral.dm"
 #include "defines\fluid.dm"
 #include "defines\infernal.dm"
@@ -71,7 +73,6 @@
 #include "defines\wages.dm"
 #include "defines\watermap.dm"
 #include "defines\worldgen.dm"
-#include "defines\_frequency.dm"
 #include "macros\actions.dm"
 #include "macros\antag_popups.dm"
 #include "macros\antagchecks.dm"
@@ -125,3 +126,5 @@
 #include "tgui.dm"
 #include "types.dm"
 #include "vox.dm"
+
+#include "packets.dm" // requires types.dm

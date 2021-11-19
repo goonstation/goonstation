@@ -27,6 +27,7 @@
 
 	New()
 		..()
+		src.pick_poison()
 		src.name = pick("Herr Doktor","Heals McGee","Wild-Eye","Jack","Boston Strangler","Insanobot")
 		SPAWN_DBG(1 MINUTE)
 			if (src?.blow_up == 1)

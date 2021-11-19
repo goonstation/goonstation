@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/office
 	name = "Office Supply Crate"
-	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors"
+	desc = "x4 Paper Bins, x2 Clipboards, x1 Sticky Note Box, x5 Writing Implement Sets, x1 Stapler, x1 Scissors, x2 Canvas"
 	contains = list(/obj/item/paper_bin = 4,
 		/obj/item/clipboard = 2,
 		/obj/item/item_box/postit,
@@ -673,6 +673,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		/obj/item/storage/box/crayon,
 		/obj/item/staple_gun/red,
 		/obj/item/scissors,
+		/obj/item/canvas = 2,
 		/obj/item/stamp = 2)
 	cost = 250
 	containername = "Office Supply Crate"
@@ -1054,6 +1055,24 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 25000
 	containertype = /obj/storage/crate/wooden
 	containername = "Red Event Table Crate"
+
+/datum/supply_packs/furniture_neon
+	name = "Neon Furnishings Crate"
+	desc = "A flat-packed set of tables and stools, each in eye-searing neon."
+	contains = list(/obj/item/furniture_parts/table/neon = 4,
+					/obj/item/furniture_parts/stool/neon = 4)
+	cost = 20000
+	containertype = /obj/storage/crate/wooden
+	containername = "Neon Furnishings Crate"
+
+/datum/supply_packs/furniture_scrap
+	name = "Scrap Furnishings Crate"
+	desc = "A flat-packed set of...trash and scrap parts. I guess you could make furniture out of it?"
+	contains = list(/obj/item/furniture_parts/table/scrap = 4,
+					/obj/item/furniture_parts/wood_chair/scrap = 4)
+	cost = 20000
+	containertype = /obj/storage/crate/wooden
+	containername = "Scrap Furnishings Crate"
 
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"
@@ -1449,6 +1468,18 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
+
+/datum/supply_packs/complex/status_display
+	name = "Disassembled Status Displays"
+	desc = "Contains four disassembled status display panels as they have not yet been installed on all NanoTrasen space objects."
+	category = "Engineering Department"
+	frames = list(/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display)
+	cost = 6000
+	containertype = /obj/storage/crate
+	containername = "Status Display Kit"
 
 /datum/supply_packs/complex/eppd_kit
 	name = "Emergency Pressurzation Kit"

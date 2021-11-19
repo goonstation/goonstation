@@ -31,7 +31,7 @@ datum
 		var/depletion_rate = 0.4 // this much goes away per tick
 		var/penetrates_skin = 0 //if this reagent can enter the bloodstream through simple touch.
 		var/touch_modifier = 1 //If this does penetrate skin, how much should be transferred by default (assuming naked dude)? 1 = transfer full amount, 0.5 = transfer half, etc.
-		var/taste = "uninteresting"
+		var/taste = null
 		var/value = 1 // how many credits this is worth per unit
 		var/thirst_value = 0
 		var/hunger_value = 0

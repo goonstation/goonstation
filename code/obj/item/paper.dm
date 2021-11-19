@@ -181,9 +181,9 @@
 			if(!src.stampable)
 				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
 				return
-			var/stamp_x = text2num(params["x"])
-			var/stamp_y = text2num(params["y"])
-			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/stamp_x = text2num_safe(params["x"])
+			var/stamp_y = text2num_safe(params["y"])
+			var/stamp_r = text2num_safe(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
 
 			if(length(stamps) < PAPER_MAX_STAMPS)
@@ -200,7 +200,7 @@
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
 
-			field_counter = params["fieldCounter"] ? text2num(params["fieldCounter"]) : field_counter
+			field_counter = params["fieldCounter"] ? text2num_safe(params["fieldCounter"]) : field_counter
 
 			if(paper_len > PAPER_MAX_LENGTH)
 				// Side note, the only way we should get here is if

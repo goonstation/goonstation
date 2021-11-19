@@ -660,6 +660,12 @@
 	desc = "Subject is proficent at haggling."
 	id = "training_quartermaster"
 
+/obj/trait/job/chef
+	name = "Kitchen Training"
+	cleanName = "Kitchen Training"
+	desc = "Subject is experienced in foodstuffs and their effects."
+	id = "training_chef"
+
 // bartender, detective, HoS
 /obj/trait/job/drinker
 	name = "Professional Drinker"
@@ -1017,7 +1023,7 @@ obj/trait/pilot
 		if(!owner.stat && can_act(owner) && probmult(9))
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
-					if(!I.anchored && isturf(I.loc))
+					if(!I.anchored && isturf(I.loc) && can_reach(owner, I))
 						I.Attackhand(owner)
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))

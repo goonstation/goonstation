@@ -1,10 +1,10 @@
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
-	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers."
+	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
-	icon_state = "nukie_speaker" // Gannets to make awesome amp stack!
+	icon_state = "amp_stack"
 	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
-	wear_image_icon = 'icons/mob/back.dmi' // Gannets to make sweet wearable?
+	wear_image_icon = 'icons/mob/back.dmi'
 
 	anchored = 0
 	speaker_range = 7
@@ -48,7 +48,7 @@
 			UpdateOverlays(null, "speech_bubble")
 
 	proc/play_song(notes=TRUE)
-		icon_state = "nukie_speaker_actv"
+		icon_state = "amp_stack_actv"
 		if(notes)
 			effect.play_notes()
 		if(ismob(src.loc))
@@ -56,7 +56,7 @@
 			M.update_clothing()
 
 	proc/stop_song()
-		icon_state = "nukie_speaker"
+		icon_state = "amp_stack"
 		effect.stop_notes()
 		if(ismob(src.loc))
 			var/mob/M = src.loc
@@ -67,11 +67,11 @@
 
 
 /obj/item/breaching_hammer/rock_sledge
-	name = "rock sledgehammer"
-	desc = "A HEAVY METAL hammer designed break down doors with the power of music."
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "rock_sledge"
-	item_state = "breaching_sledgehammer"
+	name = "Orpheus electric guitar"
+	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Bonk-Tek."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "guitar"
+	item_state = "guitar"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	is_syndicate = 1
 	click_delay = 30 / 2 // TODO
@@ -166,6 +166,7 @@
 	var/list/status_effect_ids
 	var/static/image/frame_img
 	var/static/image/rocked_out_img
+	var/sound_clip
 
 	New()
 		..()
@@ -208,7 +209,7 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, "sound/effects/light_breaker.ogg", 45, 1, 5)
+				playsound(src, "sound/musical_instruments/bard/tapping1.ogg", 45, 1, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
@@ -241,6 +242,7 @@
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
+			playsound(src, "sound/musical_instruments/bard/riff.ogg", 45, 1, 5)
 			. = ..()
 
 	ultrasound
@@ -256,6 +258,7 @@
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
+			playsound(src, "sound/musical_instruments/bard/tapping2.ogg", 45, 1, 5)
 			. = ..()
 
 	focus
@@ -263,6 +266,7 @@
 		desc = "Clear Stuns and improves resistance"
 		icon_state = "focus"
 		status_effect_ids = list("music_focus")
+		sound_clip = "sound/musical_instruments/bard/tapping1.ogg"
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -284,23 +288,28 @@
 			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
 
+	// Songs
+
 	heal
 		name = "Chill Beats to Murder To"
 		desc = "Gentle healing effect that allows you to do more."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
+		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
 
 	death_march
 		name = "Death March"
 		desc = "Move Faster, Longer, and Silently"
 		icon_state = "death_march"
 		status_effect_ids = list("music_refreshed_big")
+		sound_clip = "sound/musical_instruments/bard/riff.ogg"
 
 	perseverance
 		name = "Perseverance"
 		desc = "Health Boost and Minor Stamina Regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
+		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
 
 	epic_climax
 		name = "EPIC CLIMAX"
@@ -309,6 +318,7 @@
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
 		cooldown = 5 MINUTES
+		sound_clip = "sound/musical_instruments/bard/tapping2.ogg"
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -359,10 +369,14 @@
 		if(get_dist(owner, instrument) > 1 || instrument == null || owner == null) //If the thing is out of range, interrupt the action. Also interrupt if the user or the item disappears.
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/mob/M = owner
+		playsound(M, song.sound_clip, 45, 1, 5)
 		instrument.play_notes()
 
 	onRestart()
 		..()
+		var/mob/M = owner
+		playsound(M, song.sound_clip, 45, 1, 5)
 		last_strum = instrument.strums
 		blast_to_speakers()
 		icon_image.alpha = 200
