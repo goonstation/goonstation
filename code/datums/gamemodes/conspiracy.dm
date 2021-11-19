@@ -81,7 +81,7 @@
 		. = rand(1352, 1439)
 	while (blacklisted.Find(.))
 
-/datum/game_mode/traitor/send_intercept()
+/datum/game_mode/conspiracy/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 
