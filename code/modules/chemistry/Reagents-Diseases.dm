@@ -28,7 +28,7 @@ datum
 					M = holder.my_atom
 				if (!isliving(M) || !ispath(disease))
 					return
-				if (src.volume < minimum_to_infect)
+				if (src.volume + depletion_rate*(mult-1) < minimum_to_infect)
 					return
 				var/mob/living/L = M
 				L.contract_disease(disease, null, null, 1)
