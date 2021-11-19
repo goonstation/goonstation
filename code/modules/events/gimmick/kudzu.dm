@@ -404,7 +404,7 @@
 				sleep(bulb_complete)
 
 				if(!isalive(M) && M.ghost?.mind?.dnr)
-					src.visible_message("<span class='alert'>The bulb opens, having drained all the nutrients from [M.name]!</span>")
+					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
 					M.gib()
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
