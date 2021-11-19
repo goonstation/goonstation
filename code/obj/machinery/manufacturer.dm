@@ -1052,6 +1052,9 @@
 					user.u_equip(W)
 					W.dropped()
 
+		else if (istype(W,/obj/item/disk/data)) // Just for clarity sake
+			boutput(user, "<span class='alert'>Only manudrives are able to be inserted into manufacturers.</span>")
+
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
 			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
 			playsound(src.loc, src.sound_grump, 50, 1)
