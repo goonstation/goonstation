@@ -335,6 +335,11 @@
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
 
+/obj/item/plant/herb/poppy/spawnable
+	make_reagents()
+		src.create_reagents(25)
+		reagents.add_reagent("morphine", 15)
+
 /obj/item/plant/herb/aconite
 	name = "aconite"
 	crop_suffix	= ""

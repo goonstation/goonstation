@@ -1488,6 +1488,10 @@
 	amount = 1
 	heal_amt = 1
 
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin/spawnable
+	initial_volume = 30
+	initial_reagents = list("psilocybin",15)
+
 /obj/item/reagent_containers/food/snacks/mushroom/cloak
 	name = "space mushroom"
 	desc = "A mushroom cap of Space Fungus. It doesn't smell of anything."
