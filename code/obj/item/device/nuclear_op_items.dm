@@ -5,8 +5,8 @@
 	desc = "A single-use teleporter remote that summons the nuclear bomb to the user's current location."
 	icon_state = "bomb_remote"
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	w_class = W_CLASS_SMALL
 
 	var/charges = 1
@@ -55,8 +55,8 @@
 	desc = "A handheld beacon that allows you to call a Syndicate reinforcement to the user's current location."
 	icon_state = "beacon" //replace later
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = TRUE
 	w_class = W_CLASS_SMALL
 	var/uses = 1
 	var/ghost_confirmation_delay = 30 SECONDS
@@ -124,8 +124,8 @@
 	desc = "A modified uplink which allows you to buy a loadout on the go. Nifty!"
 	icon_state = "uplink" //replace later
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	w_class = W_CLASS_SMALL
 	flags = TGUI_INTERACTIVE_ITEM | TABLEPASS | FPRINT
 
@@ -240,9 +240,9 @@
 		..()
 
 /obj/item/device/weapon_vendor/syndicate/preloaded
-	desc = "A pre-loaded uplink which allows you to buy a sidearm and utility on the go. Nifty!"
+	desc = "A pre-loaded uplink which allows you to buy a sidearm, loadout, and utility on the go. Nifty!"
 	token_accepted = null
-	credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 1, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 1, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
+	credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 1, WEAPON_VENDOR_CATEGORY_LOADOUT = 1, WEAPON_VENDOR_CATEGORY_UTILITY = 1, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
@@ -505,31 +505,6 @@
 			if (source != target)
 				just_stop_designating(M)
 
-	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
-		if (reach)
-			return 0
-		if (!isturf(user.loc))
-			return 0
-		if (uses <= 0)
-			return 0
-		if (in_use)
-			return 0
-		if(target.z != 1 || user.z != 1)
-			return
-
-		for_by_tcl(A, /obj/machinery/broadside_gun)
-			var/obj/machinery/broadside_gun/C = A
-			if(C.firingfrom == src.ship_looking_for && !C.broken && ((C.ammo <= 0) || (!C.ammo == -1)))
-				src.linked_gun = C
-				break
-		if(isnull(src.linked_gun))
-			boutput(user, "<span class='alert'>The [src] makes a grumpy beep. It seems there's no artillery guns in position currently.</span>")
-			//playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
-			return 0
-
-
-		return src.airstrike(target, params, user, reach)
-
 	proc/airstrike(atom/target, params, mob/user, reach)
 		uses -= 1
 		in_use = TRUE
@@ -587,9 +562,6 @@
 	desc = "A handheld monocular device with a laser built into it, used for calling in fire support from the Cairngorm."
 	w_class = W_CLASS_SMALL
 	uses = 2
-	designatormove = null
-	in_use = FALSE
-	linked_gun = null
 	ship_looking_for = "Cairngorm"
 
 	New()
@@ -599,17 +571,17 @@
 	airstrike(atom/target, params, mob/user, reach)
 		..()
 		src.desc = "A handheld monocular device with a laser built into it, used for calling in fire support from the Cairngorm. It has [src.uses] charge left."
-		return 1
+		return TRUE
 
 	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 		if (reach)
-			return 0
+			return FALSE
 		if (!isturf(user.loc))
-			return 0
+			return FALSE
 		if (uses <= 0)
-			return 0
+			return FALSE
 		if (in_use)
-			return 0
+			return FALSE
 		if(target.z != 1 || user.z != 1)
 			return
 
@@ -619,10 +591,10 @@
 				src.linked_gun = C
 				break
 
-		if(isnull(src.linked_gun))
+		if(!src.linked_gun)
 			boutput(user, "<span class='alert'>The [src] makes a grumpy beep. It seems there's no artillery guns in position currently.</span>")
-			//playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
-			return 1
+			playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+			return FALSE
 
 		return src.airstrike(target, params, user, reach)
 
@@ -681,7 +653,7 @@
 		var/turf/target_turf = get_turf(target)
 		var/turf/firing_turf = get_turf(src)
 		if(!(target_turf in view(DESIGNATOR_MAX_RANGE, usr.loc))) //view() is bad and slow but I cannot find a better way to do this
-			return 0
+			return FALSE
 		if(!isnull(src.target_overlay))
 			target_turf.overlays += src.target_overlay
 		while(sound_offset_length > 0)
@@ -707,7 +679,7 @@
 		if(!isnull(src.target_overlay))
 			target_turf.overlays -= src.target_overlay
 		explosion_new(user, target_turf, 75)
-		return 1
+		return TRUE
 
 
 	syndicate
@@ -869,7 +841,8 @@
 	proc/fold_ammobag(var/mob/user)
 		src.anchored = FALSE
 		src.deployed = FALSE
-		Attackby(src, user)
+		sleep(1 DECI SECOND)
+		src.Attackhand(user)
 
 	attackby(obj/item/gun/kinetic/W, mob/user) //I detest having to do guns individually but it's for the sake of balance & special ammo types
 		if(!deployed)

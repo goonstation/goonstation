@@ -154,5 +154,5 @@
 		HH.can_range_attack = TRUE
 
 	setup_healths()
-		add_hh_robot(75, 1)
-		add_hh_robot_burn(75, 1)
+		add_hh_robot(100, 1)
+		add_hh_robot_burn(100, 1)
