@@ -1046,7 +1046,7 @@
 				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
 				src.manudrive = W
-				var/obj/item/disk/data/floppy/read_only/manudrive/MD = W
+				var/datum/computer/file/manudrive/MD = W
 				src.drive_recipes = MD.drivestored
 				if (user && W)
 					user.u_equip(W)
