@@ -51,14 +51,6 @@
 		//fucky way of doing this but whatever
 		..()
 
-
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
-		return
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 

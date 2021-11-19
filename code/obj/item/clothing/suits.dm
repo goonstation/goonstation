@@ -1060,30 +1060,6 @@
 			if(nt_wear_state in icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = 100 - material.getProperty("thermal")
-				setProperty("coldprot", prot)
-				setProperty("heatprot", round(prot/2))
-			else
-				setProperty("coldprot", 30)
-				setProperty("heatprot", 15)
-
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
-
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 13)
-				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
-			else
-				setProperty("meleeprot", 2)
-				setProperty("rangedprot", 0.4)
-
 	setupProperties()
 		..()
 		setProperty("coldprot", 50)
@@ -1306,6 +1282,31 @@
 	desc = "It comes in fun colours, but is as bulky and slow to move in as any standard space suit..."
 	icon_state = "space-neon"
 	item_state = "space-neon"
+
+/obj/item/clothing/suit/space/custom // Used for nanofabs
+	onMaterialChanged()
+		if(src.material)
+			if(material.hasProperty("thermal"))
+				var/prot = 100 - material.getProperty("thermal")
+				setProperty("coldprot", prot)
+				setProperty("heatprot", round(prot/2))
+			else
+				setProperty("coldprot", 30)
+				setProperty("heatprot", 15)
+
+			if(material.hasProperty("permeable"))
+				var/prot = 100 - material.getProperty("permeable")
+				setProperty("viralprot", prot)
+			else
+				setProperty("viralprot", 40)
+
+			if(material.hasProperty("density"))
+				var/prot = round(material.getProperty("density") / 13)
+				setProperty("meleeprot", prot)
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
+			else
+				setProperty("meleeprot", 2)
+				setProperty("rangedprot", 0.4)
 
 // Sealab suits
 
