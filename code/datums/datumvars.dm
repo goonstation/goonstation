@@ -781,6 +781,9 @@
 	if(variable=="filters" && !istype(D, /image))
 		default = "filter editor"
 		classes += default
+	else if(variable=="particles")
+		default = "particle editor"
+		classes += default
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
 
 
@@ -1124,6 +1127,10 @@
 			if(src.holder)
 				src.holder.filteriffic = new /datum/filter_editor(D)
 				src.holder.filteriffic.ui_interact(mob)
+		if ("particle editor")
+			if(src.holder)
+				src.holder.particool = new /datum/particle_editor(D)
+				src.holder.particool.ui_interact(mob)
 
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
