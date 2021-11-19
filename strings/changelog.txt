@@ -1,5 +1,9 @@
 
 (t)fri nov 19 21
+(u)Gannets
+(p)6730
+(e)🐛|bug
+(+)Syndicate weapons vendors are now explosion immune.
 (u)Nexusuxen
 (p)6632
 (e)🐛🗺|bug, mapping
