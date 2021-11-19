@@ -45442,6 +45442,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "gOo" = (
@@ -56920,7 +56921,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "thw" = (
@@ -59622,7 +59622,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "vXP" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "vYc" = (
