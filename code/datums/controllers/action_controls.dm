@@ -1114,6 +1114,11 @@ var/datum/action_controller/actions
 			var/mob/living/carbon/human/H = target
 			duration = round(duration * H.handcuffs.remove_other_multiplier)
 
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(H.traitHolder.hasTrait("training_security"))
+				duration = round(duration / 2)
+
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
 
