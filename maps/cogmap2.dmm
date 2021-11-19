@@ -78129,6 +78129,12 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"ffs" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 7
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "fiQ" = (
 /obj/decal/poster/wallsign/stencil/right/m{
 	pixel_x = 15
@@ -79356,19 +79362,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"mTR" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/launcher_loader/west{
-	door_delay = 7
-	},
-/turf/space,
-/area/space)
 "mUs" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -106643,7 +106636,7 @@ aaa
 aaC
 aaC
 aaC
-aaP
+ffs
 aal
 aaI
 aaa
@@ -107247,7 +107240,7 @@ aaa
 abC
 aaB
 aaB
-mTR
+aaB
 aaB
 aaI
 aaa
