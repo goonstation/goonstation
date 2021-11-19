@@ -2,7 +2,9 @@
 	name = "Standard ManuDrive: Empty"
 	desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer."
 	mats = 0
+	random_color = 0
 	icon_state = "datadiskwhi"
+	var/list/drivestored = list() // It breaks if I delete this and idk why, this shouldnt effect things so
 	/// Put the recipe string here and itll make em into instances.
 	var/list/datum/manufacture/temp_recipe_string = list()
 	/// Means it can be used unlimited time, its a lazy solution yet an effective one.
