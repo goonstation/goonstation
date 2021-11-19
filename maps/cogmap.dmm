@@ -37404,7 +37404,8 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -39415,15 +39416,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"bUq" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
-/area/station/hallway/primary/south)
 "bUr" = (
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -39791,6 +39783,11 @@
 	icon_state = "pipe-sj2";
 	mail_tag = "medbay";
 	name = "medbay mail router"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_x = 4;
+	pixel_y = 21
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -41203,6 +41200,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/blue/side{
@@ -41215,7 +41213,8 @@
 /area/station/hallway/primary/south)
 "bZH" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/blue/side{
 	dir = 4
@@ -42260,6 +42259,10 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cdf" = (
@@ -42731,6 +42734,7 @@
 "cew" = (
 /obj/machinery/light{
 	dir = 1;
+	pixel_x = 4;
 	pixel_y = 21
 	},
 /turf/simulated/floor/bluewhite,
@@ -44366,7 +44370,8 @@
 /area/station/medical/medbay/lobby)
 "cjr" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -45386,6 +45391,7 @@
 "clZ" = (
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/purple/side{
@@ -47828,6 +47834,7 @@
 "cst" = (
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10;
 	tag = ""
 	},
 /turf/simulated/floor/bluewhite{
@@ -49108,6 +49115,7 @@
 	},
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/item/item_box/medical_patches/styptic{
@@ -52463,10 +52471,8 @@
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/wingrille_spawn/auto,
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "dhj" = (
@@ -53149,9 +53155,6 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
 "dUJ" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -53874,7 +53877,6 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "eXb" = (
-/obj/machinery/light,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
@@ -57201,6 +57203,7 @@
 	},
 /obj/machinery/light{
 	dir = 1;
+	pixel_x = -4;
 	pixel_y = 21
 	},
 /turf/simulated/floor/bluewhite{
@@ -57496,7 +57499,8 @@
 	pixel_y = 7
 	},
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -57595,6 +57599,7 @@
 "kPk" = (
 /obj/machinery/light{
 	dir = 1;
+	pixel_x = 4;
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment{
@@ -57690,17 +57695,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/security/main)
-"lak" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "laP" = (
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/supernorn,
@@ -57716,6 +57710,14 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"lep" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "lfY" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -58933,6 +58935,8 @@
 	},
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10;
+	pixel_y = 16;
 	tag = ""
 	},
 /obj/machinery/chem_heater,
@@ -60360,7 +60364,8 @@
 /area/station/security/main)
 "pCF" = (
 /obj/machinery/light{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -60881,6 +60886,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/delivery,
 /area/station/science/chemistry)
 "qiy" = (
@@ -61111,7 +61119,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
@@ -64255,7 +64263,8 @@
 /area/station/engine/coldloop)
 "vnX" = (
 /obj/machinery/light/small{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -65136,6 +65145,7 @@
 	},
 /obj/machinery/light{
 	dir = 8;
+	pixel_x = -10;
 	tag = ""
 	},
 /obj/machinery/vending/snack,
@@ -100348,7 +100358,7 @@ ckH
 cmc
 xwZ
 keB
-lak
+cvA
 viE
 dUJ
 crD
@@ -102154,7 +102164,7 @@ mqn
 cev
 hEh
 vPB
-cev
+lep
 cev
 cmg
 mEV
@@ -103048,7 +103058,7 @@ bLD
 bRl
 bSQ
 bSZ
-bUq
+bLD
 bVE
 bWU
 bPR
