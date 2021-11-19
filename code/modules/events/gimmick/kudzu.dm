@@ -410,6 +410,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
 					SPAWN_DBG(1 SECOND)
 						qdel(src)
+					
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
