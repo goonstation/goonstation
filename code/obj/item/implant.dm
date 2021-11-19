@@ -1514,12 +1514,12 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		if (href_list["freq"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
 				var/obj/item/implant/tracking/T = src.case.imp
-				T.frequency += text2num(href_list["freq"])
+				T.frequency += text2num_safe(href_list["freq"])
 				T.frequency = sanitize_frequency(T.frequency)
 		if (href_list["id"])
 			if ((istype(src.case, /obj/item/implantcase) && istype(src.case.imp, /obj/item/implant/tracking)))
 				var/obj/item/implant/tracking/T = src.case.imp
-				T.id += text2num(href_list["id"])
+				T.id += text2num_safe(href_list["id"])
 				T.id = min(100, T.id)
 				T.id = max(1, T.id)
 		if (ismob(src.loc))

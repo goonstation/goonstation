@@ -434,10 +434,16 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	proc/remove_light(var/obj/machinery/light/L)
 		if (light_manager)
 			light_manager.lights -= L
+
 	New()
 		..()
+		START_TRACKING
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
+
+	Del()
+		STOP_TRACKING
+		..()
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 
@@ -1477,13 +1483,20 @@ ABSTRACT_TYPE(/area/station)
 	New()
 		..()
 		initial_structure_value = calculate_structure_value()
+		START_TRACKING
 #else
 	filler_turf = null
 
 	New()
 		..()
 		initial_structure_value = calculate_structure_value()
+		START_TRACKING
 #endif
+
+	Del()
+		STOP_TRACKING
+		..()
+
 ABSTRACT_TYPE(/area/station/atmos)
 /area/station/atmos
 	name = "Atmospherics"

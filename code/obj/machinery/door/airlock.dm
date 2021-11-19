@@ -1595,7 +1595,7 @@ obj/machinery/door/airlock
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
 			return
 
-		var/sent_code = text2num(signal.data["access_code"])
+		var/sent_code = text2num_safe(signal.data["access_code"])
 		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
 			if(prob(20))
 				src.play_deny()

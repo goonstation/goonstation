@@ -93,7 +93,7 @@
 				//		qdel(temp_term)
 				//		terminal = null
 		updateicon()
-	
+
 	else if (integrity_state == 2 && ispryingtool(W) && core_inserted)
 		if (user.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(user))
 			user.show_text("Not when you're incapacitated.", "red")
@@ -335,8 +335,8 @@
 			else if(adjust)
 				src.chargelevel = clamp((src.chargelevel + adjust), 0 , SEMAXCHARGELEVEL)
 				. = TRUE
-			else if(text2num(target) != null)
-				src.chargelevel = clamp(text2num(target), 0 , SEMAXCHARGELEVEL)
+			else if(text2num_safe(target) != null)
+				src.chargelevel = clamp(text2num_safe(target), 0 , SEMAXCHARGELEVEL)
 				. = TRUE
 		if("set-output")
 			var/target = params["target"]
@@ -350,8 +350,8 @@
 			else if(adjust)
 				src.output = clamp((src.output + adjust), 0 , SEMAXOUTPUT)
 				. = TRUE
-			else if(text2num(target) != null)
-				src.output = clamp(text2num(target), 0 , SEMAXOUTPUT)
+			else if(text2num_safe(target) != null)
+				src.output = clamp(text2num_safe(target), 0 , SEMAXOUTPUT)
 				. = TRUE
 	src.updateicon()
 

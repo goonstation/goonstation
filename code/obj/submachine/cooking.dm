@@ -727,7 +727,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
-			src.time = clamp(text2num(href_list["time"]), 1, 10)
+			src.time = clamp(text2num_safe(href_list["time"]), 1, 10)
 			src.updateUsrDialog()
 			return
 
@@ -735,7 +735,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>The dials are locked! THIS IS HOW OVENS WORK OK</span>")
 				return
-			var/operation = text2num(href_list["heat"])
+			var/operation = text2num_safe(href_list["heat"])
 			if (operation == 1) src.heat = "High"
 			if (operation == 2) src.heat = "Low"
 			src.updateUsrDialog()
