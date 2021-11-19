@@ -407,7 +407,7 @@
 					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
 					M.gib()
 					flick("bulb-open-animation", src)
-					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
+					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN_DBG(1 SECOND)
 						qdel(src)
 					
