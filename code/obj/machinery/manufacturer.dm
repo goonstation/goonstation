@@ -1046,11 +1046,11 @@
 				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
 				src.manudrive = W
-				var/datum/computer/file/manudrive/MD = W
-				src.drive_recipes = MD.drivestored
-				if (user && W)
-					user.u_equip(W)
-					W.dropped()
+				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+					src.drive_recipes = MD.drivestored
+					if (user && W)
+						user.u_equip(W)
+						W.dropped()
 
 		else if (istype(W,/obj/item/disk/data)) // Just for clarity sake
 			boutput(user, "<span class='alert'>Only manudrives are able to be inserted into manufacturers.</span>")
@@ -1503,14 +1503,14 @@
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
 				var/obj/item/disk/data/floppy/read_only/manudrive/ManuD = src.manudrive
-				var/datum/computer/file/manudrive/MD = ManuD
-				if(MD.fablimit == 0)
-					src.mode = "halt"
-					src.error = "The inserted ManuDrive is unable to operate further."
-					src.queue = list()
-					return
-				else
-					MD.fablimit -= 1
+				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
+					if(MD.fablimit == 0)
+						src.mode = "halt"
+						src.error = "The inserted ManuDrive is unable to operate further."
+						src.queue = list()
+						return
+					else
+						MD.fablimit -= 1
 
 		playsound(src.loc, src.sound_beginwork, 50, 1, 0, 3)
 		src.mode = "working"
@@ -1704,14 +1704,14 @@
 			"}
 
 			var/obj/item/disk/data/floppy/read_only/manudrive/ManuD = src.manudrive
-			var/datum/computer/file/manudrive/MD = ManuD
-			if(MD.fablimit >= 0)
-				dat += {"
-			<tr>
-				<td>ManuDrive Usages</td>
-				<td class='r'>[MD.fablimit]</td>
-			</tr>
-				"}
+			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
+				if(MD.fablimit >= 0)
+					dat += {"
+				<tr>
+					<td>ManuDrive Usages</td>
+					<td class='r'>[MD.fablimit]</td>
+				</tr>
+					"}
 
 		if (src.reagents.total_volume > 0)
 			dat += {"
