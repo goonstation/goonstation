@@ -84,6 +84,9 @@
 		else
 			..()
 
+	ex_act()
+		return
+
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
