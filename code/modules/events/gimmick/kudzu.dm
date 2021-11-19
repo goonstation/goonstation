@@ -403,14 +403,14 @@
 
 				sleep(bulb_complete)
 
-				if(!isalive(M) && M.ghost && M.ghost.mind && M.ghost.mind.dnr)
+				if(!isalive(M) && M.ghost?.mind?.dnr)
 					src.visible_message("<span class='alert'>The bulb opens, having drained all the nutrients from [M.name]!</span>")
 					M.gib()
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
-					sleep(10)
-					qdel(src)
-				if (!destroyed && ishuman(M))
+					SPAWN_DBG(1 SECOND)
+						qdel(src)
+				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
