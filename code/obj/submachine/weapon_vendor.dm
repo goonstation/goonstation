@@ -84,8 +84,7 @@
 		else
 			..()
 
-	ex_act()
-		return
+
 
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
@@ -153,6 +152,9 @@
 	desc = "An automated quartermaster service for supplying your nuclear operative team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
+
+	ex_act()
+		return
 
 	New()
 		..()
