@@ -1209,4 +1209,5 @@ proc/generate_space_color()
 
 	Entered(atom/movable/mover, atom/forget)
 		. = ..()
-		mover.set_loc(null)
+		if(!mover.anchored)
+			mover.set_loc(null)
