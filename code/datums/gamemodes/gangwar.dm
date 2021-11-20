@@ -77,7 +77,6 @@
 	leaders |= chosen_leader
 	for (var/datum/mind/leader in leaders)
 		leader.special_role = ROLE_GANG_LEADER
-		ticker.mode.traitors += leader
 		leaders_possible.Remove(leader)
 
 	return 1
@@ -1239,7 +1238,6 @@
 		src.gang.members += target.mind
 		if (!target.mind.special_role)
 			target.mind.special_role = ROLE_GANG_MEMBER
-		ticker.mode.traitors += target.mind
 		SHOW_GANG_MEMBER_TIPS(target)
 		var/datum/objective/gangObjective = new /datum/objective/specialist/gang(  )
 		gangObjective.owner = target.mind
