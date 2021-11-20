@@ -19,10 +19,13 @@
 	var/operating = 0
 	var/driver_operating = 0
 	var/trash = 0
+	/// Amount of time in seconds before connected blast doors should close
+	var/door_delay = 3 // Multiplied by SECONDS on New()
 
 	New()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
+			door_delay = door_delay SECONDS
 			var/list/drivers = new/list()
 			for(var/obj/machinery/mass_driver/D in range(1,src))
 				drivers += D
@@ -64,11 +67,11 @@
 						SPAWN_DBG(0)
 							if (door)
 								door.open()
-						SPAWN_DBG(3 SECONDS)
+						SPAWN_DBG(door_delay)
 							if (door)
 								door.close()
 
-				SPAWN_DBG(door ? 30 : 20) driver_operating = FALSE
+				SPAWN_DBG(door ? door_delay : 2 SECONDS) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)

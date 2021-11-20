@@ -15331,7 +15331,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "aOt" = (
@@ -23683,7 +23685,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24819,7 +24823,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bkI" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25256,7 +25262,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blP" = (
@@ -25393,7 +25401,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bmb" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25660,7 +25670,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmI" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmJ" = (
@@ -26791,7 +26803,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boU" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boV" = (
@@ -27593,7 +27607,9 @@
 /turf/space,
 /area/space)
 "bqR" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -31740,7 +31756,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "bBW" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -36952,7 +36970,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bOM" = (
@@ -37558,7 +37578,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -38270,7 +38292,9 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -54333,6 +54357,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"dRl" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dRM" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -55368,6 +55398,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
+"fud" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -59221,6 +59257,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"mDA" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mDB" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics";
@@ -98805,7 +98847,7 @@ adC
 aag
 aan
 aan
-aaA
+mDA
 aaF
 aaF
 adC
@@ -99556,7 +99598,7 @@ adC
 adC
 cyI
 cyI
-blw
+fud
 aax
 aaC
 aaG
@@ -121758,7 +121800,7 @@ aag
 aav
 aan
 aaE
-aaA
+mDA
 aaN
 aaN
 aap
@@ -132098,7 +132140,7 @@ aaw
 aap
 aaB
 aai
-aau
+dRl
 aap
 aaw
 aaw
