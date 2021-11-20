@@ -1232,7 +1232,8 @@
 			return
 
 		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
-		if (joingang == "No") return
+		if (joingang != "Yes")
+			return
 
 		target.mind.gang = gang
 		src.gang.members += target.mind
