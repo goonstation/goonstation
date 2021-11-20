@@ -95,10 +95,11 @@
 	can_dual_wield = 0
 	two_handed = 1
 	var/datum/projectile/bullet/g11/small/smallproj = new
+	default_magazine = /obj/item/ammo/bullets/g11
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/g11)
-		ammo = new/obj/item/ammo/bullets/g11
+		ammo = new default_magazine
 		. = ..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -238,9 +239,10 @@
 	caliber = 0.512
 	max_ammo_capacity = 6
 	has_empty_state = 1
+	default_magazine = /obj/item/ammo/bullets/gyrojet
 
 	New()
-		ammo = new/obj/item/ammo/bullets/gyrojet
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
 
@@ -289,20 +291,22 @@
 	has_empty_state = 1
 	gildable = 1
 	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/deagle50cal
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
-		ammo = new/obj/item/ammo/bullets/deagle50cal
+		ammo = new default_magazine
 		. = ..()
 
 	//gimmick deagle that decapitates
 	decapitation
 		force = 18.0 //mmm, pistol whip
 		throwforce = 50 //HEAVY pistol
+		default_magazine = /obj/item/ammo/bullets/deagle50cal/decapitation
 		New()
 			. = ..()
 			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
-			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+			ammo = new default_magazine
 
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal

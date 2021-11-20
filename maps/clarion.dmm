@@ -15456,20 +15456,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
-"aEV" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/instrument/bikehorn/dramatic,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen)
 "aEW" = (
 /obj/grille/catwalk/cross{
 	dir = 5
@@ -24482,26 +24468,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"aYe" = (
-/obj/machinery/light_switch/north,
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_y = 24
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet{
-	dir = 9;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/heads{
-	name = "Head of Personnel's Quarters"
-	})
 "aYf" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -44364,24 +44330,6 @@
 	icon_state = "blue1"
 	},
 /area/station/hallway/secondary/central)
-"chw" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Locker Room";
-	req_access = null
-	},
-/obj/access_spawn/sec_lockers,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/security/main)
 "chL" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -44514,6 +44462,21 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge)
+"cGj" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun();
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "cIK" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -46564,21 +46527,6 @@
 	dir = 5
 	},
 /area/station/science/teleporter)
-"ilb" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new /obj/item/captaingun;
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "ilF" = (
 /obj/machinery/recharger/wall{
 	pixel_y = -11
@@ -47103,6 +47051,26 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/central)
+"jJh" = (
+/obj/machinery/light_switch/north,
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/machinery/firealarm{
+	layer = 3.5;
+	pixel_y = 24
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/heads{
+	name = "Head of Personnel's Quarters"
+	})
 "jKb" = (
 /obj/window/reinforced/north,
 /obj/table/reinforced/auto,
@@ -51281,6 +51249,16 @@
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
+"vwV" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/instrument/bikehorn/dramatic,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen)
 "vzp" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/disposalpipe/segment/ejection,
@@ -51578,6 +51556,24 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"wsE" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/door/airlock/pyro/glass/security{
+	name = "Locker Room";
+	req_access = null
+	},
+/obj/access_spawn/security,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/security/main)
 "wwI" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -80761,7 +80757,7 @@ aQR
 bRg
 rSK
 kCY
-chw
+wsE
 eFS
 tbZ
 ban
@@ -85388,7 +85384,7 @@ aSD
 aUd
 aVA
 aWQ
-aYe
+jJh
 aZu
 baz
 aWQ
@@ -88476,7 +88472,7 @@ aYK
 aWW
 baJ
 bbT
-ilb
+cGj
 bep
 bfD
 bgL
@@ -90768,7 +90764,7 @@ aAG
 aBA
 aCH
 aCV
-aEV
+vwV
 aEK
 aFU
 aGF

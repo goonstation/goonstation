@@ -32662,21 +32662,6 @@
 	},
 /turf/space,
 /area/space)
-"bjz" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
-	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "bjA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -64033,6 +64018,22 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
+"cnJ" = (
+/obj/table/wood/auto,
+/obj/item/plate{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/shaker/salt{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/shaker/pepper{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet,
+/area/station/crew_quarters/cafeteria)
 "cnK" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
@@ -64278,17 +64279,6 @@
 /obj/deskclutter,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"coh" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp{
-	switchon = 1
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/heads)
 "coi" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
@@ -68641,6 +68631,17 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"fkX" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/storage/crate/bloody,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "fno" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
@@ -68651,13 +68652,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
-"fnQ" = (
-/obj/storage/crate/adventure,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "frS" = (
 /obj/cable{
 	d1 = 4;
@@ -68692,6 +68686,13 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
+"fEt" = (
+/obj/storage/crate/adventure,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "fGc" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -69644,6 +69645,17 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
+"lph" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp{
+	switchon = 1
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/heads)
 "lpD" = (
 /obj/lattice{
 	dir = 8;
@@ -69890,22 +69902,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"nsb" = (
-/obj/table/wood/auto,
-/obj/item/plate{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/shaker/salt{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/shaker/pepper{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/turf/simulated/floor/carpet,
-/area/station/crew_quarters/cafeteria)
 "ntT" = (
 /obj/cable{
 	d1 = 1;
@@ -108377,7 +108373,7 @@ aMj
 beU
 blx
 bln
-bjz
+fkX
 bEW
 bmg
 cAT
@@ -114418,7 +114414,7 @@ aAj
 cxn
 eJp
 cnP
-nsb
+cnJ
 nEA
 cxn
 bZH
@@ -130494,7 +130490,7 @@ cCO
 cCO
 cCO
 aWd
-fnQ
+fEt
 cqQ
 cqQ
 cMk
@@ -134078,7 +134074,7 @@ czu
 aJb
 bPD
 ave
-coh
+lph
 aUQ
 cCO
 jkw

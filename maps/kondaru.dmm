@@ -52,13 +52,6 @@
 	icon_state = "wall3"
 	},
 /area/space)
-"aal" = (
-/turf/simulated/floor/airless,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
-	},
-/area/space)
 "aam" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -160,13 +153,6 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
-"aaz" = (
-/turf/simulated/floor/airless,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	},
 /area/space)
 "aaA" = (
 /obj/cable{
@@ -312,18 +298,6 @@
 	},
 /turf/space,
 /area/space)
-"aaU" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/solar/west,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/turf/space,
-/area/station/solar/west)
 "aaV" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -866,12 +840,6 @@
 	name = "cargo belt - east";
 	operating = 1
 	},
-/turf/simulated/floor/airless/plating,
-/area/station/routing/eva{
-	name = "Router Cabinet"
-	})
-"acv" = (
-/obj/machinery/launcher_loader/east,
 /turf/simulated/floor/airless/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -16403,15 +16371,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
-"aTv" = (
-/obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/turf/simulated/floor/airless/plating{
-	icon_state = "platingdmg2"
-	},
-/area/research_outpost/indigo_rye)
 "aTw" = (
 /obj/table/auto,
 /obj/machinery/microscope,
@@ -38058,14 +38017,6 @@
 /obj/decal/cleanable/robot_debris,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost/indigo_rye)
-"ciO" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
-/turf/simulated/floor/airless/plating{
-	icon_state = "platingdmg2"
-	},
-/area/research_outpost/indigo_rye)
 "ciP" = (
 /obj/table/reinforced/auto,
 /obj/access_spawn/security,
@@ -42941,6 +42892,20 @@
 	icon_state = "engine_caution_south"
 	},
 /area/station/hangar/sec)
+"enA" = (
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/decal/cleanable/dirt,
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 32
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/storage/crate/bloody,
+/turf/simulated/floor/grey,
+/area/station/hydroponics/bay)
 "eob" = (
 /obj/storage/crate,
 /obj/item/clothing/head/merchant_hat,
@@ -44450,6 +44415,34 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"fPh" = (
+/obj/table/wood/auto,
+/obj/item/coin{
+	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
+	name = "strange coin";
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/coin{
+	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
+	name = "thick coin";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/machinery/light/lamp{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/coin{
+	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
+	name = "tarnished coin";
+	pixel_x = 5
+	},
+/obj/item/device/radio/intercom/bridge,
+/obj/blind_switch/area/west,
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
+/area/station/bridge/hos)
 "fPI" = (
 /obj/lattice{
 	dir = 4;
@@ -44680,6 +44673,14 @@
 "gda" = (
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"gdd" = (
+/obj/machinery/launcher_loader/east{
+	door_delay = 5
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/routing/eva{
+	name = "Router Cabinet"
+	})
 "gdB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45435,15 +45436,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
-"gNY" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "gOo" = (
 /obj/machinery/door_control{
 	id = "imports_door";
@@ -46593,6 +46585,12 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"hZL" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "ibQ" = (
 /obj/cable{
 	d1 = 1;
@@ -47824,6 +47822,18 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/crew_quarters/quarters_east)
+"jrS" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar/west,
+/turf/space,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/west)
 "jrT" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -48904,6 +48914,16 @@
 /obj/machinery/chem_master,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"kFx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "kGp" = (
 /obj/stool/chair{
 	dir = 1
@@ -49119,24 +49139,6 @@
 /obj/table/wood/round/auto,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
-"kSb" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/decal/cleanable/dirt,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/grey,
-/area/station/hydroponics/bay)
 "kSA" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -49171,6 +49173,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
+"kTB" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "wall3"
+	},
+/turf/simulated/floor/airless,
+/area/space)
 "kTI" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/cable{
@@ -51375,34 +51384,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
-"njD" = (
-/obj/table/wood/auto,
-/obj/item/coin{
-	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
-	name = "strange coin";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/coin{
-	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
-	name = "thick coin";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/machinery/light/lamp{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/coin{
-	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
-	name = "tarnished coin";
-	pixel_x = 5
-	},
-/obj/item/device/radio/intercom/bridge,
-/obj/blind_switch/area/west,
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/bridge/hos)
 "njL" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -52184,6 +52165,11 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"oez" = (
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/recharger/wall/sticky,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "oeB" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -52543,6 +52529,14 @@
 "osY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/east)
+"otI" = (
+/turf/simulated/floor/airless/plating{
+	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
 "oup" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -54620,6 +54614,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"qIM" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/airless,
+/area/space)
 "qJi" = (
 /obj/stool/chair{
 	dir = 4;
@@ -56274,6 +56275,15 @@
 /obj/loudspeaker,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"sDy" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless/plating{
+	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
 "sFS" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -56306,10 +56316,6 @@
 	dir = 6
 	},
 /area/station/engine/storage)
-"sHh" = (
-/obj/machinery/launcher_loader/west,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "sHo" = (
 /obj/decal/poster/wallsign/stencil/left/v,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -56745,6 +56751,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"sYp" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "sYq" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -56921,13 +56933,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
-"tho" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "thw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -59626,10 +59631,6 @@
 /obj/machinery/microwave,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"vXP" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "vYc" = (
 /obj/machinery/light,
 /obj/landmark/start{
@@ -69309,7 +69310,7 @@ aaa
 aaa
 ciE
 ciE
-ciO
+otI
 ciK
 ciU
 ciL
@@ -71121,7 +71122,7 @@ ciC
 ciH
 ciG
 ciH
-aTv
+sDy
 ciS
 ciZ
 cjb
@@ -90347,7 +90348,7 @@ aaa
 aaa
 aaa
 aaa
-aaU
+jrS
 aKa
 aKa
 aKa
@@ -90366,7 +90367,7 @@ aKa
 aKa
 aKa
 aKa
-aaU
+jrS
 aaa
 aaa
 aaa
@@ -91876,7 +91877,7 @@ aKa
 aKa
 aKa
 aKa
-aaU
+jrS
 aaa
 aaa
 aaa
@@ -92727,7 +92728,7 @@ aaa
 aaa
 aaa
 ach
-acv
+gdd
 acN
 adg
 adB
@@ -93100,7 +93101,7 @@ bsD
 bud
 drx
 bnw
-sHh
+sYp
 aci
 aaa
 aaa
@@ -116347,7 +116348,7 @@ bkx
 nbR
 nbR
 boo
-kSb
+enA
 pUl
 pUl
 gpc
@@ -122118,7 +122119,7 @@ mff
 dNQ
 uNX
 cba
-vXP
+oez
 sUs
 gYY
 mQH
@@ -122719,13 +122720,13 @@ bVQ
 lfD
 qsU
 ykc
-gNY
+kFx
 eLr
 cba
 dSr
 ltA
 mCq
-tho
+hZL
 eIo
 cba
 cba
@@ -123308,7 +123309,7 @@ bxm
 bvY
 bEO
 vTk
-njD
+fPh
 bIE
 bLs
 sJb
@@ -129470,9 +129471,9 @@ aaa
 aaa
 aaa
 aag
-aal
+kTB
 aar
-aaz
+qIM
 aaD
 aaa
 aaa

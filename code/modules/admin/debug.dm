@@ -518,16 +518,16 @@ var/global/debug_messages = 0
 		alert("Invalid mob")
 */
 
-/client/proc/cmd_debug_del_all()
+/client/proc/cmd_debug_del_all(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
+	set desc = "Delete all instances of the selected type."
 
 	// to prevent REALLY stupid deletions
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-	var/hsbitem = input("Enter atom path:","Delete",null) as null|text
+	var/hsbitem = get_one_match(typename, /atom)
 	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
 
-	hsbitem = text2path(hsbitem)
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")

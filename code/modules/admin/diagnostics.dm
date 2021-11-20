@@ -957,6 +957,27 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.alpha = p < 0.1 ? 20 : (p < 0.3 ? 50 : 100)
 			img.app.color = rgb(round(p * 255), round((1-p) * 255), 50)
 #endif
+	gangturf
+		name = "gang turf"
+		help = "Displays the name of gang that owns an area"
+		var/list/area/processed_areas
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/A = get_area(theTurf)
+			img.app.desc = "Area: [A.name]<br/>Owner: [A.gang_owners?.gang_name]"
+			img.app.color = debug_color_of(A.gang_owners?.gang_name)
+
+			if (!A.gang_owners || (A in processed_areas))
+				return
+			else
+				img.app.overlays = list(src.makeText(A.gang_owners.gang_name, align_left=TRUE))
+				processed_areas += A
+
+		OnStartRendering(client/C)
+			if (isnull(processed_areas))
+				processed_areas = list()
+			else
+				processed_areas.len = 0
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

@@ -1,5 +1,63 @@
 
+(t)fri nov 19 21
+(u)Gannets
+(p)6730
+(e)🐛|bug
+(+)Syndicate weapons vendors are now explosion immune.
+(u)Nexusuxen
+(p)6632
+(e)🐛🗺|bug, mapping
+(*)Cargo router doors should now stay open for long enough to allow for cargo to not get stuck in space.
+(t)thu nov 18 21
+(u)pali
+(+)You can now killswitch ghostdrones on the robotics console.
+(t)wed nov 17 21
+(u)pali
+(p)6707
+(e)🆕|feature
+(*)Changeling absorb ability now adds a the person to your list of transformation targets immediately, no matter whether you finish the absorption or not
+(t)tue nov 16 21
+(u)aloe
+(e)⚖|balance
+(+)The Head Surgeon no longer has access to the Medical Director's office and locker. A comprehensive NT study determined that the tranq rifle was not needed for surgery.
+(u)Sbmhawk
+(p)6484
+(e)|
+(+)Security vendors now come stocked with colorful lunchboxes of donuts, instead of boring grey boxes!
+(u)Skeletonman0
+(p)6643
+(e)|
+(*)Made Strange Reagent require an electric shock to restart people's hearts.
+(u)Danger Noodles
+(p)6618
+(e)🗺🎨|mapping, sprites
+(+)Added a new table type, it can be found on the cairngorm.
+(u)Walpvrgis
+(p)6671
+(e)🎨|sprites
+(*)Added a couple of new floor styles/sprites to the Floor and Wall Planner. Station renovating grows ever more powerful.
+(u)Walpvrgis
+(p)6672
+(e)🆕🎨|feature, sprites
+(*)Two new furniture crates are available from Cargo for 20000 credits each; a neon table and chair set, and a scrap/junk table and chair set.
+(u)Arborinus
+(p)6649
+(e)🎨|sprites
+(+)In an effort to appeal to new consumers, Discount Dan has updated the burrito extruders in their factories.
+(t)mon nov 15 21
+(u)Merlin1230
+(p)6188
+(e)📄|tgui
+(+)The rockbox UI has been updated, and now you can see the stats of ore from the menu!
+(u)Nexusuxen
+(p)6537
+(e)|
+(*)AIs may now text people directly from examine text if their PDA (or PDAs) is visible and their messenger active, except if the AI is piloting a shell.
 (t)sun nov 14 21
+(u)Mr. Moriarty
+(p)6470
+(e)🐛🗺|bug, mapping
+(+)The NSS Clarion now trusts Security Assistants enough to allow them to retrieve their own gear without supervision from a superior officer.
 (u)anonymous
 (p)6631
 (e)🗺|mapping

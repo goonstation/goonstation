@@ -78,7 +78,7 @@
 			return 1
 
 		if (href_list["dipsw"] && src.panel_open && get_dist(usr, src) < 2)
-			var/switchNum = text2num(href_list["dipsw"])
+			var/switchNum = text2num_safe(href_list["dipsw"])
 			if (switchNum < 1 || switchNum > 8)
 				return 1
 
@@ -541,8 +541,8 @@
 
 						if(istype(sought))
 							var/newval = data["val"]
-							if (isnum(text2num(newval)))
-								newval = text2num(newval)
+							if (isnum(text2num_safe(newval)))
+								newval = text2num_safe(newval)
 							sought.metadata[data["field"]] = newval
 							src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 							return
@@ -1252,7 +1252,7 @@
 						if(src.timing) //No changing the time when we're already timing!
 							src.post_status(target,"command","term_message","data","command=status&status=failure&session=[sessionid]")
 							return
-						var/thetime = text2num(data["time"])
+						var/thetime = text2num_safe(data["time"])
 						if(isnull(thetime))
 							src.post_status(target,"command","term_message","data","command=status&status=noparam&session=[sessionid]")
 							return
@@ -1502,7 +1502,7 @@
 			return
 		if(!signal || !src.net_id || signal.encryption)
 			return
-		var/theFreq = isnull(connection_id) ? null : text2num(copytext(connection_id, 2))
+		var/theFreq = isnull(connection_id) ? null : text2num_safe(copytext(connection_id, 2))
 
 		var/target = signal.data["sender"] ? signal.data["sender"] : signal.data["netid"]
 		if(!target)
@@ -1605,12 +1605,12 @@
 				if (data["_command"])
 					switch (lowertext(data["_command"]))
 						if ("add")
-							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(max(1000, min(text2num_safe(data["_freq"]), 1500)))]"
 							if (newFreq && !(newFreq in frequencies))
 								add_frequency(newFreq)
 
 						if ("remove")
-							var/newFreq = "[round(max(1000, min(text2num(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(max(1000, min(text2num_safe(data["_freq"]), 1500)))]"
 							if (newFreq && (newFreq in frequencies))
 								qdel(frequencies[newFreq])
 								frequencies -= newFreq
@@ -1625,7 +1625,7 @@
 							src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 
-				var/newFreq = round(max(1000, min(text2num(data["_freq"]), 1500)))
+				var/newFreq = round(max(1000, min(text2num_safe(data["_freq"]), 1500)))
 				data -= "_freq"
 				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
@@ -2967,7 +2967,7 @@
 				boutput(usr, "<span class='alert'>The panel is locked.</span>")
 				return
 
-			var/targetSlot = round(text2num(href_list["insert"]))
+			var/targetSlot = round(text2num_safe(href_list["insert"]))
 			if (!targetSlot || (targetSlot < 1) || (targetSlot > telecrystals.len))
 				return
 
@@ -2999,7 +2999,7 @@
 				boutput(usr, "<span class='alert'>The panel is locked.</span>")
 				return
 
-			var/targetCrystal = round(text2num(href_list["eject"]))
+			var/targetCrystal = round(text2num_safe(href_list["eject"]))
 			if (!targetCrystal || (targetCrystal < 1) || (targetCrystal > telecrystals.len))
 				return
 
@@ -3705,7 +3705,7 @@
 					message_host("command=nack")
 					return
 
-				var/newPower = text2num(packetData["value"])
+				var/newPower = text2num_safe(packetData["value"])
 				if (!isnum(newPower) || (newPower < 1) || (newPower > 100))
 					message_host("command=nack")
 					return
@@ -3729,7 +3729,7 @@
 					message_host("command=nack")
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
 					duration = round(max(1, min(duration, 255)))
 				else
@@ -3836,7 +3836,7 @@
 					message_host("command=nack")
 					return
 
-				var/standval = text2num(packetData["value"])
+				var/standval = text2num_safe(packetData["value"])
 				if (standval < 0 || standval > 1)
 					message_host("command=nack")
 					return
@@ -4083,7 +4083,7 @@
 					message_host("command=nack")
 					return
 
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (lowertext(packetData["field"]) == "voltage")
 					if (pokeval < 1 || pokeval > 100)
 						message_host("command=nack")
@@ -4169,7 +4169,7 @@
 					message_host("command=nack")
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration) && !src.active)
 					duration = round(max(1, min(duration, 255)))
 				else
@@ -4251,7 +4251,7 @@
 				message_host("command=status&data=[src.active ? "1" : "0"]")
 
 			if ("poke")
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (lowertext(packetData["field"]) == "radstrength")
 					if (pokeval < 1 || pokeval > 10)
 						message_host("command=nack")
@@ -4506,7 +4506,7 @@
 					message_host("command=nack")
 					return
 
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (pokeval < 200 || pokeval > 400)
 					message_host("command=nack")
 					return
@@ -4580,7 +4580,7 @@
 				src.update_icon()
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration) )
 					if(duration >= 200 && duration <= 400)
 						temptarget = duration
@@ -4650,7 +4650,7 @@
 					message_host("command=nack")
 					return
 
-				var/pokeval = text2num(packetData["value"])
+				var/pokeval = text2num_safe(packetData["value"])
 				if (pokeval < 1 || pokeval > 5)
 					message_host("command=nack")
 					return
@@ -4675,7 +4675,7 @@
 				else message_host("command=nack")
 
 			if ("pulse")
-				var/timer = text2num(packetData["duration"])
+				var/timer = text2num_safe(packetData["duration"])
 				if (!src.active)
 					if (isnum(duration)) src.duration = timer
 					else message_host("command=nack")
@@ -4837,7 +4837,7 @@
 			if ("poke")
 				. = lowertext(packetData["field"])
 				if (. == "outputword")
-					var/pokeval = text2num(packetData["value"])
+					var/pokeval = text2num_safe(packetData["value"])
 					if (pokeval < 0 || pokeval > 255)
 						message_host("command=nack")
 						return
@@ -4847,7 +4847,7 @@
 					message_host("command=ack")
 
 				else if (copytext(.,1,7) == "output")
-					. = round( text2num(copytext(.,7)) )
+					. = round( text2num_safe(copytext(.,7)) )
 
 					if (!isnum(.) || . < 0 || . > 7)
 						message_host("command=nack")
@@ -4893,7 +4893,7 @@
 				src.update_icon()
 
 			if ("pulse")
-				var/duration = text2num(packetData["duration"])
+				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
 					src.pulses = max(0, min(round(duration), 255))
 				else

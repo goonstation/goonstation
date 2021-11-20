@@ -103,7 +103,7 @@
 			colours -= colour
 
 			var/order = orders[ rand(1,orders.len) ]
-			wire_order += text2num(order)
+			wire_order += text2num_safe(order)
 			orders -= order
 
 	// attack by item
@@ -368,7 +368,7 @@
 
 				if("wirecut")
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
-						var/wirebit = text2num(href_list["wire"])
+						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
 							logTheThing("vehicle", usr, null, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = usr
@@ -377,7 +377,7 @@
 						boutput(usr, "<span class='notice'>You need wirecutters!</span>")
 				if("wiremend")
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
-						var/wirebit = text2num(href_list["wire"])
+						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
 							logTheThing("vehicle", usr, null, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = null
@@ -700,7 +700,7 @@
 		return
 
 	// called when bot bumps into anything
-	Bump(var/atom/obs)
+	bump(var/atom/obs)
 		if(!(wires & wire_mobavoid))		//usually just bumps, but if avoidance disabled knock over mobs
 			var/mob/M = obs
 			if(ismob(M))
@@ -802,11 +802,11 @@
 					return
 
 				if("autoret")
-					auto_return = text2num(signal.data["value"])
+					auto_return = text2num_safe(signal.data["value"])
 					return
 
 				if("autopick")
-					auto_pickup = text2num(signal.data["value"])
+					auto_pickup = text2num_safe(signal.data["value"])
 					return
 
 		// receive response from beacon
@@ -818,7 +818,7 @@
 				target = signal.source.loc
 				var/direction = signal.data["dir"]	// this will be the load/unload dir
 				if(direction)
-					loaddir = text2num(direction)
+					loaddir = text2num_safe(direction)
 				else
 					loaddir = 0
 				icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"

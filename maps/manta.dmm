@@ -3054,23 +3054,9 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"akE" = (
-/turf/space/fluid/manta,
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/listeningpost/syndicateassaultvessel)
 "akF" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
-/area/listeningpost/syndicateassaultvessel)
-"akG" = (
-/turf/space/fluid/manta,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	},
 /area/listeningpost/syndicateassaultvessel)
 "akH" = (
 /turf/simulated/shuttle/wall{
@@ -3497,13 +3483,6 @@
 /obj/access_spawn/syndie_shuttle,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
-"alP" = (
-/turf/simulated/floor/red,
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/listeningpost/syndicateassaultvessel)
 "alQ" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
@@ -3515,13 +3494,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
-"alR" = (
-/turf/simulated/floor/red,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	},
-/area/listeningpost/syndicateassaultvessel)
 "alS" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/red,
@@ -3529,13 +3501,6 @@
 "alT" = (
 /turf/simulated/floor/redblack{
 	dir = 4
-	},
-/area/listeningpost/syndicateassaultvessel)
-"alU" = (
-/turf/space/fluid/manta,
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alV" = (
@@ -3707,13 +3672,6 @@
 	},
 /turf/simulated/floor{
 	icon_state = "floorgrime-w"
-	},
-/area/listeningpost/syndicateassaultvessel)
-"amq" = (
-/turf/space/fluid/manta,
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amr" = (
@@ -9197,24 +9155,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen1"
-	},
-/area/station/hos)
-"aAx" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/stamp/hop,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/paper/mantahopnote,
-/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen1"
@@ -17737,35 +17677,6 @@
 /obj/item/storage/box/ic_cones,
 /obj/machinery/atmospherics/pipe/simple/junction/east,
 /obj/machinery/light/incandescent/cool/very,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen/freezer)
-"aYq" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
-/obj/item/instrument/bikehorn/dramatic,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
-/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
-/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
-/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
-/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYr" = (
@@ -33411,6 +33322,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"ckY" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "wall3"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "coI" = (
 /obj/machinery/arc_electroplater{
 	dir = 1
@@ -34998,6 +34916,24 @@
 	},
 /turf/space/fluid/manta,
 /area/diner/hangar)
+"fCu" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/stamp/hop,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/paper/mantahopnote,
+/obj/item/acesscomputerunfolder,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen1"
+	},
+/area/station/hos)
 "fCv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36009,6 +35945,31 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
+"hPl" = (
+/obj/item/instrument/bikehorn/dramatic,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
+/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
+/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
+/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
+/obj/item/reagent_containers/food/snacks/ingredient/seaweed,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen/freezer)
 "hRv" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -38174,6 +38135,13 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor/horprivate)
+"nxo" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "nyS" = (
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -39650,6 +39618,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"qXL" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "diagonalWall3"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "qZg" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2,
@@ -40704,6 +40679,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
+"tOA" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "tPi" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -41150,6 +41132,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"uTG" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "uYi" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -42044,6 +42033,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"xfE" = (
+/turf/simulated/shuttle/wall{
+	dir = 10;
+	icon_state = "diagonalWall3"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "xfR" = (
 /obj/item/storage/wall/clothingrack/clothes3{
 	dir = 4
@@ -79872,7 +79868,7 @@ aHJ
 acg
 aWX
 aXI
-aYq
+hPl
 aFw
 hbs
 baK
@@ -82695,9 +82691,9 @@ aaa
 aaa
 aaa
 arH
-akE
+uTG
 alO
-alU
+xfE
 arH
 aaa
 aaa
@@ -82995,13 +82991,13 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 akH
 alS
 akH
 akH
-alU
+xfE
 aaa
 aaa
 aaa
@@ -83296,7 +83292,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 asD
 alK
@@ -83321,7 +83317,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 akH
 akH
@@ -84504,7 +84500,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 asE
 alx
@@ -84806,7 +84802,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 akV
 akV
@@ -85106,7 +85102,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 akH
 akH
@@ -85402,7 +85398,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 akH
 qAx
@@ -85716,7 +85712,7 @@ avM
 akV
 alr
 alB
-alP
+tOA
 akH
 akH
 akH
@@ -86924,7 +86920,7 @@ avM
 akV
 alr
 yhC
-alR
+nxo
 akH
 akH
 akH
@@ -87214,7 +87210,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 akH
 qAx
@@ -87522,7 +87518,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 akH
 akH
@@ -87826,7 +87822,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 akV
 akV
@@ -88128,7 +88124,7 @@ aaa
 aaa
 aaa
 aaa
-akE
+uTG
 akH
 alm
 alF
@@ -89336,7 +89332,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 asF
 alN
@@ -89361,7 +89357,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 akH
 akH
@@ -89639,13 +89635,13 @@ aaa
 aaa
 aaa
 aaa
-akG
+qXL
 akH
 akH
 alS
 akH
 akH
-amq
+ckY
 aaa
 aaa
 aaa
@@ -89943,9 +89939,9 @@ aaa
 aaa
 aaa
 atA
-akG
+qXL
 alO
-amq
+ckY
 atA
 aaa
 aaa
@@ -93152,7 +93148,7 @@ apG
 aaf
 aTh
 dkw
-aAx
+fCu
 aUX
 aTh
 anG

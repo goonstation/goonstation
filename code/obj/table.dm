@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
@@ -487,6 +487,16 @@
 	auto
 		auto = 1
 
+/obj/table/scrap
+	name = "scrap table"
+	desc = "It's literally made of garbage."
+	icon = 'icons/obj/furniture/table_scrap.dmi'
+	auto_type = /obj/table/scrap/auto
+	parts_type = /obj/item/furniture_parts/table/scrap
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
@@ -514,6 +524,15 @@
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
+/obj/table/syndicate
+	name = "crimson glass table"
+	desc = "An industrial grade table with a crimson glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	auto_type = /obj/table/syndicate
+	parts_type = /obj/item/furniture_parts/table/syndicate
+
+	auto
+		auto = TRUE
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */
