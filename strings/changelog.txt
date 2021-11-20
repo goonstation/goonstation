@@ -1,4 +1,9 @@
 
+(t)sat nov 20 21
+(u)Ikea
+(p)6741
+(e)🐛|bug
+(+)Nanotrasen has noticed they were using an older recipe of plasma cutters for there ship manufacturers and has begin using the modern cheaper recipe again.
 (t)fri nov 19 21
 (u)Gannets
 (p)6730
