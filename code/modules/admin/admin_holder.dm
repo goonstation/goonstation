@@ -33,7 +33,8 @@
 	var/static/list/admin_interact_verbs
 	var/static/list/admin_interact_atom_verbs
 
-	var/datum/filter_editor/filteriffic
+	var/datum/filter_editor/filteriffic = null
+	var/datum/particle_editor/particool = null
 
 	var/list/hidden_categories = null
 
