@@ -1,4 +1,16 @@
 
+(t)fri nov 19 21
+(u)Gannets
+(p)6730
+(e)🐛|bug
+(+)Syndicate weapons vendors are now explosion immune.
+(u)Nexusuxen
+(p)6632
+(e)🐛🗺|bug, mapping
+(*)Cargo router doors should now stay open for long enough to allow for cargo to not get stuck in space.
+(t)thu nov 18 21
+(u)pali
+(+)You can now killswitch ghostdrones on the robotics console.
 (t)wed nov 17 21
 (u)pali
 (p)6707

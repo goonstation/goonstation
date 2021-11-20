@@ -35,6 +35,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -176,6 +177,7 @@
 		hud.update_pulling()
 
 	disposing()
+		STOP_TRACKING
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()

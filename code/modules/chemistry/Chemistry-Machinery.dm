@@ -412,7 +412,7 @@
 			R.trans_to(P, 100)//R.total_volume) we can't move all of the reagents if it's >100u so let's only move 100u
 			color_icon(P)
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"created a [pillname] pill containing [log_reagents(P)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create a [pillname] pill containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepillbottle"])
@@ -436,7 +436,7 @@
 			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
-			logTheThing("combat",usr,null,"created [pillcount] [pillname] pills from [log_reagents(R)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
 			var/use_bottle = src.pill_bottle
 			if (pillcount > 20) // if you're trying to make a huge pile of pills you get a bottle regardless of what the machine is set to
 				use_bottle = 1
@@ -474,7 +474,7 @@
 				R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"created a [bottlename] bottle containing [log_reagents(B)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
 			return
 
 		else if (href_list["createpatch"])
@@ -495,7 +495,7 @@
 			P.medical = med
 			P.on_reagent_change()
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"created a [patchname] patch containing [log_reagents(P)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepatchbox"])
@@ -514,7 +514,7 @@
 			A = new /obj/item/reagent_containers/ampoule(src.output_target)
 			A.name = "ampoule ([ampoulename])"
 			R.trans_to(A, 5)
-			logTheThing("combat",usr,null,"created a [ampoulename] ampoule containing [log_reagents(A)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 			updateUsrDialog()
 			return
 
@@ -531,7 +531,7 @@
 			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
-			logTheThing("combat",usr,null,"created [patchcount] [patchname] patches from [log_reagents(R)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
 			var/use_box = src.patch_box
 			if (patchcount > 20) // if you're trying to make a huge pile of patches you get a box regardless of what the machine is set to
 				use_box = 1
@@ -999,7 +999,7 @@ datum/chemicompiler_core/stationaryCore
 							R.trans_to(P, P.initial_volume)
 						P.medical = all_safe
 						P.on_reagent_change()
-						logTheThing("combat",user,null,"created a [patchname] patch containing [log_reagents(P)].")
+						logTheThing("combat",user,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 					if("Create Ampoule")
 						var/datum/reagents/R = B.reagents
 						var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -1013,7 +1013,7 @@ datum/chemicompiler_core/stationaryCore
 						A = new /obj/item/reagent_containers/ampoule(user.loc)
 						A.name = "ampoule ([ampoulename])"
 						R.trans_to(A, 5)
-						logTheThing("combat",user,null,"created a [ampoulename] ampoule containing [log_reagents(A)].")
+						logTheThing("combat",user,null,"used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 
 				working = 0
 			else if(mode_type == "Reagent Extractor")
