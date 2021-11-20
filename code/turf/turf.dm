@@ -1207,6 +1207,6 @@ proc/generate_space_color()
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "floorflush_o"
 
-	Enter(atom/movable/mover, atom/forget)
+	Entered(atom/movable/mover, atom/forget)
 		. = ..()
 		mover.set_loc(null)
