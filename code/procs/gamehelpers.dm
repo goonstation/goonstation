@@ -142,16 +142,14 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 
 
 var/obj/item/dummy/click_dummy = new
-/proc/test_click(turf/from, turf/target, target_check_all=FALSE)
+/proc/test_click(turf/from, turf/target)
 	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
 				return FALSE
-	if(target_check_all && target.density)
-		return FALSE
 	for (var/atom/A in target)
-		if ((A.flags & ON_BORDER) || target_check_all)
+		if ((A.flags & ON_BORDER))
 			if (!A.Cross(click_dummy))
 				return FALSE
 	click_dummy.set_loc(null)
@@ -199,13 +197,13 @@ var/obj/item/dummy/click_dummy = new
 					if (SOUTHWEST)
 						dir1 = SOUTH
 						dir2 = WEST
-				var/D1 = get_step(T1, dir1)
-				var/D2 = get_step(T1, dir2)
+				var/turf/D1 = get_step(T1, dir1)
+				var/turf/D2 = get_step(T1, dir2)
 
-				if (test_click(T1, D1, target_check_all=TRUE))
+				if (!D1.density && test_click(T1, D1))
 					if ((target.flags & ON_BORDER) || test_click(D1, T2))
 						return 1
-				if (test_click(T1, D2, target_check_all=TRUE))
+				if (!D2.density && test_click(T1, D2))
 					if ((target.flags & ON_BORDER) || test_click(D2, T2))
 						return 1
 			else
