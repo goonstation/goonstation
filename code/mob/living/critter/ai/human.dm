@@ -314,7 +314,7 @@
 			else
 				holder.stop_move()
 			if (dist <= 1)
-				holder.ownhuman.bump(holder.target)
+				holder.ownhuman.Bump(holder.target)
 				frustration++
 
 

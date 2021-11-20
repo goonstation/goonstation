@@ -37,6 +37,9 @@
 
 	attack_hand(mob/user)
 		if(..()) return
+		if(isghostdrone(user))
+			boutput(user, "<span class='alert'>Your processors refuse to interact with this machine!</span>")
+			return 1
 		src.add_dialog(user)
 		var/dat = {"
 			<body>
@@ -70,7 +73,9 @@
 		..()
 
 	Topic(href, href_list[])
-		if(..()) return
+		if(..()) return 1
+		if(isghostdrone(usr))
+			return 1
 
 		if(href_list["card"])
 			if(src.ID)
