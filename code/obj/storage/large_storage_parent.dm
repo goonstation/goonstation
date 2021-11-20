@@ -269,23 +269,46 @@
 		else
 			return ..()
 
-	proc/check_if_enterable(var/mob/living/L, var/skip_penalty=0)
-		//return 1 if a mob can enter, 0 if not
+	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
+		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
+		var/mob/living/L = thing
 		if(istype(L) && L.buckled)
-			return 0
-		var/turf/T = get_turf(src)
-		var/no_go = !T.Enter(L) ? T : null
+			return FALSE
+		var/turf/dest_turf = get_turf(src)
+		var/turf/orig_turf = get_turf(thing)
+		if (orig_turf == dest_turf) return TRUE
+		var/no_go
+		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
+		//First, check for directional blockers on the entering object's tile
+		if (orig_turf.checkingexit > 0)
+			for(var/obj/obstacle in orig_turf)
+				if(obstacle == thing)
+					continue
+				if(obstacle.event_handler_flags & USE_CHECKEXIT)
+					var/obj/O = thing
+					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == O.dir))
+						if(!obstacle.CheckExit(thing, dest_turf))
+							no_go = obstacle
+
+		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
+		if (isnull(no_go))
+			no_go = !dest_turf.Enter(L) ? dest_turf : null
+
+		//finally, check if there's anything else on the turf that would prevent us from entering it (e.g. dense objects)
 		if(isnull(no_go))
-			for(var/atom/A in T)
+			for(var/atom/A in dest_turf)
 				if(A != src && !A.Cross(L))
 					no_go = A
 					break
 		if(no_go)
-			L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
-			L.Bump(no_go)
-			. = 0
+			if (istype(L))
+				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			thing.Bump(no_go)
+			. = FALSE
 		else
-			. = 1
+			. = TRUE
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
@@ -378,6 +401,8 @@
 					if (thing.material && thing.material.getProperty("radioactive") > 0)
 						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
 					if (thing in user)
+						continue
+					if (!check_if_enterable(thing))
 						continue
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
