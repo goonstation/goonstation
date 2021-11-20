@@ -588,8 +588,7 @@
 	guaranteed = list(/obj/item/clipboard,
 	/obj/item/paper_bin,
 	/obj/item/pen)
-	items2spawn = list(/obj/item/pen/fancy,
-	/obj/item/pen/red,
+	items2spawn = list(/obj/item/pen/red,
 	/obj/item/pen/pencil,
 	/obj/item/pen/marker,
 	/obj/item/pen/marker/red,
