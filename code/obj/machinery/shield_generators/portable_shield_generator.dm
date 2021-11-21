@@ -243,10 +243,6 @@
 
 		else if(src.coveropen && !src.PCEL)
 			if(istype(W,/obj/item/cell/))
-				if(connected)
-					boutput(user, "You think it's a bad idea to attach a battery to the [src.name] while it's connected to a wire.")
-					return
-
 				user.drop_item()
 				W.set_loc(src)
 				src.PCEL = W
