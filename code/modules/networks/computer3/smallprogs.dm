@@ -486,26 +486,31 @@ file_save - Save file to local disk."}
 					return
 				src.ping_wait = 2
 
-				var/datum/signal/scansignal = src.peripheral_command("scan_card",null,"\ref[scanner]")
-				if (istype(scansignal))
-					var/datum/computer/file/record/udat = new
-					udat.fields["registered"] = scansignal.data["registered"]
-					udat.fields["assignment"] = scansignal.data["assignment"]
-					udat.fields["access"] = scansignal.data["access"]
-					if (!udat.fields["access"] || !udat.fields["assignment"] || !udat.fields["access"])
-						//qdel(udat)
-						udat.dispose()
-						return
-
-					var/datum/signal/termsignal = get_free_signal()
-					//termsignal.encryption = "\ref[netcard]"
-					termsignal.data["address_1"] = serv_id
-					termsignal.data["command"] = "term_file"
-					termsignal.data["data"] = "login"
-					termsignal.data_file = udat
-
-					src.peripheral_command("transmit", termsignal, "\ref[pnet_card]")
+				var/datum/computer/file/record/udat = new // what name, assignment, and access do we have??
+				if (issilicon(usr) || isAI(usr)) // silicons dont have IDs and we want them to override any inserted ID
+					udat.fields["registered"] = isAI(usr) ? "AIUSR" : "CYBORG" // should probably make all logins use the actual name of the silicon at some point
+					udat.fields["assignment"] = "AI"
+					udat.fields["access"] = "34"
+				else
+					var/datum/signal/scansignal = src.peripheral_command("scan_card",null,"\ref[scanner]")
+					if (istype(scansignal))
+						udat.fields["registered"] = scansignal.data["registered"]
+						udat.fields["assignment"] = scansignal.data["assignment"]
+						udat.fields["access"] = scansignal.data["access"]
+				if (!udat.fields["registered"] || !udat.fields["assignment"] || !udat.fields["access"])
+					udat.dispose()
+					src.print_text("Error: User credential validity error.")
 					return
+
+				var/datum/signal/termsignal = get_free_signal()
+				//termsignal.encryption = "\ref[netcard]"
+				termsignal.data["address_1"] = serv_id
+				termsignal.data["command"] = "term_file"
+				termsignal.data["data"] = "login"
+				termsignal.data_file = udat
+
+				src.peripheral_command("transmit", termsignal, "\ref[pnet_card]")
+				return
 
 
 			if("connect")
