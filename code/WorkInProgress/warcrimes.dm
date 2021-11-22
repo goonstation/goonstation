@@ -86,6 +86,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 /obj/machinery/vending/meat/prefab_grill
 	name = "Meat4cash"
 	desc = "An exotic meat vendor."
+
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost=PAY_UNTRAINED/4) // 30
