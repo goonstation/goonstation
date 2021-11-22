@@ -1,4 +1,9 @@
 
+(t)mon nov 22 21
+(u)Jan.antilles
+(p)6668
+(e)🆕🎨|feature, sprites
+(*)Resprited pies and added some new pie recipes!
 (t)sun nov 21 21
 (u)tarmunora
 (e)⚖|balance
