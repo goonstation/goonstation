@@ -121,8 +121,9 @@ var/global/datum/game_servers/game_servers = new
 		src.numeric_id = numeric_id
 		src.publ = publ
 		src.ghost_notif_target = ghost_notif_target
-		SPAWN_DBG(0)
-			get_ip_port()
+		if(config.env == "prod")
+			SPAWN_DBG(0)
+				get_ip_port()
 
 	proc/get_ip_port()
 		if(isnull(src.ip_port))
