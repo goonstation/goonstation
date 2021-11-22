@@ -323,6 +323,7 @@
 	var/tmp/ping_wait = 0 //Are we waiting for a ping reply?
 	var/auto_accept = 1 //Do we automatically accept connection attempts?
 	var/tmp/service_mode = 0
+	var/ping_filter = null
 
 	var/tmp/datum/computer/file/temp_file
 
@@ -453,6 +454,12 @@ file_save - Save file to local disk."}
 
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.encryption = "\ref[src.pnet_card]"
+
+				if (length(command_list)) // shamelessly stolen from terminal.dm
+					src.ping_filter = lowertext(command_list[1]) // actual filtering is done in the section handling ping_reply packets
+				else
+					src.ping_filter = null
+
 				src.ping_wait = 4
 
 				src.print_text("Pinging...")
@@ -735,7 +742,8 @@ file_save - Save file to local disk."}
 				var/reply_device = signal.data["device"]
 				var/reply_id = signal.data["netid"]
 
-				src.print_text("P: \[[reply_id]]-TYPE: [reply_device]")
+				if(src.ping_filter == null || findtext(lowertext(reply_device), src.ping_filter))
+					src.print_text("<b>P:</b> \[[reply_id]]-TYPE: [reply_device]")
 
 			//oh, somebody trying to connect!
 			else if(cmptext(signal.data["command"], "term_connect") && !src.serv_id)
