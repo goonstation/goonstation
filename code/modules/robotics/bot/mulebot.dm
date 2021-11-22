@@ -637,7 +637,7 @@
 	// calculates a path to the current destination
 	// given an optional turf to avoid
 	proc/calc_path(var/turf/avoid = null)
-		src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, botcard, avoid)
+		src.path = get_path_to(src, src.target, max_distance=200, id=src.botcard, skip_first=FALSE, exclude=avoid, cardinal_only=TRUE)
 
 	// sets the current destination
 	// signals all beacons matching the delivery code

@@ -268,8 +268,10 @@
 			if(checkTurfPassable(T))
 				return T
 
-/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=120)
 	var/target_turf = get_pathable_turf(the_target)
+	if(src.bot_mover?.the_target == target_turf)
+		return
 	if(!target_turf)
 		return 0
 
@@ -328,7 +330,7 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = AStar(get_turf(master), src.the_target, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, src.max_dist, master.botcard)
+		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return
