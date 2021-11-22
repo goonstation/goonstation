@@ -11,7 +11,7 @@ var decoder = decodeURIComponent || unescape;
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic;
+var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic, $lastEntry;
 var opts = {
     //General
     'messageCount': 0, //A count...of messages...
@@ -241,7 +241,7 @@ function output(message, group) {
     if (!filteredOut) {
         var bodyHeight = $('body').height();
         var messagesHeight = $messages.outerHeight();
-        var scrollPos = $('body,html').scrollTop();
+        var scrollPos = document.documentElement.scrollTop;
 
         //Should we snap the output to the bottom?
         if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
@@ -279,8 +279,6 @@ function output(message, group) {
         $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
         opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
-
-    var $lastEntry = $messages.children('.entry').last();
 
     //message is identical to the last message, do the streak counter stuff
     if (message === opts.lastMessage) {
@@ -329,7 +327,7 @@ function output(message, group) {
             }
 
             entry.innerHTML = message;
-            $messages[0].appendChild(entry);
+            $lastEntry = $($messages[0].appendChild(entry));
             opts.lastMessage = message;
         }
 
@@ -341,7 +339,7 @@ function output(message, group) {
 
     //Actually do the snap
     if (!filteredOut && atBottom) {
-        $('body,html').scrollTop($messages.outerHeight());
+        window.scrollTo(0, document.body.scrollHeight);
     }
 }
 
