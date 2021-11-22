@@ -122,8 +122,8 @@ var/global/datum/game_servers/game_servers = new
 		src.publ = publ
 		src.ghost_notif_target = ghost_notif_target
 #ifdef LIVE_SERVER
-			SPAWN_DBG(0)
-				get_ip_port()
+		SPAWN_DBG(0)
+			get_ip_port()
 #endif
 
 	proc/get_ip_port()
