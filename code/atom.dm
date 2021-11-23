@@ -795,8 +795,9 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-// use this instead of Bump
+/// override this instead of Bump
 /atom/movable/proc/bump(atom/A)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)

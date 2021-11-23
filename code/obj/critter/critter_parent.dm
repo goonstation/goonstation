@@ -414,7 +414,7 @@
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 
-	bump(M as mob|obj)
+	bump(atom/M as mob|obj)
 		if ((isliving(M)) && (!src.anchored))
 			src.set_loc(M.loc)
 			src.frustration = 0
