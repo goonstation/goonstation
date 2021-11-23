@@ -803,7 +803,7 @@ table#cooktime a#start {
 		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
