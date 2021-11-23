@@ -3,7 +3,7 @@
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
@@ -213,12 +213,6 @@
 	if(!src.density)
 
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
-
-/obj/machinery/bot/Bumped(M as mob|obj) // not sure what this is for, but it was in a bunch of the bots, so it's here just in case its vital
-	var/turf/T = get_turf(src)
-	if(ismovable(M))
-		var/atom/movable/AM = M
-		AM.set_loc(T)
 
 /obj/machinery/bot/proc/DoWhileMoving()
 	return
