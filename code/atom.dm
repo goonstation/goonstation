@@ -792,6 +792,7 @@
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 // use this instead of Bump
@@ -809,10 +810,9 @@
 			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
 				return
 	bump(A)
-	SPAWN_DBG( 0 )
-		if (A)
-			A.last_bumped = world.timeofday
-			A.Bumped(src)
+	if (!QDELETED(A))
+		A.last_bumped = world.timeofday
+		A.Bumped(src)
 	..()
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)
