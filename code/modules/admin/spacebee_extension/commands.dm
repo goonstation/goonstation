@@ -58,11 +58,11 @@
 	execute(user, ckey, notice)
 		var/datum/player/player = make_player(ckey)
 		player.cloud_fetch()
-		var/message = player.cloud_get("login_notice")
-		if (message)
+		if (player.cloud_get("login_notice"))
 			system.reply("Error, [ckey] already has a login notice set.", user)
 			return
-		if (!player.cloud_put("login_notice", notice))
+		var/message = "Message from Admin [user] at [roundLog_date]:\n\n[notice]"
+		if (!player.cloud_put("login_notice", message))
 			system.reply("Error, issue saving login notice, try again later.", user)
 			return
 		// else it succeeded
