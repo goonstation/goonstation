@@ -59,6 +59,10 @@
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
 
+/obj/item/extinguisher/on_reagent_change(add)
+	. = ..()
+	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
+
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)
 		return
