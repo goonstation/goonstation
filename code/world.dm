@@ -396,6 +396,9 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  zoldorf")
 		zoldorfsetup()
 
+		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
+		fluid_turf_setup(first_time=TRUE)
+
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
 
