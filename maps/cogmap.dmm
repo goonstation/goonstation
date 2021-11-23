@@ -26733,6 +26733,7 @@
 	},
 /obj/disposalpipe/segment/morgue,
 /obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boS" = (
@@ -33178,6 +33179,9 @@
 	operating = 1
 	},
 /obj/plasticflaps,
+/obj/machinery/door/firedoor/pyro{
+	layer = 29.1
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "bGf" = (
@@ -54257,9 +54261,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/west,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -54384,6 +54386,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "ees" = (
@@ -54418,9 +54423,7 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/east,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -54962,9 +54965,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "eSe" = (
-/obj/machinery/launcher_loader/north{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/north,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -55307,13 +55308,6 @@
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/black,
 /area/station/security/armory)
-"fAo" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/cleanable/ripped_poster,
-/turf/simulated/wall/auto/supernorn,
-/area/station/routing/sortingRoom)
 "fBp" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -55846,6 +55840,9 @@
 	mail_tag = "sortingRoom";
 	name = "sorting room router"
 	},
+/obj/machinery/door/firedoor/pyro{
+	layer = 29.1
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/sortingRoom)
 "gel" = (
@@ -55928,9 +55925,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "gjE" = (
-/obj/machinery/launcher_loader/north{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/north,
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -57456,6 +57451,10 @@
 /area/station/quartermaster/office)
 "jbH" = (
 /obj/machinery/computer/barcode,
+/obj/decal/cleanable/ripped_poster{
+	pixel_x = 1;
+	pixel_y = 32
+	},
 /turf/simulated/floor/caution/west,
 /area/station/routing/sortingRoom)
 "jcv" = (
@@ -57617,6 +57616,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "jqV" = (
@@ -59422,9 +59422,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "neb" = (
@@ -59601,12 +59599,6 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
-"nvn" = (
-/obj/machinery/launcher_loader/north{
-	door_delay = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "nvq" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -59689,18 +59681,6 @@
 	dir = 0
 	},
 /area/station/crew_quarters/info)
-"nFl" = (
-/obj/machinery/launcher_loader/south{
-	door_delay = 5
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"nFu" = (
-/obj/machinery/launcher_loader/west{
-	door_delay = 5
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "nFR" = (
 /obj/cable,
 /obj/cable{
@@ -60502,9 +60482,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "oSO" = (
@@ -60582,9 +60560,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -61866,9 +61842,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "rfA" = (
@@ -63871,9 +63845,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "upd" = (
-/obj/machinery/launcher_loader/south{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "uqe" = (
@@ -64782,9 +64754,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "wex" = (
-/obj/machinery/launcher_loader/east{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/east,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -65108,9 +65078,7 @@
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "wHg" = (
-/obj/machinery/launcher_loader/west{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/west,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -65240,9 +65208,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "wWi" = (
-/obj/machinery/launcher_loader/south{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "xau" = (
@@ -98852,7 +98818,7 @@ adC
 aag
 aan
 aan
-nFl
+aaA
 aaF
 aaF
 adC
@@ -99603,7 +99569,7 @@ adC
 adC
 cyI
 cyI
-nvn
+blw
 aax
 aaC
 aaG
@@ -119160,7 +119126,7 @@ bdK
 blr
 aYQ
 bny
-fAo
+bsp
 eax
 iAH
 ejj
@@ -121805,7 +121771,7 @@ aag
 aav
 aan
 aaE
-nFl
+aaA
 aaN
 aaN
 aap
@@ -132145,7 +132111,7 @@ aaw
 aap
 aaB
 aai
-nFu
+aau
 aap
 aaw
 aaw
