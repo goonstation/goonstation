@@ -101,7 +101,6 @@
 						text = replacetext(text, "...", selection, blank_found, blank_found+3)
 						blank_found = findtext(text,"...")
 
-			//t = capitalize(t)
 			text = uppertext(text)
 			new /obj/hologram/text(T, owner=src,msg=text)
 		else
