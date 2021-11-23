@@ -10,7 +10,6 @@
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
-	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/list/cooldowns
 
@@ -812,7 +811,6 @@
 				return
 	bump(A)
 	if (!QDELETED(A))
-		A.last_bumped = world.timeofday
 		A.Bumped(src)
 	..()
 

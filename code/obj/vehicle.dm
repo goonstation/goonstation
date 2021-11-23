@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -765,7 +765,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -1106,7 +1106,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	moving = 0
@@ -1376,7 +1376,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	..()
@@ -1783,9 +1783,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(AM == rider || !rider)
 		return
-	if(!is_badmin_bus && world.timeofday - AM.last_bumped <= 100)
+	if(!is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	if(is_badmin_bus && world.timeofday - AM.last_bumped <= 50)
+	if(is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 5 SECONDS))
 		return
 	walk(src, 0)
 	icon_state = nonmoving_state
