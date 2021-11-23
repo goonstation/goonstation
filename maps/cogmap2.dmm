@@ -39477,6 +39477,9 @@
 	pixel_y = 2
 	},
 /obj/item/pen,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "bJr" = (

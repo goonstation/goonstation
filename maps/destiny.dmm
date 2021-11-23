@@ -782,6 +782,10 @@
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
 /obj/access_spawn/head_of_personnel,
+/obj/item/bell/hop{
+	pixel_x = 16;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "acT" = (

@@ -20693,8 +20693,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/pen/marker/blue,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
 /obj/machinery/door/firedoor/pyro,
+/obj/item/bell/hop{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bbg" = (

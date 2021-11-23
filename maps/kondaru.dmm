@@ -46549,6 +46549,9 @@
 	name = "wooden table"
 	},
 /obj/machinery/cashreg,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 10
 	},

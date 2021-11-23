@@ -66296,6 +66296,9 @@
 	name = "Customs persistent notice board";
 	persistent_id = "customs"
 	},
+/obj/item/bell/hop{
+	pixel_y = 3
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "tig" = (

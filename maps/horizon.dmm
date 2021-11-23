@@ -24135,6 +24135,10 @@
 "bhA" = (
 /obj/table/reinforced/auto,
 /obj/landmark/gps_waypoint,
+/obj/item/bell/hop{
+	pixel_x = 16;
+	pixel_y = 2
+	},
 /turf/simulated/floor/blue/side,
 /area/station/bridge/hos)
 "bhC" = (

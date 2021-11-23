@@ -33491,6 +33491,9 @@
 /area/station/bridge/customs)
 "bEQ" = (
 /obj/table/reinforced/auto,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"

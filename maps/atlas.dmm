@@ -8402,6 +8402,9 @@
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
