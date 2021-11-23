@@ -609,7 +609,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
 	if (!src.emagged)
 		src.emagged = TRUE
-		src.delay = 1
+		src.delay = 1.5
 		src.weeoo()
 		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
 		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")
