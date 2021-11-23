@@ -250,7 +250,7 @@
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/delimb
 	name = "delimb"
 	help_message = "Delimbs a given ckey on a server."
-	action_name = "delib"
+	action_name = "delimb"
 
 	perform_action(user, mob/target)
 		if(!ishuman(target))
