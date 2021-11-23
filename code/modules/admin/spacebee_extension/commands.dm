@@ -49,6 +49,32 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/addnotice
+	name = "addnotice"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Adds a login notice to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="notice")
+
+	execute(user, ckey, notice)
+		var/datum/player/player = make_player(ckey)
+		player.cloud_fetch()
+		var/message = player.cloud_get("login_notice")
+		if (message)
+			system.reply("Error, [ckey] already has a login notice set.", user)
+			return
+		if (!player.cloud_put("login_notice", notice))
+			system.reply("Error, issue saving login notice, try again later.", user)
+			return
+		// else it succeeded
+		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
+		logTheThing("admin", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
+		logTheThing("diary", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
+		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
+
+		ircbot.export("admin", list(
+		"name" = user,
+		"msg" = "added an admin notice for [ckey]:\n[notice]"))
+
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
