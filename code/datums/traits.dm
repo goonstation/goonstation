@@ -796,6 +796,7 @@ obj/trait/pilot
 	id = "randomallergy"
 	points = 0
 	isPositive = 0
+	category = list("allergy")
 
 	var/list/allergic_players = list()
 
@@ -819,6 +820,7 @@ obj/trait/pilot
 	desc = "You're allergic to some medical chemical... but you can't remember which."
 	id = "medicalallergy"
 	points = 1
+	category = list("allergy")
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -1062,6 +1064,7 @@ obj/trait/pilot
 	icon_state = "placeholder"
 	points = 1
 	isPositive = 0
+	category = list("allergy")
 
 /obj/trait/allears
 	name = "All Ears (0)"
