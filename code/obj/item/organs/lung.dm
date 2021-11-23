@@ -339,6 +339,59 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
+/obj/item/organ/lung/plasmatoid
+	breaths_oxygen = FALSE
+	safe_toxins_max = INFINITY
+
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+		. = ..()
+
+		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
+		var/gas_used
+		if (Toxins_pp < safe_oxygen_min) 			// Too little plasma
+			if (prob(20))
+				if (underwater)
+					update.emotes |= "gurgle"
+				else
+					update.emotes |= "gasp"
+			if (Toxins_pp > 0)
+				var/ratio = round(safe_oxygen_min/(Toxins_pp + 0.1))
+				donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
+				gas_used = min(breath.toxins*ratio/6, breath.oxygen)
+			else
+				donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
+			update.show_oxy_indicator = TRUE
+		else 									// We're in safe limits
+			donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
+			gas_used = breath.toxins/6
+
+		breath.toxins -= gas_used
+		breath.carbon_dioxide += gas_used
+
+		if (Toxins_pp > safe_oxygen_min) // Too much toxins
+			var/ratio = breath.toxins/safe_oxygen_min
+			update.show_tox_indicator = TRUE
+
+/obj/item/organ/lung/plasmatoid/left
+	name = "right lung"
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a left lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	color = "#f0f"
+	organ_holder_name = "left_lung"
+	organ_name = "cyber_lung_L"
+	icon_state = "cyber-lung-L"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
+
+/obj/item/organ/lung/plasmatoid/right
+	name = "right lung"
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	color = "#f0f"
+	organ_name = "cyber_lung_R"
+	organ_holder_name = "right_lung"
+	icon_state = "cyber-lung-R"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
+
 
 /datum/organ/lung/status
 	var/show_oxy_indicator = FALSE
