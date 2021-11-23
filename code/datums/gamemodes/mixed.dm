@@ -272,7 +272,7 @@
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname)
 						traitor.current.real_name = newname
-						traitor.current.name = newname
+						traitor.current.UpdateName()
 
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)

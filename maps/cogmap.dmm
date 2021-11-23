@@ -15327,13 +15327,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
-"aOs" = (
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/launcher_loader/south,
-/turf/simulated/floor/plating,
-/area/station/routing/catering)
 "aOt" = (
 /obj/window/reinforced{
 	dir = 8
@@ -23679,16 +23672,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"bhP" = (
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/launcher_loader/north,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
 "bhQ" = (
 /obj/window/reinforced{
 	dir = 8
@@ -24818,14 +24801,6 @@
 /obj/machinery/cargo_router/Router5,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"bkI" = (
-/obj/machinery/launcher_loader/east,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/routing/depot)
 "bkJ" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -25252,13 +25227,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
-"blO" = (
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/launcher_loader/south,
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
 "blP" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -25386,14 +25354,6 @@
 	dir = 8;
 	id = "cargo_in"
 	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/maintenance/east)
-"bmb" = (
-/obj/machinery/launcher_loader/west,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25657,10 +25617,6 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
-"bmI" = (
-/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmJ" = (
@@ -26790,10 +26746,6 @@
 /obj/window/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"boU" = (
-/obj/machinery/launcher_loader/south,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "boV" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/junction{
@@ -27000,17 +26952,6 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor,
-/area/station/maintenance/east)
-"bpt" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "bpu" = (
@@ -27248,17 +27189,6 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor,
-/area/station/maintenance/east)
-"bpT" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/turf/simulated/floor/bot,
 /area/station/maintenance/east)
 "bpU" = (
 /turf/simulated/floor/airless/solar,
@@ -27594,16 +27524,6 @@
 /obj/grille/steel,
 /turf/space,
 /area/space)
-"bqR" = (
-/obj/machinery/launcher_loader/north,
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/routing/engine)
 "bqS" = (
 /obj/rack,
 /obj/item/device/light/flashlight{
@@ -31741,13 +31661,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/entry)
-"bBW" = (
-/obj/machinery/launcher_loader/north,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "bBX" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -36950,13 +36863,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"bOL" = (
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/machinery/launcher_loader/north,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/central)
 "bOM" = (
 /obj/machinery/conveyor{
 	name = "cargo belt - south";
@@ -37550,22 +37456,6 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/routing/airbridge)
-"bPY" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/machinery/launcher_loader/east,
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor,
 /area/station/routing/airbridge)
 "bPZ" = (
 /obj/machinery/mass_driver{
@@ -38257,22 +38147,6 @@
 	drive_range = 13;
 	id = "medsci1_in"
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/inner/central)
-"bRy" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/machinery/launcher_loader/west,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -54377,6 +54251,24 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"dTO" = (
+/obj/machinery/conveyor{
+	dir = 8;
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/maintenance/inner/central)
 "dUT" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
@@ -54517,6 +54409,24 @@
 	dir = 4
 	},
 /area/station/security/main)
+"efa" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/routing/airbridge)
 "ejj" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/hand_labeler,
@@ -54957,23 +54867,6 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"eKY" = (
-/obj/random_item_spawner/chompskey,
-/obj/storage/crate/bin{
-	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
-	name = "\improper Lost and Found bin"
-	},
-/obj/random_item_spawner/junk/some,
-/obj/random_item_spawner/furniture_parts/maybe_few,
-/obj/random_item_spawner/desk_stuff/maybe_few,
-/obj/random_item_spawner/tools/maybe_few,
-/obj/random_item_spawner/hat/maybe_few,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor,
-/area/station/maintenance/east)
 "eLo" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -55068,6 +54961,15 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"eSe" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "eTE" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -55763,6 +55665,23 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"fVo" = (
+/obj/random_item_spawner/chompskey,
+/obj/storage/crate/bin{
+	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
+	name = "\improper Lost and Found bin"
+	},
+/obj/random_item_spawner/junk/some,
+/obj/random_item_spawner/furniture_parts/maybe_few,
+/obj/random_item_spawner/desk_stuff/maybe_few,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/random_item_spawner/hat/maybe_few,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/station/maintenance/east)
 "fVA" = (
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -56008,6 +55927,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"gjE" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/engine)
 "gki" = (
 /obj/mug_rack,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -57040,6 +56971,17 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"ipx" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/item/device/radio/intercom/cargo,
+/turf/simulated/floor,
+/area/station/maintenance/east)
 "iqa" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -57056,6 +56998,10 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
+"iqe" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/bot,
+/area/station/maintenance/east)
 "iqw" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/DNDrulebook{
@@ -57658,6 +57604,21 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
+"jqI" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	name = "Mail Sorting Room"
+	},
+/obj/access_spawn/maint,
+/obj/disposalpipe/switch_junction{
+	dir = 2;
+	name = "undeliverable mail router"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/routing/sortingRoom)
 "jqV" = (
 /obj/machinery/light{
 	dir = 1;
@@ -58399,6 +58360,17 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"kJP" = (
+/obj/machinery/conveyor/east{
+	operating = 1
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/sortingRoom)
 "kOv" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -58436,10 +58408,6 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"kWT" = (
-/obj/machinery/recharge_station,
-/turf/simulated/floor/bot,
-/area/station/maintenance/east)
 "kXj" = (
 /obj/table/auto,
 /obj/item/device/light/lava_lamp{
@@ -58764,6 +58732,17 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
+"lHk" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/turf/simulated/floor/bot,
+/area/station/maintenance/east)
 "lIG" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -59439,6 +59418,15 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
+"ndE" = (
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "neb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59613,6 +59601,12 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
+"nvn" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "nvq" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -59695,6 +59689,18 @@
 	dir = 0
 	},
 /area/station/crew_quarters/info)
+"nFl" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"nFu" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "nFR" = (
 /obj/cable,
 /obj/cable{
@@ -60492,6 +60498,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"oRU" = (
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "oSO" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -60563,6 +60578,18 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/pool)
+"peL" = (
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "pfY" = (
 /obj/machinery/conveyor/west{
 	operating = 1
@@ -61835,6 +61862,15 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge)
+"reh" = (
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/catering)
 "rfA" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -61952,21 +61988,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"rpw" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	name = "Mail Sorting Room"
-	},
-/obj/access_spawn/maint,
-/obj/disposalpipe/switch_junction{
-	dir = 2;
-	name = "undeliverable mail router"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/routing/sortingRoom)
 "rpD" = (
 /obj/table/wood/auto,
 /obj/deskclutter{
@@ -63496,17 +63517,6 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"tOE" = (
-/obj/machinery/conveyor/east{
-	operating = 1
-	},
-/obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/light/small/warm/very{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating,
-/area/station/routing/sortingRoom)
 "tOJ" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -63860,6 +63870,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"upd" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "uqe" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs{
@@ -64765,6 +64781,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
+"wex" = (
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/routing/depot)
 "weH" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/xmas_lights/ephemeral,
@@ -65081,6 +65107,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
+"wHg" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/maintenance/east)
 "wIz" = (
 /obj/disposalpipe/segment,
 /obj/table/auto,
@@ -65203,6 +65239,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"wWi" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/routing/depot)
 "xau" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	req_access = null
@@ -98810,7 +98852,7 @@ adC
 aag
 aan
 aan
-aaA
+nFl
 aaF
 aaF
 adC
@@ -99561,7 +99603,7 @@ adC
 adC
 cyI
 cyI
-blw
+nvn
 aax
 aaC
 aaG
@@ -105258,7 +105300,7 @@ adC
 adC
 adC
 bUo
-bPY
+efa
 bRu
 bNi
 bNi
@@ -108881,9 +108923,9 @@ adC
 adC
 bLK
 bNk
-bOL
+ndE
 bQf
-bRy
+dTO
 whe
 bUB
 bVO
@@ -109149,7 +109191,7 @@ biR
 bjU
 biX
 blm
-blO
+oRU
 bmG
 bnn
 bvb
@@ -110956,7 +110998,7 @@ aag
 blE
 bgf
 bgW
-bhP
+peL
 biX
 bjX
 biX
@@ -111239,7 +111281,7 @@ aJy
 pCo
 aLX
 aNa
-aOs
+reh
 aPq
 aQw
 adC
@@ -111875,7 +111917,7 @@ bwg
 aaG
 bpO
 bqn
-bqR
+gjE
 brv
 bsd
 pjj
@@ -112170,7 +112212,7 @@ jUM
 bkH
 biR
 blT
-bmI
+wWi
 bno
 boh
 bwg
@@ -112469,7 +112511,7 @@ bgS
 bgS
 bkF
 bgS
-bkI
+wex
 bgS
 blp
 bgS
@@ -116095,7 +116137,7 @@ bkb
 bdN
 blr
 aYQ
-bmb
+wHg
 bdN
 bdN
 boQ
@@ -117609,7 +117651,7 @@ bmf
 bhx
 bnz
 bpm
-tOE
+kJP
 sQk
 bIH
 bso
@@ -119421,7 +119463,7 @@ blr
 aYQ
 bny
 bpp
-rpw
+jqI
 bsr
 kGT
 bso
@@ -119724,7 +119766,7 @@ bnq
 boa
 boR
 bpr
-eKY
+fVo
 bpn
 aaw
 bhH
@@ -120327,7 +120369,7 @@ blr
 bcF
 bny
 aYQ
-bpt
+ipx
 brJ
 bsK
 btq
@@ -120931,8 +120973,8 @@ blr
 aYQ
 bod
 boT
-bpT
-kWT
+lHk
+iqe
 bdN
 adC
 adC
@@ -121552,7 +121594,7 @@ adC
 adC
 bzZ
 bAX
-bBW
+eSe
 bCL
 bDQ
 bCL
@@ -121763,7 +121805,7 @@ aag
 aav
 aan
 aaE
-aaA
+nFl
 aaN
 aaN
 aap
@@ -122138,7 +122180,7 @@ bdK
 bmJ
 bns
 boi
-boU
+upd
 boP
 boW
 adC
@@ -132103,7 +132145,7 @@ aaw
 aap
 aaB
 aai
-aau
+nFu
 aap
 aaw
 aaw

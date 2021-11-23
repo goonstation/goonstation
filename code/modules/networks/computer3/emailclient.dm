@@ -200,7 +200,7 @@
 							src.print_text("New mailserver address set.")
 
 					if (2)
-						var/new_max_lines = round(text2num(command))
+						var/new_max_lines = round(text2num_safe(command))
 						if (new_max_lines < 1 || new_max_lines > 64)
 							src.print_text("Invalid value.")
 						else
@@ -238,7 +238,7 @@
 						src.print_text("Mode set to: Reply to Mail Entry.")
 
 					else
-						var/index_number = round( max( text2num(command), 0) )
+						var/index_number = round( max( text2num_safe(command), 0) )
 						if (index_number == 0)
 							src.menu = MENU_MAIN
 							src.master.temp = null

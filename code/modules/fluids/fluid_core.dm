@@ -356,7 +356,7 @@ var/mutable_appearance/fluid_ma
 						push_thing = thing
 
 					if (found)
-						if( thing.density )
+						if( thing.density || (thing.flags & FLUID_DENSE) )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))

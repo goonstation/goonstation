@@ -653,6 +653,9 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
+
+	AuxSort(by_type[/area], /proc/compareName)
+
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
@@ -837,8 +840,10 @@ var/f_color_selector_handler/F_Color_Selector
 /// world Topic. This is where external shit comes into byond and does shit.
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
-	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
-	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
+	var/cleanT = replacetext(T, regex(@"auth=[a-zA-Z0-9]*(;|&|$)"), "auth=***$1")
+	logDiary("TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
+	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1

@@ -136,11 +136,11 @@
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
 				toggle_valve()
 			if(href_list["rem_device"])

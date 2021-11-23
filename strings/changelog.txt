@@ -1,5 +1,40 @@
 
+(t)mon nov 22 21
+(u)Jan.antilles
+(p)6668
+(e)🆕🎨|feature, sprites
+(*)Resprited pies and added some new pie recipes!
+(t)sun nov 21 21
+(u)tarmunora
+(e)⚖|balance
+(+)methamphetamine acts as a purgative for brain medicines mannitol and synaptizine.
+(+)haloperidol additionally purges synaptizine
+(t)sat nov 20 21
+(u)Ikea
+(p)6741
+(e)🐛|bug
+(+)Nanotrasen has noticed they were using an older recipe of plasma cutters for there ship manufacturers and has begin using the modern cheaper recipe again.
+(t)fri nov 19 21
+(u)Gannets
+(p)6730
+(e)🐛|bug
+(+)Syndicate weapons vendors are now explosion immune.
+(u)Nexusuxen
+(p)6632
+(e)🐛🗺|bug, mapping
+(*)Cargo router doors should now stay open for long enough to allow for cargo to not get stuck in space.
+(t)thu nov 18 21
+(u)pali
+(+)You can now killswitch ghostdrones on the robotics console.
+(t)wed nov 17 21
+(u)pali
+(p)6707
+(e)🆕|feature
+(*)Changeling absorb ability now adds a the person to your list of transformation targets immediately, no matter whether you finish the absorption or not
 (t)tue nov 16 21
+(u)aloe
+(e)⚖|balance
+(+)The Head Surgeon no longer has access to the Medical Director's office and locker. A comprehensive NT study determined that the tranq rifle was not needed for surgery.
 (u)Sbmhawk
 (p)6484
 (e)|

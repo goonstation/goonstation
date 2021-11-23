@@ -1277,7 +1277,8 @@
 	name = "smol donut";
 	pixel_x = -2;
 	pixel_y = -4;
-	rand_pos = 0
+	rand_pos = 0;
+	doants = 0
 	},
 /obj/reagent_dispensers/cleanable/ants,
 /obj/item/clothing/head/crown{

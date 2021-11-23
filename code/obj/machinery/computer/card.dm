@@ -393,8 +393,8 @@
 			boutput(usr, "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in.")
 	if(href_list["access"] && href_list["allowed"])
 		if(src.authenticated)
-			var/access_type = text2num(href_list["access"])
-			var/access_allowed = text2num(href_list["allowed"])
+			var/access_type = text2num_safe(href_list["access"])
+			var/access_allowed = text2num_safe(href_list["allowed"])
 			if(access_type in get_all_accesses())
 				src.modify.access -= access_type
 				if(access_allowed == 1)
@@ -458,7 +458,7 @@
 				playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["mode"])
-		src.mode = text2num(href_list["mode"])
+		src.mode = text2num_safe(href_list["mode"])
 	if (href_list["print"])
 		if (!( src.printing ))
 			src.printing = 1
@@ -480,7 +480,7 @@
 	if (href_list["mode"])
 		src.authenticated = 0
 		src.scan_access = null
-		src.mode = text2num(href_list["mode"])
+		src.mode = text2num_safe(href_list["mode"])
 	if (href_list["colour"])
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			var/newcolour = href_list["colour"]
@@ -497,7 +497,7 @@
 			if (newcolour == "green")
 				src.modify.icon_state = "id_com"
 	if (href_list["save"])
-		var/slot = text2num(href_list["save"])
+		var/slot = text2num_safe(href_list["save"])
 		if (!src.modify.assignment)
 			src.custom_names[slot] = "Custom [slot]"
 		else
@@ -505,7 +505,7 @@
 		src.custom_access_list[slot] = src.modify.access.Copy()
 		src.custom_access_list[slot] &= allowed_access_list //prevent saving non-allowed accesses
 	if (href_list["apply"])
-		var/slot = text2num(href_list["apply"])
+		var/slot = text2num_safe(href_list["apply"])
 		src.modify.assignment = src.custom_names[slot]
 		var/list/selected_access_list = src.custom_access_list[slot]
 		src.modify.access = selected_access_list.Copy()

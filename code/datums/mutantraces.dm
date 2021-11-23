@@ -900,9 +900,9 @@
 
 			//give em zombie arms if they don't have em...
 			if (!istype(M.limbs.r_arm, /obj/item/parts/human_parts/arm/right/zombie))
-				M.limbs.replace_with("r-arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
+				M.limbs.replace_with("r_arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
 			if (!istype(M.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
-				M.limbs.replace_with("l-arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
+				M.limbs.replace_with("l_arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
 
 			SPAWN_DBG(rand(4, 30))
 				M.emote("scream")
