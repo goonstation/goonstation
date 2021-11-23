@@ -583,15 +583,33 @@ proc/get_centcom_mob_cloner_spawn_loc()
 			if(isnull(locate(/mob/living) in T))
 				return T
 
-proc/put_mob_in_centcom_cloner(mob/living/L)
-	var/area/AR = get_area(L)
+/obj/centcom_clone_wrapper
+	density = 1
+	anchored = 0
+	mouse_opacity = 0
+
+	New(atom/loc, mob/living/clone)
+		..()
+		src.vis_contents += clone
+
+	set_loc(newloc)
+		. = ..()
+		if(isnull(newloc))
+			src.vis_contents = null
+			qdel(src)
+
+proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
+	var/atom/movable/clone = indirect ? new/obj/centcom_clone_wrapper(get_centcom_mob_cloner_spawn_loc(), L) : L
+	clone.name = L.name
+	var/area/AR = get_area(clone)
 	if(!istype(AR, /area/centcom/reconstitutioncenter))
-		L.set_loc(get_centcom_mob_cloner_spawn_loc())
-	L.density = TRUE
-	L.a_intent = INTENT_HARM
-	L.dir_locked = TRUE
-	playsound(L, "sound/machines/ding.ogg", 50, 1)
-	L.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
+		clone.set_loc(get_centcom_mob_cloner_spawn_loc())
+	if(!indirect)
+		L.density = TRUE
+		L.a_intent = INTENT_HARM
+		L.dir_locked = TRUE
+	playsound(clone, "sound/machines/ding.ogg", 50, 1)
+	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0
 	if(isnull(conveyors))
