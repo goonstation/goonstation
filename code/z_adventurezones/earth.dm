@@ -587,6 +587,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 	density = 1
 	anchored = 0
 	mouse_opacity = 0
+	var/bumping = FALSE
 
 	New(atom/loc, mob/living/clone)
 		..()
@@ -597,6 +598,19 @@ proc/get_centcom_mob_cloner_spawn_loc()
 		if(isnull(newloc))
 			src.vis_contents = null
 			qdel(src)
+
+	bump(atom/O)
+		. = ..()
+		if(bumping || !ismovable(O))
+			return
+		var/atom/movable/AM = O
+		bumping = TRUE
+		var/t = get_dir(src, AM)
+		AM.animate_movement = SYNC_STEPS
+		AM.glide_size = src.glide_size
+		step(AM, t)
+		step(src, t)
+		bumping = FALSE
 
 proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 	var/atom/movable/clone = indirect ? new/obj/centcom_clone_wrapper(get_centcom_mob_cloner_spawn_loc(), L) : L
