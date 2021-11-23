@@ -1017,7 +1017,7 @@ var/list/fun_images = list()
 	var/mob/mymob = src.mob
 	var/mob/living/carbon/human/H
 	var/new_mob = FALSE
-	if(src.holder.respawn_as_self_mob && !new_self)
+	if(src.holder.respawn_as_self_mob && !src.holder.respawn_as_self_mob.disposed && !new_self)
 		H = src.holder.respawn_as_self_mob
 		H.set_loc(mymob.loc)
 		src.holder.respawn_as_self_mob = null
