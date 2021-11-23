@@ -2,7 +2,7 @@
 (t)tue nov 23 21
 (u)Flourish
 (e)🆕|feature
-(*)Customs now has a cool service bell. Ring it a bunch to annoy the HoP. Sprite by Arthur Holiday!
+(*)Customs now has a cool service bell. Ring it a bunch to annoy the HoP.<br>The chef also gets a cool dinner bell in their backpack. Sprite by Arthur Holiday!
 (t)mon nov 22 21
 (u)Flourish
 (e)⚖|balance

@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/bell)
 /obj/item/bell
 	name = "service bell"
 	icon = 'icons/obj/items/bell.dmi'
@@ -12,6 +11,8 @@ ABSTRACT_TYPE(/obj/item/bell)
 	w_class = W_CLASS_SMALL
 
 /obj/item/bell/attack_hand(mob/user as mob)
+	if ((!isturf(src.loc) && !user.is_in_hands(src)))
+		return ..()
 	if (ON_COOLDOWN(src, "service_bell", 1 SECONDS))
 		return
 	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
@@ -27,3 +28,7 @@ ABSTRACT_TYPE(/obj/item/bell)
 
 /obj/item/bell/hop
 	icon_state = "bell_hop" // get it?
+
+/obj/item/bell/kitchen
+	name = "dinner bell"
+	icon_state = "bell_kitchen"
