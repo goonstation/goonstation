@@ -181,12 +181,9 @@ var/global/harddel_count = 0
 		*/
 
 	proc/gimmick_ungcd_mob_stuff(mob/living/L)
-		L.mob_flags = 0 // one of these fixes an infinite recursion bug... I think
-		L.flags = 0
-		L.event_handler_flags = 0
 		L.lying = FALSE
 		L.update_lying()
-		put_mob_in_centcom_cloner(L)
+		put_mob_in_centcom_cloner(L, indirect=TRUE)
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG
