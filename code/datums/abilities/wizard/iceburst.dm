@@ -88,7 +88,7 @@
 /obj/icecube
 	name = "ice cube"
 	desc = "That is a surprisingly large ice cube."
-	icon = 'icons/effects/effects.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "icecube"
 	density = 1
 	layer = EFFECTS_LAYER_BASE
@@ -128,7 +128,7 @@
 
 		if (steam_on_death)
 			if (!(locate(/datum/effects/system/steam_spread) in src.loc))
-				var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+				var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 				steam.set_up(10, 0, get_turf(src))
 				steam.attach(src)
 				steam.start(clear_holder=1)

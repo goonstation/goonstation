@@ -1,5 +1,83 @@
-//rerun checks
+//bot go brr?
 //GUNS GUNS GUNS
+/datum/projectile/special/target_designator
+	sname = "foo"
+	name = "bar"
+	cost = 0
+	dissipation_rate = 0
+	projectile_speed = 12800
+	casing = /obj/item/casing/cannon
+	power = 1
+	max_range = 500
+	damage_type = D_SPECIAL
+	shot_sound = null
+	hit_mob_sound = null
+	hit_object_sound = null
+	silentshot = TRUE
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		for(var/obj/O in affected)
+			O.alpha = 0
+			O.color = "#ff0000"
+			animate(O, time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				O.color = initial(O.color)
+				qdel(O)
+			var/datum/projectile/bullet/howitzer/hack = new
+			hack.on_hit(end)
+			qdel(hack)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/bullet/rifle_3006/rakshasa
+	sname = "\improper Rakshasa"
+	name = "\improper Rakshasa round"
+	icon_state = "sniper_bullet"
+	dissipation_rate = 0
+	projectile_speed = 12800
+	casing = /obj/item/casing/cannon
+	power = 125
+	implanted = /obj/item/implant/projectile/rakshasa
+	icon_turf_hit = "bhole-large"
+	goes_through_walls = 1
+	pierces = -1
+
+	on_end(obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(P))
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		for(var/obj/O in affected)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		hit.ex_act(2)
+
+/obj/item/ammo/bullets/rifle_3006/rakshasa
+	name = "\improper Rakshasa round"
+	desc = "..."
+	ammo_type = new/datum/projectile/bullet/rifle_3006/rakshasa
+
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
@@ -17,10 +95,11 @@
 	can_dual_wield = 0
 	two_handed = 1
 	var/datum/projectile/bullet/g11/small/smallproj = new
+	default_magazine = /obj/item/ammo/bullets/g11
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/g11)
-		ammo = new/obj/item/ammo/bullets/g11
+		ammo = new default_magazine
 		. = ..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -128,23 +207,26 @@
 	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 //smart extinguisher
-/obj/item/gun/flamethrower/assembled/loaded/extinguisher
+/obj/item/gun/flamethrower/extinguisher
 	name = "smart fire extinguisher"
 	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
 	item_state = "fireextinguisher0"
+	swappable_tanks = 0
+	spread_angle = 10
+	mode = 1 //magic number bad
 
 	New()
 		. = ..()
-		src.fueltank.reagents.remove_any(400)
-		src.fueltank.reagents.add_reagent("fffoam", 400)
-		src.amt_chem = 10
+		fueltank = new/obj/item/reagent_containers/glass/beaker/extractor_tank/thick(src)
+		gastank = new/obj/item/tank/oxygen(src)
+		src.fueltank.reagents.add_reagent("ff-foam", 1000)
+		src.amt_chem = 20
 		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
-
-	attack_hand()
-		return//:shelterfrog:
+		src.current_projectile.shot_number = 3
+		src.chem_divisor = 3
 
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
 	return (M.hasStatus("burning"))
@@ -157,9 +239,10 @@
 	caliber = 0.512
 	max_ammo_capacity = 6
 	has_empty_state = 1
+	default_magazine = /obj/item/ammo/bullets/gyrojet
 
 	New()
-		ammo = new/obj/item/ammo/bullets/gyrojet
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
 
@@ -208,20 +291,22 @@
 	has_empty_state = 1
 	gildable = 1
 	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/deagle50cal
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
-		ammo = new/obj/item/ammo/bullets/deagle50cal
+		ammo = new default_magazine
 		. = ..()
 
 	//gimmick deagle that decapitates
 	decapitation
 		force = 18.0 //mmm, pistol whip
 		throwforce = 50 //HEAVY pistol
+		default_magazine = /obj/item/ammo/bullets/deagle50cal/decapitation
 		New()
 			. = ..()
 			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
-			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+			ammo = new default_magazine
 
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal

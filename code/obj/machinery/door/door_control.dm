@@ -533,7 +533,7 @@
 	desc = "A remote recieving device for a door."
 	var/id = null
 	var/pass = null
-	var/frequency = 1142
+	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
 	var/access_type = 1
 	var/access_type_secondary = null
@@ -936,9 +936,7 @@
 	New()
 		..()
 		UnsubscribeProcess()
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[frequency]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 		if(id)
 			pass = "[id]-[rand(1,50)]"
@@ -949,11 +947,6 @@
 		light.set_height(1.25)
 		light.set_color(0.9, 0.5, 0.5)
 		light.enable()
-		return
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	Click(var/location,var/control,var/params)
 		if(get_dist(usr, src) < 16)
@@ -1054,10 +1047,4 @@
 
 		signal.source = src
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		signal.transmission_method = TRANSMISSION_RADIO
-		if(frequency)
-			return frequency.post_signal(src, signal)
-		//else
-			//qdel(signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)

@@ -19,9 +19,11 @@ var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
 var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
+var/global/logLength = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
+	var/forceNonDiaryLoggingToo = FALSE
 
 	if (source)
 		source = constructName(source, type)
@@ -56,6 +58,7 @@ var/global/first_adminhelp_happened = 0
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 
 	else
 		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
@@ -66,6 +69,7 @@ var/global/first_adminhelp_happened = 0
 				logs["audit"] += ingameLog
 				diaryLogging = 1
 				diaryType = "audit"
+				forceNonDiaryLoggingToo = TRUE
 			if ("admin") logs["admin"] += ingameLog
 			if ("admin_help") logs["admin_help"] += ingameLog
 			if ("mentor_help") logs["mentor_help"] += ingameLog
@@ -83,6 +87,7 @@ var/global/first_adminhelp_happened = 0
 			if ("pathology") logs["pathology"] += ingameLog
 			if ("deleted") logs["deleted"] += ingameLog
 			if ("vehicle") logs["vehicle"] += ingameLog
+			if ("computers") logs["computers"] += ingameLog
 			if ("diary")
 				switch (diaryType)
 					//These are things we log in the out of game logs (the diary)
@@ -105,8 +110,9 @@ var/global/first_adminhelp_happened = 0
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-		if (!diaryLogging && config.allowRotatingFullLogs)
+		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 	return
 
 /proc/logDiary(text)
@@ -144,6 +150,7 @@ var/global/first_adminhelp_happened = 0
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
+	logLength++
 
 /proc/constructTarget(ref,type)
 	if (type == "diary") . = constructName(ref, type)

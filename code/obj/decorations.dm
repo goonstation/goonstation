@@ -8,7 +8,6 @@
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
 	var/float_anim = 1
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
@@ -21,7 +20,7 @@
 					if (!A.anchored)
 						animate_bumble(A, floatspeed = 8, Y1 = 3, Y2 = 0)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if (src.float_anim)
 			if (istype(A, /atom/movable) && !isobserver(A) && !istype(A, /mob/living/critter/small_animal/bee) && !istype(A, /obj/critter/domestic_bee))
 				var/atom/movable/AM = A
@@ -33,8 +32,8 @@
 		reagents.reaction(A, TOUCH, 2)
 		return ..()
 
-	HasExited(atom/movable/A, atom/newloc)
-		var/turf/T = get_turf(newloc)
+	Uncrossed(atom/movable/A)
+		var/turf/T = get_turf(A)
 		if (istype(T))
 			var/obj/poolwater/P = locate() in T
 			if (!istype(P))
@@ -50,14 +49,24 @@
 	icon_state = "tree" // changed from 0.0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
+
 	pixel_x = -20
 	density = 1
 	opacity = 0 // this causes some of the super ugly lighting issues too
 
 	elm_random
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
 		New()
 			. = ..()
 			src.dir = pick(cardinal - SOUTH)
+
+	snow_random
+		icon_state = "snowtree"
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		pixel_x = -32
+		New()
+			. = ..()
+			src.dir = pick(cardinal)
 
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
@@ -121,6 +130,16 @@
 		New()
 			. = ..()
 			src.dir = pick(alldirs)
+
+	snow
+		icon = 'icons/turf/snow.dmi'
+		icon_state = "snowstone"
+		plane = PLANE_NOSHADOW_BELOW // has snow accents to meld with turf
+
+		random
+			New()
+				. = ..()
+				src.dir = pick(alldirs)
 
 /obj/shrub
 	name = "shrub"
@@ -200,6 +219,28 @@
 
 		interact_particle(user,src)
 
+	Crossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(FALSE)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.arrestIcon?.alpha = 0
+			H.health_implant?.alpha = 0
+			H.health_mon?.alpha = 0
+
+	Uncrossed(atom/movable/AM)
+		. = ..()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.name_tag?.set_visibility(TRUE)
+		if(ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			H.arrestIcon?.alpha = 255
+			H.health_implant?.alpha = 255
+			H.health_mon?.alpha = 255
+
 	attackby(var/obj/item/W as obj, mob/user as mob)
 		user.lastattacked = src
 		hit_twitch(src)
@@ -222,6 +263,15 @@
 			. = ..()
 			src.dir = pick(alldirs)
 
+	snow
+		icon = 'icons/turf/snow.dmi'
+		icon_state = "snowshrub"
+
+		random
+			New()
+				. = ..()
+				src.dir = pick(cardinal)
+
 
 //It'll show up on multitools
 /obj/shrub/syndicateplant
@@ -230,7 +280,7 @@
 		. = ..()
 		var/turf/T = get_turf(src.loc)
 		var/obj/machinery/power/data_terminal/link = locate() in T
-		link.master = src
+		link?.master = src
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
@@ -1225,3 +1275,10 @@ obj/decoration/floralarrangement
 	anchored = 1
 	density = 1
 
+obj/decoration/pottedfern
+	name = "potted fern"
+	desc = "These look... Very plastic. Huh."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "plant_fern"
+	anchored = 1
+	density = 1

@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF)
+	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WRESTLER, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
 	var/const/werewolf_players_req = 15
@@ -11,7 +11,7 @@
 	var/has_werewolves = 1
 	var/has_blobs = 1
 
-	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF)
+	var/list/traitor_types = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_SPY_THIEF, ROLE_WEREWOLF, ROLE_ARCFIEND)
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -67,10 +67,6 @@
 		if(has_wizards && prob(10)) // powerful combat roles
 			num_wizards++
 			// if any combat roles end up in this mode they go here ok
-#ifndef RP_MODE
-		else if (prob(10) && !num_arcfiends)
-			num_arcfiends++ //starting off slow as we see how EV's play out
-#endif
 		else // more stealthy roles
 			switch(pick(src.traitor_types))
 				if(ROLE_TRAITOR) num_traitors++
@@ -80,7 +76,7 @@
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
 				if(ROLE_ARCFIEND)
-					if(!num_arcfiends) //only allow 1 for now
+					if(num_arcfiends < 2)
 						num_arcfiends++
 					else
 						num_traitors++
@@ -276,7 +272,7 @@
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname)
 						traitor.current.real_name = newname
-						traitor.current.name = newname
+						traitor.current.UpdateName()
 
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
@@ -328,9 +324,7 @@
 			#else
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
-			#ifdef SECRETS_ENABLED
 				traitor.current.make_arcfiend()
-			#endif
 
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(traitor)
@@ -341,58 +335,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/mixed/proc/get_possible_enemies(type,number)
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			switch(type)
-				if(ROLE_WIZARD)
-					if(player.client.preferences.be_wizard) candidates += player.mind
-				if(ROLE_TRAITOR)
-					if(player.client.preferences.be_traitor) candidates += player.mind
-				if(ROLE_CHANGELING)
-					if(player.client.preferences.be_changeling) candidates += player.mind
-				if(ROLE_VAMPIRE)
-					if(player.client.preferences.be_vampire) candidates += player.mind
-				if(ROLE_WRAITH)
-					if(player.client.preferences.be_wraith) candidates += player.mind
-				if(ROLE_BLOB)
-					if(player.client.preferences.be_blob) candidates += player.mind
-				if(ROLE_SPY_THIEF)
-					if(player.client.preferences.be_spy) candidates += player.mind
-				if(ROLE_WEREWOLF)
-					if(player.client.preferences.be_werewolf) candidates += player.mind
-				if(ROLE_ARCFIEND)
-					if(player.client.preferences.be_arcfiend) candidates += player.mind
-				else
-					if(player.client.preferences.be_misc) candidates += player.mind
-
-	if(candidates.len < number)
-		if(type in list(ROLE_WIZARD, ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH, ROLE_BLOB, ROLE_WEREWOLF))
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
-		else
-			logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_misc set to yes, including players who don't want to be misc enemies in the pool for [type] assignment.")
-
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-				if ((number > 1) && (candidates.len >= number))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/mixed/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

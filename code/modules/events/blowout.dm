@@ -32,7 +32,8 @@
 
 			for (var/area/A in world)
 				LAGCHECK(LAG_LOW)
-				if (A.z != Z_LEVEL_STATION)
+				var/turf/a_turf = locate(/turf) in A
+				if (a_turf?.z != Z_LEVEL_STATION)
 					continue
 				if (A.do_not_irradiate)
 					continue
@@ -93,7 +94,7 @@
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				LAGCHECK(LAG_LOW)
-				S.color = null
+				S.color = S.space_color
 	#endif
 			for (var/mob/N in mobs)
 				N.flash(3 SECONDS)

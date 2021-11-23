@@ -46,9 +46,9 @@ So, you want to contribute sprite art to Goonstation. Great! This set of guideli
 
 ## Outlines 🖋
 
-* All sprites should make use of selective outlines, "or sel-out". This means that sprites should have outlines consisting of darker shades of the colors it connects to, instead of having a single color outline. 
+* All sprites should make use of colored outlines. This means that sprites should have outlines consisting of darker shades of the colors it connects to, instead of having a single color outline. 
 
-![](https://cdn.discordapp.com/attachments/799118122899996754/872975861886877696/whiteboard.png)
+![](https://cdn.discordapp.com/attachments/659599207946256416/882768492942737438/whiteboard.png)
 
 * Outlines should also be subject to the shading on the sprite, getting darker in darker parts of the sprites and lighter when outlining lighter parts.
 

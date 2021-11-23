@@ -100,7 +100,7 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/Q in affected)
-		SPAWN_DBG(0.6 SECONDS) pool(Q)
+		SPAWN_DBG(0.6 SECONDS) qdel(Q)
 
 	for(var/mob/living/M in get_turf(target))
 		M.shock(from, wattage, "chest", 1, 1)
@@ -120,7 +120,7 @@ var/global/obj/flashDummy
 	elecflash(target,power = elecflashpower)
 	O.set_loc(null)
 
-/proc/arcFlash(var/atom/from, var/atom/target, var/wattage)
+/proc/arcFlash(var/atom/from, var/atom/target, var/wattage, stun_coeff = 1)
 	var/target_r = target
 	if (isturf(target))
 		var/obj/O = getFlashDummy()
@@ -132,10 +132,10 @@ var/global/obj/flashDummy
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 	for(var/obj/O in affected)
-		SPAWN_DBG(0.6 SECONDS) pool(O)
+		SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 	if(wattage && isliving(target)) //Probably unsafe.
-		target:shock(from, wattage, "chest", 1, 1)
+		target:shock(from, wattage, "chest", stun_coeff, 1)
 
 	var/elecflashpower = 0
 	if (wattage > 12000)
@@ -307,6 +307,7 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
+// This function is literally the exact same as sanitize(). ???
 /proc/sanitize_noencode(var/t)
 	var/index = findtext(t, "\n")
 	while(index)
@@ -325,14 +326,19 @@ proc/get_angle(atom/a, atom/b)
 		var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
 		for(var/c in bad_characters)
 			t = replacetext(t, c, "")
-	var/index = findtext(t, "<")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, "<")
-	index = findtext(t, ">")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, ">")
+
+	// html_encode(t) will convert < and > to &lt; and &gt;
+	// which will allow them to be used (safely) in messages
+	t = html_encode(t)
+
+	// var/index = findtext(t, "<")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
+	// 	index = findtext(t, "<")
+	// index = findtext(t, ">")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
+	// 	index = findtext(t, ">")
 	. = sanitize(t)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
@@ -342,14 +348,18 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/adminscrub(var/t,var/limit=MAX_MESSAGE_LEN)
 	t = html_decode(copytext(t,1,limit))
-	var/index = findtext(t, "<")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, "<")
-	index = findtext(t, ">")
-	while(index)
-		t = copytext(t, 1, index) + copytext(t, index+1)
-		index = findtext(t, ">")
+
+	// html_encode(t) will convert < and > to &lt; and &gt;
+	// which will allow them to be used (safely) in messages
+
+	// var/index = findtext(t, "<")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
+	// 	index = findtext(t, "<")
+	// index = findtext(t, ">")
+	// while(index)
+	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
+	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
@@ -734,6 +744,7 @@ proc/get_angle(atom/a, atom/b)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
+	var/last_ckey = null
 
 	if (isnull(whom))
 		return "*null*"
@@ -745,6 +756,7 @@ proc/get_angle(atom/a, atom/b)
 		the_mob = whom
 		the_client = the_mob.client
 		the_key = html_encode(the_mob.key)
+		last_ckey = the_mob.last_ckey
 	else if (istype(whom, /datum))
 		if (ismind(whom))
 			var/datum/mind/the_mind = whom
@@ -776,7 +788,10 @@ proc/get_angle(atom/a, atom/b)
 	var/text = ""
 
 	if (!the_key)
-		text += "*no client*"
+		if(last_ckey)
+			text += "*last ckey: [last_ckey]*"
+		else
+			text += "*no client*"
 	else
 		if (!isnull(the_mob))
 			if(custom_href) text += "<a href=\"[custom_href]\">"
@@ -1017,27 +1032,26 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // you couldnt have gone for "msg" or something that makes 10 times more sense?!?
 // In summary: aaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 // <3 Fire
-/proc/stars(n, pr)
-
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
+// I'm preserving the above comment block, let it be known this proc used to use the variables "n", "pr", "te", "t", "p." I have fixed them. You're welcome.
+// <3 FlamingLily
+/proc/stars(input_text, probability)
+	if(probability == null)
+		probability = 25
+	if(probability <= 0)
 		return null
 	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+		if (probability >= 100)
+			return input_text
+	var/output_text = ""
+	var/input_length = length(input_text)
+	var/cycle = 1
+	while(cycle <= input_length)
+		if ((copytext(input_text, cycle, cycle + 1) == " " || prob(probability)))
+			output_text = text("[][]", output_text, copytext(input_text, cycle, cycle + 1))
 		else
-			t = text("[]*", t)
-		p++
-	return t
+			output_text = text("[]*", output_text)
+		cycle++
+	return output_text
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -1882,7 +1896,11 @@ proc/countJob(rank)
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
 	if (!G?.mind || G.mind.dnr)
 		return 0
-	if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
+	// 	return 0
+	// If (alive) and (not in the afterlife, or in the afterlife but in hell) and (not a VR ghost)
+	// (basically, allow people who are alive in the afterlife or in VR to get respawn popups)
+	if (!isdead(G) && !(istype(get_area(G), /area/afterlife) && !istype(get_area(G), /area/afterlife/hell)) && !isVRghost(G))
 		return 0
 	if (istype(G, /mob/new_player) || G.respawning)
 		return 0
@@ -1946,7 +1964,7 @@ proc/countJob(rank)
 		return
 
 	// Find our master's mob reference (if any).
-	var/mob/mymaster = whois_ckey_to_mob_reference(M.mind.master)
+	var/mob/mymaster = ckey_to_mob(M.mind.master)
 
 	switch (slave_type)
 		if ("mslave")
@@ -2052,7 +2070,7 @@ proc/countJob(rank)
 /**
   * A universal ckey -> mob reference lookup proc, adapted from whois() (Convair880).
   */
-/proc/whois_ckey_to_mob_reference(target as text, exact=1)
+/proc/ckey_to_mob(target as text, exact=1)
 	if(isnull(target))
 		return
 	target = ckey(target)
@@ -2471,13 +2489,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 
 	return (seer.dir == dir)
 
-
-/**
-	* Linear interpolation
-	*/
-/proc/lerp(var/a, var/b, var/t)
-		return a * (1 - t) + b * t
-
 /**
 	* Returns the passed decisecond-format time in the form of a text string
 	*/
@@ -2543,7 +2554,7 @@ proc/client_has_cap_grace(var/client/C)
 
 /// Returns true if not incapicitated and unhandcuffed (by default)
 proc/can_act(var/mob/M, var/include_cuffs = 1)
-	return !((include_cuffs && M.hasStatus("handcuffed")) || is_incapacitated(M))
+	return !((include_cuffs && M.restrained()) || is_incapacitated(M))
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)

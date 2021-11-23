@@ -26,7 +26,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/removed)
 	//Filter it
-	var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 	if (filtered_out && removed)
 		filtered_out.temperature = removed.temperature
 		#define _FILTER_OUT_GAS(GAS, ...) \
@@ -178,7 +178,7 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 				holding = null
 
 		if (href_list["volume_adj"])
-			var/diff = text2num(href_list["volume_adj"])
+			var/diff = text2num_safe(href_list["volume_adj"])
 			inlet_flow = min(100, max(0, inlet_flow+diff))
 
 		else if (href_list["volume_set"])

@@ -7,7 +7,6 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 /datum/ircbot
 	var/interface = null
-	var/apikey = null
 	var/loaded = 0
 	var/loadTries = 0
 	var/list/queue = list()
@@ -25,7 +24,6 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		load()
 			if (config)
 				src.interface = config.irclog_url
-				src.apikey = config.ircbot_api
 				src.loaded = 1
 
 				if (src.queue && src.queue.len > 0)
@@ -51,6 +49,14 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			if (data) eventArgs |= data
 			return src.export("event", eventArgs)
 
+		apikey_scrub(text)
+			if(config.ircbot_api)
+				return replacetext(text, config.ircbot_api, "***")
+			else
+				return text
+
+		text_args(list/arguments)
+			return src.apikey_scrub(list2params(arguments))
 
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
@@ -60,20 +66,18 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		//Format the response to an irc request juuuuust right
 		response(args)
 			if (src.debugging)
-				src.logDebug("Response called with args: [list2params(args)]")
+				src.logDebug("Response called with args: [text_args(args)]")
 
 			args = (args == null ? list() : args)
-			//args["api_key"] = (src.apikey ? src.apikey : null)
-			//WHY WAS THAT A THING?
 
 			if (config?.server_name)
 				args["server_name"] = replacetext(config.server_name, "#", "")
 				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 
 			if (src.debugging)
-				src.logDebug("Response, final args: [list2params(args)]")
+				src.logDebug("Response, final args: [text_args(args)]")
 
-			return list2params(args)
+			return text_args(args)
 
 
 		toggleDebug(client/C)

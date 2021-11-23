@@ -99,7 +99,7 @@
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
 				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
@@ -164,11 +164,13 @@
 			if (src.scan.registered in FrozenAccounts)
 				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
 				return
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
+				if(!isnum_safe(quantity))
+					return
 				if (quantity < 1)
 					quantity = 0
 					return
@@ -182,8 +184,8 @@
 					if(shopping_cart.len + quantity > 50)
 						src.temp = {"Error. Maximum purchase limit of 50 items exceeded.<BR>
 						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-					else if(account.fields["current_money"] >= P.price * quantity)
-						account.fields["current_money"] -= P.price * quantity
+					else if(account["current_money"] >= P.price * quantity)
+						account["current_money"] -= P.price * quantity
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -206,7 +208,7 @@
 		else if (href_list["haggleb"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
 				if(N)
 					if(patience == N.haggleattempts)
@@ -245,7 +247,7 @@
 		else if (href_list["haggles"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggles"]) in goods_buy
 				if(N)
 					if(patience == N.haggleattempts)
@@ -310,7 +312,7 @@
 				return
 			var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, src.sellitem)
 			if(tradetype)
-				var/datum/data/record/account = null
+				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (!account)
 					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
@@ -322,7 +324,7 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-					account.fields["current_money"] += tradetype.price * src.sellitem.amount
+					account["current_money"] += tradetype.price * src.sellitem.amount
 					qdel (src.sellitem)
 					src.sellitem = null
 					src.add_fingerprint(usr)
@@ -342,7 +344,7 @@
 				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-					var/datum/data/record/account = null
+					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
 						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
@@ -388,10 +390,10 @@
 		dat = portrait_setup
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
-				dat+="<B>Current Funds</B>: [account.fields["current_money"]] Credits<HR>"
+				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<HR>"
 			else
 				dat+="<HR>"
 		else
@@ -518,7 +520,7 @@
 		if(!alive)
 			boutput(user, "<span class='alert'>[src] is dead!</span>")
 			return
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(src.scan.registered)
 		if(!account)
 			boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
@@ -530,7 +532,7 @@
 				if (N.comtype == O.type)
 					user.visible_message("<span class='notice'>[src] is willing to buy all of [O].</span>")
 					for(N.comtype in view(1,user))
-						account.fields["current_money"] += N.price
+						account["current_money"] += N.price
 						qdel(N.comtype)
 						sleep(0.2 SECONDS)
 						if (user.loc != staystill) break*/
@@ -549,7 +551,7 @@
 						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
-					account.fields["current_money"] += cratevalue
+					account["current_money"] += cratevalue
 				else
 					boutput(user, "<span class='notice'>[src] finds nothing of interest in [O].</span>")
 
@@ -799,14 +801,15 @@
 				src.illegal = 1
 				var/carlsell = rand(1,10)
 				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+				src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
-				if (carlsell <= 2)
+				if (carlsell <= 3)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-				if (carlsell >= 3 && carlsell <= 5)
+				if (carlsell >= 2 && carlsell <= 6)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-				if (carlsell >= 6 && carlsell <= 8)
+				if (carlsell >= 5 && carlsell <= 8)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell == 9) // if it rolls 10, then none of the three are sold
+				if (carlsell >= 9)
 					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
 					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
@@ -915,6 +918,8 @@
 				src.goods_sell += new /datum/commodity/junk/voltron(src)
 				src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
 				src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
+				src.goods_sell += new /datum/commodity/junk/speedyclone(src)
+				src.goods_sell += new /datum/commodity/junk/efficientclone(src)
 				src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 				src.goods_buy += new /datum/commodity/salvage/scrap(src)
@@ -1071,6 +1076,8 @@
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
+		src.goods_sell += new /datum/commodity/costume/purpwitch(src)
+		src.goods_sell += new /datum/commodity/costume/mintwitch(src)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)

@@ -6960,15 +6960,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "atK" = (
@@ -7153,7 +7149,7 @@
 	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -9129,7 +9125,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -14626,7 +14622,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -15125,7 +15121,7 @@
 	pixel_x = -4;
 	pixel_y = 9
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = 11;
 	pixel_y = 4
 	},
@@ -15334,7 +15330,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "aOt" = (
@@ -20695,8 +20693,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/pen/marker/blue,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
 /obj/machinery/door/firedoor/pyro,
+/obj/item/bell/hop{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bbg" = (
@@ -23682,7 +23686,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24818,7 +24824,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bkI" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25255,7 +25263,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blP" = (
@@ -25392,7 +25402,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bmb" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25659,7 +25671,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmI" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmJ" = (
@@ -26790,7 +26804,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boU" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boV" = (
@@ -27588,7 +27604,9 @@
 /turf/space,
 /area/space)
 "bqR" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -31760,7 +31778,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "bBW" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -33624,9 +33644,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "bHf" = (
@@ -36326,7 +36344,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /obj/blind_switch/area/north,
@@ -36981,7 +36999,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bOM" = (
@@ -37587,7 +37607,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -38299,7 +38321,9 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -39158,32 +39182,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/arm/left{
-	pixel_x = -12
-	},
-/obj/item/parts/robot_parts/leg/left{
-	pixel_x = -8;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = 11
-	},
-/obj/item/parts/robot_parts/leg/right{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/robot_frame{
-	pixel_y = 3
-	},
-/obj/item/parts/robot_parts/chest{
-	pixel_y = -5
-	},
-/obj/item/cable_coil/cut{
-	pixel_y = -3
-	},
-/obj/item/parts/robot_parts/head,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bTu" = (
@@ -42438,15 +42437,15 @@
 	pixel_x = -5;
 	pixel_y = -6
 	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = -12;
-	pixel_y = 6
-	},
-/obj/item/parts/robot_parts/arm/right{
+/obj/machinery/light,
+/obj/item/parts/robot_parts/arm/right/standard{
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/machinery/light,
+/obj/item/parts/robot_parts/arm/right/standard{
+	pixel_x = -12;
+	pixel_y = 6
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbP" = (
@@ -43000,29 +42999,7 @@
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cds" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/arm/left{
-	pixel_x = -12
-	},
-/obj/item/parts/robot_parts/leg/left{
-	pixel_x = -8;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/arm/right{
-	pixel_x = 11
-	},
-/obj/item/parts/robot_parts/leg/right{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/parts/robot_parts/robot_frame{
-	pixel_y = 3
-	},
-/obj/item/parts/robot_parts/chest{
-	pixel_y = -5
-	},
-/obj/item/parts/robot_parts/head,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
 "cdu" = (
@@ -52005,7 +51982,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czp" = (
@@ -54394,6 +54371,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"dRl" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dRM" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -55032,8 +55015,8 @@
 /area/station/medical/medbay)
 "eNe" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -55370,6 +55353,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
+"fud" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -55561,6 +55550,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
 /area/station/security/armory)
+"fHm" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fHI" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -55822,6 +55820,10 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"fYP" = (
+/obj/storage/crate/robotparts,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/storage)
 "fZG" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -57154,7 +57156,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -57844,59 +57846,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "jRr" = (
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/paper/book/from_file/critter_compendium{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom";
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 4;
-	pixel_y = 13
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 5;
-	pixel_y = 9
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/camera{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/device/audio_log{
-	pixel_x = -5;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/milk{
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/food/snacks/sandwich/pb{
-	pixel_y = -3
-	},
+/obj/storage/crate/adventure,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -59156,6 +59106,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"mDA" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mDB" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics";
@@ -59399,7 +59355,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "nfH" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -60119,7 +60075,7 @@
 /area/station/medical/cdc)
 "oxf" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/cable/brown{
@@ -61429,7 +61385,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/machinery/power/solar_control/west,
+/obj/machinery/computer/solar_control/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "qEB" = (
@@ -62688,7 +62644,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/market)
 "sHJ" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -65135,7 +65091,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65416,7 +65372,7 @@
 	pixel_x = 11;
 	pixel_y = 3
 	},
-/obj/item/storage/box/flashbang_kit{
+/obj/item/chem_grenade/flashbang{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -90269,7 +90225,7 @@ aap
 aar
 aar
 aar
-bXs
+fYP
 bXs
 bXs
 bXs
@@ -98613,7 +98569,7 @@ adC
 aag
 aan
 aan
-aaA
+mDA
 aaF
 aaF
 adC
@@ -99364,7 +99320,7 @@ adC
 adC
 cyI
 cyI
-blw
+fud
 aax
 aaC
 aaG
@@ -121566,7 +121522,7 @@ aag
 aav
 aan
 aaE
-aaA
+mDA
 aaN
 aaN
 aap
@@ -125228,7 +125184,7 @@ azn
 aAW
 avj
 awI
-azp
+fHm
 awI
 awI
 apY
@@ -131906,7 +131862,7 @@ aaw
 aap
 aaB
 aai
-aau
+dRl
 aap
 aaw
 aaw

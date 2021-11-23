@@ -99,7 +99,7 @@ toxic - poisons
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
-	power = 75
+	power = 25
 	cost = 65
 	dissipation_delay = 5
 	dissipation_rate = 0
@@ -275,7 +275,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/snipershot.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
-	cost = 50
+	cost = 25
 	power = 35
 	color_red = 0.4
 	color_green = 0.5

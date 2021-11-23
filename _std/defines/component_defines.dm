@@ -29,6 +29,10 @@
 #define COMPONENT_NOTRANSFER 2
 
 
+/// arginfo handling TODO: document
+#define ARG_INFO(name, type, desc, default...)\
+	list(name, type, desc, ##default)
+
 // How multiple components of the exact same type are handled in the same datum
 
 /// old component is deleted (default)
@@ -69,6 +73,8 @@
 #define COMSIG_ATOM_EXAMINE "atom_examine"
 /// when something happens that should trigger an icon update. Or something.
 #define COMSIG_UPDATE_ICON "atom_update_icon"
+/// when something triggers Crossed by entering this atom's turf (/atom/movable)
+#define COMSIG_ATOM_CROSSED "atom_crossed"
 
 // ---- atom/movable signals ----
 
@@ -78,6 +84,10 @@
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)
 #define COMSIG_MOVABLE_THROW_END "mov_throw_end"
+/// when an AM receives a packet (datum/signal/signal, receive_method, receive_param / range, connection_id)
+#define COMSIG_MOVABLE_RECEIVE_PACKET "mov_receive_packet"
+/// send this signal to send a radio packet (datum/signal/signal, receive_param / range, frequency), if frequency is null all registered frequencies are used
+#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 
 // ---- item signals ----
 
@@ -120,6 +130,10 @@
 /// Make disguiser devices turn off
 #define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
+// ---- drone beacon signal ----
+/// Triggers on destruction of a drone beacon
+#define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
@@ -146,7 +160,6 @@
 // ---- human signals ----
 
 // ---- mob signals ----
-
 /// When a client logs into a mob
 #define COMSIG_MOB_LOGIN "mob_login"
 /// When a client logs out of a mob
@@ -170,19 +183,20 @@
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+/// sent when defibbed status is added to a mob
+#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
-
 // ---- mob property signals ----
 /// When invisibility of a mob gets updated (old_value)
 #define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
 
 // ---- attack_X signals ----
 
-/// Attacking wiht an item in-hand
+/// Attacking with an item in-hand (item, attacker)
 #define COMSIG_ATTACKBY "attackby"
-/// Attacking wihtout an item in-hand
+/// Attacking without an item in-hand (attacker)
 #define COMSIG_ATTACKHAND "attackhand"
 
 

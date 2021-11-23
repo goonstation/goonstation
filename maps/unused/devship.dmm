@@ -2171,7 +2171,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "gi" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
@@ -4575,7 +4575,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
 "lz" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	icon_state = "power"
 	},
@@ -5713,7 +5713,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "oo" = (
-/obj/machinery/power/monitor/smes,
+/obj/machinery/computer/power_monitor/smes,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -12057,7 +12057,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4;
 	icon_state = "solar"
 	},
@@ -12441,7 +12441,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/machinery/power/solar_control/north{
+/obj/machinery/computer/solar_control/north{
 	dir = 4;
 	icon_state = "solar"
 	},
@@ -12916,7 +12916,7 @@
 /turf/simulated/floor/red,
 /area/station/engine/core)
 "DI" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},

@@ -12,10 +12,14 @@
 	var/see_mentor_pms = 1
 	/// to make sure that they cant escape being shamecubed by just reconnecting
 	var/shamecubed = 0
-	/// how many rounds theyve declared ready and joined, null with to differentiate between not set and no participation
+	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
 	var/rounds_participated = null
-	/// how many rounds theyve joined to at least the lobby in, null to differentiate between not set and not seen
+	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
+	var/rounds_participated_rp = null
+	/// how many rounds (total) theyve joined to at least the lobby in, null to differentiate between not set and not seen
 	var/rounds_seen = null
+	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
+	var/rounds_seen_rp = null
 	/// a list of cooldowns that has to persist between connections
 	var/list/cooldowns = null
 	/// position of client in in global.clients
@@ -65,32 +69,37 @@
 		if (!response)
 			return 0
 		src.rounds_participated = text2num(response["participated"])
+		src.rounds_participated_rp= text2num(response["participated_rp"])
 		src.rounds_seen = text2num(response["seen"])
+		src.rounds_seen_rp = text2num(response["seen_rp"])
 		return 1
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats()
-		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen))) //if the stats havent been cached yet
+		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp))) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		else
-			return list("participated" = src.rounds_participated, "seen" = src.rounds_seen)
+		return list("participated" = src.rounds_participated, "seen" = src.rounds_seen, "participated_rp" = src.rounds_participated_rp, "seen_rp" = src.rounds_seen_rp)
 
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
 		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		else
-			return src.rounds_participated
+		return src.rounds_participated
+
+	proc/get_rounds_participated_rp()
+		if (isnull(src.rounds_participated_rp)) //if the stats havent been cached yet
+			if (!src.cache_round_stats()) //if trying to set them fails
+				return null
+		return src.rounds_participated_rp
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
 		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
-		else
-			return src.rounds_seen
+		return src.rounds_seen
 
 	/// sets the join time to the current server time, in 1/10ths of a second
 	proc/log_join_time()

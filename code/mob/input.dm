@@ -11,6 +11,12 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
+	if (changed & KEY_EXAMINE)
+		if (keys & KEY_EXAMINE && HAS_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES))
+			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+		else
+			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 		if (controller)
@@ -53,7 +59,11 @@
 		if (controller)
 			return controller.process_move(src, keys)
 
-	if (isdead(src) && !isobserver(src) && !istype(src, /mob/zoldorf))
+	if (isdead(src) && isliving(src))
+		if (keys)
+			// Ghostize people who are trying to move while in a dead body.
+			boutput(src, "<span class='notice'>You leave your dead body. You can use the 'Re-enter Corpse' command to return to it.</span>")
+			src.ghostize()
 		return
 
 	if (src.next_move - world.time >= world.tick_lag / 10)
@@ -71,7 +81,7 @@
 		var/move_dir = src.move_dir
 		if (move_dir & (move_dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
-		if (src.client && src.client.flying)
+		if (src.client && src.client.flying || (ismob(src) && HAS_MOB_PROPERTY(src, PROP_NOCLIP)))
 			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks
@@ -160,7 +170,7 @@
 
 					if (!spacemove) // yes, this is dumb
 						// also fuck it.
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(src.loc)
 						I.set_dir(src.dir)
 						flick("ion_fade", I)
@@ -168,7 +178,7 @@
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
 						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+							if (I && !I.disposed) qdel(I)
 
 				if (!spacemove) // buh
 					// if the gameticker doesn't exist yet just work with no cooldown
@@ -219,14 +229,14 @@
 
 					if (src.loc != old_loc)
 						if (running)
-							src.remove_stamina(STAMINA_COST_SPRINT)
+							src.remove_stamina((src.lying ? 3 : 1) * STAMINA_COST_SPRINT)
 							if (src.pulling)
-								src.remove_stamina(STAMINA_COST_SPRINT-1)
+								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
 						var/list/pulling = list()
 						if (src.pulling)
 							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.pulling = null
+								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
 								pulling += src.pulling

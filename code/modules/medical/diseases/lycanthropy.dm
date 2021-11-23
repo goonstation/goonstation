@@ -47,7 +47,7 @@
 						H.make_jittery(1000)
 					else
 						boutput(H, "<span class='alert'>You feel a wave of lethargy wash over you!</span>")
-						H.drowsyness = max(8, H.drowsyness)
+						H.changeStatus("drowsy", 30 SECONDS)
 					src.triggered_transformation = 1
 
 					SPAWN_DBG (rand(100, 300))

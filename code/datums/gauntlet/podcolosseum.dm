@@ -2,6 +2,8 @@
 	name = "The Colosseum"
 	virtual = 1
 	ambient_light = "#bfbfbf"
+	dont_log_combat = TRUE
+
 
 	Entered(var/atom/A)
 		..()
@@ -475,7 +477,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 
 	src.debug_variables(colosseum_controller)
 
-/turf/unsimulated/floor/setpieces/gauntlet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/setpieces/gauntlet/Cross(atom/movable/mover)
 	if (istype(mover, /obj/machinery/colosseum_putt))
 		return 0
 	return ..()
@@ -484,9 +486,9 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	name = "Colosseum Hangar Floor"
 	desc = "You wonder if that little flashing white thing is a pod or a butt."
 	icon_state = "gauntfloorPod"
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/machinery/colosseum_putt))
 			return 1
 		return ..()
@@ -1138,7 +1140,7 @@ proc/get_colosseum_message(var/name, var/message)
 			boutput(usr, "<span class='alert'>You currently have no secondary weapon.</span>")
 		update_indicators(INDICATOR_SECONDARY)
 
-	Bump(atom/A)
+	bump(atom/A)
 		//walk(src, 0)
 		flying = 0
 		src.set_dir(facing)
@@ -1469,7 +1471,7 @@ proc/get_colosseum_message(var/name, var/message)
 				explosion_new(src, T, 5)
 			for(T in range(src,1))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
-				var/obj/decal/cleanable/machine_debris/C = unpool(/obj/decal/cleanable/machine_debris)
+				var/obj/decal/cleanable/machine_debris/C = new /obj/decal/cleanable/machine_debris
 				C.setup(T)
 
 			qdel(src)
@@ -1544,6 +1546,7 @@ proc/get_colosseum_message(var/name, var/message)
 				icon_state = "powerup_primary"
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1577,6 +1580,7 @@ proc/get_colosseum_message(var/name, var/message)
 			return 1
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1751,6 +1755,7 @@ proc/get_colosseum_message(var/name, var/message)
 			explosion_new(src, get_turf(src), 5)
 
 	Crossed(var/atom/A)
+		..()
 		if (disposed)
 			return
 		if (istype(A, /obj/machinery/colosseum_putt) || istype(A, /obj/critter/gunbot/drone))

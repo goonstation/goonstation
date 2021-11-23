@@ -1,17 +1,15 @@
-import { useBackend } from "../../backend";
-import {
-  AnimatedNumber,
-  Box,
-  Button,
-  Knob,
-  LabeledList,
-  Section,
-  Stack,
-  Table,
-} from "../../components";
-import { formatFrequency } from "../../format";
-import { Window } from "../../layouts";
-import { RadioData, RadioWires } from "./type";
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
+import { useBackend } from '../../backend';
+import { AnimatedNumber, Box, Button, Knob, LabeledList, Section, Stack, Table } from '../../components';
+import { formatFrequency } from '../../format';
+import { Window } from '../../layouts';
+import { RadioData, RadioWires } from './type';
 
 const MIN_FREQ = 1441;
 const MAX_FREQ = 1489;
@@ -20,7 +18,7 @@ export const Radio = (_props, context) => {
   const { data, act } = useBackend<RadioData>(context);
 
   const setFrequency = (value: number, finish: boolean) => {
-    act("set-frequency", { value, finish });
+    act('set-frequency', { value, finish });
   };
 
   return (
@@ -31,19 +29,13 @@ export const Radio = (_props, context) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Microphone">
-                  <Button.Checkbox
-                    checked={data.broadcasting}
-                    onClick={() => act("toggle-broadcasting")}
-                  >
-                    {data.broadcasting ? "Engaged" : "Disengaged"}
+                  <Button.Checkbox checked={data.broadcasting} onClick={() => act('toggle-broadcasting')}>
+                    {data.broadcasting ? 'Engaged' : 'Disengaged'}
                   </Button.Checkbox>
                 </LabeledList.Item>
                 <LabeledList.Item label="Speaker">
-                  <Button.Checkbox
-                    checked={data.listening}
-                    onClick={() => act("toggle-listening")}
-                  >
-                    {data.listening ? "Engaged" : "Disengaged"}
+                  <Button.Checkbox checked={data.listening} onClick={() => act('toggle-listening')}>
+                    {data.listening ? 'Engaged' : 'Disengaged'}
                   </Button.Checkbox>
                 </LabeledList.Item>
                 <LabeledList.Item label="Frequency">
@@ -57,18 +49,13 @@ export const Radio = (_props, context) => {
                           maxValue={MAX_FREQ}
                           stepPixelSize={2}
                           format={formatFrequency}
-                          onDrag={(_e: any, value: number) =>
-                            setFrequency(value, false)}
-                          onChange={(_e: any, value: number) =>
-                            setFrequency(value, true)}
+                          onDrag={(_e: any, value: number) => setFrequency(value, false)}
+                          onChange={(_e: any, value: number) => setFrequency(value, true)}
                         />
                       )}
                     </Stack.Item>
                     <Stack.Item>
-                      <AnimatedNumber
-                        value={data.frequency}
-                        format={formatFrequency}
-                      />
+                      <AnimatedNumber value={data.frequency} format={formatFrequency} />
                     </Stack.Item>
                   </Stack>
                 </LabeledList.Item>
@@ -84,7 +71,7 @@ export const Radio = (_props, context) => {
                     <Table.Cell header>Frequency</Table.Cell>
                     <Table.Cell header>Prefix</Table.Cell>
                   </Table.Row>
-                  {data.secureFrequencies.map(freq => (
+                  {data.secureFrequencies.map((freq) => (
                     <Table.Row key={freq.frequency}>
                       <Table.Cell>{freq.channel}</Table.Cell>
                       <Table.Cell>{freq.frequency}</Table.Cell>
@@ -102,30 +89,18 @@ export const Radio = (_props, context) => {
               <Section title="Access Panel">
                 <LabeledList>
                   <LabeledList.Item label="Green Wire" labelColor="green">
-                    <Button
-                      color="green"
-                      onClick={() =>
-                        act("toggle-wire", { wire: RadioWires.Transmit })}
-                    >
-                      {data.wires & RadioWires.Transmit ? "Cut" : "Mend"}
+                    <Button color="green" onClick={() => act('toggle-wire', { wire: RadioWires.Transmit })}>
+                      {data.wires & RadioWires.Transmit ? 'Cut' : 'Mend'}
                     </Button>
                   </LabeledList.Item>
                   <LabeledList.Item label="Red Wire" labelColor="red">
-                    <Button
-                      color="red"
-                      onClick={() =>
-                        act("toggle-wire", { wire: RadioWires.Receive })}
-                    >
-                      {data.wires & RadioWires.Receive ? "Cut" : "Mend"}
+                    <Button color="red" onClick={() => act('toggle-wire', { wire: RadioWires.Receive })}>
+                      {data.wires & RadioWires.Receive ? 'Cut' : 'Mend'}
                     </Button>
                   </LabeledList.Item>
                   <LabeledList.Item label="Blue Wire" labelColor="blue">
-                    <Button
-                      color="blue"
-                      onClick={() =>
-                        act("toggle-wire", { wire: RadioWires.Signal })}
-                    >
-                      {data.wires & RadioWires.Signal ? "Cut" : "Mend"}
+                    <Button color="blue" onClick={() => act('toggle-wire', { wire: RadioWires.Signal })}>
+                      {data.wires & RadioWires.Signal ? 'Cut' : 'Mend'}
                     </Button>
                   </LabeledList.Item>
                 </LabeledList>

@@ -9,6 +9,7 @@
 	anchored = 0
 	mats = 50
 	layer = FLOOR_EQUIP_LAYER1
+	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -22,7 +23,7 @@
 	var/image/display_panel = null
 	var/sound/sound_on = "sound/effects/shielddown.ogg"
 	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
+	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
@@ -148,7 +149,7 @@
 				playsound(src.loc, src.sound_battwarning, 50, 1)
 				src.visible_message("<span class='alert'>The <b>[src.name] emits a low battery alarm!</b></span>")
 
-		if(PCEL.charge < 0)
+		if(PCEL.charge <= 0)
 			src.visible_message("The <b>[src.name]</b> runs out of power and shuts down.")
 			src.shield_off()
 			return
@@ -334,8 +335,44 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
+	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
+			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
+			//blocks solid objects
+			var/force_value = clamp(W.force/4, 1, 10)
+			if(MS.PCEL && !MS.connected && MS.active)
+				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
+			else if(MS.connected)
+				MS.use_power(MS.power_usage + force_value )
+
+			playsound(src, src.sound_shieldhit, 20, 1)
+			return
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
+		if (!damage)
+			return
+
+		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
+			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
+			//blocks solid objects
+			var/force_value
+			if((P.proj_data.damage_type == D_PIERCING) || (P.proj_data.damage_type == D_ENERGY))
+				force_value = damage
+			else if (P.proj_data.damage_type == D_KINETIC)
+				force_value = damage / 1.7
+
+			if(MS.PCEL && !MS.connected && MS.active)
+				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
+			else if(MS.connected)
+				MS.use_power(MS.power_usage + force_value )
+
+			playsound(src, src.sound_shieldhit, 20, 1)
 
 	meteorhit(obj/O as obj)
 		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
@@ -390,10 +427,11 @@
 	desc = "A force field that can block various states of matter."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/powerlevel //Stores the power level of the deployer
+	density = 0
 
-	var/sound/sound_shieldhit = "sound/effects/shieldhit2.ogg"
+	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/update_tiles
 
@@ -413,7 +451,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF33FF" //change colour for different power levels
 			src.powerlevel = 4
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 		else if(deployer != null && deployer.power_level == 1)
 			src.name = "Atmospheric Forcefield"
 			src.desc = "A force field that prevents gas from passing through it."
@@ -421,20 +459,23 @@
 			src.color = "#3333FF" //change colour for different power levels
 			src.powerlevel = 1
 			flags = 0
+			gas_impermeable = TRUE
 		else if(deployer != null && deployer.power_level == 2)
 			src.name = "Atmospheric/Liquid Forcefield"
 			src.desc = "A force field that prevents gas and liquids from passing through it."
 			src.icon_state = "shieldw"
 			src.color = "#33FF33"
 			src.powerlevel = 2
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
+			gas_impermeable = TRUE
 		else if(deployer != null)
 			src.name = "Energy Forcefield"
 			src.desc = "A force field that prevents matter from passing through it."
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
-			flags = ALWAYS_SOLID_FLUID
+			flags = ALWAYS_SOLID_FLUID | USEDELAY | FLUID_DENSE
+			density = 1
 
 	disposing()
 		if(update_tiles)
@@ -450,40 +491,43 @@
 
 		return 1
 
-	CanPass(atom/A, turf/T)
-		var/level = 0
-		if(deployer == null)
-			level = powerlevel
-		else
-			level = deployer.power_level
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if(istype(deployer, /obj/machinery/shieldgenerator/energy_shield))
+			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
+			//blocks solid objects
+			if(ES.power_level == 3)
+				var/force_value = clamp(W.force/4, 1, 20)
+				if(ES.PCEL && !ES.connected && ES.active)
+					ES.PCEL.use(force_value * ES.range * (ES.power_level * ES.power_level))
+				else if(ES.connected)
+					ES.use_power(ES.power_usage + force_value )
 
-		switch(level)
-			if(0)
-				return 1
-			//power level one, atmos shield. Only atmos is blocked by this forcefield
-			if(1)
-				if(ismob(A)) return 1
-				if(isobj(A)) return 1
-				//Has a liquid check in IS_SOLID_TO_FLUID
+				playsound(src, src.sound_shieldhit, 20, 1)
+			return
 
-			//power level 2, liquid shield. Only liquids are blocked by this forcefield
-			if(2)
-				if(ismob(A)) return 1
-				if(isobj(A)) return 1
-				//Has a liquid check in IS_SOLID_TO_FLUID
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		damage = round((P.power/3), 1.0)
+		if (!damage)
+			return
 
-			//power level 3, solid shield. Nothing can pass by this shield
-			if(3)
-				return 0
+		if(istype(deployer, /obj/machinery/shieldgenerator/energy_shield))
+			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
+			//blocks solid objects
+			if(ES.power_level == 3)
+				var/force_value
+				if((P.proj_data.damage_type == D_PIERCING) || (P.proj_data.damage_type == D_ENERGY))
+					force_value = damage
+				else if (P.proj_data.damage_type == D_KINETIC)
+					force_value = damage / 1.7
 
-			// liquid-only shield, allows atmos etc
-			if(4)
-				return 1
+				if(ES.PCEL && !ES.connected && ES.active)
+					ES.PCEL.use(force_value * ES.range * (ES.power_level * ES.power_level))
+				else if(ES.connected)
+					ES.use_power(ES.power_usage * (0.5 * force_value) )
 
-		if(level == 1 || level == 2)
-			if(ismob(A)) return 1
-			if(isobj(A)) return 1
-		else return 0
+				playsound(src, src.sound_shieldhit, 20, 1)
 
 	meteorhit(obj/O as obj)
 		if(istype(deployer, /obj/machinery/shieldgenerator/energy_shield))
@@ -546,18 +590,23 @@
 	color = "#33FF33"
 	powerlevel = 2
 	layer = 2.5 //sits under doors if we want it to
-	flags = ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
+	gas_impermeable = TRUE
+	event_handler_flags = USE_FLUID_ENTER
 
 	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
 		if(a)
 			icon_state = "shieldw"
 			powerlevel = 2
-			invisibility = 0
+			invisibility = INVIS_NONE
+			flags |= FLUID_DENSE
+			gas_impermeable = TRUE
 		else
 			icon_state = ""
 			powerlevel = 0
-			invisibility = 100 //ehh whatever this "works"
+			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
+			flags &= ~FLUID_DENSE
+			gas_impermeable = FALSE
 
 	meteorhit(obj/O as obj)
 		return
@@ -572,7 +621,7 @@
 	name = "Permanent Vehicular Forcefield"
 	desc = "A permanent force field that prevents gas, liquids, and vehicles from passing through it."
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
 /obj/forcefield/energyshield/perma/doorlink

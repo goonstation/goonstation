@@ -774,7 +774,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			t2 = get_step(t1, NORTH)
 			t3 = get_step(t1, SOUTH)
 
-	if (!t1 || !t2 || !t3 || !t1.CanPass(src, t1) || !t2.CanPass(src, t2) || !t3.CanPass(src, t3))
+	if (!t1 || !t2 || !t3 || !t1.Cross(src) || !t2.Cross(src) || !t3.Cross(src))
 		if (t1) Bump(t1)
 		if (t2) Bump(t2)
 		if (t3) Bump(t3)
@@ -1401,6 +1401,15 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	var/succeeding = 0
 	var/did_warp = 0
 
+	New()
+		. = ..()
+		src.components -= src.engine
+		qdel(src.engine)
+		src.engine = new /obj/item/shipcomponent/engine/escape(src)
+		src.components += src.engine
+		src.engine.ship = src
+		src.engine.activate()
+
 	finish_board_pod(var/mob/boarder)
 		..()
 		if (!src.pilot) return //if they were stopped from entering by other parts of the board proc from ..()
@@ -1445,7 +1454,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 
 			playsound(src.loc, "warp", 50, 1, 0.1, 0.7)
 
-			var/obj/portal/P = unpool(/obj/portal)
+			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)

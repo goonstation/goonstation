@@ -151,11 +151,45 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 1
+	
+/obj/item/clothing/mask/moustache/Italian 
+	name = "fake Italian moustache"
+	desc = "For those who can't cut the lasagna."
+	icon_state = "moustache-i"
+	item_state = "moustache-i"
+	see_face = 1
+
 
 /obj/item/clothing/mask/gas/emergency
 	name = "emergency gas mask"
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
+
+	unremovable
+		name = "slasher's gas mask"
+		desc = "A close-fitting sealed gas mask, this one seems to be protruding some kind of dark aura."
+		cant_self_remove = 1
+		cant_other_remove = 1
+		icon_state = "slasher_mask"
+		item_state = "slasher_mask"
+		item_function_flags = IMMUNE_TO_ACID
+		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("meleeprot_head", 6)
+			setProperty("disorient_resist_eye", 100)
+			setProperty("movespeed", 0.2)
+			setProperty("exploprot", 40)
+
+	postpossession
+		name = "worn gas mask"
+		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
+		icon_state = "slasher_mask"
+		item_state = "slasher_mask"
+		see_face = 1.0
+		setupProperties()
+			..()
+			setProperty("movespeed", 0.2)
 
 /obj/item/clothing/mask/gas/swat
 	name = "SWAT mask"
@@ -192,7 +226,7 @@
 
 /obj/item/clothing/mask/monkey_translator
 	name = "vocal translator"
-	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human lanauge. Or whoever wears this."
+	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human language. Or whoever wears this."
 	icon = 'icons/obj/items/items.dmi'
 	wear_image_icon = 'icons/mob/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'

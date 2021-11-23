@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		src.UpdateOverlays(null, "rider")
 		src.underlays = null
 
-/obj/vehicle/segway/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/segway/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -714,7 +714,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			var/obj/decal/D = new/obj/decal(get_turf(src))
 			D.name = null
 			D.icon = null
-			D.invisibility = 101
+			D.invisibility = INVIS_ALWAYS
 			D.create_reagents(5)
 			src.reagents.trans_to(D, 5)
 
@@ -747,7 +747,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle/floorbuffer/is_open_container()
 	return 2
 
-/obj/vehicle/floorbuffer/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/floorbuffer/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -1088,7 +1088,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/clowncar/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -1293,7 +1293,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	pixel_x = 0
 	pixel_y = 0
 
-/obj/vehicle/clowncar/cluwne/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/clowncar/cluwne/bump(atom/AM as mob|obj|turf)
 	..(AM)
 	icon_state = "cluwnecar"
 	pixel_x = 0
@@ -1341,7 +1341,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 /obj/vehicle/cat
 	name = "Rideable Cat"
 	desc = "He looks happy... how odd!"
-	icon_state = "segwaycat-norider"
+	icon_state = "segwaycat"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
@@ -1358,7 +1358,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	desc = "Arf arf arf!"
 	icon_state = "odie"
 
-/obj/vehicle/cat/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/cat/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)
@@ -1423,6 +1423,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/mob/living/rider = src.rider
 	..()
 	rider.pixel_y = 0
+	src.icon_state = initial(src.icon_state)
 	walk(src, 0)
 	if(crashed)
 		if(crashed == 2)
@@ -1477,6 +1478,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	rider.pixel_x = 0
 	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
+	src.icon_state = "[src.icon_state]1"
 
 	for (var/mob/C in AIviewers(src))
 		if(C == user)
@@ -1642,7 +1644,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 
 // the adminbus has a pressurized cabin!
 /obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-	var/datum/gas_mixture/GM = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	var/oxygen = MOLES_O2STANDARD
 	var/nitrogen = MOLES_N2STANDARD
@@ -1763,7 +1765,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		C.show_message(msg, 3)
 	return
 
-/obj/vehicle/adminbus/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/adminbus/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 	if(AM == rider || !rider)

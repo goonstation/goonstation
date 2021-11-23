@@ -28,22 +28,19 @@
 		<tbody>
 	"}
 
-	var/V = global.vars[S]
-	if (V == logs || V == logs["audit"])
-		src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
-		boutput(usr, "<span class='alert'>Yeah, no.</span>")
-		return
-	if (V)
+	try
+		var/V = global.vars[S]
+		if (V == logs || V == logs["audit"])
+			src.audit(AUDIT_ACCESS_DENIED, "tried to access the logs datum for modification.")
+			boutput(usr, "<span class='alert'>Yeah, no.</span>")
+			return
 		body += debug_variable(S, V, "GLOB", 0)
-	else
-		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
-		return
-	body += "</tbody></table>"
+		body += "</tbody></table>"
 
-	var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
+		var/title = "[S][src.holder.level >= LEVEL_ADMIN ? " (\ref[V])" : ""]"
 
-	//stole this from view_variables below
-	var/html = {"
+		//stole this from view_variables below
+		var/html = {"
 <html>
 <head>
 	<title>[title]</title>
@@ -61,7 +58,10 @@
 </html>
 "}
 
-	usr.Browse(html, "window=variables\ref[V];size=600x400")
+		usr.Browse(html, "window=variables\ref[V];size=600x400")
+	catch
+		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
+		return
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -191,6 +191,7 @@
 				html += " &middot; <a href='byond://?src=\ref[src];PlayerOptions=\ref[D]'>Player Options</a>"
 	if (istype(D, /datum))
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];HardDelete=\ref[D]'>Hard Delete</a>"
 	if (A || istype(D, /image))
@@ -385,7 +386,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
@@ -499,6 +500,13 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to add a component to something all rude-like.")
 		return
+	if (href_list["RemoveComponent"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			debugRemoveComponent(locate(href_list["RemoveComponent"]))
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to remove a component from something all rude-like.")
+		return
 	if (href_list["Delete"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -531,7 +539,17 @@
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["ReplaceExplosive"])
-			O.replace_with_explosive()
+			if(alert("Bad old explosive or fancy new explosive?", "Explosive Object", "Old", "New") == "Old")
+				O.replace_with_explosive()
+			else
+				var/explosion_size = input(src, "Enter the size of the explosion.", "Explosion size", 5) as null|num
+				var/gib = alert("Gib the person?", "Gib?", "Yes", "No") == "Yes"
+				var/limbs_to_remove = input(src, "Enter the number of limbs to remove.", "Limbs to remove", 0) as null|num
+				var/delete_object = alert("Delete the object?", "Delete?", "Yes", "No") == "Yes"
+				var/turf_safe_explosion = FALSE
+				if(explosion_size > 0)
+					turf_safe_explosion = alert("Should the explosion be safe for turfs?", "Safe?", "Yes", "No") == "Yes"
+				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
@@ -658,10 +676,15 @@
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
+	var/list/pixel_movement_breaking_vars = list("step_x", "step_y", "step_size", "bound_x", "bound_y", "bound_height", "bound_width", "bounds")
 
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
+
+	if(pixel_movement_breaking_vars.Find(variable))
+		if (tgui_alert(usr, "Modifying this variable might break pixel movement. Don't edit this unless you know what you're doing. Continue?", "Confirmation", list("Yes", "No")) == "No")
+			return
 
 	var/default
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
@@ -754,8 +777,15 @@
 		if(dir)
 			boutput(usr, "If a direction, direction is: [dir]")
 
-	var/class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",
-		"num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	var/list/classes = list("text", "num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
+	if(variable=="filters" && !istype(D, /image))
+		default = "filter editor"
+		classes += default
+	else if(variable=="particles")
+		default = "particle editor"
+		classes += default
+	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
+
 
 	if(!class)
 		return
@@ -910,7 +940,7 @@
 			boutput(usr, "<span class='hint'>Type part of the path of the type.</span>")
 			var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
 			if (typename)
-				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
@@ -1078,7 +1108,7 @@
 				var/basetype = /obj
 				if (src.holder.rank in list("Host", "Coder", "Administrator"))
 					basetype = /datum
-				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE)
+				var/match = get_one_match(typename, basetype, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 				if (match)
 					if (set_global)
 						for (var/datum/x in world)
@@ -1093,6 +1123,14 @@
 							D.vars[variable] = new match(D)
 			else
 				return
+		if ("filter editor")
+			if(src.holder)
+				src.holder.filteriffic = new /datum/filter_editor(D)
+				src.holder.filteriffic.ui_interact(mob)
+		if ("particle editor")
+			if(src.holder)
+				src.holder.particool = new /datum/particle_editor(D)
+				src.holder.particool.ui_interact(mob)
 
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")

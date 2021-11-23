@@ -174,10 +174,9 @@
 			if ("stun")
 				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
 				logTheThing("combat", user, victim, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
+				playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
+				flick(flick_baton_active, src)
 				JOB_XP(victim, "Clown", 3)
-				else
-					flick(flick_baton_active, src)
-					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 50, 1, -1)
 
 			else
 				logTheThing("debug", user, null, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -190,16 +189,13 @@
 		else
 			dude_to_stun = victim
 
-		// Stun the target mob.
-		if (dude_to_stun.bioHolder && dude_to_stun.bioHolder.HasEffect("resist_electric"))
-			boutput(dude_to_stun, "<span class='notice'>Thankfully, electricity doesn't do much to you in your current state.</span>")
-		else
-			dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 
-			if (isliving(dude_to_stun))
-				var/mob/living/L = dude_to_stun
-				L.Virus_ShockCure(33)
-				L.shock_cyberheart(33)
+		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+
+		if (isliving(dude_to_stun))
+			var/mob/living/L = dude_to_stun
+			L.Virus_ShockCure(33)
+			L.shock_cyberheart(33)
 
 		src.process_charges(-1, user)
 

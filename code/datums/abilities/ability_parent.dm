@@ -65,6 +65,9 @@
 			qdel(abilitystat)
 			abilitystat = null
 
+		for(var/ability in src.abilities)
+			qdel(ability)
+		src.abilities = null
 		..()
 
 	proc/onLife(var/mult = 1) //failsafe for UI not doing its update correctly elsewhere
@@ -856,20 +859,22 @@
 		if (object && object.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)
-			object.owner = null
 			qdel(object)
 			src.object = null
+			src.holder = null
 		..()
 
 	proc
 		handleCast(atom/target, params)
+			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
 			if (result && result != 999)
 				last_cast = 0 // reset cooldown
 			else if (result != 999)
 				doCooldown()
 			afterCast()
-			holder.updateButtons()
+			if(!QDELETED(localholder))
+				localholder.updateButtons()
 
 		cast(atom/target)
 			if(interrupt_action_bars) actions.interrupt(holder.owner, INTERRUPT_ACT)
@@ -928,10 +933,12 @@
 			if (!castcheck())
 				src.holder.locked = 0
 				return 998
+			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
-			src.holder.locked = 0
-			if (!.)
-				holder.deductPoints(pointCost)
+			if(!QDELETED(localholder))
+				localholder.locked = 0
+				if (!.)
+					localholder.deductPoints(pointCost)
 
 		updateObject()
 			return

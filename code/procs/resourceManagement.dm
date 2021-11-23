@@ -8,7 +8,7 @@
 /proc/resource(file, group)
 	if (!file) return
 	if (cdn)
-		. = "[cdn]/[file]?serverrev=[vcs_revision]"
+		. = "[cdn]/[file]?v=[vcs_revision]"
 	else
 		if (findtext(file, "{{resource")) //Got here via the dumb regex proc (local only)
 			file = group
@@ -151,6 +151,7 @@
 
 //#LongProcNames #yolo
 /client/proc/loadResourcesFromList(list/rscList)
+	var/i = 1
 	for (var/r in rscList) //r is a file path
 		var/fileRef = file(r)
 		var/parsedFile = parseAssetLinks(fileRef, r)
@@ -164,8 +165,8 @@
 				world.log << "RESOURCE ERROR: Failed to convert text in '[r]' to a temporary file"
 		else //file is binary just throw it at the client as is
 			src << browse(fileRef, "file=[r];display=0")
-
-	return 1
+		if(i++ % 100 == 0)
+			sleep(1)
 
 
 //A thing for coders locally testing to use (as they might be offline = can't reach the CDN)

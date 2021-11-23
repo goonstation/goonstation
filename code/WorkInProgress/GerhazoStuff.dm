@@ -666,26 +666,24 @@
 /datum/mutation_orb_mutdata
 	// AddEffect arguments
 	var/id
-	var/variant
 	var/time  // how long they have the mutation, 0 means forever
 	var/stabilized  // doesn't affect genetic stability
 	var/magical  // can't be removed and costs no genetic stability
 
 	// additional settings
-	var/powerboosted = 0
+	var/power = 1
 	var/energyboosted = 0
 	var/synchronized = 0
 	var/reinforced = 0
 	var/hardoverride = 0 // AddEffect won't add a power if the subject already has it. If this is 1, it will remove and overwrite any pre-existing mutations of the same type.
 
-	New(id, variant = 0, time = 0, stabilized = 0, magical = 0, powerboosted = 0, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
+	New(id, time = 0, stabilized = 0, magical = 0, power = 1, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
 		. = ..()
 		src.id = id
-		src.variant = variant
 		src.time = time
 		src.stabilized = stabilized
 		src.magical = magical
-		src.powerboosted = powerboosted
+		src.power = power
 		src.energyboosted = energyboosted
 		src.synchronized = synchronized
 		src.reinforced = reinforced
@@ -720,14 +718,14 @@
 				if (mut.hardoverride) // if overwriting, remove pre-existing mutation if one exists
 					user.bioHolder.RemoveEffect(mut.id)
 
-				var/datum/bioEffect/added_effect = user.bioHolder.AddEffect(mut.id, mut.variant, mut.time, mut.stabilized, mut.magical)
+				var/datum/bioEffect/added_effect = user.bioHolder.AddEffect(mut.id, mut.power, mut.time, mut.stabilized, mut.magical)
 
 				if (!mut.magical && mut.reinforced)
 					added_effect.curable_by_mutadone = mut.reinforced
 
+
 				if (istype(added_effect, /datum/bioEffect/power/)) // apply chromosomes if provided and the mutation is a power
 					var/datum/bioEffect/power/added_power = added_effect
-					added_power.power = mut.powerboosted
 					added_power.safety = mut.synchronized
 					if (mut.energyboosted)
 						if (added_effect.cooldown != 0)

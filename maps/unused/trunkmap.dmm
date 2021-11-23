@@ -746,7 +746,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "acf" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "engout-solar";
 	name = "Outpost solar control"
 	},
@@ -2107,7 +2107,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "afG" = (
@@ -14148,7 +14148,7 @@
 /turf/simulated/floor,
 /area/station/engine/storage)
 "aUg" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -28548,7 +28548,7 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "fpz" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control"
 	},
@@ -33197,7 +33197,7 @@
 /turf/simulated/floor,
 /area/station/teleporter)
 "sRs" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control"
 	},

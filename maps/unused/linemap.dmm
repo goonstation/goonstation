@@ -953,7 +953,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "acj" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/machinery/camera{
@@ -3851,7 +3851,7 @@
 /area/station/hangar/main)
 "aiG" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -4051,7 +4051,7 @@
 /turf/space,
 /area/space)
 "aje" = (
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -4190,7 +4190,7 @@
 	icon_state = "camera";
 	name = "autoname - SS13"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -4463,7 +4463,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "akc" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -7186,7 +7186,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aqe" = (
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	tag = "icon-solar (WEST)";
 	icon_state = "solar";
 	dir = 8
@@ -17534,7 +17534,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -32457,7 +32457,7 @@
 	},
 /area/station/solar/east)
 "bxj" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /obj/cable,
@@ -34472,7 +34472,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bBm" = (

@@ -235,7 +235,7 @@
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
 							delme.fingerprintslast = src.fingerprintslast
 
-							invisibility = 100
+							invisibility = INVIS_ALWAYS_ISH
 							set_density(0)
 							sleep(15 SECONDS)
 							qdel(delme)

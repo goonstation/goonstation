@@ -195,20 +195,20 @@
 	generated_moolah += undistributed_earnings
 	undistributed_earnings = 0
 
-	var/list/accounts = list()
-	for(var/datum/data/record/t in data_core.bank)
-		if(t.fields["job"] == "Chief Engineer")
-			accounts += t
-			accounts += t //fuck it
-		else if(t.fields["job"] == "Engineer")
-			accounts += t
+	// the double chief engineer seems to be intentional however silly it may seem
+	var/list/accounts = \
+		data_core.bank.find_records("job", "Chief Engineer") + \
+		data_core.bank.find_records("job", "Chief Engineer") + \
+		data_core.bank.find_records("job", "Engineer")
 
-	if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
+	if(!length(accounts)) // no engineering staff but someone still started the PTL
+		wagesystem.station_budget += generated_moolah
+	else if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
 		wagesystem.station_budget += round(generated_moolah/2)
 		generated_moolah -= round(generated_moolah/2) //no coming up with $$$ out of air!
 
-		for(var/datum/data/record/t in accounts)
-			t.fields["current_money"] += round(generated_moolah/accounts.len)
+		for(var/datum/db_record/t as anything in accounts)
+			t["current_money"] += round(generated_moolah/accounts.len)
 		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
 	else
 		undistributed_earnings += generated_moolah
@@ -303,7 +303,7 @@
 
 /obj/machinery/power/pt_laser/proc/stop_firing()
 	for(var/obj/lpt_laser/L in laser_parts)
-		L.invisibility = 101 //make it invisible
+		L.invisibility = INVIS_ALWAYS //make it invisible
 		L.active = 0
 		L.light.disable()
 	affecting_mobs = list()
@@ -318,14 +318,14 @@
 	var/counter = 1
 	for(var/obj/lpt_laser/L in laser_parts)
 		if(counter <= active_num)
-			L.invisibility = 0 //make it visible
+			L.invisibility = INVIS_NONE //make it visible
 			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 			L.active = 1
 			L.light.enable()
 			L.burn_all_living_contents()
 			counter++
 		else
-			L.invisibility = 101
+			L.invisibility = INVIS_ALWAYS
 			L.active = 0
 			L.light.disable()
 
@@ -479,8 +479,8 @@
 	anchored = 2
 	density = 0
 	luminosity = 1
-	invisibility = 101
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	invisibility = INVIS_ALWAYS
+	event_handler_flags = USE_FLUID_ENTER
 	var/power = 0
 	var/active = 1
 	var/obj/machinery/power/pt_laser/source = null
@@ -496,7 +496,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
@@ -514,7 +514,8 @@
 /obj/lpt_laser/ex_act(severity)
 	return
 
-/obj/lpt_laser/HasEntered(var/atom/movable/AM)
+/obj/lpt_laser/Crossed(atom/movable/AM)
+	..()
 	if (src.active && isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
 			source.affecting_mobs |= AM

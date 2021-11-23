@@ -1,8 +1,5 @@
 //This file contains stuff that is still *mostly* my code.
 
-#define LINEMODE_SEGMENT 1
-#define LINEMODE_STRETCH 2
-#define LINEMODE_MOVE 3
 /*
 Proc: drawLine
 Arguments:
@@ -34,37 +31,38 @@ Returns:
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
-	if(!islist(render_source_line))
-		if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
-			if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
-			addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_line), "*[render_source_line]")
-		if(copytext(render_source_line,1,2) != "*") render_source_line = "*[render_source_line]"
-	else
-		for(var/X in render_source_line)
-			var/current = X
-			if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
-				if(copytext(current,1,2) == "*") current = copytext(current,2,0)
-				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
-			if(copytext(X,1,2) != "*")
-				current = "*[current]"
-			render_source_line -= X
-			render_source_line += current
+	if(mode != LINEMODE_SIMPLE && mode != LINEMODE_SIMPLE_REVERSED)
+		if(!islist(render_source_line))
+			if(!getGlobalRenderSource((copytext(render_source_line,1,2) == "*" ? render_source_line : "*[render_source_line]")))
+				if(copytext(render_source_line,1,2) == "*") render_source_line = copytext(render_source_line,2,0)
+				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_line), "*[render_source_line]")
+			if(copytext(render_source_line,1,2) != "*") render_source_line = "*[render_source_line]"
+		else
+			for(var/X in render_source_line)
+				var/current = X
+				if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
+					if(copytext(current,1,2) == "*") current = copytext(current,2,0)
+					addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
+				if(copytext(X,1,2) != "*")
+					current = "*[current]"
+				render_source_line -= X
+				render_source_line += current
 
-	if(!islist(render_source_cap))
-		if(render_source_cap != null && !getGlobalRenderSource((copytext(render_source_cap,1,2) == "*" ? render_source_cap : "*[render_source_cap]")))
-			if(copytext(render_source_cap,1,2) == "*") render_source_cap = copytext(render_source_cap,2,0)
-			addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_cap), "*[render_source_cap]")
-		if(copytext(render_source_cap,1,2) != "*") render_source_cap = "*[render_source_cap]"
-	else
-		for(var/X in render_source_cap)
-			var/current = X
-			if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
-				if(copytext(current,1,2) == "*") current = copytext(current,2,0)
-				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
-			if(copytext(X,1,2) != "*")
-				current = "*[current]"
-			render_source_cap -= X
-			render_source_cap += current
+		if(!islist(render_source_cap))
+			if(render_source_cap != null && !getGlobalRenderSource((copytext(render_source_cap,1,2) == "*" ? render_source_cap : "*[render_source_cap]")))
+				if(copytext(render_source_cap,1,2) == "*") render_source_cap = copytext(render_source_cap,2,0)
+				addGlobalRenderSource(image('icons/effects/lines2.dmi',null, render_source_cap), "*[render_source_cap]")
+			if(copytext(render_source_cap,1,2) != "*") render_source_cap = "*[render_source_cap]"
+		else
+			for(var/X in render_source_cap)
+				var/current = X
+				if(!getGlobalRenderSource((copytext(current,1,2) == "*" ? current : "*[current]")))
+					if(copytext(current,1,2) == "*") current = copytext(current,2,0)
+					addGlobalRenderSource(image('icons/effects/lines2.dmi',null, current), "*[current]")
+				if(copytext(X,1,2) != "*")
+					current = "*[current]"
+				render_source_cap -= X
+				render_source_cap += current
 
 	var/iconWidth = 64
 	var/dx = ((target.x * world.icon_size) + trg_off_x) - ((source.x * world.icon_size) + src_off_x)
@@ -95,6 +93,20 @@ Returns:
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
+		result.lineImage = I
+	else if(mode == LINEMODE_SIMPLE_REVERSED)
+		var/image/I = image(null,source)
+		I.icon = 'icons/effects/lines2.dmi'
+		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
+		I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
@@ -299,7 +311,7 @@ Returns:
 		src.underlays += alphaMask
 		src.underlays += compImage
 
-		src.filters += filter(type="layer", render_source="*portaltrg")
+		add_filter("layer", 1, layering_filter(render_source="*portaltrg"))
 
 	New()
 		..()
@@ -559,9 +571,9 @@ Returns:
 			AM.set_loc(T)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 		return
 
@@ -572,9 +584,9 @@ Returns:
 			AM.set_loc(T)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 		return
 	*/
@@ -614,6 +626,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		AM.set_loc(locate(src.x, src.y, src.targetZ))
@@ -859,7 +872,7 @@ Returns:
 	var/freeze_source = 1 //Attempt to make source mob immovable and invincible during cam?
 	nodamage = 1
 	canmove = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	density = 0
 	anchored = 1
 
@@ -1644,7 +1657,7 @@ Returns:
 			if(color != null)
 				var/actX = A.pixel_x + x - 1
 				var/actY = A.pixel_y + y - 1
-				var/obj/apixel/P = unpool(/obj/apixel)
+				var/obj/apixel/P = new /obj/apixel
 				P.set_loc(A.loc)
 				P.pixel_x = actX
 				P.pixel_y = actY
@@ -1656,7 +1669,7 @@ Returns:
 	qdel(A)
 	SPAWN_DBG(7 SECONDS)
 		for(var/datum/D in pixels)
-			pool(D)
+			qdel(D)
 
 	return
 
@@ -1668,14 +1681,6 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-
-	unpooled()
-		color = "#ffffff"
-		pixel_x = 0
-		pixel_y = 0
-		alpha = 255
-		transform = matrix()
-		..()
 
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1842,13 +1847,19 @@ Returns:
 	return tube
 
 /obj/item/ghostboard
-	name = "Ouija board"
+	name = "\improper Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "lboard"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
 	w_class = W_CLASS_NORMAL
+	var/emoji_prob = 30
+	var/emoji_min = 1
+	var/emoji_max = 3
+	var/words_prob = 100
+	var/words_min = 7
+	var/words_max = 10
 
 	New()
 		. = ..()
@@ -1859,43 +1870,57 @@ Returns:
 		. = ..()
 		STOP_TRACKING
 
+	proc/generate_words()
+		var/list/words = list()
+		if(prob(words_prob))
+			words |= get_ouija_word_list(src, words_min, words_max)
+		if(prob(emoji_prob))
+			for(var/i in 1 to rand(emoji_min, emoji_max))
+				words |= random_emoji()
+		return words
+
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr))
 			if(isAIeye(usr))
 				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
 
-			if(GET_COOLDOWN(src, usr) == 0)
-				var/list/words = list()
-				for(var/i=0, i<rand(5, 10), i++)
-					var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-					words |= picked
-
-				if(words.len)
-					var/selected = input(usr, "Select a word:", src.name) as null|anything in words
-					if(!selected) return
-
-					if(ON_COOLDOWN(src, usr, 3 SECONDS))
-						usr.show_text("Please wait a moment before using the board again.", "red")
-						return
-
-					if(src && selected)
-						animate_float(src, 1, 5, 1)
-						if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
-							var/area/AR = get_area(src)
-							for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
-								if(M.client)
-									boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
-						for (var/mob/O in observersviewers(7, src))
-							O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
-#ifdef HALLOWEEN
-						if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
-							var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
-							GH.change_points(30)
-#endif
-			else
+			if(ON_COOLDOWN(src, usr, 3 SECONDS))
 				usr.show_text("Please wait a moment before using the board again.", "red")
+				return
+
+			var/selected
+			do
+				var/list/words = list("*REFRESH*") + src.generate_words()
+				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
+			while(selected == "*REFRESH*")
+
+			if(!selected)
+				return
+
+			animate_float(src, 1, 5, 1)
+			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+				var/area/AR = get_area(src)
+				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+					if(M.client)
+						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+			for (var/mob/O in observersviewers(7, src))
+				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			#ifdef HALLOWEEN
+			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
+				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
+				GH.change_points(30)
+			#endif
 		else
 			return ..(location,control,params)
+
+/obj/item/ghostboard/emouija
+	name = "Emouija board"
+	desc = "A wooden board that allows for communication with spirits and such things. Wait, this one doesn't even have proper letters on it."
+	emoji_prob = 100
+	emoji_min = 5
+	emoji_max = 10
+	words_prob = 0
+
 
 /proc/fartes()
 	for(var/imageToLoad in flist("images/"))
@@ -2062,9 +2087,9 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/image/oimage = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
@@ -2076,7 +2101,7 @@ Returns:
 		del(oimage)
 		..()
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!istype(A,/mob/dead/hhghost)) return
 		var/mob/dead/hhghost/M = A
 		M.adventure_variables.hh_soul += 1
@@ -2098,9 +2123,9 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
 		if(!ismob(A) || !isliving(A)) return
 		qdel(src)
 		var/mob/living/M = A
@@ -2217,7 +2242,7 @@ Returns:
 	density = 0
 	anchored = 1
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/effects/ULIcons.dmi'
 	icon_state = "7-3-0"
 	var
@@ -2248,6 +2273,7 @@ Returns:
 		return
 
 	Crossed(atom/movable/O)
+		..()
 		if(!canTrigger) return
 		canTrigger = 0
 		SPAWN_DBG(procCooldown) canTrigger = 1
@@ -2347,7 +2373,7 @@ Returns:
 	density = 0
 	anchored = 1
 	opacity = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/spawn_rate = 100 	   //Time before a new object spaws after the previous is gone.
 	var/spawn_check_rate = 10  //How often we check if we need to spawn something.
 	var/spawn_type = null	   //Type to spawn
@@ -2494,6 +2520,7 @@ Returns:
 
 /obj/line_obj/elec
 	name = "electricity"
+	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
 	anchored = 1
 	density = 0
@@ -2505,7 +2532,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -2547,7 +2574,7 @@ Returns:
 			return
 		return
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if(!state)
 			..()
 			return
@@ -2793,19 +2820,20 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_from)
 		if (!istype(source))
 			qdel(src)
 			return
 		var/turf/trg = source.loc
-
-		var/area/trgar = trg.loc
-		trgar.Entered(AM, AM.loc)
-
 		AM.set_loc(trg)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/dfissure_from
 	name = "dimensional fissure"
@@ -2817,9 +2845,6 @@ Returns:
 	icon_state = "fissure"
 
 	Bumped(atom/movable/AM)
-		var/area/srcar = AM.loc.loc
-		srcar.Exited(AM)
-
 		var/obj/source = locate(/obj/dfissure_to)
 		if (!istype(source))
 			boutput(AM, "<span class='combat'>You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!</span>")
@@ -3069,12 +3094,14 @@ Returns:
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
+			if(ismob(AM))
+				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 
 	ex_act()
@@ -3136,19 +3163,13 @@ Returns:
 	icon_state = "foam"
 	animate_movement = SLIDE_STEPS
 	mouse_opacity = 0
-	var/my_dir=1
+	var/my_dir = null
 
 	Move(NewLoc,Dir=0)
 		. = ..(NewLoc,Dir)
+		if(isnull(my_dir))
+			my_dir = pick(alldirs)
 		src.set_dir(my_dir)
-
-	unpooled(var/poolname)
-		..()
-		SPAWN_DBG(1 DECI SECOND)
-			var/atom/myloc = loc
-			if(myloc && !istype(myloc,/turf/space))
-				my_dir = pick(alldirs)
-				src.set_dir(my_dir)
 
 /obj/shifting_wall
 	name = "r wall"
@@ -3178,9 +3199,9 @@ Returns:
 			return
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		src.set_loc(picked)
-		SPAWN_DBG(0.5 SECONDS) picked.invisibility = 100
+		SPAWN_DBG(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
 
 		SPAWN_DBG(rand(50,80)) update()
 
@@ -3224,13 +3245,13 @@ Returns:
 			return
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(picked)
 
 		SPAWN_DBG(0.5 SECONDS)
-			picked.invisibility = 100
+			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 
 		SPAWN_DBG(rand(50,80)) update()
@@ -3243,9 +3264,9 @@ Returns:
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (mover?.throwing)
 			return 1
 		return ..()
@@ -3403,7 +3424,7 @@ var/list/lag_list = new/list()
 
 /obj/spook
 	var/active = 0
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
 	density = 0
 	icon = 'icons/misc/hstation.dmi'
@@ -3438,10 +3459,10 @@ var/list/lag_list = new/list()
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		flick("apparition",src)
 		sleep(1.5 SECONDS)
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
 		SPAWN_DBG(10 SECONDS) active = 0
@@ -3784,7 +3805,6 @@ var/list/lag_list = new/list()
 	attack_hand(mob/user as mob)
 		switch(alert("Travel back to ss13?",,"Yes","No"))
 			if("Yes")
-				user.loc.loc.Exited(user)
 				user.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			if("No")
 				return
@@ -3856,9 +3876,9 @@ var/list/lag_list = new/list()
 
 /mob/living/intangible/aicamera/New()
 	. = ..()
-	src.invisibility = 0
+	src.invisibility = INVIS_NONE
 	src.sight = SEE_THRU
-	src.see_invisible = 0
+	src.see_invisible = INVIS_NONE
 
 /obj/ai_static
 	name = "static"

@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	var/is_dangerous = TRUE
 	var/detonating = 0
 
 
@@ -152,15 +153,19 @@
 	proc/arm(mob/user as mob)
 		if (src.state || src.stage != 2)
 			return 1
-		var/area/a = get_area(src)
-		if(a.sanctuary) return
+		var/area/A = get_area(src)
+		if(A.sanctuary)
+			return
 		// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
 		var/log_reagents = null
 		if (src.name == "grenade")
 			for (var/obj/item/reagent_containers/glass/G in src.beakers)
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
-		message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-		logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+
+		if(!A.dont_log_combat)
+			if(is_dangerous)
+				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
@@ -168,8 +173,6 @@
 		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
 		SPAWN_DBG(3 SECONDS)
 			if (src && !src.disposed)
-				a = get_area(src)
-				if(a.sanctuary) return
 				if(user?.equipped() == src)
 					user.u_equip(src)
 				explode()
@@ -192,7 +195,7 @@
 			G.reagents.trans_to(src, G.reagents.total_volume)
 
 		if (src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-			var/datum/effects/system/steam_spread/steam = unpool(/datum/effects/system/steam_spread)
+			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src))
 			steam.attach(src)
 			steam.start()
@@ -203,8 +206,8 @@
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
 
-		invisibility = 100 //Why am i doing this?
-		if (src.master) src.master.invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
+		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(5 SECONDS)		   //To make sure all reagents can work
 			if (src.master) qdel(src.master)
 			if (src) qdel(src)	   //correctly before deleting the grenade.
@@ -239,6 +242,7 @@
 	icon_state = "metalfoam"
 	icon_state_armed = "metalfoam1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -259,6 +263,7 @@
 	icon_state = "firefighting"
 	icon_state_armed = "firefighting1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -278,6 +283,7 @@
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -439,20 +445,10 @@
 	New()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
-		var/obj/item/reagent_containers/glass/B2 = new(src)
-		var/obj/item/reagent_containers/glass/B3 = new(src)
 
-		B1.reagents.add_reagent("voltagen", 25)
-		B1.reagents.add_reagent("sugar",25)
-
-		B2.reagents.add_reagent("phosphorus", 25)
-		B2.reagents.add_reagent("potassium", 25)
-
-		B3.reagents.add_reagent("voltagen", 25) //do a zap in addition to the smoke.
+		B1.reagents.add_reagent("voltagen", 50)
 
 		beakers += B1
-		beakers += B2
-		beakers += B3
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
@@ -504,6 +500,7 @@
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -526,6 +523,7 @@
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()

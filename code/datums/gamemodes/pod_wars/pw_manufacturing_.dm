@@ -28,10 +28,9 @@
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
-		/datum/manufacture/pod/weapon/mining,
+		/datum/manufacture/pod/weapon/mining_podwars,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
-		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining_weak,
 		/datum/manufacture/pod/weapon/taser,
 		/datum/manufacture/pod/weapon/laser/short,
@@ -83,7 +82,7 @@
 	create = 1
 	category = "Tool"
 
-/datum/manufacture/pod/weapon/mining
+/datum/manufacture/pod/weapon/mining_podwars
 	name = "Plasma Cutter System"
 	item_paths = list("MET-2","CON-2", "telecrystal")
 	item_amounts = list(50,50,10)
@@ -154,6 +153,11 @@
 	category = "Tool"
 
 ////////////pod-armor///////////////////////
+
+ABSTRACT_TYPE(/datum/manufacture/pod_wars)
+
+ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
+
 /datum/manufacture/pod_wars/pod/armor_light
 	name = "Light NT Pod Armor"
 	item_paths = list("MET-3","CON-1")
