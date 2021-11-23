@@ -70,7 +70,7 @@
 		if(!src.holoHolder.check(holo_type, eyecam))
 			return
 
-		if(holo_type=="write")
+		if(holo_type == "write")
 			var/list/holo_setences = list()
 			var/list/holo_actions = list()
 			var/list/holo_nouns = list()
