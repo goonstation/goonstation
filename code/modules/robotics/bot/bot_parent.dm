@@ -209,9 +209,9 @@
 	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
 		P.initial_power -= 10
 		if(P.initial_power <= 0)
+			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
 			P.die()
 	if(!src.density)
-
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
 
 /obj/machinery/bot/proc/DoWhileMoving()
