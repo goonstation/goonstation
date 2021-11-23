@@ -1,4 +1,19 @@
 
+(t)mon nov 22 21
+(u)Jan.antilles
+(p)6668
+(e)🆕🎨|feature, sprites
+(*)Resprited pies and added some new pie recipes!
+(t)sun nov 21 21
+(u)tarmunora
+(e)⚖|balance
+(+)methamphetamine acts as a purgative for brain medicines mannitol and synaptizine.
+(+)haloperidol additionally purges synaptizine
+(t)sat nov 20 21
+(u)Ikea
+(p)6741
+(e)🐛|bug
+(+)Nanotrasen has noticed they were using an older recipe of plasma cutters for there ship manufacturers and has begin using the modern cheaper recipe again.
 (t)fri nov 19 21
 (u)Gannets
 (p)6730
