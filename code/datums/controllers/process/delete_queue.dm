@@ -183,6 +183,7 @@ var/global/harddel_count = 0
 	proc/gimmick_ungcd_mob_stuff(mob/living/L)
 		L.lying = FALSE
 		L.dir = SOUTH
+		L.invisibility = INVIS_NONE
 		L.update_lying()
 		put_mob_in_centcom_cloner(L, indirect=TRUE)
 
