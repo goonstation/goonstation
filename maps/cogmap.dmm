@@ -27010,6 +27010,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "bpu" = (
@@ -27251,7 +27252,8 @@
 "bpT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/small{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/item/storage/box,
 /obj/item/storage/box,
@@ -54492,12 +54494,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
-"ebe" = (
-/obj/item/device/radio/intercom/cargo{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/maintenance/east)
 "ees" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Engine Supply Dock";
@@ -54972,6 +54968,10 @@
 /obj/random_item_spawner/desk_stuff/maybe_few,
 /obj/random_item_spawner/tools/maybe_few,
 /obj/random_item_spawner/hat/maybe_few,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "eLo" = (
@@ -58436,6 +58436,10 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
+"kWT" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/bot,
+/area/station/maintenance/east)
 "kXj" = (
 /obj/table/auto,
 /obj/item/device/light/lava_lamp{
@@ -61961,7 +61965,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "rpD" = (
 /obj/table/wood/auto,
@@ -63498,7 +63502,8 @@
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /obj/machinery/light/small/warm/very{
-	dir = 1
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
@@ -120625,7 +120630,7 @@ bcF
 bny
 boT
 bpS
-ebe
+brb
 bVx
 bVx
 bVx
@@ -120927,7 +120932,7 @@ aYQ
 bod
 boT
 bpT
-bdN
+kWT
 bdN
 adC
 adC
@@ -121230,7 +121235,7 @@ bod
 boT
 boT
 bdN
-aar
+bdN
 aar
 aar
 aar
