@@ -82,7 +82,7 @@
 				last = curr
 				curr = curr.transfer(src)
 				if(!curr)
-					last.expel(src, loc, dir)
+					last.expel(src, get_turf(loc), dir)
 
 				if(!(count--))
 					active = 0
@@ -337,7 +337,7 @@
 		if(H)
 			// holder was present
 			H.active = 0
-			var/turf/T = src.loc
+			var/turf/T = get_turf(src)
 			if(T.density)
 				// broken pipe is inside a dense turf (wall)
 				// this is unlikely, but just dump out everything into the turf in case
