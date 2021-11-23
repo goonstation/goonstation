@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
 	var/booster_upgrade = 0 //do we go through space?
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
-
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -352,7 +352,11 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		eject_rider(2)
+		if (!emagged)
+			eject_rider(2)
+		else
+			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			src.weeoo()
 		in_bump = 0
 
 	if(isitem(AM))
@@ -601,6 +605,15 @@ ABSTRACT_TYPE(/obj/vehicle)
 				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
+
+/obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = TRUE
+		src.delay = 1
+		src.weeoo()
+		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
+		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")
+		return 1
 
 ////////////////////////////////////////////////////// Floor buffer /////////////////////////////////////
 
