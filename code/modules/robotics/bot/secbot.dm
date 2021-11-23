@@ -1007,7 +1007,7 @@
 		if(loc == patrol_target) // We where we want to be?
 			at_patrol_target() // Find somewhere else to go!
 			look_for_perp()
-		else if (patrol_target) // valid path
+		else if (patrol_target (isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
 			navigate_to(patrol_target, delay)
 		else	// no path, so calculate new one
 			mode = SECBOT_START_PATROL
