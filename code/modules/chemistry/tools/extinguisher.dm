@@ -37,7 +37,10 @@
 	var/list/melting_reagents = list("acid",
 	"pacid",
 	"phlogiston",
-	"big_bang")
+	"big_bang",
+	"clacid",
+	"nitric_acid",
+	"firedust")
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
