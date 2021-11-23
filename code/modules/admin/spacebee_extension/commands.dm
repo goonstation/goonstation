@@ -180,6 +180,26 @@
 		system.reply("Command report created.", user)
 		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
 
+/datum/spacebee_extension_command/mode
+	name = "mode"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"intrigue\", \"extended\")."
+	argument_types = list(/datum/command_argument/string/optional="new_mode")
+
+	execute(user, new_mode)
+		if(new_mode == "secret" || new_mode == "intrigue" || new_mode == "extended")
+			var/which = "next round's "
+			if (current_state <= GAME_STATE_PREGAME)
+				master_mode = new_mode
+				which = ""
+			world.save_mode(new_mode)
+			logTheThing("admin", "[user] (Discord)", null, "set the [which]mode as [new_mode]")
+			logTheThing("diary", "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
+			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
+			system.reply("Set the [which]mode to [new_mode].", user)
+		else
+			system.reply("Current mode is [master_mode].", user)
+
 /datum/spacebee_extension_command/help
 	name = "help"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
@@ -225,6 +245,22 @@
 		message_admins("[user] (Discord) gibbed [key_name(target)].")
 		target.transforming = 1
 		target.gib()
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/delimb
+	name = "delimb"
+	help_message = "Delimbs a given ckey on a server."
+	action_name = "delib"
+
+	perform_action(user, mob/target)
+		if(!ishuman(target))
+			system.reply("Error, target is not human.", user)
+			return FALSE
+		var/mob/living/carbon/human/H = target
+		H.limbs.sever("all")
+		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) delimbed [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
