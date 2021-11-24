@@ -46244,6 +46244,9 @@
 "col" = (
 /obj/machinery/chemicompiler_stationary,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "coo" = (
@@ -52198,7 +52201,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cRD" = (
@@ -53537,6 +53539,9 @@
 "eCS" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -55238,6 +55243,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"gQj" = (
+/obj/machinery/light,
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/cable,
+/turf/simulated/floor/bot,
+/area/station/science/bot_storage)
 "gQt" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -57538,6 +57550,21 @@
 	pixel_x = -12;
 	pixel_y = 6
 	},
+/obj/item/device/radio/signaler{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/device/radio/signaler{
+	pixel_y = 14
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -11;
+	pixel_y = 14
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "kFg" = (
@@ -58126,12 +58153,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
-"lOD" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 10
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/atmos/hookups/southwest)
 "lQc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
@@ -59158,6 +59179,11 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "nHN" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	name = "Science Lobby Repressurization"
+	},
+/obj/item/wrench,
 /turf/simulated/floor/plating/scorched,
 /area/station/atmos/hookups/southwest)
 "nIv" = (
@@ -62083,9 +62109,13 @@
 /area/station/routing/security)
 "rXn" = (
 /obj/machinery/atmospherics/pipe/tank/air_repressurization{
-	dir = 1;
+	dir = 8;
 	name = "Air Hookup Reserve Tank (Air)"
 	},
+/obj/decal/cleanable/rust{
+	pixel_y = 32
+	},
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
 "rXW" = (
@@ -62515,16 +62545,6 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
-"sBr" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Science Lobby Repressurization"
-	},
-/obj/decal/cleanable/rust{
-	pixel_y = 32
-	},
-/obj/item/wrench,
-/turf/simulated/floor/plating,
-/area/station/atmos/hookups/southwest)
 "sBR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63168,29 +63188,22 @@
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "tAs" = (
-/obj/table/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
-	dir = 1;
+	dir = 6;
 	name = "autoname - SS13";
+	pixel_y = 21;
 	tag = ""
 	},
-/obj/item/device/radio/signaler{
-	pixel_x = -11;
-	pixel_y = 14
+/obj/cable{
+	icon_state = "2-4"
 	},
-/obj/item/device/radio/signaler{
-	pixel_y = 14
+/obj/machinery/guardbot_dock,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/item/device/radio/signaler{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/device/radio/signaler{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/turf/simulated/floor,
+/turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "tBY" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -63265,6 +63278,10 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"tJx" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating/scorched,
+/area/station/atmos/hookups/southwest)
 "tKt" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -63735,12 +63752,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"uoO" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/atmos/hookups/southwest)
 "upE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63973,6 +63984,9 @@
 /area/station/security/brig)
 "uKr" = (
 /obj/storage/closet/fire,
+/obj/decal/cleanable/rust{
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
 "uKI" = (
@@ -64269,6 +64283,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
 "vnY" = (
@@ -65362,7 +65377,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "xbT" = (
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold/north,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/southwest)
 "xdC" = (
@@ -100344,7 +100363,7 @@ bUe
 bVv
 kEP
 eCS
-cbK
+gQj
 mko
 jtU
 mdN
@@ -100646,8 +100665,8 @@ bUf
 bVj
 tAs
 cRm
-mko
-uoO
+cbK
+pCg
 stm
 lkh
 cbQ
@@ -100948,8 +100967,8 @@ bUg
 bVj
 wrb
 tbn
+hKB
 pCg
-sBr
 xbT
 dUf
 cbQ
@@ -101250,7 +101269,7 @@ bUh
 bVj
 hKB
 hKB
-lOD
+hKB
 rXn
 nHN
 lFb
@@ -101553,7 +101572,7 @@ bVj
 uKr
 vnX
 ghR
-nHN
+tJx
 poI
 eXq
 hDx
