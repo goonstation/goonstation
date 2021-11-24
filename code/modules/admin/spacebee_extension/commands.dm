@@ -224,7 +224,8 @@
 			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
 			system.reply("Set the [which]mode to [new_mode].", user)
 		else
-			system.reply("Current mode is [master_mode].", user)
+			var/detail_mode = isnull(ticker?.mode) ? "not started yet" : ticker.mode.name
+			system.reply("Current mode is [master_mode] ([detail_mode]).", user)
 
 /datum/spacebee_extension_command/help
 	name = "help"
