@@ -1475,6 +1475,11 @@ var/datum/action_controller/actions
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
+		if (isdead(target))
+			src.visible_message("<span class='alert'><B>[src] tries to perform CPR, but it's too late for [target]!</B></span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 	onStart()
 		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
 			interrupt(INTERRUPT_ALWAYS)
@@ -1490,6 +1495,11 @@ var/datum/action_controller/actions
 				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
+
+		if (isdead(target))
+			src.visible_message("<span class='alert'><B>[src] tries to perform CPR, but it's too late for [target]!</B></span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 		owner.visible_message("<span class='alert'><B>[owner] is trying to perform CPR on [target]!</B></span>")
 		..()

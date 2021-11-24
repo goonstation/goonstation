@@ -147,20 +147,6 @@
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
 
-	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (H.head && (H.head.c_flags & 4))
-			boutput(src, "<span class='notice'>You need to take off their headgear before you can give CPR!</span>")
-			return
-
-		if (H.wear_mask && !(H.wear_mask.c_flags & 32))
-			boutput(src, "<span class='notice'>You need to take off their facemask before you can give CPR!</span>")
-			return
-
-	if (isdead(target))
-		src.visible_message("<span class='alert'><B>[src] tries to perform CPR, but it's too late for [target]!</B></span>")
-		return
-
 	src.lastattacked = target
 
 	actions.start(new /datum/action/bar/icon/CPR(target), src)
