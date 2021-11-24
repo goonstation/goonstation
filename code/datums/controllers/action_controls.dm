@@ -1476,7 +1476,7 @@ var/datum/action_controller/actions
 				return
 
 		if (isdead(target))
-			src.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1497,7 +1497,7 @@ var/datum/action_controller/actions
 				return
 
 		if (isdead(target))
-			src.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
