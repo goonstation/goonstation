@@ -1475,7 +1475,7 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
-	var/mode = 2
+	var/mode = 1
 	var/maximum_force = 100
 
 	New()
