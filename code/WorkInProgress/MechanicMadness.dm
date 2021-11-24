@@ -2471,7 +2471,7 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
-		// TODO: analog registration
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
@@ -2495,7 +2495,7 @@
 		new_frequency = sanitize_frequency(new_frequency)
 		componentSay("New frequency: [new_frequency]")
 		frequency = new_frequency
-		// TODO: analog registration
+		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 		tooltip_rebuild = 1
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return

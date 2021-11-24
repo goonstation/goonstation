@@ -10,7 +10,6 @@
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
-	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/list/cooldowns
 
@@ -792,10 +791,12 @@
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-// use this instead of Bump
+/// override this instead of Bump
 /atom/movable/proc/bump(atom/A)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
@@ -809,10 +810,8 @@
 			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
 				return
 	bump(A)
-	SPAWN_DBG( 0 )
-		if (A)
-			A.last_bumped = world.timeofday
-			A.Bumped(src)
+	if (!QDELETED(A))
+		A.Bumped(src)
 	..()
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)

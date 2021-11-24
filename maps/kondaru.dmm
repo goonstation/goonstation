@@ -44039,7 +44039,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "ftT" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ftU" = (

@@ -1003,23 +1003,16 @@
 					src.cell = null
 
 	bump(atom/movable/AM as mob|obj)
-		SPAWN_DBG( 0 )
-			if ( src.now_pushing)
-				return
-			//..()
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
-			if (!istype(AM, /atom/movable))
-				return
-			if (!src.now_pushing)
-				src.now_pushing = 1
-				if (!AM.anchored)
-					var/t = get_dir(src, AM)
-					step(AM, t)
-				src.now_pushing = null
+		if ( src.now_pushing)
 			return
-		return
+		if (!istype(AM, /atom/movable))
+			return
+		if (!src.now_pushing)
+			src.now_pushing = 1
+			if (!AM.anchored)
+				var/t = get_dir(src, AM)
+				step(AM, t)
+			src.now_pushing = null
 
 	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if (isdead(src))
