@@ -1444,6 +1444,82 @@ var/datum/action_controller/actions
 		if(owner && target)
 			mop.clean(target, owner)
 
+/datum/action/bar/icon/CPR
+	duration = 4 SECONDS
+	interrupt_flags = INTERRUPT_ALWAYS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "cpr" //placeholder
+	var/mob/living/target
+	var/mob/living/carbon/human/human_owner
+
+	New(target)
+		src.target = target
+		if (ishuman(owner))
+			human_owner = owner
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (human_owner) //no starting CPR and then putting a mask on
+			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
+				boutput(human_owner, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			if (human_owner.wear_mask)
+				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+		if (isdead(target))
+			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (human_owner)
+			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
+				boutput(human_owner, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			if (human_owner.wear_mask)
+				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+		if (isdead(target))
+			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		owner.visible_message("<span class='alert'><B>[owner] is trying to perform CPR on [target]!</B></span>")
+		..()
+
+	onEnd()
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		target.take_oxygen_deprivation(-15)
+		target.losebreath = 0
+		target.changeStatus("paralysis", -2 SECONDS)
+
+		if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
+			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
+				target.cure_disease_by_path(/datum/ailment/malady/flatline)
+
+		owner.visible_message("<span class='alert'>[owner] performs CPR on [target]!</span>")
+		src.onRestart()
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30

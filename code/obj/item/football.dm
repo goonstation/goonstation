@@ -145,7 +145,8 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					D.try_force_open(src)
+					SPAWN_DBG(0)
+						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 					qdel(O)

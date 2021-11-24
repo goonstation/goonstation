@@ -192,13 +192,13 @@
 							if(I) I.pixel_x = in_x + rand(-1, 1)
 							sleep(0.1 SECONDS)
 						if(I) I.pixel_x = in_x
-					sleep(delay)
-					if(I && I.loc == src.loc)
-						if(prob(40)) //It goes in!
-							src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
-							I.set_loc(src)
-						else
-							src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
+					SPAWN_DBG(delay)
+						if(I && I.loc == src.loc)
+							if(prob(40)) //It goes in!
+								src.visible_message("<span class='alert'>\The [I] slips into \the [src]!</span>")
+								I.set_loc(src)
+							else
+								src.visible_message("<span class='alert'>\The [I] slips off of the edge of \the [src]!</span>")
 
 		else if (ishuman(MO))
 			var/mob/living/carbon/human/H = MO

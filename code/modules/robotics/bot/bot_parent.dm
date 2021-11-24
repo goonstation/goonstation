@@ -3,7 +3,7 @@
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
@@ -209,16 +209,10 @@
 	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
 		P.initial_power -= 10
 		if(P.initial_power <= 0)
+			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
 			P.die()
 	if(!src.density)
-
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
-
-/obj/machinery/bot/Bumped(M as mob|obj) // not sure what this is for, but it was in a bunch of the bots, so it's here just in case its vital
-	var/turf/T = get_turf(src)
-	if(ismovable(M))
-		var/atom/movable/AM = M
-		AM.set_loc(T)
 
 /obj/machinery/bot/proc/DoWhileMoving()
 	return
@@ -268,8 +262,12 @@
 			if(checkTurfPassable(T))
 				return T
 
-/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
+	if(IN_RANGE(the_target, src, 1))
+		return
+	if(src.bot_mover?.the_target == target_turf)
+		return 0
 	if(!target_turf)
 		return 0
 
@@ -328,7 +326,7 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = AStar(get_turf(master), src.the_target, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, src.max_dist, master.botcard)
+		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return

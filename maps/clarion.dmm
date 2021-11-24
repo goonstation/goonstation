@@ -6284,7 +6284,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "alj" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alk" = (
@@ -6615,7 +6615,7 @@
 	},
 /area/station/hangar/sec)
 "alO" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "alP" = (
@@ -7606,7 +7606,7 @@
 /area/station/hangar/sec)
 "ani" = (
 /obj/machinery/light,
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine{
 	dir = 6;
 	icon_state = "engine_caution_corners2"
@@ -7619,7 +7619,7 @@
 	},
 /area/station/hangar/sec)
 "ank" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	icon_state = "engine_caution_south"
@@ -21187,6 +21187,10 @@
 /obj/item/stamp/hop,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/firedoor_spawn,
+/obj/item/bell/hop{
+	pixel_x = 16;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "aRh" = (

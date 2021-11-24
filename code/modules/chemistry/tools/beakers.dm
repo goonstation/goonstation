@@ -90,6 +90,8 @@
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker (cryoxadone)"
+	icon_state = "roundflask"
+	icon_style = "roundflask"
 	initial_reagents = list("cryoxadone"=40)
 
 /obj/item/reagent_containers/glass/beaker/epinephrine

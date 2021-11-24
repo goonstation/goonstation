@@ -204,7 +204,7 @@
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/list/traits)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits)
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -261,8 +261,8 @@
 				src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = 0
-		if (length(traits) && src.occupant.traitHolder)
-			src.occupant.traitHolder.traits = traits
+		if (!isnull(traits) && src.occupant.traitHolder)
+			traits.copy_to(src.occupant.traitHolder)
 			if (src.occupant.traitHolder.hasTrait("puritan"))
 				src.mess = 1
 				// Puritans have a bad time.

@@ -246,9 +246,9 @@
 		var/datum/abilityHolder/A = subject.abilityHolder.deepCopy()
 		R["abilities"] = A
 
-	R["traits"] = list()
-	if(subject.traitHolder && length(subject.traitHolder.traits))
-		R["traits"] = subject.traitHolder.traits.Copy()
+	R["traits"] = null
+	if(!isnull(subject.traitHolder))
+		R["traits"] = subject.traitHolder.copy(null)
 
 	var/obj/item/implant/cloner/imp = new(subject)
 	imp.implanted = TRUE
@@ -389,7 +389,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/mob/occupant = null
 	anchored = 1.0
 	soundproofing = 10
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.

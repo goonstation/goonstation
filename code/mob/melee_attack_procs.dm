@@ -147,49 +147,9 @@
 		boutput(src, "<span class='alert'>You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!</span>")
 		return
 
-	if (ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (H.head && (H.head.c_flags & 4))
-			boutput(src, "<span class='notice'>You need to take off their headgear before you can give CPR!</span>")
-			return
-
-		if (H.wear_mask && !(H.wear_mask.c_flags & 32))
-			boutput(src, "<span class='notice'>You need to take off their facemask before you can give CPR!</span>")
-			return
-
-	if (target.cpr_time >= world.time)
-		return
-
-	if (isdead(target))
-		src.visible_message("<span class='alert'><B>[src] tries to perform CPR, but it's too late for [target]!</B></span>")
-		return
-
 	src.lastattacked = target
-	target.cpr_time = world.time + src.combat_click_delay
 
-	src.visible_message("<span class='alert'><B>[src] is trying to perform CPR on [target]!</B></span>")
-	if (do_mob(src, target, 40)) //todo : unfuck this into a progres bar or something that happens automatically over time
-		if (target.health < 0 || target.find_ailment_by_type(/datum/ailment/malady/flatline))
-			target.take_oxygen_deprivation(-15)
-			target.losebreath = 0
-			target.changeStatus("paralysis", -2 SECONDS)
-
-			if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
-				if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
-					target.cure_disease_by_path(/datum/ailment/malady/flatline)
-
-			if (src)
-				src.visible_message("<span class='alert'>[src] performs CPR on [target]!</span>")
-
-/mob/living/carbon/human/administer_CPR(var/mob/living/target)
-	if (src.head && (src.head.c_flags & 4))
-		boutput(src, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
-		return
-
-	if (src.wear_mask && !(src.wear_mask.c_flags & 32))
-		boutput(src, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
-		return
-	..()
+	actions.start(new /datum/action/bar/icon/CPR(target), src)
 
 ///////////////////////////////////////////// Grab intent //////////////////////////////////////////////////////////
 

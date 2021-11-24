@@ -91,6 +91,7 @@
 	src.occupant = entering_mob
 	entering_mob.set_dir(SOUTH)
 	var/atom/movable/proxy = new
+	proxy.mouse_opacity = FALSE
 	src.proxy = proxy
 	proxy.appearance = entering_mob.appearance
 	proxy.transform = null
@@ -115,6 +116,10 @@
 /obj/machinery/gibber/proc/go_out()
 	if (!src.occupant)
 		return
+	if(src.proxy)
+		src.vis_contents -= src.proxy
+		qdel(src.proxy)
+		src.proxy = null
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
 	src.occupant.set_loc(src.loc)
