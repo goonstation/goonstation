@@ -66,6 +66,7 @@
 
 	get_disorient_protection_eye()
 		return(max(..(), 80))
+
 	death(var/gibbed)
 		..(gibbed, 0)
 		playsound(src.loc, "sound/impact_sounds/burn_sizzle.ogg", 100, 1)
