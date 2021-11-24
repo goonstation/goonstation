@@ -346,12 +346,12 @@ AI MODULES
 			ais[name] = AI
 
 		var/mob/living/silicon/AI = null
-		if (ais.len == 1)
+		if (length(ais) == 1)
 			AI = ais[names[1]]
-		else if (ais.len > 1)
+		else if (length(ais))
 			var/res = input("Which AI are you renaming?", "Rename", null, null) as null|anything in ais
 			AI = ais[res]
-		else if (ais.len == 0)
+		else
 			boutput(sender, "There aren't any AIs available to rename...")
 		if (!AI)
 			return
@@ -446,12 +446,12 @@ AI MODULES
 			ais[name] = AI
 
 		var/mob/living/silicon/ai/AI = null
-		if (ais.len == 1)
+		if (length(ais) == 1)
 			AI = ais[names[1]]
-		else if (ais.len > 1)
+		else if (length(ais))
 			var/res = input("Which AI are you modifying?", "Hologram update", null, null) as null|anything in ais
 			AI = ais[res]
-		else if (ais.len == 0)
+		else
 			boutput(sender, "There aren't any AIs available to update...")
 		if (!AI)
 			return
