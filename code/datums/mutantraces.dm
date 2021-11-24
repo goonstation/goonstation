@@ -2124,12 +2124,14 @@
 	New(var/mob/living/carbon/human/H)
 		..(H)
 		SPAWN_DBG(0)
-			if(ishuman(mob))
+			if (ishuman(mob))
 				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
+			RegisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
 
 	disposing()
 		if (ishuman(mob))
 			REMOVE_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
+		UnregisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY)
 		..()
 
 	say_verb()
@@ -2151,7 +2153,6 @@
 					mob.UpdateOverlays(snore_bubble, "snore_bubble")
 					SPAWN_DBG(1.5 SECONDS)
 						mob.UpdateOverlays(null, "snore_bubble")
-
 			if ("sneeze")
 				if (!voluntary || mob.emote_check(voluntary, 2 SECONDS))
 					playsound(mob, "sound/voice/sneeze_pug.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
@@ -2159,11 +2160,18 @@
 						var/datum/organHolder/organs = mob.organHolder
 						var/obj/E = (organs.drop_organ("left_eye", null) || organs.drop_organ("right_eye", null))
 						if (E)
-							E.throw_at(get_edge_cheap(mob, mob.dir), 3, 1)
+							E.throw_at(get_edge_cheap(mob, mob.dir), rand(3,5), 1)
 							return "<B>[mob]</B> sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>"
 					. = "<B>[mob]</B> sneezes."
 			else
 				.= ..()
+
+	proc/throw_response(target, item, thrower)
+		if (mob == thrower || is_incapacitated(mob) || prob(90))
+			return
+		mob.throw_at(get_turf(item), 1, 1)
+		mob.visible_message("<span class='alert'>[mob] staggers.</span>")
+		mob.emote("scream")
 
 /datum/mutantrace/chicken
 	name = "Chicken"

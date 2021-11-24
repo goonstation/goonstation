@@ -436,4 +436,3 @@ obj/item/organ/eye/skeleton
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
-	icon_state = "eye-cow"
