@@ -136,11 +136,11 @@
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
 				toggle_valve()
 			if(href_list["rem_device"])
@@ -297,10 +297,10 @@
 
 			if(valve_open && (tank_one && tank_two) && tank_one.air_contents && tank_two.air_contents)
 				var/turf/bombturf = get_turf(src)
-				var/bombarea = bombturf.loc.name
-
-				logTheThing("bombing", null, null, "Bomb valve opened in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by [src.fingerprintslast]")
-				message_admins("Bomb valve opened in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by [src.fingerprintslast]")
+				var/area/A = get_area(bombturf)
+				if(!A.dont_log_combat)
+					logTheThing("bombing", null, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
 

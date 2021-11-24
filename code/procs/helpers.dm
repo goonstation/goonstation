@@ -744,6 +744,7 @@ proc/get_angle(atom/a, atom/b)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
+	var/last_ckey = null
 
 	if (isnull(whom))
 		return "*null*"
@@ -755,6 +756,7 @@ proc/get_angle(atom/a, atom/b)
 		the_mob = whom
 		the_client = the_mob.client
 		the_key = html_encode(the_mob.key)
+		last_ckey = the_mob.last_ckey
 	else if (istype(whom, /datum))
 		if (ismind(whom))
 			var/datum/mind/the_mind = whom
@@ -786,7 +788,10 @@ proc/get_angle(atom/a, atom/b)
 	var/text = ""
 
 	if (!the_key)
-		text += "*no client*"
+		if(last_ckey)
+			text += "*last ckey: [last_ckey]*"
+		else
+			text += "*no client*"
 	else
 		if (!isnull(the_mob))
 			if(custom_href) text += "<a href=\"[custom_href]\">"
@@ -1027,27 +1032,26 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // you couldnt have gone for "msg" or something that makes 10 times more sense?!?
 // In summary: aaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 // <3 Fire
-/proc/stars(n, pr)
-
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
+// I'm preserving the above comment block, let it be known this proc used to use the variables "n", "pr", "te", "t", "p." I have fixed them. You're welcome.
+// <3 FlamingLily
+/proc/stars(input_text, probability)
+	if(probability == null)
+		probability = 25
+	if(probability <= 0)
 		return null
 	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-	var/p = null
-	p = 1
-	while(p <= n)
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+		if (probability >= 100)
+			return input_text
+	var/output_text = ""
+	var/input_length = length(input_text)
+	var/cycle = 1
+	while(cycle <= input_length)
+		if ((copytext(input_text, cycle, cycle + 1) == " " || prob(probability)))
+			output_text = text("[][]", output_text, copytext(input_text, cycle, cycle + 1))
 		else
-			t = text("[]*", t)
-		p++
-	return t
+			output_text = text("[]*", output_text)
+		cycle++
+	return output_text
 
 /proc/stutter(n)
 	var/te = html_decode(n)
@@ -2104,14 +2108,14 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 5 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg || !ircbot.apikey) return 0
+	if (!msg || !config.spacebee_api_key) return 0
 	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = world.timeofday
 		msg = copytext(msg, 1, 2000)
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -2502,13 +2506,6 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 				dir = turn(dir, 45)
 
 	return (seer.dir == dir)
-
-
-/**
-	* Linear interpolation
-	*/
-/proc/lerp(var/a, var/b, var/t)
-		return a * (1 - t) + b * t
 
 /**
 	* Returns the passed decisecond-format time in the form of a text string

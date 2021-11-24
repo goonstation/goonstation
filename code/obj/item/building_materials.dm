@@ -119,7 +119,7 @@ MATERIAL
 	attack_hand(mob/user as mob)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(!in_interact_range(src, user))
+			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
 				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
@@ -186,7 +186,7 @@ MATERIAL
 			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
 				var/makesheets = min(min(R.amount,src.amount),50)
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
-				if (sheetsinput < 1)
+				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
 					return
 				sheetsinput = min(sheetsinput,makesheets)
 
@@ -329,7 +329,7 @@ MATERIAL
 				if("rods")
 					var/makerods = min(src.amount,25)
 					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
-					if (rodsinput < 1) return
+					if (rodsinput < 1 || !isnum_safe(rodsinput)) return
 					rodsinput = min(rodsinput,makerods)
 
 					if (!in_interact_range(src, usr)) //no walking away
@@ -345,7 +345,7 @@ MATERIAL
 				if("fl_tiles")
 					var/maketiles = min(src.amount,20)
 					var/tileinput = input("Use how many sheets? (Get 4 tiles for each sheet used)","Max: [maketiles]",1) as num
-					if (tileinput < 1) return
+					if (tileinput < 1 || !isnum_safe(tileinput)) return
 					tileinput = min(tileinput,maketiles)
 
 					if (!in_interact_range(src, usr)) //no walking away
@@ -580,7 +580,7 @@ MATERIAL
 				if("remetal")
 					// what the fuck is this
 					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
-					if (input < 1) return
+					if (input < 1 || !isnum_safe(input)) return
 					input = min(input,src.amount)
 
 					if (!in_interact_range(src, usr)) //no walking away
@@ -718,7 +718,7 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 
-			if (!in_interact_range(src, user)) //no walking away
+			if (!in_interact_range(src, user) || !isnum_safe(splitnum)) //no walking away
 				return
 
 			var/obj/item/rods/new_stack = split_stack(splitnum)
@@ -752,7 +752,7 @@ MATERIAL
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				makemetal = round(src.amount / 2) // could have changed during input()
 
-				if (!in_interact_range(src, user)) //no walking away
+				if (!in_interact_range(src, user) || !isnum_safe(weldinput)) //no walking away
 					return
 
 				if (weldinput < 1) return

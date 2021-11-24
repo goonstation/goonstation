@@ -493,15 +493,20 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/croissant(src)
 
+			src.recipes += new /datum/cookingrecipe/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/pie_anything(src)
+			src.recipes += new /datum/cookingrecipe/pie_cherry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blueberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blackberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_raspberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_apple(src)
 			src.recipes += new /datum/cookingrecipe/pie_lime(src)
 			src.recipes += new /datum/cookingrecipe/pie_lemon(src)
 			src.recipes += new /datum/cookingrecipe/pie_slurry(src)
 			src.recipes += new /datum/cookingrecipe/pie_pumpkin(src)
 			src.recipes += new /datum/cookingrecipe/pie_custard(src)
-			src.recipes += new /datum/cookingrecipe/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
-			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
 			src.recipes += new /datum/cookingrecipe/pot_pie(src)
 			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
@@ -727,7 +732,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
-			src.time = clamp(text2num(href_list["time"]), 1, 10)
+			src.time = clamp(text2num_safe(href_list["time"]), 1, 10)
 			src.updateUsrDialog()
 			return
 
@@ -735,7 +740,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>The dials are locked! THIS IS HOW OVENS WORK OK</span>")
 				return
-			var/operation = text2num(href_list["heat"])
+			var/operation = text2num_safe(href_list["heat"])
 			if (operation == 1) src.heat = "High"
 			if (operation == 2) src.heat = "Low"
 			src.updateUsrDialog()
@@ -798,7 +803,7 @@ table#cooktime a#start {
 		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
@@ -933,7 +938,7 @@ table#cooktime a#start {
 				if (/obj/item/reagent_containers/food/snacks/condiment/cream)
 					new/obj/item/reagent_containers/food/snacks/ingredient/butter(src.loc)
 					qdel( P )
-				if (/obj/item/reagent_containers/food/snacks/candy/regular)
+				if (/obj/item/reagent_containers/food/snacks/candy/chocolate)
 					new/obj/item/reagent_containers/food/snacks/condiment/chocchips(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn)

@@ -158,20 +158,14 @@ datum
 				var/mob/living/carbon/human/H = holder.my_atom
 				if(H.bioHolder.age < 21) // Yes. Its 21. This is Space America. That is canon now.
 					if(seen_by_camera(H))
-					// determine the name of the perp (goes by ID if wearing one)
+						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = H.name
 						if(H:wear_id && H:wear_id:registered)
 							perpname = H:wear_id:registered
-						// find the matching security record
-						for(var/datum/data/record/R in data_core.general)
-							if(R.fields["name"] == perpname)
-								for (var/datum/data/record/S in data_core.security)
-									if (S.fields["id"] == R.fields["id"])
-										// now add to rap sheet
-										S.fields["criminal"] = "*Arrest*"
-										S.fields["mi_crim"] = "Underage drinking."
-
-									break
+						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+						if(sec_record && sec_record["criminal"] != "*Arrest*")
+							sec_record["criminal"] = "*Arrest*"
+							sec_record["mi_crim"] = "Underage drinking."
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -1628,6 +1622,16 @@ datum
 			fluid_b = 0
 			alch_strength = 0.5
 			description = "A hellish cocktail that stinks of rotting garbage."
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/wellerman
+			name = "Wellerman"
+			id = "wellerman"
+			fluid_r = 121
+			fluid_g = 87
+			fluid_b = 33
+			alch_strength = 0.7
+			description = "A great shanty and a nice themed drink as well!"
 			reagent_state = LIQUID
 
 		fooddrink/alcoholic/kalimoxto

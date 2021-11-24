@@ -106,9 +106,9 @@
 			return null
 		return active_tools[active_tool]
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
+			if (src.now_pushing)
 				return
 			..()
 			if (!istype(AM, /atom/movable))

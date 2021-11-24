@@ -95,10 +95,11 @@
 	can_dual_wield = 0
 	two_handed = 1
 	var/datum/projectile/bullet/g11/small/smallproj = new
+	default_magazine = /obj/item/ammo/bullets/g11
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/g11)
-		ammo = new/obj/item/ammo/bullets/g11
+		ammo = new default_magazine
 		. = ..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -206,23 +207,26 @@
 	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
 //smart extinguisher
-/obj/item/gun/flamethrower/assembled/loaded/extinguisher
+/obj/item/gun/flamethrower/extinguisher
 	name = "smart fire extinguisher"
 	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "fire_extinguisher0"
 	item_state = "fireextinguisher0"
+	swappable_tanks = 0
+	spread_angle = 10
+	mode = 1 //magic number bad
 
 	New()
 		. = ..()
-		src.fueltank.reagents.remove_any(400)
-		src.fueltank.reagents.add_reagent("fffoam", 400)
-		src.amt_chem = 10
+		fueltank = new/obj/item/reagent_containers/glass/beaker/extractor_tank/thick(src)
+		gastank = new/obj/item/tank/oxygen(src)
+		src.fueltank.reagents.add_reagent("ff-foam", 1000)
+		src.amt_chem = 20
 		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
-
-	attack_hand()
-		return//:shelterfrog:
+		src.current_projectile.shot_number = 3
+		src.chem_divisor = 3
 
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
 	return (M.hasStatus("burning"))
@@ -235,9 +239,10 @@
 	caliber = 0.512
 	max_ammo_capacity = 6
 	has_empty_state = 1
+	default_magazine = /obj/item/ammo/bullets/gyrojet
 
 	New()
-		ammo = new/obj/item/ammo/bullets/gyrojet
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
 
@@ -286,20 +291,22 @@
 	has_empty_state = 1
 	gildable = 1
 	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/deagle50cal
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
-		ammo = new/obj/item/ammo/bullets/deagle50cal
+		ammo = new default_magazine
 		. = ..()
 
 	//gimmick deagle that decapitates
 	decapitation
 		force = 18.0 //mmm, pistol whip
 		throwforce = 50 //HEAVY pistol
+		default_magazine = /obj/item/ammo/bullets/deagle50cal/decapitation
 		New()
 			. = ..()
 			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
-			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+			ammo = new default_magazine
 
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal

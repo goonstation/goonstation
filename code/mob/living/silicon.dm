@@ -506,7 +506,7 @@ var/global/list/module_editors = list()
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
 			src.real_name = borgify_name("Robot")
-			src.name = src.real_name
+			src.UpdateName()
 			return
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
@@ -516,7 +516,7 @@ var/global/list/module_editors = list()
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
-					src.name = newname
+					src.UpdateName()
 					return 1
 				else
 					continue

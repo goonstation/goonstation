@@ -4,6 +4,7 @@
 var/global/ocean_reagent_id = "water"
 var/global/ocean_name = "ocean"
 var/global/datum/color/ocean_color = 0
+var/global/obj/fluid/ocean_fluid_obj = null
 
 /// Processes fluid turfs
 /datum/controller/process/fluid_turfs

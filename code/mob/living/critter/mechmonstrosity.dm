@@ -118,7 +118,7 @@
 		HH.can_hold_items = 0
 		HH.can_attack = 1
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))
@@ -565,7 +565,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(0)
 		return .

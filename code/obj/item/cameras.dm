@@ -203,7 +203,7 @@
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(0.6875, 0.625, MATRIX_SCALE)
+			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 			IM.pixel_y = 1
 			src.UpdateOverlays(IM, "photo")
 		if (istype(IC))
@@ -335,9 +335,6 @@
 	if (!photo)
 		return
 
-	if (istype(photo_icon))
-		photo_icon.Crop(1,1,32,32) // mehhhh
-
 	//photo.overlays += the_turf
 
 	//turficon.Scale(22,20)
@@ -357,15 +354,11 @@
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
 			continue
+		var/icon/ic = getFlatIcon(A)
+		if (ic)
+			photo_icon.Blend(ic, ICON_OVERLAY, x=A.pixel_x + world.icon_size * (A.x - the_turf.x), y=A.pixel_y + world.icon_size * (A.y - the_turf.y))
 		if (ismob(A))
 			var/mob/M = A
-			var/image/X = build_composite_icon(A)
-			var/icon/Y = A:build_flat_icon()
-			//X.Scale(22,20)
-			photo.overlays += X
-			photo_icon.Blend(Y, ICON_OVERLAY)
-			qdel(X)
-			qdel(Y)
 
 			if(src.steals_souls)
 				stolen_souls += M
@@ -409,16 +402,7 @@
 
 		else
 			if (itemnumber < 5)
-				var/image/X = build_composite_icon(A)
-				var/icon/Y = getFlatIcon(A)
-				if (X)
-					//X.Scale(22,20)
-					photo.overlays += X
-				if (Y)
-					photo_icon.Blend(Y, ICON_OVERLAY)
 				itemnumber++
-				qdel(X)
-				qdel(Y)
 
 				if (!item_title)
 					item_title = " \a [A]"
@@ -443,6 +427,10 @@
 		else if (item_title)
 			finished_title = "photo of[item_title]"
 			finished_detail = "You can see [item_detail]."
+
+	if (istype(photo_icon))
+		photo_icon.Crop(1,1,32,32)
+	photo.icon = photo_icon
 
 	var/obj/item/photo/P
 	if(src.takes_voodoo_pics)

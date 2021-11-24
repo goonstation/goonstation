@@ -12,7 +12,6 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED
 
 	armed
 		icon_state = "bear_trap-open"
@@ -46,7 +45,7 @@
 			actions.start(action_bar, M)
 		return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if ((ishuman(AM)) && (src.armed))
 			var/mob/living/carbon/H = AM
 			src.triggered(H)

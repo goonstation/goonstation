@@ -45,6 +45,8 @@
 		. = list("stock" = list())
 
 		for (var/datum/materiel/M as anything in materiel_stock)
+			if(!M.vr_allowed && istype(get_area(src), /area/sim))
+				continue
 			.["stock"] += list(list(
 				"ref" = "\ref[M]",
 				"name" = M.name,
@@ -81,6 +83,8 @@
 			accepted_token(I, user)
 		else
 			..()
+
+
 
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
@@ -149,6 +153,9 @@
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
+	ex_act()
+		return
+
 	New()
 		..()
 		// List of avaliable objects for purchase
@@ -166,6 +173,7 @@
 		materiel_stock += new/datum/materiel/loadout/engineer
 		materiel_stock += new/datum/materiel/loadout/marksman
 		materiel_stock += new/datum/materiel/loadout/knight
+		materiel_stock += new/datum/materiel/loadout/bard
 		materiel_stock += new/datum/materiel/loadout/custom
 /*
 		materiel_stock += new/datum/materiel/storage/rucksack
@@ -195,6 +203,7 @@
 	var/category = null
 	var/path = null
 	var/description = "If you see me, gannets is an idiot."
+	var/vr_allowed = TRUE
 
 /datum/materiel/sidearm
 	category = WEAPON_VENDOR_CATEGORY_SIDEARM
@@ -262,7 +271,7 @@
 
 /datum/materiel/utility/donuts
 	name = "Robust(ed) Donuts"
-	path = /obj/item/storage/box/robustdonuts
+	path = /obj/item/storage/lunchbox/robustdonuts
 	description = "Two Robust Donuts and two Robusted Donuts, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
 /datum/materiel/utility/crowdgrenades
@@ -363,9 +372,14 @@
 	description = "High-powered sniper rifle that can fire through two solid walls, optical thermal scanner and a pouch of smoke grenades"
 
 /datum/materiel/loadout/knight
-	name = "Knight (Prototype)"
+	name = "Knight"
 	path = /obj/storage/crate/classcrate/melee
-	description = "A prototype melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
+
+/datum/materiel/loadout/bard
+	name = "Bard (Prototype)"
+	path = /obj/storage/crate/classcrate/bard
+	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
@@ -429,6 +443,7 @@
 	name = "Military Headset"
 	path = /obj/item/device/radio/headset/syndicate/comtac
 	description = "A two-way radio headset designed to protect against any incoming hazardous noise, including flashbangs."
+	vr_allowed = FALSE
 // Requisition tokens
 
 /obj/item/requisition_token

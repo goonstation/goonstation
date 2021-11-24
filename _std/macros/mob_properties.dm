@@ -189,6 +189,7 @@ To remove:
 #define PROP_THERMALVISION(x) x("thermalvision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 #define PROP_THERMALVISION_MK2(x) x("thermalvisionmk2", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT) // regular thermal sight + see mobs through walls
 #define PROP_SPECTRO(x) x("spectrovision", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+#define PROP_EXAMINE_ALL_NAMES(x) x("examine_all", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 
 #define PROP_CANTMOVE(x) x("cantmove", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_CANTSPRINT(x) x("cantsprint", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
@@ -197,6 +198,9 @@ To remove:
 #define PROP_NEVER_DENSE(x) x("neverdense", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 #define PROP_INVISIBILITY(x) x("invisibility", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
 #define PROP_PASSIVE_WRESTLE(x) x("wrassler", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_NO_SELF_HARM(x) x("noselfharm", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_NOCLIP(x) x("noclip", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
+#define PROP_AI_UNTRACKABLE(x) x("aiuntrackable", APPLY_MOB_PROPERTY_SIMPLE, REMOVE_MOB_PROPERTY_SIMPLE)
 //armour properties
 #define PROP_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
 #define PROP_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_MOB_PROPERTY_MAX, REMOVE_MOB_PROPERTY_MAX)
@@ -456,5 +460,50 @@ To remove:
 				_L[property][MOB_PROPERTY_ACTIVE_PRIO] = _TO_APPLY_PRIO; \
 				if(do_update) { update_macro(target, property, _OLD_VAL); } \
 			} \
+		} \
+	} while (0)
+
+
+#define APPLY_MOB_PROPERTY_ROOT_SUM_SQUARE(target, property, do_update, update_macro, source, value) \
+	do { \
+		var/list/_L = target.mob_properties; \
+		var/_V = value; \
+		var/_S = source; \
+		if (_L) { \
+			if (_L[property]) { \
+				if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
+					var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
+					_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 - _L[property][MOB_PROPERTY_SOURCES_LIST][_S]**2); \
+					_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+					_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 + _V**2); \
+					if(do_update) { update_macro(target, property, _OLD_VAL); } \
+				} else { \
+					_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+					_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 + _V**2); \
+					if(do_update) { update_macro(target, property, _L[property][MOB_PROPERTY_ACTIVE_VALUE] - _V); } \
+				} \
+			} else { \
+				_L[property] = list(_V, list()); \
+				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+				if(do_update) { update_macro(target, property, null); } \
+			} \
+		}; \
+	} while (0)
+
+#define REMOVE_MOB_PROPERTY_ROOT_SUM_SQUARE(target, property, do_update, update_macro, source) \
+	do { \
+		var/list/_L = target.mob_properties; \
+		var/_S = source; \
+		if (_L?[property]) { \
+			var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
+			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 - _L[property][MOB_PROPERTY_SOURCES_LIST][_S]**2); \
+				_L[property][MOB_PROPERTY_SOURCES_LIST] -= _S; \
+				if(do_update) { update_macro(target, property, _OLD_VAL); } \
+			} \
+			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
+				_L -= property; \
+			} \
+			if(do_update) { update_macro(target, property, _OLD_VAL); } \
 		} \
 	} while (0)

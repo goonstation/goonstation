@@ -170,7 +170,7 @@
 					set_temperature = clamp(value, -min, max)
 
 				if("temp")
-					var/value = text2num(href_list["val"])
+					var/value = text2num_safe(href_list["val"])
 					var/max = src.emagged ? 400 : 90
 					var/min = src.emagged ? -120 : 90
 
@@ -378,7 +378,7 @@
 			switch(href_list["op"])
 
 				if("temp")
-					var/value = text2num(href_list["val"])
+					var/value = text2num_safe(href_list["val"])
 
 					// limit to 20-90 degC
 					set_temperature = clamp(set_temperature + value, 0, 200)
