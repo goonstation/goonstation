@@ -2234,7 +2234,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 */
 
 /datum/job/special/syndicate_operative
-	name = "Syndicate"
+	name = "Syndicate Operative"
 	wages = 0
 	limit = 0
 	linkcolor = "#880000"
@@ -2263,7 +2263,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/special/syndicate_operative/leader
-	name = "Syndicate Commander"
+	name = "Syndicate Operative Commander"
 	leader = TRUE
 
 /datum/job/special/syndicate_weak

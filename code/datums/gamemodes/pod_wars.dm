@@ -142,6 +142,7 @@ var/list/pw_rewards_tier3 = null
 
 		setup_control_points()
 		setup_critical_systems()
+		setup_manufacturer_resources()
 
 	SPAWN_DBG(-1)
 		setup_asteroid_ores()
@@ -166,6 +167,12 @@ var/list/pw_rewards_tier3 = null
 
 	src.playsound_to_team(team_NT, "sound/voice/pod_wars_voices/NanoTrasen-Roundstart{ALTS}.ogg", sound_type=PW_ROUNDSTART)
 	src.playsound_to_team(team_SY, "sound/voice/pod_wars_voices/Syndicate-Roundstart{ALTS}.ogg", sound_type=PW_ROUNDSTART)
+
+/datum/game_mode/pod_wars/proc/setup_manufacturer_resources()
+	for_by_tcl(M, /obj/machinery/manufacturer/pod_wars)
+		M.claim_free_resources(src)
+	for_by_tcl(M, /obj/machinery/manufacturer/mining/pod_wars)
+		M.claim_free_resources(src)
 
 /datum/game_mode/pod_wars/proc/setup_critical_systems()
 	for (var/obj/pod_base_critical_system/sys in world)
