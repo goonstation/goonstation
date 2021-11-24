@@ -6,7 +6,7 @@
 	opacity = 1
 	density = 1
 	flags = FPRINT | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0

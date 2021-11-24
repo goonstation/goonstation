@@ -1060,7 +1060,8 @@
 
 		if (S == "door" && istype(target, /obj/machinery/door))
 			var/obj/machinery/door/door = target
-			door.tear_apart(src)
+			SPAWN_DBG(0)
+				door.tear_apart(src)
 			return 1
 
 		if (S == "table" && istype(target, /obj/table))

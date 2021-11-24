@@ -1,3 +1,6 @@
+(t)mon nov 22 21
+(u)Flourish
+(*)Added Observe Random Player/ORP command, which lets you observe random living logged-in players.
 (t)tue nov 16 21
 (u)TTerc
 (*)Stealth mode now disguises your ckey in roundend credits, miscreant list, antag list and crew objective list (as long as your stealth key isn't a single space)
