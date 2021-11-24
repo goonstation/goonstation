@@ -302,8 +302,8 @@
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
 					if(!L || !length(L)) return
-					var/new_lethal_state = text2num(L["lethal"])
-					var/new_enabled_state = text2num(L["active"])
+					var/new_lethal_state = text2num_safe(L["lethal"])
+					var/new_enabled_state = text2num_safe(L["active"])
 					if(!isnull(new_lethal_state))
 						if(new_lethal_state)
 							src.lasers = 1

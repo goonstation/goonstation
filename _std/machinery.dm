@@ -6,10 +6,6 @@
 
 #define MACHINE_PROC_INTERVAL (0.4 SECONDS)
 
-//communications stuff
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
 //lighting stuff
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1

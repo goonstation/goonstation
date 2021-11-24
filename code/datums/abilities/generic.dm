@@ -145,7 +145,7 @@
 					M.changeStatus("weakened", 4 SECONDS * effect_mult)
 					M.force_laydown_standup()
 
-				if (src.hasStatus("weakened") && src.getStatusDuration("weakened") < 3 SECONDS * effect_mult) //address race of thus throw_end() happening before this proc lands due to Bump() timing
+				if (src.hasStatus("weakened") && src.getStatusDuration("weakened") < 3 SECONDS * effect_mult) //address race of thus throw_end() happening before this proc lands due to bump() timing
 					src.setStatus("weakened", 3 SECONDS * effect_mult)
 				else
 					src.changeStatus("weakened", 3 SECONDS * effect_mult)

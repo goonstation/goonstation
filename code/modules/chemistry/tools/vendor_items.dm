@@ -46,10 +46,10 @@
 	proc/smash(var/turf/T)
 		if (!T)
 			T = src.loc
-		src.reagents.reaction(T)
+		src.reagents?.reaction(T)
 		if (ismob(T)) // we've reacted with whatever we've hit, but if what we hit is a mob, let's not stick glass in their contents
 			T = get_turf(T)
-		T.visible_message("<span class='alert'>[src] shatters!</span>")
+		T?.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc(src.loc)

@@ -21,7 +21,7 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	armed
 		icon_state = "mousetraparmed"
@@ -249,7 +249,7 @@
 			..()
 		return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if ((ishuman(AM)) && (src.armed))
 			var/mob/living/carbon/H = AM
 			if (H.m_intent == "run")
@@ -462,22 +462,21 @@
 		src.set_dir(user.dir)
 		walk(src, src.dir, 3)
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
 			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
 			walk(src, 0)
-			src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
+			SPAWN_DBG(0)
+				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)
 
-			if (src.mousetrap)
-				src.mousetrap.set_loc(src.loc)
-				src.mousetrap = null
-			if (src.frame)
-				src.frame.set_loc(src.loc)
-				src.frame = null
+				if (src.mousetrap)
+					src.mousetrap.set_loc(src.loc)
+					src.mousetrap = null
+				if (src.frame)
+					src.frame.set_loc(src.loc)
+					src.frame = null
 
-			qdel(src)
-
-		return
+				qdel(src)
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)

@@ -202,7 +202,7 @@
 
 /mob/living/critter/flock/drone/is_spacefaring() return 1
 
-/mob/living/critter/flock/drone/CanPass(atom/movable/mover)
+/mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflock(mover))
 		return 1
 	else
@@ -389,7 +389,7 @@
 	else
 		return ..()
 
-/mob/living/critter/flock/drone/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/critter/flock/drone/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(floorrunning)
 		return 1
 	else

@@ -464,7 +464,6 @@
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
-	var/datum/db_record/active1 = null
 	var/a_id = null
 	var/temp = null
 	var/printing = null
@@ -583,8 +582,6 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if (!data_core.bank.has_record(src.active1))
-			src.active1 = null
 		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
@@ -603,16 +600,13 @@
 				if (href_list["logout"])
 					src.authenticated = null
 					src.screen = null
-					src.active1 = null
 				else
 					if (href_list["login"])
 						if (usr_is_robot && !isghostdrone(usr))
-							src.active1 = null
 							src.authenticated = 1
 							src.rank = "AI"
 							src.screen = 1
 						if (istype(src.scan, /obj/item/card/id))
-							src.active1 = null
 							if(check_access(src.scan))
 								src.authenticated = src.scan.registered
 								src.rank = src.scan.assignment
@@ -620,10 +614,8 @@
 			if (src.authenticated)
 				if (href_list["list"])
 					src.screen = 2
-					src.active1 = null
 				else if (href_list["main"])
 					src.screen = 1
-					src.active1 = null
 				else if(href_list["Fname"])
 					var/datum/db_record/R = locate(href_list["Fname"])
 					var/t1 = input("Please input name:", "Secure. records", R["name"], null)  as null|text

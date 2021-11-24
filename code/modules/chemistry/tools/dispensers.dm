@@ -355,6 +355,13 @@
 			for (var/i = 0, i < 3, i++)
 				reagents.temperature_reagents(power*500, power*400, 1000, 1000, 1)
 
+	Bumped(AM)
+		. = ..()
+		if (ismob(AM))
+			add_fingerprint(AM, TRUE)
+		else if (ismob(usr))
+			add_fingerprint(usr, TRUE)
+
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
 	desc = "A tank of helium."

@@ -555,7 +555,7 @@
 	proc/get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
 
-	Bump(var/atom/target)
+	bump(var/atom/target)
 		if (get_move_velocity_magnitude() > 5)
 			var/power = get_move_velocity_magnitude()
 
@@ -606,7 +606,8 @@
 				if (power > 20)
 					if (istype(O, /obj/machinery/door) && O.density)
 						var/obj/machinery/door/D = O
-						D.try_force_open(src)
+						SPAWN_DBG(0)
+							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
 

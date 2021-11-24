@@ -367,7 +367,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.blocks_air && target.air)
+			if(!target.gas_impermeable && target.air)
 				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
@@ -534,7 +534,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isliving(entering) && isturf(owner) && prob(75))
 			var/mob/living/L = entering
-			if(L.slip())
+			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
 				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return

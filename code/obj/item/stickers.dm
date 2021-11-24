@@ -402,6 +402,8 @@
 	var/list/skins = list("gold_star" = "gold star", "banana", "umbrella", "heart", "clover", "skull", "Larrow" = "left arrow",
 	"Rarrow" = "right arrow", "no" = "\"no\"", "moon", "smile", "rainbow", "frown", "balloon", "horseshoe", "bee")
 
+	var/pinpointer_category = TR_CAT_SPY_STICKERS_REGULAR
+
 	var/HTML = null
 
 	New()
@@ -444,11 +446,15 @@
 		if (src.camera)
 			src.camera.camera_status = 0
 			src.camera.c_tag = src.camera_tag
+		if(!isnull(pinpointer_category))
+			STOP_TRACKING_CAT(pinpointer_category)
 		..()
 
 	disposing()
 		if ((active) && (attached != null))
 			attached.open_to_sound = 0
+			if(!isnull(pinpointer_category))
+				START_TRACKING_CAT(pinpointer_category)
 		if (src.camera)
 			qdel(src.camera)
 		if (src.radio)
@@ -472,6 +478,8 @@
 		if (src.radio)
 			src.loc.open_to_sound = 1
 
+		if(!isnull(pinpointer_category))
+			START_TRACKING_CAT(pinpointer_category)
 
 	proc/generate_html()
 		src.HTML = {"<TT>Camera Broadcast Network:<BR>
@@ -546,6 +554,7 @@
 /obj/item/sticker/spy/radio_only/det_only
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
 	radio_path = /obj/item/device/radio/spy/det_only
+	pinpointer_category = TR_CAT_SPY_STICKERS_DET
 
 /obj/item/device/camera_viewer/sticker
 	name = "camera monitor"
@@ -558,9 +567,11 @@
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
+	slots = 8
 	spawn_contents = list(/obj/item/sticker/spy = 5,
 	/obj/item/device/camera_viewer/sticker,
-	/obj/item/device/radio/headset)
+	/obj/item/device/radio/headset,
+	/obj/item/pinpointer/category/spysticker)
 
 /obj/item/storage/box/spy_sticker_kit/radio_only
 	spawn_contents = list(/obj/item/sticker/spy/radio_only = 5,
@@ -568,7 +579,8 @@
 
 /obj/item/storage/box/spy_sticker_kit/radio_only/detective
 	spawn_contents = list(/obj/item/sticker/spy/radio_only/det_only = 6,
-	/obj/item/device/radio/headset/detective)
+	/obj/item/device/radio/headset/detective,
+	/obj/item/pinpointer/category/spysticker/det)
 
 /obj/item/device/radio/spy
 	name = "spy radio"

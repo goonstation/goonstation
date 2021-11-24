@@ -480,7 +480,7 @@
 	density = 0
 	luminosity = 1
 	invisibility = INVIS_ALWAYS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/power = 0
 	var/active = 1
 	var/obj/machinery/power/pt_laser/source = null
@@ -496,7 +496,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
@@ -514,7 +514,8 @@
 /obj/lpt_laser/ex_act(severity)
 	return
 
-/obj/lpt_laser/HasEntered(var/atom/movable/AM)
+/obj/lpt_laser/Crossed(atom/movable/AM)
+	..()
 	if (src.active && isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
 			source.affecting_mobs |= AM

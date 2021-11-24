@@ -13,6 +13,7 @@
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	icon_override = "civ"
+	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
 	var/haswiretap
 	hardened = 0
@@ -54,6 +55,7 @@
 	secure_frequencies = list("h" = R_FREQ_COMMAND)
 	secure_classes = list("h" = RADIOCL_COMMAND)
 	icon_override = "head"
+	icon_tooltip = "Head of Staff"
 
 /obj/item/device/radio/headset/command/ai
 	name = "AI Headset"
@@ -75,6 +77,7 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "ai"
+	icon_tooltip = "Artificial Intelligence"
 
 /obj/item/device/radio/headset/command/nt
 	name = "NT Headset"
@@ -87,6 +90,7 @@
 		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "nt"
+	icon_tooltip = "NanoTrasen Special Operative"
 
 /obj/item/device/radio/headset/command/captain
 	name = "Captain's Headset"
@@ -108,6 +112,7 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "cap"
+	icon_tooltip = "Captain"
 
 /obj/item/device/radio/headset/command/radio_show_host
 	name = "Radio show host's Headset"
@@ -129,6 +134,7 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "civ"
+	icon_tooltip = "Civilian"
 
 /obj/item/device/radio/headset/command/hos
 	name = "Head of Security's Headset"
@@ -141,6 +147,7 @@
 		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "hos"
+	icon_tooltip = "Head of Security"
 
 /obj/item/device/radio/headset/command/hop
 	name = "Head of Personnel's Headset"
@@ -160,6 +167,7 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "hop"
+	icon_tooltip = "Head of Personnel"
 
 /obj/item/device/radio/headset/command/rd
 	name = "Research Director's Headset"
@@ -174,6 +182,7 @@
 		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "rd"
+	icon_tooltip = "Research Director"
 
 /obj/item/device/radio/headset/command/md
 	name = "Medical Director's Headset"
@@ -188,6 +197,7 @@
 		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "md"
+	icon_tooltip = "Medical Director"
 
 /obj/item/device/radio/headset/command/ce
 	name = "Chief Engineer's Headset"
@@ -200,6 +210,7 @@
 		"e" = RADIOCL_ENGINEERING,
 		)
 	icon_override = "ce"
+	icon_tooltip = "Chief Engineer"
 
 /obj/item/device/radio/headset/security
 	name = "Security Headset"
@@ -210,6 +221,7 @@
 		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "sec"
+	icon_tooltip = "Security"
 
 /obj/item/device/radio/headset/detective
 	name = "Detective's Headset"
@@ -224,6 +236,7 @@
 		"d" = RADIOCL_DETECTIVE,
 		)
 	icon_override = "det" //neat little magnifying glass sprite I made
+	icon_tooltip = "Detective"
 
 /obj/item/device/radio/headset/engineer
 	name = "Engineering Headset"
@@ -234,6 +247,7 @@
 		"e" = RADIOCL_ENGINEERING,
 		)
 	icon_override = "eng"
+	icon_tooltip = "Engineer"
 
 /obj/item/device/radio/headset/medical
 	name = "Medical Headset"
@@ -244,6 +258,7 @@
 		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "med"
+	icon_tooltip = "Medical"
 
 /obj/item/device/radio/headset/research
 	name = "Research Headset"
@@ -254,6 +269,7 @@
 		"r" = RADIOCL_RESEARCH,
 		)
 	icon_override = "sci"
+	icon_tooltip = "Scientist"
 
 /obj/item/device/radio/headset/civilian
 	name = "Civilian Headset"
@@ -263,6 +279,7 @@
 	secure_classes = list(
 		"c" = RADIOCL_CIVILIAN,
 		)
+	icon_tooltip = "Civilian"
 
 /obj/item/device/radio/headset/shipping
 	name = "Shipping Headset"
@@ -276,6 +293,7 @@
 		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "qm"
+	icon_tooltip = "Quartermaster"
 
 /obj/item/device/radio/headset/mail
 	name = "Mailman's Headset"
@@ -289,11 +307,13 @@
 		"e" = RADIOCL_ENGINEERING,
 		)
 	icon_override = "mail"
+	icon_tooltip = "Mailman"
 
 /obj/item/device/radio/headset/clown
 	name = "Clown's Headset"
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. Anybody using this one is unlikely to be taken seriously."
 	icon_override = "clown"
+	icon_tooltip = "Clown"
 
 /obj/item/device/radio/headset/syndicate
 	name = "Radio Headset"
@@ -304,9 +324,11 @@
 	secure_classes = list(RADIOCL_SYNDICATE)
 	protected_radio = 1
 	icon_override = "syndie"
+	icon_tooltip = "Syndicate Operative"
 
 	leader
 		icon_override = "syndieboss"
+		icon_tooltip = "Syndicate Commander"
 
 	bard
 		name = "Military Headset"
@@ -388,7 +410,7 @@ Secure Frequency:
 	if ((usr.contents.Find(src) || in_interact_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["sfreq"])
-			var/new_frequency = sanitize_frequency(text2num("[secure_frequencies["h"]]") + text2num(href_list["sfreq"]))
+			var/new_frequency = sanitize_frequency(text2num_safe("[secure_frequencies["h"]]") + text2num_safe(href_list["sfreq"]))
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
 

@@ -147,6 +147,12 @@
 			else
 				return 0
 
+		if(!isdead(holder)) //This goes up here 'cuz removing limbs nulls holder
+			if(prob(40))
+				holder.emote("scream")
+		holder.TakeDamage("chest",20,0)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
+
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
@@ -166,11 +172,6 @@
 				logTheThing("diary", tool.the_mob, holder, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
 
-		if(!isdead(holder))
-			if(prob(40))
-				holder.emote("scream")
-		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
 
 		return 1
 

@@ -967,6 +967,10 @@ datum
 				if(M.sleeping) M.sleeping = 0
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
+				if(holder.has_reagent("synaptizine"))
+					holder.remove_reagent("synaptizine", 5 * mult)
+				if(holder.has_reagent("mannitol"))
+					holder.remove_reagent("mannitol", 5 * mult)
 				..()
 				return
 

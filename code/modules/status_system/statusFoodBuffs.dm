@@ -96,6 +96,8 @@
 
 	getTooltip()
 		. = "Healing [heal_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
+	getChefHint()
+		. = "Heals [heal_brute] brute damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
@@ -110,6 +112,9 @@
 	getTooltip()
 		. = "Healing [heal_tox] toxin damage every [tickSpacing/(1 SECOND)] sec."
 
+	getChefHint()
+		. = "Heals [heal_tox] toxin damage every [tickSpacing/ (1 SECOND)] sec."
+
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
 	name = "Food HoT (Burn)"
@@ -122,6 +127,9 @@
 
 	getTooltip()
 		. = "Healing [heal_burn] burn damage every [tickSpacing/(1 SECOND)] sec."
+
+	getChefHint()
+		. = "Heals [heal_burn] burn damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
@@ -136,7 +144,10 @@
 	tickSpacing = 20
 
 	getTooltip()
-		. = "Healing 0.26 damage spread across Brute/Burn/Toxin damage [tickSpacing/(1 SECOND)] sec."
+		. = "Healing 0.26 damage spread across Brute/Burn/Toxin damage every [tickSpacing/(1 SECOND)] sec."
+
+	getChefHint()
+		. = "Heals 0.26 damage spread across Brute/Burn/Toxin damage every [tickSpacing/ (1 SECOND)] sec."
 
 /datum/statusEffect/foodcold
 	id = "food_cold"
@@ -149,6 +160,10 @@
 
 	var/tickCount = 0
 	var/tickSpacing = 20 //Time between ticks.
+
+	getChefHint()
+		. = "Decreases the consumer's body temperature."
+
 
 	onUpdate(timePassed)
 		tickCount += timePassed
@@ -171,6 +186,9 @@
 
 	var/tickCount = 0
 	var/tickSpacing = 20 //Time between ticks.
+
+	getChefHint()
+		. = "Incrases the consumer's body temperature."
 
 	onUpdate(timePassed)
 		tickCount += timePassed
@@ -200,6 +218,9 @@
 	getTooltip()
 		. = "Your stamina regen is increased by [change]."
 
+	getChefHint()
+		. = "Increases stamina regen by [change]."
+
 /datum/statusEffect/foodstaminamax
 	id = "food_energized"
 	name = "Food (Energized)"
@@ -217,6 +238,9 @@
 
 	getTooltip()
 		. = "Your max. stamina is increased by [change]."
+
+	getChefHint()
+		. = "Increases max. stamina by [change]."
 
 	onAdd(optional=null)
 		. = ..()
@@ -251,6 +275,9 @@
 	getTooltip()
 		. = "Your max. health is increased by [change]."
 
+	getChefHint()
+		. = "Increases max. health by [change]"
+
 	onAdd(optional=null)
 		. = ..(change)
 
@@ -267,6 +294,9 @@
 	maxDuration = 6000
 	unique = 1
 
+	getChefHint()
+		. = "Makes the consumer feel more gassy."
+
 /datum/statusEffect/deep_burp
 	id = "food_deep_burp"
 	name = "Food (Gross Burps)"
@@ -276,6 +306,9 @@
 	maxDuration = 6000
 	unique = 1
 
+	getChefHint()
+		. = "Makes the consumer's stomach feel more gassy."
+
 /datum/statusEffect/food_cat_eyes
 	id = "food_cateyes"
 	name = "Food (Night Vision)"
@@ -284,6 +317,9 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+
+	getChefHint()
+		. = "Improves the consumer's vision in dark spaces"
 
 /datum/statusEffect/fire_burp
 	id = "food_fireburp"
@@ -303,6 +339,9 @@
 		id = "food_fireburp_big"
 		temp = 1800
 		range = 6
+
+	getChefHint()
+		. = "Creates fire in the consumer's stomach."
 
 	proc/cast()
 		var/turf/T = get_step(owner,owner.dir)
@@ -344,6 +383,10 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+
+	getChefHint()
+		. = "Increases resilience of the joints, making them somehow more resistant to \"Popping Off\"..."
+
 	onAdd(optional = 10)
 		. = ..()
 		if(ismob(owner))
@@ -365,6 +408,9 @@
 	maxDuration = 6000
 	unique = 1
 
+	getChefHint()
+		. = "Strengthens the body's resilience to diseases"
+
 /datum/statusEffect/rad_resist
 	id = "food_rad_resist"
 	name = "Food (Rad-Wick)"
@@ -373,6 +419,9 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+
+	getChefHint()
+		. = "Strenghtens the body's resistance to radiation."
 
 	onAdd(optional = 80)
 		. = ..()
@@ -395,6 +444,9 @@
 	maxDuration = 6000
 	unique = 1
 
+	getChefHint()
+		. = "Increase strengths of farts as to provide thrust."
+
 /datum/statusEffect/bad_breath
 	id = "food_bad_breath"
 	name = "Food (Bad Breath)"
@@ -403,6 +455,9 @@
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
+
+	getChefHint()
+		. = "Gives the consumer an absolutely terrible breath smell."
 
 /datum/statusEffect/sweaty
 	id = "food_sweaty"
@@ -416,12 +471,19 @@
 	var/sweat_prob = 1
 	var/tickCount = 0
 	var/static/tickSpacing = 20 //Time between ticks.
+	var/sweat_adjective = "" // used for getChefHint()
+
+
 
 	big
 		name = "Food (Sweaty+)"
 		id = "food_sweaty_big"
 		desc = "You feel really sweaty!"
 		sweat_prob = 5
+		sweat_adjective = "REALLY "
+
+	getChefHint()
+		. = "Makes the consumer [sweat_adjective]sweaty."
 
 	onUpdate(timePassed)
 		tickCount += timePassed

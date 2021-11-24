@@ -6960,15 +6960,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "atK" = (
@@ -15334,7 +15330,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "aOt" = (
@@ -20695,8 +20693,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/pen/marker/blue,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
 /obj/machinery/door/firedoor/pyro,
+/obj/item/bell/hop{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bbg" = (
@@ -23682,7 +23686,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24818,7 +24824,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bkI" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25255,7 +25263,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blP" = (
@@ -25392,7 +25402,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bmb" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25659,7 +25671,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmI" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmJ" = (
@@ -26790,7 +26804,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boU" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boV" = (
@@ -27588,7 +27604,9 @@
 /turf/space,
 /area/space)
 "bqR" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -31760,7 +31778,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "bBW" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -36979,7 +36999,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bOM" = (
@@ -37585,7 +37607,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -38297,7 +38321,9 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -54345,6 +54371,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"dRl" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dRM" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -55321,6 +55353,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
+"fud" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -57808,59 +57846,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "jRr" = (
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/paper/book/from_file/critter_compendium{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom";
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 4;
-	pixel_y = 13
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 5;
-	pixel_y = 9
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/multifreq{
-	pixel_x = 7;
-	pixel_y = 1
-	},
-/obj/item/camera{
-	pixel_x = -1;
-	pixel_y = 5
-	},
-/obj/item/device/audio_log{
-	pixel_x = -5;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/milk{
-	pixel_x = 7
-	},
-/obj/item/reagent_containers/food/snacks/sandwich/pb{
-	pixel_y = -3
-	},
+/obj/storage/crate/adventure,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -59120,6 +59106,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"mDA" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mDB" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics";
@@ -98577,7 +98569,7 @@ adC
 aag
 aan
 aan
-aaA
+mDA
 aaF
 aaF
 adC
@@ -99328,7 +99320,7 @@ adC
 adC
 cyI
 cyI
-blw
+fud
 aax
 aaC
 aaG
@@ -121530,7 +121522,7 @@ aag
 aav
 aan
 aaE
-aaA
+mDA
 aaN
 aaN
 aap
@@ -131870,7 +131862,7 @@ aaw
 aap
 aaB
 aai
-aau
+dRl
 aap
 aaw
 aaw

@@ -232,7 +232,7 @@
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				/*if (src.money < 0)
@@ -325,7 +325,7 @@
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				if (src.play_money < 20)

@@ -99,7 +99,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 			thing.glide_size = (32 / (1/thr.speed)) * world.tick_lag
-			if (!thing.Move(next))  // Grayshift: Race condition fix. Bump proc calls are delayed past the end of the loop and won't trigger end condition
+			if (!thing.Move(next))  // Grayshift: Race condition fix. bump proc calls are delayed past the end of the loop and won't trigger end condition
 				thr.hitAThing = TRUE // of !throwing on their own, so manually checking if Move failed as end condition
 				end_throwing = TRUE
 				break
