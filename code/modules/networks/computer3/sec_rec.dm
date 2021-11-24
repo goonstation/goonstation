@@ -112,7 +112,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -528,7 +528,7 @@
 
 				var/datum/db_record/result = null
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
+					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText) || ckey(R["rank"]) == searchText)
 						result = R
 						break
 

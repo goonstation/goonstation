@@ -1,5 +1,7 @@
 
 (t)wed nov 24 21
+(u)pali
+(*)You can now search by rank (job) in SecMate.
 (u)zjdtmkhzt
 (p)6650
 (e)🗺⚖|mapping, balance
