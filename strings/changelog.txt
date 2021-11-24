@@ -1,7 +1,7 @@
 
 (t)wed nov 24 21
 (u)pali
-(*)You can now search by rank (job) in SecMate.
+(*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.
 (+)Addict and Allergy traits now persist properly after cloning.
 (u)zjdtmkhzt
 (p)6650
