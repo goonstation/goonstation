@@ -154,9 +154,16 @@ GAUNTLET CARDS
 	registered = "Captain"
 	assignment = "Captain"
 	keep_icon = TRUE
+	var/touched = FALSE
 	New()
 		access = get_access("Captain")
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if(!touched)
+			touched = TRUE
+			logTheThing("station", user, null, "is the first to pick up [src] at [log_loc(src)]")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
