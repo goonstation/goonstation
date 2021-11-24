@@ -47600,7 +47600,9 @@
 	pixel_x = -8;
 	pixel_y = 3
 	},
-/obj/machinery/door/window/northleft,
+/obj/machinery/door/window/northleft{
+	name = "Chemistry Front Desk"
+	},
 /obj/access_spawn/chemistry,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/purple,
@@ -54046,7 +54048,9 @@
 	opacity = 0
 	},
 /obj/firedoor_spawn,
-/obj/machinery/door/window/northright,
+/obj/machinery/door/window/northright{
+	name = "Chemistry Front Desk"
+	},
 /obj/access_spawn/chemistry,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/five,
 /turf/simulated/floor/purple,
