@@ -550,8 +550,8 @@
 					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
-					if(src.traitHolder && length(src.traitHolder.traits))
-						R.fields["traits"] = src.traitHolder.traits.Copy()
+					if(!isnull(src.traitHolder))
+						R.fields["traits"] = src.traitHolder.copy()
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind

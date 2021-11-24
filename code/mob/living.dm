@@ -1548,8 +1548,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	// Call movement traits
 	if(src.traitHolder)
-		for(var/T in src.traitHolder.moveTraits)
-			var/obj/trait/O = getTraitById(T)
+		for(var/id in src.traitHolder.moveTraits)
+			var/obj/trait/O = src.traitHolder.moveTraits[id]
 			O.onMove(src)
 
 	..()
