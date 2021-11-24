@@ -161,9 +161,9 @@ GAUNTLET CARDS
 
 	pickup(mob/user)
 		. = ..()
-		if(!touched)
+		if(!touched && user.job != "Captain")
 			touched = TRUE
-			logTheThing("station", user, null, "is the first to pick up [src] at [log_loc(src)]")
+			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
