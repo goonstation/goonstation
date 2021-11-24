@@ -1465,12 +1465,12 @@ var/datum/action_controller/actions
 			return
 
 		if (human_owner) //no starting CPR and then putting a mask on
-			if (human_owner.head && (human_owner.head.c_flags & 4))
+			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
 				boutput(human_owner, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (human_owner.wear_mask && !(human_owner.wear_mask.c_flags & 32))
+			if (human_owner.wear_mask)
 				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
@@ -1486,12 +1486,12 @@ var/datum/action_controller/actions
 			return
 
 		if (human_owner)
-			if (human_owner.head && (human_owner.head.c_flags & 4))
+			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
 				boutput(human_owner, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-			if (human_owner.wear_mask && !(human_owner.wear_mask.c_flags & 32))
+			if (human_owner.wear_mask)
 				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
