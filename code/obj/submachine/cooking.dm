@@ -821,6 +821,7 @@ table#cooktime a#start {
 			return 0
 		return 1
 
+#define MIN_FLUID_INGREDIENT_LEVEL 10
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
@@ -927,11 +928,14 @@ table#cooktime a#start {
 					F.reagents.add_reagent("sugar", 20)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					if (P.reagents.has_reagent("milk") && P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/soy)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					//so soy milk is just milk it seems, veganism is a lie
+					if (P.reagents.has_reagent("milk") && P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/rancid)
 					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
 					qdel( P )
