@@ -41715,6 +41715,10 @@
 /obj/item/cell/supercell/charged{
 	pixel_x = -2
 	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "cbQ" = (
@@ -53196,7 +53200,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "eqg" = (
-/obj/machinery/light,
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/cable,
@@ -55408,10 +55411,6 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged{
 	pixel_x = 2
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -58486,6 +58485,11 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/bot/guardbot,
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "mPc" = (
@@ -59298,6 +59302,10 @@
 /obj/item/device/radio/signaler{
 	pixel_x = -11;
 	pixel_y = 14
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
