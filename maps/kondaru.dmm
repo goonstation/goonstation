@@ -14275,7 +14275,7 @@
 "aMO" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	icon_state = "switch-fwd";
 	id = "garbage";
 	position = 1
@@ -30085,7 +30085,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bJU" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -31359,7 +31359,7 @@
 	},
 /area/station/quartermaster/office)
 "bMY" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "kondaru_qmio";
 	pixel_x = -8;
 	pixel_y = 22
@@ -42180,7 +42180,7 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/transport,
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmbelthell";
 	layer = 4
 	},
@@ -58372,7 +58372,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "uBo" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmsend";
 	layer = 4
 	},

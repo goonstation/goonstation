@@ -4294,7 +4294,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aiK" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "chapel"
 	},
 /obj/decal/garland{
@@ -38801,7 +38801,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bKo" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -39391,7 +39391,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/ne,
 /area/station/crew_quarters/radio/lab)
 "bLI" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch"
 	},
@@ -41098,7 +41098,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bQg" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "outbound";
 	name = "outbound conveyor switch"
 	},
@@ -44073,7 +44073,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "bXj" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "garbage";
 	position = 1
 	},

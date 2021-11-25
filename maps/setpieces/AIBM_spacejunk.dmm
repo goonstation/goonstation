@@ -2622,7 +2622,7 @@
 /turf/simulated/floor,
 /area/solarium)
 "gz" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "test"
 	},
 /turf/simulated/floor,
@@ -3974,7 +3974,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "jq" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "robot_factory"
 	},
 /turf/simulated/floor,

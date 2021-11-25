@@ -9633,13 +9633,13 @@
 /turf/space,
 /area/station/quartermaster/office)
 "awd" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "cargo"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "awe" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -10232,7 +10232,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "axs" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -14633,14 +14633,14 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "aHW" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "mining";
 	layer = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "aHX" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "mining";
 	layer = 4
 	},
@@ -25160,7 +25160,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bgt" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "garbage";
 	position = 1
 	},

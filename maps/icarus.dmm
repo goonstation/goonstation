@@ -14971,7 +14971,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aGK" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	icon_state = "switch-fwd";
 	id = "garbage";
 	position = 1
@@ -16283,7 +16283,7 @@
 	dir = 4;
 	id = "qm_shuntbelt"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qm_shuntbelt";
 	pixel_y = 23
 	},
@@ -16618,7 +16618,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/qm)
 "aKh" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qm_portauthority"
 	},
 /obj/machinery/light{

@@ -1739,7 +1739,7 @@
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "dY" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -2231,7 +2231,7 @@
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "fa" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -2567,7 +2567,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "fT" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "garbage";
 	position = 1
 	},

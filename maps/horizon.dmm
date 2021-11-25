@@ -13109,7 +13109,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "aIA" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "chapel"
 	},
 /obj/cable{
@@ -27266,7 +27266,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "boY" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "trash_sort"
 	},
 /turf/simulated/floor/plating,

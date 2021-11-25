@@ -17448,7 +17448,7 @@
 /turf/simulated/floor/grey/side,
 /area/listeningpost)
 "eMW" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "toxins_n2o";
 	layer = 4
 	},
@@ -21877,7 +21877,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "gca" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "toxins_plasma";
 	layer = 4
 	},
@@ -22317,7 +22317,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qm_tohall"
 	},
 /turf/simulated/floor/black/grime,
@@ -35346,7 +35346,7 @@
 /area/station/maintenance/outer/nw)
 "kjl" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qm_in"
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -40500,7 +40500,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/hallway/primary/south)
 "lKD" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "toxins_o2";
 	layer = 4
 	},
@@ -59315,7 +59315,7 @@
 	},
 /area/station/hallway/primary/west)
 "red" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qm_out"
 	},
 /obj/disposalpipe/segment{
@@ -61049,7 +61049,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "rDq" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "disposals"
 	},
 /obj/disposalpipe/segment{
@@ -76415,7 +76415,7 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "tile1"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "toxins_co2";
 	layer = 4
 	},

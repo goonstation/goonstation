@@ -8627,7 +8627,7 @@
 /area/station/hallway/primary/north)
 "asG" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "cargo"
 	},
 /obj/machinery/light/small{
@@ -8647,7 +8647,7 @@
 	},
 /area/station/quartermaster/office)
 "asH" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -9000,7 +9000,7 @@
 	},
 /area/station/quartermaster/office)
 "atx" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -12455,7 +12455,7 @@
 /turf/simulated/floor/bot,
 /area/station/chapel/sanctuary)
 "aBv" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "chapel"
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -15109,7 +15109,7 @@
 /area/station/maintenance/disposal)
 "aHp" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	icon_state = "switch-fwd";
 	id = "garbageB";
 	position = 1
@@ -16946,7 +16946,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/maintenance/disposal)
 "aLh" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	icon_state = "switch-fwd";
 	id = "garbage";
 	position = 1

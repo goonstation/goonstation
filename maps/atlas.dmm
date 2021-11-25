@@ -1402,7 +1402,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "dy" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "outbound";
 	name = "outbound conveyor switch"
 	},
@@ -1427,7 +1427,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "dA" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch"
 	},
@@ -3513,7 +3513,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "jl" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "delivery";
 	name = "delivery conveyor switch"
 	},
@@ -13288,7 +13288,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge)
 "GC" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "trash"
 	},
 /turf/simulated/floor/purple/side{

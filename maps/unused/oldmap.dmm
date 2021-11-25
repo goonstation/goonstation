@@ -19146,7 +19146,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "mining"
 	},
 /turf/simulated/floor,

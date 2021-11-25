@@ -2840,7 +2840,7 @@
 	c_tag = "Cargo Bay Storage";
 	dir = 4
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/light{
@@ -3232,7 +3232,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "ahi" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "qmin"
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -3538,7 +3538,7 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "garbage"
 	},
 /turf/simulated/floor/grime,

@@ -5783,7 +5783,7 @@
 /turf/simulated/floor/bot,
 /area/station2/quartermaster)
 "aoC" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "outbound";
 	name = "outbound conveyor switch"
 	},
@@ -5805,7 +5805,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch"
 	},
@@ -8367,7 +8367,7 @@
 	},
 /area/station2/hallway/primary/south)
 "auu" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "delivery";
 	name = "delivery conveyor switch"
 	},
@@ -24043,7 +24043,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "bdH" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "chapel"
 	},
 /obj/cable{

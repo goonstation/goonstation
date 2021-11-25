@@ -8187,7 +8187,7 @@
 	dir = 1;
 	nostick = 1
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "chapel"
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -14868,7 +14868,7 @@
 	pixel_x = 24;
 	pixel_y = 8
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "mining2qm"
 	},
 /turf/simulated/floor,
@@ -14919,7 +14919,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "brI" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "mining2qm"
 	},
 /obj/machinery/door_control{
@@ -25953,7 +25953,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "reclamation_fork";
 	position = 1
 	},
@@ -27297,7 +27297,7 @@
 	},
 /area/station/security/hos)
 "gac" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "disposals";
 	position = 1
 	},
@@ -43166,7 +43166,7 @@
 	dir = 6;
 	name = "autoname  - SS13"
 	},
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "cargo_in";
 	name = "inbound cargo conveyor switch"
 	},
@@ -53599,7 +53599,7 @@
 	},
 /area/station/crew_quarters/bar)
 "uCY" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "reclamation_fork";
 	position = 1
 	},
@@ -58274,7 +58274,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "wZh" = (
-/obj/machinery/conveyor_switch{
+/obj/submachine/conveyor_switch{
 	id = "cargo_out";
 	name = "outbound cargo conveyor switch"
 	},

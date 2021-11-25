@@ -3609,7 +3609,7 @@ var/list/lag_list = new/list()
 	name = "Place Conveyor switch"
 	desc = "Places a Conveyor switch that can control a conveyor belt."
 	used(atom/user, atom/target)
-		var/obj/machinery/conveyor_switch/L = new/obj/machinery/conveyor_switch(get_turf(target))
+		var/obj/submachine/conveyor_switch/L = new/obj/submachine/conveyor_switch(get_turf(target))
 		L.set_dir(user:dir)
 		return
 
