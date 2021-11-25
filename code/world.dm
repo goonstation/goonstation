@@ -1730,7 +1730,7 @@ var/f_color_selector_handler/F_Color_Selector
 					var/static/logID = 0
 					var/output = world.Profile(PROFILE_REFRESH, type, "json")
 					rustg_file_write(output, "data/logs/profiling/[global.roundLog_date]_[logID++].json")
-					return null
+					return 1
 				var/action = list(
 					"stop" = PROFILE_STOP,
 					"clear" = PROFILE_CLEAR,
@@ -1744,7 +1744,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/output = world.Profile(final_action, type, "json")
 				if(action == PROFILE_REFRESH || action == PROFILE_STOP)
 					return output
-				return null
+				return 1
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
