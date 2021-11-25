@@ -203,7 +203,7 @@
 		var/mob/living/carbon/human/H = src
 		if (istype(H.mutantrace, /datum/mutantrace/pug))
 			amount *= 2
-			src.emote(pick("wheeze", "cough", "sputter"))
+			H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
