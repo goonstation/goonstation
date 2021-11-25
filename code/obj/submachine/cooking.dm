@@ -493,15 +493,20 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/croissant(src)
 
+			src.recipes += new /datum/cookingrecipe/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/pie_anything(src)
+			src.recipes += new /datum/cookingrecipe/pie_cherry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blueberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blackberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_raspberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_apple(src)
 			src.recipes += new /datum/cookingrecipe/pie_lime(src)
 			src.recipes += new /datum/cookingrecipe/pie_lemon(src)
 			src.recipes += new /datum/cookingrecipe/pie_slurry(src)
 			src.recipes += new /datum/cookingrecipe/pie_pumpkin(src)
 			src.recipes += new /datum/cookingrecipe/pie_custard(src)
-			src.recipes += new /datum/cookingrecipe/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
-			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
 			src.recipes += new /datum/cookingrecipe/pot_pie(src)
 			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
@@ -798,7 +803,7 @@ table#cooktime a#start {
 		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
@@ -816,6 +821,7 @@ table#cooktime a#start {
 			return 0
 		return 1
 
+#define MIN_FLUID_INGREDIENT_LEVEL 10
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
@@ -922,11 +928,14 @@ table#cooktime a#start {
 					F.reagents.add_reagent("sugar", 20)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/soy)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					//so soy milk is just milk it seems, veganism is a lie
+					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/rancid)
 					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
 					qdel( P )

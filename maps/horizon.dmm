@@ -20713,7 +20713,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "aZN" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/storage/eva)
 "aZO" = (
@@ -24135,6 +24135,10 @@
 "bhA" = (
 /obj/table/reinforced/auto,
 /obj/landmark/gps_waypoint,
+/obj/item/bell/hop{
+	pixel_x = 16;
+	pixel_y = 2
+	},
 /turf/simulated/floor/blue/side,
 /area/station/bridge/hos)
 "bhC" = (
@@ -40745,7 +40749,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/cable{
@@ -56136,7 +56140,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue{
@@ -57113,7 +57117,7 @@
 /turf/space,
 /area/space)
 "nyF" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -59709,7 +59713,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "ujW" = (
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/cable{
@@ -60641,7 +60645,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "wEp" = (
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/disposalpipe/junction/left/east,

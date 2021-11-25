@@ -462,3 +462,48 @@ To remove:
 			} \
 		} \
 	} while (0)
+
+
+#define APPLY_MOB_PROPERTY_ROOT_SUM_SQUARE(target, property, do_update, update_macro, source, value) \
+	do { \
+		var/list/_L = target.mob_properties; \
+		var/_V = value; \
+		var/_S = source; \
+		if (_L) { \
+			if (_L[property]) { \
+				if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
+					var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
+					_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 - _L[property][MOB_PROPERTY_SOURCES_LIST][_S]**2); \
+					_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+					_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 + _V**2); \
+					if(do_update) { update_macro(target, property, _OLD_VAL); } \
+				} else { \
+					_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+					_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 + _V**2); \
+					if(do_update) { update_macro(target, property, _L[property][MOB_PROPERTY_ACTIVE_VALUE] - _V); } \
+				} \
+			} else { \
+				_L[property] = list(_V, list()); \
+				_L[property][MOB_PROPERTY_SOURCES_LIST][_S] = _V; \
+				if(do_update) { update_macro(target, property, null); } \
+			} \
+		}; \
+	} while (0)
+
+#define REMOVE_MOB_PROPERTY_ROOT_SUM_SQUARE(target, property, do_update, update_macro, source) \
+	do { \
+		var/list/_L = target.mob_properties; \
+		var/_S = source; \
+		if (_L?[property]) { \
+			var/_OLD_VAL = _L[property][MOB_PROPERTY_ACTIVE_VALUE]; \
+			if (_L[property][MOB_PROPERTY_SOURCES_LIST][_S]) { \
+				_L[property][MOB_PROPERTY_ACTIVE_VALUE] = sqrt(_L[property][MOB_PROPERTY_ACTIVE_VALUE]**2 - _L[property][MOB_PROPERTY_SOURCES_LIST][_S]**2); \
+				_L[property][MOB_PROPERTY_SOURCES_LIST] -= _S; \
+				if(do_update) { update_macro(target, property, _OLD_VAL); } \
+			} \
+			if (!length(_L[property][MOB_PROPERTY_SOURCES_LIST])) { \
+				_L -= property; \
+			} \
+			if(do_update) { update_macro(target, property, _OLD_VAL); } \
+		} \
+	} while (0)

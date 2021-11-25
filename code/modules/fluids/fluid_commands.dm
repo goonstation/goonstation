@@ -130,6 +130,9 @@ client/proc/replace_space_exclusive()
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
 
+		ocean_fluid_obj?.group?.reagents?.clear_reagents()
+		fluid_turf_setup(first_time=FALSE)
+
 #ifdef UNDERWATER_MAP
 		var/master_reagent_name = R.get_master_reagent_name()
 		if(master_reagent_name == "water")

@@ -20766,7 +20766,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "aWv" = (
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
@@ -22426,7 +22426,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "aZN" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/storage/eva)
 "aZO" = (
@@ -46311,7 +46311,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bYs" = (
@@ -46344,7 +46344,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bYu" = (
@@ -48237,7 +48237,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/bent/north,
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "cbY" = (
@@ -48274,7 +48274,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,

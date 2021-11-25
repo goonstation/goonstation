@@ -8,6 +8,7 @@
 #define MENU_SEARCH_INPUT 4
 #define MENU_SETTINGS 5
 #define MENU_SELECT_PRINTER 6
+#define MENU_SEARCH_PICK 7
 
 #define FIELDNUM_NAME 1
 #define FIELDNUM_FULLNAME 2
@@ -40,6 +41,7 @@
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
 	var/obj/item/peripheral/network/radio/radiocard = null
 	var/tmp/last_arrest_report = 0 //When did we last report an arrest?
+	var/list/datum/db_record/possible_active = null
 
 	var/tmp/connected = 0
 	var/tmp/server_netid = null
@@ -112,7 +114,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -521,16 +523,45 @@
 				src.menu = MENU_IN_RECORD
 				return
 
+			if (MENU_SEARCH_PICK)
+				var/input = text2num_safe(ckey(strip_html(text)))
+				if(isnull(input) || input < 0 || input >> length(src.possible_active))
+					src.print_text("Cancelled")
+					src.menu = MENU_MAIN
+					return
+
+				var/datum/db_record/result = src.possible_active[input]
+				src.active_general = result
+				src.active_secure = data_core.security.find_record("id", src.active_general["id"])
+				if(!src.active_secure)
+					data_core.security.find_record("name", src.active_general["name"])
+
+				src.menu = MENU_IN_RECORD
+				src.print_active_record()
+
 			if (MENU_SEARCH_INPUT)
 				var/searchText = ckey(strip_html(text))
 				if (!searchText)
 					return
 
-				var/datum/db_record/result = null
+				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
-						result = R
-						break
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					if(findtext(haystack, searchText))
+						results += R
+
+				var/datum/db_record/result = null
+				if(length(results) == 1)
+					result = results[1]
+				else if(length(results) > 1)
+					src.print_text("Multiple results found:")
+					var/i = 1
+					for(var/datum/db_record/R as anything in results)
+						src.print_text("\[[i++]\] [R["name"]]")
+					src.print_text("\[0\] Cancel")
+					src.menu = MENU_SEARCH_PICK
+					src.possible_active = results
+					return
 
 				if(!result)
 					src.print_text("No results found.")
@@ -942,6 +973,7 @@
 #undef MENU_SEARCH_INPUT
 #undef MENU_SETTINGS
 #undef MENU_SELECT_PRINTER
+#undef MENU_SEARCH_PICK
 
 #undef FIELDNUM_NAME
 #undef FIELDNUM_FULLNAME

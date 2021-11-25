@@ -150,4 +150,4 @@
 			newname = copytext(newname, 1, 26)
 		newname = strip_html(newname)
 		src.real_name = newname
-		src.name = newname
+		src.UpdateName()
