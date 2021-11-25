@@ -1729,8 +1729,9 @@ var/f_color_selector_handler/F_Color_Selector
 				if(plist["action"] == "save")
 					var/static/logID = 0
 					var/output = world.Profile(PROFILE_REFRESH, type, "json")
-					rustg_file_write(output, "data/logs/profiling/[global.roundLog_date]_[logID++].json")
-					return 1
+					var/fname = "data/logs/profiling/[global.roundLog_date]_[logID++].json"
+					rustg_file_write(output, fname)
+					return fname
 				var/action = list(
 					"stop" = PROFILE_STOP,
 					"clear" = PROFILE_CLEAR,
