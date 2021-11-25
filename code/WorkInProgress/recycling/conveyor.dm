@@ -466,6 +466,10 @@
 				C.setdir()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
+#undef CONVEYOR_FORWARD
+#undef CONVEYOR_REVERSE
+#undef CONVEYOR_STOPPED
+
 
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
