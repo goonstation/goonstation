@@ -217,6 +217,14 @@
 			mainframe.post_status(termid, "command","term_message","data",t)
 			//Might as well log what they said too!
 			logTheThing("diary", src, null, ": [t]", "say")
+		if (href_list["map_teleport"])
+			var/value = href_list["map_teleport"]
+			//x and y coords are separated by an "x"
+			var/split = findtext(value, "x")
+			var/x_coord = copytext(value, 1, split)
+			var/y_coord = copytext(value, split + 1)
+			src.x = text2num(x_coord)
+			src.y = text2num(y_coord)
 		return
 
 	Stat()
@@ -436,6 +444,98 @@
 		set category = "AI Commands"
 		if(mainframe)
 			mainframe.ai_station_announcement()
+
+	verb/ai_open_map()
+		set category = "AI Commands"
+		set name = "Open map"
+		set desc = "Open a map of the station, double click on the map to teleport"
+
+		//default to cogmap if somehow the map settings go missing
+		var/map_name = "cogmap"
+		if (map_settings)
+			var/position = findtext(map_settings.goonhub_map, "/maps/")
+			if (position > 0)
+				map_name = copytext(map_settings.goonhub_map, position + length("/maps/"))
+		//html dumped into source files fuck yeah
+		var/HTML = {"
+			<!DOCTYPE html>
+				<head>
+					<title>AI map</title>
+
+					<link rel="stylesheet" href="https://goonhub.com/css/map.css">
+
+					<script src="https://goonhub.com/js/modernizr.min.js"></script>
+				</head>
+				<body>
+				<div id="mapcontainer">
+					<div id="map">
+						<div id="tiles"></div>
+						<div id="hilight"></div>
+					</div>
+					<div class="mapControl">
+						<div id="zoomInfo">1</div>
+						<a href="" id="zoomIn" title="Zoom In"><i class="fa fa-arrow-up fa-lg"></i></a>
+						<a href="" id="zoomOut" title="Zoom Out"><i class="fa fa-arrow-down fa-lg"></i></a>
+					</div>
+				</div>
+					<script src="https://goonhub.com/js/vendor.min.js"></script>
+
+					<script src="https://goonhub.com/js/main.min.js"></script>	<script type="text/javascript">		var zlist =\["z1"];		initializeMap('http://goonhub.com', '[map_name]', zlist);
+				</script>
+				<script>
+					//JS does not like custom protocols, so we cheat with an href
+					function sendToByond(name, value) {
+						var element = document.createElement("a")
+						element.href = "byond://?src=\ref[src];" + name + "=" + value
+						document.getElementsByTagName('body')\[0].appendChild(element)
+						element.click()
+						element.parentNode.removeChild(element)
+					}
+					function onClick(e) {
+						e = e || window.event
+						var target = e.target || e.srcElement
+						if (target.src == undefined) {
+							return
+						}
+						e.stopPropagation()
+
+						//horrible string mess to get the tile coords from the image url
+						var split_array = target.src.split("/")
+						var tile_coords = split_array\[split_array.length - 1].split(".")\[0].split(",")
+						//image tiles use y,x for some reason
+						var x = Number(tile_coords\[1])
+						var y = Number(tile_coords\[0])
+
+						//turfs are 32 pixels (half in game resolution), tiles are 1200
+						var turfs_per_tile = 1200/32
+						x *= turfs_per_tile
+						y *= turfs_per_tile
+						//add the offset within the tile
+						x += e.offsetX / 32
+						y += e.offsetY / 32
+						//the map has inverted y coordinates
+						y = 300 - y //this assumes all maps are 300x300, and map.dm doesn't say otherwise so probably okay
+						//correct southwest bias
+						y += 0.5
+						x += 0.5
+						x = Math.round(x)
+						y = Math.round(y)
+						sendToByond("map_teleport", x + "x" + y)
+						//this doesn't work, trying to give focus back to the main window after teleporting
+						window.blur()
+					}
+					//hopefully support some older IE versions
+					if (document.addEventListener == undefined) {
+						document.attachEvent("dblclick", onClick)
+					}
+					else {
+						document.addEventListener("dblclick", onClick, true)
+					}
+				</script>
+			</body>
+			</html>
+		"}
+		usr.Browse(HTML, "window=ai_map;size=600x400;")
 
 //---TURF---//
 /turf/var/image/aiImage
