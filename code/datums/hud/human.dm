@@ -132,10 +132,8 @@
 
 
 	proc/update_status_effects()
-		for(var/atom/movable/screen/statusEffect/G in src.objects)
-			remove_screen(G)
-
 		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			remove_screen(statusUiElements[S])
 			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				qdel(statusUiElements[S])
 				src.statusUiElements.Remove(S)
