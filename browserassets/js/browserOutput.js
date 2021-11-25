@@ -11,7 +11,7 @@ var decoder = decodeURIComponent || unescape;
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic;
+var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic, $lastEntry;
 var opts = {
     //General
     'messageCount': 0, //A count...of messages...
@@ -173,7 +173,7 @@ function parseEmojis(message) {
 }
 
 //Send a message to the client
-function output(message, group) {
+function output(message, group, skipNonEssential, forceScroll) {
     if (typeof message === 'undefined') {
         return;
     }
@@ -238,13 +238,13 @@ function output(message, group) {
 
     //Stuff we do along with appending a message
     var atBottom = false;
-    if (!filteredOut) {
+    if (!filteredOut && !skipNonEssential) {
         var bodyHeight = $('body').height();
         var messagesHeight = $messages.outerHeight();
-        var scrollPos = $('body,html').scrollTop();
+        var scrollPos = document.documentElement.scrollTop;
 
         //Should we snap the output to the bottom?
-        if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+        if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance || forceScroll) {
             atBottom = true;
             if ($('#newMessages').length) {
                 $('#newMessages').remove();
@@ -275,12 +275,10 @@ function output(message, group) {
     opts.messageCount++;
 
     //Pop the top message off if history limit reached
-    if (opts.messageCount >= opts.messageLimit && opts.messageLimitEnabled) {
+    if (opts.messageCount >= opts.messageLimit && opts.messageLimitEnabled && !skipNonEssential) {
         $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
         opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
-
-    var $lastEntry = $messages.children('.entry').last();
 
     //message is identical to the last message, do the streak counter stuff
     if (message === opts.lastMessage) {
@@ -329,7 +327,7 @@ function output(message, group) {
             }
 
             entry.innerHTML = message;
-            $messages[0].appendChild(entry);
+            $lastEntry = $($messages[0].appendChild(entry));
             opts.lastMessage = message;
         }
 
@@ -340,16 +338,21 @@ function output(message, group) {
     }
 
     //Actually do the snap
-    if (!filteredOut && atBottom) {
-        $('body,html').scrollTop($messages.outerHeight());
+    if (!filteredOut && atBottom && !skipNonEssential) {
+        window.scrollTo(0, document.body.scrollHeight);
     }
 }
 
 //Receive a large number of messages all at once to cut down on round trips.
 function outputBatch(messages) {
     var list = JSON.parse(messages);
+    var bodyHeight = $('body').height();
+    var messagesHeight = $messages.outerHeight();
+    var scrollPos = document.documentElement.scrollTop;
+    var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance
+
     for (var i = 0; i < list.length; i++) {
-        output(list[i].message, list[i].group);
+        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll);
     }
 }
 

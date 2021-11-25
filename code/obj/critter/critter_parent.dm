@@ -414,12 +414,9 @@
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 
-	bump(M as mob|obj)
-		if (istype(M, /obj/machinery/door/))
-			var/obj/machinery/door/D = M
-			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-		else if ((isliving(M)) && (!src.anchored))
-			src.set_loc(M:loc)
+	bump(atom/M as mob|obj)
+		if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M.loc)
 			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)

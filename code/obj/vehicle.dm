@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/delay = 2 //speed, lower is faster, minimum of MINIMUM_EFFECTIVE_DELAY
 	var/booster_upgrade = 0 //do we go through space?
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
-
+	var/emagged = FALSE
 
 	New()
 		. = ..()
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -352,7 +352,11 @@ ABSTRACT_TYPE(/obj/vehicle)
 		if(prob(10))
 			M.visible_message("<span class='alert'><b>[src]</b> beeps out an automated injury report of [M]'s vitals.</span>")
 			M.visible_message(scan_health(M, visible = 1))
-		eject_rider(2)
+		if (!emagged)
+			eject_rider(2)
+		else
+			playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			src.weeoo()
 		in_bump = 0
 
 	if(isitem(AM))
@@ -602,6 +606,15 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 	return
 
+/obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
+	if (!src.emagged)
+		src.emagged = TRUE
+		src.delay = 1.5
+		src.weeoo()
+		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
+		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")
+		return 1
+
 ////////////////////////////////////////////////////// Floor buffer /////////////////////////////////////
 
 /obj/vehicle/floorbuffer
@@ -752,7 +765,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	update()
@@ -1093,7 +1106,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	moving = 0
@@ -1363,7 +1376,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(AM == rider || !rider)
 		return
-	if(world.timeofday - AM.last_bumped <= 100)
+	if(ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
 	walk(src, 0)
 	..()
@@ -1770,9 +1783,9 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 	if(AM == rider || !rider)
 		return
-	if(!is_badmin_bus && world.timeofday - AM.last_bumped <= 100)
+	if(!is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 10 SECONDS))
 		return
-	if(is_badmin_bus && world.timeofday - AM.last_bumped <= 50)
+	if(is_badmin_bus && ON_COOLDOWN(AM, "vehicle_bump", 5 SECONDS))
 		return
 	walk(src, 0)
 	icon_state = nonmoving_state
