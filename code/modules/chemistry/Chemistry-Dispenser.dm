@@ -342,7 +342,7 @@
 						G.reagents += lowertext(reagent)
 						//Special amounts!
 						if (istext(reagentlist[reagent])) //Set a dispense amount
-							var/num = text2num(reagentlist[reagent])
+							var/num = text2num_safe(reagentlist[reagent])
 							if(!num) num = 10
 							G.reagents[lowertext(reagent)] = clamp(round(num), 1, 100)
 						else //Default to 10 if no specific amount given

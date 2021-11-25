@@ -871,7 +871,9 @@
 	name = "Router Cabinet"
 	})
 "acv" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 5
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -44037,7 +44039,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "ftT" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ftU" = (
@@ -45442,6 +45444,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "gOo" = (
@@ -46546,6 +46549,9 @@
 	name = "wooden table"
 	},
 /obj/machinery/cashreg,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 10
 	},
@@ -56302,7 +56308,9 @@
 	},
 /area/station/engine/storage)
 "sHh" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
 "sHo" = (
@@ -56920,7 +56928,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "thw" = (
@@ -59622,7 +59629,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "vXP" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "vYc" = (

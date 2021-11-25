@@ -1587,8 +1587,8 @@ PIPE BOMBS + CONSTRUCTION
 		armed = 1
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat)
-			message_admins("[key_name(user)] arms a pipe bomb (power [strength]) at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "arms a pipe bomb (power [strength]) at [log_loc(src)])")
+			message_admins("[key_name(user)] arms a [src] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "arms a [src] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
 			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!

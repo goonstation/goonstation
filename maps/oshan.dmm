@@ -24825,11 +24825,9 @@
 /area/evilreaver/bridge)
 "bjN" = (
 /obj/machinery/vending/alcohol,
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
+/obj/mug_rack{
+	pixel_y = 30
 	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bjO" = (
@@ -25292,7 +25290,7 @@
 /area/station/crew_quarters/kitchen)
 "bkP" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/crew_quarters/bar)
@@ -25534,6 +25532,9 @@
 	},
 /area/station/crew_quarters/kitchen)
 "blt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/crew_quarters/bar)
 "blu" = (
@@ -25711,6 +25712,8 @@
 "blT" = (
 /obj/machinery/chem_dispenser,
 /obj/item/clothing/glasses/spectro,
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
 /turf/simulated/floor/carpet/blue/fancy/narrow/sw,
 /area/station/crew_quarters/bar)
 "blU" = (
@@ -33488,6 +33491,9 @@
 /area/station/bridge/customs)
 "bEQ" = (
 /obj/table/reinforced/auto,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -37721,6 +37727,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/storage/emergency2)
 "bPM" = (
@@ -44588,10 +44595,6 @@
 /area/station/ranch)
 "ciD" = (
 /obj/machinery/vending/security,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ciE" = (
@@ -47486,12 +47489,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "peW" = (
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office";
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -47936,6 +47933,10 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"rOw" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "rUH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
@@ -47965,6 +47966,10 @@
 	},
 /obj/item/device/detective_scanner,
 /obj/access_spawn/forensics,
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office"
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "sdi" = (
@@ -78449,7 +78454,7 @@ boW
 btZ
 btX
 buE
-btZ
+rOw
 btZ
 btZ
 btZ

@@ -159,7 +159,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		logTheThing("combat", user, M, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace.name] mutant race at [log_loc(user)].")
+		logTheThing("combat", user, M, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)

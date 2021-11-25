@@ -245,7 +245,7 @@
 		src.toggle_power()
 
 	else if ((href_list["adj_threshold"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_threshold"])
+		var/adjust_num = text2num_safe(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if (src.heal_threshold < 5)
 			src.heal_threshold = 5
@@ -253,7 +253,7 @@
 			src.heal_threshold = 75
 
 	else if ((href_list["adj_inject"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_inject"])
+		var/adjust_num = text2num_safe(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if (src.injection_amount < 5)
 			src.injection_amount = 5
@@ -828,6 +828,7 @@
 			return
 		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
 			if (!istype(S,/obj/item/storage/pill_bottle))
+				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
 				return
 		..()
 		return

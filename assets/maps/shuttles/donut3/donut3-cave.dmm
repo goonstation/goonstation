@@ -98,7 +98,8 @@
 "ro" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
-	name = "smol donut"
+	name = "smol donut";
+	doants = 0
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)

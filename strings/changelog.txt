@@ -1,5 +1,63 @@
 
+(t)wed nov 24 21
+(u)pali
+(*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.
+(+)Addict and Allergy traits now persist properly after cloning.
+(u)zjdtmkhzt
+(p)6650
+(e)🗺⚖|mapping, balance
+(+)Hangar door access levels should now actually be checked.
+(+)Security pods now start with a Security Comms Array to be able to open their hangars. If you know the code, you can also open them from the outside with your Comms Array!
+(t)tue nov 23 21
+(u)pali
+(+)Blob has some new animation for spreading
+(+)Entering the ocean should now apply its reagents to you, this shouldn't really change much for now probably
+(+)Clientside lag caused by lots of messages in chat has been greatly reduced, woo!
+(u)Flourish
+(e)🆕|feature
+(*)Customs now has a cool service bell. Ring it a bunch to annoy the HoP.<br>The chef also gets a cool dinner bell in their backpack. Sprite by Arthur Holiday!
+(u)Flourish
+(e)🆕|feature
+(*)You can now emag segways. Emagged segways don't throw you off when you crash into other people.
+(t)mon nov 22 21
+(u)Flourish
+(e)⚖|balance
+(+)You can no longer take multiple allergy traits.
+(u)Jan.antilles
+(p)6668
+(e)🆕🎨|feature, sprites
+(*)Resprited pies and added some new pie recipes!
+(t)sun nov 21 21
+(u)tarmunora
+(e)⚖|balance
+(+)methamphetamine acts as a purgative for brain medicines mannitol and synaptizine.
+(+)haloperidol additionally purges synaptizine
+(t)sat nov 20 21
+(u)Ikea
+(p)6741
+(e)🐛|bug
+(+)Nanotrasen has noticed they were using an older recipe of plasma cutters for there ship manufacturers and has begin using the modern cheaper recipe again.
+(t)fri nov 19 21
+(u)Gannets
+(p)6730
+(e)🐛|bug
+(+)Syndicate weapons vendors are now explosion immune.
+(u)Nexusuxen
+(p)6632
+(e)🐛🗺|bug, mapping
+(*)Cargo router doors should now stay open for long enough to allow for cargo to not get stuck in space.
+(t)thu nov 18 21
+(u)pali
+(+)You can now killswitch ghostdrones on the robotics console.
+(t)wed nov 17 21
+(u)pali
+(p)6707
+(e)🆕|feature
+(*)Changeling absorb ability now adds a the person to your list of transformation targets immediately, no matter whether you finish the absorption or not
 (t)tue nov 16 21
+(u)aloe
+(e)⚖|balance
+(+)The Head Surgeon no longer has access to the Medical Director's office and locker. A comprehensive NT study determined that the tranq rifle was not needed for surgery.
 (u)Sbmhawk
 (p)6484
 (e)|

@@ -577,37 +577,35 @@
 				return
 			already_burst = 1
 			src.icon_state = "[base_icon_state]-burst"
-			sleep(0.1 SECONDS)
-			var/n_slices = rand(1, 5)
-			var/amount_per_slice = 0
-			if(src.reagents)
-				amount_per_slice = src.reagents.total_volume / 5
-				src.reagents.inert = 1
-			while(n_slices)
-				var/obj/item/reagent_containers/food/snacks/plant/melonslice/slice = new(get_turf(src))
-				slice.name = "[src.name] slice"
+			SPAWN_DBG(0.1 SECONDS)
+				var/n_slices = rand(1, 5)
+				var/amount_per_slice = 0
 				if(src.reagents)
-					slice.reagents = new
-					// temporary inert is here so this doesn't hit people with 5 potassium + water explosions at once
-					slice.reagents.inert = 1
-					src.reagents.trans_to(slice, amount_per_slice)
-					slice.reagents.inert = 0
-				var/datum/plantgenes/DNA = src.plantgenes
-				var/datum/plantgenes/PDNA = slice.plantgenes
-				if(DNA)
-					HYPpassplantgenes(DNA,PDNA)
-				if(istype(hit_atom, /mob/living) && prob(1))
-					var/mob/living/dork = hit_atom
-					boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
-					slice.Eat(dork, dork)
-				else
-					var/target = get_turf(pick(orange(4, src)))
-					slice.throw_at(target, rand(0, 10), rand(1, 4))
-				n_slices--
-			sleep(0.1 SECONDS)
-			qdel(src)
-		return
-
+					amount_per_slice = src.reagents.total_volume / 5
+					src.reagents.inert = 1
+				while(n_slices)
+					var/obj/item/reagent_containers/food/snacks/plant/melonslice/slice = new(get_turf(src))
+					slice.name = "[src.name] slice"
+					if(src.reagents)
+						slice.reagents = new
+						// temporary inert is here so this doesn't hit people with 5 potassium + water explosions at once
+						slice.reagents.inert = 1
+						src.reagents.trans_to(slice, amount_per_slice)
+						slice.reagents.inert = 0
+					var/datum/plantgenes/DNA = src.plantgenes
+					var/datum/plantgenes/PDNA = slice.plantgenes
+					if(DNA)
+						HYPpassplantgenes(DNA,PDNA)
+					if(istype(hit_atom, /mob/living) && prob(1))
+						var/mob/living/dork = hit_atom
+						boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
+						slice.Eat(dork, dork)
+					else
+						var/target = get_turf(pick(orange(4, src)))
+						slice.throw_at(target, rand(0, 10), rand(1, 4))
+					n_slices--
+				sleep(0.1 SECONDS)
+				qdel(src)
 /obj/item/reagent_containers/food/snacks/plant/chili/
 	name = "chili pepper"
 	crop_suffix = " pepper"

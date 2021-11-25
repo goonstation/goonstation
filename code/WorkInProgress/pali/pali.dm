@@ -304,7 +304,8 @@
 			var/obj/item/I = pick(src.contents)
 			if(istype(I))
 				src.last_item_bump = I
-				src.weapon_attack(AM, I, 1)
+				SPAWN_DBG(0)
+					src.weapon_attack(AM, I, 1)
 
 	death(gibbed)
 		src.vis_contents = null

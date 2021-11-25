@@ -18,19 +18,26 @@
 /datum/guardbot_mover
 	var/obj/machinery/bot/guardbot/master = null
 	var/delay = 3
+	var/max_dist = 100
 
-	New(var/newmaster)
+	New(var/newmaster, max_dist=100)
 		..()
 		if(istype(newmaster, /obj/machinery/bot/guardbot))
 			src.master = newmaster
+		src.max_dist = max_dist
 		return
+
+	disposing()
+		if(src.master.mover == src)
+			src.master.mover = null
+		src.master = null
+		..()
 
 	proc/master_move(var/atom/the_target as obj|mob,var/adjacent=0)
 		if(!master)
 			return 1
 		if(!isturf(master.loc))
-			master.mover = null
-			master = null
+			qdel(src)
 			return 1
 		var/target_turf = null
 		if(isturf(the_target))
@@ -45,7 +52,7 @@
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
+			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE)
 			if (!master)
 				return
 
@@ -56,15 +63,10 @@
 				master.task?.task_input("path_error")
 
 				master.moving = 0
-				//dispose()
-				master.mover = null
-				src.master = null
+				qdel(src)
 				return
 
 			while(length(master?.path) && target_turf && master.moving)
-//				boutput(world, "[compare_movepath] : [current_movepath]")
-				//if(compare_movepath != current_movepath)
-				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
 					master.task?.task_input("path_blocked")
@@ -79,9 +81,7 @@
 
 			if (src.master)
 				master.moving = 0
-				master.mover = null
-				src.master = null
-			//dispose()
+				qdel(src)
 
 		return 0
 
@@ -1415,9 +1415,7 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 		var/turf/T = get_turf(src)
 		if(src.mover)
-			src.mover.master = null
-			//qdel(src.mover)
-			src.mover = null
+			qdel(src.mover)
 		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
 			src.invisibility = INVIS_ALWAYS_ISH
 			var/obj/overlay/Ov = new/obj/overlay(T)
@@ -1896,26 +1894,20 @@
 
 		return
 
-	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1)
+	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1, max_dist=100)
 		if(src.moving)
 			return 1
 		src.moving = 1
 		if (clear_frustration)
 			src.frustration = 0
 		if(src.mover)
-			src.mover.master = null
-			//qdel(src.mover)
-			src.mover = null
-		//boutput(world, "TEST: Navigate to [target]")
-
-		//current_movepath = world.time
+			qdel(src.mover)
 
 		src.mover = new /datum/guardbot_mover(src)
+		src.mover.max_dist = max_dist
 
-		// drsingh for cannot modify null.delay
-		if (!isnull(src.mover))
-			src.mover.delay = max(min(move_delay,5),2)
-			src.mover.master_move(the_target,adjacent)
+		src.mover.delay = max(min(move_delay,5),2)
+		src.mover.master_move(the_target,adjacent)
 
 		return 0
 
@@ -2470,8 +2462,8 @@
 					return
 				var/list/L = params2list(signal.data["data"])
 				if(!L || !L["x"] || !L["y"]) return
-				var/search_x = text2num(L["x"])
-				var/search_y = text2num(L["y"])
+				var/search_x = text2num_safe(L["x"])
+				var/search_y = text2num_safe(L["y"])
 				var/turf/simulated/new_target = locate(search_x,search_y,master.z)
 				if(!new_target)
 					return
@@ -2589,7 +2581,7 @@
 							return
 
 						if(!master.moving)
-							master.navigate_to(src.target, 2.5)
+							master.navigate_to(src.target, 2.5, max_dist=14)
 
 					return
 
@@ -2800,12 +2792,10 @@
 							return
 
 						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
-							//qdel(master.mover)
 							if (master.mover)
-								master.mover.master = null
-								master.mover = null
+								qdel(master.mover)
 							master.moving = 0
-							master.navigate_to(hug_target,ARREST_DELAY)
+							master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
 							return
 
 
@@ -2856,10 +2846,9 @@
 					// Otherwise, go get them!
 					else
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
+						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0, max_dist=30)
 						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
@@ -2969,7 +2958,7 @@
 				return 1
 
 			if (confList["patrol"])
-				var/patrol_stat = text2num(confList["patrol"])
+				var/patrol_stat = text2num_safe(confList["patrol"])
 				if (!isnull(patrol_stat))
 					if (patrol_stat)
 						src.no_patrol = 0
@@ -2977,7 +2966,7 @@
 						src.no_patrol = 1
 
 			if (confList["lethal"] && (confList["acc_code"] == netpass_heads))
-				var/lethal_stat = text2num(confList["lethal"])
+				var/lethal_stat = text2num_safe(confList["lethal"])
 				if (!isnull(lethal_stat))
 					if (lethal_stat && !src.lethal)
 						src.lethal = 1
@@ -3105,7 +3094,7 @@
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target)
+						master.navigate_to(target, max_dist=40)
 					return
 				else
 					find_nearest_beacon()
@@ -3121,7 +3110,7 @@
 					if(master.task != src) return
 					awaiting_beacon = 0
 					if(nearest_beacon && !master.moving)
-						master.navigate_to(nearest_beacon_loc)
+						master.navigate_to(nearest_beacon_loc, max_dist=30)
 					else
 						patrol_delay = 8
 						target = null
@@ -3266,12 +3255,10 @@
 						return
 
 					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(hug_target,ARREST_DELAY)
+						master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
 						return
 
 				else
@@ -3375,9 +3362,8 @@
 					//qdel(master.mover)
 					master.frustration++
 					if (master.mover)
-						master.mover.master = null
-						master.mover = null
-					master.navigate_to(protected,3,1,1)
+						qdel(master.mover)
+					master.navigate_to(protected,3,1,1, max_dist=15)
 					return
 				else
 
@@ -3391,11 +3377,9 @@
 
 					if(!master.path || !master.path.len || (3 < get_dist(protected,master.path[master.path.len])) )
 						master.moving = 0
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
-						master.navigate_to(protected,3,1,1)
+							qdel(master.mover)
+						master.navigate_to(protected,3,1,1, max_dist=15)
 
 			return
 
@@ -3483,10 +3467,8 @@
 				if(protected.lastattacker && (protected.lastattackertime + 40) >= world.time)
 					if(protected.lastattacker != protected)
 						master.moving = 0
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						src.arrest_target = protected.lastattacker
 						src.follow_attempts = 0
 						src.arrest_attempts = 0
@@ -3658,7 +3640,7 @@
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc)
+							master.navigate_to(current_beacon_loc, max_dist=30)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -4472,12 +4454,12 @@
 
 							newtask = newtask.copy_file() //Original one will be deleted with the signal.
 							//Clear other tasks?
-							var/overwrite = text2num(data["overwrite"])
+							var/overwrite = text2num_safe(data["overwrite"])
 							if(isnull(overwrite))
 								overwrite = 0
 
 							//Replace model (default task)?
-							var/model = text2num(data["newmodel"])
+							var/model = text2num_safe(data["newmodel"])
 							if(isnull(model))
 								model = 0
 
@@ -4495,7 +4477,7 @@
 								return
 
 							var/datum/computer/file/guardbot_task/task_copy
-							if (text2num(data["model"]) != null)
+							if (text2num_safe(data["model"]) != null)
 								if (src.current.model_task)
 									task_copy = src.current.model_task.copy_file()
 							else
@@ -4555,7 +4537,7 @@
 								src.post_wire_status(target,"command","term_message","data","command=status&status=nobot")
 								return
 
-							var/newfreq = text2num(data["freq"])
+							var/newfreq = text2num_safe(data["freq"])
 							if(!newfreq || newfreq != sanitize_frequency(newfreq))
 								src.post_wire_status(target,"command","term_message","data","command=status&status=bad_freq")
 								return
@@ -4882,7 +4864,6 @@
 		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
 		var/turf/T = get_turf(src)
 		if(src.mover)
-			src.mover.master = null
 			qdel(src.mover)
 
 		src.invisibility = INVIS_ALWAYS_ISH

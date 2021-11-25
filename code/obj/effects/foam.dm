@@ -103,6 +103,13 @@
 
 			if(T.loc:sanctuary || !T.Enter(src))
 				continue
+			var/skip = FALSE
+			for(var/atom/movable/AM in T)
+				if(!AM.Cross(src))
+					skip = TRUE
+					break
+			if(skip)
+				continue
 
 			//if(istype(T, /turf/space))
 			//	continue

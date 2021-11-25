@@ -54,7 +54,7 @@
 
 			boutput(user, "<span class='notice'>The current host ID is [mainaccount["name"]]. Insert a value less than zero to cancel transaction.</span>")
 			var/amount = input(user, "How much money would you like to send?", "Deposit", 0) as null|num
-			if (amount <= 0)
+			if (amount <= 0 || !isnum_safe(amount))
 				return
 			if (amount > target_account["current_money"])
 				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [target_account["current_money"]] credits.</span>")

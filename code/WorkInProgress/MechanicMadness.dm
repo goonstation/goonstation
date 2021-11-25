@@ -1794,7 +1794,7 @@
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		var/newfreq = text2num(input.signal)
+		var/newfreq = text2num_safe(input.signal)
 		if(!newfreq) return
 		set_frequency(newfreq)
 		return
@@ -1880,7 +1880,7 @@
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
-				var/newfreq = text2num(signal.data["data"])
+				var/newfreq = text2num_safe(signal.data["data"])
 				if(!newfreq) return
 				set_frequency(newfreq)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -2471,7 +2471,7 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
-		// TODO: analog registration
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
@@ -2486,7 +2486,7 @@
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		var/newfreq = text2num(input.signal)
+		var/newfreq = text2num_safe(input.signal)
 		if (!newfreq) return
 		set_frequency(newfreq)
 
@@ -2495,7 +2495,7 @@
 		new_frequency = sanitize_frequency(new_frequency)
 		componentSay("New frequency: [new_frequency]")
 		frequency = new_frequency
-		// TODO: analog registration
+		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 		tooltip_rebuild = 1
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
@@ -2919,7 +2919,7 @@
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
 		LIGHT_UP_HOUSING
-		var/signum = text2num(input.signal)
+		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
 		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
@@ -2990,14 +2990,14 @@
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		if (!isnull(text2num(input.signal)))
-			A = text2num(input.signal)
+		if (!isnull(text2num_safe(input.signal)))
+			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		if (!isnull(text2num(input.signal)))
-			B = text2num(input.signal)
+		if (!isnull(text2num_safe(input.signal)))
+			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/evaluate()
 		switch(mode)

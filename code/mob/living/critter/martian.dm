@@ -65,6 +65,7 @@
 			if (newname)
 				if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 				src.real_name = strip_html(newname)
+				src.UpdateName()
 
 	say(message, involuntary = 0)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))

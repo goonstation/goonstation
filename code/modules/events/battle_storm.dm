@@ -86,7 +86,7 @@
 					if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle) || inafterlife(M))
 						continue
 					var/area/mob_area = get_area(M)
-					if(mob_area.storming)
+					if(mob_area?.storming)
 						M.changeStatus("burning", 8 SECONDS)
 						M.changeStatus("radiation", 8 SECONDS)
 						random_brute_damage(M, rand(3,9))
