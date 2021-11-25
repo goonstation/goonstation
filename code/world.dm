@@ -1723,7 +1723,7 @@ var/f_color_selector_handler/F_Color_Selector
 				return json_encode(response)
 
 			if("profile")
-				var/type = plist["type"]
+				var/type = plist["profiler_type"]
 				if(type != "sendmaps")
 					type = null
 				if(plist["action"] == "save")
