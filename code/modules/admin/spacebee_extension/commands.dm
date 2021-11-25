@@ -49,6 +49,32 @@
 		ircmsg["msg"] = "Added a note for [ckey]: [note]"
 		ircbot.export("admin", ircmsg)
 
+/datum/spacebee_extension_command/addnotice
+	name = "addnotice"
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+	help_message = "Adds a login notice to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="notice")
+
+	execute(user, ckey, notice)
+		var/datum/player/player = make_player(ckey)
+		player.cloud_fetch()
+		if (player.cloud_get("login_notice"))
+			system.reply("Error, [ckey] already has a login notice set.", user)
+			return
+		var/message = "Message from Admin [user] at [roundLog_date]:\n\n[notice]"
+		if (!player.cloud_put("login_notice", message))
+			system.reply("Error, issue saving login notice, try again later.", user)
+			return
+		// else it succeeded
+		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
+		logTheThing("admin", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
+		logTheThing("diary", "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
+		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
+
+		ircbot.export("admin", list(
+		"name" = user,
+		"msg" = "added an admin notice for [ckey]:\n[notice]"))
+
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
@@ -180,6 +206,27 @@
 		system.reply("Command report created.", user)
 		global.cooldowns["transmit_centcom"] = 0 // reset cooldown for reply
 
+/datum/spacebee_extension_command/mode
+	name = "mode"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Check the gamemode of a server or set it by providing an argument (\"secret\", \"intrigue\", \"extended\")."
+	argument_types = list(/datum/command_argument/string/optional="new_mode")
+
+	execute(user, new_mode)
+		if(new_mode == "secret" || new_mode == "intrigue" || new_mode == "extended")
+			var/which = "next round's "
+			if (current_state <= GAME_STATE_PREGAME)
+				master_mode = new_mode
+				which = ""
+			world.save_mode(new_mode)
+			logTheThing("admin", "[user] (Discord)", null, "set the [which]mode as [new_mode]")
+			logTheThing("diary", "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
+			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
+			system.reply("Set the [which]mode to [new_mode].", user)
+		else
+			var/detail_mode = isnull(ticker?.mode) ? "not started yet" : ticker.mode.name
+			system.reply("Current mode is [master_mode] ([detail_mode]).", user)
+
 /datum/spacebee_extension_command/help
 	name = "help"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
@@ -225,6 +272,22 @@
 		message_admins("[user] (Discord) gibbed [key_name(target)].")
 		target.transforming = 1
 		target.gib()
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/delimb
+	name = "delimb"
+	help_message = "Delimbs a given ckey on a server."
+	action_name = "delimb"
+
+	perform_action(user, mob/target)
+		if(!ishuman(target))
+			system.reply("Error, target is not human.", user)
+			return FALSE
+		var/mob/living/carbon/human/H = target
+		H.limbs.sever("all")
+		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) delimbed [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals

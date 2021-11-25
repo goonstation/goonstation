@@ -79,7 +79,7 @@
 			holder.move_away(M,1)
 
 		if (dist < 4)
-			if (M.equipped())
+			if (istype(M) && M.equipped()) //might be attacking a sub
 				owncritter.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
 			else
 				owncritter.a_intent = INTENT_HARM

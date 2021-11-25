@@ -25,12 +25,17 @@
 			src.master = newmaster
 		return
 
+	disposing()
+		if(src.master.mover == src)
+			src.master.mover = null
+		src.master = null
+		..()
+
 	proc/master_move(var/atom/the_target as obj|mob,var/adjacent=0)
 		if(!master)
 			return 1
 		if(!isturf(master.loc))
-			master.mover = null
-			master = null
+			qdel(src)
 			return 1
 		var/target_turf = null
 		if(isturf(the_target))
@@ -45,7 +50,7 @@
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = AStar(get_turf(master), target_turf, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, master.botcard)
+			var/list/thePath = get_path_to(src.master, target_turf, max_distance=100, id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE)
 			if (!master)
 				return
 
@@ -56,15 +61,10 @@
 				master.task?.task_input("path_error")
 
 				master.moving = 0
-				//dispose()
-				master.mover = null
-				src.master = null
+				qdel(src)
 				return
 
 			while(length(master?.path) && target_turf && master.moving)
-//				boutput(world, "[compare_movepath] : [current_movepath]")
-				//if(compare_movepath != current_movepath)
-				//	break
 				if(master.frustration >= 10 || master.stunned || master.idle || !master.on)
 					master.frustration = 0
 					master.task?.task_input("path_blocked")
@@ -79,9 +79,7 @@
 
 			if (src.master)
 				master.moving = 0
-				master.mover = null
-				src.master = null
-			//dispose()
+				qdel(src)
 
 		return 0
 
@@ -1415,9 +1413,7 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 		var/turf/T = get_turf(src)
 		if(src.mover)
-			src.mover.master = null
-			//qdel(src.mover)
-			src.mover = null
+			qdel(src.mover)
 		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
 			src.invisibility = INVIS_ALWAYS_ISH
 			var/obj/overlay/Ov = new/obj/overlay(T)
@@ -1903,19 +1899,12 @@
 		if (clear_frustration)
 			src.frustration = 0
 		if(src.mover)
-			src.mover.master = null
-			//qdel(src.mover)
-			src.mover = null
-		//boutput(world, "TEST: Navigate to [target]")
-
-		//current_movepath = world.time
+			qdel(src.mover)
 
 		src.mover = new /datum/guardbot_mover(src)
 
-		// drsingh for cannot modify null.delay
-		if (!isnull(src.mover))
-			src.mover.delay = max(min(move_delay,5),2)
-			src.mover.master_move(the_target,adjacent)
+		src.mover.delay = max(min(move_delay,5),2)
+		src.mover.master_move(the_target,adjacent)
 
 		return 0
 
@@ -2800,10 +2789,8 @@
 							return
 
 						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
-							//qdel(master.mover)
 							if (master.mover)
-								master.mover.master = null
-								master.mover = null
+								qdel(master.mover)
 							master.moving = 0
 							master.navigate_to(hug_target,ARREST_DELAY)
 							return
@@ -2856,8 +2843,7 @@
 					// Otherwise, go get them!
 					else
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.moving = 0
 						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0)
 						//master.current_movepath = "HEH" //Stop any current movement.
@@ -3266,10 +3252,8 @@
 						return
 
 					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.moving = 0
 						master.navigate_to(hug_target,ARREST_DELAY)
 						return
@@ -3375,8 +3359,7 @@
 					//qdel(master.mover)
 					master.frustration++
 					if (master.mover)
-						master.mover.master = null
-						master.mover = null
+						qdel(master.mover)
 					master.navigate_to(protected,3,1,1)
 					return
 				else
@@ -3391,10 +3374,8 @@
 
 					if(!master.path || !master.path.len || (3 < get_dist(protected,master.path[master.path.len])) )
 						master.moving = 0
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						master.navigate_to(protected,3,1,1)
 
 			return
@@ -3483,10 +3464,8 @@
 				if(protected.lastattacker && (protected.lastattackertime + 40) >= world.time)
 					if(protected.lastattacker != protected)
 						master.moving = 0
-						//qdel(master.mover)
 						if (master.mover)
-							master.mover.master = null
-							master.mover = null
+							qdel(master.mover)
 						src.arrest_target = protected.lastattacker
 						src.follow_attempts = 0
 						src.arrest_attempts = 0
@@ -4882,7 +4861,6 @@
 		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
 		var/turf/T = get_turf(src)
 		if(src.mover)
-			src.mover.master = null
 			qdel(src.mover)
 
 		src.invisibility = INVIS_ALWAYS_ISH

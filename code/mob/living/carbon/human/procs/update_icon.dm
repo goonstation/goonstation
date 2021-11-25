@@ -807,14 +807,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			human_image.layer = MOB_LIMB_LAYER // why was this never defined before
 			var/gender_t = null
 			if (AHOLD.mob_appearance_flags & NOT_DIMORPHIC) // Most mutants arent dimorphic
-				gender_t = "m" // and i doubt they ever will be
+				if (AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE)
+					gender_t = "s" // s for skintone I guess
+				else
+					gender_t = "m" // and i doubt they ever will be
 			else
 				gender_t = src.gender == FEMALE ? "f" : "m"
 
-			var/skin_tone = "#777777"
-			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE || AHOLD.mob_appearance_flags & HAS_PARTIAL_SKINTONE)
-				skin_tone = "#FFFFFF"	// Preserve their true coloration
-			else
+			var/skin_tone = "#FFFFFF" // #FFFFFF preserves color of base sprites
+			if(AHOLD.mob_appearance_flags & HAS_HUMAN_SKINTONE)
 				skin_tone = AHOLD.s_tone
 			human_image.color = skin_tone
 			human_decomp_image.color = skin_tone
@@ -825,10 +826,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if(AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE) // Torso is supposed to be skintoned, even if everything else isnt?
 					human_image.color = AHOLD.s_tone	// Apply their normal skin-tone to the chest if that's what its supposed to be
 				src.body_standing.overlays += human_image
-				human_image.color = chest_color_before
-
 				human_image.icon_state = "groin_[gender_t]"
 				src.body_standing.overlays += human_image
+				human_image.color = chest_color_before
 
 				// all this shit goes on the torso anyway
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)

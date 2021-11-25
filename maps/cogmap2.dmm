@@ -26889,7 +26889,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bkl" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -26905,7 +26905,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/sec)
 "bko" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "bkp" = (
@@ -39477,6 +39477,9 @@
 	pixel_y = 2
 	},
 /obj/item/pen,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor,
 /area/station/security/checkpoint/customs)
 "bJr" = (
@@ -42696,7 +42699,7 @@
 /area/station/maintenance/east)
 "bOS" = (
 /obj/decal/cleanable/oil,
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/machinery/r_door_control{
@@ -44745,7 +44748,7 @@
 /area/station/maintenance/east)
 "bTe" = (
 /obj/decal/cleanable/oil,
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /obj/machinery/r_door_control{
@@ -78554,7 +78557,7 @@
 	},
 /area/station/mining/staff_room)
 "hQX" = (
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
@@ -79695,7 +79698,7 @@
 	},
 /area/station/medical/robotics)
 "qEx" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,

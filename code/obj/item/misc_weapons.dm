@@ -1475,7 +1475,7 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
-	var/mode = 2
+	var/mode = 1
 	var/maximum_force = 100
 
 	New()
@@ -1493,6 +1493,7 @@ obj/item/whetstone
 	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
 		src.force += 5
 		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+		src.tooltip_rebuild = TRUE
 	if(src.mode == 1) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
@@ -1503,6 +1504,7 @@ obj/item/whetstone
 	if (isturf(src.loc))
 		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
 		force = initial(src.force)
+		src.tooltip_rebuild = TRUE
 		return
 
 /obj/item/heavy_power_sword/attack_self(mob/user as mob)
