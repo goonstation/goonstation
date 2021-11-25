@@ -2126,14 +2126,16 @@
 			mutant_appearance_flags &= ~HAS_NO_SKINTONE
 			mutant_appearance_flags |= (TORSO_HAS_SKINTONE | HAS_PARTIAL_SKINTONE)
 		..()
-		if(ishuman(mob))
+		if (ishuman(mob))
 			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN_DBG(0)
 				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
+		if (prob(50))
+			voice_override = "pugg"
 		RegisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
 
 	disposing()
-		if(ishuman(mob))
+		if (ishuman(mob))
 			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
 				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			REMOVE_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
@@ -2141,23 +2143,26 @@
 		..()
 
 	say_verb()
-		return "yaps"
+		return "barks"
 
 	say_filter(var/message)
 		return replacetext(message, "rough", "ruff")
 
 	emote(var/act, var/voluntary)
 		switch(act)
+			if ("sleuth")
+				if (mob.emote_check(voluntary, 5 SECONDS))
+					. = src.sleuth()
 			if ("scream")
 				if (mob.emote_check(voluntary, 5 SECONDS))
-					playsound(mob, "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(mob, "sound/voice/screams/bark.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					. = "<B>[mob]</B> screams!"
 			if ("sneeze")
 				if (mob.emote_check(voluntary, 2 SECONDS))
 					. = src.sneeze(prob(1))
 			if ("sniff")
 				if (mob.emote_check(voluntary, 2 SECONDS))
-					. = src.sniff(voluntary)
+					. = src.sniff()
 			if ("snore")
 				if (mob.emote_check(voluntary, 3 SECONDS))
 					. = src.snore()
@@ -2167,6 +2172,37 @@
 					. = list("<B>[mob]</B> wheezes.", "<I>wheezes</I>")
 			else
 				. = ..()
+
+	proc/sleuth()
+		if (mob.hasStatus("poisoned"))
+			boutput(mob, "<span class='alert'>You're sick and definitely aren't up for sleuthing!</span>")
+			return
+		var/atom/A = tgui_input_list(mob, "What would you like to sleuth?", "Sleuthing", mob.get_targets(1, "both"), 20 SECONDS)
+		if (!A)
+			return
+		playsound(mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		var/adjective = pick("astutely", "discerningly", "intently")
+		. = list("<B>[mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
+		if (ismob(A))
+			var/mob/living/M = A
+			boutput(mob, "<span class='notice'>[M] smells like a [M.mind?.color].</span>")
+			return
+		var/list/L = A.fingerprints_full
+		if (!length(L))
+			boutput(mob, "<span class='notice'>Smells like \a [A], alright.</span>")
+			return
+		var/list/print = L[pick(L)]
+		var/color = print["color"]
+		if (!color)
+			boutput(mob, "<span class='notice'>Smells like \a [A], alright.</span>")
+			return
+		var/timestamp = print["timestamp"]
+		var/intensity = "faintly"
+		if (TIME < timestamp + 3 MINUTES)
+			intensity = "strongly"
+		else if (TIME < timestamp + 10 MINUTES)
+			intensity = "kind of"
+		boutput(mob, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
 
 	proc/sneeze(var/violent)
 		playsound(mob, "sound/voice/pug_sneeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
@@ -2182,27 +2218,9 @@
 			E.throw_at(get_edge_cheap(mob, mob.dir), rand(3,5), 1)
 			. = list("<B>[mob]</B> violently sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>", "<I>sneezes violently</I>")
 
-	proc/sniff(var/voluntary)
+	proc/sniff()
 		playsound(mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[mob]</B> sniffs.", "<I>sniffs</I>")
-		if (!voluntary)
-			return
-		if (mob.hasStatus("poisoned"))
-			boutput(mob, "<span class='alert'>You're sick and can't smell a thing!</span>")
-			return
-		var/obj/item/I = mob.equipped()
-		if (!I)
-			return
-		var/list/L = I.fingerprintshidden
-		if (length(L))
-			var/list/print = L[pick(L)]
-			var/timestamp = print["timestamp"]
-			var/intensity = "faintly of"
-			if (TIME < timestamp + 3 MINUTES)
-				intensity = "strongly of"
-			else if (TIME < timestamp + 10 MINUTES)
-				intensity = "kind of like"
-			boutput(mob, "<span class='notice'>\The [I] smells [intensity] [print["real_name"]].</span>")
 
 	proc/snore()
 		playsound(mob, "sound/voice/snore.ogg", rand(5,10) * 10, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
