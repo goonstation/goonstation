@@ -98,14 +98,15 @@
 		SPAWN_DBG(0) process()
 		..()
 
-	bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN_DBG(0.4 SECONDS)
+				M.density = 1
+		SPAWN_DBG(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)
@@ -165,14 +166,15 @@
 		SPAWN_DBG(0) process()
 		..()
 
-	bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN_DBG(0.4 SECONDS)
+				M.density = 1
+		SPAWN_DBG(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)

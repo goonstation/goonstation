@@ -37,7 +37,10 @@
 	var/list/melting_reagents = list("acid",
 	"pacid",
 	"phlogiston",
-	"big_bang")
+	"big_bang",
+	"clacid",
+	"nitric_acid",
+	"firedust")
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
@@ -55,6 +58,10 @@
 	reagents.add_reagent("ff-foam", 100)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
+
+/obj/item/extinguisher/on_reagent_change(add)
+	. = ..()
+	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)

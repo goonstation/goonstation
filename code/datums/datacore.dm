@@ -82,17 +82,17 @@
 
 	var/traitStr = ""
 	if(H.traitHolder)
-		for(var/X in H.traitHolder.traits)
-			var/obj/trait/T = getTraitById(X)
+		for(var/id in H.traitHolder.traits)
+			var/obj/trait/T = H.traitHolder.traits[id]
 			if(length(traitStr)) traitStr += " | [T.cleanName]"
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
-					M["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M["alg"] = reagent_id_to_name(AT.allergen)
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
+					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
 
 	M["traits"] = traitStr
 

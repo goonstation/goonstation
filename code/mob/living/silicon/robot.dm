@@ -706,7 +706,7 @@
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
 				src.real_name = borgify_name("Cyborg")
-				src.name = src.real_name
+				src.UpdateName()
 				src.internal_pda.name = "[src]'s Internal PDA Unit"
 				src.internal_pda.owner = "[src]"
 				return
@@ -721,15 +721,15 @@
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 						src.real_name = newname
-						src.name = newname
 						src.internal_pda.name = "[src]'s Internal PDA Unit"
 						src.internal_pda.owner = "[src]"
+						src.UpdateName()
 						return 1
 					else
 						continue
 		if (!newname)
 			src.real_name = borgify_name("Cyborg")
-			src.name = src.real_name
+			src.UpdateName()
 			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 
@@ -741,7 +741,7 @@
 
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
-			src.name = src.real_name
+			src.UpdateName()
 			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
 		if (!src.syndicate && !src.connected_ai)
@@ -752,7 +752,7 @@
 
 		if (src.shell && src.mainframe)
 			src.real_name = "SHELL/[src.mainframe]"
-			src.name = src.real_name
+			src.UpdateName()
 
 		update_clothing()
 		update_appearance()
@@ -1003,23 +1003,16 @@
 					src.cell = null
 
 	bump(atom/movable/AM as mob|obj)
-		SPAWN_DBG( 0 )
-			if ( src.now_pushing)
-				return
-			//..()
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
-			if (!istype(AM, /atom/movable))
-				return
-			if (!src.now_pushing)
-				src.now_pushing = 1
-				if (!AM.anchored)
-					var/t = get_dir(src, AM)
-					step(AM, t)
-				src.now_pushing = null
+		if ( src.now_pushing)
 			return
-		return
+		if (!istype(AM, /atom/movable))
+			return
+		if (!src.now_pushing)
+			src.now_pushing = 1
+			if (!AM.anchored)
+				var/t = get_dir(src, AM)
+				step(AM, t)
+			src.now_pushing = null
 
 	triggerAlarm(var/class, area/A, var/O, var/alarmsource)
 		if (isdead(src))

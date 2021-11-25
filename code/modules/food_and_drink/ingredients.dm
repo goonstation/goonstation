@@ -99,6 +99,7 @@
 	icon_state = "bacon"
 	amount = 1
 	initial_reagents = list("porktonium"=10)
+	blood = 0
 
 	New()
 		..()
@@ -114,6 +115,7 @@
 		desc = "A strip of salty raw cured pork. It really should be cooked first."
 		icon_state = "bacon-raw"
 		amount = 1
+		blood = 2
 		real_name = "bacon"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget

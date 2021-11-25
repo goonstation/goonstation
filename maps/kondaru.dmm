@@ -44039,7 +44039,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "ftT" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ftU" = (
@@ -46549,6 +46549,9 @@
 	name = "wooden table"
 	},
 /obj/machinery/cashreg,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 10
 	},

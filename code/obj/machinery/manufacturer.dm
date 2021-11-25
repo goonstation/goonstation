@@ -1503,6 +1503,12 @@
 						make--
 
 			src.remove_materials(M)
+		else
+			src.mode = "halt"
+			src.error = "Insufficient usable materials to continue queue production."
+			src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			src.build_icon()
 
 		return
 

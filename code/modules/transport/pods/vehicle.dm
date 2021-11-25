@@ -53,6 +53,10 @@
 	var/hitmob = 0
 	var/ram_self_damage_multiplier = 0.09
 
+	/// I got sick of having the comms type swapping code in 17 New() ship types
+	/// so this is the initial type of comms array this vehicle will have
+	var/init_comms_type = /obj/item/shipcomponent/communications/
+
 	//////////////////////////////////////////////////////
 	///////Life Support Stuff ////////////////////////////
 	/////////////////////////////////////////////////////
@@ -606,7 +610,8 @@
 				if (power > 20)
 					if (istype(O, /obj/machinery/door) && O.density)
 						var/obj/machinery/door/D = O
-						D.try_force_open(src)
+						SPAWN_DBG(0)
+							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
 
@@ -1426,7 +1431,7 @@
 	/////Com-System Setup
 	src.intercom = new /obj/item/device/radio/intercom/ship( src )
 	//src.intercom.icon_state = src.icon_state
-	src.com_system = new /obj/item/shipcomponent/communications( src )
+	src.com_system = new src.init_comms_type(src)
 	src.com_system.ship = src
 	src.components += src.com_system
 	src.com_system.activate()
@@ -1783,17 +1788,13 @@
 	icon_state = "secsub_body"
 	health = 150
 	maxhealth = 150
-
+	init_comms_type = /obj/item/shipcomponent/communications/security
 
 	New()
 		..()
 		name = "security patrol minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
 		Install(new /obj/item/shipcomponent/secondary_system/lock(src))
-		src.com_system = new /obj/item/shipcomponent/communications/security( src )
-		src.com_system.ship = src
-		src.components += src.com_system
-		src.com_system.activate()
 		myhud.update_systems()
 		myhud.update_states()
 
@@ -1803,15 +1804,13 @@
 	icon_state = "syndisub_body"
 	health = 150
 	maxhealth = 150
+	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
 		..()
 		name = "syndicate minisub"
-		src.com_system = new /obj/item/shipcomponent/communications/syndicate(src)
-		src.com_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
-		src.components += src.com_system
 		src.components += src.lock
 		myhud.update_systems()
 		myhud.update_states()
