@@ -1555,6 +1555,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
 				ircmsg["time"] = (world.timeofday - curtime) / 10
+				ircmsg["ticklag"] = world.tick_lag
+				ircmsg["runtimes"] = global.runtime_count
 				return ircbot.response(ircmsg)
 
 			if ("rev")

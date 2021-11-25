@@ -924,7 +924,8 @@ var/list/fun_images = list()
 
 	boutput(src, "<b>Hidden Fingerprints on [O]:</b>")
 	for(var/i in O.fingerprintshidden)
-		boutput(src, i)
+		var/list/L = O.fingerprintshidden[i]
+		boutput(src, "Key: [L["key"]], real name: [L["real_name"]], time: [L["time"]]")
 
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
