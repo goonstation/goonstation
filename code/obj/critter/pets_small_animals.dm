@@ -541,6 +541,14 @@
 	doggy = "pug"
 	is_pet = 2
 
+	attack_hand(mob/user as mob)
+		if (prob(5) && ishuman(user) && src.alive)
+			var/mob/living/carbon/human/H = user
+			if (istype(H.mutantrace, /datum/mutantrace/pug))
+				src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
+				return
+		..()
+
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
 // am bad at dog names

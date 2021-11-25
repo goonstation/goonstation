@@ -156,6 +156,8 @@
 	id = "pug"
 	mutantrace_option = "Pug"
 	mutantrace_path = /datum/mutantrace/pug
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
 	msgGain = "You feel like barking up the wrong tree."
 	msgLose = "Dog treats no longer look appealing."
 	icon_state  = "pug"

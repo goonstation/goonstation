@@ -2122,20 +2122,27 @@
 	var/static/image/snore_bubble = image('icons/mob/pug.dmi', "bubble")
 
 	New(var/mob/living/carbon/human/H)
-		..(H)
-		SPAWN_DBG(0)
-			if (ishuman(mob))
+		..()
+		if(ishuman(mob))
+			H.update_face()
+			H.update_body()
+			H.update_clothing()
+			H.mob_flags |= SHOULD_HAVE_A_TAIL
+			SPAWN_DBG(0)
 				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
-			RegisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
 
 	disposing()
 		if (ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
+				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			REMOVE_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
 		UnregisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY)
 		..()
 
 	say_verb()
-		return "barks"
+		return "yaps"
 
 	say_filter(var/message)
 		return replacetext(message, "rough", "ruff")
@@ -2146,25 +2153,36 @@
 				if (mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[mob]</B> screams!"
 					playsound(mob, "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			if ("snore")
-				if (mob.emote_check(voluntary, 3 SECONDS))
-					. = "<B>[mob]</B> snores."
-					playsound(mob, "sound/voice/snore.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					mob.UpdateOverlays(snore_bubble, "snore_bubble")
-					SPAWN_DBG(1.5 SECONDS)
-						mob.UpdateOverlays(null, "snore_bubble")
 			if ("sneeze")
-				if (!voluntary || mob.emote_check(voluntary, 2 SECONDS))
-					playsound(mob, "sound/voice/sneeze_pug.ogg", 30, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				if (mob.emote_check(voluntary, 2 SECONDS))
+					. = ..()
+					playsound(mob, "sound/voice/pug_sneeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					animate(mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+					animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+					animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
 					if (prob(1))
 						var/datum/organHolder/organs = mob.organHolder
 						var/obj/E = (organs.drop_organ("left_eye", null) || organs.drop_organ("right_eye", null))
 						if (E)
 							E.throw_at(get_edge_cheap(mob, mob.dir), rand(3,5), 1)
-							return "<B>[mob]</B> sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>"
-					. = "<B>[mob]</B> sneezes."
+							. = list("<B>[mob]</B> violently sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>", "<I>sneezes violently</I>")
+			if ("sniff")
+				if (mob.emote_check(voluntary, 2 SECONDS))
+					. = ..()
+					playsound(mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+			if ("snore")
+				if (mob.emote_check(voluntary, 3 SECONDS))
+					. = ..()
+					playsound(mob, "sound/voice/snore.ogg", rand(5,10) * 10, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					mob.UpdateOverlays(snore_bubble, "snore_bubble")
+					SPAWN_DBG(1.5 SECONDS)
+						mob.UpdateOverlays(null, "snore_bubble")
+			if ("wheeze")
+				if (mob.emote_check(voluntary, 2 SECONDS))
+					. = ..()
+					playsound(mob, "sound/voice/pug_wheeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			else
-				.= ..()
+				. = ..()
 
 	proc/throw_response(target, item, thrower)
 		if (mob == thrower || is_incapacitated(mob) || prob(90))

@@ -225,10 +225,9 @@
 	icon_state = "tail-pug"
 	organ_image_icon = 'icons/mob/pug.dmi'
 	tail_num = TAIL_PUG
-	//TODO
-	organ_image_under_suit_1 = null
+	organ_image_under_suit_1 = "pug_under_suit"
 	organ_image_under_suit_2 = null
-	organ_image_over_suit = null
+	organ_image_over_suit = "pug_over_suit"
 
 /obj/item/organ/tail/wolf
 	name = "wolf tail"
