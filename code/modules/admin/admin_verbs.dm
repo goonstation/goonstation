@@ -309,6 +309,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_makecyborg,
 		/client/proc/cmd_admin_makeghostdrone,
 		/client/proc/cmd_debug_del_all,
+		/client/proc/cmd_debug_del_half,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
 		/client/proc/iddqd,
