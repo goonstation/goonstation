@@ -1722,6 +1722,30 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return json_encode(response)
 
+			if("profile")
+				var/type = plist["type"]
+				if(type != "sendmaps")
+					type = null
+				if(plist["action"] == "save")
+					var/static/logID = 0
+					var/output = world.Profile(PROFILE_REFRESH, type, "json")
+					rustg_file_write(output, "data/logs/profiling/[global.roundLog_date]_[logID++].json")
+					return null
+				var/action = list(
+					"stop" = PROFILE_STOP,
+					"clear" = PROFILE_CLEAR,
+					"start" = PROFILE_START,
+					"refresh" = PROFILE_REFRESH,
+					"restart" = PROFILE_RESTART
+				)[plist["action"]]
+				var/final_action = action
+				if(plist["average"])
+					final_action |= PROFILE_AVERAGE
+				var/output = world.Profile(final_action, type, "json")
+				if(action == PROFILE_REFRESH || action == PROFILE_STOP)
+					return output
+				return null
+
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
