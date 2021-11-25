@@ -9,7 +9,7 @@
 	var/const/max_distance = 5
 	var/const/reagents_per_dist = 5
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	tooltip_flags = REBUILD_DIST
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
@@ -196,14 +196,16 @@
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		safety = 0
+		ADD_FLAG(src.flags,OPENCONTAINER)
+		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
 		set_icon_state("fire_extinguisher0")
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		safety = 1
+		REMOVE_FLAG(src.flags,OPENCONTAINER)
+		safety = TRUE
 	return
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
