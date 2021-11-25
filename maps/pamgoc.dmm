@@ -67093,7 +67093,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "cxg" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "cxh" = (

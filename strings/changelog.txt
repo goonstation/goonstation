@@ -1,4 +1,13 @@
 
+(t)wed nov 24 21
+(u)pali
+(*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.
+(+)Addict and Allergy traits now persist properly after cloning.
+(u)zjdtmkhzt
+(p)6650
+(e)🗺⚖|mapping, balance
+(+)Hangar door access levels should now actually be checked.
+(+)Security pods now start with a Security Comms Array to be able to open their hangars. If you know the code, you can also open them from the outside with your Comms Array!
 (t)tue nov 23 21
 (u)pali
 (+)Blob has some new animation for spreading
