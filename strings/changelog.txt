@@ -1,5 +1,28 @@
 
+(t)wed nov 24 21
+(u)pali
+(*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.
+(+)Addict and Allergy traits now persist properly after cloning.
+(u)zjdtmkhzt
+(p)6650
+(e)🗺⚖|mapping, balance
+(+)Hangar door access levels should now actually be checked.
+(+)Security pods now start with a Security Comms Array to be able to open their hangars. If you know the code, you can also open them from the outside with your Comms Array!
+(t)tue nov 23 21
+(u)pali
+(+)Blob has some new animation for spreading
+(+)Entering the ocean should now apply its reagents to you, this shouldn't really change much for now probably
+(+)Clientside lag caused by lots of messages in chat has been greatly reduced, woo!
+(u)Flourish
+(e)🆕|feature
+(*)Customs now has a cool service bell. Ring it a bunch to annoy the HoP.<br>The chef also gets a cool dinner bell in their backpack. Sprite by Arthur Holiday!
+(u)Flourish
+(e)🆕|feature
+(*)You can now emag segways. Emagged segways are faster and don't throw you off when you crash into other people.
 (t)mon nov 22 21
+(u)Flourish
+(e)⚖|balance
+(+)You can no longer take multiple allergy traits.
 (u)Jan.antilles
 (p)6668
 (e)🆕🎨|feature, sprites

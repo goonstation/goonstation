@@ -145,13 +145,16 @@
 	..()
 	src.caller = caller
 	ends = list()
+	n_target_goals = length(goals)
 	for(var/goal in goals)
 		var/turf/T = get_turf(goal)
+		if(!istype(T))
+			n_target_goals--
+			continue
 		if(islist(ends[T]))
 			ends[T] += goal
 		else
 			ends[T] = list(goal)
-	n_target_goals = length(goals)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	sources = new()
 	src.id = id

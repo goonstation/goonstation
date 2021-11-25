@@ -5875,7 +5875,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "mr" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ms" = (
@@ -6508,7 +6508,7 @@
 	},
 /area/station/hangar/sec)
 "nA" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nB" = (

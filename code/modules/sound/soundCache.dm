@@ -159,6 +159,7 @@ var/global/list/soundCache = list(
  	"sound/ambience/station/Underwater/sub_bridge_ambi1.ogg" = 'sound/ambience/station/Underwater/sub_bridge_ambi1.ogg',\
  	"sound/effects/airbridge_dpl.ogg" = 'sound/effects/airbridge_dpl.ogg',\
  	"sound/effects/bamf.ogg" = 'sound/effects/bamf.ogg',\
+	 "sound/effects/bell_ring.ogg" = 'sound/effects/bell_ring.ogg',\
  	"sound/effects/bigwave.ogg" = 'sound/effects/bigwave.ogg',\
  	"sound/effects/bionic_sound.ogg" = 'sound/effects/bionic_sound.ogg',\
  	"sound/effects/blood.ogg" = 'sound/effects/blood.ogg',\

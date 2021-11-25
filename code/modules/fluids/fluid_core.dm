@@ -169,7 +169,7 @@ var/mutable_appearance/fluid_ma
 		amt = 0
 		avg_viscosity = initial(avg_viscosity)
 		movement_speed_mod = 0
-		group = 0
+		group = null
 		touched_other_group = 0
 		//float_anim = 0
 		step_sound = 0
@@ -814,7 +814,7 @@ var/mutable_appearance/fluid_ma
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
 			do_reagent_reaction = 0
-	if (F.my_depth_level == 4)
+	if (F.my_depth_level >= 4)
 		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
 			do_reagent_reaction = 0
 
