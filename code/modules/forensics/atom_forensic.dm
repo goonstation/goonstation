@@ -43,8 +43,8 @@
 	if (!src.fingerprintshidden)
 		src.fingerprintshidden = list()
 	if (src.fingerprintslast != M.key)
-		var/timestamp = time2text(world.timeofday, "hh:mm:ss")
-		src.fingerprintshidden[timestamp] = list("key" = M.key, "real_name" = M.real_name, "time" = timestamp)
+		var/time = time2text(TIME, "hh:mm:ss")
+		src.fingerprintshidden[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME)
 		src.fingerprintslast = M.key
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
