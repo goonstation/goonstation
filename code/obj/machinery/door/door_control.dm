@@ -535,13 +535,12 @@
 	var/pass = null
 	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
-	var/access_type = 1
-	var/access_type_secondary = null
+	var/access_type = POD_ACCESS_STANDARD
 	anchored = 1.0
 	var/datum/light/light
 
 	syndicate
-		access_type = -1
+		access_type = POD_ACCESS_SYNDICATE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
@@ -553,7 +552,7 @@
 
 		wizard
 			id = "hangar_wizard"
-			access_type = -2
+			access_type = POD_ACCESS_WIZARDS
 
 			new_walls
 				north
@@ -567,7 +566,7 @@
 
 		syndicate
 			id = "hangar_syndicate"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -659,12 +658,7 @@
 
 		security
 			id = "hangar_security"
-			access_type = 2
-			#ifdef MAP_OVERRIDE_MANTA
-			access_type_secondary = 2
-			#else
-			access_type_secondary = null
-			#endif
+			access_type = POD_ACCESS_SECURITY
 
 
 			new_walls
@@ -783,7 +777,7 @@
 
 		soviet
 			id = "hangar_soviet"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -796,7 +790,7 @@
 					pixel_x = -22
 		t1d1
 			id = "hangar_t1d1"
-			access_type = -1
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -810,7 +804,7 @@
 
 		t1d2
 			id = "hangar_t1d2"
-			access_type = -1
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -824,7 +818,7 @@
 
 		t1d3
 			id = "hangar_t1d3"
-			access_type = -1
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -838,7 +832,7 @@
 
 		t1d4
 			id = "hangar_t1d4"
-			access_type = -1
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -852,7 +846,7 @@
 
 		t1condoor
 			id = "hangar_t1condoor"
-			access_type = -1
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -866,7 +860,7 @@
 
 		t2d1
 			id = "hangar_t2d1"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -880,7 +874,7 @@
 
 		t2d2
 			id = "hangar_t2d2"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -894,7 +888,7 @@
 
 		t2d3
 			id = "hangar_t2d3"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -908,7 +902,7 @@
 
 		t2d4
 			id = "hangar_t2d4"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -922,7 +916,7 @@
 
 		t2condoor
 			id = "hangar_t2condoor"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -960,15 +954,8 @@
 					return ..()
 				if (!access_type)
 					open_door()
-				else if (!access_type_secondary)
-					open_door()
-				else if (!access_type_secondary)
-					open_door()
 				else
-					if(V.com_system.access_type == src.access_type)
-						open_door()
-
-					else if(V.com_system.access_type_secondary == src.access_type_secondary)
+					if(V.com_system.access_type.Find(src.access_type))
 						open_door()
 					else
 						boutput(usr, "<span class='alert'>Access denied. Comms system not recognized.</span>")
@@ -1008,7 +995,12 @@
 		if(signal.data["command"] =="open door")
 			if(!signal.data["doorpass"])
 				return
-			if(!signal.data["access_type"] || signal.data["access_type"] != src.access_type)
+			if(!signal.data["access_type"])
+				return
+			var/list/signal_access_types = splittext(signal.data["access_type"],";")
+			// the signal process makes the list of numbers into a list of strings
+			// this is easier than making all the signal_access_types elements back into numbers
+			if(!(signal_access_types.Find("[src.access_type]")))
 				return
 
 			if(signal.data["doorpass"] == src.pass)

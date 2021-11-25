@@ -9,7 +9,6 @@
 
 /atom/movable
 	var/tracked_blood = null // list(bDNA, btype, color, count)
-	var/tracked_mud = null
 
 /*
 /atom/proc/add_forensic_info(var/key, var/value)
@@ -43,7 +42,10 @@
 		return
 	if (!src.fingerprintshidden)
 		src.fingerprintshidden = list()
-
+	if (src.fingerprintslast != M.key)
+		var/time = time2text(TIME, "hh:mm:ss")
+		src.fingerprintshidden[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME)
+		src.fingerprintslast = M.key
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/list/L = src.fingerprints
@@ -60,18 +62,11 @@
 					L += gloveprints
 					src.fingerprints = L
 
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += "(Wearing gloves). Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
-				src.fingerprintslast = H.key
-
 			return 0
 
 		if (!( src.fingerprints ))
 			if (!hidden_only)
 				src.fingerprints = list("[H.bioHolder.uid_hash]")
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += "Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
-				src.fingerprintslast = H.key
 
 			return 1
 
@@ -82,14 +77,6 @@
 					L -= L[1]
 				L += H.bioHolder.uid_hash
 				src.fingerprints = L
-			if(src.fingerprintslast != H.key)
-				src.fingerprintshidden += "Real name: [H.real_name], Key: [H.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
-				src.fingerprintslast = H.key
-
-	else
-		if(src.fingerprintslast != M.key)
-			src.fingerprintshidden += "Real name: [M.real_name], Key: [M.key], Time: [time2text(world.timeofday, "hh:mm:ss")]"
-			src.fingerprintslast = M.key
 
 	return
 
@@ -276,8 +263,6 @@
 			L.set_clothing_icon_dirty()
 
 /atom/movable/proc/track_blood()
-	return
-/atom/movable/proc/track_mud()
 	return
 /* needs adjustment so let's stick with mobs for now
 /obj/track_blood()

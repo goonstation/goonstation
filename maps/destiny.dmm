@@ -782,6 +782,10 @@
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
 /obj/access_spawn/head_of_personnel,
+/obj/item/bell/hop{
+	pixel_x = 16;
+	pixel_y = 2
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "acT" = (
@@ -38116,7 +38120,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "meQ" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "meR" = (
@@ -57862,7 +57866,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/core)
 "wOu" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "wOw" = (

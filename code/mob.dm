@@ -79,7 +79,6 @@
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
 	var/fakedead = 0
-	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -704,13 +703,10 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(5 SECONDS)
-					src.now_pushing = 0
-
-					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
-						tmob.now_pushing = 0
-
-					return
+					SPAWN_DBG(5 SECONDS)
+						src.now_pushing = 0
+						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
+							tmob.now_pushing = 0
 
 		if (!issilicon(AM))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
