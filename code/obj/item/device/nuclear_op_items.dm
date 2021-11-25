@@ -86,7 +86,7 @@
 		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
+		message_admins("Sending Syndicate Reinforcement offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if(!length(candidates))
 			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
@@ -104,7 +104,7 @@
 		if(src.uses <= 0)
 			elecflash(src)
 			src.visible_message("<span class='alert'>The [src] sparks, before exploding!</span>")
-			sleep(5)
+			sleep(5 DECI SECONDS)
 			explosion_new(src, get_turf(src), 0.1)
 			qdel(src)
 		else
@@ -413,6 +413,13 @@
 			var/rand_time = rand(45 SECONDS, 60 SECONDS)
 			S.total_pod_time = TIME + rand_time + 7.5 SECONDS
 			sleep(7.5 SECONDS)
+			for(var/mob/living/L in sent_mobs)
+				shake_camera(L, 16, 16)
+				var/atom/target = get_edge_target_turf(L, pick(alldirs))
+				if(target && !L.buckled)
+					L.throw_at(target, 3, 1)
+					L.changeStatus("stunned", 2 SECONDS)
+					L.changeStatus("weakened", 2 SECONDS)
 			command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
 			sleep(rand_time / 2)
 			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
@@ -444,7 +451,7 @@
 	maptext_y = 20
 	maptext_width = 64
 	var/total_pod_time
-
+	processing_tier = PROCESSING_QUARTER
 
 	proc/get_pod_timer()
 		var/timeleft = round((total_pod_time - TIME) / 10, 1)
@@ -847,6 +854,9 @@
 	attackby(obj/item/gun/kinetic/W, mob/user) //I detest having to do guns individually but it's for the sake of balance & special ammo types
 		if(!deployed)
 			boutput(user, "<span class='alert'>The [src] isn't unfolded!</span>")
+			return
+
+		if(!istype(W))
 			return
 
 		if(!ON_COOLDOWN(user, "nukeop_ammobag", 10 SECONDS))
