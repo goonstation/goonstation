@@ -2122,21 +2122,20 @@
 	var/static/image/snore_bubble = image('icons/mob/pug.dmi', "bubble")
 
 	New(var/mob/living/carbon/human/H)
+		if (prob(1)) // need to modify flags before calling parent
+			mutant_appearance_flags &= ~HAS_NO_SKINTONE
+			mutant_appearance_flags |= (TORSO_HAS_SKINTONE | HAS_PARTIAL_SKINTONE)
 		..()
 		if(ishuman(mob))
-			H.update_face()
-			H.update_body()
-			H.update_clothing()
-			H.mob_flags |= SHOULD_HAVE_A_TAIL
+			mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN_DBG(0)
 				APPLY_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
 		RegisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
 
 	disposing()
-		if (ishuman(mob))
-			var/mob/living/carbon/human/H = mob
-			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
-				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		if(ishuman(mob))
+			if (mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			REMOVE_MOB_PROPERTY(mob, PROP_FAILED_SPRINT_FLOP, src)
 		UnregisterSignal(mob, COMSIG_MOB_THROW_ITEM_NEARBY)
 		..()
@@ -2151,41 +2150,69 @@
 		switch(act)
 			if ("scream")
 				if (mob.emote_check(voluntary, 5 SECONDS))
-					. = "<B>[mob]</B> screams!"
 					playsound(mob, "sound/voice/screams/moo.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					. = "<B>[mob]</B> screams!"
 			if ("sneeze")
 				if (mob.emote_check(voluntary, 2 SECONDS))
-					. = ..()
-					playsound(mob, "sound/voice/pug_sneeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					animate(mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
-					animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
-					animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
-					if (prob(1))
-						var/datum/organHolder/organs = mob.organHolder
-						var/obj/E = (organs.drop_organ("left_eye", null) || organs.drop_organ("right_eye", null))
-						if (E)
-							E.throw_at(get_edge_cheap(mob, mob.dir), rand(3,5), 1)
-							. = list("<B>[mob]</B> violently sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>", "<I>sneezes violently</I>")
+					. = src.sneeze(prob(1))
 			if ("sniff")
 				if (mob.emote_check(voluntary, 2 SECONDS))
-					. = ..()
-					playsound(mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					. = src.sniff(voluntary)
 			if ("snore")
 				if (mob.emote_check(voluntary, 3 SECONDS))
-					. = ..()
-					playsound(mob, "sound/voice/snore.ogg", rand(5,10) * 10, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					mob.UpdateOverlays(snore_bubble, "snore_bubble")
-					SPAWN_DBG(1.5 SECONDS)
-						mob.UpdateOverlays(null, "snore_bubble")
+					. = src.snore()
 			if ("wheeze")
 				if (mob.emote_check(voluntary, 2 SECONDS))
-					. = ..()
-					playsound(mob, "sound/voice/pug_wheeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(mob, "sound/voice/pug_wheeze.ogg", 80, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					. = list("<B>[mob]</B> wheezes.", "<I>wheezes</I>")
 			else
 				. = ..()
 
+	proc/sneeze(var/violent)
+		playsound(mob, "sound/voice/pug_sneeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		. = list("<B>[mob]</B> sneezes.", "<I>sneezes</I>")
+		animate(mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
+		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
+		if (!violent)
+			return
+		var/datum/organHolder/organs = mob.organHolder
+		var/obj/E = (organs.drop_organ("left_eye", null) || organs.drop_organ("right_eye", null))
+		if (E)
+			E.throw_at(get_edge_cheap(mob, mob.dir), rand(3,5), 1)
+			. = list("<B>[mob]</B> violently sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>", "<I>sneezes violently</I>")
+
+	proc/sniff(var/voluntary)
+		playsound(mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		. = list("<B>[mob]</B> sniffs.", "<I>sniffs</I>")
+		if (!voluntary)
+			return
+		if (mob.hasStatus("poisoned"))
+			boutput(mob, "<span class='alert'>You're sick and can't smell a thing!</span>")
+			return
+		var/obj/item/I = mob.equipped()
+		if (!I)
+			return
+		var/list/L = I.fingerprintshidden
+		if (length(L))
+			var/list/print = L[pick(L)]
+			var/timestamp = print["timestamp"]
+			var/intensity = "faintly of"
+			if (TIME < timestamp + 3 MINUTES)
+				intensity = "strongly of"
+			else if (TIME < timestamp + 10 MINUTES)
+				intensity = "kind of like"
+			boutput(mob, "<span class='notice'>\The [I] smells [intensity] [print["real_name"]].</span>")
+
+	proc/snore()
+		playsound(mob, "sound/voice/snore.ogg", rand(5,10) * 10, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		. = list("<B>[mob]</B> snores.", "<I>snores</I>")
+		mob.UpdateOverlays(snore_bubble, "snore_bubble")
+		SPAWN_DBG(1.5 SECONDS)
+			mob.UpdateOverlays(null, "snore_bubble")
+
 	proc/throw_response(target, item, thrower)
-		if (mob == thrower || is_incapacitated(mob) || prob(90))
+		if (mob == thrower || is_incapacitated(mob) || prob(85))
 			return
 		mob.throw_at(get_turf(item), 1, 1)
 		mob.visible_message("<span class='alert'>[mob] staggers.</span>")
