@@ -2529,16 +2529,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"afr" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/shrub,
-/turf/simulated/floor/bluegreen/side{
-	dir = 8
-	},
-/area/station/hallway/secondary/exit)
 "afs" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -2687,14 +2677,6 @@
 	},
 /turf/space,
 /area/space)
-"afR" = (
-/obj/airbridge_controller{
-	id = "escape";
-	primary_controller = 1;
-	tunnel_width = 3
-	},
-/turf/space,
-/area/station/shield_zone)
 "afS" = (
 /obj/table,
 /obj/item/storage/toolbox/emergency,
@@ -3004,6 +2986,12 @@
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10
+	},
+/obj/machinery/computer/airbr/emergency_shuttle{
+	density = 0;
+	dir = 4;
+	id = "escape2";
+	pixel_x = -32
 	},
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
@@ -48308,6 +48296,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"mKV" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/space,
+/turf/simulated/floor/plating,
+/area/space)
 "mMv" = (
 /obj/machinery/light{
 	dir = 1;
@@ -48420,6 +48413,15 @@
 /obj/access_spawn/pathology,
 /turf/simulated/floor,
 /area/station/medical/cdc)
+"npI" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/bluegreen/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "nqM" = (
 /obj/cable{
 	d1 = 1;
@@ -48779,6 +48781,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/combustion_chamber)
+"ojP" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	primary_controller = 1
+	},
+/turf/space,
+/area/station/shield_zone)
 "olz" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/sci_alt{
@@ -49017,6 +49026,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce/private)
+"oPx" = (
+/obj/grille/catwalk,
+/turf/space,
+/area/space)
 "oQm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -50072,6 +50085,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"ski" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1
+	},
+/turf/space,
+/area/station/shield_zone)
 "skj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -50893,6 +50913,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"uxR" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
 "uzK" = (
 /obj/pool/perspective{
 	dir = 1;
@@ -72734,21 +72761,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -72991,21 +73018,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -73248,22 +73275,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -73503,24 +73530,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -73759,25 +73786,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -74016,9 +74043,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 abG
 abG
 abG
@@ -74032,8 +74056,11 @@ abG
 abG
 abG
 abG
-aaa
-aaa
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -74273,7 +74300,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+abG
 abG
 abG
 abG
@@ -74547,7 +74574,7 @@ abG
 abG
 abG
 abG
-aaa
+ajO
 aaa
 aaa
 aaa
@@ -74786,25 +74813,25 @@ aaa
 aaa
 aaa
 aaa
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
 aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -75043,26 +75070,26 @@ aaa
 aaa
 aaa
 aaa
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-ajO
 aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -75300,26 +75327,26 @@ aaa
 aaa
 aaa
 aaa
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
 aaa
 aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -75558,25 +75585,25 @@ aaa
 aaa
 aaa
 aaa
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
 aaa
 aaa
+aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -75816,23 +75843,23 @@ aaa
 aaa
 aaa
 aaa
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
 aaa
+aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -76075,21 +76102,21 @@ aaa
 aaa
 aaa
 aaa
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
-abG
 aaa
-aaa
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
+abG
 aaa
 aaa
 aaa
@@ -76335,10 +76362,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 afQ
 aaa
 aaa
+uxR
 aaa
 aaa
 aaa
@@ -77620,10 +77647,10 @@ aaa
 aay
 aay
 aay
+ski
 aay
-afR
 aay
-aay
+ojP
 aay
 aay
 aaa
@@ -77875,10 +77902,10 @@ aaa
 aay
 aay
 aay
+aaa
 aaV
 aeK
 aaV
-afp
 aaV
 aeK
 aaV
@@ -78132,10 +78159,10 @@ aay
 aay
 aac
 abH
+oPx
 aee
 aeL
-afq
-aaa
+mKV
 afq
 agK
 aee
@@ -78389,10 +78416,10 @@ aac
 abH
 aaT
 abt
+afp
 aaV
 aeM
 aaV
-afp
 aaV
 aeM
 aaV
@@ -78647,8 +78674,8 @@ abt
 abt
 abt
 aef
+npI
 aeN
-afr
 afS
 agr
 aeN
