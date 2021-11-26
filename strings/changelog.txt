@@ -1,4 +1,17 @@
 
+(t)fri nov 26 21
+(u)anonymous
+(p)6784
+(e)🗺|mapping
+(*)Clarion kitchen changes: Added a stove, soup pot and ladle. Shrunk the Kitchen Freezer horizontally by one tile. Reshuffled all of the Kitchen to make more walk space and put things where they make sense to be.
+(t)thu nov 25 21
+(u)Sovexe
+(p)6708
+(e)⚖|balance
+(*)Blob rounds can now have up to 4 blobs at once.
+(u)Flourish
+(e)🗺|mapping
+(*)Oshan's cloning, EVA, security lobby, and armory are all a tiny bit more spacious now.
 (t)wed nov 24 21
 (u)pali
 (*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.

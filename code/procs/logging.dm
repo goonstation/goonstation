@@ -20,6 +20,7 @@ var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
 var/global/logLength = 0
+var/global/profilerLogID = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
