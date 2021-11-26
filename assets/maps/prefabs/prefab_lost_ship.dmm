@@ -182,6 +182,10 @@
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/map/light/sovietbattle,
 /obj/decal/cleanable/dirt/jen,
+/obj/item/clothing/under/gimmick/seaman{
+	desc = "Seems like this is some sort of dress uniform. Looks weirdly familiar, despite the age of this ship.";
+	name = "Dress Uniform"
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -387,6 +391,10 @@
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/decal/cleanable/dirt/jen,
+/obj/item/clothing/under/gimmick/lieutenant{
+	desc = "Seems like this is a dress uniform. It's got a different color and it seems to have some markings, so it must be more important!";
+	name = "more important dress uniform"
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -505,6 +513,10 @@
 /obj/random_item_spawner/hat/one_or_zero,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/map/light/sovietbattle,
+/obj/item/clothing/under/gimmick/seaman{
+	desc = "Seems like this is some sort of dress uniform. Looks weirdly familiar, despite the age of this ship.";
+	name = "Dress Uniform"
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"

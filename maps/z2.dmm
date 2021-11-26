@@ -1607,6 +1607,21 @@
 /obj/machinery/defib_mount,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/medbay)
+"agN" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "agR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -2069,6 +2084,19 @@
 	},
 /turf/unsimulated/floor/lunar,
 /area/moon)
+"ajb" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "ajf" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -11039,6 +11067,19 @@
 	dir = 8
 	},
 /area/upper_arctic/exterior/surface)
+"aMv" = (
+/obj/stool/chair/comfy/shuttle,
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "aMw" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	dir = 4
@@ -74264,6 +74305,9 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"ewM" = (
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "ewR" = (
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/shuttle{
@@ -74356,9 +74400,22 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"eDD" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "eFa" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/south)
+"eHt" = (
+/obj/stool/chair,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -74384,6 +74441,13 @@
 	dir = 5
 	},
 /area/centcom/offices/katzen)
+"eNA" = (
+/obj/indestructible/invisible_block,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "ePc" = (
 /obj/decal/poster/wallsign/bar,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -74406,6 +74470,20 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"eRE" = (
+/obj/decal/cleanable/blood/gibs/body{
+	icon_state = "gib5"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
+"eSO" = (
+/turf/unsimulated/floor/stairs/medical/wide/other{
+	dir = 8
+	},
+/area/prefab/threeonefiveone/level_two)
 "eTm" = (
 /obj/item/clothing/under/pride/ace,
 /obj/storage/closet{
@@ -74469,6 +74547,17 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"eYM" = (
+/obj/railing{
+	dir = 8
+	},
+/obj/railing,
+/obj/lattice/barricade,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "eZa" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -74482,6 +74571,14 @@
 "faP" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
+"fbs" = (
+/obj/map/light/sovietbattle,
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "fbJ" = (
 /obj/storage/cart/trash{
 	desc = "You would expect them to take this out before starting construction work, but..."
@@ -74534,6 +74631,12 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/ne,
 /area/centcom/offices/sovexe)
+"fhD" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "fiv" = (
 /obj/table/auto,
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding,
@@ -74607,6 +74710,14 @@
 	dir = 5
 	},
 /area/centcom/offices/cogwerks)
+"fri" = (
+/obj/machinery/door/airlock/soviet{
+	dir = 4;
+	layer = 10;
+	name = "airlock"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "fsj" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -74647,6 +74758,15 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"fDs" = (
+/obj/railing{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "fDA" = (
 /obj/stool/chair/office/red,
 /obj/decal/cleanable/rust/jen,
@@ -74795,6 +74915,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"gah" = (
+/obj/decal/cleanable/blood/drip/low,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "gaE" = (
 /obj/admin_plaque{
 	name = "Vaughn Moon's Office"
@@ -74955,6 +75082,11 @@
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/meat_derelict/guts)
+"gFM" = (
+/obj/indestructible/invisible_block,
+/obj/soviet/setpiece/console/bank2,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -74993,6 +75125,22 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"gLQ" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 1;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "gQl" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -75085,11 +75233,41 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"hbU" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "7";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
+"heH" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon_state = "reactoroff";
+	interesting = "The scanner picks up some exotic material inside of the core. It reports it's simular to Kosharmite";
+	name = "Nuclear Core"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "hjf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
@@ -75141,6 +75319,22 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"hmI" = (
+/obj/machinery/door/airlock/soviet{
+	dir = 4;
+	layer = 10;
+	name = "airlock"
+	},
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	id = "3151reactor"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "hnz" = (
 /obj/item/reagent_containers/food/snacks/plant/melon/bowling{
 	pixel_x = 9;
@@ -75443,6 +75637,41 @@
 /obj/machinery/deep_fryer,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/centcom/lounge)
+"iho" = (
+/obj/item/gun/kinetic/knn29{
+	ammo = 0;
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/decal/skeleton{
+	desc = "The remains of some poor cosmonaut fellow.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body9";
+	name = "corpse"
+	},
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
+"iiq" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/jacket/sparkly{
+	desc = "Now all you need is some star dusted boots!";
+	name = "stardusted jacket"
+	},
+/obj/item/clothing/head/hairbow/red,
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 1;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/item/clothing/under/gimmick/officer{
+	desc = "Looks like some sort of dress uniform. This one must be even more important than the last ones, look at those anchors!";
+	name = "Incredibly important dress uniform"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "iiN" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -75738,6 +75967,18 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"iTY" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -75751,6 +75992,14 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
+"jay" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "10";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "jbA" = (
 /obj/storage/secure/closet/civilian/hydro{
 	desc = "The only PDAs you'll find in this locker are Plant Data Analyzers. Heh.";
@@ -75801,6 +76050,18 @@
 /turf/space,
 /turf/cordon,
 /area/cordon)
+"jhp" = (
+/obj/railing{
+	dir = 8
+	},
+/obj/railing{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "jiO" = (
 /obj/decal/fakeobjects/core{
 	desc = "It looks inactive.  Hope there isn't any fuel left in there...";
@@ -75868,6 +76129,16 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/guts)
+"jqo" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4;
+	pixel_y = 11
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "jqT" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -4;
@@ -75970,6 +76241,14 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/cogmap)
+"jCl" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "6";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "jDP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -76049,6 +76328,15 @@
 /obj/item/mutation_orb/cat_orb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"jOh" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "jOH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -76087,6 +76375,14 @@
 	icon_state = "diagonalWall3"
 	},
 /area/hospital/samostrel)
+"jSu" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "9";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "jSD" = (
 /obj/stool,
 /turf/unsimulated/floor/carpet{
@@ -76220,6 +76516,28 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/offices/varshie)
+"kib" = (
+/obj/table/wood/auto/desk,
+/obj/decal/cleanable/blood{
+	icon_state = "floor5";
+	pixel_x = 10
+	},
+/obj/item/gun/kinetic/knn29{
+	ammo = 0;
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/obj/item/paper/thermal/sovietreport4,
+/obj/decal/skeleton{
+	desc = "The remains of some poor cosmonaut fellow.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body9";
+	name = "corpse";
+	pixel_x = -10
+	},
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "kiU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -76301,6 +76619,18 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"koq" = (
+/obj/railing{
+	dir = 1
+	},
+/obj/railing{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "koF" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -10;
@@ -76372,6 +76702,14 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"kwE" = (
+/obj/map/light/sovietbattle,
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "kxa" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/storage)
@@ -76412,11 +76750,37 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"kFK" = (
+/obj/indestructible/invisible_block,
+/obj/soviet/setpiece/console/nuclearcontrol{
+	dir = 1;
+	interesting = "The forensic scanner picks up some unknow energy traces. Huh"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "kGS" = (
 /obj/decal/cleanable/rust/jen,
 /obj/critter/lavacrab,
 /turf/unsimulated/greek/cave/floor,
 /area/centcom/offices/zewaka)
+"kHM" = (
+/obj/map/light/cyan,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
+"kId" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "11";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "kIs" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -76450,6 +76814,19 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"kLl" = (
+/turf/unsimulated/floor/stairs/medical{
+	dir = 1
+	},
+/area/prefab/threeonefiveone/level_two)
+"kMA" = (
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/tableware/one_or_zero,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "kNr" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -76477,6 +76854,25 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"kOv" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 4;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/soviet/setpiece/console/smallcontrol{
+	interesting = "The scanner picks up some unknow energy traces. Huh"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "kOS" = (
 /turf/space,
 /turf/unsimulated/floor/caution/corner/misc{
@@ -76550,6 +76946,14 @@
 	icon_state = "shore-41"
 	},
 /area/titlescreen)
+"laG" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "3";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "ldC" = (
 /obj/table,
 /obj/item/paper/book/from_file/dwainedummies,
@@ -76630,6 +77034,19 @@
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"lmf" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
+	dir = 4;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp3";
+	interesting = "All the electronics have been fried. There's also traces of something unhuman on the keyboard.";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "loc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -76849,6 +77266,13 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
+"lPf" = (
+/obj/railing,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "lPg" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -76896,6 +77320,17 @@
 	icon_state = "beach-0"
 	},
 /area/titlescreen)
+"lVd" = (
+/obj/soviet/setpiece/console/bank1{
+	pixel_x = 10;
+	pixel_y = 1
+	},
+/obj/indestructible/invisible_block,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "lWe" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/garden)
@@ -77046,6 +77481,19 @@
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"mop" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 1;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-23"
@@ -77084,6 +77532,15 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"mvU" = (
+/obj/railing{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "mwi" = (
 /obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
@@ -77279,6 +77736,20 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mXh" = (
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "3151_1";
+	pixel_y = 14
+	},
+/obj/decal/fakeobjects/falseladder,
+/obj/decal/cleanable/blood/drip/high,
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "mXo" = (
 /obj/item/reagent_containers/pill/methamphetamine{
 	pixel_x = -2;
@@ -77352,6 +77823,14 @@
 "ndL" = (
 /turf/unsimulated/floor/redwhite,
 /area/syndicate_station/medbay)
+"neF" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "14";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "ngg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -77448,6 +77927,14 @@
 "npu" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/racing_track)
+"npF" = (
+/obj/decal/cleanable/blood/drip/high,
+/obj/decal/cleanable/blood/gibs/body,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "nrk" = (
 /obj/admin_plaque{
 	name = "Enakai's Office"
@@ -77464,6 +77951,13 @@
 	dir = 1
 	},
 /area/centcom/offices/zewaka)
+"nrz" = (
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "nsm" = (
 /obj/item/bat,
 /obj/item/ammo/bullets/abg{
@@ -77696,6 +78190,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nNz" = (
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "nNL" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
@@ -77706,6 +78207,22 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"nPu" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHWEST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "nQp" = (
 /obj/lattice{
 	dir = 6;
@@ -77806,6 +78323,21 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"nSJ" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 1;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "u_guilty";
+	pixel_x = -13;
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "nTj" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/se,
 /area/centcom/offices/sovexe)
@@ -77878,6 +78410,15 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/east,
 /area/hospital/samostrel)
+"oaQ" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "oaR" = (
 /obj/rack,
 /obj/item/clothing/head/frog_hat{
@@ -77942,6 +78483,14 @@
 "oiM" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/outside)
+"oiR" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/item/match{
+	pixel_x = -16;
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "oju" = (
 /obj/landmark{
 	name = "lobby_leftside"
@@ -78005,6 +78554,13 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
+"osc" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "osH" = (
 /turf/space,
 /turf/unsimulated/floor{
@@ -78018,6 +78574,21 @@
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
+"ovN" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "owK" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
@@ -78087,6 +78658,20 @@
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"oFN" = (
+/obj/decal/fakeobjects/falseladder,
+/obj/ladder{
+	icon_state = "ladder_wall";
+	id = "3151_2";
+	pixel_y = 14
+	},
+/obj/decal/cleanable/blood/splatter/extra,
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "oGk" = (
 /obj/decal/cleanable/sakura{
 	real_name = "sakura petals"
@@ -78134,6 +78719,53 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
+"oIt" = (
+/obj/decal/cleanable/ash,
+/obj/decal/cleanable/ash{
+	pixel_y = -9
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/decal/cleanable/ash{
+	layer = 3;
+	pixel_x = 8
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = 6;
+	pixel_y = -7
+	},
+/obj/item/paper/thermal/sovietreport1{
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/paper/thermal/sovietreport2{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/paper/thermal/sovietreport3{
+	pixel_x = 2;
+	pixel_y = -7
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = 12;
+	pixel_y = 5
+	},
+/obj/decal/cleanable/ash{
+	pixel_x = -9;
+	pixel_y = -7
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -78412,6 +79044,21 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"pqR" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 8;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor/stairs/medical/wide{
+	dir = 8
+	},
+/area/prefab/threeonefiveone/level_two)
 "pqU" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -78478,6 +79125,11 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"pBd" = (
+/obj/table/wood/auto,
+/obj/item/bandage/medicated,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "pBy" = (
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
@@ -78569,6 +79221,17 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
+"pLu" = (
+/obj/railing,
+/obj/railing{
+	dir = 4
+	},
+/obj/lattice/barricade,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "pNh" = (
 /obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable{
 	pixel_x = -11;
@@ -78766,6 +79429,12 @@
 "qkQ" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/marsoutpost/vault)
+"qmj" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "qnn" = (
 /obj/item/extinguisher,
 /turf/space,
@@ -78826,6 +79495,14 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/diner/cow)
+"qvf" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "12";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "qvu" = (
 /obj/table/auto,
 /turf/space,
@@ -78867,6 +79544,28 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qyY" = (
+/obj/stool/bed,
+/obj/item/ammo/bullets/knnpaint{
+	pixel_x = 5
+	},
+/obj/item/ammo/bullets/knnpaint{
+	pixel_x = -1
+	},
+/obj/item/ammo/bullets/knnpaint{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/ammo/bullets/knnpaint{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/obj/item/ammo/bullets/knnpaint{
+	pixel_x = -10
+	},
+/obj/item/clothing/suit/bedsheet/red,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "qAl" = (
 /obj/forcefield/energyshield/perma{
 	dir = 8
@@ -78927,6 +79626,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"qIh" = (
+/obj/indestructible/invisible_block,
+/obj/soviet/setpiece/console/bank1{
+	interesting = "Upon closer examination, the charts that this used to hold are all missing. A fire seems to have taken hold inside the machine at one point too.";
+	pixel_x = 17;
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "qIQ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
@@ -78943,6 +79651,26 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"qJm" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/machines/nuclear64x32.dmi';
+	icon_state = "reactoroff";
+	interesting = "The scanner picks up some exotic material inside of the core. It reports it's simular to Kosharmite";
+	name = "Nuclear Core"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor{
@@ -79053,6 +79781,17 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"qRo" = (
+/turf/space,
+/area/prefab/threeonefiveone/level_two)
+"qRy" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "13";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "qRA" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-14"
@@ -79175,6 +79914,13 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"rnN" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "rou" = (
 /obj/rack,
 /obj/item/clothing/under/gimmick/princess,
@@ -79300,6 +80046,22 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"rHb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "rHo" = (
 /obj/storage/crate/wooden{
 	icon_state = "woodencrate6";
@@ -79309,6 +80071,22 @@
 /obj/random_item_spawner/organs/bloody/one_to_three,
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
+"rHp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovmachine1";
+	interesting = "The scanner detects the steel the machine is made out is less dense than normal steel....that doesn't seem right...";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "rHr" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
@@ -79398,6 +80176,19 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"rNt" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "You think is the nametag reads ????????. Is it crying?";
+	dir = 4;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "rOb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -79411,6 +80202,24 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"rOf" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 4;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/item/gun/kinetic/knn29{
+	ammo = 0;
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "rON" = (
 /obj/machinery/door/airlock/classic{
 	name = "Kitchen Door"
@@ -79573,6 +80382,22 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sgn" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTHWEST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "sgB" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -79652,6 +80477,10 @@
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
+"smE" = (
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "sna" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -79736,6 +80565,27 @@
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"sDX" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHEAST)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "sEJ" = (
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
@@ -79774,6 +80624,13 @@
 /obj/item/shinai_bag,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
+"sHP" = (
+/obj/table/folding,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "sHZ" = (
 /obj/item/paper{
 	pixel_x = 7;
@@ -79831,6 +80688,10 @@
 /turf/space,
 /turf/unsimulated/floor/engine/caution/south,
 /area/hospital/samostrel)
+"sTV" = (
+/obj/map/light/sovietbattle,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
@@ -79989,6 +80850,18 @@
 	icon_state = "Stairs_wide"
 	},
 /area/centcom)
+"trI" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "tsf" = (
 /obj/cable{
 	d1 = 1;
@@ -80053,6 +80926,34 @@
 /obj/dialogueobj/dreambee,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/eastwest,
 /area/titlescreen)
+"tFq" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
+"tGl" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
@@ -80086,6 +80987,10 @@
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"tTB" = (
+/obj/stool/chair/comfy,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -80181,6 +81086,16 @@
 	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"ueN" = (
+/obj/railing{
+	dir = 4
+	},
+/obj/railing,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "uiu" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -80231,6 +81146,10 @@
 	dir = 4
 	},
 /area/hospital/samostrel)
+"upx" = (
+/obj/indestructible/invisible_block,
+/turf/unsimulated/floor/carpet/office,
+/area/prefab/threeonefiveone/level_two)
 "usD" = (
 /obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
@@ -80396,6 +81315,19 @@
 	icon_state = "shore-17"
 	},
 /area/titlescreen)
+"uLc" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing";
+	dir = 4;
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "uMG" = (
 /obj/railing/red{
 	dir = 8;
@@ -80406,6 +81338,9 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"uMR" = (
+/turf/unsimulated/floor/stairs/medical,
+/area/prefab/threeonefiveone/level_two)
 "uMY" = (
 /turf/unsimulated/floor/redwhite{
 	dir = 1
@@ -80432,6 +81367,23 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
+"uTs" = (
+/obj/decal/skeleton{
+	desc = "The remains of some poor cosmonaut fellow.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body9";
+	name = "corpse";
+	pixel_x = 7
+	},
+/obj/decal/cleanable/blood{
+	dir = 8;
+	icon_state = "smear3"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "uVv" = (
 /turf/simulated/wall/r_wall,
 /area/diner/cow)
@@ -80498,6 +81450,14 @@
 	dir = 10
 	},
 /area/diner/cow)
+"vfr" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "5";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "vgD" = (
 /obj/landmark{
 	name = "pit_meatland"
@@ -80811,6 +81771,41 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"vYb" = (
+/obj/decal/cleanable/blood/splatter/extra,
+/obj/decal/cleanable/blood/drip/high{
+	pixel_x = 14;
+	pixel_y = 25
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
+"wcA" = (
+/obj/stool/chair/comfy/shuttle{
+	pixel_x = 2;
+	pixel_y = -10
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/skeleton{
+	desc = "The remains of some poor cosmonaut fellow.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body9";
+	name = "corpse"
+	},
+/obj/item/gun/kinetic/knn29{
+	ammo = 0;
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -81153,9 +82148,47 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"xfE" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	desc = "The only thing keeping the vaccum out and you alive.";
+	icon = 'icons/turf/walls_tempus-white.dmi';
+	icon_state = "15";
+	name = "Ship Armor"
+	},
+/area/prefab/threeonefiveone/level_two)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
+"xhN" = (
+/obj/item/paper/empty_bloody{
+	desc = "The faded blood obscures some of the text.";
+	info = "<i>Они налились... выше, повторно для... около... мёртвый. Что... экипаж... забаррикадирован в... командном центре. Корнилов кричит присоединиться, чтобы... его, к джо... Я видел, как он умер в... перевернутый... ночью... Читая это, знайте, что мы боролись за конец. Я собираюсь пойти по легкому пути... превращение в один из них. До свидания.</i> Some of this jus too covered with blood to decipher";
+	name = "The Cosmonaut's Note";
+	pixel_x = -11;
+	pixel_y = 8
+	},
+/obj/decal/skeleton{
+	desc = "The remains of some poor cosmonaut fellow.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body9";
+	name = "corpse"
+	},
+/obj/railing{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	desc = "A remote control switch for the inner blast door.";
+	id = "3151reactor";
+	name = "Blast Door Control";
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "xia" = (
 /obj/machinery/light/small/frostedred{
 	dir = 4;
@@ -81255,6 +82288,17 @@
 	icon_state = "4"
 	},
 /area/shuttle/escape/centcom/donut3)
+"xyi" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1;
+	pixel_x = 2;
+	pixel_y = 14
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "xyQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -81314,6 +82358,28 @@
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
 /area/syndicate_station/medbay)
+"xCP" = (
+/obj/critter/zombie/meatmonaut{
+	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
+	icon = 'icons/misc/soviet.dmi';
+	icon_state = "????";
+	name = "????"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "xGt" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -3
@@ -81342,6 +82408,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"xGL" = (
+/obj/lattice/barricade,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "xHa" = (
 /obj/lattice,
 /obj/table/reinforced/bar/auto,
@@ -81354,6 +82427,43 @@
 	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"xHv" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive";
+	pixel_x = -5
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive";
+	pixel_x = 12
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
+"xHz" = (
+/obj/machinery/door/airlock/soviet{
+	dir = 4;
+	layer = 10;
+	name = "airlock"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -81606,6 +82716,15 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/donut2)
+"ycX" = (
+/obj/soviet/setpiece/console/nuclearcontrol{
+	interesting = "The forensic scanner picks up some unknow energy traces. Huh"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/prefab/threeonefiveone/level_two)
 "yeV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -162861,19 +163980,19 @@ abr
 abr
 aCb
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -163163,19 +164282,19 @@ abn
 abn
 aCb
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qRo
+qRo
+jCl
+laG
+laG
+vfr
+qRo
+qRo
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -163465,19 +164584,19 @@ abn
 abn
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qRo
+jCl
+jSu
+oIt
+qyY
+jay
+vfr
+qRo
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -163767,19 +164886,19 @@ abr
 abr
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qRo
+qvf
+qmj
+oiR
+iho
+iiq
+qvf
+qRo
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -164069,19 +165188,19 @@ axb
 abr
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+jCl
+kId
+fri
+laG
+laG
+laG
+kId
+vfr
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -164371,19 +165490,19 @@ axb
 axb
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+gFM
+smE
+ewM
+ewM
+pBd
+lmf
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -164673,19 +165792,19 @@ aBb
 axa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+qIh
+sTV
+trI
+tTB
+kib
+eDD
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -164975,19 +166094,19 @@ axG
 axa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+jCl
+qRy
+upx
+ewM
+ewM
+ewM
+ewM
+nSJ
+neF
+vfr
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -165277,19 +166396,19 @@ aBc
 axa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+neF
+kId
+laG
+laG
+xHz
+xHz
+laG
+laG
+kId
+qRy
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -165579,19 +166698,19 @@ axG
 axa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qvf
+lVd
+gLQ
+ovN
+mvU
+jqo
+ueN
+rHp
+xHv
+qvf
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -165881,19 +167000,19 @@ aBd
 axa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qvf
+eNA
+kwE
+kLl
+ajb
+fhD
+uMR
+fbs
+kFK
+qvf
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -166183,19 +167302,19 @@ aBe
 axa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qvf
+eNA
+kOv
+jhp
+sHP
+nNz
+eYM
+aMv
+eNA
+qvf
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -166485,19 +167604,19 @@ lhU
 asq
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qvf
+eNA
+eNA
+mvU
+fhD
+nrz
+lPf
+fhD
+eNA
+qvf
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -166787,19 +167906,19 @@ jvI
 asq
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+neF
+laG
+laG
+laG
+xHz
+xHz
+laG
+laG
+laG
+qRy
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -167089,19 +168208,19 @@ vFr
 asq
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+jCl
+jSu
+sHP
+rOf
+nNz
+fhD
+oaQ
+fhD
+nNz
+fhD
+jay
+vfr
+aaa
 cnw
 cnw
 cnw
@@ -167391,19 +168510,19 @@ sTU
 asq
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qvf
+mXh
+rnN
+sHP
+xGL
+fhD
+fhD
+mop
+fhD
+eHt
+kMA
+qvf
+aaa
 cnw
 cnw
 cnw
@@ -167693,19 +168812,19 @@ yld
 asq
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qvf
+eRE
+vYb
+osc
+osc
+fhD
+fhD
+sHP
+fhD
+eHt
+kMA
+qvf
+aaa
 cnw
 cnw
 cnw
@@ -167995,19 +169114,19 @@ kjA
 kjA
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qvf
+fhD
+npF
+jOh
+sHP
+fhD
+mop
+sHP
+fhD
+eHt
+kMA
+qvf
+aaa
 cnw
 cnw
 cnw
@@ -168297,19 +169416,19 @@ kjA
 lqh
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qvf
+oFN
+gah
+xGL
+ajb
+uTs
+xGL
+fhD
+nNz
+eHt
+kMA
+qvf
+aaa
 cnw
 cnw
 cnw
@@ -168599,19 +169718,19 @@ lqh
 lqh
 mnh
 jhk
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+jay
+hbU
+hbU
+laG
+xHz
+laG
+laG
+xHz
+laG
+hbU
+hbU
+jSu
+aaa
 cnw
 cnw
 cnw
@@ -168901,19 +170020,19 @@ abn
 abn
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+jay
+qRy
+rNt
+nrz
+xGL
+fhD
+sHP
+nrz
+neF
+jSu
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -169203,19 +170322,19 @@ abn
 abn
 aCb
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+xhN
+pLu
+eSO
+pqR
+koq
+fDs
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -169505,19 +170624,19 @@ abr
 abr
 aCb
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+eNA
+ycX
+nNz
+nNz
+nrz
+kFK
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -169807,19 +170926,19 @@ lGN
 lGN
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+eNA
+xyi
+uLc
+fhD
+wcA
+eNA
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -170109,19 +171228,19 @@ kfa
 kfa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+jCl
+qRy
+eNA
+eNA
+nrz
+fhD
+fhD
+eNA
+neF
+vfr
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -170411,19 +171530,19 @@ kfa
 kfa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+neF
+xfE
+laG
+laG
+hmI
+hmI
+laG
+laG
+xfE
+qRy
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -170713,19 +171832,19 @@ kfa
 kfa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+neF
+qRy
+xCP
+nPu
+fhD
+fhD
+fhD
+iTY
+neF
+qRy
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -171015,19 +172134,19 @@ kfa
 kfa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+jay
+qRy
+fhD
+heH
+fhD
+fhD
+qJm
+rHb
+neF
+jSu
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -171317,19 +172436,19 @@ kfa
 kfa
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+iTY
+agN
+kHM
+kHM
+agN
+fhD
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -171619,19 +172738,19 @@ gGM
 gGM
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+qvf
+sgn
+sDX
+fhD
+tFq
+tGl
+fhD
+qvf
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
@@ -171921,19 +173040,19 @@ kmt
 kmt
 kmt
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+qRo
+qRo
+jay
+laG
+laG
+laG
+laG
+laG
+laG
+jSu
+qRo
+qRo
+aaa
 cnw
 cnw
 cnw
