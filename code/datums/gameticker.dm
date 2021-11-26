@@ -495,6 +495,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if(automatic_profiling_on)
 			if(world.cpu <= CPU_STOP_PROFILING_THRESHOLD)
 				highCpuCount--
+			else
+				highCpuCount = CPU_STOP_PROFILING_COUNT
 			if(highCpuCount <= 0 || force_stop)
 				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++].json"
@@ -507,6 +509,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		else
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
+			else
+				highCpuCount = 0
 			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
 				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
 				message_admins("CPU at [world.cpu], turning on profiling.")
