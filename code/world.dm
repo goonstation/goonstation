@@ -1190,6 +1190,9 @@ var/f_color_selector_handler/F_Color_Selector
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
+		var/list/plist = params2list(T)
+		if(!isnull(config.ircbot_auth_key) && plist["auth"] !=)
+
 		if (T == "admins")
 			var/list/s = list()
 			var/n = 0
@@ -1209,7 +1212,6 @@ var/f_color_selector_handler/F_Color_Selector
 			s["mentors"] = n
 			return list2params(s)
 
-		var/list/plist = params2list(T)
 		switch(plist["type"])
 			if("irc")
 				if (!plist["nick"] || !plist["msg"]) return 0
@@ -1743,7 +1745,7 @@ var/f_color_selector_handler/F_Color_Selector
 				if(plist["average"])
 					final_action |= PROFILE_AVERAGE
 				var/output = world.Profile(final_action, type, "json")
-				if(action == PROFILE_REFRESH || action == PROFILE_STOP)
+				if(plist["action"] == "refresh" || plist["action"] == "stop")
 					return output
 				return 1
 
