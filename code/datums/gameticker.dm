@@ -501,7 +501,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				rustg_file_write(output, fname)
 				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
 				logTheThing("debug", null, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
-				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
+				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
 		else
@@ -511,7 +511,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
 				message_admins("CPU at [world.cpu], turning on profiling.")
 				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu].")
-				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu].")
+				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu]."))
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 				automatic_profiling_on = TRUE
 
