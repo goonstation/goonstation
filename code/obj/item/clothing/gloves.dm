@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 1500)
+			if (C.charge < 1000)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				if (src.uses < 0)
 					src.uses = 0
 				src.uses = min(src.uses + 1, src.max_uses)
-				C.use(1500)
+				C.use(1000)
 				src.icon_state = "stun"
 				src.item_state = "stun"
 				src.overridespecial = 1
