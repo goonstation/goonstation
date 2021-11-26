@@ -10333,7 +10333,7 @@
 /area/station/hallway/primary/east)
 "yW" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station/east)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)

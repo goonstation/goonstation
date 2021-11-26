@@ -603,6 +603,14 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/escape/station
 	icon_state = "shuttle2"
 
+/area/shuttle/escape/station/north
+
+/area/shuttle/escape/station/south
+
+/area/shuttle/escape/station/east
+
+/area/shuttle/escape/station/west
+
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 	sound_group = "centcom"

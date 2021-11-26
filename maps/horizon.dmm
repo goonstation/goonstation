@@ -6926,7 +6926,7 @@
 /area/space)
 "asA" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station/east)
 "asC" = (
 /obj/cable{
 	d1 = 2;

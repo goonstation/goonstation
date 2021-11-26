@@ -41671,7 +41671,7 @@
 /area/station/maintenance/disposal)
 "ocJ" = (
 /turf/space,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/station/north)
 "ocW" = (
 /obj/cable,
 /obj/cable{

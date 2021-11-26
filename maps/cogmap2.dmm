@@ -57857,7 +57857,7 @@
 /area/station/hallway/secondary/exit)
 "cxj" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station/east)
 "cxk" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
