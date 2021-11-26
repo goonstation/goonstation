@@ -43809,9 +43809,16 @@
 /area/syndicate_station/battlecruiser)
 "cvZ" = (
 /obj/rack,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
+/obj/item/clothing/shoes/flippers/combat,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "cwc" = (
@@ -80299,9 +80306,12 @@
 /area/hospital/samostrel)
 "ubB" = (
 /obj/rack,
-/obj/item/tank/jetpack/syndicate,
-/obj/item/tank/jetpack/syndicate,
 /obj/machinery/light,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
+/obj/item/tank/jetpack/syndicate,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "ucy" = (
@@ -81637,8 +81647,8 @@
 "yiq" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
-	name = "smol donut";
-	doants = 0
+	doants = 0;
+	name = "smol donut"
 	},
 /obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,

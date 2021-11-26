@@ -322,6 +322,15 @@
 		..()
 		setProperty("negate_fluid_speed_penalty",0.6)
 
+/obj/item/clothing/shoes/flippers/combat
+	name = "combat flippers"
+	desc = "A pair of rubber flippers designed for both under water and surface combat scenarios."
+	icon_state = "flippers_combat"
+
+	New()
+		..()
+		setProperty("negate_fluid_speed_penalty",0.2)
+
 /obj/item/clothing/shoes/moon
 	name = "moon shoes"
 	desc = "Recent developments in trampoline-miniaturization technology have made these little wonders possible."
