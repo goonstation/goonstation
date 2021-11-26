@@ -758,6 +758,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					var/turf/end = B.delivery_area.spyturf
 					user.gpsToTurf(end, doText = 0) // spy thieves probably need to break in anyway, so screw access check
 					return 0
+				for (var/obj/item/device/pda2/P in delivery.contents) //make sure we don't delete the PDA
+					if (P.uplink == src)
+						return 0
 				user.removeGpsPath(doText = 0)
 				B.claimed = 1
 				for (var/mob/M in delivery.contents) //make sure we dont delete mobs inside the stolen item
@@ -778,7 +781,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							user.show_text("That isn't the right limb!", "red")
 					else
 						M.drop_from_slot(delivery,get_turf(M))
-
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
