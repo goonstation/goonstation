@@ -1191,7 +1191,6 @@ var/f_color_selector_handler/F_Color_Selector
 			return 0 //ip filtering
 
 		var/list/plist = params2list(T)
-		if(!isnull(config.ircbot_auth_key) && plist["auth"] !=)
 
 		if (T == "admins")
 			var/list/s = list()
