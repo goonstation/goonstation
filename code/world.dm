@@ -1728,9 +1728,8 @@ var/f_color_selector_handler/F_Color_Selector
 				if(type != "sendmaps")
 					type = null
 				if(plist["action"] == "save")
-					var/static/logID = 0
 					var/output = world.Profile(PROFILE_REFRESH, type, "json")
-					var/fname = "data/logs/profiling/[global.roundLog_date]_[logID++].json"
+					var/fname = "data/logs/profiling/[global.roundLog_date]_[global.profilerLogID++].json"
 					rustg_file_write(output, fname)
 					return fname
 				var/action = list(
@@ -1746,8 +1745,14 @@ var/f_color_selector_handler/F_Color_Selector
 				var/output = world.Profile(final_action, type, "json")
 				if(plist["action"] == "refresh" || plist["action"] == "stop")
 					SPAWN_DBG(1)
-						ircbot.export("profiler_result", list("data"=output))
-					return 1
+						var/n_tries = 3
+						var/datum/http_response/response = null
+						while(--n_tries > 0 && (isnull(response) || response.errored))
+							var/datum/http_request/request = new()
+							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
+							request.begin_async()
+							UNTIL(request.is_complete())
+							response = request.into_response()
 				return 1
 
 /world/proc/setMaxZ(new_maxz)
