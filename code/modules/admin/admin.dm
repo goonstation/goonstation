@@ -4451,6 +4451,7 @@ var/global/noir = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.full_heal()
+		H.stamina = H.stamina_max
 		H.remove_ailments() // don't spawn with heart failure
 	return
 
