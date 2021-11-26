@@ -1,0 +1,975 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"at" = (
+/obj/indestructible/shuttle_corner,
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"bF" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"ch" = (
+/obj/stool/chair/comfy/shuttle/green,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"fk" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom/manta)
+"fo" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"fI" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"fL" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"hg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom/manta)
+"ht" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/obj/item/device/radio,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"jh" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom/manta)
+"jF" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"kI" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"nG" = (
+/obj/machinery/door/airlock/pyro/command,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"nU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"qo" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"uD" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"wk" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"wI" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"wN" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"yY" = (
+/obj/machinery/door/airlock/pyro/medical,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"zh" = (
+/obj/machinery/computer/shuttle,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"zY" = (
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"Av" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom/manta)
+"AH" = (
+/obj/machinery/door/airlock/pyro/security,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/manta)
+"BG" = (
+/obj/item/storage/wall/emergency,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom/manta)
+"BJ" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/manta)
+"Ca" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = -6
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 2
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"CN" = (
+/obj/item/storage/wall/medical{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"CS" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/manta)
+"DJ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"Ej" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"Hv" = (
+/obj/indestructible/shuttle_corner,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/manta)
+"Ip" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/manta)
+"Jl" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"Kf" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"Kw" = (
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/space/fluid,
+/area/shuttle/escape/centcom/manta)
+"Na" = (
+/obj/machinery/shuttle/engine/propulsion/sea_propulsion,
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"Nr" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"Op" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"Ox" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/manta)
+"OQ" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/manta)
+"PJ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/manta)
+"PP" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/manta)
+"RA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"RJ" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/manta)
+"SV" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/manta)
+"Vj" = (
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/manta)
+"YQ" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/manta)
+"ZB" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+
+(1,1,1) = {"
+uD
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+uD
+uD
+nU
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+"}
+(2,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+bF
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(3,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(4,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(5,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(6,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(7,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(8,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+at
+YQ
+YQ
+PJ
+wk
+fk
+PJ
+RA
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(9,1,1) = {"
+uD
+aa
+aa
+Vj
+at
+fk
+PJ
+PJ
+hg
+Nr
+Ej
+zY
+jF
+jh
+Ca
+DJ
+RA
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(10,1,1) = {"
+wN
+aa
+aa
+Vj
+YQ
+Nr
+qo
+YQ
+Ej
+zY
+Ej
+zY
+Ej
+jh
+CN
+ch
+DJ
+Kw
+Na
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(11,1,1) = {"
+uD
+aa
+aa
+Vj
+YQ
+zY
+OQ
+YQ
+Ej
+jF
+Ej
+zY
+zY
+yY
+wI
+Jl
+ch
+DJ
+RA
+Vj
+aa
+aa
+aa
+aa
+uD
+"}
+(12,1,1) = {"
+uD
+aa
+aa
+YQ
+YQ
+jF
+OQ
+jh
+Ej
+zY
+Ej
+zY
+Ej
+jh
+RJ
+RJ
+wI
+ch
+BJ
+Op
+aa
+aa
+aa
+aa
+uD
+"}
+(13,1,1) = {"
+wN
+aa
+aa
+YQ
+zh
+fo
+zY
+nG
+zY
+zY
+zY
+zY
+Ej
+Av
+PJ
+PJ
+PJ
+PJ
+PP
+Op
+aa
+aa
+aa
+aa
+wN
+"}
+(14,1,1) = {"
+uD
+aa
+aa
+YQ
+YQ
+jF
+OQ
+jh
+Ej
+zY
+Ej
+zY
+Ej
+jh
+CS
+CS
+CS
+SV
+Ox
+Op
+aa
+aa
+aa
+aa
+uD
+"}
+(15,1,1) = {"
+uD
+aa
+aa
+Vj
+YQ
+zY
+OQ
+YQ
+Ej
+jF
+Ej
+zY
+zY
+AH
+CS
+Ip
+SV
+Hv
+Kf
+Vj
+aa
+aa
+aa
+aa
+uD
+"}
+(16,1,1) = {"
+wN
+aa
+aa
+Vj
+YQ
+fI
+ht
+YQ
+Ej
+zY
+Ej
+zY
+Ej
+BG
+CS
+SV
+Hv
+Kw
+Na
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(17,1,1) = {"
+uD
+aa
+aa
+Vj
+fL
+hg
+PJ
+PJ
+fk
+fI
+Ej
+zY
+jF
+jh
+SV
+Hv
+Kf
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(18,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+fL
+YQ
+YQ
+PJ
+wk
+hg
+PJ
+Kf
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(19,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(20,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(21,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(22,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(23,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(24,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+bF
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(25,1,1) = {"
+uD
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+uD
+uD
+nU
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+"}

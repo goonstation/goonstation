@@ -608,6 +608,14 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_group = "centcom"
 	is_centcom = 1
 
+/area/shuttle/escape/centcom/north
+
+/area/shuttle/escape/centcom/south
+
+/area/shuttle/escape/centcom/east
+
+/area/shuttle/escape/centcom/west
+
 /area/shuttle/prison/
 	name = "Prison Shuttle"
 
@@ -724,8 +732,18 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 			var/mob/M = Obj
 			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 
-/area/shuttle/escape/transit/ew
+/area/shuttle/escape/transit/north
+	warp_dir = NORTH
+
+/area/shuttle/escape/transit/east
 	warp_dir = EAST
+
+/area/shuttle/escape/transit/west
+	warp_dir = WEST
+
+/area/shuttle/escape/transit/south
+	warp_dir = SOUTH
+
 ABSTRACT_TYPE(/area/shuttle_transit_space)
 /area/shuttle_transit_space
 	name = "Wormhole"

@@ -1,0 +1,1165 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"br" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/east)
+"bF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"ci" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4;
+	req_access = 0
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"dW" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"fo" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"fI" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"hg" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"ht" = (
+/obj/machinery/sleeper/compact,
+/obj/machinery/light,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"iP" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom)
+"jh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/east)
+"jY" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"kI" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/east)
+"mw" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"ne" = (
+/obj/machinery/computer/announcement{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"nG" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/east)
+"nU" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"oq" = (
+/obj/stool/chair/comfy/shuttle/red,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"oW" = (
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"qU" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom/east)
+"uD" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"vB" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/east)
+"we" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/east)
+"wI" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"wN" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"yY" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"zY" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom/east)
+"Av" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"AH" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom/east)
+"Ca" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/east)
+"Cr" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/east)
+"Cu" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom/east)
+"CL" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -6
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = 7
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"CN" = (
+/obj/machinery/door/airlock/pyro/security{
+	density = 0;
+	dir = 4;
+	name = "Secure Transport"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"CS" = (
+/obj/machinery/sleeper/compact,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"DJ" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	density = 0;
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"Ej" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"GE" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/mug_rack{
+	pixel_x = -26;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/east)
+"GZ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/east)
+"HS" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"Ip" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"Iq" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7
+	},
+/obj/item/device/radio{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"Iw" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
+/area/shuttle/escape/centcom/east)
+"JY" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/east)
+"Kf" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"Nr" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"Op" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/east)
+"Ox" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"OA" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom/east)
+"OJ" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"OQ" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"PJ" = (
+/obj/stool/chair/comfy/shuttle/red,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/east)
+"QL" = (
+/obj/grille/catwalk,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"RJ" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"SV" = (
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"UV" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/east)
+"UX" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"Vj" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom/east)
+"VC" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"VP" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"VT" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"Yd" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"Ye" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom/east)
+"YQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
+"YW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/east)
+"ZB" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+
+(1,1,1) = {"
+uD
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+"}
+(2,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(3,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(4,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+kI
+kI
+kI
+aa
+aa
+aa
+aa
+kI
+kI
+kI
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(5,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+kI
+nG
+zY
+Ca
+JY
+YW
+aa
+aa
+nG
+vB
+Ca
+Cu
+YW
+kI
+aa
+aa
+aa
+aa
+uD
+"}
+(6,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+AH
+OA
+Kf
+fo
+Nr
+OA
+Op
+Op
+Ye
+yY
+jY
+hg
+Ye
+AH
+aa
+aa
+aa
+aa
+uD
+"}
+(7,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+OA
+Kf
+oq
+Av
+Nr
+Vj
+Iw
+GE
+Vj
+yY
+UV
+CS
+hg
+Ye
+aa
+aa
+aa
+aa
+wN
+"}
+(8,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+Vj
+PJ
+Av
+Av
+Nr
+Vj
+we
+br
+Vj
+yY
+UV
+UV
+ht
+Vj
+aa
+aa
+aa
+aa
+uD
+"}
+(9,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+Vj
+oq
+Av
+Av
+Nr
+Vj
+we
+br
+Vj
+CL
+UV
+UV
+CS
+Vj
+aa
+aa
+aa
+aa
+uD
+"}
+(10,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+OA
+Op
+Op
+CN
+Op
+qU
+Cr
+Cr
+qU
+Op
+DJ
+Op
+Op
+Ye
+aa
+aa
+aa
+aa
+wN
+"}
+(11,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+Vj
+RJ
+Ej
+SV
+RJ
+Ej
+SV
+SV
+Ej
+RJ
+SV
+Ej
+RJ
+Vj
+aa
+aa
+aa
+aa
+uD
+"}
+(12,1,1) = {"
+uD
+uD
+aa
+aa
+aa
+aa
+OQ
+nU
+RJ
+wI
+RJ
+RJ
+SV
+SV
+RJ
+RJ
+wI
+RJ
+Ip
+OQ
+aa
+aa
+aa
+uD
+uD
+"}
+(13,1,1) = {"
+bF
+iP
+QL
+QL
+QL
+QL
+Yd
+SV
+SV
+SV
+SV
+wI
+SV
+SV
+wI
+SV
+SV
+SV
+SV
+Yd
+QL
+QL
+QL
+iP
+bF
+"}
+(14,1,1) = {"
+dW
+uD
+aa
+aa
+aa
+aa
+OQ
+RJ
+RJ
+SV
+RJ
+RJ
+SV
+SV
+RJ
+RJ
+SV
+RJ
+RJ
+OQ
+aa
+aa
+aa
+uD
+dW
+"}
+(15,1,1) = {"
+dW
+uD
+aa
+aa
+aa
+aa
+OQ
+RJ
+RJ
+wI
+RJ
+RJ
+SV
+SV
+RJ
+RJ
+wI
+RJ
+RJ
+OQ
+aa
+aa
+aa
+uD
+dW
+"}
+(16,1,1) = {"
+bF
+iP
+QL
+QL
+QL
+QL
+Yd
+SV
+SV
+SV
+SV
+SV
+SV
+SV
+SV
+SV
+SV
+SV
+SV
+Yd
+QL
+QL
+QL
+iP
+bF
+"}
+(17,1,1) = {"
+uD
+uD
+aa
+aa
+aa
+aa
+OQ
+nU
+RJ
+RJ
+RJ
+wI
+RJ
+RJ
+wI
+RJ
+RJ
+RJ
+Ip
+OQ
+aa
+aa
+aa
+uD
+uD
+"}
+(18,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+jh
+fI
+VT
+RJ
+RJ
+SV
+RJ
+RJ
+SV
+RJ
+RJ
+VT
+Ox
+GZ
+aa
+aa
+aa
+aa
+uD
+"}
+(19,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+jh
+Op
+Op
+Op
+ci
+Op
+Op
+ci
+Op
+Op
+Op
+GZ
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(20,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+HS
+OJ
+VP
+mw
+mw
+VP
+Iq
+HS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(21,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+jh
+YQ
+UX
+ne
+oW
+UX
+VC
+GZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(22,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+jh
+HS
+HS
+HS
+HS
+GZ
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(23,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(24,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(25,1,1) = {"
+uD
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+"}

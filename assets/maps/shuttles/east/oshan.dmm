@@ -1,0 +1,1157 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"aA" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"aW" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"br" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/sealab)
+"bE" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"bF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"ci" = (
+/obj/machinery/light/small/floor,
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"dW" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"fI" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"gz" = (
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/sealab)
+"hg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"hm" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"ht" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom/sealab)
+"hS" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "10"
+	},
+/area/shuttle/escape/centcom/sealab)
+"iz" = (
+/obj/item/storage/wall/fire{
+	dir = 4;
+	pixel_z = -4
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"iP" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom)
+"jh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"kI" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"lY" = (
+/obj/machinery/computer/shuttle{
+	dir = 4;
+	icon_state = "turret1"
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"mw" = (
+/obj/item/storage/wall/emergency{
+	dir = 8
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"ne" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "4"
+	},
+/area/shuttle/escape/centcom/sealab)
+"nj" = (
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"oq" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"os" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"oW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/sealab)
+"ro" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/sealab)
+"uD" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"wD" = (
+/obj/item/storage/wall/medical{
+	dir = 4
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"wI" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "6"
+	},
+/area/shuttle/escape/centcom/sealab)
+"wN" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"yU" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom/sealab)
+"yY" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/sealab)
+"Av" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"AH" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/sealab)
+"AL" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"AY" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "9"
+	},
+/area/shuttle/escape/centcom/sealab)
+"Be" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"BH" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "5"
+	},
+/area/shuttle/escape/centcom/sealab)
+"Cu" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"CL" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4;
+	name = "Secure Transport";
+	opacity = 0
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"EF" = (
+/obj/item/storage/wall/fire{
+	dir = 4;
+	pixel_z = -4
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom/sealab)
+"EJ" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "First-Aid Station";
+	opacity = 0
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"GZ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "15"
+	},
+/area/shuttle/escape/centcom/sealab)
+"JY" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/sealab)
+"Kf" = (
+/obj/stool/chair/comfy/shuttle/green,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"LO" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/sealab)
+"MA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom/sealab)
+"Nr" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/sealab)
+"Ox" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"OA" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom/sealab)
+"PJ" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_kit,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"QL" = (
+/obj/grille/catwalk,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"Rk" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"RJ" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"RT" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"UL" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"UV" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom/sealab)
+"UX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"Vj" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom/sealab)
+"VC" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "1"
+	},
+/area/shuttle/escape/centcom/sealab)
+"VF" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"VP" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"VT" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"Yd" = (
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom/sealab)
+"Ye" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom/sealab)
+"YM" = (
+/obj/machinery/door/airlock/pyro/command,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/sealab)
+"YQ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom/sealab)
+"YW" = (
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom/sealab)
+"ZB" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+
+(1,1,1) = {"
+uD
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+"}
+(2,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(3,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(4,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(5,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+JY
+JY
+JY
+aa
+aa
+aa
+JY
+JY
+JY
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(6,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+JY
+AH
+VC
+Ye
+yY
+Nr
+wD
+yU
+wD
+Ye
+yY
+Nr
+hg
+MA
+JY
+aa
+aa
+aa
+aa
+uD
+"}
+(7,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+ne
+OA
+Kf
+YW
+YW
+YW
+bE
+OA
+UV
+UV
+gz
+UV
+UV
+OA
+OA
+aa
+aa
+aa
+aa
+wN
+"}
+(8,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+oW
+Vj
+PJ
+Av
+hm
+Av
+PJ
+OA
+br
+gz
+LO
+gz
+br
+ht
+ro
+aa
+aa
+aa
+aa
+uD
+"}
+(9,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+AH
+GZ
+oq
+oq
+EJ
+oq
+oq
+EF
+oq
+oq
+CL
+oq
+oq
+GZ
+MA
+aa
+aa
+aa
+aa
+uD
+"}
+(10,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+ht
+UX
+RJ
+RJ
+Yd
+RJ
+RJ
+RJ
+RJ
+RJ
+Yd
+RJ
+RJ
+Rk
+Vj
+aa
+aa
+aa
+aa
+wN
+"}
+(11,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+VP
+RJ
+RJ
+Yd
+VT
+Yd
+Yd
+Yd
+Yd
+Yd
+VT
+Yd
+RJ
+RJ
+VP
+aa
+aa
+aa
+aa
+uD
+"}
+(12,1,1) = {"
+uD
+uD
+aa
+aa
+aa
+OA
+RJ
+RJ
+Yd
+wI
+os
+oq
+mw
+oq
+os
+BH
+Yd
+RJ
+RJ
+OA
+aa
+aa
+aa
+uD
+uD
+"}
+(13,1,1) = {"
+bF
+iP
+QL
+QL
+QL
+Cu
+Yd
+Yd
+Yd
+OA
+AL
+RT
+lY
+RT
+VF
+OA
+Yd
+Yd
+Yd
+Cu
+QL
+QL
+QL
+iP
+bF
+"}
+(14,1,1) = {"
+dW
+uD
+aa
+aa
+aa
+VP
+Yd
+Yd
+Yd
+YM
+aA
+nj
+nj
+nj
+aA
+YM
+Yd
+Yd
+Yd
+VP
+aa
+aa
+aa
+uD
+dW
+"}
+(15,1,1) = {"
+bF
+kI
+QL
+QL
+QL
+Cu
+Yd
+Yd
+Yd
+OA
+UL
+aW
+Be
+aW
+AL
+OA
+Yd
+Yd
+Yd
+Cu
+QL
+QL
+QL
+kI
+bF
+"}
+(16,1,1) = {"
+uD
+uD
+aa
+aa
+aa
+OA
+fI
+fI
+Yd
+hS
+os
+oq
+iz
+oq
+os
+AY
+Yd
+fI
+fI
+OA
+aa
+aa
+aa
+uD
+uD
+"}
+(17,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+VP
+fI
+fI
+Yd
+Yd
+RJ
+RJ
+RJ
+RJ
+RJ
+Yd
+Yd
+fI
+fI
+VP
+aa
+aa
+aa
+aa
+uD
+"}
+(18,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+ht
+jh
+fI
+VT
+Yd
+Yd
+Yd
+Yd
+Yd
+Yd
+Yd
+VT
+fI
+Ox
+Vj
+aa
+aa
+aa
+aa
+uD
+"}
+(19,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+oW
+GZ
+jh
+fI
+fI
+fI
+ci
+fI
+ci
+fI
+fI
+fI
+Ox
+GZ
+ro
+aa
+aa
+aa
+aa
+wN
+"}
+(20,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+oW
+YQ
+oq
+VP
+VP
+VP
+mw
+VP
+VP
+VP
+oq
+YQ
+ro
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(21,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(22,1,1) = {"
+wN
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+wN
+"}
+(23,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(24,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(25,1,1) = {"
+uD
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+ZB
+uD
+uD
+uD
+"}
