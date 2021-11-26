@@ -149,6 +149,7 @@
 				if (istype(W, /obj/item/storage/secure))
 					var/obj/item/storage/secure/S = W
 					if (S.locked)
+						boutput(user, "<span class='alert'>[S] is locked and cannot be opened!</span>")
 						return
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
