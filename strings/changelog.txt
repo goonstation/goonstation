@@ -1,5 +1,9 @@
 
 (t)thu nov 25 21
+(u)Sovexe
+(p)6708
+(e)⚖|balance
+(*)Blob rounds can now have up to 4 blobs at once.
 (u)Flourish
 (e)🗺|mapping
 (*)Oshan's cloning, EVA, security lobby, and armory are all a tiny bit more spacious now.
