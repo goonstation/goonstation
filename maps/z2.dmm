@@ -1580,16 +1580,6 @@
 "agm" = (
 /turf/unsimulated/floor/caution/north,
 /area/hospital/samostrel)
-"ago" = (
-/obj/item/organ/eye/left{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "floor5"
-	},
-/turf/unsimulated/outdoors/snow,
-/area/centcom/offices/virvatuli)
 "agp" = (
 /turf/unsimulated/floor/lunar,
 /area/moon)
@@ -1616,7 +1606,7 @@
 /obj/table/auto,
 /obj/machinery/defib_mount,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "agR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -5480,18 +5470,6 @@
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
-"auj" = (
-/obj/railing{
-	dir = 8
-	},
-/obj/railing{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "aun" = (
 /obj/shrub/dead{
 	dir = 4
@@ -5990,21 +5968,6 @@
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
-"avC" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "tapedrive0";
-	name = "broken tape drive"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "avD" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -16571,7 +16534,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 5
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "bbP" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/lower_arctic/pod1)
@@ -32986,7 +32949,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "bRQ" = (
 /obj/stool/chair{
 	dir = 4
@@ -70400,22 +70363,6 @@
 /obj/machinery/door/unpowered/wood,
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
-"dKX" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (NORTH)"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "dKY" = (
 /obj/machinery/door/unpowered/wood/stall{
 	lock_dir = 1
@@ -74168,19 +74115,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"ejT" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 4;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
@@ -74219,14 +74153,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"eqH" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "7";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "eso" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-33"
@@ -74322,14 +74248,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"euC" = (
-/obj/decal/cleanable/blood/drip/high,
-/obj/decal/cleanable/blood/gibs/body,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "evW" = (
 /obj/table/auto,
 /obj/item/bandage,
@@ -74340,7 +74258,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 9
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "ewK" = (
 /obj/storage/closet/dresser,
 /turf/space,
@@ -74361,7 +74279,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "eyo" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/giftshop)
@@ -74449,17 +74367,23 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/john/owlery)
-"eNk" = (
-/obj/decal/cleanable/blood/splatter/extra,
-/obj/decal/cleanable/blood/drip/high{
-	pixel_x = 14;
-	pixel_y = 25
+"eLA" = (
+/obj/machinery/light{
+	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -10;
+	pixel_y = 7
 	},
-/area/prefab/threeonefiveone/level_two)
+/obj/item/clothing/head/pinwheel_hat{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/katzen)
 "ePc" = (
 /obj/decal/poster/wallsign/bar,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -74531,6 +74455,14 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"eXd" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/offices/bubs)
 "eYl" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
@@ -74560,11 +74492,6 @@
 	dir = 1
 	},
 /area/moon/museum)
-"fcB" = (
-/turf/unsimulated/floor/stairs/medical{
-	dir = 1
-	},
-/area/prefab/threeonefiveone/level_two)
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -74578,7 +74505,7 @@
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "fge" = (
 /turf/space,
 /turf/unsimulated/floor/caution/corner/misc{
@@ -74591,8 +74518,10 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "fhg" = (
-/obj/critter/parrot/macaw,
-/turf/unsimulated/greek/cave,
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave/floor{
+	dir = 8
+	},
 /area/centcom/offices/zewaka)
 "fhy" = (
 /obj/decal/fakeobjects{
@@ -74605,21 +74534,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/ne,
 /area/centcom/offices/sovexe)
-"fhP" = (
-/obj/item/gun/kinetic/knn29{
-	ammo = 0;
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/obj/decal/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
-	},
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "fiv" = (
 /obj/table/auto,
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding,
@@ -74633,15 +74547,18 @@
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "fkj" = (
-/obj/landmark{
-	name = "Nuclear-Closet"
+/obj/item_dispenser/barricade,
+/obj/item/deployer/barricade,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
 	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "fko" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "fls" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -74679,6 +74596,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"foA" = (
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/katzen)
 "fqO" = (
 /obj/filing_cabinet,
 /turf/unsimulated/floor/grey/side{
@@ -74708,24 +74630,6 @@
 	icon_state = "11"
 	},
 /area/shuttle/escape/centcom/sealab)
-"fyw" = (
-/obj/storage/crate/wooden{
-	desc = "Lookin cute, feelin cute.";
-	name = "Huk's clothing crate"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"fBA" = (
-/obj/railing{
-	dir = 8
-	},
-/obj/railing,
-/obj/lattice/barricade,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "fCo" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -74744,23 +74648,10 @@
 	},
 /area/centcom/offices/sord)
 "fDA" = (
-/turf/unsimulated/greek/cave/floor{
-	dir = 4
-	},
+/obj/stool/chair/office/red,
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave,
 /area/centcom/offices/zewaka)
-"fEL" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "You think is the nametag reads ????????. Is it crying?";
-	dir = 4;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "fGD" = (
 /obj/storage/cart/hotdog,
 /obj/item/clothing/suit/gimmick/hotdog,
@@ -74842,14 +74733,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"fNF" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "9";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -74875,9 +74758,6 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/destiny)
-"fQW" = (
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "fTe" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-18"
@@ -74928,15 +74808,6 @@
 /obj/map/light/white,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"gby" = (
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "gibbl2"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "gbA" = (
 /obj/storage/crate,
 /obj/machinery/light,
@@ -74947,14 +74818,6 @@
 "gcn" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
-"gdt" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "13";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "gfz" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -75038,53 +74901,11 @@
 /turf/simulated/floor/plating/damaged2,
 /area/diner/cow)
 "gsi" = (
-/obj/map/light/void,
-/obj/decal/lightshaft{
+/obj/dialogueobj/securitycorpse7{
 	mouse_opacity = 0
 	},
-/obj/storage/secure/closet/fridge{
-	desc = "An old, gross refrigerator. It's splattered with dried blood and what looks like claw marks.";
-	locked = 0;
-	name = "bloody refrigerator"
-	},
-/obj/critter/domestic_bee/creepy{
-	name = "Virvatulbee"
-	},
-/obj/item/clothing/mask/mime{
-	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
-	name = "chewed-up mime mask";
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/security_badge{
-	badge_owner_job = "Head of Security";
-	badge_owner_name = "Elika Zamani";
-	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
-	name = "scratched security badge";
-	pixel_x = 9;
-	pixel_y = -12
-	},
-/obj/item/storage/ntso_pouch{
-	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
-	name = "stained tacticool pouch";
-	pixel_x = 5;
-	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	desc = "Incredibly stinky.";
-	name = "foul-smelling mystery meat";
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
-	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
-	initial_reagents = list("psilocybin" = 20, "lsd_bee" = 20, "space_drugs" = 20);
-	name = "mystical fun guy";
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/turf/unsimulated/outdoors/snow,
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "gtU" = (
 /obj/machinery/light{
@@ -75092,14 +74913,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"gtX" = (
-/obj/table/wood/auto/desk{
-	icon_state = "8"
-	},
-/obj/item/paper/book/from_file/cookbook,
-/obj/item/paper/book/from_file/pharmacopia,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "gun" = (
 /turf/space/no_replace,
 /turf/unsimulated/wall{
@@ -75124,21 +74937,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/donut3)
-"gxZ" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "gym" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Fire Hazard'";
@@ -75227,45 +75025,10 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base)
-"gUX" = (
-/obj/indestructible/invisible_block,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "gVc" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"gVh" = (
-/obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
-"gYj" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit";
-	tag = "icon-conduit (SOUTHEAST)"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "gYs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-48"
@@ -75273,7 +75036,10 @@
 /area/titlescreen)
 "gYw" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/outdoors/snow,
+/obj/item/organ/spleen{
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "gZG" = (
 /obj/table/reinforced/auto,
@@ -75338,14 +75104,14 @@
 	name = "Thunderdome Lounge"
 	})
 "hjS" = (
-/obj/decal/cleanable/blood{
-	icon_state = "floor6"
+/obj/admin_plaque{
+	desc = "DON'T LET IT OUT!";
+	name = "Virvatuli's Office"
 	},
-/obj/item/parts/human_parts/arm/left{
-	dir = 4
-	},
-/turf/unsimulated/outdoors/snow,
-/area/centcom/offices/virvatuli)
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "hkf" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -75533,14 +75299,6 @@
 "hKE" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome1)
-"hKV" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "5";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "hNS" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /turf/unsimulated/floor/dream/beach,
@@ -75627,15 +75385,6 @@
 /obj/machinery/vending/standard,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
-"hUN" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "hVs" = (
 /obj/admin_plaque{
 	name = "Varshie's Office"
@@ -75656,33 +75405,19 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "hXa" = (
-/obj/storage/secure/closet/fridge,
-/obj/item/reagent_containers/food/snacks/bagel{
-	icon_state = "swedishfisk-open"
-	},
-/obj/item/reagent_containers/food/snacks/bagel{
-	icon_state = "seedbagel"
-	},
-/obj/item/reagent_containers/food/snacks/plant/coffeebean,
-/obj/item/reagent_containers/food/snacks/plant/coffeeberry,
-/obj/item/reagent_containers/food/snacks/plant/pineapple,
-/obj/item/reagent_containers/food/snacks/burger/luauburger,
-/obj/item/reagent_containers/food/snacks/condiment/ketchup,
-/obj/cup_rack{
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/espresso_machine,
+/obj/decal/poster/wallsign/coffee{
 	pixel_y = 24
 	},
-/turf/unsimulated/greek/cave/floor{
+/obj/machinery/light{
 	dir = 1
 	},
-/area/centcom/offices/zewaka)
-"hXs" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "3";
-	name = "Ship Armor"
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave/floor{
+	dir = 9
 	},
-/area/prefab/threeonefiveone/level_two)
+/area/centcom/offices/zewaka)
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -75692,59 +75427,35 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "iav" = (
-/turf/unsimulated/outdoors/snow,
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/obj/item/parts/human_parts/arm/left{
+	dir = 4
+	},
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "icJ" = (
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
-"ieY" = (
-/obj/decal/cleanable/ash,
-/obj/decal/cleanable/ash{
-	pixel_y = -9
+"igs" = (
+/obj/machinery/deep_fryer,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
+"iiN" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
 	},
-/obj/decal/cleanable/ash{
-	pixel_x = -4;
-	pixel_y = -6
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor";
+	opaque_atom_count = 1
 	},
-/obj/decal/cleanable/ash{
-	layer = 3;
-	pixel_x = 8
-	},
-/obj/decal/cleanable/ash{
-	pixel_x = 6;
-	pixel_y = -7
-	},
-/obj/item/paper/thermal/sovietreport1{
-	pixel_x = -4;
-	pixel_y = -5
-	},
-/obj/item/paper/thermal/sovietreport2{
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/paper/thermal/sovietreport3{
-	pixel_x = 2;
-	pixel_y = -7
-	},
-/obj/decal/cleanable/ash{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/decal/cleanable/ash{
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/decal/cleanable/ash{
-	pixel_x = 12;
-	pixel_y = 5
-	},
-/obj/decal/cleanable/ash{
-	pixel_x = -9;
-	pixel_y = -7
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
+/area/centcom/offices/sord)
 "iiP" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
@@ -75766,14 +75477,6 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"inq" = (
-/obj/map/light/sovietbattle,
-/obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "iqT" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
@@ -75851,6 +75554,17 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"ixh" = (
+/obj/machinery/light,
+/obj/stool/bee_bed{
+	desc = "A soft little bed.";
+	name = "cat bed"
+	},
+/mob/living/critter/small_animal/cat{
+	desc = "A mentor cat???"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "ixz" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/robot_debris{
@@ -75858,17 +75572,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"iyL" = (
-/obj/indestructible/invisible_block,
-/obj/soviet/setpiece/console/nuclearcontrol{
-	dir = 1;
-	interesting = "The forensic scanner picks up some unknow energy traces. Huh"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "iyY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 8
@@ -75899,6 +75602,13 @@
 /obj/decal/stage_edge/dojo,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"iFD" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/mrfishstick)
 "iHl" = (
 /obj/machinery/computer/ordercomp{
 	dir = 4
@@ -76028,29 +75738,12 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"iWk" = (
-/obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
-"iXE" = (
-/turf/unsimulated/greek/cave/floor{
-	dir = 8
-	},
-/area/centcom/offices/zewaka)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
-"iYT" = (
-/obj/decal/cleanable/blood/tracks,
-/obj/item/match{
-	pixel_x = -16;
-	pixel_y = -10
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "iZw" = (
 /obj/ladder{
 	id = "marksoffice";
@@ -76083,6 +75776,9 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
+"jen" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "jeV" = (
 /obj/machinery/door/unpowered/wood{
 	icon = 'icons/obj/doors/door_office.dmi';
@@ -76090,25 +75786,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"jeZ" = (
-/obj/ladder{
-	icon_state = "ladder_wall";
-	id = "3151_1";
-	pixel_y = 14
-	},
-/obj/decal/fakeobjects/falseladder,
-/obj/decal/cleanable/blood/drip/high,
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
-"jfm" = (
-/turf/unsimulated/greek/cave/floor{
-	dir = 10
-	},
-/area/centcom/offices/zewaka)
 "jfn" = (
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
@@ -76146,13 +75823,6 @@
 /turf/space,
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
-"jjE" = (
-/obj/railing,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "jks" = (
 /obj/stool/chair{
 	dir = 8
@@ -76189,6 +75859,15 @@
 "jnw" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/solarium)
+"joG" = (
+/obj/iomoon_puzzle/meat_ganglion{
+	id = "meatland_bossdoor"
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_2";
+	name = "Fleshy Floor"
+	},
+/area/meat_derelict/guts)
 "jqT" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -4;
@@ -76202,20 +75881,17 @@
 	},
 /area/titlescreen)
 "jtw" = (
-/turf/unsimulated/greek/cave/floor,
+/obj/decal/cleanable/rust/jen,
+/obj/critter/crab/party,
+/turf/unsimulated/greek/cave/floor{
+	dir = 10
+	},
 /area/centcom/offices/zewaka)
 "jup" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"juu" = (
-/obj/decal/cleanable/blood/splatter,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "jvr" = (
 /turf/space,
 /turf/unsimulated/floor/caution/south,
@@ -76253,8 +75929,22 @@
 	},
 /area/titlescreen)
 "jwu" = (
-/obj/decal/lightshaft/rainbow,
-/obj/item/storage/firstaid/docbag,
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/bagel{
+	icon_state = "swedishfisk-open"
+	},
+/obj/item/reagent_containers/food/snacks/bagel{
+	icon_state = "seedbagel"
+	},
+/obj/item/reagent_containers/food/snacks/plant/coffeebean,
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry,
+/obj/item/reagent_containers/food/snacks/plant/pineapple,
+/obj/item/reagent_containers/food/snacks/burger/luauburger,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/obj/cup_rack{
+	pixel_y = 24
+	},
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 1
 	},
@@ -76266,9 +75956,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"jAi" = (
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "jBr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-32"
@@ -76308,14 +75995,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"jHw" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "6";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "jHB" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -76370,14 +76049,6 @@
 /obj/item/mutation_orb/cat_orb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"jOb" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "15";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "jOH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -76422,23 +76093,6 @@
 	icon_state = "fpurple2"
 	},
 /area/centcom/lounge)
-"jTc" = (
-/obj/decal/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse";
-	pixel_x = 7
-	},
-/obj/decal/cleanable/blood{
-	dir = 8;
-	icon_state = "smear3"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "jTj" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
@@ -76450,7 +76104,7 @@
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "jWq" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/crew)
@@ -76514,51 +76168,14 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
-"jYw" = (
-/obj/machinery/light_area_manager,
-/obj/table/wood/auto/desk{
-	icon_state = "5"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
-	desc = "It's just water.";
-	dir = 8;
-	icon_state = "bottle-clear";
-	name = "Huk's Bottle";
-	pixel_x = -6;
-	pixel_y = 5
-	},
-/obj/item/chem_pill_bottle{
-	average = "#c38ecc";
-	desc = "Contains 20 Huk Brand Max Beff pills.";
-	name = "Huk Brand Max Beff pill bottle";
-	pcount = 20;
-	pixel_x = 2;
-	pixel_y = 5;
-	pname = "Huk Brand Max Beff";
-	pvol = 5
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
-"jZu" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 8;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "gibbl2"
-	},
-/turf/unsimulated/floor/stairs/medical/wide{
-	dir = 8
-	},
-/area/prefab/threeonefiveone/level_two)
 "jZx" = (
 /obj/table/wood/round,
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"kcr" = (
+/turf/unsimulated/floor/snowrough,
+/area/centcom/offices/virvatuli)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -76629,11 +76246,12 @@
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
 "klU" = (
-/obj/decal/cleanable/blood,
-/obj/item/organ/spleen{
-	pixel_y = -4
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
+	name = "reminder"
 	},
-/turf/unsimulated/outdoors/snow,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "kmt" = (
 /turf/unsimulated/floor/void/channel{
@@ -76656,17 +76274,6 @@
 /obj/map/light/screen,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
-"kob" = (
-/obj/machinery/door/airlock/soviet{
-	dir = 4;
-	layer = 10;
-	name = "airlock"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "koi" = (
 /obj/item/clothing/under/gimmick/princess{
 	color = "#8c0b0b"
@@ -76694,21 +76301,6 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/centcom/offices/rodney)
-"koy" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet machine.  It might be broken.  Or just off.  Who knows!!";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovmachine1";
-	name = "broken computer"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "koF" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -10;
@@ -76729,15 +76321,7 @@
 	icon_state = "delivery2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
-"kpf" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "11";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
+/area/syndicate_station/medbay)
 "kpi" = (
 /obj/lattice,
 /obj/submachine/chef_sink,
@@ -76751,12 +76335,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"kpz" = (
-/obj/machinery/chem_master{
-	pixel_y = 34
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
+"kpM" = (
+/obj/machinery/vending/kitchen,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
 "kpY" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -76765,14 +76347,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"kra" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "10";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "krJ" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /turf/unsimulated/floor/shuttle,
@@ -76823,13 +76397,6 @@
 "kAx" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
-"kBc" = (
-/obj/stool/chair,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "kCH" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-22"
@@ -76846,8 +76413,8 @@
 	},
 /area/hospital/samostrel)
 "kGS" = (
-/obj/table/wood/auto/desk,
-/obj/item/reagent_containers/food/drinks/energyshake,
+/obj/decal/cleanable/rust/jen,
+/obj/critter/lavacrab,
 /turf/unsimulated/greek/cave/floor,
 /area/centcom/offices/zewaka)
 "kIs" = (
@@ -76883,25 +76450,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"kKA" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "kNr" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "kNR" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -76982,14 +76537,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"kYt" = (
-/obj/machinery/door/airlock/soviet{
-	dir = 4;
-	layer = 10;
-	name = "airlock"
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "kYw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -76997,7 +76544,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "lav" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-41"
@@ -77008,6 +76555,12 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
+"leb" = (
+/obj/item/luggable_computer/cheget,
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/boss)
 "leI" = (
 /obj/stool/bar{
 	pixel_y = 6
@@ -77213,15 +76766,18 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
 /area/diner/cow)
+"lCM" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor{
+	icon_state = "bloodfloor_3"
+	},
+/area/meat_derelict/boss)
 "lEt" = (
 /turf/space,
 /turf/unsimulated/floor/plating/scorched,
 /area/adventure/channel/flingy)
-"lEL" = (
-/obj/table/wood/auto,
-/obj/item/bandage/medicated,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "lEU" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-1"
@@ -77370,14 +76926,6 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
-"lZJ" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "12";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "maI" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -77392,13 +76940,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod2)
-"mbQ" = (
-/obj/machinery/door/unpowered/wood{
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/centcom/offices/hukhukhuk)
 "mcq" = (
 /obj/securearea{
 	desc = "";
@@ -77417,32 +76958,6 @@
 /obj/table/wood/auto/desk/lily,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/ne,
 /area/centcom/offices/rodney)
-"met" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "tapedrive0";
-	name = "broken tape drive";
-	pixel_x = -5
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "tapedrive0";
-	name = "broken tape drive";
-	pixel_x = 12
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "mgs" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77488,26 +77003,16 @@
 	name = "plating"
 	},
 /area/hospital)
-"mhK" = (
-/obj/stool/chair/comfy/shuttle,
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
+"miH" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/snacks/burger/monsterburger{
+	pixel_x = -4;
+	pixel_y = 10
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 9
 	},
-/area/prefab/threeonefiveone/level_two)
-"miF" = (
-/obj/table/folding,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
+/area/centcom/offices/katzen)
 "mje" = (
 /obj/storage/closet/office,
 /turf/unsimulated/floor/wood/two,
@@ -77516,19 +77021,6 @@
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"mlE" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/espresso_machine,
-/obj/decal/poster/wallsign/coffee{
-	pixel_y = 24
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/greek/cave/floor{
-	dir = 9
-	},
-/area/centcom/offices/zewaka)
 "mlK" = (
 /turf/space,
 /turf/unsimulated/floor/caution/north,
@@ -77554,17 +77046,6 @@
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"mpZ" = (
-/obj/railing,
-/obj/railing{
-	dir = 4
-	},
-/obj/lattice/barricade,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-23"
@@ -77688,7 +77169,8 @@
 	},
 /area/sim/gunsim)
 "mJk" = (
-/obj/stool/chair/office/red,
+/obj/critter/parrot/macaw,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave,
 /area/centcom/offices/zewaka)
 "mJF" = (
@@ -77700,6 +77182,14 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"mKB" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/caution,
+/area/centcom/offices/questx)
 "mLK" = (
 /obj/cable{
 	d1 = 1;
@@ -77708,30 +77198,10 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
-"mLR" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 9
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "mLT" = (
 /obj/decal/fakeobjects/dreambeach/stones,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
-"mPe" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "mPz" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77788,6 +77258,12 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"mWr" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border,
+/area/centcom/offices/katzen)
 "mWQ" = (
 /obj/landmark{
 	name = "pit_meatland"
@@ -77811,28 +77287,6 @@
 /obj/map/light/green,
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
-"mXv" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
-	icon_state = "reactoroff";
-	interesting = "The scanner picks up some exotic material inside of the core. It reports it's simular to Kosharmite";
-	name = "Nuclear Core"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (EAST)"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "mYC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -77897,7 +77351,7 @@
 /area/hospital/samostrel)
 "ndL" = (
 /turf/unsimulated/floor/redwhite,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "ngg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -77994,10 +77448,6 @@
 "npu" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/racing_track)
-"nqB" = (
-/obj/stool/chair/comfy,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "nrk" = (
 /obj/admin_plaque{
 	name = "Enakai's Office"
@@ -78006,6 +77456,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nrr" = (
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave/floor{
+	dir = 1
+	},
+/area/centcom/offices/zewaka)
 "nsm" = (
 /obj/item/bat,
 /obj/item/ammo/bullets/abg{
@@ -78159,22 +77617,10 @@
 	dir = 1
 	},
 /area/hospital/samostrel)
-"nBF" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
-	dir = 4;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp3";
-	name = "broken computer"
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "nCr" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "nCt" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-15"
@@ -78207,32 +77653,6 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/donut3)
-"nIb" = (
-/obj/map/light/cyan,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
-"nIF" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 4;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/soviet/setpiece/console/smallcontrol{
-	interesting = "The scanner picks up some unknow energy traces. Huh"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "nJE" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -78493,14 +77913,6 @@
 	icon_state = "red2"
 	},
 /area/diner/cow)
-"ogb" = (
-/obj/machinery/light{
-	dir = 1;
-	on = 1
-	},
-/obj/fitness/speedbag/wizard,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "ogV" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
@@ -78606,18 +78018,6 @@
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
-"ouw" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "owK" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
@@ -78682,22 +78082,6 @@
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"oFf" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (NORTHWEST)"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "oFC" = (
 /obj/decal/fakeobjects/firelock_broken,
 /turf/space,
@@ -78750,13 +78134,6 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
-"oIb" = (
-/obj/table/wood/auto/desk{
-	icon_state = "2"
-	},
-/obj/machinery/computer3/luggable/personal,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -78789,22 +78166,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"oQE" = (
-/obj/machinery/door/airlock/soviet{
-	dir = 4;
-	layer = 10;
-	name = "airlock"
-	},
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	icon = 'icons/obj/doors/sovblastdoor.dmi';
-	id = "3151reactor"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "oRd" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
@@ -78840,6 +78201,12 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"oUC" = (
+/obj/meatlight{
+	brightness = 4
+	},
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/meat_derelict/boss)
 "oWW" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -78914,21 +78281,6 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"pbC" = (
-/obj/decal/cleanable/blood/drip/low,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
-"peP" = (
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
-	name = "reminder"
-	},
-/turf/unsimulated/outdoors/snow,
-/area/centcom/offices/virvatuli)
 "pfF" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/computer3/generic/personal,
@@ -79060,26 +78412,14 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"psr" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+"pqU" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
 	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/machines/nuclear64x32.dmi';
-	icon_state = "reactoroff";
-	interesting = "The scanner picks up some exotic material inside of the core. It reports it's simular to Kosharmite";
-	name = "Nuclear Core"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
+/turf/unsimulated/floor/caution,
+/area/centcom/offices/simianc)
 "ptv" = (
 /obj/admin_plaque{
 	name = "Mark's Code Dungeon";
@@ -79098,14 +78438,14 @@
 	icon_state = "blue"
 	})
 "ptS" = (
-/obj/decal/cleanable/blood{
-	icon_state = "drip2b"
+/obj/machinery/door/poddoor/blast/single{
+	desc = "An old blast door. It has plenty of scratches and dents on its surface.";
+	id = "virvadoor"
 	},
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "gibbl2"
-	},
-/turf/unsimulated/outdoors/snow,
-/area/centcom/offices/virvatuli)
+/turf/unsimulated/floor/plating/scorched,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "pux" = (
 /obj/meatlight{
 	brightness = 4
@@ -79163,6 +78503,14 @@
 	icon_state = "floor6"
 	},
 /area/centcom/offices/pali)
+"pDO" = (
+/obj/admin_plaque{
+	name = "Mrfishstick's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "pEv" = (
 /obj/lattice{
 	dir = 10;
@@ -79170,24 +78518,6 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
-"pGy" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 4;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/item/gun/kinetic/knn29{
-	ammo = 0;
-	pixel_x = 9;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "pGM" = (
 /obj/landmark/load_prefab_shuttledmm/donut2,
 /turf/unsimulated/outdoors/grass,
@@ -79208,6 +78538,7 @@
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
+/obj/item/clothing/head/longbee,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/ines)
 "pJi" = (
@@ -79238,13 +78569,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
-"pLH" = (
-/obj/lattice/barricade,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "pNh" = (
 /obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable{
 	pixel_x = -11;
@@ -79311,12 +78635,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"pUP" = (
-/obj/stool/chair/comfy{
-	dir = 1
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "pVL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-9"
@@ -79348,21 +78666,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
-"pWt" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 1;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "u_guilty";
-	pixel_x = -13;
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "pXu" = (
 /obj/cable{
 	d1 = 1;
@@ -79491,6 +78794,15 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
+"qqL" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadjunction"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "qrE" = (
 /obj/stool/bench/green,
 /turf/unsimulated/floor/carpet{
@@ -79514,10 +78826,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/diner/cow)
-"qvp" = (
-/obj/fitness/stacklifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "qvu" = (
 /obj/table/auto,
 /turf/space,
@@ -79559,23 +78867,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"qwY" = (
-/obj/soviet/setpiece/console/bank1{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/indestructible/invisible_block,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
-"qyy" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "qAl" = (
 /obj/forcefield/energyshield/perma{
 	dir = 8
@@ -79585,22 +78876,6 @@
 	icon_state = "stairs_middle"
 	},
 /area/centcom)
-"qAS" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (SOUTHWEST)"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -79688,16 +78963,12 @@
 "qJS" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/comms)
-"qKM" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 4;
-	pixel_y = 11
+"qLa" = (
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave/floor{
+	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
+/area/centcom/offices/zewaka)
 "qMN" = (
 /obj/machinery/light{
 	dir = 1
@@ -79721,12 +78992,11 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "qOG" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
-	name = "smol donut";
-	doants = 0
+	name = "smol donut"
 	},
 /obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,
@@ -79788,20 +79058,6 @@
 	icon_state = "shore-14"
 	},
 /area/titlescreen)
-"qSQ" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "qWW" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -79845,15 +79101,6 @@
 "rdl" = (
 /turf/simulated/floor/plating/scorched,
 /area/diner/cow)
-"reG" = (
-/obj/railing{
-	dir = 1
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "rfV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -79922,11 +79169,6 @@
 /obj/submachine/claw_machine,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"rmu" = (
-/turf/unsimulated/floor/stairs/medical/wide/other{
-	dir = 8
-	},
-/area/prefab/threeonefiveone/level_two)
 "rnA" = (
 /turf/unsimulated/wall{
 	icon = 'icons/turf/shuttle.dmi';
@@ -79945,6 +79187,14 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"roS" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadjunction_4way"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "rpG" = (
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_2"
@@ -80226,21 +79476,6 @@
 	icon_state = "wall3dir"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"rWZ" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/suit/jacket/sparkly{
-	desc = "Now all you need is some star dusted boots!";
-	name = "stardusted jacket"
-	},
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 1;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "rXO" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -80367,10 +79602,6 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"shs" = (
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "siD" = (
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = -11;
@@ -80421,14 +79652,6 @@
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
-"smQ" = (
-/obj/map/light/sovietbattle,
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "sna" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -80444,10 +79667,6 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
-"spa" = (
-/obj/fitness/weightlifter,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "srg" = (
 /obj/table/auto,
 /obj/table/auto,
@@ -80497,12 +79716,6 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/destiny)
-"sAl" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "sBm" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -80606,22 +79819,13 @@
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
 "sRS" = (
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
+/obj/decal/lightshaft/rainbow,
+/obj/item/storage/firstaid/docbag,
+/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 1
 	},
 /area/centcom/offices/zewaka)
-"sSd" = (
-/obj/machinery/light{
-	on = 1
-	},
-/obj/machinery/chem_dispenser_admin{
-	desc = "This object has been obsolete for 8 stations.";
-	name = "Ancient Chemical Dispenser"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices/hukhukhuk)
 "sTU" = (
 /obj/item/wirecutters,
 /turf/space,
@@ -80630,20 +79834,19 @@
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
-"sXt" = (
-/obj/decal/fakeobjects/falseladder,
-/obj/ladder{
-	icon_state = "ladder_wall";
-	id = "3151_2";
-	pixel_y = 14
+"sZD" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/sailormoon,
+/obj/item/gun/kinetic/pistol/empty{
+	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Seems not to work...";
+	icon_state = "silenced";
+	name = "Spy Pistol"
 	},
-/obj/decal/cleanable/blood/splatter/extra,
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
+/obj/item/clothing/shoes/sailormoon,
+/obj/item/clothing/head/sailormoon,
+/obj/item/clothing/gloves/sailormoon,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "tck" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/blueprint/destiny,
@@ -80658,26 +79861,14 @@
 /obj/machinery/vending/alcohol,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"teG" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 1;
-	pixel_x = 2;
-	pixel_y = 14
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "teX" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/donut3)
 "tfu" = (
-/turf/unsimulated/floor/arctic/cliff{
-	dir = 4
-	},
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "tfL" = (
 /obj/decal/fakeobjects{
@@ -80715,6 +79906,13 @@
 /obj/window/south,
 /turf/unsimulated/wall/void,
 /area/diner/cow)
+"tiw" = (
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/garden)
 "tiD" = (
 /obj/decal/skeleton{
 	desc = "The remains of a human. How'd they get out there?";
@@ -80855,13 +80053,6 @@
 /obj/dialogueobj/dreambee,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/eastwest,
 /area/titlescreen)
-"tEG" = (
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
@@ -80891,37 +80082,10 @@
 /obj/item/clothing/gloves/yellow,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
-"tNE" = (
-/obj/railing{
-	dir = 4
-	},
-/obj/railing,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
-"tPe" = (
-/obj/indestructible/invisible_block,
-/obj/soviet/setpiece/console/bank1{
-	pixel_x = 17;
-	pixel_y = 1
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "tPH" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
-"tRj" = (
-/obj/decal/cleanable/blood/gibs/body{
-	icon_state = "gib5"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "tUJ" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
@@ -81006,14 +80170,10 @@
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
 "uec" = (
-/obj/table/wood/auto,
-/obj/item/clothing/head/helmet/welding,
-/obj/item/clothing/head/fruithat,
-/obj/item/clothing/head/towel_hat,
-/obj/machinery/light,
-/turf/unsimulated/greek/cave/floor{
-	dir = 6
-	},
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/energyshake,
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave/floor,
 /area/centcom/offices/zewaka)
 "uex" = (
 /obj/machinery/light{
@@ -81039,22 +80199,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/sw,
 /area/centcom/offices/sovexe)
-"ume" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 1;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "umL" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1;
@@ -81076,10 +80220,6 @@
 /obj/landmark/escape_pod_succ/north/donut3,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
-"unu" = (
-/obj/indestructible/invisible_block,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "unx" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-46"
@@ -81118,7 +80258,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 4
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "utS" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -81175,6 +80315,16 @@
 	icon_state = "shore-39"
 	},
 /area/titlescreen)
+"uyS" = (
+/obj/item/organ/eye/left{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/unsimulated/floor/snowrough,
+/area/centcom/offices/virvatuli)
 "uzz" = (
 /obj/table/wood/auto/desk,
 /obj/item/gun/kinetic/meowitzer/inert{
@@ -81191,9 +80341,6 @@
 /area/diner/cow)
 "uDn" = (
 /obj/machinery/teleport/portal_ring,
-/obj/landmark/lrt/workshop{
-	name = "Void Diner"
-	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "uEj" = (
@@ -81263,20 +80410,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 1
 	},
-/area/syndicate_station/battlecruiser)
-"uNh" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
+/area/syndicate_station/medbay)
 "uOm" = (
 /turf/unsimulated/wall/cave,
 /area/centcom/offices{
@@ -81301,6 +80435,14 @@
 "uVv" = (
 /turf/simulated/wall/r_wall,
 /area/diner/cow)
+"uZL" = (
+/obj/admin_plaque{
+	name = "Boris Bubbleton's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "vab" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-45"
@@ -81334,36 +80476,6 @@
 	icon_state = "red4"
 	},
 /area/diner/cow)
-"vbl" = (
-/obj/item/paper/empty_bloody{
-	desc = "The faded blood obscures some of the text.";
-	info = "<i>Они налились... выше, повторно для... около... мёртвый. Что... экипаж... забаррикадирован в... командном центре. Корнилов кричит присоединиться, чтобы... его, к джо... Я видел, как он умер в... перевернутый... ночью... Читая это, знайте, что мы боролись за конец. Я собираюсь пойти по легкому пути... превращение в один из них. До свидания.</i> Some of this jus too covered with blood to decipher";
-	name = "The Cosmonaut's Note";
-	pixel_x = -11;
-	pixel_y = 8
-	},
-/obj/decal/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
-	},
-/obj/railing{
-	dir = 4
-	},
-/obj/machinery/door_control{
-	desc = "A remote control switch for the inner blast door.";
-	id = "3151reactor";
-	name = "Blast Door Control";
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "vbL" = (
 /turf/unsimulated/floor{
 	icon = 'icons/turf/adventure_gannets.dmi';
@@ -81454,6 +80566,55 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"vlZ" = (
+/obj/map/light/void,
+/obj/decal/lightshaft{
+	mouse_opacity = 0
+	},
+/obj/storage/secure/closet/fridge{
+	desc = "An old, gross refrigerator. It's splattered with dried blood and what looks like claw marks.";
+	locked = 0;
+	name = "bloody refrigerator"
+	},
+/obj/critter/domestic_bee/creepy{
+	name = "Virvatulbee"
+	},
+/obj/item/clothing/mask/mime{
+	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
+	name = "chewed-up mime mask";
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/security_badge{
+	badge_owner_job = "Head of Security";
+	badge_owner_name = "Elika Zamani";
+	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
+	name = "scratched security badge";
+	pixel_x = 9;
+	pixel_y = -12
+	},
+/obj/item/storage/ntso_pouch{
+	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
+	name = "stained tacticool pouch";
+	pixel_x = 5;
+	pixel_y = -5;
+	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	desc = "Incredibly stinky.";
+	name = "foul-smelling mystery meat";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
+	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
+	initial_reagents = list("psilocybin" = 20, "lsd_bee" = 20, "space_drugs" = 20);
+	name = "mystical fun guy";
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/snowrough,
+/area/centcom/offices/virvatuli)
 "vmg" = (
 /obj/decal/fakeobjects/dreambeach/sticks,
 /turf/unsimulated/floor/dream/beach{
@@ -81503,28 +80664,6 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/guts)
-"vtU" = (
-/obj/stool/bed,
-/obj/item/ammo/bullets/knnpaint{
-	pixel_x = 5
-	},
-/obj/item/ammo/bullets/knnpaint{
-	pixel_x = -1
-	},
-/obj/item/ammo/bullets/knnpaint{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/ammo/bullets/knnpaint{
-	pixel_x = -5;
-	pixel_y = -6
-	},
-/obj/item/ammo/bullets/knnpaint{
-	pixel_x = -10
-	},
-/obj/item/clothing/suit/bedsheet/red,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "vum" = (
 /obj/machinery/door/airlock/gannets/glass,
 /obj/decal/tile_edge/line/green{
@@ -81566,14 +80705,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
-"vxB" = (
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/tableware/one_or_zero,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "vyz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -81624,17 +80755,17 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
-"vHQ" = (
-/obj/admin_plaque{
-	name = "HukHukHuk's Office";
-	pixel_x = -32
+"vGP" = (
+/obj/item/toy/plush{
+	desc = "Ew, it's soggy.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "mouse-mentor-dead";
+	name = "Mentor mouse plush toy";
+	pixel_x = -8;
+	pixel_y = 3
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "vNH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -81642,12 +80773,15 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vOl" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/unsimulated/floor/black,
+/area/centcom/lounge)
 "vQc" = (
+/obj/landmark/lrt/voiddiner,
 /turf/simulated/floor/plating/damaged1,
 /area/diner/cow)
-"vUN" = (
-/turf/space,
-/area/prefab/threeonefiveone/level_two)
 "vWb" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -81677,23 +80811,19 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
-"vZD" = (
-/obj/railing{
-	dir = 1
-	},
-/obj/railing{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"weB" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/offices/drsingh)
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -81702,6 +80832,10 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"whF" = (
+/obj/machinery/vending/monkey,
+/turf/unsimulated/floor/specialroom/medbay,
+/area/centcom/lounge)
 "wky" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -81742,11 +80876,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"wnx" = (
-/obj/indestructible/invisible_block,
-/obj/soviet/setpiece/console/bank2,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "woU" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -81804,7 +80933,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "wyE" = (
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "wAz" = (
 /turf/space,
 /turf/unsimulated/floor/engine/caution/corner2{
@@ -81828,15 +80957,6 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
-"wBy" = (
-/obj/railing{
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "wCN" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "6";
@@ -81844,6 +80964,15 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wEf" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer3/generic/personal/meatland{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/centcom/offices/katzen)
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -81862,17 +80991,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"wGr" = (
-/turf/unsimulated/floor/stairs/medical,
-/area/prefab/threeonefiveone/level_two)
-"wGK" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	desc = "The only thing keeping the vaccum out and you alive.";
-	icon = 'icons/turf/walls_tempus-white.dmi';
-	icon_state = "14";
-	name = "Ship Armor"
-	},
-/area/prefab/threeonefiveone/level_two)
 "wHY" = (
 /obj/item/clothing/shoes/red{
 	desc = "Aren't these the HoS's? You feel like he can probably live without these.";
@@ -81906,6 +81024,13 @@
 	icon_state = "shore-43"
 	},
 /area/titlescreen)
+"wLT" = (
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/katzen)
 "wMi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-26"
@@ -81944,11 +81069,13 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "wPT" = (
-/obj/dialogueobj/securitycorpse7{
-	mouse_opacity = 0
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
 	},
-/obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/outdoors/snow,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
 "wRR" = (
 /obj/decal/fakeobjects/dreambeach/earth,
@@ -81993,7 +81120,12 @@
 	icon_state = "bot2"
 	},
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
+"xbR" = (
+/turf/unsimulated/floor/carpet/clowncarpet/border{
+	dir = 6
+	},
+/area/centcom/offices/katzen)
 "xcp" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -82031,6 +81163,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"xiw" = (
+/obj/table/wood/auto,
+/obj/item/clothing/head/helmet/welding,
+/obj/item/clothing/head/fruithat,
+/obj/item/clothing/head/towel_hat,
+/obj/machinery/light,
+/obj/decal/cleanable/rust/jen,
+/turf/unsimulated/greek/cave/floor{
+	dir = 6
+	},
+/area/centcom/offices/zewaka)
 "xjD" = (
 /turf/unsimulated/wall{
 	dir = 8;
@@ -82048,19 +81191,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
-"xjY" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing";
-	dir = 1;
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "xky" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	desc = "A small impulse drive.";
@@ -82119,7 +81249,7 @@
 /turf/unsimulated/floor/redwhite{
 	dir = 8
 	},
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "xuB" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -82152,15 +81282,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"xCm" = (
-/obj/soviet/setpiece/console/nuclearcontrol{
-	interesting = "The forensic scanner picks up some unknow energy traces. Huh"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "xCw" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -82192,29 +81313,7 @@
 /obj/item/suture,
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
-/area/syndicate_station/battlecruiser)
-"xGe" = (
-/obj/critter/zombie/meatmonaut{
-	desc = "What the fuck is this thing. How the fuck did it get in here through a lockdown anyways.";
-	icon = 'icons/misc/soviet.dmi';
-	icon_state = "????";
-	name = "????"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit";
-	tag = "icon-conduit (NORTH)"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
+/area/syndicate_station/medbay)
 "xGt" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -3
@@ -82255,13 +81354,6 @@
 	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
-"xIc" = (
-/obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -82280,18 +81372,26 @@
 /turf/space,
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
+"xJD" = (
+/obj/admin_plaque{
+	name = "Sord's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xJJ" = (
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/leg/right/standard,
-/obj/item/parts/robot_parts/leg/left/standard,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
 /obj/item/parts/robot_parts/leg/left/treads,
 /obj/item/parts/robot_parts/leg/right/treads,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /turf/unsimulated/floor/red,
-/area/syndicate_station/battlecruiser)
+/area/syndicate_station/medbay)
 "xJV" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular{
@@ -82305,28 +81405,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
-"xMA" = (
-/obj/table/wood/auto/desk,
-/obj/decal/cleanable/blood{
-	icon_state = "floor5";
-	pixel_x = 10
-	},
-/obj/item/gun/kinetic/knn29{
-	ammo = 0;
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/obj/item/paper/thermal/sovietreport4,
-/obj/decal/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse";
-	pixel_x = -10
-	},
-/obj/map/light/sovietbattle,
-/turf/unsimulated/floor/carpet/office,
-/area/prefab/threeonefiveone/level_two)
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
@@ -82394,6 +81472,17 @@
 	icon_state = "shore-21"
 	},
 /area/titlescreen)
+"xUf" = (
+/obj/admin_plaque{
+	name = "Katzen's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xUS" = (
 /obj/storage/crate/xmas,
 /turf/unsimulated/floor/shuttle{
@@ -82420,6 +81509,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
+"xWZ" = (
+/obj/decal/poster/wallsign/poster_clown{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xXb" = (
 /turf/unsimulated/floor/void/channel{
 	density = 1;
@@ -82545,35 +81643,12 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark{
-	name = "Syndicate-Gear-Closet"
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
 	},
-/turf/unsimulated/floor/darkblue,
+/turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
-"yhJ" = (
-/obj/stool/chair/comfy/shuttle{
-	pixel_x = 2;
-	pixel_y = -10
-	},
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "gibbl2"
-	},
-/obj/decal/skeleton{
-	desc = "The remains of some poor cosmonaut fellow.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body9";
-	name = "corpse"
-	},
-/obj/item/gun/kinetic/knn29{
-	ammo = 0;
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/prefab/threeonefiveone/level_two)
 "yiP" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-20"
@@ -157761,24 +156836,24 @@ cnw
 cnw
 aaa
 cfG
-cfG
-cfG
-cfG
-cfG
-cfG
-cfG
-cfG
+lCM
+leb
+chh
+oUC
+chh
+chh
+cgb
 bYN
-bYN
+bZs
+bZs
+joG
+bZd
 bZd
 bYN
-bYN
-bYN
-bYN
-bYN
-bYN
-bYN
-bYN
+cjr
+ckd
+bZs
+clZ
 bYN
 bYN
 bYN
@@ -157903,9 +156978,9 @@ nRU
 iyY
 fMq
 wel
-dvW
-dvW
-dCj
+miH
+foA
+ixh
 wel
 dCs
 dDf
@@ -158062,29 +157137,29 @@ cnw
 cnw
 cnw
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cfG
+cfG
+cfG
+cfG
+cfG
+cfG
+cfG
+cfG
+bYN
+bYN
+bZd
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
+bYN
 "}
 (251,1,1) = {"
 aaa
@@ -158204,10 +157279,10 @@ wel
 ezH
 vWb
 tGB
-wel
-dvW
-dvW
-dvW
+xWZ
+wEf
+mWr
+vGP
 wel
 dCt
 dDg
@@ -158363,30 +157438,30 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 "}
 (252,1,1) = {"
 aaa
@@ -158507,9 +157582,9 @@ qMN
 fUa
 tGB
 wel
-dvX
-dvW
-dvW
+eLA
+xbR
+jen
 wel
 dCu
 dDh
@@ -158809,9 +157884,9 @@ fqO
 kAr
 xqB
 wel
-dvW
-dvW
-dvW
+sZD
+jen
+jen
 wel
 dCv
 dDi
@@ -159112,7 +158187,7 @@ xzf
 wel
 wel
 wel
-kKw
+wLT
 wel
 wel
 wel
@@ -159413,7 +158488,7 @@ umN
 dvy
 dvy
 dvy
-rUQ
+xUf
 dvy
 dxa
 dvy
@@ -159948,21 +159023,21 @@ aES
 aES
 aES
 aES
-aES
+dFl
 aES
 aES
 wLo
-dGY
-dGZ
-dGZ
-dGZ
+wLo
+kpM
+whF
+igs
 wLo
 dHU
 dIj
 dIB
 dIM
 dIM
-dJs
+vOl
 dIM
 dIB
 dJJ
@@ -159971,25 +159046,24 @@ dHU
 dGR
 aES
 aES
-dKk
-dKR
-dLu
-dLQ
+lWe
+lWe
+dLt
+tiw
 dMk
 dMN
 dMN
 dMN
 dNR
+dOi
 dOj
-dOv
 dOj
-dOj
-dPd
-dOv
+dOi
 dOj
 dOj
 dOj
-dOj
+dOi
+dKk
 dKk
 dKk
 dQb
@@ -160001,45 +159075,46 @@ aES
 aES
 aES
 aES
+dFl
 wel
 dvy
 dvy
 wel
-dxX
-dxZ
-dCP
 wel
-dvW
-dvW
-dvW
+weB
 wel
-dzw
-dAd
-dAI
 wel
-dBk
-mAM
-dBn
 wel
-dCI
-dDt
-dDt
+dEL
 wel
-qwW
-hnO
-ius
+wel
+wel
+eXd
+wel
+wel
+uZL
+mKB
+wel
+wel
+wel
+pqU
+wel
+wel
+pDO
+iFD
+wel
 wel
 hjS
 ptS
-peP
-ePs
-nsm
-sNn
-etj
-ePs
-aES
-aES
-aES
+wel
+qqL
+xJD
+iiN
+wel
+roS
+wel
+wel
+wel
 aES
 aES
 aES
@@ -160222,6 +159297,308 @@ dFX
 dFX
 dFX
 dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+aaa
+dFc
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+wLo
+dGY
+dGZ
+dGZ
+dGZ
+wLo
+dHU
+dIj
+dIB
+dIM
+dIM
+dJs
+dIM
+dIB
+dJJ
+dHU
+dHU
+dGR
+aES
+aES
+dKk
+dKR
+dLu
+dLQ
+dMk
+dMN
+dMN
+dMN
+dNR
+dOj
+dOv
+dOj
+dOj
+dPd
+dOv
+dOj
+dOj
+dOj
+dOj
+dKk
+dKk
+dQb
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+wel
+dvy
+dvy
+wel
+dxX
+dxZ
+dCP
+wel
+dvW
+dvW
+dvW
+wel
+dzw
+dAd
+dAI
+wel
+dBk
+mAM
+dBn
+wel
+dCI
+dDt
+dDt
+wel
+qwW
+hnO
+ius
+wel
+iav
+wPT
+klU
+ePs
+nsm
+sNn
+etj
+ePs
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFc
+aaa
+dkY
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dkY
+aaa
+dkG
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkH
+dkG
+aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+"}
+(259,1,1) = {"
+aaa
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
 dFZ
 dFZ
 dFZ
@@ -160331,9 +159708,9 @@ hnO
 hnO
 jEZ
 wel
-iav
-wPT
-klU
+kcr
+gsi
+gYw
 ePs
 fCL
 sNn
@@ -160502,7 +159879,7 @@ cnw
 cnw
 cnw
 "}
-(259,1,1) = {"
+(260,1,1) = {"
 aaa
 dFX
 dFX
@@ -160633,9 +160010,9 @@ vlp
 lRg
 njW
 wel
-ago
-gsi
-gYw
+uyS
+vlZ
+tfu
 ePs
 fGD
 oRd
@@ -160804,7 +160181,7 @@ cnw
 cnw
 cnw
 "}
-(260,1,1) = {"
+(261,1,1) = {"
 aaa
 dFX
 dFX
@@ -160935,9 +160312,9 @@ qGH
 fov
 oPY
 wel
-tfu
-tfu
-tfu
+kcr
+kcr
+kcr
 ePs
 pfF
 oSl
@@ -161056,7 +160433,7 @@ gGM
 gGM
 gGM
 gGM
-bAc
+abi
 gGM
 gGM
 gGM
@@ -161106,7 +160483,7 @@ cnw
 cnw
 cnw
 "}
-(261,1,1) = {"
+(262,1,1) = {"
 aaa
 dFX
 dFX
@@ -161408,7 +160785,7 @@ cnw
 cnw
 cnw
 "}
-(262,1,1) = {"
+(263,1,1) = {"
 aaa
 dFX
 dFX
@@ -161660,9 +161037,9 @@ kfa
 kfa
 kfa
 kfa
-brD
+abl
 kfa
-brD
+abl
 kfa
 abl
 kfa
@@ -161710,7 +161087,7 @@ cnw
 cnw
 cnw
 "}
-(263,1,1) = {"
+(264,1,1) = {"
 aaa
 dFX
 dFX
@@ -162012,7 +161389,7 @@ cnw
 cnw
 cnw
 "}
-(264,1,1) = {"
+(265,1,1) = {"
 aaa
 dFX
 dFX
@@ -162314,7 +161691,7 @@ cnw
 cnw
 cnw
 "}
-(265,1,1) = {"
+(266,1,1) = {"
 aaa
 dFX
 dFX
@@ -162616,7 +161993,7 @@ cnw
 cnw
 cnw
 "}
-(266,1,1) = {"
+(267,1,1) = {"
 aaa
 dFX
 dFX
@@ -162868,7 +162245,7 @@ kfa
 kfa
 kfa
 kfa
-brD
+abl
 kfa
 kfa
 kfa
@@ -162918,7 +162295,7 @@ cnw
 cnw
 cnw
 "}
-(267,1,1) = {"
+(268,1,1) = {"
 aaa
 dFX
 dFX
@@ -163220,7 +162597,7 @@ cnw
 cnw
 cnw
 "}
-(268,1,1) = {"
+(269,1,1) = {"
 aaa
 dFX
 dFX
@@ -163484,19 +162861,19 @@ abr
 abr
 aCb
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -163522,7 +162899,7 @@ cnw
 cnw
 cnw
 "}
-(269,1,1) = {"
+(270,1,1) = {"
 aaa
 dFX
 dFX
@@ -163786,19 +163163,19 @@ abn
 abn
 aCb
 aaa
-vUN
-vUN
-vUN
-vUN
-jHw
-hXs
-hXs
-hKV
-vUN
-vUN
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -163824,7 +163201,7 @@ cnw
 cnw
 cnw
 "}
-(270,1,1) = {"
+(271,1,1) = {"
 aaa
 dFX
 dFX
@@ -163939,9 +163316,9 @@ dxT
 dxV
 dyY
 wel
-mlE
-iXE
-jfm
+hXa
+fhg
+jtw
 wel
 dxJ
 dys
@@ -164088,19 +163465,19 @@ abn
 abn
 kmt
 aaa
-vUN
-vUN
-vUN
-jHw
-fNF
-ieY
-vtU
-kra
-hKV
-vUN
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -164126,7 +163503,7 @@ cnw
 cnw
 cnw
 "}
-(271,1,1) = {"
+(272,1,1) = {"
 aaa
 dFX
 dFX
@@ -164241,9 +163618,9 @@ dxU
 dyx
 dyZ
 wel
-hXa
-fhg
-jtw
+jwu
+mJk
+kGS
 wel
 dxK
 dyt
@@ -164390,19 +163767,19 @@ abr
 abr
 kmt
 aaa
-vUN
-vUN
-vUN
-lZJ
-mLR
-iYT
-fhP
-rWZ
-lZJ
-vUN
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -164428,7 +163805,7 @@ cnw
 cnw
 cnw
 "}
-(272,1,1) = {"
+(273,1,1) = {"
 aaa
 dFX
 dFX
@@ -164543,9 +163920,9 @@ dxV
 dyy
 dxV
 wel
-jwu
-mJk
-kGS
+sRS
+fDA
+uec
 wel
 dxL
 dys
@@ -164692,19 +164069,19 @@ axb
 abr
 kmt
 aaa
-vUN
-vUN
-jHw
-kpf
-kYt
-hXs
-hXs
-hXs
-kpf
-hKV
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -164730,7 +164107,7 @@ cnw
 cnw
 cnw
 "}
-(273,1,1) = {"
+(274,1,1) = {"
 aaa
 dFX
 dFX
@@ -164845,9 +164222,9 @@ dxW
 dyz
 dza
 wel
-sRS
-fDA
-uec
+nrr
+qLa
+xiw
 wel
 dxM
 dyu
@@ -164994,19 +164371,19 @@ axb
 axb
 kmt
 aaa
-vUN
-vUN
-lZJ
-wnx
-iWk
-fQW
-fQW
-lEL
-nBF
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -165032,7 +164409,7 @@ cnw
 cnw
 cnw
 "}
-(274,1,1) = {"
+(275,1,1) = {"
 aaa
 dFX
 dFX
@@ -165296,19 +164673,19 @@ aBb
 axa
 kmt
 aaa
-vUN
-vUN
-lZJ
-tPe
-shs
-kKA
-nqB
-xMA
-pUP
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -165334,7 +164711,7 @@ cnw
 cnw
 cnw
 "}
-(275,1,1) = {"
+(276,1,1) = {"
 aaa
 dFX
 dFX
@@ -165449,9 +164826,9 @@ dDb
 dDH
 dDZ
 wel
-ogb
-oIb
-jYw
+dvW
+dvW
+dCj
 wel
 dBy
 dBY
@@ -165598,19 +164975,19 @@ axG
 axa
 kmt
 aaa
-vUN
-jHw
-gdt
-unu
-fQW
-fQW
-fQW
-fQW
-pWt
-wGK
-hKV
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -165636,7 +165013,7 @@ cnw
 cnw
 cnw
 "}
-(276,1,1) = {"
+(277,1,1) = {"
 aaa
 dFX
 dFX
@@ -165751,9 +165128,9 @@ dDc
 dDF
 dEa
 wel
-kpz
-sAl
-gtX
+dvW
+dvW
+dvW
 wel
 dBz
 dBZ
@@ -165900,19 +165277,19 @@ aBc
 axa
 kmt
 aaa
-vUN
-wGK
-kpf
-hXs
-hXs
-kob
-kob
-hXs
-hXs
-kpf
-gdt
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -165938,7 +165315,7 @@ aaa
 aaa
 aaa
 "}
-(277,1,1) = {"
+(278,1,1) = {"
 aaa
 dFX
 dFX
@@ -166053,9 +165430,9 @@ dDd
 dDG
 dEb
 wel
-qvp
-jAi
-fyw
+dvX
+dvW
+dvW
 wel
 dBz
 dCa
@@ -166202,19 +165579,19 @@ axG
 axa
 kmt
 aaa
-vUN
-lZJ
-qwY
-ume
-avC
-reG
-qKM
-tNE
-koy
-met
-lZJ
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -166240,7 +165617,7 @@ ajg
 ajg
 ajg
 "}
-(278,1,1) = {"
+(279,1,1) = {"
 aaa
 dFX
 dFX
@@ -166355,9 +165732,9 @@ dDe
 dDF
 dEc
 wel
-spa
-jAi
-sSd
+dvW
+dvW
+dvW
 wel
 dBz
 dBz
@@ -166504,19 +165881,19 @@ aBd
 axa
 kmt
 aaa
-vUN
-lZJ
-gUX
-inq
-fcB
-uNh
-qyy
-wGr
-smQ
-iyL
-lZJ
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -166542,7 +165919,7 @@ daz
 oju
 ajg
 "}
-(279,1,1) = {"
+(280,1,1) = {"
 aaa
 dFX
 dFX
@@ -166658,7 +166035,7 @@ dDD
 wel
 wel
 wel
-mbQ
+kKw
 wel
 wel
 wel
@@ -166806,19 +166183,19 @@ aBe
 axa
 kmt
 aaa
-vUN
-lZJ
-gUX
-nIF
-auj
-miF
-tEG
-fBA
-mhK
-gUX
-lZJ
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -166844,7 +166221,7 @@ daz
 daz
 ajg
 "}
-(280,1,1) = {"
+(281,1,1) = {"
 aaa
 dFX
 dFX
@@ -166959,7 +166336,7 @@ dDO
 dvy
 dxa
 dvy
-vHQ
+rUQ
 dvy
 dvy
 dvy
@@ -167108,19 +166485,19 @@ lhU
 asq
 mnh
 jhk
-vUN
-lZJ
-gUX
-gUX
-reG
-qyy
-gVh
-jjE
-qyy
-gUX
-lZJ
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -167146,7 +166523,7 @@ lWE
 daz
 ajg
 "}
-(281,1,1) = {"
+(282,1,1) = {"
 aaa
 dFX
 dFX
@@ -167410,19 +166787,19 @@ jvI
 asq
 mnh
 jhk
-vUN
-wGK
-hXs
-hXs
-hXs
-kob
-kob
-hXs
-hXs
-hXs
-gdt
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -167448,7 +166825,7 @@ daz
 daz
 ajg
 "}
-(282,1,1) = {"
+(283,1,1) = {"
 aaa
 dFX
 dFX
@@ -167712,19 +167089,19 @@ vFr
 asq
 mnh
 jhk
-jHw
-fNF
-miF
-pGy
-tEG
-qyy
-hUN
-qyy
-tEG
-qyy
-kra
-hKV
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -167750,7 +167127,7 @@ daz
 daz
 ajg
 "}
-(283,1,1) = {"
+(284,1,1) = {"
 aaa
 dFX
 dFX
@@ -168014,19 +167391,19 @@ sTU
 asq
 mnh
 jhk
-lZJ
-jeZ
-juu
-miF
-pLH
-qyy
-qyy
-xjY
-qyy
-kBc
-vxB
-lZJ
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -168052,7 +167429,7 @@ noS
 vCF
 ajg
 "}
-(284,1,1) = {"
+(285,1,1) = {"
 aaa
 dFX
 dFX
@@ -168316,19 +167693,19 @@ yld
 asq
 mnh
 jhk
-lZJ
-tRj
-eNk
-xIc
-xIc
-qyy
-qyy
-miF
-qyy
-kBc
-vxB
-lZJ
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -168354,7 +167731,7 @@ qkO
 lEU
 ajg
 "}
-(285,1,1) = {"
+(286,1,1) = {"
 aaa
 dFX
 dFX
@@ -168618,19 +167995,19 @@ kjA
 kjA
 mnh
 jhk
-lZJ
-qyy
-euC
-gby
-miF
-qyy
-xjY
-miF
-qyy
-kBc
-vxB
-lZJ
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -168656,7 +168033,7 @@ kvr
 jPv
 ajg
 "}
-(286,1,1) = {"
+(287,1,1) = {"
 aaa
 dFX
 dFX
@@ -168920,19 +168297,19 @@ kjA
 lqh
 mnh
 jhk
-lZJ
-sXt
-pbC
-pLH
-uNh
-jTc
-pLH
-qyy
-tEG
-kBc
-vxB
-lZJ
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -168958,7 +168335,7 @@ vmg
 jPv
 ajg
 "}
-(287,1,1) = {"
+(288,1,1) = {"
 aaa
 dFX
 dFX
@@ -169222,19 +168599,19 @@ lqh
 lqh
 mnh
 jhk
-kra
-eqH
-eqH
-hXs
-kob
-hXs
-hXs
-kob
-hXs
-eqH
-eqH
-fNF
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -169260,7 +168637,7 @@ kvr
 jPv
 ajg
 "}
-(288,1,1) = {"
+(289,1,1) = {"
 aaa
 dFX
 dFX
@@ -169524,19 +168901,19 @@ abn
 abn
 kmt
 aaa
-vUN
-kra
-gdt
-fEL
-gVh
-pLH
-qyy
-miF
-gVh
-wGK
-fNF
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -169562,7 +168939,7 @@ kvr
 jPv
 ajg
 "}
-(289,1,1) = {"
+(290,1,1) = {"
 aaa
 dFX
 dFX
@@ -169826,19 +169203,19 @@ abn
 abn
 aCb
 aaa
-vUN
-vUN
-lZJ
-vbl
-mpZ
-rmu
-jZu
-vZD
-wBy
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -169864,7 +169241,7 @@ kvr
 jPv
 ajg
 "}
-(290,1,1) = {"
+(291,1,1) = {"
 aaa
 dFX
 dFX
@@ -170128,19 +169505,19 @@ abr
 abr
 aCb
 aaa
-vUN
-vUN
-lZJ
-gUX
-xCm
-tEG
-tEG
-gVh
-iyL
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -170166,7 +169543,7 @@ lUK
 jPv
 ajg
 "}
-(291,1,1) = {"
+(292,1,1) = {"
 aaa
 dFX
 dFX
@@ -170430,19 +169807,19 @@ lGN
 lGN
 kmt
 aaa
-vUN
-vUN
-lZJ
-gUX
-teG
-ejT
-qyy
-yhJ
-gUX
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -170466,308 +169843,6 @@ ozw
 ozw
 kvr
 jPv
-ajg
-"}
-(292,1,1) = {"
-aaa
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-dFX
-aaa
-dFc
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dKk
-dKk
-dKk
-dKk
-dKk
-dKk
-dKk
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-dFc
-aaa
-dkG
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dkG
-aaa
-dkG
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkQ
-dkG
-aaa
-dkG
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dkG
-aaa
-kmt
-gGM
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kmt
-aaa
-vUN
-jHw
-gdt
-gUX
-gUX
-gVh
-qyy
-qyy
-gUX
-wGK
-hKV
-vUN
-aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-aaa
-ajg
-smg
-gYs
-ozw
-ozw
-ozw
-ozw
-ozw
-ozw
-ozw
-ozw
-ozw
-mLT
-ozw
-xNL
-nUK
 ajg
 "}
 (293,1,1) = {"
@@ -170821,13 +169896,6 @@ aES
 aES
 aES
 aES
-dFl
-aES
-aES
-aES
-aES
-aES
-dFl
 aES
 aES
 aES
@@ -170844,7 +169912,6 @@ aES
 aES
 aES
 aES
-dFl
 aES
 aES
 aES
@@ -170854,17 +169921,14 @@ aES
 aES
 aES
 aES
+dKk
+dKk
+dKk
+dKk
+dKk
+dKk
+dKk
 aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-dFl
 aES
 aES
 aES
@@ -170882,18 +169946,29 @@ dFl
 aES
 aES
 aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
 dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
 aES
 aES
 dFc
@@ -171000,25 +170075,25 @@ kfa
 kfa
 kfa
 kfa
-brD
-brD
-kfa
-brD
-brD
 kfa
 kfa
-brD
-brD
-kfa
-brD
-brD
 kfa
 kfa
-brD
-brD
 kfa
-brD
-brD
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -171034,19 +170109,19 @@ kfa
 kfa
 kmt
 aaa
-vUN
-wGK
-jOb
-hXs
-hXs
-oQE
-oQE
-hXs
-hXs
-jOb
-gdt
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -171056,20 +170131,20 @@ cnw
 aaa
 ajg
 smg
-pQy
-jBr
-ozw
-nyz
+gYs
 ozw
 ozw
 ozw
-jIa
 ozw
 ozw
 ozw
-nDg
-vvS
-nbb
+ozw
+ozw
+ozw
+mLT
+ozw
+xNL
+nUK
 ajg
 "}
 (294,1,1) = {"
@@ -171123,16 +170198,6 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
 dFl
 aES
 aES
@@ -171146,24 +170211,6 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
 aES
 aES
 aES
@@ -171188,7 +170235,35 @@ aES
 aES
 aES
 aES
+aES
 dFl
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
 aES
 aES
 aES
@@ -171302,25 +170377,25 @@ kfa
 kfa
 kfa
 kfa
+brD
+brD
+kfa
+brD
+brD
 kfa
 kfa
+brD
+brD
+kfa
+brD
+brD
 kfa
 kfa
+brD
+brD
 kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
-kfa
+brD
+brD
 kfa
 kfa
 kfa
@@ -171336,19 +170411,19 @@ kfa
 kfa
 kmt
 aaa
-vUN
-wGK
-gdt
-xGe
-qAS
-qyy
-qyy
-qyy
-ouw
-wGK
-gdt
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -171358,20 +170433,20 @@ cnw
 aaa
 ajg
 smg
-daz
-daz
-noj
-qOO
+pQy
+jBr
+ozw
+nyz
 ozw
 ozw
 ozw
-sQe
-hNS
+jIa
 ozw
-xUe
-qRA
-daz
-daz
+ozw
+ozw
+nDg
+vvS
+nbb
 ajg
 "}
 (295,1,1) = {"
@@ -171420,68 +170495,6 @@ dFc
 aES
 aES
 aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
 aES
 aES
 aES
@@ -171498,6 +170511,68 @@ aES
 aES
 aES
 dFl
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
 aES
 aES
 dFc
@@ -171638,19 +170713,19 @@ kfa
 kfa
 kmt
 aaa
-vUN
-kra
-gdt
-qyy
-mXv
-qyy
-qyy
-psr
-dKX
-wGK
-fNF
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -171662,18 +170737,18 @@ ajg
 smg
 daz
 daz
-lav
+noj
+qOO
 ozw
 ozw
 ozw
+sQe
+hNS
 ozw
-ozw
-ozw
-eZW
-kCH
-nCt
-uOU
-uEj
+xUe
+qRA
+daz
+daz
 ajg
 "}
 (296,1,1) = {"
@@ -171722,6 +170797,50 @@ dFc
 aES
 aES
 aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
+aES
+dFl
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+dFl
+aES
 aES
 aES
 aES
@@ -171752,54 +170871,10 @@ aES
 aES
 aES
 aES
-dFl
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
 aES
 aES
 aES
 dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
 aES
 aES
 dFc
@@ -171940,19 +171015,19 @@ kfa
 kfa
 kmt
 aaa
-vUN
-vUN
-lZJ
-ouw
-gxZ
-nIb
-nIb
-gxZ
-qyy
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -171964,18 +171039,18 @@ ajg
 smg
 daz
 daz
-jwi
-ozw
-ozw
-hNS
+lav
 ozw
 ozw
 ozw
 ozw
-mrw
-pTE
-lWE
-daz
+ozw
+ozw
+eZW
+kCH
+nCt
+uOU
+uEj
 ajg
 "}
 (297,1,1) = {"
@@ -172032,6 +171107,7 @@ aES
 aES
 aES
 aES
+dFl
 aES
 aES
 aES
@@ -172053,11 +171129,13 @@ aES
 aES
 aES
 aES
+dFl
 aES
 aES
 aES
 aES
 aES
+dFl
 aES
 aES
 aES
@@ -172069,6 +171147,7 @@ aES
 aES
 aES
 aES
+dFl
 aES
 aES
 aES
@@ -172079,25 +171158,21 @@ aES
 aES
 aES
 aES
+dFl
 aES
 aES
 aES
 aES
 aES
+dFl
 aES
 aES
 aES
 aES
+dFl
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+dFl
 aES
 aES
 aES
@@ -172194,67 +171269,67 @@ dkG
 aaa
 kmt
 gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-bAc
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-bAc
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-bAc
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
-gGM
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kmt
 aaa
-vUN
-vUN
-lZJ
-oFf
-gYj
-qyy
-qSQ
-mPe
-qyy
-lZJ
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -172266,17 +171341,17 @@ ajg
 smg
 daz
 daz
-daz
-ohz
-jru
-edL
-xoW
-tnK
-fUi
-wMi
-tnB
-daz
-daz
+jwi
+ozw
+ozw
+hNS
+ozw
+ozw
+ozw
+ozw
+mrw
+pTE
+lWE
 daz
 ajg
 "}
@@ -172323,240 +171398,240 @@ dFX
 dFX
 aaa
 dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
-dFc
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
+aES
 dFc
 aaa
 dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-aaa
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
 dkG
 aaa
 dkG
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
+dkQ
 dkG
+aaa
 dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
-dkG
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
+dly
 dkG
 aaa
 kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
-kmt
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+bAc
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+bAc
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+bAc
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
 kmt
 aaa
-vUN
-vUN
-kra
-hXs
-hXs
-hXs
-hXs
-hXs
-hXs
-fNF
-vUN
-vUN
-aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -172565,18 +171640,18 @@ cnw
 cnw
 aaa
 ajg
+smg
 daz
 daz
 daz
-daz
-daz
-daz
-daz
-daz
-daz
-daz
-daz
-daz
+ohz
+jru
+edL
+xoW
+tnK
+fUi
+wMi
+tnB
 daz
 daz
 daz
@@ -172584,605 +171659,605 @@ ajg
 "}
 (299,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+dFX
+aaa
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+dFc
+aaa
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+aaa
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+aaa
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+dkG
+aaa
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+aaa
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 aaa
 ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
-ajg
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
+daz
 ajg
 "}
 (300,1,1) = {"
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
+ajg
 "}
