@@ -26370,7 +26370,7 @@
 /obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 8
 	},
 /turf/simulated/floor/snow/snowball{
@@ -46550,7 +46550,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "nBo" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 8
 	},
 /turf/simulated/floor/snow/snowball{
@@ -52536,7 +52536,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "pon" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/warm,

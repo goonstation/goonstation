@@ -79,7 +79,6 @@
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
 	var/fakedead = 0
-	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -704,13 +703,10 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(5 SECONDS)
-					src.now_pushing = 0
-
-					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
-						tmob.now_pushing = 0
-
-					return
+					SPAWN_DBG(5 SECONDS)
+						src.now_pushing = 0
+						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
+							tmob.now_pushing = 0
 
 		if (!issilicon(AM))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
@@ -893,15 +889,14 @@
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
 	SPAWN_DBG(0)
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == title)
-				unlocks.Add(D)
-
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
+			var/list/unlocks = list()
+			for(var/A in rewardDB)
+				var/datum/achievementReward/D = rewardDB[A]
+				if (D.required_medal == title)
+					unlocks.Add(D)
 			if (announce)
 				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)

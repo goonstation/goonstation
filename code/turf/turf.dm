@@ -58,7 +58,7 @@
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
-		..()
+		SHOULD_CALL_PARENT(FALSE)
 
 	onMaterialChanged()
 		..()
@@ -312,16 +312,15 @@ proc/generate_space_color()
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
 	if (!mover)
-		return 1
+		return TRUE
 
 	var/turf/cturf = get_turf(mover)
 	if (cturf == src)
-		return 1
+		return TRUE
 
 	//First, check objects to block exit
 	if (cturf?.checkingexit > 0) //dont bother checking unless the turf actually contains a checkable :)
-		for(var/thing in cturf)
-			var/obj/obstacle = thing
+		for(var/obj/obstacle in cturf)
 			if(obstacle == mover)
 				continue
 			if((mover != obstacle) && (forget != obstacle))
@@ -332,7 +331,7 @@ proc/generate_space_color()
 					  && obstacle.dir == mover.dir)) //Allow objects that block the same dirs to be pushed past each other
 						if(!obstacle.CheckExit(mover, src))
 							mover.Bump(obstacle, 1)
-							return 0
+							return FALSE
 
 	if (mirrored_physical_zone_created) //checking visual mirrors for blockers if set
 		if (length(src.vis_contents))
@@ -341,14 +340,13 @@ proc/generate_space_color()
 				for(var/thing in T)
 					var/atom/movable/obstacle = thing
 					if(obstacle == mover) continue
-					if(!mover)	return 0
+					if(!mover)	return FALSE
 					if ((forget != obstacle))
 						if(!obstacle.Cross(mover))
 							mover.Bump(obstacle)
-							return 0
+							return FALSE
 
 	return ..() //Nothing found to block so return success!
-
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
@@ -1209,6 +1207,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "floorflush_o"
 
-	Enter(atom/movable/mover, atom/forget)
+	Entered(atom/movable/mover, atom/forget)
 		. = ..()
-		mover.set_loc(null)
+		if(!mover.anchored)
+			mover.set_loc(null)

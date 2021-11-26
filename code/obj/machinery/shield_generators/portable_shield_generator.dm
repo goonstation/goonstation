@@ -590,8 +590,9 @@
 	color = "#33FF33"
 	powerlevel = 2
 	layer = 2.5 //sits under doors if we want it to
-	flags = ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER 
+	flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
+	gas_impermeable = TRUE
+	event_handler_flags = USE_FLUID_ENTER
 
 	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
 		if(a)

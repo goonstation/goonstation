@@ -50,10 +50,8 @@ datum/mind
 	var/dnr = 0
 	var/joined_observer = 0 //keep track of whether this player joined round as an observer (blocks them from bank payouts)
 
-	var/luck = 50 // todo:
-	var/sanity = 100 // implement dis
-
 	var/handwriting = null
+	var/color = null
 
 	var/obj/item/organ/brain/brain
 
@@ -80,6 +78,7 @@ datum/mind
 			ckey = M.ckey
 			displayed_key = M.key
 			src.handwriting = pick(handwriting_styles)
+			src.color = pick_string("colors.txt", "colors")
 		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
 	proc/transfer_to(mob/new_character)

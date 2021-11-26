@@ -13153,13 +13153,14 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "azG" = (
-/obj/submachine/chef_sink,
-/obj/decal/poster/wallsign/chsl{
-	pixel_y = 32
-	},
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/suit/apron,
+/obj/item/clothing/head/souschefhat,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azH" = (
@@ -13203,12 +13204,11 @@
 	name = "Community Center"
 	})
 "azK" = (
-/obj/table/reinforced/auto,
-/obj/machinery/microwave,
 /obj/machinery/firealarm{
 	layer = 3.5;
 	pixel_y = 24
 	},
+/obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azL" = (
@@ -13226,28 +13226,24 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azM" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1;
-	pixel_y = 21
+/obj/stove,
+/obj/item/soup_pot{
+	pixel_x = 4;
+	pixel_y = 10
 	},
-/obj/table/reinforced/auto,
-/obj/submachine/mixer,
+/obj/item/ladle{
+	pixel_x = -2;
+	pixel_y = 11
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azN" = (
-/obj/machinery/power/apc{
-	areastring = "Kitchen";
-	dir = 4;
-	name = "Kitchen APC";
-	pixel_x = 24
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/glass_recycler,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azO" = (
@@ -13256,33 +13252,25 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
-"azP" = (
-/obj/machinery/light_switch/north{
-	pixel_y = 28
-	},
+"azQ" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/latex,
 /obj/item/spraybottle/cleaner,
 /obj/item/kitchen/utensil/knife,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/light_switch/north{
+	pixel_y = 28
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
-"azQ" = (
+"azR" = (
+/obj/kitchenspike,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen)
-"azR" = (
-/obj/machinery/firealarm{
-	layer = 3.5;
-	pixel_y = 24
-	},
-/obj/kitchenspike,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "azS" = (
@@ -13590,7 +13578,20 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"aAF" = (
+"aAG" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/gibber/output_south,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/firealarm{
+	layer = 3.5;
+	pixel_y = 24
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/kitchen)
+"aAH" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -13600,26 +13601,8 @@
 	dir = 4;
 	name = "Freezer"
 	},
-/obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
-"aAG" = (
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/machinery/gibber/output_south,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/kitchen)
-"aAH" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/access_spawn/kitchen,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aAI" = (
@@ -13628,7 +13611,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "aAJ" = (
@@ -13957,13 +13940,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
-"aBr" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/vending/kitchen,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "aBs" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -13977,6 +13953,7 @@
 	},
 /obj/disposalpipe/segment/food,
 /obj/machinery/light,
+/obj/machinery/vending/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBu" = (
@@ -13991,28 +13968,15 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/milk,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBx" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/plate,
-/obj/item/kitchen/utensil/spoon,
-/obj/item/kitchen/utensil/fork,
-/obj/item/storage/box/plates,
-/obj/item/storage/box/cutlery,
+/obj/item/reagent_containers/food/drinks/milk,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBy" = (
-/obj/storage/secure/closet/fridge/kitchen,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10
-	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aBz" = (
@@ -14519,17 +14483,23 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"aCE" = (
-/obj/item/device/radio/intercom/catering,
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "aCF" = (
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/table,
-/obj/machinery/phone,
+/obj/item/device/radio/intercom/catering,
+/obj/storage/cart/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/shaker/ketchup{
+	pixel_x = 6
+	},
+/obj/item/shaker/mustard{
+	pixel_x = -6
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aCG" = (
@@ -14924,10 +14894,7 @@
 /area/station/solar/west)
 "aDz" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/suit/apron,
-/obj/item/clothing/head/souschefhat,
+/obj/machinery/phone,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDA" = (
@@ -14936,6 +14903,12 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/disposal/mail/small,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/plate,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/kitchen/utensil/fork,
+/obj/item/storage/box/plates,
+/obj/item/storage/box/cutlery,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDB" = (
@@ -14943,26 +14916,18 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDC" = (
-/obj/machinery/vending/monkey,
+/obj/table/reinforced/auto,
+/obj/machinery/microwave,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDD" = (
-/obj/storage/cart/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
+/obj/table/reinforced/auto,
+/obj/submachine/mixer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDE" = (
-/obj/machinery/deep_fryer,
 /obj/machinery/light,
+/obj/machinery/vending/monkey,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDF" = (
@@ -21187,6 +21152,10 @@
 /obj/item/stamp/hop,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /obj/firedoor_spawn,
+/obj/item/bell/hop{
+	pixel_x = 16;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "aRh" = (
@@ -47974,6 +47943,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head/private)
+"lJT" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "lKX" = (
 /obj/cable{
 	d1 = 4;
@@ -49226,6 +49204,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
+"pBr" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "pBx" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -50907,6 +50892,23 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
+"uzZ" = (
+/obj/machinery/power/apc{
+	areastring = "Kitchen";
+	dir = 4;
+	name = "Kitchen APC";
+	pixel_x = 24
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/decal/poster/wallsign/chsl{
+	pixel_y = 32
+	},
+/obj/submachine/chef_sink,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "uCg" = (
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -87677,7 +87679,7 @@ ayo
 ayX
 azG
 aAz
-aBr
+aBs
 aCz
 aDx
 aEF
@@ -87934,7 +87936,7 @@ axB
 ayX
 azH
 aAz
-aBs
+pBr
 aCz
 aEr
 bjZ
@@ -89475,7 +89477,7 @@ axG
 ayt
 ayX
 azN
-aAE
+aAC
 aBy
 aAC
 aDD
@@ -89731,10 +89733,10 @@ asN
 axH
 ayu
 ayX
-ayX
-aAF
-ayX
-aCE
+uzZ
+aAE
+lJT
+aAC
 aAD
 ayX
 aqu
@@ -89988,7 +89990,7 @@ awR
 axI
 ayv
 ayX
-azP
+ayX
 aAH
 ayX
 aCF

@@ -50,8 +50,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		lobby_titlecard.set_pregame_html()
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	for(var/mob/new_player/C in world)
-		C.ready = 1
 	pregame_timeleft = 1
 	#endif
 
