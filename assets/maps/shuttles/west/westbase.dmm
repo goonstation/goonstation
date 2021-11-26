@@ -106,6 +106,22 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/west)
+"mR" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
+"mX" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "nG" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -223,6 +239,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom/west)
+"BB" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "CN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -371,14 +393,6 @@
 "PP" = (
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/west)
-"PZ" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/escape/centcom/west)
 "QL" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -423,6 +437,11 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/west)
+"SD" = (
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "Ti" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -453,6 +472,12 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/west)
+"VP" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
 "VT" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -564,33 +589,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-uD
-"}
-(4,1,1) = {"
-wN
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 Pg
 fo
 fo
@@ -605,10 +603,10 @@ aa
 aa
 aa
 aa
-wN
-"}
-(5,1,1) = {"
 uD
+"}
+(4,1,1) = {"
+wN
 aa
 aa
 aa
@@ -632,6 +630,33 @@ aa
 aa
 aa
 aa
+wN
+"}
+(5,1,1) = {"
+uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+VP
+BB
+SD
+mX
+mX
+SD
+mR
+VP
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 uD
 "}
 (6,1,1) = {"
@@ -647,8 +672,8 @@ aa
 fo
 Pq
 ch
-PZ
-PZ
+ch
+ch
 ch
 yY
 fo

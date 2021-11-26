@@ -172,6 +172,12 @@
 	opacity = 0
 	},
 /area/centcom)
+"yD" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/east)
 "yY" = (
 /obj/stool/chair/comfy/shuttle,
 /turf/unsimulated/floor/shuttle{
@@ -278,6 +284,14 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom/east)
+"Ep" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
 /area/shuttle/escape/centcom/east)
 "GE" = (
 /obj/table/auto,
@@ -1014,8 +1028,8 @@ aa
 HS
 OJ
 VP
-mw
-mw
+VP
+VP
 VP
 Iq
 HS
@@ -1030,6 +1044,33 @@ uD
 "}
 (21,1,1) = {"
 uD
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+HS
+yD
+VP
+mw
+mw
+VP
+Ep
+HS
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+uD
+"}
+(22,1,1) = {"
+wN
 aa
 aa
 aa
@@ -1053,10 +1094,10 @@ aa
 aa
 aa
 aa
-uD
-"}
-(22,1,1) = {"
 wN
+"}
+(23,1,1) = {"
+uD
 aa
 aa
 aa
@@ -1072,33 +1113,6 @@ HS
 HS
 HS
 GZ
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-wN
-"}
-(23,1,1) = {"
-uD
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa

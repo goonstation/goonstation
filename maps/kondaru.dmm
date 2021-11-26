@@ -16380,7 +16380,7 @@
 /area/station/engine/elect)
 "aTp" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station/east)
 "aTr" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -139614,14 +139614,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aTp
 aTp
 aTp
 aTp
 aTp
 aTp
-aaa
+aTp
+aTp
 aaa
 aaa
 aaa
@@ -139917,12 +139917,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aTp
+aTp
+aTp
+aTp
+aTp
+aTp
 aaa
 aaa
 aaa

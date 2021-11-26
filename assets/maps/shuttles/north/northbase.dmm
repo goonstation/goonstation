@@ -284,6 +284,14 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/north)
+"HO" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/north)
 "HS" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
@@ -411,6 +419,14 @@
 "PJ" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
+	},
+/area/shuttle/escape/centcom/north)
+"QG" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/north)
 "Rb" = (
@@ -755,8 +771,8 @@ uD
 uD
 aa
 aa
-aa
 Ye
+Id
 Id
 PJ
 UV
@@ -781,9 +797,9 @@ uD
 (10,1,1) = {"
 wN
 aa
-aa
 Ye
 dW
+HO
 Nr
 yi
 UV
@@ -808,9 +824,9 @@ wN
 (11,1,1) = {"
 uD
 aa
-aa
 Id
 YQ
+YW
 YW
 Np
 Rb
@@ -835,10 +851,10 @@ uD
 (12,1,1) = {"
 uD
 aa
-aa
 Id
 gO
 Ip
+YW
 OQ
 UV
 UV
@@ -862,10 +878,10 @@ uD
 (13,1,1) = {"
 wN
 aa
-aa
 Id
 on
 Ip
+YW
 yi
 UV
 UV
@@ -889,9 +905,9 @@ wN
 (14,1,1) = {"
 uD
 aa
-aa
 Id
 YQ
+YW
 YW
 Np
 Rb
@@ -916,9 +932,9 @@ uD
 (15,1,1) = {"
 uD
 aa
-aa
 Bo
 JY
+QG
 zY
 OQ
 UV
@@ -944,8 +960,8 @@ uD
 wN
 aa
 aa
-aa
 Bo
+Id
 Id
 PJ
 UV

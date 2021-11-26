@@ -72660,6 +72660,11 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"fFv" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
 "fGD" = (
 /obj/storage/cart/hotdog,
 /obj/item/clothing/suit/gimmick/hotdog,
@@ -72928,6 +72933,12 @@
 "gyu" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/entry)
+"gAG" = (
+/obj/machinery/vending/snack,
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
 "gDC" = (
 /obj/iomoon_puzzle/meat_ganglion{
 	id = "meatland_third"
@@ -74464,6 +74475,12 @@
 	icon_state = "wall"
 	},
 /area/hospital/samostrel)
+"lqm" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
 "lrI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -75863,6 +75880,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"oQH" = (
+/obj/machinery/vending/cola/blue,
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
 "oRd" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
@@ -76205,6 +76228,12 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pFm" = (
+/obj/reagent_dispensers/watertank/fountain/piss,
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
 "pGP" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -76844,12 +76873,23 @@
 "rtc" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/crew)
+"rtk" = (
+/turf/unsimulated/floor/arrival/corner{
+	dir = 1
+	},
+/area/centcom)
 "rtM" = (
 /obj/crevice/meatland,
 /turf/unsimulated/floor/setpieces/bloodfloor{
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"rtQ" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -78228,6 +78268,11 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vTG" = (
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
 "vWb" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -78854,6 +78899,12 @@
 /obj/window/north,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"yaC" = (
+/obj/shrub,
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
 "ybt" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater)
@@ -127613,10 +127664,10 @@ aES
 dFl
 gcn
 gcn
-dny
-dny
-dny
-dny
+yaC
+lqm
+lqm
+fFv
 dkX
 dny
 dmu
@@ -127914,8 +127965,8 @@ aES
 aES
 aES
 gcn
-dny
-dny
+vTG
+rtk
 dny
 dny
 dny
@@ -128216,10 +128267,10 @@ aES
 aES
 aES
 tZZ
-dny
-dny
-dny
-dny
+pWB
+lBN
+lBN
+lBN
 dny
 dkX
 dny
@@ -128518,7 +128569,7 @@ aES
 aES
 aES
 tZZ
-dny
+gAG
 dny
 dny
 dny
@@ -128820,7 +128871,7 @@ aES
 dFl
 aES
 tZZ
-dny
+oQH
 dny
 dny
 dny
@@ -129122,10 +129173,10 @@ aES
 aES
 aES
 tZZ
-dny
-dny
-dny
-dny
+pWB
+lBN
+lBN
+lBN
 dny
 dkX
 dny
@@ -129424,8 +129475,8 @@ dFl
 aES
 aES
 gcn
-dny
-dny
+pFm
+gae
 dny
 dny
 dny
@@ -129727,10 +129778,10 @@ aES
 dFl
 gcn
 gcn
-dny
-dny
-dny
-dny
+gOW
+rtQ
+rtQ
+mZx
 dkX
 dny
 dmu

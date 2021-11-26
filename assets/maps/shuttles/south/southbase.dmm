@@ -32,6 +32,14 @@
 	icon_state = "floor6"
 	},
 /area/shuttle/escape/centcom/south)
+"eZ" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/south)
 "fI" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -504,6 +512,14 @@
 	icon_state = "11"
 	},
 /area/shuttle/escape/centcom/south)
+"ZA" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom/south)
 "ZB" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -750,8 +766,8 @@ RA
 RA
 Ip
 Yd
+Yd
 Na
-aa
 aa
 aa
 uD
@@ -777,9 +793,9 @@ RA
 RA
 UH
 xK
+ZA
 Ca
 Na
-aa
 aa
 wN
 "}
@@ -804,9 +820,9 @@ NA
 SV
 OD
 Vj
+Vj
 CN
 Yd
-aa
 aa
 uD
 "}
@@ -830,10 +846,10 @@ SV
 RA
 RA
 PP
+Vj
 Ov
 Cl
 Yd
-aa
 aa
 uD
 "}
@@ -857,10 +873,10 @@ SV
 RA
 RA
 PP
+Vj
 Ov
 on
 Yd
-aa
 aa
 wN
 "}
@@ -885,9 +901,9 @@ NA
 SV
 OD
 Vj
+Vj
 CN
 Yd
-aa
 aa
 uD
 "}
@@ -912,9 +928,9 @@ RA
 RA
 PP
 hv
+eZ
 nG
 Ox
-aa
 aa
 uD
 "}
@@ -939,8 +955,8 @@ RA
 RA
 Ip
 Yd
+Yd
 Ox
-aa
 aa
 aa
 wN
