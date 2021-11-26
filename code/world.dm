@@ -1745,7 +1745,9 @@ var/f_color_selector_handler/F_Color_Selector
 					final_action |= PROFILE_AVERAGE
 				var/output = world.Profile(final_action, type, "json")
 				if(plist["action"] == "refresh" || plist["action"] == "stop")
-					return output
+					SPAWN_DBG(1)
+						ircbot.export("profiler_result", list("data"=output))
+					return 1
 				return 1
 
 /world/proc/setMaxZ(new_maxz)
