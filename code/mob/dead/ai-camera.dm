@@ -447,10 +447,11 @@
 
 	verb/ai_open_map()
 		set category = "AI Commands"
-		set name = "Open map"
+		set name = "Open AI map"
 		set desc = "Open a map of the station, double click on the map to teleport"
 
 		//default to cogmap if somehow the map settings go missing
+		//currently only Ozymandias and Icarus are unsupported
 		var/map_name = "cogmap"
 		if (map_settings)
 			var/position = findtext(map_settings.goonhub_map, "/maps/")
@@ -463,8 +464,6 @@
 					<title>AI map</title>
 
 					<link rel="stylesheet" href="https://goonhub.com/css/map.css">
-
-					<script src="https://goonhub.com/js/modernizr.min.js"></script>
 				</head>
 				<body>
 				<div id="mapcontainer">
@@ -500,9 +499,9 @@
 						e.stopPropagation()
 
 						//horrible string mess to get the tile coords from the image url
+						//urls have the form https://goonhub.com/images/maps/<map name>/z1/<y>,<x>.png
 						var split_array = target.src.split("/")
 						var tile_coords = split_array\[split_array.length - 1].split(".")\[0].split(",")
-						//image tiles use y,x for some reason
 						var x = Number(tile_coords\[1])
 						var y = Number(tile_coords\[0])
 
@@ -514,7 +513,7 @@
 						x += e.offsetX / 32
 						y += e.offsetY / 32
 						//the map has inverted y coordinates
-						y = 300 - y //this assumes all maps are 300x300, and map.dm doesn't say otherwise so probably okay
+						y = 300 - y //this assumes all maps are 300x300, I think the only one that isn't is Pod Wars and I don't think that has an AI?
 						//correct southwest bias
 						y += 0.5
 						x += 0.5
