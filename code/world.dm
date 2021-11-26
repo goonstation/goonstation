@@ -1728,8 +1728,9 @@ var/f_color_selector_handler/F_Color_Selector
 				if(type != "sendmaps")
 					type = null
 				if(plist["action"] == "save")
+					var/static/profilerLogID = 0
 					var/output = world.Profile(PROFILE_REFRESH, type, "json")
-					var/fname = "data/logs/profiling/[global.roundLog_date]_[global.profilerLogID++].json"
+					var/fname = "data/logs/profiling/[global.roundLog_date]_manual_[profilerLogID++].json"
 					rustg_file_write(output, fname)
 					return fname
 				var/action = list(
