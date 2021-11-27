@@ -7,3 +7,54 @@
 	recureprob = 15
 	associated_reagent = "liquid plasma"
 	affected_species = list("Monkey", "Human")
+
+/datum/ailment/disease/plasmatoid/stage_act(mob/living/affected_mob, datum/ailment_data/D)
+	if (..())
+		return
+	switch(D.stage)
+		if(2)
+			if(prob(1))
+				affected_mob.emote("cough")
+			if(prob(1))
+				boutput(affected_mob, "<span class='alert'>Your muscles ache.</span>")
+				if(prob(20))
+					random_brute_damage(affected_mob, 1)
+			if(prob(1))
+				boutput(affected_mob, "<span class='alert'>Your chest hurts.</span>")
+				if(prob(20))
+					affected_mob.take_toxin_damage(1)
+		if(3)
+			if(prob(1))
+				affected_mob.emote("cough")
+			if(prob(1))
+				boutput(affected_mob, "<span class='alert'>Your muscles ache.</span>")
+				if(prob(20))
+					random_brute_damage(affected_mob, 1)
+			if(prob(1))
+				boutput(affected_mob, "<span class='alert'>Your chest hurts.</span>")
+				if(prob(20))
+					affected_mob.take_toxin_damage(1)
+			if(prob(1))
+				boutput(affected_mob, "<span class='alert'>Your breathing feels labored.</span>")
+				affected_mob.take_oxygen_deprivation(1)
+
+		if(4)
+			var/obj/item/organ/created_organ
+			var/obj/item/organ/lung/left = affected_mob?.organHolder?.left_lung
+			var/obj/item/organ/lung/right = affected_mob?.organHolder?.right_lung
+			if(left && !left.robotic && !istype(left, /obj/item/organ/lung/plasmatoid))
+				created_organ = new /obj/item/organ/lung/plasmatoid/left()
+				affected_mob.organHolder.drop_organ(left.organ_holder_name)
+				qdel(left)
+
+				created_organ.donor = affected_mob
+				affected_mob.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+			if(right && !right.robotic && !istype(right, /obj/item/organ/lung/plasmatoid))
+				created_organ = new /obj/item/organ/lung/plasmatoid/right()
+				affected_mob.organHolder.drop_organ(right.organ_holder_name)
+				qdel(right)
+
+				created_organ.donor = affected_mob
+				affected_mob.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+

@@ -343,11 +343,18 @@
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
-	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
 		. = ..()
+		var/safe_oxygen_max = 0.4
 
+		var/breath_moles = TOTAL_MOLES(breath)
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
+		if(breath_moles == 0)
+			breath_moles = ATMOS_EPSILON
 		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
+		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
 		var/gas_used
+
 		if (Toxins_pp < safe_oxygen_min) 			// Too little plasma
 			if (prob(20))
 				if (underwater)
@@ -368,27 +375,26 @@
 		breath.toxins -= gas_used
 		breath.carbon_dioxide += gas_used
 
-		if (Toxins_pp > safe_oxygen_min) // Too much toxins
-			var/ratio = breath.toxins/safe_oxygen_min
+		if (O2_pp > safe_oxygen_max) // Too much toxins
+			var/ratio = breath.oxygen/safe_oxygen_max
+			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
 			update.show_tox_indicator = TRUE
 
 /obj/item/organ/lung/plasmatoid/left
-	name = "right lung"
-	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a left lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
-	color = "#f0f"
+	name = "left lung"
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a left lung, since it has two lobes and a cardiac notch, where the heart would be. Whoever used to have this probably didn't want it anymore."
 	organ_holder_name = "left_lung"
-	organ_name = "cyber_lung_L"
-	icon_state = "cyber-lung-L"
+	organ_name = "plasma_lung_L"
+	icon_state = "plasma_lung_L"
 	body_side = L_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/left
 
 /obj/item/organ/lung/plasmatoid/right
 	name = "right lung"
-	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
-	color = "#f0f"
-	organ_name = "cyber_lung_R"
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Whoever used to have this probably didn't want it anymore."
+	organ_name = "plasma_lung_R"
 	organ_holder_name = "right_lung"
-	icon_state = "cyber-lung-R"
+	icon_state = "plasma_lung_R"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
