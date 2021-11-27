@@ -1,6 +1,10 @@
 
 (t)fri nov 26 21
 (u)Sovexe
+(p)6771
+(e)🆕|feature
+(+)Conveyor belt switches now affect their linked belts instantly.
+(u)Sovexe
 (p)6750
 (e)🆕|feature
 (+)You no longer need to remove the battery from an energy/meteor shield generator to connect it to a wire.
