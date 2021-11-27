@@ -58,7 +58,7 @@
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
-		..()
+		SHOULD_CALL_PARENT(FALSE)
 
 	onMaterialChanged()
 		..()

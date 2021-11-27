@@ -10,7 +10,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//var/current_state = GAME_STATE_PREGAME
 	//replaced with global
 
-	var/hide_mode = 0
+	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
 	var/event_time = null
 	var/event = 0
@@ -34,6 +34,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/tmp/timeDilationLowerBound = MIN_TICKLAG
 	var/tmp/timeDilationUpperBound = OVERLOADED_WORLD_TICKLAG
 	var/tmp/highMapCpuCount = 0 // how many times in a row has the map_cpu been high
+	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
+	var/tmp/automatic_profiling_on = FALSE
 
 /datum/controller/gameticker/proc/pregame()
 
@@ -50,8 +52,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		lobby_titlecard.set_pregame_html()
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	for(var/mob/new_player/C in world)
-		C.ready = 1
 	pregame_timeleft = 1
 	#endif
 
@@ -110,8 +110,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode in list("secret","action","intrigue","wizard","alien"))
-		src.hide_mode = 1
+	if(master_mode != "extended")
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
@@ -388,6 +390,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 		emergency_shuttle.process()
 
+		automatic_profiling()
+
 		#if DM_VERSION >= 514
 		if (useTimeDilation)//TIME_DILATION_ENABLED set this
 			if (world.time > last_try_dilate + TICKLAG_DILATE_INTERVAL) //interval separate from the process loop. maybe consider moving this for cleanup later (its own process loop with diff. interval?)
@@ -487,6 +491,35 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			if (elapsed > 0)
 				ticker.round_elapsed_ticks += elapsed
+
+	proc/automatic_profiling(force_stop=FALSE, force_start=FALSE)
+		var/static/profilerLogID = 0
+		if(automatic_profiling_on)
+			if(world.cpu <= CPU_STOP_PROFILING_THRESHOLD)
+				highCpuCount--
+			else
+				highCpuCount = CPU_STOP_PROFILING_COUNT
+			if(highCpuCount <= 0 || force_stop)
+				var/output = world.Profile(PROFILE_REFRESH | PROFILE_STOP, null, "json")
+				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++].json"
+				rustg_file_write(output, fname)
+				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
+				logTheThing("debug", null, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
+				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
+				highCpuCount = 0
+				automatic_profiling_on = FALSE
+		else
+			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
+				highCpuCount++
+			else
+				highCpuCount = 0
+			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
+				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
+				message_admins("CPU at [world.cpu], turning on profiling.")
+				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu].")
+				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu]."))
+				highCpuCount = CPU_STOP_PROFILING_COUNT
+				automatic_profiling_on = TRUE
 
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
@@ -803,6 +836,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	catch(var/exception/e)
 		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
 		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
+
+	if(automatic_profiling_on)
+		automatic_profiling(force_stop=TRUE)
+
 	return 1
 
 /////
