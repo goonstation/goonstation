@@ -224,7 +224,7 @@
 			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
 			system.reply("Set the [which]mode to [new_mode].", user)
 		else if(length(new_mode) > 0)
-			system.reply("Invalid mode [new_mode]. Available game modes: [jointext(", ", global.valid_modes)].", user)
+			system.reply("Invalid mode [new_mode]. Available game modes: [jointext(global.valid_modes, ", ")].", user)
 		else
 			var/detail_mode = isnull(ticker?.mode) ? "not started yet" : ticker.mode.name
 			var/next_mode = "N/A"
