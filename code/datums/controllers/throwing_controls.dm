@@ -13,6 +13,7 @@
 	var/matrix/transform_original
 	var/list/params
 	var/turf/thrown_from
+	var/mob/thrown_by
 	var/atom/return_target
 	var/bonus_throwforce = 0
 	var/end_throw_callback
@@ -22,7 +23,7 @@
 	var/speed_error = 0
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
-			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, atom/return_target,
+			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,
 			bonus_throwforce=0, end_throw_callback=null)
 		src.thing = thing
 		src.target = target
@@ -38,6 +39,7 @@
 		src.transform_original = transform_original
 		src.params = params
 		src.thrown_from = thrown_from
+		src.thrown_by = thrown_by
 		src.return_target = return_target
 		src.bonus_throwforce = bonus_throwforce
 		src.end_throw_callback = end_throw_callback
@@ -123,6 +125,11 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)
+
+			var/mob/thrown_by = thr.thrown_by
+			if (ismob(thrown_by) && !ON_COOLDOWN(thrown_by, "throw_spam", 5 SECONDS))
+				for (var/mob/M in range(3, thrown_by))
+					SEND_SIGNAL(M, COMSIG_MOB_THROW_ITEM_NEARBY, thing, thrown_by)
 
 			if(thr.hitAThing)
 				thr.params = null// if we hit something don't use the pixel x/y from the click params

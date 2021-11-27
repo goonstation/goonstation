@@ -496,6 +496,10 @@
 					src.organ_name = "cow head"
 					src.desc = "They're not dead, they're just a really good roleplayer."
 
+				if(HEAD_PUG)
+					src.organ_name = "pug head"
+					src.desc = "Maybe a bit too smushed."
+
 				if(HEAD_WEREWOLF)
 					src.organ_name = "wolf head"
 					src.desc = "Definitely not a good boy."

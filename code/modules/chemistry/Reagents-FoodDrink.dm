@@ -2400,11 +2400,12 @@ datum
 			thirst_value = 0.5
 			hunger_value = 1
 			viscosity = 0.5
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.reagents.add_reagent("sugar", 0.8 * mult)
+				if (ispug(M))
+					M.changeStatus("poisoned", 8 SECONDS * mult)
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
