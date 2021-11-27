@@ -1,3 +1,6 @@
+(t)sat nov 27 21
+(u)pali
+(*)Info-Overlay verb now autocompletes in the command bar. It also has some new options. The most interesting of which are: var display, nested var display. They let you display a chosen var for atoms on every turf.
 (t)thu nov 25 21
 (u)pali
 (*)Added del-half verb which is like del-all except it has a 50% chance of deleting each thing. You know, for when someone makes 600 killer tomatoes and you want to Thanos-snap them.
