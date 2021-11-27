@@ -6239,7 +6239,7 @@
 /turf/simulated/floor/caution/west,
 /area/quartermaster/storage)
 "amu" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/simulated/floor,
@@ -6945,7 +6945,7 @@
 /turf/simulated/floor,
 /area/quartermaster/storage)
 "anN" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /turf/simulated/floor,
@@ -30599,7 +30599,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "bjQ" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /obj/machinery/light/small{
@@ -37953,7 +37953,7 @@
 	},
 /area/space)
 "bzE" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-blue";
 	name = "blue line switch"
 	},
@@ -38195,7 +38195,7 @@
 /turf/simulated/floor,
 /area/space)
 "bAk" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-red";
 	name = "red line switch"
 	},
@@ -52676,7 +52676,7 @@
 /turf/simulated/floor/bot,
 /area/factory)
 "cht" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "tds-assembly"
 	},
 /turf/simulated/floor/grime,
@@ -56477,7 +56477,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck/main)
 "cpu" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINWest";
 	name = "West Conveyor Switch"
 	},
@@ -56491,7 +56491,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "cpw" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINEast";
 	name = "East Conveyor Switch"
 	},
@@ -56900,7 +56900,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "cqu" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINSouth";
 	name = "South Conveyor Switch"
 	},

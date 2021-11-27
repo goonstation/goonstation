@@ -39377,7 +39377,7 @@
 	name = "Engineering Air Hookups"
 	})
 "kJD" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmsend";
 	layer = 4
 	},
@@ -46755,7 +46755,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmswapabout"
 	},
 /turf/simulated/floor/orangeblack,
@@ -55711,7 +55711,7 @@
 /turf/space,
 /area/space)
 "oXg" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cannedfartbelt"
 	},
 /obj/cable{
@@ -79387,7 +79387,7 @@
 	},
 /area/station/hallway/secondary/west)
 "uXW" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},

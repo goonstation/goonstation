@@ -8997,7 +8997,7 @@
 /turf/simulated/wall/auto/supernorn/the_tuff_stuff,
 /area/station/hangar/science)
 "vW" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "outbound";
 	name = "outbound conveyor switch"
 	},
@@ -9019,7 +9019,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch"
 	},
@@ -9572,7 +9572,7 @@
 	},
 /area/station/security/main)
 "xj" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "delivery";
 	name = "delivery conveyor switch"
 	},

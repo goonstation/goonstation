@@ -3185,7 +3185,7 @@
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
 "ajk" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINSouth";
 	name = "South Conveyor Switch"
 	},
@@ -7677,7 +7677,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "aun" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "robot_factory"
 	},
 /turf/simulated/floor,

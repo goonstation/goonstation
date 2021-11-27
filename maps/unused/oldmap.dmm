@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -19146,7 +19146,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining"
 	},
 /turf/simulated/floor,

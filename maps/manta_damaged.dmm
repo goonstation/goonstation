@@ -37315,7 +37315,7 @@
 	},
 /area/station/medical/cdc)
 "bAW" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "disposals"
 	},
 /turf/simulated/floor/plating/random,
@@ -37540,7 +37540,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/cargobay)
 "bBA" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "north"
 	},
 /turf/simulated/floor,
@@ -37551,7 +37551,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "south"
 	},
 /turf/simulated/floor,
@@ -37564,7 +37564,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bBD" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmdelivery"
 	},
 /turf/simulated/floor,

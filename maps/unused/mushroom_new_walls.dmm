@@ -2555,7 +2555,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "akl" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmin"
 	},
 /obj/cable{
@@ -5472,7 +5472,7 @@
 	c_tag = "Cargo Bay Storage";
 	dir = 4
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/light{
@@ -6487,7 +6487,7 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /turf/simulated/floor/grime,

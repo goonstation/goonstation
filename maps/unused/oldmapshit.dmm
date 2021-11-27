@@ -227,7 +227,7 @@
 	},
 /area/space)
 "aB" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-blue";
 	name = "blue line switch"
 	},
@@ -370,7 +370,7 @@
 /turf/simulated/floor,
 /area/space)
 "aQ" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-red";
 	name = "red line switch"
 	},

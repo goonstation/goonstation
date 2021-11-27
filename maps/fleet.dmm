@@ -3715,7 +3715,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "hX" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout";
 	layer = 4;
 	pixel_y = 28

@@ -11979,7 +11979,7 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/office)
 "awZ" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -12745,7 +12745,7 @@
 	},
 /area/station/quartermaster/office)
 "ayI" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -15594,7 +15594,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "aEN" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	icon_state = "switch-fwd";
 	id = "garbage";
 	position = 1
@@ -25581,7 +25581,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "aYA" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining"
 	},
 /obj/machinery/light{
@@ -30776,7 +30776,7 @@
 /area/station/mining/staff_room)
 "biF" = (
 /obj/grille/catwalk,
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining_disposals"
 	},
 /obj/disposalpipe/segment/ejection,

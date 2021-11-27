@@ -13946,7 +13946,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /obj/machinery/light{
@@ -24199,7 +24199,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bjj" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage";
 	position = 1
 	},
@@ -33470,7 +33470,7 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "bGP" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "enginesupply"
 	},
 /obj/machinery/door_control{
@@ -33495,7 +33495,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "enginesupply"
 	},
 /obj/disposalpipe/segment/mail,
@@ -33526,7 +33526,7 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "bGW" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -34304,7 +34304,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bIK" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -36496,7 +36496,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bNU" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /obj/machinery/light,
@@ -44969,7 +44969,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "ciR" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining";
 	layer = 4
 	},
@@ -44996,7 +44996,7 @@
 	},
 /area/station/science/teleporter)
 "ciU" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining";
 	layer = 4
 	},

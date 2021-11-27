@@ -11763,7 +11763,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/funeral_parlor)
 "awn" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel_belt"
 	},
 /turf/simulated/floor/wood,
@@ -13293,7 +13293,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "azT" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "disposals";
 	position = 1
 	},
@@ -34424,7 +34424,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining2qm"
 	},
 /turf/simulated/floor/orangeblack,
@@ -34470,7 +34470,7 @@
 	pixel_x = 32;
 	pixel_y = -5
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo_in";
 	name = "inbound cargo conveyor switch"
 	},
@@ -36388,7 +36388,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bxl" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo_out";
 	name = "outbound cargo conveyor switch"
 	},

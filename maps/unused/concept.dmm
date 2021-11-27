@@ -3604,7 +3604,7 @@
 	c_tag = "Cargo Bay Storage";
 	dir = 4
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout"
 	},
 /turf/simulated/floor,
@@ -4074,7 +4074,7 @@
 /turf/simulated/floor/plating,
 /area/quartermaster/storage)
 "ahZ" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmin"
 	},
 /turf/simulated/floor,
@@ -4398,7 +4398,7 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /turf/simulated/floor/grime,
@@ -4533,7 +4533,7 @@
 	},
 /area/quartermaster/storage)
 "aiR" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /turf/simulated/floor/orangeblack/side,
@@ -35076,7 +35076,7 @@
 	},
 /area/space)
 "boN" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-blue";
 	name = "blue line switch"
 	},
@@ -35340,7 +35340,7 @@
 /turf/simulated/floor,
 /area/space)
 "bps" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-red";
 	name = "red line switch"
 	},
@@ -59907,7 +59907,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fuck/main)
 "coo" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINWest";
 	name = "West Conveyor Switch"
 	},
@@ -59921,7 +59921,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "coq" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINEast";
 	name = "East Conveyor Switch"
 	},
@@ -60324,7 +60324,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "cpn" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINSouth";
 	name = "South Conveyor Switch"
 	},

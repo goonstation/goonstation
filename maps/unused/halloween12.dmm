@@ -6226,7 +6226,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/storage)
 "alL" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/simulated/floor,
@@ -6942,7 +6942,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "anc" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /turf/simulated/floor,
@@ -30227,7 +30227,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bhO" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /obj/machinery/light/small{
@@ -37273,7 +37273,7 @@
 	},
 /area/space)
 "bxB" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-blue";
 	name = "blue line switch"
 	},
@@ -37425,7 +37425,7 @@
 /turf/simulated/floor,
 /area/space)
 "bxR" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-red";
 	name = "red line switch"
 	},
@@ -49924,7 +49924,7 @@
 /turf/simulated/wall/asteroid,
 /area/space)
 "cbl" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINWest";
 	name = "West Conveyor Switch"
 	},
@@ -49938,7 +49938,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "cbn" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINEast";
 	name = "East Conveyor Switch"
 	},
@@ -50326,7 +50326,7 @@
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "cci" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "MINSouth";
 	name = "South Conveyor Switch"
 	},

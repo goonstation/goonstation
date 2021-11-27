@@ -4020,7 +4020,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aiK" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /turf/simulated/floor/black,
@@ -8951,7 +8951,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "atR" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "carousel";
 	position = 1
 	},
@@ -37638,7 +37638,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bKo" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -38167,7 +38167,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bLI" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch"
 	},
@@ -39893,7 +39893,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bQg" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "outbound";
 	name = "outbound conveyor switch"
 	},
@@ -43142,7 +43142,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bXU" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage";
 	position = 1
 	},
@@ -47232,7 +47232,7 @@
 /turf/space/fluid,
 /area/space)
 "ckp" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "south";
 	position = 1
 	},
@@ -47622,7 +47622,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clz" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "north";
 	position = 1
 	},

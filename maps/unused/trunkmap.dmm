@@ -4069,7 +4069,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "amh" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/simulated/floor,
@@ -11728,7 +11728,7 @@
 	dir = 4;
 	tag = "icon-tube1 (EAST)"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /turf/simulated/floor/wood/six,
@@ -19261,7 +19261,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/office)
 "bkR" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QM"
 	},
 /turf/simulated/floor,
@@ -26345,7 +26345,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "bDB" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /obj/machinery/door_control{
@@ -27820,7 +27820,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "dnc" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /turf/simulated/floor/grime,

@@ -37488,7 +37488,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "btt" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /obj/machinery/light,
@@ -37498,7 +37498,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "btu" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "enginesupply"
 	},
 /obj/machinery/door_control{
@@ -37509,14 +37509,14 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "btv" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage";
 	position = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "btw" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining";
 	layer = 4
 	},
@@ -37526,14 +37526,14 @@
 /turf/simulated/floor/bot,
 /area/station/mining/staff_room)
 "btx" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining";
 	layer = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "bty" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmin";
 	layer = 4
 	},
@@ -37544,7 +37544,7 @@
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "btz" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "qmout"
 	},
 /obj/machinery/door_control{
@@ -49707,7 +49707,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "enginesupply"
 	},
 /obj/disposalpipe/segment/mail,
@@ -64774,7 +64774,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /obj/machinery/light{

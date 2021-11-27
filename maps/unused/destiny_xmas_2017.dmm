@@ -26815,7 +26815,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "aTs" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "disposals";
 	position = 1
 	},
@@ -37959,7 +37959,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "blR" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining2qm"
 	},
 /obj/machinery/door_control{
@@ -38140,7 +38140,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bmd" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo_in";
 	name = "inbound cargo conveyor switch"
 	},
@@ -39501,7 +39501,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bor" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining2qm"
 	},
 /obj/machinery/door_control{
@@ -39652,7 +39652,7 @@
 /area/station/quartermaster/office)
 "boB" = (
 /obj/machinery/light,
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo_out";
 	name = "outbound cargo conveyor switch"
 	},

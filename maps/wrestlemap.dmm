@@ -17784,7 +17784,7 @@
 /turf/simulated/floor,
 /area/research_outpost/protest)
 "hwm" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargobuy"
 	},
 /obj/machinery/door_control{
@@ -32666,7 +32666,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "nTn" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /obj/machinery/camera{
@@ -50377,7 +50377,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering/breakroom)
 "vBx" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "disposals";
 	position = 1
 	},
@@ -51074,7 +51074,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/storage)
 "vSC" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargosell"
 	},
 /obj/machinery/door_control{
@@ -55688,7 +55688,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "xOy" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargodesk"
 	},
 /obj/machinery/light{

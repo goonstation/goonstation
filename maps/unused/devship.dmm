@@ -2195,7 +2195,7 @@
 	},
 /area/station/quartermaster/office)
 "gm" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "delivery";
 	name = "delivery conveyor switch"
 	},
@@ -8972,7 +8972,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "vW" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "outbound";
 	name = "outbound conveyor switch"
 	},
@@ -8994,7 +8994,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "inbound";
 	name = "inbound conveyor switch"
 	},

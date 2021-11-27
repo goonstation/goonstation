@@ -9177,7 +9177,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "asf" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/simulated/floor,
@@ -10113,7 +10113,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "auc" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /turf/simulated/floor/yellow/side,
@@ -42121,7 +42121,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bFW" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /obj/machinery/light/small{

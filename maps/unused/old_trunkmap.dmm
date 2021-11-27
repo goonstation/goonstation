@@ -9073,7 +9073,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /turf/simulated/floor/black,
@@ -14685,7 +14685,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/office)
 "aIx" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QM"
 	},
 /turf/simulated/floor,
@@ -20710,7 +20710,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "aWC" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/simulated/floor,
@@ -21646,7 +21646,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "aYB" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /obj/machinery/door_control{
@@ -24819,7 +24819,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bfM" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /turf/simulated/floor/grime,

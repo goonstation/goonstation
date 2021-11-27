@@ -63,7 +63,7 @@
 			C.next_conveyor = null
 	next_conveyor = null
 
-	for (var/obj/submachine/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
+	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
 	..()
 
@@ -387,7 +387,7 @@
 #define CONVEYOR_FORWARD 1
 #define CONVEYOR_REVERSE -1
 #define CONVEYOR_STOPPED 0
-/obj/submachine/conveyor_switch
+/obj/machinery/conveyor_switch
 
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
@@ -404,15 +404,14 @@
 
 	New()
 		. = ..()
+		UnsubscribeProcess()
 		START_TRACKING
 		update_icon()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 		conveyors = list()
 		SPAWN_DBG(0.5 SECONDS)
-			for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
-				if (C.id == src.id)
-					conveyors += C
+			link_conveyors()
 
 	disposing()
 		STOP_TRACKING
@@ -420,6 +419,14 @@
 			C.linked_switches -= src
 		conveyors = null
 		. = ..()
+
+	proc/link_conveyors()
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+			if (C.id == src.id)
+				conveyors |= C
+				if (!C.linked_switches)
+					C.linked_switches = list()
+				C.linked_switches |= src
 
 	proc/trigger(var/inp)
 		attack_hand(usr) //bit of a hack but hey.
@@ -453,7 +460,7 @@
 		update_icon()
 
 		// find any switches with same id as this one, and set their positions to match us
-		for_by_tcl(S, /obj/submachine/conveyor_switch)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if (S == src) continue
 			if(S.id == src.id)
 				S.position = position
@@ -594,7 +601,7 @@
 			update_icon()
 
 	proc/update_belts()
-		for_by_tcl(S, /obj/submachine/conveyor_switch)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)

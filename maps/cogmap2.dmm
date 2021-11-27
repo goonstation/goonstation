@@ -6846,7 +6846,7 @@
 	},
 /area/station/chapel/sanctuary)
 "apm" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "chapel"
 	},
 /obj/machinery/light{

@@ -6597,7 +6597,7 @@
 	},
 /area/quartermaster/storage)
 "amq" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "QMLoad"
 	},
 /turf/simulated/floor{
@@ -7326,7 +7326,7 @@
 	},
 /area/quartermaster/storage)
 "anC" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "cargo"
 	},
 /turf/simulated/floor{
@@ -32057,7 +32057,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
 "bhN" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
 /obj/machinery/light/small{
@@ -39425,7 +39425,7 @@
 	},
 /area/space)
 "byv" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-blue";
 	name = "blue line switch"
 	},
@@ -39611,7 +39611,7 @@
 /turf/simulated/floor,
 /area/space)
 "byP" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "maze-red";
 	name = "red line switch"
 	},
@@ -50011,7 +50011,7 @@
 /turf/simulated/floor/bot,
 /area/factory)
 "bWV" = (
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "tds-assembly"
 	},
 /turf/simulated/floor/grime,
@@ -52196,7 +52196,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/submachine/conveyor_switch{
+/obj/machinery/conveyor_switch{
 	id = "mining"
 	},
 /turf/simulated/floor{
