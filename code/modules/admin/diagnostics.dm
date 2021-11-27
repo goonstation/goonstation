@@ -597,9 +597,12 @@ proc/debug_map_apc_count(delim,zlim)
 		var/var_name = null
 
 		OnEnabled(client/C)
-			src.var_name = input(C, "var name to dispaly: ", "var name") as text|null
+			src.var_name = input(C, "var name to display: ", "var name") as text|null
+			boutput(C, "Displaying var [src.var_name]")
 
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_name))
+				return
 			var/list/results = list()
 			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
 				if(hasvar(A, src.var_name))
@@ -610,6 +613,58 @@ proc/debug_map_apc_count(delim,zlim)
 			if(length(results))
 				var/text = jointext(results, " ")
 				img.app.overlays = list(src.makeText(text))
+				img.app.color = debug_color_of(text)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
+
+	nested_var_display
+		name = "nested var display"
+		help = "Like var display except you can do stuff like: bioHolder.age<br>You can even index lists using the same syntax, for example: bioHolder.effectPool.1 or blood_pressure.diastolic"
+		var/list/var_names = null
+
+		OnEnabled(client/C)
+			var/inp = input(C, "var name path to display (like in DM, separate by .): ", "var name") as text|null
+			if(!isnull(inp))
+				src.var_names = splittext(inp, ".")
+				boutput(C, "Var path: [jointext(var_names, " ")]")
+			else
+				src.var_names = null
+				boutput(C, "No var path selected.")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_names))
+				return
+			var/list/results = list()
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				var/datum/D = A
+				for(var/var_name in src.var_names)
+					if(!istype(D) && !isclient(D) && !islist(D))
+						D = null
+						break
+					if(islist(D))
+						var/list/L = D
+						var/maybe_index = text2num(var_name)
+						if(maybe_index > 0 && maybe_index <= length(L))
+							D = L[maybe_index]
+						else if(var_name in L)
+							D = L[var_name]
+						else
+							D = null
+							break
+					else if(hasvar(D, var_name))
+						D = D.vars[var_name]
+					else
+						D = null
+						break
+				if(!isnull(D))
+					var/val = D
+					if(islist(val))
+						val = json_encode(val)
+					results += "[val]"
+			if(length(results))
+				var/text = jointext(results, " ")
+				img.app.overlays = list(src.makeText(text, align_left=TRUE))
 				img.app.color = debug_color_of(text)
 				img.app.alpha = 100
 			else
