@@ -388,10 +388,13 @@
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	var/position = CONVEYOR_STOPPED			// 0 off, -1 reverse, 1 forward
-	var/last_pos = CONVEYOR_REVERSE		// last direction setting
-
-	var/id = "" 				// must match conveyor IDs to control them
+	/// current direction setting
+	var/position = CONVEYOR_STOPPED
+	/// last direction setting
+	var/last_pos = CONVEYOR_REVERSE
+	// Checked against conveyor ID on link attempt
+	var/id = ""
+	/// the list of converyors that are controlled by this switch
 	var/list/conveyors
 	anchored = 1
 	/// time last used
