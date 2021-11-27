@@ -110,7 +110,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode in list("secret","action","intrigue","wizard","alien"))
+	if(master_mode != "extended")
 		src.hide_mode = 1
 
 	switch(master_mode)
