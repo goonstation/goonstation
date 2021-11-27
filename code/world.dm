@@ -1190,6 +1190,8 @@ var/f_color_selector_handler/F_Color_Selector
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
+		var/list/plist = params2list(T)
+
 		if (T == "admins")
 			var/list/s = list()
 			var/n = 0
@@ -1209,7 +1211,6 @@ var/f_color_selector_handler/F_Color_Selector
 			s["mentors"] = n
 			return list2params(s)
 
-		var/list/plist = params2list(T)
 		switch(plist["type"])
 			if("irc")
 				if (!plist["nick"] || !plist["msg"]) return 0
@@ -1721,6 +1722,39 @@ var/f_color_selector_handler/F_Color_Selector
 					response["playtime"] = playtime_response.body
 
 				return json_encode(response)
+
+			if("profile")
+				var/type = plist["profiler_type"]
+				if(type != "sendmaps")
+					type = null
+				if(plist["action"] == "save")
+					var/static/profilerLogID = 0
+					var/output = world.Profile(PROFILE_REFRESH, type, "json")
+					var/fname = "data/logs/profiling/[global.roundLog_date]_manual_[profilerLogID++].json"
+					rustg_file_write(output, fname)
+					return fname
+				var/action = list(
+					"stop" = PROFILE_STOP,
+					"clear" = PROFILE_CLEAR,
+					"start" = PROFILE_START,
+					"refresh" = PROFILE_REFRESH,
+					"restart" = PROFILE_RESTART
+				)[plist["action"]]
+				var/final_action = action
+				if(plist["average"])
+					final_action |= PROFILE_AVERAGE
+				var/output = world.Profile(final_action, type, "json")
+				if(plist["action"] == "refresh" || plist["action"] == "stop")
+					SPAWN_DBG(1)
+						var/n_tries = 3
+						var/datum/http_response/response = null
+						while(--n_tries > 0 && (isnull(response) || response.errored))
+							var/datum/http_request/request = new()
+							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
+							request.begin_async()
+							UNTIL(request.is_complete())
+							response = request.into_response()
+				return 1
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
