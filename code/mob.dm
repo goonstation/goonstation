@@ -889,15 +889,14 @@
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
 	SPAWN_DBG(0)
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == title)
-				unlocks.Add(D)
-
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
+			var/list/unlocks = list()
+			for(var/A in rewardDB)
+				var/datum/achievementReward/D = rewardDB[A]
+				if (D.required_medal == title)
+					unlocks.Add(D)
 			if (announce)
 				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)

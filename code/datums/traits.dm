@@ -162,8 +162,8 @@
 
 	proc/removeTrait(id)
 		if((id in traits))
-			traits.Remove(id)
 			var/obj/trait/T = traits[id]
+			traits.Remove(id)
 			if(!isnull(owner))
 				if(T.isMoveTrait)
 					moveTraits.Remove(id)

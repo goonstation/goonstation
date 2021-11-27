@@ -52,14 +52,20 @@
 
 		src.beaker =  B
 		if (!isrobot(user))
-			user.drop_item()
-			B.set_loc(src)
+			if(B.cant_drop)
+				boutput(user, "You can't add the beaker to the machine!")
+				src.beaker = null
+				return
+			else
+				user.drop_item()
+				B.set_loc(src)
 		else
 			roboworking = user
 			SPAWN_DBG(1 SECOND)
 				robot_disposal_check()
 
-		boutput(user, "You add the beaker to the machine!")
+		if(src.beaker || roboworking)
+			boutput(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
 		src.update_icon()
 

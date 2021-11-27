@@ -89,6 +89,7 @@
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
+	src.add_fingerprint(user)
 	logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
 	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)

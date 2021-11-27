@@ -57,6 +57,15 @@
 /// how often to check for time dilation, against world.time, so counted in game ticks.
 #define TICKLAG_DILATE_INTERVAL 20
 
+/// what value must world.cpu cross upwards to trigger automatic profiling
+#define CPU_START_PROFILING_THRESHOLD 200
+/// what value must world.cpu cross downwards to stop automatic profiling
+#define CPU_STOP_PROFILING_THRESHOLD 100
+/// how many ticks in a row does world.cpu needs to be above the threshold to start profiling
+#define CPU_START_PROFILING_COUNT 3
+/// how many ticks in a row does world.cpu needs to be below the threshold to stop profiling
+#define CPU_STOP_PROFILING_COUNT 3
+
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120
 /// when pcount is above this number on round start, increase ticklag to SEMIOVERLOADED_WORLD_TICKLAG to try to maintain smoothness

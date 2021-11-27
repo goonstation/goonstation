@@ -1760,7 +1760,7 @@
 
 	onRemove()
 		. = ..()
-		if (!ismob(owner)) return
+		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
 
