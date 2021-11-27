@@ -381,12 +381,7 @@
 
 
 
-// the conveyor control switch
-//
-//
-#define CONVEYOR_FORWARD 1
-#define CONVEYOR_REVERSE -1
-#define CONVEYOR_STOPPED 0
+/// the conveyor control switch
 /obj/machinery/conveyor_switch
 
 	name = "conveyor switch"
@@ -397,8 +392,8 @@
 	var/last_pos = CONVEYOR_REVERSE		// last direction setting
 
 	var/id = "" 				// must match conveyor IDs to control them
-	anchored = 1
 	var/list/conveyors
+	anchored = 1
 	/// time last used
 	var/last_used = 0
 
@@ -472,11 +467,6 @@
 				C.operating = position
 				C.setdir()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
-
-#undef CONVEYOR_FORWARD
-#undef CONVEYOR_REVERSE
-#undef CONVEYOR_STOPPED
-
 
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
