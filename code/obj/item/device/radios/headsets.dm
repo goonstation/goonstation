@@ -341,6 +341,12 @@
 			..()
 			setProperty("disorient_resist_ear", 100)
 
+		pickup(mob/user)
+			if(isVRghost(user))
+				secure_frequencies = null
+				secure_classes = null
+				locked_frequency = TRUE
+
 	comtac
 		name = "Military Headset"
 		icon_state = "comtac"
