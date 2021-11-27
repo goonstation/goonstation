@@ -8,7 +8,7 @@
 	var/list/datum/ticket/tickets = list()
 	var/obj/machinery/networked/mainframe/mainframe = null
 
-/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "")
+/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "", var/exploit_note = "")
 	if (!H || !H.mind)
 		return
 
@@ -60,6 +60,11 @@
 				IMG.img_name = "photo of [H.real_name]"
 				IMG.img_desc = "You can see [H.real_name] in the photo."
 				G["file_photo"] = IMG
+
+	if(!length(exploit_note))
+		G["notes"] = null
+	else
+		G["notes"] = exploit_note
 
 	M["bioHolder.bloodType"] = "[H.bioHolder.bloodType]"
 	M["mi_dis"] = "None"
@@ -234,8 +239,8 @@
 			return
 		return
 
-///Returns the crew manifest, but sorted according to the individual's rank.
-/proc/get_manifest()
+///Returns the crew manifest, but sorted according to the individual's rank. Only set `exploit_info` to TRUE when doing it in things that allow for buttons (e.g. PDAs), set `manifest_request` to the `obj` that's calling it.
+/proc/get_manifest(var/exploit_info = FALSE, var/obj/manifest_request = null)
 	var/list/sorted_manifest
 	var/list/Command = list()
 	var/list/Security = list()
@@ -246,55 +251,57 @@
 	var/medsci_integer = 0 // Used to check if one of medsci's two heads has already been added to the manifest
 	for(var/datum/db_record/staff_record as anything in data_core.general.records)
 		var/rank = staff_record["rank"]
+		if(exploit_info && !length(staff_record["notes"]))
+			continue
 		if(rank in command_jobs)
 			if(rank == "Captain")
-				Command.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Command.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
 			else
-				Command.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+				Command.Add("[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>")
 				if(rank == "Communications Officer")
 					continue
 
 		if((rank in security_jobs) || (rank in security_gimmicks))
 			if(rank in command_jobs)
-				Security.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Security.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 			else if(rank in command_gimmicks)
-				Security.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Security.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 			else
-				Security.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+				Security.Add("[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>")
 			continue
 
 		if((rank in engineering_jobs) || (rank in engineering_gimmicks))
 			if(rank in command_jobs)
-				Engineering.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Engineering.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 			else if(rank in command_gimmicks)
-				Engineering.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Engineering.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 			else
-				Engineering.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+				Engineering.Add("[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>")
 			continue
 		if((rank in medsci_jobs) || (rank in medsci_gimmicks))
 			if(rank in command_jobs)
-				Medsci.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Medsci.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 				medsci_integer++
 			else if(rank in command_gimmicks)
-				Medsci.Insert(medsci_integer + 1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>") // If there are two heads, both an MD and RD, medsci_integer will be at two, thus the Head Surgeon gets placed at 3 in the manifest
+				Medsci.Insert(medsci_integer + 1, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>") // If there are two heads, both an MD and RD, medsci_integer will be at two, thus the Head Surgeon gets placed at 3 in the manifest
 			else
-				Medsci.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+				Medsci.Add("[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>")
 			continue
 
 		if((rank in service_jobs) || (rank in service_gimmicks))
 			if(rank in command_jobs)
-				Service.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				Service.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>")
 			else if(rank in command_gimmicks)
-				Service.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>") //Future proofing, just in case
+				Service.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]</b><br>") //Future proofing, just in case
 			else
-				Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+				Service.Add("<b>[staff_record["name"]]</b> - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>")
 #ifdef MAP_OVERRIDE_OSHAN // Radio host is on Oshan
 		if(rank == "Radio Show Host" || rank == "Talk Show Host")
-			Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			Service.Add("<b>[staff_record["name"]]</b> - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>")
 #endif
 			continue
-		Unassigned += "[staff_record["name"]] - [staff_record["rank"]]<br>"
+		Unassigned += "<b>[staff_record["name"]]</b> - [staff_record["rank"]][exploit_info ? " - <a href='byond://?src=\ref[manifest_request];select_exp=\ref[staff_record]'>Info" : ""]<br>"
 
 	sorted_manifest += "<b><u>Station Command:</b></u><br>"
 	for(var/crew in Command)

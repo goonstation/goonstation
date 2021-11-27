@@ -450,10 +450,12 @@
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
+		var/exploit_note = ""
 		if(src.client && src.client.preferences)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
-		data_core.addManifest(src, sec_note, med_note)
+			exploit_note = src.client.preferences.exploit_note
+		data_core.addManifest(src, sec_note, med_note, exploit_note)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
