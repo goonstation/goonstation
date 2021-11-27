@@ -326,13 +326,15 @@
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			if(prob(10))
+			if(prob(3) && ispug(user))
+				src.target = user
+				src.oldtarget_name = user.name
+				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [user]!</span>")
+				src.task = "chasing"
+			else if(prob(10))
 				src.audible_message("[src] purrs!",2)
-			return
 		else
 			..()
-
-		return
 
 	CritterDeath()
 		..()
@@ -542,11 +544,9 @@
 	is_pet = 2
 
 	attack_hand(mob/user as mob)
-		if (prob(5) && ishuman(user) && src.alive)
-			var/mob/living/carbon/human/H = user
-			if (istype(H.mutantrace, /datum/mutantrace/pug))
-				src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
-				return
+		if (prob(5) && src.alive && ispug(user))
+			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
+			return
 		..()
 
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")

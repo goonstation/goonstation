@@ -2155,8 +2155,8 @@
 					. = src.sleuth()
 			if ("scream")
 				if (mob.emote_check(voluntary, 5 SECONDS))
-					playsound(mob, "sound/voice/screams/bark.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = "<B>[mob]</B> screams!"
+					playsound(mob, "sound/voice/screams/[voice_override].ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					. = list("<B>[mob]</B> growls!", "<I>growls</I>")
 			if ("sneeze")
 				if (mob.emote_check(voluntary, 2 SECONDS))
 					. = src.sneeze(prob(1))

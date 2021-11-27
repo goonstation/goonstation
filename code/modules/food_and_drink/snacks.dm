@@ -405,26 +405,21 @@
 		food_effects = list("food_hp_up_big", "food_energized_big")
 
 		heal(var/mob/M)
-			//Nonhumans can eat dog biscuits too, but not to much benefit.
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (istype(H.mutantrace, /datum/mutantrace/pug))
-					..()
-					boutput(H, "<span class='notice'>That tasted delicious!</span>")
-				else
-					src.heal_amt = 0
-					..()
-					src.heal_amt = initial(src.heal_amt)
-					boutput(H, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
+			if (ispug(M))
+				..()
+				boutput(M, "<span class='notice'>That tasted delicious!</span>")
+			else
+				src.heal_amt = 0
+				..()
+				src.heal_amt = initial(src.heal_amt)
+				boutput(M, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
 
 		on_bite(var/mob/M)
-			if (ishuman(M))
-				var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
-				var/mob/living/carbon/human/H = M
-				if (!istype(H.mutantrace, /datum/mutantrace/pug))
-					src.food_effects = list()
-				..()
-				src.food_effects = food_effects_pre
+			var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
+			if (!ispug(M))
+				src.food_effects = list()
+			..()
+			src.food_effects = food_effects_pre
 
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
