@@ -712,6 +712,17 @@
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
+				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
+					src.now_pushing = 0
+					return
+				for(var/atom/movable/obstacle in oldloc)
+					if(!ismob(obstacle) && !obstacle.Cross(tmob))
+						src.now_pushing = 0
+						return
+				for(var/atom/movable/obstacle in newloc)
+					if(!ismob(obstacle) && !obstacle.Cross(src))
+						src.now_pushing = 0
+						return
 
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
