@@ -61356,6 +61356,9 @@
 /turf/space/shuttle_transit,
 /area/area_that_kills_you_if_you_enter_it)
 "dkL" = (
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -61829,6 +61832,9 @@
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
 "dmr" = (
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 5
 	},
@@ -72719,6 +72725,9 @@
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/samostrel)
 "fKl" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 5
 	},
@@ -73164,10 +73173,24 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"hpv" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 10
+	},
+/area/centcom)
 "hqg" = (
 /obj/decal/fakeobjects/dreambeach/mercury,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"hrN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/centcom)
 "huE" = (
 /obj/cable{
 	d1 = 1;
@@ -73273,6 +73296,14 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"hIz" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/centcom)
 "hKB" = (
 /obj/table/auto,
 /obj/machinery/light/small/iomoon{
@@ -73503,6 +73534,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"ixU" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/orangeblack/side,
+/area/centcom)
 "iyY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 8
@@ -73556,6 +73591,11 @@
 "iJj" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/retentioncenter)
+"iJx" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light,
+/turf/unsimulated/floor/arrival,
+/area/centcom)
 "iKG" = (
 /obj/machinery/light/small/iomoon{
 	dir = 1
@@ -73931,6 +73971,7 @@
 /area/centcom/offices/rodney)
 "jQD" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
+/obj/machinery/light,
 /turf/unsimulated/floor/arrival{
 	dir = 6
 	},
@@ -76008,6 +76049,14 @@
 /obj/window/south,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"oYO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/centcom)
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
@@ -76228,6 +76277,9 @@
 /area/adventure/channel/flingy)
 "pFm" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 5
 	},
@@ -77772,6 +77824,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/lab)
+"uiV" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
 "ujf" = (
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/arrival{
@@ -78270,6 +78331,9 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "vTG" = (
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 9
 	},
@@ -78462,6 +78526,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"wHm" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
 "wHY" = (
 /obj/item/clothing/shoes/red{
 	desc = "Aren't these the HoS's? You feel like he can probably live without these.";
@@ -78673,6 +78746,15 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"xBV" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
 "xCw" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -126765,7 +126847,7 @@ aES
 dmy
 dkX
 dny
-dmu
+ixU
 gcn
 gcn
 dtu
@@ -127367,7 +127449,7 @@ gcn
 tZZ
 gcn
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -127667,7 +127749,7 @@ gcn
 gcn
 yaC
 lqm
-lqm
+wHm
 fFv
 dkX
 dny
@@ -128577,7 +128659,7 @@ dny
 dny
 dkX
 dny
-dmu
+ixU
 gcn
 aES
 dtC
@@ -129483,7 +129565,7 @@ dny
 dny
 dkX
 dny
-dmu
+ixU
 gcn
 gcn
 dtB
@@ -129781,7 +129863,7 @@ gcn
 gcn
 gOW
 rtQ
-rtQ
+uiV
 mZx
 dkX
 dny
@@ -130085,7 +130167,7 @@ gcn
 tZZ
 gcn
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -130691,7 +130773,7 @@ aES
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 aES
 aES
@@ -130991,7 +131073,7 @@ aES
 aES
 aES
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -131899,7 +131981,7 @@ aES
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 aES
 aES
@@ -132501,7 +132583,7 @@ aES
 aES
 aES
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -133086,7 +133168,7 @@ dFl
 aES
 aES
 aES
-aES
+gcn
 gcn
 gcn
 klN
@@ -133393,34 +133475,34 @@ dkL
 dms
 dms
 dms
+hIz
 dms
 dms
 dms
 dms
+hIz
 dms
 dms
 dms
+hIz
 dms
 dms
 dms
-dms
-dms
-dms
-dms
+hIz
 dnx
 dny
 dRc
+hIz
 dms
 dms
 dms
 dms
+hIz
 dms
 dms
+hIz
 dms
-dms
-dms
-dms
-dpz
+hpv
 gcn
 aES
 aES
@@ -133999,6 +134081,16 @@ voQ
 dmw
 dmw
 dmw
+hrN
+dmw
+dmw
+dmw
+dmw
+hrN
+dmw
+dmw
+dmw
+hrN
 dmw
 dmw
 dmw
@@ -134007,20 +134099,10 @@ dmw
 dmw
 dmw
 dmw
+hrN
 dmw
 dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
+hrN
 dmw
 dnv
 dny
@@ -134297,7 +134379,7 @@ aES
 dmy
 dkX
 dny
-dmu
+ixU
 gcn
 gcn
 gcn
@@ -134324,7 +134406,7 @@ dmJ
 gcn
 gcn
 gcn
-dkX
+oYO
 dny
 dmu
 klN
@@ -134899,7 +134981,7 @@ aES
 aES
 dFl
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -134930,7 +135012,7 @@ sbF
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 gcn
 dug
@@ -135532,7 +135614,7 @@ sbF
 sbF
 sbF
 gcn
-dkX
+oYO
 dny
 dmu
 dmy
@@ -135807,7 +135889,7 @@ aES
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 sbF
 sbF
@@ -136440,7 +136522,7 @@ sbF
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 gcn
 duv
@@ -136711,7 +136793,7 @@ aES
 aES
 aES
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -137619,7 +137701,7 @@ dFl
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 sbF
 sbF
@@ -137646,7 +137728,7 @@ sbF
 sbF
 sbF
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -138252,7 +138334,7 @@ sbF
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 aES
 aES
@@ -138523,7 +138605,7 @@ aES
 aES
 aES
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -139431,7 +139513,7 @@ aES
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 sbF
 sbF
@@ -139458,7 +139540,7 @@ sbF
 sbF
 sbF
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -140064,7 +140146,7 @@ sbF
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 aES
 aES
@@ -140335,7 +140417,7 @@ aES
 aES
 aES
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -140968,7 +141050,7 @@ sbF
 sbF
 sbF
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -141243,7 +141325,7 @@ aES
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 sbF
 sbF
@@ -141574,7 +141656,7 @@ sbF
 gcn
 dkX
 dny
-dmu
+ixU
 gcn
 aES
 aES
@@ -141845,7 +141927,7 @@ aES
 aES
 aES
 gcn
-dkX
+oYO
 dny
 dmu
 gcn
@@ -142153,38 +142235,38 @@ dRc
 dms
 dms
 dms
+hIz
 dms
 dms
 dms
 dms
+hIz
+dms
+dms
+hIz
+dms
+dms
+dms
+hIz
 dms
 dms
 dms
 dms
+hIz
 dms
 dms
 dms
-dms
-dms
-dms
-dms
-dms
-dms
-dms
-dms
-dms
-dms
-dms
+hIz
 dms
 dnx
 dny
 dRc
+hIz
 dms
 dms
 dms
 dms
-dms
-dms
+hIz
 dms
 dms
 dpz
@@ -142755,6 +142837,11 @@ dmr
 dmw
 dmw
 dmw
+hrN
+dmw
+dmw
+dmw
+hrN
 dmw
 dmw
 dmw
@@ -142763,34 +142850,29 @@ dmw
 dmw
 dmw
 dmw
+hrN
 dmw
 dmw
 dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
+hrN
 dnv
 dny
 voQ
+hrN
+dmw
+dmw
+dmw
+hrN
 dmw
 dmw
 dmw
 dmw
 dmw
+hrN
 dmw
 dmw
 dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
-dmw
+hrN
 dnI
 gcn
 aES
@@ -143364,14 +143446,14 @@ aES
 aES
 aES
 gcn
-lDQ
+xBV
 dny
 lBN
 dny
 dny
 lBN
 dny
-krb
+iJx
 gcn
 aES
 aES
@@ -143981,7 +144063,7 @@ aES
 aES
 aES
 dKL
-dMu
+dMv
 dMT
 dMu
 dKL

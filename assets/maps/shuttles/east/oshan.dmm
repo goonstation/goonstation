@@ -50,6 +50,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/sealab)
+"bq" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
 "bD" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
@@ -188,6 +198,9 @@
 /area/centcom/outside)
 "hV" = (
 /obj/shrub,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 10
 	},
@@ -265,6 +278,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "kW" = (
@@ -281,6 +295,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/sealab)
+"lc" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
 "lS" = (
 /obj/item/storage/wall/fire{
 	dir = 4;
@@ -322,6 +342,14 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"nw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "of" = (
 /turf/unsimulated/floor/stairs/dark/wide,
 /area/centcom/outside)
@@ -329,12 +357,18 @@
 /obj/shrub{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 9
 	},
 /area/centcom)
 "oF" = (
 /obj/shrub,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 5
 	},
@@ -439,6 +473,17 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/sealab)
+"sI" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
 "sT" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -489,6 +534,17 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/sealab)
+"wB" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
 "wS" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -582,6 +638,7 @@
 	},
 /obj/machinery/atmospherics/portables_connector/west,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -670,9 +727,21 @@
 	dir = 8
 	},
 /area/shuttle/escape/centcom/sealab)
+"Dz" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It's a pipe manifold.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Ex" = (
 /obj/machinery/atmospherics/portables_connector/east,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -803,6 +872,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Kh" = (
@@ -848,6 +918,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "NB" = (
@@ -855,6 +926,7 @@
 	dir = 6;
 	name = "pipe"
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "NP" = (
@@ -881,6 +953,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 4
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Pg" = (
@@ -898,6 +971,10 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom/sealab)
+"PS" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Qe" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -907,6 +984,10 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/sealab)
+"QC" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "Rl" = (
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -930,6 +1011,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 8
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Si" = (
@@ -946,6 +1028,13 @@
 	icon_state = "11"
 	},
 /area/shuttle/escape/centcom/sealab)
+"Ui" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Up" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
@@ -1019,6 +1108,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ws" = (
@@ -1029,6 +1119,7 @@
 "WO" = (
 /obj/machinery/atmospherics/portables_connector/west,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -1076,10 +1167,21 @@
 /obj/shrub{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 6
 	},
 /area/centcom)
+"Zn" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "ZM" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 10;
@@ -1127,27 +1229,27 @@ NB
 bK
 bK
 Up
-Up
-Up
-bK
-bK
-bK
-Up
-Up
+Dz
 Up
 bK
 bK
+bK
 Up
+Dz
+Up
+bK
+bK
+Dz
 bK
 bI
-Ws
+lc
 Ex
 fK
 "}
 (3,1,1) = {"
 fK
 Ws
-Ws
+lc
 nv
 RT
 RT
@@ -1259,9 +1361,9 @@ fK
 (7,1,1) = {"
 Mx
 wS
-wS
+bq
 Hq
-RT
+PS
 kK
 lZ
 jn
@@ -1278,9 +1380,9 @@ AO
 AO
 jn
 jn
-qW
+Ui
 Ha
-wS
+bq
 AD
 Mx
 "}
@@ -1398,7 +1500,7 @@ fK
 "}
 (12,1,1) = {"
 jM
-jM
+sI
 jM
 Xa
 hV
@@ -1421,7 +1523,7 @@ jn
 fK
 ot
 Xa
-jM
+sI
 jM
 "}
 (13,1,1) = {"
@@ -1510,7 +1612,7 @@ aM
 "}
 (16,1,1) = {"
 VI
-VI
+wB
 VI
 oQ
 XO
@@ -1533,7 +1635,7 @@ jn
 fK
 oF
 oQ
-VI
+wB
 VI
 "}
 (17,1,1) = {"
@@ -1652,27 +1754,27 @@ fK
 fK
 Ao
 Ao
-Ao
+QC
 zG
 RT
 MP
 xs
 xs
 xs
+nw
 xs
 xs
 xs
 xs
 xs
-xs
-xs
+nw
 xs
 xs
 xs
 Gv
 RT
 yf
-Ao
+QC
 Ao
 fK
 "}
@@ -1739,7 +1841,7 @@ Ao
 Ao
 Ao
 Ao
-Ao
+QC
 zG
 RT
 RT
@@ -1755,7 +1857,7 @@ RT
 yf
 Ao
 Ao
-Ao
+QC
 Ao
 Ao
 fK
@@ -1770,18 +1872,18 @@ Ao
 Ao
 ZM
 Cl
+Zn
 Cl
 Cl
+Zn
+Cl
+Zn
 Cl
 Cl
-Cl
-Cl
-Cl
-Cl
-Cl
+Zn
 Cl
 CJ
-Ao
+QC
 Ao
 Ao
 Ao

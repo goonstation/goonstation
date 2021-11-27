@@ -3,6 +3,9 @@
 /obj/shrub{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 6
 	},
@@ -57,6 +60,7 @@
 "cA" = (
 /obj/machinery/atmospherics/portables_connector/west,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -246,6 +250,7 @@
 	},
 /obj/machinery/atmospherics/portables_connector/east,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -308,6 +313,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 4
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "nh" = (
@@ -318,6 +324,13 @@
 	icon_state = "floor2"
 	},
 /area/space)
+"nQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "nW" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -424,6 +437,14 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/west)
+"qs" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "qw" = (
 /obj/machinery/computer/shuttle{
 	dir = 4
@@ -452,6 +473,9 @@
 /area/centcom/outside)
 "sl" = (
 /obj/shrub,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 10
 	},
@@ -459,6 +483,7 @@
 "sP" = (
 /obj/machinery/atmospherics/portables_connector/east,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -466,6 +491,22 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
+/area/centcom/outside)
+"sU" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"sX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "ta" = (
 /obj/stool/chair/comfy/shuttle/pilot{
@@ -527,6 +568,9 @@
 "uz" = (
 /obj/shrub{
 	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/unsimulated/floor/arrival{
 	dir = 9
@@ -629,6 +673,13 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"zf" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "zo" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 4;
@@ -666,6 +717,11 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"Bx" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Cm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -683,6 +739,10 @@
 	name = "power conduit"
 	},
 /turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"CD" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
 /area/centcom/outside)
 "CQ" = (
 /obj/machinery/computer/announcement{
@@ -707,6 +767,21 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"EJ" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"ER" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
 "Fe" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -720,12 +795,39 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/west)
+"Fm" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
 "Fq" = (
 /obj/machinery/sleeper/compact,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/west)
+"FE" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"FT" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "Gg" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 6
@@ -770,6 +872,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 8
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "IG" = (
@@ -796,6 +899,14 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"JN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "JX" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
@@ -814,6 +925,14 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/floor/black,
+/area/centcom/outside)
+"KF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "KL" = (
 /obj/decal/fakeobjects{
@@ -908,6 +1027,21 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
+/area/centcom/outside)
+"NB" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"NH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "NZ" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
@@ -1061,6 +1195,9 @@
 /area/centcom/outside)
 "TD" = (
 /obj/shrub,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 5
 	},
@@ -1205,16 +1342,16 @@ fa
 fa
 Lm
 zo
+FT
 zo
 zo
+FT
 zo
 zo
+FT
 zo
 zo
-zo
-zo
-zo
-zo
+FT
 zo
 OP
 fa
@@ -1229,7 +1366,7 @@ cq
 fa
 fa
 fa
-fa
+CD
 fa
 KC
 vd
@@ -1246,7 +1383,7 @@ vd
 vd
 ei
 fa
-fa
+CD
 fa
 fa
 fa
@@ -1261,7 +1398,7 @@ fa
 Lm
 YY
 vd
-mn
+sX
 Oz
 Cm
 xq
@@ -1270,7 +1407,7 @@ xq
 xq
 dh
 eK
-ba
+JN
 vd
 Ab
 OP
@@ -1284,7 +1421,7 @@ Qs
 Qs
 fa
 fa
-fa
+CD
 fa
 YY
 vd
@@ -1303,7 +1440,7 @@ vd
 vd
 Ab
 fa
-fa
+CD
 fa
 fa
 cq
@@ -1343,7 +1480,7 @@ fa
 fa
 Gg
 vd
-mn
+sX
 xz
 Oz
 xq
@@ -1356,7 +1493,7 @@ Sk
 xq
 eK
 xz
-ba
+JN
 vd
 iu
 fa
@@ -1422,7 +1559,7 @@ cq
 "}
 (10,1,1) = {"
 KU
-KU
+FE
 KU
 oc
 sl
@@ -1445,7 +1582,7 @@ cq
 uz
 oc
 KU
-oc
+sU
 KU
 "}
 (11,1,1) = {"
@@ -1562,7 +1699,7 @@ WG
 "}
 (15,1,1) = {"
 MI
-MI
+EJ
 MI
 ex
 aX
@@ -1585,7 +1722,7 @@ cq
 TD
 ex
 MI
-ex
+NB
 MI
 "}
 (16,1,1) = {"
@@ -1703,10 +1840,10 @@ cq
 (20,1,1) = {"
 Qs
 lt
-hw
+Fm
 Ip
 vd
-um
+Bx
 xX
 QW
 Fq
@@ -1721,10 +1858,10 @@ mK
 jT
 Dr
 IG
-pl
+NH
 vd
 Nm
-hw
+Fm
 hw
 Qs
 "}
@@ -1790,22 +1927,22 @@ sP
 AO
 II
 vd
-mY
+qs
 RN
 HM
 fs
 fs
 fs
-xR
+zf
 Bg
 vd
-HM
+nQ
 fs
 fs
 fs
 xR
 RN
-Bg
+KF
 vd
 YI
 KL
@@ -1820,7 +1957,7 @@ jm
 vd
 vd
 DJ
-mY
+qs
 RN
 RN
 RN
@@ -1831,19 +1968,19 @@ mY
 RN
 RN
 RN
-Bg
+KF
 DJ
 vd
 vd
 nW
-AO
+ER
 AO
 cq
 "}
 (25,1,1) = {"
 cq
 cA
-AO
+ER
 tr
 Jg
 Jg

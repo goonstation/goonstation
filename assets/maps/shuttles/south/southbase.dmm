@@ -43,6 +43,14 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"bU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "ce" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 9;
@@ -50,6 +58,15 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom/south)
+"cX" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
 "dw" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
@@ -109,6 +126,13 @@
 	dir = 4
 	},
 /area/centcom)
+"hv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "hB" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 8
@@ -153,6 +177,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/south)
+"jY" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "km" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -169,6 +203,7 @@
 "kE" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/corner/extra_big,
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "kF" = (
@@ -210,6 +245,7 @@
 "lL" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -255,6 +291,12 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/south)
+"nG" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "og" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
@@ -289,6 +331,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 1
 	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "pB" = (
@@ -300,6 +343,14 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
+/area/centcom/outside)
+"pH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qq" = (
 /obj/stool/chair/comfy/shuttle/brown,
@@ -332,6 +383,14 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"ra" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "rr" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -366,10 +425,18 @@
 /area/shuttle/escape/centcom/south)
 "uh" = (
 /obj/shrub,
+/obj/machinery/light,
 /turf/unsimulated/floor/arrival{
 	dir = 10
 	},
 /area/centcom)
+"uD" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "uU" = (
 /turf/unsimulated/floor/arrival,
 /area/centcom)
@@ -461,6 +528,9 @@
 /area/shuttle/escape/centcom/south)
 "zv" = (
 /obj/shrub,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/unsimulated/floor/arrival{
 	dir = 5
 	},
@@ -510,6 +580,14 @@
 	},
 /area/shuttle/escape/centcom/south)
 "AA" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"AM" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Bh" = (
@@ -612,6 +690,7 @@
 /obj/shrub{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/unsimulated/floor/arrival{
 	dir = 6
 	},
@@ -635,6 +714,20 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"Ft" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Gj" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "Gm" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -649,6 +742,14 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom/south)
+"GA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "GM" = (
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/south)
@@ -677,6 +778,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/south)
+"Ih" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
 "Io" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -687,6 +792,12 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom/south)
+"Ir" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
 "IL" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -701,6 +812,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -725,6 +837,9 @@
 /area/shuttle/escape/centcom/south)
 "Jh" = (
 /obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light{
 	dir = 1
 	},
 /turf/unsimulated/floor/arrival{
@@ -759,6 +874,14 @@
 	dir = 4
 	},
 /area/centcom/outside)
+"KE" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "KS" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker{
@@ -786,6 +909,16 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/south)
+"Lu" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
 "Ly" = (
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
@@ -837,6 +970,10 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"NX" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/arrival,
+/area/centcom)
 "Oc" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -919,6 +1056,13 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"Rg" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Rp" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 9
@@ -929,6 +1073,7 @@
 	dir = 1
 	},
 /obj/decal/fakeobjects{
+	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
 	name = "Canister [Plasma]"
@@ -997,10 +1142,24 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"TM" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
 "TR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"VJ" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -1031,6 +1190,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/south)
+"Wt" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light,
+/turf/unsimulated/floor/arrival,
+/area/centcom)
 "WB" = (
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/arrival,
@@ -1136,15 +1300,15 @@ lL
 Sn
 RW
 AA
-xq
+Ft
 Ly
 og
-pB
+TM
 qZ
 xi
 Sa
 qZ
-uU
+NX
 og
 Py
 Ly
@@ -1157,23 +1321,23 @@ og
 "}
 (3,1,1) = {"
 og
-pG
+Ir
 bP
 pG
 pG
 bP
-SA
+Lu
 AA
 xq
 Ly
-qO
+Ih
 kL
 qZ
 xi
 Sa
 qZ
 WB
-qO
+Ih
 Ly
 Ly
 Ly
@@ -1205,7 +1369,7 @@ Tv
 pu
 Ly
 Ly
-Ly
+Gj
 Ly
 Ly
 Ly
@@ -1222,14 +1386,14 @@ AA
 AA
 JE
 OV
-og
+Ih
 zv
 IZ
 fX
 fX
 IZ
 EN
-og
+Ih
 OV
 KC
 Ts
@@ -1243,10 +1407,10 @@ og
 og
 DB
 AA
-XE
+GA
 xF
 xF
-xF
+hv
 xF
 xF
 xF
@@ -1263,7 +1427,7 @@ AA
 AA
 JE
 Yy
-Ly
+Gj
 Ly
 og
 "}
@@ -1287,7 +1451,7 @@ sk
 mr
 Gv
 QB
-NS
+ra
 AA
 AA
 JE
@@ -1346,9 +1510,9 @@ Oc
 QB
 xF
 xF
-NS
+ra
 AA
-xq
+KE
 og
 "}
 (10,1,1) = {"
@@ -1411,7 +1575,7 @@ qO
 og
 DB
 TR
-Rd
+Rg
 YT
 Bh
 ve
@@ -1432,7 +1596,7 @@ fn
 IL
 xT
 BC
-xq
+KE
 og
 "}
 (13,1,1) = {"
@@ -1495,7 +1659,7 @@ qO
 og
 DB
 XE
-nb
+uD
 CH
 NG
 lJ
@@ -1516,7 +1680,7 @@ fn
 IL
 xT
 BC
-xq
+KE
 og
 "}
 (16,1,1) = {"
@@ -1598,9 +1762,9 @@ Oc
 km
 kq
 kq
-ir
+AM
 AA
-xq
+KE
 og
 "}
 (19,1,1) = {"
@@ -1651,7 +1815,7 @@ sk
 mr
 Hf
 km
-ir
+AM
 AA
 AA
 zQ
@@ -1663,10 +1827,10 @@ qO
 og
 AA
 AA
-TR
+bU
 kq
 kq
-kq
+pH
 Es
 kq
 kq
@@ -1683,13 +1847,13 @@ AA
 AA
 zQ
 LK
-Ly
+Gj
 Ly
 og
 "}
 (22,1,1) = {"
 og
-AA
+VJ
 AA
 AA
 AA
@@ -1698,14 +1862,14 @@ AA
 Ol
 zQ
 rI
-og
+Ih
 Jh
 qX
 St
 St
 qX
 uh
-og
+Ih
 rI
 Rp
 hB
@@ -1737,7 +1901,7 @@ Tv
 pu
 Ly
 Ly
-Ly
+Gj
 Ly
 Ly
 Ly
@@ -1746,22 +1910,22 @@ qO
 (24,1,1) = {"
 og
 rr
-pG
+Ir
 rr
 pG
 rr
-SA
+Lu
 AA
 xq
 Ly
-og
+Ih
 kL
 qZ
 xi
 Sa
 qZ
 WB
-og
+Ih
 Ly
 Ly
 Ly
@@ -1779,17 +1943,17 @@ aY
 pG
 aY
 SA
-AA
-xq
+nG
+jY
 Ly
-qO
-kL
+og
+cX
 qZ
 xi
 Sa
 qZ
-WB
-qO
+Wt
+og
 Py
 Ly
 Py
