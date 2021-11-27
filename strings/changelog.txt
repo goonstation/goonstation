@@ -1,5 +1,9 @@
 
 (t)fri nov 26 21
+(u)LeahTheTech
+(p)6769
+(e)|
+(+)Thralls can no longer be made to look human again using the genetics console.
 (u)Sovexe
 (p)6771
 (e)🆕|feature
