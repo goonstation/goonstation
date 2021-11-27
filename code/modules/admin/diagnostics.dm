@@ -1199,24 +1199,33 @@ proc/debug_map_apc_count(delim,zlim)
 				infoOverlayImages[ "[x]-[y]" ] = overlay
 				src.images += overlay
 
-/client/proc/SetInfoOverlayAlias( )
-	set name = "Info Overlay"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	src.SetInfoOverlay()
-
-/client/proc/SetInfoOverlay( )
-	set name = "Debug Overlay"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+proc/info_overlay_choices()
+	var/static/list/cached = null
+	if(!isnull(cached))
+		return cached
 	var/list/available_overlays = list()
 	for (var/datum/infooverlay/dummy as anything in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
-	var/name = input("Choose an overlay") as null|anything in (available_overlays + "REMOVE")
+	available_overlays["REMOVE"] = null
+	cached = available_overlays
+	return cached
+
+/client/proc/SetInfoOverlayAlias(name in info_overlay_choices())
+	set name = "Info Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	src.SetInfoOverlay(name)
+
+/client/proc/SetInfoOverlay(name in info_overlay_choices())
+	set name = "Debug Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
+		boutput(src, "Info overlay turned off.")
 		if(infoOverlayImages)
 			for(var/img in infoOverlayImages)
 				img = infoOverlayImages[img]//shhh
