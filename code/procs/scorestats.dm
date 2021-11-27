@@ -5,6 +5,7 @@ var/datum/score_tracker/score_tracker
 	var/score_calculated = 0
 	var/final_score_all = 0
 	var/grade = "The Aristocrats!"
+	var/inspector_report = ""
 	// SECURITY DEPARTMENT
 	// var/score_crew_evacuation_rate = 0 save this for later to keep categories balanced
 	var/score_crew_survival_rate = 0
@@ -41,6 +42,8 @@ var/datum/score_tracker/score_tracker
 			return
 		// Even if its the end of the round it'd probably be nice to just calculate this once and let players grab that
 		// instead of calculating it again every time a player wants to look at the score
+
+		inspector_report = get_inspector_report()
 
 		// SECURITY DEPARTMENT SECTION
 		var/crew_count = 0
@@ -352,6 +355,33 @@ var/datum/score_tracker/score_tracker
 
 		return jointext(., "")
 
+	//I feel like I may be reinventing the wheel here, but here's a recursive wheel
+	//recursively finds all items of type in container
+	proc/find_items_in(obj/container, type)
+		var/list/found = new /list(0)
+		for (var/obj/item/item in container.contents)
+			if (istype(item, type))
+				found += item
+			found += find_items_in(item, type)
+
+		return found
+
+	proc/get_inspector_report()
+		var/report = ""
+		//this might be a really stupid way of finding all players of a specific job, please tell me if it is
+		for (var/mob/living/carbon/human/player in mobs)
+			if (player.job != "Inspector")
+				continue
+			report += "<B>Inspector [player.real_name]'s report</B><BR><HR>"
+			//find all clipboards they have on them (probably just one, but may as well check)
+			var/list/clipboards = find_items_in(player, /obj/item/clipboard)
+			for (var/obj/item/clipboard/clipboard as anything in clipboards)
+				for(var/obj/item/paper/paper in clipboard.contents)
+					if (paper.name != "paper")
+						report += "<B>[paper.name]</B>"
+					report += paper.info
+		return report
+
 
 /mob/proc/scorestats()
 	if (score_tracker.score_calculated == 0)
@@ -400,7 +430,7 @@ var/datum/score_tracker/score_tracker
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
 /mob/proc/showtickets()
-	if(!data_core.tickets.len && !length(data_core.fines)) return
+	if(!data_core.tickets.len && !length(data_core.fines) && length(score_tracker.inspector_report) == 0) return
 
 	if (!score_tracker.tickets_text)
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
@@ -434,8 +464,9 @@ var/datum/score_tracker/score_tracker
 					if(F.target == N)
 						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
 		else
-			score_tracker.tickets_text += "No fines were issued!"
+			score_tracker.tickets_text += "No fines were issued!<br><br>"
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
+		score_tracker.tickets_text += score_tracker.inspector_report
 
 	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
 	return
