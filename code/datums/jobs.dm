@@ -2138,7 +2138,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.traitHolder.addTrait("training_security")
 		if(prob(60))
 			var/aggressive = pick("eyebeams","cryokinesis")
-			var/defensive = pick("fire_resist","cold_resist","food_rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
+			var/defensive = pick("fire_resist","cold_resist","rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
 			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, do_stability=0)
 			if(aggressive == "eyebeams")
 				var/datum/bioEffect/power/eyebeams/eb = be

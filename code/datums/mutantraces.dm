@@ -69,6 +69,8 @@
 	var/jerk = 0
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
+	/// Should a genetics terminal be able to remove this mutantrace?
+	var/genetics_removable = TRUE
 
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
@@ -1052,6 +1054,7 @@
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
 	special_head = HEAD_VAMPTHRALL
 	jerk = 1
+	genetics_removable = FALSE
 
 	var/blood_points = 0
 	var/const/blood_decay = 0.5

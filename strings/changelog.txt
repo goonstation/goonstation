@@ -1,4 +1,29 @@
 
+(t)fri nov 26 21
+(u)LeahTheTech
+(p)6769
+(e)|
+(+)Thralls can no longer be made to look human again using the genetics console.
+(u)Sovexe
+(p)6771
+(e)🆕|feature
+(+)Conveyor belt switches now affect their linked belts instantly.
+(u)Sovexe
+(p)6750
+(e)🆕|feature
+(+)You no longer need to remove the battery from an energy/meteor shield generator to connect it to a wire.
+(u)anonymous
+(p)6784
+(e)🗺|mapping
+(*)Clarion kitchen changes: Added a stove, soup pot and ladle. Shrunk the Kitchen Freezer horizontally by one tile. Reshuffled all of the Kitchen to make more walk space and put things where they make sense to be.
+(t)thu nov 25 21
+(u)Sovexe
+(p)6708
+(e)⚖|balance
+(*)Blob rounds can now have up to 4 blobs at once.
+(u)Flourish
+(e)🗺|mapping
+(*)Oshan's cloning, EVA, security lobby, and armory are all a tiny bit more spacious now.
 (t)wed nov 24 21
 (u)pali
 (*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.
@@ -18,7 +43,7 @@
 (*)Customs now has a cool service bell. Ring it a bunch to annoy the HoP.<br>The chef also gets a cool dinner bell in their backpack. Sprite by Arthur Holiday!
 (u)Flourish
 (e)🆕|feature
-(*)You can now emag segways. Emagged segways are faster and don't throw you off when you crash into other people.
+(*)You can now emag segways. Emagged segways don't throw you off when you crash into other people.
 (t)mon nov 22 21
 (u)Flourish
 (e)⚖|balance
