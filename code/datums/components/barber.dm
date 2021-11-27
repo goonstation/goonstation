@@ -10,6 +10,7 @@
 #define TOP_DETAIL 3
 #define ALL_HAIR 4
 
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
@@ -83,7 +84,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
-		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace.name] mutant race at [log_loc(user)].")
+		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed at [log_loc(user)].")
 		return ATTACK_PRE_DONT_ATTACK
 
 	if(non_murderous_failure)
@@ -158,7 +159,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		logTheThing("combat", user, M, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace.name] mutant race at [log_loc(user)].")
+		logTheThing("combat", user, M, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)

@@ -2,12 +2,15 @@
 	name = "Haunted TEG"
 	required_elapsed_round_time = 40 MINUTES
 	customization_available = 1
+#ifdef HALLOWEEN
+	weight = 75
+#else
 	weight = 50
+#endif
 	var/obj/machinery/power/generatorTemp/generator
 	var/list/circulators_to_relube
 	var/event_active
 	var/target_grump
-	var/datum/radio_frequency/pda_connection
 
 #ifdef RP_MODE
 	disabled = 1
@@ -57,8 +60,6 @@
 
 		if (!isnum(grump_to_overcome))
 			grump_to_overcome = 100
-
-		pda_connection = radio_controller.return_frequency("1149")
 
 		var/list/obj/machinery/station_switches = list()
 		for(var/area_key as() in stationAreas)
@@ -182,7 +183,6 @@
 	proc/pda_msg(event_string)
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.generator
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "ENGINE-MAILBOT"
 		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
@@ -190,7 +190,7 @@
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 
-		pda_connection.post_signal(src, signal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 datum/teg_transformation/vampire
 	mat_id = "bone"
@@ -283,10 +283,10 @@ datum/teg_transformation/vampire
 					enthrall(H)
 			else
 				if(isalive(target))
-					if( !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
+					if( prob(80) && !ON_COOLDOWN(target,"teg_glare", 30 SECONDS) )
 						glare(target)
 
-					if(!abilities["Blood Steal"].actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
+					if(!actions.hasAction(src.teg, "vamp_blood_suck_ranged") && !ON_COOLDOWN(src.teg,"vamp_blood_suck_ranged", 10 SECONDS))
 						actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(src.teg,abilityHolder, target, abilities["Blood Steal"]), src.teg)
 
 			if(ishuman(target))

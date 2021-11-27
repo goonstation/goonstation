@@ -148,7 +148,7 @@
 		src.part1.sense()
 	return
 
-/obj/item/assembly/proximity_bomb/Bump(atom/O)
+/obj/item/assembly/proximity_bomb/bump(atom/O)
 	SPAWN_DBG(0)
 		//boutput(world, "miptank bumped into [O]")
 		if(src.part1.armed)

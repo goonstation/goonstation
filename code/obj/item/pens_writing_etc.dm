@@ -89,7 +89,7 @@
 			drawing.setMaterial(src.material)
 			src.material_uses--
 			if(src.material_uses <= 0)
-				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
 				src.removeMaterial()
 			return TRUE
 		return FALSE

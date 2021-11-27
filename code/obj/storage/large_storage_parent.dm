@@ -12,7 +12,7 @@
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
 	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
@@ -42,7 +42,7 @@
 	var/health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
 	var/open_fail_prob = 50
@@ -269,37 +269,46 @@
 		else
 			return ..()
 
-	proc/check_if_enterable(var/mob/living/L, var/skip_penalty=0)
-		//return 1 if a mob can enter, 0 if not
+	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
+		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
+		var/mob/living/L = thing
 		if(istype(L) && L.buckled)
-			return 0
-		var/turf/T = get_turf(src)
-		var/no_go = 0
-		if (T.density)
-			no_go = T
-		else
-			for (var/obj/thingy in T)
-				if (thingy == src)
+			return FALSE
+		var/turf/dest_turf = get_turf(src)
+		var/turf/orig_turf = get_turf(thing)
+		if (orig_turf == dest_turf) return TRUE
+		var/no_go
+		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
+		//First, check for directional blockers on the entering object's tile
+		if (orig_turf.checkingexit > 0)
+			for(var/obj/obstacle in orig_turf)
+				if(obstacle == thing)
 					continue
-				if (istype(thingy, /obj/storage) && thingy:is_short)
-					continue
-				if (thingy.density)
-					no_go = thingy
+				if(obstacle.event_handler_flags & USE_CHECKEXIT)
+					var/obj/O = thing
+					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == O.dir))
+						if(!obstacle.CheckExit(thing, dest_turf))
+							no_go = obstacle
+
+		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
+		if (isnull(no_go))
+			no_go = !dest_turf.Enter(L) ? dest_turf : null
+
+		//finally, check if there's anything else on the turf that would prevent us from entering it (e.g. dense objects)
+		if(isnull(no_go))
+			for(var/atom/A in dest_turf)
+				if(A != src && !A.Cross(L))
+					no_go = A
 					break
-
-		if (no_go) // no more scooting around walls and doors okay
-			if(!skip_penalty && istype(L))
-				L.visible_message("<span class='alert'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
-				"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
-				if (!L.hasStatus("weakened"))
-					L.changeStatus("weakened", 4 SECONDS)
-				if (prob(25))
-					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-
-			. = 0
+		if(no_go)
+			if (istype(L))
+				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			thing.Bump(no_go)
+			. = FALSE
 		else
-			. = 1
+			. = TRUE
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
@@ -393,6 +402,8 @@
 						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
 					if (thing in user)
 						continue
+					if (!check_if_enterable(thing))
+						continue
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
 					thing.set_loc(src.loc)
@@ -425,10 +436,8 @@
 	alter_health()
 		. = get_turf(src)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		. = open
-		if (air_group || (height==0))
-			return 1
 		if (src.is_short)
 			return 0
 
@@ -790,17 +799,15 @@
 	var/icon_redlight = "redlight"
 	var/icon_sparks = "sparks"
 	var/always_display_locks = 0
-	var/datum/radio_frequency/radio_control = 1431
+	var/radio_control = FREQ_SECURE_STORAGE
 	var/net_id
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
-			if (isnum(src.radio_control) && radio_controller)
-				radio_control = max(1000, min(round(radio_control), 1500))
-				src.net_id = generate_net_id(src)
-				radio_controller.add_object(src, "[src.radio_control]")
-				src.radio_control = radio_controller.return_frequency("[src.radio_control]")
+		if (isnum(src.radio_control))
+			radio_control = max(1000, min(round(radio_control), 1500))
+			src.net_id = generate_net_id(src)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
 
 	update_icon()
 		..()
@@ -829,7 +836,6 @@
 		if (signal.data["address_1"] == src.net_id)
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["sender"] = src.net_id
 			reply.data["address_1"] = sender
 			switch (lowertext(signal.data["command"]))
@@ -879,18 +885,17 @@
 				else
 					return //COMMAND NOT RECOGNIZED
 			SPAWN_DBG(0.5 SECONDS)
-				src.radio_control.post_signal(src, reply, 2)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["address_1"] = sender
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
 			SPAWN_DBG(0.5 SECONDS)
-				src.radio_control.post_signal(src, reply, 2)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed

@@ -69,7 +69,7 @@
 			updatePanel()
 
 		if("reservoir")
-			var/resId = text2num(href_list["id"])
+			var/resId = text2num_safe(href_list["id"])
 			if(resId < minReservoir || resId > maxReservoir)
 				return
 
@@ -194,7 +194,7 @@
 	return call(src.holder, "statusChange")(oldStatus, newStatus)
 
 /datum/chemicompiler_core/proc/validateButtId(var/id as text)
-	var/buttId = text2num(id)
+	var/buttId = text2num_safe(id)
 	if(buttId < 1 || buttId > 6)
 		return 0
 	return buttId
@@ -704,6 +704,9 @@
 		// Putting SOMETHING in
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
+			if(I.cant_drop)
+				boutput(usr, "<span class='alert'>You cannot place the [I] into the [src.holder]!</span>")
+				return
 			//putting a reagent container in
 			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
 			usr.drop_item()

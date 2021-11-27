@@ -5,6 +5,14 @@
 	var/max_cell_size = INFINITY
 	var/swappable_cell = TRUE
 
+TYPEINFO(/datum/component/cell_holder)
+	initialization_args = list(
+		ARG_INFO("new_cell", "ref", "ref to cell that will be first used"),
+		ARG_INFO("chargable", "num", "If it can be placed in a recharger (bool)", TRUE),
+		ARG_INFO("max_cell", "num", "Maximum size of cell that can be held", INFINITY),
+		ARG_INFO("swappable", "num", "If the cell can be swapped out (bool)", TRUE)
+	)
+
 /datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
 	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_CELL_IS_CELL))
 		return COMPONENT_INCOMPATIBLE
@@ -108,10 +116,10 @@
 	begin_swap(user, I)
 
 /datum/component/cell_holder/proc/can_charge(parent)
-	if(!src.can_be_recharged)
-		. = CELL_UNCHARGEABLE
-	else
+	if(src.can_be_recharged && (SEND_SIGNAL(cell, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 		. = CELL_CHARGEABLE
+	else
+		. = CELL_UNCHARGEABLE
 
 /datum/component/cell_holder/proc/do_charge(parent, amount)
 	if(!src.can_be_recharged)

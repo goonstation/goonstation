@@ -387,20 +387,15 @@
 		src.add_dialog(usr)
 		if (href_list["time"])
 			if(src.allowed(usr))
-				src.timing = text2num(href_list["time"])
+				src.timing = text2num_safe(href_list["time"])
 		else
 			if (href_list["tp"])
 				if(src.allowed(usr))
-					var/tp = text2num(href_list["tp"])
+					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
 					src.time = min(max(round(src.time), 0), 300)
 		src.updateUsrDialog()
 	return
-
-/obj/machinery/sim/vr_bed/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
-	..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

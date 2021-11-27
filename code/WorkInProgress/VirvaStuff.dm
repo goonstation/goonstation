@@ -27,6 +27,7 @@
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/head.dmi'
 	item_function_flags = IMMUNE_TO_ACID
+	blocked_from_petasusaphilic = TRUE
 	color_r = 0.7
 	color_g = 0.7
 	color_b = 0.9
@@ -97,6 +98,7 @@
 	name = "syndicate beret"
 	desc = "A Syndicate officer's beret."
 	icon_state = "beret_base"
+	blocked_from_petasusaphilic = TRUE
 
 	New()
 		..()
@@ -162,8 +164,9 @@ obj/item/ammo/bullets/flechette_mag
 	auto_eject = 1
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
+	default_magazine = /obj/item/ammo/bullets/flechette_mag
 
 	New()
-		ammo = new/obj/item/ammo/bullets/flechette_mag
+		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()

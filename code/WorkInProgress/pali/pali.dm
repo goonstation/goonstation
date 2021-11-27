@@ -147,7 +147,7 @@
 		. = ..()
 		src.fix_pulling_sprite()
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	bump(atom/movable/AM as mob|obj)
 		. = ..()
 		src.fix_pulling_sprite()
 
@@ -226,8 +226,9 @@
 
 	New()
 		..()
-		src.filters += filter(type="rays", size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y)
-		var/f = src.filters[length(src.filters)]
+		add_filter("rays", 1, rays_filter(size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y))
+
+		var/f = src.get_filter("rays")
 		animate(f, offset=f:offset + 100, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 
@@ -297,13 +298,14 @@
 		access.uses = -1
 		access.implanted = 1
 
-	Bump(atom/movable/AM, yes)
+	bump(atom/movable/AM, yes = 1)
 		. = ..()
 		if(src.contents && !istype(AM, /obj/table) && !ON_COOLDOWN(src, "bump_attack", 0.5 SECONDS))
 			var/obj/item/I = pick(src.contents)
 			if(istype(I))
 				src.last_item_bump = I
-				src.weapon_attack(AM, I, 1)
+				SPAWN_DBG(0)
+					src.weapon_attack(AM, I, 1)
 
 	death(gibbed)
 		src.vis_contents = null
@@ -389,20 +391,17 @@
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	var/muscliness_factor = 7
-	var/filter
 
 	equipped(var/mob/user)
 		..()
-		user.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "muscly"), size=0)
-		src.filter = user.filters[length(user.filters)]
-		animate(filter, size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
+		user.add_filter("muscly", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "muscly"), size=0))
+		animate(user.get_filter("muscly"), size=src.muscliness_factor, time=1 SECOND, easing=SINE_EASING)
 
 	unequipped(var/mob/user)
 		..()
-		animate(filter, size=0, time=1 SECOND, easing=SINE_EASING)
+		animate(user.get_filter("muscly"), size=0, time=1 SECOND, easing=SINE_EASING)
 		SPAWN_DBG(1 SECOND)
-			user.filters -= filter
-			filter = null
+			user.remove_filter("muscly")
 
 
 // Among Us memery

@@ -69,6 +69,8 @@
 	var/jerk = 0
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
+	/// Should a genetics terminal be able to remove this mutantrace?
+	var/genetics_removable = TRUE
 
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
@@ -513,7 +515,7 @@
 				//////////////HEAD//////////////////
 				L.organHolder?.head?.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
 
-	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text, var/drop_tail)
+	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text)
 		if(!ishuman(O) || !(O?.organHolder))
 			return // hard to mess with someone's organs if they can't have any
 
@@ -527,11 +529,7 @@
 					for(var/mutorgan in src.mutant_organs)
 						if (mutorgan == "tail") // Not everyone has a tail. So just force it in
 							if (OHM.tail)
-								var/obj/item/organ/tail/organ_drop = OHM.tail
-								organ_drop.donor = null // Humanizing tail-havers made them clumsy otherwise
-								OHM.drop_organ("tail")
-								if (!drop_tail)
-									qdel(organ_drop)
+								qdel(OHM.tail)
 						else if(mutorgan == "butt") // butts arent organs
 							var/obj/item/clothing/head/butt/org = OHM.get_organ(mutorgan)
 							if(!org || istype(org, /obj/item/clothing/head/butt/cyberbutt)) // No free butts, keep your robutt too
@@ -547,10 +545,7 @@
 				if(!src.mutant_organs.len)
 					return // All done!
 				if (OHM.tail) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
-					var/obj/organ_drop = OHM.tail
-					OHM.drop_organ("tail")
-					if (!drop_tail)
-						qdel(organ_drop)
+					qdel(OHM.tail)
 				else
 					for(var/mutorgan in src.mutant_organs)
 						if(mutorgan == "butt") // butts arent organs
@@ -907,9 +902,9 @@
 
 			//give em zombie arms if they don't have em...
 			if (!istype(M.limbs.r_arm, /obj/item/parts/human_parts/arm/right/zombie))
-				M.limbs.replace_with("r-arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
+				M.limbs.replace_with("r_arm", /obj/item/parts/human_parts/arm/right/zombie, M, 0)
 			if (!istype(M.limbs.l_arm, /obj/item/parts/human_parts/arm/left/zombie))
-				M.limbs.replace_with("l-arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
+				M.limbs.replace_with("l_arm", /obj/item/parts/human_parts/arm/left/zombie, M, 0)
 
 			SPAWN_DBG(rand(4, 30))
 				M.emote("scream")
@@ -1059,6 +1054,7 @@
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
 	special_head = HEAD_VAMPTHRALL
 	jerk = 1
+	genetics_removable = FALSE
 
 	var/blood_points = 0
 	var/const/blood_decay = 0.5
@@ -1297,6 +1293,7 @@
 			health_update_queue |= mob
 			src.original_name = mob.real_name
 			mob.real_name = "werewolf"
+			mob.UpdateName()
 
 			mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
@@ -1319,6 +1316,7 @@
 
 			if (!isnull(src.original_name))
 				mob.real_name = src.original_name
+				mob.UpdateName()
 
 			mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()

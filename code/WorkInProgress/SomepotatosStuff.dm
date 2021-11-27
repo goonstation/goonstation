@@ -70,8 +70,10 @@
 	var/list/targets = list()
 	var/list/wtfbyond = list()
 	var/turf/OT = get_turf(src)
-	for(var/turf/wp in landmarks[LANDMARK_GPS_WAYPOINT])
-		var/path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=300)
+	var/list/paths = get_path_to(OT, landmarks[LANDMARK_GPS_WAYPOINT], max_distance=120, id=ID, skip_first=FALSE, cardinal_only=FALSE)
+
+	for(var/turf/wp in paths)
+		var/path = paths[wp]
 		if(path)
 			var/name = landmarks[LANDMARK_GPS_WAYPOINT][wp]
 			if(!name)
@@ -91,7 +93,7 @@
 			var/max_trav
 			boutput( usr, "Area ([area.name]) not found in 300 or not accessable" )
 			for(max_trav=300; max_trav<500;max_trav=max_trav+100)
-				path = AStar(OT, get_turf(wp), /turf/proc/AllDirsTurfsWithAccess, /turf/proc/Distance, adjacent_param = ID, maxtraverse=max_trav)
+				path = get_path_to(OT, get_turf(wp), max_distance=max_trav, id=ID, skip_first=FALSE)
 				if(path)
 					boutput( usr, "Area ([area.name]) found in [length(path)] with maxtraverse of [max_trav]" )
 					break
@@ -114,15 +116,15 @@
 	target = targets[target]
 	gpsToTurf(target, param = ID)
 
-/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, var/heuristic = /turf/proc/AllDirsTurfsWithAccess, param = null)
+/mob/proc/gpsToTurf(var/turf/dest, var/doText = 1, param = null, cardinal_only=FALSE)
 	removeGpsPath(doText)
 	var/turf/start = get_turf(src)
 	if(dest.z != start.z)
 		if(doText)
 			boutput(usr, "You are on a different z-level!")
 		return
-	client.GPS_Path = AStar(start, dest, heuristic, /turf/proc/Distance, adjacent_param = param, maxtraverse=175 )
-	if(client.GPS_Path)
+	client.GPS_Path = get_path_to(src, dest, max_distance = 120, id=src.get_id(), skip_first=FALSE, cardinal_only=cardinal_only)
+	if(length(client.GPS_Path))
 		if(doText)
 			boutput( usr, "Path located! Use the GPS verb again to clear the path!" )
 	else
@@ -191,8 +193,7 @@
 	if(ON_COOLDOWN(src, "gps", 10 SECONDS))
 		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src, "gps", 0))].")
 		return
-	if(hasvar(src,"wear_id"))
-		DoGPS(src:wear_id)
+	DoGPS(src.get_id())
 /mob/living/silicon/verb/GPS()
 	set name = "GPS"
 	set category = "Commands"

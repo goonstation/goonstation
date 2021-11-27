@@ -8,6 +8,10 @@
 	if(!L) { L = list(); } \
 	L += X; \
 
+#define LAZYLISTADDUNIQUE(L, X) \
+	if(!L) { L = list(); } \
+	L |= X; \
+
 #define LAZYLISTREMOVE(L, I) \
 	if(L) { \
 		L -= I; \

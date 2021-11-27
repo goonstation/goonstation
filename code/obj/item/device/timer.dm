@@ -148,7 +148,7 @@
 		else
 			src.master.add_dialog(usr)
 		if (href_list["time"])
-			src.timing = text2num(href_list["time"])
+			src.timing = text2num_safe(href_list["time"])
 			if(timing)
 				src.c_state(1)
 				processing_items |= src
@@ -168,7 +168,7 @@
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
 
 		if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
+			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
 			src.time = min(max(round(src.time), src.min_time), src.max_time)
 			if (can_use_detonator && src.time < src.min_detonator_time)

@@ -184,7 +184,7 @@
 			damageArmor(damage, D_KINETIC)
 			shakeCruiser(6, 2, 0.2)
 
-		if(shields <= 0 && prob(75))
+		if(length(src.interior_area.contents) && shields <= 0 && prob(75))
 			var/atom/source = pick(src.interior_area.contents)
 			explosion_new(source, source, max(min(1,4-severity), 5))
 		return
@@ -304,7 +304,7 @@
 				boutput(usr, "<span class='alert'>Fire mode now: Simultaneous</span>")
 		return
 
-	Bump(atom/O)
+	bump(atom/O)
 		..(O)
 		if(ramming)
 			ramming--
@@ -401,8 +401,8 @@
 		for(var/U in powerUse) //v FUCK BYOND. FUCK. DOUBLEFUCK. TRIPLEFUCK.
 			var/params = powerUse[U]
 			var/list/L = params2list(params)
-			var/usage = text2num(L[1])
-			var/rounds = text2num(L[L[1]])
+			var/usage = text2num_safe(L[1])
+			var/rounds = text2num_safe(L[L[1]])
 			power_used += usage
 			if(rounds > 0)
 				if((--rounds) <= 0) removePowerUse(U)
@@ -630,7 +630,7 @@
 		return
 
 	proc/startFire(var/amount = 1)
-		if(interior_area)
+		if(interior_area && length(interior_area))
 			var/list/hotspot_turfs = list()
 			for(var/turf/T in interior_area)
 				if(T.density) continue
@@ -646,7 +646,7 @@
 		return
 
 	proc/updateIndicators()
-		var/percent_health = max(min((health / health_max), 1), 0)
+		var/percent_health = max(min((health / max(1,health_max)), 1), 0)
 		bar_top.transform = matrix(percent_health, 1, MATRIX_SCALE)
 		bar_top.pixel_x = -nround( ((81 - (81 * percent_health)) / 2) )
 

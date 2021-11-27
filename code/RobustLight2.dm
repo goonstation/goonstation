@@ -23,7 +23,7 @@ proc/get_moving_lights_stats()
 	var/turf/_E = get_step(src, EAST); \
 	var/turf/_NE = get_step(src, NORTHEAST); \
 	if(!_N || !_E || !_NE) { break }; \
-	src.RL_MulOverlay.color = list( \
+	src.RL_MulOverlay?.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
 		_N.RL_LumR, _N.RL_LumG, _N.RL_LumB, 0, \
@@ -632,9 +632,19 @@ proc
 	plane = PLANE_LIGHTING
 	blend_mode = BLEND_DEFAULT // this maybe (???) fixes a bug where lighting doesn't render on clients when teleporting
 	layer = LIGHTING_LAYER_ROBUST
+	disposing()
+		var/turf/T = src.loc
+		if(T?.RL_MulOverlay == src)
+			T.RL_MulOverlay = null
+		..()
 
 /obj/overlay/tile_effect/lighting/add
 	plane = PLANE_SELFILLUM
+	disposing()
+		var/turf/T = src.loc
+		if(T?.RL_AddOverlay == src)
+			T.RL_AddOverlay = null
+		..()
 
 
 turf

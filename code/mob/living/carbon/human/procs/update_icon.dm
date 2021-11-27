@@ -101,14 +101,9 @@
 				UpdateOverlays(null, "material_suit")
 
 			if (src.w_uniform.blood_DNA)
-				if (src.w_uniform.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state =  "uniformblood"
-					blood_image.layer = MOB_CLOTHING_LAYER+0.1
-					UpdateOverlays(blood_image, "suit_image_blood")
-				else
-					blood_image.icon_state =  "uniformblood_c"
-					blood_image.layer = MOB_CLOTHING_LAYER+0.1
-					UpdateOverlays(blood_image, "suit_image_blood")
+				blood_image.icon_state =  "uniformblood_c"
+				blood_image.layer = MOB_CLOTHING_LAYER+0.1
+				UpdateOverlays(blood_image, "suit_image_blood")
 			else
 				UpdateOverlays(null, "suit_image_blood")
 
@@ -142,17 +137,11 @@
 
 		blood_image.layer = MOB_HAND_LAYER2 + 0.1
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays)
-			if (src.blood_DNA == "--conductive_substance--")
-				blood_image.icon_state = "left_bloodyhands"
-			else
-				blood_image.icon_state = "left_bloodyhands_c"
+			blood_image.icon_state = "left_bloodyhands_c"
 			UpdateOverlays(blood_image, "bloody_hands_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays)
-			if (src.blood_DNA == "--conductive_substance--")
-				blood_image.icon_state = "right_bloodyhands"
-			else
-				blood_image.icon_state = "right_bloodyhands_c"
+			blood_image.icon_state = "right_bloodyhands_c"
 			UpdateOverlays(blood_image, "bloody_hands_r")
 
 		blood_image.pixel_x = 0
@@ -167,17 +156,11 @@
 
 		blood_image.layer = MOB_CLOTHING_LAYER+0.1
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
-			if (src.blood_DNA == "--conductive_substance--")
-				blood_image.icon_state = "left_shoeblood"
-			else
-				blood_image.icon_state = "left_shoeblood_c"
+			blood_image.icon_state = "left_shoeblood_c"
 			UpdateOverlays(blood_image, "bloody_feet_l")
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
-			if (src.blood_DNA == "--conductive_substance--")
-				blood_image.icon_state = "right_shoeblood"
-			else
-				blood_image.icon_state = "right_shoeblood_c"
+			blood_image.icon_state = "right_shoeblood_c"
 			UpdateOverlays(blood_image, "bloody_feet_r")
 
 		blood_image.pixel_x = 0
@@ -223,17 +206,11 @@
 
 			blood_image.layer = MOB_HAND_LAYER2 + 0.1
 			if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays)
-				if (src.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "left_bloodygloves"
-				else
-					blood_image.icon_state = "left_bloodygloves_c"
+				blood_image.icon_state = "left_bloodygloves_c"
 			UpdateOverlays(blood_image, "bloody_gloves_l")
 
 			if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays)
-				if (src.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "right_bloodygloves"
-				else
-					blood_image.icon_state = "right_bloodygloves_c"
+				blood_image.icon_state = "right_bloodygloves_c"
 			UpdateOverlays(blood_image, "bloody_gloves_r")
 
 			blood_image.pixel_x = 0
@@ -282,19 +259,13 @@
 		if (src.shoes.blood_DNA)
 			blood_image.layer = MOB_CLOTHING_LAYER+0.1
 			if (src.limbs && src.limbs.l_leg && !.)
-				if (src.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "left_shoeblood"
-				else
-					blood_image.icon_state = "left_shoeblood_c"
+				blood_image.icon_state = "left_shoeblood_c"
 				UpdateOverlays(blood_image, "bloody_shoes_l")
 			else
 				UpdateOverlays(null, "bloody_shoes_l")
 
 			if (src.limbs && src.limbs.r_leg && !.)
-				if (src.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "right_shoeblood"
-				else
-					blood_image.icon_state = "right_shoeblood_c"
+				blood_image.icon_state = "right_shoeblood_c"
 				UpdateOverlays(blood_image, "bloody_shoes_r")
 			else
 				UpdateOverlays(null, "bloody_shoes_l")
@@ -330,20 +301,11 @@
 
 		if (src.wear_suit.blood_DNA)
 			if (src.wear_suit.bloodoverlayimage & SUITBLOOD_ARMOR)
-				if (src.wear_suit.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "armorblood"
-				else
-					blood_image.icon_state = "armorblood_c"
+				blood_image.icon_state = "armorblood_c"
 			else if (src.wear_suit.bloodoverlayimage & SUITBLOOD_COAT)
-				if (src.wear_suit.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "coatblood"
-				else
-					blood_image.icon_state = "coatblood_c"
+				blood_image.icon_state = "coatblood_c"
 			else
-				if (src.wear_suit.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "suitblood"
-				else
-					blood_image.icon_state = "suitblood_c"
+				blood_image.icon_state = "suitblood_c"
 
 			switch (src.wear_suit.wear_image.layer)
 				if (MOB_OVERLAY_BASE)
@@ -457,12 +419,8 @@
 			UpdateOverlays(null, "material_mask")
 		if (src.wear_mask.use_bloodoverlay)
 			if (src.wear_mask.blood_DNA)
-				if (src.wear_mask.blood_DNA == "--conductive_substance--")
-					blood_image.icon_state = "maskblood"
-					blood_image.layer = MOB_HEAD_LAYER1 + 0.1
-				else
-					blood_image.icon_state = "maskblood_c"
-					blood_image.layer = MOB_HEAD_LAYER1 + 0.1
+				blood_image.icon_state = "maskblood_c"
+				blood_image.layer = MOB_HEAD_LAYER1 + 0.1
 				blood_image.pixel_x = 0
 				blood_image.pixel_y = head_offset
 				UpdateOverlays(blood_image, "wear_mask_blood")
@@ -501,12 +459,8 @@
 		else
 			UpdateOverlays(null, "material_head")
 		if (src.head.blood_DNA)
-			if (src.head.blood_DNA == "--conductive_substance--")
-				blood_image.icon_state = "helmetblood"
-				blood_image.layer = MOB_HEAD_LAYER2 + 0.1
-			else
-				blood_image.icon_state = "helmetblood_c"
-				blood_image.layer = MOB_HEAD_LAYER2 + 0.1
+			blood_image.icon_state = "helmetblood_c"
+			blood_image.layer = MOB_HEAD_LAYER2 + 0.1
 			blood_image.pixel_x = 0
 			blood_image.pixel_y = head_offset
 			UpdateOverlays(blood_image, "wear_head_blood")
@@ -853,14 +807,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			human_image.layer = MOB_LIMB_LAYER // why was this never defined before
 			var/gender_t = null
 			if (AHOLD.mob_appearance_flags & NOT_DIMORPHIC) // Most mutants arent dimorphic
-				gender_t = "m" // and i doubt they ever will be
+				if (AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE)
+					gender_t = "s" // s for skintone I guess
+				else
+					gender_t = "m" // and i doubt they ever will be
 			else
 				gender_t = src.gender == FEMALE ? "f" : "m"
 
-			var/skin_tone = "#777777"
-			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE || AHOLD.mob_appearance_flags & HAS_PARTIAL_SKINTONE)
-				skin_tone = "#FFFFFF"	// Preserve their true coloration
-			else
+			var/skin_tone = "#FFFFFF" // #FFFFFF preserves color of base sprites
+			if(AHOLD.mob_appearance_flags & HAS_HUMAN_SKINTONE)
 				skin_tone = AHOLD.s_tone
 			human_image.color = skin_tone
 			human_decomp_image.color = skin_tone
@@ -871,10 +826,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if(AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE) // Torso is supposed to be skintoned, even if everything else isnt?
 					human_image.color = AHOLD.s_tone	// Apply their normal skin-tone to the chest if that's what its supposed to be
 				src.body_standing.overlays += human_image
-				human_image.color = chest_color_before
-
 				human_image.icon_state = "groin_[gender_t]"
 				src.body_standing.overlays += human_image
+				human_image.color = chest_color_before
 
 				// all this shit goes on the torso anyway
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
