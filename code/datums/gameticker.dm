@@ -10,7 +10,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//var/current_state = GAME_STATE_PREGAME
 	//replaced with global
 
-	var/hide_mode = 0
+	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
 	var/event_time = null
 	var/event = 0
@@ -111,7 +111,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	set background = 1
 	//Create and announce mode
 	if(master_mode != "extended")
-		src.hide_mode = 1
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
