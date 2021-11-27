@@ -55543,10 +55543,6 @@
 	dir = 4;
 	pixel_x = -14
 	},
-/obj/decal/tile_edge/floorguide/science,
-/obj/decal/tile_edge/floorguide/arrow_w{
-	dir = 8
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -64615,10 +64611,6 @@
 /obj/decal/garland/ephemeral{
 	dir = 4;
 	pixel_x = -14
-	},
-/obj/decal/tile_edge/floorguide/medbay,
-/obj/decal/tile_edge/floorguide/arrow_w{
-	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
