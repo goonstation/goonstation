@@ -1,4 +1,7 @@
 
+(t)sat nov 27 21
+(u)pali
+(*)T-ray scanners now only visible to the user, they penetrate walls and have higher range.
 (t)fri nov 26 21
 (u)LeahTheTech
 (p)6769
