@@ -822,13 +822,15 @@
 		var/long_day = "[pick("Hooh", "Yeah", "Yeesh", "Blimey")], [pick("wow,", "heh,", "huh,")] guess it's been a long [pick("day", "shift", "morning")][shiftTime > 6000 ? "." : " already!"]"
 		switch(trickery)
 			if ("togglelock")
-				speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
+				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may access my controls and accessories.")
 				if (deceptioncheck_passed)
 					src.locked = !src.locked
 					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
+						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
+							speak(its_the_rd)
+							speak(long_day)
+							speak("Okay, everything's [src.locked ? "locked" : "unlocked"] now!")
 					return 1
 				else
 					return 0
@@ -836,19 +838,24 @@
 				if(W)
 					user.visible_message("<b>[user]</b> tries to pry the tool out of [src], but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				if (src.gunlocklock && src.tool.tool_id == "GUN")
-					speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
-					"Yeah I'm going to need a signed permission slip from your mother first",\
-					"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
-					"You're not the boss of me!", "Couldn't even if I wanted to!"))
+					if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
+						speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+						"Yeah I'm going to need a signed permission slip from your mother first",\
+						"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
+						"You're not the boss of me!", "Couldn't even if I wanted to!"))
 					return 0
-				speak("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
+				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may modify my accessories.")
 				if (deceptioncheck_passed && src.tool.tool_id)
 					src.locked = 0
 					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						DropTheThing("tool", null, 0, 1, TdurgTrick)
-						speak("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
+						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
+							speak(its_the_rd)
+							speak(long_day)
+							DropTheThing("tool", null, 0, 1, TdurgTrick)
+							speak("Alright, my [src.tool]'s all popped out. I've also unlocked everything, just in case!")
+						else
+							DropTheThing("tool", null, 0, 1, TdurgTrick)
 					return 1
 				else
 					return 0
@@ -856,25 +863,31 @@
 				if(W)
 					user.visible_message("<b>[user]</b> tries to pry the gun off of [src]'s gun mount, but it's locked firmly in place!","You try to pry the gun off of [src]'s gun mount, but it's locked firmly in place!")
 				if (src.gunlocklock)
-					speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
-					"Yeah I'm going to need a signed permission slip from your mother first",\
-					"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
-					"You're not the boss of me!", "Couldn't even if I wanted to!"))
+					if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
+						speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
+						"Yeah I'm going to need a signed permission slip from your mother first",\
+						"No way, you'll hurt [pick("me", "yourself")]!", "No nerds allowed!",\
+						"You're not the boss of me!", "Couldn't even if I wanted to!"))
 					return 0
 				else
-					speak("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
+					if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+						speak("Sorry, only people authorized by Thinktronic Data Systems may steal my defensive weapon system.")
 				if (deceptioncheck_passed)
 					src.locked = 0
 					SPAWN_DBG(2 SECONDS)
-						speak(its_the_rd)
-						speak(long_day)
-						DropTheThing("gun", null, 0, 1, TdurgTrick)
-						speak("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
+						if(!ON_COOLDOWN(src, "speak_authorized", 10 SECONDS))
+							speak(its_the_rd)
+							speak(long_day)
+							DropTheThing("gun", null, 0, 1, TdurgTrick)
+							speak("There you go, I've placed my [src.budgun] on the ground. I've also unlocked my tool and gun mounts, just in case you wanted to give me a new one. Please.")
+						else
+							DropTheThing("gun", null, 0, 1, TdurgTrick)
 					return 1
 				else
 					return 0
 			else
-				speak("Sorry, only people authorized by Thinktronic Data Systems may do... whatever it is you're trying to do.")
+				if(!ON_COOLDOWN(src, "speak_unauthorized", 10 SECONDS))
+					speak("Sorry, only people authorized by Thinktronic Data Systems may do... whatever it is you're trying to do.")
 				return 0
 
 	proc/DropTheThing(obj/item/thing as text, mob/user as mob|null, var/by_force = 0, var/announce_it = 1, var/location, var/ignoregunlocklock)
@@ -905,7 +918,8 @@
 			if ("tool")
 				if (src.tool.tool_id == "GUN")
 					if (announce_it)
-						speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
+						if(!ON_COOLDOWN(src, "speak_gun", 10 SECONDS))
+							speak("It looks like you're trying to remove my tool module! Well... someone beat you to it.")
 					return
 				else if (by_force && user)
 					src.visible_message("<span class='alert'>[user] pries the [src.tool] out of [src]'s tool port!</span>", "<span class='alert'>You pry the [src.tool] out of [src]'s tool port!</span>")
