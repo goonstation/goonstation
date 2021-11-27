@@ -2185,8 +2185,9 @@
 		. = list("<B>[mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
 		if (ismob(A))
 			var/mob/living/M = A
-			boutput(mob, "<span class='notice'>[M] smells like a [M.mind?.color].</span>")
-			return
+			if (M.mind)
+				boutput(mob, "<span class='notice'>[M] smells like a [M.mind?.color].</span>")
+				return
 		var/list/L = A.fingerprints_full
 		if (!length(L))
 			boutput(mob, "<span class='notice'>Smells like \a [A], alright.</span>")
@@ -2201,7 +2202,7 @@
 		if (TIME < timestamp + 3 MINUTES)
 			intensity = "strongly"
 		else if (TIME < timestamp + 10 MINUTES)
-			intensity = "kind of"
+			intensity = "kind"
 		boutput(mob, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
 
 	proc/sneeze(var/violent)
