@@ -191,6 +191,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/net_access_code = null
         /// Set nameOverride to FALSE to stop New() from overwriting door name with Area name
 	var/nameOverride = TRUE
+	var/secure_door = FALSE
 
 	var/no_access = 0
 
@@ -226,11 +227,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	req_access = list(access_heads)
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/security
 	name = "security airlock"
 	icon = 'icons/obj/doors/Doorsec.dmi'
 	req_access = list(access_security)
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/engineering
 	name = "engineering airlock"
@@ -295,6 +298,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		name = "command airlock"
 		icon = 'icons/obj/doors/Doorcom-glass.dmi'
 		req_access = list(access_heads)
+		secure_door = TRUE
 
 /obj/machinery/door/airlock/glass/engineering
 		name = "engineering airlock"
@@ -334,6 +338,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = list(access_heads)
 	health = 800
 	health_max = 800
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/pyro/command/alt
 	icon_state = "com2_closed"
@@ -353,6 +358,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 	hardened = 1
 	aiControlDisabled = 1
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/pyro/weapons/noemag
 	req_access = null
@@ -366,6 +372,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_state = "sec_closed"
 	icon_base = "sec"
 	req_access = list(access_security)
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/pyro/security/alt
 	icon_state = "sec2_closed"
@@ -476,12 +483,14 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/pyro/glass/brig
 	req_access_txt = "2"
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/pyro/glass/command
 	name = "command airlock"
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
 	req_access = list(access_heads)
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/pyro/glass/engineering
 	name = "engineering airlock"
@@ -494,6 +503,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
 	req_access = list(access_security)
+	secure_door = TRUE
 
 /obj/machinery/door/airlock/pyro/glass/med
 	name = "medical airlock"
@@ -599,6 +609,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		icon_state = "com_closed"
 		icon_base = "com"
 		req_access = list(access_heads)
+		secure_door = TRUE
 
 	command/alt
 		icon_state = "fcom_closed"
@@ -610,6 +621,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		icon_state = "sec_closed"
 		icon_base = "sec"
 		req_access = list(access_security)
+		secure_door = TRUE
 
 	security/alt
 		icon_state = "fsec_closed"
@@ -696,6 +708,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		icon_state = "tcom_closed"
 		icon_base = "tcom"
 		req_access = list(access_heads)
+		secure_door = TRUE
 
 	command/alt
 		icon_state = "tfcom_closed"
@@ -707,6 +720,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		icon_state = "tsec_closed"
 		icon_base = "tsec"
 		req_access = list(access_security)
+		secure_door = TRUE
 
 	security/alt
 		icon_state = "tfsec_closed"
@@ -812,7 +826,10 @@ About the new airlock wires panel:
 			//Sending a pulse through either one causes a breaker to trip, disabling the door for 10 seconds if backup power is connected, or 1 minute if not (or until backup power comes back on, whichever is shorter).
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 25)
+				if(src.secure_door)
+					src.shock(usr, 75)
+				else
+					src.shock(usr, 25)
 		if (AIRLOCK_WIRE_DOOR_BOLTS)
 			//one wire for door bolts. Sending a pulse through this drops door bolts if they're not down (whether power's on or not),
 			//raises them if they are down (only if power's on)
@@ -827,13 +844,19 @@ About the new airlock wires panel:
 				boutput(usr, "You hear a click from inside the door.")
 			update_icon()
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 25)
+				if(src.secure_door)
+					src.shock(usr, 75)
+				else
+					src.shock(usr, 25)
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//two wires for backup power. Sending a pulse through either one causes a breaker to trip, but this does not disable it unless main power is down too (in which case it is disabled for 1 minute or however long it takes main power to come back, whichever is shorter).
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 25)
+				if(src.secure_door)
+					src.shock(usr, 75)
+				else
+					src.shock(usr, 25)
 		if (AIRLOCK_WIRE_AI_CONTROL)
 			if(prob(10))
 				src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
@@ -851,7 +874,10 @@ About the new airlock wires panel:
 				src.updateDialog()
 				tgui_process.update_uis(src)
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 25)
+				if(src.secure_door)
+					src.shock(usr, 75)
+				else
+					src.shock(usr, 25)
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//one wire for electrifying the door. Sending a pulse through this electrifies the door for 30 seconds.
 			if (src.secondsElectrified==0)
@@ -880,7 +906,10 @@ About the new airlock wires panel:
 			src.close(1)
 			src.safety = 1
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 25)
+				if(src.secure_door)
+					src.shock(usr, 75)
+				else
+					src.shock(usr, 25)
 
 /obj/machinery/door/airlock/proc/attach_signaler(var/wire_color, mob/user)
 	if(!istype(user.equipped(), /obj/item/device/radio/signaler))
@@ -932,7 +961,10 @@ About the new airlock wires panel:
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 50)
+				if(src.secure_door)
+					src.shock(usr,100)
+				else
+					src.shock(usr, 50)
 		if (AIRLOCK_WIRE_DOOR_BOLTS)
 			//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
 			if (src.locked!=1)
@@ -944,7 +976,10 @@ About the new airlock wires panel:
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
 			src.loseBackupPower()
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 50)
+				if(src.secure_door)
+					src.shock(usr,100)
+				else
+					src.shock(usr, 50)
 
 		if (AIRLOCK_WIRE_AI_CONTROL)
 			//one wire for AI control. Cutting this prevents the AI from controlling the door unless it has hacked the door through the power connection (which takes about a minute). If both main and backup power are cut, as well as this wire, then the AI cannot operate or hack the door at all.
@@ -954,7 +989,10 @@ About the new airlock wires panel:
 			else if (src.aiControlDisabled == -1)
 				src.aiControlDisabled = 2
 			SPAWN_DBG(1 DECI SECOND)
-				src.shock(usr, 25)
+				if(src.secure_door)
+					src.shock(usr,100)
+				else
+					src.shock(usr, 50)
 
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
@@ -1370,8 +1408,12 @@ About the new airlock wires panel:
 
 	if (!issilicon(user) && IN_RANGE(src, user, 1))
 		if (src.isElectrified())
-			if(src.shock(user, 75))
-				return
+			if(src.secure_door)
+				if(src.shock(user,100))
+					return
+			else
+				if(src.shock(user, 75))
+					return
 
 	if (!C)
 		..()
@@ -1401,9 +1443,10 @@ About the new airlock wires panel:
 		if (!src.has_panel)
 			boutput(user, "<span class='alert'>[src] does not have a panel for you to unscrew!</span>")
 			return
-		src.p_open = !(src.p_open)
-		tgui_process.update_uis(src)
-		src.update_icon()
+		if (src.secure_door)
+			SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, .proc/screw_open, user, C.icon, C.icon_state, null, null)
+			return
+		screw_open()
 	else if (issnippingtool(C) && src.p_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))
@@ -1415,6 +1458,14 @@ About the new airlock wires panel:
 	else
 		..()
 	return
+
+/obj/machinery/door/airlock/proc/screw_open(var/mob/user)
+	if(src.secure_door)
+		if(src.shock(user,100))
+			return
+	src.p_open = !(src.p_open)
+	tgui_process.update_uis(src)
+	src.update_icon()
 
 /obj/machinery/door/airlock/proc/unpowered_open_close()
 	if (!src || !istype(src))
