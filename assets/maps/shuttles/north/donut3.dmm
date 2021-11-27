@@ -7,6 +7,12 @@
 	icon_state = "4"
 	},
 /area/shuttle/escape/centcom/donut3)
+"aU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "aZ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -17,6 +23,28 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
+/area/centcom/outside)
+"bi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "br" = (
 /obj/decal/fakeobjects{
@@ -69,11 +97,24 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"dE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "dH" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
 /area/shuttle/escape/centcom/donut3)
+"dN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "dS" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -400,6 +441,12 @@
 	icon_state = "7"
 	},
 /area/shuttle/escape/centcom/donut3)
+"pJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "qp" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
@@ -439,6 +486,13 @@
 	},
 /turf/space,
 /area/shuttle/escape/centcom/donut3)
+"uE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "uK" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
@@ -502,6 +556,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/shuttle/escape/centcom/donut3)
+"xt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "yu" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
@@ -514,6 +575,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/donut3)
+"zr" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Az" = (
 /obj/item/storage/wall/fire{
 	pixel_y = 32
@@ -537,6 +605,16 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
+/area/centcom/outside)
+"Cf" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "A pipe.";
+	name = "pipe"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Cn" = (
 /obj/decal/fakeobjects/tallsmes,
@@ -822,6 +900,10 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/donut3)
+"PJ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "PO" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -839,6 +921,12 @@
 /area/shuttle/escape/centcom/donut3)
 "Ra" = (
 /turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Ro" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "RC" = (
 /obj/rack,
@@ -924,6 +1012,12 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
+"VJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "VP" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -1223,13 +1317,13 @@ KZ
 CD
 CD
 CD
-nr
-nr
-fh
-nr
-nr
-nr
-nr
+aU
+aU
+bj
+aU
+aU
+aU
+zr
 nr
 nr
 CD
@@ -1241,8 +1335,8 @@ Ra
 LP
 nr
 nr
-nr
-nr
+dE
+Ro
 LD
 mg
 mg
@@ -1257,7 +1351,7 @@ lb
 ZD
 ho
 eL
-oA
+Cf
 oA
 LS
 CD
@@ -1269,7 +1363,7 @@ Gh
 dV
 nr
 nr
-nr
+PJ
 LD
 FF
 mc
@@ -1285,8 +1379,8 @@ Hy
 nh
 pH
 ti
-nr
-nr
+VJ
+zr
 pF
 ZQ
 "}
@@ -1294,10 +1388,10 @@ ZQ
 CD
 LP
 nr
-nr
-nr
-nr
-nr
+dE
+aU
+aU
+Ro
 sS
 Ma
 Xp
@@ -1314,15 +1408,15 @@ Hy
 nh
 gJ
 eL
-oA
+Cf
 qp
 CD
 "}
 (10,1,1) = {"
 CD
 LP
-nr
-nr
+dE
+Ro
 LD
 Ms
 Ms
@@ -1342,14 +1436,14 @@ OZ
 Gj
 xe
 eL
-oA
+Cf
 qp
 CD
 "}
 (11,1,1) = {"
 ZQ
 LP
-nr
+PJ
 LD
 QE
 Yj
@@ -1370,14 +1464,14 @@ OZ
 Yq
 PO
 eL
-oA
+Cf
 qp
 ZQ
 "}
 (12,1,1) = {"
 CD
 LP
-nr
+PJ
 Ms
 KQ
 Xm
@@ -1397,15 +1491,15 @@ lb
 lb
 VP
 WD
-nr
-nr
+dN
+xt
 pF
 CD
 "}
 (13,1,1) = {"
 CD
 LP
-nr
+PJ
 Ms
 tF
 kI
@@ -1424,8 +1518,8 @@ jb
 jb
 Gc
 sS
-nr
-nr
+dN
+xt
 nr
 pF
 CD
@@ -1433,7 +1527,7 @@ CD
 (14,1,1) = {"
 ZQ
 LP
-nr
+PJ
 Ms
 hg
 kI
@@ -1452,8 +1546,8 @@ TI
 TI
 fD
 sS
-nr
-nr
+VJ
+zr
 nr
 pF
 ZQ
@@ -1461,7 +1555,7 @@ ZQ
 (15,1,1) = {"
 CD
 LP
-nr
+PJ
 Ms
 KQ
 Xm
@@ -1481,15 +1575,15 @@ lb
 lb
 fp
 ti
-nr
-nr
+VJ
+zr
 pF
 CD
 "}
 (16,1,1) = {"
 CD
 LP
-nr
+PJ
 wP
 bW
 Nk
@@ -1510,15 +1604,15 @@ kg
 fV
 gJ
 eL
-oA
+Cf
 qp
 CD
 "}
 (17,1,1) = {"
 ZQ
 LP
-nr
-nr
+bi
+pJ
 wP
 Ms
 Ms
@@ -1538,7 +1632,7 @@ kg
 UQ
 xe
 eL
-oA
+Cf
 qp
 ZQ
 "}
@@ -1546,10 +1640,10 @@ ZQ
 CD
 LP
 nr
-nr
-nr
-nr
-nr
+bi
+uE
+uE
+pJ
 sS
 Ma
 Xp
@@ -1566,7 +1660,7 @@ Zc
 Hx
 tL
 eL
-oA
+Cf
 qp
 CD
 "}
@@ -1577,7 +1671,7 @@ TM
 Zm
 nr
 nr
-nr
+PJ
 wP
 YE
 gs
@@ -1593,8 +1687,8 @@ Zc
 Hx
 fp
 WD
-nr
-nr
+dN
+xt
 pF
 CD
 "}
@@ -1605,8 +1699,8 @@ Ra
 LP
 nr
 nr
-nr
-nr
+bi
+pJ
 wP
 mg
 mg
@@ -1621,7 +1715,7 @@ lb
 fp
 ho
 eL
-oA
+Cf
 oA
 qp
 ZQ
@@ -1643,13 +1737,13 @@ KZ
 CD
 CD
 CD
-nr
-nr
-nr
-nr
-nr
-nr
-nr
+uE
+uE
+uE
+uE
+uE
+uE
+xt
 nr
 pF
 CD

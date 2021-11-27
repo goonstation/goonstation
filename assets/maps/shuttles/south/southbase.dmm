@@ -18,6 +18,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/south)
+"bt" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "A pipe.";
+	name = "pipe"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "bM" = (
 /obj/machinery/computer/announcement,
 /turf/unsimulated/floor/shuttle{
@@ -119,6 +127,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/south)
+"ir" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "jf" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -138,6 +153,24 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/south)
+"km" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"kq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"kE" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/corner/extra_big,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "kF" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -210,6 +243,12 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/south)
+"nb" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "nf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -243,6 +282,15 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/escape/centcom/south)
+"pu" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
 "pB" = (
 /turf/unsimulated/floor/arrival{
 	dir = 1
@@ -392,6 +440,12 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"xF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "xT" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -484,6 +538,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"BC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "CB" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -504,6 +564,22 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Es" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -754,6 +830,13 @@
 	icon_state = "11"
 	},
 /area/shuttle/escape/centcom/south)
+"NS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Oc" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -815,12 +898,24 @@
 	icon_state = "3"
 	},
 /area/shuttle/escape/centcom/south)
+"QB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "QF" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold";
 	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Rd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -902,6 +997,13 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"TR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "VL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -953,6 +1055,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
+/area/centcom/outside)
+"XE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Yu" = (
 /obj/stool/chair/comfy/shuttle{
@@ -1084,7 +1193,7 @@ VQ
 Ew
 AA
 ma
-Ly
+kE
 Tv
 kL
 qZ
@@ -1093,7 +1202,7 @@ Sa
 qZ
 uU
 Tv
-Ly
+pu
 Ly
 Ly
 Ly
@@ -1134,13 +1243,13 @@ og
 og
 DB
 AA
-AA
-AA
-AA
-AA
-AA
-AA
-AA
+XE
+xF
+xF
+xF
+xF
+xF
+xF
 og
 og
 MC
@@ -1162,7 +1271,7 @@ og
 og
 QF
 OU
-OU
+bt
 ce
 PQ
 Bh
@@ -1177,8 +1286,8 @@ mr
 sk
 mr
 Gv
-AA
-AA
+QB
+NS
 AA
 AA
 JE
@@ -1189,8 +1298,8 @@ og
 (8,1,1) = {"
 qO
 DB
-AA
-AA
+XE
+nb
 CH
 Bh
 SL
@@ -1206,7 +1315,7 @@ GM
 Zb
 nf
 Gv
-AA
+BC
 AA
 AA
 AA
@@ -1217,7 +1326,7 @@ qO
 (9,1,1) = {"
 og
 QF
-OU
+bt
 ce
 CB
 SL
@@ -1234,10 +1343,10 @@ GM
 Nt
 wq
 Oc
-AA
-AA
-AA
-AA
+QB
+xF
+xF
+NS
 AA
 xq
 og
@@ -1245,7 +1354,7 @@ og
 (10,1,1) = {"
 og
 QF
-OU
+bt
 ce
 Ay
 kQ
@@ -1265,15 +1374,15 @@ Oc
 xT
 xT
 Gv
-AA
-AA
+QB
+NS
 xq
 og
 "}
 (11,1,1) = {"
 qO
 QF
-OU
+bt
 ce
 fg
 pd
@@ -1294,15 +1403,15 @@ bg
 Yu
 Wl
 Gv
-AA
+BC
 xq
 qO
 "}
 (12,1,1) = {"
 og
 DB
-AA
-AA
+TR
+Rd
 YT
 Bh
 ve
@@ -1322,7 +1431,7 @@ fn
 fn
 IL
 xT
-AA
+BC
 xq
 og
 "}
@@ -1330,8 +1439,8 @@ og
 og
 DB
 AA
-AA
-AA
+TR
+Rd
 Oc
 KS
 xj
@@ -1350,7 +1459,7 @@ fn
 wI
 HA
 xT
-AA
+BC
 xq
 og
 "}
@@ -1358,8 +1467,8 @@ og
 qO
 DB
 AA
-AA
-AA
+XE
+nb
 Oc
 yK
 hD
@@ -1378,15 +1487,15 @@ fn
 wI
 bM
 xT
-AA
+BC
 xq
 qO
 "}
 (15,1,1) = {"
 og
 DB
-AA
-AA
+XE
+nb
 CH
 NG
 lJ
@@ -1406,14 +1515,14 @@ fn
 fn
 IL
 xT
-AA
+BC
 xq
 og
 "}
 (16,1,1) = {"
 og
 QF
-OU
+bt
 ce
 es
 pm
@@ -1434,14 +1543,14 @@ jw
 Kb
 Oo
 Hf
-AA
+BC
 xq
 og
 "}
 (17,1,1) = {"
 qO
 QF
-OU
+bt
 ce
 Ay
 KB
@@ -1461,15 +1570,15 @@ Oc
 xT
 xT
 Hf
-AA
-AA
+km
+ir
 xq
 qO
 "}
 (18,1,1) = {"
 og
 QF
-OU
+bt
 ce
 Io
 mh
@@ -1486,10 +1595,10 @@ GM
 Nt
 wq
 Oc
-AA
-AA
-AA
-AA
+km
+kq
+kq
+ir
 AA
 xq
 og
@@ -1497,8 +1606,8 @@ og
 (19,1,1) = {"
 og
 DB
-AA
-AA
+TR
+Rd
 YT
 NG
 mh
@@ -1514,7 +1623,7 @@ GM
 qq
 VL
 Hf
-AA
+BC
 AA
 AA
 AA
@@ -1526,7 +1635,7 @@ og
 qO
 Pm
 OU
-OU
+bt
 ce
 PQ
 NG
@@ -1541,8 +1650,8 @@ mr
 sk
 mr
 Hf
-AA
-AA
+km
+ir
 AA
 AA
 zQ
@@ -1554,13 +1663,13 @@ qO
 og
 AA
 AA
-AA
-AA
-AA
-AA
-Ol
-AA
-AA
+TR
+kq
+kq
+kq
+Es
+kq
+kq
 og
 og
 MC
@@ -1616,7 +1725,7 @@ Ac
 Bj
 jf
 ma
-Ly
+kE
 Tv
 pB
 qZ
@@ -1625,7 +1734,7 @@ Sa
 qZ
 uU
 Tv
-Ly
+pu
 Ly
 Ly
 Ly

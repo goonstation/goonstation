@@ -60,6 +60,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"bs" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "bD" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -75,6 +82,12 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom/east)
+"cl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "cm" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -121,6 +134,13 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"dK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "dW" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
@@ -138,6 +158,12 @@
 	icon_state = "line2"
 	},
 /turf/unsimulated/floor/black,
+/area/centcom/outside)
+"eQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "fa" = (
 /turf/simulated/wall/auto/shuttle{
@@ -404,6 +430,13 @@
 	dir = 4
 	},
 /area/centcom)
+"rQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "rR" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -447,6 +480,20 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/east)
+"tD" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "uY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -455,6 +502,13 @@
 	dir = 1
 	},
 /area/centcom)
+"vd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "vp" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -536,6 +590,12 @@
 	dir = 1
 	},
 /area/centcom)
+"zy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Ae" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -568,6 +628,10 @@
 "BD" = (
 /turf/unsimulated/floor/arrival,
 /area/centcom)
+"CC" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "CK" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
@@ -626,6 +690,16 @@
 	icon_state = "3"
 	},
 /area/shuttle/escape/centcom/east)
+"EH" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "EQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -786,6 +860,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom/east)
+"LV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "LZ" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -891,6 +972,12 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"RC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Sp" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -904,6 +991,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom/east)
+"TZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
 "Un" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -1079,18 +1172,18 @@ LZ
 rR
 rR
 kt
+dK
+EH
+EH
+EH
+LV
 rR
-kt
-kt
-kt
 rR
-rR
-rR
-rR
-kt
-kt
-kt
-rR
+dK
+EH
+EH
+EH
+LV
 kt
 rR
 rR
@@ -1105,22 +1198,22 @@ PL
 ky
 qx
 rR
-rR
-kt
-rR
+dK
+EH
+cl
 Ti
 Ti
 Ti
-rR
-rR
-rR
-rR
+zy
+LV
+dK
+cl
 Ti
 Ti
 Ti
-rR
-kt
-rR
+zy
+EH
+LV
 rR
 XZ
 zb
@@ -1133,22 +1226,22 @@ zb
 zb
 LZ
 rR
-rR
+CC
 Ti
 Sp
 pj
 Gb
 qb
 qH
-rR
-rR
+zy
+cl
 Sp
 Ls
 Gb
 gG
 qH
 Ti
-rR
+eQ
 rR
 XZ
 zb
@@ -1161,7 +1254,7 @@ PL
 ky
 qx
 rR
-rR
+CC
 dB
 dW
 vp
@@ -1176,7 +1269,7 @@ DI
 gA
 AI
 dB
-rR
+eQ
 rR
 yZ
 DN
@@ -1189,7 +1282,7 @@ sd
 sd
 ET
 rR
-rR
+CC
 dW
 vp
 Rb
@@ -1204,7 +1297,7 @@ oC
 rl
 gA
 AI
-rR
+eQ
 rR
 cm
 sd
@@ -1217,7 +1310,7 @@ VP
 rR
 iC
 LN
-LN
+tD
 fa
 cV
 ro
@@ -1232,7 +1325,7 @@ oC
 oC
 ME
 fa
-rR
+eQ
 rR
 rR
 rR
@@ -1245,7 +1338,7 @@ ac
 Iy
 ta
 eA
-rR
+CC
 fa
 Rb
 ro
@@ -1260,7 +1353,7 @@ oC
 oC
 rl
 fa
-rR
+eQ
 Yd
 ta
 Iy
@@ -1273,7 +1366,7 @@ Lk
 Lk
 af
 Ya
-rR
+CC
 dW
 EF
 EF
@@ -1288,7 +1381,7 @@ cd
 EF
 EF
 AI
-rR
+eQ
 ab
 af
 Lk
@@ -1526,7 +1619,7 @@ Lk
 Ox
 Ya
 rR
-rR
+RC
 eu
 EF
 EF
@@ -1539,7 +1632,7 @@ EF
 EF
 EF
 Er
-rR
+TZ
 rR
 ab
 Ox
@@ -1554,9 +1647,9 @@ Lk
 Lk
 Qp
 rR
-rR
-rR
-rR
+rQ
+vd
+RC
 aQ
 EQ
 xw
@@ -1565,9 +1658,9 @@ xw
 xw
 GN
 aQ
-rR
-rR
-rR
+TZ
+vd
+bs
 rR
 Da
 Lk
@@ -1584,7 +1677,7 @@ wR
 rR
 rR
 rR
-rR
+CC
 aQ
 wm
 xw
@@ -1593,7 +1686,7 @@ px
 xw
 If
 aQ
-rR
+eQ
 rR
 rR
 rR
@@ -1612,7 +1705,7 @@ Lk
 eA
 rR
 rR
-rR
+CC
 eu
 PU
 Vi
@@ -1621,7 +1714,7 @@ lK
 Vi
 LT
 Er
-rR
+eQ
 rR
 rR
 Yd
@@ -1640,16 +1733,16 @@ Lk
 gP
 eA
 rR
-rR
-rR
+rQ
+RC
 eu
 aQ
 aQ
 aQ
 aQ
 Er
-rR
-rR
+TZ
+bs
 rR
 Yd
 al
@@ -1669,14 +1762,14 @@ Lk
 Ya
 rR
 rR
-rR
-rR
-rR
-rR
-rR
-rR
-rR
-rR
+rQ
+vd
+vd
+vd
+vd
+vd
+vd
+bs
 rR
 rR
 ab
