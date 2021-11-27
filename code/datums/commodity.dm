@@ -1024,6 +1024,15 @@
 	upperfluc = 500
 	lowerfluc = -500
 
+/datum/commodity/contraband/syndicate_headset
+	comname = "Illegal Headset"
+	comtype = /obj/item/device/radio/headset/syndicate
+	desc = "This headset allows you to speak over a highly illegal Syndicate frequency."
+	price = 500
+	baseprice = 500
+	upperfluc = 250
+	lowerfluc = -250
+
 /datum/commodity/contraband/briefcase
 	comname = "Briefcase Valve Assembly"
 	comtype = /obj/item/device/transfer_valve/briefcase
