@@ -23,7 +23,7 @@ Contains:
 	mats = 5
 	var/scan_range = 3
 	var/client/last_client = null
-	var/list/image/last_displays = null
+	var/image/last_display = null
 	var/find_interesting = TRUE
 
 	proc/set_on(new_on, mob/user=null)
@@ -55,15 +55,14 @@ Contains:
 
 	proc/hide_displays()
 		if(last_client)
-			last_client.images -= last_displays
-			for(var/image/display in last_displays)
-				qdel(display)
-		last_displays = null
+			last_client.images -= last_display
+		qdel(last_display)
+		last_display = null
 		last_client = null
 
 	disposing()
 		hide_displays()
-		last_displays = null
+		last_display = null
 		last_client = null
 		..()
 
@@ -81,7 +80,7 @@ Contains:
 		var/client/C = our_mob.client
 		var/turf/center = get_turf(our_mob)
 
-		var/list/image/displays = list()
+		var/image/main_display = image(null)
 		for(var/turf/T in range(src.scan_range, our_mob))
 			if(T.interesting && find_interesting)
 				playsound(T, "sound/machines/ping.ogg", 55, 1)
@@ -108,14 +107,15 @@ Contains:
 				display.overlays += img
 
 			if( length(display.overlays))
-				displays += display
 				display.plane = PLANE_SCREEN_OVERLAYS
-				display.loc = our_mob.loc
 				display.pixel_x = (T.x - center.x) * 32
 				display.pixel_y = (T.y - center.y) * 32
+				main_display.overlays += display
 
-		C.images += displays
-		last_displays = displays
+		main_display.loc = our_mob.loc
+
+		C.images += main_display
+		last_display = main_display
 		last_client = C
 
 /obj/item/device/t_scanner/abilities = list(/obj/ability_button/tscanner_toggle)
