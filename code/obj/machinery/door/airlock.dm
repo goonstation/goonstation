@@ -1460,7 +1460,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/proc/screw_open(var/mob/user)
-	if(src.secure_door)
+	if(src.secure_door && !src.p_open)
 		if(src.shock(user,100))
 			return
 	src.p_open = !(src.p_open)
