@@ -1519,7 +1519,7 @@
 
 	var/msg = "[thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
-	if (istype(simulated) && simulated.air.toxins)
+	if (istype(simulated) && (simulated.air.toxins > 0.25))
 		msg += " Turf contains <b>plasma gas</b>."
 	if (T.active_liquid?.group)
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
