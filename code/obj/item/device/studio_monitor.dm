@@ -200,7 +200,7 @@
 			. = FALSE
 
 	proc/is_rock_immune(mob/living/target)
-		if(isVRghost(target))
+		if(isvirtual(target))
 			var/mob/living/carbon/human/H
 			if(istype(target, /mob/living/carbon/human))
 				H = target
