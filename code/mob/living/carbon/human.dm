@@ -1074,7 +1074,7 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
+		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 		if(yeet)
 			new/obj/effect/supplyexplosion(I.loc)
 

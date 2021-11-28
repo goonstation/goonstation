@@ -213,7 +213,7 @@
 	argument_types = list(/datum/command_argument/string/optional="new_mode")
 
 	execute(user, new_mode)
-		if(new_mode == "secret" || new_mode == "intrigue" || new_mode == "extended")
+		if(new_mode in global.valid_modes)
 			var/which = "next round's "
 			if (current_state <= GAME_STATE_PREGAME)
 				master_mode = new_mode
@@ -223,9 +223,17 @@
 			logTheThing("diary", "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
 			message_admins("[user] (Discord) set the [which]mode as [new_mode].")
 			system.reply("Set the [which]mode to [new_mode].", user)
+		else if(length(new_mode) > 0)
+			system.reply("Invalid mode [new_mode]. Available game modes: [jointext(global.valid_modes, ", ")].", user)
 		else
 			var/detail_mode = isnull(ticker?.mode) ? "not started yet" : ticker.mode.name
-			system.reply("Current mode is [master_mode] ([detail_mode]).", user)
+			var/next_mode = "N/A"
+			var/next_mode_text = file2text("data/mode.txt")
+			if(next_mode_text)
+				var/list/lines = splittext(next_mode_text, "\n")
+				if (lines[1])
+					next_mode = lines[1]
+			system.reply("Current mode is [master_mode] ([detail_mode]) ([ticker.hide_mode ? "hidden" : "not hidden"]). Next mode is [next_mode].", user)
 
 /datum/spacebee_extension_command/help
 	name = "help"

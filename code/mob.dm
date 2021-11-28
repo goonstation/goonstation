@@ -712,6 +712,17 @@
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
+				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
+					src.now_pushing = 0
+					return
+				for(var/atom/movable/obstacle in oldloc)
+					if(!ismob(obstacle) && !obstacle.Cross(tmob))
+						src.now_pushing = 0
+						return
+				for(var/atom/movable/obstacle in newloc)
+					if(!ismob(obstacle) && !obstacle.Cross(src))
+						src.now_pushing = 0
+						return
 
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
@@ -889,15 +900,14 @@
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
 	SPAWN_DBG(0)
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == title)
-				unlocks.Add(D)
-
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
+			var/list/unlocks = list()
+			for(var/A in rewardDB)
+				var/datum/achievementReward/D = rewardDB[A]
+				if (D.required_medal == title)
+					unlocks.Add(D)
 			if (announce)
 				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
@@ -2871,6 +2881,7 @@
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
 /mob/proc/vomit(var/nutrition=0, var/specialType=null)
+	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)

@@ -1760,7 +1760,7 @@
 
 	onRemove()
 		. = ..()
-		if (!ismob(owner)) return
+		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
 
@@ -1994,6 +1994,50 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+/datum/statusEffect/poisoned
+	id = "poisoned"
+	name = "Poisoned"
+	desc = "Something <i>really</i> didn't sit well with you."
+	icon_state = "poisoned"
+	movement_modifier = /datum/movement_modifier/poisoned //bit less punishing than regular slowed
+
+	onAdd()
+		..()
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+
+	onRemove()
+		..()
+		UnregisterSignal(owner, COMSIG_MOB_VOMIT)
+
+	onUpdate(var/timePassed)
+		var/mob/living/L = owner
+		var/tox = 0
+		var/puke_prob = 0
+		switch(timePassed)
+			if(0 to 20 SECONDS)
+				tox = 0.1
+				puke_prob = 0.5
+			if(20 SECONDS to 60 SECONDS)
+				tox = 0.4
+				puke_prob = 1
+			if(60 SECONDS to INFINITY)
+				tox = 1
+				puke_prob = 2
+		L.take_toxin_damage(tox)
+		if(prob(2))
+			L.emote(pick("groan", "moan", "shudder"))
+		if(prob(2))
+			L.change_eye_blurry(rand(5,10))
+		if(prob(puke_prob))
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.vomit()
+
+	//firstly: sorry
+	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
+	proc/reduce_duration_on_vomit(var/mob/M, var/vomit_power)
+		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
+		boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
 
 ///APC status that locks lighting circuit offline
 /datum/statusEffect/lights_out

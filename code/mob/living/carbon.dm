@@ -199,6 +199,11 @@
 		src.oxyloss = 0
 		return
 
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
+
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 

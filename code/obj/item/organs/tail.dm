@@ -219,6 +219,16 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cow_over_suit_1"	// just the tail, no nose
 
+/obj/item/organ/tail/pug
+	name = "pug tail"
+	desc = "A rather stubby tail, covered in wiry hair."
+	icon_state = "tail-pug"
+	organ_image_icon = 'icons/mob/pug.dmi'
+	tail_num = TAIL_PUG
+	organ_image_under_suit_1 = "pug_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "pug_over_suit"
+
 /obj/item/organ/tail/wolf
 	name = "wolf tail"
 	desc = "A long, fluffy tail."

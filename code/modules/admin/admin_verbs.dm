@@ -309,6 +309,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_makecyborg,
 		/client/proc/cmd_admin_makeghostdrone,
 		/client/proc/cmd_debug_del_all,
+		/client/proc/cmd_debug_del_half,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
 		/client/proc/iddqd,
@@ -918,13 +919,13 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
+	if(!O.fingerprints_full || !length(O.fingerprints_full))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 
 	boutput(src, "<b>Hidden Fingerprints on [O]:</b>")
-	for(var/i in O.fingerprintshidden)
-		var/list/L = O.fingerprintshidden[i]
+	for(var/i in O.fingerprints_full)
+		var/list/L = O.fingerprints_full[i]
 		boutput(src, "Key: [L["key"]], real name: [L["real_name"]], time: [L["time"]]")
 
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")

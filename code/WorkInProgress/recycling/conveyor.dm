@@ -27,9 +27,9 @@
 	var/divdir = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
 	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
 	var/obj/machinery/conveyor/next_conveyor = null
-	var/obj/machinery/conveyor_switch/owner = null
 	event_handler_flags = USE_FLUID_ENTER
-
+	/// list of conveyor_switches that have us in their conveyors list
+	var/list/linked_switches
 
 /obj/machinery/conveyor/north
 	dir = NORTH
@@ -63,8 +63,8 @@
 			C.next_conveyor = null
 	next_conveyor = null
 
-	if (owner) //conveyor switch could've been exploded
-		owner.conveyors -= src
+	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
+		S.conveyors -= src
 	..()
 
 	// set the dir and target turf depending on the operating direction
@@ -381,102 +381,99 @@
 
 
 
-// the conveyor control switch
-//
-//
-
+/// the conveyor control switch
 /obj/machinery/conveyor_switch
 
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	var/position = 0			// 0 off, -1 reverse, 1 forward
-	var/last_pos = -1			// last direction setting
-	var/operated = 1			// true if just operated
-
-	var/id = "" 				// must match conveyor IDs to control them
-
-	var/list/conveyors		// the list of converyors that are controlled by this switch
+	/// current direction setting
+	var/position = CONVEYOR_STOPPED
+	/// last direction setting
+	var/last_pos = CONVEYOR_REVERSE
+	// Checked against conveyor ID on link attempt
+	var/id = ""
+	/// the list of converyors that are controlled by this switch
+	var/list/conveyors
 	anchored = 1
+	/// time last used
+	var/last_used = 0
 
-
-
-/obj/machinery/conveyor_switch/New()
-	..()
-	START_TRACKING
-	update()
-
-	SPAWN_DBG(0.5 SECONDS)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
-			if(C.id == id)
-				conveyors += C
-				C.owner = src
-
+	New()
+		. = ..()
+		UnsubscribeProcess()
+		START_TRACKING
+		update_icon()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
+		conveyors = list()
+		SPAWN_DBG(0.5 SECONDS)
+			link_conveyors()
+			for (var/obj/machinery/conveyor/C as anything in conveyors)
+				if (C.id == src.id)
+					C.operating = position
+					C.setdir()
 
-/obj/machinery/conveyor_switch/disposing()
-	STOP_TRACKING
-	for(var/obj/machinery/conveyor/C in conveyors)
-		C.owner = null
-	conveyors = null
-	..()
+	disposing()
+		STOP_TRACKING
+		for (var/obj/machinery/conveyor/C as anything in conveyors)
+			C.linked_switches -= src
+		conveyors = null
+		. = ..()
 
+	proc/link_conveyors()
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+			if (C.id == src.id)
+				conveyors |= C
+				if (!C.linked_switches)
+					C.linked_switches = list()
+				C.linked_switches |= src
 
-/obj/machinery/conveyor_switch/proc/trigger(var/inp)
-	attack_hand(usr) //bit of a hack but hey.
-	return
-
-// update the icon depending on the position
-
-/obj/machinery/conveyor_switch/proc/update()
-	if(position<0)
-		icon_state = "switch-rev"
-	else if(position>0)
-		icon_state = "switch-fwd"
-	else
-		icon_state = "switch-off"
-
-
-// timed process
-// if the switch changed, update the linked conveyors
-
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
+	proc/trigger(var/inp)
+		attack_hand(usr) //bit of a hack but hey.
 		return
-	operated = 0
 
-	for(var/obj/machinery/conveyor/C in conveyors)
-		C.operating = position
-		C.setdir()
-
-// attack with hand, switch position
-/obj/machinery/conveyor_switch/attack_hand(mob/user)
-	if(position == 0)
-		if(last_pos < 0)
-			position = 1
-			last_pos = 0
+	/// update the icon depending on the position
+	proc/update_icon()
+		if(position == CONVEYOR_REVERSE)
+			icon_state = "switch-rev"
+		else if(position == CONVEYOR_FORWARD)
+			icon_state = "switch-fwd"
 		else
-			position = -1
-			last_pos = 0
-	else
-		last_pos = position
-		position = 0
+			icon_state = "switch-off"
 
-	operated = 1
-	update()
+	// attack with hand, switch position
+	attack_hand(mob/user)
+		if (TIME < (last_used + 0.5 SECONDS))
+			return
+		last_used = TIME
+		if(position == CONVEYOR_STOPPED)
+			if (last_pos == CONVEYOR_REVERSE)
+				position = CONVEYOR_FORWARD
+				last_pos = CONVEYOR_STOPPED
+			else
+				position = CONVEYOR_REVERSE
+				last_pos = CONVEYOR_STOPPED
+		else
+			last_pos = position
+			position = CONVEYOR_STOPPED
 
-	// find any switches with same id as this one, and set their positions to match us
-	for_by_tcl(S, /obj/machinery/conveyor_switch)
-		if(S.id == src.id)
-			S.position = position
-			S.update()
-		LAGCHECK(LAG_MED)
+		update_icon()
 
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
+		// find any switches with same id as this one, and set their positions to match us
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
+			if (S == src) continue
+			if(S.id == src.id)
+				S.position = position
+				S.update_icon()
+			LAGCHECK(LAG_MED)
 
+		for (var/obj/machinery/conveyor/C as anything in conveyors)
+			if (C.id == src.id)
+				C.operating = position
+				C.setdir()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()

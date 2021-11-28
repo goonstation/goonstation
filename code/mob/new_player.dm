@@ -22,6 +22,9 @@ mob/new_player
 	New()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
+	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		ready = 1
+	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
 	ex_act(severity)

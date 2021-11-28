@@ -150,12 +150,8 @@
 		sunfrac = 0
 		return
 	if(isnull(sun))	return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
-	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
-		sunfrac = 0
-		return
-
-	sunfrac = cos(p_angle) ** 2
+	var/p_angle = (360 + adir - sun.angle) % 360
+	sunfrac = max(cos(p_angle), 0) ** 2
 
 // Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
 // Adjust accordingly based on machine proc rate

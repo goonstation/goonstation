@@ -3844,14 +3844,14 @@
 /area/station/crew_quarters/fitness)
 "aPw" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -21014,7 +21014,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
-	icon_state = "5-6"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-5"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -34807,13 +34809,13 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/side{
+	dir = 1
+	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "4-6"
-	},
-/obj/grille/catwalk/jen/side{
-	dir = 1
+	icon_state = "4-5"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -40591,13 +40593,11 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/grille/catwalk/jen/side{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -42694,9 +42694,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "8-10"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -42877,7 +42877,9 @@
 	icon_state = "2-9"
 	},
 /obj/cable{
-	icon_state = "1-6"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -48443,12 +48445,12 @@
 /area/station/crew_quarters/cafeteria)
 "oaU" = (
 /obj/decal/cleanable/dirt/jen,
+/obj/grille/catwalk/jen/side,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
-	icon_state = "5-10"
+	icon_state = "5-8"
 	},
-/obj/grille/catwalk/jen/side,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "obm" = (
@@ -67323,7 +67325,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
-	icon_state = "2-5"
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-10"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
@@ -70385,11 +70389,6 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "1-9"
-	},
 /obj/grille/catwalk/jen/side{
 	dir = 4
 	},
@@ -75115,7 +75114,9 @@
 	},
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
-	icon_state = "2-10"
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)

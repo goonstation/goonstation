@@ -404,7 +404,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
 		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
 
 /obj/item/sub/frame_box
@@ -418,7 +418,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
 		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
 
 /obj/structure/vehicleframe/puttframe
@@ -491,14 +491,14 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	if (stage == 10)
 		O = new src.control_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage -= 2
 	if (stage == 9)
 		stage-- // no parts involved here, this construction step is welding the exterior
 	if (stage == 8)
 		O = new src.armor_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
@@ -506,30 +506,30 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	if (stage == 7)
 		O = new src.engine_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 6)
 		var/obj/item/sheet/steel/M = new ( get_turf(src) )
 		M.amount = src.metal_amt
 		M.fingerprints = src.fingerprints
-		M.fingerprintshidden = src.fingerprintshidden
+		M.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 5)
 		O = new src.boards_type( get_turf(src) )
 		O.fingerprints = src.fingerprints
-		O.fingerprintshidden = src.fingerprintshidden
+		O.fingerprints_full = src.fingerprints_full
 		stage--
 	if (stage == 4)
 		var/obj/item/cable_coil/cut/C = new ( get_turf(src) )
 		C.amount = src.cable_amt
 		C.fingerprints = src.fingerprints
-		C.fingerprintshidden = src.fingerprintshidden
+		C.fingerprints_full = src.fingerprints_full
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
 	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([showCoords(usr.x, usr.y, usr.z)])")
 	O.fingerprints = src.fingerprints
-	O.fingerprintshidden = src.fingerprintshidden
+	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
 
 /*-----------------------------*/
@@ -1336,7 +1336,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
 			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([showCoords(user.x, user.y, user.z)])")
 			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
+			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
 
 /obj/item/pod/paintjob

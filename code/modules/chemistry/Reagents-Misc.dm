@@ -37,8 +37,8 @@ datum
 				var/turf/T = pick(covered_turf)
 				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
 				var/context = "???"
-				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
-					var/list/fh = holder.my_atom.fingerprintshidden
+				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprints_full
+					var/list/fh = holder.my_atom.fingerprints_full
 
 					if (length(fh)) //Wire: Fix for: bad text or out of bounds
 						context = "Fingerprints: [jointext(fh, "")]"
