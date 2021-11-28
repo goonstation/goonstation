@@ -430,7 +430,7 @@ var/datum/score_tracker/score_tracker
 	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
 /mob/proc/showtickets()
-	if(!data_core.tickets.len && !length(data_core.fines) && length(score_tracker.inspector_report) == 0) return
+	if(!data_core.tickets.len && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
 
 	if (!score_tracker.tickets_text)
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
