@@ -208,6 +208,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 		START_TRACKING
 
+	get_desc()
+		. += "<br><span class='notice'>Its maintenence panel is [p_open ? (secure_door ? "screwed open, there's a \"High Voltage\" sticker on the inside." : "screwed open") : "closed"].</span>"
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
