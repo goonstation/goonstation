@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.toggling = TRUE
 		src.icon_state = "drilldrop"
 		SPAWN_DBG(2 SECONDS)
-			for (var/obj/machinery/siphon/resonator/res in orange(source, 4))
+			for (var/obj/machinery/siphon/resonator/res in orange(4))
 				src.resonators += res
 				res.x_torque_base = res.x - src.x
 				res.y_torque_base = res.y - src.y
