@@ -11,6 +11,6 @@
 	name = "harmonic siphon"
 	desc = "An egregiously complicated device purpose-built for turning magic space rocks into unmagic useful rocks."
 	icon = 'icons/obj/machines/neodrill_32x64.dmi'
-	icon_state = "drill"
+	icon_state = "drill-low"
 	density = 1
 	anchored = 1
