@@ -3,7 +3,8 @@
 (u)Aloe, Flaborized, Flourish, and mbc
 (p)6806
 (e)🆕|feature
-(*)Added playable pugs. The pug trait costs 4 points, as pugs are intended as a challenge mode for players who’d like to show off their prowess. Check out the <a href="https://github.com/goonstation/goonstation/pull/6806">PR page</a> for full details.
+(*)Added playable pugs. The pug trait costs 4 points, as pugs are intended as a challenge mode for players who’d like to show off their prowess.
+(*)Most notably, pugs take double oxy damage, are poisoned by chocolate, can sprint til they run out of stamina, have a small chance of throwing themselves towards thrown items, and have a special *sleuth emote. Check out the <a href="https://github.com/goonstation/goonstation/pull/6806">PR page</a> for full details.
 (u)pali
 (*)T-ray scanners now only visible to the user, they penetrate walls and have higher range.
 (t)fri nov 26 21

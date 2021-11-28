@@ -2149,7 +2149,8 @@
 		return "barks"
 
 	say_filter(var/message)
-		return replacetext(message, "rough", "ruff")
+		. = replacetext(message, "rough", "ruff")
+		. = replacetext(., "pog", "pug")
 
 	emote(var/act, var/voluntary)
 		switch(act)
