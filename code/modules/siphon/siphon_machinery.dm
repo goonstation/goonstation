@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	icon_state = "drill-high"
 	density = 1
 	anchored = 1
+	layer = 4
 	power_usage = 200
 
 	///sum of baseline draw from siphon and current draw from paired resonators
@@ -18,6 +19,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	///list of paired resonators, built when drill enters active position
 	var/list/resonators = list()
 
+	//resonance parameters for mineral extraction
+	var/x_torque = 0
+	var/y_torque = 0
+	var/shear = 0
+
 	process(var/mult)
 		if (status & NOPOWER)
 			return
@@ -28,7 +34,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		power_usage = total_draw
 		..()
 
-	attack_hand(mob/user)
+	attackby(obj/item/W, mob/user) //DEBUG DEBUG DEBUG
+		if(ispulsingtool(W) && src.mode != "high")
+			src.calibrate_resonance()
+			boutput(user,"LATERAL RESONANCE: [src.x_torque]")
+			boutput(user,"VERTICAL RESONANCE: [src.y_torque]")
+			boutput(user,"SHEAR VALUE: [src.shear]")
+
+	attack_hand(mob/user) //DEBUG DEBUG DEBUG
 		src.toggle_drill()
 
 	proc/toggle_drill()
@@ -44,10 +57,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		SPAWN_DBG(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4))
 				src.resonators += res
-				res.x_torque_base = res.x - src.x
-				res.y_torque_base = res.y - src.y
+				var/xadj = res.x - src.x
+				var/yadj = res.y - src.y
+				res.x_torque = sign(xadj) * 2 ** (4 - abs(xadj))
+				res.y_torque = sign(yadj) * 2 ** (4 - abs(yadj))
 				res.engage_lock()
-			SPAWN_DBG(1 SECOND)
+			SPAWN_DBG(5 DECI SECONDS)
 				src.mode = "low"
 				src.update_fx()
 				src.toggling = FALSE
@@ -57,15 +72,29 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.toggling = TRUE
 		src.mode = "high"
 		src.update_fx()
-		var/stagger = 0 //desync the disengagement a bit
+		var/stagger = 0.2 //desync the disengagement a bit
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
-			stagger = stagger + rand(1,3) * 0.1
+			stagger = stagger + rand(1,2) * 0.3
 			res.disengage_lock(stagger)
-			src.resonators -= res
+		src.resonators.Cut()
 		SPAWN_DBG(1 SECOND)
 			src.icon_state = "drillraise"
 			SPAWN_DBG(3 SECONDS)
 				src.toggling = FALSE
+
+	proc/calibrate_resonance()
+		src.x_torque = 0
+		src.y_torque = 0
+		var/xt_absolute //total absolute x torque in this pass, used for shear calculation
+		var/yt_absolute //total absolute y torque in this pass, used for shear calculation
+
+		for (var/obj/machinery/siphon/resonator/res in src.resonators)
+			src.x_torque += res.x_torque
+			xt_absolute += abs(res.x_torque)
+			src.y_torque += res.y_torque
+			yt_absolute += abs(res.y_torque)
+
+		src.shear = (xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque))
 
 	proc/update_fx()
 		if(src.mode != "high")
@@ -92,11 +121,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	///true when manually secured with wrench (affects anchoring)
 	var/wrenched = FALSE
 	///intensity scalar from 0 to 4, increasing power draw and resonance strength
-	var/intensity = 4
+	var/intensity = 1
 	///baseline X torque value, set when the resonator is anchored by the central siphon
-	var/x_torque_base = 0
+	var/x_torque = 0
 	///baseline Y torque value, set when the resonator is anchored by the central siphon
-	var/y_torque_base = 0
+	var/y_torque = 0
 	///glowy light, should vary in intensity based on resonator power level
 	var/datum/light/light
 
@@ -126,6 +155,18 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			else
 				boutput(user,"The auxiliary reinforcing bolts appear to be locked in place.")
 				return
+		else if(ispulsingtool(W))
+			var/scalex = input(usr,"Adjust Intensity","Accepts values 0 through 4","1") as num
+			scalex = clamp(scalex,0,4)
+			src.intensity = scalex
+			src.update_fx()
+
+	examine()
+		. = ..()
+		if(maglocked)
+			var/xto = src.x_torque * src.intensity
+			var/yto = src.y_torque * src.intensity
+			. += boutput(user,"A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque.")
 
 	proc/engage_lock()
 		src.anchored = 1

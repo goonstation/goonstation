@@ -134,7 +134,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/west,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -383,11 +383,6 @@
 "bL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/tools)
-"bN" = (
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "bO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
@@ -744,9 +739,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 9
-	},
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -1225,9 +1218,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 10
-	},
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -1417,7 +1408,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/east,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -1737,15 +1728,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/storage/emergencyinternals)
-"hD" = (
-/obj/decal/tile_edge/line/white{
-	dir = 10;
-	icon_state = "line4"
-	},
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "hE" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -2447,7 +2429,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/east,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -3760,15 +3742,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"qq" = (
-/obj/decal/tile_edge/line/white{
-	dir = 6;
-	icon_state = "line4"
-	},
-/turf/simulated/floor/engine/caution/south,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "qr" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/industrial,
@@ -4664,7 +4637,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line3"
 	},
-/turf/simulated/floor/engine/caution/south,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -4860,15 +4833,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargooffice)
-"vi" = (
-/obj/decal/tile_edge/line/white{
-	dir = 9;
-	icon_state = "line4"
-	},
-/turf/simulated/floor/engine/caution/north,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "vj" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -5261,7 +5225,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/turf/simulated/floor/engine/caution/east,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -7543,11 +7507,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
-"Hy" = (
-/turf/simulated/floor/engine/caution/east,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "Hz" = (
 /turf/simulated/floor/engine,
 /area/station/bridge)
@@ -7821,9 +7780,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 6
-	},
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -7988,7 +7945,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/west,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -8095,7 +8052,7 @@
 	dir = 6;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/west,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -8314,11 +8271,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
-	})
-"KT" = (
-/turf/simulated/floor/engine/caution/west,
-/area/station/science/construction{
-	name = "Extraction Nexus"
 	})
 "KU" = (
 /obj/table/reinforced/auto,
@@ -10246,15 +10198,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"Uf" = (
-/obj/decal/tile_edge/line/white{
-	dir = 5;
-	icon_state = "line4"
-	},
-/turf/simulated/floor/engine/caution/north,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "Ug" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/industrial,
@@ -10648,7 +10591,7 @@
 	dir = 4;
 	icon_state = "line4"
 	},
-/turf/simulated/floor/engine/caution/south,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -10997,7 +10940,7 @@
 	dir = 10;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/east,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -11394,9 +11337,7 @@
 	dir = 10;
 	icon_state = "line4"
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 5
-	},
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -11565,7 +11506,7 @@
 	dir = 8;
 	icon_state = "line4"
 	},
-/turf/simulated/floor/engine/caution/south,
+/turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -56112,9 +56053,9 @@ Bb
 IJ
 kw
 ge
-Hy
-Hy
-Hy
+Zv
+Zv
+Zv
 XC
 xc
 Zk
@@ -56411,7 +56352,7 @@ AK
 fH
 AK
 rv
-qq
+Vq
 Zv
 Zv
 Zv
@@ -56419,7 +56360,7 @@ Zv
 Zv
 Zv
 Zv
-Uf
+Ii
 AK
 AK
 QS
@@ -56713,7 +56654,7 @@ AK
 fH
 AK
 Wg
-bN
+Zv
 Zv
 Zv
 Zv
@@ -57921,7 +57862,7 @@ AK
 fH
 AK
 Vq
-bN
+Zv
 Zv
 Zv
 Zv
@@ -58223,7 +58164,7 @@ AK
 fH
 AK
 rv
-hD
+Wg
 Zv
 Zv
 Zv
@@ -58231,7 +58172,7 @@ Zv
 Zv
 Zv
 Zv
-vi
+Fj
 AK
 AK
 zE
@@ -58528,9 +58469,9 @@ Tg
 fl
 aF
 Js
-KT
-KT
-KT
+Zv
+Zv
+Zv
 JW
 aF
 dm
