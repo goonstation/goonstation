@@ -357,7 +357,7 @@ var/datum/score_tracker/score_tracker
 
 	//I feel like I may be reinventing the wheel here, but here's a recursive wheel
 	//recursively finds all items of type in container
-	proc/find_items_in(obj/container, type)
+	proc/find_items_in(container, type)
 		var/list/found = new /list(0)
 		for (var/obj/item/item in container.contents)
 			if (istype(item, type))
