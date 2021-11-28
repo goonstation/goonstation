@@ -2,14 +2,13 @@
 
 obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
-#define MAXCOIL 120
 #define STARTCOIL 30 //base type starting coil amt
 /obj/item/cable_coil
 	name = "cable coil"
 	var/base_name = "cable coil"
 	desc = "A coil of power cable."
 	amount = STARTCOIL
-	max_stack = MAXCOIL
+	max_stack = 120
 	stack_type = /obj/item/cable_coil // so cut cables can stack with partially depleted full coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -158,7 +157,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	cable_obj_type = /obj/cable/reinforced
 
-	New(loc, length = MAXCOIL)
+	New(loc, length = max_stack)
 		..(loc, length)
 
 /obj/item/cable_coil/reinforced/cut
@@ -242,16 +241,18 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		return
 
 	else if (istype(W, /obj/item/cable_coil))
+		if(isrobot(user))
+			src.max_stack = 500
 		var/obj/item/cable_coil/C = W
 		if(!isSameMaterial(C.conductor, src.conductor) || !isSameMaterial(C.insulator, src.insulator))
 			boutput(user, "You cannot link together cables made from different materials. That would be silly.")
 			return
 
-		if (C.amount >= MAXCOIL)
+		if (C.amount >= max_stack)
 			boutput(user, "The coil is too long, you cannot add any more cable to it.")
 			return
 
-		if ((C.amount + src.amount <= MAXCOIL))
+		if ((C.amount + src.amount <= max_stack))
 			C.amount += src.amount
 			boutput(user, "You join the cable coils together.")
 			C.updateicon()
@@ -266,10 +267,10 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return
 
 		else
-			boutput(user, "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other.")
-			src.amount -= (MAXCOIL-C.amount)
+			boutput(user, "You transfer [max_stack - src.amount ] length\s of cable from one coil to the other.")
+			src.amount -= (max_stack-C.amount)
 			src.updateicon()
-			C.amount = MAXCOIL
+			C.amount = max_stack
 			C.updateicon()
 			return
 
