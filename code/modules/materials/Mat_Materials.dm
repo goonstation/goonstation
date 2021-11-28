@@ -1190,7 +1190,7 @@
 	New()
 		setProperty("density", 26)
 		setProperty("hard", 11)
-		setProperty("electrical", 20)
+		setProperty("electrical", 30)
 		setProperty("thermal", 40)
 		return ..()
 
