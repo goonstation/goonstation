@@ -1134,6 +1134,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\robotics\robot\upgrade\spectro_scanner.dm"
 #include "code\modules\robotics\robot\upgrade\speed.dm"
 #include "code\modules\robotics\robot\upgrade\teleporter.dm"
+#include "code\modules\siphon\siphon_machinery.dm"
+#include "code\modules\siphon\siphon_minerals.dm"
 #include "code\modules\sound\djpanel.dm"
 #include "code\modules\sound\playsound.dm"
 #include "code\modules\sound\sound.dm"
