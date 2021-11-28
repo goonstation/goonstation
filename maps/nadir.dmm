@@ -2595,7 +2595,7 @@
 /turf/simulated/floor/engine,
 /area/station/storage/emergencyinternals)
 "lc" = (
-/obj/decal/fakeobjects/nadir/siphon,
+/obj/machinery/siphon/core,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -4605,7 +4605,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
 "tO" = (
-/obj/decal/fakeobjects/nadir/resonator,
+/obj/machinery/siphon/resonator,
 /turf/simulated/floor/engine/caution/misc{
 	dir = 6
 	},
