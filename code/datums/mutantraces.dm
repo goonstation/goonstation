@@ -2162,7 +2162,7 @@
 					. = list("<B>[mob]</B> growls!", "<I>growls</I>")
 			if ("sneeze")
 				if (mob.emote_check(voluntary, 2 SECONDS))
-					. = src.sneeze(prob(1))
+					. = src.sneeze()
 			if ("sniff")
 				if (mob.emote_check(voluntary, 2 SECONDS))
 					. = src.sniff()
@@ -2208,19 +2208,12 @@
 			intensity = "kind"
 		boutput(mob, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
 
-	proc/sneeze(var/violent)
+	proc/sneeze()
 		playsound(mob, "sound/voice/pug_sneeze.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[mob]</B> sneezes.", "<I>sneezes</I>")
 		animate(mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
 		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
-		if (!violent)
-			return
-		var/datum/organHolder/organs = mob.organHolder
-		var/obj/E = (organs.drop_organ("left_eye", null) || organs.drop_organ("right_eye", null))
-		if (E)
-			E.throw_at(get_edge_cheap(mob, mob.dir), rand(3,5), 1)
-			. = list("<B>[mob]</B> violently sneezes [his_or_her(mob)] eye out. <span class='alert'>What the fuck!</span>", "<I>sneezes violently</I>")
 
 	proc/sniff()
 		playsound(mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
