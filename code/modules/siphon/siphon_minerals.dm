@@ -62,6 +62,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.shear = rand(12,20) * -1
+		..()
 
 /datum/siphon_mineral/fibrilith
 	name = "Fibrilith"
@@ -71,6 +72,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.shear = rand(8,16)
+		..()
 
 /datum/siphon_mineral/martian
 	name = "Viscerite"
@@ -113,6 +115,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.shear = rand(30,40)
+		..()
 
 /datum/siphon_mineral/cerenkite
 	name = "Cerenkite"
@@ -124,15 +127,17 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.shear = rand(8,24)
+		..()
 
 /datum/siphon_mineral/koshmarite
 	name = "Koshmarite"
 	shear = 58
 	ignore_torque = TRUE
-	product = /obj/item/raw_material/koshmarite
+	product = /obj/item/raw_material/eldritch
 
 	New()
 		src.shear = rand(57,60)
+		..()
 
 /datum/siphon_mineral/gemstone
 	name = "Gemstone"
@@ -154,6 +159,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.shear = rand(61,63)
+		..()
 
 //shear of 65 or higher should do Bad Things unless precisely set to this number
 /datum/siphon_mineral/starstone
@@ -164,3 +170,4 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.shear = rand(106,124)
+		..()
