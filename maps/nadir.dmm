@@ -192,6 +192,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"aW" = (
+/obj/machinery/computer/power_monitor/console_lower,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "aX" = (
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -2306,6 +2312,12 @@
 "kL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
+"kM" = (
+/obj/machinery/computer3/generic/engine/console_lower,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "kO" = (
 /obj/machinery/light{
 	dir = 4;
@@ -3336,6 +3348,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"pK" = (
+/obj/decal/fakeobjects/console_lever,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "pL" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -56151,7 +56169,7 @@ Zv
 Zv
 Zv
 AK
-Zv
+aW
 Zv
 Zv
 Zv
@@ -56453,7 +56471,7 @@ Zv
 Zv
 Zv
 AK
-Zv
+pK
 Zv
 Zv
 Zv
@@ -56755,7 +56773,7 @@ Zv
 Zv
 Zv
 AK
-Zv
+kM
 Zv
 Zv
 Zv
