@@ -156,6 +156,13 @@
 			for(var/obj/ability_button/nukie_rocker/B as anything in ability_buttons)
 				B.UpdateOverlays(null, "rocked_out")
 
+/obj/item/breaching_hammer/rock_sledge/nanotrasen
+	name = "Marsyas electric guitar"
+	desc = "A high-tech Syndicate guitar, reverse engineered by Nanotrasen and given a blue paint job."
+	icon_state = "guitar_nt"
+	item_state = "guitar_nt"
+	is_syndicate = FALSE
+
 /obj/ability_button/nukie_rocker
 	name = "Nukie Rocker Ability - You shouldn't see this..."
 	desc = "Waht you no see! This never happened"
