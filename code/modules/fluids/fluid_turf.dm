@@ -497,6 +497,9 @@
 			return
 		else ..()
 
+/turf/space/fluid/sparse
+	spawningFlags = SPAWN_DECOR
+
 /obj/machinery/computer/sea_elevator
 	name = "Elevator Control"
 	icon_state = "shuttle"

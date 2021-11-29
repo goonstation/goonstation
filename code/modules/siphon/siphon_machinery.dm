@@ -18,30 +18,74 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/toggling = FALSE
 	///list of paired resonators, built when drill enters active position
 	var/list/resonators = list()
+	///list of possible siphon targets for the siphon
+	var/list/can_extract = list()
+	///progress in extraction; more valuable materials take more ticks to extract
+	var/extract_ticks = 0
+	///what you're trying to extract; to be implemented alongside net control
+	//var/extraction_target
 
 	//resonance parameters for mineral extraction
 	var/x_torque = 0
 	var/y_torque = 0
 	var/shear = 0
 
+	New()
+		START_TRACKING
+		boutput(world,"YES GETTING THIS FAR") //DEBUG DEBUG DEBUG
+		for(var/datum/siphon_mineral/mineral in concrete_typesof(/datum/siphon_mineral))
+			src.can_extract += new mineral
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	process(var/mult)
 		if (status & NOPOWER)
 			return
 		total_draw = 200
-		//for(var/obj/machinery/siphon/resonator/res in src.resonators)
+		if(src.mode == "active")
+			src.calibrate_resonance()
+			for(var/obj/machinery/siphon/resonator/res in src.resonators)
+				total_draw += 150 * res.intensity
 
+			src.extract_ticks++
+			for(var/datum/siphon_mineral/M in src.can_extract)
+				LAGCHECK(LAG_LOW)
+				if(src.extract_ticks >= M.tick_req) //enough mining progress to check
+					boutput(world,"CHECKING [M.name]") //DEBUG DEBUG DEBUG
+					if(M.x_torque)
+						var/xtcheck = abs(src.x_torque - M.x_torque)
+						if(xtcheck > M.sens_window) continue
+					if(M.y_torque)
+						var/ytcheck = abs(src.y_torque - M.y_torque)
+						if(ytcheck > M.sens_window) continue
+					if(M.shear)
+						var/shearcheck = abs(src.shear - M.shear)
+						if(shearcheck > M.sens_window) continue
+					boutput(world,"[M.name] SUCCESS") //DEBUG DEBUG DEBUG
+					src.extract_ticks = 0
+					new M.product(src.loc)
+					break
 
+			playsound(src.loc, 'sound/machines/interdictor_operate.ogg', 10, 0)
 		power_usage = total_draw
 		..()
 
-	attackby(obj/item/W, mob/user) //DEBUG DEBUG DEBUG
+	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W) && src.mode != "high")
 			src.calibrate_resonance()
 			boutput(user,"LATERAL RESONANCE: [src.x_torque]")
 			boutput(user,"VERTICAL RESONANCE: [src.y_torque]")
 			boutput(user,"SHEAR VALUE: [src.shear]")
+		else if(iswrenchingtool(W) && src.mode != "high") //DEBUG DEBUG DEBUG?
+			if(src.mode == "low")
+				src.mode = "active"
+			else
+				src.mode = "low"
 
-	attack_hand(mob/user) //DEBUG DEBUG DEBUG
+	attack_hand(mob/user) //DEBUG DEBUG DEBUG?
 		src.toggle_drill()
 
 	proc/toggle_drill()
@@ -69,6 +113,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	proc/disengage_drill()
 		if(src.toggling || src.mode == "high") return
+		src.extract_ticks = 0
 		src.toggling = TRUE
 		src.mode = "high"
 		src.update_fx()
@@ -89,10 +134,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		var/yt_absolute //total absolute y torque in this pass, used for shear calculation
 
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
-			src.x_torque += res.x_torque
-			xt_absolute += abs(res.x_torque)
-			src.y_torque += res.y_torque
-			yt_absolute += abs(res.y_torque)
+			var/x_torqueup = res.x_torque * res.intensity
+			src.x_torque += x_torqueup
+			xt_absolute += abs(x_torqueup)
+			var/y_torqueup = res.y_torque * res.intensity
+			src.y_torque += y_torqueup
+			yt_absolute += abs(y_torqueup)
 
 		src.shear = (xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque))
 
@@ -166,7 +213,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(maglocked)
 			var/xto = src.x_torque * src.intensity
 			var/yto = src.y_torque * src.intensity
-			. += boutput(user,"A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque.")
+			. += "<br>A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque."
 
 	proc/engage_lock()
 		src.anchored = 1

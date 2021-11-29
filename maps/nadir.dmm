@@ -196,15 +196,9 @@
 	name = "Northwest Breach Hull"
 	})
 "aV" = (
-/obj/machinery/computer/shuttle{
-	dir = 4;
-	icon_state = "turret1"
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/engine,
+/area/station/storage/emergency)
 "aX" = (
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -380,9 +374,30 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
+"bJ" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/poster/wallsign/stencil/left/one{
+	layer = 2.9
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "bL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/tools)
+"bN" = (
+/obj/decal/tile_edge/check/blue{
+	dir = 1;
+	icon_state = "check1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "bO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
@@ -597,18 +612,17 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/sanctuary)
 "cI" = (
+/obj/table/reinforced/auto,
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
-/obj/item/device/radio{
+/obj/item/device/multitool{
 	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/item/extinguisher{
-	pixel_x = -6;
 	pixel_y = 5
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -1728,6 +1742,15 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/storage/emergencyinternals)
+"hD" = (
+/obj/decal/tile_edge/check/blue{
+	icon_state = "check1"
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "hE" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -2158,6 +2181,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
+"jq" = (
+/obj/machinery/drainage,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/exit)
 "jr" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -2401,6 +2429,11 @@
 	do_not_irradiate = 1;
 	name = "Hydroponics Storage"
 	})
+"ks" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "2"
+	},
+/area/station/hallway/secondary/exit)
 "kt" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/stairs/dark/wide{
@@ -3742,6 +3775,14 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"qq" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "qr" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/industrial,
@@ -4167,6 +4208,16 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/arrival/station)
+"sj" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/poster/wallsign/stencil/left/three{
+	layer = 2.9;
+	pixel_x = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "sk" = (
 /obj/mopbucket,
 /turf/simulated/floor/engine,
@@ -4833,6 +4884,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargooffice)
+"vi" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/poster/wallsign/stencil/left/four{
+	layer = 2.9;
+	pixel_x = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "vj" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -4874,6 +4935,17 @@
 /turf/simulated/floor/engine,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Overwatch"
+	})
+"vv" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
 	})
 "vw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -4958,6 +5030,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
+/obj/landmark/start/latejoin,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -5024,15 +5097,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "wf" = (
-/obj/decal/tile_edge/line/red{
-	dir = 8;
-	icon_state = "line1"
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
 	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/hallway/secondary/exit)
+/area/space)
 "wi" = (
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/west)
@@ -5499,6 +5567,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
+/obj/landmark/start/latejoin,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -5690,6 +5759,11 @@
 "zd" = (
 /turf/space/fluid,
 /area/station/ai_monitored/armory)
+"zf" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "1"
+	},
+/area/station/hallway/secondary/exit)
 "zn" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bootleg,
@@ -5699,7 +5773,9 @@
 	name = "The Warrens"
 	})
 "zo" = (
-/turf/simulated/wall/auto/shuttle,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
 /area/station/hallway/secondary/exit)
 "zq" = (
 /turf/simulated/floor/black/grime,
@@ -6661,12 +6737,19 @@
 	name = "The Warrens"
 	})
 "DD" = (
+/obj/table/reinforced/auto,
+/obj/item/device/radio{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 5
+	},
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/fire,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -7001,6 +7084,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
+"Fa" = (
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Fc" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -7096,6 +7190,13 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/surgery)
+"Fv" = (
+/obj/machinery/drainage,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "Fw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -7507,6 +7608,9 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
+"Hy" = (
+/turf/simulated/floor/shuttle,
+/area/space)
 "Hz" = (
 /turf/simulated/floor/engine,
 /area/station/bridge)
@@ -7545,14 +7649,10 @@
 /turf/simulated/floor/engine,
 /area/station/storage/eva)
 "HI" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 8
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "1"
 	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor2"
-	},
-/area/shuttle/arrival/station)
+/area/space)
 "HJ" = (
 /obj/table/reinforced/auto,
 /obj/item/pen,
@@ -8272,6 +8372,18 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"KT" = (
+/obj/decal/tile_edge/check/blue{
+	dir = 8;
+	icon_state = "check1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "KU" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/matsci_guide,
@@ -8472,6 +8584,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
+"LO" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "2"
+	},
+/area/space)
 "LP" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -8596,6 +8713,15 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"Mo" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Mp" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/engine,
@@ -8654,6 +8780,9 @@
 "MC" = (
 /obj/stool/chair/office/yellow{
 	dir = 1
+	},
+/obj/landmark{
+	name = "Observer-Start"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -9105,6 +9234,12 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"OE" = (
+/obj/landmark/map{
+	name = "NADIR"
+	},
+/turf/space/fluid,
+/area/space)
 "OG" = (
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/construction2)
@@ -10097,6 +10232,16 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"Tw" = (
+/obj/decal/tile_edge/check/red{
+	dir = 4;
+	icon_state = "check1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/exit)
 "Tx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner{
@@ -10194,9 +10339,22 @@
 /area/station/security/brig/solitary)
 "Ue" = (
 /obj/machinery/drainage,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
+	})
+"Uf" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/poster/wallsign/stencil/left/two{
+	layer = 2.9;
+	pixel_x = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
 	})
 "Ug" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -10390,6 +10548,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"Vi" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Vj" = (
 /obj/stool/chair/comfy/shuttle/green,
 /turf/unsimulated/floor/shuttle{
@@ -11238,6 +11404,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
+/obj/landmark/start/latejoin,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -11821,7 +11988,7 @@ gM
 gM
 gM
 gM
-gM
+OE
 "}
 (2,1,1) = {"
 gM
@@ -37933,8 +38100,8 @@ Xh
 ut
 Xh
 ut
-gM
-gM
+wf
+HI
 mD
 vV
 vV
@@ -37950,8 +38117,8 @@ sl
 vV
 vV
 mD
-gM
-gM
+LO
+wf
 ut
 Xh
 ut
@@ -38235,8 +38402,8 @@ Jy
 JG
 Ks
 JG
-gM
-gM
+Hy
+Hy
 pd
 sl
 sl
@@ -38244,7 +38411,7 @@ sl
 mD
 ac
 Hr
-aV
+Hr
 Hr
 ly
 mD
@@ -38252,8 +38419,8 @@ sl
 sl
 sl
 pd
-gM
-gM
+Hy
+Hy
 JG
 Ks
 JG
@@ -38531,14 +38698,14 @@ gM
 Xh
 zq
 Xh
-qD
+bN
 Ks
 jd
 Xh
 Ue
 Xh
-gM
-gM
+Hy
+Hy
 bP
 sl
 sl
@@ -38554,14 +38721,14 @@ sl
 sl
 sl
 bP
-gM
-gM
+Hy
+Hy
 Xh
-Ue
+Fv
 Xh
 qD
 Ks
-jd
+hD
 Xh
 zq
 Xh
@@ -38839,8 +39006,8 @@ jd
 JG
 Ks
 JG
-gM
-gM
+Hy
+Hy
 pd
 sl
 sl
@@ -38848,7 +39015,7 @@ sl
 mD
 Or
 vo
-HI
+vo
 vo
 ac
 mD
@@ -38856,8 +39023,8 @@ sl
 sl
 sl
 pd
-gM
-gM
+Hy
+Hy
 JG
 Ks
 JG
@@ -39141,8 +39308,8 @@ jd
 ut
 Xh
 ut
-gM
-gM
+wf
+HI
 mD
 YV
 YV
@@ -39158,8 +39325,8 @@ sl
 YV
 YV
 mD
-gM
-gM
+LO
+wf
 ut
 Xh
 ut
@@ -39741,7 +39908,7 @@ zq
 Xh
 qD
 Ks
-jd
+hD
 Xh
 zq
 Xh
@@ -39767,7 +39934,7 @@ gM
 Xh
 zq
 Xh
-qD
+bN
 Ks
 jd
 Xh
@@ -40947,7 +41114,7 @@ jB
 ut
 zq
 Xh
-qD
+bN
 Ks
 jd
 Xh
@@ -40977,7 +41144,7 @@ zq
 Xh
 qD
 Ks
-jd
+hD
 Xh
 zq
 ut
@@ -41855,7 +42022,7 @@ jB
 Uv
 RS
 Ks
-jd
+hD
 Xh
 zq
 Xh
@@ -41881,7 +42048,7 @@ zq
 Xh
 zq
 Xh
-qD
+bN
 Ks
 Aw
 Jy
@@ -42464,23 +42631,23 @@ WP
 WP
 ut
 WP
+KT
 WP
 WP
 WP
 WP
 WP
+KT
+WP
+WP
+WP
+KT
 WP
 WP
 WP
 WP
 WP
-WP
-WP
-WP
-WP
-WP
-WP
-WP
+KT
 WP
 ut
 WP
@@ -42758,7 +42925,7 @@ jB
 jB
 jB
 jB
-qD
+bN
 Ks
 Ks
 Ks
@@ -42790,7 +42957,7 @@ Ks
 Ks
 Ks
 Ks
-jd
+hD
 Ny
 Ny
 Ny
@@ -43071,6 +43238,7 @@ Ks
 Ks
 Ks
 ut
+qq
 Ks
 Ks
 Ks
@@ -43080,8 +43248,7 @@ Ks
 Ks
 Ks
 Ks
-Ks
-Ks
+qq
 ut
 Ks
 Ks
@@ -43367,7 +43534,7 @@ Ks
 Ks
 Ks
 Ks
-Ks
+qq
 ut
 Ks
 Ks
@@ -43389,7 +43556,7 @@ Ks
 Ks
 Ks
 ut
-Ks
+qq
 Ks
 Ks
 Ks
@@ -55759,8 +55926,8 @@ AK
 mu
 AK
 Gn
-Zv
-Zv
+Mo
+vv
 rI
 Gn
 Ct
@@ -56062,7 +56229,7 @@ Zk
 cI
 Gn
 AK
-mu
+Fa
 AK
 Gn
 AK
@@ -56364,7 +56531,7 @@ Ii
 AK
 AK
 QS
-Zv
+Vi
 Zv
 tO
 AK
@@ -56666,7 +56833,7 @@ AK
 AK
 EO
 Ea
-Zv
+Vi
 Zv
 Gn
 Gn
@@ -56968,7 +57135,7 @@ AK
 FB
 Zv
 Zv
-Zv
+Vi
 Zv
 tO
 AK
@@ -57263,14 +57430,14 @@ Zv
 Ft
 Zv
 lc
-Zv
+bJ
 Ft
 Zv
 AK
 fe
 MC
 Zv
-Zv
+Vi
 Ze
 Gn
 Gn
@@ -57562,9 +57729,9 @@ AK
 XY
 Wk
 Zv
+vi
 Zv
-Zv
-Zv
+Uf
 Zv
 Zv
 Zv
@@ -57572,7 +57739,7 @@ AK
 qi
 Zv
 Zv
-Zv
+Vi
 Zv
 tO
 AK
@@ -57874,7 +58041,7 @@ AK
 AK
 PV
 qX
-Zv
+Vi
 Zv
 Gn
 Gn
@@ -58168,7 +58335,7 @@ Wg
 Zv
 Zv
 Zv
-Zv
+sj
 Zv
 Zv
 Zv
@@ -58176,7 +58343,7 @@ Fj
 AK
 AK
 zE
-Zv
+Vi
 Zv
 tO
 AK
@@ -58478,7 +58645,7 @@ dm
 DD
 Gn
 AK
-mu
+Fa
 AK
 Gn
 AK
@@ -58780,7 +58947,7 @@ mu
 AK
 Gn
 Zv
-Zv
+Vi
 rI
 Gn
 Eq
@@ -71155,7 +71322,7 @@ xJ
 sr
 hL
 hL
-wf
+hL
 sr
 sr
 IH
@@ -71169,7 +71336,7 @@ sr
 sr
 sr
 sr
-ay
+xJ
 xJ
 xJ
 sr
@@ -71459,17 +71626,17 @@ xJ
 xJ
 xJ
 sr
-xJ
-xJ
 ay
 xJ
 xJ
 xJ
 xJ
 xJ
+xJ
+xJ
+xJ
+xJ
 ay
-xJ
-xJ
 sr
 xJ
 xJ
@@ -72060,23 +72227,23 @@ pJ
 pJ
 sr
 pJ
+Tw
 pJ
 pJ
 pJ
 pJ
 pJ
+Tw
+pJ
+pJ
+pJ
+Tw
 pJ
 pJ
 pJ
 pJ
 pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
-pJ
+Tw
 pJ
 sr
 pJ
@@ -72353,7 +72520,7 @@ YI
 YI
 YI
 YI
-YI
+aV
 Ve
 xJ
 xJ
@@ -72659,7 +72826,7 @@ We
 AX
 YG
 xJ
-XF
+ZH
 iO
 mf
 iO
@@ -72685,7 +72852,7 @@ mf
 iO
 mf
 iO
-Ve
+gm
 xJ
 JD
 Kf
@@ -73563,7 +73730,7 @@ aJ
 sr
 mf
 iO
-Ve
+gm
 xJ
 XF
 iO
@@ -73593,7 +73760,7 @@ mf
 iO
 Ve
 xJ
-XF
+ZH
 iO
 mf
 sr
@@ -74773,7 +74940,7 @@ mf
 iO
 Ve
 xJ
-XF
+ZH
 iO
 mf
 iO
@@ -74799,7 +74966,7 @@ gM
 iO
 mf
 iO
-Ve
+gm
 xJ
 XF
 iO
@@ -75382,7 +75549,7 @@ sr
 iO
 sr
 zo
-zo
+zf
 ZY
 ZY
 ZY
@@ -75398,7 +75565,7 @@ ZY
 ZY
 ZY
 ZY
-zo
+ks
 zo
 sr
 iO
@@ -75979,7 +76146,7 @@ gM
 iO
 mf
 iO
-Ve
+gm
 xJ
 XF
 iO
@@ -76005,11 +76172,11 @@ ZY
 Pj
 Wc
 iO
-XP
+jq
 iO
 Ve
 xJ
-XF
+ZH
 iO
 mf
 iO
@@ -76590,7 +76757,7 @@ sr
 iO
 sr
 zo
-zo
+zf
 ZY
 ZY
 ZY
@@ -76606,7 +76773,7 @@ ZY
 ZY
 ZY
 ZY
-zo
+ks
 zo
 sr
 iO
