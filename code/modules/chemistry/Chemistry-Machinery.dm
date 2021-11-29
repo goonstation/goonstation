@@ -1046,7 +1046,7 @@ datum/chemicompiler_core/stationaryCore
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_update_icon()
+			S.update_icon()
 			src.updateUsrDialog()
 
 		else

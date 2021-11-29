@@ -68,7 +68,7 @@
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
 			S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
-			S.satchel_update_icon()
+			S.update_icon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 		return

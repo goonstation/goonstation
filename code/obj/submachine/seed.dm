@@ -679,7 +679,7 @@
 					boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-				S.satchel_update_icon()
+				S.update_icon()
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -1020,7 +1020,7 @@
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_update_icon()
+			S.update_icon()
 			src.update_icon()
 			src.updateUsrDialog()
 

@@ -178,7 +178,7 @@
 					continue
 				src.load_item(R, user)
 				amtload++
-			satchel.satchel_update_icon()
+			satchel.update_icon()
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
 			else boutput(user, "<span class='alert'>[satchel] is empty!</span>")
 

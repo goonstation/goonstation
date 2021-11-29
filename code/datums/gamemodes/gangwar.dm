@@ -1099,7 +1099,7 @@
 
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
-				S.satchel_update_icon()
+				S.update_icon()
 				hadcannabis = 1
 
 			if(hadcannabis)

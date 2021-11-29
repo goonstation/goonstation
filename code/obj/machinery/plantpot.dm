@@ -1431,7 +1431,7 @@
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
 							I.add_fingerprint(user)
-				SA.satchel_update_icon()
+				SA.update_icon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~

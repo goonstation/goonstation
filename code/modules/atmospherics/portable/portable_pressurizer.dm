@@ -218,7 +218,7 @@
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
 			var/obj/item/satchel/S = I
 			for(var/obj/item/O in S.contents) O.set_loc(src)
-			S.satchel_update_icon()
+			S.update_icon()
 			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 			return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
