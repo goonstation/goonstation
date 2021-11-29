@@ -77,6 +77,9 @@
 			if(!src.holder_ahol && ishuman(original_holder))
 				var/mob/living/carbon/human/H = original_holder
 				src.holder_ahol = H?.bioHolder?.mobAppearance
+			if (src.holder_ahol.special_style)
+				icon = src.holder_ahol.body_icon
+				partIcon = src.holder_ahol.body_icon
 			if(!src.bones)
 				src.bones = new /datum/bone(src)
 			src.bones.donor = new_holder
@@ -1348,8 +1351,8 @@
 //// PUG LIMBS ////
 
 /obj/item/parts/human_parts/arm/mutant/pug
-	icon = 'icons/mob/pug.dmi'
-	partIcon = 'icons/mob/pug.dmi'
+	icon = 'icons/mob/pug/fawn.dmi'
+	partIcon = 'icons/mob/pug/fawn.dmi'
 
 /obj/item/parts/human_parts/arm/mutant/pug/left
 	name = "left pug arm"
@@ -1368,8 +1371,8 @@
 	handlistPart = "hand_right"
 
 /obj/item/parts/human_parts/leg/mutant/pug
-	icon = 'icons/mob/pug.dmi'
-	partIcon = 'icons/mob/pug.dmi'
+	icon = 'icons/mob/pug/fawn.dmi'
+	partIcon = 'icons/mob/pug/fawn.dmi'
 
 /obj/item/parts/human_parts/leg/mutant/pug/left
 	name = "left pug leg"

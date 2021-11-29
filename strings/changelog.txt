@@ -1,5 +1,8 @@
 
 (t)sun nov 28 21
+(u)Flaborized + Flourish
+(e)🆕|feature
+(*)Pugs can now choose from several different color variants in character setup using the "Special Style" option. Sprites by Flab!
 (u)Nexusuxen
 (p)6685
 (e)🗺|mapping

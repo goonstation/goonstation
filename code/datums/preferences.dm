@@ -177,6 +177,7 @@ datum/preferences
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
 			"skinTone" = src.AH.s_tone,
+			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
 			"customStyle1" = src.AH.customization_first.name,
@@ -583,6 +584,20 @@ datum/preferences
 				update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
+			if ("update-specialStyle")
+				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+				if (!typeinfo)
+					alert(usr, "No usable special styles detected.", "Error", "Okay")
+					return
+				var/list/style_list = typeinfo.special_styles
+				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
+				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				if (new_style)
+					AH.special_style = new_style
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)

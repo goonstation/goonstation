@@ -4,6 +4,8 @@
 #define OVERRIDE_LEG_L 8
 
 /// mutant races: cheap way to add new "types" of mobs
+TYPEINFO(/datum/mutantrace)
+	var/list/special_styles // special styles which currently change the icon (sprite sheet)
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
@@ -144,6 +146,8 @@
 	var/mob/living/carbon/human/mob = null	// ...is this the owner?
 
 	var/anchor_to_floor = 0
+
+	var/special_style
 
 	/// Special Hair is anything additional that's supposed to be stuck to the mob's head
 	/// Can be anything, honestly. Used for lizard head things and cow horns
@@ -332,6 +336,13 @@
 				AH.customization_first_offset_y = src.head_offset
 				AH.customization_second_offset_y = src.head_offset
 				AH.customization_third_offset_y = src.head_offset
+
+				var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
+				if(typeinfo.special_styles)
+					if (!AH.special_style || !typeinfo.special_styles[AH.special_style]) // missing or invalid style
+						AH.special_style = pick(typeinfo.special_styles)
+					src.special_style = AH.special_style
+					src.mutant_folder = typeinfo.special_styles[AH.special_style]
 
 				AH.special_hair_1_icon = src.special_hair_1_icon
 				AH.special_hair_1_state = src.special_hair_1_state
@@ -2101,9 +2112,14 @@
 			bleed(mob, 10, 3, T)
 			T.react_all_cleanables()
 
+TYPEINFO(/datum/mutantrace/pug)
+	special_styles = list("apricot" = 'icons/mob/pug/apricot.dmi',
+	"black" = 'icons/mob/pug/black.dmi',
+	"chocolate" = 'icons/mob/pug/chocolate.dmi',
+	"fawn" = 'icons/mob/pug/fawn.dmi')
 /datum/mutantrace/pug
 	name = "pug"
-	icon = 'icons/mob/pug.dmi'
+	icon = 'icons/mob/pug/fawn.dmi'
 	icon_state = "body_m"
 	human_compatible = TRUE
 	override_attack = 0
@@ -2113,7 +2129,7 @@
 	mutant_organs = list("tail" = /obj/item/organ/tail/pug,
 	"left_eye" = /obj/item/organ/eye/pug,
 	"right_eye" = /obj/item/organ/eye/pug)
-	mutant_folder = 'icons/mob/pug.dmi'
+	mutant_folder = 'icons/mob/pug/fawn.dmi'
 	special_head = HEAD_PUG
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/left
@@ -2122,7 +2138,7 @@
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
-	var/static/image/snore_bubble = image('icons/mob/pug.dmi', "bubble")
+	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
 
 	New(var/mob/living/carbon/human/H)
 		if (prob(1)) // need to modify flags before calling parent
