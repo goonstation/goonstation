@@ -66,7 +66,7 @@
 /// how many ticks in a row does world.cpu needs to be above the threshold to start profiling
 #define CPU_START_PROFILING_COUNT 3
 /// how many ticks in a row does world.cpu needs to be below the threshold to stop profiling
-#define CPU_STOP_PROFILING_COUNT 3
+#define CPU_STOP_PROFILING_COUNT 10
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120
