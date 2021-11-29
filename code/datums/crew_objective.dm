@@ -741,7 +741,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 			var/list/geneoptions = list()
 			for_by_tcl(GB, /obj/machinery/genetics_booth)
 				geneoptions |= GB.offered_genes
-			return geneoptions.len >= 5
+			return length(geneoptions) >= 5
 
 ABSTRACT_TYPE(/datum/objective/crew/roboticist)
 /datum/objective/crew/roboticist
