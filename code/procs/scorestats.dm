@@ -355,17 +355,6 @@ var/datum/score_tracker/score_tracker
 
 		return jointext(., "")
 
-	//I feel like I may be reinventing the wheel here, but here's a recursive wheel
-	//recursively finds all items of type in container
-	proc/find_items_in(container, type)
-		var/list/found = new /list(0)
-		for (var/obj/item/item in container.contents)
-			if (istype(item, type))
-				found += item
-			found += find_items_in(item, type)
-
-		return found
-
 	proc/get_inspector_report()
 		var/report = ""
 		//this might be a really stupid way of finding all players of a specific job, please tell me if it is
@@ -374,8 +363,8 @@ var/datum/score_tracker/score_tracker
 				continue
 			report += "<B>Inspector [player.real_name]'s report</B><BR><HR>"
 			//find all clipboards they have on them (probably just one, but may as well check)
-			var/list/clipboards = find_items_in(player, /obj/item/clipboard)
-			for (var/obj/item/clipboard/clipboard as anything in clipboards)
+			var/list/items = player.get_all_items_on_mob()
+			for (var/obj/item/clipboard/clipboard in items)
 				for(var/obj/item/paper/paper in clipboard.contents)
 					if (paper.name != "paper")
 						report += "<B>[paper.name]</B>"
