@@ -201,10 +201,8 @@
 
 	proc/is_rock_immune(mob/living/target)
 		if(isvirtual(target))
-			var/mob/living/carbon/human/H
-			if(istype(target, /mob/living/carbon/human))
-				H = target
-			. = istype(target.ears, /obj/item/device/radio/headset/syndicate) || istype(H?.head, /obj/item/clothing/head/helmet/space/syndicate)
+			var/mob/living/carbon/human/virtual/V = target
+			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
 			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
 
