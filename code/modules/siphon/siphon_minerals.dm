@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/char
 	name = "Char"
-	tick_req = 20
+	tick_req = 15
 	x_torque = -16
 	y_torque = -4
 	shear = 16
@@ -86,7 +86,6 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/martian
 	name = "Viscerite"
-	tick_req = 40
 	x_torque = 20
 	y_torque = 16
 	shear = 8
@@ -95,7 +94,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/claretine
 	name = "Claretine"
-	tick_req = 50
+	tick_req = 40
 	x_torque = 32
 	y_torque = -4
 	shear = 20
@@ -104,7 +103,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/bohrum
 	name = "Bohrum"
-	tick_req = 50
+	tick_req = 40
 	x_torque = -16
 	y_torque = -16
 	shear = 24
@@ -113,7 +112,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/syreline
 	name = "Syreline"
-	tick_req = 60
+	tick_req = 40
 	x_torque = 88
 	shear = 6
 	sens_window = 1
@@ -121,7 +120,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/erebite
 	name = "Erebite"
-	tick_req = 80
+	tick_req = 70
 	x_torque = 6
 	y_torque = -22
 	shear = 33
@@ -134,7 +133,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/cerenkite
 	name = "Cerenkite"
-	tick_req = 70
+	tick_req = 50
 	x_torque = -24
 	y_torque = 8
 	shear = 16
@@ -157,7 +156,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/gemstone
 	name = "Gemstone"
-	tick_req = 80
+	tick_req = 60
 	x_torque = 0
 	y_torque = 0
 	shear = 64
@@ -165,14 +164,14 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/uqill
 	name = "uqill"
-	tick_req = 120
+	tick_req = 90
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
 
 /datum/siphon_mineral/telecrystal
 	name = "Telecrystal"
-	tick_req = 120
+	tick_req = 100
 	shear = 63
 	product = /obj/item/raw_material/telecrystal
 
@@ -183,7 +182,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 //shear of 65 or higher should do Bad Things unless precisely set to this number
 /datum/siphon_mineral/starstone
 	name = "Starstone"
-	tick_req = 350
+	tick_req = 250
 	shear = 110
 	product = /obj/item/raw_material/starstone
 
