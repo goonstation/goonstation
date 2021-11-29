@@ -39,7 +39,7 @@
 			return
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.stat)
 			src.icon_state = "eyebot-dead"
 		else if (src.controller)

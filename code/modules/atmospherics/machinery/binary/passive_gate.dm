@@ -16,6 +16,7 @@ obj/machinery/atmospherics/binary/passive_gate
 		ui = new/datum/pump_ui/passive_gate_ui(src)
 
 	update_icon()
+		. = ..()
 		if(node1&&node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else

@@ -433,7 +433,10 @@ obj/machinery/atmospherics/pipe
 			if(destroyed)
 				. = list(null, null)
 
-		update_icon()
+		update_icon(override_parent = FALSE)
+			. = ..()
+			if (override_parent)
+				return
 			if(destroyed)
 				icon_state = "destroyed"
 			else if(node1 && node2)
@@ -578,6 +581,7 @@ obj/machinery/atmospherics/pipe
 			dir = WEST
 
 		update_icon()
+			. = ..(override_parent = TRUE)
 			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 				dir = get_dir(src, node1)
 
@@ -621,6 +625,7 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
+			. = ..(override_parent = TRUE)
 			if(node1 && node2)
 				icon_state = "intact"
 
@@ -875,6 +880,7 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
+			. = ..()
 			if(node1)
 				icon_state = "intact"
 
@@ -943,6 +949,7 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
+			. = ..()
 			if(node1)
 				icon_state = "intact"
 
@@ -1016,9 +1023,6 @@ obj/machinery/atmospherics/pipe
 
 		pipeline_expansion()
 			return list(node1, node2)
-
-		update_icon()
-			return
 
 		initialize()
 			var/turf/T = get_turf(src)
@@ -1153,6 +1157,7 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		update_icon()
+			. = ..()
 			if(node1 && node2&& node3)
 				icon_state = "manifold"//[invisibility ? "-f" : ""]"
 				alpha = invisibility ? 128 : 255

@@ -131,7 +131,10 @@
 		src.triggered(AM)
 		return
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (!src || !istype(src))
 			return
 
@@ -280,6 +283,7 @@
 		armed = TRUE
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 	custom_stuff(var/atom/M)

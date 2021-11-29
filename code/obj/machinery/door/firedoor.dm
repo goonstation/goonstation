@@ -215,7 +215,8 @@
 
 		return 1
 
-/obj/machinery/door/firedoor/update_icon(var/toggling = 0)
+/obj/machinery/door/firedoor/update_icon(var/toggling = 0, override_parent = TRUE)
+	. = ..()
 	if(toggling? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"

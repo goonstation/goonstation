@@ -736,7 +736,8 @@
 	ex_act(severity)
 		return //nah
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		icon_state = icon_state = "hydrovent_[built]"
 
 	disposing()
@@ -864,7 +865,8 @@
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
 		..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		icon_state = "stomper[on]"
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
@@ -873,7 +875,7 @@
 		if(open)
 			if(cell && !user.equipped())
 				user.put_in_hand_or_drop(cell)
-				cell.updateicon()
+				cell.update_icon()
 				cell = null
 
 				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")

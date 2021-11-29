@@ -466,7 +466,10 @@
 		src.update_icon()
 		healthbar.onUpdate()
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (!src)
 			return
 
@@ -1255,6 +1258,7 @@
 		added = 0.1
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 	disposing()
@@ -1286,6 +1290,7 @@
 		..(amount, damage_mult, damtype, user)
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 /obj/blob/firewall
@@ -1305,7 +1310,8 @@
 			return ..(amount/3,mult,damtype,user)
 		else return ..()
 
-	update_icon()
+	update_icon(override_parent)
+		. = ..()
 		return
 
 /obj/material_deposit

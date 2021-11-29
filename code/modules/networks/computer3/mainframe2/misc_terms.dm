@@ -995,25 +995,26 @@
 				src.sync(src.host_id)
 			return
 
-		update_icon()
-			src.overlays = null
-			if(tank1) //Update tank overlays.
-				src.overlays += image(src.icon,"bscanner-tank1")
-			if(tank2)
-				src.overlays += image(src.icon,"bscanner-tank2")
+	update_icon()
+		. = ..()
+		src.overlays = null
+		if(tank1) //Update tank overlays.
+			src.overlays += image(src.icon,"bscanner-tank1")
+		if(tank2)
+			src.overlays += image(src.icon,"bscanner-tank2")
 
-			if(status & BROKEN)
-				icon_state = "bomb_scannerb"
-				return
-			if(status & NOPOWER)
-				icon_state = "bomb_scanner-p"
-				return
-
-			if(src.tank1 && src.tank2)
-				icon_state = "bomb_scanner1"
-			else
-				icon_state = "bomb_scanner0"
+		if(status & BROKEN)
+			icon_state = "bomb_scannerb"
 			return
+		if(status & NOPOWER)
+			icon_state = "bomb_scanner-p"
+			return
+
+		if(src.tank1 && src.tank2)
+			icon_state = "bomb_scanner1"
+		else
+			icon_state = "bomb_scanner0"
+		return
 
 //Generic disk to hold VR bomb log
 /obj/item/disk/data/bomb_tester
@@ -2115,23 +2116,24 @@
 			src.update_icon()
 			return
 
-		update_icon()
-			src.overlays = null
-			if(src.jam) //Update jam overlay.
-				src.overlays += image(src.icon,"printer-jamoverlay")
+	update_icon()
+		. = ..()
+		src.overlays = null
+		if(src.jam) //Update jam overlay.
+			src.overlays += image(src.icon,"printer-jamoverlay")
 
-			if(status & BROKEN)
-				icon_state = "printerb"
-				return
-			if(status & NOPOWER)
-				icon_state = "printer-p"
-				return
-
-			if(src.blinking)
-				icon_state = "printer-blink"
-			else
-				icon_state = "printer0"
+		if(status & BROKEN)
+			icon_state = "printerb"
 			return
+		if(status & NOPOWER)
+			icon_state = "printer-p"
+			return
+
+		if(src.blinking)
+			icon_state = "printer-blink"
+		else
+			icon_state = "printer0"
+		return
 
 #undef MAX_SHEETS
 #undef SETUP_JAM_IGNITION
@@ -2659,38 +2661,39 @@
 
 		src.update_icon(src.state)
 
-	proc
-		update_icon(var/newState = 1)
-			if (status & (NOPOWER|BROKEN))
-				light.disable()
-				icon_state = "secdetector-p"
-				if (src.scan_beam)
-					qdel(src.scan_beam)
-					src.scan_beam = null
-				src.state = src.online
-				return
 
-			var/change = (src.state != newState)
-			src.state = newState
-
-			icon_state = "secdetector[src.state]"
-			switch (src.state)
-				if (2 to 3)
-					light.set_brightness(src.state == 2 ? src.active_brightness : src.alert_brightness)
-					light.enable()
-				if (1)
-					light.disable()
-					if (src.host_id && change)
-						SPAWN_DBG(0)
-							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
-				if (0)
-					light.disable()
-					if (src.host_id && change)
-						SPAWN_DBG(0)
-							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
-
+	update_icon(var/newState = 1)
+		. = ..()
+		if (status & (NOPOWER|BROKEN))
+			light.disable()
+			icon_state = "secdetector-p"
+			if (src.scan_beam)
+				qdel(src.scan_beam)
+				src.scan_beam = null
+			src.state = src.online
 			return
 
+		var/change = (src.state != newState)
+		src.state = newState
+
+		icon_state = "secdetector[src.state]"
+		switch (src.state)
+			if (2 to 3)
+				light.set_brightness(src.state == 2 ? src.active_brightness : src.alert_brightness)
+				light.enable()
+			if (1)
+				light.disable()
+				if (src.host_id && change)
+					SPAWN_DBG(0)
+						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
+			if (0)
+				light.disable()
+				if (src.host_id && change)
+					SPAWN_DBG(0)
+						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
+
+		return
+	proc
 		beam_crossed() //Called when anything solid crosses the beam, places us into the alert state.
 			if (src.state != 1)
 				return
@@ -3161,17 +3164,18 @@
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				src.icon_state = "heptemitter-p"
-				if (src.beam)
-					//qdel(src.beam)
-					src.beam.dispose()
-			else
-				src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
-			return
+	update_icon()
+		. = ..()
+		if (status & (NOPOWER|BROKEN))
+			src.icon_state = "heptemitter-p"
+			if (src.beam)
+				//qdel(src.beam)
+				src.beam.dispose()
+		else
+			src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
+		return
 
+	proc
 		generate_beam()
 			if ((status & (NOPOWER|BROKEN)) || !crystalCount)
 				return 0
@@ -3633,14 +3637,15 @@
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				src.icon_state = "[setup_base_icon_state]-p"
-			else
-				src.icon_state = "[setup_base_icon_state][src.active ? "1" : "0"]"
-			return
+	update_icon()
+		. = ..()
+		if (status & (NOPOWER|BROKEN))
+			src.icon_state = "[setup_base_icon_state]-p"
+		else
+			src.icon_state = "[setup_base_icon_state][src.active ? "1" : "0"]"
+		return
 
+	proc
 		//Generate html interface to appear in interaction window above the host connection controls
 		return_html_interface()
 			return

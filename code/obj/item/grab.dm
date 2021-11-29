@@ -335,7 +335,10 @@
 
 		return 0
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				icon_state = "reinforce"
@@ -777,7 +780,7 @@
 		qdel(src)
 
 	update_icon()
-		.= 0
+		. = ..(override_parent = TRUE)
 
 	do_resist()
 		.= 0

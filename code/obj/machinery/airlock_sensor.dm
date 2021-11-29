@@ -13,7 +13,8 @@ obj/machinery/airlock_sensor
 	var/on = 1
 	var/alert = 0
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if(on)
 			if(alert)
 				icon_state = "airlock_sensor_alert"

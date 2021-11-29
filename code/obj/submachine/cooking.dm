@@ -224,7 +224,8 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if(src.beaker)
 			src.overlays += image(src.icon, "ice_creamer_beaker")
 		else
@@ -996,7 +997,7 @@ table#cooktime a#start {
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:satchel_update_icon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
 				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
 			return
@@ -1242,7 +1243,8 @@ var/list/mixer_recipes = list()
 			src.updateUsrDialog()
 			return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!src || !istype(src))
 			return
 

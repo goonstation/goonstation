@@ -87,7 +87,7 @@
 	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
-
+	. = ..()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
 		ClearAllOverlays()
@@ -232,13 +232,13 @@
 						if (5)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 0
-								theAPC.updateicon()
+								theAPC.update_icon()
 								theAPC.update()
 								src.visible_message("<span class='alert'>The lights mysteriously go out!</span>")
 						if (6)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 3
-								theAPC.updateicon()
+								theAPC.update_icon()
 								theAPC.update()
 
 			else if (src.det.part_fs.time < 10 && src.det.part_fs.time > 7)  //EXPLOSION IMMINENT

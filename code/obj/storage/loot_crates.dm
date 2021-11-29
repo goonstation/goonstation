@@ -396,6 +396,7 @@
 		return
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		if(open) icon_state = icon_opened
 		else icon_state = icon_closed
 

@@ -148,7 +148,7 @@
 
 			for(var/datum/targetable/B in src.abilities)
 				if(istype(B.object, /atom/movable/screen/ability) && !istype(B.object, /atom/movable/screen/ability/topBar))
-					B.object.updateIcon()
+					B.object.update_icon()
 			return
 
 	proc/updateText(var/called_by_owner = 0)
@@ -419,7 +419,10 @@
 		owner = null
 		..()
 
-	proc/updateIcon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		src.overlays.Cut()
 		if (owner.waiting_for_hotkey)
 			src.overlays += src.binding
@@ -596,7 +599,8 @@
 		..()
 
 
-	updateIcon()
+	update_icon()
+		. = ..(override_parent = TRUE)
 		var/mob/M = get_controlling_mob()
 		if (!istype(M) || !M.client)
 			return null
@@ -657,7 +661,7 @@
 
 	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
 
-		updateIcon()
+		update_icon()
 
 		if (owner.special_screen_loc)
 			src.screen_loc = owner.special_screen_loc

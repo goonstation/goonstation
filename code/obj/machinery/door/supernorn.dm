@@ -34,7 +34,8 @@
 	icon = 'icons/Testing/newicons/obj/NEWdoors/door_maintenance.dmi'
 	req_access = list(access_maint_tunnels*/
 
-/obj/machinery/door/supernorn/update_icon()
+/obj/machinery/door/supernorn/update_icon(toggling, override_parent = TRUE)
+	. = ..()
 	if (vertical)
 		icon_state = p_open ? "vopened" : "vclosed"
 	else

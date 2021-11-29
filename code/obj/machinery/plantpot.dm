@@ -927,7 +927,8 @@
 		UpdateOverlays(src.water_sprite, "water_fluid")
 		UpdateOverlays(src.water_meter, "water_meter")
 
-	proc/update_icon() //plant icon stuffs
+	update_icon() //plant icon stuffs
+		. = ..()
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
@@ -1430,7 +1431,7 @@
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
 							I.add_fingerprint(user)
-				SA.satchel_updateicon()
+				SA.satchel_update_icon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~

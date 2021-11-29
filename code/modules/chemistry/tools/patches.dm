@@ -62,7 +62,10 @@
 			src.reagents.total_temperature = src.reagents.temperature_min
 
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			icon_state = "[src.style]1"
@@ -328,6 +331,7 @@
 	icon_state = "patch_med"
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 /obj/item/reagent_containers/patch/vr/bruise
@@ -494,7 +498,8 @@
 	proc/can_operate_on(atom/A)
 		.= (iscarbon(A) || ismobcritter(A))
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
@@ -685,7 +690,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 		..()
 		update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 4), 1, 4))
 			if (!src.fluid_image)

@@ -647,7 +647,8 @@ CONTAINS:
 			defib = null
 		..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
@@ -826,7 +827,8 @@ CONTAINS:
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		switch (src.uses)
 			if (0 to -INFINITY)
 				src.icon_state = "bandage-item-0"
@@ -1060,7 +1062,7 @@ CONTAINS:
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)
@@ -1120,7 +1122,8 @@ CONTAINS:
 			AM.set_loc(src.loc)
 		..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"

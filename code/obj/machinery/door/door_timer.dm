@@ -316,7 +316,8 @@
 /obj/machinery/door_timer/attack_hand(mob/user)
 	return src.ui_interact(user)
 
-/obj/machinery/door_timer/proc/update_icon()
+/obj/machinery/door_timer/update_icon()
+	. = ..()
 	if (status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return

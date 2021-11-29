@@ -201,7 +201,10 @@
 		SPAWN_DBG(1 DECI SECOND)
 			update_icon()
 
-	update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
@@ -288,6 +291,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
@@ -337,6 +341,7 @@ obj/item/storage/wall/clothingrack/hatrack
 			update_icon()
 
 	update_icon()
+		. = ..()
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "shelf"
@@ -361,6 +366,7 @@ obj/item/storage/wall/clothingrack/hatrack
 			update_icon()
 
 	update_icon()
+		. = ..()
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "shelf"

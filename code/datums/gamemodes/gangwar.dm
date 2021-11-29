@@ -921,7 +921,8 @@
 		SPAWN_DBG(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if(health <= 0)
 			src.UpdateOverlays(null, "light")
 			src.UpdateOverlays(null, "screen")
@@ -1098,7 +1099,7 @@
 
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
-				S.satchel_updateicon()
+				S.satchel_update_icon()
 				hadcannabis = 1
 
 			if(hadcannabis)

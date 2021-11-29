@@ -303,7 +303,8 @@
 		// animate_bumble(src)
 		src.is_dancing = 0
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.has_color_overlay && src.color)
 			src.icon_color = src.color
 			src.color = null

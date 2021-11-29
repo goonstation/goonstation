@@ -124,7 +124,8 @@ obj/machinery/recharger
 		charge_status = STATUS_INACTIVE
 		src.update_icon()
 
-/obj/machinery/recharger/proc/update_icon()
+/obj/machinery/recharger/update_icon()
+	. = ..()
 	if (status & NOPOWER || charge_status == STATUS_INACTIVE)
 		// No power - show blank machine
 		src.icon_state = sprite_empty

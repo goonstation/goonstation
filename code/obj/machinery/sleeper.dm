@@ -240,7 +240,7 @@
 	anchored = 1
 	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -285,7 +285,8 @@
 			occupant = null
 		..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
 		return

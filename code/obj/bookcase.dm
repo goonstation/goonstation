@@ -74,7 +74,8 @@
 //this is polished up A LOT from the last version
 //~adhara <3
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		ClearSpecificOverlays("top_shelf", "middle_shelf", "bottom_shelf") //lets avoid any weird ghosts
 		var/image/top_image = null //initialise these 3 so we can set them inside of the conditionals
 		var/image/middle_image = null

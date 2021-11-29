@@ -107,7 +107,8 @@
 		if (M in range(1, T))
 			myMic.talk_into(M, msg)
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (myMic)
 			switch (myMic.icon_state)
 				if ("radio_mic1")

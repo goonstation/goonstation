@@ -505,7 +505,8 @@ Broken RCD + Effects
 			//if(map_setting == "COG2") T.set_dir(user.dir)
 			T.autoclose = 1
 
-	proc/update_icon() //we got fancy rcds now
+	update_icon() //we got fancy rcds now
+		. = ..()
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0

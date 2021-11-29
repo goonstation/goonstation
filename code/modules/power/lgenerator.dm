@@ -66,8 +66,8 @@
 		src.updateUsrDialog()
 		return
 
-	proc/update_icon()
-
+	update_icon()
+		. = ..()
 		if (src.active)
 			src.UpdateOverlays(spin_sprite, "spin")
 			light.enable()

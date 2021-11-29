@@ -107,11 +107,12 @@
 	New()
 		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/update_icon)
 		..()
 		update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!src.flash_mode)
 			inventory_counter.update_text("")
 		else

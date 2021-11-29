@@ -70,9 +70,6 @@
 					I.emp_act()
 		return
 
-	proc/update_icon()
-		return
-
 	proc/make_my_stuff() // use this rather than overriding the container's New()
 		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
 			return 0

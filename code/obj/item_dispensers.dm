@@ -66,7 +66,8 @@
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.amount <= 0)
 			src.icon_state = src.empty_icon_state
 		else

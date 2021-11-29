@@ -31,7 +31,8 @@ obj/machinery/air_vendor
 		..()
 		gas_prototype = new /datum/gas_mixture
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if(status & BROKEN)
 			icon_state = "O2vend_broken"
 			return

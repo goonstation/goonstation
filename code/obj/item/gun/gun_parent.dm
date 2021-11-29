@@ -452,9 +452,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return list("You have no idea what the hell this thing is!")
 	return ..()
 
-/obj/item/gun/proc/update_icon()
-	return 0
-
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	boutput(user, "<span class='alert'>*click* *click*</span>")
 	if (!src.silenced)

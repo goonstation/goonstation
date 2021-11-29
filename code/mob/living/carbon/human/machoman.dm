@@ -1190,7 +1190,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				for (var/area/R in A.related)
 					SPAWN_DBG(0)
 						R.eject = 1
-						R.updateicon()
+						R.update_icon()
 			siren.repeat = 1
 			siren.channel = 5
 			boutput(world, siren)
@@ -1226,7 +1226,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					for (var/area/R in A.related)
 						SPAWN_DBG(0)
 							R.eject = 0
-							R.updateicon()
+							R.update_icon()
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_meteor
 */
 	emote(var/act, var/emoteTarget = null)

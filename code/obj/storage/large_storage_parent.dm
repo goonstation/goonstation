@@ -90,7 +90,10 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (src.open)
 			flick(src.opening_anim,src)
 			src.icon_state = src.icon_opened
@@ -189,7 +192,7 @@
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:satchel_update_icon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [src]!", "blue")
 				else
@@ -809,8 +812,10 @@
 			src.net_id = generate_net_id(src)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
 
-	update_icon()
-		..()
+	update_icon(override_parent = FALSE)
+		..(override_parent)
+		if (override_parent)
+			return
 		if (!src.open)
 			src.icon_state = src.icon_closed
 

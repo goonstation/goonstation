@@ -582,7 +582,8 @@
 // haine: these can just inherit the parent name and description vOv
 	cigtype = /obj/item/clothing/mask/cigarette/syndicate
 
-/obj/item/cigpacket/proc/update_icon()
+/obj/item/cigpacket/update_icon()
+	. = ..()
 	src.overlays = null
 	if (length(src.contents) == 0)
 		src.icon_state = "[src.package_style]0"
@@ -671,7 +672,10 @@
 	..()
 	src.update_icon()
 
-/obj/item/cigarbox/proc/update_icon()
+/obj/item/cigarbox/update_icon(override_parent = FALSE)
+	if (override_parent)
+		return
+	. = ..()
 	src.overlays = null
 	if (src.cigcount <= 0)
 		src.icon_state = "[src.package_style]"
@@ -732,6 +736,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/gold/update_icon()
+	. = ..(override_parent = TRUE)
 	src.overlays = null
 	if (src.cigcount <= 0)
 		src.icon_state = "[src.package_style]"
@@ -871,7 +876,8 @@
 	attack()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.match_amt == -1)
 			src.icon_state = "matchbook6"
 			return

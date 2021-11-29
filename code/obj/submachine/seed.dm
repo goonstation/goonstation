@@ -679,7 +679,7 @@
 					boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-				S.satchel_updateicon()
+				S.satchel_update_icon()
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -1020,7 +1020,7 @@
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
+			S.satchel_update_icon()
 			src.update_icon()
 			src.updateUsrDialog()
 
@@ -1078,7 +1078,8 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-/obj/submachine/chem_extractor/proc/update_icon()
+/obj/submachine/chem_extractor/update_icon()
+	. = ..()
 	if (src.ingredients.len)
 		src.icon_state = "reex-on"
 	else

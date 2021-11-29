@@ -26,8 +26,8 @@
 
 */
 
-/obj/effects/foam/proc/update_icon()
-
+/obj/effects/foam/update_icon()
+	. = ..()
 	src.overlays.len = 0
 	icon_state = metal ? "mfoam" : "foam"
 	if(src.reagents && !metal)
@@ -59,7 +59,7 @@
 		if(metal)
 			var/obj/foamedmetal/M = new(src.loc)
 			M.metal = metal
-			M.updateicon()
+			M.update_icon()
 
 		if(metal)
 			flick("mfoam-disolve", src)

@@ -54,7 +54,8 @@
 
 		update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.contents.len)
 			src.icon_state = "mason_jar_green"
 

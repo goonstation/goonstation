@@ -255,7 +255,8 @@
 		update_icon()
 		updateUsrDialog()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.overlays -= src.icon_beaker
 		if (src.beaker)
 			src.overlays += src.icon_beaker
@@ -1045,7 +1046,7 @@ datum/chemicompiler_core/stationaryCore
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
+			S.satchel_update_icon()
 			src.updateUsrDialog()
 
 		else

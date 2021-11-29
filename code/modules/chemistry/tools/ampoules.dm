@@ -20,7 +20,8 @@
 	else
 		. += "<br>It's empty."
 
-/obj/item/reagent_containers/ampoule/proc/update_icon()
+/obj/item/reagent_containers/ampoule/update_icon()
+	. = ..()
 	if(icon_state != "amp-[color_id]")
 		icon_state = "amp-[color_id]"
 

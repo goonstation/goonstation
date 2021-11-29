@@ -36,7 +36,10 @@
 					src.link.master = src
 			src.net_id = generate_net_id(src)
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "shieldgen0"
 			src.UpdateOverlays(null, "top_lights")
@@ -208,6 +211,7 @@
 	icon_state = "engine1"
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 /obj/machinery/shield_generator/console_lower
@@ -215,6 +219,7 @@
 	icon_state = "engine2"
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 /* ==================== Computer ==================== */

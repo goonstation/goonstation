@@ -491,7 +491,10 @@
 				boutput(user, "<span class='alert'>You can't seem to make [I] fit into [src].</span>")
 			return 0
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)
 			src.icon_state = src.icon_empty

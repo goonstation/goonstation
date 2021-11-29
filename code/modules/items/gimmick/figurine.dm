@@ -768,6 +768,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		src.update_icon()
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		if (src.icon_state != "cap-[src.ccolor]")
 			src.icon_state = "cap-[src.ccolor]"
 		if (!src.cap_image)

@@ -134,7 +134,8 @@
 			if(istype(src))
 				src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		var/dir_sum
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)

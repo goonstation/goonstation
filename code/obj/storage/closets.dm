@@ -422,7 +422,7 @@
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:satchel_update_icon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else

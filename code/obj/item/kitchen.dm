@@ -564,7 +564,10 @@ TRAYS
 		ordered_contents -= W
 		tooltip_rebuild = 1
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		for (var/i = 1, i <= ordered_contents.len, i++)
 			var/obj/item/F = ordered_contents[i]
 			var/image/I = SafeGetOverlayImage("food_[i]", F.icon, F.icon_state)
@@ -847,6 +850,7 @@ TRAYS
 				src.item_state = "tray_6"
 
 	update_icon() //this is what builds the overlays, it looks at the ordered list of food in the tray and does magic
+		. = ..(override_parent = TRUE)
 		for (var/i = 1, i <= ordered_contents.len, i++)
 			var/obj/item/F = ordered_contents[i]
 			var/image/I = SafeGetOverlayImage("food_[i]", F.icon, F.icon_state)
@@ -1101,7 +1105,8 @@ TRAYS
 	var/platemax = 8
 
 
-	proc/update_icon(mob/user as mob)
+	update_icon(mob/user as mob)
+		. = ..()
 		src.icon_state = "platestack[src.platenum]"
 		src.item_state = "platestack[src.platenum]"
 		user.update_inhands()

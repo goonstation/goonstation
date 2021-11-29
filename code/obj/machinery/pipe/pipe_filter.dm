@@ -127,7 +127,7 @@
 		sleep(3 SECONDS)
 		locked =! locked
 		user.show_message(text("<span class='alert'>Done!</span>"),1)
-		src.updateicon()
+		src.update_icon()
 		return
 	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
 		if(src.locked)
@@ -142,14 +142,14 @@
 		user.show_message(text("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
 		sleep(10 SECONDS)
 		bypassed = 1
-		src.updateicon()
+		src.update_icon()
 		return
 	if (issnippingtool(W) && bypassed)
 		src.add_fingerprint(user)
 		user.show_message(text("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
 		sleep(5 SECONDS)
 		bypassed = 0
-		src.updateicon()
+		src.update_icon()
 		return
 	if(istype(W, /obj/item/weapon/card/emag) && (!emagged))
 		emagged++
@@ -158,7 +158,7 @@
 			O.show_message(text("<span class='alert'>[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('pipes2.dmi', "filter-spark")
 		sleep(0.6 SECONDS)
-		src.updateicon()
+		src.update_icon()
 		return src.Attackhand(user)
 	return src.Attackhand(user)
 
@@ -210,7 +210,7 @@
 			else if (href_list["tg"])
 				// toggle gas
 				src.f_mask ^= text2num_safe(href_list["tg"])
-				src.updateicon()
+				src.update_icon()
 		else
 			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
@@ -227,9 +227,9 @@
 	else
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))	//so all the filters don't come on at once
-		updateicon()
+		update_icon()
 
-/obj/machinery/pipefilter/proc/updateicon()
+/obj/machinery/pipefilter/update_icon()
 	src.overlays = null
 	if(status & NOPOWER)
 		icon_state = "filter-off"

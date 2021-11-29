@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -724,7 +724,8 @@
 		if (map_setting)
 			src.update_neighbors()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			return

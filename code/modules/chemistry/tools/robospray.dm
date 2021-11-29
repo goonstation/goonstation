@@ -34,7 +34,8 @@
 		..()
 		processing_items.Remove(src)
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (botreagents[currentreagent] >= 1)
 			if (!src.fluid_image)
 				src.fluid_image = image(src.icon, "hypoover", -1)

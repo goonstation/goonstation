@@ -972,7 +972,10 @@
 		return
 
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1075,6 +1078,7 @@
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		ENSURE_IMAGE(src.arm_image, src.icon, src.arm_icon_state)
 		src.arm_image.layer = FLY_LAYER+1
 		src.UpdateOverlays(src.arm_image, "arm")
@@ -1179,7 +1183,8 @@
 		if (arm_icon_state)
 			src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1459,7 +1464,8 @@
 		src.update_icon()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.icon_state = "e_chair[src.on]"
 		if (!src.image_belt)
 			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)
@@ -1505,7 +1511,7 @@
 		if (!A.powered(EQUIP))
 			return
 		A.use_power(EQUIP, 5000)
-		A.updateicon()
+		A.update_icon()
 
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
@@ -1533,5 +1539,5 @@
 				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(L.mind)
 
-		A.updateicon()
+		A.update_icon()
 		return

@@ -1189,7 +1189,8 @@ About the new airlock wires panel:
 		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 	return 1
 
-/obj/machinery/door/airlock/update_icon(var/toggling = 0)
+/obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
+	. = ..()
 	if(toggling ? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"

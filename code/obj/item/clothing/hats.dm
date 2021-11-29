@@ -1130,7 +1130,7 @@ proc/filter_trait_hats(var/type)
 			C.use(1000)
 			src.icon_state = text("[]-stun",src.icon_state)
 			src.item_state = text("[]-stun",src.item_state)
-			C.updateicon()
+			C.update_icon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
 			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return

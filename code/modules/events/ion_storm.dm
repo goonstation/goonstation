@@ -192,7 +192,7 @@
 						foundAPC.equipment = 0
 						foundAPC.lighting = 0
 				foundAPC.update()
-				foundAPC.updateicon()
+				foundAPC.update_icon()
 
 			sleep(message_delay * 0.25)
 

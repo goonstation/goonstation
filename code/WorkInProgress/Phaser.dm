@@ -335,7 +335,7 @@ var/const/PHASER_SNIPER = 256
 
 		return
 
-	proc/update_icon()
+	update_icon()
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("phaser[]", ratio)

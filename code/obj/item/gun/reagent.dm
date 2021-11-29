@@ -50,7 +50,10 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 		..()
 
-	update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (src.current_projectile)
 			var/amt = round(src.reagents.total_volume) / round(src.current_projectile.cost)
 			if(fractional)
@@ -204,6 +207,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 		..()
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		if(src.reagents)
 			var/ratio = min(1, src.reagents.total_volume / src.reagents.maximum_volume)
 			ratio = round(ratio, 0.25) * 100

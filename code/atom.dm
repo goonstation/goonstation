@@ -301,6 +301,11 @@
 #endif
 	src.dir = new_dir
 
+/atom/proc/update_icon()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_ICON_UPDATED)
+	return
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")

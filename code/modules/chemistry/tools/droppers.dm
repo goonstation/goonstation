@@ -32,7 +32,8 @@
 		src.update_icon()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!src || !istype(src))
 			return
 

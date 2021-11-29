@@ -37,7 +37,8 @@
 	proc/on_inactive()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if(active != last_active)
 			last_active = active
 			if(src.active)

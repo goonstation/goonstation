@@ -30,7 +30,8 @@
 			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
 
 
-/obj/noticeboard/proc/update_icon()
+/obj/noticeboard/update_icon()
+	. = ..()
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 

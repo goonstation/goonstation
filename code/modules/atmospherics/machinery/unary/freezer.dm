@@ -63,6 +63,7 @@
 
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		if(src.node)
 			if(src.on)
 				icon_state = "freezer_1"

@@ -415,7 +415,6 @@ obj/machinery/embedded_controller
 
 		..()
 
-	proc/update_icon()
 	proc/return_text()
 
 	proc/post_signal(datum/signal/signal, comm_line)
@@ -480,6 +479,7 @@ obj/machinery/embedded_controller/radio/access_controller
 		program = new_prog
 
 	update_icon()
+		. = ..()
 		if(on && program)
 			if(program.memory["processing"])
 				icon_state = "access_control_process"
@@ -552,6 +552,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 		program = new_prog
 
 	update_icon()
+		. = ..()
 		if(on && program)
 			if(program.memory["processing"])
 				icon_state = "airlock_control_process"
@@ -627,6 +628,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		program = new_prog
 
 	update_icon()
+		. = ..()
 		if(!(status & NOPOWER) && program)
 			if(program.memory["processing"])
 				icon_state = "access_control_process"

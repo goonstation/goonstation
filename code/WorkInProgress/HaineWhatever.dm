@@ -837,7 +837,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.hand_dealer -= Card
 		src.cards = shuffle(src.cards)
 
-	proc/update_icon()
+	update_icon()
 		if (!src.overlay_light)
 			src.overlay_light = image('icons/obj/objects.dmi', "BJ-light")
 		src.overlays -= src.overlay_light
@@ -1424,7 +1424,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.name = "[src.color_name] lipstick"
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.icon_state = "spacelipstick[src.open]"
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")

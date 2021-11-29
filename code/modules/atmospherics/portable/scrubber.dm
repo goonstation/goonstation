@@ -19,6 +19,7 @@
 	var/drain_max = 12
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon()
+	. = ..()
 	if(on)
 		icon_state = "pscrubber:1"
 	else

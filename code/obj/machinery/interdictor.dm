@@ -46,7 +46,7 @@
 			src.setMaterial(material_cache["steel"])
 		..()
 		START_TRACKING
-		src.updateicon()
+		src.update_icon()
 
 	disposing()
 		STOP_TRACKING
@@ -117,7 +117,8 @@
 			..()
 
 
-/obj/machinery/interdictor/proc/updateicon()
+/obj/machinery/interdictor/update_icon()
+	. = ..()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
 	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
@@ -179,7 +180,7 @@
 			playsound(src.loc, src.sound_interdict_run, 30, 0)
 
 	if(doupdateicon)
-		src.updateicon()
+		src.update_icon()
 
 
 
@@ -216,7 +217,7 @@
 				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
 					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
 						tear.stabilize()
-	src.updateicon()
+	src.update_icon()
 
 
 //ceases interdiction
@@ -227,7 +228,7 @@
 
 	src.canInterdict = 0
 	playsound(src.loc, src.sound_interdict_off, 40, 1)
-	src.updateicon()
+	src.update_icon()
 
 
 /obj/interdict_edge

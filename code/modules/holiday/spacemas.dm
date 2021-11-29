@@ -495,7 +495,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					return
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.on_fire)
 			if (!src.fire_image)
 				src.fire_image = image('icons/effects/160x160.dmi', "xmastree_2014_burning")

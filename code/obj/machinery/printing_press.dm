@@ -56,7 +56,8 @@
 //Appearance stuff//
 ////////////////////
 
-	proc/update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
+	update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
+		. = ..()
 		if (paper_amt || was_paper)
 			if (GetOverlayImage("paper"))
 				ClearSpecificOverlays("paper")
@@ -71,7 +72,6 @@
 			src.UpdateOverlays(I, "ink")
 		if (is_running)
 			flick("printing_press-work", src)
-			sleep(2.4 SECONDS)
 			return
 		icon_state = "printing_press-idle"
 

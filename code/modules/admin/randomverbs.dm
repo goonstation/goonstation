@@ -2077,7 +2077,7 @@ var/global/night_mode_enabled = 0
 		if(APC.area && APC.area.workplace)
 			APC.do_not_operate = night_mode_enabled
 			APC.update()
-			APC.updateicon()
+			APC.update_icon()
 
 /client/proc/admin_set_ai_vox()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

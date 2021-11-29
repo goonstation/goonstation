@@ -419,7 +419,8 @@
 			..()
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.overlays)
 			src.overlays = null
 		if (src.generic && src.color)
@@ -1891,7 +1892,8 @@
 		return ..()
 
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (open)
 			src.icon_state = "petbee_carton[ourEgg != null]"
 		else

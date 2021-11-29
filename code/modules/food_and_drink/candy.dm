@@ -309,7 +309,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			SPAWN_DBG(0)
 				src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.icon_random)
 			return
 		if (src.reagents)

@@ -74,16 +74,17 @@
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				//src.icon_state = "heptemitter-p"
-				if (src.beam)
-					//qdel(src.beam)
-					src.beam.dispose()
-			//else
-				//src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
-			return
+
+	update_icon()
+		. = ..()
+		if (status & (NOPOWER|BROKEN))
+			//src.icon_state = "heptemitter-p"
+			if (src.beam)
+				//qdel(src.beam)
+				src.beam.dispose()
+		//else
+			//src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
+		return
 
 
 

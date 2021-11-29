@@ -283,6 +283,7 @@
 		icon_state = "Goldbuddy0"
 
 		update_icon()
+			. = ..(override_parent = TRUE)
 			var/emotion_image = null
 
 			if(!src.on)
@@ -1788,60 +1789,6 @@
 			onclose(user, "guardbot")
 			return
 
-		update_icon()
-			var/emotion_image = null
-
-			if(!src.on)
-				src.icon_state = "robuddy0"
-
-			else if(src.stunned)
-				src.icon_state = "robuddya"
-
-			else if(src.idle)
-				src.icon_state = "robuddy_idle"
-
-			else
-				if (src.emotion)
-					emotion_image = image(src.icon, "face-[src.emotion]")
-				src.icon_state = "robuddy1"
-
-			src.overlays = list( emotion_image, src.bedsheet ? image(src.icon, "bhat-ghost[src.bedsheet]") : null, src.costume_icon ? costume_icon : null)
-
-			if (src.hat && !src.hat_shown)
-				var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = 9.5) //TODO LAYER
-				hat_image.pixel_x = hat_x_offset
-				hat_image.pixel_y = hat_y_offset
-				src.underlays = list(hat_image)
-				src.hat_shown = 1
-
-			if (src.budgun)
-				src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
-				if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
-					var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
-					if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
-						lawbringer_lights.icon_state = "old-lawbringer-d100"
-					switch(lawbringer_state)	// ugh
-						if ("clown")
-							lawbringer_lights.color = "#FFC0CB"
-						if ("detain")
-							lawbringer_lights.color = "#FFFF00"
-						if ("pulse")
-							lawbringer_lights.color = "#EEEEFF"
-						if ("knockout")
-							lawbringer_lights.color = "#008000"
-						if ("smoke")
-							lawbringer_lights.color = "#0000FF"
-						if ("execute")
-							lawbringer_lights.color = "#00FFFF"
-						if ("hotshot")
-							lawbringer_lights.color = "#FF0000"
-						if ("bigshot")
-							lawbringer_lights.color = "#551A8B"
-					src.overlays += lawbringer_lights
-
-			src.icon_needs_update = 0
-			return
-
 		set_beacon_freq(var/newfreq)
 			if (!newfreq) return
 			newfreq = sanitize_frequency(newfreq)
@@ -1853,6 +1800,63 @@
 			newfreq = sanitize_frequency(newfreq)
 			src.control_freq = newfreq
 			get_radio_connection_by_id(src, "control").update_frequency(newfreq)
+
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
+		var/emotion_image = null
+
+		if(!src.on)
+			src.icon_state = "robuddy0"
+
+		else if(src.stunned)
+			src.icon_state = "robuddya"
+
+		else if(src.idle)
+			src.icon_state = "robuddy_idle"
+
+		else
+			if (src.emotion)
+				emotion_image = image(src.icon, "face-[src.emotion]")
+			src.icon_state = "robuddy1"
+
+		src.overlays = list( emotion_image, src.bedsheet ? image(src.icon, "bhat-ghost[src.bedsheet]") : null, src.costume_icon ? costume_icon : null)
+
+		if (src.hat && !src.hat_shown)
+			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = 9.5) //TODO LAYER
+			hat_image.pixel_x = hat_x_offset
+			hat_image.pixel_y = hat_y_offset
+			src.underlays = list(hat_image)
+			src.hat_shown = 1
+
+		if (src.budgun)
+			src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
+			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
+				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
+				if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
+					lawbringer_lights.icon_state = "old-lawbringer-d100"
+				switch(lawbringer_state)	// ugh
+					if ("clown")
+						lawbringer_lights.color = "#FFC0CB"
+					if ("detain")
+						lawbringer_lights.color = "#FFFF00"
+					if ("pulse")
+						lawbringer_lights.color = "#EEEEFF"
+					if ("knockout")
+						lawbringer_lights.color = "#008000"
+					if ("smoke")
+						lawbringer_lights.color = "#0000FF"
+					if ("execute")
+						lawbringer_lights.color = "#00FFFF"
+					if ("hotshot")
+						lawbringer_lights.color = "#FF0000"
+					if ("bigshot")
+						lawbringer_lights.color = "#551A8B"
+				src.overlays += lawbringer_lights
+
+		src.icon_needs_update = 0
+		return
 
 	process()
 		. = ..()

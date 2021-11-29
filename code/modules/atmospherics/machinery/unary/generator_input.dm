@@ -9,6 +9,7 @@
 	var/update_cycle
 //
 	update_icon()
+		. = ..()
 		if(node)
 			icon_state = "intact"
 		else

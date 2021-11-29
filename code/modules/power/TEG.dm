@@ -377,6 +377,7 @@
 		update_icon()
 
 	update_icon()
+		. = ..()
 		if(src.status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
 		else if(src.last_pressure_delta >= src.min_circ_pressure)
@@ -627,7 +628,7 @@ datum/pump_ui/circulator_ui
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 
-		src.updateicon()
+		src.update_icon()
 		src.circ1?.update_icon()
 		src.circ2?.update_icon()
 
@@ -674,7 +675,7 @@ datum/pump_ui/circulator_ui
 			if(!src.semiconductor)
 				semiconductor = new(src)
 
-			updateicon()
+			update_icon()
 
 	disposing()
 		src.circ1?.generator = null
@@ -689,8 +690,8 @@ datum/pump_ui/circulator_ui
 		if(dist <= 5 && semiconductor_repair)
 			. += "<br>[semiconductor_repair]"
 
-	proc/updateicon()
-
+	update_icon()
+		. = ..()
 		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
 		else if(status & (BROKEN))
@@ -842,7 +843,7 @@ datum/pump_ui/circulator_ui
 			spam_limiter = 1
 			lastgenlev = genlev
 			last_max_warning = warnings
-			updateicon()
+			update_icon()
 			if(!genlev)
 				running = 0
 			else if (genlev && !running)
@@ -851,7 +852,7 @@ datum/pump_ui/circulator_ui
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
 		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
-			// Allow for klaxon to trigger when off cooldown if updateicon() not called
+			// Allow for klaxon to trigger when off cooldown if update_icon() not called
 			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
 				playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 
@@ -1094,7 +1095,7 @@ datum/pump_ui/circulator_ui
 		// Why don't the circulators get this from the APC directly?
 		src.circ1?.power_change()
 		src.circ2?.power_change()
-		updateicon()
+		update_icon()
 
 /obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -1211,7 +1212,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				playsound(generator, "sound/items/Scissor.ogg", 80, 1)
 				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
 				generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
-				generator.updateicon()
+				generator.update_icon()
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
 				generator.semiconductor_state = TEG_SEMI_STATE_MISSING
@@ -1297,14 +1298,14 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 						qdel(the_tool)
 					else if(istype(the_tool, /obj/item/cable_coil))
 						var/obj/item/cable_coil/C = the_tool
-						C.updateicon()
+						C.update_icon()
 
 					generator.semiconductor_state = TEG_SEMI_STATE_CONNECTED
 					boutput(owner, "<span class='notice'>You wire up the semicondoctor to \the [generator].</span>")
 					playsound(generator, "sound/items/Deconstruct.ogg", 80, 1)
 					generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
 					generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
-					generator.updateicon()
+					generator.update_icon()
 
 			if (TEG_SEMI_STATE_CONNECTED)
 				generator.semiconductor_state = TEG_SEMI_STATE_UNSCREWED
@@ -1338,6 +1339,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/current_heat_capacity = 3000
 
 	update_icon()
+		. = ..()
 		if(node)
 			icon_state = "intact_on"
 		else

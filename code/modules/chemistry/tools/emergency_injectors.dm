@@ -22,7 +22,8 @@
 	on_reagent_change()
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.underlays = null
 		if (reagents.total_volume)
 			icon_state = "emerg_inj-[label]"

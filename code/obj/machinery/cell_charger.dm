@@ -28,9 +28,10 @@
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
-		updateicon()
+		update_icon()
 
-/obj/machinery/cell_charger/proc/updateicon()
+/obj/machinery/cell_charger/update_icon()
+	. = ..()
 	icon_state = "ccharger[charging ? 1 : 0]"
 
 	if(charging && !(status & (BROKEN|NOPOWER)) )
@@ -59,11 +60,11 @@
 		else
 			charging.set_loc(src.loc)
 		charging.add_fingerprint(user)
-		charging.updateicon()
+		charging.update_icon()
 		src.charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
-		updateicon()
+		update_icon()
 
 /obj/machinery/cell_charger/process(mult)
 	if (status & BROKEN)
@@ -76,13 +77,13 @@
 	//boutput(world, "ccpt [charging] [stat]")
 	if(status & NOPOWER)
 		if(src.overlays && length(src.overlays))
-			src.updateicon()
+			src.update_icon()
 		return
 	if(!charging)
-		src.updateicon()
+		src.update_icon()
 		return
 
 	var/added = charging.give(src.chargerate * mult)
 	use_power(added / CELLRATE)
 
-	src.updateicon()
+	src.update_icon()

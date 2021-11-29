@@ -297,7 +297,8 @@
 		linked_pianos = list()
 		update_icon(0)
 
-	proc/update_icon(var/active) //1: active, 0: inactive
+	update_icon(var/active) //1: active, 0: inactive
+		. = ..()
 		if (panel_exposed)
 			icon_state = "player_piano_open"
 			return

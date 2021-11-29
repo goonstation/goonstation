@@ -32,6 +32,7 @@ obj/machinery/atmospherics/binary/volume_pump
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
+		. = ..()
 		if(node1&&node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else

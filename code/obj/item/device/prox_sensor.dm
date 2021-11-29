@@ -17,7 +17,8 @@
 	SPAWN_DBG(0)
 		src.sense()
 
-/obj/item/device/prox_sensor/proc/update_icon()
+/obj/item/device/prox_sensor/update_icon()
+	. = ..()
 	var/n = 0
 	if(armed) n = 1
 	else if(timing) n = 2

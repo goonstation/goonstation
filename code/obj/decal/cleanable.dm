@@ -1253,7 +1253,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.icon_state = "fungus[max(1,min(3, amount))]"
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
@@ -1437,14 +1438,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.update_icon()
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
 
 	setup()
 		..()
-		src.updateIcon()
+		src.update_icon()
 		health = 30
 		var/turf/T = get_turf(src)
 		if (T)
@@ -1496,7 +1497,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
+		. = ..()
 		if (!src.loc)
 			return
 		var/dirs = 0
@@ -1522,7 +1524,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingSalt(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/saltpile/S in orange(1,T))
-		S.updateIcon()
+		S.update_icon()
 
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
@@ -1537,12 +1539,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.update_icon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	setup()
 		..()
-		src.updateIcon()
+		src.update_icon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	disposing()
@@ -1554,7 +1556,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
+		. = ..()
 		var/dirs = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
@@ -1629,7 +1632,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingMagnesium(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/magnesiumpile/S in orange(1,T))
-		S.updateIcon()
+		S.update_icon()
 
 /obj/decal/cleanable/nitrotriiodide
 	name = "gooey mess"

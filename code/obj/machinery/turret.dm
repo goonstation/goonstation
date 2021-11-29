@@ -478,9 +478,10 @@
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
 			turret.setState(enabled, lethal)
-			src.updateicon()
+			src.update_icon()
 
-/obj/machinery/turretid/proc/updateicon()
+/obj/machinery/turretid/update_icon()
+	. = ..()
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "ai1"

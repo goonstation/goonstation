@@ -169,7 +169,8 @@
 			src.accounts += new_account
 			src.current_account = new_account
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!beaker)
 			src.icon_state = src.icon_base
 		else

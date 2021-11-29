@@ -3652,7 +3652,7 @@ ABSTRACT_TYPE(/area/mining)
 		return
 	if (!( src.fire ))
 		src.fire = 1
-		src.updateicon()
+		src.update_icon()
 		src.mouse_opacity = 0
 		var/list/cameras = list()
 		for_by_tcl(F, /obj/machinery/firealarm)
@@ -3673,7 +3673,7 @@ ABSTRACT_TYPE(/area/mining)
 	if (src.fire)
 		src.fire = 0
 		src.mouse_opacity = 0
-		src.updateicon()
+		src.update_icon()
 
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
@@ -3686,7 +3686,8 @@ ABSTRACT_TYPE(/area/mining)
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
-/area/proc/updateicon()
+/area/update_icon()
+	. = ..()
 	if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
@@ -3725,7 +3726,7 @@ ABSTRACT_TYPE(/area/mining)
 		var/obj/machinery/M = X
 		M?.power_change()
 
-	updateicon()
+	update_icon()
 
 /**
   * Returns the current usage of the specified channel

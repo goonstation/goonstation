@@ -39,7 +39,7 @@
 		else
 			turn_off()
 
-		updateicon()
+		update_icon()
 
 	Move(var/atom/newloc,var/newdir)
 		. = ..(newloc,newdir)
@@ -63,5 +63,5 @@
 		turn_off()
 		turn_on()
 
-	proc/updateicon()
+	update_icon()
 		icon_state = "pointer[on]"

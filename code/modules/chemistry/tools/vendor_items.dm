@@ -27,7 +27,8 @@
 	on_reagent_change()
 		update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "minivial"
@@ -73,7 +74,8 @@
 	on_reagent_change()
 		update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "vendbag"

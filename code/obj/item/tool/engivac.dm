@@ -41,7 +41,8 @@ obj/item/engivac
 ///				SPRITE-ALTERING PROCS
 ///
 
-obj/item/engivac/proc/update_icon(mob/M = null)
+obj/item/engivac/update_icon(mob/M = null)
+	. = ..()
 	item_state = "engivac_" + (held_toolbox ? held_toolbox.icon_state : "")
 	wear_state = item_state
 	underlays = null

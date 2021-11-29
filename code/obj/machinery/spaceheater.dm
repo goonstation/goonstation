@@ -26,7 +26,8 @@
 		update_icon()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (on)
 			if(heating)
 				icon_state = "sheaterH"
@@ -180,7 +181,7 @@
 				if("cellremove")
 					if(open && cell && !usr.equipped())
 						usr.put_in_hand_or_drop(cell)
-						cell.updateicon()
+						cell.update_icon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -278,7 +279,8 @@
 		update_icon()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (on)
 			if(heating)
 				icon_state = "saunaH"
@@ -386,7 +388,7 @@
 				if("cellremove")
 					if(open && cell && !usr.equipped())
 						usr.put_in_hand_or_drop(cell)
-						cell.updateicon()
+						cell.update_icon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")

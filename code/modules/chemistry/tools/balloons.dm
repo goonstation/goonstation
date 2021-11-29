@@ -31,7 +31,8 @@
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.reagents)
 			if (src.reagents.total_volume)
 				src.icon_state = "balloon_[src.balloon_color]_[src.reagents.has_reagent("helium") || src.reagents.has_reagent("hydrogen") ? "inflated" : "full"]"

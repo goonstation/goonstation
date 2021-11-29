@@ -289,7 +289,8 @@ var/list/ban_from_airborne_fluid = list()
 			if (t.active_airborne_liquid && t.active_airborne_liquid.group && src.group != t.active_airborne_liquid.group)
 				t.active_airborne_liquid.group.join(src.group)
 
-	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
+	update_icon(var/neighbor_was_removed = 0, override_parent = TRUE)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
+		. = ..()
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?

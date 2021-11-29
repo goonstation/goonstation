@@ -20,7 +20,7 @@
 		if(cell_type)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/update_icon)
 		..()
 		update_icon()
 
@@ -41,7 +41,10 @@
 		else
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
-	update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
@@ -1025,8 +1028,10 @@
 		set_current_projectile(new/datum/projectile/laser/pred)
 		projectiles = list(new/datum/projectile/laser/pred)
 
-	update_icon()
+	update_icon(override_parent = FALSE)
 		..()
+		if (override_parent)
+			return
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
@@ -1040,6 +1045,7 @@
 	icon_state = "wavegun"
 
 	update_icon() // Necessary. Parent's got a different sprite now (Convair880).
+		. = ..(override_parent = TRUE)
 		return
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun

@@ -143,7 +143,8 @@
 	CritterAttack(mob/M)
 		..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!src.toolbox_style)
 			src.toolbox_style = pick(src.toolbox_list)
 			src.dead_state = "mimic_[src.toolbox_style]1-dead"

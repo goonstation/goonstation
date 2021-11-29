@@ -156,7 +156,7 @@
 			qdel(W)
 			src.cup_amount ++
 			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.updateicon()
+			src.update_icon()
 		else return ..()
 
 	attack_hand(mob/user as mob)
@@ -168,9 +168,10 @@
 			src.cup_amount--
 			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/espressocup
 			user.put_in_hand_or_drop(P)
-			src.updateicon()
+			src.update_icon()
 
-	proc/updateicon()
+	update_icon()
+		. = ..()
 		src.icon_state = "cuprack[src.cup_amount]" //sets the icon_state to the ammount of cups on the rack
 		return
 
@@ -315,7 +316,7 @@
 			qdel(W)
 			src.cup_amount ++
 			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.updateicon()
+			src.update_icon()
 		else return ..()
 
 	attack_hand(mob/user as mob)
@@ -327,8 +328,9 @@
 			src.cup_amount--
 			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/mug
 			user.put_in_hand_or_drop(P)
-			src.updateicon()
+			src.update_icon()
 
-	proc/updateicon()
+	update_icon()
+		. = ..()
 		src.icon_state = "mugrack[src.cup_amount]" //sets the icon_state to the amount of cups on the rack
 		return

@@ -823,7 +823,8 @@
 			return 1
 		else return ..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.underlays = null
 		if (src.broken)
 			src.reagents.clear_reagents()
@@ -1010,7 +1011,10 @@
 	on_reagent_change()
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
@@ -1446,6 +1450,7 @@
 		return
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		return
 
 	throw_impact(var/turf/T)
@@ -1556,7 +1561,8 @@
 	on_reagent_change()
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)
@@ -1643,7 +1649,8 @@
 	on_reagent_change()
 		src.update_icon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
+		. = ..()
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
@@ -1666,7 +1673,8 @@
 	on_reagent_change()
 		src.update_icon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
+		. = ..()
 		if (src.reagents && src.reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()

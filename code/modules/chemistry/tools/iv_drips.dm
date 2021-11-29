@@ -31,7 +31,8 @@
 		if (src.stand)
 			src.stand.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.reagents && src.reagents.total_volume)
 			var/iv_state = max(min(round((src.reagents.total_volume / src.reagents.maximum_volume) * 100, 10) / 10, 100), 0) //Look away, you fool! Like the sun, this section of code is harmful for your eyes if you look directly at it
 			if (!src.fluid_image)
@@ -232,7 +233,8 @@
 			var/list/examine_list = src.IV.examine()
 			return examine_list.Join("\n")
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (!src.IV)
 			src.icon_state = "IVstand"
 			src.name = "\improper IV stand"

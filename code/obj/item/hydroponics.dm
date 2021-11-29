@@ -72,7 +72,8 @@
 		src.check_health()
 		return
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		return
 

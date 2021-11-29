@@ -66,7 +66,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		mantaLever = src
-		updateIcon()
+		update_icon()
 		..()
 //This crap is here so nothing can destroy it.
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -99,7 +99,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(on)
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
-				updateIcon()
+				update_icon()
 				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			else
@@ -107,7 +107,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				on = 1
 				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
 				sleep(7 SECONDS)
-				updateIcon()
+				update_icon()
 				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			return
@@ -125,7 +125,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
-				updateIcon()
+				update_icon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
@@ -133,7 +133,8 @@ var/obj/manta_speed_lever/mantaLever = null
 
 		return
 
-	proc/updateIcon()
+	update_icon()
+		. = ..()
 		if (locked == 1 && on == 1)
 			icon_state = "lever1-locked"
 		if (locked == 1 && on == 0)
@@ -448,7 +449,8 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.broken = 0
 		src.repairstate = 0
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.open == 1)
 			src.icon_state = src.iconopen
 
@@ -740,7 +742,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()

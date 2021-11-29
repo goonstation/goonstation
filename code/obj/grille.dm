@@ -21,7 +21,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -77,7 +77,8 @@
 		connects_to_turf = null
 		event_handler_flags = 0
 
-		update_icon(special_icon_state)
+		update_icon(special_icon_state, override_parent = TRUE)
+			. = ..()
 			if (ruined)
 				return
 
@@ -416,7 +417,10 @@
 					damage_blunt(W.force * 0.5)
 		return
 
-	proc/update_icon(var/special_icon_state)
+	update_icon(var/special_icon_state, override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (ruined)
 			return
 

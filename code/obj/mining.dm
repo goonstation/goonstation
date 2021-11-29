@@ -1437,6 +1437,7 @@
 
 	noborders
 		update_icon()
+			. = ..(override_parent = TRUE)
 			return
 		apply_edge_overlay()
 			return
@@ -1473,7 +1474,10 @@
 		if(ispryingtool(W))
 			src.ReplaceWithSpace()
 
-	update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		src.overlays = list()
 		/*
 		if (!coloration_overlay)
@@ -1593,10 +1597,6 @@
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
-		return
-
-
-	proc/update_icon()
 		return
 
 obj/item/clothing/gloves/concussive
@@ -2157,7 +2157,7 @@ obj/item/clothing/gloves/concussive
 				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
-					PCEL.updateicon()
+					PCEL.update_icon()
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2403,7 +2403,7 @@ var/global/list/cargopads = list()
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 			for (var/obj/item/I in satchel.contents)
 				I.set_loc(target)
-			satchel.satchel_updateicon()
+			satchel.satchel_update_icon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel

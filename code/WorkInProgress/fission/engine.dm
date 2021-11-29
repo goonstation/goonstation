@@ -41,7 +41,7 @@ ENGINE
 			if(src.id == F.id)
 				F.theEngine = src
 
-	proc/updateicon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "enginebrok"
 			active = 0
@@ -59,7 +59,7 @@ ENGINE
 			icon_state = "engineoff"
 
 	power_change()
-		updateicon()
+		update_icon()
 		..()
 
 	process()
@@ -88,7 +88,7 @@ ENGINE
 			src.active = !src.active
 			boutput(user, "You turn [src.active ? "on" : "off"] the engine.")
 			if(src.active == 0) src.lastpower = 0
-			updateicon()
+			update_icon()
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -168,7 +168,7 @@ REACTOR
 		controlRods.len = 5
 
 	process()
-		updateicon()
+		update_icon()
 
 		if (status & BROKEN)
 			return
@@ -261,7 +261,7 @@ REACTOR
 
 	proc/setupCherenkovRad()
 
-	proc/updateicon()
+	update_icon()
 		if (status & BROKEN)
 			icon_state = "reactoroff"
 			return

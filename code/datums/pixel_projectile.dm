@@ -359,7 +359,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	..()
 	return
 
-/obj/item/pixel_gun/proc/update_icon()
+/obj/item/pixel_gun/update_icon()
 	return 0
 
 /obj/item/pixel_gun/proc/process_ammo(var/mob/user)

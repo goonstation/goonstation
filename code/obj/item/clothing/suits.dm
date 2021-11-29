@@ -741,7 +741,8 @@
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		if (src.cape)
 			src.icon_state = "bedcape[src.bcolor ? "-[bcolor]" : null]"
 			src.item_state = src.icon_state

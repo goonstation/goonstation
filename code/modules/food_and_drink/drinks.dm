@@ -346,7 +346,8 @@
 	on_reagent_change()
 		src.update_icon()
 
-	proc/update_icon()
+	update_icon()
+		. = ..()
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))

@@ -66,7 +66,8 @@
 	return src.Attackhand(user)
 
 
-/obj/machinery/dispenser/proc/update_icon()
+/obj/machinery/dispenser/update_icon()
+	. = ..()
 	if (o2tanks > 0 && pltanks > 0)
 		icon_state = "dispenser-both"
 	else

@@ -59,7 +59,7 @@
 
 		terminal.master = src
 
-		updateicon()
+		update_icon()
 
 /obj/machinery/power/pt_laser/disposing()
 	for(var/obj/O in laser_parts)
@@ -82,7 +82,8 @@
 		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
 	return 1
 
-/obj/machinery/power/pt_laser/proc/updateicon(var/started_firing = 0)
+/obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
+	. = ..()
 	overlays = null
 	if(status & BROKEN || charge == 0)
 		overlays += image('icons/obj/pt_laser.dmi', "unpowered")
@@ -170,7 +171,7 @@
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
-		updateicon()
+		update_icon()
 
 /obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
 	if (round(adjusted_output) == 0)
@@ -264,7 +265,7 @@
 	if(!T) return //just in case
 
 	firing = 1
-	updateicon(1)
+	update_icon(1)
 
 	for(var/dist = 0, dist < range, dist += 1) // creates each field tile
 		T = get_step(T, dir)
@@ -282,7 +283,7 @@
 
 /obj/machinery/power/pt_laser/proc/restart_firing()
 	firing = 1
-	updateicon(1)
+	update_icon(1)
 	melt_blocking_objects()
 	update_laser()
 
@@ -452,11 +453,11 @@
 		if(2.0)
 			if (prob(50))
 				status |= BROKEN
-				updateicon()
+				update_icon()
 		if(3.0)
 			if (prob(25))
 				status |= BROKEN
-				updateicon()
+				update_icon()
 	return
 
 /obj/machinery/power/pt_laser/proc/process_laser()

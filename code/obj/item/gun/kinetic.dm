@@ -50,7 +50,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
-	update_icon()
+	update_icon(override_parent = FALSE)
+		. = ..()
+		if (override_parent)
+			return
 		if (src.ammo)
 			inventory_counter.update_number(src.ammo.amount_left)
 		else
@@ -732,6 +735,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. = ..()
 
 	update_icon()
+		. = ..(override_parent = TRUE)
 		if(open)
 			icon_state="guncase"
 		else
