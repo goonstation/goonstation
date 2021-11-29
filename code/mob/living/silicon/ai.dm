@@ -62,7 +62,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/list/terminals = list() //Stuff connected to us over the powernet
-	var/messageLog = null
+	var/messageLog = ""
 	/// controls whether or not the ai will hear termos message notifications
 	var/termMute = FALSE
 	var/hologramdown = 0 //is the hologram downed?
