@@ -1222,6 +1222,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 /obj/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
+	anchored = 1
 	layer = EFFECTS_LAYER
 	blend_mode = BLEND_ADD
 
