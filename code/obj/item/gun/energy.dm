@@ -474,31 +474,6 @@
 
 
 
-//////////////////////////////////////Disruptor
-/obj/item/gun/energy/disruptor
-	name = "Disruptor"
-	icon_state = "disruptor"
-	uses_multiple_icon_states = 1
-	desc = "Disruptor Blaster - Comes equipped with self-charging powercell."
-	m_amt = 4000
-	force = 6.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
-
-	New()
-		set_current_projectile(new/datum/projectile/disruptor)
-		projectiles = list(current_projectile,new/datum/projectile/disruptor/burst,new/datum/projectile/disruptor/high)
-		..()
-		src.update_icon()
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
-			src.icon_state = "disruptor[ratio]"
-		return
-
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "Wave Gun"
