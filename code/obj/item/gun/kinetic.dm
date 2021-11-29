@@ -636,26 +636,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		return ..(hit_atom)
 
-/obj/item/gun/kinetic/smg_old //testing keelin's continuous fire POC
-	name = "submachine gun"
-	desc = "An automatic submachine gun"
-	icon_state = "walthery1"
-	w_class = W_CLASS_SMALL
-	force = MELEE_DMG_SMG
-	contraband = 4
-	caliber = 0.355
-	max_ammo_capacity = 30
-	auto_eject = 1
-
-	continuous = 1
-	c_interval = 1.1
-	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
-
-	New()
-		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
-		..()
-//why do we keep this old crap?! (the one above)- owari
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'

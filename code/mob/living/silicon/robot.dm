@@ -721,9 +721,9 @@
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 						src.real_name = newname
+						src.UpdateName()
 						src.internal_pda.name = "[src]'s Internal PDA Unit"
 						src.internal_pda.owner = "[src]"
-						src.UpdateName()
 						return 1
 					else
 						continue

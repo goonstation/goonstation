@@ -508,9 +508,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
-		else
+		else if(ticker.round_elapsed_ticks > 50) // give server 5 seconds to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
+				if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD)
+					force_start = TRUE
 			else
 				highCpuCount = 0
 			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)

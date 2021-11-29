@@ -28,7 +28,7 @@
 		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
 
 	send_hear()
-		flick("nukie_speaker_actv", src)
+		flick("amp_stack_actv", src)
 
 		last_transmission = world.time
 		var/list/hear = hearers(src.speaker_range, get_turf(src))
@@ -199,6 +199,13 @@
 			boutput(src.the_mob, "<span class='alert'>You are already playing something...</span>")
 			. = FALSE
 
+	proc/is_rock_immune(mob/living/target)
+		if(isvirtual(target))
+			var/mob/living/carbon/human/virtual/V = target
+			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
+		else
+			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+
 	shred
 		name = "Shred"
 		desc = "Lightbreaker Effect"
@@ -216,7 +223,7 @@
 					L.broken(1)
 
 			for(var/mob/living/HH in I.get_speaker_targets())
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					continue
 
 				HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
@@ -233,7 +240,7 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/mob/living/HH in I.get_speaker_targets(2))
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					continue
 
 				HH.take_brain_damage(15)
@@ -254,7 +261,7 @@
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets(-2))
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
@@ -271,7 +278,7 @@
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets())
-				if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+				if(is_rock_immune(HH))
 					HH.delStatus("stunned")
 					HH.delStatus("weakened")
 					HH.delStatus("paralysis")
@@ -401,7 +408,7 @@
 	proc/blast_to_speakers()
 		for(var/mob/living/HH in instrument.get_speaker_targets())
 			// Beneficial Effects
-			if(istype(HH.ears, /obj/item/device/radio/headset/syndicate))
+			if(song.is_rock_immune(HH))
 				for(var/E in src.song.status_effect_ids)
 					HH.setStatus(E, 10 SECONDS)
 			//else
@@ -457,6 +464,10 @@
 		desc = "Refreshed and Hastened!"
 		change = 4
 		movement_modifier = /datum/movement_modifier/death_march
+
+		getTooltip()
+			. = ..()
+			. += " You are moving faster."
 
 	getTooltip()
 		. = "Your stamina regen is increased by [change]."
@@ -545,7 +556,7 @@
 /datum/statusEffect/simplehot/chill_murder // totally not mild stimulants...
 		id = "chill_murder"
 		name = "Murder Beats"
-		desc = "You feel on top of the world!"
+		desc = "Mending tunes to keep on killing to!"
 		exclusiveGroup = "Music"
 		unique = 1
 		tickSpacing = 4 SECONDS
@@ -630,14 +641,14 @@ obj/effects/music
 	New()
 		..()
 		add_filter("outline", 1, outline_filter(size=0.5, color="#444"))
-		src.particles.lifespan = 0
+		src.particles.spawning = 0
 
 	proc/is_playing()
-		. = src.particles.lifespan == 2 SECONDS
+		. = src.particles.spawning == 0.1
 
 	proc/play_notes()
-		src.particles.lifespan = 2 SECONDS
+		src.particles.spawning = 0.1
 
 	proc/stop_notes()
-		src.particles.lifespan = 0
+		src.particles.spawning = 0
 
