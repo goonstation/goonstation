@@ -59,6 +59,8 @@
 
 /// what value must world.cpu cross upwards to trigger automatic profiling
 #define CPU_START_PROFILING_THRESHOLD 200
+/// what value must world.cpu cross upwards to trigger automatic profiling but this one ignores CPU_START_PROFILING_COUNT
+#define CPU_START_PROFILING_IMMEDIATELY_THRESHOLD 500
 /// what value must world.cpu cross downwards to stop automatic profiling
 #define CPU_STOP_PROFILING_THRESHOLD 100
 /// how many ticks in a row does world.cpu needs to be above the threshold to start profiling
