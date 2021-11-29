@@ -1,4 +1,10 @@
 ABSTRACT_TYPE(/obj/machinery/siphon)
+/obj/machinery/siphon
+	New()
+		..()
+
+	disposing()
+		..()
 
 /obj/machinery/siphon/core
 	name = "harmonic siphon"
@@ -22,8 +28,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/list/can_extract = list()
 	///progress in extraction; more valuable materials take more ticks to extract
 	var/extract_ticks = 0
-	///what you're trying to extract; to be implemented alongside net control
-	//var/extraction_target
+	///where extracted minerals are sent
+	var/output_target = null
 
 	//resonance parameters for mineral extraction
 	var/x_torque = 0
@@ -31,14 +37,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/shear = 0
 
 	New()
-		START_TRACKING
-		boutput(world,"YES GETTING THIS FAR") //DEBUG DEBUG DEBUG
-		for(var/datum/siphon_mineral/mineral in concrete_typesof(/datum/siphon_mineral))
-			src.can_extract += new mineral
 		..()
+		for(var/mineral in concrete_typesof(/datum/siphon_mineral))
+			src.can_extract += new mineral
 
 	disposing()
-		STOP_TRACKING
 		..()
 
 	process(var/mult)
@@ -54,8 +57,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			for(var/datum/siphon_mineral/M in src.can_extract)
 				LAGCHECK(LAG_LOW)
 				if(src.extract_ticks >= M.tick_req) //enough mining progress to check
-					boutput(world,"CHECKING [M.name]") //DEBUG DEBUG DEBUG
-					if(M.x_torque)
+					if(M.x_torque) //check if difference between spec and actual is within tolerance
 						var/xtcheck = abs(src.x_torque - M.x_torque)
 						if(xtcheck > M.sens_window) continue
 					if(M.y_torque)
@@ -64,9 +66,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					if(M.shear)
 						var/shearcheck = abs(src.shear - M.shear)
 						if(shearcheck > M.sens_window) continue
-					boutput(world,"[M.name] SUCCESS") //DEBUG DEBUG DEBUG
 					src.extract_ticks = 0
-					new M.product(src.loc)
+					var/atom/yielder += new M.product()
+					yielder.set_loc(src.get_output_location())
 					break
 
 			playsound(src.loc, 'sound/machines/interdictor_operate.ogg', 10, 0)
@@ -81,14 +83,108 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(user,"SHEAR VALUE: [src.shear]")
 		else if(iswrenchingtool(W) && src.mode != "high") //DEBUG DEBUG DEBUG?
 			if(src.mode == "low")
-				src.mode = "active"
+				src.changemode("active")
 			else
-				src.mode = "low"
+				src.changemode("low")
 
-	attack_hand(mob/user) //DEBUG DEBUG DEBUG?
-		src.toggle_drill()
+	attack_hand(mob/user)
+		var/diditwork = src.toggle_drill()
+		if(diditwork)
+			boutput(user,"You manually toggle the siphon's lift mechanism.")
+
+	MouseDrop(over_object, src_location, over_location)
+		if(!isliving(usr))
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the siphon's output target.</span>")
+			return
+
+		if(get_dist(over_object,src) > 1)
+			boutput(usr, "<span class='alert'>The siphon is too far away from the target.</span>")
+			return
+
+		if(get_dist(over_object,usr) > 1)
+			boutput(usr, "<span class='alert'>You are too far away from the target.</span>")
+			return
+
+		if (istype(over_object,/obj/storage/crate/))
+			var/obj/storage/crate/C = over_object
+			if (C.locked || C.welded)
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+			else
+				src.output_target = over_object
+				boutput(usr, "<span class='notice'>You set the siphon to output to [over_object].</span>")
+
+		else if (istype(over_object,/obj/storage/cart/))
+			var/obj/storage/cart/C = over_object
+			if (C.locked || C.welded)
+				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
+			else
+				src.output_target = over_object
+				boutput(usr, "<span class='notice'>You set the siphon to output to [over_object].</span>")
+
+		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
+			var/obj/O = over_object
+			src.output_target = O.loc
+			boutput(usr, "<span class='notice'>You set the siphon to output on top of [O].</span>")
+
+		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
+			src.output_target = over_object
+			boutput(usr, "<span class='notice'>You set the siphon to output to [over_object].</span>")
+
+		else
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+		return
+
+	proc/get_output_location(var/atom/A,var/ejection = 0)
+		if (!src.output_target)
+			return src.loc
+
+		if (get_dist(src.output_target,src) > 1)
+			src.output_target = null
+			return src.loc
+
+		if (istype(src.output_target,/obj/storage/crate/))
+			var/obj/storage/crate/C = src.output_target
+			if (C.locked || C.welded)
+				src.output_target = null
+				return src.loc
+			else
+				if (C.open)
+					return C.loc
+				else
+					return C
+		if (istype(src.output_target,/obj/storage/cart/))
+			var/obj/storage/cart/C = src.output_target
+			if (C.locked || C.welded)
+				src.output_target = null
+				return src.loc
+			else
+				if (C.open)
+					return C.loc
+				else
+					return C
+		else if (istype(src.output_target,/obj/machinery/manufacturer))
+			var/obj/machinery/manufacturer/M = src.output_target
+			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
+				src.output_target = null
+				return src.loc
+			if (A && istype(A,M.base_material_class))
+				return M
+			else
+				return M.loc
+
+		else if (istype(src.output_target,/turf/simulated/floor/) || istype(src.output_target,/turf/unsimulated/floor/))
+			return src.output_target
+
+		else
+			return src.loc
+
+	proc/changemode(var/newmode)
+		src.mode = newmode
+		src.update_fx()
 
 	proc/toggle_drill()
+		. = TRUE
+		if(src.toggling) return FALSE
 		if(src.mode == "high")
 			src.engage_drill()
 		else
@@ -107,16 +203,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				res.y_torque = sign(yadj) * 2 ** (4 - abs(yadj))
 				res.engage_lock()
 			SPAWN_DBG(5 DECI SECONDS)
-				src.mode = "low"
-				src.update_fx()
+				src.changemode("low")
 				src.toggling = FALSE
 
 	proc/disengage_drill()
 		if(src.toggling || src.mode == "high") return
 		src.extract_ticks = 0
 		src.toggling = TRUE
-		src.mode = "high"
-		src.update_fx()
+		src.changemode("high")
 		var/stagger = 0.2 //desync the disengagement a bit
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
 			stagger = stagger + rand(1,2) * 0.3
