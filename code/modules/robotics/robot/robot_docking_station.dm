@@ -320,10 +320,11 @@
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
-			R.name = newname
+			R.real_name = "[newname]"
+			R.UpdateName()
 			if (R.internal_pda)
-				R.internal_pda.name = "[R]'s Internal PDA Unit"
-				R.internal_pda.owner = "[R]"
+				R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+				R.internal_pda.owner = "[R.name]"
 
 		if (href_list["selfservice"])
 			if (isrobot(usr))
