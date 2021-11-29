@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 						var/shearcheck = abs(src.shear - M.shear)
 						if(shearcheck > M.sens_window) continue
 					src.extract_ticks = 0
-					var/atom/yielder = new M.product()
+					var/atom/movable/yielder = new M.product()
 					yielder.set_loc(src.get_output_location())
 					break
 
