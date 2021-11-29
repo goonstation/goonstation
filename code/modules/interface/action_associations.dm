@@ -108,14 +108,11 @@ var/list/action_verbs = list(
 	"wave" = "me_hotkey wave",
 	"flip" = "me_hotkey flip",
 	"scream" = "me_hotkey scream",
-	"whisper" = "whisper",
 	"wink" = "me_hotkey wink",
 	"flex" = "me_hotkey flex",
 	"yawn" = "me_hotkey yawn",
 	"snap" = "me_hotkey snap",
 	"pickup" = "pick-up",
-	"ooc" = "ooc",
-	"looc" = "looc",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
 	"autoscreenshot" = ".autoscreenshot",
@@ -132,6 +129,9 @@ var/list/action_macros = list(
 	"dsay" = "dsaymacro",
 	"say" = "startsay",
 	"say_main_radio" = "radiosay",
+	"ooc" = "ooc",
+	"looc" = "looc",
+	"whisper" = "whisper",
 )
 
 ///Used to translate bitflags of hotkeys into human-readable names
