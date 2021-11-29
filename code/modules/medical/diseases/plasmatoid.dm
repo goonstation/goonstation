@@ -12,29 +12,32 @@
 	if (..())
 		return
 	switch(D.stage)
+		if(1)
+			if(prob(2))
+				affected_mob.emote("cough")
 		if(2)
 			if(prob(1))
 				affected_mob.emote("cough")
-			if(prob(1))
-				boutput(affected_mob, "<span class='alert'>Your muscles ache.</span>")
+			else if(prob(2))
+				boutput(affected_mob, "<span class='alert'>You feel a strange pressure in your chest.</span>")
 				if(prob(20))
 					random_brute_damage(affected_mob, 1)
-			if(prob(1))
+			else if(prob(3))
 				boutput(affected_mob, "<span class='alert'>Your chest hurts.</span>")
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
 		if(3)
 			if(prob(1))
 				affected_mob.emote("cough")
-			if(prob(1))
-				boutput(affected_mob, "<span class='alert'>Your muscles ache.</span>")
+			else if(prob(2))
+				boutput(affected_mob, "<span class='alert'>You feel a strange pressure in your chest.</span>")
 				if(prob(20))
 					random_brute_damage(affected_mob, 1)
-			if(prob(1))
+			else if(prob(1))
 				boutput(affected_mob, "<span class='alert'>Your chest hurts.</span>")
 				if(prob(20))
 					affected_mob.take_toxin_damage(1)
-			if(prob(1))
+			else if(prob(3))
 				boutput(affected_mob, "<span class='alert'>Your breathing feels labored.</span>")
 				affected_mob.take_oxygen_deprivation(1)
 
@@ -42,6 +45,7 @@
 			var/obj/item/organ/created_organ
 			var/obj/item/organ/lung/left = affected_mob?.organHolder?.left_lung
 			var/obj/item/organ/lung/right = affected_mob?.organHolder?.right_lung
+			var/lung_replaced = FALSE
 			if(left && !left.robotic && !istype(left, /obj/item/organ/lung/plasmatoid))
 				created_organ = new /obj/item/organ/lung/plasmatoid/left()
 				affected_mob.organHolder.drop_organ(left.organ_holder_name)
@@ -49,6 +53,8 @@
 
 				created_organ.donor = affected_mob
 				affected_mob.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+				lung_replaced = TRUE
+
 
 			if(right && !right.robotic && !istype(right, /obj/item/organ/lung/plasmatoid))
 				created_organ = new /obj/item/organ/lung/plasmatoid/right()
@@ -57,4 +63,8 @@
 
 				created_organ.donor = affected_mob
 				affected_mob.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+				lung_replaced = TRUE
 
+			if(lung_replaced)
+				boutput(affected_mob, "<span class='alert'>Your chest suddenly feels very tight as breathing seems different...</span>")
+				affected_mob.take_oxygen_deprivation(2)
