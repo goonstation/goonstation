@@ -647,7 +647,7 @@ table#cooktime a#start {
 					//Complete pizza crew objectives if possible
 					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
 						var/obj/item/reagent_containers/food/snacks/pizza/P = output
-						if (usr.mind && usr.mind.objectives)
+						if (usr.mind?.objectives)
 							for (var/datum/objective/crew/chef/pizza/O in usr.mind.objectives)
 								var/list/matching_toppings = P.topping_types & O.choices
 								if(matching_toppings.len >= PIZZA_OBJ_COUNT)
