@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/list/resonators = list()
 	///list of possible siphon targets for the siphon
 	var/list/can_extract = list()
-	///progress in extraction; more valuable materials take more ticks to extract
+	///progress in extraction, incremented each process by total intensity of resonators; more valuable materials take more ticks to extract
 	var/extract_ticks = 0
 	///where extracted minerals are sent
 	var/output_target = null
@@ -52,18 +52,19 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.calibrate_resonance()
 			for(var/obj/machinery/siphon/resonator/res in src.resonators)
 				total_draw += 150 * res.intensity
+				src.extract_ticks += res.intensity
 
 			src.extract_ticks++
 			for(var/datum/siphon_mineral/M in src.can_extract)
 				LAGCHECK(LAG_LOW)
 				if(src.extract_ticks >= M.tick_req) //enough mining progress to check
-					if(M.x_torque) //check if difference between spec and actual is within tolerance
+					if(M.x_torque != null) //check if difference between spec and actual is within tolerance
 						var/xtcheck = abs(src.x_torque - M.x_torque)
 						if(xtcheck > M.sens_window) continue
-					if(M.y_torque)
+					if(M.y_torque != null)
 						var/ytcheck = abs(src.y_torque - M.y_torque)
 						if(ytcheck > M.sens_window) continue
-					if(M.shear)
+					if(M.shear != null)
 						var/shearcheck = abs(src.shear - M.shear)
 						if(shearcheck > M.sens_window) continue
 					src.extract_ticks = 0
@@ -81,16 +82,20 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(user,"LATERAL RESONANCE: [src.x_torque]")
 			boutput(user,"VERTICAL RESONANCE: [src.y_torque]")
 			boutput(user,"SHEAR VALUE: [src.shear]")
-		else if(iswrenchingtool(W) && src.mode != "high") //DEBUG DEBUG DEBUG?
-			if(src.mode == "low")
-				src.changemode("active")
+		else if(iswrenchingtool(W))
+			var/diditwork = src.toggle_drill()
+			if(diditwork)
+				boutput(user,"You manually toggle the siphon's lift mechanism.")
 			else
-				src.changemode("low")
+				if(src.mode == "active") boutput(user,"The siphon's lift mechanism can't be toggled while it's operational.")
+
 
 	attack_hand(mob/user)
-		var/diditwork = src.toggle_drill()
+		var/diditwork = src.toggle_operating()
 		if(diditwork)
-			boutput(user,"You manually toggle the siphon's lift mechanism.")
+			boutput(user,"You touch the siphon's activation panel.")
+		else
+			boutput(user,"The siphon's activation panel isn't active.")
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -180,6 +185,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	proc/changemode(var/newmode)
 		src.mode = newmode
+		switch(newmode)
+			if("low")
+				playsound(src, "sound/machines/click.ogg", 40, 1)
+			if("active")
+				playsound(src, "sound/machines/heater_on.ogg", 50, 1)
+			if("high")
+				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
 		src.update_fx()
 
 	proc/toggle_drill()
@@ -190,15 +202,25 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		else
 			src.disengage_drill()
 
+	proc/toggle_operating()
+		. = TRUE
+		if(src.toggling || src.mode == "high") return FALSE
+		if(src.mode == "low")
+			src.changemode("active")
+		else
+			src.changemode("low")
+
 	proc/engage_drill()
 		if(src.toggling || src.mode != "high" || !src.powered()) return
 		src.toggling = TRUE
+		playsound(src, "sound/machines/click.ogg", 40, 1)
 		src.icon_state = "drilldrop"
 		SPAWN_DBG(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4))
-				src.resonators += res
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
+				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
+				src.resonators += res
 				res.x_torque = sign(xadj) * 2 ** (4 - abs(xadj))
 				res.y_torque = sign(yadj) * 2 ** (4 - abs(yadj))
 				res.engage_lock()

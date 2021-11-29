@@ -1138,6 +1138,18 @@
 	dir = 9
 	},
 /area/station/engine/elect)
+"eV" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "3";
+	name = "digit";
+	pixel_y = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "eW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/research{
@@ -2664,7 +2676,7 @@
 /obj/decal/tile_edge/line/yellow,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "2";
+	icon_state = "4";
 	name = "digit";
 	pixel_y = 8
 	},
@@ -2689,7 +2701,7 @@
 /obj/decal/tile_edge/line/yellow,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "1";
+	icon_state = "5";
 	name = "digit";
 	pixel_y = 8
 	},
@@ -5840,17 +5852,13 @@
 /turf/simulated/floor/engine,
 /area/station/storage/emergency2)
 "zK" = (
-/obj/decal/tile_edge/line/yellow,
-/obj/decal/tile_edge{
-	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "3";
-	name = "digit";
-	pixel_y = 8
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/teleporter)
 "zL" = (
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
@@ -6501,6 +6509,11 @@
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
 	name = "Active Particle Phase Matrix"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
@@ -7358,6 +7371,11 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "Gf" = (
@@ -7629,7 +7647,7 @@
 /obj/decal/tile_edge/line/yellow,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "4";
+	icon_state = "2";
 	name = "digit";
 	pixel_y = 8
 	},
@@ -8924,6 +8942,11 @@
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
+"Nj" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "Nk" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -9314,6 +9337,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northwest)
+"OS" = (
+/obj/decal/tile_edge/line/yellow,
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "1";
+	name = "digit";
+	pixel_y = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "OT" = (
 /obj/item/sheet/glass/crystal/reinforced/fullstack{
 	pixel_x = -8
@@ -10584,6 +10619,14 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/arcade/dungeon)
+"Vm" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "Vn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
@@ -38745,7 +38788,7 @@ Xh
 KT
 KT
 bP
-sl
+bn
 sl
 sl
 nn
@@ -38757,7 +38800,7 @@ Bx
 nn
 sl
 sl
-sl
+bn
 bP
 KT
 KT
@@ -52935,11 +52978,11 @@ Ja
 EI
 Ja
 RZ
+Vm
 BK
 BK
 BK
-BK
-BK
+Vm
 XZ
 JP
 FR
@@ -53845,7 +53888,7 @@ Ge
 BK
 BK
 BK
-KX
+Nj
 XZ
 JP
 hS
@@ -55045,7 +55088,7 @@ eG
 cS
 Ja
 vT
-Xs
+zK
 Xs
 Mt
 RZ
@@ -57162,7 +57205,7 @@ fH
 AK
 XY
 ZV
-Zv
+OS
 Zv
 Zv
 Zv
@@ -58070,7 +58113,7 @@ Vq
 Zv
 Zv
 Zv
-Zv
+eV
 Ft
 Zv
 Zv
@@ -58373,7 +58416,7 @@ Wg
 Zv
 Zv
 Zv
-zK
+Zv
 Zv
 Zv
 Zv
