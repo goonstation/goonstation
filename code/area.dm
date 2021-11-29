@@ -3657,7 +3657,8 @@ ABSTRACT_TYPE(/area/mining)
 		var/list/cameras = list()
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
-				F.icon_state = "fire1"
+				F.alarm_active = TRUE
+				F.update_icon()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
@@ -3677,7 +3678,8 @@ ABSTRACT_TYPE(/area/mining)
 
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
-				F.icon_state = "fire0"
+				F.alarm_active = FALSE
+				F.update_icon()
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])

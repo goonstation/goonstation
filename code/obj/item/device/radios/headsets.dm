@@ -341,6 +341,17 @@
 			..()
 			setProperty("disorient_resist_ear", 100)
 
+		pickup(mob/user)
+			if(isvirtual(user))
+				SPAWN_DBG(0)
+					var/obj/item/clothing/ears/plugs = new /obj/item/clothing/ears/earmuffs/earplugs(src.loc)
+					plugs.name = src.name
+					plugs.desc = src.desc
+					plugs.icon_state = src.icon_state
+					user.u_equip(src)
+					qdel(src)
+					user.put_in_hand_or_drop(plugs)
+
 	comtac
 		name = "Military Headset"
 		icon_state = "comtac"
