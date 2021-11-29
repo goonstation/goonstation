@@ -7,6 +7,7 @@
 (+)Toggling the lights / power off no longer breaks fire alarms
 (u)pali
 (*)The say popup (on pressing T) should now appear instantly. But as a downside the typing chatbubbly might now persist if you cancel the popup. Please report any other bugs related to speaking and/or chat bubbles.
+(*)The status bar which shows what you are hovering over has now been squished next to the command bar. Also its colour now respects dark mode.
 (t)sun nov 28 21
 (u)Flaborized + Flourish
 (e)🆕|feature
