@@ -968,6 +968,11 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"ei" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "el" = (
 /obj/table/auto,
 /obj/machinery/defib_mount{
@@ -1138,18 +1143,6 @@
 	dir = 9
 	},
 /area/station/engine/elect)
-"eV" = (
-/obj/decal/tile_edge/line/yellow,
-/obj/decal/tile_edge{
-	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "3";
-	name = "digit";
-	pixel_y = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "eW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/research{
@@ -1559,6 +1552,18 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"gK" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "4";
+	name = "digit";
+	pixel_y = 8
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "gL" = (
 /obj/machinery/light/small/warm/very{
 	dir = 8;
@@ -1840,6 +1845,19 @@
 "hX" = (
 /turf/simulated/floor/engine,
 /area/station/chapel/office)
+"hY" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "e";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "hZ" = (
 /obj/rack,
 /obj/item/clothing/suit/wizrobe/purple,
@@ -2435,6 +2453,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/storage/emergency)
+"kq" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "f";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "kr" = (
 /obj/storage/secure/closet/civilian/hydro,
 /obj/machinery/light/small{
@@ -2673,17 +2704,13 @@
 	name = "Bridge Reception"
 	})
 "lr" = (
-/obj/decal/tile_edge/line/yellow,
-/obj/decal/tile_edge{
-	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "4";
-	name = "digit";
-	pixel_y = 8
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/teleporter)
 "ls" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -2698,13 +2725,13 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/quartermaster/refinery)
 "lw" = (
-/obj/decal/tile_edge/line/yellow,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "5";
+	icon_state = "7";
 	name = "digit";
 	pixel_y = 8
 	},
+/obj/decal/tile_edge/line/orange,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -5519,6 +5546,19 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Overwatch"
 	})
+"xP" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "g";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/orange,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "xQ" = (
 /obj/machinery/optable{
 	name = "Autopsy Table"
@@ -5539,6 +5579,19 @@
 "xU" = (
 /turf/simulated/floor/darkpurple,
 /area/station/medical/head)
+"xV" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "d";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "xW" = (
 /turf/simulated/floor/engine,
 /area/station/turret_protected/Zeta)
@@ -5852,13 +5905,11 @@
 /turf/simulated/floor/engine,
 /area/station/storage/emergency2)
 "zK" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/science/teleporter)
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "zL" = (
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
@@ -6403,6 +6454,18 @@
 /obj/item/circuitboard/telescope,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
+"BP" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "3";
+	name = "digit";
+	pixel_y = 8
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "BR" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
@@ -6691,6 +6754,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/west)
+"Dd" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "b";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Di" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -7109,6 +7185,25 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/market)
+"EY" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "1";
+	name = "digit";
+	pixel_y = 8
+	},
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "a";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/orange,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "EZ" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -7345,6 +7440,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/lobby)
+"FZ" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "Gc" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -7644,13 +7747,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/crew_quarters/catering)
 "Hy" = (
-/obj/decal/tile_edge/line/yellow,
-/obj/decal/tile_edge{
-	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "2";
-	name = "digit";
-	pixel_y = 8
-	},
+/obj/decal/tile_edge/line/orange,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -7891,6 +7988,18 @@
 	},
 /turf/space/fluid,
 /area/shuttle/arrival/station)
+"IE" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "5";
+	name = "digit";
+	pixel_y = 8
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "IF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8942,11 +9051,6 @@
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
-"Nj" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light,
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "Nk" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -8993,6 +9097,18 @@
 /obj/machinery/computer/card,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
+"Nt" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "2";
+	name = "digit";
+	pixel_y = 8
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Nu" = (
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
@@ -9337,18 +9453,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northwest)
-"OS" = (
-/obj/decal/tile_edge/line/yellow,
-/obj/decal/tile_edge{
-	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "1";
-	name = "digit";
-	pixel_y = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "OT" = (
 /obj/item/sheet/glass/crystal/reinforced/fullstack{
 	pixel_x = -8
@@ -9781,6 +9885,19 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
+	})
+"Rc" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "c";
+	name = "digit";
+	pixel_x = 8;
+	pixel_y = 16
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
 	})
 "Rd" = (
 /obj/stool,
@@ -10599,6 +10716,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/chapel/office)
+"Vc" = (
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "6";
+	name = "digit";
+	pixel_y = 8
+	},
+/obj/decal/tile_edge/line/black,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Ve" = (
 /obj/decal/tile_edge/check/red{
 	dir = 1;
@@ -10619,14 +10748,6 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/arcade/dungeon)
-"Vm" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "Vn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
@@ -52978,11 +53099,11 @@ Ja
 EI
 Ja
 RZ
-Vm
+FZ
 BK
 BK
 BK
-Vm
+FZ
 XZ
 JP
 FR
@@ -53888,7 +54009,7 @@ Ge
 BK
 BK
 BK
-Nj
+ei
 XZ
 JP
 hS
@@ -55088,7 +55209,7 @@ eG
 cS
 Ja
 vT
-zK
+lr
 Xs
 Mt
 RZ
@@ -56302,7 +56423,7 @@ IJ
 kw
 ge
 Zv
-Zv
+ud
 Zv
 XC
 xc
@@ -56601,13 +56722,13 @@ fH
 AK
 rv
 Vq
-Zv
-Zv
-Zv
-Zv
-Zv
-Zv
-Zv
+lw
+Vc
+IE
+gK
+BP
+Nt
+EY
 Ii
 AK
 AK
@@ -56903,13 +57024,13 @@ fH
 AK
 Wg
 Zv
-Zv
+zK
 Zv
 Zv
 Ft
 Zv
 Zv
-Zv
+Dd
 AK
 AK
 EO
@@ -57205,13 +57326,13 @@ fH
 AK
 XY
 ZV
-OS
+zK
 Zv
 Zv
 Zv
 Zv
 Zv
-Zv
+Rc
 AK
 FB
 Zv
@@ -57507,13 +57628,13 @@ fH
 Gn
 WQ
 ud
-Zv
+zK
 Ft
 Zv
 lc
-lw
-Ft
 Zv
+Ft
+xV
 AK
 fe
 MC
@@ -57809,13 +57930,13 @@ fH
 AK
 XY
 Wk
-Zv
-Hy
-Zv
-lr
+zK
 Zv
 Zv
 Zv
+Zv
+Zv
+hY
 AK
 qi
 Zv
@@ -58111,13 +58232,13 @@ fH
 AK
 Vq
 Zv
+zK
 Zv
 Zv
-eV
 Ft
 Zv
 Zv
-Zv
+kq
 AK
 AK
 PV
@@ -58413,13 +58534,13 @@ fH
 AK
 rv
 Wg
-Zv
-Zv
-Zv
-Zv
-Zv
-Zv
-Zv
+Hy
+zK
+zK
+zK
+zK
+zK
+xP
 Fj
 AK
 AK
@@ -58718,7 +58839,7 @@ fl
 aF
 Js
 Zv
-Zv
+ud
 Zv
 JW
 aF
