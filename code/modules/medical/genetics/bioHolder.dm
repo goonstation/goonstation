@@ -623,6 +623,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
 			src.CopyOther(toCopy)
+			return
 
 		if (mobAppearance)
 			mobAppearance.StaggeredCopyOther(toCopy.mobAppearance, progress)
