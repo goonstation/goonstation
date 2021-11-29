@@ -648,10 +648,10 @@ table#cooktime a#start {
 					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
 						var/obj/item/reagent_containers/food/snacks/pizza/P = output
 						if (usr.mind?.objectives)
-							for (var/datum/objective/crew/chef/pizza/O in usr.mind.objectives)
-								var/list/matching_toppings = P.topping_types & O.choices
-								if(matching_toppings.len >= PIZZA_OBJ_COUNT)
-									O.completed = TRUE
+							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
+								var/list/matching_toppings = P.topping_types & objective.choices
+								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
+									objective.completed = TRUE
 
 					if (isnull(output))
 						output = R.output
