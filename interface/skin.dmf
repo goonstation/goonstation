@@ -816,16 +816,16 @@ window "mainwindow"
 	elem "hovertooltip"
 		type = LABEL
 		pos = 2,402
-		size = 150x18
+		size = 180x18
 		anchor1 = 0,100
 		anchor2 = none
-		font-size = 7
+		font-size = 9
 		align = "left"
 		saved-params = ""
 		text = "hover"
 	elem "input"
 		type = INPUT
-		pos = 155,402
+		pos = 185,402
 		size = 600x18
 		anchor1 = 0,100
 		anchor2 = 100,100
