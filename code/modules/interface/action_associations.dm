@@ -92,9 +92,7 @@ var/list/action_names = list(
 
 ///Used for literal input of actions
 var/list/action_verbs = list(
-	"say" = "start-say",	// lord forgive me for i have sinned
 	"say_radio" = "say_radio",
-	"say_main_radio" = "say_main_radio",
 	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",
@@ -118,8 +116,6 @@ var/list/action_verbs = list(
 	"pickup" = "pick-up",
 	"ooc" = "ooc",
 	"looc" = "looc",
-	"dsay" = "dsay",
-	"asay" = "asay",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
 	"autoscreenshot" = ".autoscreenshot",
@@ -129,6 +125,13 @@ var/list/action_verbs = list(
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
 	"Admin Interact" = "admin_interact"
+)
+
+var/list/action_macros = list(
+	"asay" = "asaymacro",
+	"dsay" = "dsaymacro",
+	"say" = "startsay",
+	"say_main_radio" = "radiosay",
 )
 
 ///Used to translate bitflags of hotkeys into human-readable names

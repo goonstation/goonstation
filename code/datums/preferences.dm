@@ -923,7 +923,7 @@ datum/preferences
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
-			usr << S
+			usr.playsound_local(usr, S, 100)
 
 	proc/randomize_name(var/first = 1, var/middle = 1, var/last = 1)
 		//real_name = random_name(src.gender)
