@@ -116,8 +116,6 @@ var/list/action_verbs = list(
 	"pickup" = "pick-up",
 	"ooc" = "ooc",
 	"looc" = "looc",
-	"dsay" = "dsay",
-	"asay" = "asay",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
 	"autoscreenshot" = ".autoscreenshot",
@@ -127,6 +125,13 @@ var/list/action_verbs = list(
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
 	"Admin Interact" = "admin_interact"
+)
+
+var/list/action_macros = list(
+	"asay" = "asaymacro",
+	"dsay" = "dsaymacro",
+	"say" = "startsay",
+	"say_main_radio" = "radiosay",
 )
 
 ///Used to translate bitflags of hotkeys into human-readable names

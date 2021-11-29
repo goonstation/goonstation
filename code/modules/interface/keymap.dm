@@ -36,13 +36,13 @@
 				src.keys[new_key] = act
 
 	proc/on_update(client/cl)
-		// sorry that this is hardcoded, it's here to make say more responsive
-		var/say_keybind = src.action_to_keybind("say")
-		if(say_keybind)
-			winset(cl, "base_macro.startsay", "name=[say_keybind]")
-		var/radio_say_keybind = src.action_to_keybind("say_main_radio")
-		if(radio_say_keybind)
-			winset(cl, "base_macro.radiosay", "name=[radio_say_keybind]")
+		var/list/winset_commands = list()
+		for(var/action in global.action_macros)
+			var/macro_id = global.action_macros[action]
+			var/keybind = src.action_to_keybind(action)
+			if(keybind)
+				winset_commands += "base_macro.[macro_id].name=[keybind]"
+		winset(cl, null, jointext(winset_commands, ";"))
 
 	///Checks the input key and converts it to a usable format
 	///Wants input in the format "CTRL+F", as an example.
