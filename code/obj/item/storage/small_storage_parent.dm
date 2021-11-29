@@ -145,6 +145,12 @@
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
 			if(istype(W, /obj/item/storage) && (canhold == 0 || canhold == -1))
+				//is the storage locked?
+				if (istype(W, /obj/item/storage/secure))
+					var/obj/item/storage/secure/S = W
+					if (S.locked)
+						boutput(user, "<span class='alert'>[S] is locked and cannot be opened!</span>")
+						return
 				var/obj/item/storage/S = W
 				for (var/obj/item/I in S.get_contents())
 					if(src.check_can_hold(I) > 0)

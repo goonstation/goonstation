@@ -78,6 +78,7 @@
 
 
 	proc/process_occupant(mob/living/occupant)
+		SEND_SIGNAL(occupant, COMSIG_MOB_VOMIT, 5) //THEY'RE PROBABLY VOMITING AT SOME POINT IN HERE OK
 		if(occupant.loc != src)
 			src.update_icon()
 			return

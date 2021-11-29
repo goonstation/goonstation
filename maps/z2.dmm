@@ -41360,7 +41360,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cpN" = (
-/obj/item/clothing/under/gimmick/mobile_suit,
+/obj/item/clothing/suit/gimmick/mobile_suit,
 /obj/item/clothing/head/mobile_suit,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo)

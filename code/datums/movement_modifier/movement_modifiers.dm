@@ -44,6 +44,9 @@
 /datum/movement_modifier/staggered_or_blocking
 	additive_slowdown = 0.4
 
+/datum/movement_modifier/poisoned
+	additive_slowdown = 3
+
 /datum/movement_modifier/disoriented
 	additive_slowdown = 8
 

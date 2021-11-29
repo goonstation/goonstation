@@ -335,7 +335,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
 
-		if (surgeon.a_intent == INTENT_HARM && patient.organHolder.head)
+		if (!patient.organHolder.head)
+			boutput(surgeon, "<span class='alert'>[patient] doesn't have a head!</span>")
+			return 0
+
+		if (surgeon.a_intent == INTENT_HARM)
 			if (patient.organHolder.head.op_stage == 0.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
@@ -931,7 +935,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
 
-		if (surgeon.a_intent == INTENT_HARM && patient.organHolder.head)
+		if (!patient.organHolder.head)
+			boutput(surgeon, "<span class='alert'>[patient] doesn't have a head!</span>")
+			return 0
+
+		if (surgeon.a_intent == INTENT_HARM)
 			if (patient.organHolder.head.op_stage == 1.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
@@ -976,7 +984,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				src.surgeryConfusion(patient, surgeon, damage_high)
 				return 1
 
-		else if (patient.organHolder.head)
+		else
 			if (patient.organHolder.head.scalp_op_stage == 1.0)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
@@ -1063,8 +1071,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			else
 				src.surgeryConfusion(patient, surgeon, damage_high)
 				return 1
-		else
-			return 0
 
 /* ---------- SAW - BUTT ---------- */
 
@@ -1624,6 +1630,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (!headSurgeryCheck(patient))
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return 1
+
+		if (!patient.organHolder.head)
+			boutput(surgeon, "<span class='alert'>[patient] doesn't have a head!</span>")
+			return 0
 
 		var/obj/item/organ/eye/target_eye = null
 		var/target_side = null

@@ -21,13 +21,23 @@ Contains:
 	item_state = "electronic"
 	m_amt = 150
 	mats = 5
+	var/scan_range = 3
+	var/client/last_client = null
+	var/image/last_display = null
+	var/find_interesting = TRUE
+
+	proc/set_on(new_on, mob/user=null)
+		on = new_on
+		set_icon_state("t-ray[on]")
+		if(user)
+			boutput(user, "You switch [src] [on ? "on" : "off"].")
+		if(!on)
+			hide_displays()
+		else
+			processing_items |= src
 
 	attack_self(mob/user)
-		on = !on
-		set_icon_state("t-ray[on]")
-		boutput(user, "You switch [src] [on ? "on" : "off"].")
-
-		if(on) processing_items |= src
+		set_on(!on, user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -43,79 +53,81 @@ Contains:
 			user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
 			boutput(user, "<br><i>Analysis failed:</i><br><span class='notice'>Unable to determine signature</span>")
 
+	proc/hide_displays()
+		if(last_client)
+			last_client.images -= last_display
+		qdel(last_display)
+		last_display = null
+		last_client = null
+
+	disposing()
+		hide_displays()
+		last_display = null
+		last_client = null
+		..()
+
 	process()
+		hide_displays()
+
 		if(!on)
 			processing_items.Remove(src)
 			return null
 
-		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		for(var/turf/T in range(1, loc_to_check))
+		var/mob/our_mob = src
+		while(!isnull(our_mob) && !istype(our_mob, /turf) && !ismob(our_mob)) our_mob = our_mob.loc
+		if(!istype(our_mob) || !our_mob.client)
+			return null
+		var/client/C = our_mob.client
+		var/turf/center = get_turf(our_mob)
 
-			if(T.interesting)
+		var/image/main_display = image(null)
+		for(var/turf/T in range(src.scan_range, our_mob))
+			if(T.interesting && find_interesting)
 				playsound(T, "sound/machines/ping.ogg", 55, 1)
 
-			if(!T.intact)
-				continue
+			var/image/display = new
 
-			for(var/obj/O in T.contents)
+			for(var/atom/A in T)
+				if(A.interesting && find_interesting)
+					playsound(A, "sound/machines/ping.ogg", 55, 1)
+				if(ismob(A))
+					var/mob/M = A
+					if(M?.invisibility != INVIS_CLOAK && IN_RANGE(src, M, 1))
+						continue
+				else if(isobj(A))
+					var/obj/O = A
+					if(O.level != 1)
+						continue
+				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
+				img.plane = PLANE_SCREEN_OVERLAYS
+				img.color = A.color
+				img.overlays = A.overlays
+				img.alpha = 100
+				img.appearance_flags = RESET_ALPHA | RESET_COLOR
+				display.overlays += img
 
-				if(O.level != 1)
-					continue
+			if( length(display.overlays))
+				display.plane = PLANE_SCREEN_OVERLAYS
+				display.pixel_x = (T.x - center.x) * 32
+				display.pixel_y = (T.y - center.y) * 32
+				main_display.overlays += display
 
-				if(O.invisibility == INVIS_ALWAYS)
-					O.invisibility = INVIS_NONE
-					O.alpha = 128
-					SPAWN_DBG(1 SECOND)
-						if(O && isturf(O.loc))
-							var/turf/U = O.loc
-							if(U.intact)
-								O.invisibility = INVIS_ALWAYS
-								O.alpha = 255
+		main_display.loc = our_mob.loc
 
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == INVIS_CLOAK)
-				M.invisibility = INVIS_NONE
-				SPAWN_DBG(0.6 SECONDS)
-					if(M)
-						M.invisibility = INVIS_CLOAK
-
-
-
-		for(var/obj/O in range(1, loc_to_check) )
-			if(O.interesting)
-				playsound(O.loc, "sound/machines/ping.ogg", 55, 1)
+		C.images += main_display
+		last_display = main_display
+		last_client = C
 
 /obj/item/device/t_scanner/abilities = list(/obj/ability_button/tscanner_toggle)
 
 /obj/item/device/t_scanner/adventure
 	name = "experimental scanner"
 	desc = "a bodged-together T-Ray scanner with a few coils cut, and a few extra coils tied-in."
-//	var/trange = 2 //depending how sluggish this is, could go up to 3 with a toggle perhaps?
+	scan_range = 4
 
-	process()
-		if(!on)
-			processing_items.Remove(src)
-			return null
-
-		var/loc_to_check = istype(src.loc, /obj/item/magtractor) ? src.loc.loc : src.loc
-		for(var/turf/T in range(2, loc_to_check))
-
-			if(T.interesting)
-				playsound(T, "sound/machines/ping.ogg", 55, 1)
-
-			if(!T.intact)
-				continue
-
-			var/mob/living/M = locate() in T
-			if(M?.invisibility == INVIS_CLOAK)
-				M.invisibility = INVIS_NONE
-				SPAWN_DBG(0.6 SECONDS)
-					if(M)
-						M.invisibility = INVIS_CLOAK
-
-		for(var/obj/O in range(2, loc_to_check) )
-			if(O.interesting)
-				playsound(O.loc, "sound/machines/ping.ogg", 55, 1)
+/obj/item/device/t_scanner/pda
+	name = "PDA T-ray scanner"
+	find_interesting = FALSE
 
 /*
 he`s got a craving
