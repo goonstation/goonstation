@@ -25,10 +25,11 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/rock
 	name = "Rock"
-	tick_req = 10
+	tick_req = 6
 	x_torque = 16
 	y_torque = 0
 	shear = 0
+	sens_window = 2
 	product = /obj/item/raw_material/rock
 
 /datum/siphon_mineral/mauxite
@@ -66,14 +67,10 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	name = "Char"
 	tick_req = 20
 	x_torque = -16
-	y_torque = 0
+	y_torque = -4
 	shear = 16
-	sens_window = 1
+	sens_window = 5
 	product = /obj/item/raw_material/char
-
-	New()
-		src.shear = rand(12,20) * -1
-		..()
 
 /datum/siphon_mineral/fibrilith
 	name = "Fibrilith"
