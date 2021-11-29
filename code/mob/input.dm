@@ -1,6 +1,7 @@
 
 /mob/var/move_dir = 0
 /mob/var/next_move = 0
+/mob/var/slip_dir = 0
 
 
 /mob/hotkey(name)
@@ -68,6 +69,24 @@
 
 	if (src.next_move - world.time >= world.tick_lag / 10)
 		return max(world.tick_lag, (src.next_move - world.time) - world.tick_lag / 10)
+
+	if(isliving(src) && isturf(src.loc))
+		var/turf/T = src.loc
+		var/lubed = T.wet == 2
+		if(!lubed && T?.active_liquid)
+			var/obj/fluid/F = T.active_liquid
+			lubed = F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity && \
+				F.group.reagents.get_master_reagent_slippy(F.group) == -1
+		if(lubed)
+			if(src.slip_dir == 0)
+				src.slip_dir = src.dir
+			step(src, slip_dir)
+			if(src.loc != T)
+				return world.tick_lag
+			else
+				src.slip_dir = 0
+		else
+			src.slip_dir = 0
 
 	if (src.move_dir)
 		var/running = 0
