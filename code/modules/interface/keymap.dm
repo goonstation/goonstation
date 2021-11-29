@@ -40,6 +40,9 @@
 		var/say_keybind = src.action_to_keybind("say")
 		if(say_keybind)
 			winset(cl, "base_macro.startsay", "name=[say_keybind]")
+		var/radio_say_keybind = src.action_to_keybind("say_main_radio")
+		if(radio_say_keybind)
+			winset(cl, "base_macro.radiosay", "name=[radio_say_keybind]")
 
 	///Checks the input key and converts it to a usable format
 	///Wants input in the format "CTRL+F", as an example.

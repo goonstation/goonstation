@@ -93,7 +93,6 @@ var/list/action_names = list(
 ///Used for literal input of actions
 var/list/action_verbs = list(
 	"say_radio" = "say_radio",
-	"say_main_radio" = "say_main_radio",
 	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",

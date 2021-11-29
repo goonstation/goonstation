@@ -115,8 +115,11 @@ macro "base_macro"
 		command = "mentorhelp"
 		is-disabled = true
 	elem "startsay"
-		name = "L"
+		name = "T"
 		command = ".starttyping\nsay"
+	elem "radiosay"
+		name = ";"
+		command = "say_main_radio"
 	elem
 		name = "Any"
 		command = ".keydown [[*]]"
