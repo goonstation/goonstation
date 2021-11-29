@@ -724,8 +724,6 @@
 		if (!newname)
 			src.real_name = borgify_name("Cyborg")
 
-		// I think this needs the \proper because silicons have neutral pronouns
-		// src.real_name = "[src.real_name]"
 		src.UpdateName()
 		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src.name]"
