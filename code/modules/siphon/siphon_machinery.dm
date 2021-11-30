@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					yielder.set_loc(src.get_output_location())
 					break
 
-			playsound(src.loc, 'sound/machines/siphon_run.ogg', 10, 0)
+			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, 0)
 		power_usage = total_draw
 		..()
 
@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if("low")
 				playsound(src, "sound/machines/click.ogg", 40, 1)
 			if("active")
-				playsound(src, "sound/machines/siphon_activate.ogg", 50, 1)
+				playsound(src, "sound/machines/siphon_activate.ogg", 40, 0)
 			if("high")
 				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
 		src.update_fx()

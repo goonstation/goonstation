@@ -4150,10 +4150,13 @@
 	})
 "ot" = (
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/clothing/head/helmet/camera,
+/obj/item/storage/box/trackimp_kit2,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
@@ -9724,22 +9727,14 @@
 /area/station/storage/eva)
 "HH" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+/obj/item/device/camera_viewer{
+	network = "Zeta"
 	},
-/obj/machinery/light,
+/obj/item/clothing/head/helmet/camera,
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
+/obj/machinery/light,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "HI" = (
