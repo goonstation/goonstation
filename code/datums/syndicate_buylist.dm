@@ -14,9 +14,9 @@ proc/build_syndi_buylist_cache()
 
 /datum/syndicate_buylist
 	var/name = null
-	var/item = null
-	var/item2 = null
-	var/item3 = null
+	var/atom/item = null
+	var/atom/item2 = null
+	var/atom/item3 = null
 	var/cost = null // Cost of the item. Leave 0 to make it unavailable.
 	var/desc = null
 	var/list/job = null // For job-specific items.
@@ -26,6 +26,7 @@ proc/build_syndi_buylist_cache()
 	var/list/exclusivemode = null
 	var/vr_allowed = 1
 	var/not_in_crates = 0 // This should not go in surplus crates.
+	var/category //WIP
 
 	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate=FALSE) // Use this to run code when the item is spawned.
 		return
@@ -1061,18 +1062,21 @@ This is basically useless for anyone but miners.
 	item2 = /obj/item/paper/reinforcement_info
 	cost = 2
 	desc = "Request a (probably) top-of-the-line Syndicate gunbot to help assist your team."
+	category = "Main"
 
 /datum/syndicate_buylist/commander/ammobag
 	name = "Ammo Bag"
 	item = /obj/item/ammo/ammobox/nukeop
 	cost = 2
 	desc = "A bag that allows you to fabricate standard ammo for most Syndicate weaponry. Due to power restrictions, ammo can only be fabricated a certain amount of times per bag. Ammo size restrictions apply."
+	category = "Main"
 
 /datum/syndicate_buylist/commander/ammobag_spec
 	name = "Specialist Ammo Bag"
 	item = /obj/item/ammo/ammobox/nukeop/spec_ammo
 	cost = 3
 	desc = "A bag that allows you to fabricate specialist ammo for some Syndicate weaponry. It even lets you fabricate explosive ammunition!"
+	category = "Main"
 
 /datum/syndicate_buylist/commander/designator
 	name = "Laser Designator"
@@ -1080,6 +1084,7 @@ This is basically useless for anyone but miners.
 	item2 = /obj/item/paper/designator_info
 	cost = 3
 	desc = "A handheld, monocular laser designator that allows you to call in heavy fire support from the Cairngorm. Comes with 2 charges."
+	category = "Main"
 
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
@@ -1087,12 +1092,14 @@ This is basically useless for anyone but miners.
 	item2 = /obj/item/paper/deployment_info
 	cost = 4
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
+	category = "Main"
 
 /datum/syndicate_buylist/commander/bomb_remote
 	name = "Nuclear Bomb Teleporter"
 	item = /obj/item/remote/nuke_summon_remote
 	cost = 1
 	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+	category = "Main"
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 

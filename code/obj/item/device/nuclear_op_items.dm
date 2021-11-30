@@ -127,7 +127,7 @@
 	density = FALSE
 	anchored = FALSE
 	w_class = W_CLASS_SMALL
-	flags = TGUI_INTERACTIVE_ITEM | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
@@ -165,7 +165,7 @@
 			return
 
 		switch(action)
-			if ("redeem")
+			if ("purchase")
 				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
 				if (src.credits[M.category] >= M.cost)
 					src.credits[M.category] -= M.cost
@@ -182,6 +182,9 @@
 			accepted_token(I, user)
 		else
 			..()
+
+	attack_self(mob/user)
+		return ui_interact(user)
 
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
@@ -285,7 +288,7 @@
 		if(src.used)
 			boutput(user, "<span class='alert'>The [src] has been used up!</span>")
 			return
-		if(isnull(src.landing_area))
+		if(!src.landing_area)
 			choose_area(user)
 		else
 			var/choice = input(user, "Would you like to reset your area, or deploy to the assault pod?") in list("Reset", "Deploy", "Cancel")
@@ -441,7 +444,7 @@
 				launch_with_missile(C, picked_turf)
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))
-				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could get sent!</span>")
+				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
 				break
 		command_alert("A group of [length(sent_mobs)] personnel missiles have been spotted launching from a Syndicate Assault pod towards [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
 		qdel(src)
@@ -475,8 +478,8 @@
 	desc = "A handheld monocular device with a laser built into it, used for calling in fire support."
 	icon_state = "laser_designator"
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
+	density = FALSE
+	anchored = FALSE
 	w_class = W_CLASS_SMALL
 	///How many times can this be used?
 	var/uses = 1
@@ -543,7 +546,7 @@
 			user:special_sprint |= SPRINT_DESIGNATOR
 			var/mob/living/L = user
 
-			//set move callback (when user moves, sniper go down)
+			//set move callback (when user moves, designator go down)
 			if (islist(L.move_laying))
 				L.move_laying += src
 			else

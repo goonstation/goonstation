@@ -1,0 +1,28 @@
+@use '../colors.scss';
+@use '../components/Button.scss';
+
+$categories: (
+  'Main': colors.$red,
+);
+
+.ComUplink {
+  @each $category, $color in $categories {
+    .Button--color--#{$category} {
+      @include Button.button-color($color);
+    }
+  }
+}
+
+@each $category, $color in $categories {
+  .ComUplink__Points {
+    @at-root &--#{$category} {
+      color: $color;
+    }
+  }
+}
+
+.ComUplink__Row {
+  &:not(:last-child) {
+    border-bottom: 2px solid colors.bg(colors.$primary);
+  }
+}

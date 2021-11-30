@@ -1015,7 +1015,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.commander_buylist = sortList(sort1)
 
-	attack_self()
+	/*attack_self()
 		var/list/dat = list()
 		if(reading_about)
 			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
@@ -1034,7 +1034,54 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.commander_buylist[T]]'>[I.name]</A> ([I.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.commander_buylist[T]]'>About</A></td>"
 			dat += "</table>"
 		usr.Browse(jointext(dat, ""), "window=nukeuplink")
-		onclose(usr, "nukeuplink")
+		onclose(usr, "nukeuplink")*/
+
+	attack_self(mob/user)
+		return ui_interact(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ComUplink")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"points" = points,
+		)
+
+	ui_static_data(mob/user)
+		. = list("stock" = list())
+
+		for (var/datum/syndicate_buylist/SB as anything in commander_buylist)
+			var/datum/syndicate_buylist/I = commander_buylist[SB]
+			.["stock"] += list(list(
+				"ref" = "\ref[I]",
+				"name" = I.name,
+				"description" = I.desc,
+				"cost" = I.cost,
+				"category" = I.category,
+			))
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if ("redeem")
+				for(var/datum/syndicate_buylist/SB as anything in commander_buylist)
+					if(istype(commander_buylist[SB], locate(params["ref"])) || commander_buylist[SB] == params["ref"]) //completely untested shitcode, look at later
+						var/datum/syndicate_buylist/B = commander_buylist[SB]
+						if (src.points >= B.cost)
+							src.points -= B.cost
+							var/atom/A = new B.item(get_turf(src))
+							if(B.item2)
+								new B.item2(get_turf(src))
+							if(B.item3)
+								new B.item3(get_turf(src))
+							B.run_on_spawn(A, usr)
+							. = TRUE
+							break
 
 #define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 #define CHECK2 (is_incapacitated(usr) || usr.restrained())

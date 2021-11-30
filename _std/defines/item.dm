@@ -50,8 +50,6 @@
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE              (1<<23)
-/// Has the possibility for a TGUI interface via `attackself`, only use for items
-#define TGUI_INTERACTIVE_ITEM		 (1<<24)
 
 //Item function flags
 

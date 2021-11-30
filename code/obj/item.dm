@@ -883,8 +883,6 @@
 			var/obj/item/parts/human_parts/arm/right/item/I = src.loc
 			I.remove_from_mob()
 			I.set_item(src)
-	if (flags & TGUI_INTERACTIVE_ITEM)
-		return ui_interact(user)
 
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user)
 
