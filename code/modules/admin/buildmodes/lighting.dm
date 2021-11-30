@@ -11,10 +11,10 @@ Right Mouse Button                     = Attempt to fix Lighting on selected til
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (on)
-			UpdateIcon_state("light_off")
+			update_icon_state("light_off")
 			on = 0
 		else
-			UpdateIcon_state("light_on")
+			update_icon_state("light_on")
 			on = 1
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
