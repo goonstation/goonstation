@@ -71,6 +71,7 @@
 			src.UpdateOverlays(I, "ink")
 		if (is_running)
 			flick("printing_press-work", src)
+			sleep(2.4 SECONDS)
 			return
 		icon_state = "printing_press-idle"
 
