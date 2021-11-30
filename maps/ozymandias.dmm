@@ -34,6 +34,12 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/wood/two,
 /area/station/medical/medbay/lobby)
+"aaR" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "aaW" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/white,
@@ -43860,6 +43866,12 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"lSt" = (
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "lSC" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "EVA";
@@ -61805,6 +61817,12 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"qFX" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 9
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "qGc" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -64776,6 +64794,12 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"rux" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "ruN" = (
 /obj/machinery/plantpot,
 /obj/decal/xmas_lights/ephemeral{
@@ -84549,6 +84573,12 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"wlD" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "wlK" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery/storage)
@@ -115441,7 +115471,7 @@ tSM
 uVD
 wLP
 wLP
-aCY
+lSt
 wLP
 avG
 aJu
@@ -115545,7 +115575,7 @@ ath
 tSM
 tSM
 uVD
-aCL
+qFX
 qzg
 ygY
 wCE
@@ -152801,7 +152831,7 @@ aJu
 aJu
 uVD
 aud
-aCL
+aaR
 aMa
 aJu
 aJu
@@ -159579,7 +159609,7 @@ fdT
 wLP
 atY
 wUK
-aoX
+rux
 aJu
 wqf
 aJu
@@ -160755,7 +160785,7 @@ aJu
 aJu
 aJu
 eHW
-aTL
+wlD
 aoX
 gPc
 asq

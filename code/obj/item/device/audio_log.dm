@@ -7,7 +7,7 @@
 	mats = 3
 
 	var/log_line = 1 //Which line of the log it's on.
-	var/max_lines = 60
+	var/max_lines = 100
 	var/list/messages = list()
 	var/list/speakers = list()
 

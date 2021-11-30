@@ -396,6 +396,9 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  zoldorf")
 		zoldorfsetup()
 
+		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
+		fluid_turf_setup(first_time=TRUE)
+
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
 
@@ -840,8 +843,10 @@ var/f_color_selector_handler/F_Color_Selector
 /// world Topic. This is where external shit comes into byond and does shit.
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
-	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
-	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
+	var/cleanT = replacetext(T, regex(@"auth=[a-zA-Z0-9]*(;|&|$)"), "auth=***$1")
+	logDiary("TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
+	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1
@@ -1185,6 +1190,8 @@ var/f_color_selector_handler/F_Color_Selector
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
+		var/list/plist = params2list(T)
+
 		if (T == "admins")
 			var/list/s = list()
 			var/n = 0
@@ -1204,7 +1211,6 @@ var/f_color_selector_handler/F_Color_Selector
 			s["mentors"] = n
 			return list2params(s)
 
-		var/list/plist = params2list(T)
 		switch(plist["type"])
 			if("irc")
 				if (!plist["nick"] || !plist["msg"]) return 0
@@ -1550,6 +1556,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
 				ircmsg["time"] = (world.timeofday - curtime) / 10
+				ircmsg["ticklag"] = world.tick_lag
+				ircmsg["runtimes"] = global.runtime_count
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1714,6 +1722,39 @@ var/f_color_selector_handler/F_Color_Selector
 					response["playtime"] = playtime_response.body
 
 				return json_encode(response)
+
+			if("profile")
+				var/type = plist["profiler_type"]
+				if(type != "sendmaps")
+					type = null
+				if(plist["action"] == "save")
+					var/static/profilerLogID = 0
+					var/output = world.Profile(PROFILE_REFRESH, type, "json")
+					var/fname = "data/logs/profiling/[global.roundLog_date]_manual_[profilerLogID++].json"
+					rustg_file_write(output, fname)
+					return fname
+				var/action = list(
+					"stop" = PROFILE_STOP,
+					"clear" = PROFILE_CLEAR,
+					"start" = PROFILE_START,
+					"refresh" = PROFILE_REFRESH,
+					"restart" = PROFILE_RESTART
+				)[plist["action"]]
+				var/final_action = action
+				if(plist["average"])
+					final_action |= PROFILE_AVERAGE
+				var/output = world.Profile(final_action, type, "json")
+				if(plist["action"] == "refresh" || plist["action"] == "stop")
+					SPAWN_DBG(1)
+						var/n_tries = 3
+						var/datum/http_response/response = null
+						while(--n_tries > 0 && (isnull(response) || response.errored))
+							var/datum/http_request/request = new()
+							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
+							request.begin_async()
+							UNTIL(request.is_complete())
+							response = request.into_response()
+				return 1
 
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)

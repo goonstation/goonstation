@@ -4746,22 +4746,6 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
-"anu" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "hangar_bridge";
-	name = "Command Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "anv" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -5197,24 +5181,8 @@
 "aoE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/lobby)
-"aoI" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "hangar_bridge";
-	name = "Command Hangar"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "aoJ" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "aoK" = (
@@ -5677,13 +5645,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aqd" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorright1";
-	id = "hangar_bridge";
-	name = "Command Hangar"
-	},
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
@@ -5693,11 +5655,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "aqe" = (
-/obj/machinery/door_control{
-	id = "hangar_bridge";
-	name = "Command Hangar Door Control";
-	pixel_x = 24
-	},
 /obj/storage/closet/welding_supply,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -5705,6 +5662,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
+/obj/machinery/door_control/podbay/security/new_walls/east,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "aqm" = (
@@ -6147,15 +6105,11 @@
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
-/obj/machinery/door_control{
-	id = "hangar_bridge";
-	name = "Secure Hangar Door Control";
-	pixel_x = -24
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge2"
 	},
+/obj/machinery/r_door_control/podbay/security/new_walls/west,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "ary" = (
@@ -7547,7 +7501,7 @@
 /area/station/ranch)
 "avm" = (
 /obj/machinery/light/small,
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "avn" = (
@@ -15330,7 +15284,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "aOt" = (
@@ -20691,8 +20647,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/pen/marker/blue,
+/obj/item/pen/marker/blue{
+	pixel_x = -6;
+	pixel_y = -1
+	},
 /obj/machinery/door/firedoor/pyro,
+/obj/item/bell/hop{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bbg" = (
@@ -23678,7 +23640,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24814,7 +24778,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bkI" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25251,7 +25217,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blP" = (
@@ -25388,7 +25356,9 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bmb" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25655,7 +25625,9 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmI" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmJ" = (
@@ -26786,7 +26758,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boU" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boV" = (
@@ -27584,7 +27558,9 @@
 /turf/space,
 /area/space)
 "bqR" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /obj/window/reinforced{
 	dir = 4
 	},
@@ -29214,7 +29190,7 @@
 	dir = 4;
 	icon_state = "bdoorleft1";
 	id = "hangar_main";
-	name = "Mechanic's Bay"
+	name = "Public Hangar"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -29581,7 +29557,7 @@
 	dir = 4;
 	icon_state = "bdoormid1";
 	id = "hangar_main";
-	name = "Mechanic's Bay"
+	name = "Public Hangar"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -30215,7 +30191,7 @@
 	dir = 4;
 	icon_state = "bdoorright1";
 	id = "hangar_main";
-	name = "Mechanic's Bay"
+	name = "Public Hangar"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -31756,7 +31732,9 @@
 	},
 /area/station/hallway/secondary/entry)
 "bBW" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -36975,7 +36953,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bOM" = (
@@ -37581,7 +37561,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -38293,7 +38275,9 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -54341,6 +54325,12 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"dRl" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dRM" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -55317,6 +55307,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
+"fud" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -59064,6 +59060,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"mDA" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mDB" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics";
@@ -92508,12 +92510,12 @@ adC
 adC
 adC
 amq
-anu
-aoI
+aqd
+aqd
 aqd
 amr
-anu
-aoI
+aqd
+aqd
 aqd
 amq
 aem
@@ -98521,7 +98523,7 @@ adC
 aag
 aan
 aan
-aaA
+mDA
 aaF
 aaF
 adC
@@ -99272,7 +99274,7 @@ adC
 adC
 cyI
 cyI
-blw
+fud
 aax
 aaC
 aaG
@@ -121474,7 +121476,7 @@ aag
 aav
 aan
 aaE
-aaA
+mDA
 aaN
 aaN
 aap
@@ -131814,7 +131816,7 @@ aaw
 aap
 aaB
 aai
-aau
+dRl
 aap
 aaw
 aaw

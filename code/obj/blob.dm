@@ -61,9 +61,51 @@
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
+				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
+
+		spawn_animation()
+
+	proc/spawn_animation()
+		var/target_alpha = src.alpha
+		src.alpha = 50
+		var/list/obj/blob/blob_sources = list()
+		for(var/obj/blob/B in src.loc)
+			if(B != src)
+				blob_sources += B
+		if(!length(blob_sources))
+			for(var/dir in ordinal)
+				var/obj/blob/blob = locate(/obj/blob) in get_step(src, dir)
+				if(blob && (locate(/obj/blob) in get_step(src, dir & (NORTH | SOUTH))) && (locate(/obj/blob) in get_step(src, dir & (EAST | WEST))))
+					blob_sources += blob
+		if(!length(blob_sources))
+			for(var/dir in cardinal)
+				var/obj/blob/blob = locate(/obj/blob) in get_step(src, dir)
+				if(blob)
+					blob_sources += blob
+		var/matrix/midmatrix = null
+		var/shiftsize = 18
+		var/x_shift_comp = 0
+		var/y_shift_comp = 0
+		if(length(blob_sources))
+			var/obj/blob/blob_source = pick(blob_sources)
+			var/source_dir = get_dir(src, blob_source)
+			var/xshift = ((source_dir & EAST) ? 1 : 0) + ((source_dir & WEST) ? -1 : 0)
+			var/yshift = ((source_dir & NORTH) ? 1 : 0) + ((source_dir & SOUTH) ? -1 : 0)
+			if(!xshift && !yshift)
+				src.transform = src.transform.Scale(1.5, 1.5)
+			else
+				src.transform = src.transform.Scale(xshift ? 0.1 : 1, yshift ? 0.1 : 1)
+			src.transform = src.transform.Translate(xshift * shiftsize, yshift * shiftsize)
+			midmatrix = matrix(null, xshift * 3 , yshift * 3, MATRIX_TRANSLATE)
+			x_shift_comp = -xshift
+			y_shift_comp = -yshift
+		animate(src, pixel_x=x_shift_comp * 3, pixel_y=y_shift_comp * 3, time=0.4 SECONDS)
+		//animate(src, pixel_x=x_shift_comp * 2, pixel_y=y_shift_comp * 2, easing=JUMP_EASING, time=1.3 SECONDS)
+		animate(transform=midmatrix, alpha=target_alpha, time=1.4 SECONDS, easing=ELASTIC_EASING, flags=ANIMATION_PARALLEL)
+		animate(pixel_x=0, pixel_y=0, transform=null, time=2 SECONDS, easing=JUMP_EASING)
 
 	proc/right_click_action()
 		usr.examine_verb(src)
@@ -105,7 +147,7 @@
 			else
 				blob_image = image('icons/mob/blob.dmi')
 			blob_image.appearance_flags |= RESET_COLOR
-			blob_image.plane = PLANE_SELFILLUM + 1
+			blob_image.plane = PLANE_ABOVE_LIGHTING
 
 			blob_image.color = organ_color
 			blob_image.icon_state = state_overlay
@@ -113,7 +155,8 @@
 		if ( anim_overlay )
 			var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
 			blob_anim_image.appearance_flags |= RESET_COLOR
-			blob_anim_image.plane = PLANE_SELFILLUM + 2
+			blob_anim_image.plane = PLANE_ABOVE_LIGHTING
+			blob_anim_image.layer = 100
 
 			blob_anim_image.color = organ_color
 			blob_anim_image.icon_state = anim_overlay
@@ -150,6 +193,9 @@
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
+				if(isliving(M))
+					var/mob/living/L = M
+					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
 				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
@@ -1285,7 +1331,7 @@
 
 		var/image/ov = image('icons/mob/blob_organs.dmi')
 		ov.appearance_flags |= RESET_COLOR
-		ov.plane = PLANE_SELFILLUM + 1
+		ov.plane = PLANE_ABOVE_LIGHTING
 		ov.color = overmind?.organ_color
 		ov.icon_state = "deposit-material"
 		UpdateOverlays(ov, name)

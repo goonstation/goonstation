@@ -355,7 +355,7 @@
 				var/mob/living/L = eater
 				L.stomach_process += B
 
-			if (src.food_effects.len && isliving(eater) && eater.bioHolder)
+			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
 				for (var/effect in src.food_effects)
 					L.add_food_bonus(effect, src)

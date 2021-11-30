@@ -70,7 +70,7 @@ var/list/page_departments = list(
 	"Mining" = MGD_MINING)
 
 /proc/get_all_jobs()
-	var/all_jobs
+	var/all_jobs = list()
 	all_jobs += command_jobs
 	all_jobs += security_jobs
 	all_jobs += engineering_jobs

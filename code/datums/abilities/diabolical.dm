@@ -230,7 +230,7 @@
 			return
 
 		holder.owner.say("See you in hell.")
-		H.mind.damned = 1
+		H.mind?.damned = 1
 		animate_blink(H)
 		sleep(0.5 SECONDS)
 		H.implode()
@@ -449,22 +449,22 @@
 
 			if(!isnull(t) || !length(t))
 				src.symbol_setting = t
-		
+
 		t = src.symbol_setting
 
 		if(isnull(t) || !length(t))
 			return
-		
+
 		if(length(t) == 1)
 			src.symbol_setting = null
 			t = t[1]
 		else
 			src.symbol_setting = t.Copy(2) // remove first
 			t = t[1]
-		
+
 		if(t in src.c_char_to_symbol)
 			t = src.c_char_to_symbol[t]
-		
+
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 

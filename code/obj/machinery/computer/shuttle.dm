@@ -13,7 +13,7 @@
 	icon_state = "shuttle-embed"
 	density = 0
 	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
-	plane = PLANE_LIGHTING - 1
+	plane = PLANE_DEFAULT
 
 	north
 		dir = NORTH

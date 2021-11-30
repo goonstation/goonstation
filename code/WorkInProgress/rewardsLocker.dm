@@ -603,11 +603,11 @@
 			var/obj/item/reagent_containers/glass/bucket/red/new_bucket = new /obj/item/reagent_containers/glass/bucket/red(get_turf(activator))
 			new_bucket.reagents = skin_target.reagents
 			new_bucket.fingerprints = skin_target.fingerprints
-			new_bucket.fingerprintshidden = skin_target.fingerprintshidden
+			new_bucket.fingerprints_full = skin_target.fingerprints_full
 			new_bucket.fingerprintslast = skin_target.fingerprintslast
 			skin_target.reagents = null
 			skin_target.fingerprints = null
-			skin_target.fingerprintshidden = null
+			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
 			qdel(skin_target)
 			activator.put_in_hand(new_bucket)

@@ -57,6 +57,8 @@ datum
 				for(var/datum/ailment_data/disease/virus in M.ailments)
 					if (virus.cure == "Antibiotics")
 						virus.state = "Remissive"
+				if(M.hasStatus("poisoned"))
+					M.changeStatus("poisoned", -10 SECONDS * mult)
 				..()
 				return
 
@@ -752,6 +754,8 @@ datum
 					holder.remove_reagent("epinephrine", 5 * mult)
 				if(holder.has_reagent("ephedrine"))
 					holder.remove_reagent("ephedrine", 5 * mult)
+				if(holder.has_reagent("synaptizine"))
+					holder.remove_reagent("synaptizine", 5 * mult)
 				if(M.hasStatus("stimulants"))
 					M.changeStatus("stimulants", -15 SECONDS * mult)
 				if(probmult(5))

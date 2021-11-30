@@ -368,6 +368,7 @@
 			return
 
 		var/obj/item/I = src.equipped()
+		var/turf/thrown_from = get_turf(src)
 
 		if (!I || !isitem(I) || I.cant_drop)
 			return
@@ -407,7 +408,7 @@
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
 				M.inertia_dir = get_dir(src,target)
-			I.throw_at(target, I.throw_range, I.throw_speed, params)
+			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 

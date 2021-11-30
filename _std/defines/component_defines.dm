@@ -179,10 +179,18 @@
 /// sent when a mob throws something (target, params)
 #define COMSIG_MOB_THROW_ITEM "throw_item"
 
+/// sent when a mob throws something that lands nearby
+#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
+
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+
+/// When the mob vomits
+#define COMSIG_MOB_VOMIT "mob_vomit"
+
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+
 /// sent when defibbed status is added to a mob
 #define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 // ---- mob/living signals ----
