@@ -20,20 +20,20 @@
 		user.show_message(text("<span class='alert'>Now [] the panel...</span>", (src.locked) ? "unscrewing" : "reattaching"), 1)
 		sleep(3 SECONDS)
 		src.locked =! src.locked
-		src.update_icon()
+		src.UpdateIcon()
 		return
 	if (issnippingtool(W) && !src.locked)
 		status ^= BROKEN
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='alert'>[] has []activated []!</span>", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		src.update_icon()
+		src.UpdateIcon()
 		return
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		emagged++
 		for(var/mob/O in viewers(user, null))
 			O.show_message(text("<span class='alert'>[] has shorted out the []'s access system with an electromagnetic card!</span>", user, src), 1)
-		src.update_icon()
+		src.UpdateIcon()
 		return src.Attackhand(user)
 	return src.Attackhand(user)
 
@@ -42,7 +42,7 @@
 		use_power(5,ENVIRON)
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/filter_control/attack_hand(mob/user as mob)
 	if(status & NOPOWER)
@@ -108,7 +108,7 @@
 		usr.machine = null
 		return
 
-/obj/machinery/filter_control/update_icon()
+/obj/machinery/filter_control/UpdateIcon()
 	overlays = null
 	if(status & NOPOWER)
 		icon_state = "filter_control-nopower"
@@ -155,5 +155,5 @@
 	else
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))
-		src.update_icon()
+		src.UpdateIcon()
 	return

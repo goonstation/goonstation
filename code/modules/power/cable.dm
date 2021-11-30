@@ -47,7 +47,7 @@
 		NC.d2 = dirn
 		NC.iconmod = coil.iconmod
 		NC.add_fingerprint()
-		NC.update_icon()
+		NC.UpdateIcon()
 		NC.update_network()
 		coil.use(1)
 		return
@@ -172,7 +172,7 @@
 
 	if(level == 1)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-	update_icon()
+	UpdateIcon()
 
 /obj/cable/update_icon()
 	. = ..()
@@ -196,14 +196,14 @@
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.update_icon()
+			C.UpdateIcon()
 	else
 		var/atom/A = new/obj/item/cable_coil(T, 1)
 		applyCableMaterials(A, src.insulator, src.conductor)
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.update_icon()
+			C.UpdateIcon()
 
 	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)

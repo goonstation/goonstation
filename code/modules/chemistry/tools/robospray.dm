@@ -28,7 +28,7 @@
 	New()
 		..()
 		processing_items.Add(src)
-		src.update_icon()
+		src.UpdateIcon()
 
 	disposing()
 		..()
@@ -59,7 +59,7 @@
 		currentreagent = pick.id
 		propername = pick.name
 		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
-		update_icon()
+		UpdateIcon()
 		tooltip_rebuild = 1
 		return
 
@@ -96,7 +96,7 @@
 		M.reagents.add_reagent(currentreagent, amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 		tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 		playsound(M, src.sound_inject, 80, 0)
 		return 0
 
@@ -114,7 +114,7 @@
 			botreagents[reagent] = min(amt + refill_amount, max_fill_amount)
 			if (reagent == currentreagent)
 				tooltip_rebuild = 1
-				update_icon()
+				UpdateIcon()
 
 		return 0
 

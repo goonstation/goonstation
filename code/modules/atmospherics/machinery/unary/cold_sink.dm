@@ -11,10 +11,9 @@
 	var/current_temperature = T20C
 	var/current_heat_capacity = 50000 //totally random
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		if(node)
 			icon_state = "intact_[on?("on"):("off")]"
 		else

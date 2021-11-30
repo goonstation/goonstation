@@ -60,14 +60,14 @@
 		else
 			amount -= used
 			tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return 1
 
 	proc/take(var/amt, var/newloc)
 		if (amt > amount)
 			amt = amount
 			tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 		if (amt == amount)
 			if (ismob(loc))
 				var/mob/owner = loc
@@ -109,7 +109,7 @@
 		lining_item_color = "blue"
 	tooltip_rebuild = 1
 	boutput(user, "You change the [base_name]'s color to [lining_item_color].")
-	update_icon()
+	UpdateIcon()
 	return
 
 /obj/item/neon_lining/get_desc()
@@ -121,7 +121,7 @@
 		tooltip_rebuild = 1
 		take(1, user.loc)
 		boutput(user, "You cut a piece off the [base_name].")
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	else if (istype(W, /obj/item/neon_lining))
@@ -135,7 +135,7 @@
 			C.amount += src.amount
 			boutput(user, "You join the lining coils together.")
 			C.tooltip_rebuild = 1
-			C.update_icon()
+			C.UpdateIcon()
 			if(istype(src.loc, /obj/item/storage))
 				var/obj/item/storage/storage = src.loc
 				storage.hud.remove_object(src)
@@ -149,17 +149,17 @@
 		else
 			boutput(user, "You transfer [MAXLINING - src.amount] length\s of lining from one coil to the other.")
 			src.amount -= (MAXLINING-C.amount)
-			src.update_icon()
+			src.UpdateIcon()
 			tooltip_rebuild = 1
 			C.amount = MAXLINING
-			C.update_icon()
+			C.UpdateIcon()
 			C.tooltip_rebuild = 1
 			return
 
 /obj/item/neon_lining/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
 	for (var/obj/item/neon_lining/C in view(1, user))
-		C.update_icon()
+		C.UpdateIcon()
 
 /obj/item/neon_lining/afterattack(turf/F, mob/user)
 	if (!isturf(user.loc))
@@ -187,6 +187,6 @@
 		boutput(user, "You set some neon lining on the floor.")
 		C.lining_color = lining_item_color
 		C.add_fingerprint(user)
-		C.lining_update_icon()
+		C.lining_UpdateIcon()
 		use(1)
 	return

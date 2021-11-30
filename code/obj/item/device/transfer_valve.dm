@@ -52,7 +52,7 @@
 				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
 				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [showCoords(T.x, T.y, T.z)].")
 
-			update_icon()
+			UpdateIcon()
 			attacher = user
 
 			if(user.back == src)
@@ -80,7 +80,7 @@
 			message_admins("[key_name(user)] made a bomb using a[extra] [item.name] and a transfer valve.")
 			*/
 			attacher = user
-			update_icon()
+			UpdateIcon()
 
 		else if(istype(item, /obj/item/cable_coil)) //make loops for shoulder straps
 			if(flags & ONBACK)
@@ -95,7 +95,7 @@
 
 			flags |= ONBACK
 			boutput(user, "<span class='notice'>You attach two loops of [item] to the transfer valve!</span>")
-			update_icon()
+			UpdateIcon()
 
 		return
 
@@ -128,11 +128,11 @@
 			if(href_list["tankone"])
 				tank_one.set_loc(get_turf(src))
 				tank_one = null
-				update_icon()
+				UpdateIcon()
 			if(href_list["tanktwo"])
 				tank_two.set_loc(get_turf(src))
 				tank_two = null
-				update_icon()
+				UpdateIcon()
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
@@ -147,7 +147,7 @@
 				attached_device.set_loc(get_turf(src))
 				attached_device.master = null
 				attached_device = null
-				update_icon()
+				UpdateIcon()
 			if(href_list["device"])
 				attached_device.attack_self(usr)
 			if(href_list["straps"])
@@ -159,7 +159,7 @@
 					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
 					C.amount = 2
 					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
-					update_icon()
+					UpdateIcon()
 
 			src.attack_self(usr)
 
@@ -177,10 +177,9 @@
 
 	process()
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		//blank slate
 		src.overlays = new/list()
 		src.underlays = new/list()
@@ -295,7 +294,7 @@
 				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
 				SPAWN_DBG(1 SECOND)
-					update_icon()
+					UpdateIcon()
 				return
 
 			if(valve_open && (tank_one && tank_two) && tank_one.air_contents && tank_two.air_contents)
@@ -316,7 +315,7 @@
 				tank_one.air_contents.merge(temp)
 
 				SPAWN_DBG(2 SECONDS) // In case one tank bursts
-					src.update_icon()
+					src.UpdateIcon()
 
 		// this doesn't do anything but the timer etc. expects it to be here
 		// eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
@@ -369,7 +368,7 @@
 	mats = 8
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		return
 
 /obj/item/device/transfer_valve/vr

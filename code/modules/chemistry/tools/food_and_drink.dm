@@ -804,10 +804,10 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -965,7 +965,7 @@
 			src.item_state = "broken_beer" // shattered beer inhand sprite
 			user.update_inhands()
 			src.broken = 1
-			src.update_icon() // handles reagent holder stuff
+			src.UpdateIcon() // handles reagent holder stuff
 
 		else
 			user.visible_message("<span class='alert'><b>[user] smashes [src] on [target]! \The [src] shatters completely!</span>")
@@ -1009,12 +1009,11 @@
 	var/image/image_doodad
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
@@ -1104,7 +1103,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wedge = W
-			src.update_icon()
+			src.UpdateIcon()
 			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
@@ -1128,7 +1127,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.in_glass = W
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		else if (istype(W, /obj/item/shaker/salt))
@@ -1139,7 +1138,7 @@
 			else
 				boutput(user, "<span class='notice'>You salt the rim of [src].</span>")
 				src.salted = 1
-				src.update_icon()
+				src.UpdateIcon()
 				S.shakes ++
 				return
 
@@ -1150,7 +1149,7 @@
 				boutput(user, "<span class='notice'>You salt the rim of [src].</span>")
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
-				src.update_icon()
+				src.UpdateIcon()
 				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
@@ -1248,7 +1247,7 @@
 			H.visible_message("[H] removes [remove_thing] from [src].",\
 			"<span class='notice'>You remove [remove_thing] from [src].</span>")
 			H.put_in_hand_or_drop(remove_thing)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (eat_thing)
@@ -1262,7 +1261,7 @@
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
 			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
 			qdel(eat_thing)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 	ex_act(severity)
@@ -1450,7 +1449,7 @@
 		return
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		return
 
 	throw_impact(var/turf/T)
@@ -1556,10 +1555,10 @@
 	New()
 		..()
 		fluid_image = image(src.icon, "fluid-duo")
-		update_icon()
+		UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -1647,7 +1646,7 @@
 
 	var/image/fluid_image
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
 		. = ..()
@@ -1671,7 +1670,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
 		. = ..()

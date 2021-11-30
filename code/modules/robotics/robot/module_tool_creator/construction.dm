@@ -14,7 +14,7 @@
 /datum/robot/module_tool_creator/item_type/amount/cable_coil/setup(obj/item/cable_coil/I)
 	..()
 	if (!isnull(I))
-		I.update_icon()
+		I.UpdateIcon()
 	return I
 
 /datum/robot/module_tool_creator/item_type/amount/glass_sheet

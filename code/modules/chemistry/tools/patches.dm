@@ -40,7 +40,7 @@
 			src.reagents.temperature_min = 270	//you can remove/adjust these afterr you fix burns from reagnets being super strong
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 		if (src.reagents)
 			src.reagents.temperature_cap = 440
 			src.reagents.temperature_min = 270
@@ -62,10 +62,9 @@
 			src.reagents.total_temperature = src.reagents.temperature_min
 
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			icon_state = "[src.style]1"
@@ -97,7 +96,7 @@
 			if (user && E)
 				user.show_text("You press on the patch with [E]. The current from [E] closes the tamper-proof seal.", "blue")
 			src.medical = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -331,7 +330,7 @@
 	icon_state = "patch_med"
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		return
 
 /obj/item/reagent_containers/patch/vr/bruise
@@ -484,7 +483,7 @@
 			src.reagents.temperature_min = 270
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
@@ -514,13 +513,13 @@
 		if (user && E)
 			user.show_text("You press on [src] with [E]. The anti-tamper lock is broken.", "blue")
 		src.tampered = 1
-		src.update_icon()
+		src.UpdateIcon()
 		return 1
 
 	on_reagent_change(add)
 		if (!tampered && add)
 			check_whitelist(src, src.whitelist)
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		if (can_operate_on(user))
@@ -688,7 +687,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -709,7 +708,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
 		if (src?.reagents.total_volume > 0)
 			src.reagents.trans_to(mender, src.reagents.total_volume)
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, 1)
 			if (src.reagents.total_volume == 0)
 				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")

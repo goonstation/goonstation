@@ -20,7 +20,7 @@
 	hide_attack = 2
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		. = ..()

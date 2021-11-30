@@ -25,7 +25,7 @@
 
 	initialize()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -125,7 +125,7 @@
 			if("set_scrubbing")
 				scrubbing = 1
 
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
 	scrub_oxygen = 0

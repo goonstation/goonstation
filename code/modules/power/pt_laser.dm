@@ -59,7 +59,7 @@
 
 		terminal.master = src
 
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
 	for(var/obj/O in laser_parts)
@@ -171,7 +171,7 @@
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
 	if (round(adjusted_output) == 0)
@@ -265,7 +265,7 @@
 	if(!T) return //just in case
 
 	firing = 1
-	update_icon(1)
+	UpdateIcon(1)
 
 	for(var/dist = 0, dist < range, dist += 1) // creates each field tile
 		T = get_step(T, dir)
@@ -283,7 +283,7 @@
 
 /obj/machinery/power/pt_laser/proc/restart_firing()
 	firing = 1
-	update_icon(1)
+	UpdateIcon(1)
 	melt_blocking_objects()
 	update_laser()
 
@@ -453,11 +453,11 @@
 		if(2.0)
 			if (prob(50))
 				status |= BROKEN
-				update_icon()
+				UpdateIcon()
 		if(3.0)
 			if (prob(25))
 				status |= BROKEN
-				update_icon()
+				UpdateIcon()
 	return
 
 /obj/machinery/power/pt_laser/proc/process_laser()

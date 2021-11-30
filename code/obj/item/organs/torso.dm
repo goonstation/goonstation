@@ -27,7 +27,7 @@
 				if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
 					src.donor_appearance = new(src)
 					src.donor_appearance.CopyOther(src.donor.bioHolder.mobAppearance)
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		if (holder)

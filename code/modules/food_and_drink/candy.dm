@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
 			SPAWN_DBG(0)
-				src.update_icon()
+				src.UpdateIcon()
 
 	update_icon()
 		. = ..()

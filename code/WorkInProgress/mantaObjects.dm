@@ -66,7 +66,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		mantaLever = src
-		update_icon()
+		UpdateIcon()
 		..()
 //This crap is here so nothing can destroy it.
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -99,7 +99,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(on)
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
-				update_icon()
+				UpdateIcon()
 				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			else
@@ -107,7 +107,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				on = 1
 				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
 				sleep(7 SECONDS)
-				update_icon()
+				UpdateIcon()
 				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
 				mantaSetMove(on)
 			return
@@ -125,7 +125,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
-				update_icon()
+				UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
@@ -389,7 +389,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	New()
 		START_TRACKING
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		STOP_TRACKING
@@ -403,11 +403,11 @@ var/obj/manta_speed_lever/mantaLever = null
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		if (!src.open)
 			src.open = 1
-			update_icon()
+			UpdateIcon()
 			user.show_text("<span class='notice'><b>You open junction box's outer door.</b></span>")
 		else
 			src.open = 0
-			update_icon()
+			UpdateIcon()
 			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)

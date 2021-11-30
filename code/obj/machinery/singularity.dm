@@ -1162,7 +1162,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_array/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)
-		update_icon()
+		UpdateIcon()
 
 
 /obj/machinery/power/collector_array/update_icon()
@@ -1181,7 +1181,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		overlays += image('icons/obj/singularity.dmi', "on")
 
 /obj/machinery/power/collector_array/power_change()
-	update_icon()
+	UpdateIcon()
 	..()
 
 /obj/machinery/power/collector_array/process()
@@ -1194,11 +1194,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(P.air_contents.toxins <= 0)
 				src.active = 0
 				icon_state = "ca_deactive"
-				update_icon()
+				UpdateIcon()
 		else if(src.active == 1)
 			src.active = 0
 			icon_state = "ca_deactive"
-			update_icon()
+			UpdateIcon()
 		..()
 
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
@@ -1238,7 +1238,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		W.set_loc(src)
 		user.u_equip(W)
 		CU?.updatecons()
-		update_icon()
+		UpdateIcon()
 	else if (ispryingtool(W))
 		if(!P)
 			return
@@ -1247,7 +1247,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		Z.layer = initial(Z.layer)
 		src.P = null
 		CU?.updatecons()
-		update_icon()
+		UpdateIcon()
 	else
 		src.add_fingerprint(user)
 		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
@@ -1343,12 +1343,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(isnull(S1) || S1.disposed)
 			S1 = null
 
-		update_icon()
+		UpdateIcon()
 		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
 	else
-		update_icon()
+		UpdateIcon()
 		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
@@ -1383,7 +1383,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		overlays += image('icons/obj/singularity.dmi', "cu sing")
 
 /obj/machinery/power/collector_control/power_change()
-	update_icon()
+	UpdateIcon()
 	..()
 
 /obj/machinery/power/collector_control/process(mult)
@@ -1432,7 +1432,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.active = 0
 		boutput(user, "You turn off the collector control.")
 		src.lastpower = 0
-		update_icon()
+		UpdateIcon()
 		return
 
 	if(src.active==0)

@@ -229,7 +229,7 @@ proc/Create_Tommyname()
 		return ..(target, start, user)
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
 			src.icon_state = "tommygun[(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE) ? "" : "-empty"]"
 			return

@@ -280,7 +280,7 @@
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
-	src.update_icon()
+	src.UpdateIcon()
 
 
 // flockdrones can always move through

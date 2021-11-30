@@ -45,10 +45,10 @@
 	process()
 		if (src.light_time>0)
 			src.light_time--
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		if(src.light.enabled) // bluh
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		return
 	proc/light_up()
@@ -56,7 +56,7 @@
 		src.light_time+=CONTAINER_LIGHT_TIME
 		src.light_time%=MAX_CONTAINER_LIGHT_TIME
 		if(!orig_light_time)
-			src.update_icon()
+			src.UpdateIcon()
 		return
 	ex_act(severity)
 		switch(severity)
@@ -69,12 +69,12 @@
 					return
 				src.open=true
 				src.welded=false
-				src.update_icon()
+				src.UpdateIcon()
 				return
 			if (3.0)
 				if(prob(50) && !src.welded)
 					src.open=true
-					src.update_icon()
+					src.UpdateIcon()
 				return
 		return
 	suicide(var/mob/user as mob) // lel
@@ -110,7 +110,7 @@
 				src.close_storage_menus()
 			else
 				src.light_time=0
-			src.update_icon()
+			src.UpdateIcon()
 			return 1
 		else if (iswrenchingtool(W))
 			if(!src.can_be_anchored)
@@ -138,11 +138,11 @@
 			if(W:try_weld(user, 1))
 				src.welded=!src.welded
 				boutput(user,"<span class='notice'>You [src.welded ? "" : "un"]weld the [src]'s cover</span>")
-				src.update_icon()
+				src.UpdateIcon()
 				return 1
 		else if (src.open || !istype(W,/obj/item/mechanics))
 			..()
-			src.update_icon()
+			src.UpdateIcon()
 		return 1
 
 	update_icon()
@@ -316,7 +316,7 @@
 		if(level == 1)
 			src.icon_state=icon_down
 			SPAWN_DBG(1 SECOND)
-				src.update_icon()
+				src.UpdateIcon()
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG)
 			playsound(src,'sound/machines/keypress.ogg',30)
@@ -499,7 +499,7 @@
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
-		update_icon()
+		UpdateIcon()
 		return
 
 /obj/item/mechanics/cashmoney
@@ -2800,10 +2800,9 @@
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 		return
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		icon_state = "comp_gun"
 		return
 
@@ -2834,7 +2833,7 @@
 		if(!Gun && charging)
 			charging = 0
 			tooltip_rebuild = 1
-			update_icon()
+			UpdateIcon()
 
 		if(!istype(Gun, /obj/item/gun/energy) || !charging)
 			return
@@ -2847,15 +2846,15 @@
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
-			update_icon()
+			UpdateIcon()
 			return
 
 		else
 			if (SEND_SIGNAL(E, COMSIG_CELL_CHARGE, 15) & CELL_FULL) // Same as other recharger.
 				src.charging = 0
 				tooltip_rebuild = 1
-				src.update_icon()
-		E.update_icon()
+				src.UpdateIcon()
+		E.UpdateIcon()
 		return
 
 	proc/recharge(var/datum/mechanicsMessage/input)
@@ -2863,7 +2862,7 @@
 		if(!istype(Gun, /obj/item/gun/energy)) return
 		charging = 1
 		tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 		return
 
 	fire(var/datum/mechanicsMessage/input)
@@ -2872,7 +2871,7 @@
 		return ..()
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		icon_state = charging ? "comp_gun2x" : "comp_gun2"
 		return
 

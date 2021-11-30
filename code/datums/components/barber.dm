@@ -151,7 +151,7 @@
 		M.emote("cry")
 		M.emote("scream")
 		if (M.organHolder?.head)
-			M.organHolder.head.update_icon()
+			M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))

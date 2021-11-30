@@ -42,7 +42,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	process()
 		if (!src.other)
@@ -54,8 +54,8 @@
 					src.other = other
 					src.other.other = src
 					src.create_field()
-					src.update_icon()
-					other.update_icon()
+					src.UpdateIcon()
+					other.UpdateIcon()
 					return
 				T = get_step(T, src.dir)
 				checked++
@@ -91,7 +91,7 @@
 			for (var/obj/field in src.fields)
 				qdel(field)
 			src.fields.len = 0
-			src.update_icon()
+			src.UpdateIcon()
 
 	update_icon()
 		. = ..()

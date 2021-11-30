@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		for (var/atom/movable/screen/S in extra_buttons)
 			holder.owner.screen -= S
 
-	proc/update_icon_state(var/newstate)
+	proc/UpdateIcon_state(var/newstate)
 		icon_state = newstate
 		holder.update_mode_icon()
 

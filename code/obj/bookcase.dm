@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 1
 	var/variant = 1 //just used for normal shelves
-	var/update_icon_suffix = "" //set to either "1" or "2" in New()
+	var/UpdateIcon_suffix = "" //set to either "1" or "2" in New()
 	var/capacity = 17 //how many books can it hold?
 	var/top_shelf_cap = 6
 	var/middle_shelf_cap = 5
@@ -55,7 +55,7 @@
 	New()
 		..()
 		if (variant)
-			update_icon_suffix = "[rand(1,2)]"
+			UpdateIcon_suffix = "[rand(1,2)]"
 
 	proc/add_to_bookshelf(var/obj/item/W)
 		bookshelf_contents += W
@@ -82,7 +82,7 @@
 		var/image/bottom_image = null
 
 		if (bookshelf_contents.len) //were almost always drawing the top shelf
-			var/icon/top = new(src.icon, "bookshelf_full_[update_icon_suffix]") //makes a new icon that we can crop from the full bookshelf icon
+			var/icon/top = new(src.icon, "bookshelf_full_[UpdateIcon_suffix]") //makes a new icon that we can crop from the full bookshelf icon
 			var/list/top_crop = list() //creating this rn so we can modify it in an if thing while also being able to reference it outside of those ifs
 			if (bookshelf_contents.len > top_shelf_cap) //lets see how to call our crop location proc, it returns a list of pixels that we crop to
 				top_crop = book_overlay_logic_center(top_shelf_cap) //if theres more books on the shelf than on the top row, just generate the top row
@@ -98,7 +98,7 @@
 				top_image = image(top) //sets the image we made at the beginning to our cropped icon, we'll fix the offsets later
 
 		if (bookshelf_contents.len > top_shelf_cap) //is the top shelf full? move onto the middle shelf
-			var/icon/middle = new(src.icon, "bookshelf_full_[update_icon_suffix]")
+			var/icon/middle = new(src.icon, "bookshelf_full_[UpdateIcon_suffix]")
 			var/list/middle_crop = list()
 			if (bookshelf_contents.len > (top_shelf_cap + middle_shelf_cap))
 				middle_crop = book_overlay_logic_center(top_shelf_cap + middle_shelf_cap)
@@ -119,7 +119,7 @@
 				middle_image = image(middle)
 
 		if (bookshelf_contents.len > (top_shelf_cap + middle_shelf_cap)) //is the middle shelf full? move onto the bottom shelf
-			var/icon/bottom = new(src.icon, "bookshelf_full_[update_icon_suffix]")
+			var/icon/bottom = new(src.icon, "bookshelf_full_[UpdateIcon_suffix]")
 			var/list/bottom_crop = book_overlay_logic_center(bookshelf_contents.len) //dont need the if because the bottom shelf is the last shelf!!
 			if ("sideways" in bottom_crop)
 				if (bookshelf_contents.len == 26)
@@ -131,7 +131,7 @@
 				bottom_image = image(bottom)
 
 		if (top_image) //now we handle offsets and updating the icon
-			switch(update_icon_suffix) //theres so many variants with different pixel offsets that this is best, i think
+			switch(UpdateIcon_suffix) //theres so many variants with different pixel offsets that this is best, i think
 				if ("1")
 					top_image.pixel_x += 6
 					top_image.pixel_y += 15
@@ -148,7 +148,7 @@
 			UpdateOverlays(top_image, "top_shelf")
 
 		if (middle_image)
-			switch(update_icon_suffix)
+			switch(UpdateIcon_suffix)
 				if ("1")
 					middle_image.pixel_x += 6
 					middle_image.pixel_y += 8
@@ -166,7 +166,7 @@
 			UpdateOverlays(middle_image, "middle_shelf")
 
 		if (bottom_image)
-			switch(update_icon_suffix)
+			switch(UpdateIcon_suffix)
 				if ("1")
 					bottom_image.pixel_x += 6
 					bottom_image.pixel_y += 1
@@ -184,7 +184,7 @@
 			UpdateOverlays(bottom_image, "bottom_shelf")
 
 	proc/book_overlay_logic_center(var/book_count) //this proc lets us just go through and get coordinates of where to crop our book image to
-		if (variant && update_icon_suffix == "2")
+		if (variant && UpdateIcon_suffix == "2")
 			book_count += 17 //to deal with variants on the og bookshelves
 		return shelf_overlay_list[book_count]
 
@@ -196,7 +196,7 @@
 				boutput(user, "You shelf the book.")
 				user.drop_item()
 				add_to_bookshelf(W)
-				update_icon()
+				UpdateIcon()
 			else
 				boutput(user, "\The [src] is too full!")
 		else if (istype(W, /obj/item/wrench))
@@ -221,7 +221,7 @@
 			boutput(user, "You take the book off the shelf.")
 			take_off_bookshelf(book_sel)
 			user.put_in_hand_or_drop(book_sel)
-			update_icon()
+			UpdateIcon()
 		else
 			boutput(user, "There's nothing to take off the shelf!")
 
@@ -229,7 +229,7 @@
 	icon_state = "bookshelf_empty_long"
 	density = 0
 	variant = 0
-	update_icon_suffix = "wall"
+	UpdateIcon_suffix = "wall"
 	top_shelf_cap = 9
 	middle_shelf_cap = 10
 	bottom_shelf_cap = 10
@@ -271,7 +271,7 @@
 
 /obj/bookshelf/long/end_left
 	icon_state = "bookshelf_empty_end_L"
-	update_icon_suffix = "L"
+	UpdateIcon_suffix = "L"
 	top_shelf_cap = 9
 	middle_shelf_cap = 9
 	bottom_shelf_cap = 9
@@ -307,7 +307,7 @@
 
 /obj/bookshelf/long/end_right
 	icon_state = "bookshelf_empty_end_R"
-	update_icon_suffix = "R"
+	UpdateIcon_suffix = "R"
 	top_shelf_cap = 9
 	middle_shelf_cap = 9
 	bottom_shelf_cap = 9
@@ -401,7 +401,7 @@
 				B.flair_colorable = book_vars["flair_colorable"]
 				B.build_custom_book()
 				src.add_to_bookshelf(B)
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/build_curr_contents() //this takes our books and makes it into a giant weird list
 		var/list/curr_contents = list()

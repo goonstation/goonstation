@@ -12,7 +12,7 @@
 /obj/item/reagent_containers/ampoule/New()
 	..()
 	color_id = pick("1", "2", "3", "4")
-	update_icon()
+	UpdateIcon()
 
 /obj/item/reagent_containers/ampoule/get_desc()
 	if(reagents.total_volume > 0)

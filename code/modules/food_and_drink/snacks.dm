@@ -1594,7 +1594,7 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -1618,7 +1618,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	heal(var/mob/M)
 		if (src.bun == 4) M.bioHolder.AddEffect("accent_elvis", timeleft = 180)
@@ -1691,7 +1691,7 @@
 
 			qdel(W)
 			user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
 			if(!src.bun)

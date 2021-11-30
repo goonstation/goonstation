@@ -601,7 +601,7 @@
 		else
 			var/obj/item/clothing/mask/cigarette/W = src.contents[1]
 			user.put_in_hand_or_drop(W)
-		src.update_icon()
+		src.UpdateIcon()
 	else
 		return ..()
 	return
@@ -620,7 +620,7 @@
 			W.set_loc(get_turf(user))
 			user.show_text("You knock a cig out of [src], flopping it to the ground.", "red")
 
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/item/cigpacket/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/clothing/mask/cigarette))
@@ -632,7 +632,7 @@
 			src.contents += cig
 			user.u_equip(cig)
 			cig.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			user.show_text("The packet is just too full to fit any more cigs.", "red")
@@ -670,11 +670,9 @@
 
 /obj/item/cigarbox/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
-/obj/item/cigarbox/update_icon(override_parent = FALSE)
-	if (override_parent)
-		return
+/obj/item/cigarbox/update_icon()
 	. = ..()
 	src.overlays = null
 	if (src.cigcount <= 0)
@@ -695,7 +693,7 @@
 			user.put_in_hand_or_drop(W)
 			if (src.cigcount != -1)
 				src.cigcount--
-		src.update_icon()
+		src.UpdateIcon()
 	else
 		return ..()
 	return
@@ -716,7 +714,7 @@
 			W.set_loc(get_turf(user))
 			user.show_text("You knock a cigar out of [src], flopping it to the ground.", "red")
 
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/item/cigarbox/gold
 	name = "deluxe golden cigar box"
@@ -736,7 +734,7 @@
 	rand_pos = 1
 
 /obj/item/cigarbox/gold/update_icon()
-	. = ..(override_parent = TRUE)
+
 	src.overlays = null
 	if (src.cigcount <= 0)
 		src.icon_state = "[src.package_style]"
@@ -756,7 +754,7 @@
 			user.put_in_hand_or_drop(W)
 			if (src.cigcount != -1)
 				src.cigcount--
-		src.update_icon()
+		src.UpdateIcon()
 	else
 		return ..()
 	return
@@ -778,7 +776,7 @@
 			W.set_loc(get_turf(user))
 			user.show_text("You knock a cigar out of [src], flopping it to the ground.", "red")
 
-	src.update_icon()
+	src.UpdateIcon()
 
 // breh
 
@@ -842,7 +840,7 @@
 				if (src.match_amt != -1)
 					src.match_amt --
 					tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			return ..()
 		return

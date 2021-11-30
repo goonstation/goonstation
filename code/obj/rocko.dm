@@ -30,7 +30,7 @@ obj/item/rocko
 
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
-		update_icon()
+		UpdateIcon()
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
@@ -177,6 +177,6 @@ obj/item/rocko
 	afterattack(atom/target, mob/user, reach, params)
 		if(src.smile && ismob(target) && prob(10))
 			src.smile = FALSE
-			update_icon()
+			UpdateIcon()
 
 

@@ -69,7 +69,7 @@
 	// hide the object if turf is intact
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE
-		update_icon()
+		UpdateIcon()
 
 	// update the icon_state
 	update_icon()
@@ -180,7 +180,7 @@
 
 			user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
-			update_icon()
+			UpdateIcon()
 
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card

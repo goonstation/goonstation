@@ -25,7 +25,7 @@
 			src.mode = S_INJECT
 		else if (!src.reagents.total_volume && src.mode == S_INJECT)
 			src.mode = S_DRAW
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -52,21 +52,21 @@
 
 	pickup(mob/user)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
-			update_icon()
+			UpdateIcon()
 
 	attack_self(mob/user as mob)
 		src.mode = !(src.mode)
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-		update_icon()
+		UpdateIcon()
 
 	attack_hand(mob/user as mob)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		return

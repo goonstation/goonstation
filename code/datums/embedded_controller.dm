@@ -437,7 +437,7 @@ obj/machinery/embedded_controller
 	process()
 		program?.process()
 
-		update_icon()
+		UpdateIcon()
 		src.updateDialog()
 		..()
 
@@ -653,7 +653,7 @@ obj/machinery/embedded_controller/radio/department_controller
 			if (update)
 				src.updateDialog()
 
-		update_icon()
+		UpdateIcon()
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)

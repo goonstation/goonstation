@@ -127,7 +127,7 @@
 			var/obj/item/I = src.loc
 			I.process_grab(mult)
 
-		update_icon()
+		UpdateIcon()
 
 	attack(atom/target, mob/user)
 		if (check())
@@ -245,7 +245,7 @@
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 				user.next_click = world.time + user.combat_click_delay
-		update_icon()
+		UpdateIcon()
 
 	proc/upgrade_to_kill(var/msg_overridden = 0)
 		if (!assailant || !affecting)
@@ -335,10 +335,9 @@
 
 		return 0
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				icon_state = "reinforce"
@@ -780,7 +779,7 @@
 		qdel(src)
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 
 	do_resist()
 		.= 0

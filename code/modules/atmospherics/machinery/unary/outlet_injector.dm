@@ -110,7 +110,7 @@
 
 		if(signal.data["tag"])
 			SPAWN_DBG(0.5 SECONDS) broadcast_status()
-		update_icon()
+		UpdateIcon()
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
 		if(node)

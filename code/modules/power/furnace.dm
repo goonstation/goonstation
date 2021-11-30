@@ -29,7 +29,7 @@
 		else
 			on_inactive()
 
-		update_icon()
+		UpdateIcon()
 
 	proc/on_burn()
 		add_avail(src.genrate)

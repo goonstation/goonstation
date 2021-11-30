@@ -740,14 +740,14 @@
 				O.air_contents.toxins = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			for(var/obj/machinery/portable_atmospherics/canister/oxygen/O in area_contents)
 				O.air_contents.volume = 1000000
 				O.air_contents.oxygen = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			#endif
 

@@ -72,11 +72,13 @@
 /// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 #define COMSIG_ATOM_EXAMINE "atom_examine"
 /// when something happens that should trigger an icon update. Or something.
-#define COMSIG_UPDATE_ICON "atom_update_icon"
+#define COMSIG_UpdateIcon "atom_UpdateIcon"
 /// when something triggers Crossed by entering this atom's turf (/atom/movable)
 #define COMSIG_ATOM_CROSSED "atom_crossed"
-/// When something calls update_icon
-#define COMSIG_ATOM_ICON_UPDATED "atom_icon_updated"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_PRE_UpdateIcon "atom_before_UpdateIcon"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_POST_UpdateIcon "atom_after_UpdateIcon"
 
 // ---- atom/movable signals ----
 

@@ -81,7 +81,7 @@
 
 			can_disarm = src.status
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		else
 			user.show_text("You need two free hands in order to activate the [src.name].", "red")

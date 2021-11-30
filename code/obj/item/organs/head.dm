@@ -62,11 +62,11 @@
 				src.bones.name = "skull"
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.update_icon(makeshitup = 0)
+					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
-					src.update_icon(makeshitup = 1)
+					src.UpdateIcon(/*makeshitup*/ 1)
 			else
-				src.update_icon(makeshitup = 1)
+				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
 		if (holder)
@@ -560,5 +560,5 @@
 					src.organ_name = "psychedelic head"
 					src.desc = "Well, that's trippy."
 
-		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
+		src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something

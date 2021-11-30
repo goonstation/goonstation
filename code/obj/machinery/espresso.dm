@@ -156,7 +156,7 @@
 			qdel(W)
 			src.cup_amount ++
 			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.update_icon()
+			src.UpdateIcon()
 		else return ..()
 
 	attack_hand(mob/user as mob)
@@ -168,7 +168,7 @@
 			src.cup_amount--
 			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/espressocup
 			user.put_in_hand_or_drop(P)
-			src.update_icon()
+			src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -316,7 +316,7 @@
 			qdel(W)
 			src.cup_amount ++
 			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.update_icon()
+			src.UpdateIcon()
 		else return ..()
 
 	attack_hand(mob/user as mob)
@@ -328,7 +328,7 @@
 			src.cup_amount--
 			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/mug
 			user.put_in_hand_or_drop(P)
-			src.update_icon()
+			src.UpdateIcon()
 
 	update_icon()
 		. = ..()

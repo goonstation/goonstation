@@ -696,7 +696,7 @@ var/linenums = 0
 
 	//gas.co2 = capacity
 
-	update_icon()
+	UpdateIcon()
 
 /obj/machinery/circulator/disposing()
 	if(gas1)
@@ -741,11 +741,11 @@ var/linenums = 0
 		SPAWN_DBG(3 SECONDS)				// 3 second delay for slow-off
 			if(circ_status == 2)
 				circ_status = 0
-				update_icon()
+				UpdateIcon()
 	else if(circ_status == 0)
 		circ_status =1
 
-	update_icon()
+	UpdateIcon()
 
 
 
@@ -764,7 +764,7 @@ var/linenums = 0
 			SPAWN_DBG(3 SECONDS)
 				if(circ_status == 2)
 					circ_status = 0
-					update_icon()
+					UpdateIcon()
 	else if(circ_status == 0)
 		if(on)
 			circ_status = 1
@@ -772,10 +772,10 @@ var/linenums = 0
 		if(on)
 			circ_status = 1
 
-	update_icon()
+	UpdateIcon()
 
 
-/obj/machinery/circulator/update_icon()
+/obj/machinery/circulator/UpdateIcon()
 
 	if(status & NOPOWER)
 		icon_state = "circ[side]-p"
@@ -796,7 +796,7 @@ var/linenums = 0
 
 /obj/machinery/circulator/power_change()
 	..()
-	update_icon()
+	UpdateIcon()
 
 /*
 /obj/machinery/circulator/receive_gas(var/obj/substance/gas/t_gas as obj, from as obj, amount)
@@ -1709,7 +1709,7 @@ var/linenums = 0
 		leak_to_turf(2)
 	*/ //TODO: FIX
 
-/obj/machinery/oneway/pipepump/update_icon()
+/obj/machinery/oneway/pipepump/UpdateIcon()
 	icon_state = "pipepump-[(status & NOPOWER) ? "stop" : "run"]"
 
 /obj/machinery/oneway/pipepump/power_change()
@@ -1719,7 +1719,7 @@ var/linenums = 0
 
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))	// So they don't all turn off at the same time
-		update_icon()
+		UpdateIcon()
 
 // Filter inlet
 // works with filter_control
@@ -1761,7 +1761,7 @@ var/linenums = 0
 	gas.copy_from(ngas)
 
 /obj/machinery/inlet/filter/process()
-	src.update_icon()
+	src.UpdateIcon()
 	if(!(status & NOPOWER))
 	/*	var/turf/T = src.loc
 		if(!T || T.density)	return
@@ -1806,10 +1806,10 @@ var/linenums = 0
 	else
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))
-		update_icon()
+		UpdateIcon()
 	return
 
-/obj/machinery/inlet/filter/update_icon()
+/obj/machinery/inlet/filter/UpdateIcon()
 	/*
 	if(status & NOPOWER)
 		icon_state = "inlet_filter-0"
@@ -1836,10 +1836,10 @@ var/linenums = 0
 	else
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))
-		update_icon()
+		UpdateIcon()
 	return
 
-/obj/machinery/vent/filter/update_icon()
+/obj/machinery/vent/filter/UpdateIcon()
 	/*
 	if(status & NOPOWER)
 		icon_state = "vent_filter-0"

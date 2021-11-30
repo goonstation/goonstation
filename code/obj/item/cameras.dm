@@ -102,14 +102,14 @@
 				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
-			src.update_icon()
+			src.UpdateIcon()
 
 	New()
 		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/update_icon)
+		RegisterSignal(src, COMSIG_UpdateIcon, /atom/proc/UpdateIcon)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -139,7 +139,7 @@
 		if (T.is_sanctuary())
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
-		src.update_icon()
+		src.UpdateIcon()
 		// Generic flash
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)

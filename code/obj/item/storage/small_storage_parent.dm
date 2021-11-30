@@ -180,7 +180,7 @@
 			user.u_equip(W)
 			src.add_contents(W)
 //		hud.add_item(W, user)
-		update_icon()
+		UpdateIcon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))

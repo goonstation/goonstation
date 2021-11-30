@@ -949,7 +949,7 @@
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 /* what in the unholy mother of god was this about
 		src.overl = new /atom/movable/overlay( src.loc )
 		src.overl.icon = 'icons/obj/objects.dmi'
@@ -965,17 +965,16 @@
 
 		src.set_dir(turn(src.dir, 90))
 //		src.overl.set_dir(src.dir)
-		src.update_icon()
+		src.UpdateIcon()
 		if (buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
 			C.set_dir(dir)
 		return
 
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1078,7 +1077,7 @@
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		ENSURE_IMAGE(src.arm_image, src.icon, src.arm_icon_state)
 		src.arm_image.layer = FLY_LAYER+1
 		src.UpdateOverlays(src.arm_image, "arm")
@@ -1181,7 +1180,7 @@
 	New()
 		..()
 		if (arm_icon_state)
-			src.update_icon()
+			src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -1393,7 +1392,7 @@
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
 					src.part1.master = src
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1456,12 +1455,12 @@
 
 	proc/toggle_active()
 		src.on = !(src.on)
-		src.update_icon()
+		src.UpdateIcon()
 		return src.on
 
 	proc/toggle_lethal()
 		src.lethal = !(src.lethal)
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	update_icon()
@@ -1511,7 +1510,7 @@
 		if (!A.powered(EQUIP))
 			return
 		A.use_power(EQUIP, 5000)
-		A.update_icon()
+		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
@@ -1539,5 +1538,5 @@
 				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(L.mind)
 
-		A.update_icon()
+		A.UpdateIcon()
 		return

@@ -133,7 +133,7 @@
 						src.growth = src.current.growtime - src.plantgenes.growtime
 					if(4)
 						src.growth = src.current.harvtime - src.plantgenes.harvtime
-				update_icon()
+				UpdateIcon()
 			else
 				if(!src.current)
 					qdel(src)
@@ -235,13 +235,13 @@
 
 	var/health_warning = 0
 	var/harvest_warning = 0
-	var/water_level = 4 // Used for efficiency in the update_icon proc with water level changing
+	var/water_level = 4 // Used for efficiency in the UpdateIcon proc with water level changing
 	var/total_volume = 4 // How much volume total is actually in the tray because why the fuck was water the only reagent being counted towards the level
 	var/image/water_sprite = null
 	var/image/water_meter = null
 	var/image/plant_sprite = null
 	var/grow_level = 1 // Same as the above except for current plant growth
-	var/do_update_icon = 0 // this is now a var on the pot itself so you can actually call it outside of process()
+	var/do_UpdateIcon = 0 // this is now a var on the pot itself so you can actually call it outside of process()
 	var/do_update_water_icon = 1 // this handles the water overlays specifically (water and water level) It's set to 1 by default so it'll update on spawn
 	var/growth_rate = 2
 		// We have this here as a check for whether or not the plant needs to update its sprite.
@@ -259,7 +259,7 @@
 		// to have too much water, which stunts plant growth speed.
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
 		src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
-		update_icon()
+		UpdateIcon()
 
 		if(!net_id)
 			net_id = generate_net_id(src)
@@ -313,7 +313,7 @@
 
 	power_change()
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	was_deconstructed_to_frame(mob/user)
 		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
@@ -322,8 +322,8 @@
 	process()
 		..()
 
-		if(do_update_icon)
-			update_icon()
+		if(do_UpdateIcon)
+			UpdateIcon()
 			update_name()
 
 			// We skip every other tick. Another cpu-conserving measure.
@@ -478,21 +478,21 @@
 
 		if(current_growth_level != src.grow_level)
 			src.grow_level = current_growth_level
-			do_update_icon = 1
+			do_UpdateIcon = 1
 
 		if(!harvest_warning && HYPcheck_if_harvestable())
 			src.harvest_warning = 1
-			do_update_icon = 1
+			do_UpdateIcon = 1
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
-			do_update_icon = 1
+			do_UpdateIcon = 1
 
 		if(!health_warning && src.health <= growing.starthealth / 2)
 			src.health_warning = 1
-			do_update_icon = 1
+			do_UpdateIcon = 1
 		else if(health_warning && src.health > growing.starthealth / 2)
 			src.health_warning = 0
-			do_update_icon = 1
+			do_UpdateIcon = 1
 
 		// Have we lost all health or growth, or used up all available harvests? If so, this plant
 		// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
@@ -500,8 +500,8 @@
 			HYPkillplant()
 			return
 
-		if(do_update_icon)
-			update_icon()
+		if(do_UpdateIcon)
+			UpdateIcon()
 			update_name()
 
 		if(!HAS_FLAG(status, NOPOWER))
@@ -721,7 +721,7 @@
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
-				update_icon()
+				UpdateIcon()
 				return
 
 
@@ -859,14 +859,14 @@
 				if(alert("Clear this tray?",,"Yes","No") == "Yes")
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
-					src.do_update_icon = 1
+					src.do_UpdateIcon = 1
 					logTheThing("combat", usr, null, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
 					HYPdestroyplant()
 		else
 			if(alert("Clear this tray?",,"Yes","No") == "Yes")
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				src.reagents.clear_reagents()
-				src.do_update_icon = 1
+				src.do_UpdateIcon = 1
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
@@ -1431,7 +1431,7 @@
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
 							I.add_fingerprint(user)
-				SA.update_icon()
+				SA.UpdateIcon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
@@ -1462,7 +1462,7 @@
 
 		//do we have to run the next life tick manually? maybe
 		playsound(src.loc, "rustle", 50, 1, -5, 2)
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 	proc/HYPmutateplant(var/severity = 1)
@@ -1538,7 +1538,7 @@
 		HYPmutateplant(1)
 		post_alert("event_new")
 		src.recently_harvested = 0
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 		if(usr && ishellbanned(usr)) //Haw haw
@@ -1556,7 +1556,7 @@
 		post_alert("event_death")
 		src.health_warning = 0
 		src.harvest_warning = 0
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 	proc/HYPdestroyplant()
@@ -1583,7 +1583,7 @@
 		DNA.mutation = null
 
 		src.generation = 0
-		update_icon()
+		UpdateIcon()
 		post_alert("event_cleared")
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
@@ -1802,7 +1802,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					if(PP)
-						PP.update_icon()
+						PP.UpdateIcon()
 						PP.update_name()
 					break
 

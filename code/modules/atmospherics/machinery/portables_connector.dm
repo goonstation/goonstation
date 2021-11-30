@@ -93,7 +93,7 @@
 				node = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 	build_network()
 		if(!network && node)

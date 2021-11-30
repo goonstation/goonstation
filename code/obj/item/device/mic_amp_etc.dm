@@ -84,7 +84,7 @@
 			return ..()
 		user.put_in_hand_or_drop(myMic)
 		myMic = null
-		src.update_icon()
+		src.UpdateIcon()
 		return ..()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -96,7 +96,7 @@
 			myMic = W
 			user.u_equip(W)
 			W.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			return ..()
 

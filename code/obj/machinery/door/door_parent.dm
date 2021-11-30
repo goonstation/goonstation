@@ -168,7 +168,7 @@
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
 
 	disposing()
 		update_nearby_tiles()
@@ -471,10 +471,8 @@
 			take_damage(damage/4)
 	return
 
-/obj/machinery/door/update_icon(var/toggling = 0, override_parent = FALSE)
+/obj/machinery/door/update_icon(var/toggling = 0, )
 	. = ..()
-	if (override_parent)
-		return
 	if(toggling? !density : density)
 		icon_state = "[icon_base]1"
 	else
@@ -522,7 +520,7 @@
 		use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
-		update_icon(0)
+		UpdateIcon(/*/toggling*/ 0)
 		update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
@@ -561,7 +559,7 @@
 	close_trys = 0
 	SPAWN_DBG(-1)
 		src.play_animation("closing")
-		src.update_icon(1)
+		src.UpdateIcon(1)
 		src.set_density(1)
 		src.update_nearby_tiles()
 

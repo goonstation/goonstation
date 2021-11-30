@@ -257,7 +257,7 @@ obj/machinery/atmospherics/pipe
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
 				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-			update_icon()
+			UpdateIcon()
 
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
@@ -351,7 +351,7 @@ obj/machinery/atmospherics/pipe
 				parent?.mingle_with_turf(loc, volume)
 				node1?.disconnect(src)
 				node2?.disconnect(src)
-				update_icon()
+				UpdateIcon()
 				return
 			else if ((pressure > (4*fatigue_pressure)) && prob(30)) new_rupture = 3
 			else if ((pressure > (2*fatigue_pressure)) && prob(60)) new_rupture = 2
@@ -433,10 +433,8 @@ obj/machinery/atmospherics/pipe
 			if(destroyed)
 				. = list(null, null)
 
-		update_icon(override_parent = FALSE)
+		update_icon()
 			. = ..()
-			if (override_parent)
-				return
 			if(destroyed)
 				icon_state = "destroyed"
 			else if(node1 && node2)
@@ -502,7 +500,7 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -519,7 +517,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node2 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -581,7 +579,7 @@ obj/machinery/atmospherics/pipe
 			dir = WEST
 
 		update_icon()
-			. = ..(override_parent = TRUE)
+
 			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 				dir = get_dir(src, node1)
 
@@ -625,7 +623,7 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
-			. = ..(override_parent = TRUE)
+
 			if(node1 && node2)
 				icon_state = "intact"
 
@@ -897,7 +895,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -907,7 +905,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -966,7 +964,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -976,7 +974,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -1035,7 +1033,7 @@ obj/machinery/atmospherics/pipe
 
 			// Search disjoint connections for vertical pipe
 			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -1052,7 +1050,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node2 = null
 
-			update_icon()
+			UpdateIcon()
 			return null
 
 
@@ -1106,7 +1104,7 @@ obj/machinery/atmospherics/pipe
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
 				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-			update_icon()
+			UpdateIcon()
 
 		pipeline_expansion()
 			return list(node1, node2, node3)
@@ -1152,7 +1150,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node3 = null
 
-			update_icon()
+			UpdateIcon()
 
 			..()
 
@@ -1220,4 +1218,4 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()

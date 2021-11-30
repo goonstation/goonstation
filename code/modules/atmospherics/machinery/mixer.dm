@@ -294,7 +294,7 @@ obj/machinery/atmospherics/mixer
 			SPAWN_DBG(0.5 SECONDS)
 				if (src) src.report_status()
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 // Housekeeping and pipe network stuff below
@@ -339,7 +339,7 @@ obj/machinery/atmospherics/mixer
 				node_out = target
 				break
 
-		update_icon()
+		UpdateIcon()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()

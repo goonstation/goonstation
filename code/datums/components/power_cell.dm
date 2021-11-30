@@ -68,7 +68,7 @@ TYPEINFO(/datum/component/power_cell)
 		processing_items -= parent
 		src.charge = src.max_charge
 		. = CELL_FULL
-	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
+	SEND_SIGNAL(parent, COMSIG_UpdateIcon)
 
 /datum/component/power_cell/proc/use(source, amount)
 	src.charge = max(src.charge - amount, 0)
@@ -81,7 +81,7 @@ TYPEINFO(/datum/component/power_cell)
 	else
 		. = CELL_INSUFFICIENT_CHARGE
 
-	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
+	SEND_SIGNAL(parent, COMSIG_UpdateIcon)
 
 /datum/component/power_cell/proc/check_charge(source, list/amount)
 	if(islist(amount))
@@ -100,5 +100,5 @@ TYPEINFO(/datum/component/power_cell)
 	cycle = !cycle
 	if(cycle)
 		src.charge(null, recharge_rate)
-	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
+	SEND_SIGNAL(parent, COMSIG_UpdateIcon)
 	return

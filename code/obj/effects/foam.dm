@@ -46,7 +46,7 @@
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
 	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
 
-	update_icon()
+	UpdateIcon()
 	if(metal)
 		if(istype(loc, /turf/space))
 			loc:ReplaceWithMetalFoam(metal)
@@ -59,7 +59,7 @@
 		if(metal)
 			var/obj/foamedmetal/M = new(src.loc)
 			M.metal = metal
-			M.update_icon()
+			M.UpdateIcon()
 
 		if(metal)
 			flick("mfoam-disolve", src)
@@ -141,7 +141,7 @@
 					if(current_reagent)
 						F.reagents.add_reagent(reagent_id,min(current_reagent.volume, 3), current_reagent.data, src.reagents.total_temperature)
 
-				F.update_icon()
+				F.UpdateIcon()
 
 		sleep(1.5 SECONDS)
 

@@ -100,7 +100,7 @@
 		holding.set_loc(loc)
 		usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
 		holding = null
-		update_icon()
+		UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W as obj, var/mob/user as mob)
@@ -110,7 +110,7 @@
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W
-			update_icon()
+			UpdateIcon()
 			tgui_process.update_uis(src) //update UI immediately
 
 	else if (iswrenchingtool(W))

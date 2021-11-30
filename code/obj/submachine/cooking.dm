@@ -133,14 +133,14 @@
 							src.beaker.set_loc(src.loc)
 							usr.put_in_hand_or_eject(src.beaker) // try to eject it into the users hand, if we can
 							src.beaker = null
-							src.update_icon()
+							src.UpdateIcon()
 
 					if("cone")
 						if(src.cone)
 							src.cone.set_loc(src.loc)
 							usr.put_in_hand_or_eject(src.cone) // try to eject it into the users hand, if we can
 							src.cone = null
-							src.update_icon()
+							src.UpdateIcon()
 
 			else if(href_list["flavor"])
 				if(doing_a_thing)
@@ -182,7 +182,7 @@
 						boutput(usr, "<span class='alert'>Unknown flavor!</span>")
 
 				doing_a_thing = 0
-				src.update_icon()
+				src.UpdateIcon()
 
 			src.updateUsrDialog()
 		return
@@ -202,7 +202,7 @@
 				src.cone = W
 				boutput(user, "<span class='notice'>You load the cone into [src].</span>")
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
@@ -215,7 +215,7 @@
 				src.beaker = W
 				boutput(user, "<span class='alert'>You load [W] into [src].</span>")
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 		else ..()
 
@@ -997,7 +997,7 @@ table#cooktime a#start {
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:update_icon()
+				W:UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
 				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
 			return
@@ -1101,7 +1101,7 @@ var/list/mixer_recipes = list()
 			src.recipes += new /datum/cookingrecipe/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/butters(src)
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1186,7 +1186,7 @@ var/list/mixer_recipes = list()
 			boutput(usr, "<span class='alert'>There's nothing in the mixer.</span>")
 			return
 		working = 1
-		src.update_icon()
+		src.UpdateIcon()
 		src.updateUsrDialog()
 		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
@@ -1239,7 +1239,7 @@ var/list/mixer_recipes = list()
 				I.throw_at(edge, 25, 4)
 
 			working = 0
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 

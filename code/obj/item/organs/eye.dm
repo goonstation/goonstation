@@ -17,7 +17,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	disposing()
 		if (holder)

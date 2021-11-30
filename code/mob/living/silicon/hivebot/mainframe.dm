@@ -39,7 +39,7 @@
 				ticker.minds += src.mind
 		src.force_mind = 0
 
-	update_icons_if_needed()
+	UpdateIcons_if_needed()
 
 /mob/living/silicon/hive_mainframe/death(gibbed)
 	setdead(src)

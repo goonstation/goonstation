@@ -30,7 +30,7 @@
 				if (map_setting && ticker)
 					src.update_neighbors()
 
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		var/list/neighbors = null
@@ -40,7 +40,7 @@
 				neighbors += O //find all of our neighbors before we move
 		..()
 		for (var/obj/grille/O in neighbors)
-			O?.update_icon() //now that we are in nullspace tell them to update
+			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
 	steel
 #ifdef IN_MAP_EDITOR
@@ -167,11 +167,11 @@
 
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
-			update_icon("cut")
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -187,11 +187,11 @@
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
 			drop_rods(1)
-			update_icon("cut")
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -204,11 +204,11 @@
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
-			update_icon("corroded")
+			UpdateIcon("corroded")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_heat(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -225,11 +225,11 @@
 
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
-			update_icon("melted")
+			UpdateIcon("melted")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	meteorhit(var/obj/M)
 		if (istype(M, /obj/newmeteor/massive))
@@ -417,10 +417,9 @@
 					damage_blunt(W.force * 0.5)
 		return
 
-	update_icon(var/special_icon_state, override_parent = FALSE)
+	update_icon(var/special_icon_state, )
 		. = ..()
-		if (override_parent)
-			return
+
 		if (ruined)
 			return
 
@@ -476,7 +475,7 @@
 
 	proc/update_neighbors()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))

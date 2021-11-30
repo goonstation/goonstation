@@ -67,7 +67,7 @@
 		playsound(src.user, "sound/items/fishing_rod_cast.ogg", 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = true
-		src.rod.update_icon()
+		src.rod.UpdateIcon()
 		src.user.update_inhands()
 
 	onUpdate()
@@ -75,7 +75,7 @@
 		if (!IN_RANGE(src.user, src.rod, 1) || !IN_RANGE(src.user, src.target, 1) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
-			src.rod.update_icon()
+			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 
@@ -84,14 +84,14 @@
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.rod.is_fishing = false
-			src.rod.update_icon()
+			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
 			src.rod.is_fishing = false
-			src.rod.update_icon()
+			src.rod.UpdateIcon()
 			src.user.update_inhands()
 			return
 

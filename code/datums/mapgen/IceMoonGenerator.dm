@@ -132,7 +132,7 @@
 		..()
 		SPAWN_DBG(3 SECONDS)
 			if(istype(src))
-				src.update_icon()
+				src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -169,7 +169,7 @@
 		clear_contents()
 		src.ReplaceWith(/turf/unsimulated/floor/arctic/abyss, force=TRUE)
 		for(var/turf/unsimulated/floor/arctic/snow/autocliff/cliff in neighbors)
-			cliff.update_icon()
+			cliff.UpdateIcon()
 
 	proc/clear_contents()
 		for(var/atom/A in src.contents)

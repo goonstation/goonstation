@@ -46,7 +46,7 @@
 			src.setMaterial(material_cache["steel"])
 		..()
 		START_TRACKING
-		src.update_icon()
+		src.UpdateIcon()
 
 	disposing()
 		STOP_TRACKING
@@ -180,7 +180,7 @@
 			playsound(src.loc, src.sound_interdict_run, 30, 0)
 
 	if(doupdateicon)
-		src.update_icon()
+		src.UpdateIcon()
 
 
 
@@ -217,7 +217,7 @@
 				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
 					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
 						tear.stabilize()
-	src.update_icon()
+	src.UpdateIcon()
 
 
 //ceases interdiction
@@ -228,7 +228,7 @@
 
 	src.canInterdict = 0
 	playsound(src.loc, src.sound_interdict_off, 40, 1)
-	src.update_icon()
+	src.UpdateIcon()
 
 
 /obj/interdict_edge

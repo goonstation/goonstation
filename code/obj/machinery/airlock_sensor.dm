@@ -48,7 +48,7 @@ obj/machinery/airlock_sensor
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, AIRLOCK_CONTROL_RANGE)
 
-		update_icon()
+		UpdateIcon()
 
 	New()
 		..()

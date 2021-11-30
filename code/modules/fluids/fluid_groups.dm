@@ -204,7 +204,7 @@
 				F.group = src
 
 		if (length(src.members) == 1)
-			F.update_icon() //update icon of the very first fluid in this group
+			F.UpdateIcon() //update icon of the very first fluid in this group
 
 		src.last_add_time = world.time
 
@@ -238,7 +238,7 @@
 				t = get_step( F, dir )
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
-					t.active_liquid.update_icon(1)
+					t.active_liquid.UpdateIcon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
@@ -246,7 +246,7 @@
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
 
-		if(src.disposed || F.disposed) return 0 // update_icon lagchecks, rip
+		if(src.disposed || F.disposed) return 0 // UpdateIcon lagchecks, rip
 
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
@@ -285,7 +285,7 @@
 				t = get_step( F, dir )
 				if (t?.active_liquid)
 					t.active_liquid.blocked_dirs = 0
-					t.active_liquid.update_icon(1)
+					t.active_liquid.UpdateIcon(1)
 		else
 			var/turf/t
 			for( var/dir in cardinal )
@@ -541,7 +541,7 @@
 		for (var/obj/fluid/F as anything in src.members)
 			if (!F || F.disposed || src.qdeled) continue
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			//Same shit here with update_icon
+			//Same shit here with UpdateIcon
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 			fluid_ma.name = src.master_reagent_name //maybe obscure later?

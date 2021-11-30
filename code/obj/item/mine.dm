@@ -18,7 +18,7 @@
 	New()
 		..()
 		if (src.armed)
-			src.update_icon()
+			src.UpdateIcon()
 
 		if (!src.our_timer || !istype(src.our_timer))
 			src.our_timer = new /obj/item/device/timer(src)
@@ -71,7 +71,7 @@
 
 		if (src.armed)
 			src.armed = FALSE
-			src.update_icon()
+			src.UpdateIcon()
 			user.show_text("You disarm the [src.name].", "blue")
 			logTheThing("bombing", user, null, "has disarmed the [src.name] at [log_loc(user)].")
 
@@ -85,7 +85,7 @@
 
 		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
 		src.armed = TRUE
-		src.update_icon()
+		src.UpdateIcon()
 
 	// Timer process() expects this to be here. Could be used for dynamic icon_states updates.
 	proc/c_state()
@@ -131,10 +131,9 @@
 		src.triggered(AM)
 		return
 
-	update_icon(override_parent = FALSE)
+	update_icon()
 		. = ..()
-		if (override_parent)
-			return
+
 		if (!src || !istype(src))
 			return
 
@@ -283,7 +282,7 @@
 		armed = TRUE
 
 	update_icon()
-		. = ..(override_parent = TRUE)
+
 		return
 
 	custom_stuff(var/atom/M)

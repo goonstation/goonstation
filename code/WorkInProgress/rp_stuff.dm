@@ -146,7 +146,7 @@
 		src.d_left.icon_state = src.d_left_state
 		src.d_left.door = src
 
-	update_icon()
+	UpdateIcon()
 		src.icon_state = "track"
 		return
 /*

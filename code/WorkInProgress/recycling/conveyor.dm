@@ -404,7 +404,7 @@
 		. = ..()
 		UnsubscribeProcess()
 		START_TRACKING
-		update_icon()
+		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
 		conveyors = list()
@@ -460,14 +460,14 @@
 			last_pos = position
 			position = CONVEYOR_STOPPED
 
-		update_icon()
+		UpdateIcon()
 
 		// find any switches with same id as this one, and set their positions to match us
 		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if (S == src) continue
 			if(S.id == src.id)
 				S.position = position
-				S.update_icon()
+				S.UpdateIcon()
 			LAGCHECK(LAG_MED)
 
 		for (var/obj/machinery/conveyor/C as anything in conveyors)
@@ -596,7 +596,7 @@
 
 		if (speedup != last_speedup)
 			update_belts()
-			update_icon()
+			UpdateIcon()
 
 	proc/update_belts()
 		for_by_tcl(S, /obj/machinery/conveyor_switch)

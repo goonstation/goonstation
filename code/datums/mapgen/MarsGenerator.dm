@@ -165,7 +165,7 @@
 		..()
 		SPAWN_DBG(3 SECONDS)
 			if(istype(src))
-				src.update_icon()
+				src.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -198,5 +198,5 @@
 			neighbors += get_step(src, direction)
 		src.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 		for(var/turf/unsimulated/wall/setpieces/martian/auto/cliff in neighbors)
-			cliff.update_icon()
+			cliff.UpdateIcon()
 

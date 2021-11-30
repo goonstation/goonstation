@@ -1161,7 +1161,7 @@
 #define VALID_REBUILD_FLAGS (FACE | BODY | CLOTHING | DAMAGE)
 /mob/var/icon_rebuild_flag = 0
 
-/mob/proc/update_icons_if_needed()
+/mob/proc/UpdateIcons_if_needed()
 	if (icon_rebuild_flag & (~VALID_REBUILD_FLAGS))
 		var/what_the_fuck = icon_rebuild_flag
 		src.icon_rebuild_flag &= VALID_REBUILD_FLAGS

@@ -14,7 +14,7 @@
 			S.charge = 0
 			S.output = 0
 			S.online = 0
-			S.update_icon()
+			S.UpdateIcon()
 			S.power_change()
 
 /datum/random_event/special/power_up
@@ -33,5 +33,5 @@
 			S.charge = S.capacity
 			S.output = 200000
 			S.online = 1
-			S.update_icon()
+			S.UpdateIcon()
 			S.power_change()

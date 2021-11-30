@@ -27,9 +27,9 @@
 	var/slashed = 0
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 		if (src.stand)
-			src.stand.update_icon()
+			src.stand.UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -61,17 +61,17 @@
 
 	pickup(mob/user)
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		src.mode = !(src.mode)
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ishuman(M))
@@ -269,7 +269,7 @@
 			newIV.set_loc(src)
 			src.IV = newIV
 			newIV.stand = src
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else if (src.IV)
 			//src.IV.Attackby(W, user)
@@ -286,7 +286,7 @@
 			user.put_in_hand_or_drop(oldIV)
 			oldIV.stand = null
 			src.IV = null
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			return ..()

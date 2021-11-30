@@ -480,7 +480,7 @@
 					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
 					C.desc = "[C] belongs to [scan.registered]."
 				var/obj/storage/crate/C = target
-				C.update_icon()
+				C.UpdateIcon()
 				qdel(src)
 			else
 				var/pox = src.pixel_x

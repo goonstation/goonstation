@@ -656,7 +656,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
 	attack_hand(mob/user as mob)
@@ -764,7 +764,7 @@
 		src.Bed = null
 		src.eyeholes = 1
 		block_vision = 0
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
 	proc/make_cape()
@@ -775,7 +775,7 @@
 		src.Bed = null
 		src.cape = 1
 		block_vision = 0
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
@@ -786,7 +786,7 @@
 		src.Bed = null
 		src.cape = 0
 		block_vision = !src.eyeholes
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 
 /obj/item/clothing/suit/bedsheet/red
@@ -848,7 +848,7 @@
 	New()
 		..()
 		src.bcolor = pick("", "red", "orange", "yellow", "green", "blue", "pink", "black")
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/item/clothing/suit/bedsheet/cape
 	icon_state = "bedcape"

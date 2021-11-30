@@ -109,7 +109,7 @@
 
 /obj/item/spongecaps/New()
 	..()
-	update_icon()
+	UpdateIcon()
 
 /obj/item/spongecaps/get_desc()
 	if(caps_amt >= 1)
@@ -136,6 +136,6 @@
 			if(caps_amt != -1)
 				caps_amt--
 				tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 	else
 		return ..()

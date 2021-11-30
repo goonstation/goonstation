@@ -112,7 +112,7 @@
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN_DBG(1 SECOND)
-		update_icon()
+		UpdateIcon()
 		update_solar_exposure()
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user)
@@ -176,13 +176,13 @@
 		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
 			use_power(power_usage)
-			update_icon()
+			UpdateIcon()
 
 		update_solar_exposure()
 
 /obj/machinery/power/solar/proc/broken()
 	status |= BROKEN
-	update_icon()
+	UpdateIcon()
 	UnsubscribeProcess() // Broken solar panels need not process, supposedly there's no way to repair them?
 	return
 
@@ -422,5 +422,5 @@
 		if(adir != ndir)
 			SPAWN_DBG(10+rand(0,15))
 				adir = (360+adir+clamp(ndir-adir,-10,10))%360
-				update_icon()
+				UpdateIcon()
 				update_solar_exposure()

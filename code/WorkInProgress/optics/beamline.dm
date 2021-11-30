@@ -51,11 +51,11 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			SPAWN_DBG(rand(0, 15))
 				status |= NOPOWER
-				src.update_icon()
+				src.UpdateIcon()
 
 	ex_act(severity)
 		switch(severity)
@@ -66,11 +66,11 @@
 			if(2.0)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			if(3.0)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			else
 		return
 

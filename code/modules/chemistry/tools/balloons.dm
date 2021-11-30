@@ -21,13 +21,13 @@
 		..()
 		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
-			update_icon()
+			UpdateIcon()
 		else if (islist(available_colors) && length(available_colors))
 			balloon_color = pick(available_colors)
-			update_icon()
+			UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 

@@ -57,7 +57,7 @@
 /obj/machinery/dispenser/New()
 	..()
 	UnsubscribeProcess()
-	update_icon()
+	UpdateIcon()
 
 /obj/machinery/dispenser/process()
 	return
@@ -110,4 +110,4 @@
 				usr.put_in_hand_or_eject(newtank)
 				src.o2tanks--
 			. = TRUE
-	update_icon()
+	UpdateIcon()

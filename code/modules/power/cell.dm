@@ -105,7 +105,7 @@
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
 	SPAWN_DBG(0.5 SECONDS)
-		update_icon()
+		UpdateIcon()
 
 	if (genrate)
 		processing_items |= src

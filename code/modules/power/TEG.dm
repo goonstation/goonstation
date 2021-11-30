@@ -152,7 +152,7 @@
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the maintenance panel on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the maintenance panel on the [src].</span>")
 			flags ^= OPENCONTAINER
-			update_icon()
+			UpdateIcon()
 		else if(iswrenchingtool(W) && open)
 			src.add_fingerprint(user)
 			playsound(src.loc, "sound/items/Ratchet.ogg", 30, 1)
@@ -374,7 +374,7 @@
 		src.lube_loss_check()
 		if(src.status & NOPOWER )	// Force off target pressure
 			src.target_pressure_enabled = FALSE
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -628,9 +628,9 @@ datum/pump_ui/circulator_ui
 		src.circ1?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 		src.circ2?.assign_variant(prepend_serial_num, src.variant_a, src.variant_b)
 
-		src.update_icon()
-		src.circ1?.update_icon()
-		src.circ2?.update_icon()
+		src.UpdateIcon()
+		src.circ1?.UpdateIcon()
+		src.circ2?.UpdateIcon()
 
 		// Note:
 		// 	THIS WILL NEED TO BE UPDATE IFF WE HAVE MORE THAN 1 TEG PER dmm/zlevel...
@@ -675,7 +675,7 @@ datum/pump_ui/circulator_ui
 			if(!src.semiconductor)
 				semiconductor = new(src)
 
-			update_icon()
+			UpdateIcon()
 
 	disposing()
 		src.circ1?.generator = null
@@ -843,7 +843,7 @@ datum/pump_ui/circulator_ui
 			spam_limiter = 1
 			lastgenlev = genlev
 			last_max_warning = warnings
-			update_icon()
+			UpdateIcon()
 			if(!genlev)
 				running = 0
 			else if (genlev && !running)
@@ -852,7 +852,7 @@ datum/pump_ui/circulator_ui
 			SPAWN_DBG(0.5 SECONDS)
 				spam_limiter = 0
 		else if(warnings > WARNING_5MIN && !(src.status & (BROKEN | NOPOWER)))
-			// Allow for klaxon to trigger when off cooldown if update_icon() not called
+			// Allow for klaxon to trigger when off cooldown if UpdateIcon() not called
 			if(!ON_COOLDOWN(src, "klaxon", 10 SECOND))
 				playsound(src.loc, "sound/misc/klaxon.ogg", 40, pitch=1.1)
 
@@ -1095,7 +1095,7 @@ datum/pump_ui/circulator_ui
 		// Why don't the circulators get this from the APC directly?
 		src.circ1?.power_change()
 		src.circ2?.power_change()
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/power/generatorTemp/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -1212,7 +1212,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				playsound(generator, "sound/items/Scissor.ogg", 80, 1)
 				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
 				generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
-				generator.update_icon()
+				generator.UpdateIcon()
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
 				generator.semiconductor_state = TEG_SEMI_STATE_MISSING
@@ -1298,14 +1298,14 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 						qdel(the_tool)
 					else if(istype(the_tool, /obj/item/cable_coil))
 						var/obj/item/cable_coil/C = the_tool
-						C.update_icon()
+						C.UpdateIcon()
 
 					generator.semiconductor_state = TEG_SEMI_STATE_CONNECTED
 					boutput(owner, "<span class='notice'>You wire up the semicondoctor to \the [generator].</span>")
 					playsound(generator, "sound/items/Deconstruct.ogg", 80, 1)
 					generator.semiconductor_repair = "The semiconductor has been wired in but has excess cable that must be removed."
 					generator.status &= ~BROKEN // SEMICONDUCTOR RECONNECTED IT UNBROKEN
-					generator.update_icon()
+					generator.UpdateIcon()
 
 			if (TEG_SEMI_STATE_CONNECTED)
 				generator.semiconductor_state = TEG_SEMI_STATE_UNSCREWED
@@ -1404,7 +1404,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				src.overlays = null
 				src.active = 0
 
-		update_icon()
+		UpdateIcon()
 
 	/*	//Holy lag batman!
 		src.overlays = null

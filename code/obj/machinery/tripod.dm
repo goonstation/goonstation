@@ -14,7 +14,7 @@
 				bulb.removed(src)
 				user.put_in_hand_or_drop(bulb)
 				bulb = null
-				src.update_icon()
+				src.UpdateIcon()
 			else
 				boutput(user, "<span class='notice'>You fold up the tripod.</span>")
 				var/obj/item/tripod/I = new()
@@ -29,7 +29,7 @@
 			bulb = W
 			W.set_loc(src)
 			bulb.inserted(src)
-			src.update_icon()
+			src.UpdateIcon()
 
 	process()
 		if (bulb)
@@ -40,7 +40,7 @@
 		. = ..()
 		src.overlays.len = 0
 		if (bulb)
-			bulb.update_icon(src)
+			bulb.UpdateIcon(src)
 
 /obj/item/tripod
 	name = "folded tripod"

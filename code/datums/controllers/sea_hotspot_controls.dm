@@ -709,7 +709,7 @@
 		var/obj/machinery/power/vent_capture/V = new /obj/machinery/power/vent_capture(src.loc)
 		V.built = 1
 		//V.built = 0
-		//V.update_icon()
+		//V.UpdateIcon()
 		qdel(src)
 
 /obj/machinery/power/vent_capture
@@ -782,7 +782,7 @@
 		if (!built)
 			if (ispryingtool(W)) //blah i don care
 				built = 1
-				update_icon()
+				UpdateIcon()
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
@@ -875,7 +875,7 @@
 		if(open)
 			if(cell && !user.equipped())
 				user.put_in_hand_or_drop(cell)
-				cell.update_icon()
+				cell.UpdateIcon()
 				cell = null
 
 				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -883,7 +883,7 @@
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
@@ -934,7 +934,7 @@
 		else if (ispryingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 		else
 			..()
 
@@ -953,7 +953,7 @@
 			return
 
 		on = 0
-		update_icon()
+		UpdateIcon()
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX

@@ -87,7 +87,7 @@
 				src.clogged = 0
 				user.show_text("The drain clog melts away.")
 
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		if (istype(I,/obj/item/material_piece/cloth))
 			var/obj/item/material_piece/cloth/C = I
@@ -95,7 +95,7 @@
 			user.show_text("You stuff [I] into the drain.")
 			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
 			qdel(I)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		return ..()
@@ -239,7 +239,7 @@
 		..()
 		src.reagents = new /datum/reagents(bladder)
 		src.reagents.my_atom = src
-		update_icon()
+		UpdateIcon()
 
 
 	ex_act(severity)
@@ -272,7 +272,7 @@
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
 						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
-				update_icon()
+				UpdateIcon()
 
 		else if (pissing)
 			if (src.reagents.total_volume > 0)
@@ -286,7 +286,7 @@
 						src.reagents.clear_reagents()
 					else T.fluid_react(src.reagents,min(piss,src.reagents.total_volume))
 
-				update_icon()
+				UpdateIcon()
 
 	update_icon()
 		. = ..()
@@ -311,17 +311,17 @@
 			if (href_list["slurp"])
 				slurping = 1
 				pissing = 0
-				update_icon()
+				UpdateIcon()
 
 			if (href_list["piss"])
 				slurping = 0
 				pissing = 1
-				update_icon()
+				UpdateIcon()
 
 			if (href_list["off"])
 				slurping = 0
 				pissing = 0
-				update_icon()
+				UpdateIcon()
 
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
