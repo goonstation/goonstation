@@ -60,6 +60,13 @@
 	if (src.listening)
 		return hearers(7, src.loc)
 
+/obj/item/device/radio/intercom/showMapText(var/mob/R, var/mob/M, receive, msg, secure, real_name, lang_id)
+	if (!isAI(M) || isdead(M) || (frequency == 1459)) // we're keeping the awful var name of R for consistency with /radio; it's the mob we're rendering maptext to
+		..() // we also want the AI to be able to tune to any intercom and have maptext, but not 1459 because of spam
+		return
+	var/maptext = generateMapText(msg, R = R, style = "color:#7F7FE2;", alpha = 255)
+	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+
 /obj/item/device/radio/intercom/putt
 	name = "Colosseum Intercommunicator"
 	frequency = R_FREQ_INTERCOM_COLOSSEUM
