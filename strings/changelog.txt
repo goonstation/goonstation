@@ -1,5 +1,9 @@
 
 (t)mon nov 29 21
+(u)Momoberry
+(p)6258
+(e)🆕⚖⛔|feature, balance, removal
+(+)Modifies the polymorph List for wizard, adds naming convention to poly victims.
 (u)Sovexe
 (p)6832
 (e)🐛🆕🎨|bug, feature, sprites
