@@ -324,6 +324,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\controllers\process\healthupdates.dm"
 #include "code\datums\controllers\process\items.dm"
 #include "code\datums\controllers\process\kudzu.dm"
+#include "code\datums\controllers\process\lag_detection.dm"
 #include "code\datums\controllers\process\lighting.dm"
 #include "code\datums\controllers\process\machines.dm"
 #include "code\datums\controllers\process\mob_ai.dm"
