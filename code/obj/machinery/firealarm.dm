@@ -44,6 +44,7 @@
 	alarm_overlay.plane = PLANE_LIGHTING
 	alarm_overlay.blend_mode = BLEND_ADD
 	alarm_overlay.layer = LIGHTING_LAYER_BASE
+	alarm_overlay.alpha = 127
 	update_icon()
 
 	AddComponent(/datum/component/mechanics_holder)
