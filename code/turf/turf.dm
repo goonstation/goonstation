@@ -888,7 +888,7 @@ proc/generate_space_color()
 	desc = "A solid... nothing? Is that even a thing?"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "white"
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	mouse_opacity = 0
 	fullbright = 1
 

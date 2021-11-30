@@ -448,7 +448,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
-	plane = PLANE_DEFAULT + 2
+	plane = PLANE_ABOVE_LIGHTING
 
 	density = 1
 	var/on_fire = 0
