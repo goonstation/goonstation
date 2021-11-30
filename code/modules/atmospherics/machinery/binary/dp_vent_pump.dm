@@ -36,7 +36,6 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
-		. = ..()
 		if(on)
 			if(pump_direction)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]out"

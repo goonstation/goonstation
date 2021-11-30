@@ -148,7 +148,6 @@
 		tooltip_rebuild = 1
 
 	update_icon()
-		. = ..()
 
 		var/perc
 		if (src.contents.len > 0 && src.maxitems > 0)

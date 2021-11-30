@@ -377,7 +377,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if(src.status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
 		else if(src.last_pressure_delta >= src.min_circ_pressure)
@@ -691,7 +690,6 @@ datum/pump_ui/circulator_ui
 			. += "<br>[semiconductor_repair]"
 
 	update_icon()
-		. = ..()
 		if(status & (NOPOWER))
 			UpdateOverlays(null, "power")
 		else if(status & (BROKEN))
@@ -1339,7 +1337,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/current_heat_capacity = 3000
 
 	update_icon()
-		. = ..()
 		if(node)
 			icon_state = "intact_on"
 		else

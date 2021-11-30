@@ -51,7 +51,6 @@
 		..()
 
 	update_icon()
-		. = ..()
 
 		if (src.current_projectile)
 			var/amt = round(src.reagents.total_volume) / round(src.current_projectile.cost)

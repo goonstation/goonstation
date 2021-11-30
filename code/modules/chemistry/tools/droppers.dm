@@ -33,7 +33,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (!src || !istype(src))
 			return
 

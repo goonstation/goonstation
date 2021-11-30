@@ -31,7 +31,6 @@
 
 
 /obj/noticeboard/update_icon()
-	. = ..()
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 

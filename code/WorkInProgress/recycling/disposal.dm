@@ -259,7 +259,6 @@
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
 	update_icon()
-		. = ..()
 
 		icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255

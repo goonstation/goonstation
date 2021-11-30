@@ -220,7 +220,6 @@
 	var/charges = 4
 
 	update_icon()
-		. = ..()
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 

@@ -63,7 +63,6 @@
 
 
 	update_icon()
-		. = ..()
 
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
@@ -498,7 +497,6 @@
 		.= (iscarbon(A) || ismobcritter(A))
 
 	update_icon()
-		. = ..()
 		if (reagents.total_volume)
 			if (!src.fluid_image)
 				src.fluid_image = image('icons/obj/chemical.dmi', "mender-fluid", -1)
@@ -690,7 +688,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 4), 1, 4))
 			if (!src.fluid_image)

@@ -101,7 +101,6 @@ Filter types:
 		..()
 
 	update_icon()
-		. = ..()
 		if(node_out1&&node_out2&&node_in)
 			icon_state = "intact_[on?("on"):("off")]"
 		else

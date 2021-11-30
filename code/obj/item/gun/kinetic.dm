@@ -51,7 +51,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
-		. = ..()
 
 		if (src.ammo)
 			inventory_counter.update_number(src.ammo.amount_left)
@@ -1046,7 +1045,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	update_icon()
-		. = ..()
 		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
 
 	canshoot()

@@ -73,7 +73,6 @@
 		onclose(user, "rtg")
 
 	update_icon()
-		. = ..()
 		if (fuel_pellet)
 			if(status & BROKEN || !lastgen)
 				icon_state = "rtg_off"

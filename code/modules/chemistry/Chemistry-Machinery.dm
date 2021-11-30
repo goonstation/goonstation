@@ -256,7 +256,6 @@
 		updateUsrDialog()
 
 	update_icon()
-		. = ..()
 		src.overlays -= src.icon_beaker
 		if (src.beaker)
 			src.overlays += src.icon_beaker

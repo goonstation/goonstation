@@ -481,7 +481,6 @@
 			src.UpdateIcon()
 
 /obj/machinery/turretid/update_icon()
-	. = ..()
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "ai1"

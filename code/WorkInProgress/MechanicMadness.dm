@@ -146,7 +146,6 @@
 		return 1
 
 	update_icon()
-		. = ..()
 		if(src.welded)
 			src.icon_state=initial(src.icon_state)+"_w"
 		else if(src.open)
@@ -327,7 +326,6 @@
 		qdel(src)// never should be outside of the gun (in someone's hands), so kill it
 		return
 	update_icon()
-		. = ..()
 		icon_state = icon_up
 		return
 
@@ -980,7 +978,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
 
@@ -1014,7 +1011,6 @@
 		return 1
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_zap"
 
 /obj/item/mechanics/pausecomp
@@ -1070,7 +1066,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_wait"
 		return
 
@@ -1139,7 +1134,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_and"
 		return
 
@@ -1182,7 +1176,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_or"
 		return
 
@@ -1222,7 +1215,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_split"
 		return
 
@@ -1321,7 +1313,6 @@
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
 		return
 
@@ -1399,7 +1390,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_regfind"
 		return
 
@@ -1466,7 +1456,6 @@
 		triggerSignal = input.signal
 		tooltip_rebuild = 1
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_check"
 		return
 
@@ -1557,7 +1546,6 @@
 		return 1 //Signal invalid, halt it
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_disp"
 		return
 
@@ -1655,7 +1643,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_builder"
 		return
 
@@ -1689,7 +1676,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_relay"
 		return
 
@@ -1744,7 +1730,6 @@
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_file"
 		return
 
@@ -1909,7 +1894,6 @@
 		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
 		return
 
@@ -2141,7 +2125,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_selector"
 		return
 
@@ -2242,7 +2225,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_toggle[on ? "1":""]"
 		return
 
@@ -2341,7 +2323,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_tele"
 		if(src.level == 1)
 			src.UpdateOverlays(telelight, "telelight")
@@ -2439,7 +2420,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_led"
 		return
 
@@ -2473,7 +2453,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_mic"
 		return
 
@@ -2543,7 +2522,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u" : ""]comp_radioscanner"
 		return
 
@@ -2565,7 +2543,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "comp_synth"
 		return
 
@@ -2591,7 +2568,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u":""]comp_pressure"
 		return
 
@@ -2636,7 +2612,6 @@
 				src.set_loc(target)
 		return
 	update_icon()
-		. = ..()
 		icon_state = icon_up
 		return
 
@@ -2718,7 +2693,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		icon_state = icon_up
 		return
 
@@ -2801,7 +2775,6 @@
 		return
 
 	update_icon()
-		. = ..()
 
 		icon_state = "comp_gun"
 		return
@@ -2967,7 +2940,6 @@
 			return
 
 	update_icon()
-		. = ..()
 		icon_state = "comp_instrument"
 		return
 
@@ -3203,7 +3175,6 @@
 		return 1
 
 	update_icon()
-		. = ..()
 		icon_state = "[under_floor ? "u" : ""]comp_ass"
 		return
 

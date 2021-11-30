@@ -14,7 +14,6 @@ obj/machinery/airlock_sensor
 	var/alert = 0
 
 	update_icon()
-		. = ..()
 		if(on)
 			if(alert)
 				icon_state = "airlock_sensor_alert"

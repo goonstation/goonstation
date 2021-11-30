@@ -407,7 +407,6 @@
 	src.repairing = 0
 
 /obj/machinery/bot/floorbot/update_icon()
-	. = ..()
 	if (src.amount > 0)
 		src.icon_state = "floorbot[src.on]"
 	else

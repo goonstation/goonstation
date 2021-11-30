@@ -317,7 +317,6 @@
 	return src.ui_interact(user)
 
 /obj/machinery/door_timer/update_icon()
-	. = ..()
 	if (status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return

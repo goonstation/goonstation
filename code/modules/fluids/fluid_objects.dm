@@ -101,7 +101,6 @@
 		return ..()
 
 	update_icon()
-		. = ..()
 		if (clogged)
 			icon_state = "[base_icon]_clogged"
 		else if (welded)
@@ -289,7 +288,6 @@
 				UpdateIcon()
 
 	update_icon()
-		. = ..()
 		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
 		icon_state = "[base_icon][amt]"
 

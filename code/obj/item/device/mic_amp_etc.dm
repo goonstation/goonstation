@@ -108,7 +108,6 @@
 			myMic.talk_into(M, msg)
 
 	update_icon()
-		. = ..()
 		if (myMic)
 			switch (myMic.icon_state)
 				if ("radio_mic1")

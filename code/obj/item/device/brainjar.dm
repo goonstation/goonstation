@@ -85,7 +85,6 @@
 			src.verbs -= /obj/item/device/brainjar/proc/detonate_tank_transfer_valve
 
 	update_icon()
-		. = ..()
 		icon_state = "tb-[colour]"
 		overlays.Cut()
 

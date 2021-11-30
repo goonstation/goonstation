@@ -84,7 +84,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if(src.fan_state != FAN_OFF)
 			UpdateOverlays(image_fan, "fan")
 		else

@@ -27,7 +27,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (on)
 			if(heating)
 				icon_state = "sheaterH"
@@ -280,7 +279,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (on)
 			if(heating)
 				icon_state = "saunaH"

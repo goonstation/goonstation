@@ -112,7 +112,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (!src.flash_mode)
 			inventory_counter.update_text("")
 		else

@@ -1079,7 +1079,6 @@
 		return
 
 /obj/submachine/chem_extractor/update_icon()
-	. = ..()
 	if (src.ingredients.len)
 		src.icon_state = "reex-on"
 	else

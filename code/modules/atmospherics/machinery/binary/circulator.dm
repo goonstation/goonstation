@@ -44,7 +44,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if(status & (BROKEN|NOPOWER))
 			icon_state = "circ[side]-p"
 		else if(last_pressure_delta > 0)

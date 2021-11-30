@@ -64,7 +64,6 @@
 		..()
 
 	update_icon()
-		. = ..()
 		if (src.hat && !src.hat_shown)
 			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = src.layer + 0.005)
 			hat_image.pixel_x = hat_x_offset

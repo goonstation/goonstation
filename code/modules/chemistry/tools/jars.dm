@@ -55,7 +55,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (src.contents.len)
 			src.icon_state = "mason_jar_green"
 

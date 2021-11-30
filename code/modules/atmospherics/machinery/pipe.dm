@@ -434,7 +434,6 @@ obj/machinery/atmospherics/pipe
 				. = list(null, null)
 
 		update_icon()
-			. = ..()
 			if(destroyed)
 				icon_state = "destroyed"
 			else if(node1 && node2)
@@ -878,7 +877,6 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
-			. = ..()
 			if(node1)
 				icon_state = "intact"
 
@@ -947,7 +945,6 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
-			. = ..()
 			if(node1)
 				icon_state = "intact"
 
@@ -1155,7 +1152,6 @@ obj/machinery/atmospherics/pipe
 			..()
 
 		update_icon()
-			. = ..()
 			if(node1 && node2&& node3)
 				icon_state = "manifold"//[invisibility ? "-f" : ""]"
 				alpha = invisibility ? 128 : 255

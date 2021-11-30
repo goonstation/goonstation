@@ -135,7 +135,6 @@
 				src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		var/dir_sum
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)

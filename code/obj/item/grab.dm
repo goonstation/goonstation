@@ -336,7 +336,6 @@
 		return 0
 
 	update_icon()
-		. = ..()
 
 		switch (src.state)
 			if (GRAB_PASSIVE)

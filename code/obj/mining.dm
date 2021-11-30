@@ -1475,7 +1475,6 @@
 			src.ReplaceWithSpace()
 
 	update_icon()
-		. = ..()
 
 		src.overlays = list()
 		/*

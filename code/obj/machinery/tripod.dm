@@ -37,7 +37,6 @@
 
 
 	update_icon()
-		. = ..()
 		src.overlays.len = 0
 		if (bulb)
 			bulb.UpdateIcon(src)
@@ -88,7 +87,6 @@
 			light.detach()
 
 		update_icon(obj/machinery/tripod/tripod)
-			. = ..()
 			tripod.overlays += "tripod_light"
 
 	beacon
@@ -116,7 +114,6 @@
 			light.detach()
 
 		update_icon(obj/machinery/tripod/tripod)
-			. = ..()
 			tripod.overlays += "tripod_beacon"
 
 		attack_self(mob/user)

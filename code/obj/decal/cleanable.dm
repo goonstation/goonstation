@@ -1254,7 +1254,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		return
 
 	update_icon()
-		. = ..()
 		src.icon_state = "fungus[max(1,min(3, amount))]"
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
@@ -1498,7 +1497,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		qdel(src)
 
 	update_icon()
-		. = ..()
 		if (!src.loc)
 			return
 		var/dirs = 0
@@ -1557,7 +1555,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		qdel(src)
 
 	update_icon()
-		. = ..()
 		var/dirs = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)

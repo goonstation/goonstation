@@ -55,7 +55,6 @@
 	..()
 
 /obj/machinery/firealarm/update_icon()
-	. = ..()
 	if (status & NOPOWER)
 		icon_state = "firep"
 		ClearSpecificOverlays("alarm_base_overlay")

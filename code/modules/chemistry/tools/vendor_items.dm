@@ -28,7 +28,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "minivial"
@@ -75,7 +74,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "vendbag"

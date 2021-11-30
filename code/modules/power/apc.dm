@@ -249,7 +249,6 @@ var/zapLimiter = 0
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
 /obj/machinery/power/apc/update_icon()
-	. = ..()
 	ClearAllOverlays(1)
 	if(opened)
 		icon_state = "apc1"

@@ -1227,7 +1227,6 @@
 			. = ..()
 
 	update_icon()
-		. = ..()
 		if(src.stored_paper)
 			src.icon_state = "portable_typewriter-full"
 		else

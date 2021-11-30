@@ -98,7 +98,6 @@ obj/machinery/atmospherics/valve
 			network_node2 = null
 
 	update_icon(animation)
-		. = ..()
 		if(animation)
 			flick("valve[src.open][!src.open]",src)
 			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
@@ -347,7 +346,6 @@ obj/machinery/atmospherics/manifold_valve
 		dir = WEST
 
 	update_icon(animation)
-		. = ..()
 		if(animation)
 			flick("valve[src.divert][!src.divert]",src)
 			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)

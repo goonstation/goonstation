@@ -76,7 +76,6 @@
 
 
 	update_icon()
-		. = ..()
 		if (status & (NOPOWER|BROKEN))
 			//src.icon_state = "heptemitter-p"
 			if (src.beam)

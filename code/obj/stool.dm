@@ -973,7 +973,6 @@
 
 
 	update_icon()
-		. = ..()
 
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
@@ -1183,7 +1182,6 @@
 			src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1464,7 +1462,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		src.icon_state = "e_chair[src.on]"
 		if (!src.image_belt)
 			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)

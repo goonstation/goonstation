@@ -35,7 +35,6 @@
 		..()
 
 	update_icon()
-		. = ..()
 		if (!src.donor || !src.donor_appearance)
 			return // vOv
 

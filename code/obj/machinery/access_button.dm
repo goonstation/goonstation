@@ -16,7 +16,6 @@ obj/machinery/access_button
 	var/on = 1
 
 	update_icon()
-		. = ..()
 		if(on)
 			icon_state = "access_button_standby"
 		else

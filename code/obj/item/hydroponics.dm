@@ -73,7 +73,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		return
 

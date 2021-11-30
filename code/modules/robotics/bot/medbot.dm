@@ -152,7 +152,6 @@
 			src.overlays += "medibot-arm"
 
 /obj/machinery/bot/medbot/update_icon(var/stun = 0, var/heal = 0)
-	. = ..()
 	UpdateOverlays(null, "medbot_overlays")
 	medbot_overlays.overlays.len = 0
 

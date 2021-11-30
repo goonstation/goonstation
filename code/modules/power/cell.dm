@@ -115,7 +115,6 @@
 	..()
 
 /obj/item/cell/update_icon()
-	. = ..()
 	if(src.specialicon) return
 
 	if(maxcharge <= 2500) icon_state = "cell"

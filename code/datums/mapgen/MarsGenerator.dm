@@ -168,7 +168,6 @@
 				src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		var/dir_sum
 		// If there is rhyme or reason to the order of mars-c I can't find it...
 		var/list/lookup = list("1"=list("mars-s",1),

@@ -39,7 +39,6 @@ obj/machinery/atmospherics/mixer
 	var/frequency
 
 	update_icon()
-		. = ..()
 		if(node_in1&&node_in2&&node_out)
 			icon_state = "intact[flipped?"_flipped":""]_[on?"on":"off"]"
 		else

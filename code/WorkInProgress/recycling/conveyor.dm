@@ -436,7 +436,6 @@
 
 	/// update the icon depending on the position
 	update_icon()
-		. = ..()
 		if(position == CONVEYOR_REVERSE)
 			icon_state = "switch-rev"
 		else if(position == CONVEYOR_FORWARD)
@@ -606,6 +605,5 @@
 				break
 
 	update_icon()
-		. = ..()
 		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

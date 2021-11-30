@@ -1279,7 +1279,6 @@ obj/machinery/embedded_controller/radio/maintpanel
 		return ..()
 
 	update_icon()
-		. = ..()
 		if (status & NOPOWER)
 			icon_state = "museum_control_off"
 		else

@@ -67,7 +67,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (src.active)
 			src.UpdateOverlays(spin_sprite, "spin")
 			light.enable()

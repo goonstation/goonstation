@@ -154,7 +154,6 @@
 
 
 /obj/machinery/power/sword_engine/update_icon()
-	. = ..()
 	if (integrity_state == 0)
 		icon_state = "engine_mangled"
 		UpdateOverlays(null, "glow")

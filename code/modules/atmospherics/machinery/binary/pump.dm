@@ -35,7 +35,6 @@ obj/machinery/atmospherics/binary/pump
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if(node1&&node2)
 			icon_state = "intact_[on?("on"):("off")]"
 		else

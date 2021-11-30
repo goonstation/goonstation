@@ -218,7 +218,6 @@
 	//	src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (src.has_tank)
 			if (src.reagents.total_volume)
 				var/datum/color/average = reagents.get_average_color()
@@ -589,7 +588,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))

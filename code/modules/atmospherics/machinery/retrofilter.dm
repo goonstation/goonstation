@@ -110,7 +110,6 @@ obj/machinery/atmospherics/retrofilter
 			network_out2 = null
 
 	update_icon()
-		. = ..()
 		if(node_out1&&node_out2&&node_in)
 			icon_state = "intact_[(status & NOPOWER)?("off"):("on")]"
 		else

@@ -178,7 +178,6 @@
 	process()
 
 	update_icon()
-		. = ..()
 
 		//blank slate
 		src.overlays = new/list()

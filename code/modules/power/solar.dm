@@ -137,7 +137,6 @@
 	return
 
 /obj/machinery/power/solar/update_icon()
-	. = ..()
 	if(status & BROKEN)
 		icon_state = "solar_panel-b"
 	else

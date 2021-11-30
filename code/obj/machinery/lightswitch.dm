@@ -51,7 +51,6 @@
 
 
 /obj/machinery/light_switch/update_icon()
-	. = ..()
 	if(status & NOPOWER)
 		icon_state = "light-p"
 		light.disable()

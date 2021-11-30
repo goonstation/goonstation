@@ -403,7 +403,6 @@
 
 	//I'm sorry sylvester... I'll fix this later when I have time, I promise. - Kyle
 	update_icon()
-		. = ..()
 		if (src.alive)
 			if (src.wearing_beret)
 				if (istype(wearing_beret, /obj/item/clothing/head/hos_hat))

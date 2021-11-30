@@ -153,7 +153,6 @@
 		return 2
 
 	update_icon()
-		. = ..()
 		if (src.portable) // no need here
 			return
 		if (src.mess)
@@ -1076,7 +1075,6 @@
 		return
 
 	update_icon(var/update_grindpaddle=0)
-		. = ..()
 		var/fluid_level = ((src.reagents.total_volume >= (src.reagents.maximum_volume * 0.6)) ? 2 : (src.reagents.total_volume >= (src.reagents.maximum_volume * 0.2) ? 1 : 0))
 
 		src.icon_state = "grinder[fluid_level]"

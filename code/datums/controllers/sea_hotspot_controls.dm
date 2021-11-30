@@ -737,7 +737,6 @@
 		return //nah
 
 	update_icon()
-		. = ..()
 		icon_state = icon_state = "hydrovent_[built]"
 
 	disposing()
@@ -866,7 +865,6 @@
 		..()
 
 	update_icon()
-		. = ..()
 		icon_state = "stomper[on]"
 
 	attack_hand(var/mob/living/carbon/human/user as mob)

@@ -84,7 +84,6 @@
 
 
 /obj/machinery/power/smes/update_icon()
-	. = ..()
 	if (status & BROKEN)
 		ClearAllOverlays()
 		return

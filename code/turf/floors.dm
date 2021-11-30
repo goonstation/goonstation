@@ -1351,7 +1351,6 @@ DEFINE_FLOORS(grasslush/thin,
 // metal foam floors
 
 /turf/simulated/floor/metalfoam/update_icon()
-	. = ..()
 	if(metal == 1)
 		icon_state = "metalfoam"
 	else

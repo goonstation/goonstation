@@ -467,7 +467,6 @@
 		healthbar.onUpdate()
 
 	update_icon()
-		. = ..()
 
 		if (!src)
 			return
@@ -1310,7 +1309,6 @@
 		else return ..()
 
 	update_icon(override_parent)
-		. = ..()
 		return
 
 /obj/material_deposit

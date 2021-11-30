@@ -118,7 +118,6 @@
 		. += "<br>It's empty."
 
 /obj/item/spongecaps/update_icon()
-	. = ..()
 	overlays = null
 	if(caps_amt <= 0)
 		icon_state = initial(icon_state)

@@ -28,7 +28,6 @@
 		UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if(on&&node)
 			if(scrubbing)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"

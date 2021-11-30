@@ -73,7 +73,6 @@
 
 	// update the icon_state
 	update_icon()
-		. = ..()
 		icon_state="navbeacon[open]"
 		alpha = invisibility ? 128 : 255
 

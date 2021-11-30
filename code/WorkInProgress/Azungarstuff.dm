@@ -1023,7 +1023,6 @@
 		return last_result_text ? "<br>The ball is currently on [last_result_text]." : ""
 
 	update_icon()
-		. = ..()
 		if (running == 0)
 			src.icon_state = "roulette_w0"
 		else if (running == 1)

@@ -1166,7 +1166,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/power/collector_array/update_icon()
-	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		overlays = null
 	if(P)
@@ -1353,7 +1352,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			updatecons()
 
 /obj/machinery/power/collector_control/update_icon()
-	. = ..()
 	if(magic != 1)
 
 		if(status & (NOPOWER|BROKEN))

@@ -91,7 +91,6 @@
 			while (--amt > 0)
 
 	update_icon()
-		. = ..()
 
 		if (src.open)
 			flick(src.opening_anim,src)

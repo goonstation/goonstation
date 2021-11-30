@@ -36,7 +36,6 @@
 			. = ..()
 
 	update_icon()
-		. = ..()
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"
 

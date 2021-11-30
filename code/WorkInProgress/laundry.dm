@@ -27,7 +27,6 @@
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/update_icon()
-	. = ..()
 	ENSURE_IMAGE(src.image_door, src.icon, "laundry[src.open]")
 	src.UpdateOverlays(src.image_door, "door")
 

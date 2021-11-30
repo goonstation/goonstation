@@ -196,7 +196,6 @@
 
 
 	update_icon()
-		. = ..()
 		icon_state = src.n_occupants > 0 ? "puke_1" : "puke_0"
 
 

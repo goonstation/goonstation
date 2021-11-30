@@ -492,7 +492,6 @@
 			return 0
 
 	update_icon()
-		. = ..()
 
 		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)

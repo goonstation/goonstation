@@ -996,7 +996,6 @@
 			return
 
 	update_icon()
-		. = ..()
 		src.overlays = null
 		if(tank1) //Update tank overlays.
 			src.overlays += image(src.icon,"bscanner-tank1")
@@ -2117,7 +2116,6 @@
 			return
 
 	update_icon()
-		. = ..()
 		src.overlays = null
 		if(src.jam) //Update jam overlay.
 			src.overlays += image(src.icon,"printer-jamoverlay")
@@ -2663,7 +2661,6 @@
 
 
 	update_icon(var/newState = 1)
-		. = ..()
 		if (status & (NOPOWER|BROKEN))
 			light.disable()
 			icon_state = "secdetector-p"
@@ -3165,7 +3162,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "heptemitter-p"
 			if (src.beam)
@@ -3638,7 +3634,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "[setup_base_icon_state]-p"
 		else

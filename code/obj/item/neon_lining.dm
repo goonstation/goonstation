@@ -80,7 +80,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		set_icon_state("item_[lining_item_color]")
 		inventory_counter?.update_number(amount)
 		return

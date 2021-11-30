@@ -725,7 +725,6 @@
 			src.update_neighbors()
 
 	update_icon()
-		. = ..()
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			return

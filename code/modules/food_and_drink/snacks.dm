@@ -1597,7 +1597,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.overlays.len = 0
 		if (src.reagents.has_reagent("juice_tomato"))
 			src.overlays += image(src.icon, "corndog-k")
@@ -1772,7 +1771,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if(!(src.GetOverlayImage("bun")))
 			switch(src.bun)
 				if(1)

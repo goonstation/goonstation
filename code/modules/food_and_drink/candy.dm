@@ -310,7 +310,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (src.icon_random)
 			return
 		if (src.reagents)

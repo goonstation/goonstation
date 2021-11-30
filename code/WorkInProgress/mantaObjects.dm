@@ -134,7 +134,6 @@ var/obj/manta_speed_lever/mantaLever = null
 		return
 
 	update_icon()
-		. = ..()
 		if (locked == 1 && on == 1)
 			icon_state = "lever1-locked"
 		if (locked == 1 && on == 0)
@@ -450,7 +449,6 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.repairstate = 0
 
 	update_icon()
-		. = ..()
 		if (src.open == 1)
 			src.icon_state = src.iconopen
 

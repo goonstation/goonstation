@@ -420,7 +420,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (src.overlays)
 			src.overlays = null
 		if (src.generic && src.color)
@@ -1893,7 +1892,6 @@
 
 
 	update_icon()
-		. = ..()
 		if (open)
 			src.icon_state = "petbee_carton[ourEgg != null]"
 		else

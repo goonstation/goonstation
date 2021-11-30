@@ -234,7 +234,6 @@
 			break
 
 	update_icon()
-		. = ..()
 		if (powered())
 			light.enable()
 			if (occupant && started>1)

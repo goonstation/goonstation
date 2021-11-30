@@ -1425,7 +1425,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.icon_state = "spacelipstick[src.open]"
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")

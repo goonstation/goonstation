@@ -824,7 +824,6 @@
 		else return ..()
 
 	update_icon()
-		. = ..()
 		src.underlays = null
 		if (src.broken)
 			src.reagents.clear_reagents()
@@ -1012,7 +1011,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 
 		src.underlays = null
 		if (reagents.total_volume)
@@ -1561,7 +1559,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)

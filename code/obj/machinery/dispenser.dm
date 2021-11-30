@@ -67,7 +67,6 @@
 
 
 /obj/machinery/dispenser/update_icon()
-	. = ..()
 	if (o2tanks > 0 && pltanks > 0)
 		icon_state = "dispenser-both"
 	else

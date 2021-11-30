@@ -40,7 +40,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 			src.whitelist = chem_whitelist
 
 	update_icon()
-		. = ..()
 		if (src.reagents.total_volume)
 			src.icon_state = "hypo1"
 			src.name = "hypospray ([src.reagents.get_master_reagent_name()])"

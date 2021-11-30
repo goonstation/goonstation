@@ -113,7 +113,6 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		C.setConductor(conductor)
 
 	update_icon()
-		. = ..()
 		if (amount <= 0)
 			qdel(src)
 		else if (amount >= 1 && amount <= 4)

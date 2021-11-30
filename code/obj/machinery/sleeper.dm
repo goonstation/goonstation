@@ -286,7 +286,6 @@
 		..()
 
 	update_icon()
-		. = ..()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
 		return

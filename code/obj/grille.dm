@@ -78,7 +78,6 @@
 		event_handler_flags = 0
 
 		update_icon(special_icon_state, override_parent = TRUE)
-			. = ..()
 			if (ruined)
 				return
 
@@ -417,8 +416,7 @@
 					damage_blunt(W.force * 0.5)
 		return
 
-	update_icon(var/special_icon_state, )
-		. = ..()
+	update_icon(var/special_icon_state)
 
 		if (ruined)
 			return

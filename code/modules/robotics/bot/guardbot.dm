@@ -1802,7 +1802,6 @@
 			get_radio_connection_by_id(src, "control").update_frequency(newfreq)
 
 	update_icon()
-		. = ..()
 
 		var/emotion_image = null
 

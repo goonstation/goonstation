@@ -23,7 +23,6 @@
 		tank_hatch = image('icons/obj/atmospherics/atmos.dmi', "")
 
 /obj/machinery/portable_atmospherics/pump/update_icon()
-	. = ..()
 	if(on)
 		icon_state = "psiphon-on"
 

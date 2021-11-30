@@ -28,7 +28,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		// drsingh for cannot read null.total_volume
 		var/rounded_vol = reagents ? round(reagents.total_volume,5) : 0;
 		icon_state = "[rounded_vol]"

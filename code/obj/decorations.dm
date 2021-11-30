@@ -294,7 +294,6 @@
 
 	// Added ex_act and meteorhit handling here (Convair880).
 	update_icon()
-		. = ..()
 		if (!src) return
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
@@ -355,7 +354,6 @@
 
 	// stole all of this from the captain's shrub lol
 	update_icon()
-		. = ..()
 		if (!src) return
 		src.destroyed = 1
 		src.desc = "The scattered remains of a once-beautiful ship in a bottle."
@@ -479,7 +477,6 @@
 			src.mySwitch.toggle()
 
 	update_icon()
-		. = ..()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
 			src.opacity = 1
@@ -819,7 +816,6 @@ obj/decoration/ceilingfan
 		light.attach(src)
 
 	update_icon()
-		. = ..()
 		if (src.lit == 1)
 			src.icon_state = src.icon_on
 			light.enable()
@@ -1180,7 +1176,6 @@ obj/decoration/ceilingfan
 		light.attach(src)
 
 	update_icon()
-		. = ..()
 		if (src.lit == 1)
 			src.icon_state = src.icon_on
 			light.enable()

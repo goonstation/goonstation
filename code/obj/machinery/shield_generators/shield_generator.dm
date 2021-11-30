@@ -37,7 +37,6 @@
 			src.net_id = generate_net_id(src)
 
 	update_icon()
-		. = ..()
 
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "shieldgen0"

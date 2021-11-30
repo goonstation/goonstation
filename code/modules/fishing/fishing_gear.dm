@@ -26,7 +26,6 @@
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 
 	update_icon()
-		. = ..()
 		//state for fishing
 		if (src.is_fishing)
 			src.icon_state = "fishing_rod-active"

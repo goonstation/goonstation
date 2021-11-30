@@ -31,7 +31,6 @@
 		UpdateIcon()
 
 /obj/machinery/cell_charger/update_icon()
-	. = ..()
 	icon_state = "ccharger[charging ? 1 : 0]"
 
 	if(charging && !(status & (BROKEN|NOPOWER)) )

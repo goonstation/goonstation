@@ -202,7 +202,6 @@
 			UpdateIcon()
 
 	update_icon()
-		. = ..()
 
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
@@ -340,7 +339,6 @@ obj/item/storage/wall/clothingrack/hatrack
 			UpdateIcon()
 
 	update_icon()
-		. = ..()
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "shelf"
@@ -365,7 +363,6 @@ obj/item/storage/wall/clothingrack/hatrack
 			UpdateIcon()
 
 	update_icon()
-		. = ..()
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "shelf"

@@ -38,7 +38,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if(active != last_active)
 			last_active = active
 			if(src.active)

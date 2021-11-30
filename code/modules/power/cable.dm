@@ -175,7 +175,6 @@
 	UpdateIcon()
 
 /obj/cable/update_icon()
-	. = ..()
 	icon_state = "[d1]-[d2][iconmod]"
 	alpha = invisibility ? 128 : 255
 	//if (cableimg)

@@ -170,7 +170,6 @@
 			src.current_account = new_account
 
 	update_icon()
-		. = ..()
 		if (!beaker)
 			src.icon_state = src.icon_base
 		else

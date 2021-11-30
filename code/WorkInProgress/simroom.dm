@@ -208,7 +208,6 @@
 
 
 /obj/machinery/sim/vr_bed/update_icon()
-	. = ..()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 

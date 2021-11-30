@@ -23,7 +23,6 @@
 		src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.underlays = null
 		if (reagents.total_volume)
 			icon_state = "emerg_inj-[label]"

@@ -583,7 +583,6 @@
 	cigtype = /obj/item/clothing/mask/cigarette/syndicate
 
 /obj/item/cigpacket/update_icon()
-	. = ..()
 	src.overlays = null
 	if (length(src.contents) == 0)
 		src.icon_state = "[src.package_style]0"
@@ -673,7 +672,6 @@
 	src.UpdateIcon()
 
 /obj/item/cigarbox/update_icon()
-	. = ..()
 	src.overlays = null
 	if (src.cigcount <= 0)
 		src.icon_state = "[src.package_style]"
@@ -875,7 +873,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (src.match_amt == -1)
 			src.icon_state = "matchbook6"
 			return

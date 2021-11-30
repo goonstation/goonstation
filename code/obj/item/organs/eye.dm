@@ -28,7 +28,6 @@
 		..()
 
 	update_icon()
-		. = ..()
 		if (!src.change_iris)
 			return
 		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")

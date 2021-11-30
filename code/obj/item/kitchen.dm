@@ -565,7 +565,6 @@ TRAYS
 		tooltip_rebuild = 1
 
 	update_icon()
-		. = ..()
 
 		for (var/i = 1, i <= ordered_contents.len, i++)
 			var/obj/item/F = ordered_contents[i]
@@ -1105,7 +1104,6 @@ TRAYS
 
 
 	update_icon(mob/user as mob)
-		. = ..()
 		src.icon_state = "platestack[src.platenum]"
 		src.item_state = "platestack[src.platenum]"
 		user.update_inhands()

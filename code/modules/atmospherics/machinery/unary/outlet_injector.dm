@@ -22,7 +22,6 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
-		. = ..()
 		if(node)
 			if(on)
 				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"

@@ -597,7 +597,6 @@
 	return 1
 
 /mob/living/silicon/hivebot/update_icon()
-	. = ..()
 	src.overlays = null
 
 	if (isalive(src))

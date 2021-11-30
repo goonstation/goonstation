@@ -83,7 +83,6 @@
 	return 1
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
-	. = ..()
 	overlays = null
 	if(status & BROKEN || charge == 0)
 		overlays += image('icons/obj/pt_laser.dmi', "unpowered")

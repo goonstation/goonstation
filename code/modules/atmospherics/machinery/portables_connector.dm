@@ -31,7 +31,6 @@
 			network = null
 
 	update_icon()
-		. = ..()
 		if(node)
 			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
 			set_dir(get_dir(src, node))

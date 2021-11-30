@@ -648,7 +648,6 @@ CONTAINS:
 		..()
 
 	update_icon()
-		. = ..()
 		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
@@ -828,7 +827,6 @@ CONTAINS:
 			return ..()
 
 	update_icon()
-		. = ..()
 		switch (src.uses)
 			if (0 to -INFINITY)
 				src.icon_state = "bandage-item-0"
@@ -1123,7 +1121,6 @@ CONTAINS:
 		..()
 
 	update_icon()
-		. = ..()
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"

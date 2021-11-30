@@ -922,7 +922,6 @@
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
 	update_icon()
-		. = ..()
 		if(health <= 0)
 			src.UpdateOverlays(null, "light")
 			src.UpdateOverlays(null, "screen")

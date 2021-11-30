@@ -171,7 +171,6 @@
 			src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.icon_state = "cuprack[src.cup_amount]" //sets the icon_state to the ammount of cups on the rack
 		return
 
@@ -331,6 +330,5 @@
 			src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		src.icon_state = "mugrack[src.cup_amount]" //sets the icon_state to the amount of cups on the rack
 		return

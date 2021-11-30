@@ -225,7 +225,6 @@
 		return ..()
 
 	update_icon()
-		. = ..()
 		if(src.beaker)
 			src.overlays += image(src.icon, "ice_creamer_beaker")
 		else
@@ -1244,7 +1243,6 @@ var/list/mixer_recipes = list()
 			return
 
 	update_icon()
-		. = ..()
 		if (!src || !istype(src))
 			return
 

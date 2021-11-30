@@ -42,7 +42,6 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
-		. = ..()
 
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)

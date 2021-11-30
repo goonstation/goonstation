@@ -264,7 +264,6 @@
 				return 5 // Full reload or ammo left over.
 
 	update_icon()
-		. = ..()
 
 		if (src.amount_left < 0)
 			src.amount_left = 0
@@ -1043,7 +1042,6 @@
 		return
 
 	update_icon()
-		. = ..()
 		if (src.artifact || src.unusualCell) return
 		overlays = null
 		var/list/ret = list()

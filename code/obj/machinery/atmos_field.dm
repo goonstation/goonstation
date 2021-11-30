@@ -94,7 +94,6 @@
 			src.UpdateIcon()
 
 	update_icon()
-		. = ..()
 		if (status & (NOPOWER|BROKEN))
 			icon_state = "atmos_field_gen_off"
 		else if (src.other)
