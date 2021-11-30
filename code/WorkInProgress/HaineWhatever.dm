@@ -497,7 +497,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_short = "paintball"
 	icon_empty = "paintball-0"
 
-	UpdateIcon()
+	update_icon()
 		if (src.amount_left < 0)
 			src.amount_left = 0
 
@@ -837,7 +837,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.hand_dealer -= Card
 		src.cards = shuffle(src.cards)
 
-	UpdateIcon()
+	update_icon()
 		if (!src.overlay_light)
 			src.overlay_light = image('icons/obj/objects.dmi', "BJ-light")
 		src.overlays -= src.overlay_light

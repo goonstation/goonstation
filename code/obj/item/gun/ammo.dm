@@ -1030,7 +1030,7 @@
 	New()
 		..()
 		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, rechargable)
-		RegisterSignal(src, COMSIG_UpdateIcon, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		UpdateIcon()
 
