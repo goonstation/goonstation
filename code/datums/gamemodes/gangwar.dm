@@ -35,7 +35,7 @@
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
 	var/kidnapping_score = 20000
-	var/kidnapp_success = 0			//true if the gang successfully kidnapps.
+	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
 	var/obj/item/device/radio/headset/gang/announcer_radio = new /obj/item/device/radio/headset/gang()
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
@@ -419,7 +419,7 @@
 		process_hot_zones()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
-	kidnapp_success = 0
+	kidnap_success = 0
 	kidnapping_target = null
 	var/datum/gang/top_gang = null
 	for (var/datum/gang/G in gangs)
@@ -464,14 +464,14 @@
 	SPAWN_DBG(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
 		sleep(1 MINUTE)
-		//if they didn't kidnapp em, then give points to other gangs depending on whether they are alive or not.
-		if(!kidnapp_success)
+		//if they didn't kidnap em, then give points to other gangs depending on whether they are alive or not.
+		if(!kidnap_success)
 			//if the kidnapping target is null or dead, nobody gets points. (the target will be "gibbed" if successfully "kidnapped" and points awarded there)
 			if (kidnapping_target && kidnapping_target.stat != 2)
 				for (var/datum/gang/G in gangs)
 					if (G != top_gang)
 						G.score_event += kidnapping_score/gangs.len 	//This is less than the total points the top_gang would get, so it behooves security to help the non-top gangs keep the target safe.
-				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnapp [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
+				broadcast_to_all_gangs("[top_gang.gang_name] has failed to kidnap [target_name] and the other gangs have been rewarded for thwarting the kidnapping attempt!")
 			else
 				broadcast_to_all_gangs("[target_name] has died in one way or another. No gangs have been rewarded for this futile exercise.")
 
@@ -1062,14 +1062,14 @@
 		//if they're the target
 		if (istype(W, /obj/item/grab))
 			if (user?.mind.gang != src.gang)
-				boutput(user, "<span class='alert'>You can't kidnapp someone for a different gang!</span>")
+				boutput(user, "<span class='alert'>You can't kidnap someone for a different gang!</span>")
 				return
-			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnapp
+			if (istype(ticker.mode, /datum/game_mode/gang))	//gotta be gang mode to kidnap
 				var/datum/game_mode/gang/mode = ticker.mode
 				var/obj/item/grab/G = W
 				if (G.affecting == mode.kidnapping_target)		//Can only shove the target in, nobody else. target must be not dead and must have a kill or pin grab on em.
 					if (G.affecting.stat == 2)
-						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnapp a dead person!</span>")
+						boutput(user, "<span class='alert'>[G.affecting] is dead, you can't kidnap a dead person!</span>")
 					else if (G.state < 3)
 						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
 					else
@@ -1081,7 +1081,7 @@
 						mode.broadcast_to_all_gangs("[src.gang.gang_name] has successfully kidnapped [mode.kidnapping_target] and has been rewarded for their efforts.")
 
 						mode.kidnapping_target = null
-						mode.kidnapp_success = 1
+						mode.kidnap_success = 1
 						G.affecting.remove()
 						qdel(G)
 			return
@@ -1231,7 +1231,8 @@
 			return
 
 		var/joingang = tgui_alert(target, "Do you wish to join [src.gang.gang_name]?", "[src]", list("Yes", "No"), timeout = 10 SECONDS)
-		if (joingang == "No") return
+		if (joingang != "Yes")
+			return
 
 		target.mind.gang = gang
 		src.gang.members += target.mind

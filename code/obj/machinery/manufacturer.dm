@@ -1071,7 +1071,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == ID.pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = ID
@@ -1503,6 +1503,12 @@
 						make--
 
 			src.remove_materials(M)
+		else
+			src.mode = "halt"
+			src.error = "Insufficient usable materials to continue queue production."
+			src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			src.build_icon()
 
 		return
 

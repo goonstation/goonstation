@@ -444,11 +444,11 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a note here with <a target='_blank' href='https://forum.ss13.co/showthread.php?tid=15478'>'https://forum.ss13.co/showthread.php?tid=15478'</a> written on it."
 	icon = 'icons/effects/160x160.dmi'
-	icon_state = "xmastree_2020"
+	icon_state = "xmastree_2021"
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
-	plane = PLANE_DEFAULT + 2
+	plane = PLANE_ABOVE_LIGHTING
 
 	density = 1
 	var/on_fire = 0

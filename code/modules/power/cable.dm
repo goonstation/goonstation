@@ -234,15 +234,16 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 		var/powernet_id = ""
 
-		if(PN && (PN.avail > 0))		// is it powered?
-			if(ispulsingtool(W))
-				// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
-				powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
+		if(ispulsingtool(W))
+			// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
+			powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
 
-			boutput(user, "<span class='alert'>[PN.avail]W in power network.[powernet_id]</span>")
+		if(PN && (PN.avail > 0))		// is it powered?
+
+			boutput(user, "<span class='alert'>[PN.avail]W in power network. [powernet_id]</span>")
 
 		else
-			boutput(user, "<span class='alert'>The cable is not powered.</span>")
+			boutput(user, "<span class='alert'>The cable is not powered. [powernet_id]</span>")
 
 		if(prob(40))
 			shock(user, 10)

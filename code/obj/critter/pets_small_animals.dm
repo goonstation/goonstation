@@ -326,13 +326,15 @@
 	attack_hand(mob/user as mob)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			if(prob(10))
+			if(prob(3) && ispug(user))
+				src.target = user
+				src.oldtarget_name = user.name
+				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [user]!</span>")
+				src.task = "chasing"
+			else if(prob(10))
 				src.audible_message("[src] purrs!",2)
-			return
 		else
 			..()
-
-		return
 
 	CritterDeath()
 		..()
@@ -433,11 +435,9 @@
 		name = pick_string_autokey("names/cats.txt")
 		..()
 
-/obj/critter/dog/george
-	name = "George"
-	desc = "Good dog."
-	icon_state = "george"
-	var/doggy = "george"
+ABSTRACT_TYPE(/obj/critter/dream_creature)
+/obj/critter/dog
+	var/doggy = "dog"
 	density = 1
 	health = 100
 	aggressive = 1
@@ -453,6 +453,22 @@
 	atk_brute_amt = 2
 	crit_brute_amt = 4
 	chase_text = "jumps on"
+
+	attackby(obj/item/I as obj, mob/living/user as mob)
+		if (istype(I, /obj/item/reagent_containers/food/snacks/cookie))
+			user.drop_item()
+			I.dropped()
+			qdel(I)
+			src.visible_message("<span class='notice'>[src] happily chows down on [I]!</span>")
+			playsound(src,"sound/items/eatfood.ogg", rand(10,50), 1)
+			return
+		..()
+
+/obj/critter/dog/george
+	name = "George"
+	desc = "Good dog."
+	icon_state = "george"
+	doggy = "george"
 	butcherable = 0
 	generic = 0
 
@@ -541,6 +557,12 @@
 	doggy = "pug"
 	is_pet = 2
 
+	attack_hand(mob/user as mob)
+		if (prob(5) && src.alive && ispug(user))
+			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
+			return
+		..()
+
 var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
 // am bad at dog names
@@ -559,7 +581,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 /obj/critter/dog/illegal
 	name = "highly illegal dog"
 	icon_state = "illegal"
-	var/doggy = "illegal"
+	doggy = "illegal"
 
 /obj/critter/pig
 	name = "space pig"

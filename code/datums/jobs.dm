@@ -864,7 +864,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/chefhat)
 	slot_suit = list(/obj/item/clothing/suit/chef)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver)
+	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/bell/kitchen)
 
 	New()
 		..()
@@ -2138,7 +2138,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.traitHolder.addTrait("training_security")
 		if(prob(60))
 			var/aggressive = pick("eyebeams","cryokinesis")
-			var/defensive = pick("fire_resist","cold_resist","food_rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
+			var/defensive = pick("fire_resist","cold_resist","rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
 			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, do_stability=0)
 			if(aggressive == "eyebeams")
 				var/datum/bioEffect/power/eyebeams/eb = be
@@ -2234,7 +2234,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 */
 
 /datum/job/special/syndicate_operative
-	name = "Syndicate"
+	name = "Syndicate Operative"
 	wages = 0
 	limit = 0
 	linkcolor = "#880000"
@@ -2263,7 +2263,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/special/syndicate_operative/leader
-	name = "Syndicate Commander"
+	name = "Syndicate Operative Commander"
 	leader = TRUE
 
 /datum/job/special/syndicate_weak
