@@ -1646,7 +1646,6 @@
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
-		. = ..()
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
@@ -1670,7 +1669,6 @@
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
-		. = ..()
 		if (src.reagents && src.reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()

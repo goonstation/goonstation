@@ -1060,7 +1060,7 @@ CONTAINS:
 		else
 			return ..()
 
-	UpdateIcon()
+	update_icon()
 		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)

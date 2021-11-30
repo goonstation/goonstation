@@ -553,7 +553,6 @@ var/mutable_appearance/fluid_ma
 						break
 	*/
 	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
-		. = ..()
 
 		if (!src.group || !src.group.reagents) return
 

@@ -506,7 +506,6 @@ Broken RCD + Effects
 			T.autoclose = 1
 
 	update_icon() //we got fancy rcds now
-		. = ..()
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0

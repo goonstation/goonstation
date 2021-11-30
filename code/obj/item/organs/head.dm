@@ -127,7 +127,6 @@
 	/// only call it if something changes the head in a major way, like becoming a lizard
 	/// it will cause the head to be rebuilt from the mob's appearanceholder!
 	update_icon(var/makeshitup, var/ignore_transplant) // should only happen once, maybe again if they change mutant race
-		. = ..()
 		var/datum/appearanceHolder/AHead = null
 
 		if(!src.donor_appearance || makeshitup || !src.donor)

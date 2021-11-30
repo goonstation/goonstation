@@ -298,7 +298,6 @@
 		UpdateIcon(0)
 
 	update_icon(var/active) //1: active, 0: inactive
-		. = ..()
 		if (panel_exposed)
 			icon_state = "player_piano_open"
 			return

@@ -205,7 +205,6 @@
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
-		. = ..()
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))

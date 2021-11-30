@@ -57,7 +57,6 @@
 ////////////////////
 
 	update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
-		. = ..()
 		if (paper_amt || was_paper)
 			if (GetOverlayImage("paper"))
 				ClearSpecificOverlays("paper")

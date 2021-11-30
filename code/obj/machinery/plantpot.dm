@@ -928,7 +928,6 @@
 		UpdateOverlays(src.water_meter, "water_meter")
 
 	update_icon() //plant icon stuffs
-		. = ..()
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
