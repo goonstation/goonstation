@@ -6555,7 +6555,7 @@
 "wW" = (
 /obj/machinery/door_control{
 	id = "nadir_disposalock";
-	name = "Emergency Re-Entry;
+	name = "Emergency Re-Entry";
 	pixel_x = -24
 	},
 /turf/space/fluid,

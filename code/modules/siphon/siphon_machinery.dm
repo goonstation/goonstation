@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					yielder.set_loc(src.get_output_location())
 					break
 
-			playsound(src.loc, 'sound/machines/interdictor_operate.ogg', 10, 0)
+			playsound(src.loc, 'sound/machines/siphon_run.ogg', 10, 0)
 		power_usage = total_draw
 		..()
 
@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if("low")
 				playsound(src, "sound/machines/click.ogg", 40, 1)
 			if("active")
-				playsound(src, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src, "sound/machines/siphon_activate.ogg", 50, 1)
 			if("high")
 				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
 		src.update_fx()
@@ -243,11 +243,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			SPAWN_DBG(3 SECONDS)
 				src.toggling = FALSE
 
+	///iterates over all currently connected resonators to get their cumulative effect on drilling
 	proc/calibrate_resonance()
 		src.x_torque = 0
 		src.y_torque = 0
 		var/xt_absolute //total absolute x torque in this pass, used for shear calculation
 		var/yt_absolute //total absolute y torque in this pass, used for shear calculation
+		var/shear_adjust = 0 //rolling counter for special shear adjustments from individual resonators
 
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
 			var/x_torqueup = res.x_torque * res.intensity
@@ -256,8 +258,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/y_torqueup = res.y_torque * res.intensity
 			src.y_torque += y_torqueup
 			yt_absolute += abs(y_torqueup)
+			if(res.shearmod) shear_adjust += res.shearmod
 
-		src.shear = (xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque))
+		src.shear = (xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque)) + shear_adjust
 
 	proc/update_fx()
 		if(src.mode != "high")
@@ -279,18 +282,29 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	icon_state = "resonator"
 	density = 1
 
+	///affix for overlay icon states, permits cleaner subtyping
+	var/resclass = "res"
+
 	///true when resonator is maglocked (can be configured, cannot move)
 	var/maglocked = FALSE
 	///true when manually secured with wrench (affects anchoring)
 	var/wrenched = FALSE
-	///intensity scalar from 0 to 4, increasing power draw and resonance strength
+	///intensity scalar from 0 to max (4 for base model), increasing power draw and resonance strength
 	var/intensity = 1
+	///maximum intensity that can be provided by the resonator
+	var/max_intensity = 4
 	///baseline X torque value, set when the resonator is anchored by the central siphon
 	var/x_torque = 0
 	///baseline Y torque value, set when the resonator is anchored by the central siphon
 	var/y_torque = 0
+	///modifier to total shear value AFTER regular shear calculation; can change dynamically as long as it's set before calibrate_resonance
+	var/shearmod = 0
 	///glowy light, should vary in intensity based on resonator power level
 	var/datum/light/light
+
+	//descriptions for wrenching
+	var/regular_desc = "Field-emitting device used to stabilize and guide a harmonic siphon. You know this because it says so on the label."
+	var/wrenched_desc = "Field-emitting device used to stabilize and guide a harmonic siphon. It's been manually secured to the floor."
 
 	New()
 		light = new /datum/light/point
@@ -306,27 +320,27 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 				boutput(user, "You secure the auxiliary reinforcing bolts to the floor.")
 				src.anchored = 1
-				src.desc = "Field-emitting device used to stabilize and guide a harmonic siphon. It's been manually secured to the floor."
+				src.desc = src.wrenched_desc
 				return
 			else if(!maglocked && wrenched)
 				src.wrenched = FALSE
 				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 				boutput(user, "You undo the auxiliary reinforcing bolts.")
 				src.anchored = 0
-				src.desc = "Field-emitting device used to stabilize and guide a harmonic siphon. You know this because it says so on the label."
+				src.desc = src.regular_desc
 				return
 			else
 				boutput(user,"The auxiliary reinforcing bolts appear to be locked in place.")
 				return
 		else if(ispulsingtool(W))
-			var/scalex = input(usr,"Adjust Intensity","Accepts values 0 through 4","1") as num
-			scalex = clamp(scalex,0,4)
+			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
 
 	examine()
 		. = ..()
-		if(maglocked)
+		if(maglocked && src.x_torque)
 			var/xto = src.x_torque * src.intensity
 			var/yto = src.y_torque * src.intensity
 			. += "<br>A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque."
@@ -351,12 +365,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	proc/update_fx()
 		if(src.maglocked)
-			var/image/resactive = SafeGetOverlayImage("locked", 'icons/obj/machines/neodrill_32x32.dmi', "res-active")
+			var/image/resactive = SafeGetOverlayImage("locked", 'icons/obj/machines/neodrill_32x32.dmi', "[src.resclass]-active")
 			resactive.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(resactive, "locked", 0, 1)
 			src.light.set_brightness(0.15 * src.intensity)
 			src.light.enable()
-			var/image/intens = SafeGetOverlayImage("intensity", 'icons/obj/machines/neodrill_32x32.dmi', "res-charge-[src.intensity]")
+			var/image/intens = SafeGetOverlayImage("intensity", 'icons/obj/machines/neodrill_32x32.dmi', "[src.resclass]-charge-[src.intensity]")
 			intens.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(intens, "intensity", 0, 1)
 		else
