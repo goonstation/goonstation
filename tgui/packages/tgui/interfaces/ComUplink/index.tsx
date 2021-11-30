@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Zonespace (https://github.com/Zonespace27)
+ * @license MIT
+ */
+
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
@@ -20,7 +27,7 @@ export const ComUplink = (props, context) => {
           <Section fill>
             <LabeledList>
               <LabeledList.Item label="Points">
-                <Box key={data.points} inline mr="10px" className={`ComUplink__Points--commander`}>
+                <Box key={data.points} inline bold color="green" mr="5px" className={`ComUplink__Points--commander`}>
                   {data.points}
                 </Box>
               </LabeledList.Item>

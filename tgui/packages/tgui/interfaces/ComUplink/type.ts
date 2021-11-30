@@ -1,7 +1,7 @@
 /**
  * @file
  * @copyright 2021
- * @author Luxizzle (https://github.com/Luxizzle)
+ * @author Zonespace (https://github.com/Zonespace27)
  * @license MIT
  */
 
