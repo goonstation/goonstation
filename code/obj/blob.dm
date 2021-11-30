@@ -61,6 +61,7 @@
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
+				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
@@ -191,6 +192,9 @@
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
+				if(isliving(M))
+					var/mob/living/L = M
+					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
 				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
