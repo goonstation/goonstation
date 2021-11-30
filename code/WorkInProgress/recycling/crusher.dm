@@ -8,7 +8,7 @@
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
 
@@ -68,13 +68,13 @@
 
 	onUpdate()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1))
+		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
 		if(!src.classic)
-			target.set_loc(owner.loc)
+			interrupt(INTERRUPT_ALWAYS)
 
 		if(ismob(target))
 			var/mob/M = target
@@ -89,7 +89,7 @@
 
 	onInterrupt(flag)
 		. = ..()
-		if(ismob(target) && target.temp_flags & BEING_CRUSHERED)
+		if(ismob(target) && !QDELETED(target) && (target.temp_flags & BEING_CRUSHERED))
 			var/mob/M = target
 			random_brute_damage(M, rand(15, 45))
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
@@ -103,7 +103,7 @@
 
 	onEnd()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1))
+		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
