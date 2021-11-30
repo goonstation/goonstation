@@ -15,7 +15,7 @@
 			insertedRod = null
 		return
 
-	UpdateIcon()
+	update_icon()
 		if(status & NOPOWER)
 			icon_state = "neutinj"
 			return

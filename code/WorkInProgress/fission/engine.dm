@@ -41,7 +41,7 @@ ENGINE
 			if(src.id == F.id)
 				F.theEngine = src
 
-	UpdateIcon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "enginebrok"
 			active = 0
