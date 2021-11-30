@@ -314,9 +314,9 @@
 /// Call this proc inplace of update_icon(...)
 /atom/proc/UpdateIcon(...)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UpdateIcon)
+	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
-	SEND_SIGNAL(src, COMSIG_ATOM_POST_UpdateIcon)
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
 	return
 
 /*
