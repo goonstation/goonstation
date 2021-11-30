@@ -507,7 +507,7 @@
 
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)
-		UpdateIcons_if_needed()
+		update_icons_if_needed()
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.

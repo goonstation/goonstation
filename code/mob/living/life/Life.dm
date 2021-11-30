@@ -234,7 +234,7 @@
 				var/obj/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
-		UpdateIcons_if_needed()
+		update_icons_if_needed()
 
 		if (src.client) //ov1
 			// overlays
