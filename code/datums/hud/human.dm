@@ -320,7 +320,7 @@
 							{\
 								/*master.u_equip(C);*/\
 								C.unequipped(master);\
-								inventory_items -= C;\
+								src.remove_item(C);\
 								master.var_name = null;\
 								if(!master.put_in_hand(C))\
 								{\
