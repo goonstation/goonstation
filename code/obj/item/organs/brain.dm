@@ -12,8 +12,6 @@
 	item_state = "brain"
 	var/datum/mind/owner = null
 	edible = 0
-	module_research = list("medicine" = 1, "efficiency" = 10)
-	module_research_type = /obj/item/organ/brain
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
@@ -99,8 +97,6 @@
 	name = "synthbrain"
 	item_state = "plant"
 	desc = "An artificial mass of grey matter. Not actually, as one might assume, very good at thinking."
-	made_from = "pharosium"
-
 	New()
 		..()
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
@@ -112,6 +108,19 @@
 	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
 	var/activated = 0
+
+	get_desc()
+		if (usr?.traitHolder?.hasTrait("training_medical"))
+			if (activated)
+				if (src.owner?.key)
+					if (!find_ghost_by_key(src.owner?.key))
+						. += "<br><span class='notice'>[src]'s indicators show that it once had a conciousness installed, but that conciousness cannot be located.</span>"
+					else
+						. += "<br><span class='notice'>[src]'s indicators show that it is still operational, and can be installed into a new body immediately.</span>"
+				else
+					. += "<br><span class='alert'>[src] has powered down fully.</span>"
+			else
+				. += "<br><span class='alert'>[src] has its factory defaults enabled. No conciousness has entered it yet.</span>"
 
 /obj/item/organ/brain/ai
 	name = "neural net processor"

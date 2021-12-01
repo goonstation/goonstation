@@ -64,7 +64,7 @@
 	desc = "Wow. These look creepy..."
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "deck1"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/inuse = 0
 	var/nextcard
 	var/can_move = 1
@@ -131,13 +131,13 @@
 		var/cardnumber
 		var/invcheck = inventorycheck(user)
 		cardnumber = input("How many cards would you like to draw?","Cards to Draw",null) as null|num //check if number works
-		if(!user || !invcheck || !cardnumber)
+		if(!user || !invcheck || !cardnumber || !isnum_safe(cardnumber))
 			src.inuse = 0
 			return
 		if(cardnumber < 0)
 			cardnumber = 0
 		else if(cardnumber > cards.len)
-			cardnumber = cards.len
+			cardnumber = length(cards)
 		carddraw(user, cardnumber)
 		src.inuse = 0
 
@@ -197,7 +197,7 @@
 			if(!yn)
 				yn = pick("Repeat","Cancel")
 			if(yn == "Repeat")
-				var/repeat = input(user,"Choose a card!","Choice") as() in deck.usedcards
+				var/repeat = input(user,"Choose a card!","Choice") as anything in deck.usedcards
 				if(!deck.usedcards.len)
 					boutput(user,"<span class='alert'><b>There are no card effects to be repeated!</b></span>")
 				if(!repeat)
@@ -215,7 +215,7 @@
 					deck.inuse = 0
 					user.u_equip(deck)
 					deck.set_loc(get_turf(user))
-					h.become_ice_statue()
+					h.become_statue_ice()
 				else
 					user.reagents.add_reagent("cryostylane", 50)
 			if("Security")
@@ -443,7 +443,7 @@
 	afterattack(atom/target as obj, mob/user as mob)
 		if(src.hat && istype(target,/obj/item) && (!istype(target,/obj/item/device/radio/intercom)) && (!src.used))
 			var/obj/item/titem = target
-			if(titem.w_class <= 2)
+			if(titem.w_class <= W_CLASS_SMALL)
 				src.used = 1
 				src.health = 5
 				if(titem.loc == user)

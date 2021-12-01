@@ -19,8 +19,8 @@
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		del(bar.img)
-		del(border.img)
+		qdel(bar.img)
+		qdel(border.img)
 		..()
 
 	onUpdate()
@@ -134,7 +134,7 @@
 			continue
 		C.show_message(textother, 1, group = "[src]_Skateboard")
 
-/obj/vehicle/skateboard/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/skateboard/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 
@@ -144,6 +144,10 @@
 
 	if(AM == rider || !rider)
 		return
+
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T.z))
+		sickness = 0
 
 	..()
 	src.stop()
@@ -208,19 +212,21 @@
 		SPAWN_DBG(0.4 SECONDS)
 			input_lockout -= 1
 
-	runningAction?.sCurr = sickness
+	if(runningAction)
+		runningAction.sCurr = sickness
 
 	update()
 	in_bump = 0
 	return
 
 /obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
 	density = 0
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 
 	src.stop()
@@ -262,7 +268,7 @@
 			M.set_loc(src.loc)
 
 /obj/vehicle/skateboard/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
 		return
 
 	if(target == user && !user.stat)
@@ -314,17 +320,7 @@
 	*/
 	return
 
-/obj/vehicle/skateboard/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
 
-/obj/vehicle/skateboard/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/skateboard/disposing()
 	if(rider)

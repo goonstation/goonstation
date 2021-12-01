@@ -18,7 +18,8 @@
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if (do_mob(holder.owner, target, 20))
-			holder.owner.say("EI NATH")
+			if(!istype(get_area(holder.owner), /area/sim/gunsim))
+				holder.owner.say("EI NATH")
 			..()
 
 			if (ishuman(target))

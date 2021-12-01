@@ -29,7 +29,7 @@
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
 		/obj/item/hand_labeler,
-		// TODO: make ticketting machine?
+		/obj/item/device/ticket_writer,
 	)
 
 // scientist.
@@ -70,7 +70,7 @@
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
-		/obj/item/reagent_containers/glass/bottle/icing,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -81,6 +81,7 @@
 		/obj/item/device/reagentscanner,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
+		/obj/item/portable_typewriter/borg,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/construction_ai

@@ -230,20 +230,6 @@ datum/v_space
 		character.bioHolder.mobAppearance.customization_first = user.bioHolder.mobAppearance.customization_first
 		character.bioHolder.mobAppearance.customization_second = user.bioHolder.mobAppearance.customization_second
 		character.bioHolder.mobAppearance.customization_third = user.bioHolder.mobAppearance.customization_third
-		if(user.bioHolder.mobAppearance.customization_first in customization_styles)
-			character.cust_one_state = customization_styles[user.bioHolder.mobAppearance.customization_first]
-		else
-			character.cust_one_state = "None"
-
-		if(user.bioHolder.mobAppearance.customization_second in customization_styles)
-			character.cust_two_state = customization_styles[user.bioHolder.mobAppearance.customization_second]
-		else
-			character.cust_two_state = "None"
-
-		if(user.bioHolder.mobAppearance.customization_third in customization_styles)
-			character.cust_two_state = customization_styles[user.bioHolder.mobAppearance.customization_third]
-		else
-			character.cust_two_state = "none"
 
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
@@ -261,15 +247,15 @@ datum/v_space
 		if (AH.customization_first_color == null)
 			AH.customization_first_color = "#101010"
 		if (AH.customization_first == null)
-			AH.customization_first = "None"
+			AH.customization_first = new /datum/customization_style/none
 		if (AH.customization_second_color == null)
 			AH.customization_second_color = "#101010"
 		if (AH.customization_second == null)
-			AH.customization_second = "None"
+			AH.customization_second = new /datum/customization_style/none
 		if (AH.customization_third_color == null)
 			AH.customization_third_color = "#101010"
 		if (AH.customization_third == null)
-			AH.customization_third = "None"
+			AH.customization_third = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)

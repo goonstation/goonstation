@@ -16,7 +16,7 @@ Contains:
 	var/state = 0.0
 	var/visible = 0.0
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 150
 	mats = 3
@@ -175,7 +175,7 @@ Contains:
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
+	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["state"])
 			src.state = !( src.state )
@@ -267,7 +267,6 @@ Contains:
 		src.part2.master = null
 		src.part1 = null
 		src.part2 = null
-		//SN src = null
 		qdel(src)
 		return
 	if (!isscrewingtool(W))

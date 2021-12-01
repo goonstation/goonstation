@@ -70,7 +70,7 @@
 /mob/living/critter/flock/bit/death(var/gibbed)
 	walk(src, 0)
 	src.flock?.removeDrone(src)
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	flockdronegibs(get_turf(src))
 	qdel(src)
 
@@ -85,7 +85,7 @@
 	switch (act)
 		if ("whistle", "beep", "burp", "scream", "growl", "abeep", "grump", "fart")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 60, 1)
 				return "<b>[src]</b> chimes."
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
@@ -112,5 +112,5 @@
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else
-		playsound(get_turf(src), "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg")
+		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg")
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)

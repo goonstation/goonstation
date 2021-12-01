@@ -6,7 +6,7 @@
 	uses_multiple_icon_states = 1
 	var/paintcolor = "neutral"
 	item_state = "paintcan"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	desc = "A can of impossible to remove paint."
 
 /obj/item/paint/attack_self(mob/user as mob)
@@ -25,6 +25,8 @@
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
 	var/paint_color = "#ff0000"
+	var/add_orig = 0.2
+	var/paint_intensity = 0.6
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(user)
@@ -52,11 +54,13 @@
 			return
 
 	attack_hand(mob/user as mob)
-		var/col_new = input(user) as color
+		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)
 			P.paint_color = col_new
 			paint_color = col_new
+			P.paint_intensity = src.paint_intensity
+			P.add_orig = src.add_orig
 			P.generate_icon()
 		return
 
@@ -187,9 +191,6 @@
 
 				if (6)
 					if (istype(W, /obj/item/tile))
-						if (W.name != "maintenance panel")
-							user.visible_message("[user] tries to use a common floor tile in place of the maintenance panel! How silly!", "<span class='alert'>That is a floor tile, not a maintenance panel! It doesn't even fit!</span>")
-							return
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
@@ -211,7 +212,7 @@
 						if (!do_after(user, 100) || (repair_stage != 7))
 							return
 						repair_stage = 8
-						if (prob(33))//5)) upped from 5 because eh
+						if(prob(100))
 							user.visible_message("[user] secures the maintenance panel!", "You secure the maintenance panel.")
 							new /obj/machinery/vending/paint(src.loc)
 							qdel(src)
@@ -231,7 +232,7 @@
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
 							delme.fingerprintslast = src.fingerprintslast
 
-							invisibility = 100
+							invisibility = INVIS_ALWAYS_ISH
 							set_density(0)
 							sleep(15 SECONDS)
 							qdel(delme)
@@ -253,10 +254,13 @@ var/list/cached_colors = new/list()
 	icon_state = "paint"
 	item_state = "bucket"
 	var/paint_color = rgb(1,1,1)
+	var/actual_paint_color
 	var/image/paint_overlay
 	var/uses = 15
+	var/paint_intensity = 0.5
+	var/add_orig = 0.0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	attack_hand(mob/user as mob)
 		..()
@@ -290,8 +294,8 @@ var/list/cached_colors = new/list()
 			target.icon = new_icon
 		*/
 		var/oldVal = target.color
-		target.color = paint_color
-		target.onVarChanged("color", oldVal, paint_color) // to force redraws on worn items if needed
+		target.color = src.actual_paint_color
+		target.onVarChanged("color", oldVal, actual_paint_color) // to force redraws on worn items if needed
 
 		//var/icon/new_icon = icon(initial(target.icon))
 		//new_icon.ColorTone(color)
@@ -305,6 +309,12 @@ var/list/cached_colors = new/list()
 		paint_overlay.color = paint_color
 		overlays = null
 		overlays += paint_overlay
+		var/list/color_list = hex_to_rgb_list(src.paint_color)
+		src.actual_paint_color = list(
+			1 - paint_intensity + add_orig, 0, 0,
+			0, 1 - paint_intensity + add_orig, 0,
+			0, 0, 1 - paint_intensity + add_orig,
+			paint_intensity * color_list[1]/255, paint_intensity * color_list[2]/255, paint_intensity * color_list[3]/255)
 
 /obj/item/paint_can/random
 	name = "random paint can"

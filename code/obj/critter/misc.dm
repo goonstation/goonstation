@@ -299,7 +299,7 @@
 /obj/critter/spirit
 	name = "spirit"
 	desc = null
-	invisibility = 10
+	invisibility = INVIS_GHOST
 	icon_state = "spirit"
 	health = 10
 	aggressive = 1
@@ -325,11 +325,11 @@
 		if (src.alive)
 			switch(task)
 				if("thinking")
-					src.invisibility = 10
+					src.invisibility = INVIS_GHOST
 				if("chasing")
-					src.invisibility = 0
+					src.invisibility = INVIS_NONE
 				if("attacking")
-					src.invisibility = 0
+					src.invisibility = INVIS_NONE
 
 	seek_target()
 		src.anchored = 0
@@ -377,7 +377,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))
@@ -679,9 +679,8 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		var/datum/chemical_reaction/smoke/thesmoke = new
-		thesmoke.on_reaction(src.reagents, 12)
-		invisibility = 100
+		src.reagents.smoke_start(12)
+		invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(5 SECONDS)
 			qdel(src)
 
@@ -786,7 +785,7 @@
 			if(iscarbon(M))
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
-					M:changeStatus("weakened", 80)
+					M:changeStatus("weakened", 8 SECONDS)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else
@@ -832,7 +831,7 @@
 	firevuln = 0
 	brutevuln = 0
 	seekrange = 5
-	invisibility = 1
+	invisibility = INVIS_INFRA
 	flying = 1
 	is_pet = FALSE
 
@@ -864,7 +863,7 @@
 		else
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1, -1)
 		if(iscarbon(M) && prob(50))
-			if(M.see_invisible < 2)
+			if(M.see_invisible < INVIS_CLOAK)
 				boutput(M, "<span class='combat'><b>You are forced to the ground by an unseen being!</b></span>")
 			else
 				boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
@@ -992,6 +991,9 @@
 
 			src.attacking = 0
 
+	blob_act(power)
+		return
+
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
@@ -1004,7 +1006,7 @@
 		else
 			if (istype(W, /obj/item/baton))
 				var/obj/item/baton/B = W
-				if (B.can_stun(1, 1, user) == 1)
+				if (B.can_stun(1, user) == 1)
 					user.visible_message("<span class='combat'><b>[user] shocks the [src.name] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, the [src.name] appears damaged!</b></span>")
 					B.process_charges(-1, user)
 					src.health--
@@ -1057,7 +1059,7 @@
 	dead_state = "ancientrobot" // fades away
 	death_text = "%src% fades away."
 	post_pet_text = " For some reason! Not like that's weird or anything!"
-	invisibility = 10
+	invisibility = INVIS_GHOST
 	health = 30
 	firevuln = 0
 	brutevuln = 0.5
@@ -1131,7 +1133,7 @@
 			return
 		src.name = pick("something","weird thing","odd thing","whatchamacallit","thing","something weird","old thing")
 		src.icon_state = "ancientrobot-appear"
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		SPAWN_DBG(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
 		return
@@ -1396,7 +1398,7 @@
 			return
 
 	proc/contents_check()
-		if(!src.allow_empty && !src.contents.len)
+		if(!src.allow_empty && !length(src.contents))
 			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 
@@ -1404,7 +1406,7 @@
 		contents_check()
 		src.attacking = 1
 		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		playsound(src.loc, "sound/weapons/genhit1.ogg", 50, 1, -1)
+		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
@@ -1423,7 +1425,7 @@
 			else
 				src.visible_message("[src] slithers around happily!")
 
-	CanPass(atom/mover, turf/target, height=0, air_group=0)
+	Cross(atom/mover)
 		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else

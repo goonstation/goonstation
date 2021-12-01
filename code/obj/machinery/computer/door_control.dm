@@ -4,7 +4,7 @@
 	icon_state = "sec_computer"
 	req_access_txt = "2"
 //	var/authenticated = 0.0		if anyone wants to make it so you need to log in in future go ahead.
-	var/id = 1.0
+	id = 1
 
 /obj/machinery/computer/door_control/proc/alarm()
 	if(status & (NOPOWER|BROKEN))
@@ -20,8 +20,6 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/door_control/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
 /obj/machinery/computer/door_control/attack_hand(var/mob/user as mob)
 	if(..())
 		return
@@ -50,11 +48,11 @@
 /obj/machinery/computer/door_control/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["setid"])
 			if(src.allowed(usr))
-				src.id = text2num(href_list["setid"])
+				src.id = text2num_safe(href_list["setid"])
 				src.alarm()
 		if (href_list["openall"])
 			if(src.allowed(usr))

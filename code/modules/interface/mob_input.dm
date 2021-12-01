@@ -4,10 +4,12 @@
 
 /mob/proc/click(atom/target, params)
 	//moved the 'actions.interrupt(src, INTERRUPT_ACT)' here to on mob/living
+	var/used_ability = src.targeting_ability
+	if (!used_ability) used_ability = get_ability_hotkey(src, params)
 
-	if (src.targeting_ability)
-		if (istype(src.targeting_ability, /datum/targetable))
-			var/datum/targetable/S = src.targeting_ability
+	if (istype(used_ability, /datum/targetable))
+		var/datum/targetable/S = used_ability
+		if (S.targeted)
 			src.targeting_ability = null
 			update_cursor()
 
@@ -22,12 +24,12 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (S.target_in_inventory && ( get_dist(src, target) > 1 && !isturf(target) && !isturf(target.loc)))
+			if (S.target_in_inventory && (!IN_RANGE(src, target, 1) && !isturf(target) && !isturf(target.loc)))
 				if(S.sticky)
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (S.check_range && (get_dist(src, target) > S.max_range))
+			if (S.check_range && !IN_RANGE(src, target, S.max_range))
 				src.show_text("You are too far away from the target.", "red") // At least tell them why it failed.
 				if(S.sticky)
 					src.targeting_ability = S
@@ -54,30 +56,30 @@
 							src.update_cursor()
 			return 100
 
-		else if (istype(src.targeting_ability, /obj/ability_button))
-			var/obj/ability_button/B = src.targeting_ability
+	else if (istype(src.targeting_ability, /obj/ability_button))
+		var/obj/ability_button/B = src.targeting_ability
 
-			if (!B.target_anything && !ismob(target) && !istype(target, B))
-				src.show_text("You have to target a person.", "red")
-				src.targeting_ability = null
-				src.update_cursor()
-				return 100
-			if (!isturf(target.loc) && !isturf(target) && !istype(target, B))
-				src.targeting_ability = null
-				src.update_cursor()
-				return 100
-			if (!B.ability_allowed())
-				src.targeting_ability = null
-				src.update_cursor()
-				return 100
-			if (istype(target, B))
-				return 100
-			actions.interrupt(src, INTERRUPT_ACTION)
-			SPAWN_DBG(0)
-				B.execute_ability(target)
-				src.targeting_ability = null
-				src.update_cursor()
+		if (!B.target_anything && !ismob(target) && !istype(target, B))
+			src.show_text("You have to target a person.", "red")
+			src.targeting_ability = null
+			src.update_cursor()
 			return 100
+		if (!isturf(target.loc) && !isturf(target) && !istype(target, B))
+			src.targeting_ability = null
+			src.update_cursor()
+			return 100
+		if (!B.ability_allowed())
+			src.targeting_ability = null
+			src.update_cursor()
+			return 100
+		if (istype(target, B))
+			return 100
+		actions.interrupt(src, INTERRUPT_ACTION)
+		SPAWN_DBG(0)
+			B.execute_ability(target)
+			src.targeting_ability = null
+			src.update_cursor()
+		return 100
 
 	if (abilityHolder)
 		if (abilityHolder.topBarRendered)
@@ -90,10 +92,10 @@
 		if(params["ctrl"])
 			if (src.pulling)
 				unpull_particle(src,pulling)
-			src.pulling = null
+			src.remove_pulling()
 
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
-	//if (istype(target, /obj/screen/ability))
+	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
 	if (get_dist(src, target) > 0)
 		if(!src.dir_locked)
@@ -123,7 +125,20 @@
 		if ("stop_pull")
 			if (src.pulling)
 				unpull_particle(src,pulling)
-			src.pulling = null
+			src.remove_pulling()
+
+/**
+	* Return the ability bound to the pressed ability hotkey combination
+  */
+/mob/proc/get_ability_hotkey(mob/user, parameters)
+	if(!parameters["left"]) return
+	if(!user?.abilityHolder) return
+	if(parameters["ctrl"] && user.abilityHolder.ctrlPower)
+		return user.abilityHolder.ctrlPower
+	if(parameters["alt"] && user.abilityHolder.altPower)
+		return user.abilityHolder.altPower
+	if(parameters["shift"] && user.abilityHolder.shiftPower)
+		return user.abilityHolder.shiftPower
 
 /**
 	* Additiviely applies keybind styles onto the client's keymap.
@@ -161,6 +176,7 @@
 	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
+		C.keymap.on_update(C)
 
 /**
 	* Builds the mob's keybind styles, checks for valid movement controllers, and finally sets the keymap.

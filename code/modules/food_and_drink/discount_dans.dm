@@ -7,6 +7,7 @@
 	heal_amt = 1
 	var/activated = 0
 	initial_volume = 60
+	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=10,"msg"=9,"salt"=10,"nicotine"=8)
 
 	New()
@@ -139,7 +140,7 @@
 				src.real_name = "Devil Dan's Quik-Noodles - Brimstone BBQ Flavor"
 				src.initial_reagents["sulfur"] = 5
 				src.initial_reagents["beff"] = 5
-				src.initial_reagents["ghostchilijuice"] = 5
+				src.initial_reagents["el_diablo"] = 5
 /*				R.add_reagent("sulfur",5)
 				R.add_reagent("beff",5)
 				R.add_reagent("ghostchilijuice",5)
@@ -206,11 +207,13 @@
 			if (2)
 				src.real_name = "Descuento Danito's Burritos - Strawberrito Churro Flavor"
 				src.desc = "There is no way anyone could possibly justify this."
+				src.icon_state = "burrito_churro"
 				src.initial_reagents["VHFCS"] = 8
 				src.initial_reagents["oil"] = 2
 
 			if (3)
 				src.real_name = "Descuento Danito's Burritos - Spicy Beans and Wieners Ole! Flavor"
+				src.icon_state = "burrito_spicy"
 				src.initial_reagents["lithium"] = 4
 				src.initial_reagents["capsaicin"] = 6
 				src.initial_reagents["refried_beans"] = 10
@@ -218,6 +221,7 @@
 			if (4)
 				src.real_name = "Descuento Danito's Burritos - Pancake Sausage Brunch Flavor"
 				src.desc = "A self-heating breakfast burrito with a buttermilk pancake in lieu of a tortilla. A little frightening."
+				src.icon_state = "burrito_pancake"
 				src.initial_reagents["porktonium"] = 4
 				src.initial_reagents["VHFCS"] = 2
 				src.initial_reagents["coffee"] = 4
@@ -225,6 +229,7 @@
 			if (5)
 				src.real_name = "Descuento Danito's Burritos - Homestyle Comfort Flavor"
 				src.desc = "A self-heating burrito just like Mom used to make, if your mother was a souless, automated burrito production line."
+				src.icon_state = "burrito_homestyle"
 				src.initial_reagents["mashedpotatoes"] = 5
 				src.initial_reagents["gravy"] = 3
 				src.initial_reagents["diethylamine"] = 2
@@ -232,6 +237,7 @@
 			if (6)
 				src.real_name = "Spooky Dan's BOO-ritos - Texas Toast Chainsaw Massacre Flavor"
 				src.desc = "A self-heating burrito.  Isn't that concept scary enough on its own?"
+				src.icon_state = "burrito_texastoast"
 				src.initial_reagents["fakecheese"] = 3
 				src.initial_reagents["space_drugs"] = 3
 				src.initial_reagents["bloodc"] = 4
@@ -239,6 +245,7 @@
 			if (7)
 				src.real_name = "Spooky Dan's BOO-ritos - Nightmare on Elm Meat Flavor"
 				src.desc = "A self-heating burrito that purports to contain elm-smoked meat. Of some sort. Probably from an animal."
+				src.icon_state = "burrito_elmmeat"
 				src.initial_reagents["beff"] = 3
 				src.initial_reagents["synthflesh"] = 2
 				src.initial_reagents["eyeofnewt"] = 5
@@ -246,6 +253,7 @@
 			if (8)
 				src.real_name = "Sconto Danilo's Burritos - 50% Real Mozzarella Pepperoni Pizza Party Flavor"
 				src.desc = "A self-heating pizza burrito."
+				src.icon_state = "burrito_pizza"
 				src.initial_reagents["fakecheese"] = 3
 				src.initial_reagents["cheese"] = 3
 				src.initial_reagents["pepperoni"] = 3
@@ -364,7 +372,7 @@
 	desc = "A box containing a self-heating TV dinner."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnerc"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
@@ -409,6 +417,7 @@
 		if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 			if (src.full == 0)
 				user.show_text("The box is empty[prob(20) ? " (much like your head)" : null].", "red")
+				user.add_karma(-0.1)
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/tvdinner/W = new /obj/item/reagent_containers/food/snacks/tvdinner(null, src.traytype)
@@ -548,6 +557,7 @@
 			reagents.add_reagent("radium", 1) //Self Microwaving?!
 			reagents.handle_reactions()
 		boutput(user, "You twist the tray, activating the heater mechanism.")
+		user.add_karma(-6)
 		return
 
 	heal(var/mob/M)

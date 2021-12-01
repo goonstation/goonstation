@@ -74,7 +74,7 @@
 
 	var/curblend = A.blend_mode || defblend
 
-	if(A.overlays.len || A.underlays.len)
+	if(A.overlays.len || length(A.underlays))
 		var/icon/flat = BLANK
 		// Layers will be a sorted list of icons/overlays, based on the order in which they are displayed
 		var/list/layers = list()
@@ -118,7 +118,7 @@
 		// Dimensions of overlay being added
 		var/list/add_size[4]
 
-		for (var/image/I as() in layers)
+		for (var/image/I as anything in layers)
 			if(I.alpha == 0)
 				continue
 

@@ -70,10 +70,6 @@
 	required_effects = list("accent_chav","accent_tommy")
 	result = /datum/bioEffect/coprolalia
 
-/datum/geneticsrecipe/epilepsy
-	required_effects = list("bad_eyesight","flashy")
-	result = /datum/bioEffect/epilepsy
-
 /datum/geneticsrecipe/blind
 	required_effects = list("bad_eyesight","narcolepsy")
 	result = /datum/bioEffect/blind
@@ -93,10 +89,6 @@
 /datum/geneticsrecipe/mutagenic_field
 	required_effects = list("radioactive","involuntary_teleporting")
 	result = /datum/bioEffect/mutagenic_field
-
-/datum/geneticsrecipe/tourettes
-	required_effects = list("clumsy","coprolalia")
-	result = /datum/bioEffect/tourettes
 
 /datum/geneticsrecipe/buzz
 	required_effects = list("bee","stinky")
@@ -143,6 +135,18 @@
 /datum/geneticsrecipe/bee
 	required_effects = list("roach","detox")
 	result = /datum/bioEffect/bee
+
+/datum/geneticsrecipe/dwarf
+	required_effects = list("strong","resist_alcohol")
+	result = /datum/bioEffect/dwarf
+
+/datum/geneticsrecipe/dwarf_two
+	required_effects = list("strong","drunk")
+	result = /datum/bioEffect/dwarf
+
+/datum/geneticsrecipe/dwarf_three
+	required_effects = list("strong","stinky")
+	result = /datum/bioEffect/dwarf
 
 // Powers
 
@@ -306,10 +310,6 @@
 	required_effects = list("glowy","chameleon")
 	result = /datum/bioEffect/mutantrace/flashy
 
-/datum/geneticsrecipe/flashy_three // Discovered
-	required_effects = list("glowy","epilepsy")
-	result = /datum/bioEffect/mutantrace/flashy
-
 /datum/geneticsrecipe/lizard
 	required_effects = list("horns","chameleon")
 	result = /datum/bioEffect/mutantrace
@@ -317,18 +317,6 @@
 /datum/geneticsrecipe/lizard_two
 	required_effects = list("horns","fire_resist")
 	result = /datum/bioEffect/mutantrace
-
-/datum/geneticsrecipe/dwarf // Discovered
-	required_effects = list("strong","resist_alcohol")
-	result = /datum/bioEffect/mutantrace/dwarf
-
-/datum/geneticsrecipe/dwarf_two
-	required_effects = list("strong","drunk")
-	result = /datum/bioEffect/mutantrace/dwarf
-
-/datum/geneticsrecipe/dwarf_three // Discovered
-	required_effects = list("strong","stinky")
-	result = /datum/bioEffect/mutantrace/dwarf
 
 /datum/geneticsrecipe/blank // Discovered
 	required_effects = list("albinism","melanism")

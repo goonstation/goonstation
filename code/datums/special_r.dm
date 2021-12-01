@@ -241,7 +241,7 @@ datum/special_respawn
 				O.cant_other_remove = 1
 				O.cant_self_remove = 1
 			mob.nodamage = 1
-			mob.bioHolder.AddEffect("xray")
+			mob.bioHolder.AddEffect("xray", 2)
 			mob.verbs += /client/proc/smnoclip
 			mob.bioHolder.AddEffect("accent_smiling")
 		else

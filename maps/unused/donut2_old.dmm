@@ -4745,7 +4745,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -10919,7 +10919,7 @@
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "awx" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -15311,22 +15311,6 @@
 	icon_state = "carpetS"
 	},
 /area/security/detectives_office)
-"aFm" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/security/detectives_office)
 "aFn" = (
 /obj/table/woodentable{
 	dir = 6
@@ -15914,21 +15898,6 @@
 /obj/item/hand_tele,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
-"aGv" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/crew_quarters/captain)
 "aGw" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/captain)
@@ -16493,10 +16462,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor,
-/area/crew_quarters/captain)
-"aHy" = (
-/obj/displaycase,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "aHz" = (
@@ -17351,7 +17316,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/inner)
 "aJd" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -19002,7 +18967,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/engine/substation/east)
 "aLT" = (
@@ -25211,7 +25176,7 @@
 /obj/item/kitchen/rollingpin,
 /obj/item/storage/cutlery,
 /obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
 /turf/simulated/floor/sanitary,
@@ -28806,7 +28771,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/engine/engineering)
 "bfX" = (
@@ -29875,7 +29840,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft2";
 	name = "South Solar Control"
 	},
@@ -31383,7 +31348,7 @@
 /turf/simulated/floor/plating/airless,
 /area/solar/south)
 "blp" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -44056,7 +44021,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	name = "SS2 Solar Control"
 	},
 /turf/simulated/floor/grime,
@@ -46459,7 +46424,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	name = "SS2 Solar Control"
 	},
 /obj/cable{
@@ -46866,7 +46831,7 @@
 /area/derelict/evilreaver/medical)
 "bVj" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/fire)
 "bVk" = (
@@ -47063,7 +47028,7 @@
 /area/derelict/evilreaver/medical)
 "bVG" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/fire)
@@ -47112,7 +47077,7 @@
 "bVO" = (
 /obj/rack,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/emergency)
@@ -47476,7 +47441,7 @@
 /area/derelict/evilreaver/storage/emergency)
 "bWL" = (
 /obj/decal/cleanable/blood,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/emergency)
 "bWM" = (
@@ -49191,7 +49156,7 @@
 /obj/rack,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/glasses/meson,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver)
 "caJ" = (
@@ -52593,7 +52558,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "tds-solar";
 	name = "Factory Solar Control"
 	},
@@ -65917,6 +65882,43 @@
 	},
 /turf/simulated/floor/delivery,
 /area/crunch)
+"gnx" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/crew_quarters/captain)
+"omC" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/crew_quarters/captain)
+"suU" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/security/detectives_office)
 
 (1,1,1) = {"
 aaa
@@ -97113,7 +97115,7 @@ avH
 aDO
 aEn
 aEO
-aFm
+suU
 aFH
 aGc
 aGs
@@ -98481,7 +98483,7 @@ aGi
 aGt
 aGN
 aHh
-aHy
+gnx
 aGw
 aIh
 aIk
@@ -99159,7 +99161,7 @@ aEV
 aFt
 aFN
 aDR
-aGv
+omC
 aGP
 aHk
 aHB

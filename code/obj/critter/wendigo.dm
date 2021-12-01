@@ -4,7 +4,7 @@
 	name = "wendigo"
 	desc = "Oh god."
 	icon_state = "wendigo"
-	invisibility = 16
+	invisibility = INVIS_SPOOKY
 	health = 60
 	firevuln = 1
 	brutevuln = 0.5
@@ -268,7 +268,8 @@
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
 					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
-					BORG.part_head.ropart_take_damage(rand(20,40),0)
+					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
+						BORG.compborg_lose_limb(BORG.part_head)
 					if (prob(33)) playsound(src.loc, "sound/voice/animal/wendigo_scream.ogg", 75, 1)
 					attack_delay = 5
 		else
@@ -316,7 +317,7 @@
 		if (!invisibility)
 			return
 		src.icon_state = "wendigo_appear"
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		set_density(1)
 		SPAWN_DBG(1.2 SECONDS)
 			if(king)
@@ -334,7 +335,7 @@
 		src.icon_state = "wendigo_melt"
 		set_density(0)
 		SPAWN_DBG(1.2 SECONDS)
-			src.invisibility = 16
+			src.invisibility = INVIS_SPOOKY
 			if(king)
 				src.icon_state = "wendigoking"
 			else

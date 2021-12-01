@@ -30,6 +30,17 @@
 	New(var/loc,var/lifespan = 2.5 MINUTES)
 		..()
 		feedings_required = rand(15,40)
+		//spatial interdictor: can't stop the black hole, but it can mitigate it
+		//interdiction consumes several thousand units - requiring a large cell - and the interdictor makes a hell of a ruckus
+		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			if (IN_RANGE(IX,src,IX.interdict_range) && IX.expend_interdict(9001))
+				playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
+				SPAWN_DBG(3 SECONDS)
+					if(IX) playsound(IX,'sound/machines/alarm_a.ogg',50,0,5,1.5)
+				IX.visible_message("<span class='alert'><b>[IX] emits a gravitational anomaly warning!</b></span>")
+				feedings_required = rand(12,24)
+				lifespan = lifespan * 1.2
+				break
 
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
@@ -37,20 +48,20 @@
 		for (var/mob/M in range(14,src))
 			boutput(M, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
 			shake_camera(M, 5, 16)
-		playsound(get_turf(src),'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
+		playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
 		sleep(lifespan / 2)
 		if (!stable)
 			src.visible_message("<span class='alert'><b>[src] begins to collapse in on itself!</b></span>")
-			playsound(get_turf(src),'sound/machines/engine_alert3.ogg',100,0,5,0.5)
+			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
-			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [src.loc.loc]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
+			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
 
 		sleep(lifespan)
 		if (!stable)
 			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
-			playsound(get_turf(src),'sound/machines/satcrash.ogg',100,0,5,0.5)
+			playsound(src,'sound/machines/satcrash.ogg',100,0,5,0.5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
 			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
@@ -125,12 +136,13 @@
 				qdel(O)
 
 	proc/process()
-		if (time_to_die < ticker.round_elapsed_ticks)
+		var/turf/checkTurf = get_turf(src)
+		if (time_to_die < ticker.round_elapsed_ticks || isrestrictedz(checkTurf?.z))
 			qdel(src)
 			return
 
 		for (var/atom/X in range(7,src))
-			if (X == src)
+			if (X == src || (X.event_handler_flags & IMMUNE_SINGULARITY))
 				continue
 			var/area/A = get_area(X)
 			if(A?.sanctuary) continue
@@ -214,7 +226,7 @@
 		else if (istype(T,/turf/simulated/wall))
 			var/atom/A = new /obj/structure/girder/reinforced(T)
 
-			var/atom/movable/B = unpool(/obj/item/raw_material/scrap_metal)
+			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 			B.set_loc(T)
 
 			if(T.material)

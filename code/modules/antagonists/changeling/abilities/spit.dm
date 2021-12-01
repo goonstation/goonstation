@@ -28,7 +28,7 @@
 
 		SPAWN_DBG(0)
 			var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
-			A.icon_state = "cbbolt"
+			A.icon_state = "acidspit"
 			A.icon = 'icons/obj/projectiles.dmi'
 			A.name = "acid"
 			A.anchored = 0
@@ -38,14 +38,16 @@
 			A.reagents = new /datum/reagents(10)
 			A.reagents.my_atom = A
 			A.reagents.add_reagent("pacid", 10)
+			animate_spin(A, "R", 1.4, -1)
 
 			var/obj/overlay/B = new /obj/overlay( A.loc )
-			B.icon_state = "cbbolt"
+			B.icon_state = "acidspit"
 			B.icon = 'icons/obj/projectiles.dmi'
 			B.name = "acid"
 			B.anchored = 1
 			B.set_density(0)
 			B.layer = OBJ_LAYER
+			animate_spin(B, "R", 1.4, -1)
 
 			for(var/i=0, i<20, i++)
 				B.set_loc(A.loc)

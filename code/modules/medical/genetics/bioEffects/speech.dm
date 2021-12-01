@@ -35,6 +35,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_smile"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -193,7 +194,7 @@
 
 /datum/bioEffect/speech/comic
 	name = "Frontal Gyrus Alteration Type-CS"
-	desc = "Causes the speech center of the subject's brain to become, uh. Well, <i>something</i> happens to it."
+	desc = "Causes the speech center of the subject's brain to become, uh. Well, SOMETHING happens to it."
 	id = "accent_comic"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -205,11 +206,41 @@
 	lockedDiff = 2
 	lockedChars = list("T","A")
 	lockedTries = 3
+	icon_state = "speech_clown"
 
 	OnAdd()
 		var/mob/living/L = owner
 		if (istype(L))
 			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
+
+	OnRemove()
+		var/mob/living/L = owner
+		if (istype(L))
+			L.speechpopupstyle = ""
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		return message
+		// just let this one handle itself for now
+
+/datum/bioEffect/speech/badmin
+	name = "Frontal Gyrus Alteration Type-Badmin"
+	desc = "Spooky. Red."
+	id = "accent_badmin"
+	effectType = EFFECT_TYPE_POWER
+	isBad = 0
+	msgGain = "You now speak with black and red text."
+	msgLose = "Back to normal text."
+	probability = 0 // NO
+	occur_in_genepools = 0 // NO ALSO
+	can_make_injector = 0
+	can_copy = 0
+
+	OnAdd()
+		var/mob/living/L = owner
+		if (istype(L))
+			L.speechpopupstyle = "font-family: 'XFont 6x9'; font-size: 6px; color: black !important; -dm-text-outline: 1px #ff0000;"
 
 	OnRemove()
 		var/mob/living/L = owner
@@ -236,6 +267,7 @@
 	lockedDiff = 2
 	lockedChars = list("T","A")
 	lockedTries = 3
+	icon_state = "speech_bad"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -260,6 +292,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_bad"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -280,6 +313,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_bad"
 	var/vowel_lower = "a"
 	var/vowel_upper = "A"
 
@@ -336,6 +370,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_loud"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -384,6 +419,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_mime"
 
 	OnSpeak(var/message)
 		if (!istext(message))
@@ -544,12 +580,13 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	icon_state = "speech_bad"
 	OnSpeak(var/message)
 		if (!istext(message))
 			return ""
 
 		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
+		if(!speech_list || !length(speech_list))
 			return ""
 
 		var/num_butts = rand(1,4)
@@ -600,6 +637,8 @@
 	isBad = 1
 	msgGain = "Oh nyo. uwu"
 	msgLose = "Nyo more funny talking."
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
 	probability = 0 // Should not be player accessible
 	reclaim_fail = 10
 	lockProb = 25
@@ -638,7 +677,7 @@
 			return ""
 
 		var/list/speech_list = splittext(message, " ")
-		if(!speech_list || !speech_list.len)
+		if(!speech_list || !length(speech_list))
 			return ""
 
 		var/o = 1

@@ -7,6 +7,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser-empty"
 	density = 1
+	status = REQ_PHYSICAL_ACCESS
 	var/o2tanks = 10
 	var/pltanks = 10
 	anchored = 1.0
@@ -62,7 +63,7 @@
 	return
 
 /obj/machinery/dispenser/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 
 /obj/machinery/dispenser/proc/update_icon()

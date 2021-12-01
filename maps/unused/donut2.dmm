@@ -162,7 +162,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "aaz" = (
@@ -889,7 +889,7 @@
 	},
 /area/station/science/teleporter)
 "acm" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
@@ -1241,15 +1241,6 @@
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 10
 	},
-/area/station/science/teleporter)
-"ade" = (
-/obj/rack,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "adf" = (
 /obj/rack,
@@ -6129,7 +6120,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -10830,7 +10821,7 @@
 "avx" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "avy" = (
@@ -11096,14 +11087,6 @@
 	dir = 8
 	},
 /area/station/quartermaster/office)
-"avX" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "avY" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -11118,9 +11101,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"avZ" = (
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "awa" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -11133,9 +11113,6 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/quartermaster/office)
-"awb" = (
-/turf/simulated/wall,
 /area/station/quartermaster/office)
 "awc" = (
 /obj/machinery/portable_reclaimer,
@@ -11605,25 +11582,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"axh" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	icon_state = "rwindow";
-	dir = 1
-	},
-/obj/window/reinforced{
-	icon_state = "rwindow";
-	dir = 8
-	},
-/obj/window/reinforced{
-	icon_state = "rwindow";
-	dir = 2
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "axi" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -11642,12 +11600,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
-"axj" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall,
 /area/station/quartermaster/office)
 "axk" = (
 /obj/machinery/door/firedoor/border_only,
@@ -14665,15 +14617,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
-"aDS" = (
-/obj/table/auto,
-/obj/machinery/light/lamp,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/obj/item/camera_test,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quarters)
 "aDT" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -15519,7 +15462,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage/eva)
 "aFI" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -19588,7 +19531,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aND" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "solar_port";
 	name = "West Solar Control"
@@ -21867,23 +21810,6 @@
 	dir = 2
 	},
 /area/station/security/detectives_office)
-"aRW" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/wood/auto,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fred2";
-	dir = 2
-	},
-/area/station/security/detectives_office)
 "aRX" = (
 /obj/table/wood/auto{
 	dir = 6
@@ -23029,17 +22955,6 @@
 /obj/item/hand_tele,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"aUi" = (
-/obj/table/auto,
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
 "aUj" = (
 /turf/simulated/wall/r_wall,
 /area/station/crew_quarters/captain)
@@ -23962,7 +23877,7 @@
 	c_tag = "Head of Research's Office";
 	dir = 4
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -24027,10 +23942,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aWi" = (
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"aWj" = (
-/obj/displaycase,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aWk" = (
@@ -25328,7 +25239,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aYG" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -27708,7 +27619,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -29372,7 +29283,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bga" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -39613,7 +39524,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -41006,7 +40917,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "solar_starboard";
 	name = "East Solar Control"
@@ -43421,7 +43332,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "bIj" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "solar_aft";
 	name = "South Solar Control"
@@ -45083,7 +44994,7 @@
 "bKX" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bKY" = (
@@ -45366,6 +45277,58 @@
 	},
 /turf/space,
 /area/space)
+"bSU" = (
+/obj/rack,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/turf/simulated/floor/orangeblack/side/white,
+/area/station/science/teleporter)
+"jCn" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/wood/auto,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fred2";
+	dir = 2
+	},
+/area/station/security/detectives_office)
+"tKX" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
+"wvD" = (
+/obj/table/auto,
+/obj/machinery/light/lamp,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/obj/item/camera,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quarters)
+"xeS" = (
+/obj/table/auto,
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 
 (1,1,1) = {"
 aaa
@@ -66661,7 +66624,7 @@ atg
 aBh
 aCt
 aDf
-aDS
+wvD
 aEQ
 aFB
 aGr
@@ -76919,7 +76882,7 @@ atr
 aue
 auI
 avl
-avX
+arx
 awy
 axf
 axX
@@ -77523,9 +77486,9 @@ att
 aug
 auK
 avn
-avZ
+are
 awA
-axh
+axb
 axV
 ayG
 azG
@@ -77825,7 +77788,7 @@ atu
 auh
 auL
 avo
-avZ
+are
 awA
 axi
 axV
@@ -78129,7 +78092,7 @@ auM
 avp
 awa
 awB
-axj
+axa
 axV
 ayG
 azI
@@ -78429,9 +78392,9 @@ atw
 auj
 auN
 apF
-awb
-awb
-axj
+arG
+arG
+axa
 aya
 ayG
 azJ
@@ -86912,7 +86875,7 @@ aKk
 aPE
 aQu
 aRk
-aRW
+jCn
 aSC
 aTl
 aUf
@@ -88730,7 +88693,7 @@ aTr
 aUg
 aUU
 aVD
-aWj
+tKX
 aUj
 aXl
 aXp
@@ -89633,7 +89596,7 @@ aRr
 aSd
 aSI
 aPH
-aUi
+xeS
 aUW
 aVG
 aWm
@@ -119754,7 +119717,7 @@ acA
 acI
 acO
 acU
-ade
+bSU
 acb
 aaa
 aaa

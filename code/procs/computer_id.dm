@@ -78,7 +78,7 @@ proc/check_compid_list(var/client/C)
 			if(hits)
 				var/ircmsg[] = new()
 				ircmsg["key"] =  C.key
-				ircmsg["name"] = C.mob.real_name
+				ircmsg["name"] = stripTextMacros(C.mob.real_name)
 				var/msg = "'s compID changed [hits] time[hits>1 ? "s" : null] within the last 180 minutes - [C.compid_info_list.len + 1] IDs on file."
 				if(hits >= 2) //This person used 3 computers within as many hours
 					if(!cid_test) cid_test = list()
@@ -91,10 +91,12 @@ proc/check_compid_list(var/client/C)
 							del(C) //RIP
 					message_admins("[key_name(C)][msg]")
 					logTheThing("admin", C, null, msg)
+					logTheThing("diary", C, null, msg, "admin")
 
 				else
 					message_admins("[key_name(C)][msg]")
 					logTheThing("admin", C, null, "[key_name(C)][msg]")
+					logTheThing("diary", C, null, "[key_name(C)][msg]", "admin")
 
 				ircmsg["msg"] = "(IP: [C.address]) [msg]"
 				ircbot.export("admin", ircmsg)
@@ -124,11 +126,12 @@ proc/do_computerid_test(var/client/C)
 
 	var/ircmsg[] = new()
 	ircmsg["key"] =  C.key
-	ircmsg["name"] = C.mob.real_name
+	ircmsg["name"] = stripTextMacros(C.mob.real_name)
 	ircmsg["msg"] = " [msg]"
 	ircbot.export("admin", ircmsg)
 	message_admins("[key_name(C)][msg]")
 	logTheThing("admin", C, null, msg)
+	logTheThing("diary", C, null, msg, "admin")
 	if(is_fucker)
 		//message_admins("[key_name(C)] was automatically banned for using the CID DLL.")
 		var/banData[] = new()
@@ -158,7 +161,7 @@ proc/view_client_compid_list(mob/user, var/C)
 			user.show_text("Could not find the ckey [C]!", "red")
 			return
 	else
-		message_coders("[key_name(usr)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
+		message_coders("[key_name(user)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
 		return
 
 	var/dat = {"<html>

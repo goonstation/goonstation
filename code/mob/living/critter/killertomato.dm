@@ -10,13 +10,13 @@
 
 	for (var/i = 1, i <= 4, i++)
 		var/obj/item/reagent_containers/food/snacks/plant/P = new PT(T)
-		P.streak(dirlist[i])
+		P.streak_object(dirlist[i])
 		produce += P
 
 	var/extra = rand(2,4)
 	for (var/i = 1, i <= extra, i++)
 		var/obj/item/reagent_containers/food/snacks/plant/P = new PT(T)
-		P.streak(alldirs)
+		P.streak_object(alldirs)
 		produce += P
 
 	return produce
@@ -32,14 +32,14 @@
 	hand_count = 1
 	can_throw = 0
 	blood_id = "juice_tomato"
-	add_abilities = list(/datum/targetable/critter/slam,
-						/datum/targetable/critter/bite)
+	add_abilities = list(/datum/targetable/critter/bite/tomato_bite,
+						/datum/targetable/critter/slam_polymorph)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
@@ -73,6 +73,6 @@
 			..()
 
 	setup_healths()
-		add_hh_flesh(-25, 25, 1)
-		add_hh_flesh_burn(-25, 25, 1.25)
+		add_hh_flesh(25, 1)
+		add_hh_flesh_burn(25, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)

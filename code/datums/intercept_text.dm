@@ -42,7 +42,7 @@
 			src.text = ""
 			src.build_malf(correct_mob)
 			return src.text
-		if("changeling")
+		if(ROLE_CHANGELING)
 			src.text = ""
 			src.build_changeling(correct_mob)
 			return src.text
@@ -96,7 +96,7 @@
 			traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "Security Officer", "Vice Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")
+		job_tmp.Remove("Captain", "Security Officer", "Security Assistant", "Vice Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if (correct_mob)

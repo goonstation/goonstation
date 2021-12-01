@@ -34,12 +34,9 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)
@@ -119,10 +116,10 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 				var/turf/T = locate(Obj.x, 4, 1)
 				Obj.set_loc(T)
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
-				var/obj/somesparks = unpool(/obj/effects/sparks)
+				var/obj/somesparks = new /obj/effects/sparks
 				somesparks.set_loc(T)
 				SPAWN_DBG(2 SECONDS)
-					if (somesparks) pool(somesparks)
+					if (somesparks) qdel(somesparks)
 
 				Obj.throw_at(get_edge_target_turf(T, NORTH), 200, 1)
 
@@ -165,12 +162,12 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	name = "malevolent thing trigger"
 	icon = 'icons/misc/hospital.dmi'
 	icon_state = "specter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!maniac_active)
 			if(isliving(AM))
 				if(AM:client)
@@ -207,8 +204,8 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
 			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 100))
-				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0)
+				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 10 SECONDS))
+				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
@@ -247,13 +244,13 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/gurney_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(ready && ismob(AM) && isliving(AM))
 			if(AM:client)
 				ready = 0
@@ -277,16 +274,14 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "whiskey"
-	bottle_style = "whiskey"
-	fluid_style = "whiskey"
+	//icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "bottle-spicedrum"
+	bottle_style = "bottle-spicedrum"
+	fluid_style = "spicedrum"
 	label = "spicedrum"//"brandy"
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 250
-	module_research = list("vice" = 10)
-	initial_reagents = list("porktonium"=30,"ethanol"=30)
 
 /*	New()
 		..()
@@ -481,7 +476,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	setup_default_startup_task = /datum/computer/file/guardbot_task/soviet
 
 	beacon_freq = 1440
-	control_freq = 1917
+	control_freq = FREQ_AINLEY_BUDDY
 
 	New()
 		..()
@@ -490,7 +485,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 #endif
 		SPAWN_DBG(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += 1917
+				src.botcard.access += FREQ_AINLEY_BUDDY
 
 	speak(var/message)
 		return ..("<font face=Consolas>[russify( uppertext(message) )]</font>")
@@ -519,46 +514,6 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			src.warm_boot = 1
 		src.wakeup()
 
-	interact(mob/user as mob)
-		var/dat = "<tt><B>&#x411;&#x420;-86 &#x411;&#x44b;&#x442;&#x43e;&#x432;&#x43e;&#x439; &#x420;&#x43e&#x431;&#x43e;&#x442; &#x432;6</B></tt><br><br>"
-
-		var/power_readout = null
-		var/readout_color = "#000000"
-		if(!src.cell)
-			power_readout = "???????"
-		else
-			var/charge_percentage = round((cell.charge/cell.maxcharge)*100)
-			power_readout = "[charge_percentage]%"
-			switch(charge_percentage)
-				if(0 to 10)
-					readout_color = "#F80000"
-				if(11 to 25)
-					readout_color = "#FFCC00"
-				if(26 to 50)
-					readout_color = "#CCFF00"
-				if(51 to 75)
-					readout_color = "#33CC00"
-				if(76 to 100)
-					readout_color = "#33FF00"
-
-
-		dat += {"&#x437;&#x430;&#x440;&#x44f;&#x434;: <table border='1' style='background-color:[readout_color]'>
-				<tr><td><font color=white>[power_readout]</font></td></tr></table><br>"}
-
-		if(src.locked)
-
-			dat += "&#x41f;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x435;: [src.on ? "&#x412;&#x43A;&#x43B;" : "&#x412;&#x44b;&#x43A;&#x43B;"]<br>"
-
-		else
-
-			dat += "&#x41f;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x435;: <a href='?src=\ref[src];power=1'>[src.on ? "&#x412;&#x43A;&#x43B;" : "&#x412;&#x44b;&#x43A;&#x43B;"]</a><br>"
-
-		dat += "<br>&#x418;&#x414;: <b>\[[uppertext(src.net_id)]]</b><br>"
-
-		user.Browse("<head><title>Strange robuddy controls</title></head>[dat]", "window=guardbot")
-		onclose(user, "guardbot")
-		return
-
 	explode()
 		if(src.exploding) return
 		src.exploding = 1
@@ -571,7 +526,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -705,7 +660,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	proc/find_nearest_beacon()
 		nearest_beacon = null
 		new_destination = "__nearest__"
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
 		SPAWN_DBG(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
@@ -722,7 +677,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 	proc/set_destination(var/new_dest)
 		new_destination = new_dest
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon(new_dest || "patrol")
 		awaiting_beacon = 5
 
 	receive_signal(datum/signal/signal)

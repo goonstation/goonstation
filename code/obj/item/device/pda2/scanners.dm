@@ -19,7 +19,7 @@
 
 		if(!(holder in src.master.contents))
 			if(master.scan_program == src)
-				master.scan_program = null
+				src.master.set_scan_program(null)
 			return 1
 
 		return 0
@@ -37,6 +37,7 @@
 				var/obj/machinery/clonepod/P = A
 				if(P.occupant)
 					scan_health(P.occupant, 0, 1)
+					scan_health_overhead(P.occupant, usr)
 					update_medical_record(P.occupant)
 
 			if (!iscarbon(A))
@@ -44,6 +45,7 @@
 			var/mob/living/carbon/C = A
 
 			. = scan_health(C, 0, 1, visible = 1)
+			scan_health_overhead(C, usr)
 			update_medical_record(C)
 
 
@@ -82,6 +84,22 @@
 		size = 16
 		var/last_address = "02000000"
 
+		on_set_scan(obj/item/device/pda2/pda)
+			pda.AddComponent(
+				/datum/component/packet_connected/radio, \
+				"ruckkit",\
+				FREQ_RUCK, \
+				pda.net_id, \
+				null, \
+				FALSE, \
+				null, \
+				FALSE \
+			)
+
+
+		on_unset_scan(obj/item/device/pda2/pda)
+			qdel(get_radio_connection_by_id(pda, "ruckkit"))
+
 		scan_atom(atom/A as obj)
 			if (..() || !istype(A, /obj))
 				return
@@ -107,14 +125,32 @@
 			signal.source = src.master
 			signal.transmission_method = 1
 
-			if (mechanic_controls.rkit_addresses.len)
-				last_address = pick(mechanic_controls.rkit_addresses)
-
-			signal.data["address_1"] = last_address
+			signal.data["address_tag"] = "TRANSRKIT"
 			signal.data["command"] = "add"
 
 			signal.data_file = theScan
-			post_signal(signal)
+			post_signal(signal, "ruckkit")
+
+	medrecord_scan
+		name = "MedTrak Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if (..())
+				return
+
+			if (istype(A, /obj/machinery/clonepod))
+				var/obj/machinery/clonepod/P = A
+				if(P.occupant)
+					scan_medrecord(src.master, P.occupant)
+					update_medical_record(P.occupant)
+
+			if (!iscarbon(A))
+				return
+			var/mob/living/carbon/C = A
+
+			. = scan_medrecord(src.master, C, visible = 1)
+			update_medical_record(C)
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"
@@ -123,15 +159,24 @@
 	var/scannedPath = null
 	var/scannedMats = null
 
+/datum/computer/file/electronics_bundle
+	name = "Ruckingenur Data"
+	extension = "DSCN"
+	var/datum/mechanic_controller/ruckData = null
+	var/target = null
+	var/known_rucks = null
+
 /datum/computer/file/genetics_scan
 	name = "DNA Scan"
 	extension = "GSCN"
 	var/subject_name = null
 	var/subject_uID = null
-	var/list/dna_pool = list()
+	var/subject_stability = null
+	var/scanned_at = null
+	var/list/datum/bioEffect/dna_pool = null
+	var/list/datum/bioEffect/dna_active = null
 
 	disposing()
-		if (dna_pool)
-			dna_pool = null
-
+		src.dna_pool = null
+		src.dna_active = null
 		..()

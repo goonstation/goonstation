@@ -89,7 +89,16 @@
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
-	playsound(get_turf(src), "sound/misc/lightswitch.ogg", 50, 1)
+	src.add_fingerprint(user)
+	logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
+
+	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+
+	if(on)
+		for_by_tcl(S, /obj/critter/turtle)
+			if(get_area(S) == src.area && S.rigged)
+				S.explode()
+
 
 /obj/machinery/light_switch/power_change()
 

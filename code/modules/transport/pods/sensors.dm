@@ -5,16 +5,23 @@
 	system = "Sensors"
 	var/ships = 0
 	var/list/obj/shiplist = list()
-	var/list/obj/whos_tracking_me = list()
+	var/beacons = 0
+	var/list/beaconlist = list()
 	var/lifeforms = 0
 	var/list/lifelist = list()
+	var/list/obj/whos_tracking_me = list()
+	//HAHA SUE ME NERDS, I'LL REMOVE THIS WHEN SENSORS DON'T SUCK --Kyle
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/seekrange = 90
+#else
 	var/seekrange = 30
+#endif
 	var/sight = SEE_SELF
 	var/see_in_dark = SEE_DARK_HUMAN + 3
 	var/antisight = 0
 	var/centerlight = null
 	var/centerlight_color = "#ffffff"
-	var/see_invisible = 2
+	var/see_invisible = INVIS_CLOAK
 	var/scanning = 0
 	var/atom/tracking_target = null
 	var/const/SENSOR_REFRESH_RATE = 10
@@ -36,7 +43,7 @@
 		M.sight &= ~SEE_MOBS
 		M.sight &= ~SEE_OBJS
 		M.see_in_dark = initial(M.see_in_dark)
-		M.see_invisible = 0
+		M.see_invisible = INVIS_NONE
 		end_tracking()
 		scanning = 0
 
@@ -49,6 +56,10 @@
 		if(src.active)
 			dat += build_html_gps_form(src, false, src.tracking_target)
 			dat += {"<HR><BR><A href='?src=\ref[src];scan=1'>Scan Area</A>"}
+			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
+			if(beaconlist.len)
+				for(var/obj/B in beaconlist)
+					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(get_dist(src.ship, B), 25)]M [dir_name(get_dir(src.ship, B))]"}
 			dat += {"<HR><B>[ships] Ships Detected:</B><BR>"}
 			if(shiplist.len)
 				for(var/obj/V in shiplist)
@@ -224,9 +235,9 @@
 		scanning = 1
 		if (href_list["dest_cords"])
 			tracking_target = null
-			var/x = text2num(href_list["x"])
-			var/y = text2num(href_list["y"])
-			var/z = text2num(href_list["z"])
+			var/x = text2num_safe(href_list["x"])
+			var/y = text2num_safe(href_list["y"])
+			var/z = text2num_safe(href_list["z"])
 			if (!x || !y/* || !z*/)
 				boutput(usr, "<span class='alert'>'0' is an invalid gps coordinate. Try again.</span>")
 				return
@@ -284,19 +295,21 @@
 		scanning = 1
 		lifeforms = 0
 		ships = 0
+		beacons = 0
 		lifelist = list()
 		shiplist = list()
+		beaconlist = list()
 		for(var/mob/living/carbon/human/M in ship)
 			M << sound('sound/machines/signal.ogg')
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
-		boutput(usr, "<span class='notice'>Scanning...</span>")
+		boutput(user, "<span class='notice'>Scanning...</span>")
 		sleep(3 SECONDS)
-		boutput(usr, "<span class='notice'>Scan complete.</span>")
+		boutput(user, "<span class='notice'>Scan complete.</span>")
 		for (var/mob/living/M in mobs)
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue
 			if ((ship.z == M.z) && get_dist(ship.loc, M) <= src.seekrange)
-				if(!isdead(M))
+				if(!isdead(M) && !isintangible(M))
 #ifdef UNDERWATER_MAP
 					if (istype(M,/mob/living/critter/aquatic/fish)) continue
 #endif
@@ -311,6 +324,12 @@
 			if(C.alive)
 				lifeforms++
 				lifelist += C.name
+
+		for (var/obj/B in by_type[/obj/warp_beacon]) //ignoring cruisers, they barely exist, sue me.
+			if(B != ship)
+				if (ship.z == B.z)
+					beacons++
+					beaconlist[B] = "[dir_name(get_dir(ship, B))]"
 
 		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)
@@ -396,7 +415,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 /obj/item/shipcomponent/sensor/ecto
 	name = "Ecto-Sensor 900"
 	desc = "The number one choice for reasearchers of the supernatural."
-	see_invisible = 15
+	see_invisible = INVIS_GHOST
 	power_used = 40
 	icon_state = "sensor-g"
 

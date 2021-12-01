@@ -143,7 +143,7 @@
 	if (src.health_attack <= 0)
 		var/turf/T = get_turf(src)
 		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-		var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+		var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 		S.set_loc(T)
 		S.setMaterial(getMaterial("gnesisglass"))
 		src.dump_contents()
@@ -159,7 +159,7 @@
 
 	if(isflock(user))
 		if (!src.toggle())
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 	else
 		boutput(user, "<span class='alert'>Nothing you can do can persuade this thing to either open or close. Bummer.</span>")
 
@@ -229,13 +229,17 @@
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			T.add_fingerprint(user)
 			qdel(src)
-
-		if (T.amount < 1  && !issilicon(user))
-			user.u_equip(T)
-			qdel(T)
 	if (isweldingtool(C) && C:try_weld(user,0,-1,0,0))
 		boutput(user, "<span class='notice'>The fibres burn away in the same way glass doesn't. Huh.</span>")
 		qdel(src)
+
+/obj/lattice/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Structural Foundation
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description
 
 /////////////
 // BARRICADE
@@ -279,8 +283,18 @@
 
 
 // flockdrones can always move through
-/obj/grille/flock/CanPass(atom/movable/mover, turf/target)
-	if (istype(mover, /mob/living/critter/flock/drone) && !mover:floorrunning)
+/obj/grille/flock/Cross(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
-		return 1
-	return ..()
+		. = TRUE
+
+
+/obj/grille/flock/special_desc(dist, mob/user)
+	if(isflock(user))
+		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>###=-</span></span>"}
+	else
+		return null // give the standard description

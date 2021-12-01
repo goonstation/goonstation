@@ -169,7 +169,7 @@
 			return
 
 		if (href_list["screen"])
-			machine_screen = text2num(href_list["screen"])
+			machine_screen = text2num_safe(href_list["screen"])
 
 		if (href_list["card_name"])
 			filter_name = input("Partial name of card holder", "Card holder name", filter_name) as text|null
@@ -462,7 +462,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 			ret["door_name"] = "[door.name] (ALERT: network indicates this may not be door)"
 		else
 			ret["door_name"] = "Unknown device (0x[door_id])"
-		var/time_n = istext(timestamp) ? text2num(timestamp) : timestamp
+		var/time_n = istext(timestamp) ? text2num_safe(timestamp) : timestamp
 		ret["timestamp"] = time_n
 		var/min = round(time_n / 600)
 		var/sec = round(time_n / 10) - min * 60
@@ -522,7 +522,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 			return
 
 		if (opts["a"])
-			if (opts["s"] && opts["t"] && opts["m"] && params.len)
+			if (opts["s"] && opts["t"] && opts["m"] && length(params))
 				if (!(opts["m"] in list("open","close","lock","unlock","reject")))
 					message_user("")
 				var/mylog = nextlog
@@ -569,8 +569,8 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 					message_user("Invalid timestamp filter format [time_filter], usage: TIMESTAMP_BEGIN:TIMESTAMP_END.")
 					mainframe_prog_exit
 					return
-				time_begin = text2num(tf_list[1])
-				time_end = text2num(tf_list[2])
+				time_begin = text2num_safe(tf_list[1])
+				time_end = text2num_safe(tf_list[2])
 				if (!isnum(time_begin) || !isnum(time_end))
 					message_user("Invalid timestamp filter [time_filter].")
 					mainframe_prog_exit
@@ -584,7 +584,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 				message_user("Error: cannot access logs directory. Please check your permissions and try again.")
 				mainframe_prog_exit
 				return
-			var/count = text2num(opts["l"])
+			var/count = text2num_safe(opts["l"])
 			if (!count)
 				message_user("Invalid count: [opts["l"]]")
 				mainframe_prog_exit
@@ -619,7 +619,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 						records -= Q
 						continue
 					if (!isnum(TS))
-						TS = text2num(TS)
+						TS = text2num_safe(TS)
 						R.fields["timestamp"] = TS
 					if (TS < 0)
 						records -= Q
@@ -642,12 +642,12 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 							continue
 
 				var/list/printing = list()
-				while (printed < count && records.len)
+				while (printed < count && length(records))
 					max = -1
 					for (var/datum/computer/file/record/R in records)
 						var/TS = R.fields["timestamp"]
 						if (!isnum(TS))
-							TS = text2num(TS)
+							TS = text2num_safe(TS)
 							R.fields["timestamp"] = TS
 						if (R.fields["timestamp"] > max && R.fields["timestamp"] < now - 300)
 							max = R.fields["timestamp"]
@@ -709,7 +709,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 
 
 		var/list/dataList = params2list(data)
-		if (!dataList || !dataList.len)
+		if (!dataList || !length(dataList))
 			return 1
 
 

@@ -20,6 +20,9 @@ datum/shuttle_controller
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall()
+		if (!online || direction != 1)
+			playsound_global(world, "sound/misc/shuttle_enroute.ogg", 100)
+
 		if (online)
 			if(direction == -1)
 				setdirection(1)
@@ -27,10 +30,11 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
-		ircbot.event("shuttlecall", src.timeleft())
+		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
 
 	proc/recall()
 		if (online && direction == 1)
+			playsound_global(world, "sound/misc/shuttle_recalled.ogg", 100)
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
 
@@ -166,7 +170,7 @@ datum/shuttle_controller
 
 						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>")
 						ircbot.event("shuttledock")
-						world << csound("sound/misc/shuttle_arrive1.ogg")
+						playsound_global(world, "sound/misc/shuttle_arrive1.ogg", 100)
 
 						processScheduler.enableProcess("Fluid_Turfs")
 
@@ -247,7 +251,7 @@ datum/shuttle_controller
 												if (M.buckled) M.buckled.unbuckle()
 												M.throw_at(target, 25, 1)
 												if (bonus_stun)
-													M.changeStatus("paralysis", 60)
+													M.changeStatus("paralysis", 6 SECONDS)
 													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 
@@ -271,7 +275,7 @@ datum/shuttle_controller
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
 						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
-						world << csound("sound/misc/shuttle_enroute.ogg")
+						playsound_global(world, "sound/misc/shuttle_enroute.ogg", 100)
 						//online = 0
 
 						return 1
@@ -301,8 +305,8 @@ datum/shuttle_controller
 						for (var/turf/G in end_location)
 							if (istype(G, transit_turf))
 								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)
-						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
-						world << csound("sound/misc/shuttle_centcom.ogg")
+						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
+						playsound_global(world, "sound/misc/shuttle_centcom.ogg", 100)
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
 
@@ -324,7 +328,7 @@ datum/shuttle_controller
 						for (var/turf/O in end_location)
 							if (istype(O, transit_turf))
 								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
-						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
+						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
 						return 1

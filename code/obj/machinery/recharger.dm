@@ -1,4 +1,4 @@
-#define CHARGE_AMOUNT 20
+#define CHARGE_AMOUNT 30
 #define ACTIVE_POWER_DRAIN 500
 
 #define STATUS_INACTIVE 0
@@ -85,30 +85,24 @@ obj/machinery/recharger
 						break
 				T = null
 
-
 /obj/machinery/recharger/attackby(obj/item/G as obj, mob/user as mob)
 	if (isrobot(user)) return
 	if (src.charging)
 		return
 
-	//Type validation
-	var/obj/item/to_charge = null
-	for(var/type in accepted_types)
-		if ( istype(G, type) )
-			to_charge = G
-			continue
+	var/ret = SEND_SIGNAL(G, COMSIG_CELL_CAN_CHARGE)
 
-	if(to_charge)
-		SubscribeToProcess()
-
-		user.drop_item()
-		to_charge.set_loc(src)
-		if (to_charge.loc == src)
-			src.charging = to_charge
+	if(ret & CELL_UNCHARGEABLE)
+		boutput(user, "<span class='alert'>[G] is not compatible with \the [src]!</span>")
+	else if(ret & CELL_CHARGEABLE)
+		user.drop_item(G)
+		G.set_loc(src)
+		if (G.loc == src)
+			src.charging = G
 			charge_status = STATUS_ACTIVE
 			update_icon()
 	else
-		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!")
+		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
 
 /obj/machinery/recharger/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
@@ -126,7 +120,6 @@ obj/machinery/recharger
 		src.charging.set_loc(src.loc)
 		src.charging = null
 
-		UnsubscribeProcess()
 		power_usage = 50
 		charge_status = STATUS_INACTIVE
 		src.update_icon()
@@ -145,18 +138,21 @@ obj/machinery/recharger
 		// Something wrong with the item we inserted. Report an error
 		src.icon_state = sprite_error
 
+/obj/machinery/recharger/get_desc(dist)
+	. = ..()
+	if(dist > 2)
+		return
+	. += "<br> <span class='notice'> It is currently recharging:"
+	if(charge_status == STATUS_ACTIVE || charge_status == STATUS_COMPLETE)
+		var/list/charge = list();
+		if(SEND_SIGNAL(src.charging, COMSIG_CELL_CHECK_CHARGE, charge) & CELL_RETURNED_LIST)
+			. += "<br> <span class='notice'> \The [charging.name]! Progress: [charge["charge"]]/[charge["max_charge"]]PU </span>"
+	else
+		. += "<br>Nothing! </span>"
+	return
+
 
 /obj/machinery/recharger/process(var/mult)
-	// what the fuck
-	// why
-	// why the fuck
-	// why
-	// WHY
-	// WHYYYYYYYYYYYYYYYYYYYYYYYYYY?Y?Y?Y?Y?Y?Y?Y????!!?G?!G!?
-	// WHO
-	// WHO DID THIS
-	// WHY DID YOU DO THIS
-	// die
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
 		update_icon()
@@ -170,30 +166,21 @@ obj/machinery/recharger
 
 
 	if(charge_status == STATUS_ACTIVE && src.charging)
-		try
-			//Do the charging - all items to be recharged should implement proc/charge()
-			switch(src.charging:charge(CHARGE_AMOUNT * mult))
-				if(REPORT_FINISH)
-					// Charge complete
-					charge_status = STATUS_COMPLETE
-					playsound(src, 'sound/machines/ping.ogg', 50)
-					update_icon()
-				if(REPORT_ERROR)
-					// Charge failed - the item does not want to be recharged
-					charge_status = STATUS_ERRORED
-					src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
-					update_icon()
-
-		catch
-			//This item was on accepted_items, but didn't have a proc/charge()
-			src.visible_message("<span class='alert'>[src] could not interface with \the [src.charging].</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+		var/ret = SEND_SIGNAL(src.charging, COMSIG_CELL_CHARGE, CHARGE_AMOUNT * mult)
+		if(ret & CELL_FULL)
+			// Charge complete
+			charge_status = STATUS_COMPLETE
+			playsound(src, 'sound/machines/ping.ogg', 50)
+			update_icon()
+		else if(ret & CELL_UNCHARGEABLE)
+			// Charge failed - the item does not want to be recharged
 			charge_status = STATUS_ERRORED
+			src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			update_icon()
 
-
-
+	if(src.charging)
+		use_power(power_usage)
 	..()
 
 #undef CHARGE_AMOUNT

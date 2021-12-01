@@ -1,0 +1,39 @@
+"a" = (/turf/space,/area/space)
+"b" = (/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
+"d" = (/obj/neon_lining{color = "#AA0000"; dir = 1},/turf/unsimulated/wall/setpieces/bloodwall{icon_state = "bloodwall_2"; name = "Meaty Wall"},/area/prefab/grillnasium)
+"h" = (/obj/lattice{dir = 10; icon_state = "lattice-dir"},/turf/space,/area/space)
+"j" = (/obj/neon_lining{color = "#AA0033"; dir = 4},/turf/unsimulated/floor/stairs/wide/other,/area/prefab/grillnasium)
+"k" = (/turf/unsimulated/wall/setpieces/bloodwall,/area/prefab/grillnasium)
+"m" = (/obj/neon_lining{color = "#AA0033"; dir = 4},/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_3"},/area/prefab/grillnasium)
+"n" = (/turf/unsimulated/wall/setpieces/bloodwall{icon_state = "bloodwall_2"; name = "Meaty Wall"},/area/prefab/grillnasium)
+"p" = (/obj/neon_lining{color = "#AA0000"; dir = 1},/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
+"v" = (/obj/neon_lining{color = "#AA0033"; dir = 8},/turf/unsimulated/floor/stairs/wide,/area/prefab/grillnasium)
+"w" = (/obj/lattice,/turf/space,/area/space)
+"x" = (/obj/railing/red/reinforced{dir = 4},/turf/unsimulated/floor/scorched2,/area/prefab/grillnasium)
+"y" = (/turf/unsimulated/wall/setpieces/bloodwall{desc = "Is it looking at you?"; icon_state = "bloodwall_5"; name = "Grody Wall"},/area/prefab/grillnasium)
+"A" = (/obj/neon_lining{color = "#AA0000"; dir = 1},/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_2"; name = "Fleshy Floor"},/area/prefab/grillnasium)
+"B" = (/turf/unsimulated/floor/stairs/wide/middle,/area/prefab/grillnasium)
+"C" = (/obj/railing/red/reinforced{dir = 8},/turf/unsimulated/floor/scorched2,/area/prefab/grillnasium)
+"G" = (/turf/unsimulated/floor/scorched2,/area/prefab/grillnasium)
+"H" = (/obj/neon_lining{color = "#AA0033"; dir = 8},/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_3"},/area/prefab/grillnasium)
+"I" = (/obj/railing/red/reinforced{dir = 4},/turf/unsimulated/floor/stairs/wide/other,/area/prefab/grillnasium)
+"J" = (/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_3"},/area/prefab/grillnasium)
+"K" = (/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_2"; name = "Fleshy Floor"},/area/prefab/grillnasium)
+"P" = (/obj/machinery/vending/meat,/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
+"R" = (/obj/railing/red/reinforced{dir = 8},/turf/unsimulated/floor/stairs/wide,/area/prefab/grillnasium)
+"X" = (/obj/ladder{icon_state = "ladder_wall"; id = "fartnasium5"; pixel_y = 20},/turf/unsimulated/floor/setpieces/bloodfloor,/area/prefab/grillnasium)
+"Y" = (/obj/neon_lining{color = "#AA0000"; dir = 1},/obj/machinery/shitty_grill{anchored = 0; name = "unchained shitty grill"},/turf/unsimulated/floor/setpieces/bloodfloor{icon_state = "bloodfloor_2"; name = "Fleshy Floor"},/area/prefab/grillnasium)
+"Z" = (/turf/unsimulated/wall/setpieces/bloodwall{desc = "Is it looking at you?"; icon_state = "bloodwall_4"; name = "Grody Wall"},/area/prefab/grillnasium)
+
+(1,1,1) = {"
+akkkkaaaaa
+kdJpkyaaaa
+kJJJXnnnka
+kkJnZnyPkk
+akJbAYAbJk
+akJJbKbJJk
+akvIHJmRjk
+akGxvBjCGk
+akkGGGGGwh
+aakkGGGkaa
+"}

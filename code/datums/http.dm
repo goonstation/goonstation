@@ -54,7 +54,7 @@
   */
 /datum/http_request/proc/execute_blocking()
 	CRASH("Attempted to execute a blocking HTTP request")
-	// _raw_response = rustg_http_request_blocking(method, url, body, headers)
+	// _raw_response = rustg_http_request_blocking(method, url, body, headers, build_options()))
 
 /**
   * Async execution starter

@@ -11,7 +11,7 @@
 	var/is_construction_mode = 0
 
 	var/list/stats = list()
-	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Shuttle")
+	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Local Time:","Shuttle")
 	//above : ORDER IS IMPORANT
 
 	New()
@@ -31,6 +31,7 @@
 		stats["Server Load:"] = 0
 		stats["Shift Time Spacer"] = -1
 		stats["Shift Time:"] = 0
+		stats["Local Time:"] = 0
 		stats["Shuttle:"] = 0
 
 	proc/update()
@@ -42,26 +43,14 @@
 		if (mapSwitcher)
 			stats["Map Vote Spacer"] = -1
 			if (mapSwitcher.current)
-				var/currentMap = mapSwitcher.current
-
-				if (mapSwitcher.locked && !mapSwitcher.next && isadmin(src))
-					currentMap += " (Compiling)"
-
-				saveStat("Map:", currentMap)
+				saveStat("Map:", mapSwitcher.current)
 
 			stats["Next Map:"] = 0
 			if (mapSwitcher.next)
 				var/nextMap = mapSwitcher.next
 
-				//if the players voted for the next map, show them compile status, otherwise limit that info to admins
-				if (mapSwitcher.locked && (mapSwitcher.nextMapIsVotedFor || isadmin(src)))
-					nextMap += " (Compiling)"
-
 				if (mapSwitcher.nextMapIsVotedFor && isadmin(src))
 					nextMap += " (Player Voted)"
-
-				if (mapSwitcher.queuedVoteCompile && mapSwitcher.voteChosenMap)
-					nextMap += " (Queued: [mapSwitcher.voteChosenMap])"
 
 				saveStat("Next Map:", nextMap)
 
@@ -74,7 +63,7 @@
 				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
 
-		if (!isnull(vote_manager) && vote_manager.active_vote)
+		if (vote_manager?.active_vote)
 			saveStat("Vote Link:",newVoteLinkStat)
 			saveStat("Vote Time:", "([round(((vote_manager.active_vote.vote_started + vote_manager.active_vote.vote_length) - world.time) / 10)] seconds remaining, [vote_manager.active_vote.voted_ckey.len] vote[vote_manager.active_vote.voted_ckey.len != 1 ? "s" : ""])")
 			stats["Vote Spacer"] = -1
@@ -101,6 +90,7 @@
 				stats["Time To Start:"] = 0
 				var/shiftTime = round(ticker.round_elapsed_ticks / 600)
 				saveStat("Shift Time:", "[shiftTime] minute[shiftTime == 1 ? "" : "s"]")
+				saveStat("Local Time:", time2text(world.timeofday, "hh:mm"))
 
 				//MBC : nah we don't run construction anyway
 				//if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
@@ -173,6 +163,9 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				//BLUEGH ADMIN SHIT
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
+					#if DM_VERSION >= 514
+					stat("Map CPU %:", "[world.map_cpu]")
+					#endif
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif

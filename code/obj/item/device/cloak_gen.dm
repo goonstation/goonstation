@@ -99,7 +99,7 @@
 	icon_state = "remote"
 	item_state = "electronic"
 	is_syndicate = 1
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/obj/item/cloak_gen/my_gen = null
 	var/anti_spam = 0 // Creating and deleting overlays en masse can cause noticeable lag (Convair880).
 	contraband = 2
@@ -146,7 +146,7 @@
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Range 0-[my_gen.maxrange]:","Set range",my_gen.range) as num
-		if(input > my_gen.maxrange || input < 0)
+		if(input > my_gen.maxrange || input < 0 || !isnum_safe(input))
 			boutput(usr, "<span class='alert'>Invalid setting.</span>")
 			return
 		my_gen.range = input

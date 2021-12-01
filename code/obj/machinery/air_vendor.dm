@@ -29,7 +29,7 @@ obj/machinery/air_vendor
 
 	New()
 		..()
-		gas_prototype = unpool(/datum/gas_mixture)
+		gas_prototype = new /datum/gas_mixture
 
 	proc/update_icon()
 		if(status & BROKEN)
@@ -50,7 +50,7 @@ obj/machinery/air_vendor
 
 	proc/fill_cost()
 		if(!holding) return 0
-		return round(src.target_pressure * src.holding.air_contents.volume * src.air_cost)
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
 
 	proc/fill()
 		if(!holding) return
@@ -68,7 +68,7 @@ obj/machinery/air_vendor
 			boutput(user, "<span class='notice'>You insert [W].</span>")
 			user.u_equip(W)
 			W.dropped()
-			pool(W)
+			qdel(W)
 			src.updateUsrDialog()
 		else if (istype(W, /obj/item/tank))
 			if(!src.holding)
@@ -90,10 +90,10 @@ obj/machinery/air_vendor
 		if (!card || !user)
 			return
 		boutput(user, "<span class='notice'>You swipe [card].</span>")
-		var/datum/data/record/account = null
+		var/datum/db_record/account = null
 		account = FindBankAccountByName(card.registered)
 		if (account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin == card.pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = card
@@ -111,10 +111,10 @@ obj/machinery/air_vendor
 		html += "<TT><b>Welcome!</b><br>"
 		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credits] credits</a></b><br>"
 		if (src.scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			html += "<b>Current ID:</b> <a href='?src=\ref[src];clearcard=1'>[src.scan]</a><br />"
-			html += "<b>Credits on Account: [account.fields["current_money"]] Credits</b> <br>"
+			html += "<b>Credits on Account: [account["current_money"]] Credits</b> <br>"
 		else
 			html += "<b>Current ID:</b> None<br>"
 		if(src.holding)
@@ -134,7 +134,7 @@ obj/machinery/air_vendor
 			return
 		if (usr.stat || usr.restrained())
 			return
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 			src.add_fingerprint(usr)
 
@@ -149,22 +149,22 @@ obj/machinery/air_vendor
 
 			if(href_list["changepressure"])
 				var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
-				if(isnum(change))
+				if(isnum_safe(change))
 					target_pressure = min(max(10.1325, change),1013.25)
 
 			if(href_list["fill"])
 				if (holding)
 					var/cost = fill_cost()
-					if(credits > cost)
+					if(credits >= cost)
 						src.credits -= cost
 						src.fill()
 						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 						src.updateUsrDialog()
 						return
 					else if(scan)
-						var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-						if (account && account.fields["current_money"] > cost)
-							account.fields["current_money"] -= cost
+						var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+						if (account && account["current_money"] >= cost)
+							account["current_money"] -= cost
 							src.fill()
 							boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 							src.updateUsrDialog()
@@ -175,7 +175,7 @@ obj/machinery/air_vendor
 
 			if (href_list["return_credits"])
 				if (src.credits > 0)
-					var/obj/item/spacecash/returned = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/returned = new /obj/item/spacecash
 					returned.setup(src.loc, src.credits)
 
 					usr.put_in_hand_or_eject(returned)

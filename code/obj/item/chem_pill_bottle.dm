@@ -2,7 +2,7 @@
 	name = "Pill bottle"
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
@@ -34,7 +34,7 @@
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 
 		if(totalpills <= 0)
 			return null
@@ -52,7 +52,7 @@
 				if (src.reagents_internal.total_volume < src.pvol)
 					src.pcount = 0
 				else
-					P = unpool(/obj/item/reagent_containers/pill)
+					P = new /obj/item/reagent_containers/pill
 					P.set_loc(src)
 					P.name = "[pname] pill"
 
@@ -68,7 +68,7 @@
 		return P
 
 	proc/rebuild_desc()
-		var/totalpills = src.pcount + src.contents.len
+		var/totalpills = src.pcount + length(src.contents)
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
 			src.inventory_counter.update_text("**")
@@ -123,7 +123,7 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
-		if (!in_range(user, src) || !in_range(user, O))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			user.show_text("That's too far away!", "red")
 			return
 		if (!istype(O, /obj/item/reagent_containers/pill))

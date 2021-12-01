@@ -35,7 +35,7 @@
 
 		var/obj_count = 1
 		var/assignCount = min(rand(1,3), objectiveTypes.len)
-		while (assignCount && objectiveTypes.len)
+		while (assignCount && length(objectiveTypes))
 			assignCount--
 			var/selectedType = pick(objectiveTypes)
 			var/datum/objective/crew/newObjective = new selectedType
@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 		explanation_text = "Don't lose your hat/beret!"
 		medal_name = "Hatris"
 		check_completion()
-			if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/helmet/HoS))
+			if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/hos_hat))
 				return 1
 			else
 				return 0
@@ -147,9 +147,9 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && F.active == 1)
-					return 1
-			return 0
+				if(F.z == 1 && !F.active && istype(F.loc.loc, /area/station))
+					return FALSE
+			return TRUE
 	ptl
 		explanation_text = "Earn at least a million credits via the PTL."
 		medal_name = "1.21 Jiggawatts"
@@ -179,6 +179,17 @@ ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 					if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
 						return 1
 			return 0
+	brigstir
+		explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
+		medal_name = "Monkey Duty"
+		check_completion()
+			for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+				if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
+					return 1
+			return 0
+
+ABSTRACT_TYPE(/datum/objective/crew/securityassistant)
+/datum/objective/crew/securityassistant
 	brigstir
 		explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 		medal_name = "Monkey Duty"
@@ -229,7 +240,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 		medal_name = "Bill Masen"
 		check_completion()
 			var/mutcount = 0
-			for(var/obj/machinery/plantpot/PP as() in machine_registry[MACHINES_PLANTPOTS])
+			for(var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
 				if(PP.current)
 					var/datum/plantgenes/DNA = PP.plantgenes
 					var/datum/plantmutation/MUT = DNA.mutation
@@ -241,7 +252,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 		explanation_text = "Make sure there are no cannabis plants, seeds or products in Hydroponics at the end of the round."
 		medal_name = "Reefer Madness"
 		check_completion()
-			for(var/obj/item/X in world)
+			for(var/obj/item/X in by_cat[TR_CAT_CANNABIS_OBJ_ITEMS])
 				var/obj/item/clothing/mask/cigarette/W = X
 				if (istype(W) && W.reagents && W.reagents.has_reagent("THC"))
 					if (istype(get_area(W), /area/station/hydroponics))
@@ -252,7 +263,7 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 				var/obj/item/seed/cannabis/S = X
 				if (istype(S) && istype(get_area(S), /area/station/hydroponics))
 					return 0
-			for (var/obj/machinery/plantpot/PP as() in machine_registry[MACHINES_PLANTPOTS])
+			for (var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
 				if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
 					if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
 						return 0
@@ -310,10 +321,23 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 		medal_name = "40K"
 		check_completion()
 			var/suitcount = 0
-			for(var/obj/item/clothing/suit/space/industrial/I in world)
-				suitcount++
+			suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
 			if(suitcount > 2) return 1
 			else return 0
+	forsale
+		explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
+		check_completion()
+			var/list/materials = list()
+			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+				if(S.broken)
+					continue
+				var/list/ores = S.ores
+				for(var/ore in ores)
+					var/datum/ore_cloud_data/OCD = ores[ore]
+					if(OCD.for_sale && OCD.amount)
+						materials |= ore
+			return materials.len >= 10
+
 
 ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 /datum/objective/crew/mechanic
@@ -328,7 +352,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 		medal_name = "It's not 'Door to Heaven'"
 		check_completion()
 			var/telecount = 0
-			for(var/obj/machinery/teleport/portal_generator/S as() in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
+			for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
 				if(S.z != 1) continue
 				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
 					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
@@ -355,7 +379,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 	heisenbee
 		explanation_text = "Ensure that Heisenbee escapes on the shuttle."
 		check_completion()
-			for (var/obj/critter/domestic_bee/heisenbee/H in world)
+			for (var/obj/critter/domestic_bee/heisenbee/H in by_cat[TR_CAT_PETS])
 				if (in_centcom(H) && H.alive)
 					return 1
 			return 0
@@ -378,7 +402,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		explanation_text = "Create a portal to the void using the science teleporter."
 		medal_name = "Where we're going, we won't need eyes to see"
 		check_completion()
-			for(var/obj/dfissure_to/F in world)
+			for(var/obj/dfissure_to/F in by_type[/obj/dfissure_to])
 				if(F.z == 1) return 1
 			return 0
 	onfire
@@ -411,7 +435,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Create a portal to the void using the science teleporter."
 		medal_name = "Where we're going, we won't need eyes to see"
 		check_completion()
-			for(var/obj/dfissure_to/F in world)
+			for(var/obj/dfissure_to/F in by_type[/obj/dfissure_to])
 				if(F.z == 1) return 1
 			return 0
 	onfire
@@ -435,7 +459,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 	dr_acula
 		explanation_text = "Ensure that Dr. Acula escapes on the shuttle."
 		check_completion()
-			for (var/obj/critter/bat/doctor/Dr in world)
+			for (var/obj/critter/bat/doctor/Dr in by_cat[TR_CAT_PETS])
 				if (in_centcom(Dr) && Dr.alive)
 					return 1
 			return 0
@@ -443,7 +467,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 	dr_acula_feeds
 		explanation_text = "Ensure that Dr. Acula survives and drinks 200 units of blood by the end of the shift."
 		check_completion()
-			for (var/obj/critter/bat/doctor/Dr in world)
+			for (var/obj/critter/bat/doctor/Dr in by_cat[TR_CAT_PETS])
 				if (Dr.blood_volume >= 200 && Dr.alive)
 					return 1
 			return 0
@@ -452,13 +476,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Ensure that the Head Surgeon escapes on the shuttle."
 		medal_name = "What's this box doing here?"
 		check_completion()
-			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (in_centcom(H))
-					return 1
-			for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (in_centcom(H))
-					return 1
-			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
+			for (var/obj/H in by_cat[TR_CAT_HEAD_SURGEON])
 				if (in_centcom(H))
 					return 1
 			return 0
@@ -466,7 +484,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 		medal_name = "Life, uh... finds a way"
 		check_completion()
-			for(var/obj/machinery/computer/cloning/C as() in machine_registry[MACHINES_CLONINGCONSOLES])
+			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
 				if(C.records.len > 4)
 					return 1
 			return 0
@@ -539,7 +557,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 		explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 		medal_name = "Life, uh... finds a way"
 		check_completion()
-			for(var/obj/machinery/computer/cloning/C as() in machine_registry[MACHINES_CLONINGCONSOLES])
+			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
 				if(C.records.len > 4)
 					return 1
 			return 0
@@ -629,7 +647,8 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		check_completion()
 			if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 				var/mob/living/carbon/human/H = owner.current
-				if(in_centcom(H) && H.head && H.head.name == "[H.real_name]'s butt") return 1
+				var/obj/item/clothing/head/butt/B = H.head
+				if(in_centcom(H) && B && istype(B) && B.donor_name == H.real_name) return 1
 			return 0
 	promotion
 		explanation_text = "Escape on the shuttle alive with a non-assistant ID registered to you."
@@ -651,7 +670,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		explanation_text = "Ensure that Gnome Chompski escapes on the shuttle."
 		medal_name = "Guardin' gnome"
 		check_completion()
-			for(var/obj/item/gnomechompski/G in world)
+			for(var/obj/item/gnomechompski/G in by_type[/obj/item/gnomechompski])
 				if (in_centcom(G)) return 1
 			return 0
 	mailman
@@ -681,10 +700,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 		explanation_text = "Ensure that the Head Surgeon escapes on the shuttle."
 		medal_name = "What's this box doing here?"
 		check_completion()
-			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (in_centcom(H))
-					return 1
-			for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/H in machine_registry[MACHINES_BOTS])
+			for (var/obj/H in by_cat[TR_CAT_HEAD_SURGEON])
 				if (in_centcom(H))
 					return 1
 			return 0
@@ -753,10 +769,9 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 		explanation_text = "Ensure that the Head Surgeon escapes on the shuttle."
 		medal_name = "What's this box doing here?"
 		check_completion()
-			for (var/obj/machinery/bot/medbot/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (in_centcom(H)) return 1
-			for (var/obj/item/clothing/suit/cardboard_box/head_surgeon/H in machine_registry[MACHINES_BOTS])
-				if (in_centcom(H)) return 1
+			for (var/obj/H in by_cat[TR_CAT_HEAD_SURGEON])
+				if (in_centcom(H))
+					return TRUE
 			return 0
 
 

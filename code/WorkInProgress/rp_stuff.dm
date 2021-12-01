@@ -95,6 +95,16 @@
 				<li>Because antagonists are often the primary driver for rounds, some amount of goodwill should be extended to them. This means you should try to interact and communicate with antagonists and try to create an exciting narrative, rather than, say, immediately laser them to death when you see them. Communication and dialogue are expected on both ends.</li>
 			</ul>
 		</li>
+		<li><b>Respawn as a new character without previous knowledge of the round.</b>
+			<ul style='list-style-type:circle'>
+				<li>When respawning you must always respawn as a new character that has not played in the current round. You may not act on any information your previous character had learned.</li>
+			</ul>
+		</li>
+		<li><b>Don't speak in IC like a chatroom.</b>
+			<ul style='list-style-type:circle'>
+				<li>Don't use txt spk (for example: lol, wtf) , ooc game terminology (even where "technically" justifiable in rp), or overly chatroomy/memey language (sus, pog, amogus, etc) when speaking in character. LOOC and OOC are fine.</li>
+			</ul>
+		</li>
 	</ul>"}, "window=rprules;title=RP+Rules" )
 
 
@@ -108,11 +118,11 @@
 
 	attackby(obj/item/W, mob/M)
 		if (src.door)
-			src.door.attackby(W, M)
+			src.door.Attackby(W, M)
 
 	attack_hand(mob/M)
 		if (src.door)
-			src.door.attack_hand(M)
+			src.door.Attackhand(M)
 
 	attack_ai(mob/user)
 		if (src.door)

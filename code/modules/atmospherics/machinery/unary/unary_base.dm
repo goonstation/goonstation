@@ -11,7 +11,7 @@
 	New()
 		..()
 		initialize_directions = dir
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 
 		air_contents.volume = 200
 
@@ -22,7 +22,7 @@
 				network.dispose()
 
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 
 		node = null

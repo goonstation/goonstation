@@ -23,19 +23,10 @@
 	var/override_state = null
 	var/death = 0
 
-	unpooled()
-		src.alpha = 255
-		src.blend_mode = 0
-		src.color = null
-		src.pixel_x = 0
-		src.pixel_y = 0
-		src.transform = null
-		src.override_state = null
-		animate(src)
-		..()
-
 	disposing()
 		particleMaster.active_particles -= src
+		for(var/turf/T in src.vis_locs)
+			T.vis_contents -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -58,6 +49,7 @@ var/datum/particleMaster/particleMaster = new
 			particleTypes[typeDatum.name] = typeDatum
 
 	proc/SpawnSystem(var/datum/particleSystem/system)
+		RETURN_TYPE(/datum/particleSystem)
 		if (!istype(system))
 			return
 
@@ -95,7 +87,6 @@ var/datum/particleMaster/particleMaster = new
 					particleSystems -= system
 				else
 					count++
-			LAGCHECK(LAG_MED)
 
 		if (count <= 0)
 			location?.temp_flags &= ~HAS_PARTICLESYSTEM
@@ -135,18 +126,17 @@ var/datum/particleMaster/particleMaster = new
 		for (var/obj/particle/P in src.active_particles)
 			if (P.death < time)
 				src.active_particles -= P
-				pool(P)
+				P.dispose() // skip the tiny qdel overhead
 				P = null
-			LAGCHECK(LAG_MED)
 
 	//Spawns specified particle. If type can be recycled, do that - else create new. After time is over, move particle to recycling to avoid del and new calls.
 	proc/SpawnParticle(var/atom/location, var/particleTypeName, var/particleTime, var/particleColor, var/atom/target, var/particleSprite) //This should be the only thing you access from the outside.
-		LAGCHECK(LAG_MED)
 		var/datum/particleType/pType = particleTypes[particleTypeName]
 
 		if (istype(pType))
 			var/obj/particle/p = new_particle(particleTime)
-			p.loc = get_turf(location)
+			var/turf/T = get_turf(location)
+			T?.vis_contents += p
 			p.color = particleColor
 			if (particleSprite)
 				p.override_state = particleSprite
@@ -159,7 +149,7 @@ var/datum/particleMaster/particleMaster = new
 			return 0
 
 	proc/new_particle(var/lifetime)
-		var/obj/particle/P = unpool(/obj/particle)
+		var/obj/particle/P = new /obj/particle
 		P.death = world.time + lifetime
 		src.active_particles += P
 		return P
@@ -185,7 +175,6 @@ var/datum/particleMaster/particleMaster = new
 		return
 
 	proc/Apply(var/obj/particle/par)
-		LAGCHECK(LAG_MED)
 		if (istype(par))
 			par.icon = icon
 			par.icon_state = par.override_state ? par.override_state : icon_state
@@ -368,6 +357,8 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	name = "tpbeam"
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "tpbeam"
+	var/start_y = -16
+	var/end_y = 32
 
 	MatrixInit()
 		first = matrix(1, 0.1, MATRIX_SCALE)
@@ -375,16 +366,21 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Apply(var/obj/particle/par)
 		if(..())
-			par.pixel_x += rand (-16, 16)
-			par.pixel_y = -16
+			par.pixel_x += rand (-10, 10)
+			par.pixel_y = start_y
 			par.alpha = 0
 
 			par.transform = first
 
 			animate(par, time = 3, alpha = 255)
-			animate(transform = second, time = 15 + rand(0,6), pixel_y = 32, alpha = 0)
+			animate(transform = second, time = 2.2 SECONDS + rand(0,6), pixel_y = end_y, alpha = 0)
 
 			MatrixInit()
+
+/datum/particleType/tpbeam/down
+	name = "tpbeamdown"
+	start_y = 16
+	end_y = -16
 
 /datum/particleType/swoosh
 	name = "swoosh"
@@ -490,8 +486,12 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 			par.transform = first
 
-			var/move_x = ((par.target.x-par.loc.x) * 2) * 32 + rand(-14, 14)
-			var/move_y = ((par.target.y-par.loc.y) * 2) * 32 + rand(-14, 14)
+			if(!length(par.vis_locs))
+				return
+			var/turf/T = par.vis_locs[1]
+
+			var/move_x = ((par.target.x-T.x) * 2) * 32 + rand(-14, 14)
+			var/move_y = ((par.target.y-T.y) * 2) * 32 + rand(-14, 14)
 
 			animate(par,transform = second, time = 25, pixel_y = move_y,  pixel_x = move_x , easing = SINE_EASING)
 			animate(transform = third, time = 5, easing = LINEAR_EASING|EASE_OUT)
@@ -621,12 +621,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if (!par.loc)
+			if(!length(par.vis_locs))
 				return
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
-				move_x = (par.target.x-par.loc.x)*32 + rand(-32, 0)
-				move_y = (par.target.y-par.loc.y)*32 + rand(-32, 0)
+				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
+				move_y = (par.target.y-T.y)*32 + rand(-32, 0)
 			else
 				move_x = rand(-64, 64)
 				move_y = rand(-64, 64)
@@ -654,12 +655,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if (!par.loc)
+			if(!length(par.vis_locs))
 				return
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
-				move_x = (par.target.x-par.loc.x)*32 + rand(-32, 0)
-				move_y = (par.target.y-par.loc.y)*32 + rand(-32, 0)
+				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
+				move_y = (par.target.y-T.y)*32 + rand(-32, 0)
 			else
 				move_x = rand(-64, 64)
 				move_y = rand(-64, 64)
@@ -1084,6 +1086,21 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				SpawnParticle()
 			Sleep(1)
 
+/datum/particleSystem/sparklesagentb
+	New(var/atom/location = null)
+		..(location, "sparkle", 10, "#ff0000")
+
+	Init()
+		sleepCounter = 3
+
+	Run()
+		if (..())
+			if (sleepCounter > 0)
+				sleepCounter--
+				SpawnParticle()
+				Sleep(1)
+			else
+				Die()
 /datum/particleSystem/sparkles_disco
 	New(var/atom/location = null)
 		..(location, "sparkle", 10, "#FFFFFF")
@@ -1261,13 +1278,30 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		..(location, "tpbeam", 28)
 
 	Init()
-		sleepCounter = 20
+		sleepCounter = 6
 
 	Run()
 		if (..())
 			if (sleepCounter > 0)
 				sleepCounter--
-				for(var/i=0, i<rand(1,3), i++)
+				for(var/i=0, i<rand(1,4), i++)
+					SpawnParticle()
+				Sleep(1)
+			else
+				Die()
+
+/datum/particleSystem/tpbeamdown
+	New(var/atom/location = null)
+		..(location, "tpbeamdown", 28)
+
+	Init()
+		sleepCounter = 6
+
+	Run()
+		if (..())
+			if (sleepCounter > 0)
+				sleepCounter--
+				for(var/i=0, i<rand(1,4), i++)
 					SpawnParticle()
 				Sleep(1)
 			else
@@ -1412,7 +1446,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/chemSmoke
 	var/datum/reagents/copied
 	var/list/affected
-	var/list/banned_reagents = list("smokepowder", "thalmerite", "fluorosurfactant", "stimulants", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
+	var/list/banned_reagents = list("smokepowder", "propellant", "thalmerite", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
 	var/smoke_size = 3
 
 	New(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)

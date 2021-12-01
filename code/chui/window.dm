@@ -73,6 +73,8 @@ chui/window
 	//Chui will open the window on their client and have its content set appropriately.
 	//The window ref is the \ref[src] of the window.
 	proc/Subscribe( var/client/who )
+		if(isnull(who))
+			return 0
 		CDBG1( "[who] subscribed to [name]" )
 		if(!IsSubscribed(who) && !(who in connecting))
 
@@ -334,5 +336,3 @@ client/proc/Browse( var/html, var/opts, var/forceChui )
 mob/proc/Browse( var/html, var/opts, var/forceChui )
 	if( src.client )
 		chui.staticinst.bbrowse( src.client, html, opts, forceChui )
-
-//#define browse #error Use --.Browse() instead.

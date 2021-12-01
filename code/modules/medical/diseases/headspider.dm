@@ -53,7 +53,7 @@
 
 /datum/ailment/parasite/headspider/proc/move_spider_out(var/mob/living/surgeon, var/mob/living/M)
 	for (var/mob/living/critter/changeling/headspider/HS in M.contents)
-		HS.changeStatus("stunned", 50)
+		HS.changeStatus("stunned", 5 SECONDS)
 		HS.health = 0
 		HS.death()
 		HS.set_loc(M.loc)

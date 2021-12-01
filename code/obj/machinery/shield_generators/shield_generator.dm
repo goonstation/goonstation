@@ -9,7 +9,7 @@
 /obj/machinery/shield_generator
 	name = "shield generator"
 	desc = "Some kinda thing what generates a big ol' shield around everything."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "shieldgen0"
 	anchored = 1
 	density = 1
@@ -67,7 +67,6 @@
 			src.UpdateOverlays(null, "meteor_dir4")
 
 	process()
-		//src.update_icon()
 		if (status & BROKEN)
 			src.deactivate()
 			return
@@ -75,6 +74,7 @@
 		if (status & NOPOWER)
 			src.deactivate()
 			return
+
 		src.use_power(250)
 		if (src.shields.len)
 			src.use_power(5*src.shields.len)
@@ -126,6 +126,9 @@
 
 	// for testing atm
 	attack_hand(mob/user as mob)
+		if (status & (NOPOWER|BROKEN) || !src.link)
+			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
+			return
 
 		var/diff = world.timeofday - lastuse
 		if(diff < 0) diff += 864000 //Wrapping protection.

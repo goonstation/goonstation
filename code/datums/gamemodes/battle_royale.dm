@@ -5,12 +5,12 @@
 var/global/area/current_battle_spawn = null
 var/global/list/datum/mind/battle_pass_holders = list()
 
-#define TIME_BETWEEN_SHUTTLE_MOVES 50
-#define MAX_TIME_ON_SHUTTLE 1 * 60 * 10
-#define MIN_TIME_BETWEEN_STORMS 4 * 60 * 10
-#define MAX_TIME_BETWEEN_STORMS 8 * 60 * 10
-#define MIN_TIME_BETWEEN_SUPPLY_DROPS 1 * 60 * 10
-#define MAX_TIME_BETWEEN_SUPPLY_DROPS 3 * 60 * 10
+#define TIME_BETWEEN_SHUTTLE_MOVES 5 SECONDS
+#define MAX_TIME_ON_SHUTTLE 60 SECONDS
+#define MIN_TIME_BETWEEN_STORMS 240 SECONDS
+#define MAX_TIME_BETWEEN_STORMS 480 SECONDS
+#define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
+#define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
 
 
 /datum/game_mode/battle_royale
@@ -41,7 +41,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
-				player.mind.special_role = "battler"
+				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
 	storm = new /datum/random_event/special/battlestorm()
@@ -139,7 +139,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	// Is it time for a storm
 	if(src.next_storm < world.time)
 		src.next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-		SPAWN_DBG(storm.event_effect())
+		storm.event_effect()
+		SPAWN_DBG(85 SECONDS)
 			var/you_died_good_work = recently_deceased.len > 0 ? "The following players recently died: " : ""
 			for(var/datum/mind/M in recently_deceased)
 				you_died_good_work += " [M.current.name],"
@@ -155,6 +156,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 // Does what it says on the tin
 proc/hide_weapons_everywhere()
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
+	// Kill sec lockers because it's free armor that makes them too much of a no brainer
+	for_by_tcl(S, /obj/storage)
+		if(istype(S, /obj/storage/secure/closet/security/equipment))
+			qdel(S)
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()
@@ -248,13 +253,15 @@ proc/equip_battler(mob/living/carbon/human/battler)
 //returns a list of all areas on a station
 // Maybe nuclear could use this in the future???
 proc/get_accessible_station_areas()
+	if(global.station_areas && global.area_list_is_up_to_date) // In case someone makes a new area
+		return global.station_areas
 	// All areas
 	var/list/L = list()
-	var/list/areas = concrete_typesof(/area/station)
-	for(var/A in areas)
-		var/area/station/instance = locate(A)
-		for(var/turf/T in instance)
+	for_by_tcl(AR, /area/station)
+		for(var/turf/T in AR)
 			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
 				continue
-			L[instance.name] = instance
+			L[AR.name] = AR
+	global.area_list_is_up_to_date = 1
+	global.station_areas = L
 	return L

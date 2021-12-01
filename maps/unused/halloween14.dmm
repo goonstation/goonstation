@@ -829,7 +829,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "abN" = (
@@ -6149,7 +6149,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -12806,7 +12806,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage/eva)
 "azV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -17932,22 +17932,6 @@
 	icon_state = "carpetS"
 	},
 /area/station/security/detectives_office)
-"aKw" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/station/security/detectives_office)
 "aKx" = (
 /obj/table/woodentable{
 	dir = 6
@@ -18896,21 +18880,6 @@
 /obj/item/card/id/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
-/turf/simulated/floor/grime,
-/area/station/crew_quarters/captain)
-"aMy" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/captain)
 "aMz" = (
@@ -19945,10 +19914,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor,
-/area/station/crew_quarters/captain)
-"aOx" = (
-/obj/displaycase,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "aOy" = (
@@ -21437,7 +21402,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aRf" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -24393,7 +24358,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "aWq" = (
@@ -24931,7 +24896,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /turf/simulated/floor/yellow/side{
@@ -35628,7 +35593,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "btf" = (
@@ -36937,7 +36902,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_starboard";
 	name = "East Solar Control"
 	},
@@ -38709,7 +38674,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/south)
 "bzA" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -40043,7 +40008,7 @@
 	dir = 10
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bBT" = (
@@ -40697,12 +40662,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bDq" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave)
 "bDr" = (
 /turf/unsimulated/floor/setpieces{
@@ -40821,7 +40781,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/crater)
 "bDI" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{
+/obj/machinery/atmospherics/pipe/tank/rad_particles{
 	desc = "A large vessel containing an unknown pressurized gas.";
 	name = "Unidentified Gas Tank"
 	},
@@ -44199,7 +44159,7 @@
 	icon_state = "woodentable";
 	dir = 8
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "bLY" = (
@@ -46437,7 +46397,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "bRu" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /obj/cable{
 	d1 = 1;
@@ -46713,7 +46673,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/pod1)
 "bRT" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -52194,12 +52154,7 @@
 	},
 /area/crater/cave/lower)
 "cdK" = (
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "cdL" = (
 /obj/decal/fakeobjects{
@@ -54330,12 +54285,7 @@
 	sd_ColorGreen = 0.3;
 	sd_ColorRed = 0.4
 	},
-/turf/unsimulated/wall/setpieces{
-	desc = "A weird jet black metal wall indented with strange grooves and lines.";
-	icon = 'icons/turf/walls.dmi';
-	icon_state = "ancient";
-	name = "stranger wall"
-	},
+/turf/unsimulated/wall/setpieces/stranger,
 /area/crater/cave/lower)
 "chL" = (
 /turf/unsimulated/wall{
@@ -68012,15 +67962,6 @@
 /obj/item/storage/briefcase,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
-"cIS" = (
-/obj/table/reinforced{
-	tag = "icon-reinf_tabledir (SOUTHEAST)";
-	icon_state = "reinf_tabledir";
-	dir = 6
-	},
-/obj/item/camera_test,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "cIT" = (
 /obj/decal/fakeobjects{
 	density = 1;
@@ -70839,7 +70780,7 @@
 	icon_state = "reinf_tabledir";
 	dir = 6
 	},
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
@@ -70896,7 +70837,7 @@
 	icon_state = "bar";
 	dir = 8
 	},
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "cPx" = (
@@ -84114,7 +84055,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	name = "SS2 Solar Control"
 	},
 /turf/simulated/floor/grime,
@@ -86572,7 +86513,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	name = "SS2 Solar Control"
 	},
 /obj/cable{
@@ -86996,7 +86937,7 @@
 /area/evilreaver/medical)
 "dzJ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/fire)
 "dzK" = (
@@ -87191,7 +87132,7 @@
 /area/evilreaver/medical)
 "dAf" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/fire)
@@ -87240,7 +87181,7 @@
 "dAn" = (
 /obj/rack,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/emergency)
@@ -87623,7 +87564,7 @@
 /area/evilreaver/storage/emergency)
 "dBl" = (
 /obj/decal/cleanable/blood,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/evilreaver/storage/emergency)
 "dBm" = (
@@ -89371,7 +89312,7 @@
 /obj/rack,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/glasses/meson,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/evilreaver)
 "dFg" = (
@@ -90513,6 +90454,52 @@
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/plating,
 /area/helldrone)
+"ebH" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/captain)
+"kas" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor/grime,
+/area/station/crew_quarters/captain)
+"sAE" = (
+/obj/table/reinforced{
+	tag = "icon-reinf_tabledir (SOUTHEAST)";
+	icon_state = "reinf_tabledir";
+	dir = 6
+	},
+/obj/item/camera,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
+"xoo" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/station/security/detectives_office)
 
 (1,1,1) = {"
 aaa
@@ -132059,7 +132046,7 @@ azf
 aIq
 aJe
 aJT
-aKw
+xoo
 aKX
 aLH
 aMv
@@ -133877,7 +133864,7 @@ aLN
 aMw
 aNh
 aNM
-aOx
+ebH
 aMz
 aPR
 aPU
@@ -134780,7 +134767,7 @@ aKa
 aKD
 aLd
 aIt
-aMy
+kas
 aNj
 aNP
 aOA
@@ -223323,7 +223310,7 @@ cHk
 cHk
 cIc
 cGh
-cIS
+sAE
 cHo
 cHo
 cJZ

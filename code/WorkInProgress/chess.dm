@@ -113,7 +113,7 @@ obj/item/chesspiece
 		var/turf/Tb = get_turf(over_location)
 		var/turf/Ta = get_turf(src_location)
 
-		if(!Tb | !Ta)
+		if(!Tb || !Ta)
 			return
 		else
 			if(istype(Tb,/turf/unsimulated/floor/chess) && validmove(Ta,Tb))

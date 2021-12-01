@@ -16,6 +16,8 @@
 
 		if (!mimic_name)
 			return 1
+		if(mimic_name != last_mimiced_name)
+			phrase_log.log_phrase("voice-mimic", mimic_name, no_duplicates=TRUE)
 		last_mimiced_name = mimic_name //A little qol, probably.
 
 		var/mimic_message = html_encode(input("Choose something to say:","Mimic Message.","") as null|text)

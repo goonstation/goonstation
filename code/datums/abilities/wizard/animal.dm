@@ -1,5 +1,4 @@
-var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mouse,
-/mob/living/critter/small_animal/cat,
+var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/dog,
 /mob/living/critter/small_animal/dog/corgi,
 /mob/living/critter/small_animal/dog/shiba,
@@ -8,30 +7,34 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 /mob/living/critter/small_animal/bird/turkey,
 /mob/living/critter/small_animal/bird/timberdoodle,
 /mob/living/critter/small_animal/bird/seagull,
+/mob/living/critter/small_animal/sparrow,
 /mob/living/critter/small_animal/bird/crow,
 /mob/living/critter/small_animal/bird/goose,
 /mob/living/critter/small_animal/bird/goose/swan,
-/mob/living/critter/small_animal/cockroach,
-/mob/living/critter/small_animal/cockroach/robo,
-/mob/living/critter/small_animal/opossum,
 /mob/living/critter/small_animal/floateye,
 /mob/living/critter/small_animal/pig,
-/mob/living/critter/spider/clown,
 /mob/living/critter/small_animal/bat,
 /mob/living/critter/small_animal/bat/angry,
 /mob/living/critter/spider/nice,
+/mob/living/critter/spider/clown,
+/mob/living/critter/small_animal/fly,
+/mob/living/critter/small_animal/mosquito,
 /mob/living/critter/spider/baby,
 /mob/living/critter/spider/ice/baby,
 /mob/living/critter/small_animal/wasp,
 /mob/living/critter/small_animal/raccoon,
+/mob/living/critter/small_animal/seal,
+/mob/living/critter/small_animal/walrus,
 /mob/living/critter/small_animal/slug,
 /mob/living/critter/small_animal/slug/snail,
 /mob/living/critter/small_animal/bee,
-/mob/living/critter/small_animal/butterfly)
+/mob/living/critter/maneater_polymorph,
+/mob/living/critter/fermid_polymorph,
+/mob/living/critter/small_animal/crab_polymorph)
 
 /datum/targetable/spell/animal
 	name = "Baleful Polymorph" // todo: a decent name - done?
-	desc = "Turns the target into an animal of some sort."
+	desc = "Turns the target into a creature of some sort."
 	icon_state = "animal"
 	targeted = 1
 	max_range = 1
@@ -50,9 +53,12 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 		if (!istype(H))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
+		if(!IN_RANGE(target, holder.owner, max_range))
+			return 1
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
 		if (do_mob(holder.owner, target, 20))
-			holder.owner.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+			if(!istype(get_area(holder.owner), /area/sim/gunsim))
+				holder.owner.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
 			..()
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -82,6 +88,9 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/mous
 
 				H.unequip_all()
 				var/mob/living/critter/C = H.make_critter(pick(animal_spell_critter_paths))
+				C.real_name = "[H.real_name] the [C.real_name]"
+				C.name = C.real_name
+				C.butcherable = 1 // we would like the brain to be recoverable, please
 				if (istype(C, /mob/living/critter/small_animal/bee))
 					var/mob/living/critter/small_animal/bee/B = C
 					B.non_admin_bee_allowed = 1

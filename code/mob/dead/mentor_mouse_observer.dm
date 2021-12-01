@@ -7,6 +7,8 @@
 	var/mob/living/critter/small_animal/mouse/weak/mentor/my_mouse
 	var/is_admin = 0
 
+	var/leave_popup_open = FALSE
+
 	New(atom/L, is_admin)
 		..()
 		src.is_admin = is_admin
@@ -23,8 +25,11 @@
 		src.ping.plane = PLANE_HUD
 
 	process_move(keys)
-		if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-			..()
+		if(keys && src.move_dir && !src.leave_popup_open)
+			src.leave_popup_open = TRUE
+			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
+				src.stop_observing()
+			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
 		if (!islist(params))
@@ -44,14 +49,14 @@
 		src.ping.loc = target
 
 		src.ping.alpha = 0
-		var/matrix/M = unpool(/matrix)
+		var/matrix/M = new /matrix
 		M.Reset()
 		M.Scale(3/2, 3/2)
 		src.ping.transform = M
 		M.Scale(1/10, 1/10)
 		animate(src.ping, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
 		animate(src.ping, transform = M, time = 1 SECOND, easing = BACK_EASING, flags = ANIMATION_PARALLEL)
-		pool(M)
+		qdel(M)
 
 		SPAWN_DBG(1 SECONDS)
 			if(my_id == src.ping_id) // spam clicking and stuff
@@ -60,6 +65,11 @@
 			sleep(0.3 SECOND)
 			if(my_id == src.ping_id)
 				src.ping.loc = null
+
+	examine_verb(atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/computer3))
+			A.Attackhand(src)
 
 	say_understands(var/other)
 		return 1

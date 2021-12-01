@@ -15,9 +15,9 @@
 
 /mob/dead/hhghost/New()
 	. = ..()
-	src.invisibility = 100
+	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_HHGHOST)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = 0
+	src.see_invisible = INVIS_NONE
 
 /mob/dead/hhghost/Login()
 	..()
@@ -53,10 +53,6 @@
 	if(!isturf(src.loc)) src.set_loc(get_turf(src))
 	if(NewLoc)
 		src.set_loc(NewLoc)
-		NewLoc.HasEntered(src)
-		for(var/atom/A in NewLoc)
-			if(A == src) continue
-			A.HasEntered(src)
 		return
 	if((direct & NORTH) && src.y < world.maxy)
 		src.y++

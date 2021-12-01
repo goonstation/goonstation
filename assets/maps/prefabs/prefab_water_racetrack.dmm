@@ -44,7 +44,7 @@
 "aR" = (/obj/shrub{icon_state = "shrub"; dir = 6},/obj/item/seed/alien,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
 "aS" = (/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
 "aT" = (/obj/critter/spacebee,/obj/shrub{icon_state = "shrub"; dir = 6},/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
-"aU" = (/obj/critter/mimic,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
+"aU" = (/obj/critter/mimic,/obj/item/sea_ladder,/turf/simulated/floor/shuttlebay{name = "reinforced plating"},/area/prefab/raceway)
 "aV" = (/obj/decal/tile_edge/check/white{icon_state = "check1"; dir = 8},/obj/shrub,/obj/machinery/light/incandescent/warm,/obj/item/old_grenade/banana,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/raceway)
 "aW" = (/obj/decal/cleanable/oil,/obj/item/storage/belt/utility,/turf/simulated/floor/black,/area/prefab/raceway)
 "aX" = (/obj/decal/cleanable/oil,/turf/simulated/floor/black,/area/prefab/raceway)

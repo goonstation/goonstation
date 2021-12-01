@@ -8,7 +8,7 @@
 "ah" = (/obj/stool/chair/comfy,/turf/simulated/floor/wood,/area/prefab/blind_pig)
 "ai" = (/obj/table/reinforced/bar/auto,/obj/cup_rack{pixel_y = 32},/obj/machinery/espresso_machine,/turf/simulated/floor/wood,/area/prefab/blind_pig)
 "aj" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/purple/fancy/edge/sw,/area/prefab/blind_pig)
-"ak" = (/obj/table/reinforced/bar/auto,/obj/item/playing_cards/suit,/turf/simulated/floor/carpet/purple/fancy/edge/south,/area/prefab/blind_pig)
+"ak" = (/obj/table/reinforced/bar/auto,/obj/item/card_group/plain,/turf/simulated/floor/carpet/purple/fancy/edge/south,/area/prefab/blind_pig)
 "al" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/purple/fancy/edge/se,/area/prefab/blind_pig)
 "am" = (/turf/simulated/floor/wood,/area/prefab/blind_pig)
 "an" = (/obj/item/storage/toilet,/turf/simulated/floor/sanitary,/area/prefab/blind_pig)

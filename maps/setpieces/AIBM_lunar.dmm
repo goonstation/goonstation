@@ -5686,7 +5686,7 @@
 	desc = "You would expect them to take this out before starting construction work, but..."
 	},
 /obj/item/device/audio_log/lunar_01,
-/obj/item/camera_test,
+/obj/item/camera,
 /turf/unsimulated/floor/red/side{
 	dir = 1
 	},
@@ -6432,7 +6432,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oD" = (
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -7671,7 +7671,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rD" = (

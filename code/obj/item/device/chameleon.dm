@@ -72,7 +72,7 @@
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/can_use = 0
 	var/obj/overlay/anim = null //The toggle animation overlay will also be retained
 	var/obj/dummy/chameleon/cham = null //No sense creating / destroying this
@@ -122,7 +122,7 @@
 				user.show_text("You are too far away to do that.", "red")
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
+		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
 			if (!cham)
 				cham = new(src)
 				cham.master = src
@@ -194,7 +194,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
 	burn_possible = 0
-	var/strength = 32 // same as syndie pipebombs, calls the same proc
+	var/strength = 12
 
 	dropped()
 		return

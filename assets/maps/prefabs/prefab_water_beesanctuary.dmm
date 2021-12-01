@@ -1,6 +1,6 @@
 "am" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "aA" = (/obj/stone{dir = 4},/turf/unsimulated/grass,/area/prefab/bee_sanctuary)
-"aC" = (/obj/storage/secure/crate/bee/loaded,/turf/unsimulated/floor/purpleblack{dir = 5},/area/prefab/bee_sanctuary)
+"aC" = (/obj/storage/secure/crate/bee/loaded,/obj/decal/fakeobjects{dir = 6; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/purpleblack{dir = 5},/area/prefab/bee_sanctuary)
 "aT" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "bo" = (/obj/decal/cleanable/dirt/dirt2,/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 10},/turf/unsimulated/floor/green/side{dir = 4},/area/prefab/bee_sanctuary)
 "bB" = (/obj/machinery/door/airlock/pyro/classic,/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
@@ -27,6 +27,7 @@
 "ho" = (/obj/stone{dir = 4},/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/unsimulated/grass,/area/prefab/bee_sanctuary)
 "hK" = (/obj/critter/domestic_bee,/turf/unsimulated/floor/black/grime,/area/prefab/bee_sanctuary)
 "ik" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
+"il" = (/obj/machinery/light{layer = 3; pixel_y = -10},/obj/decal/fakeobjects{dir = 10; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "iP" = (/obj/machinery/light/small/warm/very{dir = 8; pixel_x = -10},/turf/unsimulated/floor/green/side{dir = 8},/area/prefab/bee_sanctuary)
 "je" = (/obj/machinery/door/airlock/pyro/classic,/turf/unsimulated/floor/black,/area/prefab/bee_sanctuary)
 "jv" = (/obj/stool/chair,/turf/unsimulated/floor/caution/south,/area/prefab/bee_sanctuary)
@@ -35,9 +36,12 @@
 "ke" = (/obj/window/crystal/east,/obj/item/raw_material/shard/plasmacrystal{pixel_x = -14; pixel_y = 1},/obj/decal/fakeobjects/pipe{icon = 'icons/obj/atmospherics/pipe_vent.dmi'},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "lf" = (/obj/item/clothing/head/bio_hood/beekeeper{pixel_y = 10},/obj/item/clothing/head/bio_hood/beekeeper,/obj/table/reinforced/chemistry/auto,/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "nf" = (/obj/decal/fakeobjects/pipe{desc = "It seems to have been damaged somehow."; dir = 8; icon = 'icons/obj/atmospherics/retro_filter.dmi'; icon_state = "intact_off"; name = "filter"},/obj/decal/cleanable/dirt,/turf/unsimulated/floor/caution/corner/sw,/area/prefab/bee_sanctuary)
+"nv" = (/obj/decal/fakeobjects{dir = 8; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "nG" = (/obj/decal/cleanable/dirt/dirt2,/turf/unsimulated/floor/green/side{dir = 8},/area/prefab/bee_sanctuary)
 "nL" = (/obj/window/crystal/east,/obj/window/crystal/south,/obj/window/crystal/west,/obj/critter/domestic_bee/zombee,/obj/decal/fakeobjects/pipe,/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "nW" = (/obj/shrub{dir = 4},/turf/unsimulated/grass,/area/prefab/bee_sanctuary)
+"nX" = (/obj/decal/cleanable/dirt/dirt5,/obj/decal/fakeobjects{dir = 6; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
+"om" = (/obj/decal/fakeobjects{dir = 1; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "ow" = (/obj/table/reinforced/chemistry/auto,/obj/machinery/microscope,/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "oz" = (/obj/table/reinforced/chemistry/auto,/obj/item/bee_egg_carton{pixel_y = 7},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "oH" = (/obj/decal/cleanable/dirt/dirt2,/turf/unsimulated/floor/purpleblack{dir = 10},/area/prefab/bee_sanctuary)
@@ -50,7 +54,7 @@
 "qZ" = (/obj/decal/fakeobjects/pipe{desc = "The air from it smells faintly of mildew."; dir = 8; icon = 'icons/obj/atmospherics/pipes.dmi'; icon_state = "vent"; name = "grimy vent"},/turf/unsimulated/floor/black/grime,/area/prefab/bee_sanctuary)
 "rb" = (/obj/item/remote/porter/port_a_gene,/obj/table/reinforced/chemistry/auto,/turf/unsimulated/floor/green/side{dir = 5},/area/prefab/bee_sanctuary)
 "re" = (/obj/table/reinforced/auto,/obj/decal/cleanable/dirt/dirt2,/obj/item/storage/toolbox/electrical{pixel_y = 6},/obj/item/storage/toolbox/mechanical,/turf/unsimulated/floor/caution/corner/ne,/area/prefab/bee_sanctuary)
-"ru" = (/obj/machinery/light/small/purpleish{dir = 8; pixel_x = -10},/turf/unsimulated/floor/damaged1,/area/prefab/bee_sanctuary)
+"ru" = (/obj/machinery/light/small/purpleish{dir = 8; pixel_x = -10},/obj/decal/fakeobjects{dir = 4; icon = 'icons/obj/monitors.dmi'; icon_state = "cameraemp"; name = "security camera"},/turf/unsimulated/floor/damaged1,/area/prefab/bee_sanctuary)
 "ry" = (/obj/machinery/light/small/purpleish{dir = 8; pixel_x = -10},/obj/decal/fakeobjects/pipe{desc = "It won't budge."; dir = 4; icon = 'icons/obj/pipe-item.dmi'; icon_state = "valve"; name = "rusted valve"},/turf/unsimulated/floor/green/side{dir = 8},/area/prefab/bee_sanctuary)
 "rD" = (/turf/unsimulated/floor/green/side{dir = 4},/area/prefab/bee_sanctuary)
 "rK" = (/obj/machinery/vending/cola/red,/turf/unsimulated/floor/purpleblack{dir = 6},/area/prefab/bee_sanctuary)
@@ -66,6 +70,8 @@
 "uf" = (/obj/decal/fakeobjects/pipe{dir = 9; tag = "icon-intact-f (NORTHWEST)"},/obj/decal/cleanable/dirt/dirt5,/turf/unsimulated/floor/caution/south,/area/prefab/bee_sanctuary)
 "uj" = (/obj/machinery/light{layer = 3; pixel_y = -10},/turf/unsimulated/floor/purpleblack,/area/prefab/bee_sanctuary)
 "uE" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/turf/unsimulated/floor/black,/area/prefab/bee_sanctuary)
+"uG" = (/obj/decal/fakeobjects{dir = 1; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/purpleblack,/area/prefab/bee_sanctuary)
+"uJ" = (/obj/machinery/power/apc/autoname_north/nopoweralert,/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "vm" = (/obj/decal/cleanable/dirt/dirt5,/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "wg" = (/turf/unsimulated/floor/damaged1,/area/prefab/bee_sanctuary)
 "xD" = (/obj/critter/domestic_bee/zombee,/obj/window/crystal/east,/obj/window/crystal/west,/obj/window/crystal/north,/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
@@ -84,6 +90,7 @@
 "Dn" = (/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/misc/hstation.dmi'; icon_state = "bloodydoor"; name = "broken airlock"},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "Dr" = (/obj/machinery/light/small/warm/very{dir = 4; pixel_x = 10},/turf/unsimulated/floor/green/side{dir = 5},/area/prefab/bee_sanctuary)
 "DB" = (/turf/unsimulated/floor/purpleblack{dir = 9},/area/prefab/bee_sanctuary)
+"DO" = (/obj/decal/fakeobjects{dir = 6; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/grass,/area/prefab/bee_sanctuary)
 "DP" = (/obj/decal/cleanable/dirt/dirt5,/obj/machinery/atmospherics/pipe/tank/toxins{volume = 0},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "DW" = (/obj/decal/cleanable/cobweb,/turf/unsimulated/floor/green/side{dir = 9},/area/prefab/bee_sanctuary)
 "DX" = (/obj/table/reinforced/chemistry/auto,/obj/item/device/light/lava_lamp{pixel_y = 8},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
@@ -94,6 +101,7 @@
 "FG" = (/obj/decal/floatingtiles{dir = 8},/turf/unsimulated/floor/void,/area/prefab/bee_sanctuary)
 "Ga" = (/obj/machinery/light/small/purpleish{dir = 1; pixel_y = 10},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "Gg" = (/obj/decal/floatingtiles{dir = 8; icon_state = "floattiles6"},/turf/unsimulated/floor/void,/area/prefab/bee_sanctuary)
+"GR" = (/obj/decal/fakeobjects{dir = 6; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/green/side{dir = 1},/area/prefab/bee_sanctuary)
 "GY" = (/obj/decal/fakeobjects/pipe{dir = 8},/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "Hb" = (/obj/machinery/light{dir = 4; pixel_x = 10},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "He" = (/obj/decal/fakeobjects/pipe{density = 1; desc = "A tank.  For storing water."; icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'; name = "River Loop Storage Tank"; tag = ""},/turf/unsimulated/floor/caution/north,/area/prefab/bee_sanctuary)
@@ -113,6 +121,7 @@
 "Kc" = (/obj/decal/fakeobjects/pipe{desc = "It seems to have been damaged somehow."; dir = 8; icon = 'icons/obj/atmospherics/retro_filter.dmi'; icon_state = "intact_off"; name = "filter"},/turf/unsimulated/floor/plating,/area/prefab/bee_sanctuary)
 "Kd" = (/obj/map/light/void,/turf/unsimulated/floor/void,/area/prefab/bee_sanctuary)
 "Kl" = (/obj/decal/cleanable/cobweb{icon_state = "cobweb2"},/obj/machinery/atmospherics/pipe/tank{volume = 0},/obj/machinery/light/small{dir = 1; pixel_y = 10},/turf/unsimulated/floor/plating,/area/prefab/bee_sanctuary)
+"KA" = (/obj/shrub{dir = 4},/obj/decal/fakeobjects{dir = 4; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/grass,/area/prefab/bee_sanctuary)
 "Ld" = (/obj/securearea,/turf/unsimulated/wall/auto/reinforced/supernorn,/area/prefab/bee_sanctuary)
 "Lp" = (/obj/decal/cleanable/blood/drip/high,/obj/decal/skeleton,/turf/unsimulated/floor,/area/prefab/bee_sanctuary)
 "LC" = (/turf/unsimulated/floor/damaged3,/area/prefab/bee_sanctuary)
@@ -122,7 +131,7 @@
 "LZ" = (/turf/unsimulated/floor/purpleblack{dir = 10},/area/prefab/bee_sanctuary)
 "Mk" = (/obj/decal/cleanable/dirt/dirt2,/turf/unsimulated/floor/green/side{dir = 1},/area/prefab/bee_sanctuary)
 "Mx" = (/obj/decal/cleanable/dirt/dirt2,/turf/unsimulated/floor/purpleblack{dir = 1},/area/prefab/bee_sanctuary)
-"Nw" = (/obj/decal/cleanable/dirt/dirt4,/turf/unsimulated/floor/green/side,/area/prefab/bee_sanctuary)
+"Nw" = (/obj/decal/cleanable/dirt/dirt4,/obj/decal/fakeobjects{dir = 10; icon = 'icons/obj/monitors.dmi'; icon_state = "camera"; name = "security camera"},/turf/unsimulated/floor/green/side,/area/prefab/bee_sanctuary)
 "Nz" = (/obj/shrub{dir = 4},/obj/river{dir = 10},/turf/unsimulated/grass,/area/prefab/bee_sanctuary)
 "NC" = (/obj/machinery/light{dir = 1; layer = 9.1; pixel_y = 21},/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
 "NQ" = (/obj/storage/secure/crate/bee/loaded,/turf/unsimulated/floor/white,/area/prefab/bee_sanctuary)
@@ -187,17 +196,17 @@ OsOsOsOsOsOsOsOsZzOnKlZzqZVvZzqZVvZzqZVvZzOsZzZzZzZzZzZzZzZzOsOsOsOs
 OsOsOsOsOsOsOsOsZzSPKcZzhKLLZzhKLLZzhKLLZzLdZzEoJFaCjJUTlfZzOsOsOsOs
 OsOsOsOsZzZzLdZzZzZzFgOesCsCZzsCsCZzsCsCZzJmuEoHzJHEQVvmtBZzOsOsOsOs
 OsOsOsOsZzNCWZYpDBYsYsMxYsYsYsYsYsYsYsYsYsZxxHZzZzZzRojeRoZzZzZzZzZz
-OsOsOsOsZzWZWZYpLZujzJzJzJujzNzJzJujzJJSRcHlZzVwOHvmGapxzvGaOHOHQBZz
+OsOsOsOsZzWZWZYpLZujzJzJuGujzNzJzJujuGJSRcHlZzVwOHnXGapxzvGaOHOHQBZz
 ZzZzZzZzRoJVJVZzZzZzZzZzZzZzZzZzZzZzZzgvBNrKZzVUjvVUjvwgVUtnLCVUgZZz
-ZzoRIVWZWZWZWZZzIJINTRTRTRhoTRTRTROqZzZzZzZzZzVHVHeuVHVHRpPrVHVHDnZz
-ZzOSWZWZWZWZWZZzNzdoPddodoBCTRTRTRdtRoSNHereZzDWAKLGGgFGMkWIWIVhsVZz
+ZzoRIVuJWZWZWZZzIJINTRTRTRhoTRDOTROqZzZzZzZzZzVHVHeuVHVHRpPrVHVHDnZz
+ZzOSWZWZWZWZnvZzNzdoPddodoBCTRTRTRdtRoSNHereZzDWAKLGGgFGMkWIWIVhsVZz
 ZzjWWZWZTAgfHbZzTRTRYkdtTRWunWWSYkTRevnfufHsZzruYiTgyCoXsygYwgxDboZz
-ZzQaWZWZamamamZzikikZznWbPgOTRYkYddoZzZzZzZzxHnGBhKdLGUXkeOHOHqlrDZz
+ZzQaWZWZamamamZzikikZzKAbPgOTRYkYddoZzZzZzZzxHnGBhKdLGUXkeOHOHqlrDZz
 ZzUGIVWZWZWZWZJVWZWZJVTRTRWuaATRXbdtZzucDPLpaTthOHEhZYoXfBOHOHnLrDZz
-ZzZzZzWZewWZWZJVWZewJVTRTRAuUgdoRReLZzFmdVgWZzryRwYUGYUDYUpQGYsHAVZz
+ZzZzZzWZilWZWZJVWZewJVTRTRAuUgdoRReLZzFmdVgWZzryRwYUGYUDYUpQGYsHAVZz
 fQfQZzZzZzpHpHZzJVZzZzZzikikikZzZzZzZzZzZzZzZzJqQnfzQnQnXoQnNwQnHrZz
 fQfQfQfQZzWZWZZzWZWZowozPoPoDXNQgmZzUseJJvrbZzZzbBZzZzZzZzZzZzZzZzZz
-fQfQfQfQZzRFtpZzWZewWZWZBSPXBSWZZMZziPOHfiLYWIMkDrZzOsOsOsOsOsOsOsOs
+fQfQfQfQZzRFtpZzWZewomWZBSPXBSWZZMZziPOHfiLYGRMkDrZzOsOsOsOsOsOsOsOs
 fQfQfQfQZzpHpHZzZzZzZzZzZzZzZzZzZzZzPCQnQnQnQnQnOkZzOsOsOsOsOsOsOsOs
 fQfQfQfQfQfQfQfQfQfQfQfQOsOsOsOsOsZzZzZzZzZzZzZzZzZzOsOsOsOsOsOsOsOs
 fQfQfQfQfQfQfQfQfQfQfQfQOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOsOs

@@ -1,11 +1,12 @@
-// handles health updates
+
+/// handles health updates
 datum/controller/process/healthupdates
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 
 	setup()
 		name = "HealthUpdate"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 		detailed_count = new
 
 	doWork()
@@ -15,6 +16,10 @@ datum/controller/process/healthupdates
 				M.UpdateDamage()
 				if (!(c++ % 20))
 					scheck()
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/healthupdates/old_healthupdates = target
+		src.detailed_count = old_healthupdates.detailed_count
 
 	onFinish()
 		global.health_update_queue.len = 0

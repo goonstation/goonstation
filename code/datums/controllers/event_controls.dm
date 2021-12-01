@@ -2,22 +2,26 @@ var/datum/event_controller/random_events
 
 /datum/event_controller
 	var/list/events = list()
-	var/major_events_begin = 18000 // 30m
-	var/time_between_events_lower = 6600  // 11m
-	var/time_between_events_upper = 12000 // 20m
+	var/major_events_begin = 30 MINUTES // 30m
+	var/time_between_events_lower = 11 MINUTES  // 11m
+	var/time_between_events_upper = 20 MINUTES // 20m
 	var/events_enabled = 1
 	var/announce_events = 1
 	var/event_cycle_count = 0
 
 	var/list/minor_events = list()
-	var/minor_events_begin = 6000 // 10m
-	var/time_between_minor_events_lower = 4000 // roughly 8m
-	var/time_between_minor_events_upper = 8000 // roughly 14m
+	var/minor_events_begin = 10 MINUTES // 10m
+	var/time_between_minor_events_lower = 400 SECONDS // roughly 8m
+	var/time_between_minor_events_upper = 800 SECONDS // roughly 14m
 	var/minor_events_enabled = 1
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
-	var/alive_antags_threshold = 0.06
+#ifdef RP_MODE
+	var/alive_antags_threshold = 0.04
+#else
+	var/alive_antags_threshold = 0.1
+#endif
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
@@ -101,7 +105,7 @@ var/datum/event_controller/random_events
 			message_admins("<span class='internal'>A spawn event would have happened now, but there is not enough players!</span>")
 			do_event = 0
 
-		if (do_event)
+		if (do_event && ticker?.mode?.do_random_events)
 			var/aap = get_alive_antags_percentage()
 			var/dcp = get_dead_crew_percentage()
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
@@ -118,6 +122,9 @@ var/datum/event_controller/random_events
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
+			return
+		if (!ticker?.mode?.do_random_events)
+			logTheThing("debug", null, null, "<b>Random Events:</b> Random events are turned off on this game mode.")
 			return
 		var/list/eligible = list()
 		var/list/weights = list()

@@ -112,17 +112,16 @@
 				T.control = src
 
 	attack_hand(var/mob/user as mob)
-		if ( (get_dist(src, user) > 1 ))
-			if (!issilicon(user))
-				boutput(user, text("Too far away."))
-				src.remove_dialog(user)
-				user.Browse(null, "window=turretid")
-				return
+		if (!in_interact_range(src,user))
+			boutput(user, text("Too far away."))
+			src.remove_dialog(user)
+			user.Browse(null, "window=turretid")
+			return
 
 		src.add_dialog(user)
 		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
-		if(src.locked && (!issilicon(user)))
+		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
 			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
@@ -135,7 +134,7 @@
 
 	Topic(href, href_list)
 		if (src.locked)
-			if (!issilicon(usr))
+			if (!can_access_remotely(usr))
 				boutput(usr, "Control panel is locked!")
 				return
 		if (href_list["rescan"])
@@ -174,7 +173,7 @@
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "room"
 	item_state = "gun"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	mats = 6
 	var/using = 0
@@ -237,7 +236,7 @@
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 	prefix = "bio"
 	metal_ammo = 20
@@ -263,7 +262,7 @@
 
 	var/processing = 0
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
@@ -276,11 +275,11 @@
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -295,7 +294,7 @@
 		else if (DM.material_flags & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -304,7 +303,7 @@
 		else if (DM.material_flags & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -364,10 +363,10 @@
 			var/obj/item/material_piece/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
-				pool(W)
+				qdel(W)
 				metal_count += 10
 			else if (which == "glass")
-				pool(W)
+				qdel(W)
 				glass_count += 10
 			else
 				return
@@ -429,13 +428,13 @@
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (MT.mat_id == DM.mat_id)
+				if (isSameMaterial(MT, DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10
 					else
 						glass_count += 10
-					pool(M)
+					qdel(M)
 					sleep(0.1 SECONDS)
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
@@ -447,12 +446,12 @@
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	mats = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 
 	var/selecting = 0
 	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi')
+	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi', "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
 	var/selected = "floor"
 	// var/pod_turf = 0
@@ -470,6 +469,10 @@
 		mode = input("What to mark?", "Marking", mode) in icons
 		selected = null
 		var/states = list()
+		if (mode == "restore original")
+			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
+			selecting = 0
+			return
 		if (mode == "walls")
 			states += "* AUTO *"
 		states += icon_states(icons[mode])
@@ -492,13 +495,29 @@
 		if (!T)
 			return 0
 
+		if (mode == "restore original") //For those who want to undo the carnage
+			if (istype(T, /turf/simulated/floor))
+				if (!T.intact)
+					return
+				var/turf/simulated/floor/F = T
+				F.icon = initial(F.icon)
+				F.icon_state = F.roundstart_icon_state
+				F.set_dir(F.roundstart_dir)
+			else if (istype(T, /turf/simulated/wall))
+				T.icon = initial(T.icon)
+				//T.icon_state = initial(T.icon_state)
+				if (istype(T, /turf/simulated/wall/auto))
+					var/turf/simulated/wall/auto/W = T
+					W.update_icon()
+					W.update_neighbors()
+			return
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
 				old = K
 				break
 		if (old)
-			old.attackby(src, user)
+			old.Attackby(src, user)
 		else
 			var/class = marker_class[mode]
 			old = new class(T, selected)
@@ -518,7 +537,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 	var/allows_vehicles = 0
 	var/turf_op = 1
 
@@ -535,7 +554,7 @@
 			return
 		var/turf/T = get_turf(src)
 		if (T)
-			T.attackby(W, user)
+			T.Attackby(W, user)
 			W.afterattack(T, user)
 
 /obj/plan_marker/glass_shaper
@@ -545,7 +564,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 
 	var/static/image/wE = null
 	var/static/image/wW = null
@@ -767,11 +786,11 @@
 
 	proc/check()
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/simulated/floor))
+		if (istype(T, /turf/simulated/floor) && T.intact)
 			// Same deal as above, only checked for that specific type of floor
 			// so the various alternate designs weren't able to be converted
 			T.icon = src.icon
 			T.icon_state = src.icon_state
 			T.set_dir(src.dir)
 			// T:allows_vehicles = src.allows_vehicles
-			qdel(src)
+		qdel(src)

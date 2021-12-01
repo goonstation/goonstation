@@ -11,7 +11,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "butt-nc"
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
@@ -20,8 +20,6 @@
 	var/s_tone = "#FAD7D0"
 	var/stapled = 0
 	var/allow_staple = 1
-	module_research = list("medical" = 1)
-	module_research_type = /obj/item/clothing/head/butt
 	var/op_stage = 0.0
 	rand_pos = 1
 	var/mob/living/carbon/human/donor = null
@@ -43,20 +41,19 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		SPAWN_DBG(0)
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
-			if (istype(nholder) && nholder.donor)
-				src.holder = nholder
-				src.donor = nholder.donor
-			if (src.donor)
-				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]'s [initial(src.name)]"
-				src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
-				src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
-				if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
-					src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
-					if (src.s_tone)
-						src.color = src.s_tone
+		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
+		if (istype(nholder) && nholder.donor)
+			src.holder = nholder
+			src.donor = nholder.donor
+		if (src.donor)
+			src.donor_name = src.donor.real_name
+			src.name = "[src.donor_name]'s [initial(src.name)]"
+			src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
+			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
+				src.s_tone = src.donor.bioHolder.mobAppearance.s_tone
+				if (src.s_tone)
+					src.color = src.s_tone
 
 	attack(var/mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ismob(M))
@@ -78,6 +75,9 @@
 			return 0
 
 		if (!surgeryCheck(M, user))
+			return 0
+
+		if (!can_act(user))
 			return 0
 
 		var/mob/living/carbon/human/H = M
@@ -111,6 +111,7 @@
 			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be, but the [fluff2] has been cauterized closed and [src] falls right off!</span>")
 			if (user.find_in_hand(src))
 				user.u_equip(src)
+				set_loc(get_turf(H))
 			return null
 		else
 			return 0
@@ -145,7 +146,7 @@
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(get_turf(target), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+			playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
@@ -159,28 +160,15 @@
 			qdel(W)
 			qdel(src)
 		else if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot
-			if (src.toned)
-				B.toned = 1
-				B.s_tone = src.s_tone
-
+			var/obj/machinery/bot/buttbot/B = new /obj/machinery/bot/buttbot(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
-			B.set_loc(get_turf(user))
-			qdel(W)
-			qdel(src)
-
-		else if (istype(W, /obj/item/spacecash) && W.type != /obj/item/spacecash/buttcoin)
+			B.set_loc(get_turf(src))
+			src.set_loc(B)
+			user.u_equip(src)
+			W.set_loc(B)
 			user.u_equip(W)
-			pool(W)
-
-			var/obj/item/spacecash/buttcoin/S = unpool(/obj/item/spacecash/buttcoin)
-			S.setup(get_turf(src))
-			user.put_in_hand_or_drop(S)
-
-			user.show_text("You stuff the cash into the butt... (What is wrong with you?)")
-			qdel(src)
 
 		else
 			return ..()
@@ -201,12 +189,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/parts/robot_parts/arm))
-			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(get_turf(user))
+			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] robuttbot"
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
-			qdel(W)
-			qdel(src)
+			B.set_loc(get_turf(src))
+			src.set_loc(B)
+			user.u_equip(src)
+			W.set_loc(B)
+			user.u_equip(W)
 		else
 			return ..()
 

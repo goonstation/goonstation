@@ -1,27 +1,3 @@
-/obj/screen/ability/chaplain
-	clicked(params)
-		var/datum/targetable/chaplain/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(usr.loc))
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN_DBG(0)
-				spell.handleCast()
-
-/obj/screen/ability/topBar/chaplain
-	tens_offset_x = 19
-	tens_offset_y = 7
-	secs_offset_x = 23
-	secs_offset_y = 7
-
 /datum/abilityHolder/religious
 	usesPoints = 0
 	regenRate = 0
@@ -48,7 +24,7 @@
 	var/disabled = 0
 
 	New()
-		var/obj/screen/ability/chaplain/B = new /obj/screen/ability/chaplain(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -56,16 +32,13 @@
 		B.desc = src.desc
 		src.object = B
 
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.stunned || M.getStatusDuration("weakened")
-
 	castcheck()
-		if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+		var/mob/living/M = holder.owner
+		if (M.restrained() || !isalive(M) || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") > 0  || M.getStatusDuration("weakened"))
+			boutput(M, "<span class='alert'>You can't do that while you're incapacitated.</span>")
 			return 0
 		if (disabled)
-			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
+			boutput(M, "<span class='alert'>You cannot use that ability at this time.</span>")
 			return 0
 		return 1
 
@@ -115,64 +88,73 @@
 	targeted = 0
 	target_anything = 0
 	icon_state = "absorbcorpse"
-	var/static/list/domains = list("Atheism" = 1, "Order" = 2, "Chaos" = 3, "Light" = 4, "Darkness" = 5, "Life" = 6, "Death" = 7, "Machinery" = 8, "Nature" = 9, "Surprise me!" = 10)
+	var/static/list/domains = list("Atheism", "Order", "Chaos", "Light", "Darkness", "Life" , "Death", "Machinery", "Nature", "Surprise me!")
 	//var/static/list/domainsForNerds = list("Atheism" = 1, "Order" = 2, "Chaos" = 3, "Light" = 4, "Darkness" = 5, "Life" = 6, "Death" = 7, "Machinery" = 8, "Nature" = 9, "Sol Invictus" = 10, "the Void" = 11, "Surprise me!" = 12)
 
 	cast()
 		var/datum/abilityHolder/religious/religiousHolder = src.holder
 		if (..())
 			return 1
-		var/domainChoice = input("Which domain?", "Domain", "Surprise me!") in domains
+		var/domainChoice = tgui_input_list(holder.owner, "Pick a domain", "Domains", domains)
+
+		if (!domainChoice)
+			return
 
 		if (domainChoice  == "Surprise me!")
-			domainChoice = rand(1, 9)
-		else
-			domainChoice = domains[domainChoice]
+			domainChoice = pick(domains - "Surprise me!")
+
 		switch (domainChoice)
-			if (1)
+			if ("Atheism")
 				religiousHolder.god_domain = "Atheism"
 				assemble_name(religiousHolder)
 
-			if (2)
+
+			if ("Order")
 				religiousHolder.god_domain = "Order"
 				assemble_name(religiousHolder)
 
-			if (3)
+
+			if ("Chaos")
 				religiousHolder.god_domain = "Chaos"
 				assemble_name(religiousHolder)
 
-			if (4)
+
+			if ("Light")
 				religiousHolder.god_domain = "Light"
 				assemble_name(religiousHolder)
 
-			if (5)
+
+			if ("Darkness")
 				religiousHolder.god_domain = "Darkness"
 				assemble_name(religiousHolder)
 
-			if (6)
+
+			if ("Life")
 				religiousHolder.god_domain = "Life"
 				religiousHolder.addAbility(/datum/targetable/chaplain/stabilize)
 				assemble_name(religiousHolder)
 
-			if (7)
+
+			if ("Death")
 				religiousHolder.god_domain = "Death"
 				assemble_name(religiousHolder)
 
-			if (8)
+
+			if ("Machinery")
 				religiousHolder.god_domain = "Machinery"
 				usr.robot_talk_understand = 1
 				religiousHolder.addAbility(/datum/targetable/chaplain/chaplainDemag)
 				religiousHolder.addAbility(/datum/targetable/chaplain/sootheMachineSpirits)
 				assemble_name(religiousHolder)
 
-			if (9)
+
+			if ("Nature")
 				religiousHolder.god_domain = "Nature"
 				religiousHolder.addAbility(/datum/targetable/chaplain/blessWeed)
 				religiousHolder.addAbility(/datum/targetable/chaplain/fortifySeed)
 				assemble_name(religiousHolder)
 
 		religiousHolder.removeAbility(/datum/targetable/chaplain/chooseReligion)
-		return
 
 //*************** ATHEISM *****************
 
@@ -231,23 +213,16 @@
 		usr.visible_message("<span class='notice'>[src.holder.owner] lays hands upon [C], murmuring a soft prayer to [religiousHolder.god_name]!</span>")
 		boutput(C, "<span class='notice'>You feel less terrible!</span>")
 		playsound(usr.loc, "sound/voice/heavenly.ogg", 50, 1)
-		var/datum/ailment_data/disease/D
-		for(D in C.ailments)
-			if (istype(D.master, /datum/ailment/disease/heartfailure))
-				C.cure_disease(D)
-			if (istype(D.master, /datum/ailment/disease/flatline))
-				C.cure_disease(D)
-			if (istype(D.master, /datum/ailment/disease/shock))
-				C.cure_disease(D)
-			if (istype(D.master, /datum/ailment/disease/noheart))
-				boutput(usr, "<span style\"color:red\">[C] is still sort of missing their heart. Maybe this calls for an actual doctor. Just saying.</span>")
-
+		C.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+		C.cure_disease_by_path(/datum/ailment/malady/flatline)
+		C.cure_disease_by_path(/datum/ailment/malady/shock)
+		if (C.find_ailment_by_type(/datum/ailment/disease/noheart))
+			boutput(usr, "<span style\"color:red\">[C] is still sort of missing their heart. Maybe this calls for an actual doctor. Just saying.</span>")
 		C.take_oxygen_deprivation(-INFINITY)
 		C.losebreath = 0
-		C.paralysis--
-		C.bleeding = 0
-		if (C.blood_volume < 101)
-			C.blood_volume = 101 //this is to prevent people from instantly relapsing into shock/heart failure/braindeath at low blood
+		C.delStatus("paralysis")
+		repair_bleeding_damage(C, 100, 10)
+		C.blood_volume = 500 //this is to prevent people from instantly relapsing into shock/heart failure/braindeath at low blood
 
 		return 0
 

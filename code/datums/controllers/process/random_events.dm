@@ -1,4 +1,5 @@
-// handles random events
+
+/// handles random events
 datum/controller/process/randomevents
 	hang_warning_time = 5 MINUTES
 	hang_alert_time = 5.5 MINUTES

@@ -19,8 +19,8 @@
 		if(!isdead(target))
 			boutput(holder.owner, "<span class='alert'>That person is still alive! Find a corpse.</span>")
 			return 1 // No cooldown when it fails.
-
-		holder.owner.say("EI NECRIS")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("EI NECRIS")
 		..()
 
 		var/obj/critter/magiczombie/UMMACTUALLYITSASKELETONNOWFUCKZOMBIESFOREVER = new /obj/critter/magiczombie(get_turf(target)) // what the fuck

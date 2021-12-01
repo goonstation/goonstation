@@ -29,12 +29,6 @@
 		else
 			on_inactive()
 
-		//src.overlays = null
-		//if (src.active) src.overlays += image('icons/obj/power.dmi', "furn-burn")
-		//if (fuelperc >= 20) src.overlays += image('icons/obj/power.dmi', "furn-c1")
-		//if (fuelperc >= 40) src.overlays += image('icons/obj/power.dmi', "furn-c2")
-		//if (fuelperc >= 60) src.overlays += image('icons/obj/power.dmi', "furn-c3")
-		//if (fuelperc >= 80) src.overlays += image('icons/obj/power.dmi', "furn-c4")
 		update_icon()
 
 	proc/on_burn()
@@ -67,6 +61,9 @@
 					UpdateOverlays(null, okey, 0, 1)
 
 
+	was_deconstructed_to_frame(mob/user)
+		src.active = 0
+
 	attack_hand(var/mob/user as mob)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
@@ -79,19 +76,25 @@
 				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
 				return
 			else
-				user.visible_message("<span class='alert'>[user] starts to shove [W:affecting] into the furnace!</span>")
-				logTheThing("combat", user, W:affecting, "attempted to force [constructTarget(W:affecting,"combat")] into a furnace at [log_loc(src)].")
-				message_admins("[key_name(user)] is trying to force [key_name(W:affecting)] into a furnace at [log_loc(src)].")
+				var/obj/item/grab/grab = W
+				var/mob/target = grab.affecting
+				if(target?.buckled || target?.anchored)
+					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
+					return
+				user.visible_message("<span class='alert'>[user] starts to shove [target] into the furnace!</span>")
+				logTheThing("combat", user, target, "attempted to force [constructTarget(target,"combat")] into a furnace at [log_loc(src)].")
+				message_admins("[key_name(user)] is trying to force [key_name(target)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
 				sleep(5 SECONDS)
-				if(W && W:affecting && src.active) //ZeWaka: Fix for null.affecting
-					user.visible_message("<span class='alert'>[user] stuffs [W:affecting] into the furnace!</span>")
-					var/mob/M = W:affecting
+				if(grab?.affecting && src.active && in_interact_range(src, user)) //ZeWaka: Fix for null.affecting
+					var/mob/M = grab.affecting
+					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
 					logTheThing("combat", user, M, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
 					M.death(1)
 					if (M.mind)
 						M.ghostize()
+					src.stoked += round(M.reagents?.get_reagent_amount("THC") / 5)
 					qdel(M)
 					qdel(W)
 					src.fuel += 400
@@ -124,9 +127,9 @@
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				if (istype(M,/obj/item/raw_material/char))
-					amtload += load_fuel_and_pool(M, 60)
+					amtload += load_fuel_and_qdel(M, 60)
 				else if (istype(M,/obj/item/raw_material/plasmastone))
-					amtload += load_fuel_and_pool(M, 800)
+					amtload += load_fuel_and_qdel(M, 800)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -141,7 +144,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/char/M in view(1,user))
-				load_fuel_and_pool(M, 60)
+				load_fuel_and_qdel(M, 60)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -157,7 +160,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing weed into [src]!</span>") // four fuckin twenty all day
 			var/staystill = user.loc
 			for(var/obj/item/plant/herb/cannabis/M in view(1,user))
-				load_fuel_and_pool(M, 30, 10)
+				load_fuel_and_qdel(M, 30, 5)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -173,7 +176,7 @@
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing ore into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/raw_material/plasmastone/M in view(1,user))
-				load_fuel_and_pool(M, 800)
+				load_fuel_and_qdel(M, 800)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
 					boutput(user, "<span class='notice'>The furnace is now full!</span>")
@@ -193,21 +196,23 @@
 			user.visible_message("<span class='notice'>[user] [pick("crams", "shoves", "pushes", "forces")] [O] into [src]!</span>")
 			src.fuel += initial(C.health) * 8
 			src.stoked += max(C.quality / 2, 0)
+			src.stoked += round(C.reagents?.get_reagent_amount("THC") / 5)
 			qdel(O)
 		else ..()
 		src.updateUsrDialog()
 
 	// Loads items into furnace with provided fuel and stoked values
 	// Returns number of items loaded
-	proc/load_fuel_and_pool(obj/item/F, fuel_value, stoked_value=0)
+	proc/load_fuel_and_qdel(obj/item/F, fuel_value, stoked_value=0)
 		var/amtload = 0
+		stoked_value += round(F.reagents?.get_reagent_amount("THC") / 5)
 		if (istype(F))
 			amtload = min( ceil( (src.maxfuel - src.fuel) / fuel_value ), F.amount )
 			src.fuel += fuel_value * amtload
 			src.stoked += stoked_value * amtload
 			F.amount -= amtload
 			if (F.amount <= 0)
-				pool(F)
+				qdel(F)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
@@ -239,16 +244,16 @@
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (istype(W, /obj/item/raw_material/char))
-			load_fuel_and_pool(W, 60)
+			load_fuel_and_qdel(W, 60)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/raw_material/plasmastone))
-			load_fuel_and_pool(W, 800)
+			load_fuel_and_qdel(W, 800)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/paper/))
-			load_fuel_and_pool(W, 6)
+			load_fuel_and_qdel(W, 6)
 			pooled_type = TRUE
 		else if (istype(W, /obj/item/spacecash/))
-			if( load_fuel_and_pool(W, 2) > 1)
+			if( load_fuel_and_qdel(W, 2) > 1)
 				fuel_name = "credits"
 			else
 				fuel_name = "a credit"
@@ -271,14 +276,15 @@
 					M.death(1)
 					if (M.mind)
 						M.ghostize()
-					qdel(M)
 					fuel += 400
 					stoked += 50
+					stoked += round(M.reagents?.get_reagent_amount("THC") / 5)
+					qdel(M)
 				else if(isitem(fried_content))
 					var/obj/item/O = fried_content
 					load_into_furnace(O, 0)
 		else if (istype(W, /obj/item/plant/herb/cannabis))
-			load_fuel_and_pool(W, 30, 10)
+			load_fuel_and_qdel(W, 30, 5)
 			pooled_type = TRUE
 		else
 			return 0

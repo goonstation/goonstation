@@ -21,7 +21,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	New()
 		..()
@@ -55,11 +55,13 @@
 		desc = "Looks like its been in this sorry state for quite some time."
 		icon_state = "grille-cut"
 		ruined = 1
+		density = 0
+		health = 0
 
-		New()
-			..()
-			damage_slashing(1000)
-			update_icon()
+		corroded
+			icon_state = "grille-corroded"
+		melted
+			icon_state = "grille-melted"
 
 	catwalk
 		name = "catwalk surface"
@@ -73,6 +75,7 @@
 		auto = FALSE
 		connects_to_turf = null
 		connects_to_turf = null
+		event_handler_flags = 0
 
 		update_icon(special_icon_state)
 			if (ruined)
@@ -110,7 +113,7 @@
 				if (issnippingtool(W))
 					..()
 				else
-					src.loc.attackby(user.equipped(), user)
+					src.loc.Attackby(user.equipped(), user)
 
 			reagent_act(var/reagent_id,var/volume)
 				..()
@@ -367,7 +370,7 @@
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
 
-				S.consume_sheets(2)
+				S.change_stack_amount(-2)
 				return
 			else
 				..()
@@ -383,7 +386,7 @@
 		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
 			dmg_mod = 60 - src.material.getProperty("electrical")
 
-		if (OSHA_is_crying && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && IN_RANGE(src, user, 1) && shock(user, 100 - dmg_mod))
 			return
 
 		// Things that will electrocute you
@@ -396,6 +399,7 @@
 		else if (isscrewingtool(W) && (istype(src.loc, /turf/simulated) || src.anchored))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !( src.anchored )
+			src.stops_space_move = !(src.stops_space_move)
 			src.visible_message("<span class='alert'><b>[usr]</b> [src.anchored ? "fastens" : "unfastens"] [src].</span>")
 			return
 
@@ -513,7 +517,7 @@
 
 		return src.electrocute(user, prb, net, ignore_gloves)
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			if (density)
 				return prob(50)
@@ -524,14 +528,14 @@
 
 		return ..()
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (src.shock_when_entered)
 			if (ismob(AM))
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

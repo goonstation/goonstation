@@ -19,7 +19,7 @@
 	var/gain_rate = 1
 	var/drain_rate = 1
 
-	var/obj/screen/hud/hud = new
+	var/atom/movable/screen/hud/hud = new
 
 	New(var/is_control = 0)
 		..()
@@ -160,17 +160,21 @@
 		icon_state = "hunger"
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
 		depletion_rate = 0.078
-		var/starve_message = "<span class='alert'>You are starving to death!</span>"
+		var/debuff = "hungry"
+		var/debuff_threshold = 25
+		var/debuffed = FALSE
 
-		var/starving = 0
+		onIncrease()
+			if (value > debuff_threshold && debuffed)
+				showOwner("<span class='notice'>You feel considerably less [debuff]!</span>")
+				holder.owner.delStatus(debuff)
+				debuffed = FALSE
 
-		onDeplete()
-			if (!starving)
-				showOwner(starve_message)
-				starving++
-
-		onFill()
-			starving = 0
+		onDecrease()
+			if (value < debuff_threshold && !debuffed)
+				showOwner("<span class='alert'>You feel considerably [debuff]!</span>")
+				holder.owner.setStatus(debuff, duration = null)
+				debuffed = TRUE
 
 		getWarningMessage()
 			if (value < 25)
@@ -182,22 +186,12 @@
 			else
 				return null
 
-		/*onLife()
-			if (starving && value < 25)
-				starving++
-				if (!(starving % 10))
-					showOwner(starve_message)
-				if (starving > 30 && prob(10))
-					holder.owner.death()
-			else if (starving && value > 50)
-				starving--*/
-
 		thirst
 			name = "Thirst"
 			icon_state = "thirst"
 			desc = "Thirst can be raised by drinking various liquids. Certain liquids can also lower your thirst."
-			starve_message = "<span class='alert'>You are dying of thirst!</span>"
 			depletion_rate = 0.0909
+			debuff = "thirsty"
 
 			getWarningMessage()
 				if (value < 25)
@@ -285,11 +279,12 @@
 				showOwner("<span class='alert'>You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!</span>")
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+			if (value < 5 && prob(1) && prob(25))
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
+				P.spread = 0
 				holder.owner.infected(P)
-				showOwner("<span class='alert'>You don't feel well.</span>")
+				showOwner("<span class='alert'>You feel really sick.</span>") // in a bad way
 			#endif
 
 		getWarningMessage()
@@ -678,7 +673,7 @@ var/global/datum/simsControl/simsController = new()
 			var/mob/living/carbon/human/H = owner
 			for (var/name in motives)
 				var/datum/simsMotive/M = motives[name]
-				var/obj/screen/hud/hud = M.hud
+				var/atom/movable/screen/hud/hud = M.hud
 				hud.screen_loc = "NORTH-[SY],EAST"
 				SY++
 				H.hud.add_screen(hud)
@@ -688,7 +683,7 @@ var/global/datum/simsControl/simsController = new()
 			var/mob/living/carbon/human/H = owner
 			for (var/name in motives)
 				var/datum/simsMotive/M = motives[name]
-				var/obj/screen/hud/hud = M.hud
+				var/atom/movable/screen/hud/hud = M.hud
 				H.hud.remove_screen(hud)
 			if (plumbob && islist(H.attached_objs))
 				H.attached_objs -= plumbob
@@ -706,7 +701,7 @@ var/global/datum/simsControl/simsController = new()
 		..()
 
 	proc/updateHudIcons(var/icon/I)
-		if (!I || !src.motives.len)
+		if (!I || !length(src.motives))
 			return
 		for (var/name in motives)
 			var/datum/simsMotive/M = motives[name]
@@ -714,7 +709,7 @@ var/global/datum/simsControl/simsController = new()
 				M.updateHudIcon(I)
 
 	proc/getMoodActionMultiplier()
-		if (!motives || !motives.len)
+		if (!motives || !length(motives))
 			return 1
 		if (!base_mood_value)
 			base_mood_value = 1
@@ -761,7 +756,7 @@ var/global/datum/simsControl/simsController = new()
 				attach_plum(owner)
 
 			plumbob.color = rgb((1 - color_t) * 255, color_t * 255, 0)
-			plumbob.light.set_color(1 - color_t, color_t, 0)
+			plumbob.add_simple_light("plumbob", list(1 - color_t, color_t, 0, 100))
 
 /obj/effect/plumbob
 	name = "plumbob"
@@ -771,24 +766,20 @@ var/global/datum/simsControl/simsController = new()
 	anchored = 1.0
 	pixel_y = 32
 	var/mob/living/owner
-	var/datum/light/light
 
 	New()
 		..()
 		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_brightness(0.5)
-		light.enable()
+		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (owner)
-			owner.attackby(W, user)
+			owner.Attackby(W, user)
 
 	attack_hand(mob/user as mob)
 		if (owner)
-			owner.attack_hand(user)
+			owner.Attackhand(user)
 
 	attack_ai(mob/user as mob)
 		if (owner)

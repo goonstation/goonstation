@@ -1605,7 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/bridge)
@@ -2152,7 +2152,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/engine/shields{
 	name = "Engineering SMES Centre"
@@ -2659,7 +2659,7 @@
 /turf/simulated/floor,
 /area/bridge)
 "fR" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /turf/simulated/floor,
 /area/bridge)
@@ -3432,17 +3432,6 @@
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
-"hz" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 8
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/crew_quarters/captain)
 "hA" = (
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -3637,10 +3626,6 @@
 "ic" = (
 /obj/rack,
 /obj/item/clothing/mask/gas/emergency,
-/turf/simulated/floor,
-/area/crew_quarters/captain)
-"id" = (
-/obj/displaycase,
 /turf/simulated/floor,
 /area/crew_quarters/captain)
 "ie" = (
@@ -17412,7 +17397,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -21161,6 +21146,23 @@
 	icon_state = "sw1"
 	},
 /area/space)
+"Wp" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/crew_quarters/captain)
+"Yk" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 8
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/crew_quarters/captain)
 
 (1,1,1) = {"
 aa
@@ -33694,9 +33696,9 @@ gy
 gJ
 gV
 hr
-hz
+Yk
 hQ
-id
+Wp
 il
 it
 iI

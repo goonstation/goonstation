@@ -1,13 +1,19 @@
-// handles critters
-datum/controller/process/critters
+
+/// handles critters
+/datum/controller/process/critters
 	var/tmp/list/detailed_count
 	var/tmp/tick_counter
 
 	setup()
 		name = "Critter"
-		schedule_interval = 16 // 1.6 seconds
+		schedule_interval = 1.6 SECONDS
 
 		detailed_count = new
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/critters/old_critters = target
+		src.detailed_count = old_critters.detailed_count
+
 	doWork()
 		var/i
 		for(var/datum/c in by_cat[TR_CAT_CRITTERS])

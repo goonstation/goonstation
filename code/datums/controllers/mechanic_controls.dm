@@ -1,3 +1,4 @@
+//The host ruck kit will replace this with it's own database so objectives and stuff can track the scanned items
 var/datum/mechanic_controller/mechanic_controls
 
 /datum/mechanic_controller
@@ -5,21 +6,30 @@ var/datum/mechanic_controller/mechanic_controls
 	var/list/rkit_addresses = list()
 
 	proc
-		scan_in(var/N,var/T,var/M)
+		scan_in(var/N,var/T,var/list/M, var/locked)
 			var/datum/electronics/scanned_item/S = new/datum/electronics/scanned_item
+			var/MC
 			S.name = N
 			S.item_type = T
-			S.item_mats = M
-			S.create_partslist(M)
-			S.create_blueprint(M)
+			if (istype(M))
+				S.mats = M.Copy()
+				MC = M.Copy()
+			else
+				MC = M
+			S.item_mats = MC
+			S.create_partslist(MC)
+			S.create_blueprint(MC)
+			if (!isnull(locked)) S.locked = locked
 			src.scanned_items += S
-			return 1
+			return S
 
 /datum/electronics/scanned_item
 	var/name = "Unknown"
 	var/item_type = ""
-	var/list/item_mats
+	var/list/item_mats //old electronics parts list
+	var/list/mats //list or amount of materials
 	var/finish_time = 0
+	var/locked = FALSE
 	var/datum/manufacture/mechanics/blueprint = null
 
 	proc
@@ -48,9 +58,13 @@ var/datum/mechanic_controller/mechanic_controls
 			return
 
 		create_blueprint(var/mats_number = 10)
+			var/datum/manufacture/mechanics/M = new /datum/manufacture/mechanics(manuf_controls)
+			var/datum/manufacture/mechanics/cached_print = new /datum/manufacture/mechanics(manuf_controls)
 			if (istype(src.blueprint,/datum/manufacture/mechanics/))
 				return
-			if (get_schematic_from_name_in_custom(src.name))
+			cached_print = get_schematic_from_path_in_custom(src.item_type)
+			if (cached_print)
+				src.blueprint = cached_print
 				return
 			var/mats_types = null // null = keep default
 			if(islist(mats_number))
@@ -64,7 +78,7 @@ var/datum/mechanic_controller/mechanic_controls
 			if (!isnum(mats_number))
 				mats_number = 10
 
-			var/datum/manufacture/mechanics/M = new /datum/manufacture/mechanics(manuf_controls)
+
 			manuf_controls.custom_schematics += M
 			M.name = src.name
 			M.time = mats_number * 1.5 SECONDS

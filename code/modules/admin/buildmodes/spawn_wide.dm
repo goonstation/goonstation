@@ -16,14 +16,16 @@ change the direction of created objects.<br>
 	var/cinematic = "Blink"
 	var/delete_area = 0
 	var/turf/A = null
+	var/image/marker = null
 
 	deselected()
 		..()
 		A = null
+		usr.client?.images -= marker
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad", "Supplydrop", "Supplydrop (no lootbox)")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None", "Fancy and Inefficient yet Laggy Telepad", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)")) || cinematic
 			return
 		if(alt)
 			delete_area = !delete_area
@@ -33,9 +35,18 @@ change the direction of created objects.<br>
 		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
 		update_button_text(objpath)
 		A = null
+		usr.client?.images -= marker
 
 	proc/mark_corner(atom/object)
+		if (!marker)
+			marker = image('icons/misc/buildmode.dmi', "marker")
+			marker.plane = PLANE_OVERLAY_EFFECTS
+			marker.layer = NOLIGHT_EFFECTS_LAYER_BASE
+			marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
 		A = get_turf(object)
+		marker.loc = A
+		usr.client?.images += marker
+
 	var/matrix/mtx = matrix()
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
@@ -50,7 +61,6 @@ change the direction of created objects.<br>
 				return
 			update_button_text("Spawning...")
 			var/cnt = 0
-			var/area_of_block = (abs(A.x - B.x) * abs(A.y - B.y))
 			for (var/turf/Q in block(A,B))
 				//var/atom/sp = new objpath(Q)
 				//if (isobj(sp) || ismob(sp) || isturf(sp))
@@ -58,8 +68,8 @@ change the direction of created objects.<br>
 					//sp.onVarChanged("dir", 2, holder.dir)
 				switch(cinematic)
 					if("Telepad")
-						var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-						var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+						var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+						var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 						swirl.mouse_opacity = 0
 						pad.mouse_opacity = 0
 						pad.loc = Q
@@ -88,12 +98,12 @@ change the direction of created objects.<br>
 							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
-							pool(swirl)
-							pool(pad)
+							qdel(swirl)
+							qdel(pad)
 					if("Fancy and Inefficient yet Laggy Telepad")
 						SPAWN_DBG(cnt/10)
-							var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
-							var/obj/decal/fakeobjects/teleport_pad/pad = unpool(/obj/decal/fakeobjects/teleport_pad)
+							var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
+							var/obj/decal/fakeobjects/teleport_pad/pad = new /obj/decal/fakeobjects/teleport_pad
 							swirl.mouse_opacity = 0
 							pad.mouse_opacity = 0
 							pad.loc = Q
@@ -122,8 +132,8 @@ change the direction of created objects.<br>
 							sleep(0.5 SECONDS)
 							swirl.mouse_opacity = 1
 							pad.mouse_opacity = 1
-							pool(swirl)
-							pool(pad)
+							qdel(swirl)
+							qdel(pad)
 
 					if("Blink")
 						var/atom/A = 0
@@ -137,13 +147,21 @@ change the direction of created objects.<br>
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
 					if("Supplydrop")
-						SPAWN_DBG(rand(0, min(area_of_block*5, 200)))
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath)
 					if("Supplydrop (no lootbox)")
-						SPAWN_DBG(rand(0, min(area_of_block*5, 200)))
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
 							if (ispath(objpath, /atom/movable))
 								new/obj/effect/supplymarker/safe(Q, 3 SECONDS, objpath, TRUE)
+					if("Lethal Supplydrop")
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+							if (ispath(objpath, /atom/movable))
+								new/obj/effect/supplymarker(Q, 3 SECONDS, objpath)
+					if("Lethal Supplydrop (no lootbox)")
+						SPAWN_DBG(rand(0, min(200, (length(block(A,B))))))
+							if (ispath(objpath, /atom/movable))
+								new/obj/effect/supplymarker(Q, 3 SECONDS, objpath, TRUE)
 					else
 						var/atom/A = 0
 						if(ispath(objpath, /turf))
@@ -159,6 +177,7 @@ change the direction of created objects.<br>
 					cnt = 0
 					sleep(0.2 SECONDS)
 			A = null
+			usr.client?.images -= marker
 			update_button_text(objpath)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
@@ -179,3 +198,4 @@ change the direction of created objects.<br>
 				T.ReplaceWithSpaceForce()
 				LAGCHECK(LAG_LOW)
 			A = null
+			usr.client?.images -= marker

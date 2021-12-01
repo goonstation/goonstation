@@ -10,7 +10,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
@@ -108,6 +108,7 @@
 		if (!message || !length(message))
 			return
 		var/msg = replacetext(message, "%src%", "<b>[src]</b>")
+		msg = replacetext(msg, "%target%", "[target]")
 		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 		src.visible_message("<span class='alert'>[msg]</span>")
 
@@ -245,11 +246,17 @@
 			..()
 			return
 
-		if (src.health_gain_from_food && (istype(W, /obj/item/reagent_containers/food/snacks) || istype(W, /obj/item/seed)))
-			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
+		if (istype(W, /obj/item/reagent_containers/food/snacks) || istype(W, /obj/item/seed))
+			boutput(user, "You offer [src] [W].")
+			if (!do_mob(user, src, 1 SECOND) || get_dist(user, src) > 1)
+				if (user && ismob(user))
+					user.show_text("You were interrupted!", "red")
+				return
 			if (src.feed_text)
-				src.visible_message("[src] [src.feed_text]")
+				src.visible_message("<span class='notice'>[src] [src.feed_text]</span>")
+			eat_twitch(src)
 			src.health += src.health_gain_from_food
+			user.drop_item()
 			qdel(W)
 			return
 
@@ -339,13 +346,13 @@
 
 	proc/on_damaged(mob/user)
 		if(registered_area) //In case some butt fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		return
 
 
 	proc/on_pet(mob/user)
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		if (!user)
 			return 1 // so things can do if (..())
 		return
@@ -407,12 +414,9 @@
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 
-	Bump(M as mob|obj)
-		if (istype(M, /obj/machinery/door/))
-			var/obj/machinery/door/D = M
-			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-		else if ((isliving(M)) && (!src.anchored))
-			src.set_loc(M:loc)
+	bump(atom/M as mob|obj)
+		if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M.loc)
 			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)
@@ -825,7 +829,7 @@
 				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
-			if (src.corpse_target && visible.Find(src.corpse_target))
+			if (src.corpse_target && (src.corpse_target in visible))
 				src.task = "chasing"// corpse"
 				return
 			else
@@ -839,7 +843,7 @@
 			var/list/visible = new()
 			for (var/obj/item/reagent_containers/food/snacks/S in view(src.seekrange,src))
 				visible.Add(S)
-			if (src.food_target && visible.Find(src.food_target))
+			if (src.food_target && (src.food_target in visible))
 				src.task = "chasing"// food"
 				return
 			else
@@ -1019,11 +1023,12 @@
 			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
 			if (!t)
 				return
+			phrase_log.log_phrase("name-critter", t, no_duplicates=TRUE)
 			t = strip_html(replacetext(t, "'",""))
 			t = copytext(t, 1, 65)
 			if (!t)
 				return
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
 			src.critter_name = t

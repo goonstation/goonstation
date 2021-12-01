@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	amount = 5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0

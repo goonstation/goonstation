@@ -53,35 +53,35 @@
 /obj/machinery/shuttle/engine/propulsion/attackby(obj/item/W as obj, mob/user as mob)
 	if (isscrewingtool(W))
 		if (src.stat1 == 0)
-			boutput(usr, "<span class='notice'>Resecuring outer frame.</span>")
+			boutput(user, "<span class='notice'>Resecuring outer frame.</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 			sleep(2 SECONDS)
-			boutput(usr, "<span class='notice'>Outer frame secured.</span>")
+			boutput(user, "<span class='notice'>Outer frame secured.</span>")
 			src.stat1 = 1
 			return
 		if (src.stat1 == 1)
-			boutput(usr, "<span class='alert'>Unsecuring outer frame.</span>")
+			boutput(user, "<span class='alert'>Unsecuring outer frame.</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
 			sleep(2 SECONDS)
-			boutput(usr, "<span class='alert'>Done.</span>")
+			boutput(user, "<span class='alert'>Done.</span>")
 			src.stat1 = 0
 			return
 		else
 			..()
 			return
 	else if (istype(W, /obj/item/rods) && src.stat2 == 0)
-		boutput(usr, "<span class='notice'>Now plating hull.</span>")
+		boutput(user, "<span class='notice'>Now plating hull.</span>")
 		sleep(2 SECONDS)
-		boutput(usr, "<span class='notice'>Plating secured.</span>")
+		boutput(user, "<span class='notice'>Plating secured.</span>")
 		qdel(W)
 		src.stat2 = 1
 		return
 	else if (iswrenchingtool(W) && src.stat2 == 1)
 		var/obj/item/rods/R = new /obj/item/rods
 		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
-		boutput(usr, "<span class='alert'>Removing outer hull plating.</span>")
+		boutput(user, "<span class='alert'>Removing outer hull plating.</span>")
 		sleep(2 SECONDS)
-		boutput(usr, "<span class='alert'>Done.</span>")
+		boutput(user, "<span class='alert'>Done.</span>")
 		src.stat2 = 0
 		R.set_loc(src.loc)
 		return
@@ -136,7 +136,7 @@
 
 ///// SHIP-SCALE WEAPONRY. BEEOO BEEOO HIT THE DECK /////
 
-/obj/machinery/shuttle/weapon/howitzer
+/obj/machinery/shuttle/weapon/howitzer_plasma
 	icon = 'icons/misc/64x32.dmi'
 	icon_state = "howitzer-idle"
 	name = "plasma howitzer"
@@ -159,10 +159,29 @@
 		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
 
+
+/obj/machinery/shuttle/weapon/howitzer_152mm
+	name = "BL 6-Inch Howitzer"
+	desc = "A huge cannon firing six inch artillery rounds. It looks extremely dangerous."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "howitzerL"
+	anchored = 1
+	density = 1
+	layer = 20
+	dir = 8
+	var/icon_firing = "howitzerL-firing"
+	var/current_projectile = new/datum/projectile/bullet/howitzer
+
+	proc/fire()
+		flick(src.icon_firing, src)
+		src.visible_message("<span class='alert'><b>[src] fires!</b></span>")
+		sleep(0.25 SECONDS)
+		shoot_projectile_DIR((get_step(get_turf(src), SOUTH)), current_projectile, dir)
+
 /obj/item/material_piece/sphere/plasmaball // heh
 	name = "plasma round"
 	desc = "A hefty weaponized sphere of compressed plasma contained within a mesh of exotic materials."
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	force = 40
 	throw_speed = 0.3
 

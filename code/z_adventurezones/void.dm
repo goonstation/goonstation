@@ -413,19 +413,19 @@ CONTENTS:
 				SPAWN_DBG(5 SECONDS)
 					playsound(src.loc, 'sound/machines/modem.ogg', 100, 1)
 					A.show_text("<B>You feel your mind slipping...</B>", "red")
-					A.drowsyness = max(A.drowsyness, 10)
+					A.changeStatus("drowsy", 20 SECONDS)
 					B.show_text("<B>You feel your mind slipping...</B>", "red")
-					B.drowsyness = max(B.drowsyness, 10)
+					B.changeStatus("drowsy", 20 SECONDS)
 
 				sleep(10 SECONDS)
 				playsound(src.loc,'sound/effects/elec_bzzz.ogg', 60, 1)
 				if(A && B && can_operate()) //We're all here, still
 					A.emote("faint")
-					A.changeStatus("paralysis", 250)
+					A.changeStatus("paralysis", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					B.emote("faint")
-					B.changeStatus("paralysis", 250)
+					B.changeStatus("paralysis", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					if(A.mind)

@@ -12,9 +12,11 @@
 
 /datum/artifact/power_gen
 	associated_object = /obj/machinery/artifact/power_gen
-	rarity_class = 4
+	type_name = "Power Generator"
+	rarity_weight = 90
 	validtypes = list("ancient")
 	validtriggers = list(/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	activated = 0
 	activ_text = "begins to emit an electric hum!"
 	deact_text = "sparks and shuts down!"
@@ -39,6 +41,8 @@
 			return
 		elecflash(user,power=2)
 		user.shock(O, rand(5000, gen_rate / 4))
+		if(!user.disposed)
+			O.ArtifactFaultUsed(user) // in case you weren't already fucked enough lol
 		if(mode == 0)
 			var/turf/T = get_turf(O)
 			if(isturf(T) && !T.intact)
@@ -95,5 +99,7 @@
 					O.visible_message("<span class='alert'>[O] sparks violently!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
 						arcFlash(O, M, gen_rate/2)
+						if(!M.disposed)
+							O.ArtifactFaultUsed(M) // in case you weren't already fucked enough lol
 		else
 			playsound(O, pick(spark_sounds), 75, 1)

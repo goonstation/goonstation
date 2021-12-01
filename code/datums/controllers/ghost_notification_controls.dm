@@ -95,7 +95,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 		N.expire()
 
 /datum/ghost_notification_controller/proc/config()
-	src.config_window.Subscribe(usr)
+	src.config_window.Subscribe(usr.client)
 
 
 /////////////////////////////////////////////

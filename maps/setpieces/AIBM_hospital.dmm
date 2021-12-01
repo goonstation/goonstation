@@ -1882,7 +1882,7 @@
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
 	dir = 1;
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "industrial atmospheric processor"
 	},
@@ -2163,7 +2163,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "industrial atmospheric processor"
 	},
@@ -4131,7 +4131,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "kH" = (
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -5301,7 +5301,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control,
+/obj/machinery/computer/solar_control,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "nA" = (

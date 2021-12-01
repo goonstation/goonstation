@@ -1,0 +1,37 @@
+	<center><h2>Torpedoes And You Aka How To Not Blow Yourself Up</h2></center>
+	<h3>Foreword about torpedoes</h3><hr>
+	NSS Manta comes equipped with four different flavors of torpedoes, each of them with a dinstinct functionality. Each of them should be fired off to defeat a specific threat they were designed to neutralize. The following section will cover them more in-depth.<hr>
+	<h4>Torpedo variants:</h4>
+	<i>Remember, using and blowing up torpedoes aboard NSS Manta is strictly forbidden under Nanotrasen employee contract. Failure to comply this rule may lead to complete bloodline eradication.</i>
+	<ul style='list-style-type:disc'>
+		<li>Incendiary
+			<ul style='list-style-type:circle'>
+				<li>Distinguishable by bright red outer shell. Upon contact with the target, two contained liquids inside combine and cause a severe fire to erupt on location. Due to the fire being chemically produced, it may even be used underwater.</li>
+			</ul>
+		</li>
+		<li>Toxic
+			<ul style='list-style-type:circle'>
+				<li>Distinguishable by a green outer shell. Upon contact with the target, releases the extremely poisonous but yet Space Law sanctioned chemicals in a very nasty gas cloud. Despite certain rumors, it is not recycling the nuclear engine waste.</li>
+			</ul>
+		</li>
+		<li>Explosive
+			<ul style='list-style-type:circle'>
+				<li>Distinguishable by a blue outer shell. Upon contact with the target, explodes in a violent manner and causes shrapnel to erupt from it's shell.</li>
+			</ul>
+		</li>
+		<li>High-Explosive
+			<ul style='list-style-type:circle'>
+				<li>Distinguishable by a grey outer shell. Upon contact with target or a hard surface, continues to fly through three, penetrating everything in it's path before exploding violently.</li>
+			</ul>
+		</li>
+	<h3>Operating torpedoes</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) Choose a torpedo that you wish to use. Open the torpedo tube and drag the torpedo onto the tray. Make sure you're not blocking the path of the tray.</li>
+		<li>2) Push the tray back in and close the hatch.</li>
+		<li>3) Mark your target with the torpedo console. You can exit the console at any time by pressing Q or E.</li>
+		<li>4) Await for confirmation orders from the Captain, Head of Personnel or Head of Security before you proceed to fire the torpedo by pressing space. </li>
+		<li>5) Upon receiving confirmation, destroy your target.</li>
+	</ul>
+
+	<h4>Editors note:</h4>
+	<li>It should be noted that torpedoes are extremely fragile and no force should be applied to them. Enough force will lead to the torpedo flying off into the direction it's facing which is extremely undesirable inside NSS Manta.</li>

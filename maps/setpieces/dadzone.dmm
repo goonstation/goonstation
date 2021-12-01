@@ -3415,7 +3415,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "hK" = (
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
 	icon_state = "tube1";
@@ -5805,7 +5805,7 @@
 	icon_state = "bar";
 	dir = 8
 	},
-/obj/item/paper/book/monster_manual,
+/obj/item/paper/book/from_file/monster_manual,
 /turf/unsimulated/floor/black{
 	intact = 1
 	},

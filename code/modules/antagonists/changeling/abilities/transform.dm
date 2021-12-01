@@ -29,7 +29,7 @@
 				H.transforming = 1
 				H.canmove = 0
 				H.icon = null
-				H.invisibility = 101
+				APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 				var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
 				animation.icon_state = "blank"
 				animation.icon = 'icons/mob/mob.dmi'
@@ -42,11 +42,12 @@
 				H.transforming = 0
 				H.canmove = 1
 				H.icon = initial(H.icon)
-				H.invisibility = initial(H.invisibility)
+				REMOVE_MOB_PROPERTY(H, PROP_INVISIBILITY, "transform")
 				H.update_face()
 				H.update_body()
 				H.update_clothing()
 				H.real_name = last_used_name
+				H.abilityHolder.updateButtons()
 				logTheThing("combat", H, null, "leaves lesser form as a changeling, [log_loc(H)].")
 				return 0
 			else if (isabomination(H))
@@ -59,7 +60,10 @@
 			if (alert("Are we sure?","Assume lesser form?","Yes","No") != "Yes")
 				return 1
 			last_used_name = H.real_name
+			if (H.hasStatus("handcuffed"))
+				H.handcuffs.drop_handcuffs(H)
 			H.monkeyize()
+			H.abilityHolder.updateButtons()
 			logTheThing("combat", H, null, "enters lesser form as a changeling, [log_loc(H)].")
 			return 0
 

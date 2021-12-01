@@ -87,6 +87,7 @@ Run `.\bin\tgui.bat` with any of the options listed below.
 doing development on IE8).
 - `bin/tgui --lint` - Show problems with the code.
 - `bin/tgui --fix` - Auto-fix problems with the code.
+- `bin/tgui --test` - Run tests.
 - `bin/tgui --analyze` - Run a bundle analyzer.
 - `bin/tgui --clean` - Clean up project repo.
 - `bin/tgui [webpack options]` - Build the project with custom webpack
@@ -134,7 +135,23 @@ same thing. You may need to reboot after this.
 
 Add `crossorigin="anonymous"` to the script tags in your downloaded tgui-window-x.html file found in your BYOND cache.
 
-## Developer Tools
+**Webpack errors out with some cryptic messages!**
+
+> Example: `No template for dependency: PureExpressionDependency`
+Webpack stores its cache on disk since tgui 4.3, and it is very sensitive
+to build configuration. So if you update webpack, or share the same cache
+directory between development and production build, it will start
+hallucinating.
+
+To fix this kind of problem, run `bin/tgui --clean` and try again.
+
+**Error: Unable to locate pnpapi, the module '...\goonstation\tgui\packages\tgui-dev-server\index.js' is controlled by multiple pnpapi instances.**
+
+At present, due to an issue with yarn the dev server cannot be ran if the path to your repo contains spaces. This could be caused if you have the repo in your Documents folder and your Windows user is your first name and last name (e.g. `C:\Users\Firstname Lastname\Documents\goonstation`).
+
+For now, you'll have to move the whole repo to a different location without spaces (e.g. `C:\Dev\goonstation`). Moving the whole `goonstation` folder in this way shouldn't cause any issues, but make sure to close down VS Code and anything else you have that might be accessing the files within.
+
+## Dev Server Tools
 
 When developing with `tgui-dev-server`, you will have access to certain
 development only features.
@@ -152,6 +169,23 @@ playground to test various tgui components.
 Press `F11` to toggle the *layout debugger*. It will show outlines of
 all tgui elements, which makes it easy to understand how everything comes
 together, and can reveal certain layout bugs which are not normally visible.
+
+## Browser Developer Tools
+
+To debug TGUI interfaces with browser-style developer tools, there exists a utility
+that Microsoft bundles with Windows to debug any Internet Explorer/Trident-using interface,
+which BYOND uses.
+
+This provides invaluable tools such as a local console, a DOM viewer, an interactive debugger, and more.
+
+The 64-bit version that we use is located at `%windir%\SysWOW64\F12\IEChooser.exe`.
+There's also a 32-bit one in `system32\`.
+
+Simply launch the application after you've opened a TGUI window, and choose the .html name.
+This is likely to be something like `tgui-window-1`. There's a refresh button in the top right.
+
+Unfortunately, it seems this program doesn't have a new target chooser if your window is fully closed
+so you'll need to restart it if it disconnects from the window.
 
 ## Project Structure
 
@@ -195,11 +229,12 @@ For a list of all the icons you can use, see the [FontAwesome website](https://f
 
 ## License
 
-Source code is covered by /tg/station's parent license - **AGPL-3.0**
-(see the main [README](https://github.com/tgstation/tgstation/blob/master/README.md)), unless otherwise indicated.
+All tgui code in the Goonstation repository is licensed under **MIT** unless otherwise indicated.
+The original source code on the tgstation repository is covered by /tg/station's parent license - **AGPL-3.0**
+(see their main [README](https://github.com/tgstation/tgstation/blob/master/README.md)).
 
-Some files are annotated with a copyright header, which explicitly states
-the copyright holder and license of the file. Most of the core tgui
-source code is available under the **MIT** license.
+However, tgui files from tgstation used by us are annotated with a copyright header,
+which explicitly states the copyright holder and license of the file.
+Most of the tgui source code is available under the **MIT** or **ISC** license.
 
 The Authors retain all copyright to their respective work here submitted.

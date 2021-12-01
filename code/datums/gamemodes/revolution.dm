@@ -18,9 +18,10 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
-	var/round_limit = 21000 // 35 minutes (see post_setup)
+	var/round_limit = 45 MINUTES //see post_setup
 	var/endthisshit = 0
 	do_antag_random_spawns = 0
+	escape_possible = 0
 
 /datum/game_mode/revolution/extended
 	name = "extended revolution"
@@ -32,7 +33,7 @@
 	boutput(world, "<B>Some crewmembers are attempting to start a revolution!<BR><br>Revolutionaries - Kill the heads of staff. Convert other crewmembers (excluding synthetics and security) to your cause by flashing them. Protect your leaders.<BR><br>Personnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by using an electropack, electric chair or beating them in the head).</B>")
 
 /datum/game_mode/revolution/pre_setup()
-	var/list/revs_possible = get_possible_revolutionaries()
+	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REV, 1)
 
 	if (!revs_possible.len)
 		return 0
@@ -42,7 +43,7 @@
 	if(revs_possible.len >= 3)
 		rev_number = 3
 	else
-		rev_number = revs_possible.len
+		rev_number = length(revs_possible)
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -54,10 +55,10 @@
 		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
-	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = "head_rev", amount = rev_number, recordChosen = 1)
+	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
 	head_revolutionaries |= chosen_revolutionaries
 	for (var/datum/mind/rev in head_revolutionaries)
-		rev.special_role = "head_rev"
+		rev.special_role = ROLE_HEAD_REV
 		revs_possible.Remove(rev)
 
 	return 1
@@ -150,7 +151,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(head_revolutionaries))
 /*
-	for (var/obj/machinery/computer/communications/comm as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -201,7 +202,7 @@
 		logTheThing("combat", rev_mind.current, null, "was made a member of the revolution.")
 		. = 1
 
-		var/obj/itemspecialeffect/derev/E = unpool(/obj/itemspecialeffect/derev)
+		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#FF5555"
 		E.setup(rev_mind.current.loc)
 
@@ -223,7 +224,7 @@
 
 		.= 1
 
-		var/obj/itemspecialeffect/derev/E = unpool(/obj/itemspecialeffect/derev)
+		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#5555FF"
 		E.setup(rev_mind.current.loc)
 
@@ -262,33 +263,6 @@
 			M.current.antagonist_overlay_refresh(1, 0)
 
 	return
-
-/datum/game_mode/revolution/proc/get_possible_revolutionaries()
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_revhead)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_revhead set to yes, so we're adding players who don't want to be rev leaders to the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/revolution/proc/get_living_heads()
 	var/list/heads = list()
@@ -336,7 +310,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head Surgeon", "Head of Mining", "Security Officer", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head Surgeon", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 
@@ -393,7 +367,15 @@
 				// If they're a robot don't count them
 				continue
 
+			var/area/area = get_area(rev_mind.current)
+			if(istype(area, /area/afterlife))
+				continue
+
 			if(isghostcritter(rev_mind.current) || isVRghost(rev_mind.current))
+				continue
+
+			if(ismobcritter(rev_mind.current))
+				//mob critters can't revolt because they don't work here.
 				continue
 
 			var/turf/T = get_turf(rev_mind.current)
@@ -506,7 +488,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "revsign"
 
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD

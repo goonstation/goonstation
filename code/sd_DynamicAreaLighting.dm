@@ -251,7 +251,7 @@ turf
 				hsv[3] = min(0.5, hsv[3]) // Set value to 50% or less
 				var/_rgb = hsv2rgb(hsv)
 				if (!src.effect_overlay_additive)
-					src.effect_overlay_additive = unpool(/obj/overlay/tile_effect)
+					src.effect_overlay_additive = new /obj/overlay/tile_effect
 					src.effect_overlay_additive.set_loc(src)
 					src.effect_overlay_additive.blend_mode = BLEND_ADD
 					// Maybe scale this based on nRGB[4] (coefficient)
@@ -261,7 +261,7 @@ turf
 			sd_LastRedAdditiveApplied = 0
 			sd_LastGreenAdditiveApplied = 0
 			sd_LastBlueAdditiveApplied = 0
-			pool(src.effect_overlay_additive)
+			qdel(src.effect_overlay_additive)
 			src.effect_overlay_additive.set_loc(null)
 			src.effect_overlay_additive.alpha = 255
 			src.effect_overlay_additive = null
@@ -269,7 +269,7 @@ turf
 		sd_lumcount = (sd_TotalRed + sd_TotalGreen + sd_TotalBlue) * 2.5 // Hack for old code that accessed sd_lumcount directly to work
 		//Apply color on the Multiplicative blend overlay I WISH BYOND HAD 2X MULTIPLICATIVE BLENDING WTF LUMMUX_BITCHFACE
 		if (!src.effect_overlay)
-			src.effect_overlay = unpool(/obj/overlay/tile_effect)
+			src.effect_overlay = new /obj/overlay/tile_effect
 			src.effect_overlay.set_loc(src)
 			src.effect_overlay.blend_mode = BLEND_MULTIPLY
 		src.effect_overlay.color = rgb(min(255, r * 255), min(255, g * 255), min(255, b * 255))
@@ -279,13 +279,13 @@ turf
 
 	proc/sd_StripEffectOverlayLighting()
 		if(effect_overlay)
-			pool(src.effect_overlay)
+			qdel(src.effect_overlay)
 			src.effect_overlay.set_loc(null)
 			src.effect_overlay = null
 
 	proc/sd_StripAdditiveEffectOverlay()
 		if(effect_overlay_additive)
-			pool(src.effect_overlay_additive)
+			qdel(src.effect_overlay_additive)
 			src.effect_overlay_additive.set_loc(null)
 			src.effect_overlay_additive = null
 

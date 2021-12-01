@@ -99,7 +99,7 @@
 						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 
 					if (isobserver(M) && M.client) //if a ghooooost (dead) (and online)
-						if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+						if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 							if (M in range(M.client.view, src))
 								M.show_message(thisR, 2)
 						else
@@ -115,9 +115,9 @@
 
 	ghostize()
 		var/mob/dead/observer/O = ..()
-
-		O.icon = 'icons/obj/surgery.dmi'
-		O.icon_state = "cool_brain"
-		O.alpha = 155
+		if(O)
+			O.icon = 'icons/obj/surgery.dmi'
+			O.icon_state = "cool_brain"
+			O.alpha = 155
 
 		return O

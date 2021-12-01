@@ -215,7 +215,7 @@ obj/critter/bear/care
 		M.transforming = 1
 		M.canmove = 0
 		M.icon = null
-		M.invisibility = 101
+		APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 		if(ishuman(M))
 			animation = new(src.loc)
 			animation.icon_state = "blank"
@@ -377,7 +377,7 @@ obj/critter/bear/care
 		if (src.task == "wandering" || src.task == "thinking")
 			if (ishuman(over_object) && usr == over_object)
 				var/mob/living/carbon/human/H = over_object
-				if (H && !H.restrained() && !H.stat && in_range(src, H))
+				if (H && !H.restrained() && !H.stat && in_interact_range(src, H))
 					src.task = "drink mob"
 					src.drink_target = H
 					src.set_loc(H.loc)
@@ -503,7 +503,7 @@ obj/critter/bear/care
 
 	CritterDeath()
 		..()
-		src.reagents.add_reagent("woolofbat", 50, null)
+		src.reagents?.add_reagent("woolofbat", 50, null)
 		return
 
 	CritterAttack(mob/M)

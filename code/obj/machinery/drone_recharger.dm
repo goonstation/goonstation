@@ -1,7 +1,7 @@
 
 /obj/machinery/drone_recharger
 	name = "Drone Recharger"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	desc = "A wall-mounted station for drones to recharge at. Automatically activated on approach."
 	icon_state = "drone-charger-idle"
 	density = 0
@@ -12,7 +12,8 @@
 	var/chargerate = 400
 	var/mob/living/silicon/ghostdrone/occupant = null
 	var/transition = 0 //For when closing
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 
 	New()
 		..()
@@ -51,12 +52,12 @@
 				return
 		return 1
 
-	HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (!src.occupant && isghostdrone(AM) && !src.transition)
 			src.turnOn(AM)
 
-	HasExited(atom/movable/AM as mob|obj)
+	Uncrossed(atom/movable/AM as mob|obj)
 		..()
 		if (AM.loc != src.loc && src.occupant == AM && isghostdrone(AM))
 			src.turnOff()
@@ -144,9 +145,9 @@
 /obj/machinery/drone_recharger/factory
 	var/id = "ghostdrone"
 	mats = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
-	HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/AM as mob|obj)
 		if (!src.occupant && istype(AM, /obj/item/ghostdrone_assembly) && !src.transition)
 			src.createDrone(AM)
 		..()
@@ -156,7 +157,7 @@
 			return 0
 		var/mob/living/silicon/ghostdrone/GD = new(src.loc)
 		if (GD)
-			pool(G)
+			qdel(G)
 			GD.newDrone = 1
 			available_ghostdrones += GD
 			src.turnOn(GD)

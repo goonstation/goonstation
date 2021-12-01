@@ -107,7 +107,7 @@
 /obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
 
@@ -166,12 +166,12 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
+			var/diff = text2num_safe(href_list["pressure_adj"])
 			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
 
 		else if (href_list["pressure_set"])
 			var/change = input(usr,"Target Pressure (0-[10*ONE_ATMOSPHERE]):","Enter target pressure",target_pressure) as num
-			if(!isnum(change)) return
+			if(!isnum_safe(change)) return
 			target_pressure = min(10*ONE_ATMOSPHERE, max(0, change))
 
 		src.updateUsrDialog()

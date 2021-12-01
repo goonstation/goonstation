@@ -9,7 +9,7 @@
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/mob/donor = null
 	var/donor_name = null
 	var/datum/organHolder/holder = null
@@ -94,7 +94,7 @@
 			return
 
 		if (istype(W, /obj/item/rods) && W.amount > 0)
-			W:consume_rods(1)
+			W.change_stack_amount(-1)
 			user.visible_message("<b>[user]</b> jams a rod into the bottom of [src]. Welp.",\
 			"You jam a rod into the bottom of [src]. Welp.")
 			var/obj/item/reagent_containers/food/drinks/skull_chalice/C = new /obj/item/reagent_containers/food/drinks/skull_chalice(src.loc)
@@ -102,7 +102,7 @@
 			qdel(src)
 			return
 
-		if (istype(W, /obj/item/circular_saw))
+		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
@@ -144,6 +144,9 @@
 			return 0
 
 		if (!surgeryCheck(M, user))
+			return 0
+
+		if (!can_act(user))
 			return 0
 
 		var/mob/living/carbon/human/H = M

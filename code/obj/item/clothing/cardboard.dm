@@ -8,7 +8,7 @@
 	density = 1
 	see_face = 0
 	over_hair = 1
-	over_all = 1
+	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	permeability_coefficient = 0.8
@@ -51,7 +51,7 @@
 				block_vision = 0
 				src.UpdateOverlays(image(src.icon, "eyeholes"), "eyeholes")
 				src.wear_image.overlays += image(src.wear_image_icon, "eyeholes")
-				playsound(get_turf(src), "sound/items/Scissor.ogg", 100, 1)
+				playsound(src, "sound/items/Scissor.ogg", 100, 1)
 				user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
 				"<span class='notice'>You cut eyeholes out of [src].</span>")
 		else if (istype(W, /obj/item/pen/crayon))
@@ -91,9 +91,14 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		if (prob(50))
 			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
 			qdel(src)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
 
 	proc/speak(var/message)
 		if (!message)
@@ -124,3 +129,8 @@
 	name = "cardboard box - 'Clown'"
 	desc = "Much like a real clown car, it's more spacious on the inside. Must be, to fit the clown."
 	face = "clown"
+
+/obj/item/clothing/suit/cardboard_box/ai
+	name = "cardboard box - 'AI'"
+	desc = "It can probably still open doors!"
+	face = "ai"

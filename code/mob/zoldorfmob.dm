@@ -23,14 +23,11 @@
 
 	New(var/mob/M)
 		..()
-		src.invisibility = 10
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 16
+		src.see_invisible = INVIS_GHOST
 		src.see_in_dark = SEE_DARK_FULL
-
-	proc/addAbility(var/abilityType)
-		abilityHolder.addAbility(abilityType)
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -46,9 +43,6 @@
 		//debug stuffs
 		//src.addAbility(/datum/targetable/zoldorfAbility/addsoul)
 		//src.addAbility(/datum/targetable/zoldorfAbility/removesoul)
-
-	proc/removeAbility(var/abilityType)
-		abilityHolder.removeAbility(abilityType)
 
 	proc/removeAllAbilities()
 		src.removeAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -67,9 +61,6 @@
 
 	proc/updateButtons()
 		abilityHolder.updateButtons()
-
-	proc/getAbility(var/abilityType)
-		return abilityHolder.getAbility(abilityType)
 
 	proc/free() //since making two mobs would be pretty redundant. zoldorf mobs have two states. free and unfree. freed = souldorf, unfree = zoldorf
 		src.free = 1 //this proc handles the transforming of a zoldorf into a souldorf
@@ -100,8 +91,8 @@
 		src.addAbility(/datum/targetable/zoldorfAbility/color)
 
 		the_zoldorf = list()
-
-		src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		spawn(0)
+			src << browse(grabResource("html/traitorTips/souldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
 
 	Login()
 		..()
@@ -146,7 +137,7 @@
 		. = ..()
 		if (. == 100)
 			return 100
-		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > 0))
+		if((target in range(0,src))&&(istype(target,/obj/item/reagent_containers/food/snacks/ectoplasm))&&(src.invisibility > INVIS_NONE))
 			if(src.emoting)
 				return
 			src.visible_message("<span class='notice'><b>[src.name] rolls around in the ectoplasm, making their soul visible!</b></span>")
@@ -155,12 +146,12 @@
 			else
 				animate_spin(src, "L", 1, 0)
 			src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"ectooverlay"),"ecto")
-			src.invisibility = 0
+			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 			qdel(target)
 		else
 			src.examine_verb(target)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 	say_understands(var/other)
@@ -263,7 +254,7 @@
 							sleep(0.1 SECONDS)
 						src.pixel_x = 0
 						src.pixel_y = 0
-						src.invisibility = 10
+						APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 						src.ClearAllOverlays()
 						var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 						e.set_loc(get_turf(src))
@@ -273,7 +264,7 @@
 				soulcache = src.icon
 				if(!src.invisibility)
 					src.visible_message("<span class='alert'><b>The ectoplasm falls off! Oh no!</b></span>")
-					src.invisibility = 10
+					APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 					src.ClearAllOverlays()
 					var/obj/item/reagent_containers/food/snacks/ectoplasm/e = new /obj/item/reagent_containers/food/snacks/ectoplasm
 					e.set_loc(get_turf(src))
@@ -400,6 +391,8 @@
 
 	if(istype(over_object,/obj/item) && istype(usr.loc,/obj/machinery/playerzoldorf))
 		var/obj/item/i = over_object
+		if(i.anchored)
+			return
 		var/obj/machinery/playerzoldorf/pz = usr.loc
 		if((i in range(1,usr.loc)) && (Tb in range(1,Ta)))
 			if(!pz.GetOverlayImage("fortunetelling"))

@@ -18,6 +18,13 @@
 	speechverb_ask = "queries"
 	metabolizes = 0
 
+	New()
+		. = ..()
+		APPLY_MOB_PROPERTY(src, PROP_THERMALVISION, src)
+		var/image/eye_light = image(icon, "mars_sec_bot_eye")
+		eye_light.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(eye_light, "eye_light")
+
 	death(var/gibbed)
 		..(gibbed, 0)
 		if (!gibbed)
@@ -33,7 +40,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -55,7 +62,7 @@
 		HH.icon_state = "hand38"
 		HH.limb_name = ".38 Anti-Personnel Arm"
 		HH.can_hold_items = 0
-		HH.can_attack = 0
+		HH.can_attack = 1
 		HH.can_range_attack = 1
 
 		HH = hands[2]
@@ -65,7 +72,7 @@
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = 0
-		HH.can_attack = 0
+		HH.can_attack = 1
 		HH.can_range_attack = 1
 
 		HH = hands[3]
@@ -76,11 +83,53 @@
 		HH.limb_name = "gunbot hands"
 
 	setup_healths()
-		add_hh_robot(-75, 75, 1)
-		add_hh_robot_burn(-50, 50, 1)
+		add_hh_robot(75, 1)
+		add_hh_robot_burn(50, 1)
 
 	get_melee_protection(zone, damage_type)
 		return 6
 
 	get_ranged_protection()
 		return 2
+
+	get_disorient_protection()
+		return max(..(), 80)
+
+	attack_hand(mob/user)
+		user.lastattacked = src
+		if(!user.stat)
+			if (user.a_intent != INTENT_HELP)
+				actions.interrupt(src, INTERRUPT_ATTACKED)
+			switch(user.a_intent)
+				if(INTENT_HELP) //Friend person
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
+					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+				if(INTENT_DISARM) //Shove
+					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
+					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+				if(INTENT_GRAB) //Shake
+					if (istype(user, /mob/living/carbon/human/machoman))
+						return ..()
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
+					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+				if(INTENT_HARM) //Dumbo
+					if (istype(user, /mob/living/carbon/human/machoman))
+						return ..()
+					if (ishuman(user))
+						if (user.is_hulk())
+							src.TakeDamage("All", 5, 0)
+							if (prob(20))
+								var/turf/T = get_edge_target_turf(user, user.dir)
+								if (isturf(T))
+									src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
+									src.throw_at(T, 10, 2)
+								else
+									src.visible_message("<span class='alert'><B>[user] punches [src]!</B></span>")
+							playsound(src.loc, pick(sounds_punch), 50, 1, -1)
+						else
+							user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+							random_brute_damage(user, rand(2,5))
+							playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+							if(prob(10)) user.show_text("Your hand hurts...", "red")
+					else
+						return ..()

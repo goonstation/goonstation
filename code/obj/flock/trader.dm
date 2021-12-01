@@ -232,10 +232,10 @@
 	SPAWN_DBG(10 SECONDS)
 		for(var/obj/flock_screen/F in orange(5, src))
 			screen = F
-		screen.trader = src
+		screen?.trader = src
 		for(var/obj/flock_reclaimer/R in orange(5, src))
 			reclaimer = R
-		reclaimer.trader = src
+		reclaimer?.trader = src
 		for(var/obj/machinery/door/feather/trader/D in orange(5, src))
 			door = D
 
@@ -368,7 +368,7 @@
 	trader.greet(user)
 
 /obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
-	if(!W || !user)
+	if(!W || !user || W.cant_drop)
 		return
 	if(istype(W, /obj/item/grab))
 		boutput(user, "<span class='alert'>You can't fit them into this, sadly.</span>")

@@ -15,7 +15,7 @@
 	var/toggle = 1
 	var/force_dud = 0
 
-	w_class = 6 /// HEH
+	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
 	mats = 5
 
@@ -25,6 +25,12 @@
 		if (user.mind && user.mind.gang)
 			boutput(user, "<span class='alert'>You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway.</span>")
 		if(istype(item, /obj/item/tank) || istype(item, /obj/item/clothing/head/butt))
+			if(istype(item, /obj/item/tank))
+				var/obj/item/tank/myTank = item
+				if(!myTank.compatible_with_TTV)
+					boutput(user, "<span class='alert'>There's no way that will fit!</span>")
+					return
+
 			if(tank_one && tank_two)
 				boutput(user, "<span class='alert'>There are already two tanks attached, remove one first!</span>")
 				return
@@ -130,11 +136,11 @@
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
+					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [showCoords(bombturf.x, bombturf.y, bombturf.z)].")
 				toggle_valve()
 			if(href_list["rem_device"])
@@ -150,7 +156,8 @@
 				else
 					flags &= ~ONBACK
 					var/turf/location = get_turf(src)
-					new /obj/item/cable_coil/cut/small(location)
+					var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(location)
+					C.amount = 2
 					boutput(usr, "<span class='notice'>You detach the loops of wire from [src]!</span>")
 					update_icon()
 
@@ -236,7 +243,7 @@
 		toggle_valve()
 			src.valve_open = !valve_open
 			if(valve_open && force_dud)
-				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing("bombing", null, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 				return
 
@@ -261,7 +268,7 @@
 					return
 				else if (power < 0.50)
 					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return
 
 				var/stun_time = 6 * power
@@ -270,14 +277,14 @@
 				var/throw_repeat = 6 * power
 				var/sound_volume = 100 * power
 
-				playsound(get_turf(src), 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/voice/farts/superfart.ogg', sound_volume, 2, channel=VOLUME_CHANNEL_EMOTE)
 				visible_message("<span class='combat bold' style='font-size:[100 + (100*(power-0.5))]%;'>\The [src] farts loudly!</span>")
 
 				for(var/mob/living/L in hearers(get_turf(src), fart_range))
 					shake_camera(L,10,32)
 					boutput(L, "<span class='alert'>You are sent flying!</span>")
 
-					L.changeStatus("weakened", stun_time * 10)
+					L.changeStatus("weakened", stun_time SECONDS)
 					while (throw_repeat > 0)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
@@ -290,10 +297,10 @@
 
 			if(valve_open && (tank_one && tank_two) && tank_one.air_contents && tank_two.air_contents)
 				var/turf/bombturf = get_turf(src)
-				var/bombarea = bombturf.loc.name
-
-				logTheThing("bombing", null, null, "Bomb valve opened in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by [src.fingerprintslast]")
-				message_admins("Bomb valve opened in [bombarea] ([showCoords(bombturf.x, bombturf.y, bombturf.z)]). Last touched by [src.fingerprintslast]")
+				var/area/A = get_area(bombturf)
+				if(!A.dont_log_combat)
+					logTheThing("bombing", null, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
 
@@ -353,6 +360,8 @@
 /obj/item/device/transfer_valve/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase"
 	var/obj/item/storage/briefcase/B = null
 	mats = 8
 

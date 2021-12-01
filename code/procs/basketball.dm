@@ -431,7 +431,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -483,7 +483,7 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_nova"])
 			if (src.uses >= 1)

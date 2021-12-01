@@ -184,3 +184,8 @@
 	name = "Toxic"
 	desc = "Produce harvested from this plant may contain toxic substances."
 	reagents_to_add = list ("toxin")
+
+/datum/plant_gene_strain/reagent_adder/lasher
+	name = "Enzymatic"
+	desc = "Produce harvested from this plant may contain powerful enzymes."
+	reagents_to_add = list ("booster_enzyme")

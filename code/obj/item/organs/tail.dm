@@ -33,6 +33,13 @@
 			build_mob_tail_image()
 			update_tail_icon()
 
+	disposing()
+		if(holder)
+			on_removal()
+			holder.tail = null
+			holder.donor.update_body()
+		. = ..()
+
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
@@ -152,7 +159,7 @@
 
 	proc/human_monkey_tail_interchange(var/tail_iconstate as text, var/human_getting_monkey_tail as num, var/monkey_getting_human_tail as num)
 		if (!tail_iconstate || (human_getting_monkey_tail && monkey_getting_human_tail))
-			logTheThing("debug", src, null, "HumanMonkeyTailInterchange fucked up. tail_iconstate = [tail_iconstate], [human_getting_monkey_tail] && [monkey_getting_human_tail]. call lagg")
+			logTheThing("debug", usr, null, "([src])HumanMonkeyTailInterchange fucked up. tail_iconstate = [tail_iconstate], [human_getting_monkey_tail] && [monkey_getting_human_tail]. call lagg")
 			return null	// Something went wrong
 		if (!human_getting_monkey_tail && !monkey_getting_human_tail)	// tail's going to the right place
 			return tail_iconstate	// Send it as-is
@@ -212,6 +219,16 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cow_over_suit_1"	// just the tail, no nose
 
+/obj/item/organ/tail/pug
+	name = "pug tail"
+	desc = "A rather stubby tail, covered in wiry hair."
+	icon_state = "tail-pug"
+	organ_image_icon = 'icons/mob/pug/fawn.dmi'
+	tail_num = TAIL_PUG
+	organ_image_under_suit_1 = "pug_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "pug_over_suit"
+
 /obj/item/organ/tail/wolf
 	name = "wolf tail"
 	desc = "A long, fluffy tail."
@@ -266,3 +283,4 @@
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"
+	colorful = 1

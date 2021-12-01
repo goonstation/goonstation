@@ -78,10 +78,10 @@
 	for (var/obj/item/implant/I in C) //Still preserving implants
 		implants += I
 
-	C.reagents.remove_any(10 * mult)
 
 	if (!C.getStatusDuration("burning") && !isdead(C) && (C.health < 100 || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg || C.organHolder.get_missing_organs().len > 0))
-		if (C.health < 100)
+		C.reagents.remove_any(10 * mult)
+		if (C.health < C.max_health)
 			C.HealDamage("All", 10 * mult, 1 * mult)
 			C.take_toxin_damage(-10 * mult)
 			C.take_oxygen_deprivation(-10 * mult)

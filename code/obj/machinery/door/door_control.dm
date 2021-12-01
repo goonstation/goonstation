@@ -5,6 +5,8 @@
 	desc = "A remote control switch for a door."
 	var/id = null
 	var/timer = 0
+	var/cooldown = 0 SECONDS
+	var/inuse = FALSE
 	anchored = 1.0
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -256,21 +258,150 @@
 					pixel_y = -19
 				west
 					pixel_x = -24
+		t1d1
+			id = "hangar_t1d1"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1d2
+			id = "hangar_t1d2"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1d3
+			id = "hangar_t1d3"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1d4
+			id = "hangar_t1d4"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t1condoor
+			id = "hangar_t1condoor"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d1
+			id = "hangar_t2d1"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d2
+			id = "hangar_t2d2"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d3
+			id = "hangar_t2d3"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2d4
+			id = "hangar_t2d4"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
+
+		t2condoor
+			id = "hangar_t2condoor"
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 24
+				south
+					pixel_y = -19
+				west
+					pixel_x = -24
 
 /obj/machinery/door_control/New()
 	..()
 	UnsubscribeProcess()
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_control/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user as mob)
-	if(status & (NOPOWER|BROKEN))
+	if((status & (NOPOWER|BROKEN)) || inuse)
 		return
 
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
@@ -304,7 +435,7 @@
 			else
 				M.close()
 
-	for (var/obj/machinery/conveyor/M as() in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
+	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
 			if (M.operating)
 				M.operating = 0
@@ -318,10 +449,15 @@
 						M.operating = 0
 			M.setdir()
 
+	if(src.cooldown)
+		inuse = TRUE
+		sleep(src.cooldown)
+		inuse = FALSE
+
 	SPAWN_DBG(1.5 SECONDS)
 		if(!(status & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 
 /obj/machinery/door_control/power_change()
 	..()
@@ -343,13 +479,13 @@
 //////////////Mass Driver Button	///////////////////
 ///////////////////////////////////////////////////////
 /obj/machinery/driver_button/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/driver_button/attackby(obj/item/W, mob/user as mob)
 
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user as mob)
 
@@ -369,7 +505,7 @@
 
 	sleep(2 SECONDS)
 
-	for(var/obj/machinery/mass_driver/M as() in machine_registry[MACHINES_MASSDRIVERS])
+	for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 		if(M.id == src.id)
 			M.drive()
 
@@ -397,15 +533,14 @@
 	desc = "A remote recieving device for a door."
 	var/id = null
 	var/pass = null
-	var/frequency = 1142
+	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
-	var/access_type = 1
-	var/access_type_secondary = null
+	var/access_type = POD_ACCESS_STANDARD
 	anchored = 1.0
 	var/datum/light/light
 
 	syndicate
-		access_type = -1
+		access_type = POD_ACCESS_SYNDICATE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)
@@ -417,7 +552,7 @@
 
 		wizard
 			id = "hangar_wizard"
-			access_type = -2
+			access_type = POD_ACCESS_WIZARDS
 
 			new_walls
 				north
@@ -431,7 +566,7 @@
 
 		syndicate
 			id = "hangar_syndicate"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
 
 			new_walls
 				north
@@ -523,12 +658,7 @@
 
 		security
 			id = "hangar_security"
-			access_type = 2
-			#ifdef MAP_OVERRIDE_MANTA
-			access_type_secondary = 2
-			#else
-			access_type_secondary = null
-			#endif
+			access_type = POD_ACCESS_SECURITY
 
 
 			new_walls
@@ -647,7 +777,20 @@
 
 		soviet
 			id = "hangar_soviet"
-			access_type = -1
+			access_type = POD_ACCESS_SYNDICATE
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+		t1d1
+			id = "hangar_t1d1"
+			access_type = POD_ACCESS_SECURITY
 
 			new_walls
 				north
@@ -659,12 +802,135 @@
 				west
 					pixel_x = -22
 
+		t1d2
+			id = "hangar_t1d2"
+			access_type = POD_ACCESS_SECURITY
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1d3
+			id = "hangar_t1d3"
+			access_type = POD_ACCESS_SECURITY
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1d4
+			id = "hangar_t1d4"
+			access_type = POD_ACCESS_SECURITY
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t1condoor
+			id = "hangar_t1condoor"
+			access_type = POD_ACCESS_SECURITY
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d1
+			id = "hangar_t2d1"
+			access_type = POD_ACCESS_SYNDICATE
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d2
+			id = "hangar_t2d2"
+			access_type = POD_ACCESS_SYNDICATE
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d3
+			id = "hangar_t2d3"
+			access_type = POD_ACCESS_SYNDICATE
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2d4
+			id = "hangar_t2d4"
+			access_type = POD_ACCESS_SYNDICATE
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
+
+		t2condoor
+			id = "hangar_t2condoor"
+			access_type = POD_ACCESS_SYNDICATE
+
+			new_walls
+				north
+					pixel_y = 24
+				east
+					pixel_x = 22
+				south
+					pixel_y = -19
+				west
+					pixel_x = -22
 	New()
 		..()
 		UnsubscribeProcess()
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			if(radio_controller)
-				radio_controller.add_object(src, "[frequency]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 		if(id)
 			pass = "[id]-[rand(1,50)]"
@@ -675,11 +941,6 @@
 		light.set_height(1.25)
 		light.set_color(0.9, 0.5, 0.5)
 		light.enable()
-		return
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	Click(var/location,var/control,var/params)
 		if(get_dist(usr, src) < 16)
@@ -693,15 +954,8 @@
 					return ..()
 				if (!access_type)
 					open_door()
-				else if (!access_type_secondary)
-					open_door()
-				else if (!access_type_secondary)
-					open_door()
 				else
-					if(V.com_system.access_type == src.access_type)
-						open_door()
-
-					else if(V.com_system.access_type_secondary == src.access_type_secondary)
+					if(V.com_system.access_type.Find(src.access_type))
 						open_door()
 					else
 						boutput(usr, "<span class='alert'>Access denied. Comms system not recognized.</span>")
@@ -709,12 +963,12 @@
 			return ..()
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attackby(obj/item/W, mob/user as mob)
 		if(istype(W, /obj/item/device/detective_scanner))
 			return
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user as mob)
 		boutput(user, "<span class='notice'>The password is \[[src.pass]\]</span>")
@@ -741,7 +995,12 @@
 		if(signal.data["command"] =="open door")
 			if(!signal.data["doorpass"])
 				return
-			if(!signal.data["access_type"] || signal.data["access_type"] != src.access_type)
+			if(!signal.data["access_type"])
+				return
+			var/list/signal_access_types = splittext(signal.data["access_type"],";")
+			// the signal process makes the list of numbers into a list of strings
+			// this is easier than making all the signal_access_types elements back into numbers
+			if(!(signal_access_types.Find("[src.access_type]")))
 				return
 
 			if(signal.data["doorpass"] == src.pass)
@@ -780,10 +1039,4 @@
 
 		signal.source = src
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		signal.transmission_method = TRANSMISSION_RADIO
-		if(frequency)
-			return frequency.post_signal(src, signal)
-		//else
-			//qdel(signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)

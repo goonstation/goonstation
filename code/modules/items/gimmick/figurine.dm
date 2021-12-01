@@ -3,7 +3,7 @@
 	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1
 	throw_speed = 4
 	throw_range = 7
@@ -33,10 +33,10 @@
 		else if (!istype(src.info))
 			var/datum/figure_info/randomInfo
 
-			var/potential_donator_ckey = usr?.mind.ckey
+			var/potential_donator_ckey = usr?.mind?.ckey
 			var/donator_figtype = null
 			if (potential_donator_ckey) // check if the player has a figurine (therefore a donator)
-				for (var/datum/figure_info/patreon/fig as() in concrete_typesof(/datum/figure_info/patreon))
+				for (var/datum/figure_info/patreon/fig as anything in concrete_typesof(/datum/figure_info/patreon))
 					if (initial(fig.ckey) == potential_donator_ckey)
 						donator_figtype = fig
 						src.patreon_prob *= 2	// x2 chance of getting patreon figure
@@ -96,16 +96,16 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
-				playsound(get_turf(src), "sound/items/toys/figure-kiss.ogg", 15, 1)
+				playsound(src, "sound/items/toys/figure-kiss.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
 			else if(user:a_intent == INTENT_DISARM)
-				playsound(get_turf(src), "sound/items/toys/figure-knock.ogg", 15, 1)
+				playsound(src, "sound/items/toys/figure-knock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
 			else if(user:a_intent == INTENT_GRAB)
-				playsound(get_turf(src), "sound/items/toys/figure-headlock.ogg", 15, 1)
+				playsound(src, "sound/items/toys/figure-headlock.ogg", 15, 1)
 				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
-				playsound(get_turf(src), "sound/impact_sounds/Flesh_Break_1.ogg", 15, 1, 0.1, 2.5)
+				playsound(src, "sound/impact_sounds/Flesh_Break_1.ogg", 15, 1, 0.1, 2.5)
 				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
@@ -515,6 +515,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	emilyclaire
 		name = "\improper Emily Claire"
 		icon_state = "emilyclaire"
+		ckey = "ursulamejor"
 
 	drsingh
 		name = "\improper Dr. Singh"
@@ -524,18 +525,22 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	hubcapwillie
 		name = "\improper Hubcap Willie"
 		icon_state = "hubcapwillie"
+		ckey = "simianc"
 
 	smallbart
 		name = "\improper Small Bart"
 		icon_state = "smallbart"
+		ckey = "reginaldhj"
 
 	nolanstone
 		name = "\improper Nolan Stone"
 		icon_state = "nolanstone"
+		ckey = "thegorog"
 
 	jenidenton
 		name = "\improper Jeni Denton"
 		icon_state = "jenidenton"
+		ckey = "ryumi"
 
 	fredcooper
 		name = "\improper Frederick Cooper"
@@ -545,10 +550,12 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	spark
 		name = "\improper S.P.A.R.K."
 		icon_state = "spark"
+		ckey = "gerhazo"
 
 	jamesnowak
 		name = "\improper James Nowak"
 		icon_state = "jamesnowak"
+		ckey = "thenicked"
 
 	floorpills
 		name = "\improper Dr. Floorpills"
@@ -563,6 +570,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	fletcherhenderson
 		name = "\improper Fletcher Henderson"
 		icon_state = "fletcherhenderson"
+		ckey = "pacra"
 
 	adaohara
 		name = "\improper Ada O'Hara"
@@ -597,6 +605,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	listelsheerfield
 		name = "\improper Listel Sheerfield"
 		icon_state = "listelsheerfield"
+		ckey = "couturier"
 
 	raphaelzahel
 		name = "\improper Raphael Zahel"
@@ -606,10 +615,12 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	derekclarke
 		name = "\improper Derek Clarke"
 		icon_state = "derekclarke"
+		ckey = "heisenbee"
 
 	fartcan
 		name = "\improper Fart Canister"
 		icon_state = "fartcan"
+		ckey = "warcrimes"
 
 	tomato
 		name = "\improper Tomato"
@@ -619,18 +630,22 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	zooblarskrippus
 		name = "\improper Zooblar Skrippus"
 		icon_state = "zooblarskrippus"
+		ckey = "stush"
 
 	vivi
 		name = "\improper Vivi"
 		icon_state = "vivi"
+		ckey = "zadenae"
 
 	giggles
 		name = "\improper Giggles"
 		icon_state = "giggles"
+		ckey = "grizzlybutch"
 
 	mavericksabre
 		name = "\improper Maverick Sabre"
 		icon_state = "mavericksabre"
+		ckey = "wrench1"
 
 	whitneystingray
 		name = "\improper Whitney Stingray"
@@ -654,6 +669,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	helgergunnink
 		name = "\improper Helger Gunnink"
 		icon_state = "helgergunnink"
+		ckey = "Ssaintsblizzard"
 
 	hex
 		name = "\improper HEX"
@@ -663,11 +679,73 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	tray
 		name = "\improper Tray"
 		icon_state = "tray"
+		ckey = "awarriorbunny"
 
 	smellstosee
 		name = "\improper Smells to See"
 		icon_state = "smellstosee"
 		ckey = "zergspower"
+
+	bunnyfriendsmen
+		name = "\improper Bunny Friendsmen"
+		icon_state = "bunnyfriendsmen"
+		ckey = "bunnykimber"
+
+	retrino
+		name = "\improper Neo Xzilon"
+		icon_state = "neoxzilon"
+		ckey = "retrino"
+
+		New()
+			..()
+			if(prob(50))
+				src.name = "\improper Matcha Usucha" //retrino's second character
+				src.icon_state = "matchausucha"
+
+	hazel
+		name = "\improper Hazel Adenine"
+		icon_state = "hazel"
+		ckey = "hazelmaecry"
+
+	vicky
+		name = "\improper Vicky Hudson"
+		icon_state = "vicky"
+		ckey = "mrprogamer96"
+
+	camrynstern
+		name = "\improper Camryn Stern"
+		icon_state = "camrynstern"
+		ckey = "richardgere"
+
+	edwardly
+		name = "\improper Newt Treitor"
+		icon_state = "newttreitor"
+		ckey = "edwardly"
+
+	ook
+		name = "\improper Ook"
+		icon_state = "ook"
+		ckey = "taocat"
+
+	brucemcafee
+		name = "\improper Bruce McAfee"
+		icon_state = "brucemcafee"
+		ckey = "mysticmidgit"
+
+	chefbot
+		name = "\improper ChefBot"
+		icon_state = "chefbot"
+		ckey = "skeletondoot"
+
+	flyntloach
+		name = "\improper Flynt Loach"
+		icon_state = "flyntloach"
+		ckey = "profomii"
+
+	dennismccreary
+		name = "\improper Dennis McCreary"
+		icon_state = "dennismccreary"
+		ckey = "lordvoxelrot"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
@@ -682,6 +760,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	rand_pos = 1
 	var/ccolor = "y"
 	var/image/cap_image = null
+	var/itemstate = "cap-fig"
 
 	New()
 		..()
@@ -695,13 +774,21 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.cap_image = image(src.icon, "cap-cap[src.item_amount ? 1 : 0]")
 		if (src.open)
 			if (src.item_amount)
-				src.cap_image.icon_state = "cap-fig"
+				src.cap_image.icon_state = itemstate
 				src.UpdateOverlays(src.cap_image, "cap")
 			else
 				src.UpdateOverlays(null, "cap")
 		else
 			src.cap_image.icon_state = "cap-cap[src.item_amount ? 1 : 0]"
 			src.UpdateOverlays(src.cap_image, "cap")
+
+	attack_self(mob/user as mob)
+		if (open && item_amount == 0)
+			user.playsound_local(user, "sound/items/can_crush-3.ogg", 50, 1)
+			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
+			qdel(src)
+			return
+		..()
 
 /obj/machinery/vending/capsule
 	name = "capsule machine"
@@ -714,11 +801,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/image/capsule_image = null
 
-	New()
-		..()
-		//Products
+	create_products()
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 26, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
 		src.icon_state = "machine[rand(1,6)]"
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")

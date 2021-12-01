@@ -30,7 +30,7 @@
 		return 0
 	else
 		var/mob/living/carbon/human/humantarget = target
-		if (istype(humantarget.mutantrace, /datum/mutantrace/vamp_zombie))
+		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, __red("You cannot drink the blood of a thrall."))
 			return 0
 
@@ -47,19 +47,15 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return 0
 
-	if ((target.mind && target.mind.special_role == "vampthrall") && target.is_mentally_dominated_by(M))
+	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(M))
 		boutput(M, __red("You can't drink the blood of your own thralls!"))
 		return 0
 
@@ -142,7 +138,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 100)
+						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -160,16 +156,16 @@
 	playsound(src.owner.loc,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
 
-/datum/abilityHolder/vampiric_zombie/var/list/blood_tally
-/datum/abilityHolder/vampiric_zombie/var/const/max_take_per_mob = 250
+/datum/abilityHolder/vampiric_thrall/var/list/blood_tally
+/datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
 
-/datum/abilityHolder/vampiric_zombie/proc/can_take_blood_from(var/mob/living/carbon/human/target)
+/datum/abilityHolder/vampiric_thrall/proc/can_take_blood_from(var/mob/living/carbon/human/target)
 	.= 1
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
 
-/datum/abilityHolder/vampiric_zombie/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
+/datum/abilityHolder/vampiric_thrall/proc/tally_bite(var/mob/living/carbon/human/target, var/blood_amt_taken)
 	if (!src.blood_tally)
 		src.blood_tally = list()
 
@@ -178,10 +174,10 @@
 
 	src.blood_tally[target] += blood_amt_taken
 
-/datum/abilityHolder/vampiric_zombie/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
-	var/datum/abilityHolder/vampiric_zombie/holder = src
+/datum/abilityHolder/vampiric_thrall/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
+	var/datum/abilityHolder/vampiric_thrall/holder = src
 	var/mob/living/M = holder.owner
-	var/datum/abilityHolder/vampiric_zombie/H = holder
+	var/datum/abilityHolder/vampiric_thrall/H = holder
 
 	if (!M || !target)
 		return 0
@@ -191,7 +187,7 @@
 		return 0
 	else
 		var/mob/living/carbon/human/humantarget = target
-		if (istype(humantarget.mutantrace, /datum/mutantrace/vamp_zombie))
+		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, __red("You cannot drink the blood of a thrall."))
 			return 0
 
@@ -208,12 +204,8 @@
 			boutput(M, __red("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.body_parts_covered & HEAD)
+	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, __red("You need to remove their headgear first."))
-		return 0
-
-	if (is_pointblank && target.wear_mask && target.wear_mask.body_parts_covered & HEAD)
-		boutput(M, __red("You need to remove their facemask first."))
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -222,8 +214,8 @@
 
 	var/mob/master = null
 	if(src.owner.mind && src.owner.mind.master)
-		master = whois_ckey_to_mob_reference(src.owner.mind.master)
-	if ((target.mind && target.mind.special_role == "vampthrall") && target.is_mentally_dominated_by(master))
+		master = ckey_to_mob(src.owner.mind.master)
+	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(master))
 		boutput(M, __red("You can't drink the blood of your master's thralls!"))
 		return 0
 
@@ -237,10 +229,10 @@
 
 	return 1
 
-/datum/abilityHolder/vampiric_zombie/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
+/datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
-	var/datum/abilityHolder/vampiric_zombie/H = src
+	var/datum/abilityHolder/vampiric_thrall/H = src
 
 
 	if (HH.blood_volume <= 0)
@@ -304,7 +296,7 @@
 					if (HH.blood_volume < 300 && prob(15))
 						if (!HH.getStatusDuration("paralysis"))
 							boutput(HH, __red("Your vision fades to blackness."))
-						HH.changeStatus("paralysis", 100)
+						HH.changeStatus("paralysis", 10 SECONDS)
 					else
 						if (prob(65))
 							HH.changeStatus("weakened", 1 SECOND)
@@ -352,6 +344,11 @@
 	id = "vamp_blood_suck_ranged"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/vampire/H
 	var/mob/living/carbon/human/HH
@@ -366,7 +363,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null)
+		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -421,7 +418,7 @@
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
-			if (HH.blood_volume < 0)
+			if (HH.blood_volume <= 0)
 				boutput(M, __red("[HH] doesn't have enough blood left to drink."))
 			else if (!H.can_take_blood_from(H, HH))
 				boutput(M, __red("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
@@ -495,6 +492,11 @@
 	id = "vamp_blood_suck"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
 	var/mob/living/carbon/human/M
 	var/datum/abilityHolder/vampire/H
 	var/mob/living/carbon/human/HH

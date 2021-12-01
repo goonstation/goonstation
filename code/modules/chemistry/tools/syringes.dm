@@ -5,7 +5,7 @@
 #define S_DRAW 0
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
-	name = "Syringe"
+	name = "syringe"
 	desc = "A syringe."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -14,8 +14,6 @@
 	uses_multiple_icon_states = 1
 	initial_volume = 15
 	amount_per_transfer_from_this = 5
-	module_research = list("science" = 1, "medicine" = 1)
-	module_research_type = /obj/item/reagent_containers/syringe
 	var/mode = S_DRAW
 	var/image/fluid_image
 	var/image/image_inj_dr
@@ -34,14 +32,12 @@
 		var/rounded_vol = reagents ? round(reagents.total_volume,5) : 0;
 		icon_state = "[rounded_vol]"
 		item_state = "syringe_[rounded_vol]"
-		//src.overlays = null
 		src.underlays = null
 		if (ismob(loc))
 			if (!src.image_inj_dr)
 				src.image_inj_dr = image(src.icon)
 			src.image_inj_dr.icon_state = src.mode ? "inject" : "draw"
 			src.UpdateOverlays(src.image_inj_dr, "inj_dr")
-			//src.overlays += mode == S_INJECT ? "inject" : "draw"
 		else
 			src.UpdateOverlays(null, "inj_dr")
 		if (!src.fluid_image)

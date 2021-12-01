@@ -73,6 +73,7 @@
 	icon_state = "meat-plant"
 	amount = 1
 	initial_volume = 20
+	food_color = "#228822"
 	initial_reagents = list("synthflesh"=2)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
@@ -98,6 +99,7 @@
 	icon_state = "bacon"
 	amount = 1
 	initial_reagents = list("porktonium"=10)
+	blood = 0
 
 	New()
 		..()
@@ -113,6 +115,7 @@
 		desc = "A strip of salty raw cured pork. It really should be cooked first."
 		icon_state = "bacon-raw"
 		amount = 1
+		blood = 2
 		real_name = "bacon"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
@@ -178,6 +181,8 @@
 			boutput(user, "<span class='notice'>You cut [src] in half</span>")
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			qdel(src)
 		else ..()
 
@@ -260,6 +265,22 @@
 	food_color = "#CC9966"
 	custom_food = 1
 
+/obj/item/reagent_containers/food/snacks/ingredient/salt
+	name = "salt"
+	desc = "A must have in any kitchen, just don't use too much."
+	icon_state = "salt"
+	amount = 1
+	food_color = "#a7927d"
+	custom_food = 1
+
+/obj/item/reagent_containers/food/snacks/ingredient/pepper
+	name = "pepper"
+	desc = "A must have in any kitchen, just don't use too much."
+	icon_state = "pepper"
+	amount = 1
+	food_color = "#a7927d"
+	custom_food = 1
+
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."
@@ -274,7 +295,7 @@
 	brew_result = "mead"
 	New()
 		..()
-		src.setMaterial(getMaterial("beeswax"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("honey"), appearance = 0, setname = 0)
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"
@@ -362,6 +383,8 @@
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/rollingpin))
 			boutput(user, "<span class='notice'>You flatten out the dough.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
@@ -371,6 +394,8 @@
 			qdel(src)
 		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
@@ -379,6 +404,8 @@
 			qdel(src)
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
 			boutput(user, "<span class='notice'>You stab holes in the dough. How vicious.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
@@ -388,6 +415,8 @@
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
 			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
@@ -395,6 +424,26 @@
 			user.u_equip(src)
 			user.put_in_hand_or_drop(F)
 			qdel(src)
+		else if (istype(W, /obj/item/baton))
+			var/obj/item/baton/baton = W
+			if (baton.is_active) //baton is on
+				if (user.a_intent != "harm")
+					if (user.traitHolder.hasTrait("training_security"))
+						playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1) //bit quieter than a baton hit
+						user.visible_message("<span class='notice'>[user] [pick("expertly", "deftly", "casually", "smoothly")] baton-fries the dough, yielding a tasty donut.</span>", group = "batonfry")
+						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
+						user.u_equip(src)
+						user.put_in_hand_or_drop(result)
+						qdel(src)
+					else
+						boutput(user, "<span class='alert'>You just aren't experienced enough to baton-fry.</span>")
+				else
+					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
+					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1)
+					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
+					user.emote("scream")
+			else
+				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
 		else ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina
@@ -405,6 +454,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/kitchen/rollingpin))
 			boutput(user, "<span class='notice'>You flatten out the dough into a sheet.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			if(prob(1))
 				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
@@ -425,6 +476,8 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/dough_strip))
 			boutput(user, "<span class='notice'>You attach the [src]s back together to make a piece of dough.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
 			var/obj/item/reagent_containers/food/snacks/ingredient/dough/D = new /obj/item/reagent_containers/food/snacks/ingredient/dough(W.loc)
 			user.u_equip(W)
 			user.put_in_hand_or_drop(D)
@@ -434,6 +487,8 @@
 
 	attack_self(var/mob/user as mob)
 		boutput(user, "<span class='notice'>You twist the [src] into a circle.</span>")
+		if (prob(25))
+			JOB_XP(user, "Chef", 1)
 		if(prob(1))
 			playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 			src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
@@ -468,6 +523,8 @@
 			for(var/i = 1, i <= 4, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src))
 			qdel(src)
+		if (prob(25))
+			JOB_XP(user, "Chef", 1)
 		else ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
@@ -517,11 +574,15 @@
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
+		if (prob(25))
+			JOB_XP(user, "Chef", 1)
 		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
 			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 3, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))
 			qdel(src)
+		if (prob(25))
+			JOB_XP(user, "Chef", 1)
 		else ..()
 
 	attack_self(var/mob/user as mob)
@@ -578,7 +639,22 @@
 	var/toppingstext = null
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/reagent_containers/food/snacks/))
+		if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom))
+			var/pizzam = new /obj/item/reagent_containers/food/snacks/ingredient/pizzam
+			user.put_in_hand_or_drop(pizzam)
+			qdel (W)
+			qdel (src)
+		else if (istype(W,/obj/item/reagent_containers/food/snacks/meatball))
+			var/pizzab = new /obj/item/reagent_containers/food/snacks/ingredient/pizzab
+			user.put_in_hand_or_drop(pizzab)
+			qdel (W)
+			qdel (src)
+		else if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/pepperoni))
+			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
+			user.put_in_hand_or_drop(pizzap)
+			qdel (W)
+			qdel (src)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
 				return
@@ -612,6 +688,48 @@
 		I.Blend(topping_color, ICON_ADD)
 		src.topping_colors += topping_color
 		src.overlays += I
+
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ingredient/pizzam
+	name = "uncooked mushroom pizza"
+	desc = "A cheese and mushroom pizza. You need to bake it..."
+	icon_state = "pizzabasem"
+
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ingredient/pizzab
+	name = "uncooked meatball pizza"
+	desc = "A cheese and meatball pizza. You need to bake it..."
+	icon_state = "pizzabaseb"
+
+	attack(mob/M as mob, mob/user as mob, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ingredient/pizzap
+	name = "uncooked pepperoni pizza"
+	desc = "A cheese and pepperoni pizza. You need to bake it..."
+	icon_state = "pizzabasep"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
@@ -740,3 +858,13 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	amount = 1
 	heal_amt = 1
 	food_color = "#4C453E"
+
+/obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	name = "curry powder"
+	desc = "A bag of curry powder. Smells heavenly."
+	icon_state = "currypowder"
+	amount = 1
+	heal_amt = 0
+	food_color = "#e0a80c"
+	initial_volume = 10
+	initial_reagents = "currypowder"

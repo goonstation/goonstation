@@ -13,7 +13,7 @@ var/HasturPresent = 0
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-	see_invisible = 21
+	see_invisible = INVIS_ADVENTURE
 	stat = 2
 	stepsound = "sound/misc/hastur/tentacle_walk.ogg"
 	speechverb_say = "states"
@@ -35,13 +35,13 @@ var/HasturPresent = 0
 		changeIcon()
 		src.nodamage = 1
 		HasturPresent = 1
-		radio_brains += src
+		radio_brains[src] = 2
 		abilityHolder.addAbility(/datum/targetable/hastur/devour)
 		abilityHolder.addAbility(/datum/targetable/hastur/insanityaura)
 		abilityHolder.addAbility(/datum/targetable/hastur/masswhisper)
 		abilityHolder.addAbility(/datum/targetable/hastur/ancientinvisibility)
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(0)
 		return .
@@ -110,8 +110,8 @@ var/HasturPresent = 0
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_flesh(-35, 6500, 0.5)
-		add_hh_flesh_burn(-35, 6500, 0.5)
+		add_hh_flesh(6500, 0.5)
+		add_hh_flesh_burn(6500, 0.5)
 		add_health_holder(/datum/healthHolder/toxin)
 
 	death(var/gibbed)
@@ -121,7 +121,7 @@ var/HasturPresent = 0
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/misc/hastur/growl.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/misc/hastur/growl.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>Something growls menacingly under [src]'s robe!</b>"
 		return null
 
@@ -227,7 +227,7 @@ var/HasturPresent = 0
 		var/mob/living/critter/hastur/H = src.holder.owner
 		if (stage == 1)
 			H.set_density(1)
-			H.invisibility = 0
+			REMOVE_MOB_PROPERTY(H, PROP_INVISIBILITY, src)
 			H.alpha = 255
 			H.stepsound = "sound/misc/hastur/tentacle_walk.ogg"
 			H.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms and manifests into shape!</span>"), pick("<span class='alert'>Void manifests around you, giving you your physical form back.</span>", "<span class='alert'>Energies of the void allow you to manifest back in a physical form.</span>"))
@@ -235,10 +235,10 @@ var/HasturPresent = 0
 		else
 			H.visible_message(pick("<span class='alert'>[H] vanishes from sight!</span>", "<span class='alert'>[H] dissolves into the void!</span>"), pick("<span class='notice'>You are enveloped by the void, hiding your physical manifestation.</span>", "<span class='notice'>You fade into the void!</span>"))
 			H.set_density(0)
-			H.invisibility = 10
+			APPLY_MOB_PROPERTY(H, PROP_INVISIBILITY, src, INVIS_GHOST)
 			H.alpha = 160
 			H.stepsound = null
-			H.see_invisible = 16
+			H.see_invisible = INVIS_GHOST
 			stage = 1
 
 //TENTACLE LONG RANGE WHIP//
@@ -250,26 +250,13 @@ var/HasturPresent = 0
 	density = 0
 	opacity = 0
 
-	unpooled(var/pool)
-		name = initial(name)
-		desc = initial(desc)
-		anchored = initial(anchored)
-		density = initial(density)
-		opacity = initial(opacity)
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		layer = initial(layer)
-		pixel_x = initial(pixel_x)
-		pixel_y = initial(pixel_y)
-		..()
-
 /obj/tentacle_trg_dummy
 	name = ""
 	desc = ""
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 
 /datum/limb/longtentacle
@@ -336,7 +323,7 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)
 
@@ -409,6 +396,6 @@ var/HasturPresent = 0
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
-				pool(O)
+				qdel(O)
 
 			if(istype(target_r, /obj/tentacle_trg_dummy)) qdel(target_r)

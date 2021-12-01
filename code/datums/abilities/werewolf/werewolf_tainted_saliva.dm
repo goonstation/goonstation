@@ -24,7 +24,7 @@
 			boutput(M, __blue("<B>You don't have any reagents in your bloodstream!</B>"))
 			return 1
 
-		M.changeStatus("werewolf_saliva",300)
+		M.changeStatus("werewolf_saliva", 30 SECONDS)
 		return 0
 
 /datum/statusEffect/tainted_saliva
@@ -36,6 +36,7 @@
 	unique = 1
 
 	onAdd(var/optional=null)
+		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
@@ -51,6 +52,7 @@
 		return
 
 	onRemove()
+		. = ..()
 		var/mob/living/M = owner
 		if (!istype(M)) return
 
