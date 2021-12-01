@@ -39,25 +39,25 @@
 				rustg_file_write(output, fname)
 				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
 				logTheThing("debug", null, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
-				ircbot.export("admin", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
+				ircbot.export("admin_debug", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
-				if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD || last_tick_time > 1 SECOND)
-					#ifdef PRE_PROFILING_ENABLED
-					var/output = world.Profile(PROFILE_REFRESH, null, "json")
-					var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
-					rustg_file_write(output, fname)
-					#endif
-					force_start = TRUE
+			if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD || time_since_last > 1 SECOND)
+				#ifdef PRE_PROFILING_ENABLED
+				var/output = world.Profile(PROFILE_REFRESH, null, "json")
+				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
+				rustg_file_write(output, fname)
+				#endif
+				force_start = TRUE
 			else
 				highCpuCount = 0
 			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
 				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
-				message_admins("CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [last_tick_time], turning on profiling.")
-				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [last_tick_time].")
-				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [last_tick_time]."))
+				message_admins("CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last], turning on profiling.")
+				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last].")
+				ircbot.export("admin_debug", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last]."))
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 				automatic_profiling_on = TRUE
