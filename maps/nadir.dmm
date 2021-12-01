@@ -114,14 +114,14 @@
 	name = "Northeast Breach Hull"
 	})
 "aq" = (
+/obj/decal/tile_edge/line/black,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "f";
+	icon_state = "g";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -193,14 +193,14 @@
 	name = "Extraction Nexus"
 	})
 "aG" = (
+/obj/decal/tile_edge/line/orange,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "g";
+	icon_state = "h";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/orange,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -3569,6 +3569,21 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"mn" = (
+/obj/decal/tile_edge/line/white{
+	dir = 6;
+	icon_state = "line4"
+	},
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "8";
+	name = "digit";
+	pixel_y = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "mo" = (
 /turf/simulated/floor/engine,
 /area/station/garden/owlery)
@@ -4677,14 +4692,14 @@
 	name = "Extraction Nexus"
 	})
 "ql" = (
+/obj/decal/tile_edge/line/black,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "b";
+	icon_state = "c";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -6497,6 +6512,26 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"wH" = (
+/obj/decal/tile_edge/line/white{
+	dir = 1;
+	icon_state = "line3"
+	},
+/obj/decal/tile_edge/line/white{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "i";
+	name = "digit";
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "wI" = (
 /obj/decal/tile_edge/line/white{
 	dir = 5;
@@ -6627,6 +6662,13 @@
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line3"
+	},
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "a";
+	name = "digit";
+	pixel_x = 14;
+	pixel_y = 16
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -8180,14 +8222,14 @@
 /turf/simulated/floor/engine,
 /area/station/security/processing)
 "Cr" = (
+/obj/decal/tile_edge/line/black,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "c";
+	icon_state = "d";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -8412,14 +8454,14 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/west)
 "Df" = (
+/obj/decal/tile_edge/line/black,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "d";
+	icon_state = "e";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -9465,6 +9507,21 @@
 "Gr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/treatment)
+"Gs" = (
+/obj/decal/tile_edge/line/white{
+	dir = 5;
+	icon_state = "line4"
+	},
+/obj/decal/tile_edge{
+	icon = 'icons/obj/decals/stencils.dmi';
+	icon_state = "0";
+	name = "digit";
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "Gt" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -12367,14 +12424,14 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "QB" = (
+/obj/decal/tile_edge/line/black,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "e";
+	icon_state = "f";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/black,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -14290,14 +14347,14 @@
 	name = "digit";
 	pixel_y = 8
 	},
+/obj/decal/tile_edge/line/orange,
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
-	icon_state = "a";
+	icon_state = "b";
 	name = "digit";
 	pixel_x = 8;
 	pixel_y = 16
 	},
-/obj/decal/tile_edge/line/orange,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -59758,7 +59815,7 @@ AK
 fH
 AK
 rv
-Vq
+mn
 zr
 gB
 gg
@@ -59766,7 +59823,7 @@ IY
 nB
 ZP
 XM
-Ii
+Gs
 AK
 AK
 QS
@@ -61879,7 +61936,7 @@ Zv
 ud
 Zv
 JW
-aF
+wH
 dm
 DD
 Gn

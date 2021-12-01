@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/rock
 	name = "Rock"
-	tick_req = 10
+	tick_req = 8
 	x_torque = 16
 	y_torque = 0
 	shear = 0

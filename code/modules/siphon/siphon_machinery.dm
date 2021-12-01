@@ -1,10 +1,70 @@
 ABSTRACT_TYPE(/obj/machinery/siphon)
 /obj/machinery/siphon
+	var/frequency = FREQ_HARMONIC_SIPHON
+	var/net_id
+
+	///shortened name for networked control
+	var/netname = "ERROR"
+
 	New()
+		src.net_id = generate_net_id(src)
 		..()
 
 	disposing()
 		..()
+
+	receive_signal(datum/signal/signal)
+		if(status & NOPOWER)
+			return
+
+		if(!signal || signal.encryption || !signal.data["sender"])
+			return
+
+		if(signal.transmission_method != TRANSMISSION_RADIO)
+			return
+
+		var/sender = signal.data["sender"]
+		if((signal.data["address_1"] in list(src.net_id, "poll")) && sender)
+			var/datum/signal/reply = new
+			reply.data["address_1"] = sender
+			reply.data["command"] = "poll_reply"
+			reply.data["device"] = src.netname
+			reply.data["netid"] = src.net_id
+			var/readouts = src.build_readouts(reply)
+			if(readouts) reply.data["devdat"] = readouts //see associated proc
+			SPAWN_DBG(0.5 SECONDS)
+				src.post_signal(src, reply)
+			return
+
+		return
+
+	///constructs a list of readouts specific to the device, to be automatically interpreted; should return a list
+	proc/build_readouts()
+		/*
+		var/list/devdat = list()
+		devdat["Intensity"] = src.intensity
+		devdat["Lateral Resonance"] = src.x_torque
+		devdat["Vertical Resonance"] = src.y_torque
+		return devdat
+		*/
+
+	proc/post_signal(datum/signal/signal,var/newfreq)
+		if(!signal)
+			return
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
+
+		signal.source = src
+		signal.data["sender"] = src.net_id
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, freq)
+
+
+
+
+
+//section: main siphon
 
 /obj/machinery/siphon/core
 	name = "harmonic siphon"
@@ -15,6 +75,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	anchored = 1
 	layer = 4
 	power_usage = 200
+	netname = "SIPHON"
 	///overlay for beam because can't animate otherwise apparently
 	var/obj/overlay/beamlight
 
@@ -38,6 +99,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/y_torque = 0
 	var/shear = 0
 
+	///total intensity of all connected resonators; increases power draw and production progress per tick
+	var/resofactor = 0
+
 	New()
 		..()
 		src.beamlight = new /obj/overlay/siphonbeam()
@@ -55,11 +119,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		total_draw = 200
 		if(src.mode == "active")
 			src.calibrate_resonance()
-			for(var/obj/machinery/siphon/resonator/res in src.resonators)
-				total_draw += 150 * res.intensity
-				src.extract_ticks += res.intensity
+			total_draw += 150 * src.resofactor
+			src.extract_ticks += src.resofactor
 
-			src.extract_ticks++
 			for(var/datum/siphon_mineral/M in src.can_extract)
 				LAGCHECK(LAG_LOW)
 				if(src.extract_ticks >= M.tick_req) //enough mining progress to check
@@ -251,11 +313,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	proc/calibrate_resonance()
 		src.x_torque = 0
 		src.y_torque = 0
+		src.resofactor = 0
 		var/xt_absolute //total absolute x torque in this pass, used for shear calculation
 		var/yt_absolute //total absolute y torque in this pass, used for shear calculation
 		var/shear_adjust = 0 //rolling counter for special shear adjustments from individual resonators
 
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
+			src.resofactor += res.intensity
 			var/x_torqueup = res.x_torque * res.intensity
 			src.x_torque += x_torqueup
 			xt_absolute += abs(x_torqueup)
@@ -278,10 +342,25 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.beamlight.icon_state = "drill-beam-0"
 			ClearAllOverlays()
 
+	build_readouts()
+		var/list/devdat = list()
+		devdat["Total Intensity"] = src.resofactor
+		devdat["Lateral Resonance"] = src.x_torque
+		devdat["Vertical Resonance"] = src.y_torque
+		devdat["Shear Value"] = src.shear
+		return devdat
+
 /obj/overlay/siphonbeam
 	icon = 'icons/obj/machines/neodrill_32x64.dmi'
 	icon_state = "drill-beam-0"
 	plane = PLANE_OVERLAY_EFFECTS
+
+
+
+
+
+
+//section: resonators
 
 /obj/machinery/siphon/resonator
 	name = "\improper Type-AX siphon resonator"
@@ -289,6 +368,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
 	icon_state = "resonator"
 	density = 1
+	netname = "RES_AX"
 
 	///affix for overlay icon states, permits cleaner subtyping
 	var/resclass = "res"
@@ -309,6 +389,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/shearmod = 0
 	///glowy light, should vary in intensity based on resonator power level
 	var/datum/light/light
+	///formatted coordinates for reporting to central console
+	var/formatted_coords = ""
 
 	//descriptions for wrenching
 	var/regular_desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
@@ -353,7 +435,24 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/yto = src.y_torque * src.intensity
 			. += "<br>A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque."
 
-	//called by siphon to set up the resonator's initial strength; resonator passes in directional x and y offsets
+	//called by siphon to set up the resonator's coordinate reporting and strength values for its initialized position
+	proc/initialize(var/xadj,var/yadj)
+		var/horizontal_identifier
+		switch(xadj) //this is wack but you can't key-value by numbers so there
+			if(-4) horizontal_identifier = "A"
+			if(-3) horizontal_identifier = "B"
+			if(-2) horizontal_identifier = "C"
+			if(-1) horizontal_identifier = "D"
+			if(0) horizontal_identifier = "E"
+			if(1) horizontal_identifier = "F"
+			if(2) horizontal_identifier = "G"
+			if(3) horizontal_identifier = "H"
+			if(4) horizontal_identifier = "I"
+		var/vertical_identifier = yadj + 4
+		src.formatted_coords = "[horizontal_identifier][vertical_identifier]"
+		src.torque_init(xadj,yadj)
+
+	//initializes torque and shear values after prompted, determining what effect the resonator has on siphoning
 	//x_torque, y_torque and shearmod values set here will be multiplied by the resonator's intensity
 	proc/torque_init(var/xadj,var/yadj)
 		//base torque is 1 at maximum range, and increases by powers of two with proximity, up to a max of 8 at point blank
@@ -396,6 +495,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.light.disable()
 			ClearAllOverlays()
 
+	build_readouts()
+		var/list/devdat = list()
+		devdat["Intensity"] = src.intensity
+		devdat["Lateral Resonance"] = src.x_torque * src.intensity
+		devdat["Vertical Resonance"] = src.y_torque * src.intensity
+		return devdat
+
+
 //stabilizing resonator, provides purely reduction to shear based on lowest torque value
 /obj/machinery/siphon/resonator/stabilizer
 	name = "\improper Type-SM siphon resonator"
@@ -406,7 +513,49 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	wrenched_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
 	max_intensity = 3
 	resclass = "stab"
+	netname = "RES_SM"
 
 	torque_init(var/xadj,var/yadj)
 		//base shear mitigation ramps from 8>1 (powers of two again!) with decreasing proximity, based simply on radial rings
 		src.shearmod = -min(2 ** (4 - abs(xadj)),2 ** (4 - abs(yadj)))
+
+	build_readouts()
+		var/list/devdat = list()
+		devdat["Intensity"] = src.intensity
+		devdat["Shear Modifier"] = src.shearmod * src.intensity
+		return devdat
+
+
+
+
+//section: secondary consoles
+
+//control for siphon and associated resonators
+//can poll siphon and resonators for information, and control resonator operation; siphon itself could have a big lever console?
+/obj/machinery/computer/siphon_control
+	name = "Harmonic Siphon Control"
+	icon = 'icons/obj/computerpanel.dmi'
+	icon_state = "engine1"
+	req_access = list(access_mining)
+	object_flags = CAN_REPROGRAM_ACCESS
+	var/temp = null
+
+	light_r = 0.8
+	light_g = 1
+	light_b = 1
+
+	New()
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+
+//database to look up requirements for extraction, including in some cases a recommendation for parameters
+/obj/machinery/computer/siphon_db
+	name = "Resonance Calibration Database"
+	icon = 'icons/obj/computerpanel.dmi'
+	icon_state = "qmreq1"
+	object_flags = CAN_REPROGRAM_ACCESS
+	var/temp = null
+
+	light_r = 0.8
+	light_g = 1
+	light_b = 1
