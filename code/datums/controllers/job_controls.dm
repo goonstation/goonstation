@@ -986,7 +986,7 @@ var/datum/job_controller/job_controls
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker")
 	#ifndef MAP_OVERRIDE_MANTA
-		excluded_strings += "Communications Officer"
+	excluded_strings += "Communications Officer"
 	#endif
 	if (string in excluded_strings)
 		return null
