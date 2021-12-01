@@ -531,10 +531,10 @@ var/list/headset_channel_lookup
 	return maptext
 
 /// Handles the displaying of maptext to a player; called on the actual object that the maptext is generating on. Override in child to change maptext behavior!
-/obj/item/device/radio/proc/showMapText(var/mob/R, var/mob/sender, receive, msg, secure, real_name, lang_id)
+/obj/item/device/radio/proc/showMapText(var/mob/R, var/mob/sender, receive, msg, secure, real_name, lang_id, textLoc)
 	if(!src.doesMapText && !force_radio_maptext)
 		return
-	var/maptext = generateMapText(msg, R = R)
+	var/maptext = generateMapText(msg, R = R, textLoc = textLoc) // if you want to simply ..() but want to override the maptext loc
 	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
