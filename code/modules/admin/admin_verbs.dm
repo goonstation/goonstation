@@ -1180,7 +1180,7 @@ var/list/fun_images = list()
 			S.charge = S.capacity
 			S.output = 200000
 			S.online = 1
-			S.updateicon()
+			S.UpdateIcon()
 			S.power_change()
 
 	var/confirm4 = alert("Turn space bright pink? (For post processing/optimizations)", "Pink Background?", "No", "Yes")

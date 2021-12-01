@@ -1594,9 +1594,9 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.overlays.len = 0
 		if (src.reagents.has_reagent("juice_tomato"))
 			src.overlays += image(src.icon, "corndog-k")
@@ -1617,7 +1617,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	heal(var/mob/M)
 		if (src.bun == 4) M.bioHolder.AddEffect("accent_elvis", timeleft = 180)
@@ -1690,7 +1690,7 @@
 
 			qdel(W)
 			user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
 			if(!src.bun)
@@ -1770,7 +1770,7 @@
 			..()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(!(src.GetOverlayImage("bun")))
 			switch(src.bun)
 				if(1)

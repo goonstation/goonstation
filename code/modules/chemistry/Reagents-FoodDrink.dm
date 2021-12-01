@@ -2604,7 +2604,7 @@ datum
 						var/obj/decal/cleanable/saltpile/pile = locate(/obj/decal/cleanable/saltpile) in T
 						if (pile)
 							pile.health = min(pile.health+10, 30)
-							//pile.update_icon()
+							//pile.UpdateIcon()
 
 
 			reaction_obj(var/obj/O, var/volume)

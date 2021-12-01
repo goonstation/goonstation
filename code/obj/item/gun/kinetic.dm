@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(silenced)
 			current_projectile.shot_sound = 'sound/machines/click.ogg'
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	examine()
 		. = ..()
@@ -51,6 +51,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+
 		if (src.ammo)
 			inventory_counter.update_number(src.ammo.amount_left)
 		else
@@ -156,7 +157,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			ammoHand.icon_state = src.ammo.icon_state
 			ammoHand.ammo_type = src.ammo.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
+			ammoHand.UpdateIcon()
 			user.put_in_hand_or_drop(ammoHand)
 			ammoHand.after_unload(user)
 
@@ -165,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.ammo.amount_left = 0
-			src.update_icon()
+			src.UpdateIcon()
 			src.add_fingerprint(user)
 			ammoHand.add_fingerprint(user)
 
@@ -681,12 +682,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	attack_self(mob/user)
 		if(open)
 			open = FALSE
-			update_icon()
+			UpdateIcon()
 			boutput(user, "<span class='alert'>You close the [src]!</span>")
 		else
 			boutput(user, "<span class='alert'>You open the [src].</span>")
 			open = TRUE
-			update_icon()
+			UpdateIcon()
 			if (src.loc == user && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
 				src.add_fingerprint(user)
 				if (!src.sanitycheck(0, 1))
@@ -712,6 +713,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			. = ..()
 
 	update_icon()
+
 		if(open)
 			icon_state="guncase"
 		else
@@ -778,7 +780,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(!pulled)
 			pulled = 1
 			playsound(user.loc, "sound/weapons/gunload_click.ogg", 60, 1)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		..()
@@ -800,7 +802,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return
 		..()
 		pulled = 0
-		update_icon()
+		UpdateIcon()
 
 	shoot_point_blank(var/mob/M as mob, var/mob/user as mob)
 		if(!pulled)
@@ -809,7 +811,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return
 		..()
 		pulled = 0
-		update_icon()
+		UpdateIcon()
 
 
 /obj/item/gun/kinetic/foamdartrevolver
@@ -884,7 +886,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		..()
 		ammo.amount_left = 0
-		update_icon()
+		UpdateIcon()
 
 //0.45
 /obj/item/gun/kinetic/colt_saa
@@ -1056,7 +1058,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.racked_slide = FALSE
 		src.casings_to_eject = 1
 		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.update_icon()
+			src.UpdateIcon()
 			src.casings_to_eject = 0
 
 	shoot_point_blank(user, user)
@@ -1067,7 +1069,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.racked_slide = FALSE
 		src.casings_to_eject = 1
 		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.update_icon()
+			src.UpdateIcon()
 			src.casings_to_eject = 0
 
 	attack_self(mob/user as mob)
@@ -1081,15 +1083,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (!src.racked_slide) //Are we racked?
 			if (src.ammo.amount_left == 0)
 				boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
-				update_icon()
+				UpdateIcon()
 			else
 				src.racked_slide = TRUE
 				if (src.icon_state == "shotty[src.gilded ? "-golden" : ""]") //"animated" racking
-					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having update_icon() here breaks
+					src.icon_state = "shotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
 					animate(src, time = 0.2 SECONDS)
 					animate(icon_state = "shotty[gilded ? "-golden" : ""]")
 				else
-					update_icon() // Slide already open? Just close the slide
+					UpdateIcon() // Slide already open? Just close the slide
 				boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
 				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
 				src.casings_to_eject = 0
@@ -1151,14 +1153,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.icon_state = "slamgun-open-loaded"
 			else
 				src.icon_state = "slamgun-open"
-			update_icon()
+			UpdateIcon()
 			two_handed = 0
 			user.updateTwoHanded(src, 0)
 			user.update_inhands()
 		else
 			w_class = W_CLASS_BULKY
 			src.icon_state = "slamgun-ready"
-			update_icon()
+			UpdateIcon()
 			two_handed = 1
 			user.updateTwoHanded(src, 1)
 			user.update_inhands()
@@ -1204,7 +1206,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 						src.ejectcasings()
 						src.casings_to_eject = 0 // needed for bullets that don't have casings (???)
-						src.update_icon()
+						src.UpdateIcon()
 						return
 				else
 					usr.show_text("[src] is empty!", "red")
@@ -1218,7 +1220,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			ammoHand.icon_state = src.ammo.icon_state
 			ammoHand.ammo_type = src.ammo.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.update_icon()
+			ammoHand.UpdateIcon()
 			usr.put_in_hand_or_drop(ammoHand)
 
 			// The gun may have been fired; eject casings if so.
@@ -1226,7 +1228,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.casings_to_eject = 0
 
 			src.ammo.amount_left = 0
-			src.update_icon()
+			src.UpdateIcon()
 
 			src.add_fingerprint(usr)
 			ammoHand.add_fingerprint(usr)
@@ -1373,7 +1375,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		New()
 			..()
 			ammo.amount_left = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 
@@ -1482,7 +1484,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		..()
 		ammo.amount_left = 0
-		update_icon()
+		UpdateIcon()
 
 /obj/item/gun/kinetic/pistol/smart/mkII
 	name = "\improper Hydra smart pistol"
@@ -1527,7 +1529,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	New()
 		..()
 		ammo.amount_left = 0
-		update_icon()
+		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
 	name = "Gwydion tranquilizer pistol"

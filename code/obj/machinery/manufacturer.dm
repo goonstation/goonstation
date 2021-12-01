@@ -907,7 +907,7 @@
 					continue
 				src.load_item(M)
 				amtload++
-			W:satchel_updateicon()
+			W:UpdateIcon()
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 

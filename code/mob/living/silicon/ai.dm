@@ -1711,7 +1711,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
-				D.update_icon()
+				D.UpdateIcon()
 				count++
 
 		message_admins("[key_name(message_mob)] globally unbolted [count] airlocks.")

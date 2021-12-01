@@ -45,7 +45,7 @@
 		START_TRACKING
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
-		src.update_icon()
+		src.UpdateIcon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B?.blobs += src
@@ -135,7 +135,7 @@
 			update_overlays(overmind?.organ_color || src.color)
 		if(isturf(old_loc))
 			update_surrounding_blob_icons(old_loc)
-		update_icon()
+		UpdateIcon()
 		if(isturf(newloc))
 			update_surrounding_blob_icons(newloc)
 
@@ -430,7 +430,7 @@
 			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
-			src.update_icon()
+			src.UpdateIcon()
 			if (healthbar) //ZeWaka: Fix for null.onUpdate
 				healthbar.onUpdate()
 		return
@@ -468,10 +468,11 @@
 		src.health += amount
 		src.health = max(0,min(src.health_max,src.health))
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
-		src.update_icon()
+		src.UpdateIcon()
 		healthbar.onUpdate()
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src)
 			return
 
@@ -811,8 +812,8 @@
 		var/turf/T = B.loc
 		B.set_loc(loc)
 		set_loc(T)
-		update_icon()
-		B.update_icon()
+		UpdateIcon()
+		B.UpdateIcon()
 
 	replicator
 		name = "replicator"
@@ -1260,6 +1261,7 @@
 		added = 0.1
 
 	update_icon()
+
 		return
 
 	disposing()
@@ -1291,6 +1293,7 @@
 		..(amount, damage_mult, damtype, user)
 
 	update_icon()
+
 		return
 
 /obj/blob/firewall
@@ -1310,7 +1313,7 @@
 			return ..(amount/3,mult,damtype,user)
 		else return ..()
 
-	update_icon()
+	update_icon(override_parent)
 		return
 
 /obj/material_deposit
@@ -1444,4 +1447,4 @@
 	if (!istype(T))
 		return
 	for (var/obj/blob/B in orange(1,T))
-		B.update_icon()
+		B.UpdateIcon()

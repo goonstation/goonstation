@@ -33,7 +33,7 @@
 		rad = new(src)
 		*/
 		update_controller_verbs()
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		controller?.ghostize()
@@ -58,7 +58,7 @@
 	proc/set_appearance(var/colour="blue")
 		if(colour in list("blue", "red", "green", "yellow"))
 			src.colour = colour
-			update_icon()
+			UpdateIcon()
 			. = 1
 
 	proc/update_controller_verbs()
@@ -84,7 +84,7 @@
 		else
 			src.verbs -= /obj/item/device/brainjar/proc/detonate_tank_transfer_valve
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "tb-[colour]"
 		overlays.Cut()
 
@@ -128,7 +128,7 @@
 						user.show_text("You attach the wires to the cyborg head and secure them to the assembly. Needs a monitoring tool before it'll work, by all appearances.", "blue")
 						playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 20, 1)
 						crafting_stage = 1
-						update_icon()
+						UpdateIcon()
 					else
 						user.show_text("There's not enough wire on \the [C]!.", "red")
 					return
@@ -139,7 +139,7 @@
 					user.u_equip(W)
 					qdel(W)
 					crafting_stage = 2
-					update_icon()
+					UpdateIcon()
 					return
 			if(2)
 				if (ispulsingtool(W))
@@ -154,7 +154,7 @@
 					user.u_equip(W)
 					qdel(W)
 					crafting_stage = 4
-					update_icon()
+					UpdateIcon()
 					return
 			if(4)
 				if(istype(W, /obj/item/device/radio))
@@ -191,7 +191,7 @@
 				B.owner.transfer_to(controller)
 				user.show_text("You install \the [B] in \the [src].", "blue")
 				logTheThing("combat", user, controller, "installs [constructTarget(controller,"combat")] into a brain assembly!")
-				update_icon()
+				UpdateIcon()
 			else
 				user.show_text("This brain seems unfit to use in the assembly.", "red")
 			update_controller_verbs()
@@ -210,7 +210,7 @@
 			W.set_loc(controller)
 			user.show_text("You hook up \the [W] to \the [src].", "blue")
 			update_controller_verbs()
-			update_icon()
+			UpdateIcon()
 			return
 
 		else ..()
