@@ -1371,7 +1371,8 @@
 					HYPpassplantgenes(HDNA,SDNA)
 					S.generation = src.generation
 					if(growing.hybrid)
-						var/datum/plant/hybrid = new /datum/plant(S)
+						var/plantType = growing.type
+						var/datum/plant/hybrid = new plantType(S)
 						for(var/V in growing.vars)
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]
