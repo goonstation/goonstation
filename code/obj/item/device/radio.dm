@@ -25,7 +25,7 @@
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
 
-	var/doMapText = FALSE //Set to TRUE for your radio obj to have flying text [or modify showMapText()]
+	var/doesMapText = FALSE // Set to TRUE for your radio obj to have unconditional flying text. Override showMapText() to conditionalize it.
 	// probably not too resource intensive but I'd be careful using this just in case
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
@@ -532,7 +532,7 @@ var/list/headset_channel_lookup
 
 /// Handles the displaying of maptext to a player; called on the actual object that the maptext is generating on. Override in child to change maptext behavior!
 /obj/item/device/radio/proc/showMapText(var/mob/R, var/mob/sender, receive, msg, secure, real_name, lang_id)
-	if (!doMapText && !force_radio_maptext)
+	if(!R.doesMaptext && !force_radio_maptext)
 		return
 	var/maptext = generateMapText(msg, R = R)
 	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
