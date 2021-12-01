@@ -788,7 +788,7 @@
 		if (did_something)
 			var/turf/T = get_turf(target)
 			T.visible_message("<span class='notice'>As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!</span>")
-			var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
 			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)

@@ -1,5 +1,8 @@
 
 (t)wed dec 01 21
+(u)Tarmunora
+(e)⚖|balance
+(*)booster enzyme now exothermic and depletes faster.
 (u)Gannets
 (p)6843
 (e)🎨|sprites
