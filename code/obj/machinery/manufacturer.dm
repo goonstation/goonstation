@@ -2014,6 +2014,20 @@
 	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/interdictor_rod_sigma
 
+/******************** Nadir Resonators *******************/
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_ax
+	name = "Type-AX Resonator"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/resonator_type_ax
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_sm
+	name = "Type-SM Resonator"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/resonator_type_sm
+
 /******************** Phaser Drone *******************/
 /obj/item/paper/manufacturer_blueprint/gunbot
 	name = "Security Robot blueprint"
