@@ -516,7 +516,7 @@ var/list/headset_channel_lookup
 /// Handles adding radio objs to the list of radios someone is hearing a message through.
 /obj/item/device/radio/proc/associateRadioToMob(var/mob/rmob, var/obj/item/device/radio/R, receive, messages, secure, real_name, lang_id)
 // By default, associateRadioToMob() won't use all these vars, but we're calling them anyways in case someone overrides it and is expecting it to be called with these args
-	if (rmob.client/* || isAI(rmob)*/) // an ai in its eye wont hear radio text
+	if (rmob.client)
 		if (!islist(receive[rmob]))
 			receive[rmob] = list()
 		receive[rmob] += R
@@ -532,7 +532,7 @@ var/list/headset_channel_lookup
 
 /// Handles the displaying of maptext to a player; called on the actual object that the maptext is generating on. Override in child to change maptext behavior!
 /obj/item/device/radio/proc/showMapText(var/mob/R, var/mob/sender, receive, msg, secure, real_name, lang_id)
-	if(!R.doesMaptext && !force_radio_maptext)
+	if(!src.doesMapText && !force_radio_maptext)
 		return
 	var/maptext = generateMapText(msg, R = R)
 	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
