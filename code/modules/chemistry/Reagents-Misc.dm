@@ -2306,6 +2306,8 @@ datum
 				animate_spin(M, dir_temp, speed_temp)
 
 			reaction_obj(var/obj/O)
+				if(!O.mouse_opacity)
+					return
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)

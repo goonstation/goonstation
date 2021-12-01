@@ -195,6 +195,10 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 
 
 obj/item/engivac/get_desc(dist)
+	if(held_toolbox)
+		. += "<br>There's \a [held_toolbox] loaded in it."
+	else
+		. += "<br>It seems like you need to load an empty toolbox into it first."
 	if (dist <= 2) //List settings
 		. += "<br>It is set to [collect_buildmats ? "collect" : "leave"] building materials and [collect_debris ? "collect" : "leave"] debris."
 		. += "<br>It is currently [placing_tiles? "" : "not "]automatically placing floor tiles."

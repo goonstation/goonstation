@@ -1112,13 +1112,11 @@
 	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	for (var/atom/movable/A in world)
-		A.name_suffixes = null
-		A.UpdateName()
-
-	for (var/turf/T in world)
-		T.name_suffixes = null
-		T.UpdateName()
+	for (var/atom/A in world)
+		if(!isnull(A.name_suffixes))
+			A.name_suffixes = null
+			A.UpdateName()
+		LAGCHECK(LAG_LOW)
 
 	return
 

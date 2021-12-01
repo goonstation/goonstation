@@ -281,7 +281,7 @@
 	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
-		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+		var/enterpin = usr.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
