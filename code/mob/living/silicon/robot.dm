@@ -706,10 +706,7 @@
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
 				src.real_name = borgify_name("Cyborg")
-				src.UpdateName()
-				src.internal_pda.name = "[src]'s Internal PDA Unit"
-				src.internal_pda.owner = "[src]"
-				return
+				break
 			else
 				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
@@ -721,17 +718,15 @@
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 						src.real_name = newname
-						src.internal_pda.name = "[src]'s Internal PDA Unit"
-						src.internal_pda.owner = "[src]"
-						src.UpdateName()
-						return 1
+						break
 					else
 						continue
 		if (!newname)
 			src.real_name = borgify_name("Cyborg")
-			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+
+		src.UpdateName()
+		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+		src.internal_pda.owner = "[src.name]"
 
 	Login()
 		..()

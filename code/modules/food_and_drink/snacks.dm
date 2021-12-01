@@ -393,6 +393,34 @@
 		initial_reagents = list("sugar"=20)
 		food_effects = list("food_deep_burp")
 
+	dog
+		name = "dog biscuit"
+		desc = "It looks tasty! To dogs."
+		icon_state = "dog-biscuit"
+		frosted = 1
+		amount = 5
+		heal_amt = 3 //for pugs only. Strong, but there's no recipe for these (just the one you start with).
+		initial_volume = 20
+		initial_reagents = list("meat_slurry" = 10)
+		food_effects = list("food_hp_up_big", "food_energized_big")
+
+		heal(var/mob/M)
+			if (ispug(M))
+				..()
+				boutput(M, "<span class='notice'>That tasted delicious!</span>")
+			else
+				src.heal_amt = 0
+				..()
+				src.heal_amt = initial(src.heal_amt)
+				boutput(M, "<span class='notice'>That tasted awful! Why would you eat it!?</span>")
+
+		on_bite(var/mob/M)
+			var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
+			if (!ispug(M))
+				src.food_effects = list()
+			..()
+			src.food_effects = food_effects_pre
+
 /obj/item/reagent_containers/food/snacks/moon_pie
 	name = "sugar moon pie"
 	desc = "A confection consisting of a creamy filling sandwiched between two cookies."

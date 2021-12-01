@@ -341,13 +341,13 @@
 		return
 
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
+				var/enterpin = user.enter_pin("Barcode Computer")
 				if (enterpin == I:pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I

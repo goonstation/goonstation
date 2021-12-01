@@ -1895,7 +1895,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if (..())
 			return 1
-		src.visible_message("<span class='alert'>You feel uncomfortable now.</span>")
+		boutput(user, "<span class='alert'>You feel uncomfortable now.</span>")
 
 /* ============================================= */
 /* -------------------- Pig -------------------- */

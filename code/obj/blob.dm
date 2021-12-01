@@ -61,6 +61,7 @@
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
+				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
@@ -146,7 +147,7 @@
 			else
 				blob_image = image('icons/mob/blob.dmi')
 			blob_image.appearance_flags |= RESET_COLOR
-			blob_image.plane = PLANE_SELFILLUM + 1
+			blob_image.plane = PLANE_ABOVE_LIGHTING
 
 			blob_image.color = organ_color
 			blob_image.icon_state = state_overlay
@@ -154,7 +155,8 @@
 		if ( anim_overlay )
 			var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
 			blob_anim_image.appearance_flags |= RESET_COLOR
-			blob_anim_image.plane = PLANE_SELFILLUM + 2
+			blob_anim_image.plane = PLANE_ABOVE_LIGHTING
+			blob_anim_image.layer = 100
 
 			blob_anim_image.color = organ_color
 			blob_anim_image.icon_state = anim_overlay
@@ -191,6 +193,9 @@
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
+				if(isliving(M))
+					var/mob/living/L = M
+					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
 				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
@@ -1326,7 +1331,7 @@
 
 		var/image/ov = image('icons/mob/blob_organs.dmi')
 		ov.appearance_flags |= RESET_COLOR
-		ov.plane = PLANE_SELFILLUM + 1
+		ov.plane = PLANE_ABOVE_LIGHTING
 		ov.color = overmind?.organ_color
 		ov.icon_state = "deposit-material"
 		UpdateOverlays(ov, name)

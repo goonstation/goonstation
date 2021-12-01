@@ -41360,7 +41360,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cpN" = (
-/obj/item/clothing/under/gimmick/mobile_suit,
+/obj/item/clothing/suit/gimmick/mobile_suit,
 /obj/item/clothing/head/mobile_suit,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo)
@@ -45534,7 +45534,7 @@
 "cAh" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = -94
+	plane = -95
 	},
 /obj/landmark/spawner{
 	name = "john_bill"
@@ -80418,10 +80418,11 @@
 /obj/item/clothing/head/NTberet{
 	desc = "You can tell that this beret has been well looked after.";
 	name = "Karu Karim's Nanotrasen Beret";
-	plane = -98
+	plane = -100;
+	layer = 30
 	},
 /obj/item/luggable_computer/personal{
-	plane = -99
+	plane = -100
 	},
 /turf/unsimulated/floor/carpet{
 	dir = 5;

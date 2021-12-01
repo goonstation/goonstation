@@ -1743,6 +1743,11 @@ var/f_color_selector_handler/F_Color_Selector
 				var/final_action = action
 				if(plist["average"])
 					final_action |= PROFILE_AVERAGE
+				var/datum/controller/process/lag_detection/lag_process = processScheduler.getProcess("Lag Detection")
+				if(plist["action"] == PROFILE_STOP)
+					lag_process.manual_profiling_on = FALSE
+				else if(plist["action"] == PROFILE_START)
+					lag_process.manual_profiling_on = TRUE
 				var/output = world.Profile(final_action, type, "json")
 				if(plist["action"] == "refresh" || plist["action"] == "stop")
 					SPAWN_DBG(1)

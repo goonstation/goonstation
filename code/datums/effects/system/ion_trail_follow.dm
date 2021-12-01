@@ -21,7 +21,7 @@
 		if(istype(T, /turf/space) || (istype(vehicle, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
 			if (istext(istate) && istate != "blank")
 				var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
-				I.set_loc(src.oldposition)
+				src.oldposition.vis_contents += I
 				src.oldposition = T
 				I.set_dir(direction)
 				flick(istate, I)
@@ -29,7 +29,10 @@
 				I.pixel_x = xoffset
 				I.pixel_y = yoffset
 				SPAWN_DBG(2 SECONDS)
-					if (I && !I.disposed) qdel(I)
+					if (I && !I.disposed)
+						var/turf/vis_loc = I.vis_locs[1]
+						vis_loc.vis_contents -= I
+						qdel(I)
 
 /datum/effects/system/ion_trail_follow/proc/start() //todo : process loop. no spawn loop, ew
 	if(!src.on)

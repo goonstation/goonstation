@@ -573,6 +573,7 @@
 
 		B.visible_message("<span class='alert'><b>The blob starts trying to absorb [M.name]!</b></span>")
 		actions.start(new /datum/action/bar/blob_absorb(M, owner), B)
+		M.was_harmed(B)
 
 
 //The owner is the blob tile object...

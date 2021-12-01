@@ -410,6 +410,10 @@
 		conveyors = list()
 		SPAWN_DBG(0.5 SECONDS)
 			link_conveyors()
+			for (var/obj/machinery/conveyor/C as anything in conveyors)
+				if (C.id == src.id)
+					C.operating = position
+					C.setdir()
 
 	disposing()
 		STOP_TRACKING

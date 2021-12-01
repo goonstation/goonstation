@@ -789,21 +789,28 @@
 		RS.trans_to(RT, amount, index = index)
 	if (target == 11)
 		// Generate pill
-		showMessage("[src.holder] makes an alarming grinding noise!")
-		var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
-		RS.trans_to(P, amount, index = index)
-		showMessage("[src.holder] ejects a pill.")
+		if(RS.total_volume >= 1)
+			showMessage("[src.holder] makes an alarming grinding noise!")
+			var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
+			RS.trans_to(P, amount, index = index)
+			showMessage("[src.holder] ejects a pill.")
+		else
+			showMessage("[src.holder] doesn't have enough reagents to make a pill.")
 	if (target == 12)
 		// Generate vial
-		var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
-		RS.trans_to(V, amount, index = index)
-		showMessage("[src.holder] ejects a vial of some unknown substance.")
+		if(RS.total_volume >= 1)
+			var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
+			RS.trans_to(V, amount, index = index)
+			showMessage("[src.holder] ejects a vial of some unknown substance.")
+		else
+			showMessage("[src.holder] doesn't have enough reagents to make a vial.")
 	if (target == 13)
-		RS.trans_to(src.ejection_reservoir, amount, index = index)
-		RS = src.ejection_reservoir.reagents
-		RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
-		RS.clear_reagents()
-		showMessage("Something drips out the side of [src.holder].")
+		if(RS.total_volume >= 1)
+			RS.trans_to(src.ejection_reservoir, amount, index = index)
+			RS = src.ejection_reservoir.reagents
+			RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
+			RS.clear_reagents()
+			showMessage("Something drips out the side of [src.holder].")
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
