@@ -242,7 +242,8 @@
 									S.generic_seed_setup(stored)
 								HYPpassplantgenes(DNA,PDNA)
 								if (stored.hybrid)
-									var/datum/plant/hybrid = new /datum/plant(S)
+									var/plantType = stored.type
+									var/datum/plant/hybrid = new plantType(S)
 									for (var/V in stored.vars)
 										if (issaved(stored.vars[V]) && V != "holder")
 											hybrid.vars[V] = stored.vars[V]
