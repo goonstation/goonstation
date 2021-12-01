@@ -15,6 +15,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	anchored = 1
 	layer = 4
 	power_usage = 200
+	///overlay for beam because can't animate otherwise apparently
+	var/obj/overlay/beamlight
 
 	///sum of baseline draw from siphon and current draw from paired resonators
 	var/total_draw
@@ -38,10 +40,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		..()
+		src.beamlight = new /obj/overlay/siphonbeam()
+		src.vis_contents += beamlight
 		for(var/mineral in concrete_typesof(/datum/siphon_mineral))
 			src.can_extract += new mineral
 
 	disposing()
+		qdel(src.beamlight)
 		..()
 
 	process(var/mult)
@@ -221,8 +226,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
 				src.resonators += res
-				res.x_torque = sign(xadj) * 2 ** (4 - abs(xadj))
-				res.y_torque = sign(yadj) * 2 ** (4 - abs(yadj))
+				res.torque_init(xadj,yadj)
 				res.engage_lock()
 			SPAWN_DBG(5 DECI SECONDS)
 				src.changemode("low")
@@ -258,9 +262,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/y_torqueup = res.y_torque * res.intensity
 			src.y_torque += y_torqueup
 			yt_absolute += abs(y_torqueup)
-			if(res.shearmod) shear_adjust += res.shearmod
+			if(res.shearmod) shear_adjust += res.shearmod * res.intensity
 
-		src.shear = (xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque)) + shear_adjust
+		src.shear = max(0,(xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque)) + shear_adjust)
 
 	proc/update_fx()
 		if(src.mode != "high")
@@ -269,15 +273,19 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			UpdateOverlays(beamline, "beamline", 0, 1)
 			var/imdriller = 0
 			if(src.mode == "active") imdriller = 1
-			var/image/beam = SafeGetOverlayImage("B E A M", 'icons/obj/machines/neodrill_32x64.dmi', "drill-beam-[imdriller]")
-			beam.plane = PLANE_OVERLAY_EFFECTS
-			UpdateOverlays(beam, "B E A M", 0, 1)
+			src.beamlight.icon_state = "drill-beam-[imdriller]"
 		else
+			src.beamlight.icon_state = "drill-beam-0"
 			ClearAllOverlays()
 
+/obj/overlay/siphonbeam
+	icon = 'icons/obj/machines/neodrill_32x64.dmi'
+	icon_state = "drill-beam-0"
+	plane = PLANE_OVERLAY_EFFECTS
+
 /obj/machinery/siphon/resonator
-	name = "siphon resonator"
-	desc = "Field-emitting device used to stabilize and guide a harmonic siphon. You know this because it says so on the label."
+	name = "\improper Type-AX siphon resonator"
+	desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
 	icon_state = "resonator"
 	density = 1
@@ -303,8 +311,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/datum/light/light
 
 	//descriptions for wrenching
-	var/regular_desc = "Field-emitting device used to stabilize and guide a harmonic siphon. You know this because it says so on the label."
-	var/wrenched_desc = "Field-emitting device used to stabilize and guide a harmonic siphon. It's been manually secured to the floor."
+	var/regular_desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
+	var/wrenched_desc = "Field-emitting device used to amplify and direct a harmonic siphon. It's been manually secured to the floor."
 
 	New()
 		light = new /datum/light/point
@@ -345,6 +353,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/yto = src.y_torque * src.intensity
 			. += "<br>A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque."
 
+	//called by siphon to set up the resonator's initial strength; resonator passes in directional x and y offsets
+	//x_torque, y_torque and shearmod values set here will be multiplied by the resonator's intensity
+	proc/torque_init(var/xadj,var/yadj)
+		//base torque is 1 at maximum range, and increases by powers of two with proximity, up to a max of 8 at point blank
+		//torques don't take each other into account deliberately, allowing for the same horizontal torque at any vertical position or vice versa
+		src.x_torque = sign(xadj) * 2 ** (4 - abs(xadj))
+		src.y_torque = sign(yadj) * 2 ** (4 - abs(yadj))
+
 	proc/engage_lock()
 		src.anchored = 1
 		src.maglocked = 1
@@ -368,11 +384,29 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/image/resactive = SafeGetOverlayImage("locked", 'icons/obj/machines/neodrill_32x32.dmi', "[src.resclass]-active")
 			resactive.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(resactive, "locked", 0, 1)
-			src.light.set_brightness(0.15 * src.intensity)
-			src.light.enable()
+			if(src.intensity > 0)
+				src.light.set_brightness(0.15 * src.intensity)
+				src.light.enable()
+			else
+				src.light.disable()
 			var/image/intens = SafeGetOverlayImage("intensity", 'icons/obj/machines/neodrill_32x32.dmi', "[src.resclass]-charge-[src.intensity]")
 			intens.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(intens, "intensity", 0, 1)
 		else
 			src.light.disable()
 			ClearAllOverlays()
+
+//stabilizing resonator, provides purely reduction to shear based on lowest torque value
+/obj/machinery/siphon/resonator/stabilizer
+	name = "\improper Type-SM siphon resonator"
+	desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
+	icon_state = "stabilizer"
+	density = 1
+	regular_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
+	wrenched_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."
+	max_intensity = 3
+	resclass = "stab"
+
+	torque_init(var/xadj,var/yadj)
+		//base shear mitigation ramps from 8>1 (powers of two again!) with decreasing proximity, based simply on radial rings
+		src.shearmod = -min(2 ** (4 - abs(xadj)),2 ** (4 - abs(yadj)))
