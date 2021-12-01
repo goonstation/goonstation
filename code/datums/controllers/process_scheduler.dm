@@ -307,6 +307,10 @@ var/global/datum/controller/processScheduler/processScheduler
 	if (nameToProcessMap[processName])
 		return 1
 
+/datum/controller/processScheduler/proc/getProcess(var/processName as text)
+	RETURN_TYPE(/datum/controller/process)
+	. = nameToProcessMap[processName]
+
 /datum/controller/processScheduler/proc/killProcess(var/processName as text)
 	restartProcess(processName)
 

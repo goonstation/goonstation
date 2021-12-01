@@ -333,8 +333,8 @@
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
 			. += "<br><span class='notice'>[src] has the following traits:</span>"
-			for(var/X in src.traitHolder.traits)
-				var/obj/trait/T = getTraitById(X)
+			for(var/id in src.traitHolder.traits)
+				var/obj/trait/T = src.traitHolder.traits[id]
 				. += "<br><span class='notice'>[T.cleanName]</span>"
 		else
 			. += "<br><span class='notice'>[src] does not appear to possess any special traits.</span>"

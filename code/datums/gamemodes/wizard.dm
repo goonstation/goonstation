@@ -96,7 +96,7 @@
 				if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 				newname = strip_html(newname)
 				wizard.current.real_name = newname
-				wizard.current.name = newname
+				wizard.current.UpdateName()
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()

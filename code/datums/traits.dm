@@ -134,28 +134,53 @@
 		owner = ownerMob
 		return ..()
 
-	proc/addTrait(id)
-		if(!(id in traits) && owner)
-			var/obj/trait/T = traitList[id]
+	proc/copy(mob/newMob)
+		RETURN_TYPE(/datum/traitHolder)
+		var/datum/traitHolder/traitHolder = new(newMob)
+		for(var/id in traits)
+			traitHolder.addTrait(id, traits[id])
+		return traitHolder
+
+	proc/copy_to(datum/traitHolder/other)
+		other.removeAll()
+		for(var/id in traits)
+			other.addTrait(id, traits[id])
+
+	proc/addTrait(id, obj/trait/trait_instance=null)
+		if(!(id in traits))
+			var/obj/trait/T = null
+			if(isnull(trait_instance))
+				var/traitType = traitList[id].type
+				T = new traitType
+			else
+				T = trait_instance
 			traits[id] = T
-			if(T.isMoveTrait)
-				moveTraits.Add(id)
-			T.onAdd(owner)
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Add(id)
+				T.onAdd(owner)
 
 	proc/removeTrait(id)
-		if((id in traits) && owner)
+		if((id in traits))
+			var/obj/trait/T = traits[id]
 			traits.Remove(id)
-			var/obj/trait/T = traitList[id]
-			if(T.isMoveTrait)
-				moveTraits.Remove(id)
-			T.onRemove(owner)
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Remove(id)
+				T.onRemove(owner)
 
 	proc/removeAll()
-		for (var/obj/trait/T in traits)
-			traits.Remove(T.id)
-			if(T.isMoveTrait)
-				moveTraits.Remove(T.id)
-			T.onRemove(owner)
+		for (var/id in traits)
+			var/obj/trait/T = traits[id]
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Remove(T.id)
+				T.onRemove(owner)
+		traits.Cut()
+
+	proc/getTrait(id)
+		RETURN_TYPE(/obj/trait)
+		return traits[id]
 
 	proc/hasTrait(var/id)
 		. = (id in traits)
@@ -556,14 +581,14 @@
 	category = list("trinkets")
 
 /obj/trait/bald
-	name = "Bald (0) \[Trinkets, species\]"
+	name = "Bald (0) \[Trinkets\]"
 	cleanName = "Bald"
 	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
 	id = "bald"
 	icon_state = "placeholder"
 	points = 0
 	isPositive = 1
-	category = list("trinkets")
+	category = list("trinkets", "nopug")
 
 /obj/trait/one_armed
 	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
@@ -796,8 +821,9 @@ obj/trait/pilot
 	id = "randomallergy"
 	points = 0
 	isPositive = 0
+	category = list("allergy")
 
-	var/list/allergic_players = list()
+	var/allergen = null
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -806,11 +832,12 @@ obj/trait/pilot
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
-	onAdd(var/mob/owner)
-		allergic_players[owner] = pick(allergen_id_list)
+	New()
+		..()
+		allergen = pick(allergen_id_list)
 
 	onLife(var/mob/owner)
-		if (owner?.reagents?.has_reagent(allergic_players[owner]))
+		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
 
 /obj/trait/random_allergy/medical_allergy
@@ -819,6 +846,7 @@ obj/trait/pilot
 	desc = "You're allergic to some medical chemical... but you can't remember which."
 	id = "medicalallergy"
 	points = 1
+	category = list("allergy")
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -834,18 +862,18 @@ obj/trait/pilot
 	isPositive = 0
 	var/selected_reagent = "ethanol"
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
-	var/list/addicted_players = list()
+
+	New()
+		..()
+		selected_reagent = pick(addictive_reagents)
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
-			addicted_players[owner] = pick(addictive_reagents)
-			selected_reagent = addicted_players[owner]
 			addAddiction(owner)
 
 	onLife(var/mob/owner, var/mult) //Just to be safe.
 		if(isliving(owner) && probmult(1))
 			var/mob/living/M = owner
-			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
@@ -1062,6 +1090,7 @@ obj/trait/pilot
 	icon_state = "placeholder"
 	points = 1
 	isPositive = 0
+	category = list("allergy")
 
 /obj/trait/allears
 	name = "All Ears (0)"
@@ -1122,6 +1151,21 @@ obj/trait/pilot
 	isPositive = 1
 	category = list("species")
 	mutantRace = /datum/mutantrace/roach
+
+/obj/trait/pug
+	name = "Pug (-4) \[Species\]"
+	cleanName = "Pug"
+	icon_state = "pug"
+	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan... Aw, look at those little ears!"
+	id = "pug"
+	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
+	isPositive = 1 //Debatably???? also this var never gets used so Who Cares
+	category = list("species", "nopug")
+	mutantRace = /datum/mutantrace/pug
+
+	onAdd(var/mob/owner)
+		..()
+		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 
 //Infernal Contract Traits
 /obj/trait/hair

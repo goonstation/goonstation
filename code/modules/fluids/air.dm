@@ -29,6 +29,7 @@ var/list/ban_from_airborne_fluid = list()
 	mouse_opacity = 1
 	opacity = 0
 	layer = FLUID_AIR_LAYER
+	flags = NOSPLASH
 
 	set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return

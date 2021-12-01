@@ -1277,10 +1277,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
 	anchored = TRUE
+	plane = PLANE_UNDERFLOOR
+	layer = -100
 
 	New()
 		. = ..()
-		src.plane = PLANE_UNDERFLOOR - 1
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
 
 	Crossed(atom/movable/AM)

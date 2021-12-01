@@ -316,7 +316,7 @@
 			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
 			var/obj/O = new /obj/interdictor_frame( get_turf(user) )
 			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
+			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
 
 /obj/interdictor_frame

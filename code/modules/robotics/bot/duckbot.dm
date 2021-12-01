@@ -61,7 +61,7 @@
 				if(IN_RANGE(src, M, 7))
 					if(!ON_COOLDOWN(src, "[DUCKBOT_ANNOY_LOCKOUT_TIMEOUT]-[M.name]", src.forget_annoyed_timeout))
 						src.annoy_target = M
-						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 100)
+						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 20)
 						break
 	else
 		src.navigate_to(get_step_rand(src))
@@ -76,7 +76,7 @@
 	if(length(T) >= 1)
 		T = (pick(T))
 		src.mystical_access()
-		src.navigate_to(T, src.bot_move_delay, 0, 300)
+		src.navigate_to(T, src.bot_move_delay, 0, 100)
 		if(length(src.path) >= 1)
 			return TRUE
 
@@ -192,7 +192,7 @@
 		SPAWN_DBG(rand(0,10 SECONDS)) // give em some time to spread out a bit
 			T = (pick(T))
 			//src.mystical_access() AB SO FUC KING LUTE LEY NOT THANK YOU VERRY MOUCHE - warc
-			src.navigate_to(T, src.bot_move_delay, 0, 300)
+			src.navigate_to(T, src.bot_move_delay, 0, 80)
 			if(length(src.path) < 1)
 				src.KillPathAndGiveUp(1)
 

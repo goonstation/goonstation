@@ -299,7 +299,7 @@ Custom Books
 	file_path = "strings/books/grifening.txt"
 
 /obj/item/paper/book/from_file/DNDrulebook
-	name = "Stations and Syndicates 8th Edition Rulebook"
+	name = "Stations and Syndicates 9th Edition Rulebook"
 	desc = "A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 7 editions but maybe its probably not worth looking for them."
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"

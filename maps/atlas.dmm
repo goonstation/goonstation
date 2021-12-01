@@ -1326,6 +1326,25 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"dm" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/station/bridge/customs)
 "dn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
@@ -2031,6 +2050,23 @@
 	dir = 5
 	},
 /area/station/security/main)
+"fh" = (
+/obj/machinery/light_switch/auto,
+/obj/item/fish/bass,
+/obj/item/fish/bass,
+/obj/item/fish/carp,
+/obj/item/fish/carp,
+/obj/item/fish/salmon,
+/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "fi" = (
 /obj/lattice{
 	dir = 4;
@@ -4471,16 +4507,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"lz" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "lA" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/tracks{
@@ -4577,17 +4603,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"lL" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
-/obj/rack,
-/obj/item/gun/implanter,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "lM" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -8374,22 +8389,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
-"uo" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/station/bridge/customs)
 "up" = (
 /obj/machinery/computer/bank_data,
 /turf/simulated/floor/carpet{
@@ -9083,23 +9082,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"vV" = (
-/obj/machinery/light_switch/auto,
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/storage/crate/bloody,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "vW" = (
 /obj/cable{
 	d1 = 1;
@@ -18824,6 +18806,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"US" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/rack,
+/obj/item/gun/implanter,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "UT" = (
 /obj/cable{
 	d1 = 2;
@@ -19220,6 +19212,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"Wa" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "Wb" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
@@ -19861,6 +19864,28 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"XN" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/accessimp_kit,
+/obj/item/paper/CrashedHopShuttle,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/heads)
 "XO" = (
 /obj/cable{
 	d1 = 4;
@@ -20080,28 +20105,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"Yp" = (
-/obj/table/wood/auto,
-/obj/item/storage/box/accessimp_kit,
-/obj/item/paper/CrashedHopShuttle,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
 "Yq" = (
 /obj/machinery/vehicle/pod_smooth,
 /obj/decal/tile_edge/stripe/big{
@@ -68500,7 +68503,7 @@ db
 dF
 ee
 Xj
-vV
+fh
 gV
 dE
 fk
@@ -74245,7 +74248,7 @@ GQ
 BO
 YV
 jI
-lz
+Wa
 jI
 nY
 hJ
@@ -74547,7 +74550,7 @@ hO
 SQ
 jK
 kC
-lL
+US
 mW
 od
 hl
@@ -77577,7 +77580,7 @@ mr
 rI
 sp
 tH
-uo
+dm
 vf
 FO
 Wz
@@ -78790,7 +78793,7 @@ sq
 yr
 Xv
 ZL
-Yp
+XN
 VU
 Re
 CU

@@ -305,7 +305,7 @@
 
 		// we are not there. how do we get there
 		if (!src.path || !length(src.path))
-			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 120)
+			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 20)
 			if (!src.path || !length(src.path))
 				// answer: we don't. try to find something else then.
 				src.targets_invalid |= turf2coordinates(src.target)

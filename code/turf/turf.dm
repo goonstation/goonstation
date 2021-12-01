@@ -58,7 +58,7 @@
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
-		..()
+		SHOULD_CALL_PARENT(FALSE)
 
 	onMaterialChanged()
 		..()
@@ -888,7 +888,7 @@ proc/generate_space_color()
 	desc = "A solid... nothing? Is that even a thing?"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "white"
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	mouse_opacity = 0
 	fullbright = 1
 
@@ -1207,6 +1207,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "floorflush_o"
 
-	Enter(atom/movable/mover, atom/forget)
+	Entered(atom/movable/mover, atom/forget)
 		. = ..()
-		mover.set_loc(null)
+		if(!mover.anchored)
+			mover.set_loc(null)

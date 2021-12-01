@@ -32662,6 +32662,17 @@
 	},
 /turf/space,
 /area/space)
+"bjz" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/storage/crate/bloody,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "bjA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -67071,10 +67082,6 @@
 "cxf" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"cxg" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "cxh" = (
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -68360,6 +68367,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
+"dcm" = (
+/obj/storage/crate/adventure,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/science/teleporter)
 "dfo" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -68631,17 +68645,6 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
-"fkX" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/storage/crate/bloody,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "fno" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
@@ -68686,13 +68689,6 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
-"fEt" = (
-/obj/storage/crate/adventure,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/science/teleporter)
 "fGc" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -69645,17 +69641,6 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
-"lph" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp{
-	switchon = 1
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/heads)
 "lpD" = (
 /obj/lattice{
 	dir = 8;
@@ -69854,6 +69839,17 @@
 /obj/decal/xmas_lights/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"mQE" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp{
+	switchon = 1
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/heads)
 "mVi" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -71077,6 +71073,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/quartermaster/refinery)
+"vQU" = (
+/obj/machinery/vehicle/pod_smooth/heavy/security,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "vXZ" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -108373,7 +108373,7 @@ aMj
 beU
 blx
 bln
-fkX
+bjz
 bEW
 bmg
 cAT
@@ -130490,7 +130490,7 @@ cCO
 cCO
 cCO
 aWd
-fEt
+dcm
 cqQ
 cqQ
 cMk
@@ -134040,12 +134040,12 @@ cCO
 cCO
 aBq
 cxf
-cxg
+vQU
 cxf
 ctC
 cxf
 cxf
-cxg
+vQU
 cAa
 bas
 cdI
@@ -134074,7 +134074,7 @@ czu
 aJb
 bPD
 ave
-lph
+mQE
 aUQ
 cCO
 jkw

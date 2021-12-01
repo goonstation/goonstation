@@ -5874,10 +5874,6 @@
 "mq" = (
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
-"mr" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "ms" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -6506,10 +6502,6 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/hangar/sec)
-"nA" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
-/turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nB" = (
 /obj/disposaloutlet/east,
@@ -10312,33 +10304,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
-"uQ" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/storage/wall{
-	desc = "It's a big box that comes in useful when the inevitable depressurization occurs.";
-	dir = 8;
-	name = "breach response cabinet";
-	pixel_x = 32;
-	spawn_contents = list(/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen)
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/obj/machinery/light_switch/north{
-	pixel_x = -12
-	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
 "uR" = (
@@ -23360,6 +23325,33 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"TA" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/pen/fancy,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/storage/wall{
+	desc = "It's a big box that comes in useful when the inevitable depressurization occurs.";
+	dir = 8;
+	name = "breach response cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen)
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -12
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/wood/two,
+/area/station/bridge/hos)
 "TC" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -23629,6 +23621,10 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Ux" = (
+/obj/machinery/vehicle/miniputt/nanoputt/security,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "UB" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -24200,6 +24196,10 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Wj" = (
+/obj/machinery/vehicle/pod_smooth/heavy/security,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "Wl" = (
 /obj/table/wood/auto,
 /obj/displaycase{
@@ -56186,7 +56186,7 @@ aa
 aa
 aa
 Ut
-uQ
+TA
 vK
 wy
 xb
@@ -60088,9 +60088,9 @@ aa
 aa
 kV
 xy
-mr
+Wj
 lI
-nA
+Ux
 lI
 lI
 pf

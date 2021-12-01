@@ -550,8 +550,8 @@
 					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
-					if(src.traitHolder && length(src.traitHolder.traits))
-						R.fields["traits"] = src.traitHolder.traits.Copy()
+					if(!isnull(src.traitHolder))
+						R.fields["traits"] = src.traitHolder.copy()
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
@@ -706,6 +706,7 @@
 	boutput(src, "<span class='notice'>Your pin to your ID is: [C.pin]</span>")
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
+	src.mind?.remembered_pin = C.pin
 
 	if (wagesystem.jobs[JOB.name])
 		var/cashModifier = 1.0
