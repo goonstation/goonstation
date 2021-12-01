@@ -1,5 +1,9 @@
 
 (t)wed dec 01 21
+(u)sovexe
+(p)6836
+(e)|
+(*)Refactored a bunch of update_icon procs. Please report if you see any bugs such as invisible items.
 (u)Tarmunora
 (e)⚖|balance
 (*)booster enzyme now exothermic and depletes faster.
