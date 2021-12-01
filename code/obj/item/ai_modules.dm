@@ -47,7 +47,7 @@ AI MODULES
 		return "This law does not exist."
 
 
-	proc/install(obj/machinery/computer/aiupload/comp, user)
+	proc/install(obj/machinery/computer/aiupload/comp, mob/user)
 		if (comp.status & NOPOWER)
 			boutput(user, "\The [comp] has no power!")
 			return
@@ -316,17 +316,17 @@ AI MODULES
 		lawTarget = replacetext(copytext(html_encode(lawTarget),1, 128), "http:","")
 		phrase_log.log_phrase("name-ai", lawTarget, no_duplicates=TRUE)
 
-	install(obj/machinery/computer/aiupload/comp)
+	install(obj/machinery/computer/aiupload/comp, mob/user)
 		if (comp.status & NOPOWER)
-			boutput(usr, "\The [comp] has no power!")
+			boutput(user, "\The [comp] has no power!")
 			return
 		if (comp.status & BROKEN)
-			boutput(usr, "\The [comp] computer is broken!")
+			boutput(user, "\The [comp] computer is broken!")
 			return
 
-		src.transmitInstructions(usr)
+		src.transmitInstructions(user, comp)
 
-	transmitInstructions(var/mob/sender, var/law)
+	transmitInstructions(mob/sender, obj/machinery/computer/aiupload/comp)
 		// what if we let them pick what AI to rename..?
 		// the future is now
 		// this is mostly stolen from observer.dm's observe list
@@ -356,11 +356,7 @@ AI MODULES
 		if (!AI)
 			return
 
-		// This doesn't check the comp's distance, and I'm too lazy to give a shit,
-		// so until this gets fixed you can start a rename and then finish it anywhere
-		// as long as you still have the rename module.
-		// its a feature ok
-		if (get_dist(sender.loc, src.loc) > 2)
+		if (!in_interact_range(comp, sender))
 			boutput(sender, "You aren't next to an AI upload computer any more.")
 			return
 
@@ -416,17 +412,17 @@ AI MODULES
 	desc = "A module that updates an AI's hologram images."
 	var/expansion
 
-	install(obj/machinery/computer/aiupload/comp)
+	install(obj/machinery/computer/aiupload/comp, mob/user)
 		if (comp.status & NOPOWER)
-			boutput(usr, "\The [comp] has no power!")
+			boutput(user, "\The [comp] has no power!")
 			return
 		if (comp.status & BROKEN)
-			boutput(usr, "\The [comp] computer is broken!")
+			boutput(user, "\The [comp] computer is broken!")
 			return
 
-		src.transmitInstructions(usr)
+		src.transmitInstructions(user, comp)
 
-	transmitInstructions(var/mob/sender, var/law)
+	transmitInstructions(mob/sender, obj/machinery/computer/aiupload/comp)
 		// what if we let them pick what AI to update?
 		// the future is now
 		// this is mostly stolen from observer.dm's observe list
@@ -456,11 +452,7 @@ AI MODULES
 		if (!AI)
 			return
 
-		// This doesn't check the comp's distance, and I'm too lazy to give a shit,
-		// so until this gets fixed you can start a rename and then finish it anywhere
-		// as long as you still have the rename module.
-		// its a feature ok
-		if (get_dist(sender.loc, src.loc) > 2)
+		if (!in_interact_range(comp, sender))
 			boutput(sender, "You aren't next to an AI upload computer any more.")
 			return
 
