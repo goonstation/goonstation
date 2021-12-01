@@ -6,7 +6,7 @@
 
 	setup()
 		name = "Lag Detection"
-		schedule_interval = 0.1 SECONDS
+		schedule_interval = 0 SECONDS
 		#ifdef PRE_PROFILING_ENABLED
 		world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
 		#endif
