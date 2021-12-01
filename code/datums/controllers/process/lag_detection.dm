@@ -45,7 +45,7 @@
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
-			if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD || time_since_last > 1 SECOND)
+			if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD || time_since_last > 2.5 SECONDS)
 				#ifdef PRE_PROFILING_ENABLED
 				var/output = world.Profile(PROFILE_REFRESH, null, "json")
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
