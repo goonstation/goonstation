@@ -29706,6 +29706,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/clothing/suit/armor/hopcoat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -30398,6 +30399,7 @@
 "bxX" = (
 /obj/table/wood/round/auto,
 /obj/item/item_box/gold_star,
+/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -46348,9 +46350,6 @@
 	},
 /obj/item/paper/CrashedHopShuttle,
 /obj/item/pen/crayon/golden,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/rack,
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/gas/emergency,
@@ -46763,18 +46762,7 @@
 /turf/simulated/floor/green,
 /area/research_outpost/maint)
 "kiL" = (
-/obj/table/wood/round/auto,
-/obj/item/stamp/hop,
-/obj/item/device/gps,
-/obj/item/acesscomputerunfolder,
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/stool/chair/comfy/blue,
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -47145,7 +47133,6 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "nac" = (
-/obj/storage/secure/closet/command/hop,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -47157,10 +47144,6 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
-	},
-/obj/item/clothing/suit/armor/hopcoat,
-/obj{
-	name = "---Merge conflict marker---"
 	},
 /obj/stool/bed,
 /obj/item/sticker/ribbon/first_place{

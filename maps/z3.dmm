@@ -25128,6 +25128,7 @@
 	name = "Head of Personnel's Office";
 	req_access = null
 	},
+/obj/access_spawn/head_of_personnel,
 /turf/simulated/floor,
 /area/crashed_hop_shuttle)
 "hOL" = (
@@ -25198,6 +25199,7 @@
 	name = "Head of Personnel's Office";
 	req_access_txt = "55"
 	},
+/obj/access_spawn/head_of_personnel,
 /turf/simulated/floor,
 /area/crashed_hop_shuttle)
 "lbt" = (
