@@ -50,8 +50,8 @@
 				highCpuCount = 0
 			if(highCpuCount >= CPU_START_PROFILING_COUNT || force_start)
 				world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
-				message_admins("CPU at [world.cpu], turning on profiling.")
-				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu].")
-				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu]."))
+				message_admins("CPU at [world.cpu], map CPU at [world.map_cpu], turning on profiling.")
+				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu].")
+				ircbot.export("admin", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu]."))
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 				automatic_profiling_on = TRUE
