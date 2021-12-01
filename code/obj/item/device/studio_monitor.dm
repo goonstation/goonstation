@@ -211,7 +211,10 @@
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			if(is_syndicate)
+				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
+			else
+				. = !istype(target.ears, /obj/item/device/radio/headset/syndicate) //Nanotrasen guitar, Nanotrasen tunes
 
 	shred
 		name = "Shred"
