@@ -673,6 +673,9 @@
 
 	proc/flushit()
 		if(!trunk) return
+		if(trunk.loc != src.loc)
+			trunk = null
+			return
 		LIGHT_UP_HOUSING
 		var/obj/disposalholder/H = new /obj/disposalholder
 
