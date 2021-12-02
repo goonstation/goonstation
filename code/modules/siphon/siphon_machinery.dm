@@ -8,6 +8,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
 		..()
 
 	disposing()
@@ -20,22 +21,28 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(!signal || signal.encryption || !signal.data["sender"])
 			return
 
-		if(signal.transmission_method != TRANSMISSION_RADIO)
-			return
-
 		var/sender = signal.data["sender"]
-		if((signal.data["address_1"] in list(src.net_id, "poll")) && sender)
-			var/datum/signal/reply = new
-			reply.data["address_1"] = sender
-			reply.data["command"] = "poll_reply"
-			reply.data["device"] = src.netname
-			reply.data["netid"] = src.net_id
-			var/readouts = src.build_readouts(reply)
-			if(readouts) reply.data["devdat"] = readouts //see associated proc
-			SPAWN_DBG(0.5 SECONDS)
-				src.post_signal(src, reply)
+
+		if((signal.data["address_1"] in list(src.net_id, "probe")) && sender)
+			src.build_net_update(signal,sender)
 			return
 
+		return
+
+	///when prompted, assesses contents of sent command packet and replies; placed in a discrete proc so subtypes can preempt the reply
+	proc/build_net_update(var/datum/signal/signal,var/sender)
+		var/datum/signal/reply = new
+		if(sender)
+			reply.data["address_1"] = sender
+		else
+			reply.data["address_1"] = "devdat"
+		reply.data["command"] = "devdat" //short for device data
+		reply.data["device"] = src.netname
+		reply.data["netid"] = src.net_id
+		var/readouts = src.build_readouts(reply)
+		if(readouts) reply.data["devdat"] = readouts //see associated proc
+		SPAWN_DBG(0.5 SECONDS)
+			src.post_signal(src, reply)
 		return
 
 	///constructs a list of readouts specific to the device, to be automatically interpreted; should return a list
@@ -55,10 +62,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(!freq)
 			freq = src.frequency
 
-		signal.source = src
+		signal.source = src //this is runtiming why
 		signal.data["sender"] = src.net_id
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, freq)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
 
 
 
@@ -288,9 +295,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
 				src.resonators += res
-				res.torque_init(xadj,yadj)
+				res.paired_core = src
+				res.reso_init(xadj,yadj)
 				res.engage_lock()
+				res.build_net_update()
 			SPAWN_DBG(5 DECI SECONDS)
+				src.calibrate_resonance()
+				src.build_net_update()
 				src.changemode("low")
 				src.toggling = FALSE
 
@@ -301,6 +312,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.changemode("high")
 		var/stagger = 0.2 //desync the disengagement a bit
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
+			res.paired_core = null
 			stagger = stagger + rand(1,2) * 0.3
 			res.disengage_lock(stagger)
 		src.resonators.Cut()
@@ -391,6 +403,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/datum/light/light
 	///formatted coordinates for reporting to central console
 	var/formatted_coords = ""
+	///reference
+	var/obj/machinery/siphon/core/paired_core = null
 
 	//descriptions for wrenching
 	var/regular_desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
@@ -436,7 +450,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			. += "<br>A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque."
 
 	//called by siphon to set up the resonator's coordinate reporting and strength values for its initialized position
-	proc/initialize(var/xadj,var/yadj)
+	proc/reso_init(var/xadj,var/yadj)
 		var/horizontal_identifier
 		switch(xadj) //this is wack but you can't key-value by numbers so there
 			if(-4) horizontal_identifier = "A"
@@ -495,8 +509,18 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.light.disable()
 			ClearAllOverlays()
 
+	build_net_update(datum/signal/signal,var/manual)
+		if(manual || (signal && signal.data["command"] == "calibrate"))
+			var/scalex = signal.data["intensity"]
+			scalex = clamp(scalex,0,src.max_intensity)
+			src.intensity = scalex
+			src.update_fx()
+			paired_core.build_net_update()
+		..()
+
 	build_readouts()
 		var/list/devdat = list()
+		devdat["Device Position"] = src.formatted_coords
 		devdat["Intensity"] = src.intensity
 		devdat["Lateral Resonance"] = src.x_torque * src.intensity
 		devdat["Vertical Resonance"] = src.y_torque * src.intensity
@@ -539,6 +563,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	req_access = list(access_mining)
 	object_flags = CAN_REPROGRAM_ACCESS
 	var/temp = null
+	///list of devices known to the siphon control device
+	var/list/known_devices = list()
+	///formatted version of above device manifest
+	var/formatted_list = null
+	///thing to avoid having to update the list every time you click the window
+	var/list_is_updated = FALSE
 
 	light_r = 0.8
 	light_g = 1
@@ -546,7 +576,110 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+
+	receive_signal(datum/signal/signal)
+		if(status & NOPOWER)
+			return
+
+		if(!signal || signal.encryption || !signal.data["sender"])
+			return
+
+		var/sender = signal.data["sender"]
+
+		if(sender && signal.data["command"] == "devdat")
+			src.list_is_updated = FALSE
+			var/device_netid = signal.data["netid"]
+			var/list/manifest = new()
+			manifest["Identifier"] = signal.data["device"]
+			manifest += signal.data["devdat"]
+			src.known_devices[device_netid] = manifest
+		return
+
+/obj/machinery/computer/siphon_control/attack_hand(var/mob/user as mob)
+	if(!src.allowed(user))
+		boutput(user, "<span class='alert'>Access Denied.</span>")
+		return
+
+	if(..())
+		return
+
+	src.add_dialog(user)
+	var/HTML
+
+	///if it works, don't break it?
+	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+		<style type='text/css'>
+			body {
+				font-family: Verdana, sans-serif;
+				background: #222228;
+				color: #ddd;
+				}
+			strong {
+				color: #fff;
+				}
+			a {
+				color: #6ce;
+				text-decoration: none;
+				}
+			a:hover, a:active {
+				color: #cff;
+				}
+			img, a img {
+				border: 0;
+				}
+		</style>
+	"} : {"
+	<style type='text/css'>
+		/* when chui is on apparently do nothing, cargo cult moment */
+	</style>
+	"}
+
+	HTML += {"
+	[header_thing_chui_toggle]
+	<title>HARMONIC SIPHON CONTROL</title>"}
+
+	src.build_formatted_list()
+	if (src.formatted_list)
+		HTML += src.formatted_list
+
+	user.Browse(HTML, "window=siphonControl_\ref[src];title=Harmonic Siphon Control;size=500x600;")
+	onclose(user, "siphonControl_\ref[src]")
+	return
+
+//oh boy another place this gets duplicated
+/obj/machinery/computer/siphon_control/proc/topicLink(action, subaction, var/list/extra)
+	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+
+/obj/machinery/computer/siphon_control/proc/build_formatted_list()
+	if(src.list_is_updated) return
+	var/mainlist = "" //held separately so the siphon can always start the list
+	var/rollingtext = "" //list of entries for not siphon
+
+	for (var/list/manifest in src.known_devices)
+		var/saveforsiphon = FALSE
+		var/minitext = ""
+		for(var/field in manifest)
+			if(field == "Intensity") //calibration isn't in yet, add it, seriously !!!!!!!!!!!
+				minitext += "[field] &middot; [manifest[field]] <A href='[topicLink("calibrate","\ref[manifest]")]'>(Calibrate)</A><br>"
+			else
+				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
+				minitext += "[field] &middot; [manifest[field]]<br>"
+		if(saveforsiphon)
+			mainlist = minitext
+			mainlist += "<br>"
+		else
+			rollingtext += minitext
+			rollingtext += "<br>"
+
+	mainlist += rollingtext
+	src.formatted_list = mainlist
+	src.list_is_updated = TRUE
+	return
+
+
+
+
 
 //database to look up requirements for extraction, including in some cases a recommendation for parameters
 /obj/machinery/computer/siphon_db
