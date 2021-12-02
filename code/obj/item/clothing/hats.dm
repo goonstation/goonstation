@@ -1157,6 +1157,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "chemhood"
 	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	item_function_flags = IMMUNE_TO_ACID
 	seal_hair = 1
 
 	setupProperties()

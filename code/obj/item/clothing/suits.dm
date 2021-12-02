@@ -1693,6 +1693,7 @@
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
+	item_function_flags = IMMUNE_TO_ACID
 	permeability_coefficient = 0
 
 /obj/item/clothing/suit/security_badge
