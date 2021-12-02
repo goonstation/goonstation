@@ -502,7 +502,6 @@
 	spawningFlags = null
 	generateLight = 0
 	temperature = TRENCH_TEMP
-	luminosity = 0
 
 /obj/machinery/computer/sea_elevator
 	name = "Elevator Control"
