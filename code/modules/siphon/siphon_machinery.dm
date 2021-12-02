@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		var/readouts = src.build_readouts(reply)
 		if(readouts) reply.data["devdat"] = readouts //see associated proc
 		SPAWN_DBG(0.5 SECONDS)
-			src.post_signal(src, reply)
+			src.post_signal(reply)
 		return
 
 	///constructs a list of readouts specific to the device, to be automatically interpreted; should return a list
@@ -637,7 +637,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	HTML += {"
 	[header_thing_chui_toggle]
-	<title>HARMONIC SIPHON CONTROL</title>"}
+	<title>Harmonic Siphon Control</title>"}
+
+	HTML += ""
 
 	src.build_formatted_list()
 	if (src.formatted_list)
@@ -655,6 +657,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	if(src.list_is_updated) return
 	var/mainlist = "" //held separately so the siphon can always start the list
 	var/rollingtext = "" //list of entries for not siphon
+
+	if(!length(src.known_devices))
+		mainlist = "NO CONNECTION TO DEVICES"
+		src.formatted_list = mainlist
+		return
 
 	for (var/list/manifest in src.known_devices)
 		var/saveforsiphon = FALSE
