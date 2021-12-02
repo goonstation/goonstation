@@ -501,6 +501,7 @@
 	name = "acid sea floor"
 	spawningFlags = null
 	generateLight = 0
+	temperature = TRENCH_TEMP
 
 /obj/machinery/computer/sea_elevator
 	name = "Elevator Control"
