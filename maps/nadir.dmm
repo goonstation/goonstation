@@ -366,6 +366,9 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor/engine,
 /area/station/science)
 "bk" = (
@@ -711,6 +714,9 @@
 "cr" = (
 /obj/stool/chair/office/blue{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Scientist"
 	},
 /turf/simulated/floor/engine,
 /area/station/science)
@@ -1811,6 +1817,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor/engine,
 /area/station/science)
 "gb" = (
@@ -1929,6 +1938,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/landmark/start{
+	name = "Scientist"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/lobby)
@@ -4686,7 +4698,7 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/sanctuary)
 "qi" = (
-/obj/machinery/computer3/generic/engine/console_lower,
+/obj/machinery/computer/siphon_db,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -5288,6 +5300,9 @@
 	dir = 4;
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
+	},
+/obj/landmark/start{
+	name = "Scientist"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/lobby)
@@ -7280,6 +7295,9 @@
 /obj/stool/chair/office/blue{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Scientist"
+	},
 /turf/simulated/floor/engine,
 /area/station/science)
 "zj" = (
@@ -9221,7 +9239,7 @@
 	name = "The Warrens"
 	})
 "FB" = (
-/obj/machinery/computer/power_monitor/console_lower,
+/obj/machinery/computer/siphon_control,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -9568,6 +9586,9 @@
 	},
 /obj/stool/chair{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Scientist"
 	},
 /turf/simulated/floor/engine,
 /area/station/science)
@@ -12558,6 +12579,9 @@
 "Rc" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Scientist"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/lobby)

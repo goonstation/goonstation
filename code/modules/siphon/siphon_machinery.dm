@@ -1,3 +1,7 @@
+//values to differentiate types of manual packet triggering (as opposed to poll-based triggering)
+#define SIGBUILD_REGULAR 1
+#define SIGBUILD_PAIRED 2
+
 ABSTRACT_TYPE(/obj/machinery/siphon)
 /obj/machinery/siphon
 	var/frequency = FREQ_HARMONIC_SIPHON
@@ -24,18 +28,17 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		var/sender = signal.data["sender"]
 
 		if((signal.data["address_1"] in list(src.net_id, "probe")) && sender)
-			src.build_net_update(signal,sender)
+			src.build_net_update(signal,null,sender)
 			return
 
 		return
 
-	///when prompted, assesses contents of sent command packet and replies; placed in a discrete proc so subtypes can preempt the reply
-	proc/build_net_update(var/datum/signal/signal,var/sender)
+	///prepares an update for the siphon control console; placed in a discrete proc so subtypes can handle input commands before signal post
+	proc/build_net_update(var/datum/signal/signal,var/manual,var/replyto)
+		//manual is used in subtypes for local update triggering if changes were done asynchronously
 		var/datum/signal/reply = new
-		if(sender)
-			reply.data["address_1"] = sender
-		else
-			reply.data["address_1"] = "devdat"
+		if(replyto)
+			reply.data["address_1"] = replyto
 		reply.data["command"] = "devdat" //short for device data
 		reply.data["device"] = src.netname
 		reply.data["netid"] = src.net_id
@@ -62,7 +65,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(!freq)
 			freq = src.frequency
 
-		signal.source = src //this is runtiming why
+		signal.source = src
 		signal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
@@ -125,7 +128,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			return
 		total_draw = 200
 		if(src.mode == "active")
-			src.calibrate_resonance()
 			total_draw += 150 * src.resofactor
 			src.extract_ticks += src.resofactor
 
@@ -156,12 +158,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(user,"LATERAL RESONANCE: [src.x_torque]")
 			boutput(user,"VERTICAL RESONANCE: [src.y_torque]")
 			boutput(user,"SHEAR VALUE: [src.shear]")
+			return
 		else if(iswrenchingtool(W))
 			var/diditwork = src.toggle_drill()
 			if(diditwork)
 				boutput(user,"You manually toggle the siphon's lift mechanism.")
 			else
 				if(src.mode == "active") boutput(user,"The siphon's lift mechanism can't be toggled while it's operational.")
+			return
 
 
 	attack_hand(mob/user)
@@ -298,10 +302,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				res.paired_core = src
 				res.reso_init(xadj,yadj)
 				res.engage_lock()
-				res.build_net_update()
+				res.build_net_update(null,SIGBUILD_REGULAR)
 			SPAWN_DBG(5 DECI SECONDS)
 				src.calibrate_resonance()
-				src.build_net_update()
+				src.build_net_update(null,SIGBUILD_REGULAR)
 				src.changemode("low")
 				src.toggling = FALSE
 
@@ -441,6 +445,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
+			if(paired_core)
+				paired_core.calibrate_resonance()
+				src.build_net_update(null,SIGBUILD_PAIRED)
+			return
 
 	examine()
 		. = ..()
@@ -510,11 +518,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			ClearAllOverlays()
 
 	build_net_update(datum/signal/signal,var/manual)
-		if(manual || (signal && signal.data["command"] == "calibrate"))
+		if(signal && signal.data["command"] == "calibrate")
 			var/scalex = signal.data["intensity"]
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
+			paired_core.calibrate_resonance()
+			paired_core.build_net_update()
+		if(manual == SIGBUILD_PAIRED)
 			paired_core.build_net_update()
 		..()
 
@@ -560,8 +571,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	name = "Harmonic Siphon Control"
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine1"
-	req_access = list(access_mining)
+	req_access = list(access_research)
 	object_flags = CAN_REPROGRAM_ACCESS
+	var/net_id
 	var/temp = null
 	///list of devices known to the siphon control device
 	var/list/known_devices = list()
@@ -576,6 +588,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		..()
+		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
 
 	receive_signal(datum/signal/signal)
@@ -614,6 +627,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				font-family: Verdana, sans-serif;
 				background: #222228;
 				color: #ddd;
+				text-align: center;
 				}
 			strong {
 				color: #fff;
@@ -659,14 +673,18 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/rollingtext = "" //list of entries for not siphon
 
 	if(!length(src.known_devices))
-		mainlist = "NO CONNECTION TO DEVICES"
+		mainlist = "NO CONNECTION TO DEVICES<br>LOWER SIPHON TO INITIALIZE"
 		src.formatted_list = mainlist
 		return
 
+	mainlist += "CONNECTED DEVICES"
+
 	for (var/list/manifest in src.known_devices)
+		boutput(world,"[manifest] plus [known_devices[manifest]]")
 		var/saveforsiphon = FALSE
 		var/minitext = ""
 		for(var/field in manifest)
+			boutput(world,"[field] plus [manifest[field]]")
 			if(field == "Intensity") //calibration isn't in yet, add it, seriously !!!!!!!!!!!
 				minitext += "[field] &middot; [manifest[field]] <A href='[topicLink("calibrate","\ref[manifest]")]'>(Calibrate)</A><br>"
 			else
