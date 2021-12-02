@@ -12390,7 +12390,7 @@
 	area_access = 37;
 	detector_id = "Escape Breach Window";
 	dir = 1;
-	setup_beam_length = 22
+	setup_beam_length = 20
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black/grime,
