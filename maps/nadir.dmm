@@ -267,7 +267,7 @@
 "aU" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 40
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -281,7 +281,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -337,7 +336,7 @@
 "bg" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 40
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -351,7 +350,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -1625,6 +1623,7 @@
 "fr" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/decal/tile_edge/line/purple,
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "fs" = (
@@ -2402,6 +2401,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/refinery)
 "id" = (
@@ -3010,7 +3010,7 @@
 "ki" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 40
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -3024,7 +3024,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -3108,7 +3107,7 @@
 "kv" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 24
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -3122,7 +3121,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/mining,
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "line2"
@@ -4670,6 +4668,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "qd" = (
@@ -5930,6 +5929,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
+/obj/access_spawn/research_director,
 /turf/simulated/floor/engine,
 /area/station/science/research_director)
 "uw" = (
@@ -6363,6 +6363,7 @@
 /area/station/engine/elect)
 "wd" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/lobby)
 "we" = (
@@ -6416,7 +6417,7 @@
 "wr" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 40
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -6430,7 +6431,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -8513,7 +8513,7 @@
 "Dm" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 24
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -8527,7 +8527,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/mining,
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
 	icon_state = "line2"
@@ -8938,6 +8937,7 @@
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "EC" = (
@@ -8999,6 +8999,7 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "EK" = (
@@ -9763,6 +9764,7 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
+/obj/access_spawn/research_director,
 /turf/simulated/floor/engine,
 /area/station/science/research_director)
 "Ho" = (
@@ -10274,7 +10276,7 @@
 "Jf" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
-	req_access = null
+	req_access = 26
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -10288,7 +10290,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/access_spawn/janitor,
 /turf/simulated/floor/engine,
 /area/station/janitor/office)
 "Jg" = (
@@ -11603,6 +11604,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "NJ" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science)
 "NK" = (
@@ -12190,6 +12192,7 @@
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/engine/caution/misc{
 	dir = 6
 	},
@@ -13169,6 +13172,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "Tn" = (
@@ -13634,6 +13638,7 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/line/purple,
+/obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "Vb" = (
