@@ -1887,19 +1887,19 @@
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
-	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return 0
-	if (!(src.has_hand(1) && src.has_hand(0))) return 0 //gotta have two hands to two-hand
+	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return FALSE
+	if (!(src.has_hand(1) && src.has_hand(0))) return FALSE //gotta have two hands to two-hand
 	I.two_handed = twoHanded
 
 	if(I.two_handed)
 		if(src.l_hand == I)
 			if(src.r_hand != null)
 				I.two_handed = 0
-				return 0
+				return FALSE
 		else if(src.r_hand == I)
 			if(src.l_hand != null)
 				I.two_handed = 0
-				return 0
+				return FALSE
 		hud.set_visible(hud.lhand, 0)
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
@@ -1930,7 +1930,7 @@
 				src.l_hand = null
 				src.r_hand = I
 	src.update_inhands()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/has_any_hands()
 	return src.has_hand(1) || src.has_hand(0)
