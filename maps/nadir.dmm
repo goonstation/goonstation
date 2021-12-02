@@ -427,7 +427,7 @@
 "bt" = (
 /obj/lattice,
 /obj/machinery/launcher_loader/north,
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "bv" = (
 /obj/decal/tile_edge/line/orange{
@@ -2044,7 +2044,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/arcade/dungeon)
 "gM" = (
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "gN" = (
 /obj/table/wood/auto,
@@ -2097,7 +2097,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/shuttle/arrival/station)
 "gV" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -2766,7 +2766,7 @@
 /obj/landmark/map{
 	name = "NADIR"
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "jk" = (
 /obj/storage/closet/emergency,
@@ -6199,7 +6199,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "vA" = (
 /obj/machinery/light/incandescent/netural,
@@ -6249,7 +6249,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/shuttle/arrival/station)
 "vO" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -6633,7 +6633,7 @@
 	name = "Emergency Re-Entry";
 	pixel_x = -24
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "wX" = (
 /obj/machinery/light{
@@ -7277,7 +7277,7 @@
 	name = "The Warrens"
 	})
 "zd" = (
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/station/ai_monitored/armory)
 "ze" = (
 /obj/decal/tile_edge/line/blue{
@@ -8561,7 +8561,7 @@
 	name = "Northeast Breach Hull"
 	})
 "Dt" = (
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
 	})
@@ -9637,7 +9637,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/shuttle/arrival/station)
 "GQ" = (
 /obj/stool/chair/couch{
@@ -10110,7 +10110,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/shuttle/arrival/station)
 "IF" = (
 /obj/cable{
@@ -12052,7 +12052,7 @@
 	})
 "Pe" = (
 /obj/lattice,
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "Pf" = (
 /obj/decal/tile_edge/line/red{
@@ -12626,7 +12626,7 @@
 	drive_range = 50;
 	id = "trashgun"
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "Rj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -13200,7 +13200,7 @@
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/space)
 "Tv" = (
 /obj/machinery/computer3/generic/personal{
@@ -13626,7 +13626,7 @@
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/shuttle/arrival/station)
 "Va" = (
 /obj/table/reinforced/auto,
@@ -14993,7 +14993,7 @@
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
 "ZY" = (
-/turf/space/fluid,
+/turf/space/fluid/sparse,
 /area/shuttle/escape/station/sealab)
 "ZZ" = (
 /obj/decal/tile_edge/check/blue{
