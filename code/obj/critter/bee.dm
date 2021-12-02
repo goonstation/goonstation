@@ -837,8 +837,7 @@
 		/obj/item/clothing/head/wizard/red,
 		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/clothing/head/helmet/viking,
-		/obj/item/clothing/head/void_crown,
-		/obj/item/clothing/head/bighat/syndicate/biggest
+		/obj/item/clothing/head/void_crown
 	)
 
 	New()
