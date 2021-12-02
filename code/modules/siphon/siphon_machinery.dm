@@ -295,6 +295,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.icon_state = "drilldrop"
 		SPAWN_DBG(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4))
+				LAGCHECK(LAG_LOW)
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
@@ -316,10 +317,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.changemode("high")
 		var/stagger = 0.2 //desync the disengagement a bit
 		for (var/obj/machinery/siphon/resonator/res in src.resonators)
+			LAGCHECK(LAG_LOW)
 			res.paired_core = null
 			stagger = stagger + rand(1,2) * 0.3
 			res.disengage_lock(stagger)
 		src.resonators.Cut()
+		src.clear_siphon_console()
 		SPAWN_DBG(1 SECOND)
 			src.icon_state = "drillraise"
 			SPAWN_DBG(3 SECONDS)
@@ -365,6 +368,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		devdat["Vertical Resonance"] = src.y_torque
 		devdat["Shear Value"] = src.shear
 		return devdat
+
+	proc/clear_siphon_console()
+		var/datum/signal/reply = new
+		reply.data["command"] = "deinit"
+		reply.data["device"] = src.netname
+		reply.data["netid"] = src.net_id
+		src.post_signal(reply)
+		return
 
 /obj/overlay/siphonbeam
 	icon = 'icons/obj/machines/neodrill_32x64.dmi'
@@ -600,13 +611,19 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 		var/sender = signal.data["sender"]
 
-		if(sender && signal.data["command"] == "devdat")
-			src.list_is_updated = FALSE
-			var/device_netid = signal.data["netid"]
-			var/list/manifest = new()
-			manifest["Identifier"] = signal.data["device"]
-			manifest += signal.data["devdat"]
-			src.known_devices[device_netid] = manifest
+		if(sender)
+			switch(signal.data["command"])
+				if("devdat")
+					src.list_is_updated = FALSE
+					var/device_netid = signal.data["netid"]
+					var/list/manifest = new()
+					manifest["Identifier"] = signal.data["device"]
+					manifest += signal.data["devdat"]
+					src.known_devices[device_netid] = manifest
+				if("deinit")
+					if(signal.data["device"] == "SIPHON")
+						src.list_is_updated = FALSE
+						src.known_devices.Cut()
 		return
 
 /obj/machinery/computer/siphon_control/attack_hand(var/mob/user as mob)
@@ -679,10 +696,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	mainlist += "CONNECTED DEVICES"
 
-	for (var/list/manifest in src.known_devices)
-		boutput(world,"[manifest] plus [known_devices[manifest]]")
+	for (var/device_index in src.known_devices)
+		boutput(world,"[device_index] plus [known_devices[device_index]]")
 		var/saveforsiphon = FALSE
 		var/minitext = ""
+		var/list/manifest = known_devices[device_index]
 		for(var/field in manifest)
 			boutput(world,"[field] plus [manifest[field]]")
 			if(field == "Intensity") //calibration isn't in yet, add it, seriously !!!!!!!!!!!
