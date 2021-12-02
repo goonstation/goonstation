@@ -804,9 +804,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
 		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
 
-	for(var/datum/controller/process/lag_detection/lag_detection_process in global.processScheduler.processes)
-		if(lag_detection_process.automatic_profiling_on)
-			lag_detection_process.automatic_profiling(force_stop=TRUE)
+	if(global.lag_detection_process.automatic_profiling_on)
+		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
 

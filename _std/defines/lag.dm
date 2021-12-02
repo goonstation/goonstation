@@ -58,7 +58,7 @@
 #define TICKLAG_DILATE_INTERVAL 20
 
 /// whether we want to profile in advance of a lagspike every tick to catch relevant lagspike info
-// #define PRE_PROFILING_ENABLED
+#define PRE_PROFILING_ENABLED
 /// what value must world.cpu cross upwards to trigger automatic profiling
 #define CPU_START_PROFILING_THRESHOLD 150
 /// what value must world.cpu cross upwards to trigger automatic profiling but this one ignores CPU_START_PROFILING_COUNT
@@ -71,6 +71,8 @@
 #define CPU_STOP_PROFILING_COUNT 20
 /// how long the round needs to be in progress before we can start profiling
 #define CPU_PROFILING_ROUNDSTART_GRACE_PERIOD 10 SECONDS
+/// even if world.cpu is normal if tick took this amount of time profiling will start
+#define TICK_TIME_PROFILING_THRESHOLD 0.6 SECONDS
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120
