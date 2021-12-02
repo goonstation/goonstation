@@ -1297,7 +1297,7 @@
 		..()
 		src.smash(A)
 
-	pixelaction(atom/target, params, mob/living/user, reach)
+	pixelaction(atom/target, list/params, mob/living/user, reach)
 		if(!istype(target, /obj/table))
 			return ..()
 		var/obj/table/target_table = target
@@ -1312,6 +1312,10 @@
 			return
 		if(!can_reach(user, source_table))
 			return
+		if("icon-x" in params)
+			src.pixel_x = text2num(params["icon-x"]) - 16
+		if("icon-y" in params)
+			src.pixel_y = text2num(params["icon-y"]) - 16
 		user.weapon_attack(source_table, src, TRUE, list())
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
