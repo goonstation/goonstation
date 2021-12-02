@@ -951,7 +951,7 @@ var/global/list/mapNames = list(
 	escape_station = /area/shuttle/escape/station/sealab
 	escape_def = SHUTTLE_OSHAN
 	escape_dir = EAST
-	shuttle_map_turf = /turf/space/fluid/sparse
+	shuttle_map_turf = /turf/space/fluid/acid
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap

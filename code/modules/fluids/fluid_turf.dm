@@ -497,8 +497,10 @@
 			return
 		else ..()
 
-/turf/space/fluid/sparse
-	spawningFlags = SPAWN_DECOR
+/turf/space/fluid/acid
+	name = "acid sea floor"
+	spawningFlags = null
+	generateLight = 0
 
 /obj/machinery/computer/sea_elevator
 	name = "Elevator Control"
