@@ -30,6 +30,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		if(!automatic_profiling_on && tick_count % 100 == 0)
 			world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
 			last_tick_time = null
+			last_tick_time = 0
 		#endif
 
 	proc/automatic_profiling(force_stop=FALSE, force_start=FALSE)
@@ -49,6 +50,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
 				last_tick_time = null
+				last_tick_time = 0
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
