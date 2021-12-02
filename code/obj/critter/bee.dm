@@ -1636,6 +1636,13 @@
 				SPAWN_DBG(0.7 SECONDS)
 					fellow_bee.aggressive = 0
 
+/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
+	name = "greater domestic space-beean"
+	icon_state = "beean-wings"
+	icon_body = "beean"
+	sleeping_icon_state = "beean-sleep"
+
+
 /* -------------------- END -------------------- */
 
 /* -------------------- EGGS & FOOD -------------------- */
