@@ -10,7 +10,7 @@
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER 
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -219,7 +219,7 @@
 		if(IN_RANGE(src,src.target,3))
 			spray_at(src.target)
 		else
-			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 50)
+			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 30)
 			if (!src.path)
 				src.KillPathAndGiveUp(1)
 

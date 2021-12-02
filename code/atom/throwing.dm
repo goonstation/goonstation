@@ -71,7 +71,7 @@
 		src.throwing = 0
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1,
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return
@@ -131,6 +131,7 @@
 		transform_original = transform_original,
 		params = params,
 		thrown_from = thrown_from,
+		thrown_by = thrown_by,
 		return_target = usr, // gross
 		bonus_throwforce = bonus_throwforce,
 		end_throw_callback = end_throw_callback

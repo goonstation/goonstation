@@ -519,7 +519,7 @@
 			if ("listbasic")
 				src.show_text("smile, grin, smirk, frown, scowl, grimace, sulk, pout, nod, blink, drool, shrug, tremble, quiver, shiver, shudder, shake, \
 				think, ponder, clap, wave, salute, flap, aflap, laugh, chuckle, giggle, chortle, guffaw, cough, hiccup, sigh, mumble, grumble, groan, moan, sneeze, \
-				sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
+				wheeze, sniff, snore, whimper, yawn, choke, gasp, weep, sob, wail, whine, gurgle, gargle, blush, flinch, blink_r, eyebrow, shakehead, shakebutt, \
 				pale, flipout, rage, shame, raisehand, crackknuckles, stretch, rude, cry, retch, raspberry, tantrum, gesticulate, wgesticulate, smug, \
 				nosepick, flex, facepalm, panic, snap, airquote, twitch, twitch_v, faint, deathgasp, signal, wink, collapse, trip, dance, scream, \
 				burp, fart, monologue, contemplate, custom")
@@ -813,7 +813,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle")
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter")
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -1739,7 +1739,7 @@
 										src.set_loc(newloc)
 										message = "<B>[src]</B> flips onto [T]!"
 
-							var/flipped_a_guy = 0
+							var/flipped_a_guy = FALSE
 							for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 								var/mob/living/M = G.affecting
 								if (M == src)
@@ -1749,7 +1749,7 @@
 								if (src.a_intent == INTENT_HELP)
 									M.emote("flip", 1) // make it voluntary so there's a cooldown and stuff
 									continue
-								flipped_a_guy = 1
+								flipped_a_guy = TRUE
 								var/suplex_result = src.do_suplex(G)
 								if(suplex_result)
 									combatflip |= TRUE
@@ -1757,10 +1757,34 @@
 								if(!combatflip)
 									var/turf/oldloc = src.loc
 									var/turf/newloc = G.affecting.loc
-									if(istype(oldloc) && istype(newloc))
+									var/mob/tmob = G.affecting
+									var/do_flip = TRUE
+									var/orig_src_flags = src.flags
+									var/orig_tmob_flags = tmob.flags
+									src.flags |= TABLEPASS
+									tmob.flags |= TABLEPASS
+									if(!istype(oldloc) || !istype(newloc))
+										do_flip = FALSE
+									if(do_flip && (!oldloc.Enter(tmob) || !newloc.Enter(src)))
+										do_flip = FALSE
+									if(do_flip)
+										for(var/atom/movable/obstacle in oldloc)
+											if(!ismob(obstacle) && !obstacle.Cross(tmob))
+												do_flip = FALSE
+												break
+									if(do_flip)
+										for(var/atom/movable/obstacle in newloc)
+											if(!ismob(obstacle) && !obstacle.Cross(src))
+												do_flip = FALSE
+												break
+									if(do_flip)
 										src.set_loc(newloc)
-										G.affecting.set_loc(oldloc)
-										message = "<B>[src]</B> flips over [G.affecting]!"
+										tmob.set_loc(oldloc)
+										message = "<B>[src]</B> flips over [tmob]!"
+									else
+										flipped_a_guy = FALSE
+									src.flags = orig_src_flags
+									tmob.flags = orig_tmob_flags
 							if (!flipped_a_guy)
 								for (var/mob/living/M in view(1, null))
 									if (M == src)

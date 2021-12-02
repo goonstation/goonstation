@@ -1442,8 +1442,6 @@ DEFINE_FLOORS(grasslush/thin,
 /turf/simulated/floor/blob_act(var/power)
 	return
 
-/turf/simulated/floor/proc/update_icon()
-
 /turf/simulated/attack_hand(mob/user as mob)
 	if (src.density == 1)
 		return

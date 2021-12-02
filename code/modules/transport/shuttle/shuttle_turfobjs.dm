@@ -84,7 +84,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 */
 	/////////////////////////////////////////////////////////////////OBJECTS
 

@@ -188,6 +188,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 
 /atom/proc/GetOverlayImage(var/key)
+	RETURN_TYPE(/image)
 	if (!src.overlay_refs)
 		src.overlay_refs = list()
 	//Never rely on this proc returning an image.

@@ -157,7 +157,7 @@ Broken RCD + Effects
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -178,7 +178,7 @@ Broken RCD + Effects
 					R.matter = 0
 					qdel(R)
 				R.tooltip_rebuild = 1
-				src.update_icon()
+				src.UpdateIcon()
 				playsound(src, "sound/machines/click.ogg", 50, 1)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
@@ -218,7 +218,7 @@ Broken RCD + Effects
 		// Gonna change this so it doesn't shit sparks when mode switched
 		// Just that it does it only after actually doing something
 		//src.shitSparks()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	afterattack(atom/A, mob/user as mob)
@@ -466,7 +466,7 @@ Broken RCD + Effects
 		else
 			src.matter -= checkamt
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter units.")
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/do_thing(mob/user as mob, atom/target, var/what, var/ammo, var/delay)
 		if (!ammo_check(user, ammo))
@@ -505,7 +505,7 @@ Broken RCD + Effects
 			//if(map_setting == "COG2") T.set_dir(user.dir)
 			T.autoclose = 1
 
-	proc/update_icon() //we got fancy rcds now
+	update_icon() //we got fancy rcds now
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
