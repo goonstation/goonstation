@@ -1743,9 +1743,9 @@ var/f_color_selector_handler/F_Color_Selector
 				var/final_action = action
 				if(plist["average"])
 					final_action |= PROFILE_AVERAGE
-				if(plist["action"] == PROFILE_STOP)
+				if(plist["action"] == "stop")
 					lag_detection_process.manual_profiling_on = FALSE
-				else if(plist["action"] == PROFILE_START)
+				else if(plist["action"] == "start")
 					lag_detection_process.manual_profiling_on = TRUE
 				var/output = world.Profile(final_action, type, "json")
 				if(plist["action"] == "refresh" || plist["action"] == "stop")
