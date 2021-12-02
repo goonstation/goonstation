@@ -17,6 +17,7 @@
 			. += "\nThere's a barcode with the code for [src.delivery_destination] on it."
 
 	update_icon()
+		..()
 		if(src.delivery_destination)
 			src.UpdateOverlays(image(src.icon, "crate-barcode"), "barcode")
 		else
