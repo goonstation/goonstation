@@ -1,4 +1,7 @@
 
+(t)thu dec 02 21
+(u)pali
+(*)You can now slide glasses across tables. Just stand next to a table and click on another table far away with a drinking glass in hand
 (t)wed dec 01 21
 (u)sovexe
 (p)6836

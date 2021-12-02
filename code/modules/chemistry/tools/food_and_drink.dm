@@ -1297,6 +1297,35 @@
 		..()
 		src.smash(A)
 
+	pixelaction(atom/target, params, mob/living/user, reach)
+		if(!istype(target, /obj/table))
+			return ..()
+		var/obj/table/target_table = target
+		var/obj/table/source_table = locate() in get_step(user, user.dir)
+		if(isnull(source_table))
+			for(var/dir in cardinal)
+				source_table = locate() in get_step(user, dir)
+				if(!isnull(source_table))
+					user.set_dir(dir)
+					break
+		if(isnull(source_table))
+			return
+		if(!can_reach(user, source_table))
+			return
+		user.weapon_attack(source_table, src, TRUE, list())
+		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
+		var/turf/last_turf = get_turf(source_table)
+		SPAWN_DBG(0)
+			for(var/turf/T in path)
+				if(src.loc != last_turf)
+					break
+				if(!(locate(/obj/table) in src.loc))
+					src.smash(T)
+					break
+				step_towards(src, T, 0.1 SECONDS)
+				last_turf = T
+				sleep(0.1 SECONDS)
+
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
