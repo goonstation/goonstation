@@ -1245,6 +1245,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		return
 
 /obj/decal/tile_edge/stripe/xmas
+	EPHEMERAL_XMAS
 	icon_state = "xmas"
 
 /obj/storage/crate/xmas
