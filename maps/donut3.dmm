@@ -22487,6 +22487,7 @@
 /obj/decal/xmas_lights/ephemeral{
 	pixel_y = 38
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
@@ -23191,6 +23192,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/grimycarpet,
 /area/station/hallway/primary/southeast)
 "goQ" = (
@@ -38243,6 +38245,7 @@
 	dir = 8
 	},
 /obj/random_item_spawner/tools/one,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "kOC" = (
@@ -42408,6 +42411,7 @@
 	pixel_x = -1;
 	pixel_y = 7
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -45284,6 +45288,7 @@
 "mRC" = (
 /obj/table/auto,
 /obj/random_item_spawner/junk/maybe_few,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -45674,6 +45679,7 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "mWJ" = (
@@ -46115,6 +46121,7 @@
 	dir = 4;
 	pixel_x = 16
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -49716,6 +49723,7 @@
 	dir = 1
 	},
 /obj/machinery/light/emergency,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "ofw" = (
@@ -62880,6 +62888,7 @@
 "rIs" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/maybe_few,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "rIw" = (
@@ -63786,6 +63795,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -70717,6 +70727,7 @@
 /obj/table/round/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/disposalpipe/segment/brig,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -73961,6 +73972,19 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
+"uUX" = (
+/obj/table/glass/auto,
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/decal/xmas_lights/ephemeral{
+	pixel_y = 38
+	},
+/obj/item/a_gift/festive/ephemeral,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "uUY" = (
 /obj/machinery/vending/snack,
 /turf/simulated/grimycarpet,
@@ -82430,6 +82454,7 @@
 	pixel_y = 3
 	},
 /obj/random_item_spawner/tableware/few,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -82640,6 +82665,7 @@
 /area/listeningpost)
 "xsX" = (
 /obj/table/wood/auto,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "xta" = (
@@ -83936,6 +83962,7 @@
 	pixel_x = -7;
 	pixel_y = 12
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -84703,6 +84730,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "xVz" = (
@@ -85705,6 +85733,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "ykb" = (
@@ -122917,7 +122946,7 @@ rdj
 rdj
 rdj
 xVa
-jBB
+uUX
 qqy
 qae
 qae

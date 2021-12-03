@@ -6993,6 +6993,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
 "atA" = (
@@ -7455,6 +7456,7 @@
 	pixel_x = 3;
 	pixel_y = 7
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
 "auM" = (
@@ -12420,6 +12422,7 @@
 /area/station/hallway/primary/central)
 "aGR" = (
 /obj/table/glass/auto,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/neutral/corner,
 /area/station/hallway/primary/central)
 "aGS" = (
@@ -12853,6 +12856,7 @@
 /area/station/hallway/primary/central)
 "aIb" = (
 /obj/table/glass/auto,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/neutral/side{
 	dir = 6
 	},
@@ -14268,6 +14272,7 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet,
 /area/station/security/main)
 "aLx" = (
@@ -15606,6 +15611,7 @@
 	pixel_x = -2;
 	pixel_y = 1
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet{
 	icon_state = "blue1"
 	},
@@ -20857,6 +20863,7 @@
 /obj/item/bell/hop{
 	pixel_y = 5
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
 "bbg" = (
@@ -26361,6 +26368,7 @@
 "bnD" = (
 /obj/table/auto,
 /obj/item/clothing/head/that,
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue2"
@@ -28941,6 +28949,7 @@
 	dir = 1;
 	pixel_y = 5
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "btL" = (
@@ -43714,6 +43723,7 @@
 /obj/item/kitchen/utensil/knife{
 	pixel_y = 5
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/supplylobby)
 "cdH" = (
@@ -54284,6 +54294,7 @@
 	pixel_x = -1;
 	pixel_y = 11
 	},
+/obj/item/a_gift/festive/ephemeral,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
