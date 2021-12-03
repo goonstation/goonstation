@@ -67789,6 +67789,9 @@
 	pixel_y = 26;
 	text = "NF"
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -67818,6 +67821,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -67836,6 +67842,9 @@
 	name = "Mining Shutters";
 	pixel_x = 4;
 	pixel_y = 24
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
@@ -68486,6 +68495,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -68501,6 +68511,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -68509,6 +68520,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -79242,6 +79254,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_north"
 	},
@@ -79679,6 +79694,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -79854,6 +79870,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -79890,6 +79907,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
 	},
@@ -82074,7 +82092,6 @@
 	dir = 6
 	},
 /obj/machinery/light/small,
-/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "unJ" = (
