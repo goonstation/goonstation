@@ -81139,6 +81139,14 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
+"lcw" = (
+/obj/table/glass/reinforced/auto,
+/obj/random_item_spawner/tableware,
+/obj/item/reagent_containers/food/drinks/eggnog/ephemeral,
+/turf/simulated/floor{
+	icon_state = "carpet2"
+	},
+/area/station/crew_quarters/cafeteria)
 "lhJ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -116474,7 +116482,7 @@ aAX
 aHK
 aJp
 aKG
-aLY
+lcw
 aNq
 aOA
 aPL

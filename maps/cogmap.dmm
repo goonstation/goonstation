@@ -11503,6 +11503,7 @@
 	pixel_x = 19;
 	pixel_y = 8
 	},
+/obj/item/reagent_containers/food/drinks/eggnog/ephemeral,
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 8
 	},

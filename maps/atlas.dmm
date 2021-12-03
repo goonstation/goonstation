@@ -12383,7 +12383,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/a_gift/festive/ephemeral,
+/obj/item/reagent_containers/food/drinks/eggnog/ephemeral,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Dl" = (

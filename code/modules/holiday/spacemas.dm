@@ -1248,6 +1248,17 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	EPHEMERAL_XMAS
 	icon_state = "xmas"
 
+/obj/item/reagent_containers/food/drinks/eggnog
+	EPHEMERAL_XMAS
+	name = "Egg Nog"
+	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
+	icon_state = "nog"
+	heal_amt = 1
+	festivity = 1
+	rc_flags = RC_FULLNESS
+	initial_volume = 50
+	initial_reagents = list("eggnog"=40)
+
 /obj/storage/crate/xmas
 	name = "\improper Spacemas crate"
 	icon_state = "xmascrate"

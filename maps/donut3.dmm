@@ -84584,6 +84584,7 @@
 /area/station/chapel/sanctuary)
 "xTR" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/eggnog/ephemeral,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"
