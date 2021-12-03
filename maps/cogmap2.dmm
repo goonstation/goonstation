@@ -14245,10 +14245,12 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/caution/south,
 /area/station/hydroponics/lobby)
 "aFN" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/caution/south,
 /area/station/hydroponics/lobby)
 "aFO" = (
@@ -14258,6 +14260,7 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/storage/wall/random,
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/caution/south,
 /area/station/hydroponics/lobby)
 "aFP" = (
@@ -15594,6 +15597,9 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north,
 /area/station/hydroponics/lobby)
 "aJe" = (
@@ -15608,6 +15614,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/storage/crate,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north,
 /area/station/hydroponics/lobby)
 "aJf" = (
@@ -15621,6 +15630,9 @@
 	},
 /obj/disposalpipe/trunk/produce{
 	dir = 4
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
 	},
 /turf/simulated/floor/caution/north,
 /area/station/hydroponics/lobby)
@@ -25993,6 +26005,12 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/inner/central)
