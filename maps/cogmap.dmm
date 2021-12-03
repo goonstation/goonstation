@@ -31929,11 +31929,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/power/apc/autoname_east,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "bCF" = (
@@ -55653,9 +55652,8 @@
 /obj/machinery/atmospherics/valve{
 	name = "gas mix supply valve"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
@@ -62913,9 +62911,8 @@
 /turf/simulated/floor,
 /area/station/security/secwing)
 "vlS" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
