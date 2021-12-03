@@ -1887,18 +1887,19 @@
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
-	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return 0
+	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return FALSE
+	if (!(src.has_hand(1) && src.has_hand(0))) return FALSE //gotta have two hands to two-hand
 	I.two_handed = twoHanded
 
 	if(I.two_handed)
 		if(src.l_hand == I)
 			if(src.r_hand != null)
 				I.two_handed = 0
-				return 0
+				return FALSE
 		else if(src.r_hand == I)
 			if(src.l_hand != null)
 				I.two_handed = 0
-				return 0
+				return FALSE
 		hud.set_visible(hud.lhand, 0)
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
@@ -1929,16 +1930,24 @@
 				src.l_hand = null
 				src.r_hand = I
 	src.update_inhands()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/has_any_hands()
-	. = ..()
-	if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-		. = TRUE
-	else if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-		. = TRUE
-	else if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
-		. = TRUE
+	return src.has_hand(1) || src.has_hand(0)
+
+/mob/living/carbon/human/proc/has_hand(var/hand = 1)
+	switch(hand)
+		if (1)//Left
+			if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				return TRUE
+			if (istype(src.l_hand, /obj/item/magtractor))
+				return TRUE
+		if (0)//Right
+			if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				return TRUE
+			if (istype(src.r_hand, /obj/item/magtractor))
+				return TRUE
+	return FALSE
 
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
