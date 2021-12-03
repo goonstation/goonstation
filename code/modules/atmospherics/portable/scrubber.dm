@@ -72,7 +72,7 @@
 		if(src.on)
 			src.on = FALSE
 			src.updateDialog()
-			src.update_icon()
+			src.UpdateIcon()
 			src.visible_message("<span class='alert'>[src] shuts down due to lack of APC power.</span>")
 		return
 
@@ -100,7 +100,7 @@
 		power_usage += filtered_out_moles * 700 WATTS
 		A.use_power(power_usage, ENVIRON)
 		src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents
@@ -188,7 +188,7 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
-		update_icon()
+		UpdateIcon()
 	else
 		usr.Browse(null, "window=scrubber")
 		return

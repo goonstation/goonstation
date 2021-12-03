@@ -257,7 +257,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
 			return
 
@@ -279,7 +279,7 @@
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
-	src.update_icon()
+	src.UpdateIcon()
 
 
 // flockdrones can always move through

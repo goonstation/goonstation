@@ -104,7 +104,7 @@
 	icon_state = "vine-light1"
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/static/ideal_temp = 310		//same as blob, why not? I have no other reference point.
 	var/growth = 0
 	var/waittime = 40
@@ -403,7 +403,15 @@
 
 				sleep(bulb_complete)
 
-				if (!destroyed && ishuman(M))
+				if(!isalive(M) && M.ghost?.mind?.dnr)
+					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
+					M.gib()
+					flick("bulb-open-animation", src)
+					new/obj/decal/opened_kudzu_bulb(get_turf(src))
+					SPAWN_DBG(1 SECOND)
+						qdel(src)
+					
+				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))

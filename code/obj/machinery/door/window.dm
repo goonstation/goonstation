@@ -18,8 +18,8 @@
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
-	object_flags = CAN_REPROGRAM_ACCESS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK
 
 	New()
 		..()
@@ -27,6 +27,9 @@
 		if (src.req_access && length(src.req_access))
 			src.icon_state = "[src.icon_state]"
 			src.base_state = src.icon_state
+		return
+
+	xmasify()
 		return
 
 	attack_hand(mob/user as mob)

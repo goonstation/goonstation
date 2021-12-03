@@ -65,7 +65,7 @@
 		weld_image.pixel_x = weld_image_offset_X
 		weld_image.pixel_y = weld_image_offset_Y
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
 				for (var/atom/movable/A in src.loc)
@@ -90,7 +90,8 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
-	proc/update_icon()
+	update_icon()
+
 		if (src.open)
 			flick(src.opening_anim,src)
 			src.icon_state = src.icon_opened
@@ -189,7 +190,7 @@
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [src]!", "blue")
 				else
@@ -241,7 +242,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -253,7 +254,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return
@@ -269,23 +270,46 @@
 		else
 			return ..()
 
-	proc/check_if_enterable(var/mob/living/L, var/skip_penalty=0)
-		//return 1 if a mob can enter, 0 if not
+	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
+		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
+		var/mob/living/L = thing
 		if(istype(L) && L.buckled)
-			return 0
-		var/turf/T = get_turf(src)
-		var/no_go = !T.Enter(L) ? T : null
+			return FALSE
+		var/turf/dest_turf = get_turf(src)
+		var/turf/orig_turf = get_turf(thing)
+		if (orig_turf == dest_turf) return TRUE
+		var/no_go
+		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
+		//First, check for directional blockers on the entering object's tile
+		if (orig_turf.checkingexit > 0)
+			for(var/obj/obstacle in orig_turf)
+				if(obstacle == thing)
+					continue
+				if(obstacle.event_handler_flags & USE_CHECKEXIT)
+					var/obj/O = thing
+					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == O.dir))
+						if(!obstacle.CheckExit(thing, dest_turf))
+							no_go = obstacle
+
+		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
+		if (isnull(no_go))
+			no_go = !dest_turf.Enter(L) ? dest_turf : null
+
+		//finally, check if there's anything else on the turf that would prevent us from entering it (e.g. dense objects)
 		if(isnull(no_go))
-			for(var/atom/A in T)
+			for(var/atom/A in dest_turf)
 				if(A != src && !A.Cross(L))
 					no_go = A
 					break
 		if(no_go)
-			L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
-			L.Bump(no_go)
-			. = 0
+			if (istype(L))
+				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			thing.Bump(no_go)
+			. = FALSE
 		else
-			. = 1
+			. = TRUE
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
@@ -378,6 +402,8 @@
 					if (thing.material && thing.material.getProperty("radioactive") > 0)
 						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
 					if (thing in user)
+						continue
+					if (!check_if_enterable(thing))
 						continue
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
@@ -478,7 +504,7 @@
 		else
 			src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, src.open_sound, 15, 1, -3)
 		return 1
@@ -538,7 +564,7 @@
 				AM.set_loc(entangled.open ? entangled.loc : entangled)
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, 15, 1, -3)
 		return 1
 
@@ -616,7 +642,7 @@
 		else
 			weldman.visible_message("<span class='alert'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
 			src.welded = 0
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 		return
@@ -839,7 +865,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -851,7 +877,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -876,7 +902,7 @@
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed
 			src.emagged = 1
 			src.locked = 0
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			if (user)
 				user.show_text("You short out the lock on [src].", "blue")
@@ -888,7 +914,7 @@
 			return 0
 		else if (src.emagged)
 			src.emagged = 0
-			src.update_icon()
+			src.UpdateIcon()
 			if (user)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1

@@ -1711,7 +1711,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
-				D.update_icon()
+				D.UpdateIcon()
 				count++
 
 		message_admins("[key_name(message_mob)] globally unbolted [count] airlocks.")
@@ -2201,11 +2201,8 @@ proc/get_mobs_trackable_by_AI()
 		if (src.brain.owner != brain_owner)
 			return
 		if (!newname)
-			src.real_name = default_name
-			src.name = src.real_name
-			src.internal_pda.name = "[src]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
-			return
+			newname = default_name
+			break
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname))
@@ -2217,15 +2214,15 @@ proc/get_mobs_trackable_by_AI()
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
-					src.name = newname
-					src.internal_pda.name = "[src]'s Internal PDA Unit"
-					src.internal_pda.owner = "[src]"
-					return 1
+					break
 				else
 					continue
 	if (!newname)
 		src.real_name = default_name
-		src.name = src.real_name
+
+	src.UpdateName()
+	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.owner = "[src.name]"
 
 /*-----Core-Creation---------------------------------------*/
 

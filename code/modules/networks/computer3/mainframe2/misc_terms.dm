@@ -687,11 +687,11 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			update_icon()
+			UpdateIcon()
 		else
 			SPAWN_DBG(rand(0, 15))
 				status |= NOPOWER
-				update_icon()
+				UpdateIcon()
 				if(vrbomb)
 					qdel(vrbomb)
 
@@ -811,7 +811,7 @@
 								I.set_loc(src)
 								src.tank1 = I
 								boutput(usr, "You insert [I].")
-					src.update_icon()
+					src.UpdateIcon()
 				if("2")
 					if(src.tank2)
 						src.tank2.set_loc(src.loc)
@@ -834,7 +834,7 @@
 								I.set_loc(src)
 								src.tank2 = I
 								boutput(usr, "You insert [I].")
-					src.update_icon()
+					src.UpdateIcon()
 
 			src.updateUsrDialog()
 
@@ -912,7 +912,7 @@
 			vrtank2.master = vrbomb
 			vrtank2.set_loc(vrbomb)
 
-			vrbomb.update_icon()
+			vrbomb.UpdateIcon()
 
 			T.timing = 1
 			T.c_state(1)
@@ -995,25 +995,25 @@
 				src.sync(src.host_id)
 			return
 
-		update_icon()
-			src.overlays = null
-			if(tank1) //Update tank overlays.
-				src.overlays += image(src.icon,"bscanner-tank1")
-			if(tank2)
-				src.overlays += image(src.icon,"bscanner-tank2")
+	update_icon()
+		src.overlays = null
+		if(tank1) //Update tank overlays.
+			src.overlays += image(src.icon,"bscanner-tank1")
+		if(tank2)
+			src.overlays += image(src.icon,"bscanner-tank2")
 
-			if(status & BROKEN)
-				icon_state = "bomb_scannerb"
-				return
-			if(status & NOPOWER)
-				icon_state = "bomb_scanner-p"
-				return
-
-			if(src.tank1 && src.tank2)
-				icon_state = "bomb_scanner1"
-			else
-				icon_state = "bomb_scanner0"
+		if(status & BROKEN)
+			icon_state = "bomb_scannerb"
 			return
+		if(status & NOPOWER)
+			icon_state = "bomb_scanner-p"
+			return
+
+		if(src.tank1 && src.tank2)
+			icon_state = "bomb_scanner1"
+		else
+			icon_state = "bomb_scanner0"
+		return
 
 //Generic disk to hold VR bomb log
 /obj/item/disk/data/bomb_tester
@@ -1706,7 +1706,7 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon() //Update the icon
+			src.UpdateIcon() //Update the icon
 		return
 
 
@@ -1819,7 +1819,7 @@
 					return
 				src.jam = 0
 				src.blinking = 0
-				src.update_icon()
+				src.UpdateIcon()
 				src.temp_msg = "PRINTER OK"
 				src.updateUsrDialog()
 				boutput(usr, "<span class='notice'>You clear the jam.</span>")
@@ -2092,7 +2092,7 @@
 				src.printing = 0
 				src.print_buffer.len = 0
 
-				src.update_icon()
+				src.UpdateIcon()
 
 				elecflash(src,power = 3)
 				if(src.host_id) //welp, we're broken.
@@ -2105,33 +2105,33 @@
 
 		print_alert()
 			blinking = 1
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
 			src.visible_message("<span class='alert'>[src] pings!</span>")
 			return
 
 		clear_alert()
 			blinking = 0
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
-		update_icon()
-			src.overlays = null
-			if(src.jam) //Update jam overlay.
-				src.overlays += image(src.icon,"printer-jamoverlay")
+	update_icon()
+		src.overlays = null
+		if(src.jam) //Update jam overlay.
+			src.overlays += image(src.icon,"printer-jamoverlay")
 
-			if(status & BROKEN)
-				icon_state = "printerb"
-				return
-			if(status & NOPOWER)
-				icon_state = "printer-p"
-				return
-
-			if(src.blinking)
-				icon_state = "printer-blink"
-			else
-				icon_state = "printer0"
+		if(status & BROKEN)
+			icon_state = "printerb"
 			return
+		if(status & NOPOWER)
+			icon_state = "printer-p"
+			return
+
+		if(src.blinking)
+			icon_state = "printer-blink"
+		else
+			icon_state = "printer0"
+		return
 
 #undef MAX_SHEETS
 #undef SETUP_JAM_IGNITION
@@ -2411,7 +2411,7 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon()
+			src.UpdateIcon()
 		return
 /*
 	disposing()
@@ -2512,7 +2512,7 @@
 			active_time--
 			if (!active_time)
 				//src.state = src.online
-				src.update_icon(src.online)
+				src.UpdateIcon(src.online)
 
 		switch (src.state)
 			if (0)
@@ -2541,7 +2541,7 @@
 						if (src.host_id)
 							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=alert")
 
-						src.update_icon(3)
+						src.UpdateIcon(3)
 						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
 						return
 
@@ -2606,12 +2606,12 @@
 				switch(lowertext(data["command"]))
 					if("activate")
 						src.online = 1
-						src.update_icon(max(1, src.state))
+						src.UpdateIcon(max(1, src.state))
 
 					if("deactivate")
 						src.online = 0
 						src.active_time = 0
-						src.update_icon(0)
+						src.UpdateIcon(0)
 
 
 				return
@@ -2643,11 +2643,11 @@
 			if(2.0)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon(0)
+					src.UpdateIcon(0)
 			if(3.0)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon(0)
+					src.UpdateIcon(0)
 			else
 		return
 
@@ -2657,40 +2657,40 @@
 		else
 			status |= NOPOWER
 
-		src.update_icon(src.state)
+		src.UpdateIcon(src.state)
 
-	proc
-		update_icon(var/newState = 1)
-			if (status & (NOPOWER|BROKEN))
-				light.disable()
-				icon_state = "secdetector-p"
-				if (src.scan_beam)
-					qdel(src.scan_beam)
-					src.scan_beam = null
-				src.state = src.online
-				return
 
-			var/change = (src.state != newState)
-			src.state = newState
-
-			icon_state = "secdetector[src.state]"
-			switch (src.state)
-				if (2 to 3)
-					light.set_brightness(src.state == 2 ? src.active_brightness : src.alert_brightness)
-					light.enable()
-				if (1)
-					light.disable()
-					if (src.host_id && change)
-						SPAWN_DBG(0)
-							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
-				if (0)
-					light.disable()
-					if (src.host_id && change)
-						SPAWN_DBG(0)
-							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
-
+	update_icon(var/newState = 1)
+		if (status & (NOPOWER|BROKEN))
+			light.disable()
+			icon_state = "secdetector-p"
+			if (src.scan_beam)
+				qdel(src.scan_beam)
+				src.scan_beam = null
+			src.state = src.online
 			return
 
+		var/change = (src.state != newState)
+		src.state = newState
+
+		icon_state = "secdetector[src.state]"
+		switch (src.state)
+			if (2 to 3)
+				light.set_brightness(src.state == 2 ? src.active_brightness : src.alert_brightness)
+				light.enable()
+			if (1)
+				light.disable()
+				if (src.host_id && change)
+					SPAWN_DBG(0)
+						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=idle")
+			if (0)
+				light.disable()
+				if (src.host_id && change)
+					SPAWN_DBG(0)
+						src.post_status(src.host_id,"command","term_message","data","command=statechange&state=inactive")
+
+		return
+	proc
 		beam_crossed() //Called when anything solid crosses the beam, places us into the alert state.
 			if (src.state != 1)
 				return
@@ -2698,7 +2698,7 @@
 			if (src.scan_beam)
 				src.scan_beam.dispose()
 			src.active_time = src.setup_active_time
-			update_icon(2)
+			UpdateIcon(2)
 			if (src.host_id)
 				src.post_status(src.host_id,"command","term_message","data","command=statechange&state=onguard")
 			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
@@ -2868,7 +2868,7 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon()
+			src.UpdateIcon()
 		return
 /*
 	disposing()
@@ -3138,11 +3138,11 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			SPAWN_DBG(rand(0, 15))
 				status |= NOPOWER
-				src.update_icon()
+				src.UpdateIcon()
 
 	ex_act(severity)
 		switch(severity)
@@ -3153,25 +3153,25 @@
 			if(2.0)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			if(3.0)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				src.icon_state = "heptemitter-p"
-				if (src.beam)
-					//qdel(src.beam)
-					src.beam.dispose()
-			else
-				src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
-			return
+	update_icon()
+		if (status & (NOPOWER|BROKEN))
+			src.icon_state = "heptemitter-p"
+			if (src.beam)
+				//qdel(src.beam)
+				src.beam.dispose()
+		else
+			src.icon_state = "heptemitter[src.beam ? "1" : "0"]"
+		return
 
+	proc
 		generate_beam()
 			if ((status & (NOPOWER|BROKEN)) || !crystalCount)
 				return 0
@@ -3191,7 +3191,7 @@
 			else
 				src.beam.update_power(src.crystalCount)
 
-			update_icon()
+			UpdateIcon()
 			src.updateUsrDialog()
 			return 1
 
@@ -3400,7 +3400,7 @@
 					src.link = test_link
 					src.link.master = src
 
-			src.update_icon()
+			src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -3458,7 +3458,7 @@
 				return
 			src.visible_message("<b>[user.name]</b> loads [O] into [src.name]!")
 			O.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 		else return
 
 	MouseDrop(obj/over_object as obj, src_location, over_location)
@@ -3481,7 +3481,7 @@
 			return
 		for (var/atom/movable/O in src.contents) O.set_loc(target_location)
 		src.visible_message("<b>[unloader.name]</b> unloads [src.name]!")
-		src.update_icon()
+		src.UpdateIcon()
 
 	Topic(href, href_list)
 		if(..())
@@ -3610,11 +3610,11 @@
 	power_change()
 		if(powered())
 			status &= ~NOPOWER
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			SPAWN_DBG(rand(0, 15))
 				status |= NOPOWER
-				src.update_icon()
+				src.UpdateIcon()
 
 	ex_act(severity)
 		switch(severity)
@@ -3625,22 +3625,22 @@
 			if(2.0)
 				if (prob(50))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			if(3.0)
 				if (prob(25))
 					src.status |= BROKEN
-					src.update_icon()
+					src.UpdateIcon()
 			else
 		return
 
-	proc
-		update_icon()
-			if (status & (NOPOWER|BROKEN))
-				src.icon_state = "[setup_base_icon_state]-p"
-			else
-				src.icon_state = "[setup_base_icon_state][src.active ? "1" : "0"]"
-			return
+	update_icon()
+		if (status & (NOPOWER|BROKEN))
+			src.icon_state = "[setup_base_icon_state]-p"
+		else
+			src.icon_state = "[setup_base_icon_state][src.active ? "1" : "0"]"
+		return
 
+	proc
 		//Generate html interface to appear in interaction window above the host connection controls
 		return_html_interface()
 			return
@@ -3724,7 +3724,7 @@
 				if (src.contents.len)
 					active = length(src.contents)
 					message_host("command=ack")
-					src.update_icon()
+					src.UpdateIcon()
 				else
 					message_host("command=nack")
 
@@ -3739,12 +3739,12 @@
 
 				src.active = duration
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				active = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 		return
 
@@ -3765,13 +3765,13 @@
 					src.visible_message("<b>[src.name]</b> pings.")
 					src.active = 0
 					playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
-					src.update_icon()
+					src.UpdateIcon()
 				return
 
 			src.visible_message("<b>[src.name]</b> pings.")
 			src.active = 0
 			playsound(src, "sound/machines/chime.ogg", 50, 1)
-			src.update_icon()
+			src.UpdateIcon()
 
 		return
 
@@ -3847,7 +3847,7 @@
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
 						flick("impactpad-extend",src)
-						src.update_icon()
+						src.UpdateIcon()
 						playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 					else
 						src.visible_message("<span class='alert'><b>[src.name]</b> clanks and clatters noisily!</span>")
@@ -3858,7 +3858,7 @@
 					src.set_density(0)
 					src.setup_base_icon_state = "impactpad"
 					flick("impactstand-retract",src)
-					src.update_icon()
+					src.UpdateIcon()
 					playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
 					message_host("command=ack")
 				else
@@ -4012,7 +4012,7 @@
 			src.active = 0
 			src.visible_message("<b>[src.name]</b> buzzes angrily and stops operating!")
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (src.active)
@@ -4024,7 +4024,7 @@
 				src.timer = -1
 				src.visible_message("<b>[src.name]</b> emits a buzz and shuts down.")
 				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
-				src.update_icon()
+				src.UpdateIcon()
 				return
 			src.electrify_contents()
 
@@ -4064,7 +4064,7 @@
 				user.drop_item()
 			I.set_loc(src)
 			user.visible_message("<b>[user]</b> loads [I] into [src.name]!")
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			boutput(user, "There is no room left for that!")
@@ -4164,7 +4164,7 @@
 					src.timer = -1
 					src.electrify_contents()
 					message_host("command=ack")
-					src.update_icon()
+					src.UpdateIcon()
 				else
 					message_host("command=nack")
 
@@ -4181,13 +4181,13 @@
 				src.timer = duration
 				src.electrify_contents()
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				src.timer = -1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 /obj/machinery/networked/test_apparatus/xraymachine
@@ -4236,7 +4236,7 @@
 				user.drop_item()
 			I.set_loc(src)
 			user.visible_message("<b>[user]</b> loads [I] into [src.name]!")
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			boutput(user, "There is no room left for that!")
@@ -4286,7 +4286,7 @@
 				if (src.contents.len && !src.active)
 					message_host("command=ack")
 					active = 1
-					src.update_icon()
+					src.UpdateIcon()
 					src.visible_message("<b>[src.name]</b> begins to operate.")
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/genetics.ogg', 50, 1)
@@ -4382,7 +4382,7 @@
 						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
 						playsound(src, "sound/machines/chime.ogg", 50, 1)
 						active = 0
-						src.update_icon()
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 		return
@@ -4489,7 +4489,7 @@
 			else if (src.temperature < 310)
 				src.temperature++
 
-		src.update_icon()
+		src.UpdateIcon()
 
 		return
 
@@ -4577,7 +4577,7 @@
 				src.active = 1
 				src.stopattarget = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
@@ -4591,12 +4591,12 @@
 				src.stopattarget = 1
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 /* Finish this later when I can think of how exactly to implement it
@@ -4671,7 +4671,7 @@
 					src.active = 1
 					src.duration = -1
 					message_host("command=ack")
-					src.update_icon()
+					src.UpdateIcon()
 				else message_host("command=nack")
 
 			if ("pulse")
@@ -4683,13 +4683,13 @@
 
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				src.duration = -1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 /obj/machinery/networked/test_apparatus/laserR
@@ -4890,7 +4890,7 @@
 				src.pulses = 0
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
@@ -4902,13 +4902,13 @@
 
 				src.active = 1
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 
 			if ("deactivate")
 				src.active = 0
 				src.pulses = 0
 				message_host("command=ack")
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 	process()

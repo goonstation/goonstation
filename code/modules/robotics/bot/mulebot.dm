@@ -302,7 +302,7 @@
 						usr.put_in_hand_or_drop(cell)
 
 						cell.add_fingerprint(usr)
-						cell.updateicon()
+						cell.UpdateIcon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
@@ -637,7 +637,7 @@
 	// calculates a path to the current destination
 	// given an optional turf to avoid
 	proc/calc_path(var/turf/avoid = null)
-		src.path = AStar(src.loc, src.target, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 500, botcard, avoid)
+		src.path = get_path_to(src, src.target, max_distance=200, id=src.botcard, skip_first=FALSE, exclude=avoid, cardinal_only=TRUE)
 
 	// sets the current destination
 	// signals all beacons matching the delivery code

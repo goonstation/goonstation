@@ -913,11 +913,9 @@
 
 // Gundam Costumes
 
-/obj/item/clothing/under/gimmick/mobile_suit
+/obj/item/clothing/suit/gimmick/mobile_suit
 	name = "mobile suit"
 	desc = "A blocky looking armor suit, it's made of plastic."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
 

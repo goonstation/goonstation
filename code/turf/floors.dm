@@ -1064,6 +1064,7 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/snow
 	name = "snow"
+	has_material = FALSE
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -1189,9 +1190,16 @@ DEFINE_FLOORS(techfloor/green,
 	step_priority = STEP_PRIORITY_MED
 
 	New()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			if(prob(10))
+				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
+			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE)
+			return
+		#endif
+
 		..()
 		setMaterial(getMaterial("synthrubber"))
-
 /turf/proc/grassify()
 	.=0
 
@@ -1441,8 +1449,6 @@ DEFINE_FLOORS(grasslush/thin,
 
 /turf/simulated/floor/blob_act(var/power)
 	return
-
-/turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/attack_hand(mob/user as mob)
 	if (src.density == 1)

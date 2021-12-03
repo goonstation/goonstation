@@ -100,6 +100,8 @@ var/list/admin_verbs = list(
 		/client/proc/revive_all_parrots,
 		/datum/admins/proc/toggle_blood_system,
 		/client/proc/narrator_mode,
+		/client/proc/admin_observe_random_player,
+		/client/proc/orp,
 		/client/proc/admin_pick_random_player,
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,
@@ -307,6 +309,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_makecyborg,
 		/client/proc/cmd_admin_makeghostdrone,
 		/client/proc/cmd_debug_del_all,
+		/client/proc/cmd_debug_del_half,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
 		/client/proc/iddqd,
@@ -436,6 +439,9 @@ var/list/admin_verbs = list(
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
+
+		/client/proc/delete_profiling_logs,
+		/client/proc/cause_lag,
 
 		/client/proc/player_panel_tgui,
 
@@ -916,13 +922,14 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
+	if(!O.fingerprints_full || !length(O.fingerprints_full))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 
 	boutput(src, "<b>Hidden Fingerprints on [O]:</b>")
-	for(var/i in O.fingerprintshidden)
-		boutput(src, i)
+	for(var/i in O.fingerprints_full)
+		var/list/L = O.fingerprints_full[i]
+		boutput(src, "Key: [L["key"]], real name: [L["real_name"]], time: [L["time"]]")
 
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
@@ -1015,7 +1022,7 @@ var/list/fun_images = list()
 	var/mob/mymob = src.mob
 	var/mob/living/carbon/human/H
 	var/new_mob = FALSE
-	if(src.holder.respawn_as_self_mob && !new_self)
+	if(src.holder.respawn_as_self_mob && !src.holder.respawn_as_self_mob.disposed && !new_self)
 		H = src.holder.respawn_as_self_mob
 		H.set_loc(mymob.loc)
 		src.holder.respawn_as_self_mob = null
@@ -1176,7 +1183,7 @@ var/list/fun_images = list()
 			S.charge = S.capacity
 			S.output = 200000
 			S.online = 1
-			S.updateicon()
+			S.UpdateIcon()
 			S.power_change()
 
 	var/confirm4 = alert("Turn space bright pink? (For post processing/optimizations)", "Pink Background?", "No", "Yes")
