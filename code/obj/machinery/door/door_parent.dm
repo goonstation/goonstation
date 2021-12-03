@@ -181,7 +181,8 @@
 
 	proc/xmasify()
 		var/obj/decal/garland/garland = new(src.loc)
-		garland.dir = src.dir
+		if(src.dir =! NORTH)
+			garland.dir = src.dir
 
 	proc/toggleinput()
 		if(cant_emag || (src.req_access && !(src.operating == -1)))
