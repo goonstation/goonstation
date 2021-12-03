@@ -57,7 +57,21 @@
 	initialize()
 		src.set_layer_from_settings()
 		update_nearby_tiles(need_rebuild=1)
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME && !is_cardinal(src.dir))
+			xmasify()
+		#endif
 		..()
+
+	proc/xmasify()
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.02)
+			new /obj/decal/wreath(src.loc)
+		else
+			var/turf/T = get_step(src, SOUTH)
+			if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				var/obj/decal/xmas_lights/lights = new(src.loc)
+				lights.light_pattern(y % 5)
 
 	proc/set_layer_from_settings()
 		if (!map_settings)

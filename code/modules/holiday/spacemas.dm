@@ -514,16 +514,21 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	throwforce = 1
 	doants = 0
 	food_color = "#FFFFFF"
+	var/melts = TRUE
+
+	unmelting
+		melts = FALSE
 
 	New()
 		..()
-		SPAWN_DBG(rand(100,500))
-			if (src.loc && (istype(src.loc, /turf/simulated/floor/specialroom/freezer) || src.loc.loc.name == "Space" || src.loc.loc.name == "Ocean"))
-				src.visible_message("\The [src] vanishes into thin air, as its subatomic particles decay!")
-			else
-				src.visible_message("\The [src] melts!")
-				make_cleanable( /obj/decal/cleanable/water,get_turf(src))
-			qdel(src)
+		if(melts)
+			SPAWN_DBG(rand(100,500))
+				if (src.loc && (istype(src.loc, /turf/simulated/floor/specialroom/freezer) || src.loc.loc.name == "Space" || src.loc.loc.name == "Ocean"))
+					src.visible_message("\The [src] vanishes into thin air, as its subatomic particles decay!")
+				else
+					src.visible_message("\The [src] melts!")
+					make_cleanable( /obj/decal/cleanable/water,get_turf(src))
+				qdel(src)
 
 	heal(var/mob/living/M)
 		if (!M || !isliving(M))
@@ -582,7 +587,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
-	EPHEMERAL_XMAS
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
@@ -590,7 +594,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/tinsel
-	EPHEMERAL_XMAS
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
@@ -598,7 +601,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/wreath
-	EPHEMERAL_XMAS
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
@@ -612,7 +614,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
-	EPHEMERAL_XMAS
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
@@ -1187,7 +1188,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 						playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 1, 0 ,0.5)
 
 /obj/stocking
-	EPHEMERAL_XMAS
 	name = "stocking"
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
@@ -1245,11 +1245,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		return
 
 /obj/decal/tile_edge/stripe/xmas
-	EPHEMERAL_XMAS
 	icon_state = "xmas"
 
 /obj/item/reagent_containers/food/drinks/eggnog
-	EPHEMERAL_XMAS
 	name = "Egg Nog"
 	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
 	icon_state = "nog"

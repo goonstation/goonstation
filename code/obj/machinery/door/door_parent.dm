@@ -169,11 +169,19 @@
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.UpdateIcon()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			src.xmasify()
+		#endif
 
 	disposing()
 		update_nearby_tiles()
 		STOP_TRACKING
 		..()
+
+	proc/xmasify()
+		var/obj/decal/garland/garland = new(src.loc)
+		garland.dir = src.dir
 
 	proc/toggleinput()
 		if(cant_emag || (src.req_access && !(src.operating == -1)))

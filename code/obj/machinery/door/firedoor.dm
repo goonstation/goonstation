@@ -36,6 +36,9 @@
 	has_crush = 0
 	cant_emag = 1
 
+	xmasify()
+		return
+
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
 	icon = 'icons/obj/doors/door_fire2.dmi'
