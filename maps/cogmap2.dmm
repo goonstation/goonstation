@@ -837,11 +837,17 @@
 	pixel_x = -10
 	},
 /obj/machinery/recharge_station,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
 /area/station/turret_protected/ai)
 "abK" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 5
+	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/turret_protected/ai)
 "abL" = (
@@ -856,6 +862,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "abN" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 9
+	},
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
@@ -867,6 +876,9 @@
 	pixel_x = 10
 	},
 /obj/machinery/recharge_station,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
@@ -922,6 +934,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai)
@@ -1021,6 +1036,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai)
@@ -1274,6 +1292,9 @@
 /turf/simulated/floor/delivery,
 /area/station/turret_protected/ai)
 "acu" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai)
 "acv" = (
@@ -1318,6 +1339,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "acy" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai)
 "acz" = (
@@ -1359,9 +1383,13 @@
 	pixel_x = -10
 	},
 /obj/machinery/recharge_station,
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/caution/south,
 /area/station/turret_protected/ai)
 "acF" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 6
+	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
@@ -1378,6 +1406,9 @@
 	},
 /area/station/turret_protected/ai)
 "acH" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 10
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/turret_protected/ai)
 "acI" = (
@@ -1387,6 +1418,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/recharge_station,
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/caution/south,
 /area/station/turret_protected/ai)
 "acJ" = (
@@ -1475,6 +1507,9 @@
 /area/station/turret_protected/ai)
 "acT" = (
 /obj/stool,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai)
 "acU" = (
@@ -1487,6 +1522,9 @@
 /area/station/turret_protected/ai)
 "acV" = (
 /obj/stool,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai)
 "acW" = (
@@ -4280,6 +4318,9 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai_upload_foyer)
 "ajs" = (
@@ -4333,6 +4374,9 @@
 	},
 /obj/machinery/ai_status_display{
 	pixel_y = 28
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/ai_upload_foyer)
@@ -4905,6 +4949,9 @@
 /area/station/turret_protected/ai)
 "akE" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 10
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/turret_protected/ai_upload_foyer)
 "akF" = (
@@ -4937,6 +4984,9 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -5507,6 +5557,9 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "alS" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 10
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/turret_protected/ai_upload_foyer)
 "alT" = (
@@ -5515,6 +5568,7 @@
 	dir = 10;
 	name = "autoname - SS13"
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
 /turf/simulated/floor/caution/south,
 /area/station/turret_protected/ai_upload_foyer)
 "alU" = (
@@ -5524,6 +5578,9 @@
 	id = "aiupload";
 	pixel_x = 32;
 	starts_established = 1
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -6743,6 +6800,9 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/fitness)
 "aoO" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 9
+	},
 /turf/simulated/floor/caution/corner/nw{
 	dir = 8
 	},
@@ -6753,6 +6813,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/fitness)
 "aoQ" = (
@@ -6760,15 +6823,24 @@
 	dir = 1;
 	pixel_y = 32
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/fitness)
 "aoR" = (
 /obj/machinery/light_switch/north,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/fitness)
 "aoS" = (
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 28
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
 	},
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/fitness)
@@ -6779,9 +6851,15 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/caution/north,
 /area/station/crew_quarters/fitness)
 "aoU" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 5
+	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/crew_quarters/fitness)
 "aoV" = (
@@ -7185,6 +7263,9 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/fitness)
 "apW" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/west,
 /area/station/crew_quarters/fitness)
 "apX" = (
@@ -7217,6 +7298,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "aqc" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
@@ -8208,6 +8292,9 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/fitness)
 "aso" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 10
+	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/fitness)
 "asp" = (
@@ -8223,6 +8310,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "asr" = (
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 6
+	},
 /turf/simulated/floor{
 	icon_state = "corner_east"
 	},
@@ -17237,6 +17327,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -18883,6 +18976,9 @@
 /area/station/crew_quarters/quartersA)
 "aQG" = (
 /obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
 	dir = 8
 	},
 /turf/simulated/floor/blueblack{
@@ -23179,6 +23275,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -23681,6 +23780,9 @@
 /area/station/security/checkpoint/chapel)
 "bbK" = (
 /obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
 	dir = 1
 	},
 /turf/simulated/floor/blueblack{
