@@ -67,7 +67,7 @@
 	proc/xmasify()
 		var/turf/T = get_step(src, SOUTH)
 		for(var/obj/O in T)
-			if(istype(O, /obj/machinery/light) || istype(/obj/machinery/recharger/wall))
+			if(istype(O, /obj/machinery/light) || istype(O, /obj/machinery/recharger/wall))
 				if(O.pixel_y > 6)
 					return
 		if(locate(/obj/decal) in src.loc)
