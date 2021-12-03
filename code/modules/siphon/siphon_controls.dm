@@ -3,7 +3,7 @@
 	name = "Primary Siphon Control"
 	desc = "Console with a sizable lever and hand pad for activation of a harmonic siphon from a distance."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
-	icon-state = "siph_control"
+	icon-state = "siph-control-0"
 	density = 1
 	var/obj/machinery/siphon/core/paired_core = null
 	var/lever_active = 0
