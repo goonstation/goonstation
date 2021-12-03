@@ -8,6 +8,7 @@
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 50
+	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
 	var/obj/machinery/phone/linked = null
@@ -49,6 +50,7 @@
 		src.UpdateOverlays(image('icons/obj/machines/phones.dmi',"[dialicon]"), "dial")
 		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
 		stripe_image.color = stripe_color
+		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.UpdateOverlays(stripe_image, "stripe")
 		// Generate a name for the phone.
 
@@ -296,6 +298,8 @@
 		src.parent = parent_phone
 		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
 		stripe_image.color = parent_phone.stripe_color
+		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+		src.color = parent_phone.color
 		src.UpdateOverlays(stripe_image, "stripe")
 		if(picker_upper)
 			src.holder = picker_upper
