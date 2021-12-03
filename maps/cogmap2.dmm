@@ -1643,6 +1643,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/turret_protected/ai)
 "adp" = (
@@ -2038,6 +2039,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
@@ -2792,6 +2796,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -3131,6 +3136,7 @@
 /area/station/hangar/catering)
 "agK" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -3192,6 +3198,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quartersB)
 "agT" = (
@@ -3248,6 +3257,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/scorched,
 /area/station/crew_quarters/quartersB)
@@ -3622,6 +3634,7 @@
 "ahT" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/maintenance/solar/north)
 "ahU" = (
@@ -3830,6 +3843,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai_upload)
 "ais" = (
@@ -3923,6 +3937,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/catering)
 "aiF" = (
@@ -3930,6 +3947,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -4158,6 +4178,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/scorched,
 /area/station/crew_quarters/quartersB)
 "ajg" = (
@@ -4194,6 +4215,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Bathroom"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/scorched,
 /area/station/crew_quarters/quartersB)
 "ajm" = (
@@ -4535,6 +4557,9 @@
 	dir = 4;
 	name = "Catering Staff Quarters";
 	req_access_txt = "25|28"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/solar/north)
@@ -5243,6 +5268,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersB)
 "alu" = (
@@ -5582,6 +5610,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating/damaged3,
 /area/station/hallway/secondary/construction)
 "amf" = (
@@ -5597,6 +5626,7 @@
 	name = "Catering Storage";
 	req_access_txt = "25|28|35"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/catering)
 "ami" = (
@@ -5611,6 +5641,7 @@
 	name = "Catering Storage";
 	req_access_txt = "25|28|35"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/catering)
 "amj" = (
@@ -5930,6 +5961,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/crematorium)
 "amS" = (
@@ -5987,6 +6021,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/medical/crematorium)
@@ -6077,6 +6114,7 @@
 	req_access_txt = "16"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/bot,
 /area/station/turret_protected/ai_upload_foyer)
 "anh" = (
@@ -6278,6 +6316,7 @@
 	name = "Catering Staff Quarters";
 	req_access_txt = "25|28"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "anK" = (
@@ -6286,6 +6325,7 @@
 	name = "Detective's Office";
 	req_access_txt = "4"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "anL" = (
@@ -6409,6 +6449,7 @@
 	req_access_txt = "27"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/chapel/sanctuary)
 "aof" = (
@@ -6821,6 +6862,7 @@
 /area/station/crew_quarters/catering)
 "apg" = (
 /obj/machinery/door/unpowered/wood/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aph" = (
@@ -6833,6 +6875,7 @@
 	req_access_txt = "22"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "apj" = (
@@ -7389,6 +7432,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/arrivals)
 "aqF" = (
@@ -7780,6 +7824,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "arE" = (
@@ -8072,6 +8119,7 @@
 	name = "Meat Locker";
 	req_access_txt = "28"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/catering)
 "asb" = (
@@ -8243,6 +8291,7 @@
 "asA" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/maintenance/northeast)
 "asB" = (
@@ -8426,6 +8475,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/arrivals)
 "asX" = (
@@ -8517,6 +8567,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
@@ -8712,6 +8765,7 @@
 	dir = 1;
 	name = "Detective's Lobby"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -8818,6 +8872,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/sanitary,
 /area/station/storage/primary)
 "atP" = (
@@ -8882,6 +8937,7 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "atX" = (
@@ -8996,6 +9052,9 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -9207,6 +9266,9 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/kitchen)
 "auO" = (
@@ -9253,6 +9315,9 @@
 	req_access_txt = "28"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -9661,6 +9726,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/chapel/sanctuary)
 "avM" = (
@@ -9770,6 +9838,7 @@
 	name = "AI Upload";
 	req_access_txt = "16"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -10083,6 +10152,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/chapel/sanctuary)
 "awU" = (
@@ -10209,6 +10281,9 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
@@ -10764,6 +10839,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/primary)
 "ayn" = (
@@ -10840,6 +10918,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
@@ -11214,6 +11295,7 @@
 	name = "Emergency Storage B";
 	req_access_txt = "12"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency2)
 "azf" = (
@@ -11411,6 +11493,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "azF" = (
@@ -11418,6 +11501,7 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "azG" = (
@@ -11905,6 +11989,7 @@
 "aAE" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAF" = (
@@ -13435,6 +13520,7 @@
 	req_access_txt = "12"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
 "aDQ" = (
@@ -13449,6 +13535,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
 "aDS" = (
@@ -13456,6 +13545,9 @@
 /area/station/chapel/sanctuary)
 "aDT" = (
 /obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/obj/decal/garland/ephemeral{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -13519,6 +13611,9 @@
 /area/station/chapel/sanctuary)
 "aEd" = (
 /obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -13751,6 +13846,7 @@
 /area/shuttle/arrival/station)
 "aEB" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -13816,6 +13912,7 @@
 	name = "Catering Storage";
 	req_access_txt = "35"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/catering)
 "aEL" = (
@@ -13942,6 +14039,7 @@
 	name = "Fitness Room"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aEX" = (
@@ -13991,6 +14089,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Chapel"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/chapel/sanctuary)
 "aFf" = (
@@ -13998,6 +14097,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	name = "Trial Chamber"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/chapel/sanctuary)
 "aFg" = (
@@ -14032,6 +14132,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "aFl" = (
@@ -14047,6 +14148,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Net Cafe"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -14056,6 +14158,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Emergency Storage B"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency2)
 "aFo" = (
@@ -14069,6 +14172,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "aFq" = (
@@ -14509,6 +14613,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/garden)
 "aGw" = (
@@ -14998,6 +15103,9 @@
 	dir = 4
 	},
 /obj/landmark/gps_waypoint,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/hydroponics/bay)
 "aHz" = (
@@ -15028,6 +15136,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
@@ -15193,6 +15304,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "aIc" = (
@@ -15235,6 +15349,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/garden)
 "aIh" = (
@@ -15347,6 +15464,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/garden)
 "aIw" = (
@@ -15373,6 +15493,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aIz" = (
@@ -15770,6 +15893,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "aJC" = (
@@ -15800,6 +15926,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/garden)
 "aJH" = (
@@ -15875,6 +16004,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/garden)
 "aJT" = (
@@ -15892,6 +16024,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -16241,6 +16376,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pool Room"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aKR" = (
@@ -16270,6 +16406,7 @@
 	req_access_txt = "5"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blue,
 /area/station/medical/medbooth)
 "aKV" = (
@@ -16991,6 +17128,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/chapel)
 "aMB" = (
@@ -17067,6 +17205,7 @@
 	name = "Laundry Room"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aMI" = (
@@ -17266,6 +17405,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/landmark/gps_waypoint,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aNi" = (
@@ -17296,6 +17438,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
@@ -17358,12 +17503,14 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "aNt" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "aNu" = (
@@ -17589,6 +17736,9 @@
 /area/station/crew_quarters/quartersA)
 "aNW" = (
 /obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/obj/decal/garland/ephemeral{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/grime,
@@ -18200,6 +18350,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/quartersA)
 "aPs" = (
@@ -18212,6 +18363,7 @@
 "aPu" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aPv" = (
@@ -18225,6 +18377,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aPx" = (
@@ -18532,6 +18685,9 @@
 	dir = 4;
 	req_access_txt = "5;12"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbooth)
 "aQe" = (
@@ -18828,6 +18984,7 @@
 /obj/access_spawn/rancher,
 /obj/firedoor_spawn,
 /obj/decal/tile_edge/stripe,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/wood,
 /area/station/hydroponics/bay)
 "aQV" = (
@@ -19164,6 +19321,7 @@
 	name = "Owlery"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -19193,6 +19351,7 @@
 	dir = 1;
 	name = "Owlery"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -19285,6 +19444,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/locker)
 "aRU" = (
@@ -19301,6 +19463,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/quartersA)
@@ -19435,6 +19600,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
@@ -19756,6 +19924,7 @@
 "aTi" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aTj" = (
@@ -20093,6 +20262,7 @@
 	req_access_txt = "26"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aTW" = (
@@ -20163,6 +20333,9 @@
 	name = "Owlery"
 	},
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
 "aUe" = (
@@ -20196,6 +20369,9 @@
 	name = "Owlery"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
 "aUi" = (
@@ -20550,6 +20726,9 @@
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4;
 	name = "Sauna"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
@@ -20926,6 +21105,9 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/arrivals)
 "aVZ" = (
@@ -20992,6 +21174,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "aWl" = (
@@ -21301,6 +21484,7 @@
 "aWY" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/locker)
 "aWZ" = (
@@ -21319,6 +21503,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/locker)
 "aXc" = (
@@ -21570,6 +21755,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue5"
@@ -21671,6 +21859,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aXQ" = (
@@ -21738,6 +21929,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -21817,6 +22011,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aYe" = (
@@ -22270,6 +22465,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aZa" = (
@@ -22829,6 +23027,9 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
 "bab" = (
@@ -22843,6 +23044,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/garden/owlery)
 "bad" = (
@@ -22913,6 +23117,7 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "bal" = (
@@ -22924,6 +23129,7 @@
 	name = "undeliverable parcels"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/maintenance/northeast)
 "ban" = (
@@ -22941,6 +23147,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/quartersA)
 "bap" = (
@@ -23217,6 +23426,7 @@
 "bbb" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_west)
 "bbc" = (
@@ -23267,6 +23477,7 @@
 "bbj" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/north)
 "bbk" = (
@@ -23322,6 +23533,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
 "bbt" = (
@@ -23499,6 +23711,7 @@
 "bbP" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "bbQ" = (
@@ -23508,6 +23721,7 @@
 /area/station/crew_quarters/quartersA)
 "bbR" = (
 /obj/machinery/door/unpowered/wood/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "bbS" = (
@@ -23722,6 +23936,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -23750,6 +23965,7 @@
 	name = "West Substation and Air Hookup"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bcv" = (
@@ -24012,6 +24228,7 @@
 "bda" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/crew_quarters/cafeteria)
 "bdb" = (
@@ -24346,6 +24563,7 @@
 "bdQ" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/secondary/entry)
 "bdR" = (
@@ -24886,6 +25104,7 @@
 "bfb" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/west)
 "bfc" = (
@@ -25039,6 +25258,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/substation/west)
 "bfu" = (
@@ -25496,6 +25716,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "40"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/west)
 "bgw" = (
@@ -25582,6 +25803,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bgI" = (
@@ -25739,6 +25961,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/maintenance/central)
 "bhf" = (
@@ -25837,6 +26062,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "bho" = (
@@ -25990,6 +26218,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/maintenance/inner/central)
 "bhD" = (
@@ -26028,6 +26259,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -26105,6 +26339,7 @@
 "bhQ" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/primary/east)
 "bhR" = (
@@ -26614,6 +26849,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "bjl" = (
@@ -26673,6 +26909,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bjv" = (
@@ -26713,6 +26952,7 @@
 "bjA" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
 "bjB" = (
@@ -26723,6 +26963,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
 "bjC" = (
@@ -26787,6 +27028,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -27275,6 +27519,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/ai_monitored/storage/eva)
 "bkO" = (
@@ -27345,6 +27592,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
 "bkW" = (
@@ -27586,6 +27836,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "blA" = (
@@ -28013,6 +28264,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "bmA" = (
@@ -28130,6 +28382,7 @@
 "bmL" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -28168,6 +28421,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -28211,6 +28467,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -28501,6 +28760,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/secscanner,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bnx" = (
@@ -28538,6 +28798,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/secscanner,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bnA" = (
@@ -29236,6 +29497,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "bpg" = (
@@ -29492,6 +29756,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -29772,6 +30039,7 @@
 "bql" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "bqm" = (
@@ -29808,6 +30076,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/central)
 "bqt" = (
@@ -30024,6 +30293,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
 "bqS" = (
@@ -30388,6 +30658,7 @@
 "brz" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/engineering,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "brA" = (
@@ -30439,6 +30710,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
@@ -30651,6 +30925,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
 "brY" = (
@@ -30675,6 +30952,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
 "bsc" = (
@@ -30719,6 +30999,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/sec)
 "bsf" = (
@@ -30834,6 +31115,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/routing/security)
@@ -32010,6 +32294,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/crew_quarters/heads)
 "buQ" = (
@@ -32151,6 +32438,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
 "bvk" = (
@@ -32165,6 +32453,7 @@
 "bvl" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/hotloop)
 "bvm" = (
@@ -32672,6 +32961,7 @@
 "bwk" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
 "bwl" = (
@@ -32684,6 +32974,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
 "bwn" = (
@@ -32768,6 +33059,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/ai_monitored/storage/eva)
 "bwu" = (
@@ -32809,6 +33103,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/heads)
@@ -32965,6 +33262,9 @@
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
@@ -33626,6 +33926,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "byc" = (
@@ -33987,6 +34290,7 @@
 	name = "Pod Bay";
 	req_access_txt = "0"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
 "byK" = (
@@ -33996,6 +34300,7 @@
 	req_access_txt = "0"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
 "byL" = (
@@ -34055,6 +34360,7 @@
 	req_access_txt = "40"
 	},
 /obj/landmark/gps_waypoint,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "byT" = (
@@ -34242,6 +34548,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
 "bzj" = (
@@ -34267,6 +34576,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
 "bzm" = (
@@ -34559,6 +34871,7 @@
 	name = "EVA Access";
 	req_access_txt = "18"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/ai_monitored/storage/eva)
 "bzX" = (
@@ -34616,6 +34929,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Bridge Access"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/customs)
 "bAb" = (
@@ -34638,6 +34952,7 @@
 	name = "Head of Personnel's Office";
 	req_access_txt = "55"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/bridge)
 "bAf" = (
@@ -34796,6 +35111,7 @@
 	name = "Beamline Interlock";
 	req_access_txt = "54"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -34817,6 +35133,7 @@
 	req_access_txt = "54"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -34993,6 +35310,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/core)
 "bAI" = (
@@ -35623,6 +35941,7 @@
 	name = "Beamline Interlock";
 	req_access_txt = "54"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "bCc" = (
@@ -35642,6 +35961,7 @@
 	req_access_txt = "54"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "bCd" = (
@@ -35953,6 +36273,7 @@
 	name = "Engineering Control Room";
 	req_access_txt = "44"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/power{
 	name = "Engineering Control Room"
@@ -35968,6 +36289,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/power{
 	name = "Engineering Control Room"
@@ -37758,6 +38080,9 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/customs)
 "bFQ" = (
@@ -38471,6 +38796,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bGZ" = (
@@ -38509,6 +38837,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/ai_monitored/armory)
 "bHc" = (
@@ -39209,6 +39540,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/ce)
 "bIt" = (
@@ -39421,6 +39755,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/caution/westeast,
@@ -40812,6 +41149,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bKJ" = (
@@ -41205,6 +41545,7 @@
 	name = "Checkpoint Lockdown Doors";
 	opacity = 0
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
 "bLx" = (
@@ -41218,6 +41559,7 @@
 	name = "Checkpoint Lockdown Doors";
 	opacity = 0
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/west)
 "bLy" = (
@@ -41918,6 +42260,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/sec_foyer)
 "bMD" = (
@@ -42058,6 +42403,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/customs)
@@ -42269,6 +42617,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bNm" = (
@@ -42432,6 +42783,9 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/customs)
 "bNw" = (
@@ -42488,6 +42842,7 @@
 	name = "Engineering Control Room";
 	req_access_txt = "44"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/power{
 	name = "Engineering Control Room"
@@ -43165,6 +43520,9 @@
 	dir = 4;
 	req_access_txt = "1"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/maintenance/east)
 "bOS" = (
@@ -43267,6 +43625,7 @@
 	name = "Engine Core";
 	req_access_txt = "44"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/core)
 "bPa" = (
@@ -43413,6 +43772,9 @@
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/sec_foyer)
@@ -43774,6 +44136,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/podbay)
 "bQg" = (
@@ -43800,6 +44163,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/podbay)
 "bQi" = (
@@ -43852,6 +44216,7 @@
 	name = "Emergency Storage A";
 	req_access_txt = "41"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency)
 "bQo" = (
@@ -44021,6 +44386,9 @@
 	req_access_txt = "41"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -44387,6 +44755,7 @@
 "bRu" = (
 /obj/machinery/door/airlock/pyro,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east)
 "bRv" = (
@@ -44398,6 +44767,7 @@
 	name = "Teleporter";
 	req_access_txt = "17"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/teleporter)
 "bRx" = (
@@ -44418,6 +44788,7 @@
 	name = "Captain's Quarters";
 	req_access_txt = "20"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/bridge)
 "bRB" = (
@@ -45005,6 +45376,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "bSF" = (
@@ -45490,6 +45864,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/coldloop)
 "bTG" = (
@@ -45505,6 +45880,7 @@
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/coldloop)
 "bTI" = (
@@ -45603,6 +45979,9 @@
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/hangar/main)
@@ -45779,6 +46158,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "bUg" = (
@@ -45912,6 +46292,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "bUv" = (
@@ -45998,6 +46381,9 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/teleporter)
 "bUF" = (
@@ -46033,6 +46419,9 @@
 	req_access_txt = "20"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -46779,6 +47168,9 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/crew_quarters/captain)
 "bWt" = (
@@ -46905,6 +47297,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/coldloop)
@@ -47095,6 +47490,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/engine/coldloop)
 "bWY" = (
@@ -47266,6 +47664,7 @@
 	},
 /obj/machinery/secscanner,
 /obj/disposalpipe/segment/ejection,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bXt" = (
@@ -47507,6 +47906,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency)
 "bXU" = (
@@ -47593,6 +47995,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/coldloop)
@@ -48630,6 +49035,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/storage/emergency)
 "cap" = (
@@ -48711,6 +49117,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/engine)
 "caA" = (
@@ -48727,6 +49134,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -48754,6 +49164,9 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
@@ -48999,6 +49412,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "cbe" = (
@@ -49216,6 +49632,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "cbK" = (
@@ -49427,6 +49846,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /obj/disposalpipe/segment/mail/bent/north,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "ccj" = (
@@ -49618,6 +50040,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -50133,6 +50558,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "cdJ" = (
@@ -50168,6 +50594,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "cdN" = (
@@ -50262,6 +50689,7 @@
 /area/station/maintenance/southeast)
 "cdY" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/southeast)
 "cdZ" = (
@@ -50399,6 +50827,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "cer" = (
@@ -50413,6 +50844,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "cet" = (
@@ -50476,6 +50910,7 @@
 "ceF" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ceG" = (
@@ -50650,6 +51085,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "40"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/substation/east)
 "cfe" = (
@@ -50934,6 +51370,7 @@
 	req_access_txt = "40"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/substation/east)
 "cfP" = (
@@ -51355,6 +51792,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/maintenance/disposal)
 "cgV" = (
@@ -51386,6 +51824,7 @@
 /area/station/maintenance/southeast)
 "cgZ" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
 "cha" = (
@@ -51438,6 +51877,7 @@
 "chi" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/medical/medbay/lobby)
 "chj" = (
@@ -51778,6 +52218,7 @@
 "cid" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/secondary/exit)
 "cie" = (
@@ -51926,12 +52367,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ciz" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ciA" = (
@@ -51967,6 +52410,7 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/gps_waypoint,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "ciE" = (
@@ -51979,6 +52423,7 @@
 	name = "East Substation and Air Hookup"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/substation/east)
 "ciG" = (
@@ -52151,6 +52596,7 @@
 "cjb" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cjc" = (
@@ -52430,6 +52876,7 @@
 "cjH" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_east)
 "cjI" = (
@@ -53542,6 +53989,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/maintenance/disposal)
 "clW" = (
@@ -53933,6 +54383,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "cmM" = (
@@ -53977,6 +54430,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/lobby)
@@ -54040,6 +54496,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -54530,6 +54989,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "cnV" = (
@@ -54949,6 +55411,7 @@
 	},
 /obj/access_spawn/robotics,
 /obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "coI" = (
@@ -55864,6 +56327,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/refinery)
 "cqM" = (
@@ -55913,6 +56379,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/refinery)
 "cqS" = (
@@ -56214,6 +56683,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "crE" = (
@@ -56319,6 +56791,7 @@
 	name = "Construction Area";
 	req_access_txt = "24"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/science/construction)
 "crQ" = (
@@ -56672,6 +57145,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "csM" = (
@@ -56806,6 +57282,7 @@
 	name = "Research Director's Office";
 	req_access_txt = "11"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/hor)
 "ctc" = (
@@ -56897,6 +57374,9 @@
 	req_access_txt = "8"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -57105,6 +57585,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/storage/warehouse)
 "ctG" = (
@@ -57303,6 +57786,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/maintenance/disposal)
 "cud" = (
@@ -57438,6 +57924,7 @@
 "cur" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "cus" = (
@@ -57787,6 +58274,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/refinery)
 "cvh" = (
@@ -57807,6 +58295,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/classic,
 /obj/disposalpipe/segment/mineral,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/refinery)
 "cvk" = (
@@ -58151,6 +58640,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/delivery,
 /area/station/science/testchamber)
@@ -58706,6 +59198,7 @@
 /area/station/hallway/secondary/exit)
 "cxl" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hallway/secondary/exit)
 "cxm" = (
@@ -59024,6 +59517,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
 "cxU" = (
@@ -59371,11 +59867,13 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
 "cyI" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/glass,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
 "cyJ" = (
@@ -59623,11 +60121,13 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/lobby)
 "czk" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/lobby)
 "czl" = (
@@ -60432,6 +60932,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "cAY" = (
@@ -60679,6 +61180,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "cBw" = (
@@ -60904,6 +61406,7 @@
 	req_access_txt = "7"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/science/testchamber)
 "cBY" = (
@@ -61014,6 +61517,7 @@
 	},
 /obj/access_spawn/robotics,
 /obj/firedoor_spawn,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/robotics)
 "cCo" = (
@@ -61242,6 +61746,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/engine/elect)
 "cCM" = (
@@ -61655,6 +62160,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/lobby)
 "cDP" = (
@@ -61692,6 +62200,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -61790,6 +62301,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market)
 "cEm" = (
@@ -61832,6 +62346,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
 "cEr" = (
@@ -62111,6 +62628,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/science/lab)
 "cEX" = (
@@ -62158,6 +62678,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/bot,
 /area/station/science/lab)
 "cFa" = (
@@ -62219,6 +62742,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "cFf" = (
@@ -62243,6 +62769,9 @@
 	req_access_txt = "24"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/purple,
@@ -62471,6 +63000,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/lobby)
 "cFG" = (
@@ -62501,6 +63033,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market)
 "cFK" = (
@@ -62612,6 +63147,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -63060,6 +63598,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/market)
 "cHe" = (
@@ -63567,6 +64106,7 @@
 	req_access_txt = "6"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cIl" = (
@@ -63652,6 +64192,7 @@
 	},
 /obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cIw" = (
@@ -63660,6 +64201,7 @@
 	name = "Cargo Bay";
 	req_access_txt = "31"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cIx" = (
@@ -63746,6 +64288,7 @@
 	name = "Mining";
 	req_access_txt = "50"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "cII" = (
@@ -63763,6 +64306,7 @@
 "cIK" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "cIL" = (
@@ -64048,6 +64592,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/cargo)
 "cJm" = (
@@ -64186,6 +64731,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/cloner)
 "cJC" = (
@@ -64903,6 +65449,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "cLo" = (
@@ -65124,6 +65671,7 @@
 /area/station/hangar/escape)
 "cLW" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/hangar/escape)
 "cLX" = (
@@ -65435,6 +65983,7 @@
 	req_access_txt = "5"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cMF" = (
@@ -65647,6 +66196,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -65866,6 +66418,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cNC" = (
@@ -65992,6 +66547,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/pharmacy)
 "cNQ" = (
@@ -66403,6 +66959,7 @@
 "cOM" = (
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "cON" = (
@@ -66724,6 +67281,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/medical/morgue)
 "cPu" = (
@@ -66773,6 +67333,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/medical/morgue)
@@ -66861,6 +67424,9 @@
 	req_access_txt = "5"
 	},
 /obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -67041,6 +67607,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cQa" = (
@@ -67142,6 +67709,7 @@
 	req_access_txt = "8"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cQm" = (
@@ -67180,6 +67748,7 @@
 "cQs" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -67542,6 +68111,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cRi" = (
@@ -67716,6 +68288,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cRx" = (
@@ -67790,6 +68365,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
@@ -67988,6 +68566,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "cRS" = (
@@ -68044,6 +68625,9 @@
 /area/station/hangar/escape)
 "cRY" = (
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
@@ -68271,6 +68855,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/surgery)
 "cSx" = (
@@ -68314,6 +68899,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -68412,6 +68998,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
@@ -68754,6 +69343,7 @@
 	req_access_txt = "33"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cTF" = (
@@ -68782,6 +69372,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cTI" = (
@@ -69367,12 +69958,14 @@
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "50"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "cUO" = (
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "50"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "cUP" = (
@@ -69456,6 +70049,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/science/storage)
 "cUZ" = (
@@ -69808,6 +70404,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/storage/auxillary)
 "cVJ" = (
@@ -69824,6 +70421,7 @@
 	name = "cargo hangar";
 	req_access_txt = "31"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/qm)
 "cVM" = (
@@ -69851,6 +70449,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = "31"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "cVP" = (
@@ -70377,6 +70976,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "31"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/hangar/qm)
 "cWU" = (
@@ -70509,6 +71109,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cXe" = (
@@ -70537,6 +71138,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -71129,6 +71733,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/magnet)
 "cYv" = (
@@ -71141,6 +71746,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/mining/magnet)
 "cYx" = (
@@ -71272,6 +71878,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
@@ -72193,6 +72802,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "daz" = (
@@ -72207,6 +72817,7 @@
 	req_access_txt = "24"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "daA" = (
@@ -72553,6 +73164,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/hangar/qm)
 "dbl" = (
@@ -72733,6 +73347,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/surgery)
 "dbI" = (
@@ -72798,6 +73413,7 @@
 	req_access_txt = "9"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -72923,6 +73539,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/science)
 "dck" = (
@@ -72934,6 +73553,9 @@
 	},
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
@@ -73070,6 +73692,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "dcA" = (
@@ -73136,6 +73761,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "dcG" = (
@@ -73303,6 +73931,9 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/pathology,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcS" = (
@@ -73384,6 +74015,9 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/access_spawn/pathology,
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "dcZ" = (
@@ -73463,6 +74097,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
 "ddj" = (
@@ -73517,6 +74152,7 @@
 "ddo" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/maintenance/solar/south)
 "ddp" = (
@@ -73609,6 +74245,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "ddJ" = (
@@ -73649,6 +74288,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
@@ -73768,6 +74410,7 @@
 /area/station/medical/dome)
 "deb" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/solar/south)
 "dec" = (
@@ -73816,6 +74459,7 @@
 	name = "EMERGENCY DISPOSAL";
 	nameOverride = 0
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/airless/engine/caution/westeast,
 /area/station/hangar/science)
 "den" = (
@@ -73904,6 +74548,7 @@
 	req_access_txt = "5"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "deB" = (
@@ -73920,6 +74565,7 @@
 	req_access_txt = null
 	},
 /obj/access_spawn/pathology,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/cdc)
 "deD" = (
@@ -73981,6 +74627,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/caution/northsouth,
 /area/station/storage/auxillary)
 "deJ" = (
@@ -74518,6 +75165,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dfX" = (
@@ -74766,6 +75416,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/firedoor/pyro,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "dgx" = (
@@ -79079,6 +79730,7 @@
 	nameOverride = 0;
 	req_access_txt = "24"
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "evY" = (
@@ -79544,6 +80196,18 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
+"hjj" = (
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "hlO" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -79850,6 +80514,15 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"isV" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/maintenance/central)
 "ius" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -80133,6 +80806,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/central)
 "jOa" = (
@@ -80317,6 +80993,9 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "lak" = (
@@ -80467,6 +81146,7 @@
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/xmas/ephemeral,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -80591,6 +81271,9 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "mvz" = (
@@ -80689,6 +81372,7 @@
 /obj/decal/tile_edge/stripe/xmas/ephemeral{
 	dir = 1
 	},
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "mOe" = (
@@ -80919,6 +81603,9 @@
 	name = "Secure Pod Bay";
 	req_access_txt = "1"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/podbay)
 "nSx" = (
@@ -80998,6 +81685,18 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
+"owP" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
+/turf/simulated/floor/delivery,
+/area/station/crew_quarters/market)
 "oxp" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -81084,6 +81783,19 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/hydroponics/bay)
+"pfb" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
+/turf/simulated/floor/delivery,
+/area/station/maintenance/central)
 "pjN" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -81281,6 +81993,24 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"qjT" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "qkz" = (
 /obj/lattice,
 /obj/machinery/light/runway_light/delay4,
@@ -81795,6 +82525,16 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"sTR" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/xmas/ephemeral{
+	dir = 1
+	},
+/obj/decal/garland/ephemeral,
+/turf/simulated/floor/blueblack,
+/area/station/hallway/primary/west)
 "sVj" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -82028,6 +82768,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/decal/garland/ephemeral{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "tOI" = (
@@ -82156,6 +82899,9 @@
 "uMn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
+	},
+/obj/decal/garland/ephemeral{
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
@@ -82478,6 +83224,17 @@
 /obj/decal/wreath/ephemeral,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"wuk" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 4;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/decal/garland/ephemeral,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "wuE" = (
 /obj/securearea{
 	desc = "This hazard stripe marks a high-intensity beamline.";
@@ -82695,18 +83452,40 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/decal/garland/ephemeral{
+	dir = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/checkpoint/podbay)
 "xyL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"xAy" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/xmas/ephemeral,
+/obj/decal/garland/ephemeral,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "xBG" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen2"
 	},
 /area/station/hydroponics/bay)
+"xDJ" = (
+/obj/securearea{
+	desc = "This hazard stripe marks a high-intensity beamline.";
+	dir = 8;
+	icon_state = "magwarning";
+	layer = 2.5;
+	name = "Beamline"
+	},
+/obj/decal/garland/ephemeral,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "xFz" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
@@ -82805,6 +83584,7 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/stripe,
+/obj/decal/garland/ephemeral,
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "xZN" = (
@@ -111992,9 +112772,9 @@ beS
 bpx
 beS
 bgQ
-bAw
+xDJ
 bHN
-bLM
+wuk
 byI
 ius
 hQX
@@ -112294,9 +113074,9 @@ bpx
 bpx
 bpx
 mGF
-bAw
+xDJ
 bHN
-bLM
+wuk
 wuE
 bQe
 bQe
@@ -112596,9 +113376,9 @@ bpx
 bpx
 bHP
 bgQ
-bAw
+xDJ
 bHN
-bLM
+wuk
 byI
 qfb
 bQe
@@ -114123,7 +114903,7 @@ byI
 cbC
 bgA
 bgA
-jNE
+isV
 bgA
 aaB
 aaF
@@ -114727,7 +115507,7 @@ toG
 kSc
 xJW
 bgA
-tMx
+hjj
 iDw
 aaa
 aam
@@ -117442,7 +118222,7 @@ bQm
 bXT
 bXT
 bQm
-cbJ
+qjT
 bgA
 bgA
 bfc
@@ -118032,9 +118812,9 @@ byR
 bsQ
 bww
 byw
-bAt
+xAy
 lsh
-bCd
+sTR
 bCh
 bww
 bGC
@@ -124056,7 +124836,7 @@ aam
 bfm
 aaS
 bgB
-bhe
+pfb
 bij
 biS
 bjJ
@@ -134985,7 +135765,7 @@ cfu
 cfu
 cwV
 cEl
-cDT
+owP
 cwV
 cea
 cea
