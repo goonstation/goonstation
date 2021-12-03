@@ -86,6 +86,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	layer = 4
 	power_usage = 200
 	netname = "SIPHON"
+	var/sound/sound_unload = sound('sound/items/Deconstruct.ogg')
+
 	///overlay for beam because can't animate otherwise apparently
 	var/obj/overlay/beamlight
 	///paired control console for non-manual operation
@@ -148,6 +150,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 						var/shearcheck = abs(src.shear - M.shear)
 						if(shearcheck > M.sens_window) continue
 					src.extract_ticks -= M.tick_req
+					//todo: make a buildup of extraction ticks contribute to instability
 					var/atom/movable/yielder = new M.product()
 					if(istype(yielder,/obj/item)) //items go into internal reservoir
 						src.contents += yielder
@@ -155,6 +158,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					else //pulled out something that isn't an item... what could it be?
 						yielder.set_loc(get_turf(src))
 					break
+
+			//todo, probably here: instability based on both excess shear and overdriven extraction ticks
 
 			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, 0)
 
@@ -194,7 +199,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(diditwork)
 			boutput(user,"You touch the siphon's activation panel.")
 		else
-			boutput(user,"The siphon's activation panel isn't active.")
+			boutput(user,"The siphon's activation panel doesn't respond to your touch.")
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -209,21 +214,59 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(usr, "<span class='alert'>You are too far away from the target.</span>")
 			return
 
+		if(src.mode == "active")
+			boutput(usr, "<span class='alert'>You can't unload the siphon while it's running.</span>")
+			return
+
 		if (istype(over_object,/obj/storage/crate/) || istype(over_object,/obj/storage/cart))
-			usr.visible_message("<span class='notice'>[usr] uses [src]'s automatic ore offloader on [over_object].</span>", "<span class='notice'>You use [src]'s automatic ore offloader on [over_object].</span>")
+			var/offload_count = 0
 			for (var/obj/item/I in src.contents)
 				I.set_loc(over_object)
+				offload_count++
+			playsound(src, sound_unload, 40, 1)
+			usr.visible_message("<span class='notice'>[usr] uses [src]'s automatic ore offloader on [over_object].</span>", "<span class='notice'>You load [offload_count] materials into [over_object] from [src].</span>")
 			src.update_storage_bar()
+
+		if (istype(over_object,/obj/item/satchel/mining))
+			var/obj/item/satchel/mining/satchel = over_object
+			usr.visible_message("<span class='notice'>[usr] begins unloading ore into [satchel].</span>")
+			if (satchel.contents.len < satchel.maxitems)
+				var/staystill = usr.loc
+				var/interval = 0
+				for (var/obj/item/I in src.contents)
+					I.set_loc(satchel)
+					I.add_fingerprint(usr)
+					if (!(interval++ % 4))
+						satchel.UpdateIcon()
+						src.update_storage_bar()
+					playsound(src, sound_unload, 30, 1)
+					sleep(0.1 SECONDS)
+					if (usr.loc != staystill) break
+					if (satchel.contents.len >= satchel.maxitems)
+						boutput(usr, "<span class='notice'>\The [satchel] is now full!</span>")
+						break
+				var/incomplete = 1 //you're not done filling
+				if(satchel.contents.len == satchel.maxitems || !length(src.contents)) incomplete = 0
+				boutput(usr, "<span class='notice'>You [incomplete ? "stop" : "finish"] filling \the [satchel].</span>")
+				satchel.UpdateIcon()
+				src.update_storage_bar()
+			else
+				boutput(usr, "<span class='notice'>\The [satchel] doesn't have any room to accept materials.</span>")
 
 		else if (istype(over_object, /turf/))
 			usr.visible_message("<span class='notice'>[usr] begins unloading ore from [src].</span>")
 			var/staystill = usr.loc
+			var/interval = 0
 			for (var/obj/item/I in src.contents)
 				I.set_loc(over_object)
-				src.update_storage_bar()
-				sleep(0.3 SECONDS)
+				I.add_fingerprint(usr)
+				if (!(interval++ % 4))
+					src.update_storage_bar()
+				playsound(src, sound_unload, 30, 1)
+				sleep(0.1 SECONDS)
 				if (usr.loc != staystill) break
 			boutput(usr, "<span class='notice'>You [length(src.contents) ? "stop" : "finish"] unloading ore from [src].</span>")
+			src.update_storage_bar()
 
 		else ..()
 
@@ -253,7 +296,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	proc/toggle_operating(var/remote_activation)
 		. = TRUE
 		if(src.toggling || src.mode == "high") return FALSE
-		if(src.mode == "low")
+		if(src.mode == "low" && length(src.contents) < src.max_held_items)
 			src.changemode("active")
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(1)
 		else
@@ -329,7 +372,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.beamlight.icon_state = "drill-beam-[imdriller]"
 		else
 			src.beamlight.icon_state = "drill-beam-0"
-			ClearAllOverlays()
+			ClearSpecificOverlays(null,"beamline")
 
 	proc/update_storage_bar()
 		if(!(status & NOPOWER))
@@ -339,7 +382,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			storebar.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(storebar, "storage", 0, 1)
 		else
-			ClearAllOverlays()
+			ClearSpecificOverlays(null,"storage")
 
 	build_readouts()
 		var/list/devdat = list()
