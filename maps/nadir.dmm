@@ -592,6 +592,11 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/kitchen)
 "bT" = (
@@ -934,6 +939,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light_switch/north,
+/obj/storage/cart,
 /turf/simulated/floor/engine,
 /area/station/science)
 "cX" = (
@@ -2960,11 +2966,6 @@
 	name = "The Warrens"
 	})
 "jy" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/gloves/latex{
@@ -4055,6 +4056,15 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
+"ne" = (
+/obj/item/storage/wall{
+	dir = 8;
+	name = "reagent gear cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner)
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "nf" = (
 /obj/machinery/chem_master{
 	dir = 4
@@ -4221,7 +4231,9 @@
 	pixel_x = -10
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/espresso_machine,
+/obj/machinery/espresso_machine{
+	pixel_y = 7
+	},
 /obj/cup_rack{
 	pixel_y = 32
 	},
@@ -5220,6 +5232,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/storage/cart,
 /turf/simulated/floor/engine,
 /area/station/science)
 "qW" = (
@@ -5710,8 +5723,8 @@
 /area/station/turret_protected/Zeta)
 "sA" = (
 /obj/item/storage/box/donkpocket_kit{
-	pixel_x = -10;
-	pixel_y = -2
+	pixel_x = -9;
+	pixel_y = -7
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -9086,11 +9099,10 @@
 /turf/simulated/floor/engine,
 /area/station/crewquarters/cryotron)
 "Dp" = (
-/obj/machinery/light/small/floor/netural,
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
+/obj/stool/chair{
+	dir = 4
 	},
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "Dq" = (
@@ -9945,11 +9957,6 @@
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "FS" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/submachine/chef_sink{
 	desc = "A common utility sink.";
 	dir = 4;
@@ -12629,7 +12636,6 @@
 /area/station/hallway/secondary/construction2)
 "OH" = (
 /obj/table/auto,
-/obj/machinery/microwave,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "OI" = (
@@ -13518,11 +13524,6 @@
 /turf/simulated/floor/engine,
 /area/station/security/brig/genpop)
 "RJ" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
 /obj/table/reinforced/auto,
 /obj/item/storage/box/cutlery{
 	pixel_x = -3;
@@ -13745,14 +13746,7 @@
 	})
 "Sv" = (
 /obj/table/auto,
-/obj/item/device/reagentscanner{
-	pixel_x = -7;
-	pixel_y = 4
-	},
-/obj/item/storage/box/beakerbox{
-	pixel_x = 3;
-	pixel_y = 5
-	},
+/obj/machinery/microwave,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "Sy" = (
@@ -15796,6 +15790,11 @@
 /obj/machinery/deep_fryer,
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/kitchen)
@@ -49919,7 +49918,7 @@ gR
 vw
 xK
 wl
-wl
+ne
 Pa
 vP
 Sv
@@ -51737,7 +51736,7 @@ vm
 xt
 Lu
 xt
-Dp
+Lu
 xt
 Lu
 Co
@@ -52343,7 +52342,7 @@ sN
 sN
 CS
 jE
-sN
+Dp
 sN
 jE
 jE

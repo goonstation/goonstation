@@ -97,6 +97,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/mode = "high"
 	///true while toggling between high and low
 	var/toggling = FALSE
+	///how much the siphon can hold in its internal reservoir before it has to be unloaded
+	var/max_held_items = 20
 	///list of paired resonators, built when drill enters active position
 	var/list/resonators = list()
 	///list of possible siphon targets for the siphon
@@ -147,12 +149,30 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 						if(shearcheck > M.sens_window) continue
 					src.extract_ticks -= M.tick_req
 					var/atom/movable/yielder = new M.product()
-					yielder.set_loc(src.get_output_location())
+					if(istype(yielder,/obj/item)) //items go into internal reservoir
+						src.contents += yielder
+						src.update_storage_bar()
+					else //pulled out something that isn't an item... what could it be?
+						yielder.set_loc(get_turf(src))
 					break
 
 			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, 0)
+
+			if(length(src.contents) >= src.max_held_items)
+				src.changemode("low")
+				if(src.paired_lever != null) paired_lever.vis_setpanel(0)
+				src.visible_message("<span class='alert'><B>[src]</B> shuts down. Its internal storage is full.</span>")
+
 		power_usage = total_draw
 		..()
+
+	power_change()
+		if(powered())
+			status &= ~NOPOWER
+		else
+			status |= NOPOWER
+		src.update_fx()
+		src.update_storage_bar()
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W) && src.mode != "high")
@@ -168,7 +188,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			else
 				if(src.mode == "active") boutput(user,"The siphon's lift mechanism can't be toggled while it's operational.")
 			return
-
 
 	attack_hand(mob/user)
 		var/diditwork = src.toggle_operating()
@@ -190,78 +209,23 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			boutput(usr, "<span class='alert'>You are too far away from the target.</span>")
 			return
 
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set the siphon to output to [over_object].</span>")
+		if (istype(over_object,/obj/storage/crate/) || istype(over_object,/obj/storage/cart))
+			usr.visible_message("<span class='notice'>[usr] uses [src]'s automatic ore offloader on [over_object].</span>", "<span class='notice'>You use [src]'s automatic ore offloader on [over_object].</span>")
+			for (var/obj/item/I in src.contents)
+				I.set_loc(over_object)
+			src.update_storage_bar()
 
-		else if (istype(over_object,/obj/storage/cart/))
-			var/obj/storage/cart/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
-			else
-				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set the siphon to output to [over_object].</span>")
+		else if (istype(over_object, /turf/))
+			usr.visible_message("<span class='notice'>[usr] begins unloading ore from [src].</span>")
+			var/staystill = usr.loc
+			for (var/obj/item/I in src.contents)
+				I.set_loc(over_object)
+				src.update_storage_bar()
+				sleep(0.3 SECONDS)
+				if (usr.loc != staystill) break
+			boutput(usr, "<span class='notice'>You [length(src.contents) ? "stop" : "finish"] unloading ore from [src].</span>")
 
-		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set the siphon to output on top of [O].</span>")
-
-		else if (istype(over_object,/turf/simulated/floor/) || istype(over_object,/turf/unsimulated/floor/))
-			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the siphon to output to [over_object].</span>")
-
-		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
-	proc/get_output_location(var/atom/A,var/ejection = 0)
-		if (!src.output_target)
-			return src.loc
-
-		if (get_dist(src.output_target,src) > 1)
-			src.output_target = null
-			return src.loc
-
-		if (istype(src.output_target,/obj/storage/crate/))
-			var/obj/storage/crate/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-		if (istype(src.output_target,/obj/storage/cart/))
-			var/obj/storage/cart/C = src.output_target
-			if (C.locked || C.welded)
-				src.output_target = null
-				return src.loc
-			else
-				if (C.open)
-					return C.loc
-				else
-					return C
-		else if (istype(src.output_target,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = src.output_target
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				src.output_target = null
-				return src.loc
-			if (A && istype(A,M.base_material_class))
-				return M
-			else
-				return M.loc
-
-		else if (istype(src.output_target,/turf/simulated/floor/) || istype(src.output_target,/turf/unsimulated/floor/))
-			return src.output_target
-
-		else
-			return src.loc
+		else ..()
 
 	proc/changemode(var/newmode)
 		src.mode = newmode
@@ -278,23 +242,23 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		. = TRUE
 		if(src.toggling) return FALSE
 		if(src.mode == "high")
-			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setlever(1)
 			src.engage_drill()
+			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setlever(1)
 		else
+			src.disengage_drill()
 			if(src.paired_lever != null && !remote_activation)
 				paired_lever.vis_setlever(0)
 				paired_lever.vis_setpanel(0)
-			src.disengage_drill()
 
 	proc/toggle_operating(var/remote_activation)
 		. = TRUE
 		if(src.toggling || src.mode == "high") return FALSE
 		if(src.mode == "low")
-			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(1)
 			src.changemode("active")
+			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(1)
 		else
-			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(0)
 			src.changemode("low")
+			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(0)
 
 	proc/engage_drill()
 		if(src.toggling || src.mode != "high" || !src.powered()) return
@@ -302,8 +266,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		playsound(src, "sound/machines/click.ogg", 40, 1)
 		src.icon_state = "drilldrop"
 		SPAWN_DBG(2 SECONDS)
-			for (var/obj/machinery/siphon/resonator/res in orange(4))
-				LAGCHECK(LAG_LOW)
+			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
@@ -311,7 +274,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				res.paired_core = src
 				res.reso_init(xadj,yadj)
 				res.engage_lock()
-				res.build_net_update(null,SIGBUILD_REGULAR)
 			SPAWN_DBG(5 DECI SECONDS)
 				src.calibrate_resonance()
 				src.build_net_update(null,SIGBUILD_REGULAR)
@@ -358,7 +320,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.shear = max(0,(xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque)) + shear_adjust)
 
 	proc/update_fx()
-		if(src.mode != "high")
+		if(!(status & NOPOWER) && src.mode != "high")
 			var/image/beamline = SafeGetOverlayImage("beamline", 'icons/obj/machines/neodrill_32x64.dmi', "drill-active")
 			beamline.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(beamline, "beamline", 0, 1)
@@ -367,6 +329,15 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.beamlight.icon_state = "drill-beam-[imdriller]"
 		else
 			src.beamlight.icon_state = "drill-beam-0"
+			ClearAllOverlays()
+
+	proc/update_storage_bar()
+		if(!(status & NOPOWER))
+			var/storatio = round((length(src.contents) / src.max_held_items) * 5)
+			var/image/storebar = SafeGetOverlayImage("storage", 'icons/obj/machines/neodrill_32x64.dmi', "drill-storage-[storatio]")
+			storebar.plane = PLANE_OVERLAY_EFFECTS
+			UpdateOverlays(storebar, "storage", 0, 1)
+		else
 			ClearAllOverlays()
 
 	build_readouts()
@@ -492,6 +463,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		var/vertical_identifier = yadj + 4
 		src.formatted_coords = "[horizontal_identifier][vertical_identifier]"
 		src.torque_init(xadj,yadj)
+		SPAWN_DBG(0.1 SECONDS)
+			src.build_net_update(null,SIGBUILD_REGULAR)
 
 	//initializes torque and shear values after prompted, determining what effect the resonator has on siphoning
 	//x_torque, y_torque and shearmod values set here will be multiplied by the resonator's intensity
@@ -542,9 +515,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
-			paired_core.calibrate_resonance()
-			paired_core.build_net_update()
 		if(manual == SIGBUILD_PAIRED)
+			paired_core.calibrate_resonance()
 			paired_core.build_net_update()
 		..()
 
