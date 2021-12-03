@@ -88,6 +88,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	netname = "SIPHON"
 	///overlay for beam because can't animate otherwise apparently
 	var/obj/overlay/beamlight
+	///paired control console for non-manual operation
+	var/obj/machinery/siphon_lever/paired_lever
 
 	///sum of baseline draw from siphon and current draw from paired resonators
 	var/total_draw
@@ -272,20 +274,24 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
 		src.update_fx()
 
-	proc/toggle_drill()
+	proc/toggle_drill(var/remote_activation)
 		. = TRUE
 		if(src.toggling) return FALSE
 		if(src.mode == "high")
+			if(src.paired_lever && !remote_activation) paired_lever.vis_setlever(1)
 			src.engage_drill()
 		else
+			if(src.paired_lever && !remote_activation) paired_lever.vis_setlever(0)
 			src.disengage_drill()
 
-	proc/toggle_operating()
+	proc/toggle_operating(var/remote_activation)
 		. = TRUE
 		if(src.toggling || src.mode == "high") return FALSE
 		if(src.mode == "low")
+			if(src.paired_lever && !remote_activation) paired_lever.vis_setpanel(1)
 			src.changemode("active")
 		else
+			if(src.paired_lever && !remote_activation) paired_lever.vis_setpanel(0)
 			src.changemode("low")
 
 	proc/engage_drill()
@@ -570,168 +576,3 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		devdat["Intensity"] = src.intensity
 		devdat["Shear Modifier"] = src.shearmod * src.intensity
 		return devdat
-
-
-
-
-//section: secondary consoles
-
-//control for siphon and associated resonators
-//can poll siphon and resonators for information, and control resonator operation; siphon itself could have a big lever console?
-/obj/machinery/computer/siphon_control
-	name = "Harmonic Siphon Control"
-	icon = 'icons/obj/computerpanel.dmi'
-	icon_state = "engine1"
-	req_access = list(access_research)
-	object_flags = CAN_REPROGRAM_ACCESS
-	var/net_id
-	var/temp = null
-	///list of devices known to the siphon control device
-	var/list/known_devices = list()
-	///formatted version of above device manifest
-	var/formatted_list = null
-	///thing to avoid having to update the list every time you click the window
-	var/list_is_updated = FALSE
-
-	light_r = 0.8
-	light_g = 1
-	light_b = 1
-
-	New()
-		..()
-		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
-
-	receive_signal(datum/signal/signal)
-		if(status & NOPOWER)
-			return
-
-		if(!signal || signal.encryption || !signal.data["sender"])
-			return
-
-		var/sender = signal.data["sender"]
-
-		if(sender)
-			switch(signal.data["command"])
-				if("devdat")
-					src.list_is_updated = FALSE
-					var/device_netid = signal.data["netid"]
-					var/list/manifest = new()
-					manifest["Identifier"] = signal.data["device"]
-					manifest += signal.data["devdat"]
-					src.known_devices[device_netid] = manifest
-				if("deinit")
-					if(signal.data["device"] == "SIPHON")
-						src.list_is_updated = FALSE
-						src.known_devices.Cut()
-		return
-
-/obj/machinery/computer/siphon_control/attack_hand(var/mob/user as mob)
-	if(!src.allowed(user))
-		boutput(user, "<span class='alert'>Access Denied.</span>")
-		return
-
-	if(..())
-		return
-
-	src.add_dialog(user)
-	var/HTML
-
-	///if it works, don't break it?
-	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
-		<style type='text/css'>
-			body {
-				font-family: Verdana, sans-serif;
-				background: #222228;
-				color: #ddd;
-				text-align: center;
-				}
-			strong {
-				color: #fff;
-				}
-			a {
-				color: #6ce;
-				text-decoration: none;
-				}
-			a:hover, a:active {
-				color: #cff;
-				}
-			img, a img {
-				border: 0;
-				}
-		</style>
-	"} : {"
-	<style type='text/css'>
-		/* when chui is on apparently do nothing, cargo cult moment */
-	</style>
-	"}
-
-	HTML += {"
-	[header_thing_chui_toggle]
-	<title>Harmonic Siphon Control</title>"}
-
-	HTML += ""
-
-	src.build_formatted_list()
-	if (src.formatted_list)
-		HTML += src.formatted_list
-
-	user.Browse(HTML, "window=siphonControl_\ref[src];title=Harmonic Siphon Control;size=500x600;")
-	onclose(user, "siphonControl_\ref[src]")
-	return
-
-//oh boy another place this gets duplicated
-/obj/machinery/computer/siphon_control/proc/topicLink(action, subaction, var/list/extra)
-	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
-
-/obj/machinery/computer/siphon_control/proc/build_formatted_list()
-	if(src.list_is_updated) return
-	var/mainlist = "" //held separately so the siphon can always start the list
-	var/rollingtext = "" //list of entries for not siphon
-
-	if(!length(src.known_devices))
-		mainlist = "NO CONNECTION TO DEVICES<br>LOWER SIPHON TO INITIALIZE"
-		src.formatted_list = mainlist
-		return
-
-	mainlist += "CONNECTED DEVICES"
-
-	for (var/device_index in src.known_devices)
-		boutput(world,"[device_index] plus [known_devices[device_index]]")
-		var/saveforsiphon = FALSE
-		var/minitext = ""
-		var/list/manifest = known_devices[device_index]
-		for(var/field in manifest)
-			boutput(world,"[field] plus [manifest[field]]")
-			if(field == "Intensity") //calibration isn't in yet, add it, seriously !!!!!!!!!!!
-				minitext += "[field] &middot; [manifest[field]] <A href='[topicLink("calibrate","\ref[manifest]")]'>(Calibrate)</A><br>"
-			else
-				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
-				minitext += "[field] &middot; [manifest[field]]<br>"
-		if(saveforsiphon)
-			mainlist = minitext
-			mainlist += "<br>"
-		else
-			rollingtext += minitext
-			rollingtext += "<br>"
-
-	mainlist += rollingtext
-	src.formatted_list = mainlist
-	src.list_is_updated = TRUE
-	return
-
-
-
-
-
-//database to look up requirements for extraction, including in some cases a recommendation for parameters
-/obj/machinery/computer/siphon_db
-	name = "Resonance Calibration Database"
-	icon = 'icons/obj/computerpanel.dmi'
-	icon_state = "qmreq1"
-	object_flags = CAN_REPROGRAM_ACCESS
-	var/temp = null
-
-	light_r = 0.8
-	light_g = 1
-	light_b = 1
