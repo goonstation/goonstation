@@ -54,6 +54,8 @@
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
+		if (prob(50))
+			new /obj/item/clothing/head/helmet/firefighter(src)
 		if (prob(30))
 			new /obj/item/clothing/suit/fire(src)
 			new /obj/item/clothing/mask/gas/emergency(src)
