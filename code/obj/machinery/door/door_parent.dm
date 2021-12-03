@@ -181,7 +181,7 @@
 
 	proc/xmasify()
 		var/obj/decal/garland/garland = new(src.loc)
-		if(src.dir =! NORTH)
+		if(src.dir != NORTH)
 			garland.dir = src.dir
 
 	proc/toggleinput()
