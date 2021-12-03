@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if(length(src.contents) >= src.max_held_items)
 				src.changemode("low")
 				if(src.paired_lever != null) paired_lever.vis_setpanel(0)
-				src.visible_message("<span class='alert'><B>[src]</B> shuts down. Its internal storage is full.</span>")
+				src.visible_message("<B>[src]</B> shuts down. Its internal storage is full.")
 
 		power_usage = total_draw
 		..()
@@ -334,6 +334,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	proc/update_storage_bar()
 		if(!(status & NOPOWER))
 			var/storatio = round((length(src.contents) / src.max_held_items) * 5)
+			if(storatio == 0 && length(src.contents)) storatio = 1 //show immediate storage progress for tactile feedback
 			var/image/storebar = SafeGetOverlayImage("storage", 'icons/obj/machines/neodrill_32x64.dmi', "drill-storage-[storatio]")
 			storebar.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(storebar, "storage", 0, 1)
