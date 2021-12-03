@@ -1,9 +1,12 @@
+#define CLICK_ZONE_LEVER 1
+#define CLICK_ZONE_PANEL 2
+
 ///manual control panel for core operation of siphon itself (raising and lowering, on and off); stays physically paired to the siphon
 /obj/machinery/siphon_lever
 	name = "Primary Siphon Control"
 	desc = "Console with a sizable lever and hand pad for activation of a harmonic siphon from a distance."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
-	icon-state = "siph-control-0"
+	icon_state = "siph-control-0"
 	density = 1
 	var/obj/machinery/siphon/core/paired_core = null
 	var/lever_active = 0
@@ -17,7 +20,21 @@
 	proc/pair_siphon()
 		src.paired_core?.paired_lever = null
 		src.paired_core = locate(/obj/machinery/siphon/core, orange(6,src))
-		src.paired_core?.paired_lever = src
+		if(paired_core)
+			src.paired_core.paired_lever = src
+			switch(src.paired_core.mode)
+				if("high")
+					src.vis_setlever(0)
+					src.vis_setpanel(0)
+				if("low")
+					src.vis_setlever(1)
+					src.vis_setpanel(0)
+				if("active")
+					src.vis_setlever(1)
+					src.vis_setpanel(1)
+		else
+			src.vis_setlever(0)
+			src.vis_setpanel(0)
 
 	proc/vis_setlever(var/external_swap_type)
 		if(external_swap_type != null)
@@ -34,20 +51,46 @@
 		panelglow.plane = PLANE_OVERLAY_EFFECTS
 		UpdateOverlays(panelglow, "panel", 0, 1)
 
-	attack_hand(mob/user as mob, params)
-		if(islist(params) && params["icon-x"])
-			if(params["icon-x"] < 16) //left hand side, aka lever
-				if(powered() && paired_core.toggle_drill(TRUE))
-					src.lever_active = !src.lever_active
-					src.vis_setlever()
-				else
-					boutput(user,"The lever seems to be locked in place.")
-			else //right hand side, aka handpad
-				if(powered() && paired_core.toggle_operating(TRUE))
-					src.panel_active = !src.panel_active
-					src.vis_setlever()
-				else
-					boutput(user,"The hand pad doesn't respond when you touch it.")
+	RawClick(location,control,params)
+		var/mob/user = usr
+		if (ismobcritter(user) || issilicon(user) || isobserver(user))
+			return
+		if(can_act(user) && can_reach(user, src))
+			var/list/paramList = params2list(params)
+
+			var/obj/item/I = user.equipped()
+			if(I) //no hitting the controls with stuff to operate them!
+				src.attackby(I,user)
+				return
+
+			//Determine spot that was clicked
+			var/click_zone_override = null
+			switch(text2num(paramList["icon-x"]))
+				if(3 to 16) //Lever horizontal range
+					switch(text2num(paramList["icon-y"]))
+						if(11 to 28) //Lever vertical range
+							click_zone_override = CLICK_ZONE_LEVER
+				if(21 to 29) //Panel horizontal range
+					switch(text2num(paramList["icon-y"]))
+						if(14 to 23) //Panel vertical range
+							click_zone_override = CLICK_ZONE_PANEL
+			switch(click_zone_override)
+				if(CLICK_ZONE_LEVER)
+					if(powered() && paired_core.toggle_drill(TRUE))
+						src.lever_active = !src.lever_active
+						src.vis_setlever()
+					else
+						boutput(user,"The lever seems to be locked in place.")
+				if(CLICK_ZONE_PANEL)
+					if(powered() && paired_core.toggle_operating(TRUE))
+						src.panel_active = !src.panel_active
+						src.vis_setpanel()
+					else
+						boutput(user,"The hand pad doesn't respond when you touch it.")
+
+#undef CLICK_ZONE_LEVER
+#undef CLICK_ZONE_PANEL
+
 
 ///control for siphon and associated resonators: receives siphon and resonator data, and controls resonator operation
 /obj/machinery/computer/siphon_control
@@ -173,11 +216,11 @@
 	var/rollingtext = "" //list of entries for not siphon
 
 	if(!length(src.known_devices))
-		mainlist = "<h2>NO CONNECTION TO DEVICES</h2><br><h3>LOWER SIPHON TO INITIALIZE</h3>"
+		mainlist = "<h2>NO CONNECTION TO DEVICES</h2><br>Lower siphon to initialize"
 		src.formatted_list = mainlist
 		return
 
-	mainlist += "<h2>CONNECTED DEVICES<h2>"
+	mainlist += "<h2>CONNECTED DEVICES</h2><br><br>"
 
 	for (var/device_index in src.known_devices)
 		var/saveforsiphon = FALSE
@@ -190,7 +233,7 @@
 				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
 				minitext += "<strong>[field]</strong> &middot; [manifest[field]]<br>"
 		if(saveforsiphon)
-			mainlist = minitext
+			mainlist += minitext
 			mainlist += "<br>"
 		else
 			rollingtext += minitext

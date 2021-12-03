@@ -278,20 +278,22 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		. = TRUE
 		if(src.toggling) return FALSE
 		if(src.mode == "high")
-			if(src.paired_lever && !remote_activation) paired_lever.vis_setlever(1)
+			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setlever(1)
 			src.engage_drill()
 		else
-			if(src.paired_lever && !remote_activation) paired_lever.vis_setlever(0)
+			if(src.paired_lever != null && !remote_activation)
+				paired_lever.vis_setlever(0)
+				paired_lever.vis_setpanel(0)
 			src.disengage_drill()
 
 	proc/toggle_operating(var/remote_activation)
 		. = TRUE
 		if(src.toggling || src.mode == "high") return FALSE
 		if(src.mode == "low")
-			if(src.paired_lever && !remote_activation) paired_lever.vis_setpanel(1)
+			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(1)
 			src.changemode("active")
 		else
-			if(src.paired_lever && !remote_activation) paired_lever.vis_setpanel(0)
+			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(0)
 			src.changemode("low")
 
 	proc/engage_drill()
