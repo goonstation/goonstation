@@ -65,10 +65,16 @@
 		..()
 
 	proc/xmasify()
+		var/turf/T = get_step(src, SOUTH)
+		for(var/obj/O in T)
+			if(istype(O, /obj/machinery/light) || istype(/obj/machinery/recharger/wall))
+				if(O.pixel_y > 6)
+					return
+		if(locate(/obj/decal) in src.loc)
+			return
 		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.02)
 			new /obj/decal/wreath(src.loc)
 		else
-			var/turf/T = get_step(src, SOUTH)
 			if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
 				var/obj/decal/xmas_lights/lights = new(src.loc)
 				lights.light_pattern(y % 5)
