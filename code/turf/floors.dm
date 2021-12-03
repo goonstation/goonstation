@@ -1198,7 +1198,7 @@ DEFINE_FLOORS(techfloor/green,
 			if(prob(10))
 				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
 			SPAWN_DBG(1)
-				var/turf/T = src.ReplaceWith(/turf/simulated/floor/snow, keep_old_material=FALSE)
+				var/turf/T = src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE)
 				T.RL_Init()
 		#endif
 
