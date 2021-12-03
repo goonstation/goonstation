@@ -31107,10 +31107,6 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/item/storage/toolbox/emergency{
 	pixel_x = -3;
 	pixel_y = 7
@@ -31123,15 +31119,17 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "bAB" = (
 /obj/machinery/atmospherics/portables_connector{
 	name = "Mixing West"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
@@ -31139,9 +31137,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
@@ -32239,9 +32236,9 @@
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
@@ -32569,9 +32566,9 @@
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/big{
+/obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
@@ -54897,10 +54894,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/item/device/analyzer/atmosanalyzer_upgrade{
 	pixel_x = 8;
 	pixel_y = 10
@@ -54910,6 +54903,9 @@
 	pixel_y = -3
 	},
 /obj/table/glass/auto,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "fgs" = (
@@ -59233,12 +59229,11 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "osp" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/cable/brown{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
