@@ -146,6 +146,10 @@
 	pixel_x = 3;
 	pixel_y = 28
 	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "aw" = (
@@ -625,6 +629,13 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
+"bQ" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/security/detectives_office)
 "bR" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /obj/decal/tile_edge/line/white{
@@ -2468,6 +2479,7 @@
 	})
 "hF" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/engine,
 /area/station/security/detectives_office)
 "hG" = (
@@ -3715,11 +3727,11 @@
 	},
 /area/shuttle/arrival/station)
 "lz" = (
-/obj/table/reinforced/auto,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/surgery_tray,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/kitchen)
 "lB" = (
@@ -4570,6 +4582,7 @@
 	})
 "oo" = (
 /obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/light/small,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "op" = (
@@ -7880,6 +7893,10 @@
 	})
 "ym" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "yn" = (
@@ -8175,6 +8192,10 @@
 	name = "Door Cameras";
 	network = "detnet"
 	},
+/obj/blind_switch/area/north{
+	pixel_x = -11
+	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "zh" = (
@@ -12966,6 +12987,7 @@
 /obj/storage/cart/forensic{
 	req_access_txt = "4"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "NT" = (
@@ -13022,6 +13044,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hydroponics/bay)
+"Ob" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/wood/two,
+/area/station/security/detectives_office)
 "Oc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -14719,6 +14748,10 @@
 /obj/shrub/dead{
 	pixel_x = -7;
 	pixel_y = 21
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/engine,
 /area/station/security/detectives_office)
@@ -50433,7 +50466,7 @@ Pw
 JT
 Bi
 Ci
-JT
+Ob
 JT
 Wd
 oX
@@ -51034,7 +51067,7 @@ Lu
 hF
 Vc
 CC
-JT
+Ob
 JT
 JT
 JT
@@ -51338,9 +51371,9 @@ LG
 LG
 LG
 LG
-hF
+bQ
 OP
-hF
+bQ
 LG
 oX
 Zn
