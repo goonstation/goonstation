@@ -59,10 +59,11 @@
 				node = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 
 	update_icon()
+
 		if(src.node)
 			if(src.on)
 				icon_state = "freezer_1"
@@ -100,7 +101,7 @@
 			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on
-				update_icon()
+				UpdateIcon()
 			if(href_list["temp"])
 				var/amount = text2num_safe(href_list["temp"])
 				if(amount > 0)

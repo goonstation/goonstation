@@ -65,7 +65,7 @@
 		weld_image.pixel_x = weld_image_offset_X
 		weld_image.pixel_y = weld_image_offset_Y
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
 				for (var/atom/movable/A in src.loc)
@@ -90,7 +90,8 @@
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
 
-	proc/update_icon()
+	update_icon()
+
 		if (src.open)
 			flick(src.opening_anim,src)
 			src.icon_state = src.icon_opened
@@ -189,7 +190,7 @@
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [src]!", "blue")
 				else
@@ -241,7 +242,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -253,7 +254,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return
@@ -503,7 +504,7 @@
 		else
 			src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, src.open_sound, 15, 1, -3)
 		return 1
@@ -563,7 +564,7 @@
 				AM.set_loc(entangled.open ? entangled.loc : entangled)
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, 15, 1, -3)
 		return 1
 
@@ -641,7 +642,7 @@
 		else
 			weldman.visible_message("<span class='alert'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
 			src.welded = 0
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 		return
@@ -864,7 +865,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -876,7 +877,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -901,7 +902,7 @@
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed
 			src.emagged = 1
 			src.locked = 0
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			if (user)
 				user.show_text("You short out the lock on [src].", "blue")
@@ -913,7 +914,7 @@
 			return 0
 		else if (src.emagged)
 			src.emagged = 0
-			src.update_icon()
+			src.UpdateIcon()
 			if (user)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1

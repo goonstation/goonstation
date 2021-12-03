@@ -86,7 +86,7 @@
 				air_contents.merge(removed)
 
 		src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/pump/return_air()
@@ -176,7 +176,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
-		update_icon()
+		UpdateIcon()
 	else
 		usr.Browse(null, "window=pump")
 		return
@@ -189,7 +189,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 
 	if (!on) //Can't chop your head off if the fan's not spinning
 		on = 1
-		update_icon()
+		UpdateIcon()
 
 	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")

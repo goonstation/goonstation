@@ -50,6 +50,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	var/datum/keybind_style/init_style = new style //Can't do static referencing for merge, press F to pay respekts
 	var/datum/keymap/init_keymap = new /datum/keymap(init_style.changed_keys)
 	src.keymap.merge(init_keymap)
+	src.keymap.on_update(src)
 
 /** apply_keybind: Takes a given string style, and finds the datum, then applies it.
  *	External use only.

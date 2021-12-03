@@ -179,14 +179,14 @@
 			src.time = 0
 			src.timing = FALSE
 			last_tick = 0
-		src.update_icon()
+		src.UpdateIcon()
 		last_tick = TIME
 	else
 		last_tick = 0
 	return
 
 /obj/machinery/door_timer/power_change()
-	update_icon()
+	UpdateIcon()
 
 
 // Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
@@ -230,12 +230,12 @@
 			if (B.id == src.id && B.our_timer == src)
 				if (B.locked)
 					B.locked = 0
-					B.update_icon()
+					B.UpdateIcon()
 					B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
 			LAGCHECK(LAG_HIGH)
 
 	src.updateUsrDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/door_timer/ui_interact(mob/user, datum/tgui/ui)
@@ -299,7 +299,7 @@
 			logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
 
 			src.add_fingerprint(usr)
-			src.update_icon()
+			src.UpdateIcon()
 			return TRUE
 
 		if ("activate-flasher")
@@ -316,7 +316,7 @@
 /obj/machinery/door_timer/attack_hand(mob/user)
 	return src.ui_interact(user)
 
-/obj/machinery/door_timer/proc/update_icon()
+/obj/machinery/door_timer/update_icon()
 	if (status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return

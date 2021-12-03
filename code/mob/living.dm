@@ -432,8 +432,6 @@
 			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
-		if ("say_main_radio")
-			src.say_radio()
 		else
 			. = ..()
 
@@ -1736,7 +1734,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(D)
 		for (var/datum/ailment_data/malady/M in src.ailments)
 			src.cure_disease(M)
-
+		for(var/datum/ailment_data/addiction/A in src.ailments)
+			src.ailments -= A
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	SHOULD_CALL_PARENT(TRUE)

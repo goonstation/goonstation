@@ -98,7 +98,7 @@ obj/machinery/atmospherics/binary
 				node2 = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 	build_network()
 		if(!network1 && node1)

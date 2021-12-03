@@ -440,6 +440,9 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
 
+		/client/proc/delete_profiling_logs,
+		/client/proc/cause_lag,
+
 		/client/proc/player_panel_tgui,
 
 #ifdef MACHINE_PROCESSING_DEBUG
@@ -1180,7 +1183,7 @@ var/list/fun_images = list()
 			S.charge = S.capacity
 			S.output = 200000
 			S.online = 1
-			S.updateicon()
+			S.UpdateIcon()
 			S.power_change()
 
 	var/confirm4 = alert("Turn space bright pink? (For post processing/optimizations)", "Pink Background?", "No", "Yes")

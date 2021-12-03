@@ -24,13 +24,13 @@
 
 		if (current_state > GAME_STATE_WORLD_INIT)
 			SPAWN_DBG(0) //worldgen overrides ideally
-				src.update_icon()
+				src.UpdateIcon()
 
 		else
 			worldgenCandidates[src] = 1
 
 	generate_worldgen()
-		src.update_icon()
+		src.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -39,7 +39,7 @@
 	the_tuff_stuff
 		explosion_resistance = 7
 	// ty to somepotato for assistance with making this proc actually work right :I
-	proc/update_icon()
+	update_icon()
 		var/builtdir = 0
 		if (connect_overlay && !islist(connects_with_overlay))
 			connects_with_overlay = list()
@@ -121,9 +121,9 @@
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.update_icon()
+			T.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -262,7 +262,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 
 	the_tuff_stuff
 		explosion_resistance = 7
@@ -322,7 +322,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 
 	dark1
 		color = "#dddddd"
@@ -381,7 +381,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
@@ -406,7 +406,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
@@ -467,7 +467,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 /turf/simulated/wall/auto/supernorn/wood
 	icon = 'icons/turf/walls_wood.dmi'
 	connect_diagonal = 0
@@ -498,7 +498,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 
 /turf/simulated/wall/auto/reinforced/gannets
 	icon = 'icons/turf/walls_destiny.dmi'
@@ -539,20 +539,20 @@
 			src.update_neighbors()
 		if (current_state > GAME_STATE_WORLD_INIT)
 			SPAWN_DBG(0) //worldgen overrides ideally
-				src.update_icon()
+				src.UpdateIcon()
 
 		else
 			worldgenCandidates[src] = 1
 
 	generate_worldgen()
-		src.update_icon()
+		src.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
 		..()
 
 
-	proc/update_icon()
+	update_icon()
 		var/builtdir = 0
 		var/overlaydir = 0
 		if (connect_overlay && !islist(connects_with_overlay))
@@ -625,9 +625,9 @@
 
 	proc/update_neighbors()
 		for (var/turf/unsimulated/wall/auto/T in orange(1,src))
-			T.update_icon()
+			T.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 /turf/unsimulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -806,7 +806,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 				self_message = "You cut the reinforcing rods."
 				message = "[owner] cuts \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 1
-				the_wall.update_icon()
+				the_wall.UpdateIcon()
 			if (WALL_REMOVERERODS)
 				var/atom/A = new /obj/item/rods( the_wall )
 				if (the_wall.material)
