@@ -1,7 +1,6 @@
 
 /mob/var/move_dir = 0
 /mob/var/next_move = 0
-/mob/var/slip_dir = 0
 
 
 /mob/hotkey(name)
@@ -78,20 +77,18 @@
 			lubed = F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity && \
 				F.group.reagents.get_master_reagent_slippy(F.group) == -1
 		if(lubed)
-			if(src.slip_dir == 0)
-				src.slip_dir = src.dir
-			if(src.slip_dir && src.dir != src.slip_dir && prob(20))
+			if(src.last_move_dir && (src.move_dir & ~src.last_move_dir) && prob(20))
 				src.remove_pulling()
 				src.changeStatus("weakened", 3 SECONDS)
 				src.force_laydown_standup()
-			if(src.slip_dir)
-				step(src, slip_dir)
+			if(src.last_move_dir)
+				step(src, last_move_dir)
 			if(src.loc != T)
 				return world.tick_lag
 			else
-				src.slip_dir = 0
+				src.last_move_dir = 0
 		else
-			src.slip_dir = 0
+			src.last_move_dir = 0
 
 	if (src.move_dir)
 		var/running = 0
