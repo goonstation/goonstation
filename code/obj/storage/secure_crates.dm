@@ -176,3 +176,61 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+/obj/storage/secure/crate/synd_debris
+	desc = "A heavily reinforced Syndicate crate."
+	name = "old crate"
+	icon_state = "syndcrate"
+	density = TRUE
+	anchored = TRUE
+	icon_opened = "syndcrateopen"
+	icon_closed = "syndcrate"
+	req_access = list(access_syndicate_commander) //*shrug
+
+	attackby(obj/item/W, mob/user)
+		return
+
+	ex_act(severity)
+		return
+
+	meteorhit(obj/O)
+		return
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		return
+
+	New()
+		..()
+		src.RegisterSignal(src, COMSIG_DRONE_BEACON_DESTROYED, .proc/check_open)
+
+	disposing()
+		src.UnregisterSignal(src, COMSIG_DRONE_BEACON_DESTROYED)
+		..()
+
+	proc/check_open(var/obj/O)
+		if(GET_DIST(O, src) <= 10 && src.locked)
+			SPAWN_DBG(2.5 SECONDS)
+				src.locked = FALSE
+				src.audible_message("<span class='notice'>The [src] unlocks itself!</span>")
+
+	make_my_stuff()
+		if (..())
+			var/lootnum = rand(1, 10)
+			switch(lootnum)
+				if(1, 2)
+					new/obj/item/gun/energy/laser_gun/pred(src)
+				if(3, 4)
+					new/obj/item/clothing/suit/space/mining_combat(src)
+					new/obj/item/clothing/head/helmet/space/mining_combat(src)
+				if(5)
+					new/obj/item/shipcomponent/mainweapon/gun(src)
+				if(6)
+					new/obj/item/podarmor/armor_red(src)
+					new/obj/item/shipcomponent/secondary_system/crash(src)
+				if(7, 8)
+					new/obj/item/storage/box/donkpocket_w_kit/small(src)
+				if(9)
+					new/obj/item/tank/jetpack/syndicate(src)
+				if(10)
+					new/obj/item/storage/tactical_grenade_pouch(src)
+			return TRUE

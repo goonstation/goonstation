@@ -1,0 +1,36 @@
+"a" = (/turf/space,/area/noGenerate)
+"b" = (/obj/machinery/drone_beacon,/obj/machinery/light/small/floor/frostedred,/turf/simulated/floor/shuttlebay,/area/noGenerate)
+"d" = (/obj/lattice{dir = 9; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"l" = (/obj/lattice,/turf/space,/area/noGenerate)
+"m" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/obj/deployable_turret/debris/east,/turf/space,/area/noGenerate)
+"v" = (/obj/lattice{dir = 8; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"C" = (/obj/deployable_turret/debris/east,/obj/lattice{dir = 6; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"G" = (/obj/lattice{dir = 4; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"I" = (/turf/simulated/floor/shuttlebay,/area/noGenerate)
+"J" = (/obj/lattice{dir = 10; icon_state = "lattice-dir"},/obj/deployable_turret/debris/south,/turf/space,/area/noGenerate)
+"K" = (/obj/lattice{dir = 6; icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+"M" = (/obj/lattice{dir = 9; icon_state = "lattice-dir-b"},/obj/deployable_turret/debris/west,/turf/space,/area/noGenerate)
+"P" = (/obj/storage/secure/crate/synd_debris,/obj/lattice,/turf/space,/area/noGenerate)
+"T" = (/obj/lattice{dir = 6; icon_state = "lattice-dir"},/obj/deployable_turret/debris/north,/turf/space,/area/noGenerate)
+"Y" = (/obj/lattice{icon_state = "lattice-dir"},/turf/space,/area/noGenerate)
+
+(1,1,1) = {"
+aaaaaaGaaaaaaaaaaa
+aaaaaaaaaaGaaaaaaa
+aaKaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaa
+aaaaaTaaaaaaaaCaaa
+aaaaaaaaYaaaaaaaaa
+aaaaaaaIlIaaaaaaaa
+GaaadaGIbIaaaaGaaa
+aaaaaaaaIaaaaaaaaa
+aMaaaaalaaaaaaaaaa
+aaaaavaaaaaJaaaaaa
+aaaaaaaaaaaaaaaaaa
+aaaaaaaaaPaaaaaaaa
+aaaaaGaaaaalaaaaam
+aaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaa
+aaGaaaaaaaaaaaaaaa
+"}

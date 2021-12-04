@@ -33,6 +33,8 @@
 #define DEBRIS_LOOT_LOWER 30
 /// Upper bound of amount of generated loot derelicts that can spawn
 #define DEBRIS_LOOT_UPPER 50
+/// How many drone beacons do we REALLY NEED TO SPAWN?
+#define DEBRIS_DRONE_BEACONS 5
 
 #ifdef UNDERWATER_MAP
 /// How many prefabs to place. It'll try it's hardest to place this many at the very least. You're basically guaranteed this amount of prefabs.

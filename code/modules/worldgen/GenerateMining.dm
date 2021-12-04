@@ -1,4 +1,7 @@
 #define ISDISTEDGE(A, D) (((A.x > (world.maxx - D) || A.x <= D)||(A.y > (world.maxy - D) || A.y <= D))?1:0) //1 if A is within D tiles range from edge of the map.
+#define DEBRIS_NOGENERATE_PREFAB_EXCLUSION 8
+#define DEBRIS_NOGENERATE_ASTEROID_EXCLUSION 8
+
 
 var/list/miningModifiers = list()
 var/list/miningModifiersUsed = list()//Assoc list, type:times used
@@ -10,13 +13,17 @@ var/list/debrisModifiersBigUsed = list()//Assoc list, type:times used
 var/list/debrisModifiersSmall = list()
 var/list/debrisModifiersSmallUsed = list()//Assoc list, type:times used
 
+var/list/debrisDroneBeacons = list()
+var/list/debrisDroneBeaconsUsed = list()
+
 var/icon/debris_map = 0
 var/icon/debris_map_html = 0
 var/list/debris_map_colors = list(
 	empty = rgb(30, 30, 45),
 	solid = rgb(180,180,180),
 	station = rgb(27, 163, 186),
-	other = rgb(186, 0, 60))
+	syndicate = rgb(237, 3, 3),
+	other = rgb(136, 2, 44))
 
 //Notes:
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
@@ -290,23 +297,46 @@ var/list/debris_map_colors = list(
 		var/asteroid_amount = rand(DEBRIS_ASTEROID_LOWER, DEBRIS_ASTEROID_UPPER)
 		var/loot_thingies = rand(DEBRIS_LOOT_LOWER, DEBRIS_LOOT_UPPER)
 
-		for(var/i in 0 to asteroid_amount)
+		for(var/i in 1 to asteroid_amount)
 			var/ast_length = rand(DEBRIS_ASTEROID_LENGTH_LOWER, DEBRIS_ASTEROID_LENGTH_UPPER)
 			var/turf/X = pick(debrisZ)
+			var/turf_check = FALSE
 
-			while(istype(X.loc, /area/noGenerate) || !istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
+			while(istype(get_area(X), /area/noGenerate) || !istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
 				X = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
+
+			while(!turf_check) //there may be a better way to do this, but it works
+				var/atom/t_thing
+				for(var/atom/T as obj|turf in view(3, X))
+					if(!istype(T, /turf/space))
+						t_thing = T
+						break
+				for(var/area/noGenerate/NG in range(DEBRIS_NOGENERATE_ASTEROID_EXCLUSION, X))
+					if(!t_thing)
+						t_thing = NG
+					break
+				if(!t_thing)
+					turf_check = TRUE
+				else
+					X = pick(debrisZ)
+					LAGCHECK(LAG_REALTIME)
 
 			var/list/ast_turfs = list(X)
 			var/list/full_ast_turfs = list()
 
 			var/turf/curr_turf = X
-			for(var/a in 0 to ast_length)
+			for(var/a in 1 to ast_length)
 				var/turf/rand_step = get_step_rand(curr_turf)
-				while(ast_turfs.Find(rand_step) || !istype(rand_step, /turf/space) || ISDISTEDGE(rand_step, AST_MAPSEEDBORDER) || (rand_step.loc.type != /area/space && !istype(rand_step.loc , /area/allowGenerate)))
+				var/shit_fucked = 0
+
+				while(ast_turfs.Find(rand_step) || !istype(rand_step, /turf/space) || (rand_step.loc.type != /area/space && !istype(rand_step.loc , /area/allowGenerate)))
+					if(ISDISTEDGE(rand_step, AST_MAPSEEDBORDER))
+						shit_fucked += 1
 					rand_step = get_step_rand(curr_turf)
 					LAGCHECK(LAG_REALTIME)
+					if(shit_fucked >= 5)
+						rand_step = curr_turf
 
 				ast_turfs += rand_step
 				curr_turf = rand_step
@@ -322,14 +352,31 @@ var/list/debris_map_colors = list(
 					full_ast_turfs += T2
 					T2.ReplaceWith(/turf/simulated/wall/asteroid)
 
-		for(var/i in 0 to loot_thingies)
+		for(var/i in 1 to loot_thingies)
 			var/turf/possible_spot = pick(debrisZ)
 			var/xcalc
 			var/ycalc
+			var/turf_check = FALSE
 
-			while(istype(possible_spot.loc, /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(get_area(possible_spot), /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
+
+			while(length(getneighbours(possible_spot)) < 4) //double sanity check because fuuuuuuuccccckkk
+				possible_spot = pick(debrisZ)
+				LAGCHECK(LAG_REALTIME)
+
+			while(!turf_check) //there may be a better way to do this, but it works
+				var/atom/t_thing
+				for(var/atom/T as obj|turf in view(3, possible_spot))
+					if(!istype(T, /turf/space))
+						t_thing = T
+						break
+				if(!t_thing)
+					turf_check = TRUE
+				else
+					possible_spot = pick(debrisZ)
+					LAGCHECK(LAG_REALTIME)
 
 			var/turf/simulated/floor/base_floor = possible_spot.ReplaceWithFloor()
 			base_floor.to_plating()
@@ -361,7 +408,7 @@ var/list/debris_map_colors = list(
 
 			var/list/neighbors = getneighbours(possible_spot)
 			for(var/turf/T in neighbors)
-				if(istype(T.loc, /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
+				if(istype(get_area(T), /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
 					continue
 
 				var/floor_or_what = pick("turf", "obj", "nothing")
@@ -390,7 +437,7 @@ var/list/debris_map_colors = list(
 
 				var/list/neighbors2 = getneighbours(T)
 				for(var/turf/T3 in neighbors2)
-					if(istype(T3.loc, /area/noGenerate) || !istype(T3, /turf/space) || ISDISTEDGE(T3, AST_MAPSEEDBORDER) || (T3.loc.type != /area/space && !istype(T3.loc, /area/allowGenerate)))
+					if(istype(get_area(T3), /area/noGenerate) || !istype(T3, /turf/space) || ISDISTEDGE(T3, AST_MAPSEEDBORDER) || (T3.loc.type != /area/space && !istype(T3.loc, /area/allowGenerate)))
 						continue
 
 					if(prob(33))
@@ -402,7 +449,7 @@ var/list/debris_map_colors = list(
 					if(prob(15)) //we're going DEEP
 						var/list/neighbors3 = getneighbours(T3)
 						for(var/turf/T4 in neighbors3)
-							if(istype(T.loc, /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
+							if(istype(get_area(T), /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
 								continue
 
 							var/floor_or_obj = pick("turf", "obj")
@@ -427,22 +474,22 @@ var/list/debris_map_colors = list(
 									new O(T)
 
 
-		for(var/i in 0 to garbage_amount)
+		for(var/i in 1 to garbage_amount)
 			var/turf/possible_spot = pick(debrisZ)
 
-			while(istype(possible_spot.loc, /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(get_area(possible_spot), /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
 			var/obj/garbage = pick(possible_garbage)
 			new garbage(possible_spot)
 
-		for(var/i in 0 to drone_amount)
+		for(var/i in 1 to drone_amount)
 			var/turf/possible_spot = pick(debrisZ)
 			var/xcalc
 			var/ycalc
 
-			while(istype(possible_spot.loc, /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(get_area(possible_spot), /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -461,13 +508,13 @@ var/list/debris_map_colors = list(
 			var/drone_risk = max(1, ((xcalc + ycalc) / 2) / 10)
 
 			var/list/drones = list()
-			drones[/obj/critter/gunbot/drone/minigundrone] = drone_risk
 			drones[/obj/critter/gunbot/drone/heavydrone] = drone_risk
 			if(drone_risk < 10)
 				drones[/obj/critter/gunbot/drone/buzzdrone] = 25-drone_risk
 				drones[/obj/critter/gunbot/drone/laserdrone] = 20-drone_risk
 			if(drone_risk > 10)
 				drones[/obj/critter/gunbot/drone/cannondrone] = drone_risk-10
+				drones[/obj/critter/gunbot/drone/minigundrone] = drone_risk-10
 			if(drone_risk > 15)
 				drones[/obj/critter/gunbot/drone/aciddrone] = drone_risk-15
 			if(drone_risk > 20)
@@ -496,6 +543,12 @@ var/list/debris_map_colors = list(
 					turf_color = "other"
 
 				debris_map.DrawBox(debris_map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
+		for_by_tcl(B, /obj/machinery/drone_beacon)
+			var/turf/T = get_turf(B)
+			debris_map.DrawBox(debris_map_colors["syndicate"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
+		for_by_tcl(S, /obj/machinery/sword_terminal)
+			var/turf/T = get_turf(S)
+			debris_map.DrawBox(debris_map_colors["syndicate"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
 			Z_LOG_DEBUG("Debris Map", "Map generation complete")
 			generate_debris_map_html()
@@ -558,6 +611,7 @@ var/list/debris_map_colors = list(
 		.empty { background-color: [debris_map_colors["empty"]]; }
 		.solid { background-color: [debris_map_colors["solid"]]; }
 		.station { background-color: [debris_map_colors["station"]]; }
+		.syndicate { background-color: [debris_map_colors["syndicate"]]; }
 		.other { background-color: [debris_map_colors["other"]]; }
 	</style>
 </head>
@@ -568,6 +622,7 @@ var/list/debris_map_colors = list(
 		<div class='key'>
 			<span><span class='solid'></span> Solid Rock</span>
 			<span><span class='station'></span> NT Asset</span>
+			<span><span class='syndicate'></span> Syndicate</span>
 			<span><span class='other'></span> Unknown</span>
 			</div>
 </body>
@@ -658,49 +713,89 @@ var/list/debris_map_colors = list(
 			debrisZ.Add(T)
 
 	var/num_to_place_big = DEBRIS_NUMBIGPREFABS + rand(0, DEBRIS_NUMBIGPREFABSEXTRA)
-	for (var/n in 0 to num_to_place_big)
+	for (var/n in 1 to num_to_place_big)
 		game_start_countdown?.update_status("Setting up debris level...\n(Large Prefab [n]/[num_to_place_big])")
 		var/datum/generatorPrefab/M = pickDebPrefabBig()
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
-			var/stop = 0
-			var/count= 0
-			var/maxTries = (M.required ? 200:33)
-			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), DEBRIS_ZLEVEL)
-				var/ret = M.applyTo(target)
-				if (ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
-				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
-					stop = 1
-				count++
-				if (count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
-		else break
-
-	var/num_to_place_small = DEBRIS_NUMSMALLPREFABS + rand(0, DEBRIS_NUMSMALLPREFABSEXTRA)
-	for (var/n in 0 to num_to_place_small)
-		game_start_countdown?.update_status("Setting up debris level...\n(Small Prefab [n]/[num_to_place_small])")
-		var/datum/generatorPrefab/M = pickDebPrefabSmall()
-		if (M)
-			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
-			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
 			var/stop = FALSE
-			var/count= 0
+			var/count = 0
 			var/maxTries = (M.required ? 200:33)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), DEBRIS_ZLEVEL)
-				var/ret = M.applyTo(target)
-				if (ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
+				var/area_stop = FALSE
+				var/ret
+				for(var/area/noGenerate/NG in range(DEBRIS_NOGENERATE_PREFAB_EXCLUSION, target))
+					area_stop = TRUE
+					break
+				if(!area_stop)
+					ret = M.applyTo(target)
+				if (!ret)
+					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to proximity to a NoGenerate area, or was blocked. [target] @ [showCoords(target.x, target.y, target.z)]")
 				else
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 					stop = TRUE
 				count++
 				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
+		else break
+
+	var/num_to_place_small = DEBRIS_NUMSMALLPREFABS + rand(0, DEBRIS_NUMSMALLPREFABSEXTRA)
+	for (var/n in 1 to num_to_place_small)
+		game_start_countdown?.update_status("Setting up debris level...\n(Small Prefab [n]/[num_to_place_small])")
+		var/datum/generatorPrefab/M = pickDebPrefabSmall()
+		if (M)
+			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
+			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
+			var/stop = FALSE
+			var/count = 0
+			var/maxTries = (M.required ? 200:33)
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), DEBRIS_ZLEVEL)
+				var/area_stop = FALSE
+				var/ret
+				for(var/area/noGenerate/NG in range(DEBRIS_NOGENERATE_PREFAB_EXCLUSION, target))
+					area_stop = TRUE
+					break
+				if(!area_stop)
+					ret = M.applyTo(target)
+				if (!ret)
+					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to proximity to a NoGenerate area, or was blocked. [target] @ [showCoords(target.x, target.y, target.z)]")
+				else
+					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
+					stop = TRUE
+				count++
+				if (count >= 33)
+					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
+		else break
+
+	for (var/n in 1 to DEBRIS_DRONE_BEACONS)
+		game_start_countdown?.update_status("Setting up debris level...\n(Drone Beacon [n]/[DEBRIS_DRONE_BEACONS])")
+		var/datum/generatorPrefab/M = pickDebDroneBeacon()
+		if (M)
+			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
+			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
+			var/stop = FALSE
+			var/count = 0
+			var/maxTries = (M.required ? 200:33)
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), DEBRIS_ZLEVEL)
+				var/area_stop = FALSE
+				var/ret
+				for(var/area/noGenerate/NG in range(DEBRIS_NOGENERATE_PREFAB_EXCLUSION, target))
+					area_stop = TRUE
+					break
+				if(!area_stop)
+					ret = M.applyTo(target)
+				if (!ret)
+					logTheThing("debug", null, null, "Drone Beacon #[n] [M.type] failed due to proximity to a NoGenerate area, or was blocked. [target] @ [showCoords(target.x, target.y, target.z)]")
+				else
+					logTheThing("debug", null, null, "Drone Beacon #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
+					stop = TRUE
+				count++
+				if (count >= 100) //we really need these fucking things to spawn
+					logTheThing("debug", null, null, "Drone Beacon #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
 		else break
 
 	var/datum/mapGenerator/D = new/datum/mapGenerator/debrisDistance()
@@ -837,3 +932,45 @@ var/list/debris_map_colors = list(
 				debrisModifiersSmallUsed[P.type] = 1
 			return P
 		else return null
+
+/proc/pickDebDroneBeacon()
+	var/list/eligibleSmall = list()
+	var/list/requiredSmall = list()
+
+	//small prefab handling
+	for(var/datum/generatorPrefab/M in debrisDroneBeacons)
+		if(M.underwater != map_currently_underwater) continue
+		if(M.type in debrisDroneBeaconsUsed)
+			if(M.required) continue
+			if(M.maxNum != -1)
+				if(debrisDroneBeaconsUsed[M.type] >= M.maxNum)
+					continue
+				else
+					eligibleSmall.Add(M)
+					eligibleSmall[M] = M.probability
+			else
+				eligibleSmall.Add(M)
+				eligibleSmall[M] = M.probability
+		else
+			eligibleSmall.Add(M)
+			eligibleSmall[M] = M.probability
+			if(M.required) requiredSmall.Add(M)
+
+	if(length(requiredSmall))
+		var/datum/generatorPrefab/P = requiredSmall[1]
+		debrisDroneBeaconsUsed.Add(P.type)
+		debrisDroneBeaconsUsed[P.type] = 1
+		return P
+	else
+		if(length(eligibleSmall))
+			var/datum/generatorPrefab/P = weighted_pick(eligibleSmall)
+			if(P.type in debrisDroneBeaconsUsed)
+				debrisDroneBeaconsUsed[P.type] = (debrisDroneBeaconsUsed[P.type] + 1)
+			else
+				debrisDroneBeaconsUsed.Add(P.type)
+				debrisDroneBeaconsUsed[P.type] = 1
+			return P
+		else return null
+
+#undef DEBRIS_NOGENERATE_PREFAB_EXCLUSION
+#undef DEBRIS_NOGENERATE_ASTEROID_EXCLUSION

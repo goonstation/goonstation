@@ -532,7 +532,75 @@
 
 			return 0
 
+/////////////////////////////
+//    Debris Field Ones    //
+/////////////////////////////
 
+/obj/item/turret_deployer/debris //shouldn't be spawning in normal play, but just in case
+	name = "S.S.D.T. Deployer"
+	desc = "A Syndicate Salvage Defense Turret Deployer. Use it in your hand to deploy."
+	icon_state = "st_deployer"
+	w_class = W_CLASS_BULKY
+	health = 125
+	icon_tag = "st"
+	quick_deploy_fuel = 0
+	mats = list("INS-1"=10, "CON-2"=20, "CRY-1"=30, "MET-2"=20)
+	is_syndicate = TRUE
+
+	spawn_turret(var/direct)
+		var/obj/deployable_turret/debris/turret = new /obj/deployable_turret/debris(src.loc,direction=direct)
+		turret.health = src.health
+		turret.damage_words = src.damage_words
+		turret.quick_deploy_fuel = src.quick_deploy_fuel
+		return turret
+
+/obj/deployable_turret/debris
+	name = "S.S.D.T."
+	desc = "A Syndicate Salvage Defense Turret."
+	icon_state = "st_off"
+	health = 125
+	max_health = 125
+	wait_time = 2 SECONDS //wait if it can't find a target
+	range = 15 // we don't need this flying off for ages
+	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY/turret
+	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/red_SY/turret
+	burst_size = 3 // number of shots to fire. Keep in mind the bullet's shot_count
+	fire_rate = 3 // rate of fire in shots per second
+	angle_arc_size = 90
+	icon_tag = "st"
+	quick_deploy_fuel = 0
+	mats = list("INS-1"=10, "CON-2"=20, "CRY-1"=30, "MET-2"=20) //godawful idea, let's see how this goes
+	is_syndicate = TRUE
+	anchored = TRUE
+	active = TRUE
+
+	New(var/direction)
+		..(direction=direction)
+
+	is_friend(var/mob/living/C)
+		return FALSE
+
+	spawn_deployer()
+		var/obj/item/turret_deployer/debris/deployer = new /obj/item/turret_deployer/debris(src.loc)
+		deployer.health = src.health
+		deployer.damage_words = src.damage_words
+		deployer.quick_deploy_fuel = src.quick_deploy_fuel
+		return deployer
+
+	attackby(obj/item/W, mob/user)
+		return //no removing these
+
+	meteorhit(obj/meteor)
+		return //fuck off, buzzdrones
+
+	north
+		dir=NORTH
+	south
+		dir=SOUTH
+	east
+		dir=EAST
+	west
+		dir=WEST
 
 /////////////////////////////
 //Why not one for security?//

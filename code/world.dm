@@ -352,6 +352,11 @@ var/f_color_selector_handler/F_Color_Selector
 			var/datum/generatorPrefab/R = new A()
 			debrisModifiersSmall.Add(R)
 
+		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab/debris_drone_beacons")
+		for(var/A in childrentypesof(/datum/generatorPrefab/debris_drone_beacons))
+			var/datum/generatorPrefab/R = new A()
+			debrisDroneBeacons.Add(R)
+
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
 			var/datum/faction/R = new A()

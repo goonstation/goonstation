@@ -781,7 +781,15 @@
 		/obj/item/reagent_containers/emergency_injector/epinephrine,
 		/obj/item/reagent_containers/emergency_injector/salicylic_acid)
 
+	records
+		spawn_contents = list(/obj/random_item_spawner/records/one_to_four)
 
+	botany
+		spawn_contents = list(/obj/item/seed/alien = 4,
+		/obj/item/clothing/under/misc/hydroponics)
+
+	bees
+		spawn_contents = list(/obj/random_item_spawner/bee_junk/four_to_six)
 
 /obj/storage/crate/debris_loot/med
 	meds
@@ -799,6 +807,9 @@
 		/obj/item/clothing/suit/space/syndicate,
 		/obj/item/clothing/head/helmet/space/syndicate)
 
+	gold
+		spawn_contents = list(/obj/item/material_piece/gold)
+
 /obj/storage/crate/debris_loot/high
 	meds
 		spawn_contents = list(/obj/item/storage/firstaid/crit,
@@ -809,3 +820,6 @@
 	laser_gun
 		spawn_contents = list(/obj/item/gun/energy/laser_gun,
 		/obj/item/ammo/power_cell/med_power)
+
+	gold_lots
+		spawn_contents = list(/obj/random_item_spawner/gold_bullion/two_to_four)

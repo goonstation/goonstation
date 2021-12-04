@@ -80,6 +80,17 @@
 				transformation_countdown()									//...the countdown starts.
 		return
 
+	get_desc(dist) //People complained about lack of feedback when hitting SWORD
+		switch(health/initial(health))
+			if (0.90 to 1)
+				. += "<span class='alert'>It looks to be in perfect condition!</span>"
+			if (0.60 to 0.90)
+				. += "<span class='alert'>It is a little bit damaged.</span>"
+			if (0.30 to 0.60)
+				. += "<span class='alert'>It looks pretty beaten up.</span>"
+			if (0 to 0.30)
+				. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
+
 	CritterDeath()
 		..()
 		if (!died_already)
@@ -116,6 +127,9 @@
 
 			SPAWN_DBG(60)
 				new/obj/machinery/power/sword_engine(locate(death_loc_x, death_loc_y, death_loc_z))
+				new/obj/item/syndicate_destruction_system(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
+				new/obj/item/shipcomponent/mainweapon/syndicate_purge_system(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
+				new/obj/item/shipcomponent/secondary_system/syndicate_rewind_system(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
 
 			SPAWN_DBG(65)
 				elecflash(death_loc)
@@ -885,9 +899,9 @@
 		glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
-		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", "sound/vox/alert.ogg")
-		SPAWN_DBG(2 MINUTES)
-			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", "sound/vox/alert.ogg")
+		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected in the debris field. Be cautious when leaving the station.</span></b>", "Alert", "sound/vox/alert.ogg")
+		SPAWN_DBG(30 SECONDS)
+			command_announcement("<br><b><span class='alert'>The debris field is occupied by the Syndicate-made object detected earlier. Excersize extreme caution off-station.</span></b>", "Alert", "sound/vox/alert.ogg")
 			transformation(0)
 
 

@@ -1002,7 +1002,8 @@ proc/generate_space_color()
 #else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
-
+	if(istype(A, /obj/critter/sword))
+		return
 	if(A.z == 3) zlevel = 5
 	else zlevel = 3
 

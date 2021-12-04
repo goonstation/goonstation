@@ -521,7 +521,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 // Use for prefabs for the debris field (z3), not asteroid field (z5)!
 // Put a prefab in small if less than 225 tiles (which is 15x15), big if larger
-/datum/generatorPrefab/debrissmall
+/datum/generatorPrefab/debrisbig
 
 	artifact_asteroid
 		maxNum = 5
@@ -676,7 +676,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 20
 		prefabSizeY = 13
 
-/datum/generatorPrefab/debrisbig
+/datum/generatorPrefab/debrissmall
 
 	cannibal_asteroid
 		maxNum = 3
@@ -769,3 +769,35 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabPath = "assets/maps/debris/tourist_ship.dmm"
 		prefabSizeX = 6
 		prefabSizeY = 5
+
+/datum/generatorPrefab/debris_drone_beacons
+
+	drone_beacon1
+		maxNum = 1
+		prefabPath = "assets/maps/debris/beacons/drone_beacon1.dmm"
+		prefabSizeX = 9
+		prefabSizeY = 10
+
+	drone_beacon2
+		maxNum = 1
+		prefabPath = "assets/maps/debris/beacons/drone_beacon2.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 15
+
+	drone_beacon3
+		maxNum = 1
+		prefabPath = "assets/maps/debris/beacons/drone_beacon3.dmm"
+		prefabSizeX = 11
+		prefabSizeY = 10
+
+	drone_beacon_destroyed
+		maxNum = 1
+		prefabPath = "assets/maps/debris/beacons/drone_beacon_destroyed.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 17
+
+	drone_beacon_destroyed2
+		maxNum = 1
+		prefabPath = "assets/maps/debris/beacons/drone_beacon_destroyed2.dmm"
+		prefabSizeX = 18
+		prefabSizeY = 18

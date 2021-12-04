@@ -321,6 +321,15 @@
 /obj/item/storage/box/donkpocket_w_kit/vr
 	icon = 'icons/effects/VR.dmi'
 
+/obj/item/storage/box/donkpocket_w_kit/small
+	name = "\improper Donk-Pocket lunchbox"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donkpocket_w = 2)
+
+	New()
+		..()
+		var/my_lunchbox = pick("black","red","orange","yellow","purple")
+		icon_state = "lunchbox_[my_lunchbox]"
+
 /obj/item/storage/box/fakerevolver
 	name = "\improper Russian surplus munitions box"
 	icon_state = "fakerevolver"
