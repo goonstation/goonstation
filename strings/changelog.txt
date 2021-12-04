@@ -1,4 +1,9 @@
 
+(t)sat dec 04 21
+(u)Arthur Holiday
+(p)6380
+(e)⚖|balance
+(+)Polymorph now has an action bar.
 (t)thu dec 02 21
 (u)pali
 (*)You can now slide glasses across tables. Just stand next to a table and click on another table far away with a drinking glass in hand
