@@ -153,7 +153,7 @@
 				target_product = product
 				break
 
-		if (target_product == null)
+		if (!target_product)
 			return
 
 		if (src.glass_amt < target_product.product_cost)
@@ -164,7 +164,6 @@
 		src.glass_amt -= target_product.product_cost
 
 		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
-		return
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
