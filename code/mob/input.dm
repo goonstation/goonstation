@@ -83,12 +83,13 @@
 				src.force_laydown_standup()
 			if(src.last_move_dir)
 				step(src, last_move_dir)
-			if(src.loc != T)
-				return world.tick_lag
-			else
-				src.last_move_dir = 0
-		else
-			src.last_move_dir = 0
+				if(src.loc.type == /turf/space)
+					var/atom/target = get_edge_target_turf(src, src.last_move_dir)
+					src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
+				if(src.loc != T)
+					return world.tick_lag
+				else
+					src.last_move_dir = 0
 
 	if (src.move_dir)
 		var/running = 0
