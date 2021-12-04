@@ -8,6 +8,9 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 	var/tmp/last_tick_time = null
 	var/tmp/tick_count = 0
 
+	var/tmp/cpu_start_profiling_immediately_threshold = CPU_START_PROFILING_IMMEDIATELY_THRESHOLD
+	var/tmp/tick_time_profiling_threshold = TICK_TIME_PROFILING_THRESHOLD
+
 	proc/setup()
 		#ifdef PRE_PROFILING_ENABLED
 		world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
@@ -54,7 +57,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
-			if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD || time_since_last > TICK_TIME_PROFILING_THRESHOLD)
+			if(world.cpu >= cpu_start_profiling_immediately_threshold || time_since_last > tick_time_profiling_threshold)
 				#ifdef PRE_PROFILING_ENABLED
 				var/output = world.Profile(PROFILE_REFRESH, null, "json")
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
