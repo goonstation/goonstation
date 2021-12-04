@@ -748,7 +748,7 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					SPAWN_DBG(2.5 MINUTES * volume_mult)
+					SPAWN_DBG(800 * volume_mult)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
