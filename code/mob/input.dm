@@ -89,6 +89,17 @@
 				if(src.loc != T)
 					return world.tick_lag
 				else
+					var/turf/next = get_step(src, last_move_dir)
+					if(next.density)
+						next.hitby(src)
+					else
+						for(var/atom/A in next)
+							if(!A.Cross(src))
+								var/old_throwing = src.throwing
+								src.throwing = TRUE
+								A.hitby(src)
+								src.throwing = old_throwing
+								break
 					src.last_move_dir = 0
 
 	if (src.move_dir)
