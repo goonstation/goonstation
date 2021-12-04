@@ -1782,6 +1782,6 @@
 			lipstick.font_color = C.font_color
 			lipstick.color_name = hex2color_name(lipstick.font_color)
 			lipstick.name = "[lipstick.color_name] lipstick"
-			lipstick.update_icon()
+			lipstick.UpdateIcon()
 		return lipstick
 

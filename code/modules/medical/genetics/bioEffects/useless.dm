@@ -223,7 +223,9 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.personalized_stink)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")

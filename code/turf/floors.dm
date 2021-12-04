@@ -30,6 +30,87 @@
 			setMaterial(plate_mat)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			switch(src.icon_state)
+				if("caution_north")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+				if("engine_caution_north")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+				if("caution_south")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("engine_caution_south")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("caution_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+				if("engine_caution_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+				if("caution_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("engine_caution_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("caution_we")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("engine_caution_we")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("caution_ns")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("engine_caution_ns")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("corner_neast")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("corner_nwest")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+				if("corner_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+				if("corner_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+				if("floor_hazard_misc")
+					if(src.dir == SOUTH)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+					if(src.dir == NORTH)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					if(src.dir == EAST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					if(src.dir == WEST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+					if(src.dir == SOUTHEAST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("engine_caution_misc")
+					if(src.dir == SOUTH)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+					if(src.dir == NORTH)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					if(src.dir == EAST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					if(src.dir == WEST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+					if(src.dir == SOUTHEAST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("engine_caution_corners")
+					if(src.dir == SOUTH)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+					if(src.dir == NORTH)
+						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+					if(src.dir == EAST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					if(src.dir == WEST)
+						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+		#endif
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -1064,6 +1145,7 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/snow
 	name = "snow"
+	has_material = FALSE
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -1189,9 +1271,16 @@ DEFINE_FLOORS(techfloor/green,
 	step_priority = STEP_PRIORITY_MED
 
 	New()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			if(prob(10))
+				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
+			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+			return
+		#endif
+
 		..()
 		setMaterial(getMaterial("synthrubber"))
-
 /turf/proc/grassify()
 	.=0
 
@@ -1441,8 +1530,6 @@ DEFINE_FLOORS(grasslush/thin,
 
 /turf/simulated/floor/blob_act(var/power)
 	return
-
-/turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/attack_hand(mob/user as mob)
 	if (src.density == 1)

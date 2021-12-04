@@ -75,7 +75,7 @@
 							dork = M
 			if (thechef)
 				point(shitfood)
-				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 60) // Shit food can't hide!
+				src.navigate_to(shitfood, CHEFBOT_MOVE_SPEED / (1+src.emagged), 1, 15) // Shit food can't hide!
 				if (prob(50))
 					speak(pick("ALRIGHT, EVERYBODY STOP!" , "THAT'S ENOUGH!"))
 				sleep(1 SECOND)

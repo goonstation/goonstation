@@ -230,8 +230,8 @@
 
 		//Regular Trait updates
 		if(src.traitHolder)
-			for(var/T in src.traitHolder.traits)
-				var/obj/trait/O = getTraitById(T)
+			for(var/id in src.traitHolder.traits)
+				var/obj/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()

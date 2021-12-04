@@ -37,8 +37,8 @@ datum
 				var/turf/T = pick(covered_turf)
 				message_admins("Nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [showCoords(T.x, T.y, T.z)].")
 				var/context = "???"
-				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprintshidden
-					var/list/fh = holder.my_atom.fingerprintshidden
+				if(holder?.my_atom) // Erik: Fix for Cannot read null.fingerprints_full
+					var/list/fh = holder.my_atom.fingerprints_full
 
 					if (length(fh)) //Wire: Fix for: bad text or out of bounds
 						context = "Fingerprints: [jointext(fh, "")]"
@@ -1063,15 +1063,16 @@ datum
 			fluid_b = 192
 			transparency = 255
 			viscosity = 0.15
+			depletion_rate = 1
 			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						var/amt = min(2 * mult, 20-check_amount)
-						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt)
-						holder.add_reagent("enzymatic_leftovers", amt/2)
+						var/amt = min(1 * mult, 20-check_amount)
+						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt, temp_new = holder.total_temperature + 20)
+						holder.add_reagent("enzymatic_leftovers", amt/2, temp_new = holder.total_temperature + 20)
 				..()
 				return
 
@@ -1340,6 +1341,7 @@ datum
 			fluid_b = 19
 			transparency = 255
 			depletion_rate = 0.01
+			heat_capacity = 200
 
 		// used to make fake initropidril
 		eyeofnewt
@@ -2306,6 +2308,8 @@ datum
 				animate_spin(M, dir_temp, speed_temp)
 
 			reaction_obj(var/obj/O)
+				if(!O.mouse_opacity)
+					return
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
@@ -3970,14 +3974,15 @@ datum
 		SPAWN_DBG(0) process()
 		..()
 
-	bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN_DBG(0.4 SECONDS)
+				M.density = 1 //Apparently this is a horrible stinky line of code by don't blame me, this is all the gibshark codes fault.
+		SPAWN_DBG(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)

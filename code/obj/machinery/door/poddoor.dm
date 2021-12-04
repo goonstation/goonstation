@@ -20,6 +20,9 @@
 		. = ..()
 		STOP_TRACKING
 
+	xmasify()
+		return
+
 /obj/machinery/door/poddoor/blast/single
 	doordir = "single"
 	icon_state = "bdoorsingle1"

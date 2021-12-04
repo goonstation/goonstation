@@ -250,6 +250,7 @@
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 		if (ishellbanned(player)) continue //No treason for you
+		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
 
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
 			if (player.client.preferences.vars[get_preference_for_role(type)])

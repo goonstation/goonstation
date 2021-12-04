@@ -170,7 +170,7 @@ var/zapLimiter = 0
 	if (!QDELETED(src.area))
 		src.area.area_apc = src
 
-	src.updateicon()
+	src.UpdateIcon()
 
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
@@ -248,7 +248,7 @@ var/zapLimiter = 0
 
 // update the APC icon to show the three base states
 // also add overlays for indicator lights
-/obj/machinery/power/apc/proc/updateicon()
+/obj/machinery/power/apc/update_icon()
 	ClearAllOverlays(1)
 	if(opened)
 		icon_state = "apc1"
@@ -327,7 +327,7 @@ var/zapLimiter = 0
 				locked = 0
 				if (user)
 					boutput(user, "You emag the APC interface.")
-				updateicon()
+				UpdateIcon()
 				return 1
 			else
 				if (user)
@@ -391,7 +391,7 @@ var/zapLimiter = 0
 					icon_state = initial(src.icon_state)
 					operating = 1
 					update()
-					updateicon()
+					UpdateIcon()
 					return
 			return
 
@@ -446,13 +446,13 @@ var/zapLimiter = 0
 	if (ispryingtool(W))	// crowbar means open or close the cover
 		if(opened)
 			opened = 0
-			updateicon()
+			UpdateIcon()
 		else
 			if(coverlocked)
 				boutput(user, "The cover is locked and cannot be opened.")
 			else
 				opened = 1
-				updateicon()
+				UpdateIcon()
 	else if	(istype(W, /obj/item/cell) && opened)	// trying to put a cell inside
 		if(cell)
 			boutput(user, "There is a power cell already installed.")
@@ -462,7 +462,7 @@ var/zapLimiter = 0
 				cell = W
 				boutput(user, "You insert the power cell.")
 				chargecount = 0
-		updateicon()
+		UpdateIcon()
 	else if	(isscrewingtool(W))
 		if(opened)
 			boutput(user, "Close the APC first")
@@ -471,7 +471,7 @@ var/zapLimiter = 0
 		else
 			wiresexposed = !wiresexposed
 			boutput(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
-			updateicon()
+			UpdateIcon()
 
 	else if (wiresexposed && (issnippingtool(W) || ispulsingtool(W)))
 		src.Attackhand(user)
@@ -529,7 +529,7 @@ var/zapLimiter = 0
 			if(src.allowed(usr))
 				locked = !locked
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
-				updateicon()
+				UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -565,11 +565,11 @@ var/zapLimiter = 0
 	if(opened && !isAI(user))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
-			cell.updateicon()
+			cell.UpdateIcon()
 			src.cell = null
 			boutput(user, "You remove the power cell.")
 			charging = 0
-			src.updateicon()
+			src.UpdateIcon()
 
 	else
 		// do APC interaction
@@ -868,7 +868,7 @@ var/zapLimiter = 0
 				src.aidisabled = 1
 			src.updateUsrDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
-	updateicon()
+	UpdateIcon()
 
 /obj/machinery/power/apc/proc/bite(var/wireColor) // are you fuckin huffing or somethin
 	if (is_incapacitated(usr))
@@ -894,7 +894,7 @@ var/zapLimiter = 0
 		if(APC_WIRE_IDSCAN) // basically pulse but with a really good chance of dying
 			src.shock(usr, 90, 1)
 			src.locked = 0
-	updateicon()
+	UpdateIcon()
 
 
 /obj/machinery/power/apc/proc/mend(var/wireColor)
@@ -923,7 +923,7 @@ var/zapLimiter = 0
 				src.aidisabled = 0
 			src.updateUsrDialog()
 //		if(APC_WIRE_IDSCAN)		nothing happens when you cut this wire, add in something if you want whatever
-	updateicon()
+	UpdateIcon()
 
 /obj/machinery/power/apc/proc/pulse(var/wireColor)
 	if (is_incapacitated(usr))
@@ -1012,7 +1012,7 @@ var/zapLimiter = 0
 
 			operating = !operating
 			src.update()
-			updateicon()
+			UpdateIcon()
 
 		else if (href_list["cmode"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
 			if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
@@ -1023,7 +1023,7 @@ var/zapLimiter = 0
 			chargemode = !chargemode
 			if(!chargemode)
 				charging = 0
-				updateicon()
+				UpdateIcon()
 
 		else if (href_list["eqp"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
 			if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
@@ -1044,7 +1044,7 @@ var/zapLimiter = 0
 			logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 			equipment = (val==1) ? 0 : val
 
-			updateicon()
+			UpdateIcon()
 			update()
 
 		else if (href_list["lgt"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
@@ -1065,7 +1065,7 @@ var/zapLimiter = 0
 			logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 			lighting = (val==1) ? 0 : val
 
-			updateicon()
+			UpdateIcon()
 			update()
 		else if (href_list["env"] && ((!locked && setup_networkapc < 2) || issilicon(usr) || isAI(usr)))
 			if ((issilicon(usr) || isAI(usr)) && src.aidisabled)
@@ -1085,7 +1085,7 @@ var/zapLimiter = 0
 			logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 			environ = (val==1) ? 0 :val
 
-			updateicon()
+			UpdateIcon()
 			update()
 		else if( href_list["close"] )
 			usr.Browse(null, "window=apc")
@@ -1284,7 +1284,7 @@ var/zapLimiter = 0
 	// update icon & area power if anything changed
 
 	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging)
-		updateicon()
+		UpdateIcon()
 		update()
 
 	src.updateDialog()
@@ -1499,7 +1499,7 @@ var/zapLimiter = 0
 					else
 						coverlocked = 0
 
-					updateicon()
+					UpdateIcon()
 					update()
 					src.post_status(src.host_id,"command","term_message","data","command=ack")
 					return
@@ -1543,7 +1543,7 @@ var/zapLimiter = 0
 		operating = !operating
 		boutput(user, "You have turned \the [src] <B>[src.operating ? "on" : "off"]</B>.")
 		src.update()
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/power/apc/powered()
 	//Always powered

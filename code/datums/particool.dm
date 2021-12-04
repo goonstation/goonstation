@@ -53,11 +53,16 @@ var/list/master_particle_info = list()
 		if(6)
 			return matrix(L[1],L[2],L[3],L[4],L[5],L[6])
 
-/datum/particle_editor/proc/stringToList(str, toNum = FALSE)
+/datum/particle_editor/proc/stringToList(str, toNum = FALSE, restoreNull = FALSE)
 	. = splittext(str,regex(@"(?<!\\),"))
 	if(toNum)
 		for(var/i = 1; i <= length(.); ++i)
-			.[i] = text2num(.[i])
+			.[i] = stringToNum(.[i], restoreNull)
+
+/datum/particle_editor/proc/stringToNum(str, restoreNull = FALSE)
+	. = text2num(str)
+	if(isnull(.) && restoreNull)
+		. = str
 
 /datum/particle_editor/proc/stringToMatrix(str)
 	return ListToMatrix(stringToList(str))
@@ -102,9 +107,9 @@ var/list/master_particle_info = list()
 		if("string") return L["value"]
 		if("float") return L["value"]
 		if("int") return L["value"]
-		if("color") return L["value"]
+		if("color") return stringToNum(L["value"], TRUE)
 		if("text") return L["value"]
-		if("list") return stringToList(L["value"])
+		if("list") return stringToList(L["value"], TRUE, TRUE)
 		if("numList") return stringToList(L["value"],TRUE)
 		if("matrix") return ListToMatrix(L["value"])
 		if("generator") return generateGenerator(L["value"]) // This value should be a new list, if it isn't then we will explode
