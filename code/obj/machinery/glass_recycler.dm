@@ -38,7 +38,11 @@
 	anchored = 1
 	density = 0
 	var/glass_amt = 0
+<<<<<<< HEAD
 	var/list/product_list = list()
+=======
+	var/list/product_list = new()
+>>>>>>> 96a4723fe2280361dc281e89135e986d19742cbc
 	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
