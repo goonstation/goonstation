@@ -74645,22 +74645,13 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom/donut3)
 "eAl" = (
-/obj/table/virtual{
-	dir = 6;
-	icon_state = "tabledir"
+/obj/fakeobjects{
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "roach-dead";
+	name = "squashed bug"
 	},
-/obj/item/item_box/medical_patches/mini_synthflesh{
-	name = "box of unmerged patches";
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/pill/sheltestgrog{
-	pixel_x = 9;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
 "eAt" = (
@@ -75344,16 +75335,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"hag" = (
-/obj/item/strange_candle{
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
-	},
-/area/centcom/offices/pali)
 "hao" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -75430,20 +75411,11 @@
 	},
 /area/meat_derelict/guts)
 "hnz" = (
-/obj/item/reagent_containers/food/snacks/plant/melon/bowling{
-	pixel_x = 9;
-	pixel_y = -3
+/obj/critter/roach{
+	name = "unsquashed bug"
 	},
-/obj/item/reagent_containers/food/snacks/plant/melon/bowling{
-	pixel_x = 9;
-	pixel_y = -11
-	},
-/obj/item/reagent_containers/food/snacks/plant/melon/bowling{
-	pixel_y = -10
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
 "hnB" = (
@@ -75903,15 +75875,9 @@
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "iOu" = (
-/obj/maptext_spawner{
-	loc_maptext = "<span class='pixel c ol' style='#baff99'>WELCOME</span>";
-	loc_maptext_width = 96;
-	loc_maptext_x = 16;
-	loc_maptext_y = 16
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
 "iOJ" = (
@@ -77409,6 +77375,15 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mUZ" = (
+/obj/pedestal,
+/obj/item/gun/kinetic/beepsky/one_bullet{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/pali)
 "mVb" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -78467,17 +78442,6 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
-"pkO" = (
-/obj/fakeobjects{
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "roach-dead";
-	name = "squashed bug"
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
-	},
-/area/centcom/offices/pali)
 "plR" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -78644,17 +78608,15 @@
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "pCx" = (
-/obj/table/virtual{
-	dir = 10;
-	icon_state = "tabledir"
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 20
 	},
-/obj/item/strange_candle{
-	pixel_x = -6;
-	pixel_y = 8
+/obj/critter/roach{
+	name = "\"feature\""
 	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
 "pEv" = (
@@ -78987,16 +78949,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"qvZ" = (
-/obj/pedestal,
-/obj/item/gun/kinetic/beepsky/one_bullet{
-	pixel_y = 7
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
-	},
-/area/centcom/offices/pali)
 "qwk" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Compartment Access";
@@ -79333,9 +79285,8 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "rqw" = (
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
+/turf/unsimulated/floor{
+	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
 "rst" = (
@@ -79469,15 +79420,6 @@
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"rJI" = (
-/obj/critter/roach{
-	name = "unsquashed bug"
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
-	},
-/area/centcom/offices/pali)
 "rJR" = (
 /turf/space,
 /turf/unsimulated/floor/blackwhite/whitegrime,
@@ -79591,15 +79533,6 @@
 	},
 /turf/unsimulated/floor/snowrough,
 /area/centcom/offices/virvatuli)
-"rUf" = (
-/obj/critter/roach{
-	name = "\"feature\""
-	},
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor6"
-	},
-/area/centcom/offices/pali)
 "rUQ" = (
 /obj/admin_plaque{
 	pixel_x = -32
@@ -80417,9 +80350,9 @@
 	},
 /obj/item/clothing/head/NTberet{
 	desc = "You can tell that this beret has been well looked after.";
+	layer = 30;
 	name = "Karu Karim's Nanotrasen Beret";
-	plane = -100;
-	layer = 30
+	plane = -100
 	},
 /obj/item/luggable_computer/personal{
 	plane = -100
@@ -81638,8 +81571,8 @@
 "yiq" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
-	name = "smol donut";
-	doants = 0
+	doants = 0;
+	name = "smol donut"
 	},
 /obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,
@@ -155474,8 +155407,8 @@ dRO
 dCF
 eTm
 wel
-pkO
-rJI
+rqw
+rqw
 iOu
 wel
 wvy
@@ -155777,7 +155710,7 @@ dDq
 dCF
 wel
 rqw
-rUf
+rqw
 rqw
 wel
 fhy
@@ -156079,8 +156012,8 @@ dDq
 dDN
 wel
 pCx
-qvZ
-hag
+rqw
+rqw
 wel
 xoF
 tXu
@@ -156381,7 +156314,7 @@ dDE
 dRQ
 wel
 eAl
-rqw
+mUZ
 hnz
 wel
 dXN
