@@ -53107,15 +53107,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/cable/brown{
-	icon_state = "0-2"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -55657,15 +55648,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters)
-"heT" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/ptl)
 "hfr" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor,
@@ -55905,10 +55887,6 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"hCQ" = (
-/obj/decal/poster/wallsign/hazard_electrical,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "hDP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -57670,12 +57648,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
-"llc" = (
-/obj/decal/poster/wallsign/statistics2{
-	desc = "A poster with a line chart depicting the rapid growth of PTL related accidents."
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "lmb" = (
 /obj/critter/opossum/morty,
 /obj/item/device/radio/intercom/medical{
@@ -57863,12 +57835,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -58539,15 +58505,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
-"ndp" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "ndX" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -61027,6 +60984,12 @@
 	dir = 9
 	},
 /area/station/engine/engineering)
+"rqM" = (
+/obj/decal/poster/wallsign/hazard_electrical{
+	pixel_y = 32
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/ptl)
 "rrQ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -61868,18 +61831,6 @@
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -62282,11 +62233,9 @@
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big{
-	dir = 8
+/obj/decal/poster/wallsign/statistics2{
+	desc = "A poster with a line chart depicting the rapid growth of PTL related accidents.";
+	pixel_y = 32
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
@@ -63080,19 +63029,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
-"vhY" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "vjb" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -63745,12 +63681,6 @@
 /area/station/crew_quarters/barber_shop)
 "wzc" = (
 /obj/machinery/power/pt_laser,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
 "wAV" = (
@@ -116074,7 +116004,7 @@ hJO
 uog
 ssE
 aaG
-vhY
+brH
 div
 sUz
 tEG
@@ -116377,7 +116307,7 @@ uog
 ssE
 aap
 brH
-bsq
+bsr
 bsq
 wzc
 nGW
@@ -116679,9 +116609,9 @@ uog
 ssE
 aaG
 brH
-bsr
+rqM
 bsq
-heT
+bsq
 pnv
 brH
 bxf
@@ -116980,10 +116910,10 @@ vuZ
 uog
 ssE
 aaG
-hCQ
+brH
+bsr
 bsq
 bsq
-heT
 ogp
 brH
 bxg
@@ -117282,7 +117212,7 @@ dmQ
 uog
 ssE
 aap
-ndp
+brH
 tIE
 lNp
 bss
@@ -117584,7 +117514,7 @@ gEJ
 pBz
 jIT
 aaG
-llc
+brH
 eot
 mZB
 pRm
