@@ -80,7 +80,12 @@
 		if(lubed)
 			if(src.slip_dir == 0)
 				src.slip_dir = src.dir
-			step(src, slip_dir)
+			if(src.slip_dir && src.dir != src.slip_dir && prob(20))
+				src.remove_pulling()
+				src.changeStatus("weakened", 3 SECONDS)
+				src.force_laydown_standup()
+			if(src.slip_dir)
+				step(src, slip_dir)
 			if(src.loc != T)
 				return world.tick_lag
 			else
