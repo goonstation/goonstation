@@ -2,11 +2,13 @@
 
 /datum/glass_product
 	var/product_name = "generic"
+	var/product_img
 	var/product_type = "generic"
 	var/atom/product_path = null
 	var/product_cost
 
 	var/static/list/product_name_cache = list()
+	var/static/list/product_base64_cache = list()
 
 	New(type, path, cost=1)
 		..()
@@ -26,6 +28,15 @@
 			var/p_name = initial(product_path.name)
 			src.product_name = capitalize(p_name)
 			product_name_cache[path] = src.product_name
+
+		var/img_check = product_base64_cache[path]
+		if (img_check)
+			src.product_img = img_check
+		else
+			var/atom/dummy_atom = path
+			var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state))
+			src.product_img = icon2base64(dummy_icon)
+			product_base64_cache[path] = src.product_img
 
 		src.product_cost = cost
 
@@ -169,6 +180,7 @@
 					"name" = product.product_name,
 					"type" = product.product_type,
 					"cost" = product.product_cost,
+					"img" = product.product_img,
 				)
 			)
 		. = list(

@@ -13,6 +13,7 @@ const GlassRecyclerProductEntry = (props, context) => {
     product: {
       name,
       cost,
+      img,
     },
     disabled,
     onClick,
@@ -21,9 +22,21 @@ const GlassRecyclerProductEntry = (props, context) => {
   return (
     <Fragment>
       <Flex direction="row" align="center">
+        <Flex.Item>
+          <img
+            src={`data:image/jpeg;base64,${img}`}
+            style={{
+              'vertical-align': 'middle',
+              'horizontal-align': 'middle',
+            }}
+          />
+        </Flex.Item>
         <Flex.Item grow={1}>
           <Box bold>
             {capitalize(name)}
+          </Box>
+          <Box>
+            {`Cost: ${cost} ${pluralize('Unit', cost)}`}
           </Box>
         </Flex.Item>
         <Flex.Item>
@@ -32,9 +45,6 @@ const GlassRecyclerProductEntry = (props, context) => {
           </Button>
         </Flex.Item>
       </Flex>
-      <Box>
-        {`Cost: ${cost} ${pluralize('Unit', cost)}`}
-      </Box>
       <Divider />
     </Fragment>
   );
