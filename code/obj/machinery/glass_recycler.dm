@@ -1,5 +1,6 @@
 #define PLATE_COST 2
 
+<<<<<<< HEAD
 /datum/glass_product
 	var/product_name = "generic"
 	var/product_type = "generic"
@@ -8,6 +9,15 @@
 	var/product_cost
 
 	var/static/list/product_name_cache = list()
+=======
+/datum/data/glass_product
+	var/product_name = "generic"
+	var/product_type = "generic"
+	var/atom/product_path = null
+	var/product_cost
+
+	var/static/list/product_name_cache = new()
+>>>>>>> 96a4723fe2280361dc281e89135e986d19742cbc
 
 	New(type, path, cost=1)
 		..()
@@ -38,7 +48,11 @@
 	anchored = 1
 	density = 0
 	var/glass_amt = 0
+<<<<<<< HEAD
 	var/list/product_list = list()
+=======
+	var/list/product_list = new()
+>>>>>>> 96a4723fe2280361dc281e89135e986d19742cbc
 	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
