@@ -1771,7 +1771,7 @@
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
-			C.updateicon()
+			C.UpdateIcon()
 			wiresinstalled = FALSE
 		else if (state == "DECONSTRUCTED")
 			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")

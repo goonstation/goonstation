@@ -143,7 +143,7 @@
 			for(var/obj/item/I in S)
 				if(I.material)
 					I.set_loc(src)
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			return
 
 		if (W.cant_drop) //For borg held items

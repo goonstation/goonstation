@@ -75,6 +75,10 @@
 #define COMSIG_UPDATE_ICON "atom_update_icon"
 /// when something triggers Crossed by entering this atom's turf (/atom/movable)
 #define COMSIG_ATOM_CROSSED "atom_crossed"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 
 // ---- atom/movable signals ----
 

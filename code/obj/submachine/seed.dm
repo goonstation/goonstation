@@ -679,7 +679,7 @@
 					boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-				S.satchel_updateicon()
+				S.UpdateIcon()
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -899,7 +899,7 @@
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "transference"
 				else src.mode = "overview"
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
@@ -917,12 +917,12 @@
 				src.ingredients.Remove(I)
 				I.set_loc(src.output_target)
 				boutput(usr, "<span class='notice'>You eject [I] from the machine!</span>")
-				src.update_icon()
+				src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (href_list["autoextract"])
 			src.autoextract = !src.autoextract
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (href_list["flush_reagent"])
@@ -944,7 +944,7 @@
 			var/target = input(usr, "Extract to which target?", "Reagent Extractor", 0) in ext_targets
 			if(get_dist(usr, src) > 1) return
 			src.extract_to = target
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["extractingred"])
@@ -961,7 +961,7 @@
 					src.doExtract(I)
 					src.ingredients -= I
 					qdel(I)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["chemtransfer"])
@@ -1020,8 +1020,8 @@
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
-			src.update_icon()
+			S.UpdateIcon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else
@@ -1035,7 +1035,7 @@
 			user.u_equip(W)
 			W.dropped()
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
@@ -1055,7 +1055,7 @@
 					sleep(0.2 SECONDS)
 				else continue
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
-		src.update_icon()
+		src.UpdateIcon()
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -1078,7 +1078,7 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-/obj/submachine/chem_extractor/proc/update_icon()
+/obj/submachine/chem_extractor/update_icon()
 	if (src.ingredients.len)
 		src.icon_state = "reex-on"
 	else
@@ -1092,7 +1092,7 @@
 		return
 
 	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/submachine/chem_extractor/proc/canExtract(O)
 	. = FALSE

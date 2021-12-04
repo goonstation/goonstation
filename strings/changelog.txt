@@ -1,10 +1,27 @@
 
-(t)tue nov 30 21
+(t)sat dec 04 21
+(u)Arthur Holiday
+(p)6380
+(e)⚖|balance
+(+)Polymorph now has an action bar.
+(t)thu dec 02 21
+(u)pali
+(*)You can now slide glasses across tables. Just stand next to a table and click on another table far away with a drinking glass in hand
+(t)wed dec 01 21
+(u)sovexe
+(p)6836
+(e)|
+(*)Refactored a bunch of update_icon procs. Please report if you see any bugs such as invisible items.
+(u)Tarmunora
+(e)⚖|balance
+(*)booster enzyme now exothermic and depletes faster.
 (u)Gannets
 (p)6843
 (e)🎨|sprites
 (*)The merry month of Spacemas is here! Come contribute a spacemas tree decoration on the forums!  https://forum.ss13.co/showthread.php?tid=17615
-(t)wed dec 01 21
+(u)Flourish
+(e)🆕|feature
+(*)Send a letter to Spacebe - er, Santa! Find their helper under the Spacemas tree.
 (u)pali
 (*)When entering your PIN into things the input popup now defaults to your actual PIN. The future is now.
 (t)mon nov 29 21

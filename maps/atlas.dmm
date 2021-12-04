@@ -1559,6 +1559,10 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"dR" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "dS" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 5
@@ -2872,10 +2876,6 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor/red,
-/area/station/security/main)
-"hJ" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
 /area/station/security/main)
 "hK" = (
 /obj/potted_plant{
@@ -6982,14 +6982,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"rt" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 8
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 6
-	},
-/area/station/engine/core)
 "ru" = (
 /turf/simulated/floor/engine,
 /area/station/mining/staff_room)
@@ -14044,10 +14036,6 @@
 "Il" = (
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
-"Im" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating,
-/area/station/janitor/office)
 "In" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14609,10 +14597,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
-"JR" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating,
-/area/station/medical/cdc)
 "JS" = (
 /obj/machinery/pathogen_manipulator,
 /turf/simulated/floor/bluewhite{
@@ -19032,6 +19016,14 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon12,
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/arrivals)
+"Vs" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 6
+	},
+/area/station/engine/core)
 "Vt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -19219,6 +19211,10 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
+"VW" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/medical/cdc)
 "VX" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -20243,6 +20239,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"YM" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "YN" = (
 /obj/table/auto,
 /obj/item/device/prox_sensor{
@@ -20483,6 +20483,12 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/arrivals)
+"Zv" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "Zw" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/delivery,
@@ -57041,9 +57047,9 @@ kN
 nt
 pi
 qR
-rt
+Vs
 Uw
-rt
+Vs
 Zb
 vD
 wx
@@ -68540,9 +68546,9 @@ GR
 IC
 IX
 Jx
-JR
-JR
-JR
+VW
+VW
+VW
 Jx
 aa
 PS
@@ -68845,7 +68851,7 @@ Jy
 JS
 Kl
 KA
-JR
+VW
 aa
 PS
 aa
@@ -69147,7 +69153,7 @@ Jy
 JT
 Km
 KB
-JR
+VW
 aa
 PS
 aa
@@ -69751,7 +69757,7 @@ Jy
 JV
 Kn
 KD
-JR
+VW
 aa
 PS
 aa
@@ -70053,7 +70059,7 @@ Jy
 JW
 Km
 KE
-JR
+VW
 aa
 PS
 aa
@@ -71827,7 +71833,7 @@ hl
 fc
 fR
 gC
-hJ
+dR
 xk
 xm
 vu
@@ -72431,7 +72437,7 @@ hl
 ff
 gp
 gG
-hJ
+dR
 hU
 gE
 nD
@@ -74250,7 +74256,7 @@ jI
 lz
 jI
 nY
-hJ
+dR
 pJ
 ry
 sA
@@ -76993,7 +76999,7 @@ EV
 Hh
 HI
 Ik
-Im
+YM
 aa
 PS
 aa
@@ -77266,7 +77272,7 @@ gY
 iS
 iA
 iS
-kG
+Zv
 ct
 oT
 ct
@@ -77898,7 +77904,7 @@ Rd
 GD
 Hk
 HL
-Im
+YM
 be
 aa
 PS

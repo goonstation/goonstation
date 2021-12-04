@@ -72,7 +72,7 @@
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.updateicon()
+			src.UpdateIcon()
 	return
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
@@ -145,7 +145,7 @@
 			loaded = T.amount
 			qdel(T)
 		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
-		src.updateicon()
+		src.UpdateIcon()
 	//Regular ID
 	else
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -324,7 +324,7 @@
 		src.floorbottargets -= turf2coordinates(src.target)
 		src.target = null
 		src.anchored = 0
-		src.updateicon()
+		src.UpdateIcon()
 		src.repairing = 0
 		src.oldtarget = null
 		src.oldloc = null
@@ -373,7 +373,7 @@
 	else
 		src.amount += T.amount
 		qdel(T)
-	src.updateicon()
+	src.UpdateIcon()
 	src.floorbottargets -= turf2coordinates(src.target)
 	src.target = null
 	src.repairing = 0
@@ -406,7 +406,7 @@
 	src.target = null
 	src.repairing = 0
 
-/obj/machinery/bot/floorbot/proc/updateicon()
+/obj/machinery/bot/floorbot/update_icon()
 	if (src.amount > 0)
 		src.icon_state = "floorbot[src.on]"
 	else
@@ -532,7 +532,7 @@
 
 		master.repairing = 0
 		master.amount -= 1
-		master.updateicon()
+		master.UpdateIcon()
 		master.anchored = 0
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)
@@ -592,7 +592,7 @@
 
 		T.ReplaceWithSpace()
 		master.repairing = 0
-		master.updateicon()
+		master.UpdateIcon()
 		master.anchored = 0
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)

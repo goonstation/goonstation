@@ -34,7 +34,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(2,6),rand(0,40))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,6))
@@ -79,7 +79,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(2,6),0)
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,6))
@@ -109,7 +109,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
@@ -196,7 +196,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"miraclium",rand(2,9))
 
@@ -226,7 +226,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"mauxite",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -257,7 +257,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		var/list/left = Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"gold",rand(2,4))
 		Turfspawn_Asteroid_SeedSpecificOre(left,"syreline",rand(3,6))
@@ -289,7 +289,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"molitz",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -320,7 +320,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"pharosium",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -351,7 +351,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"bohrum",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -382,7 +382,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"char",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -413,7 +413,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"nanite cluster",rand(2,5))
 
@@ -443,7 +443,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"erebite",rand(1,4))
 
@@ -473,7 +473,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"cerenkite",rand(2,8))
 
@@ -503,7 +503,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"koshmarite",rand(2,8))
 
@@ -533,7 +533,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"viscerite",rand(2,8))
 
@@ -563,7 +563,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"starstone",rand(1,2))
 // Terrain Gen Procs

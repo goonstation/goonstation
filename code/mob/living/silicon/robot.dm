@@ -1495,7 +1495,7 @@
 					src.show_text("Your power cell was removed!", "red")
 					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
-					cell.updateicon()
+					cell.UpdateIcon()
 					src.cell = null
 
 			update_appearance()

@@ -1192,7 +1192,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	sleep(1.5 SECONDS)
 
 /proc/heavenly_spawn(var/atom/movable/A)
-	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
@@ -1219,7 +1219,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
-/obj/heavenly_light
+/obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER

@@ -31,7 +31,7 @@ obj/machinery/air_vendor
 		..()
 		gas_prototype = new /datum/gas_mixture
 
-	proc/update_icon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "O2vend_broken"
 			return
@@ -46,7 +46,7 @@ obj/machinery/air_vendor
 
 	power_change()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	proc/fill_cost()
 		if(!holding) return 0
@@ -76,7 +76,7 @@ obj/machinery/air_vendor
 				user.drop_item()
 				W.set_loc(src)
 				src.holding = W
-				src.update_icon()
+				src.UpdateIcon()
 				src.updateUsrDialog()
 			else
 				boutput(user, "You try to insert the [W.name] into the the [src.name], but there's already a tank there!</span>")
@@ -184,4 +184,4 @@ obj/machinery/air_vendor
 
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
-			update_icon()
+			UpdateIcon()

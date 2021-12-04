@@ -70,9 +70,6 @@
 					I.emp_act()
 		return
 
-	proc/update_icon()
-		return
-
 	proc/make_my_stuff() // use this rather than overriding the container's New()
 		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
 			return 0
@@ -183,7 +180,7 @@
 			user.u_equip(W)
 			src.add_contents(W)
 //		hud.add_item(W, user)
-		update_icon()
+		UpdateIcon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))

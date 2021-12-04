@@ -442,7 +442,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/xmastree
 	EPHEMERAL_XMAS
 	name = "Spacemas tree"
-	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a note here with <a target='_blank' href='https://forum.ss13.co/showthread.php?tid=15478'>'https://forum.ss13.co/showthread.php?tid=15478'</a> written on it."
+	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a note here with <a target='_blank' href='https://forum.ss13.co/showthread.php?tid=17615'>'https://forum.ss13.co/showthread.php?tid=17615'</a> written on it."
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "xmastree_2021"
 	anchored = 1
@@ -493,9 +493,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					modify_christmas_cheer(-33)
 					qdel(src)
 					return
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.on_fire)
 			if (!src.fire_image)
 				src.fire_image = image('icons/effects/160x160.dmi', "xmastree_2014_burning")
@@ -514,16 +514,21 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	throwforce = 1
 	doants = 0
 	food_color = "#FFFFFF"
+	var/melts = TRUE
+
+	unmelting
+		melts = FALSE
 
 	New()
 		..()
-		SPAWN_DBG(rand(100,500))
-			if (src.loc && (istype(src.loc, /turf/simulated/floor/specialroom/freezer) || src.loc.loc.name == "Space" || src.loc.loc.name == "Ocean"))
-				src.visible_message("\The [src] vanishes into thin air, as its subatomic particles decay!")
-			else
-				src.visible_message("\The [src] melts!")
-				make_cleanable( /obj/decal/cleanable/water,get_turf(src))
-			qdel(src)
+		if(melts)
+			SPAWN_DBG(rand(100,500))
+				if (src.loc && (istype(src.loc, /turf/simulated/floor/specialroom/freezer) || src.loc.loc.name == "Space" || src.loc.loc.name == "Ocean"))
+					src.visible_message("\The [src] vanishes into thin air, as its subatomic particles decay!")
+				else
+					src.visible_message("\The [src] melts!")
+					make_cleanable( /obj/decal/cleanable/water,get_turf(src))
+				qdel(src)
 
 	heal(var/mob/living/M)
 		if (!M || !isliving(M))
@@ -582,7 +587,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
-	EPHEMERAL_XMAS
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
@@ -590,7 +594,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/tinsel
-	EPHEMERAL_XMAS
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
@@ -598,7 +601,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/wreath
-	EPHEMERAL_XMAS
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
@@ -612,7 +614,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
-	EPHEMERAL_XMAS
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
@@ -1112,7 +1113,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				usr.put_in_hand_or_drop(G)
 				M.changeStatus("stunned", 1 SECOND)
 				G.state = 1
-				G.update_icon()
+				G.UpdateIcon()
 				src.set_dir(get_dir(src, M))
 				playsound(src.loc, "sound/voice/animal/werewolf_attack3.ogg", 65, 1, 0, 0.5)
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
@@ -1187,7 +1188,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 						playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 1, 0 ,0.5)
 
 /obj/stocking
-	EPHEMERAL_XMAS
 	name = "stocking"
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
@@ -1246,6 +1246,16 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 /obj/decal/tile_edge/stripe/xmas
 	icon_state = "xmas"
+
+/obj/item/reagent_containers/food/drinks/eggnog
+	name = "Egg Nog"
+	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
+	icon_state = "nog"
+	heal_amt = 1
+	festivity = 1
+	rc_flags = RC_FULLNESS
+	initial_volume = 50
+	initial_reagents = list("eggnog"=40)
 
 /obj/storage/crate/xmas
 	name = "\improper Spacemas crate"

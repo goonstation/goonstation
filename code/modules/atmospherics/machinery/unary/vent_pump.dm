@@ -173,7 +173,7 @@
 
 	initialize()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

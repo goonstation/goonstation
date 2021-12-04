@@ -168,12 +168,21 @@
 		update_nearby_tiles(need_rebuild=1)
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			src.xmasify()
+		#endif
 
 	disposing()
 		update_nearby_tiles()
 		STOP_TRACKING
 		..()
+
+	proc/xmasify()
+		var/obj/decal/garland/garland = new(src.loc)
+		if(src.dir != NORTH)
+			garland.dir = src.dir
 
 	proc/toggleinput()
 		if(cant_emag || (src.req_access && !(src.operating == -1)))
@@ -471,7 +480,7 @@
 			take_damage(damage/4)
 	return
 
-/obj/machinery/door/proc/update_icon(var/toggling = 0)
+/obj/machinery/door/update_icon(var/toggling = 0)
 	if(toggling? !density : density)
 		icon_state = "[icon_base]1"
 	else
@@ -519,7 +528,7 @@
 		use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
-		update_icon(0)
+		UpdateIcon(/*/toggling*/ 0)
 		update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
@@ -558,7 +567,7 @@
 	close_trys = 0
 	SPAWN_DBG(-1)
 		src.play_animation("closing")
-		src.update_icon(1)
+		src.UpdateIcon(1)
 		src.set_density(1)
 		src.update_nearby_tiles()
 
