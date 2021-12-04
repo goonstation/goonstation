@@ -3,10 +3,7 @@ import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Divider, Flex, Section, Stack } from "../components";
 import { Window } from "../layouts";
 
-// This already exists in WeaponVendor/index.tsx, but feels weird
-// to make it a dependency.
-const pluralize = (word, n) => (n !== 1 ? word + 's' : word);
-const capitalize = (word) => word.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
+import { capitalize, pluralize } from './common/stringUtils';
 
 const GlassRecyclerProductEntry = (props, context) => {
   const {
