@@ -62,7 +62,7 @@
 
 	var/cleaning = 0 // Are we currently cleaning something?
 	var/reagent_normal = "cleaner"
-	var/reagent_emagged = "lube"
+	var/reagent_emagged = "superlube"
 	var/bucket_type_on_destruction = /obj/item/reagent_containers/glass/bucket
 	var/search_range = 1
 	var/max_search_range = 7

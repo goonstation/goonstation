@@ -155,9 +155,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		holder.owner.reagents.add_reagent(reagent_id, 30)
 		playsound(holder.owner.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
 	lube
-		name = "Synthesize Space Lube"
+		name = "Synthesize Organic Space Lube"
 		desc = "Fill yourself will space lube. Creates a slipping hazard, but it makes those floors shine so well that you can see yourself in them!"
-		reagent_id = "lube"
+		reagent_id = "superlube"
 		icon_state = "clean_lube"
 
 	phlogiston_dust
