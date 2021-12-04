@@ -47,7 +47,11 @@ Contains:
 		logTheThing("bombing", src.fingerprintslast, null, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
-		var/turf/T = src.loc
+		var/turf/T = get_turf(src)
+		if(isrestrictedz(T?.z))
+			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
+			qdel(src)
+
 		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 3, 0.8)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
@@ -134,6 +138,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	. = ..()
 
 /obj/machinery/the_singularity/process()
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T?.z))
+		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
+		qdel(src)
 	eat()
 
 	if (src.Dtime)//If its a temp singularity IE: an event
@@ -165,6 +173,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = 1
 			maxradius = INFINITY
+			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
+			message_admins("[src] has become loose at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -273,7 +283,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			//src.warp = 100
 
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
-			pool(A)
+			qdel(A)
 			gain = 2
 		else
 			var/obj/O = A
@@ -760,7 +770,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
 	var/delay = 5
@@ -866,7 +876,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	src.gen_secondary.power -= 3
 	return
 
-/obj/machinery/containment_field/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
+/obj/machinery/containment_field/Cross(atom/movable/O as mob|obj)
 	if(iscarbon(O) && prob(80))
 		shock(O)
 	..()
@@ -1581,21 +1591,21 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							boutput(usr, "<span class='alert'>\The [src] is already deactivated!</span>")
 			if("timer")
 				if(!timing)
-					var/tp = text2num(href_list["tp"])
+					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
 					src.time = min(max(round(src.time), 30), 600)
 				else
 					boutput(usr, "<span class='alert'>You can't change the time while the timer is engaged!</span>")
 		/*
 		if (href_list["time"])
-			src.timing = text2num(href_list["time"])
+			src.timing = text2num_safe(href_list["time"])
 			if(timing) processing_items |= src
 				src.icon_state = "portgen2"
 			else
 				src.icon_state = "portgen1"
 
 		if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
+			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
 			src.time = min(max(round(src.time), 60), 600)
 

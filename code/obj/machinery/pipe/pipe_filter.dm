@@ -4,23 +4,23 @@
 	..()
 	p_dir = (NORTH|SOUTH|EAST|WEST) ^ turn(dir, 180)
 
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
-	f_gas = unpool(/datum/gas_mixture)
-	f_ngas = unpool(/datum/gas_mixture)
+	f_gas = new /datum/gas_mixture
+	f_ngas = new /datum/gas_mixture
 
 	gasflowlist += src
 
 /obj/machinery/pipefilter/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	if(f_gas)
-		pool(f_gas)
+		qdel(f_gas)
 	if(f_ngas)
-		pool(f_ngas)
+		qdel(f_ngas)
 	..()
 
 /obj/machinery/pipefilter/buildnodes()
@@ -206,10 +206,10 @@
 			return
 		if (src.allowed(usr) || src.emagged || src.bypassed)
 			if (href_list["fp"])
-				src.f_per = min(max(round(src.f_per + text2num(href_list["fp"])), 0), src.maxrate)
+				src.f_per = min(max(round(src.f_per + text2num_safe(href_list["fp"])), 0), src.maxrate)
 			else if (href_list["tg"])
 				// toggle gas
-				src.f_mask ^= text2num(href_list["tg"])
+				src.f_mask ^= text2num_safe(href_list["tg"])
 				src.updateicon()
 		else
 			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")

@@ -135,8 +135,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 	proc/update_mode_icon()
 		button_mode.icon_state = mode.icon_state
 		button_mode.maptext_width = 256
-		button_mode.maptext_height = 64
-		button_mode.maptext_y = -64
+		button_mode.maptext_height = 96
+		button_mode.maptext_y = -96
 		button_mode.maptext_x = -62
 
 	proc/build_click(atom/target, location, control, list/params)
@@ -228,13 +228,13 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = initial(usr.see_in_dark)
-		usr.see_invisible = 16
+		usr.see_invisible = INVIS_GHOST
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = 10
-		usr.see_invisible = 21
+		usr.see_invisible = INVIS_ADVENTURE
 		src.show_popup_menus = 0
 
 /atom/movable/screen/buildmode/builddir

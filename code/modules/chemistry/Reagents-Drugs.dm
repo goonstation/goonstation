@@ -439,7 +439,12 @@ datum
 				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in view(7,M))
 						var/chat_text = null
-						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list("M"="[M]", "beeMom"=bee.beeMom ? bee.beeMom : "Mom", "other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"), bee)
+						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list(
+							"M"="[M]",
+							"beeMom"=bee.beeMom ? bee.beeMom : "Mom",
+							"other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Spacebee" : "Seabee",
+							"bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"
+							))
 						if(!M.client.preferences.flying_chat_hidden)
 							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
@@ -962,6 +967,10 @@ datum
 				if(M.sleeping) M.sleeping = 0
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
+				if(holder.has_reagent("synaptizine"))
+					holder.remove_reagent("synaptizine", 5 * mult)
+				if(holder.has_reagent("mannitol"))
+					holder.remove_reagent("mannitol", 5 * mult)
 				..()
 				return
 

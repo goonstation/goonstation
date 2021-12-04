@@ -61,6 +61,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/customization_third_original = "None"
 	var/customization_third_offset_y = 0
 
+	/// Currently changes which sprite sheet is used
+	var/special_style
+
 	/// Intended for extra head features that may or may not be hair
 	var/special_hair_1_icon = 'icons/mob/human_hair.dmi'
 	var/special_hair_1_state = "none"
@@ -137,7 +140,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/bioHolder/parentHolder = null
 
 	var/gender = MALE
-	var/pronouns = 0		//1 if using neutral pronouns (they/their);  0 if using gendered pronouns matching their gender var
+	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
 	var/voicetype = 0
@@ -233,6 +236,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		s_tone = toCopy.s_tone
 		s_tone_original = toCopy.s_tone_original
 
+		special_style = toCopy.special_style
+
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
@@ -284,6 +289,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (progress > 7 || prob(progress * 10))
 			gender = toCopy.gender
 			pronouns = toCopy.pronouns
+			special_style = toCopy.special_style
 			mutant_race = toCopy.mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
@@ -327,6 +333,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
 
@@ -584,7 +592,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
 			clone_generation = toCopy.clone_generation
-			genetic_stability = toCopy.genetic_stability
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)
@@ -622,6 +629,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
 			src.CopyOther(toCopy)
+			return
 
 		if (mobAppearance)
 			mobAppearance.StaggeredCopyOther(toCopy.mobAppearance, progress)

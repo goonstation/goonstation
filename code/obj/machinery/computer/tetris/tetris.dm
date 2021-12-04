@@ -13,7 +13,7 @@
 				if(response)
 					var/list/rList = params2list(response)
 					if(rList["Tetris"])
-						currScore = text2num(rList["Tetris"])
+						currScore = text2num_safe(rList["Tetris"])
 				if(T.highscore > currScore)
 					DEBUG_MESSAGE("Setting Tetris scores: Key: [T.highscorekey] Score: [T.highscore]")
 					var/returnval = world.SetScores(T.highscorekey, "Tetris=[T.highscore]", config.medal_hub, config.medal_password)
@@ -25,7 +25,7 @@
 	if(response)
 		var/list/rList = params2list(response)
 		if(rList[field_name])
-			result = text2num(rList[field_name])
+			result = text2num_safe(rList[field_name])
 	return result
 */
 
@@ -89,11 +89,11 @@ ABSTRACT_TYPE(/datum/game)
 		if (owner.Topic(href, href_list))
 			return
 		if (href_list["highscore"])
-			if (text2num(href_list["highscore"]))
-				if (text2num(href_list["highscore"]) >= 30000)
+			if (text2num_safe(href_list["highscore"]))
+				if (text2num_safe(href_list["highscore"]) >= 30000)
 					usr.unlock_medal("Block Stacker", 1)
-				if (text2num(href_list["highscore"]) > highscore)
-					highscore = text2num(href_list["highscore"])
+				if (text2num_safe(href_list["highscore"]) > highscore)
+					highscore = text2num_safe(href_list["highscore"])
 					highscorekey = usr.key
 					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
 					src.end_game()

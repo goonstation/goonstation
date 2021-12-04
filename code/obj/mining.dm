@@ -128,7 +128,7 @@
 /obj/magnet_target_marker
 	name = "mineral magnet target"
 	desc = "Marks the location of an area of asteroid magnetting."
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/width = 15
 	var/height = 15
 	var/scan_range = 7
@@ -271,7 +271,7 @@
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
-			pool(W)
+			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!magnet)
@@ -405,7 +405,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 1
 				M.set_density(1)
-				M.invisibility = 0
+				M.invisibility = INVIS_NONE
 
 			active = 1
 
@@ -445,7 +445,7 @@
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 					M.opacity = 0
 					M.set_density(0)
-					M.invisibility = 1
+					M.invisibility = INVIS_INFRA
 				active = 0
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 				return
@@ -460,7 +460,7 @@
 			for (var/obj/forcefield/mining/M in wall_bits)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 101
+				M.invisibility = INVIS_ALWAYS
 
 			src.updateUsrDialog()
 			return
@@ -632,7 +632,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 1
 			M.set_density(1)
-			M.invisibility = 0
+			M.invisibility = INVIS_NONE
 
 		active = 1
 
@@ -650,6 +650,9 @@
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
 				T.ReplaceWithSpace()
 				//qdel(T)
+		if(station_repair.station_generator)
+			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
+				UT.ReplaceWith("Space", force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.overlays = list()
 
@@ -680,10 +683,16 @@
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 				M.opacity = 0
 				M.set_density(0)
-				M.invisibility = 1
+				M.invisibility = INVIS_INFRA
 			active = 0
 			boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
 			return
+
+		if(station_repair.station_generator)
+			var/list/turf/space/repair_turfs = list()
+			for(var/turf/space/T in mining_controls.magnet_area.contents)
+				repair_turfs += T
+			station_repair.repair_turfs(repair_turfs)
 
 		sleep(sleep_time)
 		if (malfunctioning && prob(20))
@@ -695,7 +704,7 @@
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
 			M.opacity = 0
 			M.set_density(0)
-			M.invisibility = 101
+			M.invisibility = INVIS_ALWAYS
 
 		src.updateUsrDialog()
 		return
@@ -1153,7 +1162,7 @@
 				H = L
 			var/obj/item/held = L.equipped()
 			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
-				L.click(src, list(), null, null)
+				UNLINT(L.click(src, list(), null, null))
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1271,7 +1280,7 @@
 				dig_feedback = "This rock is tough. You may need a stronger tool."
 			if (2)
 				dig_chance = 10
-				dig_feedback = "This rock is very tough. You need a stronger tool."
+				dig_feedback = "This rock is very tough. You'll be faster with a stronger tool."
 			if (3 to INFINITY)
 				dig_chance = 0
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
@@ -1332,7 +1341,7 @@
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = unpool(ore_to_create)
+				var/obj/item/raw_material/MAT = new ore_to_create
 				MAT.set_loc(src)
 
 				if(MAT.material)
@@ -2356,14 +2365,17 @@ var/global/list/cargopads = list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W,/obj/item/satchel/mining/))
-			var/obj/item/satchel/mining/S = W
-			user.drop_item()
-			if (satchel)
-				user.put_in_hand_or_drop(satchel)
-			S.set_loc(src)
-			satchel = S
-			icon_state = "scoop-bag"
-			user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			if (!issilicon(usr))
+				var/obj/item/satchel/mining/S = W
+				user.drop_item()
+				if (satchel)
+					user.put_in_hand_or_drop(satchel)
+				S.set_loc(src)
+				satchel = S
+				icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 		else
 			..()
 			return
@@ -2378,7 +2390,7 @@ var/global/list/cargopads = list()
 			else
 				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
 		else
-			boutput(user, "<span class='alert'>The satchel is firmly secured.</span>")
+			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))

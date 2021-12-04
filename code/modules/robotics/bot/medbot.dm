@@ -92,6 +92,14 @@
 	access_lookup = "Head Surgeon"
 	text2speech = 1
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
+
 /obj/machinery/bot/medbot/head_surgeon/no_camera
 	no_camera = 1
 
@@ -116,6 +124,12 @@
 	treatment_fire = "LSD"
 	treatment_tox = "hugs"
 	treatment_virus = "chickensoup"
+	no_camera = 1
+
+/obj/machinery/bot/medbot/medass
+	name = "MedicalAssistant"
+	desc = "A little medical robot. This one looks very busy."
+	skin = "medicalassistant"
 	no_camera = 1
 
 /obj/item/firstaid_arm_assembly
@@ -231,7 +245,7 @@
 		src.toggle_power()
 
 	else if ((href_list["adj_threshold"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_threshold"])
+		var/adjust_num = text2num_safe(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if (src.heal_threshold < 5)
 			src.heal_threshold = 5
@@ -239,7 +253,7 @@
 			src.heal_threshold = 75
 
 	else if ((href_list["adj_inject"]) && (!src.locked))
-		var/adjust_num = text2num(href_list["adj_inject"])
+		var/adjust_num = text2num_safe(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if (src.injection_amount < 5)
 			src.injection_amount = 5
@@ -798,7 +812,7 @@
 		src.reagent_glass = null
 
 	if (prob(50))
-		new /obj/item/parts/robot_parts/arm/left(Tsec)
+		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	qdel(src)
@@ -814,6 +828,7 @@
 			return
 		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
 			if (!istype(S,/obj/item/storage/pill_bottle))
+				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
 				return
 		..()
 		return

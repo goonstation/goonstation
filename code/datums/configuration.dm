@@ -56,7 +56,7 @@
 	var/sql_database = null
 
 	// Player notes
-	var/player_notes_baseurl = "http://playernotes.goonhub.com"
+	var/player_notes_baseurl = "https://playernotes.goonhub.com"
 	var/player_notes_auth = null
 
 	// Server list for cross-bans and other stuff
@@ -68,6 +68,8 @@
 	var/irclog_url = null
 	var/ircbot_api = null
 	var/ircbot_ip = null
+	var/spacebee_api_url = "https://spacebee.goonhub.com"
+	var/spacebee_api_key = null
 
 	//External server configuration (for central bans etc)
 	var/goonhub_api_version = 0
@@ -101,6 +103,9 @@
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
 	var/whitelist_path = "strings/whitelist.txt"
+
+	//Which server can ghosts join by clicking on an on-screen link
+	var/server_buddy_id = null
 
 /datum/configuration/New()
 	..()
@@ -301,6 +306,11 @@
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
 
+			if ("spacebee_api_url")
+				config.spacebee_api_url = trim(value)
+			if ("spacebee_api_key")
+				config.spacebee_api_key = trim(value)
+
 			if ("goonhub_parser_url")
 				config.goonhub_parser_url = trim(value)
 			if ("goonhub_parser_key")
@@ -363,6 +373,9 @@
 
 			if ("whitelist_path")
 				config.whitelist_path = trim(value)
+
+			if ("server_buddy_id")
+				config.server_buddy_id = trim(value)
 
 			else
 				logDiary("Unknown setting in configuration: '[name]'")

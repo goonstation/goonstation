@@ -91,7 +91,7 @@
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
 
 			user.set_loc(get_turf(O.loc))
-			if (ismonkey(user) || jobban_isbanned(user, "Cyborg"))
+			if (isnpcmonkey(user) || jobban_isbanned(user, "Cyborg"))
 				user.death()
 				user.ghostize()
 				var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,

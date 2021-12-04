@@ -19,8 +19,8 @@
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		del(bar.img)
-		del(border.img)
+		qdel(bar.img)
+		qdel(border.img)
 		..()
 
 	onUpdate()
@@ -134,7 +134,7 @@
 			continue
 		C.show_message(textother, 1, group = "[src]_Skateboard")
 
-/obj/vehicle/skateboard/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/skateboard/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 

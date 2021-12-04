@@ -14,6 +14,13 @@
 // * Krampus 1.0 stuff
 // * Stockings - from halloween.dm - wtf
 
+// define used for removing spacemas objects when it's not xmas
+#ifdef XMAS
+#define EPHEMERAL_XMAS EPHEMERAL_SHOWN
+#else
+#define EPHEMERAL_XMAS EPHEMERAL_HIDDEN
+#endif
+
 var/global/christmas_cheer = 60
 var/global/xmas_respawn_lock = 0
 var/global/santa_spawned = 0
@@ -148,9 +155,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			pixel_x = rand(-6, 6)
 			pixel_y = rand(-6, 6)
 			if(prob(5) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(src.loc)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			return TRUE
 
 /obj/machinery/bot/guardbot/xmas
@@ -174,7 +181,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -187,7 +194,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.tool.set_loc(get_turf(src))
 
 		var/list/throwparts = list()
-		throwparts += new /obj/item/parts/robot_parts/arm/left(T)
+		throwparts += new /obj/item/parts/robot_parts/arm/left/standard(T)
 		throwparts += new /obj/item/device/flash(T)
 		//throwparts += core
 		throwparts += src.tool
@@ -433,14 +440,15 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 // Throughout December the icon will change!
 /obj/xmastree
+	EPHEMERAL_XMAS
 	name = "Spacemas tree"
-	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a note here with <a target='_blank' href='https://forum.ss13.co/showthread.php?tid=15478'>'https://forum.ss13.co/showthread.php?tid=15478'</a> written on it."
+	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a note here with <a target='_blank' href='https://forum.ss13.co/showthread.php?tid=17615'>'https://forum.ss13.co/showthread.php?tid=17615'</a> written on it."
 	icon = 'icons/effects/160x160.dmi'
-	icon_state = "xmastree_2020"
+	icon_state = "xmastree_2021"
 	anchored = 1
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
-	plane = PLANE_DEFAULT + 2
+	plane = PLANE_ABOVE_LIGHTING
 
 	density = 1
 	var/on_fire = 0
@@ -453,6 +461,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	disposing()
 		STOP_TRACKING
+		qdel(src.fire_image)
+		src.fire_image = null
 		..()
 
 	attack_hand(mob/user as mob)
@@ -493,13 +503,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			src.UpdateOverlays(src.fire_image, "fire")
 		else
 			src.UpdateOverlays(null, "fire")
-
-	ephemeral //Disappears except on xmas
-#ifndef XMAS
-		New()
-			..()
-			qdel(src)
-#endif
 
 /obj/item/reagent_containers/food/snacks/snowball
 	name = "snowball"
@@ -579,47 +582,28 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 /obj/decal/garland
+	EPHEMERAL_XMAS
 	name = "garland"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
 	layer = 5
 	anchored = 1
 
-	ephemeral //Disappears except on xmas
-#ifndef XMAS
-		New()
-			qdel(src)
-			..()
-#endif
-
 /obj/decal/tinsel
+	EPHEMERAL_XMAS
 	name = "tinsel"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
 	layer = 5
 	anchored = 1
 
-	ephemeral //Disappears except on xmas
-#ifndef XMAS
-		New()
-			qdel(src)
-			..()
-#endif
-
 /obj/decal/wreath
+	EPHEMERAL_XMAS
 	name = "wreath"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
 	anchored = 1
-
-	ephemeral //Disappears except on xmas
-#ifndef XMAS
-		New()
-			qdel(src)
-			..()
-#endif
-
 /obj/decal/mistletoe
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
@@ -628,6 +612,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 
 /obj/decal/xmas_lights
+	EPHEMERAL_XMAS
 	name = "spacemas lights"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
@@ -642,6 +627,11 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		light.set_brightness(0.3)
 		light.attach(src)
 		light.enable()
+
+	disposing()
+		. = ..()
+		qdel(src.light)
+		src.light = null
 
 	attack_hand(mob/user as mob)
 		change_light_pattern()
@@ -659,18 +649,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	proc/change_light_pattern()
 		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
-		if (isnull(pattern))
+		if (!isnum_safe(pattern))
 			return
 		pattern = clamp(pattern, 0, 4)
 		src.light_pattern(pattern)
-
-	ephemeral //Disappears except on xmas
-#ifndef XMAS
-		New()
-			qdel(src)
-			..()
-#endif
-
 
 
 // Grinch Stuff
@@ -906,7 +888,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	sight_modifier()
 		mob.sight |= SEE_MOBS
 		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = 1
+		mob.see_invisible = INVIS_INFRA
 
 /mob/living/carbon/human/krampus
 	New()
@@ -931,9 +913,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		. = ..()
 
 
-	Bump(atom/movable/AM, yes)
+	bump(atom/movable/AM)
 		if(src.stance == "krampage")
-			if ((!( yes ) || src.now_pushing))
+			if (src.now_pushing)
 				return
 			now_pushing = 1
 			var/attack_strength = 2
@@ -1205,6 +1187,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 						playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 1, 0 ,0.5)
 
 /obj/stocking
+	EPHEMERAL_XMAS
 	name = "stocking"
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
@@ -1260,13 +1243,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			else
 				user.visible_message("<span class='notice'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='notice'>You take [gift] out of [src]!</span>")
 		return
-
-	ephemeral //Disappears except on xmas
-#ifndef XMAS
-		New()
-			..()
-			qdel(src)
-#endif
 
 /obj/decal/tile_edge/stripe/xmas
 	icon_state = "xmas"

@@ -10,7 +10,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//var/current_state = GAME_STATE_PREGAME
 	//replaced with global
 
-	var/hide_mode = 0
+	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
 	var/event_time = null
 	var/event = 0
@@ -50,8 +50,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		lobby_titlecard.set_pregame_html()
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	for(var/mob/new_player/C in world)
-		C.ready = 1
 	pregame_timeleft = 1
 	#endif
 
@@ -110,8 +108,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode in list("secret","action","intrigue","wizard","alien"))
-		src.hide_mode = 1
+	if(master_mode != "extended")
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
@@ -251,16 +251,23 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		participationRecorder.releaseHold()
 
 	SPAWN_DBG (6000) // 10 minutes in
-		for(var/obj/machinery/power/monitor/smes/E in machine_registry[MACHINES_POWER])
+		for(var/obj/machinery/computer/power_monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
-			if(E.powernet?.avail <= 0)
+			var/datum/powernet/PN = E.get_direct_powernet()
+			if(PN?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning")
 			break
+
+	for(var/turf/T in job_start_locations["AI"])
+		if(isnull(locate(/mob/living/silicon/ai) in T))
+			new /obj/item/clothing/suit/cardboard_box/ai(T)
 
 	processScheduler.start()
 
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG
+	else if (total_clients() >= SEMIOVERLOAD_PLAYERCOUNT)
+		world.tick_lag = SEMIOVERLOADED_WORLD_TICKLAG
 
 //Okay this is kinda stupid, but mapSwitcher.autoVoteDelay which is now set to 30 seconds, (used to be 5 min).
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
@@ -430,6 +437,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			// Official go-ahead to be an end-of-round asshole
 			boutput(world, "<h3>The round has ended!</h3><strong style='color: #393;'>Further actions will have no impact on round results. Go hog wild!</strong>")
 
+			SPAWN_DBG(0)
+				change_ghost_invisibility(INVIS_NONE)
+
 			// i feel like this should probably be a proc call somewhere instead but w/e
 			if (!ooc_allowed)
 				ooc_allowed = 1
@@ -550,9 +560,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				logTheThing("diary",crewMind,null,"failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0
-
 		if (allComplete && count)
-			successfulCrew += "[crewMind.current.real_name] ([crewMind.key])"
+			successfulCrew += "[crewMind.current.real_name] ([crewMind.displayed_key])"
+		boutput(crewMind.current, "<br>")
 #endif
 
 	//logTheThing("debug", null, null, "Zamujasa: [world.timeofday] mode.declare_completion()")
@@ -597,8 +607,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		if(!miscreantMind.objectives.len)
 			continue
 
-		var/miscreant_info = "[miscreantMind.key]"
-		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.key])"
+		var/miscreant_info = "[miscreantMind.displayed_key]"
+		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.displayed_key])"
 
 		boutput(world, "<B>[miscreant_info] was a miscreant!</B>")
 		for (var/datum/objective/miscreant/O in miscreantMind.objectives)
@@ -793,6 +803,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	catch(var/exception/e)
 		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
 		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
+
+	for(var/datum/controller/process/lag_detection/lag_detection_process in global.processScheduler.processes)
+		if(lag_detection_process.automatic_profiling_on)
+			lag_detection_process.automatic_profiling(force_stop=TRUE)
+
 	return 1
 
 /////

@@ -53,11 +53,11 @@
 	},
 /area/space)
 "aal" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
+/turf/simulated/floor/airless,
 /area/space)
 "aam" = (
 /obj/cable{
@@ -162,11 +162,11 @@
 /turf/space,
 /area/space)
 "aaz" = (
-/turf/simulated/floor/airless,
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
+/turf/simulated/floor/airless,
 /area/space)
 "aaA" = (
 /obj/cable{
@@ -318,11 +318,11 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar/west,
+/turf/space,
 /turf/simulated/floor/airless{
 	icon_state = "solarbase";
 	name = "solar paneling"
 	},
-/turf/space,
 /area/station/solar/west)
 "aaV" = (
 /obj/grille/catwalk{
@@ -423,7 +423,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4
 	},
 /turf/space,
@@ -871,7 +871,9 @@
 	name = "Router Cabinet"
 	})
 "acv" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 5
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -1329,7 +1331,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/ptl)
 "adu" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -1475,7 +1477,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /turf/simulated/floor/plating,
@@ -5960,7 +5962,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -8044,7 +8046,7 @@
 	},
 /area/station/engine/core)
 "avQ" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 4;
 	name = "Station Power Grid Monitoring"
 	},
@@ -9191,7 +9193,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -9255,7 +9257,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 8;
 	name = "Engine Output Monitoring"
 	},
@@ -14804,7 +14806,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "aOX" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -16405,11 +16407,11 @@
 /area/station/ai_monitored/armory)
 "aTv" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/research_outpost/indigo_rye)
 "aTw" = (
@@ -19560,7 +19562,7 @@
 /turf/simulated/floor,
 /area/station/storage/eva)
 "bdg" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -22676,7 +22678,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bnA" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/cable{
@@ -22728,7 +22730,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bnJ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -23205,9 +23207,9 @@
 	},
 /area/station/medical/medbay)
 "bpa" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -23229,9 +23231,9 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bpb" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -25592,16 +25594,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bxI" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
 /obj/decal/cleanable/dirt,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bxJ" = (
@@ -28518,10 +28512,10 @@
 	},
 /obj/item/guardbot_core,
 /obj/item/device/guardbot_tool/medicator,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
 /obj/storage/crate,
 /obj/item/clothing/suit/robuddy,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "bGg" = (
@@ -29134,15 +29128,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "bHH" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
-/obj/item/parts/robot_parts/head,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/storage/crate/robotparts,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bHI" = (
@@ -38075,11 +38061,11 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/research_outpost/indigo_rye)
 "ciO" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
 	},
 /area/research_outpost/indigo_rye)
 "ciP" = (
@@ -38948,7 +38934,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "clb" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -41919,9 +41905,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -44055,7 +44039,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "ftT" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ftU" = (
@@ -44440,13 +44424,13 @@
 	},
 /obj/disposalpipe/trunk/mail/south,
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
-/obj/item/reagent_containers/food/snacks/chicken_feed_bag{
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1
 	},
 /turf/simulated/floor/grasstodirt{
@@ -45460,6 +45444,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "gOo" = (
@@ -46564,6 +46549,9 @@
 	name = "wooden table"
 	},
 /obj/machinery/cashreg,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 10
 	},
@@ -47153,7 +47141,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Station Power Grid Monitoring"
 	},
@@ -49138,11 +49126,6 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "kSb" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
 /obj/decal/cleanable/dirt,
@@ -49153,6 +49136,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "kSA" = (
@@ -52486,7 +52470,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
@@ -53920,7 +53904,7 @@
 "pSZ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/gloves/fingerless,
 /turf/simulated/floor/redblack{
@@ -56324,7 +56308,9 @@
 	},
 /area/station/engine/storage)
 "sHh" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
 "sHo" = (
@@ -56698,9 +56684,9 @@
 /area/station/hallway/primary/east)
 "sVX" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
@@ -56942,7 +56928,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "thw" = (
@@ -58822,6 +58807,12 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"vaO" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vbJ" = (
 /obj/decal/garland/ephemeral{
 	dir = 8;
@@ -59638,7 +59629,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "vXP" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "vYc" = (
@@ -111533,7 +111525,7 @@ dZr
 emB
 buI
 bAJ
-emI
+vaO
 emI
 emI
 tah

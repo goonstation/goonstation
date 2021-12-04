@@ -5,7 +5,7 @@
 	color = "#0000ff"
 	anchored = 1
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /obj/swapAreaLowerLeft
 	name = "lower left corner"
@@ -14,7 +14,7 @@
 	color = "#0000ff"
 	anchored = 1
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /area/swap
 	name = ""

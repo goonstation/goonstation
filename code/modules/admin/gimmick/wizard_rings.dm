@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 		possible_rings = null
 		//Need the spawn for it to work with the admin spawn menu properly
 		SPAWN_DBG(1 SECOND)
-			del(src)
+			qdel(src)
 
 	offensive
 		possible_rings = list("fireball", "magic_missile", "blind", "ice_burst", "prismatic_spray", "cluwne", "shocking_touch", "rathens_secret", "pandemonium", "sticks_to_snakes", "staff", "golem", "polymorph")

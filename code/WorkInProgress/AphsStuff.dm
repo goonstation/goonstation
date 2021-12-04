@@ -266,10 +266,11 @@
 	proc/change_face(state)
 		src.overlays = null
 		var/image/sheen = image('icons/effects/96x96.dmi', "oldai_light")
-		sheen.plane = PLANE_SELFILLUM + 2
+		sheen.plane = PLANE_ABOVE_LIGHTING
+		sheen.layer = 100
 		if(findtext(state,"face_"))
 			var/image/face_over = image('icons/effects/96x96.dmi', "oldai-faceoverlay")
-			face_over.plane = PLANE_SELFILLUM + 1
+			face_over.plane = PLANE_ABOVE_LIGHTING
 			src.overlays += face_over
 
 		src.face = image('icons/effects/96x96.dmi', "oldai-[state]")
@@ -334,7 +335,7 @@
 	luminosity = 1
 	force_fullbright = 1
 
-/obj/machinery/power/solar_control/derelict_ai_sat
+/obj/machinery/computer/solar_control/derelict_ai_sat
 	id = "derelict_ai_sat"
 
 

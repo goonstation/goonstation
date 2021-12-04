@@ -79,9 +79,11 @@
 	last_life_tick = TIME
 
 /mob/living/disposing()
-	..()
 	for (var/datum/lifeprocess/L in lifeprocesses)
 		remove_lifeprocess(L)
+	lifeprocesses.len = 0
+	lifeprocesses = null
+	..()
 
 /mob/living/carbon/human
 	var/list/heartbeatOverlays = list()
@@ -148,21 +150,19 @@
 
 /mob/living/silicon/hivebot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
 /mob/living/silicon/robot/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
 	add_lifeprocess(/datum/lifeprocess/sight)
-	add_lifeprocess(/datum/lifeprocess/statusupdate)
+	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
@@ -171,12 +171,11 @@
 
 /mob/living/silicon/drone/New()
 	..()
-	//add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = 0
+	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -231,8 +230,8 @@
 
 		//Regular Trait updates
 		if(src.traitHolder)
-			for(var/T in src.traitHolder.traits)
-				var/obj/trait/O = getTraitById(T)
+			for(var/id in src.traitHolder.traits)
+				var/obj/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
@@ -542,6 +541,8 @@
 			L.process()
 
 	force_laydown_standup() //immediately force a laydown
+		if(!lifeprocesses)
+			return
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
 			L.process()

@@ -144,7 +144,7 @@
 		if(H)
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
-			H.stamina_stun()
+			H.stamina_stun(mult)
 			if(H.stamina <= -75)
 				H.losebreath += (3 * mult)
 			else if(H.stamina <= -50)
@@ -806,7 +806,9 @@
 				I.reagents.temperature_reagents(4000,10)
 			.= src.getProperty("I_block_[prop]")
 		if(real_hit)
-			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED)
+			var/ret = list(.)
+			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED, hit_type, ret)
+			. = ret[1]
 			block_spark(src.assailant)
 			fuckup_attack_particle()
 

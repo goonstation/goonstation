@@ -99,7 +99,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
-	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
@@ -143,15 +143,17 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 
 var/obj/item/dummy/click_dummy = new
 /proc/test_click(turf/from, turf/target)
+	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
-				return 0
+				return FALSE
 	for (var/atom/A in target)
-		if (A.flags & ON_BORDER)
-			if (!A.CanPass(click_dummy, from, 1, 0))
-				return 0
-	return 1
+		if ((A.flags & ON_BORDER))
+			if (!A.Cross(click_dummy))
+				return FALSE
+	click_dummy.set_loc(null)
+	return TRUE
 
 /proc/can_reach(mob/user, atom/target)
 	if (target in bible_contents)
@@ -195,13 +197,13 @@ var/obj/item/dummy/click_dummy = new
 					if (SOUTHWEST)
 						dir1 = SOUTH
 						dir2 = WEST
-				var/D1 = get_step(T1, dir1)
-				var/D2 = get_step(T1, dir2)
+				var/turf/D1 = get_step(T1, dir1)
+				var/turf/D2 = get_step(T1, dir2)
 
-				if (test_click(T1, D1))
+				if (!D1.density && test_click(T1, D1))
 					if ((target.flags & ON_BORDER) || test_click(D1, T2))
 						return 1
-				if (test_click(T1, D2))
+				if (!D2.density && test_click(T1, D2))
 					if ((target.flags & ON_BORDER) || test_click(D2, T2))
 						return 1
 			else
@@ -686,3 +688,70 @@ proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/para
 	if(istype(A))
 		var/turf/Y = GetRandomPerimeterTurf(A, dist)
 		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)
+
+
+
+/// get_ouija_word_list
+// get a list of words for an ouija board
+proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/words_max = 8, var/include_nearby_mobs_chance = 40, var/include_most_mobs_chance = 20, include_said_phrases_chance = 10)
+	var/list/words = list()
+
+	// Generic Ouija words
+	for(var/i in 1 to rand(words_min, words_max))
+		var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+		words |= picked
+
+	if (prob(include_nearby_mobs_chance))
+		var/list/mobs = observersviewers(Center = source)
+		if (length(mobs))
+			var/mob/M = pick(mobs)
+			words |= (M.real_name ? M.real_name : M.name)
+
+	if(prob(include_said_phrases_chance))
+		words |= phrase_log.random_phrase("say")
+
+	if (prob(include_most_mobs_chance))
+
+		var/roll = rand(0, 200)
+		switch (roll)
+			if (0)
+				// any actual antag
+				var/list/player_pool = list()
+				for (var/mob/M in mobs)
+					if (!M.client || istype(M, /mob/new_player) || !checktraitor(M))
+						continue
+					player_pool += M
+				if (length(player_pool))
+					var/mob/M = pick(player_pool)
+					words |= (M.real_name ? M.real_name : M.name)
+			if (1 to 5)
+				// fake wraith
+				words |= call(/mob/wraith/proc/make_name)()
+			if (6 to 10)
+				// fake blob (heh)
+				var/blobname = phrase_log.random_phrase("name-blob")
+				words |= strip_html(copytext(blobname, 1, 26) + " the Blob")
+			if (10 to 20)
+				// fake nukeop (uses the real nukeop company name, too)
+				// Copied from gamemodes/nuclear.dm
+				var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
+				//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
+				var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
+				words |= "[syndicate_name()] Operative [pick(callsign_list)]"
+			if (20 to 30)
+				// fake wizard
+				var/wizname = phrase_log.random_phrase("name-wizard")
+				words |= strip_html(copytext(wizname, 1, 26))
+
+			else
+				// any random living mob
+				var/list/player_pool = list()
+				for (var/mob/M in mobs)
+					if (!M.client || istype(M, /mob/new_player))
+						continue
+					player_pool += M
+				if (length(player_pool))
+					var/mob/M = pick(player_pool)
+					words |= (M.real_name ? M.real_name : M.name)
+
+	return words

@@ -3,7 +3,7 @@
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
@@ -72,7 +72,7 @@
 	power_change()
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			return 0
 		return ..()
@@ -209,16 +209,10 @@
 	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
 		P.initial_power -= 10
 		if(P.initial_power <= 0)
+			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
 			P.die()
 	if(!src.density)
-
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
-
-/obj/machinery/bot/Bumped(M as mob|obj) // not sure what this is for, but it was in a bunch of the bots, so it's here just in case its vital
-	var/turf/T = get_turf(src)
-	if(ismovable(M))
-		var/atom/movable/AM = M
-		AM.set_loc(T)
 
 /obj/machinery/bot/proc/DoWhileMoving()
 	return
@@ -240,7 +234,7 @@
 	P.pixel_y = target.pixel_y
 	P.color = src.bot_speech_color
 	SPAWN_DBG(2 SECONDS)
-		P.invisibility = 101
+		P.invisibility = INVIS_ALWAYS
 		qdel(P)
 
 /obj/machinery/bot/emp_act()
@@ -268,8 +262,12 @@
 			if(checkTurfPassable(T))
 				return T
 
-/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=600)
+/obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
+	if(IN_RANGE(the_target, src, 1))
+		return
+	if(src.bot_mover?.the_target == target_turf)
+		return 0
 	if(!target_turf)
 		return 0
 
@@ -287,7 +285,7 @@
 	var/scanrate = 10
 	var/max_dist = 600
 
-	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 600)
+	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
 		if(istype(newmaster))
 			src.master = newmaster
@@ -319,6 +317,8 @@
 		..()
 
 	proc/master_move()
+		if(QDELETED(src))
+			return
 		if(!istype(master))
 			qdel(src)
 			return
@@ -326,7 +326,7 @@
 			master.KillPathAndGiveUp(0)
 			return
 		var/compare_movepath = src.current_movepath
-		master.path = AStar(get_turf(master), src.the_target, /turf/proc/CardinalTurfsAndSpaceWithAccess, /turf/proc/Distance, src.max_dist, master.botcard)
+		master.path = get_path_to(src.master, src.the_target, max_distance=src.max_dist, id=master.botcard, skip_first=FALSE, simulated_only=FALSE, cardinal_only=TRUE)
 		if(!length(master.path))
 			qdel(src)
 			return
@@ -341,7 +341,7 @@
 
 			master?.moving = 1
 
-			while(length(master?.path) && src.the_target)
+			while(length(master?.path) && src.the_target && !QDELETED(src))
 				if(compare_movepath != current_movepath) break
 				if(!master) break
 				if(!length(master.path)) break
@@ -353,7 +353,7 @@
 
 				if(length(master?.path) && master.path[1])
 					if(istype(get_turf(master), /turf/space)) // frick it, duckie toys get jetpacks
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(get_turf(master))
 						I.set_dir(master.dir)
 						flick("ion_fade", I)
@@ -361,7 +361,7 @@
 						I.pixel_x = master.pixel_x
 						I.pixel_y = master.pixel_y
 						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+							if (I && !I.disposed) qdel(I)
 
 					step_to(master, master?.path[1])
 					if(isnull(master))

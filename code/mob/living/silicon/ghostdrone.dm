@@ -35,6 +35,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
@@ -176,6 +177,7 @@
 		hud.update_pulling()
 
 	disposing()
+		STOP_TRACKING
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()
@@ -399,24 +401,17 @@
 		else
 			stat("No Cell Inserted!")
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
-				return
-			//..()
-			if (!istype(AM, /atom/movable))
-				return
-			if (!src.now_pushing)
-				src.now_pushing = 1
-				if (!AM.anchored)
-					var/t = get_dir(src, AM)
-					step(AM, t)
-				src.now_pushing = null
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
+	bump(atom/movable/AM as mob|obj)
+		if ( src.now_pushing)
 			return
-		return
+		if (!istype(AM, /atom/movable))
+			return
+		if (!src.now_pushing)
+			src.now_pushing = 1
+			if (!AM.anchored)
+				var/t = get_dir(src, AM)
+				step(AM, t)
+			src.now_pushing = null
 
 	//Four very important procs follow
 	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
@@ -1012,8 +1007,10 @@
 			return src.emote(copytext(message, 2),1)
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
+		var/speech_bubble_time = src.last_typing
 		SPAWN_DBG(1.5 SECONDS)
-			UpdateOverlays(null, "speech_bubble")
+			if(speech_bubble_time == src.last_typing)
+				UpdateOverlays(null, "speech_bubble")
 
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
@@ -1107,9 +1104,9 @@
 		setFace(pick("happy", "sad", "mad"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 	ex_act(severity)
 		if (src.nodamage) return
@@ -1338,9 +1335,9 @@
 			src.see_in_dark = SEE_DARK_FULL
 
 			if (client.adventure_view)
-				src.see_invisible = 21
+				src.see_invisible = INVIS_ADVENTURE
 			else
-				src.see_invisible = 9
+				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
 

@@ -122,13 +122,13 @@
 	desc = "A wireless computer card. It has a bit of a limited range."
 	icon_state = "radio_mod"
 	func_tag = "RAD_ADAPTER"
-	var/frequency = 1419
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_FREE
 	var/range = 8 //How far can our signal travel?? HOW FAR
 	var/setup_freq_locked = 0 //If set, frequency cannot be adjusted.
 	var/setup_netmode_norange = 1 //If set, there is no range limit in network mode.
 	var/net_mode = 0 //If 1, act like a powernet card (ignore tranmissions not addressed to us.)
 	//var/logstring = null //Log incoming transmissions.  With a string.
+	var/send_only = FALSE
 
 	locked //Locked wireless card
 		name = "Limited Wireless card"
@@ -137,54 +137,33 @@
 		setup_freq_locked = 1
 
 		pda
-			frequency = 1149 //Standard PDA comm frequency.
-			range = 0
+			frequency = FREQ_PDA //Standard PDA comm frequency.
+			range = null
 			/*net_mode = 1
 			func_tag = "NET_ADAPTER"*/
 
+			transmit_only
+				send_only = TRUE
+
 		status //This one is for status display control.
-			frequency = 1435
+			frequency = FREQ_STATUS_DISPLAY
 			setup_netmode_norange = 0
 
 	New()
 		..()
-		if(radio_controller)
-			initialize()
-
 		src.net_id = format_net_id("\ref[src]")
-
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	initialize()
-		set_frequency(frequency)
-
-	disposing()
-		if (radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
-		radio_connection = null
-
-		..()
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
+		if(send_only)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT("wireless", frequency)
+		else
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if(..())
 			return 1
 
-		if(!radio_connection)
-			return 1
-
 		var/broadcast_range = src.range //No range in network mode!!
 		if(setup_netmode_norange && src.net_mode)
-			broadcast_range = 0
+			broadcast_range = null
 
 		switch(command)
 			if("transmit")
@@ -195,7 +174,6 @@
 				if(signal.data_file) //Gonna transfer so many files.
 					newsignal.data_file = signal.data_file.copy_file()
 				newsignal.encryption = src.code
-				newsignal.transmission_method = TRANSMISSION_RADIO
 				newsignal.source = src
 				if(src.net_mode)
 					if(!newsignal.data["address_1"])
@@ -205,17 +183,19 @@
 
 					newsignal.data["sender"] = src.net_id
 
-				src.radio_connection.post_signal(src, newsignal, broadcast_range)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, broadcast_range)
 
 				return 0
 
 			if("mode_net")
 				src.net_mode = 1
 				func_tag = "NET_ADAPTER" //Pretend to be that fukken wired card.
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 				return 0
 
 			if("mode_free")
 				src.net_mode = 0
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(FALSE)
 				func_tag = "RAD_ADAPTER"
 				return 0
 
@@ -230,9 +210,8 @@
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.data["address_1"] = "ping"
 				newsignal.data["sender"] = src.net_id
-				newsignal.transmission_method = TRANSMISSION_RADIO
 				newsignal.source = src
-				src.radio_connection.post_signal(src, newsignal, broadcast_range)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, broadcast_range)
 				return 0
 
 			if ("help")
@@ -240,9 +219,10 @@
 
 			else
 				if(!src.setup_freq_locked)
-					var/new_freq = round(text2num(command))
+					var/new_freq = round(text2num_safe(command))
 					if(new_freq && (new_freq >= 1000 && new_freq <= 1500))
-						src.set_frequency(new_freq)
+						get_radio_connection_by_id(src, "wireless").update_frequency(new_freq)
+						src.frequency = new_freq
 						return 0
 
 
@@ -269,12 +249,11 @@
 					pingsignal.data["address_1"] = signal.data["sender"]
 					pingsignal.data["command"] = "ping_reply"
 					pingsignal.data["data"] = host.name
-					pingsignal.transmission_method = TRANSMISSION_RADIO
 					var/broadcast_range = src.range
 					if(src.setup_netmode_norange)
 						broadcast_range = 0
 					SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
-						src.radio_connection.post_signal(src, pingsignal, broadcast_range)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, broadcast_range)
 
 				return
 
@@ -373,7 +352,7 @@
 			newsignal.data["address_1"] = "ping"
 			newsignal.data["sender"] = src.net_id
 			if (length(command) > 4)
-				var/new_net_number = text2num( copytext(command, 5) )
+				var/new_net_number = text2num_safe( copytext(command, 5) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					newsignal.data["net"] = "[new_net_number]"
 				else if (src.net_number)
@@ -388,7 +367,7 @@
 
 		else if (dd_hasprefix(command, "subnet"))
 			if (length(command) > 6)
-				var/new_net_number = text2num( copytext(command, 7) )
+				var/new_net_number = text2num_safe( copytext(command, 7) )
 				if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 					src.net_number = new_net_number
 			else
@@ -522,7 +501,7 @@
 					src.printing = 0
 					return 1
 				SPAWN_DBG(5 SECONDS)
-					var/obj/item/paper/thermal/P = unpool(/obj/item/paper/thermal)
+					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
 					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -546,7 +525,7 @@
 					newsignal.data["sender"] = src.net_id
 
 					if (length(command) > 4)
-						var/new_net_number = text2num( copytext(command, 5) )
+						var/new_net_number = text2num_safe( copytext(command, 5) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							newsignal.data["net"] = "[new_net_number]"
 						else if (src.net_number)
@@ -560,7 +539,7 @@
 
 				else if (dd_hasprefix(command, "subnet"))
 					if (length(command) > 6)
-						var/new_net_number = text2num( copytext(command, 7) )
+						var/new_net_number = text2num_safe( copytext(command, 7) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							src.net_number = new_net_number
 					else
@@ -579,26 +558,18 @@
 	var/obj/machinery/power/data_terminal/wired_link = null
 	var/subnet = null
 
-	var/datum/radio_frequency/wireless_link = null
-	var/frequency = 1419
+	var/frequency = FREQ_FREE
 	var/wireless_range = 8
 
 	New()
 		..()
-		if(radio_controller)
-			initialize()
-
 		SPAWN_DBG(1 SECOND)
 			if(src.host && !src.wired_link) //Wait for the map to load and hook up if installed() hasn't done it.
 				src.check_wired_connection()
 			//Let's blindy attempt to generate a unique network ID!
-			src.net_id = format_net_id("\ref[src]")
+		src.net_id = format_net_id("\ref[src]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
 
-			src.set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	receive_command(obj/source, command, datum/signal/signal)
 		if((source != host) || !(src in host))
@@ -611,9 +582,6 @@
 		switch(command)
 			if ("transmit")
 				if (src.mode < 2)
-					if (!wireless_link)
-						return 1
-
 					var/datum/signal/newsignal = get_free_signal()
 					newsignal.data = signal.data:Copy()
 
@@ -622,9 +590,9 @@
 
 					if (src.mode == 1)
 						newsignal.data["sender"] = src.net_id
-					newsignal.transmission_method = TRANSMISSION_RADIO
 					newsignal.source = src
-					src.wireless_link.post_signal(src, newsignal, (src.mode == 1 ? 0 : src.wireless_range))
+
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, src.mode == 1 ? null : src.wireless_range, "wireless")
 					return 0
 
 				else
@@ -645,16 +613,19 @@
 
 			if ("mode_free")
 				src.mode = 0
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 				func_tag = "RAD_ADAPTER"
 				return 0
 
 			if ("mode_net")
 				src.mode = 1
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(FALSE)
 				func_tag = "NET_ADAPTER"
 				return 0
 
 			if ("mode_wire")
 				src.mode = 2
+				get_radio_connection_by_id(src, "wireless").update_all_hearing(FALSE)
 				func_tag = "NET_ADAPTER"
 				return 0
 
@@ -669,7 +640,7 @@
 					src.printing = 0
 					return 1
 				SPAWN_DBG(5 SECONDS)
-					var/obj/item/paper/thermal/P = unpool(/obj/item/paper/thermal)
+					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
 					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -685,9 +656,6 @@
 			else
 				if (copytext(command, 1, 5) == "ping")
 					if (src.mode == 1)
-						if (!wireless_link)
-							return 1
-
 						if( (last_ping && ((last_ping + 10) >= world.time) ) || !src.net_id)
 							return 1
 
@@ -696,9 +664,8 @@
 						newsignal.data["address_1"] = "ping"
 						newsignal.data["sender"] = src.net_id
 
-						newsignal.transmission_method = TRANSMISSION_RADIO
 						newsignal.source = src
-						src.wireless_link.post_signal(src, newsignal)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "wireless")
 
 						return 0
 
@@ -726,7 +693,7 @@
 					return 1
 
 				else if (copytext(command, 1, 7) == "subnet")
-					. = text2num( copytext(command, 7) )
+					. = text2num_safe( copytext(command, 7) )
 					if (. != null && . >= 0 && . <= 16)
 						src.subnet = .
 					else
@@ -735,10 +702,11 @@
 					return 0
 
 				else if (mode < 2)
-					. = text2num(command)
+					. = text2num_safe(command)
 					if (isnum(.))
 						. = round( max(1000, min(., 1500)) )
-						set_frequency(.)
+						get_radio_connection_by_id(src, "wireless").update_frequency(.)
+						src.frequency = .
 						return 0
 
 		return 1
@@ -750,7 +718,7 @@
 		if(!signal || !src.net_id || signal.encryption)
 			return
 
-		if((src.mode < 2 && !src.wireless_link) || (src.mode == 2 && (!src.wired_link || !src.check_wired_connection())))
+		if(src.mode == 2 && (!src.wired_link || !src.check_wired_connection()))
 			return
 
 		if(signal.data["address_1"] != src.net_id)
@@ -765,8 +733,8 @@
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if (src.mode == 2 && src.wired_link)
 						src.wired_link.post_signal(src, pingsignal)
-					else if (src.wireless_link)
-						src.wireless_link.post_signal(src, pingsignal)
+					else
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, null, "wireless")
 
 			return //Just toss out the rest of the signal then I guess
 
@@ -775,28 +743,22 @@
 		if(signal.data_file) //Gonna transfer so many files.
 			newsignal.data_file = signal.data_file.copy_file()
 
-		send_command("receive",newsignal)
+		send_command("receive", newsignal)
 		return
 
 	installed(var/obj/machinery/computer3/newhost)
 		if(..())
 			return 1
 
-		if (!src.wireless_link)
-			src.wireless_link = radio_controller.add_object(src, "[frequency]")
+		if(!get_radio_connection_by_id(src, "wireless"))
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
+			get_radio_connection_by_id(src, "wireless").update_all_hearing(TRUE)
 
-		//src.wired_link = null
 		src.check_wired_connection()
 
 		return 0
 
 	uninstalled()
-
-		//Unsubscribe from any wireless link we might have
-		if (src.wireless_link)
-			radio_controller.remove_object(src, "[frequency]")
-			src.wireless_link = null
-
 		//Clear our status as the wired link's master, then null out that link.
 		if((src.wired_link) && (src.wired_link.master == src))
 			src.wired_link.master = null
@@ -819,13 +781,7 @@
 
 	disposing()
 		uninstalled()
-
 		..()
-
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, "[frequency]")
-		frequency = new_frequency
-		wireless_link = radio_controller.add_object(src, "[frequency]")
 
 	proc/check_wired_connection()
 		//if there is a link, it has a master, and the master is valid..
@@ -869,7 +825,7 @@
 				src.printing = 0
 				return
 			SPAWN_DBG(5 SECONDS)
-				var/obj/item/paper/thermal/P = unpool(/obj/item/paper/thermal)
+				var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 				P.set_loc(src.host.loc)
 
 				playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -937,7 +893,7 @@
 
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/P = new /obj/item/spacecash
 				P.setup(prize_location)
 				prize = P
 				prize.name = "space ticket"
@@ -1068,7 +1024,7 @@
 					return "nocard"
 				var/new_access = 0
 				if(signal)
-					new_access = text2num(signal.data["access"])
+					new_access = text2num_safe(signal.data["access"])
 
 				if(!new_access || (new_access in src.authid.access))
 					var/datum/signal/newsignal = get_free_signal()
@@ -1086,12 +1042,12 @@
 					return "nocard"
 /*
 				//We need correct PIN numbers you jerks.
-				if(text2num(signal.data["pin"]) != src.authid.pin)
+				if(text2num_safe(signal.data["pin"]) != src.authid.pin)
 					SPAWN_DBG(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 */
-				var/charge_amount = text2num(signal.data["data"])
+				var/charge_amount = text2num_safe(signal.data["data"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
 					SPAWN_DBG(0.4 SECONDS)
 						send_command("card_bad_charge")
@@ -1105,7 +1061,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/new_access = text2num(signal.data["access"])
+				var/new_access = text2num_safe(signal.data["access"])
 				if(!new_access || (new_access <= 0))
 					return
 
@@ -1125,7 +1081,7 @@
 				if(!src.authid || !src.can_manage_access || !signal)
 					return "nocard"
 
-				var/rem_access = text2num(signal.data["access"])
+				var/rem_access = text2num_safe(signal.data["access"])
 				if(!rem_access || (rem_access <= 0))
 					return 1
 

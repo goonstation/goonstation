@@ -302,7 +302,7 @@
 	icon_state = "mugrack4" //changes based on cup_ammount in updateicon
 	anchored = 1
 	var/cup_amount = 4
-	var/contained_cup = /obj/item/reagent_containers/food/drinks/mug
+	var/contained_cup = /obj/item/reagent_containers/food/drinks/mug/random_color
 	var/contained_cup_name = "mug"
 
 	get_desc(dist, mob/user)

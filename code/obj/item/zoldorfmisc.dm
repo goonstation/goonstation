@@ -131,7 +131,7 @@
 		var/cardnumber
 		var/invcheck = inventorycheck(user)
 		cardnumber = input("How many cards would you like to draw?","Cards to Draw",null) as null|num //check if number works
-		if(!user || !invcheck || !cardnumber)
+		if(!user || !invcheck || !cardnumber || !isnum_safe(cardnumber))
 			src.inuse = 0
 			return
 		if(cardnumber < 0)

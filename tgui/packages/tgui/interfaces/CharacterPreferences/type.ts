@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 
 export interface CharacterPreferencesData {
@@ -5,7 +12,7 @@ export interface CharacterPreferencesData {
 
   profiles: CharacterPreferencesProfile[];
 
-  cloudSaves?: string[]
+  cloudSaves?: string[];
 
   preview: string;
   profileName: string;
@@ -15,6 +22,7 @@ export interface CharacterPreferencesData {
   nameLast: string;
   randomName: number;
   gender: string;
+  pronouns: string;
   age: string;
   bloodRandom: string;
   bloodType: string;
@@ -28,6 +36,7 @@ export interface CharacterPreferencesData {
   pdaColor: string;
   pdaRingtone: string;
   skinTone: string;
+  specialStyle: string;
   eyeColor: string;
   customColor1: string;
   customStyle1: string;

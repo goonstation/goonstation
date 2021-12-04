@@ -137,7 +137,7 @@ var/global/derelict_mode = 0
 				LAGCHECK(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
-			world << sound('sound/machines/lavamoon_plantalarm.ogg')
+			playsound_global(world, "sound/machines/lavamoon_plantalarm.ogg", 70)
 			SPAWN_DBG(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(3 SECONDS)
@@ -198,5 +198,5 @@ proc/voidify_world()
 			Automaton.aggressive = 1
 			Automaton.atkcarbon = 1
 			Automaton.atksilicon = 1
-		world << sound('sound/ambience/industrial/Precursor_Drone1.ogg')
+		playsound_global(world, "sound/ambience/industrial/Precursor_Drone1.ogg", 70)
 	return

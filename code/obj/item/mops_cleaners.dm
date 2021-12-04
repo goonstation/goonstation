@@ -89,7 +89,9 @@ WET FLOOR SIGN
 		set_loc(_loc)
 		create_reagents(10)
 		reagents.add_reagent("cleaner", 10)
-		var/direction = get_dir_alt(src, target)
+		var/direction = src.dir
+		if(target)
+			direction = get_dir_alt(src, target)
 		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
 			direction = turn(direction, 45)
 		switch(direction)
@@ -134,7 +136,7 @@ WET FLOOR SIGN
 	proc/vanish()
 		animate(src, alpha = 0, time = 5)
 		SPAWN_DBG(0.5 SECONDS)
-			src.invisibility = 101
+			src.invisibility = INVIS_ALWAYS
 			src.set_loc(null)
 			qdel(src)
 		return
@@ -160,7 +162,7 @@ WET FLOOR SIGN
 		for(var/turf/B in affected)
 			reagents.reaction(B)
 			for (var/atom/A in B)
-				if (istype(A, /obj/overlay/tile_effect) || A.invisibility >= 100)
+				if (istype(A, /obj/overlay/tile_effect) || A.invisibility >= INVIS_ALWAYS_ISH)
 					continue
 				reagents.reaction(A)
 		return
@@ -230,7 +232,7 @@ WET FLOOR SIGN
 			D.reagents.reaction(theTurf)
 			D.reagents.remove_any(1)
 			for (var/atom/T in theTurf)
-				if (istype(T, /obj/overlay/tile_effect) || T.invisibility >= 100)
+				if (istype(T, /obj/overlay/tile_effect) || T.invisibility >= INVIS_ALWAYS_ISH)
 					continue
 				D.reagents.reaction(T)
 				if (ismob(T))
@@ -327,9 +329,9 @@ WET FLOOR SIGN
 
 	var/obj/fluid/target_fluid = A
 	if (istype(target_fluid))
+		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
 			target_fluid.group.drain(target_fluid,1,src)
-		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
@@ -814,7 +816,7 @@ WET FLOOR SIGN
 
 	disposing()
 		if(holoparticles)
-			holoparticles.invisibility = 101
+			holoparticles.invisibility = INVIS_ALWAYS
 			qdel(holoparticles)
 			holoparticles = null
 		..()
@@ -1053,6 +1055,8 @@ WET FLOOR SIGN
 		suck.suck_in_range = 3
 		suck.throw_range = 10
 		suck.throw_speed = 1
+		suck.moveDelayDuration = 5
+		suck.moveDelay = 4
 
 /datum/item_special/suck
 	cooldown = 30

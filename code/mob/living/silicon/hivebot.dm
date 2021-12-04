@@ -90,7 +90,7 @@
 	src.sight |= SEE_OBJS
 
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
+	src.see_invisible = INVIS_CLOAK
 	src.updateicon()
 /*
 	if(src.client)
@@ -482,24 +482,17 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj, yes)
-	SPAWN_DBG( 0 )
-		if ((!( yes ) || src.now_pushing))
-			return
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			src.now_pushing = null
-
-		if(AM)
-			AM.last_bumped = world.timeofday
-			AM.Bumped(src)
+/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
+	if (src.now_pushing)
 		return
-	return
+	if (!istype(AM, /atom/movable))
+		return
+	if (!src.now_pushing)
+		src.now_pushing = 1
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			step(AM, t)
+		src.now_pushing = null
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
 	if (isweldingtool(W))

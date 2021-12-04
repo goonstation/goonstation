@@ -601,6 +601,30 @@ DEFINE_FLOORS(carpet/clowncarpet/innercorner,
 
 ////////////////////////////////////////
 
+DEFINE_FLOORS(twotone,
+	name = "two-tone checker floor";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "twotone_grey";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(twotone/red,
+	icon_state = "twotone_red")
+
+DEFINE_FLOORS(twotone/purple,
+	icon_state = "twotone_purple")
+
+DEFINE_FLOORS(twotone/green,
+	icon_state = "twotone_green")
+
+DEFINE_FLOORS(twotone/blue,
+	icon_state = "twotone_blue")
+
+DEFINE_FLOORS(twotone/yellow,
+	icon_state = "twotone_yellow")
+
+/////////////////////////////////////////
+
 DEFINE_FLOORS(terrazzo,
 	name = "terrazzo tiling";\
 	icon = 'icons/turf/floors.dmi';\
@@ -631,6 +655,34 @@ DEFINE_FLOORS(marble/border_bw,
 
 DEFINE_FLOORS(marble/border_wb,
 	icon_state = "marble_border_wb")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(glassblock,
+	name = "glass block tiling";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "glass_small";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	step_material = "step_wood";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(glassblock/large,
+	icon_state = "glass_large")
+
+/////////////////////////////////////////
+
+DEFINE_FLOORS(minitiles,
+	name = "mini tiles";\
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "minitiles_grey";\
+	step_material = "step_plating";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(minitiles/white,
+	icon_state = "minitiles_white")
+
+DEFINE_FLOORS(minitiles/black,
+	icon_state = "minitiles_black")
 
 /////////////////////////////////////////
 
@@ -1192,6 +1244,31 @@ DEFINE_FLOORS(techfloor/green,
 
 /////////////////////////////////////////
 
+/* Outdoors tilesets - Walp */
+
+DEFINE_FLOORS(grasslush,
+	name = "lush grass";\
+	desc = "This grass somehow thrives in space.";\
+	icon = 'icons/turf/outdoors.dmi';\
+	icon_state = "grass_lush";\
+	mat_appearances_to_ignore = list("steel","synthrubber");\
+	mat_changename = 0;\
+	mat_changedesc = 0;\
+	step_material = "step_outdoors";\
+	step_priority = STEP_PRIORITY_MED)
+
+DEFINE_FLOORS(grasslush/border,
+	icon_state = "grass_lush_border")
+
+DEFINE_FLOORS(grasslush/corner,
+	icon_state = "grass_lush_corner")
+
+DEFINE_FLOORS(grasslush/thinner,
+	icon_state = "grass_lesslush")
+
+DEFINE_FLOORS(grasslush/thin,
+	icon_state = "grass_thin")
+
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-FUCK THAT SHIT MY WRIST HURTS=-=-=-=-=-=-=-=-=*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
@@ -1299,18 +1376,18 @@ DEFINE_FLOORS(techfloor/green,
 	else
 		boutput(user, "Your attack bounces off the foamed metal floor.")
 
-/turf/simulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
 	return ..()
 
-/turf/simulated/shuttle/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/simulated/shuttle/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		return 0
 	return ..()
 
-/turf/unsimulated/floor/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/Cross(atom/movable/mover)
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			return 0
@@ -1332,7 +1409,7 @@ DEFINE_FLOORS(techfloor/green,
 			switch(pick(1,2;75,3))
 				if (1)
 					if(prob(33))
-						var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+						var/obj/item/I = new /obj/item/raw_material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)
@@ -1344,7 +1421,7 @@ DEFINE_FLOORS(techfloor/green,
 					src.ReplaceWithSpace()
 				if(3)
 					if(prob(33))
-						var/obj/item/I = unpool(/obj/item/raw_material/scrap_metal)
+						var/obj/item/I = new /obj/item/raw_material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)
@@ -1381,7 +1458,7 @@ DEFINE_FLOORS(techfloor/green,
 		user.remove_pulling()
 		return
 	//if the object being pulled's loc is another object (being in their contents) return
-	if (isobj(user.pulling.loc))
+	if (!isturf(user.pulling.loc))
 		var/obj/container = user.pulling.loc
 		if (user.pulling in container.contents)
 			return

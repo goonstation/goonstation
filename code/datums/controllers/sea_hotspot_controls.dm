@@ -459,7 +459,7 @@
 	item_state = "dowsing"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	throwforce = 6
 	w_class = W_CLASS_SMALL
 	force = 6
@@ -841,7 +841,7 @@
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	mats = 8
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
 	var/mode_toggle = 0
@@ -1023,6 +1023,11 @@
 		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(locate(/obj/machinery/power/vent_capture) in T)
+			V.visible_message("<span class='notice'>[V] beeps grumpily and aborts construction.</span>", "<span class='notice'>You hear a grumpy beeping.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && V && T)
 			V.finish_build(T)
 

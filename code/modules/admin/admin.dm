@@ -187,12 +187,16 @@ var/global/noir = 0
 				usr.client.toggle_server_toggles_tab()
 				src.show_pref_window(usr)
 		if ("toggle_atom_verbs")
-			if (src.level >= LEVEL_PA)
+			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_atom_verbs()
 				src.show_pref_window(usr)
 		if ("toggle_attack_messages")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_attack_messages()
+				src.show_pref_window(usr)
+		if ("toggle_adminwho_alerts")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_adminwho_alerts()
 				src.show_pref_window(usr)
 		if ("toggle_rp_word_filtering")
 			if (src.level >= LEVEL_MOD)
@@ -315,7 +319,10 @@ var/global/noir = 0
 					src.auto_alt_key_name = null
 					boutput(usr, "<span class='notice'>Auto Alt Key removed.</span>")
 					return
-
+		if ("set_auto_alias_global_save")
+			if (src.level >= LEVEL_SA)
+				usr.client.holder.auto_alias_global_save = !usr.client.holder.auto_alias_global_save
+				src.show_pref_window(usr)
 		if ("refreshoptions")
 			var/mob/M = locate(href_list["target"])
 			if (!M) return
@@ -457,6 +464,17 @@ var/global/noir = 0
 					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
 					ircmsg["msg"] = "Added a note for [player]: [the_note]"
 					ircbot.export("admin", ircmsg)
+
+		if("loginnotice")
+			var/player = null
+			var/mob/M = locate(href_list["target"])
+			if(M)
+				player = M.ckey
+			else
+				player = href_list["target"]
+			if(!player)
+				return
+			src.setLoginNotice(player)
 
 		if("viewcompids")
 			var/player = href_list["targetckey"]
@@ -825,18 +843,13 @@ var/global/noir = 0
 				if (current_state > GAME_STATE_PREGAME)
 					return alert(usr, "The game has already started.", null, null, null, null)
 
-				var/list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
-				"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock", "arcfiend")
-#if defined(MAP_OVERRIDE_POD_WARS)
-				valid_modes += "pod_wars"
-#else
+#ifndef MAP_OVERRIDE_POD_WARS
 				if (href_list["type"] == "pod_wars")
 					boutput(usr, "<span class='alert'><b>You can only set the mode to Pod Wars if the current map is a Pod Wars map!<br>If you want to play Pod Wars, you have to set the next map for compile to be pod_wars.dmm!</b></span>")
 					return
 #endif
 				var/requestedMode = href_list["type"]
-				if (requestedMode in valid_modes)
+				if (requestedMode in global.valid_modes)
 					logTheThing("admin", usr, null, "set the mode as [requestedMode].")
 					logTheThing("diary", usr, null, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
@@ -1224,7 +1237,7 @@ var/global/noir = 0
 					message_admins("[key_name(usr)] removed the [effect] status-effect from [key_name(M)].")
 				else
 					M.setStatus(effect, duration SECONDS)
-					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration * 10] seconds.")
+					message_admins("[key_name(usr)] added the [effect] status-effect to [key_name(M)] for [duration] seconds.")
 
 			else
 				alert("If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
@@ -1493,6 +1506,17 @@ var/global/noir = 0
 				if (A)
 					usr.client.cmd_admin_check_health(A)
 					return
+
+		if ("kill")
+			if (src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if(M)
+					M.death()
+					message_admins("<span class='alert'>Admin [key_name(usr)] killed [key_name(M)]!</span>")
+					logTheThing("admin", usr, M, "killed [constructTarget(M,"admin")]")
+					logTheThing("diary", usr, M, "killed [constructTarget(M,"diary")]", "admin")
+				return
+
 		if ("addreagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1819,6 +1843,18 @@ var/global/noir = 0
 			if (alert("Make [M] a macho man?", "Make Macho", "Yes", "No") == "Yes")
 				M.machoize()
 
+		if ("makeslasher")
+			if( src.level < LEVEL_PA )
+				alert("You must be at least a Primary Administrator to make someone a Slasher.")
+				return
+			if(!ticker || !ticker.mode)
+				alert("The game hasn't started yet!")
+				return
+			var/mob/M = locate(href_list["target"])
+			if (!M) return
+			if (alert("Make [M] into a Slasher?", "Make Slasher", "Yes", "No") == "Yes")
+				M.slasherize()
+
 		if ("makecritter")
 			if( src.level < LEVEL_PA )
 				alert("You must be at least a Primary Administrator to make someone a Critter.")
@@ -1832,10 +1868,6 @@ var/global/noir = 0
 			var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
 
 			var/list/matches = get_matches(CT, "/mob/living/critter")
-			matches -= list(/mob/living/critter, /mob/living/critter/small_animal, /mob/living/critter/aquatic) //blacklist
-#ifdef SECRETS_ENABLED
-			matches -= list(/mob/living/critter/vending) //secret repo blacklist
-#endif
 
 			if (!length(matches))
 				return
@@ -2186,14 +2218,24 @@ var/global/noir = 0
 						switch (href_list["offset_type"])
 							if ("absolute")
 								for (var/path in paths)
-									var/atom/thing = new path(locate(0 + X,0 + Y,0 + Z))
+									var/atom/thing
+									if(ispath(path, /turf))
+										var/turf/T = locate(0 + X,0 + Y,0 + Z)
+										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+									else
+										thing = new path(locate(0 + X,0 + Y,0 + Z))
 									thing.set_dir(direction ? direction : SOUTH)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
 								if (loc)
 									for (var/path in paths)
-										var/atom/thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
+										var/atom/thing
+										if(ispath(path, /turf))
+											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
+											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+										else
+											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
 										thing.set_dir(direction ? direction : SOUTH)
 										LAGCHECK(LAG_LOW)
 								else
@@ -2354,23 +2396,23 @@ var/global/noir = 0
 				switch(href_list["type"])
 					if("sec_clothes")
 						for(var/obj/item/clothing/under/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_all_clothes")
 						for(var/obj/item/clothing/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 					if("sec_classic1")
 						for(var/obj/item/clothing/suit/fire/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/grille/O in world)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/machinery/vehicle/pod/O in all_processing_machines())
 							for(var/atom/movable/A in O)
 								A.set_loc(O.loc)
-							del(O)
+							qdel(O)
 							LAGCHECK(LAG_LOW)
 
 					if("transform_one")
@@ -4222,6 +4264,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=vehicle_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log'>Computers Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=computers_log_string'><small>(Search)</small></A>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
 			"}
@@ -4290,9 +4334,6 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
-
-	if (mapSwitcher.locked)
-		return alert("The map switcher is currently compiling the map for next round. You must wait until it finishes.")
 
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -4405,6 +4446,7 @@ var/global/noir = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.full_heal()
+		H.stamina = H.stamina_max
 		H.remove_ailments() // don't spawn with heart failure
 	return
 
@@ -4591,13 +4633,9 @@ var/global/noir = 0
 				SHOW_TRAITOR_HARDMODE_TIPS(M)
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
-#ifdef SECRETS_ENABLED
 				M.mind.special_role = ROLE_ARCFIEND
 				M.make_arcfiend()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
-#else
-				M.show_text("<h2><font color=red><B>NOTHING TO SEE HERE!</B></font></h2>", "red")
-#endif
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
@@ -4700,7 +4738,7 @@ var/global/noir = 0
 
 	return chosen
 
-/proc/get_matches(var/object, var/base = /atom, use_concrete_types = TRUE)
+/proc/get_matches(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/types
 	if(use_concrete_types)
 		types = concrete_typesof(base)
@@ -4710,13 +4748,17 @@ var/global/noir = 0
 	var/list/matches = new()
 
 	for(var/path in types)
+		if(only_admin_spawnable)
+			var/typeinfo/atom/typeinfo = get_type_typeinfo(path)
+			if(!typeinfo.admin_spawnable)
+				continue
 		if(findtext("[path]", object))
 			matches += path
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types = TRUE)
-	var/list/matches = get_matches(object, base, use_concrete_types)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!matches.len)
 		return null
@@ -4759,6 +4801,33 @@ var/global/noir = 0
 					spawn_animation1(A)
 			logTheThing("admin", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
 			logTheThing("diary", usr, null, "spawned [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
+
+	else
+		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
+		return
+
+/datum/admins/proc/spawn_figurine(var/figurine as text)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set desc="Spawn a figurine"
+	set name="Spawn-Figurine"
+	if(!figurine)
+		return
+
+	var/client/client = usr.client
+
+	if (client.holder.level >= LEVEL_PA)
+		var/chosen = get_one_match(figurine, /datum/figure_info)
+
+		if (chosen)
+			var/atom/movable/A
+			if (client.holder.spawn_in_loc)
+				A = new /obj/item/toy/figure(usr.loc, new chosen)
+			else
+				A = new /obj/item/toy/figure(get_turf(usr), new chosen)
+			if (client.flourish)
+				spawn_animation1(A)
+			logTheThing("admin", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z)])")
+			logTheThing("diary", usr, null, "spawned figurine [chosen] at ([showCoords(usr.x, usr.y, usr.z, 1)])", "admin")
 
 	else
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
@@ -5131,7 +5200,7 @@ var/global/noir = 0
 	boutput(usr, "You are [usr.client.flying ? "now" : "no longer"] flying through matter.")
 
 /client/Move(NewLoc, direct)
-	if(usr.client.flying)
+	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 
@@ -5167,18 +5236,18 @@ var/global/noir = 0
 		boutput(usr, "Sorry, you have to be alive!")
 		return
 
-	if(!(usr.invisibility == 100))
+	if(!(usr.invisibility == INVIS_ALWAYS_ISH))
 		boutput(usr, "You are now cloaked")
 		usr.set_clothing_icon_dirty()
 
 		usr.overlays += image("icon" = 'icons/mob/mob.dmi', "icon_state" = "shield")
 
-		usr.invisibility = 100
+		usr.invisibility = INVIS_ALWAYS_ISH
 	else
 		boutput(usr, "You are no longer cloaked")
 
 		usr.set_clothing_icon_dirty()
-		usr.invisibility = 0
+		usr.invisibility = INVIS_NONE
 */
 //
 //

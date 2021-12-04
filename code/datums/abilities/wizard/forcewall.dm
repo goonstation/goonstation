@@ -57,6 +57,11 @@
 	opacity = 0
 	density = 1
 	luminosity = 3
+	flags = USEDELAY
+
+	attackby(obj/item/I, mob/user)
+		. = ..()
+		user.lastattacked = src
 
 /obj/forcefield/artifact
 	var/obj/artifact/forcefield_generator/source = null

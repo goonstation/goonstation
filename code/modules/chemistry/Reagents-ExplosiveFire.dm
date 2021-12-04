@@ -111,7 +111,7 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(2 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
+						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(3 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
@@ -140,7 +140,7 @@ datum
 					if(method == TOUCH)
 						var/mob/living/L = M
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
-						L.changeStatus("slowed", 2 SECONDS, optional = 4)
+						L.changeStatus("slowed", 4 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
 							L.changeStatus("burning", src.volume SECONDS)
 							burn.counter += 5 * src.volume
@@ -252,13 +252,9 @@ datum
 			minimum_reaction_temperature = T0C+25
 			var/ignited = 0
 
-			pooled()
-				..()
-				ignited = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
+				if(!holder?.my_atom?.is_open_container() && !istype(holder, /datum/reagents/fluid_group))
 					if(holder.my_atom)
 						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
@@ -280,10 +276,6 @@ datum
 			transparency = 230
 			minimum_reaction_temperature = T0C + 100
 			var/ignited = FALSE
-
-			pooled()
-				..()
-				ignited = FALSE
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/datum/reagents/myholder = holder
@@ -673,10 +665,6 @@ datum
 			var/caused_fireflash = 0
 			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
 
-			unpooled(pooltype)
-				. = ..()
-				caused_fireflash = 0 //scream. Band-aid fix for unpooled fuel sometimes coming with caused_fireflash preset to True.
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)
 					if (holder)
@@ -845,10 +833,6 @@ datum
 			minimum_reaction_temperature = T0C+100
 			var/is_dry = 0
 
-			pooled()
-				..()
-				is_dry = 0
-
 			proc/bang()
 				if(holder?.my_atom)
 					holder.my_atom.visible_message("<b>The powder detonates!</b>")
@@ -901,14 +885,6 @@ datum
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
-
-			unpooled()
-				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
-					dry()
-				..()
-
-
-
 		combustible/nitrogentriiodide/dry
 			id = "nitrotri_dry"
 			random_chem_blacklisted = 1
@@ -922,12 +898,6 @@ datum
 				..()
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
-
-			unpooled()
-				is_dry = 1
-				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
-					bang()
-				..()
 
 			reaction_turf(var/turf/T, var/volume)
 				var/obj/decal/cleanable/nitrotriiodide/NT = ..()

@@ -19,14 +19,14 @@ client/proc/delete_fluids()
 	var/i = 0
 	SPAWN_DBG(0)
 		for(var/obj/fluid/fluid in world)
-			if (fluid.pooled) continue
+			if (fluid.disposed) continue
 
 			for (var/mob/living/M in fluid.loc)
-				fluid.HasExited(M,M.loc)
+				fluid.Uncrossed(M)
 				M.show_submerged_image(0)
 			for(var/obj/O in fluid.loc)
 				if (O.submerged_images)
-					fluid.HasExited(O,O.loc)
+					fluid.Uncrossed(O)
 					O.show_submerged_image(0)
 			if(fluid.group)
 				fluid.group.evaporate()
@@ -129,6 +129,9 @@ client/proc/replace_space_exclusive()
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
+
+		ocean_fluid_obj?.group?.reagents?.clear_reagents()
+		fluid_turf_setup(first_time=FALSE)
 
 #ifdef UNDERWATER_MAP
 		var/master_reagent_name = R.get_master_reagent_name()

@@ -135,7 +135,7 @@
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
 	desc = "Shields the subject's cellular structure against ionizing radiation."
-	id = "food_rad_resist"
+	id = "rad_resist"
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 2
 	secret = 1
@@ -775,7 +775,7 @@ var/list/radio_brains = list()
 	msgGain = "You feel like being stabbed isn't such a big deal anymore."
 	msgLose = "You are once again afraid of being stabbed."
 	stability_loss = 5
-	icon_state  = "regen"
+	icon_state  = "blood_od"
 	effect_group = "blood"
 
 	OnLife(var/mult)

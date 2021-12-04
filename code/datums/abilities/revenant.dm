@@ -36,6 +36,12 @@
 			return 0
 		return 1
 
+	onAbilityStat()
+		..()
+		.= list()
+		.["Points:"] = round(relay.points)
+		.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
+
 /datum/bioEffect/hidden/revenant
 	name = "Revenant"
 	desc = "The subject appears to be possessed by a wraith."
@@ -125,7 +131,7 @@
 		src.wraith = W
 		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
-		W.abilityHolder.suspendAllAbilities()
+		W.abilityHolder.topBarRendered = 0
 
 		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
@@ -161,7 +167,7 @@
 			owner.client.mob = src.wraith
 		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
-		src.wraith.abilityHolder.resumeAllAbilities()
+		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
 		owner:decomp_stage = 4
@@ -275,7 +281,6 @@
 	name = "Mass Command"
 	desc = "Launch an assortment of nearby objects at a target location."
 	icon_state = "masscomm"
-	special_screen_loc = "NORTH-1,WEST"
 	targeted = 1
 	target_anything = 1
 	pointCost = 500
@@ -320,7 +325,6 @@
 	cooldown = 35 SECONDS
 	var/propagation_percentage = 60
 	var/iteration_depth = 6
-	special_screen_loc = "NORTH-1,WEST+1"
 	var/static/list/prev = list("1" = NORTHWEST, "5" = NORTH, "4" = NORTHEAST, "6" = EAST,  "2" = SOUTHEAST, "10" = SOUTH, "8" = SOUTHWEST, "9" = WEST)
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
@@ -400,7 +404,6 @@
 	targeted = 0
 	pointCost = 1000
 	cooldown = 30 SECONDS
-	special_screen_loc = "NORTH-1,WEST+2"
 
 	cast()
 		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
@@ -421,7 +424,6 @@
 	target_anything = 1
 	pointCost = 50
 	cooldown = 15 SECONDS
-	special_screen_loc = "NORTH-1,WEST+3"
 
 	cast(atom/target)
 		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 70, 0)
@@ -460,7 +462,6 @@
 	targeted = 1
 	pointCost = 2500
 	cooldown = 1 MINUTE
-	special_screen_loc = "NORTH-1,WEST+4"
 
 	cast(atom/target)
 		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
@@ -533,16 +534,16 @@
 	targeted = 0
 	cooldown = 0
 	helpable = 0
-	special_screen_loc = "SOUTH,EAST"
 
 	cast(atom/target)
 		if (..())
 			return 1
 		if (holder.help_mode)
 			holder.help_mode = 0
+			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = 1
-			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='hint'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='hint'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
 			boutput(holder.owner, "<span class='hint'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")

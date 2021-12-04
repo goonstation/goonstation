@@ -191,6 +191,35 @@
 			else
 				return 0
 
+/* COW DINER DIALOGUE BELOW */
+
+/datum/dialogueMaster/telescopeCow
+	dialogueName = "Void Diner"
+	start = /datum/dialogueNode/telCowStart
+	visibleDialogue = 0
+
+/datum/dialogueNode
+	telCowStart
+		nodeImage = "milk.png"
+		nodeText = "This place seems... familiar.<br>Have you been here before?"
+		linkText = "..."
+		links = list(/datum/dialogueNode/telCowEnable)
+
+	telCowEnable
+		linkText = "Save the location."
+		nodeText = "The location is now available at the long-range teleporter."
+
+		onActivate(var/client/C)
+			if(!special_places.Find("Void Diner"))
+				special_places.Add("Void Diner")
+			return
+
+		canShow(var/client/C)
+			if(!special_places.Find("Void Diner"))
+				return 1
+			else
+				return 0
+
 
 /* GENERIC ASTEROID DIALOGUE BELOW */
 

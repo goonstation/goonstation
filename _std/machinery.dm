@@ -6,10 +6,6 @@
 
 #define MACHINE_PROC_INTERVAL (0.4 SECONDS)
 
-//communications stuff
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
 //lighting stuff
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1
@@ -38,6 +34,11 @@
 //red smashy button stuff
 #define SHIP_ALERT_GOOD 0
 #define SHIP_ALERT_BAD 1
+
+//conveyor belt operating modes
+#define CONVEYOR_FORWARD 1
+#define CONVEYOR_REVERSE -1
+#define CONVEYOR_STOPPED 0
 
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
 

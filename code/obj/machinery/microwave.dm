@@ -250,7 +250,7 @@ obj/machinery/microwave/attackby(var/obj/item/O as obj, var/mob/user as mob)
 
 	if(href_list["cook"])
 		if(!src.operating)
-			var/operation = text2num(href_list["cook"])
+			var/operation = text2num_safe(href_list["cook"])
 			var/cooked_item = ""
 
 			/// If cook was pressed in the menu

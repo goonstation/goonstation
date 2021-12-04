@@ -226,8 +226,8 @@
 			src.set_current_projectile(new /datum/projectile/laser)
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
-		src.update_icon()
 		..()
+		src.update_icon()
 
 	update_icon()
 		..()
@@ -473,31 +473,6 @@
 
 
 
-
-//////////////////////////////////////Disruptor
-/obj/item/gun/energy/disruptor
-	name = "Disruptor"
-	icon_state = "disruptor"
-	uses_multiple_icon_states = 1
-	desc = "Disruptor Blaster - Comes equipped with self-charging powercell."
-	m_amt = 4000
-	force = 6.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
-
-	New()
-		set_current_projectile(new/datum/projectile/disruptor)
-		projectiles = list(current_projectile,new/datum/projectile/disruptor/burst,new/datum/projectile/disruptor/high)
-		src.update_icon()
-		..()
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
-			src.icon_state = "disruptor[ratio]"
-		return
 
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
@@ -1016,7 +991,7 @@
 	item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
@@ -1407,7 +1382,7 @@
 			// 	// shock(user, 70)
 			// 	random_burn_damage(user, 50)
 			// 	user.changeStatus("weakened", 4 SECONDS)
-			// 	var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
+			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
 			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
@@ -1517,6 +1492,7 @@
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer2"
 	w_class = W_CLASS_NORMAL		//for clarity
+	object_flags = NO_ARM_ATTACH
 	force = 8
 	two_handed = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer

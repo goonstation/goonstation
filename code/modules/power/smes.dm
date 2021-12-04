@@ -264,8 +264,8 @@
 			else if(adjust)
 				src.chargelevel = clamp((src.chargelevel + adjust), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
-			else if(text2num(target) != null) //set by drag
-				src.chargelevel = clamp(text2num(target), 0 , SMESMAXCHARGELEVEL)
+			else if(text2num_safe(target) != null) //set by drag
+				src.chargelevel = clamp(text2num_safe(target), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
 		if("set-output")
 			var/target = params["target"]
@@ -279,8 +279,8 @@
 			else if(adjust)
 				src.output = clamp((src.output + adjust), 0 , SMESMAXOUTPUT)
 				. = TRUE
-			else if(text2num(target) != null) //set by drag
-				src.output = clamp(text2num(target), 0 , SMESMAXOUTPUT)
+			else if(text2num_safe(target) != null) //set by drag
+				src.output = clamp(text2num_safe(target), 0 , SMESMAXOUTPUT)
 				. = TRUE
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
