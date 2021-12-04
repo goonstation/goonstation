@@ -3,10 +3,11 @@
 /datum/glass_product
 	var/product_name = "generic"
 	var/product_type = "generic"
+	var/product_category
 	var/atom/product_path = null
 	var/product_cost
 
-	var/static/list/product_name_cache = new()
+	var/static/list/product_name_cache = list()
 
 	New(type, path, cost=1)
 		..()
@@ -37,7 +38,7 @@
 	anchored = 1
 	density = 0
 	var/glass_amt = 0
-	var/list/product_list = new()
+	var/list/product_list = list()
 	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
@@ -107,35 +108,11 @@
 				qdel(W)
 			else
 				qdel(W)
+			ui_interact(user)
 			return 1
 		else
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
 			return 0
-
-	attack_hand(mob/user as mob)
-		var/dat = "<b>Glass Left</b>: [glass_amt]<br>"
-		for (var/datum/glass_product/product in product_list)
-			dat += "<A href='?src=\ref[src];type=[product.product_type]'>[product.product_name]</A><br>"
-		dat += {"<HR><A href='?src=\ref[src];refresh=1'>Refresh</A>
-				<BR><BR><A href='?action=mach_close&window=glass'>Close</A>"}
-		user.Browse(dat, "window=glass;size=220x360;title=Recycler")
-		onclose(user, "glass")
-		return
-
-	Topic(href, href_list) // should probably rewrite this since it's kinda shitty
-		if(..())
-			return
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
-			src.add_dialog(usr)
-
-			if (href_list["type"])
-				create(lowertext(href_list["type"]))
-
-			if (href_list["refresh"])
-				src.updateUsrDialog()
-			src.add_fingerprint(usr)
-			src.updateUsrDialog()
-		return
 
 	proc/get_products()
 		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
@@ -178,6 +155,43 @@
 
 		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
 		return
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "GlassRecycler")
+			ui.open()
+
+	ui_static_data(mob/user)
+		var/products = list()
+		for (var/datum/glass_product/product in product_list)
+			products += list(
+				list(
+					"name" = product.product_name,
+					"type" = product.product_type,
+					"cost" = product.product_cost,
+				)
+			)
+		. = list(
+			"products" = products,
+		)
+
+
+	ui_data(mob/user)
+		. = list(
+			"glassAmt" = glass_amt,
+		)
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+		switch(action)
+			if("create")
+				var/product_type = params["type"]
+				create(product_type)
+				. = TRUE
+
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
