@@ -301,6 +301,24 @@
 #endif
 	src.dir = new_dir
 
+
+/**
+ * DO NOT CALL THIS PROC - Call UpdateIcon(...) Instead!
+ *
+ * Only override this proc!
+ */
+/atom/proc/update_icon(...)
+	PROTECTED_PROC(TRUE)
+	return
+
+/// Call this proc inplace of update_icon(...)
+/atom/proc/UpdateIcon(...)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
+	update_icon(arglist(args))
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
+	return
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")

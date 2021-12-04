@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -57,7 +57,27 @@
 	initialize()
 		src.set_layer_from_settings()
 		update_nearby_tiles(need_rebuild=1)
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME && !is_cardinal(src.dir))
+			xmasify()
+		#endif
 		..()
+
+	proc/xmasify()
+		var/turf/T = get_step(src, SOUTH)
+		for(var/obj/O in T)
+			if(istype(O, /obj/machinery/light) || istype(O, /obj/machinery/recharger/wall))
+				if(O.pixel_y > 6)
+					return
+		if(locate(/obj/decal) in src.loc)
+			return
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.02)
+			new /obj/decal/wreath(src.loc)
+		else
+			if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				var/obj/decal/xmas_lights/lights = new(src.loc)
+				lights.light_pattern(y % 5)
 
 	proc/set_layer_from_settings()
 		if (!map_settings)
@@ -628,7 +648,7 @@
 
 	New()
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
 */
 /obj/window/north
 	dir = NORTH
@@ -716,7 +736,7 @@
 			src.update_neighbors()
 
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	disposing()
 		..()
@@ -724,7 +744,7 @@
 		if (map_setting)
 			src.update_neighbors()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			return
@@ -748,15 +768,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.update_icon()
+			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"

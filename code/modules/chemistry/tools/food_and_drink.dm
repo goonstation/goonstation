@@ -242,7 +242,8 @@
 									S.generic_seed_setup(stored)
 								HYPpassplantgenes(DNA,PDNA)
 								if (stored.hybrid)
-									var/datum/plant/hybrid = new /datum/plant(S)
+									var/plantType = stored.type
+									var/datum/plant/hybrid = new plantType(S)
 									for (var/V in stored.vars)
 										if (issaved(stored.vars[V]) && V != "holder")
 											hybrid.vars[V] = stored.vars[V]
@@ -804,10 +805,10 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -823,7 +824,7 @@
 			return 1
 		else return ..()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (src.broken)
 			src.reagents.clear_reagents()
@@ -964,7 +965,7 @@
 			src.item_state = "broken_beer" // shattered beer inhand sprite
 			user.update_inhands()
 			src.broken = 1
-			src.update_icon() // handles reagent holder stuff
+			src.UpdateIcon() // handles reagent holder stuff
 
 		else
 			user.visible_message("<span class='alert'><b>[user] smashes [src] on [target]! \The [src] shatters completely!</span>")
@@ -1008,9 +1009,10 @@
 	var/image/image_doodad
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
+
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
@@ -1100,7 +1102,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wedge = W
-			src.update_icon()
+			src.UpdateIcon()
 			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
@@ -1124,7 +1126,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.in_glass = W
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		else if (istype(W, /obj/item/shaker/salt))
@@ -1135,7 +1137,7 @@
 			else
 				boutput(user, "<span class='notice'>You salt the rim of [src].</span>")
 				src.salted = 1
-				src.update_icon()
+				src.UpdateIcon()
 				S.shakes ++
 				return
 
@@ -1146,7 +1148,7 @@
 				boutput(user, "<span class='notice'>You salt the rim of [src].</span>")
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
-				src.update_icon()
+				src.UpdateIcon()
 				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
@@ -1244,7 +1246,7 @@
 			H.visible_message("[H] removes [remove_thing] from [src].",\
 			"<span class='notice'>You remove [remove_thing] from [src].</span>")
 			H.put_in_hand_or_drop(remove_thing)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (eat_thing)
@@ -1258,7 +1260,7 @@
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
 			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
 			qdel(eat_thing)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 	ex_act(severity)
@@ -1294,6 +1296,39 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
+
+	pixelaction(atom/target, list/params, mob/living/user, reach)
+		if(!istype(target, /obj/table))
+			return ..()
+		var/obj/table/target_table = target
+		var/obj/table/source_table = locate() in get_step(user, user.dir)
+		if(isnull(source_table))
+			for(var/dir in cardinal)
+				source_table = locate() in get_step(user, dir)
+				if(!isnull(source_table))
+					user.set_dir(dir)
+					break
+		if(isnull(source_table))
+			return
+		if(!can_reach(user, source_table))
+			return
+		if("icon-x" in params)
+			src.pixel_x = text2num(params["icon-x"]) - 16
+		if("icon-y" in params)
+			src.pixel_y = text2num(params["icon-y"]) - 16
+		user.weapon_attack(source_table, src, TRUE, list())
+		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
+		var/turf/last_turf = get_turf(source_table)
+		SPAWN_DBG(0)
+			for(var/turf/T in path)
+				if(src.loc != last_turf)
+					break
+				if(!(locate(/obj/table) in src.loc))
+					src.smash(T)
+					break
+				step_towards(src, T, 0.1 SECONDS)
+				last_turf = T
+				sleep(0.1 SECONDS)
 
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/chug
@@ -1446,6 +1481,7 @@
 		return
 
 	update_icon()
+
 		return
 
 	throw_impact(var/turf/T)
@@ -1551,12 +1587,12 @@
 	New()
 		..()
 		fluid_image = image(src.icon, "fluid-duo")
-		update_icon()
+		UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)
@@ -1641,9 +1677,9 @@
 
 	var/image/fluid_image
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
@@ -1664,9 +1700,9 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
 		if (src.reagents && src.reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()

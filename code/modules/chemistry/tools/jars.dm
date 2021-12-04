@@ -27,7 +27,7 @@
 			user.drop_item()
 			W.set_loc(src)
 			user.visible_message("<b>[user]</b> puts [W] into [src].", "You stuff [W] into [src].")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else
 			..()
@@ -38,7 +38,7 @@
 			if (istype(yoinked_out_thing))
 				user.put_in_hand_or_drop(yoinked_out_thing)
 				user.visible_message("<b>[user]</b> pulls [yoinked_out_thing] out of [src]","You pull [yoinked_out_thing] out of [src]")
-				src.update_icon()
+				src.UpdateIcon()
 
 	on_reagent_change()
 		if (!color_underlay)
@@ -52,9 +52,9 @@
 			color_underlay.color = src.reagents.get_master_color()
 			src.underlays = list(color_underlay)
 
-		update_icon()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.contents.len)
 			src.icon_state = "mason_jar_green"
 

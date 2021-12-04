@@ -96,7 +96,7 @@
 			if (action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
 				for(var/obj/item/O in S.contents) O.set_loc(src)
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		if (istype(I,/obj/item/storage/) && I.contents.len)

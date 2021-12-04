@@ -52,9 +52,9 @@
 		if(cell_type)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, TRUE, INFINITY, can_swap_cell)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
-		src.update_icon()
+		src.UpdateIcon()
 		src.setItemSpecial(/datum/item_special/spark)
 
 		BLOCK_SETUP(BLOCK_ROD)
@@ -76,7 +76,8 @@
 		src.process_charges(-INFINITY)
 		return
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src || !istype(src))
 			return
 
@@ -205,7 +206,7 @@
 			dude_to_stun.lastattacker = user
 			dude_to_stun.lastattackertime = world.time
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attack_self(mob/user as mob)
@@ -229,7 +230,7 @@
 			boutput(user, "<span class='notice'>The [src.name] is now off.</span>")
 			playsound(src, "sparks", 75, 1, -1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 
 		return
@@ -269,7 +270,7 @@
 		if (src.flipped && user.a_intent != INTENT_HARM)
 			user.show_text("You flip \the [src] the right way around as you grab it.")
 			src.flipped = false
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		else if (user.a_intent == INTENT_HARM)
 			src.do_flip_stuff(user, INTENT_HARM)
@@ -284,7 +285,7 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
 		else //not already flipped
@@ -295,14 +296,14 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
 
 	dropped(mob/user)
 		if (src.flipped)
 			src.flipped = false
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		..()
 
@@ -417,7 +418,7 @@
 					src.force = 7
 					playsound(src, "sound/misc/lightswitch.ogg", 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					user.update_inhands()
 					return
 
@@ -444,12 +445,13 @@
 				boutput(user, "<span class='notice'>The [src.name] is now closed.</span>")
 				playsound(src, "sparks", 75, 1, -1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 
 		return
 
 	update_icon()
+
 		if (!src || !istype(src))
 			return
 		switch (src.state)

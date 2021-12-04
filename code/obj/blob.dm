@@ -45,7 +45,7 @@
 		START_TRACKING
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
-		src.update_icon()
+		src.UpdateIcon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B?.blobs += src
@@ -61,6 +61,7 @@
 			for (var/mob/living/carbon/human/H in src.loc)
 				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
+				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
 				actions.start(new /datum/action/bar/blob_absorb(H, overmind), src)
 				playsound(src.loc, "sound/voice/blob/blobsucc[rand(1, 3)].ogg", 10, 1)
@@ -134,7 +135,7 @@
 			update_overlays(overmind?.organ_color || src.color)
 		if(isturf(old_loc))
 			update_surrounding_blob_icons(old_loc)
-		update_icon()
+		UpdateIcon()
 		if(isturf(newloc))
 			update_surrounding_blob_icons(newloc)
 
@@ -146,7 +147,7 @@
 			else
 				blob_image = image('icons/mob/blob.dmi')
 			blob_image.appearance_flags |= RESET_COLOR
-			blob_image.plane = PLANE_SELFILLUM + 1
+			blob_image.plane = PLANE_ABOVE_LIGHTING
 
 			blob_image.color = organ_color
 			blob_image.icon_state = state_overlay
@@ -154,7 +155,8 @@
 		if ( anim_overlay )
 			var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
 			blob_anim_image.appearance_flags |= RESET_COLOR
-			blob_anim_image.plane = PLANE_SELFILLUM + 2
+			blob_anim_image.plane = PLANE_ABOVE_LIGHTING
+			blob_anim_image.layer = 100
 
 			blob_anim_image.color = organ_color
 			blob_anim_image.icon_state = anim_overlay
@@ -191,6 +193,9 @@
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
+				if(isliving(M))
+					var/mob/living/L = M
+					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
 				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
@@ -425,7 +430,7 @@
 			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
-			src.update_icon()
+			src.UpdateIcon()
 			if (healthbar) //ZeWaka: Fix for null.onUpdate
 				healthbar.onUpdate()
 		return
@@ -463,10 +468,11 @@
 		src.health += amount
 		src.health = max(0,min(src.health_max,src.health))
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
-		src.update_icon()
+		src.UpdateIcon()
 		healthbar.onUpdate()
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src)
 			return
 
@@ -806,8 +812,8 @@
 		var/turf/T = B.loc
 		B.set_loc(loc)
 		set_loc(T)
-		update_icon()
-		B.update_icon()
+		UpdateIcon()
+		B.UpdateIcon()
 
 	replicator
 		name = "replicator"
@@ -1255,6 +1261,7 @@
 		added = 0.1
 
 	update_icon()
+
 		return
 
 	disposing()
@@ -1286,6 +1293,7 @@
 		..(amount, damage_mult, damtype, user)
 
 	update_icon()
+
 		return
 
 /obj/blob/firewall
@@ -1305,7 +1313,7 @@
 			return ..(amount/3,mult,damtype,user)
 		else return ..()
 
-	update_icon()
+	update_icon(override_parent)
 		return
 
 /obj/material_deposit
@@ -1326,7 +1334,7 @@
 
 		var/image/ov = image('icons/mob/blob_organs.dmi')
 		ov.appearance_flags |= RESET_COLOR
-		ov.plane = PLANE_SELFILLUM + 1
+		ov.plane = PLANE_ABOVE_LIGHTING
 		ov.color = overmind?.organ_color
 		ov.icon_state = "deposit-material"
 		UpdateOverlays(ov, name)
@@ -1439,4 +1447,4 @@
 	if (!istype(T))
 		return
 	for (var/obj/blob/B in orange(1,T))
-		B.update_icon()
+		B.UpdateIcon()

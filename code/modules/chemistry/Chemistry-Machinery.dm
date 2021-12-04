@@ -67,11 +67,11 @@
 		if(src.beaker || roboworking)
 			boutput(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
-		src.update_icon()
+		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 	ex_act(severity)
@@ -115,21 +115,21 @@
 				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 
 			beaker = null
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustM"])
 			target_temp = min(max(0, target_temp-change),1000)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustP"])
 			target_temp = min(max(0, target_temp+change),1000)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["settemp"])
@@ -137,7 +137,7 @@
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
 			if(!change || !isnum_safe(change)) return
 			target_temp = min(max(0, change),1000)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["stop"])
@@ -147,12 +147,12 @@
 			if (!beaker.reagents.total_volume) return
 			active = 1
 			active()
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else
 			usr.Browse(null, "window=chem_heater;title=Chemistry Heater")
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
@@ -252,10 +252,10 @@
 	proc/set_inactive()
 		power_usage = 50
 		active = 0
-		update_icon()
+		UpdateIcon()
 		updateUsrDialog()
 
-	proc/update_icon()
+	update_icon()
 		src.overlays -= src.icon_beaker
 		if (src.beaker)
 			src.overlays += src.icon_beaker
@@ -1045,7 +1045,7 @@ datum/chemicompiler_core/stationaryCore
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			src.updateUsrDialog()
 
 		else
