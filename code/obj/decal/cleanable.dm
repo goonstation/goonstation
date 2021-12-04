@@ -1249,11 +1249,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	New()
 		if (prob(5))
 			src.amount += rand(1,2)
-			src.update_icon()
+			src.UpdateIcon()
 		..()
 		return
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "fungus[max(1,min(3, amount))]"
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
@@ -1273,7 +1273,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				src.amount--
 				if (src.amount <= 0)
 					qdel(src)
-				src.update_icon()
+				src.UpdateIcon()
 				return 1
 
 
@@ -1437,14 +1437,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
 
 	setup()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		health = 30
 		var/turf/T = get_turf(src)
 		if (T)
@@ -1496,7 +1496,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
 		if (!src.loc)
 			return
 		var/dirs = 0
@@ -1522,7 +1522,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingSalt(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/saltpile/S in orange(1,T))
-		S.updateIcon()
+		S.UpdateIcon()
 
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
@@ -1537,12 +1537,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	setup()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	disposing()
@@ -1554,7 +1554,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
 		var/dirs = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
@@ -1629,7 +1629,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingMagnesium(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/magnesiumpile/S in orange(1,T))
-		S.updateIcon()
+		S.UpdateIcon()
 
 /obj/decal/cleanable/nitrotriiodide
 	name = "gooey mess"

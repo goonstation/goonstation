@@ -1418,6 +1418,39 @@ var/datum/flock/testflock
 	selection.RemoveComponent()
 	boutput(usr, "<span class='notice'>Removed [selection] from [target].</span>")
 
+/client/proc/delete_profiling_logs()
+	set desc = "Delete all saved profiling data, I hope you know what you're doing."
+	set name = "Delete profiling logs"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(input(usr, "Type in: 'delete profiling logs' to confirm:", "Confirmation of prof. logs deletion") != "delete profiling logs")
+		boutput(usr, "Deletion of profiling logs aborted.")
+		return
+	fdel("data/logs/profiling/")
+	logTheThing("admin", usr, null, "deleted profiling logs.")
+	logTheThing("diary", usr, null, "deleted profiling logs.")
+	message_admins("[key_name(usr)] deleted profiling logs.")
+	ircbot.export("admin_debug", list("key"=usr.ckey, "msg"="deleted profiling logs for this server."))
+
+/client/proc/cause_lag(a as num, b as num)
+	set desc = "Loops a times b times over some trivial statement."
+	set name = "cause lag"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(alert("Are you sure you want to cause lag?","Why would you do this?","Yes","No") != "Yes")
+		return
+
+	logTheThing("admin", usr, null, "decided to cause lag with parameters of [a] and [b]")
+
+	var/x = 0
+	boutput(src, "lag start [world.time] [TIME] (x=[x])")
+	for(var/i in 1 to a)
+		for(var/j in 1 to b)
+			x++
+	boutput(usr, "lag end [world.time] [TIME] (x=[x])")
+
 #undef ARG_INFO_NAME
 #undef ARG_INFO_TYPE
 #undef ARG_INFO_DESC

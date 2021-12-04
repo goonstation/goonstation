@@ -632,6 +632,7 @@
 /obj/item/reagent_containers/food/snacks/fruit_cake
 	name = "fruitcake"
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_fruit"
 	amount = 12
 	heal_amt = 3

@@ -133,7 +133,7 @@
 						src.growth = src.current.growtime - src.plantgenes.growtime
 					if(4)
 						src.growth = src.current.harvtime - src.plantgenes.harvtime
-				update_icon()
+				UpdateIcon()
 			else
 				if(!src.current)
 					qdel(src)
@@ -235,7 +235,7 @@
 
 	var/health_warning = 0
 	var/harvest_warning = 0
-	var/water_level = 4 // Used for efficiency in the update_icon proc with water level changing
+	var/water_level = 4 // Used for efficiency in the UpdateIcon proc with water level changing
 	var/total_volume = 4 // How much volume total is actually in the tray because why the fuck was water the only reagent being counted towards the level
 	var/image/water_sprite = null
 	var/image/water_meter = null
@@ -259,7 +259,7 @@
 		// to have too much water, which stunts plant growth speed.
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
 		src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
-		update_icon()
+		UpdateIcon()
 
 		if(!net_id)
 			net_id = generate_net_id(src)
@@ -313,7 +313,7 @@
 
 	power_change()
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	was_deconstructed_to_frame(mob/user)
 		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
@@ -323,7 +323,7 @@
 		..()
 
 		if(do_update_icon)
-			update_icon()
+			UpdateIcon()
 			update_name()
 
 			// We skip every other tick. Another cpu-conserving measure.
@@ -501,7 +501,7 @@
 			return
 
 		if(do_update_icon)
-			update_icon()
+			UpdateIcon()
 			update_name()
 
 		if(!HAS_FLAG(status, NOPOWER))
@@ -721,7 +721,7 @@
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
-				update_icon()
+				UpdateIcon()
 				return
 
 
@@ -927,7 +927,7 @@
 		UpdateOverlays(src.water_sprite, "water_fluid")
 		UpdateOverlays(src.water_meter, "water_meter")
 
-	proc/update_icon() //plant icon stuffs
+	update_icon() //plant icon stuffs
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
@@ -1371,7 +1371,8 @@
 					HYPpassplantgenes(HDNA,SDNA)
 					S.generation = src.generation
 					if(growing.hybrid)
-						var/datum/plant/hybrid = new /datum/plant(S)
+						var/plantType = growing.type
+						var/datum/plant/hybrid = new plantType(S)
 						for(var/V in growing.vars)
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]
@@ -1430,7 +1431,7 @@
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
 							I.add_fingerprint(user)
-				SA.satchel_updateicon()
+				SA.UpdateIcon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
@@ -1461,7 +1462,7 @@
 
 		//do we have to run the next life tick manually? maybe
 		playsound(src.loc, "rustle", 50, 1, -5, 2)
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 	proc/HYPmutateplant(var/severity = 1)
@@ -1537,7 +1538,7 @@
 		HYPmutateplant(1)
 		post_alert("event_new")
 		src.recently_harvested = 0
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 		if(usr && ishellbanned(usr)) //Haw haw
@@ -1555,7 +1556,7 @@
 		post_alert("event_death")
 		src.health_warning = 0
 		src.harvest_warning = 0
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 	proc/HYPdestroyplant()
@@ -1582,7 +1583,7 @@
 		DNA.mutation = null
 
 		src.generation = 0
-		update_icon()
+		UpdateIcon()
 		post_alert("event_cleared")
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
@@ -1801,7 +1802,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					if(PP)
-						PP.update_icon()
+						PP.UpdateIcon()
 						PP.update_name()
 					break
 

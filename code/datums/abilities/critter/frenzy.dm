@@ -72,7 +72,7 @@
 
 /datum/targetable/critter/crabmaul
 	name = "Crustaceous Frenzy"
-	desc = "Go into a primal rage, snipping a target to ribbons with your claws."
+	desc = "Go into a primal rage, snipping a weakened target to ribbons with your claws."
 	cooldown = 1 MINUTE
 	targeted = 1
 	target_anything = 1

@@ -29,6 +29,9 @@
 			src.base_state = src.icon_state
 		return
 
+	xmasify()
+		return
+
 	attack_hand(mob/user as mob)
 		if (issilicon(user) && src.hardened == 1)
 			user.show_text("You cannot control this door.", "red")

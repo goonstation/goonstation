@@ -52,7 +52,7 @@
 
 /mob/living/silicon/hivebot/New(loc, mainframe)
 	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-	updateicon()
+	UpdateIcon()
 
 	if (mainframe)
 		dependent = 1
@@ -91,7 +91,7 @@
 
 	src.see_in_dark = SEE_DARK_FULL
 	src.see_invisible = INVIS_CLOAK
-	src.updateicon()
+	src.UpdateIcon()
 /*
 	if(src.client)
 		SPAWN_DBG(0)
@@ -529,7 +529,7 @@
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
 		src.beebot = 1
-		src.updateicon()
+		src.UpdateIcon()
 		qdel(W)
 		return
 	else
@@ -552,7 +552,7 @@
 					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
 					boutput(user, "You pull [B] off of [src]!")
 					src.beebot = 0
-					src.updateicon()
+					src.UpdateIcon()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
 					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
@@ -596,8 +596,7 @@
 			return 0
 	return 1
 
-/mob/living/silicon/hivebot/proc/updateicon()
-
+/mob/living/silicon/hivebot/update_icon()
 	src.overlays = null
 
 	if (isalive(src))
@@ -726,7 +725,7 @@ Frequency:
 /mob/living/silicon/hivebot/proc/return_mainframe()
 	if(mainframe)
 		mainframe.return_to(src)
-		src.updateicon()
+		src.UpdateIcon()
 	else
 		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
 		return
@@ -791,7 +790,7 @@ Frequency:
 	..()
 
 	update_clothing()
-	updateicon()
+	UpdateIcon()
 
 	if (src.mainframe)
 		src.real_name = "SHELL/[src.mainframe]"
@@ -806,7 +805,7 @@ Frequency:
 
 /mob/living/silicon/hivebot/Logout()
 	..()
-	updateicon()
+	UpdateIcon()
 
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
@@ -992,7 +991,7 @@ Frequency:
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
+	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		src.overlays = null
 
 		if(isalive(src))

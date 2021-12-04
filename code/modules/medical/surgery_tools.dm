@@ -647,7 +647,7 @@ CONTAINS:
 			defib = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
@@ -670,7 +670,7 @@ CONTAINS:
 		src.defib.parent = src
 		playsound(src, "sound/items/pickup_defib.ogg", 65, vary=0.2)
 
-		update_icon()
+		UpdateIcon()
 
 		//set move callback (when user moves, defib go back)
 		if (islist(user.move_laying))
@@ -697,7 +697,7 @@ CONTAINS:
 			M.move_laying = null
 
 		playsound(src, "sound/items/putback_defib.ogg", 65, vary=0.2)
-		update_icon()
+		UpdateIcon()
 
 
 /* ================================================ */
@@ -826,7 +826,7 @@ CONTAINS:
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		switch (src.uses)
 			if (0 to -INFINITY)
 				src.icon_state = "bandage-item-0"
@@ -949,7 +949,7 @@ CONTAINS:
 				B.in_use = 0
 				B.uses --
 				B.tooltip_rebuild = 1
-				B.update_icon()
+				B.UpdateIcon()
 				if (B.uses <= 0)
 					boutput(ownerMob, "<span class='alert'>You use up the last of the bandages.</span>")
 					ownerMob.u_equip(tool)
@@ -1029,7 +1029,7 @@ CONTAINS:
 					else
 						H.blood_volume ++
 						src.volume --
-						src.update_icon()
+						src.UpdateIcon()
 						if (prob(5))
 							var/fluff = pick("better", "a little better", "a bit better", "warmer", "a little warmer", "a bit warmer", "less cold")
 							H.visible_message("<span class='notice'><b>[H]</b> looks [fluff].</span>", \
@@ -1060,7 +1060,7 @@ CONTAINS:
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)
@@ -1120,7 +1120,7 @@ CONTAINS:
 			AM.set_loc(src.loc)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.open && src.open_image)
 			src.overlays += src.open_image
 			src.icon_state = "bodybag-open"
@@ -1144,7 +1144,7 @@ CONTAINS:
 			user.drop_item()
 			pixel_x = 0
 			pixel_y = 0
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			return
 
@@ -1198,7 +1198,7 @@ CONTAINS:
 			SPAWN_DBG(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/close()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
@@ -1211,7 +1211,7 @@ CONTAINS:
 				continue
 			M.set_loc(src)
 		src.open = 0
-		src.update_icon()
+		src.UpdateIcon()
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */

@@ -495,6 +495,14 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
+	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
+		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
+		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
+		"battle_royale", "vampire","assday", "football", "flock", "arcfiend"
+#if defined(MAP_OVERRIDE_POD_WARS)
+		,"pod_wars"
+#endif
+	)
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

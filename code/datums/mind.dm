@@ -6,6 +6,7 @@ datum/mind
 	var/mob/virtual
 
 	var/memory
+	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
 	var/miranda // sec's miranda rights thingy.
 	var/last_miranda_time = 0 // this is different than last_memory_time, this is when the rights were last SAID, not last CHANGED

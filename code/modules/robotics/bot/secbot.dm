@@ -775,7 +775,7 @@
 			/// Tango in charging distance?
 			else if(IN_RANGE(src, src.target, 13)) // max perp-seek distance of 13
 				/// Charge em!
-				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 200) // but they can go anywhere in that 13 tiles
+				navigate_to(src.target, src.move_arrest_step_delay, max_dist = 30) // but they can go anywhere in that 13 tiles
 				if(!src.path || length(src.path) < 1)
 					speak("...?", just_float = 1)
 					src.KillPathAndGiveUp(kpagu)

@@ -112,7 +112,7 @@
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN_DBG(1 SECOND)
-		updateicon()
+		UpdateIcon()
 		update_solar_exposure()
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user)
@@ -136,7 +136,7 @@
 			return
 	return
 
-/obj/machinery/power/solar/proc/updateicon()
+/obj/machinery/power/solar/update_icon()
 	if(status & BROKEN)
 		icon_state = "solar_panel-b"
 	else
@@ -150,12 +150,8 @@
 		sunfrac = 0
 		return
 	if(isnull(sun))	return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
-	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
-		sunfrac = 0
-		return
-
-	sunfrac = cos(p_angle) ** 2
+	var/p_angle = (360 + adir - sun.angle) % 360
+	sunfrac = max(cos(p_angle), 0) ** 2
 
 // Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
 // Adjust accordingly based on machine proc rate
@@ -179,13 +175,13 @@
 		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
 			use_power(power_usage)
-			updateicon()
+			UpdateIcon()
 
 		update_solar_exposure()
 
 /obj/machinery/power/solar/proc/broken()
 	status |= BROKEN
-	updateicon()
+	UpdateIcon()
 	UnsubscribeProcess() // Broken solar panels need not process, supposedly there's no way to repair them?
 	return
 
@@ -425,5 +421,5 @@
 		if(adir != ndir)
 			SPAWN_DBG(10+rand(0,15))
 				adir = (360+adir+clamp(ndir-adir,-10,10))%360
-				updateicon()
+				UpdateIcon()
 				update_solar_exposure()

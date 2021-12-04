@@ -436,34 +436,33 @@
 	return 0
 
 /obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
-	if(processing_items.Find(src)) //processing items cant be lit on fire to avoid weird bugs
+	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
-	if (!src.burning)
-		START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-		src.visible_message("<span class='alert'>[src] catches on fire!</span>")
-		src.burning = 1
-		src.firesource = FIRESOURCE_OPEN_FLAME
-		if (istype(src, /obj/item/plant))
-			if (!GET_COOLDOWN(global, "hotbox_adminlog"))
-				var/list/hotbox_plants = list()
-				for (var/obj/item/plant/P in get_turf(src))
-					hotbox_plants += P
-				if (length(hotbox_plants) >= 5) //number is up for debate, 5 seemed like a good starting place
-					ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
-					var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
-					if (W?.firesource)
-						msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
-					message_admins(msg)
-					logTheThing("bombing", W?.fingerprintslast, null, msg)
-		if (src.burn_output >= 1000)
-			UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
-		else
-			UpdateOverlays(image('icons/effects/fire.dmi', "1old"),"burn_overlay")
-		processing_items.Add(src)
+	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
+	src.visible_message("<span class='alert'>[src] catches on fire!</span>")
+	src.burning = 1
+	src.firesource = FIRESOURCE_OPEN_FLAME
+	if (istype(src, /obj/item/plant))
+		if (!GET_COOLDOWN(global, "hotbox_adminlog"))
+			var/list/hotbox_plants = list()
+			for (var/obj/item/plant/P in get_turf(src))
+				hotbox_plants += P
+			if (length(hotbox_plants) >= 5) //number is up for debate, 5 seemed like a good starting place
+				ON_COOLDOWN(global, "hotbox_adminlog", 30 SECONDS)
+				var/msg = "([src]) was set on fire on the same turf as at least ([length(hotbox_plants)]) other plants at [log_loc(src)]"
+				if (W?.firesource)
+					msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
+				message_admins(msg)
+				logTheThing("bombing", W?.fingerprintslast, null, msg)
+	if (src.burn_output >= 1000)
+		UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
+	else
+		UpdateOverlays(image('icons/effects/fire.dmi', "1old"),"burn_overlay")
 
 /obj/item/proc/combust_ended()
+	if(!src.burning)
+		return
 	STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-	processing_items.Remove(src)
 	burning = null
 	firesource = FALSE
 	ClearSpecificOverlays("burn_overlay")
@@ -818,6 +817,9 @@
 	else
 		src.last_tick_duration = (ticker.round_elapsed_ticks - src.last_processing_tick) / (2.9 SECONDS)
 	src.last_processing_tick = ticker.round_elapsed_ticks
+
+/obj/item/proc/process_burning()
+	SHOULD_NOT_SLEEP(TRUE)
 	if (src.burning)
 		if (src.material && !(src.item_function_flags & COLD_BURN))
 			src.material.triggerTemp(src, src.burn_output + rand(1,200))
@@ -868,10 +870,7 @@
 				src.overlays -= image('icons/effects/fire.dmi', "1old")
 			return
 		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
-		processing_items.Remove(src)
-
 	burning_last_process = src.burning
-	return null
 
 /obj/item/proc/attack_self(mob/user)
 	if (src.temp_flags & IS_LIMB_ITEM)
@@ -1416,6 +1415,8 @@
 	return (!cant_other_remove && !cant_drop)
 
 /obj/item/disposing()
+	if(src.burning)
+		STOP_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	// Clean up circular references
 	disposing_abilities()
 	setItemSpecial(null)
@@ -1519,7 +1520,7 @@
 
 	var/msg = "[thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
-	if (istype(simulated) && simulated.air.toxins)
+	if (istype(simulated) && (simulated.air.toxins > 0.25))
 		msg += " Turf contains <b>plasma gas</b>."
 	if (T.active_liquid?.group)
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."
