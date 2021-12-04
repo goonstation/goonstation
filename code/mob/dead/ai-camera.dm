@@ -257,8 +257,8 @@
 	say_radio()
 		src.mainframe.say_radio()
 
-	say_main_radio()
-		src.mainframe.say_main_radio()
+	say_main_radio(msg as text)
+		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
 		if (mainframe)

@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				src.icon_state = "stun"
 				src.item_state = "stun"
 				src.overridespecial = 1
-				C.updateicon()
+				C.UpdateIcon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stun gloves.</span>", "<span class='notice'>The stun gloves now hold [src.uses]/[src.max_uses] charges!</span>")
 			else

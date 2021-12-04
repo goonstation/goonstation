@@ -15,7 +15,7 @@
 		. = ..()
 		src.fluid_image = image(src.icon, "fluid", -1)
 
-	proc/update_icon()
+	update_icon()
 		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
@@ -25,7 +25,7 @@
 
 	on_reagent_change()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/mopbucket/New()
 	..()

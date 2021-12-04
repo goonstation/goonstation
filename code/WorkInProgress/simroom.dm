@@ -200,14 +200,14 @@
 
 /obj/machinery/sim/vr_bed/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/sim/vr_bed/disposing()
 	go_out()
 	. = ..()
 
 
-/obj/machinery/sim/vr_bed/proc/update_icon()
+/obj/machinery/sim/vr_bed/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
@@ -271,7 +271,7 @@
 	Station_VNet.Enter_Vspace(M, src, src.network)
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
@@ -344,7 +344,7 @@
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)

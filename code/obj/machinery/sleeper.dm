@@ -240,7 +240,7 @@
 	anchored = 1
 	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -269,7 +269,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		SPAWN_DBG(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
@@ -285,7 +285,7 @@
 			occupant = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
 		return
@@ -359,7 +359,7 @@
 		var/mob/living/carbon/human/H = G.affecting
 		H.set_loc(src)
 		src.occupant = H
-		src.update_icon()
+		src.UpdateIcon()
 #ifdef DATALOGGER
 		game_stats.Increment("sleeper")
 #endif
@@ -527,7 +527,7 @@
 			src.occupant.changeStatus("weakened", 1 SECOND)
 			src.occupant.force_laydown_standup()
 			src.occupant = null
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 			return
 
@@ -587,7 +587,7 @@
 		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/obj/O in src)
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue

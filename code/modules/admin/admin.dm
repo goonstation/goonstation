@@ -198,6 +198,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_adminwho_alerts()
 				src.show_pref_window(usr)
+		if ("toggle_ghost_respawns")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_ghost_respawns()
+				src.show_pref_window(usr)
 		if ("toggle_rp_word_filtering")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
@@ -4446,6 +4450,7 @@ var/global/noir = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.full_heal()
+		H.stamina = H.stamina_max
 		H.remove_ailments() // don't spawn with heart failure
 	return
 

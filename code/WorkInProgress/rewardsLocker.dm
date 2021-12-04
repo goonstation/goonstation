@@ -580,7 +580,7 @@
 			skin_target.icon_style = "flask"
 			skin_target.item_state = "flask"
 			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
-			skin_target.update_icon()
+			skin_target.UpdateIcon()
 			activator.set_clothing_icon_dirty()
 			return 1
 		else
@@ -1292,7 +1292,7 @@
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
 			gunmod.gilded = TRUE
-			gunmod.update_icon()
+			gunmod.UpdateIcon()
 			H.update_inhands()
 			return 1
 

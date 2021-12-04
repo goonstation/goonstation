@@ -109,7 +109,7 @@
 	New()
 		..()
 		src.toolbox_style = pick(src.toolbox_list)
-		src.update_icon()
+		src.UpdateIcon()
 		if (prob(src.switcharoo))
 			switch (src.toolbox_style)
 				if ("blue")
@@ -130,11 +130,11 @@
 		if (src.alive)
 			switch (task)
 				if ("thinking")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("chasing")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("attacking")
-					src.update_icon()
+					src.UpdateIcon()
 
 	ChaseAttack(mob/M)
 		..()
@@ -143,7 +143,7 @@
 	CritterAttack(mob/M)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.toolbox_style)
 			src.toolbox_style = pick(src.toolbox_list)
 			src.dead_state = "mimic_[src.toolbox_style]1-dead"

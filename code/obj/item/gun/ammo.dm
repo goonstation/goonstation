@@ -20,9 +20,6 @@
 	inventory_counter_enabled = 1
 
 	proc
-		update_icon()
-			return
-
 		swap(var/obj/item/ammo/A)
 			return
 
@@ -71,16 +68,16 @@
 		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!src.disposed)
-				src.update_icon() // So we get dynamic updates right off the bat. Screw static descs.
+				src.UpdateIcon() // So we get dynamic updates right off the bat. Screw static descs.
 		return
 
 	use(var/amt = 0)
 		if(amount_left >= amt)
 			amount_left -= amt
-			update_icon()
+			UpdateIcon()
 			return 1
 		else
-			src.update_icon()
+			src.UpdateIcon()
 			return 0
 
 	attackby(obj/b as obj, mob/user as mob)
@@ -99,15 +96,15 @@
 				A.amount_left--
 				src.amount_left++
 			if ((A.amount_left < 1) && (src.amount_left < src.max_amount))
-				A.update_icon()
-				src.update_icon()
+				A.UpdateIcon()
+				src.UpdateIcon()
 				if (A.delete_on_reload)
 					qdel(A) // No duplicating empty magazines, please (Convair880).
 				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough ammo left in [A.name] to fully refill [src]. It only has [src.amount_left] rounds remaining.</span>")
 				return // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (src.amount_left == src.max_amount))
-				A.update_icon()
-				src.update_icon()
+				A.UpdateIcon()
+				src.UpdateIcon()
 				if (A.amount_left == 0)
 					if (A.delete_on_reload)
 						qdel(A) // No duplicating empty magazines, please (Convair880).
@@ -148,7 +145,7 @@
 			ammoDrop.icon_state = K.ammo.icon_state
 			ammoDrop.ammo_type = K.ammo.ammo_type
 			ammoDrop.delete_on_reload = 1 // No duplicating empty magazines, please.
-			ammoDrop.update_icon()
+			ammoDrop.UpdateIcon()
 			usr.put_in_hand_or_drop(ammoDrop)
 			ammoDrop.after_unload(usr)
 			K.ammo.amount_left = 0 // Make room for the new ammo.
@@ -168,7 +165,7 @@
 			ammoHand.icon_state = K.ammo.icon_state
 			ammoHand.ammo_type = K.ammo.ammo_type
 			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please.
-			ammoHand.update_icon()
+			ammoHand.UpdateIcon()
 			usr.put_in_hand_or_drop(ammoHand)
 			ammoHand.after_unload(usr)
 
@@ -186,7 +183,7 @@
 			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
 				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
-			K.update_icon()
+			K.UpdateIcon()
 
 			return 1
 
@@ -249,17 +246,17 @@
 			K.ammo.ammo_type = A.ammo_type
 
 			if ((A.amount_left < 1) && (K.ammo.amount_left < K.max_ammo_capacity))
-				A.update_icon()
-				K.update_icon()
-				K.ammo.update_icon()
+				A.UpdateIcon()
+				K.UpdateIcon()
+				K.ammo.UpdateIcon()
 				if (A.delete_on_reload)
 					//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on partial reload.")
 					qdel(A) // No duplicating empty magazines, please (Convair880).
 				return 4 // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (K.ammo.amount_left == K.max_ammo_capacity))
-				A.update_icon()
-				K.update_icon()
-				K.ammo.update_icon()
+				A.UpdateIcon()
+				K.UpdateIcon()
+				K.ammo.UpdateIcon()
 				if (A.amount_left == 0)
 					if (A.delete_on_reload)
 						//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on full reload.")
@@ -267,6 +264,7 @@
 				return 5 // Full reload or ammo left over.
 
 	update_icon()
+
 		if (src.amount_left < 0)
 			src.amount_left = 0
 		inventory_counter?.update_number(src.amount_left)
@@ -898,7 +896,7 @@
 				user.u_equip(W)
 				W.layer = initial(W.layer)
 				W.set_loc(src)
-				src.update_icon()
+				src.UpdateIcon()
 				boutput(user, "You load [W] into the [src].")
 				return
 			else if(src.amount_left < src.max_amount && W.type == AMMO.get_nade()?.type)
@@ -920,11 +918,12 @@
 			AMMO.unload_nade()
 			boutput(user, "You pry the grenade[amount_left>1?"s":""] out of [src].")
 			src.add_fingerprint(user)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		return ..()
 
 	update_icon()
+
 		inventory_counter.update_number(src.amount_left)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if (AMMO.has_grenade != 0)
@@ -1030,9 +1029,9 @@
 	New()
 		..()
 		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, rechargable)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		processing_items -= src

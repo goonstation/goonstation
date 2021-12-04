@@ -62,11 +62,11 @@
 				src.bones.name = "skull"
 				if (src.donor?.bioHolder?.mobAppearance)
 					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.update_icon(makeshitup = 0)
+					src.UpdateIcon(/*makeshitup*/ 0)
 				else //The heck?
-					src.update_icon(makeshitup = 1)
+					src.UpdateIcon(/*makeshitup*/ 1)
 			else
-				src.update_icon(makeshitup = 1)
+				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
 		if (holder)
@@ -126,7 +126,7 @@
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
 	/// it will cause the head to be rebuilt from the mob's appearanceholder!
-	proc/update_icon(var/makeshitup, var/ignore_transplant) // should only happen once, maybe again if they change mutant race
+	update_icon(var/makeshitup, var/ignore_transplant) // should only happen once, maybe again if they change mutant race
 		var/datum/appearanceHolder/AHead = null
 
 		if(!src.donor_appearance || makeshitup || !src.donor)
@@ -559,5 +559,5 @@
 					src.organ_name = "psychedelic head"
 					src.desc = "Well, that's trippy."
 
-		src.update_icon(makeshitup = 0)	// so our head actually looks like the thing its supposed to be
+		src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something
