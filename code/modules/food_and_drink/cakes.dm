@@ -296,10 +296,10 @@
 		//Complete cake crew objectives if possible
 		src.cake_types += c.cake_types
 		if (user.mind && user.mind.objectives)
-			for (var/datum/objective/crew/chef/cake/O in user.mind.objectives)
-				var/list/matching_types = src.cake_types & O.choices
-				if(matching_types.len >= CAKE_OBJ_COUNT)
-					O.completed = TRUE
+			for (var/datum/objective/crew/chef/cake/objective in user.mind.objectives)
+				var/list/matching_types = src.cake_types & objective.choices
+				if(length(matching_types) >= CAKE_OBJ_COUNT)
+					objective.completed = TRUE
 		qdel(c)
 
 

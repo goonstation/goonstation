@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && !F.active && istype(get_area(F), /area/station))
+				if(F.z == Z_LEVEL_STATION && !F.active && istype(get_area(F), /area/station))
 					return FALSE
 			return TRUE
 	ptl
@@ -226,8 +226,7 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 			else return 0
 
 	specialorder
-		explanation_text = "Fulfill an off-station order requisition."
-		var/completed = FALSE
+		explanation_text = "Fulfill an off-station order requisition or special order."
 		check_completion()
 			return length(shippingmarket.complete_orders)
 
@@ -343,34 +342,33 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	drinks
 		var/completed = FALSE
 		var/ids[DRINK_OBJ_COUNT]
+		var/static/list/blacklist = list(
+			/datum/reagent/fooddrink/alcoholic/bitters,
+			/datum/reagent/fooddrink/alcoholic/beer,
+			/datum/reagent/fooddrink/alcoholic/bojack,
+			/datum/reagent/fooddrink/alcoholic/bourbon,
+			/datum/reagent/fooddrink/alcoholic/champagne,
+			/datum/reagent/fooddrink/alcoholic/cider,
+			/datum/reagent/fooddrink/alcoholic/cocktail_grog,
+			/datum/reagent/fooddrink/alcoholic/curacao,
+			/datum/reagent/fooddrink/alcoholic/dbreath,
+			/datum/reagent/fooddrink/alcoholic/freeze,
+			/datum/reagent/fooddrink/alcoholic/gin,
+			/datum/reagent/fooddrink/alcoholic/mead,
+			/datum/reagent/fooddrink/alcoholic/moonshine,
+			/datum/reagent/fooddrink/alcoholic/ricewine,
+			/datum/reagent/fooddrink/alcoholic/rum,
+			/datum/reagent/fooddrink/alcoholic/tequila,
+			/datum/reagent/fooddrink/alcoholic/vermouth,
+			/datum/reagent/fooddrink/alcoholic/vodka,
+			/datum/reagent/fooddrink/alcoholic/wine,
+			/datum/reagent/fooddrink/alcoholic/wine/white
+		)
+		var/static/list/cocktails = concrete_typesof(/datum/reagent/fooddrink/alcoholic)-blacklist
 		New()
 			..()
-			var/list/cocktails = concrete_typesof(/datum/reagent/fooddrink/alcoholic)
-			var/list/blacklist = list(
-				/datum/reagent/fooddrink/alcoholic/bitters,
-				/datum/reagent/fooddrink/alcoholic/beer,
-				/datum/reagent/fooddrink/alcoholic/bojack,
-				/datum/reagent/fooddrink/alcoholic/bourbon,
-				/datum/reagent/fooddrink/alcoholic/champagne,
-				/datum/reagent/fooddrink/alcoholic/cider,
-				/datum/reagent/fooddrink/alcoholic/cocktail_grog,
-				/datum/reagent/fooddrink/alcoholic/curacao,
-				/datum/reagent/fooddrink/alcoholic/dbreath,
-				/datum/reagent/fooddrink/alcoholic/freeze,
-				/datum/reagent/fooddrink/alcoholic/gin,
-				/datum/reagent/fooddrink/alcoholic/mead,
-				/datum/reagent/fooddrink/alcoholic/moonshine,
-				/datum/reagent/fooddrink/alcoholic/ricewine,
-				/datum/reagent/fooddrink/alcoholic/rum,
-				/datum/reagent/fooddrink/alcoholic/tequila,
-				/datum/reagent/fooddrink/alcoholic/vermouth,
-				/datum/reagent/fooddrink/alcoholic/vodka,
-				/datum/reagent/fooddrink/alcoholic/wine,
-				/datum/reagent/fooddrink/alcoholic/wine/white
-			)
-			cocktails -= blacklist
 			var/list/names[DRINK_OBJ_COUNT]
-			for(var/i = 1, i <= DRINK_OBJ_COUNT, i++)
+			for(var/i in 1 to DRINK_OBJ_COUNT)
 				var/choiceType = pick(cocktails)
 				var/datum/reagent/fooddrink/instance =  new choiceType
 				names[i] = instance.name
@@ -390,7 +388,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 #define PIZZA_OBJ_COUNT 3
 ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef
-	var/list/blacklist = list(
+	var/static/list/blacklist = list(
 		/obj/item/reagent_containers/food/snacks/burger/humanburger,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
@@ -402,18 +400,16 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
 		/obj/item/reagent_containers/food/snacks/plant,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+		/obj/item/reagent_containers/food/snacks/soup
 	)
+	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)-blacklist-concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 	cake
 		var/choices[CAKE_OBJ_COUNT]
 		var/completed = FALSE
 		New()
 			..()
-			//Result is cached so it should just access the list after the first time
-			var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)
-			ingredients -= src.blacklist
-			ingredients -= concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 			var/list/names[CAKE_OBJ_COUNT]
-			for(var/i = 1, i <= CAKE_OBJ_COUNT, i++)
+			for(var/i in 1 to CAKE_OBJ_COUNT)
 				choices[i] = pick(ingredients)
 				var/choiceType = choices[i]
 				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
@@ -436,9 +432,6 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		var/completed = FALSE
 		New()
 			..()
-			var/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)
-			ingredients -= src.blacklist
-			ingredients -= concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 			var/list/names[PIZZA_OBJ_COUNT]
 			for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)
 				choices[i] = pick(ingredients)
@@ -465,7 +458,7 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 		medal_name = "Slow Burn"
 		check_completion()
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && !F.active && istype(get_area(F), /area/station))
+				if(F.z == Z_LEVEL_STATION && !F.active && istype(get_area(F), /area/station))
 					return FALSE
 			return TRUE
 
@@ -576,7 +569,7 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 		medal_name = "Where we're going, we won't need eyes to see"
 		check_completion()
 			for_by_tcl(F, /obj/dfissure_to)
-				if(F.z == 1) return 1
+				if(F.z == Z_LEVEL_STATION) return 1
 			return 0
 	onfire
 		explanation_text = "Escape on the shuttle alive while on fire with silver sulfadiazine in your bloodstream."
@@ -609,7 +602,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		medal_name = "Where we're going, we won't need eyes to see"
 		check_completion()
 			for_by_tcl(F, /obj/dfissure_to)
-				if(F.z == 1) return 1
+				if(F.z == Z_LEVEL_STATION) return 1
 			return 0
 	onfire
 		explanation_text = "Escape on the shuttle alive while on fire with silver sulfadiazine in your bloodstream."
