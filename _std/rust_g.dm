@@ -62,7 +62,7 @@
 
 #define rustg_file_read(fname) call(RUST_G, "file_read")(fname)
 #define rustg_file_exists(fname) call(RUST_G, "file_exists")(fname)
-#define rustg_file_write(text, fname) text2file(text, fname) //call(RUST_G, "file_write")(text, fname)
+#define rustg_file_write(text, fname) call(RUST_G, "file_write")(text, fname)
 #define rustg_file_append(text, fname) call(RUST_G, "file_append")(text, fname)
 
 #ifdef RUSTG_OVERRIDE_BUILTINS
@@ -103,7 +103,7 @@
 
 #define rustg_json_is_valid(text) (call(RUST_G, "json_is_valid")(text) == "true")
 
-#define rustg_log_write(fname, text, format) text2file(text, fname) //call(RUST_G, "log_write")(fname, text, format)
+#define rustg_log_write(fname, text, format) call(RUST_G, "log_write")(fname, text, format)
 /proc/rustg_log_close_all() return call(RUST_G, "log_close_all")()
 
 #define rustg_noise_get_at_coordinates(seed, x, y) call(RUST_G, "noise_get_at_coordinates")(seed, x, y)
