@@ -186,7 +186,7 @@
 
 		if(length(src.interior_area.contents) && shields <= 0 && prob(75))
 			var/atom/source = pick(src.interior_area.contents)
-			explosion_new(source, source, clamp(1, 5, 4-severity))
+			explosion_new(source, source, clamp(4 - severity, 1, 3))
 		return
 
 	New()
