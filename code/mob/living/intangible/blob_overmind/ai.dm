@@ -691,7 +691,7 @@
 		return 0
 
 	onBlobHit(var/obj/blob/B, var/mob/M)
-		if (!prob(clamp(100, (2000 - 100 * get_dist(B, 1, src)) / 13)))
+		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
 			return
 		if (!(M in attackers))
 			attackers += M
