@@ -46,7 +46,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			SPAWN_DBG(0)
 				santa_krampus_spawn(1)
 #endif
-	return
 
 // Might as well tweak Santa/Krampus respawn to make it use the universal player selection proc I wrote (Convair880).
 /proc/santa_krampus_spawn(var/which_one = 0, var/confirmation_delay = 1200)
