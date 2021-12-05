@@ -407,6 +407,7 @@
 	pixel_x = 1;
 	pixel_y = 41
 	},
+/obj/submachine/slot_machine,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "aaC" = (
@@ -3322,10 +3323,6 @@
 "aGP" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/secure/closet/security/equipment,
-/obj/machinery/phone/wall{
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -9005,7 +9002,6 @@
 /area/station/science/chemistry)
 "cpD" = (
 /obj/table/wood/auto,
-/obj/machinery/phone,
 /turf/simulated/floor/carpet/purple/fancy/junction/nw_e,
 /area/station/crew_quarters/hor)
 "cpH" = (
@@ -16651,12 +16647,10 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/table/auto,
 /obj/decal/tile_edge/line/grey{
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/machinery/phone,
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 4;
 	pixel_y = 41
@@ -16664,6 +16658,9 @@
 /obj/decal/poster/wallsign/stencil/right/i{
 	pixel_x = 13;
 	pixel_y = 41
+	},
+/obj/machinery/computer/arcade{
+	desc = "The VR representation of a popular computer game."
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
@@ -38783,10 +38780,6 @@
 	},
 /area/station/maintenance/outer/west)
 "llV" = (
-/obj/machinery/phone/wall{
-	pixel_x = -23;
-	pixel_y = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -47941,7 +47934,6 @@
 	},
 /area/station/hallway/primary/west)
 "nUf" = (
-/obj/machinery/phone,
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
@@ -54018,10 +54010,6 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/phone/wall{
-	pixel_x = -1;
-	pixel_y = -19
-	},
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
 "pHv" = (
@@ -55371,7 +55359,6 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/surgery/storage)
 "qbj" = (
-/obj/machinery/phone,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/emergency_injector/calomel{
 	pixel_y = -14
@@ -56622,7 +56609,6 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/phone,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -65667,10 +65653,6 @@
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "sXk" = (
-/obj/machinery/phone/wall{
-	pixel_x = -5;
-	pixel_y = 32
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -67664,6 +67646,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"tBh" = (
+/obj/machinery/phone/wall,
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/bridge)
 "tBC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -77676,6 +77662,7 @@
 	icon_state = "line1"
 	},
 /obj/table/auto,
+/obj/machinery/phone,
 /turf/simulated/floor/purpleblack{
 	dir = 5
 	},
@@ -78175,16 +78162,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/south_side)
-"wEs" = (
-/obj/disposalpipe/segment/brig{
-	dir = 1
-	},
-/obj/machinery/phone/wall{
-	pixel_x = 23;
-	pixel_y = 24
-	},
-/turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/arrivals)
 "wEy" = (
 /obj/stool/bench/auto,
 /turf/simulated/floor/blue/side{
@@ -114673,7 +114650,7 @@ rdj
 rdj
 mxj
 tGy
-wEs
+mkV
 mkV
 mkV
 dWY
@@ -117122,7 +117099,7 @@ nMc
 nHT
 nMc
 nMc
-prh
+tBh
 bbp
 vlq
 dqf
