@@ -806,7 +806,7 @@
 	New()
 		..()
 		if (isnum(src.radio_control))
-			radio_control = max(1000, min(round(radio_control), 1500))
+			radio_control = clamp(round(radio_control), 1000, 1500)
 			src.net_id = generate_net_id(src)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
 

@@ -785,7 +785,7 @@
 		if (cmptext(command, "-p") && initlist.len > 2)
 			. = text2num_safe(initlist[2])
 			if (isnum(.))
-				. = max(0, min(round(.), 64))
+				. = clamp(round(.), 0, 64)
 				var/list/possibleDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="s_telepad"))
 				if (istype(possibleDrivers))
 					for (var/x = 1, x <= possibleDrivers.len, x++)
@@ -2981,7 +2981,7 @@
 				return
 
 			if ("remove_report")
-				. = round( max(0, min(text2num_safe(datalist["filenum"]),127 ) ))
+				. = round( clamp(text2num_safe(datalist["filenum"]), 0, 127 ) )
 				if (!isnum(.))
 					return
 

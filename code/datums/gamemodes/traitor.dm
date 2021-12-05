@@ -36,7 +36,7 @@
 	var/token_wraith = 0
 
 	if(traitor_scaling)
-		num_traitors = max(1, min(round((num_players + randomizer) / pop_divisor), traitors_possible)) // adjust the randomizer as needed
+		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
 	if(num_traitors > 2 && prob(10))
 		num_traitors -= 2

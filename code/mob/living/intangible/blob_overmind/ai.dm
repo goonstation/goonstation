@@ -691,7 +691,7 @@
 		return 0
 
 	onBlobHit(var/obj/blob/B, var/mob/M)
-		if (!prob(max(1, min(100, (2000 - 100 * get_dist(B, src)) / 13))))
+		if (!prob(clamp(100, (2000 - 100 * get_dist(B, 1, src)) / 13)))
 			return
 		if (!(M in attackers))
 			attackers += M
@@ -703,7 +703,7 @@
 		counter = 0
 
 	onBlobDeath(var/obj/blob/B, var/mob/M)
-		if (!prob(max(1, min(100, (2000 - 100 * get_dist(B, src)) / 13))))
+		if (!prob(clamp(100, (2000 - 100 * get_dist(B, 1, src)) / 13)))
 			return
 		attacker = M
 		if (istype(B, /obj/blob/ribosome))

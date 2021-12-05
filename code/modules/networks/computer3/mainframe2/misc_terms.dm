@@ -1605,12 +1605,12 @@
 				if (data["_command"])
 					switch (lowertext(data["_command"]))
 						if ("add")
-							var/newFreq = "[round(max(1000, min(text2num_safe(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(clamp(text2num_safe(data["_freq"]), 1000, 1500))]"
 							if (newFreq && !(newFreq in frequencies))
 								add_frequency(newFreq)
 
 						if ("remove")
-							var/newFreq = "[round(max(1000, min(text2num_safe(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(clamp(text2num_safe(data["_freq"]), 1000, 1500))]"
 							if (newFreq && (newFreq in frequencies))
 								qdel(frequencies[newFreq])
 								frequencies -= newFreq
@@ -1625,7 +1625,7 @@
 							src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 
-				var/newFreq = round(max(1000, min(text2num_safe(data["_freq"]), 1500)))
+				var/newFreq = round(clamp(text2num_safe(data["_freq"]), 1000, 1500))
 				data -= "_freq"
 				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
@@ -4895,7 +4895,7 @@
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
-					src.pulses = max(0, min(round(duration), 255))
+					src.pulses = clamp(round(duration), 0, 255)
 				else
 					message_host("command=nack")
 					return
