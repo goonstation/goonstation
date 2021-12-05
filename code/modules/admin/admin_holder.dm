@@ -198,7 +198,7 @@
 		if (isnull(saved_toggle_ghost_respawns))
 			saved_toggle_ghost_respawns = 1
 		if (saved_toggle_ghost_respawns == 0 && ghost_respawns != 0)
-			src.owner:toggle_ghost_respawns ()
+			src.owner:toggle_ghost_respawns()
 		ghost_respawns = saved_toggle_ghost_respawns
 
 		var/saved_adminwho_alerts = AP["adminwho_alerts"]
