@@ -196,7 +196,7 @@
 	if(length(state) && blendm && ialpha && length(icolor))
 		F.icon_state = state
 		F.blend_mode = blendm
-		F.alpha = clamp(255, 0, ialpha)
+		F.alpha = clamp(ialpha, 0, 255)
 		F.color = icolor
 		F.layer = ilayer
 

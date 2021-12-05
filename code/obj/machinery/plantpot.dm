@@ -1446,7 +1446,7 @@
 			if(src.health >= growing.starthealth * 4)
 				// If we have excellent health, its a +20% chance for an extra harvest.
 				extra_harvest_chance += 20
-				extra_harvest_chance = clamp(100, 0, extra_harvest_chance)
+				extra_harvest_chance = clamp(extra_harvest_chance, 0, 100)
 				if(prob(extra_harvest_chance))
 					boutput(user, "<span class='notice'>The plant glistens with good health!</span>")
 					// We got the bonus so don't reduce harvests.

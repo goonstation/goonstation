@@ -179,7 +179,7 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = clamp(100, 0, DNA.endurance / 2)
+		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
 			playsound(POT, "sound/effects/exlow.ogg", 30, 1)

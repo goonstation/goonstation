@@ -154,7 +154,7 @@
 			src.current_pieces += input("Select Piece","Jumpsuit Maker") as anything in src.components
 			src.current_colors += input("Select Color","Jumpsuit Maker") as color
 			var/new_alpha = input("Input Alpha","Jumpsuit Maker") as num
-			new_alpha = clamp(255, 0, new_alpha)
+			new_alpha = clamp(new_alpha, 0, 255)
 			src.current_alphas += new_alpha
 
 		else if (href_list["wipe"])
