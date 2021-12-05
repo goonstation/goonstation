@@ -35,7 +35,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		return
 #ifdef XMAS
 	christmas_cheer += mod
-	christmas_cheer = max(0,min(christmas_cheer,100))
 
 	if (!xmas_respawn_lock)
 		if (christmas_cheer >= 80 && !santa_spawned)
