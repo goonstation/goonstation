@@ -112,7 +112,7 @@
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN_DBG(1 SECOND)
-		updateicon()
+		UpdateIcon()
 		update_solar_exposure()
 
 /obj/machinery/power/solar/attackby(obj/item/W, mob/user)
@@ -136,7 +136,7 @@
 			return
 	return
 
-/obj/machinery/power/solar/proc/updateicon()
+/obj/machinery/power/solar/update_icon()
 	if(status & BROKEN)
 		icon_state = "solar_panel-b"
 	else
@@ -150,12 +150,8 @@
 		sunfrac = 0
 		return
 	if(isnull(sun))	return
-	var/p_angle = abs((360+adir)%360 - (360+sun.angle)%360)
-	if(p_angle > 90)			// if facing more than 90deg from sun, zero output
-		sunfrac = 0
-		return
-
-	sunfrac = cos(p_angle) ** 2
+	var/p_angle = (360 + adir - sun.angle) % 360
+	sunfrac = max(cos(p_angle), 0) ** 2
 
 // Previous SOLARGENRATE was 1500 WATTS processed every 3.3 SECONDS.  This provides 454.54 WATTS every second
 // Adjust accordingly based on machine proc rate
@@ -179,13 +175,13 @@
 		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
 		if(adir != old_adir)
 			use_power(power_usage)
-			updateicon()
+			UpdateIcon()
 
 		update_solar_exposure()
 
 /obj/machinery/power/solar/proc/broken()
 	status |= BROKEN
-	updateicon()
+	UpdateIcon()
 	UnsubscribeProcess() // Broken solar panels need not process, supposedly there's no way to repair them?
 	return
 
@@ -341,22 +337,22 @@
 		return
 
 	if(href_list["dir"])
-		cdir = text2num(href_list["dir"])
+		cdir = text2num_safe(href_list["dir"])
 		SPAWN_DBG(1 DECI SECOND)
 			set_panels(cdir)
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
-			src.cdir = clamp((360+src.cdir+text2num(href_list["cdir"]))%360, 0, 359)
+			src.cdir = clamp((360+src.cdir+text2num_safe(href_list["cdir"]))%360, 0, 359)
 			SPAWN_DBG(1 DECI SECOND)
 				set_panels(cdir)
 		if(href_list["tdir"])
-			src.trackrate = clamp(src.trackrate+text2num(href_list["tdir"]), -7200,7200)
+			src.trackrate = clamp(src.trackrate+text2num_safe(href_list["tdir"]), -7200,7200)
 			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 
 	if(href_list["track"])
 		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
-		track = text2num(href_list["track"])
+		track = text2num_safe(href_list["track"])
 		if(track == 2)
 			var/obj/machinery/power/tracker/T = locate() in machine_registry[MACHINES_POWER]
 			if(T)
@@ -425,5 +421,5 @@
 		if(adir != ndir)
 			SPAWN_DBG(10+rand(0,15))
 				adir = (360+adir+clamp(ndir-adir,-10,10))%360
-				updateicon()
+				UpdateIcon()
 				update_solar_exposure()

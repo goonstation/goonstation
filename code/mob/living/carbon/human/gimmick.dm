@@ -381,7 +381,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/head_of_security, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/dirty_vest, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/paper/postcard/owlery, slot_l_hand)
 		//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, slot_ears)
 		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)

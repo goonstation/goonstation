@@ -78,9 +78,9 @@
 			var/traitor_name
 
 			if (traitor.current)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
+				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else
-				traitor_name = "[traitor.key] (character destroyed)"
+				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
 			if (traitor.special_role == ROLE_MINDSLAVE)
 				stuff_to_output += "<B>[traitor_name]</B> was a mindslave!"
@@ -215,9 +215,9 @@
 			var/traitor_name
 
 			if (traitor.current)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.key])"
+				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else
-				traitor_name = "[traitor.key] (character destroyed)"
+				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)
@@ -250,6 +250,7 @@
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 		if (ishellbanned(player)) continue //No treason for you
+		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
 
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
 			if (player.client.preferences.vars[get_preference_for_role(type)])

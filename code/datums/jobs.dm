@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/datum/job/command)
 
 
 #ifdef SUBMARINE_MAP
-	slot_jump = list(/obj/item/clothing/under/rank/head_of_securityold/fancy_alt)
+	slot_jump = list(/obj/item/clothing/under/rank/head_of_security/fancy_alt)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/requisition_token/security)
 	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
-	slot_jump = list(/obj/item/clothing/under/rank/head_of_securityold)
+	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_head = list(/obj/item/clothing/head/hos_hat)
@@ -864,7 +864,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/chefhat)
 	slot_suit = list(/obj/item/clothing/suit/chef)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver)
+	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/bell/kitchen)
 
 	New()
 		..()
@@ -1121,8 +1121,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		src.access = get_access("Head Surgeon")
-		return
+		src.access = get_access("Medical Director") - access_medical_director
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1620,7 +1619,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/device/camera_viewer(B)
+			new /obj/item/device/camera_viewer{network = "Zeta"}(B)
 			new /obj/item/clothing/head/helmet/camera(B)
 			new /obj/item/device/audio_log(B)
 			new /obj/item/clipboard/with_pen(B)
@@ -2139,7 +2138,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.traitHolder.addTrait("training_security")
 		if(prob(60))
 			var/aggressive = pick("eyebeams","cryokinesis")
-			var/defensive = pick("fire_resist","cold_resist","food_rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
+			var/defensive = pick("fire_resist","cold_resist","rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
 			var/datum/bioEffect/power/be = M.bioHolder.AddEffect(aggressive, do_stability=0)
 			if(aggressive == "eyebeams")
 				var/datum/bioEffect/power/eyebeams/eb = be
@@ -2235,7 +2234,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 */
 
 /datum/job/special/syndicate_operative
-	name = "Syndicate"
+	name = "Syndicate Operative"
 	wages = 0
 	limit = 0
 	linkcolor = "#880000"
@@ -2246,6 +2245,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list()
 	slot_belt = list()
 	spawn_id = 0
+	radio_announcement = FALSE
+	var/leader = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2255,12 +2256,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			M.real_name = "[syndicate_name()] Operative #[ticker.mode:agent_number]"
 			ticker.mode:agent_number++
 		else
-			M.real_name = "Syndicate Agent"
+			M.real_name = "Syndicate Operative [M.real_name]"
 
-		antagify(M, "Syndicate Agent", 0)
-
-		equip_syndicate(M)
+		antagify(M, ROLE_NUKEOP, 0)
+		equip_syndicate(M, leader)
 		return
+
+/datum/job/special/syndicate_operative/leader
+	name = "Syndicate Operative Commander"
+	leader = TRUE
 
 /datum/job/special/syndicate_weak
 	linkcolor = "#880000"

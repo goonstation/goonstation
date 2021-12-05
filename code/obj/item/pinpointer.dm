@@ -8,7 +8,7 @@
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	var/atom/target = null
+	var/tmp/atom/target = null
 	/// target type to search for in world
 	var/target_criteria = null
 	/// exact target reference

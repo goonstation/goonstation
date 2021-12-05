@@ -219,7 +219,7 @@
 	w_class = W_CLASS_SMALL
 	var/charges = 4
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
@@ -265,7 +265,7 @@
 			new_imp.implanted(M, user, override)
 
 			src.charges--
-			src.update_icon()
+			src.UpdateIcon()
 
 
 /obj/item/implant/spy_implant

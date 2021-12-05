@@ -1140,7 +1140,7 @@ proc/get_colosseum_message(var/name, var/message)
 			boutput(usr, "<span class='alert'>You currently have no secondary weapon.</span>")
 		update_indicators(INDICATOR_SECONDARY)
 
-	Bump(atom/A)
+	bump(atom/A)
 		//walk(src, 0)
 		flying = 0
 		src.set_dir(facing)
@@ -1672,7 +1672,7 @@ proc/get_colosseum_message(var/name, var/message)
 				. = ..()
 				C.simple.power += amount
 				C.update_indicators(INDICATOR_SHOTDAMAGE)
-				C.simple.update_icon()
+				C.simple.UpdateIcon()
 
 			t2
 				amount = 4

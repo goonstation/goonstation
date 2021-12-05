@@ -434,10 +434,16 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	proc/remove_light(var/obj/machinery/light/L)
 		if (light_manager)
 			light_manager.lights -= L
+
 	New()
 		..()
+		START_TRACKING
 		if(area_space_nopower(src))
 			power_equip = power_light = power_environ = 0
+
+	Del()
+		STOP_TRACKING
+		..()
 
 /area/space // the base area you SHOULD be using for space/ocean/etc.
 
@@ -1477,13 +1483,20 @@ ABSTRACT_TYPE(/area/station)
 	New()
 		..()
 		initial_structure_value = calculate_structure_value()
+		START_TRACKING
 #else
 	filler_turf = null
 
 	New()
 		..()
 		initial_structure_value = calculate_structure_value()
+		START_TRACKING
 #endif
+
+	Del()
+		STOP_TRACKING
+		..()
+
 ABSTRACT_TYPE(/area/station/atmos)
 /area/station/atmos
 	name = "Atmospherics"
@@ -3639,12 +3652,13 @@ ABSTRACT_TYPE(/area/mining)
 		return
 	if (!( src.fire ))
 		src.fire = 1
-		src.updateicon()
+		src.UpdateIcon()
 		src.mouse_opacity = 0
 		var/list/cameras = list()
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
-				F.icon_state = "fire1"
+				F.alarm_active = TRUE
+				F.UpdateIcon()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
@@ -3660,11 +3674,12 @@ ABSTRACT_TYPE(/area/mining)
 	if (src.fire)
 		src.fire = 0
 		src.mouse_opacity = 0
-		src.updateicon()
+		src.UpdateIcon()
 
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
-				F.icon_state = "fire0"
+				F.alarm_active = FALSE
+				F.UpdateIcon()
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
@@ -3673,7 +3688,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
-/area/proc/updateicon()
+/area/update_icon()
 	if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
@@ -3712,7 +3727,7 @@ ABSTRACT_TYPE(/area/mining)
 		var/obj/machinery/M = X
 		M?.power_change()
 
-	updateicon()
+	UpdateIcon()
 
 /**
   * Returns the current usage of the specified channel

@@ -35,6 +35,15 @@
 			else
 				src.keys[new_key] = act
 
+	proc/on_update(client/cl)
+		var/list/winset_commands = list()
+		for(var/action in global.action_macros)
+			var/macro_id = global.action_macros[action]
+			var/keybind = src.action_to_keybind(action)
+			if(keybind)
+				winset_commands += "base_macro.[macro_id].name=[keybind]"
+		winset(cl, null, jointext(winset_commands, ";"))
+
 	///Checks the input key and converts it to a usable format
 	///Wants input in the format "CTRL+F", as an example.
 	proc/parse_keybind(keybind)
@@ -90,6 +99,14 @@
 			return key_bitflag_to_stringdesc(num2text(action))
 		else //must be a string
 			return key_string_to_desc(action)
+
+	///Returns keybind for a given action
+	proc/action_to_keybind(action)
+		for(var/key_string in keys)
+			var/action_string = keys[key_string]
+			if(action_string == action)
+				return unparse_keybind(key_string)
+		return null
 
 	///Converts from code-readable action names to human-readable
 	///Example: "l_arm" to "Target Left Arm"

@@ -508,7 +508,7 @@
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					W.update_icon()
+					W.UpdateIcon()
 					W.update_neighbors()
 			return
 		var/obj/plan_marker/old = null
@@ -775,7 +775,7 @@
 				AT.icon_state = initial(AT.icon_state)
 				AT.set_dir(initial(AT.dir))
 				AT:allows_vehicles = initial(AT.allows_vehicles)
-				AT.update_icon()
+				AT.UpdateIcon()
 				AT.update_neighbors()
 			qdel(src)
 

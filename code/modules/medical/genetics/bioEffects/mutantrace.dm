@@ -150,6 +150,18 @@
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
 
+/datum/bioEffect/mutantrace/pug
+	name = "Canine Genetics"
+	desc = "The subject takes on the appearance of a fluffy pug."
+	id = "pug"
+	mutantrace_option = "Pug"
+	mutantrace_path = /datum/mutantrace/pug
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	msgGain = "You feel like barking up the wrong tree."
+	msgLose = "Dog treats no longer look appealing."
+	icon_state  = "pug"
+
 /datum/bioEffect/mutantrace/chicken
 	name = "Experimental Strain Epsilon Gamma Gamma #5"
 	desc = "For exclusive use under the supervision of Dr. Cox MD. Unauthorized modification, replication, and distribution prohibited."

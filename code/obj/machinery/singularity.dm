@@ -173,6 +173,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = 1
 			maxradius = INFINITY
+			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
+			message_admins("[src] has become loose at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -768,7 +770,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY 
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
 	var/power = 10
 	var/delay = 5
@@ -1160,11 +1162,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_array/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/collector_array/proc/updateicon()
-
+/obj/machinery/power/collector_array/update_icon()
 	if(status & (NOPOWER|BROKEN))
 		overlays = null
 	if(P)
@@ -1179,7 +1180,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		overlays += image('icons/obj/singularity.dmi', "on")
 
 /obj/machinery/power/collector_array/power_change()
-	updateicon()
+	UpdateIcon()
 	..()
 
 /obj/machinery/power/collector_array/process()
@@ -1192,11 +1193,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(P.air_contents.toxins <= 0)
 				src.active = 0
 				icon_state = "ca_deactive"
-				updateicon()
+				UpdateIcon()
 		else if(src.active == 1)
 			src.active = 0
 			icon_state = "ca_deactive"
-			updateicon()
+			UpdateIcon()
 		..()
 
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
@@ -1236,7 +1237,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		W.set_loc(src)
 		user.u_equip(W)
 		CU?.updatecons()
-		updateicon()
+		UpdateIcon()
 	else if (ispryingtool(W))
 		if(!P)
 			return
@@ -1245,7 +1246,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		Z.layer = initial(Z.layer)
 		src.P = null
 		CU?.updatecons()
-		updateicon()
+		UpdateIcon()
 	else
 		src.add_fingerprint(user)
 		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
@@ -1341,17 +1342,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(isnull(S1) || S1.disposed)
 			S1 = null
 
-		updateicon()
+		UpdateIcon()
 		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
 	else
-		updateicon()
+		UpdateIcon()
 		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
-/obj/machinery/power/collector_control/proc/updateicon()
-
+/obj/machinery/power/collector_control/update_icon()
 	if(magic != 1)
 
 		if(status & (NOPOWER|BROKEN))
@@ -1381,7 +1381,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		overlays += image('icons/obj/singularity.dmi', "cu sing")
 
 /obj/machinery/power/collector_control/power_change()
-	updateicon()
+	UpdateIcon()
 	..()
 
 /obj/machinery/power/collector_control/process(mult)
@@ -1430,7 +1430,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.active = 0
 		boutput(user, "You turn off the collector control.")
 		src.lastpower = 0
-		updateicon()
+		UpdateIcon()
 		return
 
 	if(src.active==0)
@@ -1589,21 +1589,21 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							boutput(usr, "<span class='alert'>\The [src] is already deactivated!</span>")
 			if("timer")
 				if(!timing)
-					var/tp = text2num(href_list["tp"])
+					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
 					src.time = min(max(round(src.time), 30), 600)
 				else
 					boutput(usr, "<span class='alert'>You can't change the time while the timer is engaged!</span>")
 		/*
 		if (href_list["time"])
-			src.timing = text2num(href_list["time"])
+			src.timing = text2num_safe(href_list["time"])
 			if(timing) processing_items |= src
 				src.icon_state = "portgen2"
 			else
 				src.icon_state = "portgen1"
 
 		if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
+			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
 			src.time = min(max(round(src.time), 60), 600)
 

@@ -119,6 +119,13 @@
 	icon_closed = "freezer"
 	weld_image_offset_Y = -1
 
+/obj/storage/crate/bloody
+	name = "dented crate"
+	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
+
 /obj/storage/crate/bartending
 	name = "bartending crate"
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
@@ -237,8 +244,10 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/misc/halloween.dmi'
-	icon_state = "crate"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 	var/triggered = 0
 
 	make_my_stuff()
@@ -255,20 +264,22 @@
 			return
 
 /obj/storage/crate/syndicate_surplus
-	var/ready = 0
+	var/nest_amt = 0
+	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
+
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
-			if (!ready)
-				spawn_items()
+		spawn_items()
 
 	proc/spawn_items(var/mob/owner)
-		ready = 1
+		#define NESTED_SCALING_FACTOR 0.8
+		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
+			src.nest_amt++
+			src.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the crate itself
 		var/telecrystals = 0
-		var/list/possible_items = list()
 
-		if (islist(syndi_buylist_cache))
+		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
 				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
@@ -285,11 +296,13 @@
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
+				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
 					item_datum.run_on_spawn(I, owner, TRUE)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
+		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/pizza
 	name = "pizza box"
@@ -592,7 +605,7 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
-		name = "Class Crate - Rocker"
+		name = "Class Crate - Bard"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,

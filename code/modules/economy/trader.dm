@@ -102,7 +102,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == I:pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
@@ -169,6 +169,8 @@
 			if (account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
+				if(!isnum_safe(quantity))
+					return
 				if (quantity < 1)
 					quantity = 0
 					return
@@ -206,7 +208,7 @@
 		else if (href_list["haggleb"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
 				if(N)
 					if(patience == N.haggleattempts)
@@ -245,7 +247,7 @@
 		else if (href_list["haggles"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggles"]) in goods_buy
 				if(N)
 					if(patience == N.haggleattempts)
@@ -345,7 +347,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I

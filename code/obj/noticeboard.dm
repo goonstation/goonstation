@@ -23,14 +23,14 @@
 			user.drop_item()
 			O.set_loc(src)
 			src.notices++
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
 			src.updateUsrDialog()
 		else
 			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
 
 
-/obj/noticeboard/proc/update_icon()
+/obj/noticeboard/update_icon()
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
@@ -59,7 +59,7 @@
 			P.add_fingerprint(usr)
 			src.add_fingerprint(usr)
 			src.notices--
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 	if(href_list["write"])
@@ -121,7 +121,7 @@
 			paper.info = book_info[2]
 			paper.fingerprintslast = book_info[3]
 	src.notices = length(src.contents)
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/noticeboard/persistent/proc/save_stuff()
 	src.data[src.persistent_id] = list()

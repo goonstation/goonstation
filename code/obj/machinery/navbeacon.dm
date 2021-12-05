@@ -69,10 +69,10 @@
 	// hide the object if turf is intact
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE
-		updateicon()
+		UpdateIcon()
 
 	// update the icon_state
-	proc/updateicon()
+	update_icon()
 		icon_state="navbeacon[open]"
 		alpha = invisibility ? 128 : 255
 
@@ -179,7 +179,7 @@
 
 			user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
-			updateicon()
+			UpdateIcon()
 
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
@@ -260,7 +260,7 @@ Transponder Codes:<UL>"}
 				src.add_dialog(usr)
 
 				if (href_list["freq"])
-					freq = sanitize_frequency(freq + text2num(href_list["freq"]))
+					freq = sanitize_frequency(freq + text2num_safe(href_list["freq"]))
 					set_frequency(freq)
 					updateDialog()
 

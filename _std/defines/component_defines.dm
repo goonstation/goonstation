@@ -29,6 +29,10 @@
 #define COMPONENT_NOTRANSFER 2
 
 
+/// arginfo handling TODO: document
+#define ARG_INFO(name, type, desc, default...)\
+	list(name, type, desc, ##default)
+
 // How multiple components of the exact same type are handled in the same datum
 
 /// old component is deleted (default)
@@ -71,6 +75,10 @@
 #define COMSIG_UPDATE_ICON "atom_update_icon"
 /// when something triggers Crossed by entering this atom's turf (/atom/movable)
 #define COMSIG_ATOM_CROSSED "atom_crossed"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 
 // ---- atom/movable signals ----
 
@@ -126,6 +134,10 @@
 /// Make disguiser devices turn off
 #define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
+// ---- drone beacon signal ----
+/// Triggers on destruction of a drone beacon
+#define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
@@ -152,7 +164,6 @@
 // ---- human signals ----
 
 // ---- mob signals ----
-
 /// When a client logs into a mob
 #define COMSIG_MOB_LOGIN "mob_login"
 /// When a client logs out of a mob
@@ -172,14 +183,23 @@
 /// sent when a mob throws something (target, params)
 #define COMSIG_MOB_THROW_ITEM "throw_item"
 
+/// sent when a mob throws something that lands nearby
+#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
+
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+
+/// When the mob vomits
+#define COMSIG_MOB_VOMIT "mob_vomit"
+
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+
+/// sent when defibbed status is added to a mob
+#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
-
 // ---- mob property signals ----
 /// When invisibility of a mob gets updated (old_value)
 #define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"

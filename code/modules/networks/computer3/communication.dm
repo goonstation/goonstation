@@ -70,6 +70,8 @@
 	input_text(text)
 		if(..())
 			return
+		if(isghostdrone(usr))
+			return
 
 		var/list/command_list = parse_string(text)
 		var/command = command_list[1]

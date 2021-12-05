@@ -147,7 +147,7 @@
 		. = ..()
 		src.fix_pulling_sprite()
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		. = ..()
 		src.fix_pulling_sprite()
 
@@ -298,13 +298,14 @@
 		access.uses = -1
 		access.implanted = 1
 
-	Bump(atom/movable/AM, yes = 1)
+	bump(atom/movable/AM, yes = 1)
 		. = ..()
 		if(src.contents && !istype(AM, /obj/table) && !ON_COOLDOWN(src, "bump_attack", 0.5 SECONDS))
 			var/obj/item/I = pick(src.contents)
 			if(istype(I))
 				src.last_item_bump = I
-				src.weapon_attack(AM, I, 1)
+				SPAWN_DBG(0)
+					src.weapon_attack(AM, I, 1)
 
 	death(gibbed)
 		src.vis_contents = null

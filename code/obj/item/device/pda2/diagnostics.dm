@@ -93,7 +93,7 @@
 				master.updateSelfDialog()
 
 		else if (href_list["range"])
-			var/rd = text2num(href_list["range"])
+			var/rd = text2num_safe(href_list["range"])
 			switch(range)
 				if(16)
 					range = 32
@@ -106,7 +106,7 @@
 					range = 32
 
 		else if (href_list["adj_freq"])
-			var/new_freq = sanitize_frequency_diagnostic(send_freq + text2num(href_list["adj_freq"]))
+			var/new_freq = sanitize_frequency_diagnostic(send_freq + text2num_safe(href_list["adj_freq"]))
 			adjust_frequency(send_freq, new_freq)
 			send_freq = new_freq
 
@@ -211,7 +211,7 @@
 			return
 
 		if (href_list["adj_freq"])
-			var/new_freq = sanitize_frequency_diagnostic(scan_freq + text2num(href_list["adj_freq"]))
+			var/new_freq = sanitize_frequency_diagnostic(scan_freq + text2num_safe(href_list["adj_freq"]))
 			adjust_frequency(scan_freq, new_freq)
 			scan_freq = new_freq
 
@@ -222,14 +222,14 @@
 			scan_freq = new_freq
 
 		else if (href_list["run"])
-			mode = text2num(href_list["run"])
+			mode = text2num_safe(href_list["run"])
 
 		else if (href_list["clear"])
 			if(result)
 				result.Cut()
 
 		else if (href_list["range"])
-			var/rd = text2num(href_list["range"])
+			var/rd = text2num_safe(href_list["range"])
 			switch(range)
 				if(16)
 					range = 32
@@ -354,7 +354,7 @@
 			return
 
 		if (href_list["adj_freq"])
-			send_freq = sanitize_frequency_diagnostic(send_freq + text2num(href_list["adj_freq"]))
+			send_freq = sanitize_frequency_diagnostic(send_freq + text2num_safe(href_list["adj_freq"]))
 			get_radio_connection_by_id(src.master, "sender").update_frequency(send_freq)
 
 		else if (href_list["set_freq"])
@@ -451,7 +451,7 @@
 
 
 		else if (href_list["range"])
-			var/rd = text2num(href_list["range"])
+			var/rd = text2num_safe(href_list["range"])
 			switch(range)
 				if(16)
 					range = 32

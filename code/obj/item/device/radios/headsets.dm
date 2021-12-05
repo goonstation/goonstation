@@ -341,6 +341,17 @@
 			..()
 			setProperty("disorient_resist_ear", 100)
 
+		pickup(mob/user)
+			if(isvirtual(user))
+				SPAWN_DBG(0)
+					var/obj/item/clothing/ears/plugs = new /obj/item/clothing/ears/earmuffs/earplugs(src.loc)
+					plugs.name = src.name
+					plugs.desc = src.desc
+					plugs.icon_state = src.icon_state
+					user.u_equip(src)
+					qdel(src)
+					user.put_in_hand_or_drop(plugs)
+
 	comtac
 		name = "Military Headset"
 		icon_state = "comtac"
@@ -410,7 +421,7 @@ Secure Frequency:
 	if ((usr.contents.Find(src) || in_interact_range(src, usr) && istype(src.loc, /turf)) || (usr.loc == src.loc) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["sfreq"])
-			var/new_frequency = sanitize_frequency(text2num("[secure_frequencies["h"]]") + text2num(href_list["sfreq"]))
+			var/new_frequency = sanitize_frequency(text2num_safe("[secure_frequencies["h"]]") + text2num_safe(href_list["sfreq"]))
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
 

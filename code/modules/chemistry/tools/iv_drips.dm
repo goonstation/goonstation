@@ -27,11 +27,11 @@
 	var/slashed = 0
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 		if (src.stand)
-			src.stand.update_icon()
+			src.stand.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents && src.reagents.total_volume)
 			var/iv_state = max(min(round((src.reagents.total_volume / src.reagents.maximum_volume) * 100, 10) / 10, 100), 0) //Look away, you fool! Like the sun, this section of code is harmful for your eyes if you look directly at it
 			if (!src.fluid_image)
@@ -60,17 +60,17 @@
 
 	pickup(mob/user)
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		src.mode = !(src.mode)
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ishuman(M))
@@ -232,7 +232,7 @@
 			var/list/examine_list = src.IV.examine()
 			return examine_list.Join("\n")
 
-	proc/update_icon()
+	update_icon()
 		if (!src.IV)
 			src.icon_state = "IVstand"
 			src.name = "\improper IV stand"
@@ -267,7 +267,7 @@
 			newIV.set_loc(src)
 			src.IV = newIV
 			newIV.stand = src
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else if (src.IV)
 			//src.IV.Attackby(W, user)
@@ -284,7 +284,7 @@
 			user.put_in_hand_or_drop(oldIV)
 			oldIV.stand = null
 			src.IV = null
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			return ..()

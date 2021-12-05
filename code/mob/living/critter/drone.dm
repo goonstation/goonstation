@@ -29,7 +29,7 @@
 		setup_loot_table()
 		name = "[initial(name)] [drone_designation]-[rand(num_max)]"
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		if(smashes_shit)
 			if(isobj(AM))
 				if (istype(AM, /obj/critter) || istype(AM, /obj/machinery/vehicle))

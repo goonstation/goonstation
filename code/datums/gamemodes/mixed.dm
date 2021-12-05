@@ -51,7 +51,7 @@
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
-#ifdef XMAS
+#if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types += ROLE_GRINCH
 	src.latejoin_antag_roles += ROLE_GRINCH
 #endif
@@ -272,7 +272,7 @@
 						if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 						newname = strip_html(newname)
 						traitor.current.real_name = newname
-						traitor.current.name = newname
+						traitor.current.UpdateName()
 
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)

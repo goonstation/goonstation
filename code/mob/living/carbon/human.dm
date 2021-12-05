@@ -7,7 +7,7 @@
 	icon_state = "blank"
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
-	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see update_icon.dm for the place where this change happens)
+	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see UpdateIcon.dm for the place where this change happens)
 
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
@@ -770,7 +770,7 @@
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
 
-	ticker.mode.check_win()
+	ticker.mode?.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -1074,7 +1074,7 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from)
+		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 		if(yeet)
 			new/obj/effect/supplyexplosion(I.loc)
 
@@ -1887,18 +1887,19 @@
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
-	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return 0
+	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return FALSE
+	if (!(src.has_hand(1) && src.has_hand(0))) return FALSE //gotta have two hands to two-hand
 	I.two_handed = twoHanded
 
 	if(I.two_handed)
 		if(src.l_hand == I)
 			if(src.r_hand != null)
 				I.two_handed = 0
-				return 0
+				return FALSE
 		else if(src.r_hand == I)
 			if(src.l_hand != null)
 				I.two_handed = 0
-				return 0
+				return FALSE
 		hud.set_visible(hud.lhand, 0)
 		hud.set_visible(hud.rhand, 0)
 		hud.set_visible(hud.twohandl, 1)
@@ -1929,16 +1930,24 @@
 				src.l_hand = null
 				src.r_hand = I
 	src.update_inhands()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/has_any_hands()
-	. = ..()
-	if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-		. = TRUE
-	else if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-		. = TRUE
-	else if (istype(src.l_hand, /obj/item/magtractor) || istype(src.r_hand, /obj/item/magtractor))
-		. = TRUE
+	return src.has_hand(1) || src.has_hand(0)
+
+/mob/living/carbon/human/proc/has_hand(var/hand = 1)
+	switch(hand)
+		if (1)//Left
+			if (src.limbs && src.limbs.l_arm && !istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
+				return TRUE
+			if (istype(src.l_hand, /obj/item/magtractor))
+				return TRUE
+		if (0)//Right
+			if (src.limbs && src.limbs.r_arm && !istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
+				return TRUE
+			if (istype(src.r_hand, /obj/item/magtractor))
+				return TRUE
+	return FALSE
 
 /mob/living/carbon/human/put_in_hand(obj/item/I, hand)
 	if (!istype(I))
@@ -2964,7 +2973,7 @@
 		return 1
 	return .
 
-/mob/living/carbon/human/Bump(atom/movable/AM as mob|obj)
+/mob/living/carbon/human/bump(atom/movable/AM as mob|obj)
 	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
@@ -3469,7 +3478,7 @@
 			RL.colorize_limb_icon()
 			RL.set_skin_tone()
 		if (H.organHolder?.head)
-			H.organHolder.head.update_icon()
+			H.organHolder.head.UpdateIcon()
 		if (H.organHolder?.tail)
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)

@@ -78,7 +78,7 @@
 
 	proc/update_value(var/mob/living/C)
 		last_update = TIME
-		if(abs(C.stamina - last_val) * 32 / C.stamina_max <= 1) return //No need to change anything
+		if(C.stamina_max <= 0 || abs(C.stamina - last_val) * 32 / C.stamina_max <= 1) return //No need to change anything
 		else last_val = C.stamina
 
 		if(C.stamina < 0)

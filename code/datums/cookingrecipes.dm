@@ -1077,6 +1077,36 @@
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 
+/datum/cookingrecipe/pie_strawberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/strawberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/strawberry
+
+/datum/cookingrecipe/pie_cherry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/cherry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/cherry
+
+/datum/cookingrecipe/pie_blueberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/blueberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/blueberry
+
+/datum/cookingrecipe/pie_raspberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/raspberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/raspberry
+
+/datum/cookingrecipe/pie_blackberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/blackberry
+
 /datum/cookingrecipe/pie_apple
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/plant/apple
@@ -1106,13 +1136,6 @@
 	item2 = /obj/item/reagent_containers/food/snacks/plant/pumpkin
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pumpkin
-
-/datum/cookingrecipe/pie_strawberry
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/plant/strawberry
-	amt2 = 2
-	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/pie/strawberry
 
 /datum/cookingrecipe/pie_cream
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
@@ -1761,6 +1784,6 @@
 			lipstick.font_color = C.font_color
 			lipstick.color_name = hex2color_name(lipstick.font_color)
 			lipstick.name = "[lipstick.color_name] lipstick"
-			lipstick.update_icon()
+			lipstick.UpdateIcon()
 		return lipstick
 

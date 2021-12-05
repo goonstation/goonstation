@@ -207,7 +207,7 @@
 							boutput(usr, "You insert [I].")
 
 			else if (href_list["dipsw"] && (status & NOPOWER))
-				var/switchNum = text2num(href_list["dipsw"])
+				var/switchNum = text2num_safe(href_list["dipsw"])
 				if (switchNum < 1 || switchNum > 8)
 					return 1
 

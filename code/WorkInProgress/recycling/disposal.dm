@@ -82,7 +82,7 @@
 				last = curr
 				curr = curr.transfer(src)
 				if(!curr)
-					last.expel(src, loc, dir)
+					last.expel(src, get_turf(loc), dir)
 
 				if(!(count--))
 					active = 0
@@ -158,7 +158,7 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location.assume_air(gas)  // vent all gas to turf
+		location?.assume_air(gas)  // vent all gas to turf
 		gas = null
 		return
 
@@ -252,13 +252,14 @@
 	// change visibility status and force update of icon
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		updateicon()
+		UpdateIcon()
 
 	// update actual icon_state depending on visibility
 	// if invisible, set alpha to half the norm
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
-	proc/updateicon()
+	update_icon()
+
 		icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255
 		return
@@ -337,7 +338,7 @@
 		if(H)
 			// holder was present
 			H.active = 0
-			var/turf/T = src.loc
+			var/turf/T = get_turf(src)
 			if(T.density)
 				// broken pipe is inside a dense turf (wall)
 				// this is unlikely, but just dump out everything into the turf in case
@@ -887,7 +888,6 @@
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-					newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
@@ -989,7 +989,6 @@
 	throwforce = 0
 	initial_volume = 1000
 	var/loaf_factor = 1
-	var/loaf_recursion = 1
 	var/processing = 0
 
 	New()
@@ -1171,22 +1170,23 @@
 			else
 				return fromdir
 
-	updateicon()
+	update_icon()
+
 		icon_state = "pipe-mech[active]"//[invisibility ? "f" : null]"
 		alpha = invisibility ? 128 : 255
 		return
 
 	proc/toggleactivation()
 		src.active = !src.active
-		updateicon()
+		UpdateIcon()
 
 	proc/activate()
 		src.active = 1
-		updateicon()
+		UpdateIcon()
 
 	proc/deactivate()
 		src.active = 0
-		updateicon()
+		UpdateIcon()
 
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)

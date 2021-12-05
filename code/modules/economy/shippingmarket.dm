@@ -575,7 +575,7 @@
 	if (!trans) return
 
 	var/amount = input(usr, "How much?", "Funds", 0) as null|num
-	if (!amount) return
+	if (!isnum_safe(amount)) return
 
 	switch(trans)
 		if("Payroll")
