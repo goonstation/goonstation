@@ -270,7 +270,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(maxhealth, 0, health+change)
 		if(health == 0)
 			setOn(0)
 			repairstate = 1
@@ -530,7 +530,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(maxhealth, 0, health+change)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -600,7 +600,7 @@ var/obj/manta_speed_lever/mantaLever = null
 							actions.start(new /datum/action/bar/icon/magnettether_fix(src, I, 30), user)
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(maxhealth, 0, health+change)
 		if (broken == 1)
 			return
 		if(health == 0)

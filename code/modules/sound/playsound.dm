@@ -6,7 +6,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		return
 
 	var/admin_key = admin_key(src)
-	vol = max(min(vol, 100), 0)
+	vol = clamp(vol, 0, 100)
 
 	var/sound/uploaded_sound = new()
 	uploaded_sound.file = S

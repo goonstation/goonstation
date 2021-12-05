@@ -186,7 +186,7 @@
 
 		if(length(src.interior_area.contents) && shields <= 0 && prob(75))
 			var/atom/source = pick(src.interior_area.contents)
-			explosion_new(source, source, max(min(1,4-severity), 5))
+			explosion_new(source, source, clamp(1, 5, 4-severity))
 		return
 
 	New()
@@ -485,7 +485,7 @@
 	proc/adjustShields(var/amount, var/type = D_SPECIAL)
 		shields_last = shields
 		shields += amount
-		shields = max(min(shields, shields_max), 0)
+		shields = clamp(shields, 0, shields_max)
 
 		var/percent_shields = max(min((shields / shields_max), 1), 0)
 		if(shields_last > 0 && shields <= 0) //Collapse
