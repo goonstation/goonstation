@@ -311,7 +311,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 				if (!caller.useracc || !caller.useracc.user_file)
 					return ESIG_NOUSR
 
-				caller.useracc.user_file.fields["group"] = min(255, max(data["group"], 0))
+				caller.useracc.user_file.fields["group"] = clamp(0, data["group"], 255)
 				return ESIG_SUCCESS
 
 			if (DWAINE_COMMAND_ULIST) //List current users.

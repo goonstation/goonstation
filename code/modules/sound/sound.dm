@@ -48,7 +48,7 @@
 			var/datum/gas_mixture/air = T.return_air()
 			if (air)
 				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
-				attenuate = min(1, max(0, attenuate))
+				attenuate = clamp(attenuate, 0, 1)
 
 	return attenuate
 

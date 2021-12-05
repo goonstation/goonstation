@@ -81,7 +81,7 @@
 
 /obj/vehicle/skateboard/proc/adjustSickness(var/mod)
 	var/oldSick = sickness
-	sickness = min(100, max(0, sickness + mod))
+	sickness = clamp(sickness + mod, 0, 100)
 	var/howSick = round(sickness / 5)
 	if(howSick > round(oldSick / 5))
 		trickPopup(howSick)

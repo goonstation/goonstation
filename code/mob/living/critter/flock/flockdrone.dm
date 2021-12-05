@@ -308,7 +308,7 @@
 	var/obj/item/I = absorber.item
 
 	if(I)
-		var/absorb = min(src.absorb_rate, max(0, I.health))
+		var/absorb = clamp(I.health, 0, src.absorb_rate)
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
 		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
