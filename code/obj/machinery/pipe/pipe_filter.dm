@@ -206,7 +206,7 @@
 			return
 		if (src.allowed(usr) || src.emagged || src.bypassed)
 			if (href_list["fp"])
-				src.f_per = clamp(0, round(src.f_per + text2num_safe(href_list["fp"])), src.maxrate)
+				src.f_per = clamp(round(src.f_per + text2num_safe(href_list["fp"])), 0, src.maxrate)
 			else if (href_list["tg"])
 				// toggle gas
 				src.f_mask ^= text2num_safe(href_list["tg"])
