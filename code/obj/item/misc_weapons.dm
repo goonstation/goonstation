@@ -117,8 +117,8 @@
 			var/mob/living/carbon/human/H = user
 			age_modifier = 30 - H.bioHolder.age
 
-		if(user.gender == MALE) playsound(user, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
-		else playsound(user, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
+		if(user.gender == MALE) playsound(user, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, clamp(1.2, 0.7, 1.0 + age_modifier/60))
+		else playsound(user, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, clamp(1.4, 0.7, 1.0 + age_modifier/50))
 		..()
 	else
 		if (user.a_intent == INTENT_HELP)

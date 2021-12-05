@@ -179,7 +179,7 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = max(0,min(100, DNA.endurance / 2))
+		var/thud_prob = clamp(100, 0, DNA.endurance / 2)
 
 		if (prob(thud_prob))
 			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
@@ -260,7 +260,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = max(0,min(100,DNA.potency))
+		var/fart_prob = clamp(100, 0, DNA.potency)
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")

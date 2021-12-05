@@ -220,9 +220,9 @@ proc/is_teleportation_allowed(var/turf/T)
 							message_host("command=nack")
 							return
 
-						src.realx = round(  max(0, min(coords.destx, world.maxx+1)) )
-						src.realy = round(  max(0, min(coords.desty, world.maxy+1)) )
-						src.realz = round(  max(0, min(coords.destz, world.maxz+1)) )
+						src.realx = round(  clamp(coords.destx, 0, world.maxx+1) )
+						src.realy = round(  clamp(coords.desty, 0, world.maxy+1) )
+						src.realz = round(  clamp(coords.destz, 0, world.maxz+1) )
 						message_host("command=ack")
 
 					if ("send")

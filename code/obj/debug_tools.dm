@@ -52,8 +52,8 @@
 
 		var/alpha_initial = P.initial_alpha + rand((0 - P.initial_alpha_variance),P.initial_alpha_variance)
 		var/alpha_destination = P.destination_alpha + rand((0 - P.destination_alpha_variance),P.destination_alpha_variance)
-		par.alpha = max(0,min(alpha_initial,255))
-		var/end_alpha = max(0,min(alpha_destination,255))
+		par.alpha = clamp(alpha_initial, 0, 255)
+		var/end_alpha = clamp(alpha_destination, 0, 255)
 
 		var/matrix/M = turn(matrix(), rand(P.destination_turn_min, P.destination_turn_max))
 		M.Scale(rand(P.destination_scale_min,P.destination_scale_max))
@@ -154,7 +154,7 @@
 			src.current_pieces += input("Select Piece","Jumpsuit Maker") as anything in src.components
 			src.current_colors += input("Select Color","Jumpsuit Maker") as color
 			var/new_alpha = input("Input Alpha","Jumpsuit Maker") as num
-			new_alpha = max(0,min(255,new_alpha))
+			new_alpha = clamp(255, 0, new_alpha)
 			src.current_alphas += new_alpha
 
 		else if (href_list["wipe"])

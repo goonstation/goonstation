@@ -1201,7 +1201,7 @@
 	if (..())
 		return
 
-	src.misstep_chance = max(0,min(misstep_chance + amount,100))
+	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
 /mob/living/proc/get_static_image()
 	if (src.disposed)

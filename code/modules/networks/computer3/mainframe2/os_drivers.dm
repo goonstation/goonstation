@@ -2117,13 +2117,13 @@
 			var/newCover = data["cover"]
 
 			if (!isnull(newEquip))
-				commandString += "&equip=[round(max(0, min(newEquip, 3)))]"
+				commandString += "&equip=[round(clamp(newEquip, 0, 3))]"
 
 			if (!isnull(newLight))
-				commandString += "&light=[round(max(0, min(newLight, 3)))]"
+				commandString += "&light=[round(clamp(newLight, 0, 3))]"
 
 			if (!isnull(newEnviron))
-				commandString += "&environ=[round(max(0, min(newEnviron, 3)))]"
+				commandString += "&environ=[round(clamp(newEnviron, 0, 3))]"
 
 			if (!isnull(newCover))
 				commandString += "&cover=[newCover ? "1" : "0"]"
@@ -2155,13 +2155,13 @@
 				var/newCover = text2num_safe(datalist["cover"])
 
 				if (!isnull(newEquip))
-					apcEquip = round(max(0, min(newEquip, 3)))
+					apcEquip = round(clamp(newEquip, 0, 3))
 
 				if (!isnull(newLight))
-					apcLight = round(max(0, min(newLight, 3)))
+					apcLight = round(clamp(newLight, 0, 3))
 
 				if (!isnull(newEnviron))
-					apcEnviron = round(max(0, min(newEnviron, 3)))
+					apcEnviron = round(clamp(newEnviron, 0, 3))
 
 				if (newCover)
 					apcCover = 1
@@ -2407,7 +2407,7 @@
 			if ("poke") //Set an arbitrary (device-specific) configuration value on the device.
 				if (!isnull(data["field"]) && !isnull(data["value"]))
 					if (isnum(data["value"]))
-						data["value"] = round(max(1, min(data["value"], 400))) // 400 is highest stimulus value for heater
+						data["value"] = round(clamp(data["value"], 1, 400)) // 400 is highest stimulus value for heater
 
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
@@ -2434,7 +2434,7 @@
 				if (!isnum(pulseDuration))
 					pulseDuration = 1
 
-				pulseDuration = max(1, min(pulseDuration, 255))
+				pulseDuration = clamp(pulseDuration, 1, 255)
 				message_device("command=pulse&duration=[pulseDuration]")
 				return ESIG_SUCCESS
 

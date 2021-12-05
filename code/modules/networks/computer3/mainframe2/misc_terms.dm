@@ -3731,7 +3731,7 @@
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
-					duration = round(max(1, min(duration, 255)))
+					duration = round(clamp(duration, 1, 255))
 				else
 					src.active = 0
 					message_host("command=nack")
@@ -4171,7 +4171,7 @@
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration) && !src.active)
-					duration = round(max(1, min(duration, 255)))
+					duration = round(clamp(duration, 1, 255))
 				else
 					src.active = 0
 					message_host("command=nack")

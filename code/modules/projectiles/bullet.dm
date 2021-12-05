@@ -1033,7 +1033,7 @@ datum/projectile/bullet/autocannon
 				sign = 1
 
 			var/relang = arccos(dot)
-			P.rotateDirection(max(-max_turn_rate, min(max_turn_rate, sign * relang)))
+			P.rotateDirection(clamp(max_turn_rate, -max_turn_rate, sign * relang))
 
 		pod_seeking
 			name = "pod-seeking grenade"

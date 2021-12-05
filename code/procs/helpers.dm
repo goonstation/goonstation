@@ -1570,7 +1570,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	if (!isnum(armor) || !isnum(damage) || damage <= 0)
 		return 0
 	// [13:22] <volundr> it would be ( (100 - armorpercentage) / 100 ) * damageamount
-	armor = max(0,min(armor,100))
+	armor = clamp(armor, 0, 100)
 	. = ((100 - armor) / 100) * damage
 
 /proc/get_filtered_atoms_in_touch_range(var/atom/center,var/filter)

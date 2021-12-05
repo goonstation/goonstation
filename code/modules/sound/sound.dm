@@ -301,7 +301,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
-			S.pan = max(-100, min(100, dx/8.0 * 100))
+			S.pan = clamp(100, -100, dx/8.0 * 100)
 
 		src << S
 

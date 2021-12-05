@@ -1486,13 +1486,13 @@ var/zapLimiter = 0
 					var/newCover = text2num_safe(data["cover"])
 
 					if (!isnull(newEquip))
-						equipment = round(max(0, min(newEquip, 3)))
+						equipment = round(clamp(newEquip, 0, 3))
 
 					if (!isnull(newLight))
-						lighting = round(max(0, min(newLight, 3)))
+						lighting = round(clamp(newLight, 0, 3))
 
 					if (!isnull(newEnviron))
-						environ = round(max(0, min(newEnviron, 3)))
+						environ = round(clamp(newEnviron, 0, 3))
 
 					if (newCover)
 						coverlocked = 1

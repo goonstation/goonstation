@@ -529,7 +529,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(1000, 0, t)
 		var/points
 
 		if (t < 514)

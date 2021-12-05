@@ -816,7 +816,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (M.client)
 				if(isturf(source))
 					var/dx = source.x - M.x
-					S.pan = max(-100, min(100, dx/8.0 * 100))
+					S.pan = clamp(100, -100, dx/8.0 * 100)
 				M << S
 
 	attack_self(mob/user as mob)
