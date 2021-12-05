@@ -488,7 +488,7 @@
 	get_desc()
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
-			var/t_ind = max(min(round(keyed/10),10),0)
+			var/t_ind = clamp(round(keyed/10), 0, 10)
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)

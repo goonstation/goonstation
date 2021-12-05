@@ -25,7 +25,7 @@
 
 	onUpdate()
 		if (bar)
-			var/complete = max(min((sCurr / sMax), 1), 0)
+			var/complete = clamp((sCurr / sMax), 0, 1)
 			var/matrix/newMtx = matrix(complete, 1, MATRIX_SCALE)
 			animate( bar, transform = newMtx, pixel_x = -nround( ((30 - (30 * complete)) / 2) ), time = 3 )
 		//..()

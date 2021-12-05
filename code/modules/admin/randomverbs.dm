@@ -814,7 +814,7 @@
 			var/new_age = input(usr, "Please select type in age: [minage]-[maxage]", "Polymorph Menu")  as num
 
 			if(new_age)
-				src.tf_holder.age = max(min(round(text2num(new_age)), maxage), minage)
+				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
 			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )

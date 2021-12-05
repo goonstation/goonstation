@@ -913,7 +913,7 @@ proc/create_fluff(datum/mind/target)
 	var/max_escapees
 
 	set_up()
-		max_escapees = max(min(5, round(ticker.minds.len / 10)), 1)
+		max_escapees = clamp(5, 1, round(ticker.minds.len / 10))
 		explanation_text = "Force the mortals to remain stranded on this structure. No more than [max_escapees] may escape!"
 
 	check_completion()

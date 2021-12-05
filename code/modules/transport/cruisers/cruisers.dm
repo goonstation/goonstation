@@ -487,7 +487,7 @@
 		shields += amount
 		shields = clamp(shields, 0, shields_max)
 
-		var/percent_shields = max(min((shields / shields_max), 1), 0)
+		var/percent_shields = clamp((shields / shields_max), 0, 1)
 		if(shields_last > 0 && shields <= 0) //Collapse
 			if(shield_obj.icon_state != "shield_collapse")
 				internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
@@ -646,15 +646,15 @@
 		return
 
 	proc/updateIndicators()
-		var/percent_health = max(min((health / max(1,health_max)), 1), 0)
+		var/percent_health = clamp((health / max(1,health_max)), 0, 1)
 		bar_top.transform = matrix(percent_health, 1, MATRIX_SCALE)
 		bar_top.pixel_x = -nround( ((81 - (81 * percent_health)) / 2) )
 
-		var/percent_shields = max(min((shields / shields_max), 1), 0)
+		var/percent_shields = clamp((shields / shields_max), 0, 1)
 		bar_middle.transform = matrix(percent_shields, 1, MATRIX_SCALE)
 		bar_middle.pixel_x = -nround( ((81 - (81 * percent_shields)) / 2) )
 
-		var/percent_power = max(min((power_used_last / max(1,power_produced_last)), 1), 0)
+		var/percent_power = clamp((power_used_last / max(1,power_produced_last)), 0, 1)
 		bar_bottom.transform = matrix(percent_power, 1, MATRIX_SCALE)
 		bar_bottom.pixel_x = -nround( ((81 - (81 * percent_power)) / 2) )
 
