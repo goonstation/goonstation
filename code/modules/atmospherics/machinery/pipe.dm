@@ -392,8 +392,8 @@ obj/machinery/atmospherics/pipe
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "You repair the [src.name].", null)
-
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "", null)
+				user.visible_message("<span class='notice'>[user] repairs the [src.name].</span>", "<span class='notice'>You repair the [src.name].</span>")
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
 				if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
