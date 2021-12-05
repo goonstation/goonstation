@@ -530,13 +530,14 @@
 			hitMob.do_disorient(stamina_damage = 35, weakened = 0, stunned = 0, disorient = 30, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
 			src.icon_state = "[base_icon_state]-spin-right"
 		else
 			src.icon_state = "[base_icon_state]-spin-left"
-		..()
+		. = ..()
 
 	attack_hand(mob/user as mob)
 		..()
