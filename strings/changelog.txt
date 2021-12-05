@@ -1,4 +1,9 @@
 
+(t)sun dec 05 21
+(u)Flaborized
+(p)6519
+(e)🎨|sprites
+(*)Resprited the cyborg HUD elements.
 (t)sat dec 04 21
 (u)Arthur Holiday
 (p)6380
