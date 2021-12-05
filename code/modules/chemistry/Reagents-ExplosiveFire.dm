@@ -100,7 +100,7 @@ datum
 					var/radius = clamp(volume*0.15, 0, 8)
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
-						radius = min(max(0,(volume/covered.len)*0.15),8)
+						radius = clamp((volume/covered.len)*0.15, 0, 8)
 						fireflash_s(t, radius, rand(3000, 6000), 500)
 				holder?.del_reagent(id)
 				return
@@ -170,7 +170,7 @@ datum
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
 				for(var/turf/t in covered)
-					radius = min(max(0,(volume/covered.len)*0.15),8)
+					radius = clamp((volume/covered.len)*0.15, 0, 8)
 					affected += fireflash_sm(t, radius, rand(3000, 6000), 500)
 
 				for (var/turf/T in affected)
@@ -679,7 +679,7 @@ datum
 						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
 							caused_fireflash = 1
 						for(var/turf/turf in covered)
-							var/radius = min(max(min_radius, ((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier)), max_radius)
+							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
 							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
 							if(holder && volume/length(covered) >= explosion_threshold)
 								if(holder.my_atom)
@@ -693,7 +693,7 @@ datum
 									message_admins("Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
 									logTheThing("bombing", null, null, "Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
 
-								var/boomrange = min(max(min_explosion_radius, round((volume/covered.len) * volume_explosion_radius_multiplier + volume_explosion_radius_modifier)), max_explosion_radius)
+								var/boomrange = clamp(round((volume/covered.len) * volume_explosion_radius_multiplier + volume_explosion_radius_modifier), min_explosion_radius, max_explosion_radius)
 								explosion(holder.my_atom, turf, -1,-1,boomrange,1)
 				if (caused_fireflash)
 					holder?.del_reagent(id)

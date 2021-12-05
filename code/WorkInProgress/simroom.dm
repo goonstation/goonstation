@@ -393,7 +393,7 @@
 				if(src.allowed(usr))
 					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
-					src.time = min(max(round(src.time), 0), 300)
+					src.time = clamp(0, round(src.time), 300)
 		src.updateUsrDialog()
 	return
 

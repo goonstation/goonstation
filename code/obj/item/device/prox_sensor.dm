@@ -162,7 +162,7 @@
 		if (href_list["tp"])
 			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
-			src.time = min(max(round(src.time), 0), 600)
+			src.time = clamp(0, round(src.time), 600)
 
 		if (href_list["close"])
 			usr.Browse(null, "window=prox")

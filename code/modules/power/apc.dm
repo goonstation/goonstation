@@ -1031,7 +1031,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num_safe(href_list["eqp"])), 3)
+			var/val = clamp(text2num_safe(href_list["eqp"]), 1, 3)
 
 			// Fix for exploit that allowed synthetics to perma-stun intruders by cycling the APC
 			// ad infinitum (activating power/turrets for one tick) despite missing power cell (Convair880).
@@ -1053,7 +1053,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num_safe(href_list["lgt"])), 3)
+			var/val = clamp(text2num_safe(href_list["lgt"]), 1, 3)
 
 			// Same deal.
 			if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -1073,7 +1073,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num_safe(href_list["env"])), 3)
+			var/val = clamp(text2num_safe(href_list["env"]), 1, 3)
 
 			// Yep.
 			if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
