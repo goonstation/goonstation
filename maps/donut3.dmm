@@ -27444,7 +27444,6 @@
 /area/station/hallway/primary/east)
 "hJJ" = (
 /obj/table/round/auto,
-/obj/machinery/phone,
 /obj/machinery/light_switch/auto,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
@@ -30578,6 +30577,12 @@
 	dir = 1
 	},
 /area/station/medical/medbay/treatment)
+"iGL" = (
+/obj/machinery/phone/wall{
+	pixel_y = 5
+	},
+/turf/simulated/wall/auto/jen,
+/area/station/ranch)
 "iGT" = (
 /obj/cable{
 	d1 = 4;
@@ -38419,6 +38424,10 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = -30;
+	pixel_y = 4
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -130636,7 +130645,7 @@ mfs
 mfs
 mfs
 mfs
-mfs
+iGL
 sFl
 fBI
 uNZ
