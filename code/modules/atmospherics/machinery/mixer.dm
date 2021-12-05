@@ -278,7 +278,7 @@ obj/machinery/atmospherics/mixer
 			if ("set_ratio")
 				var/number = text2num(signal.data["parameter"])
 				if (number && isnum(number))
-					number = clamp(0, number, 100)
+					number = clamp(number, 0, 100)
 					node1_concentration = number/100
 					node2_concentration = (100-number)/100
 

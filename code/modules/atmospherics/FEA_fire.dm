@@ -254,7 +254,7 @@
 			return 0
 
 		for (var/mob/living/L in loc)
-			L.update_burning(clamp(5, temperature / 60, 33))
+			L.update_burning(clamp(temperature / 60, 5, 33))
 
 		perform_exposure()
 

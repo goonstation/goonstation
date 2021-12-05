@@ -272,7 +272,7 @@
 					return
 				var/datum/signal/newsignal = get_free_signal()
 
-				percentage = clamp(1, percentage, 500)
+				percentage = clamp(percentage, 1, 500)
 
 				switch(lowertext(signal.data["system"]))
 					if("thrusters")

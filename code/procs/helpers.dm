@@ -2269,7 +2269,7 @@ var/global/list/allowed_restricted_z_areas
 	if (new_tone == "Custom...")
 		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
 		if (!isnull(tone))
-			tone = 35 - clamp(1, tone, 220) // range is 34 to -194
+			tone = 35 - clamp(tone, 1, 220) // range is 34 to -194
 			//new_tone = rgb(220 + tone, 220 + tone, 220 + tone)
 			new_tone = blend_skintone(tone,tone,tone)
 		else

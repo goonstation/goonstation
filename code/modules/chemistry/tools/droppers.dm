@@ -153,7 +153,7 @@
 
 	proc/modify_transfer_amt(var/diff)
 		src.transfer_amount += diff
-		src.transfer_amount = clamp(0.1, transfer_amount, 10) // Sanity check.
+		src.transfer_amount = clamp(transfer_amount, 0.1, 10) // Sanity check.
 		src.amount_per_transfer_from_this = src.transfer_amount
 		return
 
