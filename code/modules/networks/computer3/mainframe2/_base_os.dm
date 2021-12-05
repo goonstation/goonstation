@@ -692,7 +692,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 					change_metadata(target_datum, "owner", copytext(data["owner"], 1, 16))
 
 				if (isnum(data["group"]))
-					change_metadata(target_datum, "group", min(max(0, data["group"]), 255))
+					change_metadata(target_datum, "group", clamp(data["group"], 0, 255))
 
 				return ESIG_SUCCESS
 

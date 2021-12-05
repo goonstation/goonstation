@@ -96,7 +96,7 @@ obj/machinery/atmospherics/binary/volume_pump
 
 			if("set_transfer_rate")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), air1.volume)
+				number = clamp(0, number, air1.volume)
 
 				transfer_rate = number
 

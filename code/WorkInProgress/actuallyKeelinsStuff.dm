@@ -2564,7 +2564,7 @@ Returns:
 
 	process()
 		if ((!( src.current ) || src.loc == src.current))
-			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
+			src.current = locate(clamp(1, src.x + src.xo, world.maxx), clamp(1, src.y + src.yo, world.maxy), src.z)
 		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 			qdel(src)
 			return

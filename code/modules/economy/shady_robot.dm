@@ -344,7 +344,7 @@
 		if (href_list["duration"])
 			var/input = input("Duration in seconds (1-600)?","Temporary ID") as num
 			if(isnum_safe(input))
-				src.card_duration = min(max(input,1),600)
+				src.card_duration = clamp(1, input, 600)
 
 			updatecardprice()
 			href = "temp_card=1"

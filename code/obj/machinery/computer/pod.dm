@@ -143,7 +143,7 @@
 			return
 		if (href_list["power"])
 			var/t = text2num_safe(href_list["power"])
-			t = min(max(0.25, t), 16)
+			t = clamp(t, 0.25, 16)
 			if (src.connected)
 				src.connected.power = t
 		else

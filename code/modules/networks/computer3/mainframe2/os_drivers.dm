@@ -1132,7 +1132,7 @@
 				if (!isnum(stat_time))
 					return
 
-				src.nuke_time = min(max(stat_time, 0), 512)
+				src.nuke_time = clamp(0, stat_time, 512)
 
 				src.nuke_active = (datalist["active"] == "1")
 
