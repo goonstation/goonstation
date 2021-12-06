@@ -377,39 +377,43 @@
 	var/increment
 	var/pod_is_large = false
 	var/core_inserted = false
-	var/image/purge
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state= "SPS_empty"
 
 	Fire(var/mob/user,var/shot_dir_override = -1)
+		if(ON_COOLDOWN(src, "fire", firerate))
+			return
 		if(!core_inserted)
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
-		if(ON_COOLDOWN(src, "fire", firerate))
-			return
 		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
 		logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
+		purge.dir = ship.facing
+		if(!is_cardinal(purge.dir))
+			if(prob(50))
+				purge.dir &= NORTH | SOUTH
+			else
+				purge.dir &= EAST | WEST
+		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
 			pod_is_large = true
-			purge = image('icons/misc/retribution/320x320.dmi', "SPS_o_large", "layer" = EFFECTS_LAYER_4)
+			flick("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
 			pod_is_large = false
-			purge = image('icons/misc/retribution/320x320.dmi', "SPS_o_small", "layer" = EFFECTS_LAYER_4)
+			flick("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
-		purge.plane = PLANE_SELFILLUM
-		ship.UpdateOverlays(purge, "purge")
 
-		SPAWN_DBG(12)
+		SPAWN_DBG(1.2 SECONDS)
 			var/destruction_point_x
 			var/destruction_point_y
-			SPAWN_DBG(8)
-				ship.UpdateOverlays(null, "purge")
+			ship.vis_contents -= purge
 			playsound(ship.loc, "sound/weapons/laserultra.ogg", 100, 1)
-			switch (ship.dir)
-				if (1)	//N
+			switch (purge.dir)
+				if (NORTH)
 					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x
 						destruction_point_y = ship.loc.y + increment
@@ -419,7 +423,7 @@
 							destruction_point_x = ship.loc.x + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 
-				if (4)	//E
+				if (EAST)
 					for(increment in 1 to 4)
 						destruction_point_x = ship.loc.x + increment
 						destruction_point_y = ship.loc.y
@@ -429,7 +433,7 @@
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 
-				if (2)	//S
+				if (SOUTH)
 					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x
 						destruction_point_y = ship.loc.y - increment
@@ -438,7 +442,7 @@
 							destruction_point_x = ship.loc.x + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 
-				if (8)	//W
+				if (WEST)
 					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x - increment
 						destruction_point_y = ship.loc.y
@@ -446,8 +450,6 @@
 							purge_sps(destruction_point_x, destruction_point_y)
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
-
-				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
 			return
 		return
 
