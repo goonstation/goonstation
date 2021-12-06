@@ -1315,7 +1315,7 @@ About the new airlock wires panel:
 			if (aiControlDisabled == 1 || cant_emag)
 				return
 			var/mob/silicon = AM
-			if (isnull(silicon.mind))
+			if (!silicon.mind)
 				return
 
 		src.last_bump = world.time
