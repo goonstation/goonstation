@@ -242,12 +242,14 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	SPAWN_DBG(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
 
-		if(!src.link)
+		/*if(!src.link)
 			var/turf/T = get_turf(src)
 			var/obj/machinery/power/data_terminal/test_link = locate() in T
 			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 				src.link = test_link
-				src.link.master = src
+				src.link.master = src*/
+
+		update_terminal()
 
 		for (var/mob/living/silicon/hivebot/eyebot/E in mobs)
 			if (!(E in available_ai_shells))
@@ -306,6 +308,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.anchored = !src.anchored
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
+		src.update_terminal()
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
@@ -828,6 +831,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.update_appearance()
 
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
+
+	for(var/target in src.terminals)
+		src.terminals.Remove(target)
+		src.post_status(target, "command", "term_message", "data", "Alert: Connected AI has been shut down. Disconnecting...")
+		SPAWN_DBG(0.3 SECONDS)
+			src.post_status(target, "command","term_disconnect")
+	// we do this after we disconnect connected terminal computers since we dont need to alert the ai of each disconnected terminal
+	if(gibbed) // and yeah people *can* reconnect if we aren't gibbed, but this is a way to tell them "we're dead, no need to stay connected"
+		src.update_terminal(disconnect = TRUE)
 
 	if (src.mind)
 		src.mind.register_death()
@@ -1362,6 +1374,29 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 
 	..()
+
+/// Handles connecting and disconnecting the AI from data terminals. Calling with disconnect or tryConnect is not required, but useful if you only want one to happen
+/mob/living/silicon/ai/proc/update_terminal(var/disconnect = FALSE, var/tryConnect = FALSE)
+
+	if((tryConnect || src.anchored) && !disconnect)
+		var/turf/T = get_turf(src)
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
+			src.link = test_link
+			src.link.master = src
+	else
+		for(var/target in src.terminals) // otherwise they'll still be sorta connected
+			src.terminals.Remove(target)
+			textToPlayer("--- Connection lost with [target]!")
+			SPAWN_DBG(0.3 SECONDS)
+				src.post_status(target, "command","term_message", "data", "Alert: Terminal connection disrupted. Disconnecting...")
+			SPAWN_DBG(0.4 SECONDS)
+				src.post_status(target, "command","term_disconnect")
+		SPAWN_DBG(2 SECONDS) //so our messages send before the data terminal connection closes
+			src.link?.master = null
+			src.link = null
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
