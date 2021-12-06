@@ -1,4 +1,11 @@
 
+(t)sun dec 05 21
+(u)pali
+(*)You no longer need to mash space to shoot in pods. Holding it down is enough now!
+(u)Flaborized
+(p)6519
+(e)🎨|sprites
+(*)Resprited the cyborg HUD elements.
 (t)sat dec 04 21
 (u)Arthur Holiday
 (p)6380

@@ -1902,7 +1902,7 @@ DEFINE_FLOORS(grasslush/thin,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material.triggerOnHit(src, C, user, 1)
+		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 

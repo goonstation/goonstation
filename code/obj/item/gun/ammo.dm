@@ -743,33 +743,6 @@
 	caliber = 1.0
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-//1.12
-/obj/item/ammo/bullets/antisingularity
-	sname = "Singularity buster rocket"
-	name = "Singularity buster rocket"
-	amount_left = 1
-	max_amount = 1
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "regularrocket"
-	ammo_type = new /datum/projectile/bullet/antisingularity
-	caliber = 1.12
-	w_class = W_CLASS_NORMAL
-	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
-
-/obj/item/ammo/bullets/mininuke
-	sname = "Miniature nuclear warhead"
-	name = "Miniature nuclear warhead"
-	amount_left = 1
-	max_amount = 1
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "mininuke"
-	ammo_type = new /datum/projectile/bullet/mininuke
-	caliber = 1.12
-	w_class = W_CLASS_NORMAL
-	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
-
 //1.57
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
@@ -949,6 +922,32 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
 	ammo_type = new /datum/projectile/bullet/rpg
+	caliber = 1.58
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = 1
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/antisingularity
+	sname = "Singularity buster rocket"
+	name = "Singularity buster rocket"
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "regularrocket"
+	ammo_type = new /datum/projectile/bullet/antisingularity
+	caliber = 1.58
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = 1
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+/obj/item/ammo/bullets/mininuke
+	sname = "Miniature nuclear warhead"
+	name = "Miniature nuclear warhead"
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "mininuke"
+	ammo_type = new /datum/projectile/bullet/mininuke
 	caliber = 1.58
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
