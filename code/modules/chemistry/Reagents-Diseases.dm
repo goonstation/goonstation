@@ -104,7 +104,7 @@ datum
 		disease/green_mucus // Flu
 			name = "green Mucus"
 			id = "green mucus"
-			description = "Mucus. Thats green."
+			description = "Mucus. That's green."
 			reagent_state = LIQUID
 			minimum_to_infect = 0
 			fluid_r = 215
