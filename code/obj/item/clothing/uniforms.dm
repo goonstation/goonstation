@@ -27,37 +27,6 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
 
-// Experimental composite jumpsuit
-
-/obj/item/clothing/under/experimental
-	name = "experimental hi-tech jumpsuit"
-	desc = "The very height of fabric technology."
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_experiment.dmi'
-	icon_state = "white"
-	item_state = "white"
-	var/list/component_images = list("jacket","sleeves","pants", "stripe_sides", "zipper")
-	var/list/component_colors = list("#FFFFFF","#FFFFFF","#FFFFFF", "#FFFFFF","#666666")
-	var/list/component_alphas = list(255,255,255,255,255)
-	var/list/images = list()
-
-	New()
-		..()
-		update_images()
-
-	proc/update_images()
-		var/list_counter = 0
-		src.images = list()
-
-		for (var/C as anything in src.component_images)
-			list_counter++
-			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
-			suit_image.icon_state = C
-			suit_image.alpha = src.component_alphas[list_counter]
-			suit_image.color = src.component_colors[list_counter]
-			src.images += suit_image
-
-		src.color = src.component_colors[1]
-
 
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
