@@ -180,6 +180,8 @@
 		..()
 
 	proc/xmasify()
+		if(istype(src, /obj/machinery/door/airlock/pyro/glass/windoor))
+			return
 		var/obj/decal/garland/garland = new(src.loc)
 		if(src.dir != NORTH)
 			garland.dir = src.dir
