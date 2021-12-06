@@ -80,11 +80,10 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/smes/proc/updateicon()
-
+/obj/machinery/power/smes/update_icon()
 	if (status & BROKEN)
 		ClearAllOverlays()
 		return
@@ -168,7 +167,7 @@
 
 	// only update icon if state changed
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		UpdateIcon()
 
 	src.updateDialog()
 
@@ -199,7 +198,7 @@
 	loaddemand = lastout - excess
 
 	if (clev != chargedisplay())
-		updateicon()
+		UpdateIcon()
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
@@ -246,11 +245,11 @@
 			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("toggle-output")
 			src.online = !src.online
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("set-input")
 			var/target = params["target"]

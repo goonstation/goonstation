@@ -12309,8 +12309,6 @@
 "aGE" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
-/obj/decal/garland,
-/obj/decal/wreath,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -12352,8 +12350,6 @@
 "aGM" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
-/obj/decal/garland,
-/obj/decal/wreath,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -12762,15 +12758,6 @@
 	dir = 8
 	},
 /area/station/maintenance/northeast)
-"aHF" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/garland,
-/obj/disposalpipe/segment/cargo{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
 "aHG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15878,30 +15865,17 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/bar)
 "aPa" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/bar)
-"aPb" = (
-/obj/decal/wreath,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/bar)
-"aPc" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/garland,
-/turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "aPd" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/decal/poster/wallsign/bar,
-/obj/decal/garland,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "aPe" = (
@@ -16098,19 +16072,9 @@
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
-"aPu" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/wreath,
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/kitchen)
 "aPv" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
-/obj/decal/xmas_lights,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "aPw" = (
@@ -16137,12 +16101,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
-"aPz" = (
-/obj/grille/steel,
-/obj/window/auto/reinforced,
-/obj/decal/xmas_lights,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/bar)
 "aPB" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/machinery/sleeper/compact{
@@ -28599,6 +28557,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/xmastree/ephemeral,
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw,
 /area/station/hallway/secondary/east)
 "bss" = (
@@ -59695,7 +59654,6 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/decal/poster/wallsign/bar,
-/obj/decal/garland,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
@@ -60240,6 +60198,11 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
+"vBF" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/bar)
 "vCJ" = (
 /obj/cable{
 	d2 = 2;
@@ -111680,7 +111643,7 @@ bKa
 bTh
 bQe
 bTh
-aPu
+bKb
 bTp
 bZU
 cbC
@@ -112269,7 +112232,7 @@ aUe
 aUe
 dnu
 bdj
-aHF
+btN
 aLF
 blV
 brP
@@ -112279,7 +112242,7 @@ hQk
 byK
 bBC
 bEB
-aPc
+vBF
 bKc
 bNs
 bMB
@@ -112592,7 +112555,7 @@ bZY
 xoU
 lcE
 cet
-aPz
+vBF
 aaa
 aaa
 aaa
@@ -112894,7 +112857,7 @@ bZY
 xoU
 lcE
 ceu
-aPz
+vBF
 aaa
 aaa
 aaa
@@ -113196,7 +113159,7 @@ bZZ
 cbF
 cds
 cev
-aPz
+vBF
 aaa
 aaa
 aaa
@@ -113779,7 +113742,7 @@ aUj
 aIB
 bax
 bdm
-aHF
+btN
 aLK
 blZ
 brR
@@ -113789,7 +113752,7 @@ pwb
 byN
 bBH
 bEF
-aPc
+vBF
 bKh
 ekU
 bQk
@@ -115297,7 +115260,7 @@ brV
 btK
 bwk
 byS
-aPb
+bBM
 bEK
 bHs
 bHs

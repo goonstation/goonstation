@@ -239,6 +239,28 @@ const ParticleNumListEntry = (props, context) => {
   );
 };
 
+const ParticleListEntry = (props, context) => {
+  const { value, tooltip, name } = props;
+  const { act } = useBackend(context);
+
+  let valArr = value ? Object.keys(value).map((key) => value[key]) : [];
+
+  return (
+    <Tooltip position="bottom" content={tooltip}>
+      <Input
+        value={valArr.join(',')}
+        width="250px"
+        onInput={(e, val) => act('modify_particle_value', {
+          new_data: {
+            name: name,
+            value: val,
+            type: 'list',
+          },
+        })} />
+    </Tooltip>
+  );
+};
+
 const ParticleColorEntry = (props, context) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend(context);
@@ -289,7 +311,7 @@ const particleEntryMap = {
   bound1: { type: 'numlist', tooltip: "Minimum particle position in x,y,z space" },
   bound2: { type: 'numlist', tooltip: "Maximum particle position in x,y,z space" },
   gravity: { type: 'numlist', tooltip: "Constant acceleration applied to all particles in this set (pixels per squared tick)" },
-  gradient: { type: 'string', tooltip: "Color gradient used, if any" },
+  gradient: { type: 'list', tooltip: "Color gradient used, if any" },
   transform: { type: 'matrix', tooltip: "Transform done to all particles, if any (can be higher than 2D)" },
   lifespan: { type: 'float', tooltip: "Maximum life of the particle, in ticks" },
   fade: { type: 'float', tooltip: "Fade-out time at end of lifespan, in ticks" },
@@ -316,6 +338,7 @@ const ParticleDataEntry = (props, context) => {
     float: <ParticleFloatEntry {...props} />,
     string: <ParticleTextEntry {...props} />,
     numlist: <ParticleNumListEntry {...props} />,
+    list: <ParticleListEntry {...props} />,
     color: <ParticleColorEntry {...props} />,
     icon: <ParticleIconEntry {...props} />,
     generator: <ParticleGeneratorEntry {...props} />,

@@ -91,7 +91,7 @@
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = 0
 	// layer = MOB_LAYER+1
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	var/fov = 2
 	var/obj/machinery/security_monitor/owner
 	var/image/blank

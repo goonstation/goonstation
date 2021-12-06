@@ -2051,7 +2051,7 @@
 		if(istype(APC))
 			oldstate = APC.lighting
 			APC.lighting = 0
-			APC.updateicon()
+			APC.UpdateIcon()
 			APC.update()
 
 
@@ -2060,7 +2060,7 @@
 		var/obj/machinery/power/apc/APC = owner
 		if(istype(APC) && APC.lighting != 0)
 			APC.lighting = 0
-			APC.updateicon()
+			APC.UpdateIcon()
 			APC.update()
 
 
@@ -2069,5 +2069,5 @@
 		var/obj/machinery/power/apc/APC = owner
 		if(istype(APC))
 			APC.lighting = oldstate
-			APC.updateicon()
+			APC.UpdateIcon()
 			APC.update()

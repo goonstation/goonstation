@@ -310,7 +310,26 @@
 				if (I)
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
+					// you can write multiline macros with \, please god don't write 400 character macros on one line
+					#define autoequip_slot(slot, var_name)\
+						if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
+						{\
+							master.u_equip(I);\
+							var/obj/item/C = master.var_name;\
+							if (C)\
+							{\
+								/*master.u_equip(C);*/\
+								C.unequipped(master);\
+								src.remove_item(C);\
+								master.var_name = null;\
+								if(!master.put_in_hand(C))\
+								{\
+									master.drop_from_slot(C, get_turf(C))\
+								}\
+							}\
+							master.force_equip(I, master.slot);\
+							return\
+						}
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)

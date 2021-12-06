@@ -335,6 +335,7 @@ toxic - poisons
 		cost = 3
 		shot_number = 3
 
+
 /datum/projectile/bullet/nine_mm_NATO
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -456,7 +457,7 @@ toxic - poisons
 		if(T)
 			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
 			ammo_dropped.amount_left = 1
-			ammo_dropped.update_icon()
+			ammo_dropped.UpdateIcon()
 			ammo_dropped.pixel_x += rand(-12,12)
 			ammo_dropped.pixel_y += rand(-12,12)
 

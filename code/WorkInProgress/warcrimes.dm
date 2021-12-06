@@ -608,7 +608,7 @@ Urs' Hauntdog critter
 		H.food_effects = list("food_all","food_brute")
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
-		H.update_icon()
+		H.UpdateIcon()
 
 		qdel(src)
 

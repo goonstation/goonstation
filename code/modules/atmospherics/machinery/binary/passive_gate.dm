@@ -81,7 +81,7 @@ datum/pump_ui/passive_gate_ui/set_value(val)
 
 datum/pump_ui/passive_gate_ui/toggle_power()
 	our_gate.on = !our_gate.on
-	our_gate.update_icon()
+	our_gate.UpdateIcon()
 
 datum/pump_ui/passive_gate_ui/is_on()
 	return our_gate.on

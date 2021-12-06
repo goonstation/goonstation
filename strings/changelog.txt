@@ -1,5 +1,46 @@
 
+(t)sat dec 04 21
+(u)Arthur Holiday
+(p)6380
+(e)⚖|balance
+(+)Polymorph now has an action bar.
+(t)thu dec 02 21
+(u)pali
+(*)You can now slide glasses across tables. Just stand next to a table and click on another table far away with a drinking glass in hand
+(t)wed dec 01 21
+(u)sovexe
+(p)6836
+(e)|
+(*)Refactored a bunch of update_icon procs. Please report if you see any bugs such as invisible items.
+(u)Tarmunora
+(e)⚖|balance
+(*)booster enzyme now exothermic and depletes faster.
+(u)Gannets
+(p)6843
+(e)🎨|sprites
+(*)The merry month of Spacemas is here! Come contribute a spacemas tree decoration on the forums!  https://forum.ss13.co/showthread.php?tid=17615
+(u)Flourish
+(e)🆕|feature
+(*)Send a letter to Spacebe - er, Santa! Find their helper under the Spacemas tree.
+(u)pali
+(*)When entering your PIN into things the input popup now defaults to your actual PIN. The future is now.
+(t)mon nov 29 21
+(u)Momoberry
+(p)6258
+(e)🆕⚖⛔|feature, balance, removal
+(+)Modifies the polymorph List for wizard, adds naming convention to poly victims.
+(u)Sovexe
+(p)6832
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Fire alarm status lights now shine through the darkness
+(+)Toggling the lights / power off no longer breaks fire alarms
+(u)pali
+(*)The say popup (on pressing T) should now appear instantly. But as a downside the typing chatbubbly might now persist if you cancel the popup. Please report any other bugs related to speaking and/or chat bubbles.
+(*)The status bar which shows what you are hovering over has now been squished next to the command bar. Also its colour now respects dark mode.
 (t)sun nov 28 21
+(u)Flaborized + Flourish
+(e)🆕|feature
+(*)Pugs can now choose from several different color variants in character setup using the "Special Style" option. Sprites by Flab!
 (u)Nexusuxen
 (p)6685
 (e)🗺|mapping

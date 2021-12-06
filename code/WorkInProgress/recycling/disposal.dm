@@ -252,13 +252,14 @@
 	// change visibility status and force update of icon
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		updateicon()
+		UpdateIcon()
 
 	// update actual icon_state depending on visibility
 	// if invisible, set alpha to half the norm
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
-	proc/updateicon()
+	update_icon()
+
 		icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255
 		return
@@ -1169,22 +1170,23 @@
 			else
 				return fromdir
 
-	updateicon()
+	update_icon()
+
 		icon_state = "pipe-mech[active]"//[invisibility ? "f" : null]"
 		alpha = invisibility ? 128 : 255
 		return
 
 	proc/toggleactivation()
 		src.active = !src.active
-		updateicon()
+		UpdateIcon()
 
 	proc/activate()
 		src.active = 1
-		updateicon()
+		UpdateIcon()
 
 	proc/deactivate()
 		src.active = 0
-		updateicon()
+		UpdateIcon()
 
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)

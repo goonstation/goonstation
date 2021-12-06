@@ -1672,7 +1672,7 @@ proc/get_colosseum_message(var/name, var/message)
 				. = ..()
 				C.simple.power += amount
 				C.update_indicators(INDICATOR_SHOTDAMAGE)
-				C.simple.update_icon()
+				C.simple.UpdateIcon()
 
 			t2
 				amount = 4

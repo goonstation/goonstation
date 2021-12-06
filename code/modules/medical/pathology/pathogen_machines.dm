@@ -1745,7 +1745,7 @@
 		..()
 		flags |= NOSPLASH
 
-	proc/update_icon()
+	update_icon()
 		src.overlays -= src.icon_beaker
 		if (src.target)
 			src.overlays += src.icon_beaker
@@ -1756,7 +1756,7 @@
 				src.target.set_loc(src.loc)
 				user.put_in_hand_or_eject(src.target)
 				src.target = null
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 	attackby(var/obj/item/O as obj, var/mob/user as mob)
@@ -1773,7 +1773,7 @@
 					var/datum/pathogen/PT = Q.pathogens[pick(Q.pathogens)] 	// more than one pathogen in a petri dish won't grow properly anyway
 					medium = PT.body_type.growth_medium
 				boutput(user, "You insert the [O] into the machine.")
-				src.update_icon()
+				src.UpdateIcon()
 		else if(istype(O, /obj/item/reagent_containers/glass/vial))
 			var/obj/item/reagent_containers/glass/vial/V = O
 			if(V.reagents.total_volume)

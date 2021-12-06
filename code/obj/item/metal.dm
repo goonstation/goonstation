@@ -109,7 +109,7 @@ MATERIAL
 					G.health = G.health_max
 					G.set_density(1)
 					G.destroyed = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")

@@ -907,7 +907,7 @@
 					continue
 				src.load_item(M)
 				amtload++
-			W:satchel_updateicon()
+			W:UpdateIcon()
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 
@@ -1071,7 +1071,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == ID.pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = ID
