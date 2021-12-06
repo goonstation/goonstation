@@ -678,8 +678,9 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 				out_y = clamp(T_y + dist, 1, world.maxy)
 			else if (dir == SOUTH)
 				out_y = clamp(T_y - dist, 1, world.maxy)
+		else
+			out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 		out_x = clamp(rand(T_x - dist, T_x + dist), 1, world.maxx)
-		out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 	T = locate(out_x, out_y, T_z)
 	if(isturf(T))
 		return T
