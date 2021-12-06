@@ -1,5 +1,10 @@
 
 (t)sun dec 05 21
+(u)Nexusuxen
+(p)6502
+(e)|
+(*)TermOS messaging with the AI has been significantly improved. See the PR or minor changelog for more details!
+(+)TermOS messaging for AIs now include audio feedback, properly route everything to shells and eye, with a new window to log and view your conversations! Accessed with the 'View Message Log' AI command.
 (u)pali
 (*)You no longer need to mash space to shoot in pods. Holding it down is enough now!
 (u)Flaborized
