@@ -127,8 +127,9 @@
 
 	var/const/singing_prefix = "%"
 
-/mob/living/New()
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	..()
+	init_preferences?.copy_to(src, usr, ignore_randomizer)
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
