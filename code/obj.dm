@@ -92,6 +92,9 @@
 			return 0
 		return 1
 
+	proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
+		return
+
 	proc/onDestroy()
 		qdel(src)
 		return
@@ -132,7 +135,8 @@
 		tag = null
 		mats = null
 		if (artifact && !isnum(artifact))
-			artifact:holder = null
+			qdel(artifact)
+			artifact = null
 		remove_dialogs()
 		..()
 

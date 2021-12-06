@@ -182,10 +182,14 @@
 	if (!( ticker ))
 		return
 	if (src.mode) // accessing crew manifest
-		var/crew = ""
-		for(var/datum/db_record/t as anything in data_core.general.records)
-			crew += "[t["name"]] - [t["rank"]]<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[crew]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
+
+		var/stored = ""
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
+
 	else
 		var/header = "<b>Identification Card Modifier</b><br><i>Please insert the cards into the slots</i><br>"
 
@@ -223,6 +227,10 @@
 		if (src.authenticated && src.modify)
 			body += "Registered: <a href='?src=\ref[src];reg=1'>[target_owner]</a><br>"
 			body += "Assignment: <a href='?src=\ref[src];assign=Custom Assignment'>[replacetext(target_rank, " ", "&nbsp")]</a><br>"
+			body += "Pronouns: <a href='?src=\ref[src];pronouns=next'>[src.modify.pronouns?.name || "-"]</a>"
+			if(!isnull(src.modify.pronouns))
+				body += " <a href='?src=\ref[src];pronouns=remove'>X</a>"
+			body += "<br>"
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
@@ -385,12 +393,22 @@
 			boutput(usr, "You can't modify an ID without an ID inserted to modify. Once one is in the modify slot on the computer, you can log in.")
 	if(href_list["access"] && href_list["allowed"])
 		if(src.authenticated)
-			var/access_type = text2num(href_list["access"])
-			var/access_allowed = text2num(href_list["allowed"])
+			var/access_type = text2num_safe(href_list["access"])
+			var/access_allowed = text2num_safe(href_list["allowed"])
 			if(access_type in get_all_accesses())
 				src.modify.access -= access_type
 				if(access_allowed == 1)
 					src.modify.access += access_type
+
+	if (href_list["pronouns"])
+		if (src.authenticated && src.modify)
+			if(href_list["pronouns"] == "next")
+				if(src.modify?.pronouns)
+					src.modify.pronouns = src.modify.pronouns.next_pronouns()
+				else
+					src.modify.pronouns = get_singleton(/datum/pronouns/theyThem)
+			else if(href_list["pronouns"] == "remove")
+				src.modify.pronouns = null
 
 	if (href_list["assign"])
 		if (src.authenticated && src.modify)
@@ -402,6 +420,7 @@
 			if (t1 == "Custom Assignment")
 				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
 				t1 = strip_html(t1, 100, 1)
+				logTheThing("station", usr, null, "changes the assignment on the ID card from [src.modify.assignment] to [t1]")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
 				src.modify.access = get_access(t1)
@@ -440,7 +459,7 @@
 				playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["mode"])
-		src.mode = text2num(href_list["mode"])
+		src.mode = text2num_safe(href_list["mode"])
 	if (href_list["print"])
 		if (!( src.printing ))
 			src.printing = 1
@@ -448,16 +467,21 @@
 			var/obj/item/paper/P = new /obj/item/paper
 			P.set_loc(src.loc)
 
-			var/t1 = "<B>Crew Manifest:</B><BR>"
-			for(var/datum/db_record/t as anything in data_core.general.records)
-				t1 += "<B>[t["name"]]</B> - [t["rank"]]<BR>"
+			var/t1 = "<B>Crew Manifest:</B><hr>"
+			var/stored = ""
+			if(length(by_type[/obj/cryotron]))
+				var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+				for(var/L as anything in cryo_unit.stored_crew_names)
+					stored += "<i>- [L]<i><br>"
+			t1 += get_manifest()
+			t1 += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 			P.info = t1
 			P.name = "paper- 'Crew Manifest'"
 			src.printing = null
 	if (href_list["mode"])
 		src.authenticated = 0
 		src.scan_access = null
-		src.mode = text2num(href_list["mode"])
+		src.mode = text2num_safe(href_list["mode"])
 	if (href_list["colour"])
 		if(src.modify.keep_icon == FALSE) // ids that are FALSE will update their icon if the job changes
 			var/newcolour = href_list["colour"]
@@ -474,7 +498,7 @@
 			if (newcolour == "green")
 				src.modify.icon_state = "id_com"
 	if (href_list["save"])
-		var/slot = text2num(href_list["save"])
+		var/slot = text2num_safe(href_list["save"])
 		if (!src.modify.assignment)
 			src.custom_names[slot] = "Custom [slot]"
 		else
@@ -482,7 +506,7 @@
 		src.custom_access_list[slot] = src.modify.access.Copy()
 		src.custom_access_list[slot] &= allowed_access_list //prevent saving non-allowed accesses
 	if (href_list["apply"])
-		var/slot = text2num(href_list["apply"])
+		var/slot = text2num_safe(href_list["apply"])
 		src.modify.assignment = src.custom_names[slot]
 		var/list/selected_access_list = src.custom_access_list[slot]
 		src.modify.access = selected_access_list.Copy()

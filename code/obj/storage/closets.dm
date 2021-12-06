@@ -276,6 +276,10 @@
 			B9.pixel_y = 0
 			B9.pixel_x = 6
 
+			var/obj/item/folder/B10 = new /obj/item/canvas(src)
+			B10.pixel_y = 0	// everything else does it i guess
+			B10.pixel_x = 0
+
 			return 1
 
 //A closet that traps you when you step onto it!
@@ -283,14 +287,14 @@
 //A locker that traps folks.  I guess it's haunted.
 /obj/storage/closet/haunted
 	var/throw_strength = 100
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
 		src.open()
 		return
 
-	HasEntered(atom/movable/A as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/A as mob|obj)
 		if (!src.open || src.welded || !isliving(A))
 			return ..()
 
@@ -307,8 +311,8 @@
 		if (!istype(M) || M.loc != src)
 			return
 
-		if (M.throwing || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
-			var/flingdir = turn(get_dir(src.loc, OldLoc), 180)
+		if (M.throwing || istype(A.last_turf, /turf/space) || (M.m_intent != "walk"))
+			var/flingdir = turn(get_dir(src.loc, A.last_turf), 180)
 			src.throw_at(get_edge_target_turf(src, flingdir), throw_strength, 1)
 			return
 
@@ -344,7 +348,7 @@
 
 		src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
@@ -399,7 +403,7 @@
 			entangled.contents = src.contents
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
 		return 1
 
@@ -418,7 +422,7 @@
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -453,7 +457,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -465,7 +469,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return

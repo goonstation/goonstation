@@ -539,7 +539,17 @@
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
 			var/obj/O = locate(href_list["ReplaceExplosive"])
-			O.replace_with_explosive()
+			if(alert("Bad old explosive or fancy new explosive?", "Explosive Object", "Old", "New") == "Old")
+				O.replace_with_explosive()
+			else
+				var/explosion_size = input(src, "Enter the size of the explosion.", "Explosion size", 5) as null|num
+				var/gib = alert("Gib the person?", "Gib?", "Yes", "No") == "Yes"
+				var/limbs_to_remove = input(src, "Enter the number of limbs to remove.", "Limbs to remove", 0) as null|num
+				var/delete_object = alert("Delete the object?", "Delete?", "Yes", "No") == "Yes"
+				var/turf_safe_explosion = FALSE
+				if(explosion_size > 0)
+					turf_safe_explosion = alert("Should the explosion be safe for turfs?", "Safe?", "Yes", "No") == "Yes"
+				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
@@ -770,6 +780,9 @@
 	var/list/classes = list("text", "num","num adjust","type","reference","mob reference","turf by coordinates","reference picker","new instance of a type","icon","file","color","list","json","edit referenced object","create new list", "matrix","null", "ref", "restore to default")
 	if(variable=="filters" && !istype(D, /image))
 		default = "filter editor"
+		classes += default
+	else if(variable=="particles")
+		default = "particle editor"
 		classes += default
 	var/class = input("What kind of variable?","Variable Type",default) as null|anything in classes
 
@@ -1114,6 +1127,10 @@
 			if(src.holder)
 				src.holder.filteriffic = new /datum/filter_editor(D)
 				src.holder.filteriffic.ui_interact(mob)
+		if ("particle editor")
+			if(src.holder)
+				src.holder.particool = new /datum/particle_editor(D)
+				src.holder.particool.ui_interact(mob)
 
 	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")

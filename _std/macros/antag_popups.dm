@@ -63,6 +63,7 @@
 #define SHOW_KUDZU_TIPS(M) M.Browse(grabResource("html/traitorTips/kudzu.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_FOOTBALL_TIPS(M) M.Browse(grabResource("html/traitorTips/football.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_ZOMBIE_TIPS(M) M.Browse(grabResource("html/traitorTips/zombieTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_SLASHER_TIPS(M) M.Browse(grabResource("html/traitorTips/slasherTips.html"), ANTAG_TIPS_WINDOW)
 
 // borg does things a little differently
 #define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
@@ -75,6 +76,9 @@
 
 // soulsteel posession
 #define SHOW_SOULSTEEL_TIPS(M) M.Browse(grabResource("html/soulsteel.html"), SOULSTEEL_TIPS_WINDOW)
+
+// slasher possession
+#define SHOW_SLASHER_POSSESSION_TIPS(M) M.Browse(grabResource("html/slasher_possession.html"), ANTAG_TIPS_WINDOW)
 
 // mindwipe from cloner zap chance
 #define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
@@ -144,7 +148,8 @@
 	<a href='?src=\ref[src];action=wrestler'>Wrestler</a> |
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
-	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a>
+	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
+	<a href='?src=\ref[src];action=slasher'>The Slasher</a>
 	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
@@ -152,7 +157,8 @@
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
-	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a>
+	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
+	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a>
 </div>
 "}
 
@@ -258,6 +264,8 @@
 				SHOW_MARTIAN_TIPS(M)
 			if ("kudzu")
 				SHOW_KUDZU_TIPS(M)
+			if ("slasher")
+				SHOW_SLASHER_TIPS(M)
 			if ("arcfiend")
 				SHOW_ARCFIEND_TIPS(M)
 
@@ -271,6 +279,8 @@
 				SHOW_ANTAG_REMOVED_TIPS(M)
 			if ("soulsteel")
 				SHOW_SOULSTEEL_TIPS(M)
+			if ("slasher_possession")
+				SHOW_SLASHER_POSSESSION_TIPS(M)
 			if ("mindwipe")
 				SHOW_MINDWIPE_TIPS(M)
 

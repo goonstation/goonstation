@@ -194,7 +194,7 @@ proc/filter_trait_hats(var/type)
 			src.on = !src.on
 
 		if (src.on)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
@@ -381,7 +381,7 @@ proc/filter_trait_hats(var/type)
 					var/obj/item/clothing/mask/cigarette/C = packet.contents[1]
 					C.set_loc(src)
 					cigs.Add(C)
-					packet.update_icon()
+					packet.UpdateIcon()
 				success = 1
 
 		if(success)
@@ -458,6 +458,13 @@ proc/filter_trait_hats(var/type)
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
+
+/obj/item/clothing/head/chefhatpuffy
+	name = "Puffy Chef's Hat"
+	desc = "A chef's toque blanche, pleasantly puffy on top."
+	icon_state = "chef-puffy"
+	item_state = "chefhat"
+	wear_state = "chef-puffy"
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
@@ -963,6 +970,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
+		logTheThing("combat", user, null, "equipped [src].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
@@ -1105,7 +1113,7 @@ proc/filter_trait_hats(var/type)
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 1500)
+			if (C.charge < 1000)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -1119,10 +1127,10 @@ proc/filter_trait_hats(var/type)
 			if (src.uses < 0)
 				src.uses = 0
 			src.uses = min(src.uses + 1, src.max_uses)
-			C.use(1500)
+			C.use(1000)
 			src.icon_state = text("[]-stun",src.icon_state)
 			src.item_state = text("[]-stun",src.item_state)
-			C.updateicon()
+			C.UpdateIcon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
 			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return

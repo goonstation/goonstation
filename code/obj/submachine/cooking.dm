@@ -133,14 +133,14 @@
 							src.beaker.set_loc(src.loc)
 							usr.put_in_hand_or_eject(src.beaker) // try to eject it into the users hand, if we can
 							src.beaker = null
-							src.update_icon()
+							src.UpdateIcon()
 
 					if("cone")
 						if(src.cone)
 							src.cone.set_loc(src.loc)
 							usr.put_in_hand_or_eject(src.cone) // try to eject it into the users hand, if we can
 							src.cone = null
-							src.update_icon()
+							src.UpdateIcon()
 
 			else if(href_list["flavor"])
 				if(doing_a_thing)
@@ -182,7 +182,7 @@
 						boutput(usr, "<span class='alert'>Unknown flavor!</span>")
 
 				doing_a_thing = 0
-				src.update_icon()
+				src.UpdateIcon()
 
 			src.updateUsrDialog()
 		return
@@ -202,7 +202,7 @@
 				src.cone = W
 				boutput(user, "<span class='notice'>You load the cone into [src].</span>")
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
@@ -215,7 +215,7 @@
 				src.beaker = W
 				boutput(user, "<span class='alert'>You load [W] into [src].</span>")
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 		else ..()
 
@@ -224,7 +224,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	proc/update_icon()
+	update_icon()
 		if(src.beaker)
 			src.overlays += image(src.icon, "ice_creamer_beaker")
 		else
@@ -493,15 +493,20 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/croissant(src)
 
+			src.recipes += new /datum/cookingrecipe/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/pie_anything(src)
+			src.recipes += new /datum/cookingrecipe/pie_cherry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blueberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_blackberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_raspberry(src)
+			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
 			src.recipes += new /datum/cookingrecipe/pie_apple(src)
 			src.recipes += new /datum/cookingrecipe/pie_lime(src)
 			src.recipes += new /datum/cookingrecipe/pie_lemon(src)
 			src.recipes += new /datum/cookingrecipe/pie_slurry(src)
 			src.recipes += new /datum/cookingrecipe/pie_pumpkin(src)
 			src.recipes += new /datum/cookingrecipe/pie_custard(src)
-			src.recipes += new /datum/cookingrecipe/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/pie_strawberry(src)
-			src.recipes += new /datum/cookingrecipe/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/pie_bacon(src)
 			src.recipes += new /datum/cookingrecipe/pot_pie(src)
 			src.recipes += new /datum/cookingrecipe/pie_chocolate(src)
@@ -727,7 +732,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
-			src.time = clamp(text2num(href_list["time"]), 1, 10)
+			src.time = clamp(text2num_safe(href_list["time"]), 1, 10)
 			src.updateUsrDialog()
 			return
 
@@ -735,7 +740,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>The dials are locked! THIS IS HOW OVENS WORK OK</span>")
 				return
-			var/operation = text2num(href_list["heat"])
+			var/operation = text2num_safe(href_list["heat"])
 			if (operation == 1) src.heat = "High"
 			if (operation == 2) src.heat = "Low"
 			src.updateUsrDialog()
@@ -798,7 +803,7 @@ table#cooktime a#start {
 		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
-		W.dropped()
+		W.dropped(user)
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
@@ -816,6 +821,7 @@ table#cooktime a#start {
 			return 0
 		return 1
 
+#define MIN_FLUID_INGREDIENT_LEVEL 10
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
@@ -922,11 +928,14 @@ table#cooktime a#start {
 					F.reagents.add_reagent("sugar", 20)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/soy)
-					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-					qdel( P )
+					//so soy milk is just milk it seems, veganism is a lie
+					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+						qdel( P )
 				if (/obj/item/reagent_containers/food/drinks/milk/rancid)
 					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
 					qdel( P )
@@ -987,7 +996,7 @@ table#cooktime a#start {
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
 				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
 			return
@@ -1091,7 +1100,7 @@ var/list/mixer_recipes = list()
 			src.recipes += new /datum/cookingrecipe/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/butters(src)
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1176,7 +1185,7 @@ var/list/mixer_recipes = list()
 			boutput(usr, "<span class='alert'>There's nothing in the mixer.</span>")
 			return
 		working = 1
-		src.update_icon()
+		src.UpdateIcon()
 		src.updateUsrDialog()
 		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
@@ -1229,11 +1238,11 @@ var/list/mixer_recipes = list()
 				I.throw_at(edge, 25, 4)
 
 			working = 0
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
-	proc/update_icon()
+	update_icon()
 		if (!src || !istype(src))
 			return
 

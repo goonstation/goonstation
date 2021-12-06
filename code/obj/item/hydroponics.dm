@@ -53,7 +53,7 @@
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
-				src.update_icon()
+				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
@@ -72,7 +72,7 @@
 		src.check_health()
 		return
 
-	proc/update_icon()
+	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		return
 
@@ -166,7 +166,7 @@
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
 		tooltip_rebuild = 1
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 		src.add_fingerprint(user)
 		return
@@ -448,14 +448,14 @@
 			var/obj/machinery/plantpot/pot = target
 			if(pot.current)
 				var/datum/plant/p = pot.current
+				if(p.growthmode == "weed")
+					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
+					return
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
 				else
-					return
-				if(p.growthmode == "weed")
-					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
 					return
 				pot.HYPdestroyplant()
 

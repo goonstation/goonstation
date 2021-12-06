@@ -217,7 +217,7 @@ datum/shuttle_controller
 							if (istype(D, door_type))
 								D.set_density(1)
 								D.locked = 1
-								D.update_icon()
+								D.UpdateIcon()
 
 						for (var/atom/A in start_location)
 							if(istype( A, /obj/stool ))
@@ -296,7 +296,7 @@ datum/shuttle_controller
 							if (istype(D, door_type))
 								D.set_density(0)
 								D.locked = 0
-								D.update_icon()
+								D.UpdateIcon()
 
 						var/filler_turf = text2path(end_location.filler_turf)
 						if (!filler_turf)

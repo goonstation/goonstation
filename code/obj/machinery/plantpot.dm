@@ -133,7 +133,7 @@
 						src.growth = src.current.growtime - src.plantgenes.growtime
 					if(4)
 						src.growth = src.current.harvtime - src.plantgenes.harvtime
-				update_icon()
+				UpdateIcon()
 			else
 				if(!src.current)
 					qdel(src)
@@ -230,12 +230,12 @@
 	var/weedproof = 0  // Does this tray block weeds from appearing in it? (Won't stop deliberately planted weeds)
 	var/list/contributors = list() // Who helped grow this plant? Mainly used for critters.
 
-	var/report_freq = 1433 //Radio channel to report plant status/death/whatever.
+	var/report_freq = FREQ_HYDRO //Radio channel to report plant status/death/whatever.
 	var/net_id = null
 
 	var/health_warning = 0
 	var/harvest_warning = 0
-	var/water_level = 4 // Used for efficiency in the update_icon proc with water level changing
+	var/water_level = 4 // Used for efficiency in the UpdateIcon proc with water level changing
 	var/total_volume = 4 // How much volume total is actually in the tray because why the fuck was water the only reagent being counted towards the level
 	var/image/water_sprite = null
 	var/image/water_meter = null
@@ -259,32 +259,24 @@
 		// to have too much water, which stunts plant growth speed.
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
 		src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
-		update_icon()
+		UpdateIcon()
 
-		SPAWN_DBG(0.5 SECONDS)
-			radio_controller?.add_object(src, "[report_freq]")
-
-			if(!net_id)
-				net_id = generate_net_id(src)
-
-	disposing()
-		radio_controller.remove_object(src, "[report_freq]")
-		..()
+		if(!net_id)
+			net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
 	proc/post_alert(var/alert_msg)
 		if(status & (NOPOWER|BROKEN)) return
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
-
-		if(!frequency || !alert_msg) return
+		if(!alert_msg) return
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
 		signal.data["data"] = alert_msg
 		signal.data["netid"] = net_id
+		signal.data["address_tag"] = "plantpot_listener" // prevents unnecessarily sending to other plantpots
 
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/update_water_level() //checks reagent contents of the pot, then returns the cuurent water level
 		var/current_total_volume = (src.reagents ? src.reagents.total_volume : 0)
@@ -321,7 +313,7 @@
 
 	power_change()
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	was_deconstructed_to_frame(mob/user)
 		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
@@ -331,7 +323,7 @@
 		..()
 
 		if(do_update_icon)
-			update_icon()
+			UpdateIcon()
 			update_name()
 
 			// We skip every other tick. Another cpu-conserving measure.
@@ -509,7 +501,7 @@
 			return
 
 		if(do_update_icon)
-			update_icon()
+			UpdateIcon()
 			update_name()
 
 		if(!HAS_FLAG(status, NOPOWER))
@@ -729,7 +721,7 @@
 				if(!(user in src.contributors))
 					src.contributors += user
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
-				update_icon()
+				UpdateIcon()
 				return
 
 
@@ -915,12 +907,9 @@
 			pingsignal.data["netid"] = src.net_id
 			pingsignal.data["address_1"] = signal.data["sender"]
 			pingsignal.data["command"] = "ping_reply"
-			pingsignal.transmission_method = TRANSMISSION_RADIO
 
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency("[report_freq]")
-			if(!frequency) return
 			SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
-				frequency.post_signal(src, pingsignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
 
 		return //Just toss out the rest of the signal then I guess
 
@@ -938,7 +927,7 @@
 		UpdateOverlays(src.water_sprite, "water_fluid")
 		UpdateOverlays(src.water_meter, "water_meter")
 
-	proc/update_icon() //plant icon stuffs
+	update_icon() //plant icon stuffs
 		src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
 		UpdateOverlays(water_meter, "water_meter")
 		if(!src.current)
@@ -1382,7 +1371,8 @@
 					HYPpassplantgenes(HDNA,SDNA)
 					S.generation = src.generation
 					if(growing.hybrid)
-						var/datum/plant/hybrid = new /datum/plant(S)
+						var/plantType = growing.type
+						var/datum/plant/hybrid = new plantType(S)
 						for(var/V in growing.vars)
 							if(issaved(growing.vars[V]) && V != "holder")
 								hybrid.vars[V] = growing.vars[V]
@@ -1441,7 +1431,7 @@
 						if(!satchelpick || satchelpick == "Produce Only")
 							I.set_loc(SA)
 							I.add_fingerprint(user)
-				SA.satchel_updateicon()
+				SA.UpdateIcon()
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
@@ -1472,7 +1462,7 @@
 
 		//do we have to run the next life tick manually? maybe
 		playsound(src.loc, "rustle", 50, 1, -5, 2)
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 	proc/HYPmutateplant(var/severity = 1)
@@ -1548,7 +1538,7 @@
 		HYPmutateplant(1)
 		post_alert("event_new")
 		src.recently_harvested = 0
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 		if(usr && ishellbanned(usr)) //Haw haw
@@ -1566,7 +1556,7 @@
 		post_alert("event_death")
 		src.health_warning = 0
 		src.harvest_warning = 0
-		update_icon()
+		UpdateIcon()
 		update_name()
 
 	proc/HYPdestroyplant()
@@ -1593,7 +1583,7 @@
 		DNA.mutation = null
 
 		src.generation = 0
-		update_icon()
+		UpdateIcon()
 		post_alert("event_cleared")
 
 	proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
@@ -1813,7 +1803,7 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					if(PP)
 						playsound(PP, MUT.mutation_sfx, 10, 1)
-						PP.update_icon()
+						PP.UpdateIcon()
 						PP.update_name()
 						animate_wiggle_then_reset(PP, 1, 2)
 					else if(S)

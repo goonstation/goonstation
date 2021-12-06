@@ -99,7 +99,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
-	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
@@ -143,15 +143,17 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 
 var/obj/item/dummy/click_dummy = new
 /proc/test_click(turf/from, turf/target)
+	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
-				return 0
+				return FALSE
 	for (var/atom/A in target)
-		if (A.flags & ON_BORDER)
-			if (!A.CanPass(click_dummy, from, 1, 0))
-				return 0
-	return 1
+		if ((A.flags & ON_BORDER))
+			if (!A.Cross(click_dummy))
+				return FALSE
+	click_dummy.set_loc(null)
+	return TRUE
 
 /proc/can_reach(mob/user, atom/target)
 	if (target in bible_contents)
@@ -195,13 +197,13 @@ var/obj/item/dummy/click_dummy = new
 					if (SOUTHWEST)
 						dir1 = SOUTH
 						dir2 = WEST
-				var/D1 = get_step(T1, dir1)
-				var/D2 = get_step(T1, dir2)
+				var/turf/D1 = get_step(T1, dir1)
+				var/turf/D2 = get_step(T1, dir2)
 
-				if (test_click(T1, D1))
+				if (!D1.density && test_click(T1, D1))
 					if ((target.flags & ON_BORDER) || test_click(D1, T2))
 						return 1
-				if (test_click(T1, D2))
+				if (!D2.density && test_click(T1, D2))
 					if ((target.flags & ON_BORDER) || test_click(D2, T2))
 						return 1
 			else

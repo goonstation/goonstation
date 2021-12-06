@@ -5,8 +5,6 @@
 	desc = "A serviceable and comfortable jumpsuit used by nearly everyone on the station."
 	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
 	wear_image_icon = 'icons/mob/jumpsuits/worn_js.dmi'
-	var/image/wear_image_fat = null
-	var/image/wear_image_fat_icon = 'icons/mob/jumpsuits/worn_js_fat.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
@@ -28,42 +26,6 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
-
-/obj/item/clothing/under/New()
-	wear_image_fat = image(wear_image_fat_icon)
-	wear_image_fat.icon_state = icon_state
-	..()
-
-// Experimental composite jumpsuit
-
-/obj/item/clothing/under/experimental
-	name = "experimental hi-tech jumpsuit"
-	desc = "The very height of fabric technology."
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_experiment.dmi'
-	icon_state = "white"
-	item_state = "white"
-	var/list/component_images = list("jacket","sleeves","pants", "stripe_sides", "zipper")
-	var/list/component_colors = list("#FFFFFF","#FFFFFF","#FFFFFF", "#FFFFFF","#666666")
-	var/list/component_alphas = list(255,255,255,255,255)
-	var/list/images = list()
-
-	New()
-		..()
-		update_images()
-
-	proc/update_images()
-		var/list_counter = 0
-		src.images = list()
-
-		for (var/C as anything in src.component_images)
-			list_counter++
-			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
-			suit_image.icon_state = C
-			suit_image.alpha = src.component_alphas[list_counter]
-			suit_image.color = src.component_colors[list_counter]
-			src.images += suit_image
-
-		src.color = src.component_colors[1]
 
 
 /obj/item/clothing/under/crafted
@@ -182,6 +144,10 @@
 		name = "pink jumpsuit"
 		icon_state = "pink"
 		item_state = "pink"
+
+	unremovable
+		cant_self_remove = 1
+		cant_other_remove = 1
 //PRIDE
 /obj/item/clothing/under/pride
 	name = "LGBT pride jumpsuit"
@@ -322,7 +288,7 @@
 	dress
 		icon_state = "hop-dress"
 
-/obj/item/clothing/under/rank/head_of_securityold
+/obj/item/clothing/under/rank/head_of_security
 	name = "head of security's uniform"
 	desc = "It's bright red and rather crisp, much like security's victims tend to be."
 	icon_state = "hos"
@@ -344,7 +310,7 @@
 		icon_state = "hos-fancy-alt"
 		item_state = "hos-fancy-alt"
 
-/obj/item/clothing/under/misc/head_of_security
+/obj/item/clothing/under/misc/dirty_vest //HoS uniform from the Elite Security era
 	name = "dirty vest"
 	desc = "This outfit has seen better days."
 	icon_state = "vest"

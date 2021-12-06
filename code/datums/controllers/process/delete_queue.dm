@@ -108,9 +108,7 @@ var/global/harddel_count = 0
 			del(D)
 	#else
 			if(isliving(D))
-				D.disposed = FALSE
-				D.qdeled = FALSE
-				put_mob_in_centcom_cloner(D)
+				gimmick_ungcd_mob_stuff(D)
 	#endif
 
 #endif
@@ -181,6 +179,13 @@ var/global/harddel_count = 0
 			if (deleteChunkSize > MIN_DELETE_CHUNK_SIZE)
 				deleteChunkSize--
 		*/
+
+	proc/gimmick_ungcd_mob_stuff(mob/living/L)
+		L.lying = FALSE
+		L.dir = SOUTH
+		L.invisibility = INVIS_NONE
+		L.update_lying()
+		put_mob_in_centcom_cloner(L, indirect=TRUE)
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG

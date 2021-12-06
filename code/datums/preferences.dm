@@ -163,7 +163,7 @@ datum/preferences
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
-			"pronouns" = AH.pronouns.name,
+			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -177,6 +177,7 @@ datum/preferences
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
 			"skinTone" = src.AH.s_tone,
+			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
 			"customStyle1" = src.AH.customization_first.name,
@@ -435,14 +436,12 @@ datum/preferences
 				return TRUE
 
 			if ("update-pronouns")
-				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
-				var/selected
-				for (var/i = 1, i <= length(types), i++)
-					var/datum/pronouns/pronouns = get_singleton(types[i])
-					if (AH.pronouns == pronouns)
-						selected = i
-						break
-				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
+				if(isnull(AH.pronouns))
+					AH.pronouns = get_singleton(/datum/pronouns/theyThem)
+				else
+					AH.pronouns = AH.pronouns.next_pronouns()
+					if(AH.pronouns == get_singleton(/datum/pronouns/theyThem))
+						AH.pronouns = null
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -585,6 +584,20 @@ datum/preferences
 				update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
+			if ("update-specialStyle")
+				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+				if (!typeinfo)
+					alert(usr, "No usable special styles detected.", "Error", "Okay")
+					return
+				var/list/style_list = typeinfo.special_styles
+				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
+				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				if (new_style)
+					AH.special_style = new_style
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)
@@ -910,7 +923,7 @@ datum/preferences
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
-			usr << S
+			usr.playsound_local(usr, S, 100)
 
 	proc/randomize_name(var/first = 1, var/middle = 1, var/last = 1)
 		//real_name = random_name(src.gender)
@@ -972,11 +985,16 @@ datum/preferences
 
 		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 
-		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
-			var/mob/living/carbon/human/H = src.preview.preview_mob
-			var/ourWig = H.head
+		// bald trait preview stuff
+		if (!src.preview)
+			return
+		var/mob/living/carbon/human/H = src.preview.preview_mob
+		var/ourWig = H.head
+		if (ourWig)
 			H.u_equip(ourWig)
 			qdel(ourWig)
+
+		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
 			H.equip_if_possible(H.create_wig(), H.slot_head)
 
 	proc/ShowChoices(mob/user)
@@ -1042,7 +1060,7 @@ datum/preferences
 		for (var/datum/job/J in job_controls.staple_jobs)
 			if (istype(J, /datum/job/daily))
 				continue
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))

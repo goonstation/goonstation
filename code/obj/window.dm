@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -28,6 +28,7 @@
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 0//20
 	pressure_resistance = 4*ONE_ATMOSPHERE
+	gas_impermeable = TRUE
 	anchored = 1
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -56,7 +57,27 @@
 	initialize()
 		src.set_layer_from_settings()
 		update_nearby_tiles(need_rebuild=1)
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME && !is_cardinal(src.dir))
+			xmasify()
+		#endif
 		..()
+
+	proc/xmasify()
+		var/turf/T = get_step(src, SOUTH)
+		for(var/obj/O in T)
+			if(istype(O, /obj/machinery/light) || istype(O, /obj/machinery/recharger/wall))
+				if(O.pixel_y > 6)
+					return
+		if(locate(/obj/decal) in src.loc)
+			return
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.02)
+			new /obj/decal/wreath(src.loc)
+		else
+			if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				var/obj/decal/xmas_lights/lights = new(src.loc)
+				lights.light_pattern(y % 5)
 
 	proc/set_layer_from_settings()
 		if (!map_settings)
@@ -286,18 +307,23 @@
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if(P.proj_data.window_pass)
 				return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 			return 0 //full tile window, you can't move into it!
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) == dir)
 
 			return !density
 		else
 			return 1
+
+	gas_cross(turf/target)
+		. = TRUE
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) == dir)
+			. = ..()
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
@@ -622,7 +648,7 @@
 
 	New()
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
 */
 /obj/window/north
 	dir = NORTH
@@ -710,7 +736,7 @@
 			src.update_neighbors()
 
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	disposing()
 		..()
@@ -718,7 +744,7 @@
 		if (map_setting)
 			src.update_neighbors()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			return
@@ -742,15 +768,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.update_icon()
+			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
@@ -775,13 +801,14 @@
 		if(actuallysmash)
 			return ..()
 
-	attack_hand()
-		src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
-		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(0.3 SECONDS)
-		playsound(src.loc, src.hitsound, 100, 1)
-		sleep(0.3 SECONDS)
-		playsound(src.loc, src.hitsound, 100, 1)
+	attack_hand(mob/user as mob)
+		if(!ON_COOLDOWN(user, "glass_tap", 5 SECONDS))
+			src.visible_message("<span class='alert'><b>[usr]</b> knocks on [src].</span>")
+			playsound(src.loc, src.hitsound, 100, 1)
+			sleep(0.3 SECONDS)
+			playsound(src.loc, src.hitsound, 100, 1)
+			sleep(0.3 SECONDS)
+			playsound(src.loc, src.hitsound, 100, 1)
 		return
 
 	attackby()
@@ -892,7 +919,10 @@
 				var/turf/T = get_step(src, dir)
 				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
 					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					new new_win(src.loc)
+					if(new_win)
+						new new_win(src.loc)
+					else
+						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
 		if (src.full_win)
 			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
 				// if we have directional windows, there's already a window (or windows) from directional windows

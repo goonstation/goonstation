@@ -19,7 +19,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	*
 	* These flags help define what features get drawn when the mob's sprite is assembled
 	*
-	* For instance, WEARS_UNDERPANTS tells update_icon.dm to draw the mob's underpants
+	* For instance, WEARS_UNDERPANTS tells UpdateIcon.dm to draw the mob's underpants
 	*
 	* SEE: appearance.dm for more flags and details!
 	*/
@@ -60,6 +60,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/customization_style/customization_third = new /datum/customization_style/none
 	var/customization_third_original = "None"
 	var/customization_third_offset_y = 0
+
+	/// Currently changes which sprite sheet is used
+	var/special_style
 
 	/// Intended for extra head features that may or may not be hair
 	var/special_hair_1_icon = 'icons/mob/human_hair.dmi'
@@ -167,9 +170,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	New()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
-		pronouns = get_singleton(/datum/pronouns/theyThem)
 
-	proc/CopyOther(var/datum/appearanceHolder/toCopy, no_mutantrace)
+	proc/CopyOther(var/datum/appearanceHolder/toCopy)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
 
@@ -223,8 +225,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_oversuit_1_color_ref = toCopy.mob_oversuit_1_color_ref
 		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
 
-		if(!no_mutantrace)
-			mutant_race = toCopy.mutant_race
+		mutant_race = toCopy.mutant_race
 
 		e_color = toCopy.e_color
 		e_icon = toCopy.e_icon
@@ -234,6 +235,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		s_tone = toCopy.s_tone
 		s_tone_original = toCopy.s_tone_original
+
+		special_style = toCopy.special_style
 
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
@@ -286,6 +289,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (progress > 7 || prob(progress * 10))
 			gender = toCopy.gender
 			pronouns = toCopy.pronouns
+			special_style = toCopy.special_style
 			mutant_race = toCopy.mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
@@ -329,6 +333,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+			H.update_name_tag()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
 
@@ -576,17 +582,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		return newUid
 
-	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1, noMutantrace = 0)
+	proc/CopyOther(var/datum/bioHolder/toCopy, var/copyAppearance = 1, var/copyPool = 1, var/copyEffectBlocks = 0, var/copyActiveEffects = 1)
 		//Copies the settings of another given holder. Used for syringes, the dna spread virus and such things.
 		if(copyAppearance)
-			mobAppearance.CopyOther(toCopy.mobAppearance, noMutantrace)
+			mobAppearance.CopyOther(toCopy.mobAppearance)
 			mobAppearance.UpdateMob()
 
 			age = toCopy.age
 			bloodType = toCopy.bloodType
 			bloodColor = toCopy.bloodColor
 			clone_generation = toCopy.clone_generation
-			genetic_stability = toCopy.genetic_stability
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)
@@ -624,6 +629,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
 			src.CopyOther(toCopy)
+			return
 
 		if (mobAppearance)
 			mobAppearance.StaggeredCopyOther(toCopy.mobAppearance, progress)

@@ -1475,7 +1475,7 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
-	var/mode = 2
+	var/mode = 1
 	var/maximum_force = 100
 
 	New()
@@ -1493,6 +1493,7 @@ obj/item/whetstone
 	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
 		src.force += 5
 		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+		src.tooltip_rebuild = TRUE
 	if(src.mode == 1) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
@@ -1503,6 +1504,7 @@ obj/item/whetstone
 	if (isturf(src.loc))
 		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
 		force = initial(src.force)
+		src.tooltip_rebuild = TRUE
 		return
 
 /obj/item/heavy_power_sword/attack_self(mob/user as mob)
@@ -1548,3 +1550,78 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+
+//Machete for The Slasher
+/obj/item/slasher_machete
+	name = "slasher's machete"
+	desc = "An old machete, clearly showing signs of wear and tear due to its age."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "welder_machete"
+	item_state = "welder_machete"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+	force = 15.0 //damage increases by 2.5 for every soul they take
+	throwforce = 15 //damage goes up by 2.5 for every soul they take
+	flags = FPRINT | CONDUCT | TABLEPASS | ONBELT
+	item_function_flags = IMMUNE_TO_ACID
+	hit_type = DAMAGE_CUT
+	tool_flags = TOOL_CUTTING
+	w_class = W_CLASS_NORMAL
+	var/slasher_key = ""
+
+	New()
+		. = ..()
+		START_TRACKING
+		src.setItemSpecial(/datum/item_special/swipe)
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	attack_hand(var/mob/user as mob)
+		if (user.mind)
+			if (isslasher(user) || check_target_immunity(user))
+				if (user.mind.key != src.slasher_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is attuned to another Slasher! You may use it, but it may get recalled at any time!</span>")
+				..()
+				return
+			else
+				random_brute_damage(user, 2*src.force)
+				boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+				user.changeStatus("weakened", 80)
+				return
+		else ..()
+
+	pull(var/mob/user)
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (isslasher(user))
+			return ..()
+		else
+			random_brute_damage(user, 2*src.force)
+			boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+			user.changeStatus("weakened", 80)
+			return
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+			if (ismob(usr))
+				C.lastattacker = usr
+				C.lastattackertime = world.time
+			C.changeStatus("weakened", 3 SECONDS)
+			C.force_laydown_standup()
+			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
+			random_brute_damage(C, round(throwforce * 0.75),1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+
+	possessed
+		cant_self_remove = 1
+		cant_other_remove = 1
+		cant_drop = 1
+		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
+		force = 20

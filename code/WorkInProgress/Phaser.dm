@@ -199,7 +199,7 @@ var/const/PHASER_SNIPER = 256
 		var/energy_old = min(125,src.charges)
 		P.safeties = src.safeties
 		P.charges = energy_old
-		P.update_icon()
+		P.UpdateIcon()
 		qdel(src)
 
 	examine()
@@ -335,7 +335,7 @@ var/const/PHASER_SNIPER = 256
 
 		return
 
-	proc/update_icon()
+	update_icon()
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("phaser[]", ratio)
@@ -369,7 +369,7 @@ var/const/PHASER_SNIPER = 256
 		else
 			src.charges -= charges_per_shot
 
-		update_icon()
+		UpdateIcon()
 
 		SPAWN_DBG(0)
 
@@ -534,7 +534,7 @@ var/const/PHASER_SNIPER = 256
 		src.add_dialog(usr)
 		if (href_list["power"])
 			var/change = href_list["power"]
-			prop_power += text2num(change)
+			prop_power += text2num_safe(change)
 			if(prop_power < 0) prop_power = 0
 			if(prop_power > 50 && safeties) prop_power = 50
 			if(prop_power > 100) prop_power = 100
@@ -544,7 +544,7 @@ var/const/PHASER_SNIPER = 256
 			return
 		else if (href_list["focus"])
 			var/change = href_list["focus"]
-			prop_range += text2num(change)
+			prop_range += text2num_safe(change)
 			if(prop_range < 0) prop_range = 0
 			if(prop_range > prop_maxrange) prop_range = prop_maxrange
 			update_settings()

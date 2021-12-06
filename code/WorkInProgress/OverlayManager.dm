@@ -412,7 +412,7 @@
 		warp.d_icon_state = src.warp_dir
 		warp.d_blend_mode = 1
 		warp.d_layer = BACKGROUND_LAYER
-		warp.d_plane = PLANE_FLOOR - 1
+		warp.d_plane = PLANE_FLOOR
 		definitions.Add(warp)
 
 		return ..()

@@ -52,20 +52,26 @@
 
 		src.beaker =  B
 		if (!isrobot(user))
-			user.drop_item()
-			B.set_loc(src)
+			if(B.cant_drop)
+				boutput(user, "You can't add the beaker to the machine!")
+				src.beaker = null
+				return
+			else
+				user.drop_item()
+				B.set_loc(src)
 		else
 			roboworking = user
 			SPAWN_DBG(1 SECOND)
 				robot_disposal_check()
 
-		boutput(user, "You add the beaker to the machine!")
+		if(src.beaker || roboworking)
+			boutput(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
-		src.update_icon()
+		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 	ex_act(severity)
@@ -109,29 +115,29 @@
 				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 
 			beaker = null
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
-			var/change = text2num(href_list["adjustM"])
+			var/change = text2num_safe(href_list["adjustM"])
 			target_temp = min(max(0, target_temp-change),1000)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
-			var/change = text2num(href_list["adjustP"])
+			var/change = text2num_safe(href_list["adjustP"])
 			target_temp = min(max(0, target_temp+change),1000)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["settemp"])
 			if (!beaker.reagents.total_volume) return
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
-			if(!change || !isnum(change)) return
+			if(!change || !isnum_safe(change)) return
 			target_temp = min(max(0, change),1000)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["stop"])
@@ -141,12 +147,12 @@
 			if (!beaker.reagents.total_volume) return
 			active = 1
 			active()
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else
 			usr.Browse(null, "window=chem_heater;title=Chemistry Heater")
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
@@ -246,10 +252,10 @@
 	proc/set_inactive()
 		power_usage = 50
 		active = 0
-		update_icon()
+		UpdateIcon()
 		updateUsrDialog()
 
-	proc/update_icon()
+	update_icon()
 		src.overlays -= src.icon_beaker
 		if (src.beaker)
 			src.overlays += src.icon_beaker
@@ -412,7 +418,7 @@
 			R.trans_to(P, 100)//R.total_volume) we can't move all of the reagents if it's >100u so let's only move 100u
 			color_icon(P)
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"created a [pillname] pill containing [log_reagents(P)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create a [pillname] pill containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepillbottle"])
@@ -431,12 +437,12 @@
 				return
 			// get the pill volume from the user
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
-			if (!pillvol || !src.beaker || !R)
+			if (!pillvol || !src.beaker || !R || !isnum_safe(pillvol))
 				return
 			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
-			logTheThing("combat",usr,null,"created [pillcount] [pillname] pills from [log_reagents(R)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
 			var/use_bottle = src.pill_bottle
 			if (pillcount > 20) // if you're trying to make a huge pile of pills you get a bottle regardless of what the machine is set to
 				use_bottle = 1
@@ -474,7 +480,7 @@
 				R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"created a [bottlename] bottle containing [log_reagents(B)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
 			return
 
 		else if (href_list["createpatch"])
@@ -495,7 +501,7 @@
 			P.medical = med
 			P.on_reagent_change()
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"created a [patchname] patch containing [log_reagents(P)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepatchbox"])
@@ -514,7 +520,7 @@
 			A = new /obj/item/reagent_containers/ampoule(src.output_target)
 			A.name = "ampoule ([ampoulename])"
 			R.trans_to(A, 5)
-			logTheThing("combat",usr,null,"created a [ampoulename] ampoule containing [log_reagents(A)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 			updateUsrDialog()
 			return
 
@@ -526,12 +532,12 @@
 				return
 			// get the pill volume from the user
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
-			if (!patchvol || !src.beaker || !R)
+			if (!patchvol || !src.beaker || !R || !isnum_safe(patchvol))
 				return
 			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
-			logTheThing("combat",usr,null,"created [patchcount] [patchname] patches from [log_reagents(R)].")
+			logTheThing("combat",usr,null,"used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
 			var/use_box = src.patch_box
 			if (patchcount > 20) // if you're trying to make a huge pile of patches you get a box regardless of what the machine is set to
 				use_box = 1
@@ -959,7 +965,7 @@ datum/chemicompiler_core/stationaryCore
 							phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
 
 						var/pillvol = input( user, "Volume:", "Volume of chemical per pill!", "5" ) as num
-						if( !pillvol || !isnum(pillvol) || pillvol < 5 )
+						if( !pillvol || !isnum_safe(pillvol) || pillvol < 5 )
 							pillvol = 5
 
 						var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
@@ -999,7 +1005,7 @@ datum/chemicompiler_core/stationaryCore
 							R.trans_to(P, P.initial_volume)
 						P.medical = all_safe
 						P.on_reagent_change()
-						logTheThing("combat",user,null,"created a [patchname] patch containing [log_reagents(P)].")
+						logTheThing("combat",user,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 					if("Create Ampoule")
 						var/datum/reagents/R = B.reagents
 						var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -1013,7 +1019,7 @@ datum/chemicompiler_core/stationaryCore
 						A = new /obj/item/reagent_containers/ampoule(user.loc)
 						A.name = "ampoule ([ampoulename])"
 						R.trans_to(A, 5)
-						logTheThing("combat",user,null,"created a [ampoulename] ampoule containing [log_reagents(A)].")
+						logTheThing("combat",user,null,"used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 
 				working = 0
 			else if(mode_type == "Reagent Extractor")
@@ -1039,7 +1045,7 @@ datum/chemicompiler_core/stationaryCore
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			src.updateUsrDialog()
 
 		else
@@ -1176,7 +1182,7 @@ datum/chemicompiler_core/stationaryCore
 			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
-			var/ops = text2num(href_list["page"])
+			var/ops = text2num_safe(href_list["page"])
 			switch(ops)
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "transference"
@@ -1263,6 +1269,8 @@ datum/chemicompiler_core/stationaryCore
 			else if (G == T) boutput(usr, "<span class='alert'>Cannot transfer a container's contents to itself.</span>")
 			else
 				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
+				if(!isnum_safe(amt))
+					return
 				if(get_dist(usr, src) > 1) return
 				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
 				else G.reagents.trans_to(T,amt)
