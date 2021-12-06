@@ -1,6 +1,8 @@
-//values to differentiate types of manual packet triggering (as opposed to poll-based triggering)
-#define SIGBUILD_REGULAR 1
-#define SIGBUILD_PAIRED 2
+//values to differentiate types of condition in which net updates are built
+//setup indicates a batched build that shouldn't update ui individually
+//regular indicates an individual build, i.e. for a single resonator changing, that should prompt an update
+#define SIGBUILD_SETUP 1
+#define SIGBUILD_REGULAR 2
 
 ABSTRACT_TYPE(/obj/machinery/siphon)
 /obj/machinery/siphon
@@ -34,14 +36,16 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		return
 
 	///prepares an update for the siphon control console; placed in a discrete proc so subtypes can handle input commands before signal post
-	proc/build_net_update(var/datum/signal/signal,var/manual,var/replyto)
-		//manual is used in subtypes for local update triggering if changes were done asynchronously
+	proc/build_net_update(var/datum/signal/signal,var/sigvalue,var/replyto)
+		//sigvalue is used for control over update triggering, see define comments
 		var/datum/signal/reply = new
 		if(replyto)
 			reply.data["address_1"] = replyto
 		reply.data["command"] = "devdat" //short for device data
 		reply.data["device"] = src.netname
 		reply.data["netid"] = src.net_id
+		if(sigvalue == SIGBUILD_REGULAR) //give update to control console
+			reply.data["REFRESH_UI"] = TRUE
 		var/readouts = src.build_readouts(reply)
 		if(readouts) reply.data["devdat"] = readouts //see associated proc
 		SPAWN_DBG(0.5 SECONDS)
@@ -105,7 +109,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/list/resonators = list()
 	///list of possible siphon targets for the siphon
 	var/list/can_extract = list()
-	///progress in extraction, incremented each process by total intensity of resonators; more valuable materials take more ticks to extract
+	///progress in extraction, incremented each process by total intensity of resonators; consumption varies by material. also known as EEU
 	var/extract_ticks = 0
 	///where extracted minerals are sent
 	var/output_target = null
@@ -128,6 +132,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	disposing()
 		qdel(src.beamlight)
 		..()
+
+	examine()
+		. = ..()
+		var/quant = length(src.contents)
+		if(quant > 0)
+			. += " It's holding [quant] units of material."
 
 	process(var/mult)
 		if (status & NOPOWER)
@@ -318,8 +328,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				res.reso_init(xadj,yadj)
 				res.engage_lock()
 			SPAWN_DBG(5 DECI SECONDS)
-				src.calibrate_resonance()
-				src.build_net_update(null,SIGBUILD_REGULAR)
+				src.build_net_update(null,SIGBUILD_REGULAR) //resonance calibration happening in here via build readouts
 				src.changemode("low")
 				src.toggling = FALSE
 
@@ -385,6 +394,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			ClearSpecificOverlays(null,"storage")
 
 	build_readouts()
+		src.calibrate_resonance()
 		var/list/devdat = list()
 		devdat["Total Intensity"] = src.resofactor
 		devdat["Lateral Resonance"] = src.x_torque
@@ -480,8 +490,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.intensity = scalex
 			src.update_fx()
 			if(paired_core)
-				paired_core.calibrate_resonance()
-				src.build_net_update(null,SIGBUILD_PAIRED)
+				src.build_net_update(null,SIGBUILD_REGULAR)
 			return
 
 	examine()
@@ -508,7 +517,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.formatted_coords = "[horizontal_identifier][vertical_identifier]"
 		src.torque_init(xadj,yadj)
 		SPAWN_DBG(0.1 SECONDS)
-			src.build_net_update(null,SIGBUILD_REGULAR)
+			src.build_net_update(null,SIGBUILD_SETUP)
 
 	//initializes torque and shear values after prompted, determining what effect the resonator has on siphoning
 	//x_torque, y_torque and shearmod values set here will be multiplied by the resonator's intensity
@@ -553,21 +562,23 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.light.disable()
 			ClearAllOverlays()
 
-	build_net_update(datum/signal/signal,var/manual)
+	build_net_update(datum/signal/signal,var/sigvalue)
 		if(signal && signal.data["command"] == "calibrate")
 			var/scalex = signal.data["intensity"]
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()
-		if(manual == SIGBUILD_PAIRED)
-			paired_core.calibrate_resonance()
-			paired_core.build_net_update()
+			SPAWN_DBG(0.2 SECONDS)
+				paired_core.build_net_update(null,SIGBUILD_REGULAR)
+		else if(sigvalue == SIGBUILD_REGULAR)
+			paired_core.build_net_update(null,SIGBUILD_REGULAR)
 		..()
 
 	build_readouts()
 		var/list/devdat = list()
 		devdat["Device Position"] = src.formatted_coords
 		devdat["Intensity"] = src.intensity
+		devdat["Maximum Intensity"] = src.max_intensity
 		devdat["Lateral Resonance"] = src.x_torque * src.intensity
 		devdat["Vertical Resonance"] = src.y_torque * src.intensity
 		return devdat
@@ -591,6 +602,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	build_readouts()
 		var/list/devdat = list()
+		devdat["Device Position"] = src.formatted_coords
 		devdat["Intensity"] = src.intensity
+		devdat["Maximum Intensity"] = src.max_intensity
 		devdat["Shear Modifier"] = src.shearmod * src.intensity
 		return devdat

@@ -1,3 +1,4 @@
+//defines for physical click zones on siphon control
 #define CLICK_ZONE_LEVER 1
 #define CLICK_ZONE_PANEL 2
 
@@ -130,16 +131,42 @@
 			switch(signal.data["command"])
 				if("devdat")
 					src.list_is_updated = FALSE
-					var/device_netid = signal.data["netid"]
+					var/device_netid = "DEV_[signal.data["netid"]]" //stored like this so it overwrites existing entries for partial refreshes
 					var/list/manifest = new()
 					manifest["Identifier"] = signal.data["device"]
+					manifest["INT_TARGETID"] = signal.data["netid"]
 					manifest += signal.data["devdat"]
 					src.known_devices[device_netid] = manifest
+					if(signal.data["REFRESH_UI"])
+						src.updateUsrDialog()
 				if("deinit")
 					if(signal.data["device"] == "SIPHON")
 						src.list_is_updated = FALSE
 						src.known_devices.Cut()
 		return
+
+	//construct command packet to send out; accepts netid for comms target device and a list of key-value paired commands
+	proc/build_command(var/com_target,var/command_list)
+		if(com_target)
+			var/datum/signal/yell = new
+			yell.data["address_1"] = com_target
+			yell.data["command"] = "calibrate"
+			yell.data += command_list
+			SPAWN_DBG(0.5 SECONDS)
+				src.post_signal(yell)
+		return
+
+	proc/post_signal(datum/signal/signal,var/newfreq)
+		if(!signal)
+			return
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
+
+		signal.source = src
+		signal.data["sender"] = src.net_id
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
 
 /obj/machinery/computer/siphon_control/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -202,7 +229,7 @@
 	if (src.formatted_list)
 		HTML += src.formatted_list
 
-	user.Browse(HTML, "window=siphonControl_\ref[src];title=Siphon Systems Console;size=350x550;")
+	user.Browse(HTML, "window=siphonControl_\ref[src];title=Siphon Systems Control;size=350x550;")
 	onclose(user, "siphonControl_\ref[src]")
 	return
 
@@ -220,7 +247,7 @@
 		src.formatted_list = mainlist
 		return
 
-	mainlist += "<h2>CONNECTED DEVICES</h2><br><br>"
+	mainlist += "<h2>CONNECTED DEVICES</h2>"
 
 	for (var/device_index in src.known_devices)
 		var/saveforsiphon = FALSE
@@ -228,8 +255,10 @@
 		var/list/manifest = known_devices[device_index]
 		for(var/field in manifest)
 			if(field == "Intensity") //calibration isn't in yet, add it, seriously !!!!!!!!!!!
-				minitext += "<strong>[field]</strong> &middot; [manifest[field]] <A href='[topicLink("calibrate","\ref[manifest]")]'>(Calibrate)</A><br>"
-			else
+				var/maxintens = manifest["Maximum Intensity"]
+				minitext += "<strong>[field]</strong> &middot; [manifest[field]][maxintens ? " / [maxintens]" : ""] "
+				minitext += "<A href='[topicLink("calibrate","\ref[device_index]")]'>(Calibrate)</A><br>"
+			else if(field != "INT_TARGETID" && field != "Maximum Intensity")
 				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
 				minitext += "<strong>[field]</strong> &middot; [manifest[field]]<br>"
 		if(saveforsiphon)
@@ -242,6 +271,30 @@
 	mainlist += rollingtext
 	src.formatted_list = mainlist
 	src.list_is_updated = TRUE
+	return
+
+/obj/machinery/computer/siphon_control/Topic(href, href_list)
+	if(..())
+		return
+
+	//var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
+
+	switch (href_list["action"])
+		if ("calibrate")
+			var/manifest_identifier = locate(href_list["subaction"]) in src.known_devices
+			var/list/manifest = known_devices[manifest_identifier]
+			boutput(world,manifest)
+			if(manifest["Identifier"])
+				boutput(world,manifest["INT_TARGETID"])
+				var/intensicap = manifest["Maximum Intensity"]
+				boutput(world,intensicap)
+				var/scalex = input(usr,"Accepts values 0 through [intensicap]","Adjust Intensity","1") as num
+				scalex = clamp(scalex,0,intensicap)
+				var/list/commanderino = list("intensity" = scalex)
+				src.build_command(manifest["INT_TARGETID"],commanderino)
+
+	src.add_fingerprint(usr)
+	//src.updateUsrDialog() //not sure if this is needed given updates are prompted by receipt of update from a resonator
 	return
 
 
@@ -259,3 +312,149 @@
 	light_r = 0.8
 	light_g = 1
 	light_b = 1
+
+	///textified list of all indexed (non-hidden) minerals
+	var/mineral_list = null
+
+	New()
+		..()
+		src.build_mineral_list()
+
+/obj/machinery/computer/siphon_db/attack_hand(var/mob/user as mob)
+	if(!src.allowed(user))
+		boutput(user, "<span class='alert'>Access Denied.</span>")
+		return
+
+	if(..())
+		return
+
+	src.add_dialog(user)
+	var/HTML
+
+	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+		<style type='text/css'>
+			body {
+				font-family: Verdana, sans-serif;
+				background: #222228;
+				color: #ddd;
+				text-align: center;
+				}
+			strong {
+				color: #fff;
+				}
+			a {
+				color: #6ce;
+				text-decoration: none;
+				}
+			a:hover, a:active {
+				color: #cff;
+				}
+			img, a img {
+				border: 0;
+				}
+		</style>
+	"} : {"
+	<style type='text/css'>
+		/* when chui is on apparently do nothing, cargo cult moment */
+	</style>
+	"}
+
+	HTML += {"
+	[header_thing_chui_toggle]
+	<title>Resonance Calibration Database</title>
+	<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			margin: 0.2em 0;
+			background: #111520;
+			text-align: center;
+			padding: 0.2em;
+			border-top: 1px solid #456;
+			border-bottom: 1px solid #456;
+		}
+
+		h2 { font-size: 130%; }
+		h3 { font-size: 110%; margin-top: 1em; }
+	</style>"}
+
+	HTML += "This computer lists our projections<br>"
+	HTML += "for outcomes of certain resonant parameters<br>"
+	HTML += "when applied to the harmonic siphon.<br>"
+	HTML += "It <strong>does not control siphon function</strong>;<br>"
+	HTML += "please use provided devices for that purpose.<br><br>"
+	HTML += "A subset of these entries contain configurations for<br>"
+	HTML += "resonator positions corresponding to successful<br>"
+	HTML += "extraction of their listed resource; you are<br>"
+	HTML += "not required to use these parameters.<br>"
+	HTML += "They are given for reference and ease of initial use.<br><br>"
+	HTML += "Please see end of list for a<br>"
+	HTML += "glossary of pertinent terms.<br><br>"
+
+	src.build_mineral_list()
+	if (src.mineral_list)
+		HTML += src.mineral_list
+
+	HTML += "<h2>GLOSSARY</h2>"
+	HTML += "<h3>EEU: Effective Extraction Units</h3>"
+	HTML += "Each time the harmonic siphon cycles, one EEU is <br>"
+	HTML += "produced for each unit of resonance in active <br>"
+	HTML += "resonators; once cumulative EEU matches a material's <br>"
+	HTML += "required EEU per extraction under appropriate resonant<br>"
+	HTML += "conditions, a unit of that material is produced and added<br>"
+	HTML += "to the siphon's internal resource buffer.<br><br>"
+	HTML += "Increased total resonance results in more EEU per cycle;<br>"
+	HTML += "maximum production is reached by matching the EEU<br>"
+	HTML += "per cycle to the resource's EEU per extraction.<br>"
+	HTML += "<h3>LATERAL RESONANCE</h3>"
+	HTML += "First of three resonant parameters, charted on<br>"
+	HTML += "the letter axis. Type-AX resonators will raise or lower<br>"
+	HTML += "this value by eight units per intensity at 'point-blank'<br>"
+	HTML += "(columns D or F), diminishing by powers of two to a <br>"
+	HTML += "minimum of one unit at max range (columns A or I).<br>"
+	HTML += "<h3>VERTICAL RESONANCE</h3>"
+	HTML += "Second of three resonant parameters, charted on<br>"
+	HTML += "the number axis. Type-AX resonators will raise or lower<br>"
+	HTML += "this value by eight units per intensity at 'point-blank'<br>"
+	HTML += "(rows 3 or 5), diminishing by powers of two to a <br>"
+	HTML += "minimum of one unit at max range (rows 0 or 8).<br>"
+	HTML += "<h3>RESONANT SHEAR</h3>"
+	HTML += "Third of three resonant parameters, a byproduct<br>"
+	HTML += "of lateral and vertical resonance.<br>"
+	HTML += "When positive and negative resonance values cancel out<br>"
+	HTML += "on the same axis, a shear will be produced equal to<br>"
+	HTML += "the amount of resonance cancelled.<br>"
+	HTML += "Shear cannot be produced directly, but can be mitigated<br>"
+	HTML += "by use of the Type-SM resonator, mitigating one to eight<br>"
+	HTML += "units of shear per intensity, depending on distance.<br>"
+	HTML += "<h3>SENSITIVITY MARGIN</h3>"
+	HTML += "Some extraction targets are more forgiving of <br>"
+	HTML += "inexact parameters than others. If this value is listed,<br>"
+	HTML += "<strong>any</strong> resonance parameter may differ by<br>"
+	HTML += "the amount of the listed value without an<br>"
+	HTML += "adverse effect on extraction.<br>"
+
+	user.Browse(HTML, "window=siphonControl_\ref[src];title=Resonance Calibration Database;size=420x500;")
+	onclose(user, "siphonControl_\ref[src]")
+	return
+
+/obj/machinery/computer/siphon_db/proc/build_mineral_list()
+	var/rollingtext = ""
+
+	for (var/DAT in concrete_typesof(/datum/siphon_mineral))
+		var/datum/siphon_mineral/mat = new DAT
+		rollingtext += "<h2>[mat.name]</h2>"
+		rollingtext += "<strong>EEU per Extraction:</strong> [mat.tick_req]<br>"
+		if(mat.x_torque)
+			rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
+		if(mat.y_torque)
+			rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
+		if(mat.shear)
+			rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
+		rollingtext += "<strong>Sensitivity Margin:</strong> [mat.sens_window]<br>"
+		if(mat.setup_guide)
+			rollingtext += "<br><strong>Reference Configuration</strong><br>"
+			for(var/stringerino in mat.setup_guide)
+				rollingtext += stringerino
+		rollingtext += "<br>"
+
+	src.mineral_list = rollingtext
+	return

@@ -17,6 +17,8 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	var/sens_window = 0
 	///Stuff to produce when parameters are successfully met
 	var/product = /obj/item/raw_material/scrap_metal
+	///Setup guide, formatted as a list of strings describing individual resonator positions and intensities
+	var/list/setup_guide = null
 
 	New()
 		..()
@@ -31,6 +33,9 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 0
 	sens_window = 2
 	product = /obj/item/raw_material/rock
+	setup_guide = list(
+		"Type-AX Resonator, Position F4, 2 Intensity<br>"
+	)
 
 /datum/siphon_mineral/mauxite
 	name = "Mauxite"
@@ -39,6 +44,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 8
 	sens_window = 7
 	product = /obj/item/raw_material/mauxite
+	setup_guide = list(
+		"Type-AX Resonator, Position F4, 4 Intensity<br>",
+		"Type-AX Resonator, Position G4, 2 Intensity<br>",
+		"Type-AX Resonator, Position E3, 3 Intensity<br>",
+		"Type-AX Resonator, Position F6, 1 Intensity<br>"
+	)
 
 /datum/siphon_mineral/molitz
 	name = "Molitz"
@@ -47,6 +58,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 8
 	sens_window = 7
 	product = /obj/item/raw_material/molitz
+	setup_guide = list(
+		"Type-AX Resonator, Position F4, 4 Intensity<br>",
+		"Type-AX Resonator, Position G4, 2 Intensity<br>",
+		"Type-AX Resonator, Position E3, 3 Intensity<br>",
+		"Type-AX Resonator, Position F6, 1 Intensity<br>"
+	)
 
 /datum/siphon_mineral/pharosium
 	name = "Pharosium"
@@ -55,13 +72,11 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 40
 	sens_window = 7
 	product = /obj/item/raw_material/pharosium
-
-/datum/siphon_mineral/cobryl
-	name = "Cobryl"
-	x_torque = -96
-	shear = 4
-	sens_window = 9
-	product = /obj/item/raw_material/cobryl
+	setup_guide = list(
+		"Type-AX Resonator, Position E3, 4 Intensity<br>",
+		"Type-AX Resonator, Position E2, 4 Intensity<br>",
+		"Type-AX Resonator, Position D7, 2 Intensity<br>"
+	)
 
 /datum/siphon_mineral/char
 	name = "Char"
@@ -71,6 +86,55 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 16
 	sens_window = 5
 	product = /obj/item/raw_material/char
+	setup_guide = list(
+		"Type-AX Resonator, Position C6, 1 Intensity<br>",
+		"Type-AX Resonator, Position G2, 1 Intensity<br>",
+		"Type-AX Resonator, Position D4, 2 Intensity<br>"
+	)
+
+/datum/siphon_mineral/martian
+	name = "Viscerite"
+	x_torque = 20
+	y_torque = 16
+	shear = 8
+	sens_window = 3
+	product = /obj/item/raw_material/martian
+	setup_guide = list(
+		"Type-AX Resonator, Position F4, 4 Intensity<br>",
+		"Type-AX Resonator, Position G4, 2 Intensity<br>",
+		"Type-AX Resonator, Position E3, 3 Intensity<br>",
+		"Type-AX Resonator, Position F6, 1 Intensity<br>"
+	)
+
+/datum/siphon_mineral/claretine
+	name = "Claretine"
+	tick_req = 40
+	x_torque = 32
+	y_torque = -4
+	shear = 20
+	sens_window = 4
+	product = /obj/item/raw_material/claretine
+	setup_guide = list(
+		"Type-AX Resonator, Position E7, 3 Intensity<br>",
+		"Type-AX Resonator, Position E2, 1 Intensity<br>",
+		"Type-AX Resonator, Position G6, 3 Intensity<br>",
+		"Type-AX Resonator, Position F4, 1 Intensity<br>"
+	)
+
+/datum/siphon_mineral/bohrum
+	name = "Bohrum"
+	tick_req = 40
+	x_torque = -16
+	y_torque = -16
+	shear = 24
+	sens_window = 4
+	product = /obj/item/raw_material/bohrum
+	setup_guide = list(
+		"Type-AX Resonator, Position C2, 2 Intensity<br>",
+		"Type-AX Resonator, Position D3, 2 Intensity<br>",
+		"Type-AX Resonator, Position G6, 1 Intensity<br>",
+		"Type-AX Resonator, Position H7, 1 Intensity<br>"
+	)
 
 /datum/siphon_mineral/fibrilith
 	name = "Fibrilith"
@@ -84,31 +148,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		src.shear = rand(8,16)
 		..()
 
-/datum/siphon_mineral/martian
-	name = "Viscerite"
-	x_torque = 20
-	y_torque = 16
-	shear = 8
-	sens_window = 3
-	product = /obj/item/raw_material/martian
-
-/datum/siphon_mineral/claretine
-	name = "Claretine"
-	tick_req = 40
-	x_torque = 32
-	y_torque = -4
-	shear = 20
-	sens_window = 4
-	product = /obj/item/raw_material/claretine
-
-/datum/siphon_mineral/bohrum
-	name = "Bohrum"
-	tick_req = 40
-	x_torque = -16
-	y_torque = -16
-	shear = 24
-	sens_window = 4
-	product = /obj/item/raw_material/bohrum
+/datum/siphon_mineral/cobryl
+	name = "Cobryl"
+	x_torque = -96
+	shear = 4
+	sens_window = 9
+	product = /obj/item/raw_material/cobryl
 
 /datum/siphon_mineral/syreline
 	name = "Syreline"
@@ -163,7 +208,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/raw_material/gemstone
 
 /datum/siphon_mineral/uqill
-	name = "uqill"
+	name = "Uqill"
 	tick_req = 90
 	shear = 54
 	sens_window = 2
