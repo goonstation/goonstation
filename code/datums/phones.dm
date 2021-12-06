@@ -4,8 +4,8 @@
 
 /datum/phone
 	var/atom/holder = null // set type in child datum so you can call necessary procs
-	var/phone_name = null // This is the name the user will see when we're displayed in a contact list
-	var/phone_id = null // unique identifier based on netIDs, and can be used as a net ID if necessary, or overidden to share with its holder
+	var/phoneName = null // This is the name the user will see when we're displayed in a contact list
+	var/phoneID = null // unique identifier based on netIDs, and can be used as a net ID if necessary, or overidden to share with its holder
 	var/phoneCallType = /datum/phonecall // override var for your phone datum to generate a different phonecall datum
 
 	var/unlisted = FALSE
@@ -22,9 +22,9 @@
 	New(var/atom/creator)
 		..()
 		holder = creator
-		if (!phone_name)
-			phone_name = creator.name
-		phone_id = format_net_id("\ref[src]")
+		if (!phoneName)
+			phoneName = creator.name
+		phoneID = format_net_id("\ref[src]")
 		START_TRACKING
 
 	disposing()
@@ -34,13 +34,15 @@
 	/// Starts and automatically joins a phone call
 	proc/startPhoneCall(var/call_list, var/forceStart) // does not have to be a list, can be just a ref to a phone datum
 		if(currentPhoneCall) // forceStart will boot us from any active call
-			forceStart ? disconnectFromCall() : return // TODO: MAKE PROC FOR DENYING PHONE CALL AND ONDENY() OR WHATEVER
+			if(forceStart)
+				disconnectFromCall() // TODO: MAKE PROC FOR DENYING PHONE CALL AND ONDENY() OR WHATEVER
+			else return
 		if(!call_list && !forceStart)
 			return
 		currentPhoneCall = new phoneCallType(src, maxConnected, prioritizeOurMax)
 		if(!islist(call_list))
-			return inviteToCall(contact)
-		for(var/datum/phone/contact in targets)
+			return inviteToCall(call_list)
+		for(var/datum/phone/contact in call_list)
 			. += inviteToCall(contact) // we let our proc caller know if we're successfully ringing them or not, and how many people we were able to start ringing
 			// (since true returns as 1, we can just add the return to . and if even just one return is true, the final return can be read as true or for the target count)
 
@@ -81,16 +83,16 @@
 	/// Returns the phone associated with the provided ID, or null if it can't find it.
 	proc/getRefFromID(var/id)
 		for(var/datum/phone/contact in by_type[/datum/phone])
-			if(contact.phone_id = id)
+			if(contact.phoneID == id)
 				return contact
 
 
-	/// Returns the same list as getContacts() except instead of refs its the phones' phone_name associated with phone_id. Yes it's a lengthy proc name fuck you.
-	proc/getContactNameToIDList()
+	/// Returns the same list as getContacts() except instead of refs its the phones' phoneName associated with phoneID. Yes it's a lengthy proc name fuck you.
+	proc/getContactIDToNameList()
 		var/list/L = new()
 		for(var/datum/phone/contact in getContacts())
-			L += contact.phone_name
-			L[contact.phone_name] = contact.phone_id
+			L += contact.phoneID
+			L[contact.phoneID] = contact.phoneName
 		return L
 
 
@@ -123,41 +125,55 @@
 	/// Default UI, override/copy+paste at your leisure
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
+		. = ui
 		if(!ui)
-			ui = new(user, src, "PhoneBook")
+			ui = new(user, src, "phoneDefault")
 			ui.open()
 
 	ui_data(mob/user)
+		// We'll send an assoc. list to the UI so js can take each key and value into the list to make it a new object
+		// which represents each individual contact. ID = name
 		. = list(
-			"contacts" = getContactNameToIDList(),
-			"inCall" = !isnull(currentPhoneCall),
-			"phonecallMembers" = currentPhoneCall?.members,
-			"pendingCallMembers" = currentPhoneCall?.pendingMembers
+			"contactList" = getContactIDToNameList(),
+			"phoneCallMembers" = currentPhoneCall?.members,
+			"pendingCallMembers" = currentPhoneCall?.pendingMembers,
+			"callHost" = currentPhoneCall?.host,
+			"phonecallID" = currentPhoneCall?.phonecallID
 		)
+	ui_host()
+		return holder
 /*
 contact[1], idk what else
 be sure to have it return id
 */
-	/obj/machinery/my_machine/ui_act(action, params)
+	ui_act(action, params)
 		. = ..()
+		if (.)
+			return
 		switch(action)
-			if("make_call")
+			if("makeCall")
 				var/datum/phone/contact = getRefFromID(params[1])
-				src.startPhoneCall(contact)
-			if("leave_call")
+				if(!(contact in getContacts()))
+					return // double-checking that the contact should actually be visible to our phone
+				startPhoneCall(contact)
+			if("leaveCall")
+				disconnectFromCall()
 
 // Be careful overriding this, make sure you account for other phone datums that may try to connect to this!
 /// Handles routing all the speech and data in a phone call
 /datum/phonecall
-	var/members = list()
+	var/phonecallID = null // in case someone needs to refer to a specific call, we'll have a unique ID for it
+
+	var/members = list() // Support for 3+ contact PhoneCalls! Number of connected phones capped by maxMembers
 	var/pendingMembers = list() // sometimes it's useful to know who's being rung up but hasn't connected yet
 	var/datum/phone/host = null // who's hosting this party?!
+
 	var/maxMembers = null // how many people can be in this PhoneCall?
 	var/overrideMax = FALSE // if true, phones will ignore their maxMembers value
-	var/connected = list() // Support for 3+ contact PhoneCalls! Number of connected phones capped by maxConnected
 
 	New(creator, max, priority)
 		..()
+		phonecallID = format_net_id("\ref[src]")
 		host = creator
 		maxMembers = max
 		overrideMax = priority
@@ -210,6 +226,7 @@ be sure to have it return id
 	icon_state = "cellphone-on"
 	flags = TALK_INTO_HAND
 	var/datum/phone/test/phoneDatum = null
+	var/datum/tgui/ui = null
 
 	New()
 		..()
@@ -220,10 +237,11 @@ be sure to have it return id
 		if(phoneDatum.incomingCall)
 			phoneDatum.incomingCall.tryConnect(phoneDatum)
 			return
-		var/formattedContacts
+		ui = phoneDatum.ui_interact(user, ui)
+		/*var/formattedContacts
 		for(var/datum/phone/contact in phoneDatum.getContacts())
-			formattedContacts += "<br><a href='byond://?src=\ref[src];CALL-PHONE=\ref[contact]'>[contact.phone_name]</a>"
-		usr.Browse("<head><title>PLACEHOLDER PHONE UI</title></head><body><tt><b>Contact list:</b><hr>[formattedContacts]</tt></body>", "window=placeholder_phone_ui")
+			formattedContacts += "<br><a href='byond://?src=\ref[src];CALL-PHONE=\ref[contact]'>[contact.phoneName]</a>"
+		usr.Browse("<head><title>PLACEHOLDER PHONE UI</title></head><body><tt><b>Contact list:</b><hr>[formattedContacts]</tt></body>", "window=placeholder_phone_ui")*/
 
 	Topic(href, href_list)
 		if("CALL-PHONE" in href_list)
