@@ -1808,9 +1808,9 @@ proc/countJob(rank)
 
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
-/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0, var/require_client = FALSE)
+/proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
+		var/require_client = FALSE)
 	var/list/candidates = list()
-
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
 		var/ghost_timestamp = world.time
@@ -1841,14 +1841,15 @@ proc/countJob(rank)
 				var/client/C = M.current.client
 				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
 					continue
-				if (C.holder && !C.holder.ghost_respawns && !C.player_mode)
+				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
 
 				SPAWN_DBG(0) // Don't lock up the entire proc.
-					M.current << csound("sound/misc/lawnotify.ogg")
+					M.current.playsound_local(M.current, "sound/misc/lawnotify.ogg", 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
 
-					if (alert(M.current, text_alert, "Respawn", "Yes", "No") == "Yes")
+					var/response = tgui_alert(M.current, text_alert, "Respawn", list("Yes", "No", "Stop these"), timeout = ghost_timestamp + confirmation_spawn - world.time)
+					if (response == "Yes")
 						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
@@ -1859,11 +1860,14 @@ proc/countJob(rank)
 						if (M.current && !(M in candidates))
 							boutput(M.current, text_chat_added)
 							candidates.Add(M)
+					else if (response == "Stop these")
+						M.show_respawn_prompts = FALSE
+						return
 					else
 						return
 
 		while (ghost_timestamp && world.time < ghost_timestamp + confirmation_spawn)
-			sleep (300)
+			sleep(30 SECONDS)
 
 		// Filter list again.
 		if (candidates.len)
