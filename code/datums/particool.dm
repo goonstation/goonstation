@@ -58,6 +58,8 @@ var/list/master_particle_info = list()
 	if(toNum)
 		for(var/i = 1; i <= length(.); ++i)
 			.[i] = stringToNum(.[i], restoreNull)
+	if(length(.) == 1 && (isnull(.[1]) || .[1] == ""))
+		. = null
 
 /datum/particle_editor/proc/stringToNum(str, restoreNull = FALSE)
 	. = text2num(str)
