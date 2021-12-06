@@ -4665,6 +4665,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
@@ -18169,6 +18172,14 @@
 	dir = 4
 	},
 /area/station/security/hos)
+"eYO" = (
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 1
+	},
+/area/station/crew_quarters/cafeteria)
 "eYU" = (
 /obj/cable{
 	d1 = 2;
@@ -30577,12 +30588,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay/treatment)
-"iGL" = (
-/obj/machinery/phone/wall{
-	pixel_y = 5
-	},
-/turf/simulated/wall/auto/jen,
-/area/station/ranch)
 "iGT" = (
 /obj/cable{
 	d1 = 4;
@@ -38426,7 +38431,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/phone/wall{
-	pixel_x = -30;
+	pixel_x = -28;
 	pixel_y = 4
 	},
 /turf/simulated/floor,
@@ -44037,7 +44042,6 @@
 /area/station/security/equipment)
 "mLe" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/phone,
 /turf/simulated/floor/carpet/green/fancy/innercorner{
 	dir = 8
 	},
@@ -60918,10 +60922,6 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
-"rzO" = (
-/obj/decal/poster/wallsign/bar,
-/turf/simulated/wall/auto/jen,
-/area/station/crew_quarters/kitchen)
 "rzR" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/camera{
@@ -61096,6 +61096,9 @@
 	},
 /obj/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/decal/poster/wallsign/bar{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood/eight{
 	dir = 1
@@ -64549,6 +64552,9 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 36
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "sFw" = (
@@ -67655,10 +67661,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"tBh" = (
-/obj/machinery/phone/wall,
-/turf/simulated/wall/auto/reinforced/jen/blue,
-/area/station/bridge)
 "tBC" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -117108,7 +117110,7 @@ nMc
 nHT
 nMc
 nMc
-tBh
+prh
 bbp
 vlq
 dqf
@@ -126425,8 +126427,8 @@ hJO
 fsn
 saL
 pQh
-rzO
-rNI
+pQh
+eYO
 qHy
 eEy
 rul
@@ -130645,7 +130647,7 @@ mfs
 mfs
 mfs
 mfs
-iGL
+mfs
 sFl
 fBI
 uNZ
