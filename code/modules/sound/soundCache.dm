@@ -249,6 +249,7 @@ var/global/list/soundCache = list(
  	"sound/effects/mindkill.ogg" = 'sound/effects/mindkill.ogg',\
  	"sound/effects/normstethoscope.ogg" = 'sound/effects/normstethoscope.ogg',\
  	"sound/effects/pixelexplosion.ogg" = 'sound/effects/pixelexplosion.ogg',\
+	"sound/effects/plant_mutation.ogg" = 'sound/effects/plant_mutation.ogg',\
  	"sound/effects/plop_dissolve.ogg" = 'sound/effects/plop_dissolve.ogg',\
  	"sound/effects/poff.ogg" = 'sound/effects/poff.ogg',\
  	"sound/effects/polaris_crateopening.ogg" = 'sound/effects/polaris_crateopening.ogg',\
