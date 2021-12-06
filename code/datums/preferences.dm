@@ -1620,18 +1620,24 @@ datum/preferences
 	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0)//LOOK SORRY, I MADE THIS /mob/living iF THIS BREAKS SOMETHING YOU SHOULD PROBABLY NOT BE CALLING THIS ON A NON LIVING MOB
 		sanitize_null_values()
 		if (!ignore_randomizer)
-			var/namebanned = jobban_isbanned(user, "Custom Names")
-			if (be_random_name || namebanned)
+			if (be_random_name)
 				randomize_name()
 
-			if (be_random_look || namebanned)
+			if (be_random_look)
 				randomizeLook()
 
 			if (character.bioHolder)
-				if (random_blood || namebanned)
+				if (random_blood)
 					character.bioHolder.bloodType = random_blood_type()
 				else
 					character.bioHolder.bloodType = blType
+
+			SPAWN_DBG(0) // avoid blocking
+				if(jobban_isbanned(user, "Custom Names"))
+					randomize_name()
+					randomizeLook()
+					character.bioHolder?.bloodType = random_blood_type()
+					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
 		src.real_name = src.name_first + " " + src.name_last
