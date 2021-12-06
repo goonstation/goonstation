@@ -558,6 +558,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			src.autoclose = 0
 		..(user)
 
+	xmasify()
+		return
+
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
 	icon_base = "windoor2"
