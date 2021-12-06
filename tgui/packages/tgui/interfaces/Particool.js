@@ -317,7 +317,7 @@ const particleEntryMap = {
   fade: { type: 'float', tooltip: "Fade-out time at end of lifespan, in ticks" },
   fadein: { type: 'float', tooltip: "Fade-in time, in ticks" },
   icon: { type: 'icon', tooltip: "Icon to use, if any; no icon means this particle will be a dot" },
-  icon_state: { type: 'string', tooltip: "Icon state to use, if any" },
+  icon_state: { type: 'list', tooltip: "Icon state to use, if any" },
   color: { type: 'color', tooltip: "Particle color; can be a number if a gradient is used" },
   color_change: { type: 'float', tooltip: "Color change per tick; only applies if gradient is used" },
   position: { type: 'generator', tooltip: "x,y,z position, from center in pixels" },

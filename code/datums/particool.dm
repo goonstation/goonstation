@@ -198,7 +198,37 @@ var/list/master_particle_info = list()
 	particles = null
 
 /atom/movable/proc/modify_particle_value(varName, varVal)
+	var/list/default_particle = list(width = 100,
+									height = 100,
+									count = 100,
+									spawning = 1,
+									bound1 = -1000,
+									bound2 = 1000,
+									icon_state="",
+									grow = 0,
+									position = 0,
+									velocity = 0,
+									scale = generator("num",1,1),
+									velocity = 0,
+									rotation = 0,
+									spin = 0,
+									friction = 0,
+									drift = 0
+									// The following variables either handle null or will evaluate to 0 via Particool
+									// gravity
+									// gradient
+									// transform
+									// lifespan
+									// fade
+									// fadein
+									// icon
+									// color
+									// color_change
+									)
+
 	if(particles)
+		if(isnull(varVal) && !isnull(default_particle[varName]))
+			varVal = default_particle[varName]
 		particles.vars[varName] = varVal
 
 /atom/movable/proc/transition_particle(time, list/new_params, easing, loop)
