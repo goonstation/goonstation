@@ -1617,7 +1617,7 @@ datum/preferences
 
 		src.ShowChoices(user)
 
-	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0)//LOOK SORRY, I MADE THIS /mob/living iF THIS BREAKS SOMETHING YOU SHOULD PROBABLY NOT BE CALLING THIS ON A NON LIVING MOB
+	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0, skip_post_new_stuff=FALSE)
 		sanitize_null_values()
 		if (!ignore_randomizer)
 			if (be_random_name)
@@ -1656,12 +1656,9 @@ datum/preferences
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
-			if (H?.organHolder?.head?.donor_appearance) // aaaa
-				H.organHolder.head.donor_appearance.CopyOther(AH)
 
-		if (traitPreferences.isValid() && character.traitHolder)
-			for (var/T in traitPreferences.traits_selected)
-				character.traitHolder.addTrait(T)
+		if (!skip_post_new_stuff)
+			apply_post_new_stuff(character)
 
 		character.update_face()
 		character.update_body()
@@ -1674,6 +1671,15 @@ datum/preferences
 			var/mob/living/carbon/human/H = character
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+	proc/apply_post_new_stuff(mob/living/character)
+		if(ishuman(character))
+			var/mob/living/carbon/human/H = character
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
+		if (traitPreferences.isValid() && character.traitHolder)
+			for (var/T in traitPreferences.traits_selected)
+				character.traitHolder.addTrait(T)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))
