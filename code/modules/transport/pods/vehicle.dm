@@ -62,6 +62,7 @@
 
 	New()
 		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+		src.facing = src.dir
 
 		. = ..()
 		START_TRACKING
