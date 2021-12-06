@@ -5,14 +5,12 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
-	var/isfiring = 0
 	var/weapon_score = 0.1
 	var/appearanceString
 
 	var/uses_ammunition = 0
 	var/remaining_ammunition = 0
 	var/muzzle_flash = null
-
 
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
@@ -60,12 +58,11 @@
 
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
-	if(isfiring) return
-	isfiring = 1
+	if(ON_COOLDOWN(src, "fire", firerate))
+		return
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
-			isfiring  = 0
 			return
 
 	var/rdir = ship.dir
@@ -77,8 +74,6 @@
 	logTheThing("combat", user, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
-	SPAWN_DBG (firerate)
-		isfiring = 0
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
 	if(!gunner)
@@ -304,8 +299,8 @@
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		switch(mode)
 			if(0)
-				if(isfiring) return
-				isfiring = 1
+				if(ON_COOLDOWN(src, "fire", firerate))
+					return
 				var/obj/decal/D = new/obj/decal(ship.loc)
 				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
@@ -332,9 +327,6 @@
 					s.start()
 					sleep(0.3 SECONDS)
 					D.dispose()
-
-				SPAWN_DBG(firerate)
-					isfiring = 0
 			if(1)
 				..()
 
@@ -393,8 +385,8 @@
 		if(!core_inserted)
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
-		if(isfiring) return
-		isfiring = 1
+		if(ON_COOLDOWN(src, "fire", firerate))
+			return
 		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
 		logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
@@ -456,10 +448,6 @@
 						purge_sps(destruction_point_x, destruction_point_y)
 
 				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
-
-
-			SPAWN_DBG(firerate)
-				isfiring = 0
 			return
 		return
 

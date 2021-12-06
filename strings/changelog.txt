@@ -1,5 +1,7 @@
 
 (t)sun dec 05 21
+(u)pali
+(*)You no longer need to mash space to shoot in pods. Holding it down is enough now!
 (u)Flaborized
 (p)6519
 (e)🎨|sprites
