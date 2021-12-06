@@ -642,6 +642,7 @@ var/global/list/soundCache = list(
  	"sound/machines/spend.ogg" = 'sound/machines/spend.ogg',\
  	"sound/machines/squeaky_rolling.ogg" = 'sound/machines/squeaky_rolling.ogg',\
  	"sound/machines/sweep.ogg" = 'sound/machines/sweep.ogg',\
+ 	"sound/machines/tone_beep.ogg" = 'sound/machines/tone_beep.ogg',\
  	"sound/machines/tractorrev.ogg" = 'sound/machines/tractorrev.ogg',\
  	"sound/machines/tractor_running.ogg" = 'sound/machines/tractor_running.ogg',\
  	"sound/machines/tractor_running2.ogg" = 'sound/machines/tractor_running2.ogg',\

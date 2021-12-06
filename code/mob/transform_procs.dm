@@ -149,6 +149,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
+	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.job = "AI"
 
 	SPAWN_DBG(0)
