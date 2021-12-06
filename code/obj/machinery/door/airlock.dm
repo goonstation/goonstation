@@ -1312,7 +1312,7 @@ About the new airlock wires panel:
 			return
 
 		if (issilicon(AM))
-			if (aiControlDisabled == 1 || cant_emag)
+			if (aiControlDisabled || cant_emag)
 				return
 			var/mob/silicon = AM
 			if (!silicon.mind)
