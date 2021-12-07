@@ -3,6 +3,15 @@ var/global/list
 	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
 	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
+	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
+
+proc/dir_to_dirname(dir)
+	for(var/name in global.dirnames)
+		if(dirnames[name] == dir)
+			return name
+
+proc/dirname_to_dir(dir)
+	return global.dirnames[dir]
 
 /// returns true if a direction is cardinal
 #define is_cardinal(DIR) (!((DIR - 1) & DIR))
