@@ -22640,13 +22640,6 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/quartersA)
-"gtR" = (
-/obj/decal/garland/ephemeral{
-	dir = 8;
-	pixel_x = 14
-	},
-/turf/simulated/floor/escape/corner,
-/area/station/hallway/secondary/exit)
 "gtS" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -30450,10 +30443,6 @@
 "iCV" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/decal/garland/ephemeral{
-	dir = 4;
-	pixel_x = -14
 	},
 /turf/simulated/floor/escape{
 	dir = 8
@@ -45962,14 +45951,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/coldloop)
-"mMa" = (
-/obj/wingrille_spawn/auto,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/stool/bench/blue/auto,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "mMe" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -56452,15 +56433,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/routing/engine)
-"pIj" = (
-/obj/stool/bench/blue/auto,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
-/turf/simulated/floor/escape{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "pIr" = (
 /obj/stool/chair{
 	dir = 4
@@ -62570,13 +62542,6 @@
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"rrV" = (
-/obj/decal/poster/wallsign/space,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/exit)
 "rrX" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -65849,14 +65814,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"skJ" = (
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
-/turf/simulated/floor/escape{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "skL" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -69178,9 +69135,6 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/jazz)
 "tae" = (
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /turf/simulated/floor/delivery,
 /area/station/routing/airbridge{
 	name = "Vessel Dock Router"
@@ -74866,9 +74820,6 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "uyP" = (
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -87522,16 +87473,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
-"xCZ" = (
-/obj/wingrille_spawn/auto,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "xDc" = (
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
@@ -88465,18 +88406,6 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/station/science/artifact)
-"xNF" = (
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
-/obj/decal/garland/ephemeral{
-	dir = 8;
-	pixel_x = 14
-	},
-/turf/simulated/floor/escape{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "xNU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -90247,15 +90176,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"ylt" = (
-/obj/decal/garland/ephemeral{
-	dir = 4;
-	pixel_x = -14
-	},
-/turf/simulated/floor/escape{
-	dir = 8
-	},
-/area/station/hallway/secondary/exit)
 "ylu" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -138327,12 +138247,12 @@ xdw
 xdw
 xdw
 xdw
-rrV
-xCZ
+wvn
+tUh
 scd
 nPr
 xcr
-ylt
+uvX
 iCV
 xcr
 tdQ
@@ -141048,7 +140968,7 @@ aJu
 aJu
 aJu
 tUh
-skJ
+xkJ
 lIU
 tzo
 wkt
@@ -141954,7 +141874,7 @@ aJu
 aJu
 aJu
 tUh
-skJ
+xkJ
 lIU
 xFP
 tUh
@@ -143760,12 +143680,12 @@ cRV
 aST
 vFa
 tUh
-mMa
 tUh
 tUh
 tUh
 tUh
-pIj
+tUh
+xcC
 aUE
 pLn
 xFP
@@ -144666,12 +144586,12 @@ vYk
 xqT
 bAK
 xGd
-mMa
 tUh
 tUh
 tUh
 tUh
-pIj
+tUh
+xcC
 rbv
 dww
 tzo
@@ -146181,8 +146101,8 @@ aJu
 aJu
 aJu
 tUh
-xNF
-gtR
+xkJ
+bmJ
 kMm
 hRU
 btR
@@ -146785,7 +146705,7 @@ aJu
 aJu
 aJu
 tUh
-skJ
+xkJ
 tzo
 bsk
 xhH
@@ -147389,7 +147309,7 @@ aJu
 aJu
 aJu
 tUh
-skJ
+xkJ
 tzo
 bsk
 xhH
@@ -147993,7 +147913,7 @@ aJu
 aJu
 aJu
 tUh
-skJ
+xkJ
 tzo
 bsk
 xhH
