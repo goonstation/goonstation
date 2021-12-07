@@ -1381,8 +1381,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if((tryConnect || src.anchored) && !disconnect)
 		var/turf/T = get_turf(src)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
-		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-			src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
+		if(test_link && (!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master) || test_link.master == src))// if somehow we forgot our link but the terminal didnt
+			if(src.link && src.link?.master == src)
+				src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
 			src.link = test_link
 			src.link.master = src
 	else
