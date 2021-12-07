@@ -75949,6 +75949,12 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"oSz" = (
+/obj/landmark{
+	name = "shuttle-centcom"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
 "oSI" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -78940,6 +78946,12 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"xYc" = (
+/obj/landmark{
+	name = "shuttle-transit"
+	},
+/turf/space/shuttle_transit,
+/area/area_that_kills_you_if_you_enter_it)
 "xYs" = (
 /obj/machinery/vending/standard{
 	pixel_y = 5
@@ -134405,7 +134417,7 @@ gcn
 dmJ
 gcn
 gcn
-gcn
+oSz
 oYO
 dny
 dmu
@@ -160450,7 +160462,7 @@ dkG
 dkG
 dkG
 dkG
-dkG
+xYc
 aaa
 dkY
 dly

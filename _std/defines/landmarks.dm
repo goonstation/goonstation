@@ -25,6 +25,9 @@
 #define LANDMARK_SHUTTLE_DONUT2 "shuttle-donut2"
 #define LANDMARK_SHUTTLE_DONUT3 "shuttle-donut3"
 #define LANDMARK_SHUTTLE_DESTINY "shuttle-destiny"
+// new shuttles
+#define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
+#define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
 
 // nukies
 
