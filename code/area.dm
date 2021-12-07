@@ -522,7 +522,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
+		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
 		return
 
