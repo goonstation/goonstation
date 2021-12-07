@@ -568,30 +568,3 @@ TYPEINFO(/datum/component)
  */
 /datum/component/ui_host()
 	return parent
-
-/proc/CallAsync(datum/object, delegate, list/callingArguments) // Adapted from /datum/callback/proc/InvokeAsync, which is PD, unlike this proc on tg
-	set waitfor = 0
-	if (isnull(object))
-		CRASH("Cannot call null. [delegate]")
-	return call(object, delegate)(arglist(callingArguments))
-
-/proc/type2parent(child)
-	var/string_type = "[child]"
-	var/last_slash = findlasttext(string_type, "/")
-	if(last_slash == 1)
-		switch(child)
-			if(/datum)
-				return null
-			if(/obj, /mob)
-				return /atom/movable
-			if(/area, /turf)
-				return /atom
-			else
-				return /datum
-	return text2path(copytext(string_type, 1, last_slash))
-
-/proc/stack_trace(var/thing_to_crash)
-	CRASH(thing_to_crash)
-
-/datum/proc/AdminAddComponent(...)
-	_AddComponent(args)
