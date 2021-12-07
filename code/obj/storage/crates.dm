@@ -2,9 +2,15 @@
 	name = "crate"
 	desc = "A small, cuboid object with a hinged top and empty interior."
 	is_short = 1
+	#ifdef XMAS
+	icon_state = "xmascrate"
+	icon_opened = "xmascrateopen"
+	icon_closed = "xmascrate"
+	#else
 	icon_state = "crate"
 	icon_closed = "crate"
 	icon_opened = "crateopen"
+	#endif
 	icon_welded = "welded-crate"
 	soundproofing = 3
 	throwforce = 50 //ouch

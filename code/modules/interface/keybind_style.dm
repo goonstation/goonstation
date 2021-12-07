@@ -298,7 +298,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/pod
 	name = "pod"
 	changed_keys = list(
-		"SPACE" = "fire"
+		"SPACE" = KEY_SHOCK
 	)
 
 /datum/keybind_style/torpedo

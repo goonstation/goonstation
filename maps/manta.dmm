@@ -29364,7 +29364,9 @@
 	},
 /area/station/medical/cdc)
 "bCD" = (
-/obj/disposaloutlet,
+/obj/disposaloutlet{
+	range = 2
+	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},

@@ -104,7 +104,7 @@ datum
 		disease/green_mucus // Flu
 			name = "green Mucus"
 			id = "green mucus"
-			description = "Mucus. Thats green."
+			description = "Mucus. That's green."
 			reagent_state = LIQUID
 			minimum_to_infect = 0
 			fluid_r = 215
@@ -316,7 +316,6 @@ datum
 			name = "rat venom"
 			id = "rat_venom"
 			description = "Unbelievably deadly. Not to be mistaken with rat poison."
-			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_g = 40

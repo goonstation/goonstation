@@ -173,7 +173,7 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..()
+		. = ..(loc, null, null, FALSE)
 
 		hud = new(src)
 		src.attach_hud(hud)
