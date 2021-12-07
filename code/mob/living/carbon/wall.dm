@@ -5,7 +5,7 @@
 	real_name = "living wall"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "livingwall"
-	a_intent = "disarm" // just so they don't swap with help intent users
+	a_intent ="disarm" // just so they don't swap with help intent users
 	health = INFINITY
 	anchored = 1
 	density = 1

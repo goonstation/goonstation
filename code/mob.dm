@@ -878,6 +878,12 @@
 			return
 	src.set_cursor(null)
 
+/// used to set the a_intent var of a mob
+/mob/proc/set_a_intent(intent)
+	if (!intent) return
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent)
+	src.a_intent = intent
+
 // medals
 /mob/proc/revoke_medal(title, debug)
 	if (!debug && (!src.client || !src.key))

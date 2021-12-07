@@ -1712,7 +1712,7 @@ datum
 					M = holder.my_atom
 
 				if (M.a_intent == INTENT_HARM)
-					M.a_intent = INTENT_HELP
+					M.set_a_intent(INTENT_HELP)
 
 				if (probmult(8))
 					. = ""
