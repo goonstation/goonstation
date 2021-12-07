@@ -168,7 +168,7 @@
 	blood_id = "blood"
 	blood_volume = 500
 
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
@@ -242,6 +242,8 @@
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
+
+	init_preferences?.apply_post_new_stuff(src)
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null

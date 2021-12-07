@@ -144,7 +144,8 @@
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
-		init_preferences?.apply_post_new_stuff(src)
+		if(!ishuman(src))
+			init_preferences?.apply_post_new_stuff(src)
 
 
 /mob/living/flash(duration)
