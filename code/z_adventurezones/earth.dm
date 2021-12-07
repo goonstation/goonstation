@@ -535,21 +535,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
 		src.cant_self_remove = true
 		src.cant_other_remove = true
-		sleep(1 SECOND)
-		if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
-			boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
-		else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
-			boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
-			sleep(1 SECOND)
-			boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
-			sleep(1 SECOND)
-			user.bioHolder.AddEffect("accent_scots")
-			boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
-		else
-			boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
-			src.rejected_mobs.Add(user)
-		src.cant_self_remove = true
-		src.cant_other_remove = false
+		SPAWN_DBG(1 SECOND)
+			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
+				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
+			else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
+				boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
+				sleep(1 SECOND)
+				boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
+				sleep(1 SECOND)
+				user.bioHolder.AddEffect("accent_scots")
+				boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
+			else
+				boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
+				src.rejected_mobs.Add(user)
+			src.cant_self_remove = true
+			src.cant_other_remove = false
 
 
 /area/centcom/offices/enakai

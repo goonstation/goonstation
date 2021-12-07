@@ -1190,6 +1190,8 @@ var/f_color_selector_handler/F_Color_Selector
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
+		var/list/plist = params2list(T)
+
 		if (T == "admins")
 			var/list/s = list()
 			var/n = 0
@@ -1209,7 +1211,6 @@ var/f_color_selector_handler/F_Color_Selector
 			s["mentors"] = n
 			return list2params(s)
 
-		var/list/plist = params2list(T)
 		switch(plist["type"])
 			if("irc")
 				if (!plist["nick"] || !plist["msg"]) return 0
@@ -1727,9 +1728,9 @@ var/f_color_selector_handler/F_Color_Selector
 				if(type != "sendmaps")
 					type = null
 				if(plist["action"] == "save")
-					var/static/logID = 0
+					var/static/profilerLogID = 0
 					var/output = world.Profile(PROFILE_REFRESH, type, "json")
-					var/fname = "data/logs/profiling/[global.roundLog_date]_[logID++].json"
+					var/fname = "data/logs/profiling/[global.roundLog_date]_manual_[profilerLogID++].json"
 					rustg_file_write(output, fname)
 					return fname
 				var/action = list(
@@ -1742,9 +1743,21 @@ var/f_color_selector_handler/F_Color_Selector
 				var/final_action = action
 				if(plist["average"])
 					final_action |= PROFILE_AVERAGE
+				if(plist["action"] == "stop")
+					lag_detection_process.manual_profiling_on = FALSE
+				else if(plist["action"] == "start")
+					lag_detection_process.manual_profiling_on = TRUE
 				var/output = world.Profile(final_action, type, "json")
-				if(action == PROFILE_REFRESH || action == PROFILE_STOP)
-					return output
+				if(plist["action"] == "refresh" || plist["action"] == "stop")
+					SPAWN_DBG(1)
+						var/n_tries = 3
+						var/datum/http_response/response = null
+						while(--n_tries > 0 && (isnull(response) || response.errored))
+							var/datum/http_request/request = new()
+							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
+							request.begin_async()
+							UNTIL(request.is_complete())
+							response = request.into_response()
 				return 1
 
 /world/proc/setMaxZ(new_maxz)

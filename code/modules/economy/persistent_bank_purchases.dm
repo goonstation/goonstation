@@ -441,6 +441,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			shippingmarket.receive_crate(S)
 			return 1
 
+	frog
+		name = "Buy a Frog"
+		cost = 9000
+
+		Create(var/mob/living/M)
+			new/obj/critter/frog(M.loc)
+			return 1
+
 	missile_arrival
 		name = "Missile Arrival"
 		cost = 20000

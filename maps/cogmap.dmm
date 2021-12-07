@@ -54366,10 +54366,6 @@
 /obj/decal/garland/ephemeral,
 /turf/simulated/floor/delivery,
 /area/station/turret_protected/ai_upload_foyer)
-"dSU" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/space)
 "dTC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62408,11 +62404,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"sow" = (
-/obj/wingrille_spawn/auto,
-/obj/decal/xmas_lights/ephemeral,
-/turf/simulated/floor/plating,
-/area/space)
 "sqK" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -110481,7 +110472,7 @@ tUi
 ceN
 cdu
 cdu
-dSU
+cdu
 cdu
 cdu
 cdu
@@ -111684,7 +111675,7 @@ chj
 cjL
 cdw
 cmE
-sow
+lxN
 adC
 coW
 coW
@@ -111986,7 +111977,7 @@ chk
 cjL
 cmC
 cqb
-dSU
+cdu
 adC
 coW
 coW
@@ -112288,7 +112279,7 @@ chU
 cjL
 cmE
 lxN
-dSU
+cdu
 coW
 coW
 coW
@@ -114704,7 +114695,7 @@ ciw
 cjL
 cpb
 lxN
-dSU
+cdu
 coW
 coW
 coW
@@ -115006,7 +114997,7 @@ cix
 cjL
 cpc
 cqc
-dSU
+cdu
 coW
 coW
 coW
@@ -115308,7 +115299,7 @@ ciC
 cjL
 clr
 cmE
-dSU
+cdu
 adC
 coW
 coW
@@ -115610,7 +115601,7 @@ ceN
 cjH
 clr
 cmE
-dSU
+cdu
 adC
 coW
 coW

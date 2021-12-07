@@ -202,7 +202,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 				//my_cable = null
 				var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 				C.amount = 5
-				C.updateicon()
+				C.UpdateIcon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)

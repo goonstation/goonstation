@@ -348,7 +348,7 @@
 
 		src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
@@ -403,7 +403,7 @@
 			entangled.contents = src.contents
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
 		return 1
 
@@ -422,7 +422,7 @@
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -457,7 +457,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -469,7 +469,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return

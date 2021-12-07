@@ -1162,11 +1162,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/power/collector_array/New()
 	..()
 	SPAWN_DBG(0.5 SECONDS)
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/collector_array/proc/updateicon()
-
+/obj/machinery/power/collector_array/update_icon()
 	if(status & (NOPOWER|BROKEN))
 		overlays = null
 	if(P)
@@ -1181,7 +1180,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		overlays += image('icons/obj/singularity.dmi', "on")
 
 /obj/machinery/power/collector_array/power_change()
-	updateicon()
+	UpdateIcon()
 	..()
 
 /obj/machinery/power/collector_array/process()
@@ -1194,11 +1193,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(P.air_contents.toxins <= 0)
 				src.active = 0
 				icon_state = "ca_deactive"
-				updateicon()
+				UpdateIcon()
 		else if(src.active == 1)
 			src.active = 0
 			icon_state = "ca_deactive"
-			updateicon()
+			UpdateIcon()
 		..()
 
 /obj/machinery/power/collector_array/attack_hand(mob/user as mob)
@@ -1238,7 +1237,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		W.set_loc(src)
 		user.u_equip(W)
 		CU?.updatecons()
-		updateicon()
+		UpdateIcon()
 	else if (ispryingtool(W))
 		if(!P)
 			return
@@ -1247,7 +1246,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		Z.layer = initial(Z.layer)
 		src.P = null
 		CU?.updatecons()
-		updateicon()
+		UpdateIcon()
 	else
 		src.add_fingerprint(user)
 		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
@@ -1343,17 +1342,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(isnull(S1) || S1.disposed)
 			S1 = null
 
-		updateicon()
+		UpdateIcon()
 		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
 	else
-		updateicon()
+		UpdateIcon()
 		SPAWN_DBG(1 MINUTE)
 			updatecons()
 
-/obj/machinery/power/collector_control/proc/updateicon()
-
+/obj/machinery/power/collector_control/update_icon()
 	if(magic != 1)
 
 		if(status & (NOPOWER|BROKEN))
@@ -1383,7 +1381,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		overlays += image('icons/obj/singularity.dmi', "cu sing")
 
 /obj/machinery/power/collector_control/power_change()
-	updateicon()
+	UpdateIcon()
 	..()
 
 /obj/machinery/power/collector_control/process(mult)
@@ -1432,7 +1430,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.active = 0
 		boutput(user, "You turn off the collector control.")
 		src.lastpower = 0
-		updateicon()
+		UpdateIcon()
 		return
 
 	if(src.active==0)

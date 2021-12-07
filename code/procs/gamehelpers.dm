@@ -99,7 +99,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
-	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // fucking byond
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
@@ -678,8 +678,9 @@ proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
 				out_y = clamp(T_y + dist, 1, world.maxy)
 			else if (dir == SOUTH)
 				out_y = clamp(T_y - dist, 1, world.maxy)
+		else
+			out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 		out_x = clamp(rand(T_x - dist, T_x + dist), 1, world.maxx)
-		out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
 	T = locate(out_x, out_y, T_z)
 	if(isturf(T))
 		return T

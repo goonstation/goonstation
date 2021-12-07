@@ -198,6 +198,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_adminwho_alerts()
 				src.show_pref_window(usr)
+		if ("toggle_ghost_respawns")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_ghost_respawns()
+				src.show_pref_window(usr)
 		if ("toggle_rp_word_filtering")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
@@ -843,18 +847,13 @@ var/global/noir = 0
 				if (current_state > GAME_STATE_PREGAME)
 					return alert(usr, "The game has already started.", null, null, null, null)
 
-				var/list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
-				"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-				"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft","battle_royale", "vampire","assday", "football", "flock", "arcfiend")
-#if defined(MAP_OVERRIDE_POD_WARS)
-				valid_modes += "pod_wars"
-#else
+#ifndef MAP_OVERRIDE_POD_WARS
 				if (href_list["type"] == "pod_wars")
 					boutput(usr, "<span class='alert'><b>You can only set the mode to Pod Wars if the current map is a Pod Wars map!<br>If you want to play Pod Wars, you have to set the next map for compile to be pod_wars.dmm!</b></span>")
 					return
 #endif
 				var/requestedMode = href_list["type"]
-				if (requestedMode in valid_modes)
+				if (requestedMode in global.valid_modes)
 					logTheThing("admin", usr, null, "set the mode as [requestedMode].")
 					logTheThing("diary", usr, null, "set the mode as [requestedMode].", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] set the mode as [requestedMode].</span>")
@@ -2332,6 +2331,9 @@ var/global/noir = 0
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				M.unlock_medal( "Contributor", 1 )
@@ -2342,6 +2344,9 @@ var/global/noir = 0
 				alert("You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				var/suc = M.revoke_medal( "Contributor" )
@@ -4451,6 +4456,7 @@ var/global/noir = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.full_heal()
+		H.stamina = H.stamina_max
 		H.remove_ailments() // don't spawn with heart failure
 	return
 

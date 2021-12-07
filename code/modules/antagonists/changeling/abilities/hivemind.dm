@@ -83,7 +83,7 @@
 
 		if (arm_type && istype(arm_type, /obj/item/parts/robot_parts))
 			spider.icon_prefix = "robo"
-			spider.update_icon()
+			spider.UpdateIcon()
 
 		spider.Browse(grabResource("html/mindslave/handspider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")

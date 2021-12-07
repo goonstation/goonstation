@@ -17,7 +17,7 @@
 	SPAWN_DBG(0)
 		src.sense()
 
-/obj/item/device/prox_sensor/proc/update_icon()
+/obj/item/device/prox_sensor/update_icon()
 	var/n = 0
 	if(armed) n = 1
 	else if(timing) n = 2
@@ -47,14 +47,14 @@
 	if (src.timing)
 		if (src.time > 0)
 			if(src.armed != 1)
-				src.update_icon()
+				src.UpdateIcon()
 				src.time = round(src.time) - 1
 			else src.timing = 0
 		else
 			src.armed = 1
 			src.time = 0
 			src.timing = 0
-			src.update_icon()
+			src.UpdateIcon()
 
 
 		if (!src.master)
@@ -127,7 +127,7 @@
 			src.master.add_dialog(usr)
 		if (href_list["arm"])
 			src.armed = !src.armed
-			src.update_icon()
+			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 
 			var/turf/T = get_turf(src)
@@ -144,7 +144,7 @@
 
 		if (href_list["time"])
 			src.timing = text2num_safe(href_list["time"])
-			src.update_icon()
+			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 
 			var/turf/T = get_turf(src)

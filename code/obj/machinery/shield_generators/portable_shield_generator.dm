@@ -228,9 +228,6 @@
 			if(active)
 				boutput(user, "Disconnecting [src.name] from the power source while active doesn't sound like the best idea.")
 				return
-			if(PCEL)
-				boutput(user, "You can't think of a reason to attach the [src.name] to a wire when it already has a battery.")
-				return
 
 			//just checking if it's placed on any wire, like powersink
 			var/obj/cable/C = locate() in get_turf(src)
@@ -246,10 +243,6 @@
 
 		else if(src.coveropen && !src.PCEL)
 			if(istype(W,/obj/item/cell/))
-				if(connected)
-					boutput(user, "You think it's a bad idea to attach a battery to the [src.name] while it's connected to a wire.")
-					return
-
 				user.drop_item()
 				W.set_loc(src)
 				src.PCEL = W
@@ -427,7 +420,7 @@
 	desc = "A force field that can block various states of matter."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/powerlevel //Stores the power level of the deployer
 	density = 0
 

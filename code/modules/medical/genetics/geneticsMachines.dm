@@ -509,6 +509,10 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
+			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
+				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
+				return
 			if (isnull(BE))
 				if (!isnull(H.mutantrace))
 					src.log_me(H, "mutantrace removed")
