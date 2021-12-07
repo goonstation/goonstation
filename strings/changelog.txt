@@ -4,6 +4,9 @@
 (p)6865
 (e)🐛|bug
 (+)SecMate can now properly choose a printer and print records on it.
+(u)aloe
+(e)🆕|feature
+(+)You can wring hearts out to dump a quarter of their reagents on the ground. Has a 2 second cooldown between squeezes. Sound effects are placeholders (probably????)
 (t)mon dec 06 21
 (u)Vocalpocal
 (p)6466
