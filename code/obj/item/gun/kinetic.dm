@@ -1270,8 +1270,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = MELEE_DMG_LARGE
-	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_SMG
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
