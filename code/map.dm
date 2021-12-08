@@ -1040,9 +1040,6 @@ var/global/list/mapNames = list(
 	sealab
 		icon_state = "shuttle_escape-sealab"
 		warp_dir = EAST
-	battle_shuttle
-		icon_state = "shuttle_escape-battle-shuttle"
-		warp_dir = EAST
 	manta
 		icon_state = "shuttle_escape-manta"
 		warp_dir = NORTH

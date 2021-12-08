@@ -61408,12 +61408,12 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dle" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlf" = (
 /obj/item/storage/wall/medical{
 	pixel_z = -1
@@ -61421,32 +61421,32 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlg" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlh" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dli" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlj" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dll" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -61455,39 +61455,39 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlm" = (
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dln" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlo" = (
 /obj/item/instrument/large/jukebox,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlp" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlq" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "15"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlr" = (
 /obj/window/auto/reinforced,
 /obj/grille/steel,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dls" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -61496,24 +61496,24 @@
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlt" = (
 /obj/map/light/white,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlu" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlv" = (
 /obj/map/light/white,
 /obj/landmark{
 	name = "battle-royale-spawn"
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlw" = (
 /obj/map/light/white,
 /obj/landmark{
@@ -61524,7 +61524,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlx" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
@@ -61533,7 +61533,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dly" = (
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
@@ -61546,7 +61546,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlA" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
@@ -61556,14 +61556,14 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlB" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -61571,7 +61571,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlD" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -61580,38 +61580,38 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlE" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlF" = (
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlH" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlI" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlK" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlL" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -61619,35 +61619,35 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlM" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlP" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlQ" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "8"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlR" = (
 /obj/map/light/white,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlS" = (
 /obj/map/light/white,
 /obj/landmark{
@@ -61658,7 +61658,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlT" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
@@ -61667,7 +61667,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlU" = (
 /obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal,
 /turf/unsimulated/floor/black,
@@ -61682,7 +61682,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlW" = (
 /turf/space/shuttle_transit,
 /area/shuttle_particle_spawn/west)
@@ -61695,7 +61695,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlY" = (
 /obj/map/light/white,
 /obj/landmark{
@@ -61705,7 +61705,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dlZ" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
@@ -61715,7 +61715,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dma" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -61724,12 +61724,12 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmb" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmc" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -61738,16 +61738,16 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmd" = (
 /turf/simulated/shuttle/wall/cockpit,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dme" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmf" = (
 /obj/map/light/white,
 /obj/landmark{
@@ -61758,7 +61758,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmg" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
@@ -61768,7 +61768,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmh" = (
 /obj/map/light/white,
 /obj/landmark{
@@ -61779,7 +61779,7 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmi" = (
 /obj/landmark{
 	name = "battle-royale-spawn"
@@ -61789,34 +61789,34 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmj" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmk" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dml" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmm" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmn" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmo" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "diagonalWall"
@@ -61824,7 +61824,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
 	},
-/area/shuttle/escape/transit/battle_shuttle)
+/area/shuttle/battle)
 "dmp" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8

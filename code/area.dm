@@ -586,6 +586,25 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_environment = 2
 	expandable = 0
 
+/area/shuttle/battle
+	icon_state = "shuttle_escape-battle-shuttle"
+	warp_dir = EAST
+
+	Entered(atom/movable/Obj,atom/OldLoc)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+	Exited(atom/movable/Obj)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	teleport_blocked = 2
