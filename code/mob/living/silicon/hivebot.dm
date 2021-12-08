@@ -733,7 +733,7 @@ Frequency:
 /mob/living/silicon/hivebot
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 1), 0)
+		sleeping = clamp(sleeping, 0, 1)
 		bruteloss = max(bruteloss, 0)
 		fireloss = max(fireloss, 0)
 		if (src.stuttering)

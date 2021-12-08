@@ -2321,7 +2321,7 @@
 
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 5), 0)
+		sleeping = clamp(sleeping, 0, 5)
 		if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
 		if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
 		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)

@@ -220,9 +220,9 @@ proc/is_teleportation_allowed(var/turf/T)
 							message_host("command=nack")
 							return
 
-						src.realx = round(  max(0, min(coords.destx, world.maxx+1)) )
-						src.realy = round(  max(0, min(coords.desty, world.maxy+1)) )
-						src.realz = round(  max(0, min(coords.destz, world.maxz+1)) )
+						src.realx = round(  clamp(coords.destx, 0, world.maxx+1) )
+						src.realy = round(  clamp(coords.desty, 0, world.maxy+1) )
+						src.realz = round(  clamp(coords.destz, 0, world.maxz+1) )
 						message_host("command=ack")
 
 					if ("send")
@@ -1097,14 +1097,14 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		if (href_list["decreaseX"])
 			var/change = text2num_safe(href_list["decreaseX"])
-			xtarget = min(max(0, xtarget-change),500)
+			xtarget = clamp(xtarget-change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseX"])
 			var/change = text2num_safe(href_list["increaseX"])
-			xtarget = min(max(0, xtarget+change),500)
+			xtarget = clamp(xtarget+change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
@@ -1113,21 +1113,21 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/change = input(usr,"Target X:","Enter target X coordinate",xtarget) as num
 			if(!isnum_safe(change))
 				return
-			xtarget = min(max(0, change),500)
+			xtarget = clamp(change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["decreaseY"])
 			var/change = text2num_safe(href_list["decreaseY"])
-			ytarget = min(max(0, ytarget-change),500)
+			ytarget = clamp(ytarget-change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseY"])
 			var/change = text2num_safe(href_list["increaseY"])
-			ytarget = min(max(0, ytarget+change),500)
+			ytarget = clamp(ytarget+change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
@@ -1136,21 +1136,21 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/change = input(usr,"Target Y:","Enter target Y coordinate",ytarget) as num
 			if(!isnum_safe(change))
 				return
-			ytarget = min(max(0, change),500)
+			ytarget = clamp(change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["decreaseZ"])
 			var/change = text2num_safe(href_list["decreaseZ"])
-			ztarget = min(max(0, ztarget-change),14)
+			ztarget = clamp(ztarget-change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseZ"])
 			var/change = text2num_safe(href_list["increaseZ"])
-			ztarget = min(max(0, ztarget+change),14)
+			ztarget = clamp(ztarget+change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
@@ -1159,7 +1159,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/change = input(usr,"Target Z:","Enter target Z coordinate",ztarget) as num
 			if(!isnum_safe(change))
 				return
-			ztarget = min(max(0, change),14)
+			ztarget = clamp(change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
