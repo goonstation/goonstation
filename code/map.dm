@@ -166,7 +166,7 @@ var/global/list/mapNames = list(
 			for(var/obj/window/W in T)
 				W.UpdateIcon()
 			if(cleanup_grass_and_stuff)
-				if(istype(T, /turf/unsimulated/outdoors/grass) || istype(T, /turf/unsimulated/nicegrass))
+				if(!istype(T.loc, /area/shuttle) && (istype(T, /turf/unsimulated/outdoors/grass) || istype(T, /turf/unsimulated/nicegrass)))
 					T.ReplaceWith(/turf/unsimulated/floor/shuttlebay , keep_old_material=FALSE, force=TRUE)
 				for(var/obj/lattice/lattice in T)
 					qdel(lattice)
