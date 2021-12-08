@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/datum/plant)
 		var/datum/plantgenes/DNA = S.plantgenes
 
 		var/damage_prob = 100 - (src.endurance + DNA.endurance)
-		damage_prob = max(0,min(100,damage_prob))
+		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
 			if ("phlogiston","infernite","thalmerite","sorium")

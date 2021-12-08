@@ -86,7 +86,7 @@ Contains:
 		return 1
 
 	proc/set_release_pressure(var/pressure as num)
-		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))

@@ -1,5 +1,8 @@
 
 (t)tue dec 07 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Riot launchers no longer a bulky item.
 (u)Jawns
 (p)6865
 (e)🐛|bug

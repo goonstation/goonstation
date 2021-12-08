@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
+			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
@@ -962,7 +962,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot()
 		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+			failure_chance = clamp(round(current_projectile.caliber * (current_projectile.power/2)), 10, 33)
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
@@ -1270,8 +1270,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = MELEE_DMG_LARGE
-	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_SMG
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1

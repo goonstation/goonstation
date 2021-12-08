@@ -123,7 +123,7 @@
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
-	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
 	if (ignore_actual_delay)
 		movedelay = movement_delay_real
 
@@ -308,7 +308,7 @@
 		src.update_burning(burn)
 		src.TakeDamage("head", 0, 5)
 
-	if (prob(max(0, min(uncloak_prob, 100))))
+	if (prob(clamp(uncloak_prob, 0, 100)))
 		SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
 		SEND_SIGNAL(src, COMSIG_DISGUISER_DEACTIVATE)
 
@@ -434,7 +434,7 @@
 		if (ear_tempdeaf > 0)
 			src.take_ear_damage(ear_tempdeaf, 1)
 
-		if (weak == 0 && stun == 0 && prob(max(0, min(drop_item, 100))))
+		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
 			if (is_deaf)
 				src.show_message(__red("<B>You drop what you were holding to clutch at your head!</B>"))
 			else

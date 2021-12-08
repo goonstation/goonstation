@@ -121,14 +121,14 @@
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustM"])
-			target_temp = min(max(0, target_temp-change),1000)
+			target_temp = clamp(target_temp-change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustP"])
-			target_temp = min(max(0, target_temp+change),1000)
+			target_temp = clamp(target_temp+change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
@@ -136,7 +136,7 @@
 			if (!beaker.reagents.total_volume) return
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
 			if(!change || !isnum_safe(change)) return
-			target_temp = min(max(0, change),1000)
+			target_temp = clamp(change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
