@@ -1,5 +1,10 @@
 
 (t)wed dec 08 21
+(u)112358sam
+(p)6244
+(e)🆕|feature
+(*)Added seven new crew objectives.
+(+)Added the furnace objective that the CE has to the possible engineer objectives.
 (u)Sord and Pali
 (p)6782
 (e)🗺|mapping
