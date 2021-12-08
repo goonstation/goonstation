@@ -163,6 +163,9 @@ var/global/list/mapNames = list(
 			var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
 			dmm_suite.read_map(file2text(src.get_shuttle_transit_path()), transit_start.x, transit_start.y, transit_start.z)
 
+			var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
+			transit_area.warp_dir = escape_dir
+
 
 /datum/map_settings/donut2
 	name = "DONUT2"
@@ -984,65 +987,18 @@ var/global/list/mapNames = list(
 
 /area/shuttle/escape/centcom
 	icon_state = "shuttle_escape"
-	donut2
-		icon_state = "shuttle_escape-dnt2"
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-	cogmap
-		icon_state = "shuttle_escape-cog1"
-	cogmap2
-		icon_state = "shuttle_escape-cog2"
-	destiny
-		icon_state = "shuttle_escape-dest"
-	sealab
-		icon_state = "shuttle_escape-sealab"
-	manta
-		icon_state = "shuttle_escape-manta"
-		filler_turf = "/turf/space/fluid"
-	donut3
-		icon_state = "shuttle_escape-dnt3"
+	#ifdef MAP_OVERRIDE_MANTA
+	filler_turf = "/turf/space/fluid"
+	#endif
 
 /area/shuttle/escape/station
 	#ifdef UNDERWATER_MAP
 	ambient_light = OCEAN_LIGHT
 	#endif
 	icon_state = "shuttle_escape"
-	donut2
-		icon_state = "shuttle_escape-dnt2"
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-	cogmap
-		icon_state = "shuttle_escape-cog1"
-	cogmap2
-		icon_state = "shuttle_escape-cog2"
-	destiny
-		icon_state = "shuttle_escape-dest"
-	sealab
-		icon_state = "shuttle_escape-sealab"
-	manta
-		icon_state = "shuttle_escape-manta"
 
 /area/shuttle/escape/transit
 	icon_state = "shuttle_escape"
-	donut2
-		icon_state = "shuttle_escape-dnt2"
-		warp_dir = WEST
-	donut3
-		icon_state = "shuttle_escape-dnt3"
-		warp_dir = NORTH
-	cogmap
-		icon_state = "shuttle_escape-cog1"
-	cogmap2
-		icon_state = "shuttle_escape-cog2"
-		warp_dir = EAST
-	destiny
-		icon_state = "shuttle_escape-dest"
-	sealab
-		icon_state = "shuttle_escape-sealab"
-		warp_dir = EAST
-	manta
-		icon_state = "shuttle_escape-manta"
-		warp_dir = NORTH
 
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"
