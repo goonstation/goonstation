@@ -4,13 +4,13 @@
 	dir = 6;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "cw" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_kit,
 /obj/random_item_spawner/med_kit,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "dg" = (
 /turf/unsimulated/floor/stairs{
 	icon_state = "Stairs2_wide"
@@ -27,14 +27,14 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "og" = (
 /obj/machinery/computer/shuttle/embedded/east,
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 4
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "pm" = (
 /obj/overlay{
 	desc = "The corpse of a long dead space thing.";
@@ -46,14 +46,14 @@
 	dir = 4
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "pZ" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "qn" = (
 /obj/overlay{
 	desc = "The corpse of a long dead space thing.";
@@ -63,7 +63,7 @@
 	},
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "rZ" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. Or maybe a television.  Or an arcade machine.  Who the hell knows?";
@@ -74,16 +74,16 @@
 	dir = 8
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "tR" = (
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "uF" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "vQ" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -98,7 +98,7 @@
 /area/centcom)
 "yn" = (
 /turf/space,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "zl" = (
 /turf/unsimulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -109,11 +109,11 @@
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "BE" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Ed" = (
 /obj/lattice{
 	dir = 9;
@@ -129,7 +129,7 @@
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "GJ" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1;
@@ -139,19 +139,19 @@
 "Hm" = (
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Jr" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "MN" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "NK" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -160,7 +160,7 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "NP" = (
 /obj/lattice{
 	dir = 4;
@@ -174,17 +174,17 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "QA" = (
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Ry" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "SD" = (
 /obj/overlay{
 	desc = "The corpse of a long dead space thing.";
@@ -193,46 +193,46 @@
 	name = "dessicated alien"
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "SV" = (
 /turf/simulated/martian/wall{
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "SZ" = (
 /turf/simulated/shuttle/wall/cockpit{
 	icon_state = "shuttlecock_busted"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "UG" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/med_kit,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Vk" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "VR" = (
 /obj/machinery/door/unpowered/martian{
 	opacity = 0
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Xf" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Yc" = (
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Yl" = (
 /turf/unsimulated/wall{
 	dir = 1;
@@ -242,7 +242,7 @@
 /area/centcom)
 "ZA" = (
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 ju

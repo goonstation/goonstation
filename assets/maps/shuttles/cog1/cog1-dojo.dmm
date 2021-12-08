@@ -1,11 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
 /turf/unsimulated/floor/dojo/sand/horizontal,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "bg" = (
 /obj/machinery/computer/shuttle/embedded/south,
 /turf/unsimulated/floor/tatami,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "bC" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
@@ -14,14 +14,14 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "bK" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/lantern{
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "gh" = (
 /obj/decal/fakeobjects/swordrack{
 	pixel_y = 5
@@ -29,29 +29,29 @@
 /turf/unsimulated/wall/auto/sengoku{
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "ib" = (
 /turf/unsimulated/wall/auto/sengoku{
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "ik" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "kb" = (
 /obj/decal/wallscroll/scroll2{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "kM" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 9;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "lQ" = (
 /obj/lantern{
 	pixel_y = 10
@@ -59,14 +59,14 @@
 /turf/unsimulated/wall/auto/sengoku{
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "mo" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/unsimulated/floor/dojo/sand/vertical,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "oQ" = (
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "pk" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -79,33 +79,33 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "uH" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
 /turf/unsimulated/floor/dojo/stone,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "vJ" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/dojo/sand/vertical,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "vM" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "vR" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/tatami,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "wk" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "xl" = (
 /turf/unsimulated/wall/water/border,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "xP" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -113,24 +113,24 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "yt" = (
 /turf/unsimulated/floor/tatami,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "yB" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "zF" = (
 /turf/unsimulated/floor/dojo/stone,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "AD" = (
 /turf/unsimulated/wall/auto/paper{
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Ck" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -138,33 +138,33 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Cl" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Fa" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Fd" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
 	},
 /turf/unsimulated/floor/dojo/stone,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Gd" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "IL" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/dojo/sand/circle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Ny" = (
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Rb" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -174,13 +174,13 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Sm" = (
 /obj/decal/fakeobjects/lotus{
 	icon_state = "lotus_2"
 	},
 /turf/unsimulated/wall/water/border,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "UH" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -192,18 +192,18 @@
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Ya" = (
 /obj/machinery/sleeper/compact,
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Ym" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/lantern{
 	dir = 8
 	},
 /turf/unsimulated/floor/dojo/sand/circle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Ze" = (
 /obj/lantern{
 	pixel_y = 10
@@ -211,14 +211,14 @@
 /turf/unsimulated/wall/auto/paper{
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Zk" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 10;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "ZU" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -226,7 +226,7 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 oQ

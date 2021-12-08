@@ -7,60 +7,60 @@
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "d" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "e" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "f" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "g" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "i" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "k" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "m" = (
 /obj/machinery/computer/shuttle/embedded/north,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "o" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "q" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "v" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "w" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -69,39 +69,39 @@
 /area/centcom/outside)
 "x" = (
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "z" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "C" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "E" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "I" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "K" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "L" = (
 /turf/simulated/wall/auto/shuttle,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "S" = (
 /obj/lattice{
 	dir = 1;
@@ -115,23 +115,23 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "V" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "1"
 	},
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "Y" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 "Z" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
 	},
-/area/shuttle/escape/centcom/destiny)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 w

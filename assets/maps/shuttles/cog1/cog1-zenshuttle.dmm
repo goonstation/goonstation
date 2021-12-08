@@ -11,10 +11,10 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "c" = (
 /turf/simulated/wall/auto/shuttle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "d" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -22,33 +22,33 @@
 	},
 /obj/stool/chair/comfy/green,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "e" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "f" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 10;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "g" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "h" = (
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "j" = (
 /turf/unsimulated/floor/dojo/sand/vertical,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "k" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -57,7 +57,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "q" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -68,22 +68,22 @@
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "t" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "u" = (
 /obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /turf/unsimulated/floor/dojo/sand/circle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "w" = (
 /obj/machinery/computer/shuttle/embedded/south,
 /obj/stool/chair/comfy/shuttle/pilot,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "x" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -91,25 +91,25 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "y" = (
 /turf/unsimulated/floor/dojo/sand/circle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "z" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "A" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "B" = (
 /obj/stool/chair/comfy/green,
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "C" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -117,13 +117,13 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "D" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
 	},
 /turf/unsimulated/floor/dojo/sand/circle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "E" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -133,7 +133,7 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "F" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -141,10 +141,10 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "H" = (
 /turf/unsimulated/floor/dojo/sand/horizontal,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "J" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -154,76 +154,76 @@
 	icon_state = "line1"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "K" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "M" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "N" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
 	},
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "O" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "P" = (
 /obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Q" = (
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "R" = (
 /obj/stool/chair/comfy/green{
 	dir = 1
 	},
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "S" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "T" = (
 /obj/tree1,
 /turf/unsimulated/floor/dojo/sand/circle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "V" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/dojo/sand,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "W" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 9;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "X" = (
 /obj/stool/chair/comfy/green{
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Z" = (
 /obj/stool/chair/comfy/green{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 Q
