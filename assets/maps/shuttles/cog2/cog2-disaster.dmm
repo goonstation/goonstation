@@ -5,13 +5,13 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "bl" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/regular,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "bv" = (
 /obj/item/storage/wall/medical{
 	pixel_z = -1
@@ -19,17 +19,17 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "bw" = (
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "dw" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "eY" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -38,17 +38,17 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "fa" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "fC" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "hD" = (
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
@@ -57,7 +57,7 @@
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "ie" = (
 /turf/unsimulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -67,7 +67,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "ir" = (
 /obj/decal/skeleton{
 	desc = "Eugh, the stench is horrible!";
@@ -80,40 +80,40 @@
 	icon_state = "floor2"
 	},
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "km" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "kK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "kS" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "lu" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "mW" = (
 /obj/decal/cleanable/robot_debris,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "on" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "oy" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -131,13 +131,13 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "qi" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "qz" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -147,7 +147,7 @@
 	pixel_y = 21
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "rz" = (
 /obj/lattice{
 	dir = 9;
@@ -160,30 +160,30 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "sc" = (
 /turf/unsimulated/floor/void,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "sy" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "tw" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "tS" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "tW" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -192,24 +192,24 @@
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "uP" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "vX" = (
 /turf/unsimulated/floor/plating/damaged2,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "wj" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/decal/cleanable/vomit,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "wA" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -221,35 +221,35 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "xH" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/plating/damaged2,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "xJ" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "xT" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "yc" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "yj" = (
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "zi" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "zX" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1;
@@ -258,20 +258,20 @@
 /area/centcom)
 "Aq" = (
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "CG" = (
 /obj/machinery/light/small/floor,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Da" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Db" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -281,12 +281,12 @@
 "Dj" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "DG" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "DY" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -294,13 +294,13 @@
 /obj/machinery/light,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Ex" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Fy" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -308,11 +308,11 @@
 	opacity = 0
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "FJ" = (
 /obj/decal/cleanable/paper,
 /turf/unsimulated/floor/void,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Gp" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1;
@@ -323,7 +323,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Hp" = (
 /turf/unsimulated/floor/stairs{
 	icon_state = "Stairs2_wide"
@@ -332,7 +332,7 @@
 "HD" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "HU" = (
 /obj/decal/skeleton{
 	desc = "Eugh, the stench is horrible!";
@@ -344,41 +344,41 @@
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "HX" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "If" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Ii" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Jl" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Jz" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Kv" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged2,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "KD" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
@@ -386,22 +386,22 @@
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "KG" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Lt" = (
 /turf/simulated/shuttle/wall/cockpit,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "LJ" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "LV" = (
 /turf/unsimulated/wall{
 	dir = 1;
@@ -413,7 +413,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Om" = (
 /obj/lattice{
 	dir = 4;
@@ -428,12 +428,12 @@
 	opacity = 0
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "OT" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "15"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Pt" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -447,31 +447,31 @@
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/vomit,
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Qj" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "RS" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Sh" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
 /obj/decal/cleanable/vomit,
 /turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "St" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "2"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Vb" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
@@ -481,7 +481,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Vr" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -491,36 +491,36 @@
 	icon_state = "gibbl2"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Vt" = (
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "VN" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "1"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "WY" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Xc" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Xr" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "XB" = (
 /obj/machinery/computer/shuttle/embedded/east,
 /obj/stool/chair/comfy/shuttle/pilot{
@@ -528,24 +528,24 @@
 	},
 /obj/decal/cleanable/molten_item,
 /turf/unsimulated/floor/plating/damaged3,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "XN" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "XZ" = (
 /obj/machinery/light/small/floor,
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "Yc" = (
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "YS" = (
 /obj/critter/crunched,
 /turf/unsimulated/floor/void,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "ZJ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -554,7 +554,7 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 "ZN" = (
 /obj/item/storage/wall/fire{
 	pixel_z = -1
@@ -562,7 +562,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/cogmap2)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 wA

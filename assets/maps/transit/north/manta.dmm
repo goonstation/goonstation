@@ -4,7 +4,7 @@
 /area/area_that_kills_you_if_you_enter_it)
 "b" = (
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/manta)
+/area/shuttle/escape/transit)
 "w" = (
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)

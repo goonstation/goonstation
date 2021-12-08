@@ -14,7 +14,7 @@
 /area/shuttle_particle_spawn/west)
 "Y" = (
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/east)
+/area/shuttle/escape/transit)
 
 (1,1,1) = {"
 a

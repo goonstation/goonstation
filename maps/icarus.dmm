@@ -26555,7 +26555,7 @@
 /area/station/engine/engineering)
 "eXa" = (
 /turf/space,
-/area/shuttle/escape/station/north)
+/area/shuttle/escape/station)
 "fbT" = (
 /obj/airbridge_controller{
 	id = "escape2";

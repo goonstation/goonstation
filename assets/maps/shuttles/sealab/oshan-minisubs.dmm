@@ -4,7 +4,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "iN" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -13,19 +13,19 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "kz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "kA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "sx" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -34,7 +34,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "tv" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -42,7 +42,7 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "ur" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Secure Transport";
@@ -51,7 +51,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "xl" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -60,13 +60,13 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "xL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "xY" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -75,13 +75,13 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "zK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/space/fluid,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Aa" = (
 /obj/machinery/door/airlock/pyro/command{
 	opacity = 0
@@ -89,7 +89,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Jz" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -101,13 +101,13 @@
 	icon_state = "alt_heater"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "LM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Mk" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -116,7 +116,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "RJ" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -125,7 +125,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "SP" = (
 /obj/machinery/door/airlock/pyro/medical{
 	name = "First-Aid Station";
@@ -134,12 +134,12 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Ug" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "We" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -149,7 +149,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Xb" = (
 /obj/machinery/computer/shuttle/embedded/east,
 /obj/stool/chair/comfy/shuttle/pilot{
@@ -159,13 +159,13 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "YK" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 We

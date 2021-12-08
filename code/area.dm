@@ -603,26 +603,10 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/escape/station
 	icon_state = "shuttle2"
 
-/area/shuttle/escape/station/north
-
-/area/shuttle/escape/station/south
-
-/area/shuttle/escape/station/east
-
-/area/shuttle/escape/station/west
-
 /area/shuttle/escape/centcom
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
-
-/area/shuttle/escape/centcom/north
-
-/area/shuttle/escape/centcom/south
-
-/area/shuttle/escape/centcom/east
-
-/area/shuttle/escape/centcom/west
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -740,16 +724,16 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 			var/mob/M = Obj
 			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 
-/area/shuttle/escape/transit/north
+/area/shuttle/escape/transit
 	warp_dir = NORTH
 
-/area/shuttle/escape/transit/east
+/area/shuttle/escape/transit
 	warp_dir = EAST
 
-/area/shuttle/escape/transit/west
+/area/shuttle/escape/transit
 	warp_dir = WEST
 
-/area/shuttle/escape/transit/south
+/area/shuttle/escape/transit
 	warp_dir = SOUTH
 
 ABSTRACT_TYPE(/area/shuttle_transit_space)

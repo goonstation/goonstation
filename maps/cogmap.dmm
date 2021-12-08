@@ -47565,7 +47565,7 @@
 /area/station/hallway/secondary/exit)
 "coW" = (
 /turf/space,
-/area/shuttle/escape/station/south)
+/area/shuttle/escape/station)
 "coX" = (
 /turf/space,
 /area/shuttle_sound_spawn)

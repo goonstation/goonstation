@@ -59027,7 +59027,7 @@
 /area/station/routing/depot)
 "wzw" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "wAu" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4

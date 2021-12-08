@@ -3,13 +3,13 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "ak" = (
 /obj/machinery/door/airlock/pyro/glass/command,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "ar" = (
 /obj/item/storage/wall/medical{
 	dir = 4;
@@ -19,13 +19,13 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "dc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "eO" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -34,14 +34,14 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "fK" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
 /turf/space,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "gp" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 1
@@ -49,38 +49,38 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "he" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "iz" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "iJ" = (
 /obj/machinery/door/airlock/pyro/security,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "iU" = (
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "jm" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "lX" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "mG" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -92,7 +92,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "nf" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -100,13 +100,13 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "nJ" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "pE" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -114,12 +114,12 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "pP" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "pV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -127,12 +127,12 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "ql" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "qS" = (
 /obj/lattice{
 	dir = 1;
@@ -144,13 +144,13 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "ri" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "sm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0;
@@ -159,14 +159,14 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "tJ" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
 /turf/simulated/floor/plating/airless,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "uD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -174,12 +174,12 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "vs" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "wQ" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -190,42 +190,42 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "yh" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "yL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "yW" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "8"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "zi" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "zx" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/floor/plating/airless,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Be" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Cb" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -236,13 +236,13 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Cj" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Cu" = (
 /obj/table/auto,
 /obj/mug_rack{
@@ -257,26 +257,26 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "DH" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "DS" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Ez" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Fh" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "FA" = (
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 8
@@ -284,11 +284,11 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "FS" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "HB" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -298,13 +298,13 @@
 	icon_state = "7"
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "HR" = (
 /obj/machinery/computer/announcement,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "IW" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 1
@@ -312,7 +312,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Jq" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
@@ -323,7 +323,7 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "JW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -331,19 +331,19 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Kc" = (
 /obj/machinery/computer/shuttle,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Lb" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Nh" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -351,7 +351,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Nl" = (
 /obj/table/auto,
 /obj/table/auto,
@@ -368,12 +368,12 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "NW" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Og" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -381,7 +381,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "OZ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular{
@@ -394,51 +394,51 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Qy" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /turf/simulated/floor/plating/airless,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "QN" = (
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "QT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Rg" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "RB" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Sk" = (
 /obj/item/storage/wall/fire{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "SS" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "TP" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -446,13 +446,13 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "VW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Wb" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -460,7 +460,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Xf" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
@@ -479,7 +479,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "YN" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -491,10 +491,10 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "YQ" = (
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 "Zi" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -503,7 +503,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/donut3)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 Wb

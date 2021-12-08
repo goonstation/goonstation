@@ -25073,7 +25073,7 @@
 /area/station/hydroponics/bay)
 "iNk" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "iNv" = (
 /obj/lattice{
 	icon_state = "lattice-dir"

@@ -55225,7 +55225,7 @@
 /area/station/turret_protected/ai)
 "jje" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "jjl" = (
 /obj/machinery/drainage,
 /obj/cable{

@@ -10,7 +10,7 @@
 /area/shuttle_transit_space/north)
 "S" = (
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/south)
+/area/shuttle/escape/transit)
 "X" = (
 /obj/landmark/escape_pod_succ/south,
 /turf/space/shuttle_transit,

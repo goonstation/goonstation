@@ -42507,7 +42507,7 @@
 "mnL" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/jen,
-/area/shuttle/escape/station/donut3)
+/area/shuttle/escape/station)
 "mnY" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -58489,7 +58489,7 @@
 /area/station/chapel/sanctuary)
 "qRB" = (
 /turf/simulated/floor/plating/jen,
-/area/shuttle/escape/station/donut3)
+/area/shuttle/escape/station)
 "qRD" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/conveyor{

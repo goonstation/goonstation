@@ -22623,7 +22623,7 @@
 	})
 "Rn" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "Ro" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/darkpurple,

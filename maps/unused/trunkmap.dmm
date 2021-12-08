@@ -17812,7 +17812,7 @@
 /area/station/hallway/secondary/exit)
 "bgN" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "bgO" = (
 /obj/machinery/light,
 /obj/stool/chair/comfy/shuttle{

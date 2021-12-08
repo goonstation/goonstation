@@ -5770,7 +5770,7 @@
 /area/station/science/lobby)
 "ani" = (
 /turf/space,
-/area/shuttle/escape/station/west)
+/area/shuttle/escape/station)
 "anj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0

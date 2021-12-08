@@ -94,9 +94,9 @@ var/global/list/mapNames = list(
 	var/ext_airlocks = /obj/machinery/door/airlock/external
 	var/airlock_style = "gannets"
 
-	var/escape_centcom = null
-	var/escape_transit = null
-	var/escape_station = null
+	var/escape_centcom = /area/shuttle/escape/centcom
+	var/escape_transit = /area/shuttle/escape/transit
+	var/escape_station = /area/shuttle/escape/station
 	var/escape_def = SHUTTLE_NODEF
 	var/escape_dir = SOUTH
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
@@ -122,31 +122,6 @@ var/global/list/mapNames = list(
 
 	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
 	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
-
-	New()
-		..()
-		var/dirname = dir_to_dirname(escape_dir)
-		if(isnull(escape_centcom))
-			escape_centcom = list(
-				"south" = /area/shuttle/escape/centcom/south,
-				"east" = /area/shuttle/escape/centcom/east,
-				"west" = /area/shuttle/escape/centcom/west,
-				"north" = /area/shuttle/escape/centcom/north
-			)[dirname]
-		if(isnull(escape_transit))
-			escape_transit = list(
-				"south" = /area/shuttle/escape/transit/south,
-				"east" = /area/shuttle/escape/transit/east,
-				"west" = /area/shuttle/escape/transit/west,
-				"north" = /area/shuttle/escape/transit/north
-			)[dirname]
-		if(isnull(escape_station))
-			escape_station = list(
-				"south" = /area/shuttle/escape/station/south,
-				"east" = /area/shuttle/escape/station/east,
-				"west" = /area/shuttle/escape/station/west,
-				"north" = /area/shuttle/escape/station/north
-			)[dirname]
 
 	proc/get_shuttle_path()
 		var/dirname = dir_to_dirname(escape_dir)
@@ -196,9 +171,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	escape_centcom = /area/shuttle/escape/centcom/donut2
-	escape_transit = /area/shuttle/escape/transit/donut2
-	escape_station = /area/shuttle/escape/station/donut2
 	escape_def = SHUTTLE_WEST
 	escape_dir = WEST
 
@@ -225,9 +197,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
-	escape_centcom = /area/shuttle/escape/centcom/donut3
-	escape_transit = /area/shuttle/escape/transit/donut3
-	escape_station = /area/shuttle/escape/station/donut3
 	escape_def = SHUTTLE_DONUT3
 	escape_dir = NORTH
 	default_shuttle = "donut3"
@@ -538,9 +507,6 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 	shuttle_map_turf = /turf/space/fluid/manta
 
-	escape_centcom = /area/shuttle/escape/centcom/manta
-	escape_transit = /area/shuttle/escape/transit/manta
-	escape_station = /area/shuttle/escape/station/manta
 	default_shuttle = "manta"
 	escape_def = SHUTTLE_MANTA
 	escape_dir = NORTH
@@ -908,9 +874,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/sealab
-	escape_transit = /area/shuttle/escape/transit/sealab
-	escape_station = /area/shuttle/escape/station/sealab
 	escape_def = SHUTTLE_OSHAN
 	escape_dir = EAST
 	default_shuttle = "oshan"

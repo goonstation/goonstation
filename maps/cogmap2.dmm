@@ -79729,7 +79729,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "qaU" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "qfb" = (
 /obj/item/storage/wall/medical{
 	dir = 1;

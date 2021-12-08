@@ -4,7 +4,7 @@
 /area/area_that_kills_you_if_you_enter_it)
 "n" = (
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/north)
+/area/shuttle/escape/transit)
 "q" = (
 /turf/space/shuttle_transit,
 /area/shuttle_particle_spawn/south)

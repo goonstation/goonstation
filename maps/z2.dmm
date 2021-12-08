@@ -2066,7 +2066,7 @@
 /area/moon)
 "ajd" = (
 /turf/space,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "ajf" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -72324,9 +72324,6 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
-"eud" = (
-/turf/space,
-/area/shuttle/escape/centcom/destiny)
 "euA" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -73077,9 +73074,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"hcn" = (
-/turf/space,
-/area/shuttle/escape/centcom/manta)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
@@ -74112,9 +74106,6 @@
 	icon_state = "wall3"
 	},
 /area/hospital/samostrel)
-"kjY" = (
-/turf/space,
-/area/shuttle/escape/centcom/cogmap2)
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
@@ -75731,9 +75722,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"oqo" = (
-/turf/space,
-/area/shuttle/escape/centcom/sealab)
 "oqW" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/space,
@@ -77315,9 +77303,6 @@
 	dir = 6
 	},
 /area/centcom/offices/katzen)
-"szM" = (
-/turf/space,
-/area/shuttle/escape/centcom/donut2)
 "sBm" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -77802,9 +77787,6 @@
 	dir = 4
 	},
 /area/hospital/samostrel)
-"uoU" = (
-/turf/space,
-/area/shuttle/escape/centcom/donut3)
 "usD" = (
 /obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
@@ -133074,9 +133056,9 @@ aaa
 cnw
 cnw
 cnw
-kjY
+ajd
 cnw
-uoU
+ajd
 cnw
 ajd
 cnw
@@ -133678,9 +133660,9 @@ aaa
 cnw
 cnw
 cnw
-szM
+ajd
 cnw
-eud
+ajd
 cnw
 qQc
 cnw
@@ -134282,9 +134264,9 @@ aaa
 cnw
 cnw
 cnw
-hcn
+ajd
 cnw
-oqo
+ajd
 cnw
 cnw
 cnw

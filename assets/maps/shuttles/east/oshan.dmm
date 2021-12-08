@@ -10,13 +10,13 @@
 	dir = 8;
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "aG" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "aM" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -42,14 +42,14 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "be" = (
 /obj/machinery/door/airlock/pyro/command,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "bq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -107,12 +107,12 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "cn" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "15"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "dw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -120,7 +120,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "dK" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 1
@@ -143,13 +143,13 @@
 	dir = 8;
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "fc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "fK" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
@@ -158,7 +158,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "gG" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
@@ -166,13 +166,13 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "gN" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "hg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -180,12 +180,12 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "ht" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "hL" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 8;
@@ -222,12 +222,12 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "jn" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "jM" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -243,7 +243,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "kE" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -294,7 +294,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "lc" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor{
@@ -309,12 +309,12 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "lZ" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "4"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "mL" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -384,7 +384,7 @@
 	dir = 8;
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "pk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -392,7 +392,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "pw" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -401,12 +401,12 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "pG" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "1"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "pM" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -414,7 +414,7 @@
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "pV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -437,7 +437,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "qW" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -472,7 +472,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "sI" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -491,7 +491,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "tm" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 10
@@ -502,7 +502,7 @@
 	dir = 8;
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "uE" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -512,7 +512,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "vR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
@@ -524,7 +524,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "ww" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
@@ -533,7 +533,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "wB" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -575,7 +575,7 @@
 	dir = 8;
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "ym" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -596,7 +596,7 @@
 	dir = 8;
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "yr" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -671,12 +671,12 @@
 	dir = 8;
 	icon_state = "floor4"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Bp" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "BQ" = (
 /obj/decal/fakeobjects/tallsmes,
 /turf/unsimulated/floor{
@@ -696,7 +696,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "CJ" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 9;
@@ -726,7 +726,7 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Dz" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.";
@@ -764,7 +764,7 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Fk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -777,12 +777,12 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "6"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "FK" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "9"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Gh" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -790,14 +790,14 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Gl" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Gv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -847,7 +847,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "5"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "IW" = (
 /obj/rack,
 /obj/random_item_spawner/tools/maybe_few,
@@ -858,7 +858,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Ju" = (
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 8
@@ -867,7 +867,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Jz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -882,7 +882,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Kn" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -906,7 +906,7 @@
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "MP" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
@@ -937,7 +937,7 @@
 	dir = 8;
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Op" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -964,13 +964,13 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "PK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
 /turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "PS" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
@@ -983,7 +983,7 @@
 	dir = 8;
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "QC" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
@@ -993,13 +993,13 @@
 	dir = 8;
 	icon_state = "floor3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Ry" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "RT" = (
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
@@ -1022,12 +1022,12 @@
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Ug" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Ui" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -1052,7 +1052,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "VI" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -1068,13 +1068,13 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "VO" = (
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "VU" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -1143,7 +1143,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "10"
 	},
-/area/shuttle/escape/centcom/sealab)
+/area/shuttle/escape/centcom)
 "Xs" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";

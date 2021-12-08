@@ -85413,7 +85413,7 @@
 /area/station/turret_protected/ai)
 "xdw" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "xdA" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/storage/warehouse)

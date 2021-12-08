@@ -14,7 +14,7 @@
 /area/shuttle_transit_space/east)
 "V" = (
 /turf/space/shuttle_transit,
-/area/shuttle/escape/transit/west)
+/area/shuttle/escape/transit)
 
 (1,1,1) = {"
 a

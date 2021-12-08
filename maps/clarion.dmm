@@ -44609,7 +44609,7 @@
 /area/station/science/research_director)
 "dJh" = (
 /turf/space,
-/area/shuttle/escape/station/north)
+/area/shuttle/escape/station)
 "dJI" = (
 /obj/table/wood/auto,
 /obj/item/clipboard,

@@ -8796,7 +8796,7 @@
 /area/station/bridge/customs)
 "vh" = (
 /turf/space,
-/area/shuttle/escape/station/east)
+/area/shuttle/escape/station)
 "vi" = (
 /obj/stool/chair/red{
 	anchored = 0;
