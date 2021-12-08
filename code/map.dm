@@ -157,6 +157,8 @@ var/global/list/mapNames = list(
 				T.UpdateIcon()
 				for(var/obj/machinery/light/L in T)
 					L.seton(TRUE)
+				for(var/obj/window/W in T)
+					W.UpdateIcon()
 
 			var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
 			dmm_suite.read_map(file2text(src.get_shuttle_transit_path()), transit_start.x, transit_start.y, transit_start.z)
