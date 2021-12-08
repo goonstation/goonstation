@@ -52,11 +52,6 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
-"cy" = (
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
 "cA" = (
 /obj/machinery/atmospherics/portables_connector/west,
 /obj/decal/fakeobjects{
@@ -323,7 +318,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/space)
+/area/shuttle/escape/centcom)
 "nQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -515,7 +510,7 @@
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/space)
+/area/shuttle/escape/centcom)
 "tq" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
@@ -981,18 +976,12 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
-"LE" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
 "LX" = (
 /obj/stool/chair/comfy/shuttle,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/space)
+/area/shuttle/escape/centcom)
 "Mx" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 4;
@@ -1455,14 +1444,14 @@ vd
 vd
 vd
 um
-LE
+xq
 LX
-cy
+ou
 ta
 ta
-cy
+ou
 nh
-LE
+xq
 pl
 vd
 vd
