@@ -6,7 +6,7 @@
 /turf/space/shuttle_transit,
 /area/shuttle_particle_spawn/west)
 "C" = (
-/obj/landmark/escape_pod_succ/east/oshan,
+/obj/landmark/escape_pod_succ/east,
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
 "W" = (
