@@ -174,8 +174,6 @@
 (p)5645
 (e)🎨|sprites
 (*)Status Displays are back (but as of right now not placed on all maps). But you can order a crate of them from cargo for now.
-(u)tarmunora
-(+)prismatic spray spell now hits targets once/burst, and has full ground-hit-chance
 (t)fri nov 12 21
 (u)Azrun, Gannets & Aquario
 (p)6646

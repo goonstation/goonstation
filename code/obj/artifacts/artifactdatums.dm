@@ -253,6 +253,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 
 	shot_volume = 66
 	projectile_speed = 54
+	hit_ground_chance = 10
 
 	randomise()
 		. = ..()
@@ -261,11 +262,6 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		src.power = max(10, src.power)
 		if(prob(90))
 			src.ks_ratio = 1
-
-	on_pre_hit(atom/hit, angle, obj/projectile/O)
-		. = ..()
-		if(ismob(hit) && ON_COOLDOWN(hit, "prismaticed", 1.5 SECONDS))
-			. = TRUE
 
 	New()
 		..()
