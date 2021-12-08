@@ -97,7 +97,6 @@ var/global/list/mapNames = list(
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
-	var/escape_def = SHUTTLE_NODEF
 	var/escape_dir = SOUTH
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
@@ -173,7 +172,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	escape_def = SHUTTLE_WEST
 	escape_dir = WEST
 
 	windows = /obj/window/auto
@@ -199,7 +197,6 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
-	escape_def = SHUTTLE_DONUT3
 	escape_dir = NORTH
 	default_shuttle = "donut3"
 	auto_windows = 1
@@ -237,7 +234,6 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
-	escape_def = SHUTTLE_SOUTH
 	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -266,7 +262,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_SOUTH
 	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -311,7 +306,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -362,7 +356,6 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = 1
 
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -442,7 +435,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -510,7 +502,6 @@ var/global/list/mapNames = list(
 	shuttle_map_turf = /turf/space/fluid/manta
 
 	default_shuttle = "manta"
-	escape_def = SHUTTLE_MANTA
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -549,13 +540,11 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = 1
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 /datum/map_settings/trunkmap
 	name = "TRUNKMAP"
 	goonhub_map = "https://goonhub.com/maps/trunkmap"
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -587,7 +576,6 @@ var/global/list/mapNames = list(
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -627,7 +615,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -682,7 +669,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -725,7 +711,6 @@ var/global/list/mapNames = list(
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = null
@@ -765,7 +750,6 @@ var/global/list/mapNames = list(
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
@@ -800,7 +784,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_EAST
 	escape_dir = EAST
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
@@ -840,7 +823,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_SOUTH
 	escape_dir = SOUTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
@@ -876,7 +858,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_OSHAN
 	escape_dir = EAST
 	default_shuttle = "oshan"
 	shuttle_map_turf = /turf/space/fluid
@@ -927,7 +908,6 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_def = SHUTTLE_NORTH
 	escape_dir = NORTH
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
