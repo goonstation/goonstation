@@ -67,39 +67,25 @@ const ParticleMatrixEntry = (props, context) => {
 const ParticleFloatEntry = (props, context) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend(context);
-  const [step, setStep] = useLocalState(context, 'particleFloatStep', 0.01);
+  const [step, _] = useLocalState(context, 'particleFloatStep', 0.01);
   return (
-    <>
-      <Tooltip position="bottom" content={tooltip}>
-        <NumberInput
-          value={value}
-          stepPixelSize={4}
-          step={step}
-          format={value => toFixed(value, numberOfDecimalDigits(step))}
-          width="80px"
-          onDrag={(e, value) =>
-            act('modify_particle_value', {
-              new_data: {
-                name: name,
-                value: value,
-                type: 'float',
-              },
-            })} />
-
-      </Tooltip>
-      <Box
-        inline
-        ml={2}
-        mr={1}>
-        Step:
-      </Box>
+    <Tooltip position="bottom" content={tooltip}>
       <NumberInput
-        value={step}
-        step={0.001}
+        value={value}
+        stepPixelSize={4}
+        step={step}
         format={value => toFixed(value, numberOfDecimalDigits(step))}
-        width="70px"
-        onChange={(e, value) => setStep(value)} />
-    </>
+        width="80px"
+        onDrag={(e, value) =>
+          act('modify_particle_value', {
+            new_data: {
+              name: name,
+              value: value,
+              type: 'float',
+            },
+          })} />
+
+    </Tooltip>
   );
 };
 
@@ -441,6 +427,7 @@ export const Particool = (props, context) => {
   const { act, data } = useBackend(context);
   const particles = data.target_particle || {};
   const hasParticles = particles && Object.keys(particles).length > 0;
+  const [step, setStep] = useLocalState(context, 'particleFloatStep', 0.01);
 
   const [hiddenSecret, setHiddenSecret] = useLocalState(context, 'hidden', false);
   return (
@@ -474,6 +461,18 @@ export const Particool = (props, context) => {
             content="Remove Particle"
             onClick={() => act("remove_particle")} />)} >
           <GeneratorHelp />
+          <Box
+            inline
+            ml={2}
+            mr={1}>
+            Float change step:
+          </Box>
+          <NumberInput
+            value={step}
+            step={0.001}
+            format={value => toFixed(value, numberOfDecimalDigits(step))}
+            width="70px"
+            onChange={(e, value) => setStep(value)} />
           {!hasParticles ? (
             <Box>
               No particle
