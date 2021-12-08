@@ -155,8 +155,7 @@ var/global/list/mapNames = list(
 
 			// fixes for stuff that doesn't load properly, might be removable once we improve DMM loader using Init()
 			for(var/turf/T in block(start, locate(shuttleProp.maxX, shuttleProp.maxY, shuttleProp.maxZ)))
-				if(istype(T, /turf/simulated/wall/auto) || istype(T, /turf/unsimulated/wall/auto))
-					T:update_icon() // TODO replace with the base .UpdateIcon() call once master is merged
+				T.UpdateIcon()
 				for(var/obj/machinery/light/L in T)
 					L.seton(TRUE)
 
