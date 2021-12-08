@@ -31886,11 +31886,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bTK" = (
-/obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk/west,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	name = "Loading Chute Cover"
+/obj/machinery/floorflusher{
+	desc = "It's totally not just a gigantic disposal chute! This one seems to not operate automatically.";
+	id = "kondaflush";
+	name = "manual loading chute"
 	},
 /turf/simulated/floor/orange/side{
 	dir = 8
@@ -57577,10 +57577,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 8
-	},
-/obj/decal/tile_edge/floorguide/arrow_w,
 /turf/simulated/floor/grey,
 /area/station/routing/medsci{
 	name = "Research Router"
@@ -58405,7 +58401,14 @@
 	info = "CUSTOM CARGO NODE - UNLABELED CARGO WILL BE EJECTED";
 	name = "printed card";
 	pixel_x = 10;
-	pixel_y = -2
+	pixel_y = 5
+	},
+/obj/machinery/door_timer{
+	desc = "A remote control switch for a cargo/ejection chute.";
+	id = "kondaflush";
+	name = "Timed Chute Activator";
+	pixel_y = 24;
+	req_access = list(24,31)
 	},
 /turf/simulated/floor/orange/side{
 	dir = 9
@@ -94744,7 +94747,7 @@ bLC
 bMD
 qsO
 bPx
-bQV
+bQU
 vUS
 bTK
 bUO
