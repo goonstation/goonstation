@@ -39,7 +39,7 @@ const ParticleMatrixEntry = (props, context) => {
 
 
   // Actual matrix, or matrix of 0
-  value = value || [0, 0, 0, 0, 0, 0];
+  value = value || [1, 0, 0, 0, 1, 0];
   return (
     <Flex>
       <Flex.Item>
