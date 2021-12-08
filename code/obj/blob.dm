@@ -421,7 +421,7 @@
 
 
 		src.health -= amount
-		src.health = clamp(src.health_max, 0, src.health)
+		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
 			src.onKilled()
@@ -466,7 +466,7 @@
 		if (src.poison)
 			amount /= 4
 		src.health += amount
-		src.health = clamp(src.health_max, 0, src.health)
+		src.health = clamp(src.health, 0, src.health_max)
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
 		src.UpdateIcon()
 		healthbar.onUpdate()
