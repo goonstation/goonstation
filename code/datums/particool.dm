@@ -141,8 +141,8 @@ var/list/master_particle_info = list()
 		if("vector") return generator(L["genType"], a, b)
 		if("box")    return generator(L["genType"], a, b)
 		if("color") //Color can be string or matrix
-			a = length(a) > 1 ? ListToMatrix(a) : L["a"]
-			b = length(a) > 1 ? ListToMatrix(b) : L["b"]
+			a = length(a) > 1 ? a : L["a"]
+			b = length(a) > 1 ? b : L["b"]
 			return generator(L["genType"], a, b)
 		if("circle") return generator(L["genType"], a, b)
 		if("sphere") return generator(L["genType"], a, b)
