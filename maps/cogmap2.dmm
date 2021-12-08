@@ -40336,6 +40336,14 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/head/helmet/riot,
+/obj/item/breaching_hammer{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bKE" = (
