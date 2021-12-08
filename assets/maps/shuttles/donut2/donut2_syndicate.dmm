@@ -8,25 +8,25 @@
 	},
 /obj/access_spawn/medical,
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "bn" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm18"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "br" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "bW" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "dv" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -35,7 +35,7 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "dQ" = (
 /obj/decal/fakeobjects/shuttleweapon{
 	dir = 4
@@ -44,13 +44,13 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "ed" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8;
 	icon_state = "shuttlecock_syndie"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "fQ" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -58,14 +58,14 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm2"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "fV" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "gI" = (
 /turf/unsimulated/wall{
 	dir = 1;
@@ -77,7 +77,7 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm6"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "if" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -85,14 +85,14 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "jA" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "la" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -100,19 +100,19 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm19"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "ln" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm14"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "me" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "mt" = (
 /obj/decal/poster/wallsign/stencil/right/a{
 	pixel_x = -11;
@@ -127,7 +127,7 @@
 	pixel_y = 6
 	},
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "on" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -135,19 +135,19 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "oo" = (
 /obj/machinery/sleeper/compact,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "oL" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "wall3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "oU" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -155,10 +155,10 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "pv" = (
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "ri" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -166,16 +166,16 @@
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "rD" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm15"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "rZ" = (
 /obj/machinery/sleeper/compact,
 /turf/unsimulated/floor/redblack/corner,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "tk" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	dir = 4;
@@ -185,7 +185,7 @@
 	},
 /obj/access_spawn/heads,
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "tG" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	dir = 4;
@@ -195,17 +195,17 @@
 	},
 /obj/access_spawn/security,
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "vM" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm16"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "wm" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm4"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "xA" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -213,12 +213,12 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "xQ" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm5"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "xR" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
@@ -226,22 +226,22 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "xS" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 1
 	},
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "xV" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm7"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "yN" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "AN" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -249,7 +249,7 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm20"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "BQ" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -258,10 +258,10 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Cb" = (
 /turf/unsimulated/floor/redblack/corner,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "DA" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -269,31 +269,31 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "DO" = (
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "DP" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Ef" = (
 /turf/unsimulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Gb" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3";
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Gd" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Go" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -301,13 +301,13 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm1"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "He" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "HA" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -315,17 +315,17 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "HV" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "If" = (
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Io" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -338,7 +338,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "LM" = (
 /obj/decal/fakeobjects/shuttleweapon{
 	dir = 4
@@ -347,12 +347,12 @@
 	dir = 10;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Mv" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm8"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Ns" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = 0;
@@ -363,13 +363,13 @@
 	pixel_y = 6
 	},
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "NM" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Od" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -380,13 +380,13 @@
 /turf/unsimulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "OL" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
 	},
 /turf/unsimulated/floor/redblack/corner,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Pz" = (
 /obj/decal/fakeobjects/shuttleweapon/base{
 	dir = 8
@@ -395,16 +395,16 @@
 	icon_state = "wall3";
 	opacity = 0
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "PK" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/red,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "QK" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm17"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "TD" = (
 /obj/decal/poster/wallsign/stencil/right/i{
 	pixel_x = 5;
@@ -425,7 +425,7 @@
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/black,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "VV" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -433,20 +433,20 @@
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm21"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Wf" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "XU" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/donut2)
+/area/shuttle/escape/centcom)
 "Yz" = (
 /turf/unsimulated/floor/stairs{
 	dir = 1

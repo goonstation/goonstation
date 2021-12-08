@@ -164,7 +164,7 @@
 
 			amount -= armor
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			UpdateIcon("cut")
 			src.set_density(0)
@@ -183,7 +183,7 @@
 
 		amount = get_damage_after_percentage_based_armor_reduction(cut_resist,amount)
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			drop_rods(1)
 			UpdateIcon("cut")
@@ -201,7 +201,7 @@
 			return
 
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			UpdateIcon("corroded")
 			src.set_density(0)
@@ -222,7 +222,7 @@
 				// Not applying enough heat to melt it
 				return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			UpdateIcon("melted")
 			src.set_density(0)

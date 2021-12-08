@@ -9701,7 +9701,7 @@
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "dUX" = (
 /obj/machinery/light{
 	dir = 1;
@@ -31919,7 +31919,7 @@
 /area/station/engine/inner)
 "nEk" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "nEw" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/white,

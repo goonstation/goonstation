@@ -7,7 +7,7 @@
 /area/centcom/outside)
 "b" = (
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "d" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -16,13 +16,13 @@
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "g" = (
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "h" = (
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
@@ -31,14 +31,14 @@
 	name = "First-Aid Station"
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "j" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 5;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "k" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -46,68 +46,68 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "m" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Secure Transport"
 	},
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "p" = (
 /turf/simulated/martian/wall{
 	dir = 6;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "r" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 10;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "s" = (
 /obj/stool/chair/comfy/shuttle,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "u" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "v" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "w" = (
 /obj/stool/chair/comfy/shuttle/red,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "x" = (
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "z" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "A" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 9;
 	icon_state = "alt_propulsion"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "B" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "C" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
@@ -116,21 +116,21 @@
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "E" = (
 /obj/map/light/dimred,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "F" = (
 /turf/simulated/martian/wall{
 	dir = 8;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "H" = (
 /obj/indestructible/invisible_block,
 /turf/unsimulated/outdoors/grass,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "J" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -140,31 +140,31 @@
 "K" = (
 /obj/machinery/sleeper/compact,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "L" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "N" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "P" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "R" = (
 /turf/simulated/martian/wall{
 	dir = 5;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "U" = (
 /obj/machinery/computer/shuttle/embedded/south,
 /obj/stool/chair/comfy/shuttle/pilot,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "V" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -172,7 +172,7 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "W" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
@@ -180,20 +180,20 @@
 	},
 /obj/window/reinforced/south,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "X" = (
 /obj/machinery/door/airlock/pyro/command,
 /turf/simulated/martian/floor,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Y" = (
 /turf/simulated/martian/wall,
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 "Z" = (
 /turf/simulated/martian/wall{
 	dir = 4;
 	icon_state = "diagonalWall"
 	},
-/area/shuttle/escape/centcom/cogmap)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 b

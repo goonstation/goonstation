@@ -1395,7 +1395,7 @@ proc/get_colosseum_message(var/name, var/message)
 		update_indicators(INDICATOR_HEALTH)
 
 	ex_act(var/severity)
-		var/actual_severity = max(min(4 - severity, 3), 1)
+		var/actual_severity = clamp(4 - severity, 1, 3)
 		var/multiplier = actual_severity * actual_severity
 		var/damage = rand(25, 75) * 0.1 * multiplier
 		take_damage(damage, 2, 2)

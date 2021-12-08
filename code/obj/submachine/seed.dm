@@ -216,7 +216,7 @@
 						else
 							splice_chance += S.splice_mod
 
-				splice_chance = max(0,min(splice_chance,100))
+				splice_chance = clamp(splice_chance, 0, 100)
 
 				dat += "<b>Chance of Successful Splice:</b> [splice_chance]%<br>"
 				dat += "<A href='?src=\ref[src];splice=1'>(Proceed)</A> <A href='?src=\ref[src];splice_cancel=1'>(Cancel)</A><BR>"
@@ -494,7 +494,7 @@
 							splice_chance += S.splice_mod
 
 			// Cap probability between 0 and 100
-			splice_chance = max(0,min(splice_chance,100))
+			splice_chance = clamp(splice_chance, 0, 100)
 			if (prob(splice_chance)) // We're good, so start splicing!
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes

@@ -6162,7 +6162,7 @@
 /area/station/crew_quarters/bathroom)
 "pq" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "pr" = (
 /obj/cable{
 	d1 = 1;

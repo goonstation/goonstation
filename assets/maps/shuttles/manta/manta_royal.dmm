@@ -32,11 +32,11 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "df" = (
 /obj/machinery/shuttle/engine/heater/seaheater_middle,
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "dx" = (
 /obj/item/storage/wall/medical{
 	dir = 4
@@ -44,12 +44,12 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "et" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "eA" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
@@ -58,7 +58,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 10
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "fn" = (
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
@@ -78,7 +78,7 @@
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/carpet/regalcarpet/border,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "fu" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -96,7 +96,7 @@
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "gx" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -107,7 +107,7 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "gM" = (
 /obj/table/regal/auto,
 /obj/item/storage/toolbox/emergency{
@@ -131,7 +131,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "gS" = (
 /obj/decal/lightshaft,
 /obj/shrub{
@@ -144,7 +144,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 6
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "hE" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -155,47 +155,47 @@
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "hM" = (
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "hW" = (
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 10
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "jj" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "jz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "jM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "kT" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/marble/border_wb,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "lg" = (
 /obj/table/regal/auto,
 /obj/decoration/floralarrangement,
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "lp" = (
 /obj/shrub{
 	dir = 6
@@ -203,7 +203,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "lK" = (
 /obj/decal/lightshaft,
 /obj/shrub{
@@ -212,22 +212,22 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "mf" = (
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 6
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "nD" = (
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 4
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "oY" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "pn" = (
 /obj/stool/chair/comfy/throne_gold{
 	anchored = 1
@@ -235,7 +235,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "qC" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
@@ -244,7 +244,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 4
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "sb" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 5
@@ -256,7 +256,7 @@
 	},
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "tw" = (
 /obj/item/storage/wall/emergency{
 	dir = 8
@@ -264,7 +264,7 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "tO" = (
 /obj/shrub{
 	dir = 1
@@ -272,7 +272,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "uE" = (
 /turf/space/fluid,
 /area/centcom)
@@ -282,29 +282,29 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "wv" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 6
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "wC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "xx" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "yg" = (
 /obj/shrub{
 	dir = 8
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "yl" = (
 /obj/stool/chair/comfy/throne_gold{
 	anchored = 1
@@ -313,12 +313,12 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "yn" = (
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "yu" = (
 /obj/table/regal/auto,
 /obj/decoration/floralarrangement{
@@ -329,7 +329,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 10
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "yN" = (
 /obj/shrub{
 	dir = 4
@@ -342,23 +342,23 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 10
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "AF" = (
 /turf/unsimulated/floor/marble,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "AL" = (
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Bn" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Cd" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "CC" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
@@ -367,7 +367,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Dt" = (
 /obj/table/regal/auto,
 /obj/machinery/light/small/floor/netural,
@@ -392,13 +392,13 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Dx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Dy" = (
 /obj/table/regal/auto,
 /obj/machinery/light/small/floor/netural,
@@ -420,18 +420,18 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "DQ" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "DW" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Fg" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
@@ -440,7 +440,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Gs" = (
 /obj/table/regal/auto,
 /obj/random_item_spawner/med_kit/two,
@@ -448,7 +448,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 6
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Gx" = (
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/snacks/croissant{
@@ -485,34 +485,34 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "HT" = (
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "HY" = (
 /turf/unsimulated/floor/carpet/regalcarpet/border,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Il" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "IJ" = (
 /obj/machinery/computer/shuttle,
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Jj" = (
 /obj/machinery/shuttle/engine/propulsion/sea_propulsion,
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "JA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "JJ" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -521,7 +521,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "JM" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -530,12 +530,12 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "JU" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 10
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "KM" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
@@ -549,7 +549,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 4
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "LV" = (
 /obj/stool/chair/comfy/throne_gold{
 	anchored = 1
@@ -557,7 +557,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Mw" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
@@ -566,13 +566,13 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 6
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "MK" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
 	},
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Nb" = (
 /obj/table/regal/auto,
 /obj/machinery/light/small/floor/netural,
@@ -607,18 +607,18 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Nu" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Ob" = (
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 8
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "OL" = (
 /obj/table/regal/auto,
 /obj/decoration/floralarrangement{
@@ -640,25 +640,25 @@
 	},
 /obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/carpet/regalcarpet/border,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Pb" = (
 /obj/decoration/regallamp{
 	anchored = 1;
 	lit = 1
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Pd" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Pn" = (
 /obj/decal/lightshaft,
 /obj/shrub{
 	dir = 6
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "PC" = (
 /obj/shrub{
 	dir = 4
@@ -667,7 +667,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "PZ" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
@@ -676,7 +676,7 @@
 "QE" = (
 /obj/indestructible/shuttle_corner,
 /turf/space/fluid,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "RB" = (
 /obj/table/regal/auto,
 /obj/machinery/light/small/floor/netural,
@@ -701,7 +701,7 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "RD" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/worlds.dmi';
@@ -710,7 +710,7 @@
 /area/centcom)
 "RQ" = (
 /turf/unsimulated/floor/carpet/regalcarpet,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Se" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -719,14 +719,14 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "SL" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
 	dir = 1
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "SW" = (
 /obj/stool/chair/comfy/throne_gold{
 	anchored = 1
@@ -734,7 +734,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "SZ" = (
 /obj/table/regal/auto,
 /obj/machinery/light/small/floor/netural,
@@ -759,7 +759,7 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Tj" = (
 /obj/stool/chair/wooden/regal{
 	anchored = 1;
@@ -768,12 +768,12 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "VK" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Wu" = (
 /obj/stool/chair/comfy/throne_gold{
 	anchored = 1
@@ -781,12 +781,12 @@
 /turf/unsimulated/floor/carpet/regalcarpet/innercorner{
 	dir = 1
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Ww" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "XK" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -795,7 +795,7 @@
 /turf/unsimulated/floor/marble/border_bw{
 	dir = 5
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "XR" = (
 /obj/decoration/regallamp{
 	anchored = 1;
@@ -804,7 +804,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 9
 	},
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "XY" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 10
@@ -848,13 +848,13 @@
 	rand_pos = 0
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 "Zh" = (
 /obj/shrub{
 	dir = 10
 	},
 /turf/unsimulated/floor/marble/black,
-/area/shuttle/escape/centcom/manta)
+/area/shuttle/escape/centcom)
 
 (1,1,1) = {"
 uE

@@ -522,7 +522,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
+		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
 		return
 
@@ -586,6 +586,25 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_environment = 2
 	expandable = 0
 
+/area/shuttle/battle
+	icon_state = "shuttle_escape-battle-shuttle"
+	var/warp_dir = EAST
+
+	Entered(atom/movable/Obj,atom/OldLoc)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+	Exited(atom/movable/Obj)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	teleport_blocked = 2
@@ -601,12 +620,22 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Emergency Shuttle"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
+	filler_turf = /turf/unsimulated/floor/shuttlebay
+
+/area/shuttle/escape/transit
+	name = "Emergency Shuttle Transit"
+	icon_state = "shuttle_escape"
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -724,8 +753,18 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 			var/mob/M = Obj
 			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 
-/area/shuttle/escape/transit/ew
+/area/shuttle/escape/transit
+	warp_dir = NORTH
+
+/area/shuttle/escape/transit
 	warp_dir = EAST
+
+/area/shuttle/escape/transit
+	warp_dir = WEST
+
+/area/shuttle/escape/transit
+	warp_dir = SOUTH
+
 ABSTRACT_TYPE(/area/shuttle_transit_space)
 /area/shuttle_transit_space
 	name = "Wormhole"
