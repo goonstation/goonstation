@@ -631,9 +631,8 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
-	#ifdef MAP_OVERRIDE_MANTA
-	filler_turf = "/turf/space/fluid"
-	#endif
+	filler_turf = /turf/unsimulated/floor/shuttlebay
+
 /area/shuttle/escape/transit
 	name = "Emergency Shuttle Transit"
 	icon_state = "shuttle_escape"
