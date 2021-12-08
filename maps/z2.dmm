@@ -2064,9 +2064,6 @@
 	},
 /turf/unsimulated/floor/lunar,
 /area/moon)
-"ajd" = (
-/turf/space,
-/area/shuttle/escape/centcom)
 "ajf" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -72110,9 +72107,6 @@
 /obj/item/clothing/glasses/regular,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
-"dUs" = (
-/turf/unsimulated/outdoors/grass/dense,
-/area/space)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -72823,14 +72817,6 @@
 "gcn" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
-"gfp" = (
-/turf/unsimulated/wall/auto/lead/blue,
-/area/space)
-"gfs" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/space)
 "gfz" = (
 /obj/table/wood/round/auto,
 /obj/item/paper_bin,
@@ -76292,14 +76278,6 @@
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
-"pQi" = (
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwindow_1";
-	name = "window";
-	opacity = 0
-	},
-/area/space)
 "pQk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -76578,15 +76556,6 @@
 /obj/machinery/computer3/generic/personal/meatland,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"qGX" = (
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwindow_1";
-	name = "window";
-	opacity = 0
-	},
-/area/space)
 "qHA" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -76674,9 +76643,6 @@
 /obj/wizard_light/stand/quartz,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
-"qQc" = (
-/turf/space,
-/area/centcom)
 "qQd" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/machinery/light/small/floor,
@@ -77817,9 +77783,9 @@
 	},
 /obj/item/clothing/head/NTberet{
 	desc = "You can tell that this beret has been well looked after.";
+	layer = 30;
 	name = "Karu Karim's Nanotrasen Beret";
-	plane = -100;
-	layer = 30
+	plane = -100
 	},
 /obj/item/luggable_computer/personal{
 	plane = -100
@@ -133056,11 +133022,11 @@ aaa
 cnw
 cnw
 cnw
-ajd
 cnw
-ajd
 cnw
-ajd
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -133660,11 +133626,11 @@ aaa
 cnw
 cnw
 cnw
-ajd
 cnw
-ajd
 cnw
-qQc
+cnw
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -134264,9 +134230,9 @@ aaa
 cnw
 cnw
 cnw
-ajd
 cnw
-ajd
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -134870,9 +134836,9 @@ cnw
 cnw
 cnw
 cnw
-qGX
 cnw
-pQi
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -135474,9 +135440,9 @@ cnw
 cnw
 cnw
 cnw
-gfp
 cnw
-kqJ
+cnw
+cnw
 cnw
 cnw
 cnw
@@ -136078,9 +136044,9 @@ cnw
 cnw
 cnw
 cnw
-gfs
 cnw
-dUs
+cnw
+cnw
 cnw
 cnw
 cnw
