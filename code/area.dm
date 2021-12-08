@@ -620,12 +620,23 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Emergency Shuttle"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
+	#ifdef MAP_OVERRIDE_MANTA
+	filler_turf = "/turf/space/fluid"
+	#endif
+/area/shuttle/escape/transit
+	name = "Emergency Shuttle Transit"
+	icon_state = "shuttle_escape"
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"

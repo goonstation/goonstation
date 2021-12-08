@@ -151,7 +151,7 @@ var/global/list/mapNames = list(
 		var/turf/start = pick_landmark(LANDMARK_SHUTTLE_CENTCOM)
 		if(start)
 			var/dmm_suite/dmm_suite = new
-			var/datum/loadedProperties/shuttleProp = dmm_suite.read_map(file2text(src.get_shuttle_path()), start.x, start.y, start.z)
+			var/datum/loadedProperties/shuttleProp = dmm_suite.read_map(file2text(src.get_shuttle_path()), start.x, start.y, start.z, overwrite=DMM_OVERWRITE_OBJS)
 
 			// fixes for stuff that doesn't load properly, might be removable once we improve DMM loader using Init()
 			for(var/turf/T in block(start, locate(shuttleProp.maxX, shuttleProp.maxY, shuttleProp.maxZ)))
@@ -983,21 +983,6 @@ var/global/list/mapNames = list(
 	merchant_right_station = null
 
 	valid_nuke_targets = list()
-
-/area/shuttle/escape/centcom
-	icon_state = "shuttle_escape"
-	#ifdef MAP_OVERRIDE_MANTA
-	filler_turf = "/turf/space/fluid"
-	#endif
-
-/area/shuttle/escape/station
-	#ifdef UNDERWATER_MAP
-	ambient_light = OCEAN_LIGHT
-	#endif
-	icon_state = "shuttle_escape"
-
-/area/shuttle/escape/transit
-	icon_state = "shuttle_escape"
 
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"
