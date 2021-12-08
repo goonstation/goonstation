@@ -38,7 +38,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	flags = NOSPLASH | FPRINT
 	layer = DECAL_LAYER
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
 
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -106,7 +105,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			var/turf/F = src.loc
 			F.messy++
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (src.qdeled || src.disposed)
 			return
@@ -323,7 +322,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (!istype(AM))
 			return
@@ -468,14 +467,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			processing_items.Remove(src)
 			return
 
-	proc/add_volume(var/add_color, var/reagent_id = "blood", var/amount = 1, var/vis_amount = 1, var/list/bdata = null, var/i_state = null, var/direction = null, var/do_fluid_react = 1)
+	proc/add_volume(var/add_color, var/reagent_id = "blood", var/amount = 1, var/vis_amount = 1, var/list/bdata = null, var/i_state = null, var/direction = null, var/do_fluid_react = 1, blood_reagent_data=null)
 	// add_color passes the blood's color to the overlays
 	// vis_amount should only be 1-5 if you want anything to happen
 		if (istype(bdata))
 			src.blood_DNA = bdata["bDNA"]
 			src.blood_type = bdata["btype"]
 
-		src.reagents.add_reagent(reagent_id, amount)
+		src.reagents.add_reagent(reagent_id, amount, blood_reagent_data)
 
 		var/turf/simulated/floor/T = src.loc
 		if (istype(T) && do_fluid_react)
@@ -529,7 +528,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Someone walked through some blood and got it everywhere, jeez!"
 	can_track = 0
 
-	add_volume(var/add_color, var/reagent_id = "blood", var/amount = 1, var/vis_amount = 1, var/list/bdata = null, var/i_state = null, var/direction = null, var/e_tracking = 1, var/do_fluid_react = 1)
+	add_volume(var/add_color, var/reagent_id = "blood", var/amount = 1, var/vis_amount = 1, var/list/bdata = null, var/i_state = null, var/direction = null, var/e_tracking = 1, var/do_fluid_react = 1, blood_reagent_data=null)
 		// e_tracking will be set to 0 by the track_blood() proc atoms run when moving, so anything that doesn't set it to 0 is a regular sort of bleed and should re-enable tracking
 		if (e_tracking)
 			src.can_track = 1
@@ -657,7 +656,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	can_fluid_absorb = 0
 
-	HasEntered(AM)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(prob(4))
 			src.reagents.reaction(AM, TOUCH)
@@ -674,7 +673,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	can_fluid_absorb = 0
 
-	HasEntered(AM)
+	Crossed(atom/movable/AM)
 		. = ..()
 		if(!ishuman(AM))
 			return
@@ -1226,9 +1225,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER-1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb_floor-c"
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/A, turf/T)
+
+	Cross(atom/A)
 		if (ismob(A))
 			A.changeStatus("slowed", 0.2 SECONDS)
 			SPAWN_DBG(-1)
@@ -1250,11 +1249,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	New()
 		if (prob(5))
 			src.amount += rand(1,2)
-			src.update_icon()
+			src.UpdateIcon()
 		..()
 		return
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "fungus[max(1,min(3, amount))]"
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
@@ -1274,7 +1273,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				src.amount--
 				if (src.amount <= 0)
 					qdel(src)
-				src.update_icon()
+				src.UpdateIcon()
 				return 1
 
 
@@ -1438,20 +1437,20 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
 
 	setup()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		health = 30
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (istype(AM, /obj/critter/slug))
 			var/obj/critter/slug/S = AM
@@ -1497,7 +1496,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
 		if (!src.loc)
 			return
 		var/dirs = 0
@@ -1523,7 +1522,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingSalt(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/saltpile/S in orange(1,T))
-		S.updateIcon()
+		S.UpdateIcon()
 
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
@@ -1538,12 +1537,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	setup()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	disposing()
@@ -1555,7 +1554,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
 		var/dirs = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
@@ -1630,7 +1629,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingMagnesium(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/magnesiumpile/S in orange(1,T))
-		S.updateIcon()
+		S.UpdateIcon()
 
 /obj/decal/cleanable/nitrotriiodide
 	name = "gooey mess"
@@ -1641,7 +1640,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 1
 	var/do_bang = 0
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if( !src.dry || !(isliving(AM) || isobj(AM)) ) return
 		src.bang()
 
@@ -1720,6 +1720,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
 /obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+	if(src.disposed)
+		return
 	if(isnull(get_turf(src)))
 		CRASH("Attempting to streak cleanable [src] which is in null.")
 

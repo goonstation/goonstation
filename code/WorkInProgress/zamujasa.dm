@@ -179,7 +179,6 @@
 /obj/invisible_teleporter
 	name = "invisible teleporter side 1"
 	desc = "Totally not a portal."
-	event_handler_flags = USE_HASENTERED
 	icon = 'icons/effects/letter_overlay.dmi'
 	icon_state = "A"
 	anchored = 1
@@ -200,7 +199,7 @@
 		src.maptext_width = 128
 		*/
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if (AM == src)
 			// jesus christ don't teleport OURSELVES
 			return
@@ -569,10 +568,12 @@
 	name = "Space American Football Stadium"
 	force_fullbright = 1
 	icon_state = "purple"
+	dont_log_combat = TRUE
 
 /area/football/field
 	name = "Space American Football Field"
 	icon_state = "green"
+	dont_log_combat = TRUE
 
 	endzone
 		icon_state = "yellow"
@@ -1151,7 +1152,7 @@
 		src.anchored = 2
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
-New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" clss="ol">Click here for a tutorial!</a>
+New? <a href="https://mini.xkeeper.net/ss13/tutorial/" style="color: #8888ff; font-weight: bold;" class="ol" target="_blank">Click here for a tutorial!</a>
 Ask mentors for help with <strong>F3</strong>
 Contact admins with <strong>F1</strong>
 Read the rules, don't grief, and have fun!</div>"}

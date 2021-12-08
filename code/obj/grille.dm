@@ -21,7 +21,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -30,7 +30,7 @@
 				if (map_setting && ticker)
 					src.update_neighbors()
 
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		var/list/neighbors = null
@@ -40,7 +40,7 @@
 				neighbors += O //find all of our neighbors before we move
 		..()
 		for (var/obj/grille/O in neighbors)
-			O?.update_icon() //now that we are in nullspace tell them to update
+			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
 	steel
 #ifdef IN_MAP_EDITOR
@@ -75,8 +75,9 @@
 		auto = FALSE
 		connects_to_turf = null
 		connects_to_turf = null
+		event_handler_flags = 0
 
-		update_icon(special_icon_state)
+		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
 				return
 
@@ -165,11 +166,11 @@
 
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
-			update_icon("cut")
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -185,11 +186,11 @@
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
 			drop_rods(1)
-			update_icon("cut")
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -202,11 +203,11 @@
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
-			update_icon("corroded")
+			UpdateIcon("corroded")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_heat(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -223,11 +224,11 @@
 
 		src.health = max(0,min(src.health - amount,src.health_max))
 		if (src.health == 0)
-			update_icon("melted")
+			UpdateIcon("melted")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	meteorhit(var/obj/M)
 		if (istype(M, /obj/newmeteor/massive))
@@ -415,7 +416,8 @@
 					damage_blunt(W.force * 0.5)
 		return
 
-	proc/update_icon(var/special_icon_state)
+	update_icon(var/special_icon_state)
+
 		if (ruined)
 			return
 
@@ -471,7 +473,7 @@
 
 	proc/update_neighbors()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))
@@ -516,7 +518,7 @@
 
 		return src.electrocute(user, prb, net, ignore_gloves)
 
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			if (density)
 				return prob(50)
@@ -527,14 +529,14 @@
 
 		return ..()
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (src.shock_when_entered)
 			if (ismob(AM))
 				if (!isliving(AM) || isintangible(AM)) // I assume this was left out by accident (Convair880).
 					return
 				var/mob/M = AM
-				if (M.client && M.client.flying) // noclip
+				if (M.client && M.client.flying || (ismob(M) && HAS_MOB_PROPERTY(M, PROP_NOCLIP))) // noclip
 					return
 				var/s_chance = 10
 				if (M.m_intent != "walk") // move carefully

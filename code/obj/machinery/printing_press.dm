@@ -2,7 +2,7 @@
 	name = "printing press"
 	desc = "Some machinery that's supposed to be able to write on a lot of pages super quickly. It looks pretty old."
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "printing_press" //proper icon is set in update_icon
+	icon_state = "printing_press" //proper icon is set in UpdateIcon
 	anchored = 1
 	density = 1
 	bound_width = 64 //the game just handles xtra wide objects already halleluiah
@@ -56,7 +56,7 @@
 //Appearance stuff//
 ////////////////////
 
-	proc/update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
+	update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
 		if (paper_amt || was_paper)
 			if (GetOverlayImage("paper"))
 				ClearSpecificOverlays("paper")
@@ -71,7 +71,6 @@
 			src.UpdateOverlays(I, "ink")
 		if (is_running)
 			flick("printing_press-work", src)
-			sleep(2.4 SECONDS)
 			return
 		icon_state = "printing_press-idle"
 
@@ -129,7 +128,7 @@
 				return
 
 			src.x -= 1
-		update_icon()
+		UpdateIcon()
 
 	// this bad boy requires two tiles of space so we'll check it out
 	proc/is_fuckled(var/where)
@@ -157,7 +156,7 @@
 				var/amount_to_take = paper_max - paper_amt
 				var/amount_taken = min(amount_to_take, P.amount)
 				paper_amt += amount_taken
-				update_icon()
+				UpdateIcon()
 				P.amount = P.amount - amount_taken
 				P.update()
 				return
@@ -174,7 +173,7 @@
 			if (paper_amt < paper_max)
 				boutput(user, "You load \the [W] into \the [src].")
 				paper_amt++
-				update_icon()
+				UpdateIcon()
 				user.drop_item()
 				qdel(W)
 			else
@@ -211,7 +210,7 @@
 					if ((ink_level + 100) <= ink_max) //500ink internal resevoir
 						ink_level += 100
 						boutput(user, "Ink refilled.")
-						update_icon() //to show ink level change
+						UpdateIcon() //to show ink level change
 					else
 						boutput(user, "\The [src] doesn't need an ink refill yet.")
 						return
@@ -464,11 +463,11 @@
 					src.visible_message("\The [src] runs out of ink and stops printing.")
 
 				is_running = 0
-				update_icon()
+				UpdateIcon()
 				break
 
 			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
-			update_icon()
+			UpdateIcon()
 
 			var/obj/item/paper/book/custom/B = new(get_turf(src))
 
@@ -529,7 +528,7 @@
 			paper_amt -= 2
 
 		is_running = 0
-		update_icon() //just in case?
+		UpdateIcon() //just in case?
 		src.visible_message("\The [src] finishes printing and shuts down.")
 
 /obj/item/press_upgrade //parent just to i dont have to set name and icon a bunch i am PEAK lazy

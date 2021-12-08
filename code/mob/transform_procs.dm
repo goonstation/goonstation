@@ -149,6 +149,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
+	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.job = "AI"
 
 	SPAWN_DBG(0)
@@ -235,6 +236,7 @@
 	O.bioHolder?.mobAppearance?.pronouns = src.bioHolder?.mobAppearance?.pronouns
 	O.name = "Cyborg"
 	O.real_name = "Cyborg"
+	O.UpdateName()
 	if (src.client)
 		O.lastKnownIP = src.client.address
 		src.client.mob = O
@@ -394,6 +396,33 @@
 		return make_blob()
 	return 0
 
+/mob/proc/slasherize()
+	if(src.mind || src.client)
+		var/mob/living/carbon/human/slasher/W = new/mob/living/carbon/human/slasher(src)
+		var/turf/T = get_turf(src)
+		if(!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
+			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
+			if (ASLoc)
+				W.set_loc(ASLoc)
+			else
+				W.set_loc(locate(1, 1, 1))
+		else
+			W.set_loc(T)
+		SHOW_SLASHER_TIPS(src)
+		if(src.mind)
+			src.mind.transfer_to(W)
+			src.mind.special_role = "slasher"
+		else
+			var/key = src.client.key
+			if (src.client)
+				src.client.mob = W
+			W.mind = new /datum/mind()
+			ticker.minds += W.mind
+			W.mind.ckey = ckey
+			W.mind.key = key
+			W.mind.current = W
+		qdel(src)
+
 /mob/proc/machoize(var/shitty = 0)
 	if (src.mind || src.client)
 		if (shitty)
@@ -552,11 +581,13 @@
 	dispose()
 	return O
 
-
-
 /mob/dead/observer/verb/enter_ghostdrone_queue()
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
+
+	if(master_mode == "battle_royale")
+		boutput(usr, "You can't respawn as a ghost drone during Battle Royale!")
+		return
 
 	if (!src.can_respawn_as_ghost_critter())
 		return
@@ -778,8 +809,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new()
-	src.client.preferences.copy_to(newbody,src,1)
+	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
 		src.mind.assigned_role = "Staff Assistant"
@@ -851,8 +881,7 @@ var/respawn_arena_enabled = 0
 		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
 		return
 
-	var/mob/living/carbon/human/newbody = new()
-	src.client.preferences.copy_to(newbody,src,1)
+	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 
 

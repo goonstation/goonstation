@@ -34,7 +34,7 @@
 	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["make"])
-		var/p_type = text2num(href_list["make"])
+		var/p_type = text2num_safe(href_list["make"])
 		var/obj/item/pipe/P = new /obj/item/pipe(src.loc)
 		P.pipe_type = p_type
 		P.update()
@@ -81,7 +81,7 @@
 	src.add_dialog(usr)
 	src.add_fingerprint(usr)
 	if(href_list["dmake"])
-		var/p_type = text2num(href_list["dmake"])
+		var/p_type = text2num_safe(href_list["dmake"])
 		var/obj/disposalconstruct/C = new (src.loc)
 		switch(p_type)
 			if(0)
@@ -242,7 +242,7 @@
 			src.Attackhand(usr)
 			return
 		else if(href_list["dmake"])
-			var/p_type = text2num(href_list["dmake"])
+			var/p_type = text2num_safe(href_list["dmake"])
 			var/obj/disposalconstruct/C = new (src.loc)
 			switch(p_type)
 				if(0)

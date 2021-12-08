@@ -18,7 +18,7 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
-	var/round_limit = 21000 // 35 minutes (see post_setup)
+	var/round_limit = 45 MINUTES //see post_setup
 	var/endthisshit = 0
 	do_antag_random_spawns = 0
 	escape_possible = 0
@@ -33,7 +33,7 @@
 	boutput(world, "<B>Some crewmembers are attempting to start a revolution!<BR><br>Revolutionaries - Kill the heads of staff. Convert other crewmembers (excluding synthetics and security) to your cause by flashing them. Protect your leaders.<BR><br>Personnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by using an electropack, electric chair or beating them in the head).</B>")
 
 /datum/game_mode/revolution/pre_setup()
-	var/list/revs_possible = get_possible_revolutionaries()
+	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REV, 1)
 
 	if (!revs_possible.len)
 		return 0
@@ -263,33 +263,6 @@
 			M.current.antagonist_overlay_refresh(1, 0)
 
 	return
-
-/datum/game_mode/revolution/proc/get_possible_revolutionaries()
-	var/list/candidates = list()
-
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_revhead)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_revhead set to yes, so we're adding players who don't want to be rev leaders to the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in head_revolutionaries) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/revolution/proc/get_living_heads()
 	var/list/heads = list()

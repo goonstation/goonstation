@@ -132,7 +132,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 		// proximity
 		if (1)
@@ -155,7 +155,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 
 		// timer
@@ -178,7 +178,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 	qdel(src)
 
 
@@ -225,7 +225,7 @@
 		if(ismob(A))
 			walk(src, get_dir(A, src), 1)
 
-	Bump(atom/O)
+	bump(atom/O)
 		walk(src, 0)
 
 	ex_act(severity)

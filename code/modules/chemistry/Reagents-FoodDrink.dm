@@ -158,20 +158,14 @@ datum
 				var/mob/living/carbon/human/H = holder.my_atom
 				if(H.bioHolder.age < 21) // Yes. Its 21. This is Space America. That is canon now.
 					if(seen_by_camera(H))
-					// determine the name of the perp (goes by ID if wearing one)
+						// determine the name of the perp (goes by ID if wearing one)
 						var/perpname = H.name
 						if(H:wear_id && H:wear_id:registered)
 							perpname = H:wear_id:registered
-						// find the matching security record
-						for(var/datum/data/record/R in data_core.general)
-							if(R.fields["name"] == perpname)
-								for (var/datum/data/record/S in data_core.security)
-									if (S.fields["id"] == R.fields["id"])
-										// now add to rap sheet
-										S.fields["criminal"] = "*Arrest*"
-										S.fields["mi_crim"] = "Underage drinking."
-
-									break
+						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+						if(sec_record && sec_record["criminal"] != "*Arrest*")
+							sec_record["criminal"] = "*Arrest*"
+							sec_record["mi_crim"] = "Underage drinking."
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -422,7 +416,7 @@ datum
 				if(!volume_passed) return
 				if(method == INGEST)
 					if(M.client && (istraitor(M) || isspythief(M)))
-						M.reagents.add_reagent("omnizine",10)
+						M.reagents.add_reagent("omnizine",volume_passed * 2)
 						return
 
 			on_mob_life(var/mob/target, var/mult = 1)
@@ -472,7 +466,7 @@ datum
 					"I'm lonely. And I'm lonely in some horribly deep way and for a flash of an instant, I can see just how lonely, and how deep this feeling runs. And it scares the shit out of me to be this lonely because it seems catastrophic.",\
 					"Someday, we'll run into each other again, I know it. Maybe I'll be older and smarter and just plain better. If that happens, that's when I'll deserve you. But now, at this moment, you can't hook your boat to mine, because I'm liable to sink us both.",\
 					"There you go...let it all slide out. Unhappiness can't stick in a person's soul when it's slick with tears.",\
-					"I was in the biggest breakdown of my life when I stopped crying long enough to let the words of my epiphany really sink in. That whore, karma had finally made her way around and had just bitch-slapped me right across the face. The realization only made me cry harder.",\
+					"I was in the biggest breakdown of my life when I stopped crying long enough to let the words of my epiphany really sink in. Karma had finally made her way around and had just slapped me right across the face. The realization only made me cry harder.",\
 					"I waste at least an hour every day lying in bed. Then I waste time pacing. I waste time thinking. I waste time being quiet and not saying anything because I'm afraid I'll stutter."))
 				..()
 				return
@@ -1630,6 +1624,16 @@ datum
 			description = "A hellish cocktail that stinks of rotting garbage."
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/wellerman
+			name = "Wellerman"
+			id = "wellerman"
+			fluid_r = 121
+			fluid_g = 87
+			fluid_b = 33
+			alch_strength = 0.7
+			description = "A great shanty and a nice themed drink as well!"
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/kalimoxto
 			name = "Kalimoxto"
 			id = "kalimoxto"
@@ -2396,11 +2400,12 @@ datum
 			thirst_value = 0.5
 			hunger_value = 1
 			viscosity = 0.5
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.reagents.add_reagent("sugar", 0.8 * mult)
+				if (ispug(M))
+					M.changeStatus("poisoned", 8 SECONDS * mult)
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
@@ -2599,7 +2604,7 @@ datum
 						var/obj/decal/cleanable/saltpile/pile = locate(/obj/decal/cleanable/saltpile) in T
 						if (pile)
 							pile.health = min(pile.health+10, 30)
-							//pile.update_icon()
+							//pile.UpdateIcon()
 
 
 			reaction_obj(var/obj/O, var/volume)

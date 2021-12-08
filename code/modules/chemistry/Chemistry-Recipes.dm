@@ -673,6 +673,16 @@ datum
 			mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
 			drinkrecipe = 1
 
+		cocktail_wellerman
+			name = "Wellerman"
+			id = "wellerman"
+			result = "wellerman"
+			required_reagents = list("sweet_tea" = 2, "rum" = 1)
+			result_amount = 3
+			mix_phrase = "Soon may the Wellerman come. To bring us sugar and tea and rum."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
 		cocktail_hardpunch
 			name = "Hard Punch"
 			id = "hard_punch"
@@ -2661,11 +2671,6 @@ datum
 #ifdef CHEM_REACTION_PRIORITY
 			priority = 9
 #endif
-			on_reaction(var/datum/reagents/holder, var/created_volume)
-				if(holder)
-					holder.del_reagent("potassium")
-					holder.del_reagent("sugar")
-					holder.del_reagent("phosphorus")
 
 		smoke
 			name = "Smoke"
@@ -2683,9 +2688,6 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
 
 				if (holder)
-					holder.del_reagent("potassium")
-					holder.del_reagent("sugar")
-					holder.del_reagent("phosphorus")
 					if(!holder?.my_atom?.is_open_container())
 						if(holder.my_atom)
 							for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))

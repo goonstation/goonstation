@@ -320,10 +320,11 @@
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
-			R.name = newname
+			R.real_name = "[newname]"
+			R.UpdateName()
 			if (R.internal_pda)
-				R.internal_pda.name = "[R]'s Internal PDA Unit"
-				R.internal_pda.owner = "[R]"
+				R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+				R.internal_pda.owner = "[R.name]"
 
 		if (href_list["selfservice"])
 			if (isrobot(usr))
@@ -339,14 +340,14 @@
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 
-			var/ops = text2num(href_list["repair"])
+			var/ops = text2num_safe(href_list["repair"])
 
 			if (ops == 1 && R.compborg_get_total_damage(1) > 0)
 				if (src.reagents.get_reagent_amount("fuel") < 1)
 					boutput(usr, "<span class='alert'>Not enough welding fuel for repairs.</span>")
 					return
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
+				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(1))
 					usage = R.compborg_get_total_damage(1)
@@ -362,7 +363,7 @@
 					boutput(usr, "<span class='alert'>Not enough wiring for repairs.</span>")
 					return
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat)
+				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(2))
 					usage = R.compborg_get_total_damage(2)

@@ -52,11 +52,11 @@
 		return
 	if(src.locked)
 		src.locked = 0
-		update_icon()
+		UpdateIcon()
 	else
 		logTheThing("station",user,null,"[user] has bolted a door at [log_loc(src)].")
 		src.locked = 1
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
 	if(!src.arePowerSystemsOn() || (status & NOPOWER))
@@ -189,6 +189,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/has_panel = 1
 	var/hackMessage = ""
 	var/net_access_code = null
+        /// Set nameOverride to FALSE to stop New() from overwriting door name with Area name
+	var/nameOverride = TRUE
 
 	var/no_access = 0
 
@@ -199,7 +201,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	New()
 		..()
-		if(!isrestrictedz(src.z))
+		if(!isrestrictedz(src.z) && nameOverride)
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
@@ -544,6 +546,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	health_max = 500
 	layer = 3.5
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
+	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
 
 	bumpopen(mob/user as mob)
 		if (src.density)
@@ -554,6 +557,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if (src.density)
 			src.autoclose = 0
 		..(user)
+
+	xmasify()
+		return
 
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
@@ -822,7 +828,7 @@ About the new airlock wires panel:
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
 				boutput(usr, "You hear a click from inside the door.")
-			update_icon()
+			UpdateIcon()
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
@@ -935,7 +941,7 @@ About the new airlock wires panel:
 			if (src.locked!=1)
 				src.locked = 1
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
-			update_icon()
+			UpdateIcon()
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
@@ -1186,7 +1192,7 @@ About the new airlock wires panel:
 		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 	return 1
 
-/obj/machinery/door/airlock/update_icon(var/toggling = 0)
+/obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling ? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"
@@ -1213,13 +1219,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/play_animation(animation)
 	switch (animation)
 		if ("opening")
-			src.update_icon()
+			src.UpdateIcon()
 			if (p_open)
 				flick("o_[icon_base]_opening", src) // there's an issue with the panel overlay not being gone by the time the animation is nearly done but I can't make that stop, despite my best efforts
 			else
 				flick("[icon_base]_opening", src)
 		if ("closing")
-			src.update_icon()
+			src.UpdateIcon()
 			if (p_open)
 				flick("o_[icon_base]_closing", src)
 			else
@@ -1305,8 +1311,12 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
-			return
+		if (issilicon(AM))
+			if (aiControlDisabled || cant_emag)
+				return
+			var/mob/silicon = AM
+			if (!silicon.mind)
+				return
 
 		src.last_bump = world.time
 		if (src.isElectrified())
@@ -1389,7 +1399,7 @@ About the new airlock wires panel:
 			src.heal_damage()
 			boutput(user, "<span class='notice'>Your repair the damage to [src].</span>")
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 	else if (isscrewingtool(C))
 		if (src.hardened == 1)
@@ -1400,7 +1410,7 @@ About the new airlock wires panel:
 			return
 		src.p_open = !(src.p_open)
 		tgui_process.update_uis(src)
-		src.update_icon()
+		src.UpdateIcon()
 	else if (issnippingtool(C) && src.p_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))
@@ -1421,7 +1431,7 @@ About the new airlock wires panel:
 		SPAWN_DBG( 0 )
 			src.operating = 1
 			play_animation("opening")
-			update_icon(1)
+			UpdateIcon(1)
 
 			sleep(src.operation_time)
 
@@ -1433,13 +1443,13 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
-			src.update_icon()
+			src.UpdateIcon()
 
 	else if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
 		SPAWN_DBG( 0 )
 			src.operating = 1
 			play_animation("closing")
-			update_icon(1)
+			UpdateIcon(1)
 
 			src.set_density(1)
 			sleep(1.5 SECONDS)
@@ -1450,7 +1460,7 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
-			src.update_icon()
+			src.UpdateIcon()
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
@@ -1529,12 +1539,11 @@ About the new airlock wires panel:
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 obj/machinery/door/airlock
 	var/id_tag
-	var/frequency = 1411
+	var/frequency = FREQ_AIRLOCK
 	var/last_update_time = 0
 	var/last_radio_login = 0
 	mats = 18
 
-	var/datum/radio_frequency/radio_connection
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption)
@@ -1552,9 +1561,8 @@ obj/machinery/door/airlock
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
-				pingsignal.transmission_method = TRANSMISSION_RADIO
 
-				radio_connection.post_signal(src, pingsignal, radiorange)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, radiorange)
 				return
 
 			else if (!id_tag || id_tag != signal.data["tag"])
@@ -1563,7 +1571,6 @@ obj/machinery/door/airlock
 		if (signal.data["command"] && signal.data["command"] == "help")
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["sender"] = src.net_id
 			reply.data["address_1"] = signal.data["sender"]
 			if (!signal.data["topic"])
@@ -1592,10 +1599,10 @@ obj/machinery/door/airlock
 						reply.data["args"] = "access_code"
 					else
 						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
-			radio_connection.post_signal(src, reply, radiorange)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
 			return
 
-		var/sent_code = text2num(signal.data["access_code"])
+		var/sent_code = text2num_safe(signal.data["access_code"])
 		if (aiControlDisabled > 0 || cant_emag || sent_code != src.net_access_code)
 			if(prob(20))
 				src.play_deny()
@@ -1607,9 +1614,8 @@ obj/machinery/door/airlock
 			rejectsignal.data["command"] = "nack"
 			rejectsignal.data["data"] = "badpass"
 			rejectsignal.data["sender"] = src.net_id
-			rejectsignal.transmission_method = TRANSMISSION_RADIO
 
-			radio_connection.post_signal(src, rejectsignal, radiorange)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rejectsignal, radiorange)
 			return
 
 		if (!signal.data["command"])
@@ -1629,24 +1635,24 @@ obj/machinery/door/airlock
 
 			if("unlock")
 				locked = 0
-				update_icon()
+				UpdateIcon()
 				send_status(,senderid)
 
 			if("lock")
 				locked = 1
-				update_icon()
+				UpdateIcon()
 				send_status()
 
 			if("secure_open")
 				SPAWN_DBG(0)
 					locked = 0
-					update_icon()
+					UpdateIcon()
 
 					sleep(0.5 SECONDS)
 					open(1)
 
 					locked = 1
-					update_icon()
+					UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
@@ -1657,33 +1663,31 @@ obj/machinery/door/airlock
 
 					locked = 1
 					sleep(0.5 SECONDS)
-					update_icon()
+					UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
 	proc/send_status(userid,target)
-		if(radio_connection)
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
-			if (id_tag)
-				signal.data["tag"] = id_tag
-			signal.data["sender"] = net_id
-			signal.data["timestamp"] = "[air_master.current_cycle]"
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		if (id_tag)
+			signal.data["tag"] = id_tag
+		signal.data["sender"] = net_id
+		signal.data["timestamp"] = "[air_master.current_cycle]"
+		signal.data["address_tag"] = "airlock_listener" // prevents other doors from receiving this packet unnecessarily
 
-			if (userid)
-				signal.data["user_id"] = "[userid]"
-			if (target)
-				signal.data["address_1"] = target
-			signal.data["door_status"] = density?("closed"):("open")
-			signal.data["lock_status"] = locked?("locked"):("unlocked")
+		if (userid)
+			signal.data["user_id"] = "[userid]"
+		if (target)
+			signal.data["address_1"] = target
+		signal.data["door_status"] = density?("closed"):("open")
+		signal.data["lock_status"] = locked?("locked"):("unlocked")
 
-			radio_connection.post_signal(src, signal, radiorange)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
 	proc/send_packet(userid,target,message) //For unique conditions like a rejection message instead of overall status
-		if(radio_connection && message)
+		if(message)
 			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
 			signal.source = src
 			if (id_tag)
 				signal.data["tag"] = id_tag
@@ -1694,10 +1698,11 @@ obj/machinery/door/airlock
 				signal.data["user_id"] = "[userid]"
 			if (target)
 				signal.data["address_1"] = target
+			signal.data["address_tag"] = "door" // prevents other doors from receiving this packet unnecessarily
 
 			signal.data["data"] = "[message]"
 
-			radio_connection.post_signal(src, signal, radiorange)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
 	open(surpress_send)
 		. = ..()
@@ -1753,29 +1758,13 @@ obj/machinery/door/airlock
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, "[frequency]")
-		if(new_frequency)
-			frequency = new_frequency
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
 	initialize()
 		..()
-		if(frequency)
-			set_frequency(frequency)
-
-		update_icon()
+		UpdateIcon()
 
 	New()
 		..()
-
-		if(radio_controller)
-			set_frequency(frequency)
-
-	disposing()
-		if (radio_controller)
-			set_frequency(null)
-		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/door/airlock/emp_act()
 	..()
@@ -1915,7 +1904,7 @@ obj/machinery/door/airlock
 			if("disruptMain")
 				if(!secondsMainPowerLost)
 					loseMainPower()
-					update_icon()
+					UpdateIcon()
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Main power is already offline.</span>")
@@ -1923,7 +1912,7 @@ obj/machinery/door/airlock
 			if("disruptBackup")
 				if(!secondsBackupPowerLost)
 					loseBackupPower()
-					update_icon()
+					UpdateIcon()
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Backup power is already offline.</span>")

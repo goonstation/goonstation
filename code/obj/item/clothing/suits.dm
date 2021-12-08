@@ -433,7 +433,7 @@
 	item_state = "sousapron"
 	body_parts_covered = TORSO
 	permeability_coefficient = 0.70
-	
+
 /obj/item/clothing/suit/apron/tricolor
 	name = "pizza apron"
 	desc = "An apron made specifically to protect from tomato sauce."
@@ -447,6 +447,39 @@
 	desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
 	icon_state = "apron-botany"
 	item_state = "apron-botany"
+
+/obj/item/clothing/suit/apron/slasher
+	name = "butcher's apron"
+	desc = "A brown butcher's apron, you can feel an aura of something dark radiating off of it."
+	icon_state = "apron-welder"
+	item_state = "apron-welder"
+	cant_self_remove = TRUE
+	cant_other_remove = TRUE
+	item_function_flags = IMMUNE_TO_ACID
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 7)
+		setProperty("rangedprot", 2)
+		setProperty("coldprot", 75)
+		setProperty("heatprot", 75)
+		setProperty("movespeed", 0.4)
+		setProperty("exploprot", 30)
+
+
+	postpossession
+		cant_self_remove = FALSE
+		cant_other_remove = FALSE
+		name = "worn apron"
+		desc = "A brown, faded butcher's apron, it looks as though it's over a hundred years old."
+
+		setupProperties()
+			..()
+			setProperty("meleeprot", 1)
+			setProperty("rangedprot", 0)
+			setProperty("coldprot", 10)
+			setProperty("heatprot", 10)
+			setProperty("movespeed", 0.4)
 
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
@@ -623,7 +656,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
 	attack_hand(mob/user as mob)
@@ -708,7 +741,7 @@
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.cape)
 			src.icon_state = "bedcape[src.bcolor ? "-[bcolor]" : null]"
 			src.item_state = src.icon_state
@@ -730,7 +763,7 @@
 		src.Bed = null
 		src.eyeholes = 1
 		block_vision = 0
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
 	proc/make_cape()
@@ -741,7 +774,7 @@
 		src.Bed = null
 		src.cape = 1
 		block_vision = 0
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
@@ -752,7 +785,7 @@
 		src.Bed = null
 		src.cape = 0
 		block_vision = !src.eyeholes
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 
 /obj/item/clothing/suit/bedsheet/red
@@ -814,7 +847,7 @@
 	New()
 		..()
 		src.bcolor = pick("", "red", "orange", "yellow", "green", "blue", "pink", "black")
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/item/clothing/suit/bedsheet/cape
 	icon_state = "bedcape"
@@ -914,7 +947,7 @@
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
 	if (istype(W, /obj/item/clothing/suit/armor/vest))
-		if (istype(src, /obj/item/clothing/suit/fire/heavy) || istype(src, /obj/item/clothing/suit/fire/old))
+		if (istype(src, /obj/item/clothing/suit/fire/heavy))
 			return
 		else
 			new /obj/item/clothing/suit/fire/armored(T)
@@ -938,12 +971,6 @@
 		setProperty("rangedprot", 0.8)
 		setProperty("movespeed", 2)
 		setProperty("disorient_resist", 25)
-
-/obj/item/clothing/suit/fire/old
-	name = "old firesuit"
-	desc = "Just looking at this thing makes your eyes take burn damage."
-	icon_state = "fire_old"
-	item_state = "fire_old"
 
 // SWEATERS
 
@@ -1234,6 +1261,11 @@
 				..()
 				setProperty("exploprot", 60)
 
+		bard
+			name = "road-worn stage uniform"
+			icon_state = "syndie_specialist-bard"
+			item_state = "syndie_specialist-bard"
+
 		unremovable
 			cant_self_remove = 1
 			cant_other_remove = 1
@@ -1333,6 +1365,14 @@
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	syndicate
 		name = "\improper Syndicate command armor"

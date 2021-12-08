@@ -8,24 +8,57 @@
 	set name = "whisper"
 	return src.whisper(message)
 
+/mob/verb/start_typing()
+	set name = ".starttyping"
+	set hidden = TRUE
+
+	var/mob/living/M = src
+	if(!istype(M) || !isalive(M))
+		return
+
+	M.speech_bubble.icon_state = "typing"
+	UpdateOverlays(M.speech_bubble, "speech_bubble")
+	var/start_time = TIME
+	M.last_typing = start_time
+
+	SPAWN_DBG(15 SECONDS)
+		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+			src.UpdateOverlays(null, "speech_bubble")
+
 /mob/verb/say_verb(message as text)
 	set name = "say"
-	//&& !src.client.holder
-
 	if (!message)
+		if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+			src.UpdateOverlays(null, "speech_bubble")
 		return
 	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 	src.say(message)
+	if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+		src.UpdateOverlays(null, "speech_bubble")
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
-		//logit("say", 0, src, " said ", message)
 
 /mob/verb/say_radio()
 	set name = "say_radio"
 	set hidden = 1
+
+/mob/verb/say_main_radio(msg as text)
+	set name = "say_main_radio"
+	set hidden = 1
+
+/mob/living/say_main_radio(msg as text)
+	set name = "say_main_radio"
+	set desc = "Speaking on the main radio frequency"
+	set hidden = 1
+	if (src.capitalize_speech())
+		var/i = 1
+		while (copytext(msg, i, i+1) == " ")
+			i++
+		msg = capitalize(copytext(msg, i))
+	src.say_verb(";" + msg)
 
 /mob/living/say_radio()
 	set name = "say_radio"
@@ -72,8 +105,7 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-
-			if(src?.client?.preferences.auto_capitalization)
+			if (src.capitalize_speech())
 				text = capitalize(text)
 
 			src.say_verb(token + " " + text)
@@ -109,7 +141,7 @@
 			token = ":" + R.secure_frequencies[choice_index - 1]
 
 		var/text = input("", "Speaking to [choice] frequency") as null|text
-		if (client.preferences.auto_capitalization)
+		if (src.capitalize_speech())
 			var/i = 1
 			while (copytext(text, i, i+1) == " ")
 				i++
@@ -649,6 +681,23 @@
 		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
 			recipients += M.client
 
+	var looc_style = ""
+	if (src.client.holder && !src.client.stealth)
+		if (src.client.holder.level == LEVEL_BABBY)
+			looc_style = "color: #4cb7db;"
+		else
+			looc_style = "color: #cd6c4c;"
+	else if (src.client.is_mentor() && !src.client.stealth)
+		looc_style = "color: #a24cff;"
+
+	var/image/chat_maptext/looc_text = null
+	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
+	if(looc_text)
+		looc_text.measure(src.client)
+		for(var/image/chat_maptext/I in src.chat_text.lines)
+			if(I != looc_text)
+				I.bump_up(looc_text.measured_height)
+
 	phrase_log.log_phrase("looc", msg)
 	for (var/client/C in recipients)
 		// DEBUGGING
@@ -659,7 +708,6 @@
 			continue
 
 		var looc_class = ""
-		var looc_style = ""
 		var display_name = src.key
 
 		if (src.client.stealth || src.client.alt_key)
@@ -671,13 +719,10 @@
 		if (src.client.holder && (!src.client.stealth || C.holder))
 			if (src.client.holder.level == LEVEL_BABBY)
 				looc_class = "gfartlooc"
-				looc_style = "color: #4cb7db;"
 			else
 				looc_class = "adminlooc"
-				looc_style = "color: #cd6c4c;"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			looc_class = "mentorlooc"
-			looc_style = "color: #a24cff;"
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 
@@ -687,14 +732,7 @@
 		boutput(C, rendered)
 		var/mob/M = C.mob
 		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
-			var/image/chat_maptext/looc_text = null
-			looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
-			if(looc_text)
-				looc_text.measure(C)
-				for(var/image/chat_maptext/I in M.chat_text.lines)
-					if(I != looc_text)
-						I.bump_up(looc_text.measured_height)
-				looc_text.show_to(C)
+			looc_text.show_to(C)
 
 	logTheThing("ooc", src, null, "LOOC: [msg]")
 

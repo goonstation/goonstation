@@ -58,12 +58,12 @@
 			user.drop_item()
 			W.set_loc(src)
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<b>[user]</b> puts a hat on [src]!","You put a hat on [src]!")
 			return
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.hat && !src.hat_shown)
 			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = src.layer + 0.005)
 			hat_image.pixel_x = hat_x_offset
@@ -87,7 +87,7 @@
 		if (hat)
 			hat.set_loc(src.loc)
 			hat = 0
-			update_icon()
+			UpdateIcon()
 		if (!gibbed)
 			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
 		death_effect()
@@ -221,7 +221,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -427,7 +427,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -645,7 +645,7 @@
 				src.layer = target.layer - 0.01
 				src.visible_message("[src] hides under [target]!")
 			src.hat_shown = 0
-			update_icon()
+			UpdateIcon()
 
 /mob/living/critter/changeling/headspider/death_effect()
 	var/datum/abilityHolder/changeling/C = changeling

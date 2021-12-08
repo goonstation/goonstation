@@ -335,7 +335,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		return
 	//Update that icon, having it here means we dont need it in each process_ammo proc
-	update_icon()
+	UpdateIcon()
 	//Play a sound if we have one
 	if(src.current_projectile.shot_sound)
 		playsound(user, src.current_projectile.shot_sound, 50)
@@ -359,7 +359,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	..()
 	return
 
-/obj/item/pixel_gun/proc/update_icon()
+/obj/item/pixel_gun/UpdateIcon()
 	return 0
 
 /obj/item/pixel_gun/proc/process_ammo(var/mob/user)
@@ -385,7 +385,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
 
-	update_icon()
+	UpdateIcon()
 		if(cell)
 			var/ratio = src.cell.charge / src.cell.max_charge
 			ratio = round(ratio, 0.25) * 100
@@ -443,7 +443,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 			if (src.cell&&!src.rechargeable)
 				user.put_in_hand_or_drop(src.cell)
 				src.cell = null
-				update_icon()
+				UpdateIcon()
 				src.add_fingerprint(user)
 		else
 			return ..()

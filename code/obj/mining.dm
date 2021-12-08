@@ -1168,7 +1168,7 @@
 				H = L
 			var/obj/item/held = L.equipped()
 			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
-				L.click(src, list(), null, null)
+				UNLINT(L.click(src, list(), null, null))
 			return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1371,7 +1371,7 @@
 		src.levelupdate()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.update_icon()
+			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
 		if (current_state == GAME_STATE_PLAYING)
 			hotspot_controller.disturb_turf(src)
@@ -1443,6 +1443,7 @@
 
 	noborders
 		update_icon()
+
 			return
 		apply_edge_overlay()
 			return
@@ -1456,7 +1457,7 @@
 		icon_state = "astfloor" + "[sprite_variation]"
 		coloration_overlay = image(src.icon,"color_overlay")
 		coloration_overlay.blend_mode = 4
-		update_icon()
+		UpdateIcon()
 		worldgenCandidates += src
 
 	generate_worldgen()
@@ -1480,6 +1481,7 @@
 			src.ReplaceWithSpace()
 
 	update_icon()
+
 		src.overlays = list()
 		/*
 		if (!coloration_overlay)
@@ -1599,10 +1601,6 @@
 		if (powered_overlay)
 			src.overlays = null
 			signal_event("icon_updated")
-		return
-
-
-	proc/update_icon()
 		return
 
 obj/item/clothing/gloves/concussive
@@ -2163,7 +2161,7 @@ obj/item/clothing/gloves/concussive
 				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
-					PCEL.updateicon()
+					PCEL.UpdateIcon()
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2409,7 +2407,7 @@ var/global/list/cargopads = list()
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
 			for (var/obj/item/I in satchel.contents)
 				I.set_loc(target)
-			satchel.satchel_updateicon()
+			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
 			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel

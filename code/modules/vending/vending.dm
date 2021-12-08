@@ -278,10 +278,10 @@
 	if (!card || !user || !src.acceptcard)
 		return
 	boutput(user, "<span class='notice'>You swipe [card].</span>")
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
-		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+		var/enterpin = usr.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
@@ -324,10 +324,10 @@
 				html_parts += "<B>You have selected the following item for purchase:</b><br>"
 				html_parts += "&emsp;[src.paying_for.product_name]<br>"
 				html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
-			html_parts += "<B>Credits on Account: [account.fields["current_money"]] Credits</B> <BR>"
+			html_parts += "<B>Credits on Account: [account["current_money"]] Credits</B> <BR>"
 		else
 			html_parts += "<B>Current ID:</B> None<BR>"
 
@@ -573,7 +573,7 @@
 				trigger_anti_cheat(usr, "tried to href exploit [src] to spawn an invalid item.")
 				return
 
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			if (src.pay)
 				if (src.acceptcard && src.scan)
 					account = FindBankAccountByName(src.scan.registered)
@@ -584,7 +584,7 @@
 						src.paying_for = R
 						src.generate_HTML(1)
 						return
-					if (account.fields["current_money"] < R.product_cost)
+					if (account["current_money"] < R.product_cost)
 						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
 						flick(src.icon_deny,src)
 						src.vend_ready = 1
@@ -614,7 +614,7 @@
 
 			if (src.pay)
 				if (src.acceptcard && account)
-					account.fields["current_money"] -= R.product_cost
+					account["current_money"] -= R.product_cost
 				else
 					src.credit -= R.product_cost
 				if (!isplayer)
@@ -622,7 +622,7 @@
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
-					T.owneraccount.fields["current_money"] += round(R.product_cost * profit)
+					T.owneraccount["current_money"] += round(R.product_cost * profit)
 					wagesystem.shipping_budget += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
@@ -690,7 +690,7 @@
 					src.generate_HTML(1)
 
 		if ((href_list["cutwire"]) && (src.panel_open))
-			var/twire = text2num(href_list["cutwire"])
+			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -700,7 +700,7 @@
 				src.cut(twire)
 
 		if ((href_list["pulsewire"]) && (src.panel_open || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
+			var/twire = text2num_safe(href_list["pulsewire"])
 			if (! (usr.find_tool_in_hand(TOOL_PULSING) || isAI(usr)) )
 				boutput(usr, "You need a multitool or similar!")
 				return
@@ -1076,7 +1076,7 @@
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/regular, 10, cost=PAY_UNTRAINED/20)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/chocolate, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, 10, cost=PAY_TRADESMAN/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/fries, 10, cost=PAY_TRADESMAN/15)
@@ -1425,6 +1425,17 @@
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/triplaser, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wificomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/wifisplit, 30)
+/obj/machinery/vending/mechanics/attackby(obj/item/W as obj, mob/user as mob)
+	if(!istype(W,/obj/item/mechanics))
+		..()
+		return
+	for(var/datum/data/vending_product/product in product_list)
+		if(W.type == product.product_path)
+			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
+			product.product_amount += 1
+			qdel(W)
+			generate_HTML(1)
+			return
 
 /obj/machinery/vending/computer3
 	name = "CompTech"
@@ -1760,7 +1771,7 @@
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
-			C.updateicon()
+			C.UpdateIcon()
 			wiresinstalled = FALSE
 		else if (state == "DECONSTRUCTED")
 			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
@@ -1835,7 +1846,7 @@
 	//card display name
 	var/cardname
 	//Bank account
-	var/datum/data/record/owneraccount = null
+	var/datum/db_record/owneraccount = null
 	var/image/crtoverlay = null
 	var/image/promoimage = null
 	player_list = list()
@@ -2035,7 +2046,9 @@
 		else if (href_list["setprice"] && src.panel_open && src.unlocked)
 			var/inp
 			inp = input(usr,"Enter the new price:","Item Price", "") as num
-			if (inp && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
+			if(!isnum_safe(inp))
+				return
+			if (!isnull(inp) && inp >= 0 && !(isdead(usr) || !can_act(usr) || !in_interact_range(src, usr)))
 				var/datum/data/vending_product/player_product/R = locate(href_list["setprice"]) in src.player_list
 				R.product_cost = inp
 				src.generate_HTML(1, 0)
@@ -2730,10 +2743,10 @@
 		html += "<TT><b>Welcome!</b><br>"
 		html += "<b>Current balance: <a href='byond://?src=\ref[src];return_credits=1'>[src.credit] credits</a></b><br>"
 		if (src.scan)
-			var/datum/data/record/account = null
+			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
 			html += "<b>Current ID:</b> <a href='?src=\ref[src];logout=1'>[src.scan]</a><br />"
-			html += "<b>Credits on Account: [account.fields["current_money"]] Credits</b> <br>"
+			html += "<b>Credits on Account: [account["current_money"]] Credits</b> <br>"
 		else
 			html += "<b>Current ID:</b> None<br>"
 		if(src.holding)
@@ -2760,7 +2773,7 @@
 
 		if(href_list["changepressure"])
 			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
-			if(isnum(change))
+			if(isnum_safe(change))
 				target_pressure = min(max(10.1325, change),1013.25)
 				src.updateUsrDialog()
 
@@ -2774,9 +2787,9 @@
 					src.updateUsrDialog()
 					return
 				else if(scan)
-					var/datum/data/record/account = FindBankAccountByName(src.scan.registered)
-					if (account && account.fields["current_money"] >= cost)
-						account.fields["current_money"] -= cost
+					var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+					if (account && account["current_money"] >= cost)
+						account["current_money"] -= cost
 						src.fill()
 						boutput(usr, "<span class='notice'>You fill up the [src.holding].</span>")
 						src.updateUsrDialog()

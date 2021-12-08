@@ -25,6 +25,7 @@ datum/preferences
 
 	var/be_traitor = 0
 	var/be_syndicate = 0
+	var/be_syndicate_commander = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
 	var/be_revhead = 0
@@ -162,7 +163,7 @@ datum/preferences
 			"nameLast" = src.name_last,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
-			"pronouns" = AH.pronouns.name,
+			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
 			"age" = src.age,
 			"bloodRandom" = src.random_blood,
 			"bloodType" = src.blType,
@@ -176,6 +177,7 @@ datum/preferences
 			"pdaColor" = src.PDAcolor,
 			"pdaRingtone" = src.pda_ringtone_index,
 			"skinTone" = src.AH.s_tone,
+			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
 			"customColor1" = src.AH.customization_first_color,
 			"customStyle1" = src.AH.customization_first.name,
@@ -434,14 +436,12 @@ datum/preferences
 				return TRUE
 
 			if ("update-pronouns")
-				var/list/types = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
-				var/selected
-				for (var/i = 1, i <= length(types), i++)
-					var/datum/pronouns/pronouns = get_singleton(types[i])
-					if (AH.pronouns == pronouns)
-						selected = i
-						break
-				AH.pronouns = get_singleton(types[selected < length(types) ? selected + 1 : 1])
+				if(isnull(AH.pronouns))
+					AH.pronouns = get_singleton(/datum/pronouns/theyThem)
+				else
+					AH.pronouns = AH.pronouns.next_pronouns()
+					if(AH.pronouns == get_singleton(/datum/pronouns/theyThem))
+						AH.pronouns = null
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -584,6 +584,20 @@ datum/preferences
 				update_preview_icon()
 				src.profile_modified = TRUE
 				return TRUE
+			if ("update-specialStyle")
+				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+				if (!typeinfo)
+					alert(usr, "No usable special styles detected.", "Error", "Okay")
+					return
+				var/list/style_list = typeinfo.special_styles
+				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
+				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				if (new_style)
+					AH.special_style = new_style
+					update_preview_icon()
+					src.profile_modified = TRUE
+					return TRUE
 			if ("update-eyeColor")
 				var/new_color = input(usr, "Please select an eye color.", "Character Generation", AH.e_color) as null|color
 				if (new_color)
@@ -874,6 +888,7 @@ datum/preferences
 				use_click_buffer = 0
 				be_traitor = 0
 				be_syndicate = 0
+				be_syndicate_commander = 0
 				be_spy = 0
 				be_gangleader = 0
 				be_revhead = 0
@@ -908,7 +923,7 @@ datum/preferences
 	proc/preview_sound(var/sound/S)
 		// tgui kinda adds the ability to spam stuff very fast. This just limits people to spam sound previews.
 		if (!ON_COOLDOWN(usr, "preferences_preview_sound", 0.5 SECONDS))
-			usr << S
+			usr.playsound_local(usr, S, 100)
 
 	proc/randomize_name(var/first = 1, var/middle = 1, var/last = 1)
 		//real_name = random_name(src.gender)
@@ -970,6 +985,17 @@ datum/preferences
 
 		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name=src.real_name)
 
+		// bald trait preview stuff
+		if (!src.preview)
+			return
+		var/mob/living/carbon/human/H = src.preview.preview_mob
+		var/ourWig = H.head
+		if (ourWig)
+			H.u_equip(ourWig)
+			qdel(ourWig)
+
+		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
+			H.equip_if_possible(H.create_wig(), H.slot_head)
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)
@@ -1034,7 +1060,7 @@ datum/preferences
 		for (var/datum/job/J in job_controls.staple_jobs)
 			if (istype(J, /datum/job/daily))
 				continue
-			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(ckey(user.mind.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
+			if (jobban_isbanned(user,J.name) || (J.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J.requires_whitelist && !NT.Find(user.ckey || ckey(user.mind?.key))) || istype(J, /datum/job/command) || istype(J, /datum/job/civilian/AI) || istype(J, /datum/job/civilian/cyborg) || istype(J, /datum/job/security/security_officer))
 				src.jobs_unwanted += J.name
 				continue
 			if (J.rounds_needed_to_play && (user.client && user.client.player))
@@ -1287,6 +1313,7 @@ datum/preferences
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = 0
 			src.be_syndicate = 0
+			src.be_syndicate_commander = 0
 			src.be_spy = 0
 			src.be_gangleader = 0
 			src.be_revhead = 0
@@ -1304,6 +1331,7 @@ datum/preferences
 			HTML += {"
 			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_gangleader=1" class="[src.be_gangleader ? "yup" : "nope"]">[crap_checkbox(src.be_gangleader)] Gang Leader</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_revhead=1" class="[src.be_revhead ? "yup" : "nope"]">[crap_checkbox(src.be_revhead)] Revolution Leader</a>
@@ -1517,6 +1545,12 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
+		if (link_tags["b_syndicate_commander"])
+			src.be_syndicate_commander = !( src.be_syndicate_commander )
+			src.be_syndicate |= src.be_syndicate_commander
+			src.SetChoices(user)
+			return
+
 		if (link_tags["b_spy"])
 			src.be_spy = !( src.be_spy)
 			src.SetChoices(user)
@@ -1583,21 +1617,27 @@ datum/preferences
 
 		src.ShowChoices(user)
 
-	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0)//LOOK SORRY, I MADE THIS /mob/living iF THIS BREAKS SOMETHING YOU SHOULD PROBABLY NOT BE CALLING THIS ON A NON LIVING MOB
+	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0, skip_post_new_stuff=FALSE)
 		sanitize_null_values()
 		if (!ignore_randomizer)
-			var/namebanned = jobban_isbanned(user, "Custom Names")
-			if (be_random_name || namebanned)
+			if (be_random_name)
 				randomize_name()
 
-			if (be_random_look || namebanned)
+			if (be_random_look)
 				randomizeLook()
 
 			if (character.bioHolder)
-				if (random_blood || namebanned)
+				if (random_blood)
 					character.bioHolder.bloodType = random_blood_type()
 				else
 					character.bioHolder.bloodType = blType
+
+			SPAWN_DBG(0) // avoid blocking
+				if(jobban_isbanned(user, "Custom Names"))
+					randomize_name()
+					randomizeLook()
+					character.bioHolder?.bloodType = random_blood_type()
+					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
 		src.real_name = src.name_first + " " + src.name_last
@@ -1616,12 +1656,9 @@ datum/preferences
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
-			if (H?.organHolder?.head?.donor_appearance) // aaaa
-				H.organHolder.head.donor_appearance.CopyOther(AH)
 
-		if (traitPreferences.isValid() && character.traitHolder)
-			for (var/T in traitPreferences.traits_selected)
-				character.traitHolder.addTrait(T)
+		if (!skip_post_new_stuff)
+			apply_post_new_stuff(character)
 
 		character.update_face()
 		character.update_body()
@@ -1634,6 +1671,15 @@ datum/preferences
 			var/mob/living/carbon/human/H = character
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+	proc/apply_post_new_stuff(mob/living/character)
+		if(ishuman(character))
+			var/mob/living/carbon/human/H = character
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
+		if (traitPreferences.isValid() && character.traitHolder)
+			for (var/T in traitPreferences.traits_selected)
+				character.traitHolder.addTrait(T)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))

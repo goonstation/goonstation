@@ -231,7 +231,7 @@ toxic - poisons
 						cangle += angle_step
 				P.die()
 
-		proc/update_icon()
+		proc/UpdateIcon()
 			if (power >= 75)
 				icon_state = "phaser_ultra"
 			else if (power >= 50)
@@ -275,7 +275,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/snipershot.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
-	cost = 50
+	cost = 25
 	power = 35
 	color_red = 0.4
 	color_green = 0.5

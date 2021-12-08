@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 
 export interface CharacterPreferencesData {
@@ -29,6 +36,7 @@ export interface CharacterPreferencesData {
   pdaColor: string;
   pdaRingtone: string;
   skinTone: string;
+  specialStyle: string;
   eyeColor: string;
   customColor1: string;
   customStyle1: string;

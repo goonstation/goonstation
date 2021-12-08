@@ -57,7 +57,7 @@
 /obj/machinery/dispenser/New()
 	..()
 	UnsubscribeProcess()
-	update_icon()
+	UpdateIcon()
 
 /obj/machinery/dispenser/process()
 	return
@@ -66,7 +66,7 @@
 	return src.Attackhand(user)
 
 
-/obj/machinery/dispenser/proc/update_icon()
+/obj/machinery/dispenser/update_icon()
 	if (o2tanks > 0 && pltanks > 0)
 		icon_state = "dispenser-both"
 	else
@@ -109,4 +109,4 @@
 				usr.put_in_hand_or_eject(newtank)
 				src.o2tanks--
 			. = TRUE
-	update_icon()
+	UpdateIcon()

@@ -84,7 +84,7 @@
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 */
 	/////////////////////////////////////////////////////////////////OBJECTS
 
@@ -185,7 +185,7 @@
 	var/icon_style = "wall"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 	pathable = 0
 
 	New()

@@ -557,7 +557,7 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
+			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
 		return
@@ -910,7 +910,7 @@
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
 			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
+			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
 		return
@@ -1288,6 +1288,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/reagent_containers/glass/bottle,\
 	/obj/item/scalpel,\
 	/obj/item/circular_saw,\
+	/obj/machinery/emitter,\
+	/obj/machinery/field_generator,\
 	/obj/item/staple_gun,\
 	/obj/item/scissors,\
 	/obj/item/razor_blade,\

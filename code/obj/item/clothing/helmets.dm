@@ -351,8 +351,8 @@
 		knight
 			name = "heavy specialist great helm"
 			desc = "A menacing full-face helmet for syndicate super-heavies."
-			icon_state = "syndie_specialist-knight" //todo
-			item_state = "syndie_specialist-knight" //todo
+			icon_state = "syndie_specialist-knight"
+			item_state = "syndie_specialist-knight"
 
 			setupProperties()
 				..()
@@ -362,6 +362,12 @@
 				setProperty("disorient_resist_eye", 50)
 				setProperty("disorient_resist_ear", 50)
 				setProperty("space_movespeed", 0.3)
+
+		bard
+			name = "anarchist performance helmet"
+			desc = "The tall decorative mohawk inspires both fear and envy."
+			icon_state = "syndie_specialist-bard"
+			item_state = "syndie_specialist-bard"
 
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
@@ -606,7 +612,6 @@
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
 
-
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
 /obj/item/clothing/head/helmet/EOD
@@ -824,7 +829,7 @@
 	icon_state = "gr_helmet"
 	setupProperties()
 		..()
-		setProperty("meleeprot_head", 7)
+		setProperty("meleeprot_head", 2)
 
 /*/obj/item/clothing/head/helmet/escape
 	name = "escape helmet"

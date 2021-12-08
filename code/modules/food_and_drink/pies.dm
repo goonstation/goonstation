@@ -32,14 +32,16 @@
 
 /obj/item/reagent_containers/food/snacks/pie/apple
 	name = "apple pie"
-	desc = "It smells delicious."
-	icon_state = "pie"
+	desc = "Is there anything more Space-American?"
+	icon_state = "applepie"
 	amount = 3
 	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_apple"=15)
 
 /obj/item/reagent_containers/food/snacks/pie/lime
 	name = "key lime pie"
-	desc = "Shouldn't the topping be white? Space is weird."
+	desc = "Tart, sweet, and with a dollop of cream on top."
 	icon_state = "limepie"
 	amount = 3
 	heal_amt = 4
@@ -74,7 +76,7 @@
 
 /obj/item/reagent_containers/food/snacks/pie/strawberry
 	name = "strawberry pie"
-	desc = "It smells delicious."
+	desc = "It smells like summertime memories."
 	icon_state = "strawberrypie"
 	amount = 3
 	heal_amt = 4
@@ -206,3 +208,39 @@
 	amount = 3
 	initial_volume = 30
 	food_effects = list("food_sweaty","food_rad_wick","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/raspberry
+	name = "raspberry pie"
+	desc = "Those are fresh raspberries, too. Oh man."
+	icon_state = "raspberrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_raspberry"=15)
+
+/obj/item/reagent_containers/food/snacks/pie/blackberry
+	name = "blackberry pie"
+	desc = "The stains will be oh so worth it."
+	icon_state = "blackberrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_blackberry"=15)
+
+/obj/item/reagent_containers/food/snacks/pie/blueberry
+	name = "blueberry pie"
+	desc = "Blueberries cook up purple, who knew?"
+	icon_state = "blueberrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_blueberry"=15)
+
+/obj/item/reagent_containers/food/snacks/pie/cherry
+	name = "cherry pie"
+	desc = "It looks so good, it brings a tear to you eye."
+	icon_state = "cherrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_cherry"=15)

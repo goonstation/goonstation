@@ -65,22 +65,16 @@
 			SPAWN_DBG(0)
 				animate(src, alpha=0, time=7 SECONDS)
 				sleep(0.1 SECONDS)
-				if(!src || src.disposed)
+				if(src.disposed)
 					return
 				animate_ripple(src, 4)
 				animate_wave(src, 3)
 				sleep(7 SECONDS)
-				if(!src || src.disposed)
+				if(src.disposed)
 					return
 				qdel(src)
 		var/ckey_of_dead_player = src.ckey
 		var/mob/ghost_mob = src.ghostize()
-		if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
-			ghost_mob = null
-			if(ckey_of_dead_player)
-				for (var/mob/M in mobs)
-					if(M.ckey == ckey_of_dead_player)
-						ghost_mob = M
 		var/our_icon_state = src.icon_state
 		// resurrection attempt
 		if(!ghost_mob)
@@ -89,14 +83,8 @@
 			if (tgui_alert(ghost_mob, "You have fallen, but the curse is not lifted this easily. Do you wish to return to the physical realm?", "Resurrection",
 				list("Yes", "No"), timeout = 60 SECOND) == "Yes")
 				// get a random not locked station container
-				var/list/eligible_containers = list()
-				for_by_tcl(iterated_container, /obj/storage)
-					if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
-						eligible_containers += iterated_container
-				if (!length(eligible_containers))
-					return
-				var/obj/storage/spawn_target = pick(eligible_containers)
-				if(spawn_target == null)
+				var/obj/storage/spawn_target = get_a_random_station_unlocked_container_with_no_others_on_the_turf()
+				if(isnull(spawn_target))
 					boutput(ghost_mob, "<h3><span class='alert'>Couldn't find a suitable location to respawn. Resurrection impossible.</span></h3>")
 					return
 				if(spawn_target.open) // close the container if it's opened
@@ -110,9 +98,10 @@
 				sleep(time_to_respawn)
 				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
 					ghost_mob = null
-					for (var/mob/M in mobs)
-						if(M.ckey == ckey_of_dead_player)
-							ghost_mob = M
+					ghost_mob = ckey_to_mob(ckey_of_dead_player, 1)
+				if(!(isobserver(ghost_mob) || inafterlife(ghost_mob))) // the plushie player is no longer a ghost/in afterlife, probably revived, abort
+					return
+
 				if(!new_vessel || new_vessel.disposed)
 					if(ghost_mob)
 						boutput(ghost_mob, "<h3><span class='alert'>The vessel has been destroyed. Your return to the physical realm has been prevented.</span></h3>")
@@ -142,16 +131,16 @@
 
 	Login()
 		..()
-		boutput(src, "<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>")
-		boutput(src, "<span class='notice'>You can't move when being watched.</span>")
-		boutput(src, "<span class='notice'>Use your Plushie Talk ability to communicate.</span>")
-		boutput(src, "<span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>")
-		boutput(src, "<span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>")
-		boutput(src, "<span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>")
-		boutput(src, "<span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>")
-		boutput(src, "<span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>")
-		boutput(src, "<span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>")
-		boutput(src, "<span class='notice'>Access special emotes through *scream, *dance and *snap.</span>")
+		boutput(src, {"<h1><span class='alert'>You are NOT an antagonist unless stated otherwise through an obvious popup/message.</span></h1>
+			<span class='notice'>You can't move when being watched.</span>
+			<br><span class='notice'>Use your Plushie Talk ability to communicate.</span>
+			<br><span class='notice'>Your override sensors ability lets you temporarily move a few steps even if being watched.</span>
+			<br><span class='notice'>Your blink ability lets you teleport when you're not being watched.</span>
+			<br><span class='notice'>Your teleport away ability lets you teleport away and hide in a random station container.</span>
+			<br><span class='notice'>Your vengeful retreat will stun your recent attacker and teleport you away.</span>
+			<br><span class='notice'>Your toggle glowing eyes ability lets you toggle your eyes glowing at will.</span>
+			<br><span class='notice'>Your set glowing eyes color ability lets you set your eyes' glowing color.</span>
+			<br><span class='notice'>Access special emotes through *scream, *dance and *snap.</span>"})
 
 	proc/plushie_speech(var/text_to_say)
 		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
@@ -236,6 +225,8 @@
 				continue
 			if (!isalive(M))
 				continue
+			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
+				continue
 			if (M.client) // Only players
 				last_witness = M
 				being_seen = TRUE
@@ -274,7 +265,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	icon_state = "corruption"
 	cooldown = 50
 	qdel_itself_if_not_attached_to_plushie = 1
-	var/words_min = 5
+	var/words_min = 7
 	var/words_max = 10
 
 	cast(atom/target)
@@ -283,7 +274,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		var/selected
 		do
-			var/list/words = list("*REFRESH*") + src.generate_words()
+			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max)
 			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
 		while(selected == "*REFRESH*")
 		if(!selected)
@@ -295,19 +286,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		our_plushie.plushie_speech(selected)
 		return 0
 
-	proc/generate_words()
-		var/list/words = list()
-		for(var/i in 1 to rand(words_min, words_max))
-			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
-			words |= picked
-		return words
-
 /datum/targetable/critter/cryptid_plushie/movement_override
 	name = "Override Sensors"
 	desc = "Be able to move a few steps in spite of whether you're being looked at."
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "adrenaline"
-	cooldown = 450
+	cooldown = 400
 	targeted = 0
 	qdel_itself_if_not_attached_to_plushie = 1
 	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
@@ -331,11 +315,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		*/
 
 		var/roll = rand(1, 100)
-		if(roll <= 60)
+		if(roll <= 55)
 			minor_event()
-		else if(roll <= 91)
+		else if(roll <= 89)
 			moderate_event()
-		else if(roll >= 92)
+		else if(roll >= 90)
 			major_event()
 
 		SPAWN_DBG(4 SECONDS)
@@ -345,12 +329,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 	proc/minor_event()
 		playsound(get_turf(holder.owner), "[pick(minor_event_sounds)]", 45, 1)
-		our_plushie.override_steps = rand(7, 10)
+		our_plushie.override_steps = rand(6, 10)
 		glitch_out(0.8 SECONDS, 1, 0.7)
 
 	proc/moderate_event()
 		playsound(get_turf(holder.owner), "[pick(moderate_event_sounds)]", 45, 1)
-		our_plushie.override_steps = rand(9, 15)
+		our_plushie.override_steps = rand(8, 13)
 		glitch_out(1.4 SECONDS, 1, 0.9)
 
 	proc/major_event()
@@ -373,6 +357,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		var/scratch_chance = 40
 		var/gibberish_words_chance = 30
 		for(var/i = 0 to iterations)
+			if(!our_plushie || our_plushie.disposed || src.disposed)
+				return
 			if(prob(scratch_chance))
 				playsound(get_turf(holder.owner), "sound/misc/automaton_scratch.ogg", 20, 1)
 				scratch_chance -= 10
@@ -412,42 +398,55 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 /datum/targetable/critter/cryptid_plushie/teleportation
+	var/animation_ripples = 4
+	var/animation_waves = 3
 
 	proc/get_a_random_station_unlocked_container()
-		var/list/eligible_containers = list()
-		for_by_tcl(iterated_container, /obj/storage)
-			if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !istype(get_area(iterated_container), /area/listeningpost))
-				eligible_containers += iterated_container
-		if (!length(eligible_containers))
-			return null
-		return pick(eligible_containers)
+		return get_a_random_station_unlocked_container_with_no_others_on_the_turf()
 
 	proc/teleport_to_a_target(var/teleportation_target = null, var/target_a_random_container = FALSE)
 		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
 		animate(holder.owner, alpha=0, time=1.5 SECONDS)
 		sleep(0.1 SECONDS)
-		animate_ripple(holder.owner, 4)
-		animate_wave(holder.owner, 3)
+		if(!holder.owner || holder.owner.disposed || src.disposed)
+			return
+		animate_ripple(holder.owner, animation_ripples)
+		animate_wave(holder.owner, animation_waves)
 		sleep(1.4 SECONDS)
-		if(!holder || !holder.owner)
+		if(!holder || !holder.owner || src.disposed)
 			return
 
 		if(target_a_random_container)
 			teleportation_target = get_a_random_station_unlocked_container()
 		if(istype(teleportation_target, /obj/storage))
+			var/is_valid_storage_target = TRUE
 			var/obj/storage/container = teleportation_target
-			if(container.open)
-				container.close()
+			var/turf/container_turf = get_turf(container)
+			for(var/obj/storage/storage_object in container_turf)
+				if(storage_object == container)
+					continue
+				is_valid_storage_target = FALSE // found another storage object on the same turf as our container, teleport onto the turf instead
+				teleportation_target = get_turf(teleportation_target)
+			if(is_valid_storage_target)
+				if(container.open)
+					container.close()
 		else
 			teleportation_target = get_turf(teleportation_target)
-		holder.owner.set_loc(teleportation_target)
+		if(teleportation_target)
+			holder.owner.set_loc(teleportation_target)
+		else
+			boutput(holder.owner, "<span class='alert'>Couldn't find a container to teleport to!</span>")
 
 		playsound(get_turf(teleportation_target), "sound/effects/ghostlaugh.ogg", 75, 1)
 		animate(holder.owner, alpha=255, time=1.5 SECONDS)
 		sleep(1.5 SECONDS)
-		if(!holder || !holder.owner)
+		if(!holder || !holder.owner || src.disposed)
 			return
 		animate(holder.owner)
+		for(var/i=1, i<=animation_ripples, ++i)
+			holder.owner.remove_filter("ripple-[i]")
+		for(var/i=1, i<=animation_waves, ++i)
+			holder.owner.remove_filter("wave-[i]")
 
 /datum/targetable/critter/cryptid_plushie/teleportation/blink
 	name = "Teleport"
@@ -466,8 +465,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		if (!isturf(target))
 			if(istype(target, /obj/storage))
 				var/obj/storage/targetted_container = target
-				if(targetted_container.locked)
-					target = get_turf(target) // the container we picked is locked, we don't want to trap ourselves inside
+				if(targetted_container.locked || targetted_container.welded)
+					target = get_turf(target) // the container we picked is locked or welded, we don't want to trap ourselves inside
 			else
 				target = get_turf(target)
 		if (target == get_turf(holder.owner))
@@ -577,3 +576,24 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 
 		return 0
 
+proc/get_a_random_station_unlocked_container_with_no_others_on_the_turf()
+	var/list/eligible_containers = list()
+	for_by_tcl(iterated_container, /obj/storage)
+		if (iterated_container.z == Z_LEVEL_STATION && !iterated_container.locked && !iterated_container.welded && !istype(get_area(iterated_container), /area/listeningpost))
+			eligible_containers += iterated_container
+	if (!length(eligible_containers))
+		return null
+	var/potential_container = null
+	while(isnull(potential_container))
+		potential_container = pick(eligible_containers)
+		eligible_containers.Remove(potential_container)
+		var/turf/turf_of_potential_container = get_turf(potential_container)
+		for(var/obj/storage/storage_object in turf_of_potential_container)
+			if(storage_object == potential_container)
+				continue
+			potential_container = null // found another storage object on the same turf as our picked potential container, look for another
+			break
+		if(!length(eligible_containers)) // ran out of containers to look at
+			break
+
+	return potential_container
