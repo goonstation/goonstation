@@ -2779,16 +2779,12 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Spawn in a special escape shuttle"
 	admin_only
 	if(src.holder.level >= LEVEL_ADMIN)
-		var/datum/prefab_shuttle/shuttle = tgui_input_list(src, "Select a shuttle", "Special Shuttle", prefab_shuttles)
-		if (!shuttle) return
-		var/loaded = file2text(shuttle.prefab_path)
-		var/turf/T = landmarks[shuttle.landmark][1]
-		if(T && loaded)
-			var/dmm_suite/D = new/dmm_suite()
-			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
-			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
-			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
-			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
+		var/list/shuttles = get_prefab_shuttles()
+		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		if(shuttle.load())
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 

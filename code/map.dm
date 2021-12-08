@@ -146,25 +146,37 @@ var/global/list/mapNames = list(
 		SPAWN_DBG(5 SECONDS)
 			src.load_shuttle()
 
-	proc/load_shuttle()
-		var/turf/start = pick_landmark(LANDMARK_SHUTTLE_CENTCOM)
-		if(start)
-			var/dmm_suite/dmm_suite = new
-			var/datum/loadedProperties/shuttleProp = dmm_suite.read_map(file2text(src.get_shuttle_path()), start.x, start.y, start.z, overwrite=DMM_OVERWRITE_OBJS)
+	proc/load_shuttle(path=null, transit_path=null, load_loc_override=null, cleanup_grass_and_stuff=FALSE)
+		if(isnull(path))
+			path = src.get_shuttle_path()
+		if(isnull(transit_path))
+			transit_path = src.get_shuttle_transit_path()
 
-			// fixes for stuff that doesn't load properly, might be removable once we improve DMM loader using Init()
-			for(var/turf/T in block(start, locate(shuttleProp.maxX, shuttleProp.maxY, shuttleProp.maxZ)))
-				T.UpdateIcon()
-				for(var/obj/machinery/light/L in T)
-					L.seton(TRUE)
-				for(var/obj/window/W in T)
-					W.UpdateIcon()
+		var/turf/start = load_loc_override || pick_landmark(LANDMARK_SHUTTLE_CENTCOM)
+		if(!start)
+			return FALSE
+		var/dmm_suite/dmm_suite = new
+		var/datum/loadedProperties/shuttleProp = dmm_suite.read_map(file2text(path), start.x, start.y, start.z, overwrite=DMM_OVERWRITE_OBJS)
 
-			var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
-			dmm_suite.read_map(file2text(src.get_shuttle_transit_path()), transit_start.x, transit_start.y, transit_start.z)
+		// fixes for stuff that doesn't load properly, might be removable once we improve DMM loader using Init()
+		for(var/turf/T in block(start, locate(shuttleProp.maxX, shuttleProp.maxY, shuttleProp.maxZ)))
+			T.UpdateIcon()
+			for(var/obj/machinery/light/L in T)
+				L.seton(TRUE)
+			for(var/obj/window/W in T)
+				W.UpdateIcon()
+			if(cleanup_grass_and_stuff)
+				if(istype(T, /turf/unsimulated/outdoors/grass) || istype(T, /turf/unsimulated/nicegrass))
+					T.ReplaceWith(/turf/unsimulated/floor/shuttlebay , keep_old_material=FALSE, force=TRUE)
+				for(var/obj/lattice/lattice in T)
+					qdel(lattice)
 
-			var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
-			transit_area.warp_dir = escape_dir
+		var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
+		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
+
+		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
+		transit_area.warp_dir = escape_dir
+		return TRUE
 
 
 /datum/map_settings/donut2
