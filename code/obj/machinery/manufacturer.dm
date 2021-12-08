@@ -716,7 +716,7 @@
 			if (href_list["ejectmanudrive"])
 				src.drive_recipes = null
 				if (src.manudrive)
-					src.manudrive.set_loc(get_output_location(manudrive,1))
+					usr.put_in_hand_or_drop(manudrive)
 				src.manudrive = null
 
 			if (href_list["ejectbeaker"])
@@ -1041,16 +1041,27 @@
 
 		else if (istype(W,/obj/item/disk/data/floppy/read_only/manudrive))
 			if (src.manudrive)
-				boutput(user, "<span class='alert'>There's already a drive in the machine. You need to remove it first.</span>")
+				boutput(user, "<span class='alert'>You swap out the manudrive in the manufacturer with a different one.</span>")
+				src.drive_recipes = null // redundancies sake
+				if (src.manudrive)
+					usr.put_in_hand_or_drop(manudrive)
+				src.manudrive = null // Probably not needed but seems nice to have.
+				src.manudrive = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
+				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
+					src.drive_recipes = MD.drivestored
 			else
 				boutput(user, "<span class='notice'>You insert [W].</span>")
 				W.set_loc(src)
 				src.manudrive = W
+				if (user && W)
+					user.u_equip(W)
+					W.dropped()
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
-					if (user && W)
-						user.u_equip(W)
-						W.dropped()
+
 
 		else if (istype(W,/obj/item/disk/data)) // Just for clarity sake
 			boutput(user, "<span class='alert'>Only manudrives are able to be inserted into manufacturers.</span>")
