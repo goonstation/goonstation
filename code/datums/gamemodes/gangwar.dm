@@ -111,14 +111,6 @@
 		send_intercept()
 	return 1
 
-/datum/game_mode/gang/process()
-	if(TIME >= 10 MINUTES)
-		process_hot_zones()
-	if(TIME >= 15 MINUTES)
-		process_kidnapping_event()
-	if(TIME >= 55 MINUTES)
-		force_shuttle()
-
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)
 		emergency_shuttle.disabled = 0
@@ -208,6 +200,13 @@
 		return
 	else
 		slow_process = 0
+
+	if (ticker.round_elapsed_ticks == 10 MINUTES)
+		process_hot_zones()
+	if (ticker.round_elapsed_ticks == 15 MINUTES)
+		process_kidnapping_event()
+	if (ticker.round_elapsed_ticks == 55 MINUTES)
+		force_shuttle()
 
 	for(var/datum/gang/G in gangs)
 		var/tmp_turf_points = G.num_areas_controlled()*15
