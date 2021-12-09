@@ -51,6 +51,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/moustache,\
 	new /datum/bank_purchaseable/gold_that,\
 	new /datum/bank_purchaseable/dancin_shoes,\
+	new /datum/bank_purchaseable/frog,\
 
 	new /datum/bank_purchaseable/alohamaton,\
 	new /datum/bank_purchaseable/ai_hat)
@@ -442,8 +443,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			return 1
 
 	frog
-		name = "Buy a Frog"
-		cost = 9000
+		name = "Adopt a Frog"
+		cost = 6000
 
 		Create(var/mob/living/M)
 			new/obj/critter/frog(M.loc)
