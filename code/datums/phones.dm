@@ -130,10 +130,14 @@
 			ui.open()
 
 	ui_data(mob/user)
-		// We'll send an assoc. list to the UI so js can take each key and value into the list to make it a new object
-		// which represents each individual contact. ID = name
-		. = list(
-			"contactList" = getContactIDToNameList(),
+		var/contactList = getContactIDToNameList()
+		var/list/contacts = list()
+		for(var/contact in contactList)
+			var/id = contact
+			var/name = contactList[id] // we give js this list of associative lists so it knows how to break up the info given
+			contacts += list(list("id" = id, "name" = name)) //todo: write a better comment
+		. = list( // if you're reading this, please god yell at nex, thank you
+			"contactList" = contacts,
 			"phoneCallMembers" = currentPhoneCall?.members,
 			"pendingCallMembers" = currentPhoneCall?.pendingMembers,
 			"callHost" = currentPhoneCall?.host,
