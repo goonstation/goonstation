@@ -122,7 +122,6 @@
 	},
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle{
@@ -269,7 +268,6 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/machinery/light,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
@@ -729,11 +727,13 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Ah" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 1
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
 	},
-/obj/machinery/light,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
 /area/shuttle/escape/centcom)
 "As" = (
 /obj/indestructible/shuttle_corner{
@@ -829,7 +829,6 @@
 	},
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle,
@@ -918,7 +917,6 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle,
@@ -959,7 +957,6 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle{
@@ -1515,7 +1512,7 @@ lQ
 lQ
 sU
 lQ
-Ah
+lQ
 tU
 ML
 ML
@@ -1599,7 +1596,7 @@ lQ
 lQ
 mx
 lQ
-Ah
+lQ
 Ih
 tt
 tt
@@ -1629,7 +1626,7 @@ sU
 sU
 sU
 DE
-Pe
+Ah
 Pe
 gy
 Tr
@@ -1683,7 +1680,7 @@ lQ
 lQ
 mx
 lQ
-Ah
+lQ
 Ih
 tt
 tt
@@ -1767,7 +1764,7 @@ lQ
 lQ
 sU
 lQ
-Ah
+lQ
 dB
 rU
 rU

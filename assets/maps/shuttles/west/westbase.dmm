@@ -113,15 +113,10 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "fb" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 8
+/obj/machinery/light,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
 	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "fs" = (
 /obj/decal/fakeobjects/shuttlethruster{
@@ -269,7 +264,6 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle,
@@ -969,8 +963,7 @@
 /area/shuttle/escape/centcom)
 "Lt" = (
 /obj/machinery/light{
-	dir = 4;
-	layer = 9.1
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
@@ -1212,8 +1205,7 @@
 /area/shuttle/escape/centcom)
 "VI" = (
 /obj/machinery/light{
-	dir = 4;
-	layer = 9.1
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -1286,7 +1278,6 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle{
@@ -1723,16 +1714,16 @@ cC
 cq
 aY
 jK
-fb
-fY
-jK
-fb
-fY
-fY
-fb
 jK
 fY
-fb
+jK
+jK
+fY
+fY
+jK
+jK
+fY
+jK
 jK
 aY
 cq
@@ -1784,7 +1775,7 @@ bo
 wu
 aY
 Ld
-Ls
+fb
 aY
 GJ
 mK
