@@ -47,8 +47,8 @@ proc/get_prefab_shuttles()
 				if(isnull(dir))
 					continue
 				for(var/fname in flist("[base_path][dir_name]"))
-					var/is_folder = copytext(fname, length(fname), length(fname) + 1)
-					if(is_folder != "/")
+					var/is_folder = copytext(fname, length(fname), length(fname) + 1) == "/"
+					if(!is_folder)
 						var/name = "[dir_name][fname]"
 						prefab_shuttles[name] = new/datum/prefab_shuttle("[base_path][dir_name][fname]", name, dir)
 						continue
