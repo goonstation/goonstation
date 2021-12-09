@@ -1254,7 +1254,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		return
 
 	update_icon()
-		src.icon_state = "fungus[max(1,min(3, amount))]"
+		src.icon_state = "fungus[clamp(amount, 1, 3)]"
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		if (!src.can_sample || !W.reagents)

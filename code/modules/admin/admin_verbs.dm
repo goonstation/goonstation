@@ -442,6 +442,7 @@ var/list/admin_verbs = list(
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
+		/client/proc/persistent_lag,
 
 		/client/proc/player_panel_tgui,
 
@@ -976,8 +977,7 @@ var/list/fun_images = list()
 		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH)
-	cli.preferences.copy_to(H,src.mob,1)
+	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH, cli.preferences, TRUE)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
 		mymob.mind.ckey = ckey
@@ -1027,8 +1027,7 @@ var/list/fun_images = list()
 		H.set_loc(mymob.loc)
 		src.holder.respawn_as_self_mob = null
 	else
-		H = new(mymob.loc, src.preferences.AH)
-		src.preferences.copy_to(H,src.mob,1)
+		H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
 		new_mob = TRUE
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()

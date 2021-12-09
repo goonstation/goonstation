@@ -54,58 +54,39 @@
 
 	// Uniform
 	if (src.w_uniform)
-		if (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/experimental))
-			var/obj/item/clothing/under/experimental/worn_suit = src.w_uniform
-			wear_sanity_check(worn_suit)
+		var/image/suit_image
+		wear_sanity_check(src.w_uniform)
+		suit_image = src.w_uniform.wear_image
 
-			var/counter = 0
-			while (counter < 6)
-				counter++
-				if (counter > worn_suit.images.len)
-					UpdateOverlays(null, "suit_image[counter]")
-				else
-					UpdateOverlays(worn_suit.images[counter], "suit_image[counter]")
+		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
+		if (islist(override_states) && ("js-[wear_state]" in override_states))
+			suit_image.icon = src.mutantrace.clothing_icon_override
+			suit_image.icon_state = "js-[wear_state]"
+		else
+			suit_image.icon = src.w_uniform.wear_image_icon
+			suit_image.icon_state = wear_state
 
-			if (worn_suit.blood_DNA)
-				blood_image.icon_state =  "uniformblood"
-				blood_image.layer = MOB_CLOTHING_LAYER+0.1
-				UpdateOverlays(blood_image, "suit_image_blood")
-			else
-				UpdateOverlays(null, "suit_image_blood")
-		else if(src.w_uniform)
-			var/image/suit_image
-			wear_sanity_check(src.w_uniform)
-			suit_image = src.w_uniform.wear_image
+		suit_image.layer = src.w_uniform.wear_layer
+		suit_image.alpha = src.w_uniform.alpha
+		suit_image.color = src.w_uniform.color
+		UpdateOverlays(suit_image, "suit_image1")
+		var/counter = 1
+		while (counter < 6)
+			counter++
+			UpdateOverlays(null, "suit_image[counter]")
 
-			var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
-			if (islist(override_states) && ("js-[wear_state]" in override_states))
-				suit_image.icon = src.mutantrace.clothing_icon_override
-				suit_image.icon_state = "js-[wear_state]"
-			else
-				suit_image.icon = src.w_uniform.wear_image_icon
-				suit_image.icon_state = wear_state
+		if (src.w_uniform.worn_material_texture_image != null)
+			src.w_uniform.worn_material_texture_image.layer = src.w_uniform.wear_image.layer + 0.1
+			UpdateOverlays(src.w_uniform.worn_material_texture_image, "material_suit")
+		else
+			UpdateOverlays(null, "material_suit")
 
-			suit_image.layer = src.w_uniform.wear_layer
-			suit_image.alpha = src.w_uniform.alpha
-			suit_image.color = src.w_uniform.color
-			UpdateOverlays(suit_image, "suit_image1")
-			var/counter = 1
-			while (counter < 6)
-				counter++
-				UpdateOverlays(null, "suit_image[counter]")
-
-			if (src.w_uniform.worn_material_texture_image != null)
-				src.w_uniform.worn_material_texture_image.layer = src.w_uniform.wear_image.layer + 0.1
-				UpdateOverlays(src.w_uniform.worn_material_texture_image, "material_suit")
-			else
-				UpdateOverlays(null, "material_suit")
-
-			if (src.w_uniform.blood_DNA)
-				blood_image.icon_state =  "uniformblood_c"
-				blood_image.layer = MOB_CLOTHING_LAYER+0.1
-				UpdateOverlays(blood_image, "suit_image_blood")
-			else
-				UpdateOverlays(null, "suit_image_blood")
+		if (src.w_uniform.blood_DNA)
+			blood_image.icon_state =  "uniformblood_c"
+			blood_image.layer = MOB_CLOTHING_LAYER+0.1
+			UpdateOverlays(blood_image, "suit_image_blood")
+		else
+			UpdateOverlays(null, "suit_image_blood")
 
 	else
 		var/counter = 0

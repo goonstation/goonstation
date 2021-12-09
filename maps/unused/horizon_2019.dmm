@@ -48732,7 +48732,7 @@
 /area/station/security/main)
 "cdR" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "cdS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4

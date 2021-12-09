@@ -35,7 +35,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		return
 #ifdef XMAS
 	christmas_cheer += mod
-	christmas_cheer = max(0,min(christmas_cheer,100))
 
 	if (!xmas_respawn_lock)
 		if (christmas_cheer >= 80 && !santa_spawned)
@@ -47,7 +46,6 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			SPAWN_DBG(0)
 				santa_krampus_spawn(1)
 #endif
-	return
 
 // Might as well tweak Santa/Krampus respawn to make it use the universal player selection proc I wrote (Convair880).
 /proc/santa_krampus_spawn(var/which_one = 0, var/confirmation_delay = 1200)
@@ -724,7 +722,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_heal
 			playsound(src.loc, "sound/voice/heavenly.ogg", 100, 1, 0)
@@ -742,7 +740,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_gifts
 			src.visible_message("<span class='alert'><B>[src] throws out a bunch of Spacemas presents from nowhere!</B></span>")
@@ -773,7 +771,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_food
 			src.visible_message("<span class='alert'><B>[src] casts out a whole shitload of snacks from nowhere!</B></span>")
@@ -806,7 +804,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_warmth
 			playsound(src.loc, "sound/effects/MagShieldUp.ogg", 100, 1, 0)
@@ -825,12 +823,15 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_teleport
 			var/A
 			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 			var/area/thearea = get_telearea(A)
+			if(thearea.teleport_blocked)
+				boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+				return 1
 
 			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
 			playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)
@@ -862,7 +863,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			if (src.stat || src.transforming)
 				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
-				return
+				return 1
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			for (var/mob/living/carbon/cube/meat/krampus/K in view(7,src))

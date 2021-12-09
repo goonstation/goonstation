@@ -1591,7 +1591,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				if(!timing)
 					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
-					src.time = min(max(round(src.time), 30), 600)
+					src.time = clamp(round(src.time), 30, 600)
 				else
 					boutput(usr, "<span class='alert'>You can't change the time while the timer is engaged!</span>")
 		/*
@@ -1605,7 +1605,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (href_list["tp"])
 			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
-			src.time = min(max(round(src.time), 60), 600)
+			src.time = clamp(round(src.time), 60, 600)
 
 		if (href_list["close"])
 			usr.Browse(null, "window=timer")

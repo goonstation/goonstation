@@ -14612,7 +14612,7 @@
 /area/station2/bridge/hos)
 "aHj" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "aHk" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -31228,7 +31228,7 @@
 /area/station/hangar/main)
 "bsb" = (
 /turf/simulated/wall/asteroid/lighted,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "bsc" = (
 /obj/item/clothing/suit/bedsheet,
 /obj/landmark/start{

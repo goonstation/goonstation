@@ -358,7 +358,7 @@
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/turf/last_turf = 0
+	var/tmp/turf/last_turf = 0
 	var/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
