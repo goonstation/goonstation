@@ -620,7 +620,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		clone.set_loc(get_centcom_mob_cloner_spawn_loc())
 	if(!indirect)
 		L.density = TRUE
-		L.a_intent = INTENT_HARM
+		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
 	playsound(clone, "sound/machines/ding.ogg", 50, 1)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")

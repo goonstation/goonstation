@@ -212,7 +212,6 @@
 	},
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle{
@@ -302,11 +301,12 @@
 /area/centcom)
 "op" = (
 /obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+	dir = 4;
+	pixel_x = 10
 	},
-/obj/stool/chair/comfy/shuttle/brown,
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
 /area/shuttle/escape/centcom)
 "pd" = (
 /obj/stool/chair/comfy/shuttle{
@@ -356,7 +356,6 @@
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle,
@@ -474,14 +473,6 @@
 /area/shuttle/escape/centcom)
 "wT" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom)
-"wY" = (
-/obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "xi" = (
@@ -902,7 +893,6 @@
 	},
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle{
@@ -1252,7 +1242,6 @@
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/light{
 	dir = 8;
-	layer = 9.1;
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/shuttle,
@@ -1498,7 +1487,7 @@ fl
 Mq
 Mq
 dw
-wY
+Nt
 Nt
 GM
 Nt
@@ -1582,7 +1571,7 @@ ve
 ve
 ve
 sx
-op
+Nt
 Nt
 wT
 Nt
@@ -1636,7 +1625,7 @@ nb
 Oc
 yK
 hD
-hD
+op
 Jb
 GM
 GM
@@ -1666,7 +1655,7 @@ lJ
 ve
 ve
 sx
-op
+Nt
 Nt
 wT
 Nt
@@ -1750,7 +1739,7 @@ ml
 ZL
 ZL
 dw
-wY
+Nt
 Nt
 GM
 Nt

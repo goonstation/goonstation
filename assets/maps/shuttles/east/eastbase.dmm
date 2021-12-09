@@ -374,8 +374,7 @@
 /area/centcom)
 "pp" = (
 /obj/machinery/light{
-	dir = 8;
-	layer = 9.1
+	dir = 8
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -574,15 +573,13 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "vW" = (
-/obj/stool/chair/comfy/shuttle/brown{
-	dir = 4
-	},
 /obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+	dir = 1;
+	pixel_y = 21
 	},
-/turf/unsimulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor6"
+	},
 /area/shuttle/escape/centcom)
 "wm" = (
 /obj/stool/chair/comfy/shuttle,
@@ -724,8 +721,7 @@
 /area/shuttle/escape/centcom)
 "DI" = (
 /obj/machinery/light{
-	dir = 8;
-	layer = 9.1
+	dir = 8
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
@@ -1144,7 +1140,6 @@
 	},
 /obj/machinery/light{
 	dir = 4;
-	layer = 9.1;
 	pixel_x = 10
 	},
 /turf/unsimulated/floor/shuttle{
@@ -1466,7 +1461,7 @@ ro
 ro
 Iz
 fa
-DY
+vW
 hx
 fa
 Ou
@@ -1518,16 +1513,16 @@ pm
 IV
 fa
 bD
-vW
-Il
-bD
-vW
-Il
-Il
-vW
 bD
 Il
-vW
+bD
+bD
+Il
+Il
+bD
+bD
+Il
+bD
 bD
 fa
 IV

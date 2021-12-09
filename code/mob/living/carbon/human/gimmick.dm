@@ -501,7 +501,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -678,7 +678,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
@@ -689,7 +689,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
-				J.a_intent = INTENT_HARM
+				J.set_a_intent(INTENT_HARM)
 
 
 /mob/living/carbon/human/biker/cow
