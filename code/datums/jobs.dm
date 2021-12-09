@@ -1724,8 +1724,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #else
 	limit = 1
 	special_spawn_location = 1
-	spawn_x = 276
-	spawn_y = 257
+	spawn_x = 18
+	spawn_y = 19
 	spawn_z = 3
 #endif
 	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
