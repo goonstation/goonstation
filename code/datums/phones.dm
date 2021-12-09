@@ -125,9 +125,8 @@
 	/// Default UI, override/copy+paste at your leisure
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
-		. = ui
 		if(!ui)
-			ui = new(user, src, "phoneDefault")
+			ui = new(user, src, "PhoneDefault")
 			ui.open()
 
 	ui_data(mob/user)
