@@ -172,13 +172,13 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 		var/obj/background_star/S = null
 		for(var/i=0,i<num_stars,i++)
 			S = new/obj/background_star()
+			S.plane = PLANE_SPACE
 			S.loc = get_turf(src)
 			S.ships_id =  src.ship_id
 			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
 			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.galaxy_icon)
 			if(ship_id=="artemis")
 				S.duplicate_galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
-				S.duplicate_galaxy_icon.plane = PLANE_SPACE
 				S.duplicate_galaxy_icon.pixel_x += (57 * 32)
 				get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.duplicate_galaxy_icon)
 			S.icon = null

@@ -73,15 +73,16 @@
 #elif defined(MAP_OVERRIDE_POD_WARS)
 #include "pod_wars.dm"
 
-#elif defined(MAP_OVERRIDE_ARTEMIS)
-#include "artemis.dm"
-
 #elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "gottagofast.dm"
 
 //Entry below is the "default" map
 #else
 #include "standard.dm"
+#endif
+
+#if defined(ENABLE_ARTEMIS) && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#include "..\artemis\planets.dmm"
 #endif
 
 #if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)

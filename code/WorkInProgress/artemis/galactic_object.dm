@@ -271,6 +271,7 @@ var/global/datum/galaxy/GALAXY = new
 			ship_body.scale = scale
 		M = M.Translate(ship_body.actual_x,ship_body.actual_y)
 		ship_body.transform = M
+		ship_body.plane = PLANE_SPACE
 
 		ship_body.parallax_multi = 1/20
 		ship_body.loc = get_turf(ship_mark)
@@ -281,7 +282,6 @@ var/global/datum/galaxy/GALAXY = new
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(ship_body.galaxy_icon)
 		if(ship.bottom_x_offset)
 			ship_body.duplicate_galaxy_icon = image(ship_body.icon, ship_body, ship_body.icon_state, ship_body.layer)
-			ship_body.duplicate_galaxy_icon.plane = PLANE_SPACE
 			ship_body.duplicate_galaxy_icon.pixel_x += (ship.bottom_x_offset * 32)
 			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(ship_body.duplicate_galaxy_icon)
 		ship_body.icon_state = null

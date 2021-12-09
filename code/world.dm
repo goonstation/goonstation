@@ -612,7 +612,7 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
 	initialize_biomes()
 
-	#ifdef ENABLE_ARTEMIS
+	#if SKIP_PLANETS_SETUP == 0
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()
