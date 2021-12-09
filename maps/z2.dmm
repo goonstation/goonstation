@@ -72126,6 +72126,12 @@
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/south)
+"dZt" = (
+/obj/machinery/light,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lobby)
 "ebC" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -127336,7 +127342,7 @@ gcn
 tZZ
 gcn
 gcn
-oYO
+dkX
 dny
 dmu
 gcn
@@ -130054,7 +130060,7 @@ gcn
 tZZ
 gcn
 gcn
-oYO
+dkX
 dny
 dmu
 gcn
@@ -133387,7 +133393,7 @@ dms
 hIz
 dms
 dms
-hIz
+dms
 dms
 hpv
 gcn
@@ -133989,7 +133995,7 @@ dmw
 hrN
 dmw
 dmw
-hrN
+dmw
 dmw
 dnv
 dny
@@ -142148,7 +142154,7 @@ dms
 dnx
 dny
 dRc
-hIz
+dms
 dms
 dms
 dms
@@ -142737,7 +142743,7 @@ dmw
 dmw
 dmw
 dmw
-hrN
+dmw
 dmw
 dmw
 dmw
@@ -144858,7 +144864,7 @@ aES
 dKL
 dMu
 dMT
-dMu
+dZt
 dKL
 aES
 aES
@@ -146670,7 +146676,7 @@ aES
 dKL
 dMu
 dMT
-dMu
+dZt
 dKL
 aES
 aES
