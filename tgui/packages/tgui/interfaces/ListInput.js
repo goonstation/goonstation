@@ -5,7 +5,7 @@
  */
 
 import { clamp01 } from 'common/math';
-import { KEY_UP, KEY_DOWN } from 'common/keycodes';
+import { KEY_UP, KEY_DOWN, KEY_PAGEDOWN, KEY_END, KEY_HOME } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from '../components';
 import { Window } from '../layouts';
@@ -45,6 +45,20 @@ export const ListInput = (props, context) => {
       return;
     }
     nextScrollTime = performance.now() + 125;
+
+    if (e.keyCode === KEY_END) {
+      const button = buttons[buttons.length - 1];
+      setSelectedButton(button);
+      setLastCharCode(null);
+      document.getElementById(button).focus();
+    }
+
+    if (e.keyCode === KEY_HOME) {
+      const button = buttons[0];
+      setSelectedButton(button);
+      setLastCharCode(null);
+      document.getElementById(button).focus();
+    }
 
     if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN) {
       let direction = 1;
