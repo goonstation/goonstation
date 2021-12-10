@@ -878,6 +878,12 @@
 			return
 	src.set_cursor(null)
 
+/// used to set the a_intent var of a mob
+/mob/proc/set_a_intent(intent)
+	if (!intent) return
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent)
+	src.a_intent = intent
+
 // medals
 /mob/proc/revoke_medal(title, debug)
 	if (!debug && (!src.client || !src.key))
@@ -2578,7 +2584,7 @@
 		else
 			upper_cap = cap
 
-	src.eye_blurry = max(0, min(src.eye_blurry + amount, upper_cap))
+	src.eye_blurry = clamp(src.eye_blurry + amount, 0, upper_cap)
 	//DEBUG_MESSAGE("Amount is [amount], new eye blurry is [src.eye_blurry], cap is [upper_cap]")
 	return 1
 
@@ -3040,7 +3046,7 @@
 	if(isnpc(src))
 		return 0
 	if(allow_overflow)
-		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
+		amount = clamp(src.mind.soul, 1, amount) // can't sell less than 1
 	if (isdiabolical(src))
 		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
 		return 0

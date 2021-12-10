@@ -56,7 +56,7 @@
 		..()
 		if(istype(src.material))
 			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
+			setProperty("meleeprot", material.hasProperty("hard") ? round(clamp((material.getProperty("hard") - 50) / 15.25, 0, 3)) : getProperty("meleeprot"))
 		return
 
 	UpdateName()

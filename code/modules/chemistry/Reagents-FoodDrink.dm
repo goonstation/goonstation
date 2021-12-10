@@ -2237,9 +2237,9 @@ datum
 			id = "energydrink"
 			description = "An energy drink is a liquid plastic with a high amount of caffeine."
 			reagent_state = LIQUID
-			fluid_r = 255
-			fluid_g = 255
-			fluid_b = 64
+			fluid_r = 120
+			fluid_g = 223
+			fluid_b = 45
 			transparency = 170
 			overdose = 25
 			addiction_prob = 4
@@ -2604,7 +2604,7 @@ datum
 						var/obj/decal/cleanable/saltpile/pile = locate(/obj/decal/cleanable/saltpile) in T
 						if (pile)
 							pile.health = min(pile.health+10, 30)
-							//pile.update_icon()
+							//pile.UpdateIcon()
 
 
 			reaction_obj(var/obj/O, var/volume)

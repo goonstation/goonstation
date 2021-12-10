@@ -2318,19 +2318,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"air" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "ais" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -15930,6 +15917,17 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
+"aTG" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/machinery/cashreg,
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
+/turf/simulated/floor,
+/area/station/hos)
 "aTH" = (
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -26783,24 +26781,6 @@
 "bvG" = (
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
-"bvH" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bvI" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bvJ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "bvL" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -27319,21 +27299,6 @@
 	dir = 4
 	},
 /area/station/crewquarters/cryotron)
-"bxo" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bxp" = (
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bxq" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "bxr" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -29335,13 +29300,6 @@
 	dir = 8
 	},
 /area/station/medical/cdc)
-"bCD" = (
-/obj/disposaloutlet,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
 "bCE" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
@@ -29536,20 +29494,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
-"bDp" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bDq" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "bDr" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -30873,13 +30817,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
-"bIf" = (
-/obj/item/beach_ball,
-/obj/landmark/gps_waypoint{
-	name = "Escape"
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "bIg" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -31550,32 +31487,6 @@
 /obj/table/wood/round/auto,
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
-"bKe" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bKf" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bKg" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bKh" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "bKj" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/tapebox,
@@ -32026,42 +31937,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office_manta/detectives_bedroom)
-"bLp" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/poster/wallsign/stencil/left/e{
-	pixel_x = 1;
-	pixel_y = -16
-	},
-/obj/decal/poster/wallsign/stencil/right/s{
-	pixel_x = 14;
-	pixel_y = -16
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bLq" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/poster/wallsign/stencil/left/c{
-	pixel_x = -6;
-	pixel_y = -16
-	},
-/obj/decal/poster/wallsign/stencil/right/a{
-	pixel_x = 7;
-	pixel_y = -16
-	},
-/obj/decal/poster/wallsign/stencil/right/p{
-	pixel_x = 18;
-	pixel_y = -16
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
-"bLr" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/poster/wallsign/stencil/left/e{
-	pixel_x = -1;
-	pixel_y = -16
-	},
-/turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
 "bLs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33049,6 +32924,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
+"bOm" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "bOs" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -33532,6 +33413,19 @@
 	},
 /turf/simulated/floor/wood/six,
 /area/station/security/detectives_office_manta)
+"cFz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "cGD" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -35154,6 +35048,15 @@
 	dir = 4
 	},
 /area/station/crew_quarters/market)
+"fYd" = (
+/obj/disposaloutlet{
+	range = 2
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/disposal)
 "fZj" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/secure_data{
@@ -35234,6 +35137,12 @@
 "ghs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crewquarters/cryotron)
+"ghw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "glv" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -35996,6 +35905,24 @@
 	},
 /turf/simulated/floor/longtile,
 /area/station/bridge)
+"hSc" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/stamp/hop,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/paper/mantahopnote,
+/obj/item/acesscomputerunfolder,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen1"
+	},
+/area/station/hos)
 "hSo" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -36480,24 +36407,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
-"jcT" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/stamp/hop,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/paper/mantahopnote,
-/obj/item/acesscomputerunfolder,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen1"
-	},
-/area/station/hos)
 "jfb" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 8;
@@ -36677,6 +36586,18 @@
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
+"jvI" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = 1;
+	pixel_y = -16
+	},
+/obj/decal/poster/wallsign/stencil/right/s{
+	pixel_x = 14;
+	pixel_y = -16
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "jwm" = (
 /obj/table/auto,
 /obj/item/device/detective_scanner,
@@ -36738,6 +36659,19 @@
 /obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
+"jFC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "jFQ" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -36769,6 +36703,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/green,
 /area/station/crewquarters/cryotron)
+"jQD" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "jRl" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4;
@@ -36780,6 +36720,13 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
+"jRO" = (
+/obj/item/beach_ball,
+/obj/landmark/gps_waypoint{
+	name = "Escape"
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "jUI" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -37573,17 +37520,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/industrial,
 /area/station/mining/refinery)
-"mfL" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/machinery/cashreg,
-/obj/item/bell/hop{
-	pixel_y = 15
-	},
-/turf/simulated/floor,
-/area/station/hos)
 "mfZ" = (
 /obj/stool/chair/green{
 	dir = 8
@@ -37642,6 +37578,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/dining)
+"mlV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "mmh" = (
 /obj/machinery/disposal/small{
 	dir = 4
@@ -38960,6 +38903,12 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"pea" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "peV" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -39350,6 +39299,12 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
+"qcQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "qcW" = (
 /obj/dartboard{
 	pixel_y = 28
@@ -39649,6 +39604,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"qVT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "qZg" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2,
@@ -39972,6 +39933,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/visitation)
+"rxH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "rzg" = (
 /obj/machinery/light_switch/west,
 /obj/machinery/camera{
@@ -40234,6 +40201,14 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
+"sqG" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = -1;
+	pixel_y = -16
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "srA" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
@@ -40540,6 +40515,22 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
+"tkC" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = -6;
+	pixel_y = -16
+	},
+/obj/decal/poster/wallsign/stencil/right/a{
+	pixel_x = 7;
+	pixel_y = -16
+	},
+/obj/decal/poster/wallsign/stencil/right/p{
+	pixel_x = 18;
+	pixel_y = -16
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "tlH" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/dirt/dirt4,
@@ -40684,6 +40675,13 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/station/mining/staff_room)
+"tLr" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "tNr" = (
 /obj/machinery/light/incandescent/blueish{
 	dir = 8;
@@ -40710,19 +40708,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
-"tTX" = (
+"tSA" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "tWT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41189,6 +41181,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/captain)
+"vbX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "veP" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -42005,6 +42004,9 @@
 	},
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
+"xcA" = (
+/turf/simulated/floor/plating/random,
+/area/shuttle/escape/station)
 "xdd" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -84730,14 +84732,14 @@ vRo
 vRo
 vRo
 vRo
-bvH
-bxo
-tTX
-bxo
-bxo
-bxo
-bxo
-bKe
+qcQ
+jQD
+jFC
+jQD
+jQD
+jQD
+jQD
+pea
 avp
 avp
 orp
@@ -85027,20 +85029,20 @@ bqv
 brI
 bsR
 bus
-bvH
-bxo
-bxo
-bxo
-bxo
-bDp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bKf
-bKe
+qcQ
+jQD
+jQD
+jQD
+jQD
+vbX
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+tSA
+pea
 avp
 avp
 avp
@@ -85329,22 +85331,22 @@ bqw
 brJ
 bsS
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bKf
-bxo
-bKe
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+tSA
+jQD
+pea
 avp
 avp
 qDY
@@ -85631,23 +85633,23 @@ bqx
 brK
 aEN
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bKe
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+pea
 avp
 dyv
 awP
@@ -85933,23 +85935,23 @@ bqy
 brL
 bsS
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bLp
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+jvI
 avp
 awE
 awP
@@ -86235,23 +86237,23 @@ aqo
 brM
 bsT
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bIf
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bLq
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+jRO
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+tkC
 avp
 awB
 awP
@@ -86537,23 +86539,23 @@ bqz
 brJ
 bsS
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bLr
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+sqG
 avp
 awB
 awR
@@ -86839,23 +86841,23 @@ bqx
 brK
 aEN
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bKg
-bKh
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+tLr
+ghw
 avp
 awG
 awP
@@ -87141,22 +87143,22 @@ bqw
 brL
 bsS
 aNo
-bvI
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bKg
-bxq
-bKh
+qVT
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+tLr
+rxH
+ghw
 avp
 avp
 qDY
@@ -87443,20 +87445,20 @@ bqA
 brN
 bsU
 bus
-bvJ
-bxq
-bxq
-bxq
-bxq
-bDq
-bxp
-bxp
-bxp
-bxp
-bxp
-bxp
-bKg
-bKh
+bOm
+rxH
+rxH
+rxH
+rxH
+mlV
+xcA
+xcA
+xcA
+xcA
+xcA
+xcA
+tLr
+ghw
 avp
 avp
 avp
@@ -87750,14 +87752,14 @@ aLH
 aLH
 aLH
 aLH
-bvJ
-bxq
-air
-bxq
-bxq
-bxq
-bxq
-bKh
+bOm
+rxH
+cFz
+rxH
+rxH
+rxH
+rxH
+ghw
 avp
 avp
 orp
@@ -91338,7 +91340,7 @@ wHu
 aaf
 aaf
 aTb
-mfL
+aTG
 asA
 auQ
 aTh
@@ -93151,7 +93153,7 @@ apG
 aaf
 aTh
 dkw
-jcT
+hSc
 aUX
 aTh
 anG
@@ -105869,7 +105871,7 @@ aKN
 bxU
 aKN
 bAW
-bCD
+fYd
 bDQ
 bDQ
 bDQ

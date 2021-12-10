@@ -421,7 +421,7 @@ mob/new_player
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
-			var/shown = min(max(c, (limit == -1 ? 99 : limit)), maxslots)
+			var/shown = clamp(c, (limit == -1 ? 99 : limit), maxslots)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];' title='Join the round as [J.name].'>&#x2713;&#xFE0E;</a>"
@@ -626,13 +626,12 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc, client.preferences.AH)
+			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
-			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH) // fallback
+			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
 
 		close_spawn_windows()
 
-		client.preferences.copy_to(new_character,src)
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			H.update_colorful_parts()

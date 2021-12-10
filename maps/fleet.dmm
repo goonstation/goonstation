@@ -3810,6 +3810,33 @@
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
+"ii" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/pen/fancy,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/storage/wall{
+	desc = "It's a big box that comes in useful when the inevitable depressurization occurs.";
+	dir = 8;
+	name = "breach response cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen)
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -12
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/wood/two,
+/area/station/bridge/hos)
 "ij" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/locker{
@@ -5874,6 +5901,10 @@
 "mq" = (
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
+"mr" = (
+/obj/machinery/vehicle/pod_smooth/heavy/security,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
 "ms" = (
 /obj/item/storage/toilet{
 	dir = 4;
@@ -6502,6 +6533,10 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
+/area/station/hangar/sec)
+"nA" = (
+/obj/machinery/vehicle/miniputt/nanoputt/security,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nB" = (
 /obj/disposaloutlet/east,
@@ -16090,14 +16125,6 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
-"FF" = (
-/obj/airbridge_controller{
-	id = "escape";
-	primary_controller = 1;
-	tunnel_width = 2
-	},
-/turf/space,
-/area/space)
 "FG" = (
 /obj/shrub{
 	dir = 1
@@ -16960,16 +16987,6 @@
 /area/station/maintenance/south{
 	name = "Demeter Operations Room"
 	})
-"Hs" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
-"Ht" = (
-/obj/airbridge_controller{
-	id = "escape";
-	tunnel_width = 2
-	},
-/turf/space,
-/area/space)
 "Hu" = (
 /obj/shrub{
 	dir = 8
@@ -22609,6 +22626,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
+"Rr" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Rs" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -23325,33 +23345,6 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
-"TA" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/storage/wall{
-	desc = "It's a big box that comes in useful when the inevitable depressurization occurs.";
-	dir = 8;
-	name = "breach response cabinet";
-	pixel_x = 32;
-	spawn_contents = list(/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen)
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/obj/machinery/light_switch/north{
-	pixel_x = -12
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
 "TC" = (
 /obj/machinery/power/smes{
 	charge = 1e+006;
@@ -23502,6 +23495,14 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Ue" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1;
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
 "Uf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -23537,6 +23538,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Up" = (
+/obj/airbridge_controller{
+	id = "escape";
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
 "Uq" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -23621,10 +23629,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"Ux" = (
-/obj/machinery/vehicle/miniputt/nanoputt/security,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "UB" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -24196,10 +24200,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"Wj" = (
-/obj/machinery/vehicle/pod_smooth/heavy/security,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "Wl" = (
 /obj/table/wood/auto,
 /obj/displaycase{
@@ -56186,7 +56186,7 @@ aa
 aa
 aa
 Ut
-TA
+ii
 vK
 wy
 xb
@@ -60088,9 +60088,9 @@ aa
 aa
 kV
 xy
-Wj
+mr
 lI
-Ux
+nA
 lI
 lI
 pf
@@ -66189,16 +66189,16 @@ Aw
 aa
 aa
 aa
+Rr
+Rr
+Rr
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -66489,20 +66489,20 @@ GA
 Hb
 Aw
 aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -66791,20 +66791,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -67093,20 +67093,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -67394,21 +67394,21 @@ UF
 GA
 PV
 Aw
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -67696,21 +67696,21 @@ GA
 GA
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -67998,21 +67998,21 @@ aa
 aa
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -68301,20 +68301,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -68603,20 +68603,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -68905,20 +68905,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -69199,28 +69199,28 @@ Cd
 Cd
 Cd
 Qe
-FF
+Ue
 aa
 aa
 aa
 aa
 Xa
 aa
-Ht
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Up
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -69509,20 +69509,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -69811,20 +69811,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -70113,20 +70113,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -70415,20 +70415,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -70717,19 +70717,19 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -71019,17 +71019,17 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
+aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -71322,16 +71322,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -71624,16 +71624,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -71927,14 +71927,14 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rr
+Rr
+Rr
+Rr
+Rr
+Rr
 aa
 aa
 aa
@@ -72229,11 +72229,11 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72532,9 +72532,9 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
+aa
+aa
+aa
 aa
 aa
 aa

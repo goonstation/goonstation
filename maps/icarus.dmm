@@ -1826,23 +1826,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
-"aew" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
 "aex" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -8193,9 +8176,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
-"ash" = (
-/turf/space,
-/area/shuttle/escape/station/destiny)
 "asi" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -9452,15 +9432,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"auO" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "auP" = (
 /obj/machinery/computer/ordercomp{
 	dir = 4
@@ -9825,41 +9796,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"avw" = (
-/obj/stool/chair,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
-"avx" = (
-/obj/table/auto,
-/obj/random_item_spawner/desk_stuff,
-/obj/machinery/computer/airbr/emergency_shuttle{
-	density = 0;
-	id = "escape";
-	pixel_y = 32
-	},
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/light/flashlight,
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
-"avy" = (
-/obj/airbridge_controller{
-	id = "escape";
-	primary_controller = 1;
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
-"avz" = (
-/obj/airbridge_controller{
-	id = "escape";
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
 "avA" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -10247,10 +10183,6 @@
 	dir = 4;
 	icon_state = "greyblack"
 	},
-/area/station/hallway/primary/east)
-"awo" = (
-/obj/machinery/light,
-/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "awp" = (
 /turf/space,
@@ -26277,6 +26209,19 @@
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/chapel/sanctuary)
+"bSX" = (
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "bWd" = (
 /obj/cable{
 	d1 = 4;
@@ -26406,6 +26351,12 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/station/hangar/sec)
+"dgC" = (
+/obj/airbridge_controller{
+	id = "escape"
+	},
+/turf/space,
+/area/space)
 "dgN" = (
 /obj/cable{
 	d1 = 1;
@@ -26703,6 +26654,13 @@
 /obj/item/storage/wall/random,
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
+"huV" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "hEc" = (
 /turf/simulated/floor/sanitary,
 /area/research_outpost/indigo_rye)
@@ -26753,6 +26711,9 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
+"hZM" = (
+/turf/space,
+/area/shuttle/escape/station)
 "idU" = (
 /obj/table/round/auto,
 /obj/item/decoration/ashtray{
@@ -27219,6 +27180,12 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
+"mLe" = (
+/obj/airbridge_controller{
+	id = "escape2"
+	},
+/turf/space,
+/area/space)
 "mZv" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = 3
@@ -27589,6 +27556,13 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
+"snw" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "soe" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/medbay_right,
@@ -27711,6 +27685,23 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
+"uUe" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/pen/fancy,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "uVI" = (
 /obj/cable{
 	d1 = 1;
@@ -27818,6 +27809,14 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
+"vMS" = (
+/obj/machinery/light,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "vQn" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -70374,7 +70373,7 @@ adM
 adn
 sKy
 aej
-aew
+uUe
 aeH
 aeT
 afb
@@ -75262,10 +75261,10 @@ auf
 auf
 auN
 auf
-avw
 auf
 auN
 auf
+auM
 axs
 axO
 axO
@@ -75562,12 +75561,12 @@ aaU
 aaU
 aaU
 auf
-auO
+bSX
+auM
+auM
+vMS
 auf
-avx
-auf
-awo
-auf
+auM
 axt
 axP
 ayu
@@ -75867,9 +75866,9 @@ auf
 auN
 auf
 auf
-auf
 auN
 auf
+atF
 atF
 atF
 ayv
@@ -76166,10 +76165,10 @@ aaa
 aaa
 aaa
 aaa
+snw
 aaa
 aaa
-avy
-aaa
+huV
 aaa
 aaa
 aem
@@ -77374,10 +77373,10 @@ aaa
 aaa
 aaa
 aaa
+mLe
 aaa
 aaa
-avz
-aaa
+dgC
 aaa
 aaa
 aaa
@@ -77673,21 +77672,21 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -77973,23 +77972,23 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
+aaa
+aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -78274,25 +78273,25 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
+aaa
+aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -78575,26 +78574,26 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -78876,27 +78875,27 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-aAF
 aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -79179,25 +79178,25 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -79481,25 +79480,25 @@ aaa
 aaa
 aaa
 aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
 aaa
 aaa
@@ -79783,25 +79782,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+aAF
 aaa
 aaa
 aaa
@@ -80085,25 +80084,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -80387,26 +80386,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -80690,25 +80689,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -80995,22 +80994,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -81297,21 +81296,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa
@@ -81600,20 +81599,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
+hZM
 aaa
 aaa
 aaa

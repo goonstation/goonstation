@@ -19,7 +19,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	*
 	* These flags help define what features get drawn when the mob's sprite is assembled
 	*
-	* For instance, WEARS_UNDERPANTS tells update_icon.dm to draw the mob's underpants
+	* For instance, WEARS_UNDERPANTS tells UpdateIcon.dm to draw the mob's underpants
 	*
 	* SEE: appearance.dm for more flags and details!
 	*/

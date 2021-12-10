@@ -3459,22 +3459,6 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
-"hK" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
 "hL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -4977,9 +4961,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chapel/sanctuary)
-"kz" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "kA" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment{
@@ -7140,6 +7121,9 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"Bd" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Ct" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
@@ -7149,6 +7133,22 @@
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"Lv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/checkpoint/customs)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -44163,15 +44163,15 @@ jX
 kw
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -44465,15 +44465,15 @@ jz
 kw
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -44766,17 +44766,17 @@ jh
 jh
 kx
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -45068,17 +45068,17 @@ jh
 jh
 kx
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -45370,17 +45370,17 @@ jA
 ji
 ky
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -45673,15 +45673,15 @@ jY
 ky
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -45975,15 +45975,15 @@ jZ
 ky
 aa
 dM
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -46277,15 +46277,15 @@ ji
 ky
 dM
 dM
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -46579,15 +46579,15 @@ cE
 kA
 kN
 kO
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -46881,15 +46881,15 @@ cE
 kA
 kN
 kO
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -47183,15 +47183,15 @@ ka
 bX
 dM
 dM
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -47485,15 +47485,15 @@ kb
 bX
 aa
 dM
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -47778,7 +47778,7 @@ eJ
 gC
 hc
 hv
-hK
+Lv
 ii
 iJ
 hu
@@ -47787,15 +47787,15 @@ oB
 bX
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -48089,15 +48089,15 @@ bT
 ad
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -48391,15 +48391,15 @@ mu
 ad
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -48694,13 +48694,13 @@ ad
 aa
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -48996,13 +48996,13 @@ ad
 aa
 aa
 aa
-kz
-kz
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -49299,11 +49299,11 @@ aa
 aa
 aa
 aa
-kz
-kz
-kz
-kz
-kz
+Bd
+Bd
+Bd
+Bd
+Bd
 aa
 aa
 aa
@@ -49602,9 +49602,9 @@ aa
 aa
 aa
 aa
-kz
-kz
-kz
+Bd
+Bd
+Bd
 aa
 aa
 aa

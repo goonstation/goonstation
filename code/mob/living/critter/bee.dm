@@ -62,7 +62,7 @@
 		SPAWN_DBG(0)
 			ADMIN_BEES_ONLY
 			//statlog_bees(src)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!isdead(src))
 				animate_bumble(src)
@@ -180,12 +180,12 @@
 
 	on_sleep()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	on_wake()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -303,7 +303,7 @@
 		// animate_bumble(src)
 		src.is_dancing = 0
 
-	proc/update_icon()
+	update_icon()
 		if (src.has_color_overlay && src.color)
 			src.icon_color = src.color
 			src.color = null
@@ -481,10 +481,6 @@
 			if (MT.reagents.get_reagent_amount(venom1) < 10)
 				MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
-			var/datum/ailment_data/disease/plague = MT.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				MT.cure_disease(plague)
 		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_STAB)//armor piercing stingers
 		return 0
 
@@ -969,7 +965,7 @@
 		src.icon_state = "bubsbee"
 		src.sleeping = rand(10, 20)
 		src.setStatus("paralysis", 2 SECONDS)
-		src.update_icon()
+		src.UpdateIcon()
 		src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 		src.is_dancing = 0
 

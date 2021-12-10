@@ -1215,9 +1215,6 @@
 /obj/item/scissors,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"cZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/exit)
 "da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -1326,25 +1323,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"dm" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/obj/item/bell/hop{
-	pixel_y = 15
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/station/bridge/customs)
 "dn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
@@ -1728,16 +1706,6 @@
 "en" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"eo" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white/checker,
-/area/station/hallway/secondary/exit)
 "ep" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4507,6 +4475,17 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"lz" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "lA" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/tracks{
@@ -4603,6 +4582,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"lL" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/rack,
+/obj/item/gun/implanter,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "lM" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -8389,6 +8378,25 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
+"uo" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/station/bridge/customs)
 "up" = (
 /obj/machinery/computer/bank_data,
 /turf/simulated/floor/carpet{
@@ -10323,9 +10331,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
-"yW" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)
@@ -10888,6 +10893,28 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon5,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"Aw" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/accessimp_kit,
+/obj/item/paper/CrashedHopShuttle,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/heads)
 "Ax" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/engine,
@@ -12360,6 +12387,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/garden/owlery)
+"Eu" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "Ew" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -14035,6 +14072,9 @@
 	dir = 5
 	},
 /area/station/medical/medbay)
+"Io" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Iq" = (
 /obj/cable{
 	d1 = 1;
@@ -18476,6 +18516,14 @@
 	dir = 1
 	},
 /area/listeningpost)
+"TN" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/caution/west,
+/area/station/hallway/secondary/exit)
 "TO" = (
 /obj/cable{
 	d1 = 2;
@@ -18806,16 +18854,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
-"US" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/rack,
-/obj/item/gun/implanter,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "UT" = (
 /obj/cable{
 	d1 = 2;
@@ -19031,6 +19069,12 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/lounge)
+"VA" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "VB" = (
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
@@ -19212,17 +19256,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
-"Wa" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "Wb" = (
 /obj/table/auto,
 /obj/item/kitchen/rollingpin,
@@ -19864,28 +19897,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"XN" = (
-/obj/table/wood/auto,
-/obj/item/storage/box/accessimp_kit,
-/obj/item/paper/CrashedHopShuttle,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
 "XO" = (
 /obj/cable{
 	d1 = 4;
@@ -72407,16 +72418,16 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-yX
-aa
-aa
+Io
+Io
+Io
 aa
 aa
 aa
@@ -72707,20 +72718,20 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+yX
+Io
+Io
+Io
+Io
+Io
+Io
 aa
 aa
 aa
@@ -73009,20 +73020,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
 aa
 aa
@@ -73311,21 +73322,21 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 PS
@@ -73613,21 +73624,21 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 PS
@@ -73915,21 +73926,21 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 PS
 PS
 PS
@@ -74217,20 +74228,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 PS
 PS
 aa
@@ -74248,7 +74259,7 @@ GQ
 BO
 YV
 jI
-Wa
+lz
 jI
 nY
 hJ
@@ -74519,20 +74530,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 PS
 aa
 nB
@@ -74550,7 +74561,7 @@ hO
 SQ
 jK
 kC
-US
+lL
 mW
 od
 hl
@@ -74821,20 +74832,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 ap
 cR
 cR
@@ -75123,22 +75134,22 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aB
-aR
+TN
 aR
 bs
 VF
@@ -75425,25 +75436,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aB
-bc
-bc
-bs
-cf
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+cR
+gs
+gs
+cR
+cI
 cf
 cf
 ek
@@ -75727,27 +75738,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-ap
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 cR
+gs
+gs
 cR
-br
 cg
-cI
-cI
+cf
+cf
 ek
 eZ
 ew
@@ -76029,28 +76040,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-PS
-aa
-cl
-cR
-cR
-cR
-cZ
-eo
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+aB
+Eu
+bc
+bs
+cf
+cf
+cf
+ek
 ew
 ew
 fJ
@@ -76331,26 +76342,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-PS
-PS
-aa
-aa
-aa
-cl
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+ap
+cR
+cR
+br
+cR
+cR
 ch
 cG
 ew
@@ -76633,25 +76644,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 PS
-PS
-PS
-PS
+aa
+aa
+aa
+aa
 aa
 ch
 dk
@@ -76936,23 +76947,23 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aa
-aa
-aa
-aa
+PS
+PS
+PS
+PS
 PS
 aa
 cz
@@ -77240,16 +77251,16 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
 aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -77267,7 +77278,7 @@ gY
 iS
 iA
 iS
-kG
+VA
 ct
 oT
 ct
@@ -77542,16 +77553,16 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
 aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -77580,7 +77591,7 @@ mr
 rI
 sp
 tH
-dm
+uo
 vf
 FO
 Wz
@@ -77844,15 +77855,15 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -78147,13 +78158,13 @@ aa
 aa
 aa
 aa
+Io
+Io
+Io
+Io
+Io
+Io
 aa
-aa
-aa
-aa
-yW
-yW
-yW
 aa
 aa
 aa
@@ -78793,7 +78804,7 @@ sq
 yr
 Xv
 ZL
-XN
+Aw
 VU
 Re
 CU

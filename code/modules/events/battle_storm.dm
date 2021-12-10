@@ -83,7 +83,7 @@
 			for(var/i = 0, i < 20, i++)
 				sleep(1 SECOND)
 				for(var/mob/living/M in mobs)
-					if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle) || inafterlife(M))
+					if(istype(get_area(M),/area/shuttle/battle) || inafterlife(M))
 						continue
 					var/area/mob_area = get_area(M)
 					if(mob_area?.storming)

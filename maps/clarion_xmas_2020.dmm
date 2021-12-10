@@ -693,7 +693,7 @@
 /area/station/maintenance/northeast)
 "abG" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "abH" = (
 /obj/grille/catwalk,
 /turf/space,
