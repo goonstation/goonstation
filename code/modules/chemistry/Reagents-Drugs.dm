@@ -1018,6 +1018,7 @@ datum
 				fluid_r = 115 // This shit's pure and blue
 				fluid_g = 197
 				fluid_b = 250
+				random_chem_blacklisted = TRUE
 
 		drug/hellshroom_extract
 			name = "Hellshroom extract"
