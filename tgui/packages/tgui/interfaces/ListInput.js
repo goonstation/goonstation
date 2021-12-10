@@ -12,6 +12,13 @@ import { Window } from '../layouts';
 
 let nextScrollTime = 0;
 
+const nextTick
+= typeof Promise !== 'undefined'
+  ? Promise.resolve().then.bind(Promise.resolve())
+  : function (a) {
+    window.setTimeout(a, 0);
+  };
+
 export const ListInput = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -112,8 +119,15 @@ export const ListInput = (props, context) => {
     const charCode = String.fromCharCode(e.keyCode).toLowerCase();
     if (!charCode) return;
 
-    else if (charCode === "f" && e.ctrlKey) {
+    if (charCode === "f" && e.ctrlKey) {
+      if (!showSearchBar) {
+        nextTick(() => document.getElementById("search_bar").getElementsByTagName('input')[0].focus());
+      }
+      else {
+        document.getElementById(selectedButton)?.focus();
+      }
       setShowSearchBar(!showSearchBar);
+      e.preventDefault();
       return;
     }
 
