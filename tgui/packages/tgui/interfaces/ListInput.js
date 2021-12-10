@@ -61,7 +61,7 @@ export const ListInput = (props, context) => {
       if (nextScrollTime > performance.now()) {
         return;
       }
-      nextScrollTime = performance.now() + 125;
+      nextScrollTime = performance.now() + 50;
 
       let direction;
       switch (e.keyCode) {
