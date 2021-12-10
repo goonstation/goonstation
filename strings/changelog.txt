@@ -1,5 +1,8 @@
 
 (t)thu dec 09 21
+(u)tarmunora
+(e)⚖|balance
+(*)Lethal hypotension starts after missing 200u of blood instead of 125u.
 (u)pali
 (+)For the low price of 6000 spacebux you can now adopt a frog.
 (t)wed dec 08 21
