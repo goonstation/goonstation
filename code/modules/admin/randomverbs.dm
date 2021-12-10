@@ -814,7 +814,7 @@
 			var/new_age = input(usr, "Please select type in age: [minage]-[maxage]", "Polymorph Menu")  as num
 
 			if(new_age)
-				src.tf_holder.age = max(min(round(text2num(new_age)), maxage), minage)
+				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
 			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
@@ -1112,13 +1112,11 @@
 	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	for (var/atom/movable/A in world)
-		A.name_suffixes = null
-		A.UpdateName()
-
-	for (var/turf/T in world)
-		T.name_suffixes = null
-		T.UpdateName()
+	for (var/atom/A in world)
+		if(!isnull(A.name_suffixes))
+			A.name_suffixes = null
+			A.UpdateName()
+		LAGCHECK(LAG_LOW)
 
 	return
 
@@ -1575,7 +1573,7 @@
 			Bee.alive = 1
 			//Bee.icon_state = initial(Bee.icon_state)
 			Bee.set_density(initial(Bee.density))
-			Bee.update_icon()
+			Bee.UpdateIcon()
 			Bee.on_revive()
 			Bee.visible_message("<span class='alert'>[Bee] seems to rise from the dead!</span>")
 			revived ++
@@ -2077,7 +2075,7 @@ var/global/night_mode_enabled = 0
 		if(APC.area && APC.area.workplace)
 			APC.do_not_operate = night_mode_enabled
 			APC.update()
-			APC.updateicon()
+			APC.UpdateIcon()
 
 /client/proc/admin_set_ai_vox()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -2452,11 +2450,11 @@ var/global/night_mode_enabled = 0
 		boutput(src, "No telesci modifiers! Perhaps they haven't been set up yet.")
 	else
 		var/tx = (T.x + XSUBTRACT) / XMULTIPLY
-		tx = (  max(0, min(tx, world.maxx+1)) )
+		tx = clamp(tx, 0, world.maxx+1)
 		var/ty = (T.y + YSUBTRACT) / YMULTIPLY
-		ty = (  max(0, min(ty, world.maxy+1)) )
+		ty = clamp(ty, 0, world.maxy+1)
 		var/tz = T.z + ZSUBTRACT
-		tz = (  max(0, min(tz, world.maxz+1)) )
+		tz = clamp(tz, 0, world.maxz+1)
 		boutput(src, "Telesci Coords: [tx], [ty], [tz]")
 
 
@@ -2781,16 +2779,12 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	set desc = "Spawn in a special escape shuttle"
 	admin_only
 	if(src.holder.level >= LEVEL_ADMIN)
-		var/datum/prefab_shuttle/shuttle = tgui_input_list(src, "Select a shuttle", "Special Shuttle", prefab_shuttles)
-		if (!shuttle) return
-		var/loaded = file2text(shuttle.prefab_path)
-		var/turf/T = landmarks[shuttle.landmark][1]
-		if(T && loaded)
-			var/dmm_suite/D = new/dmm_suite()
-			D.read_map(loaded,T.x,T.y,T.z,shuttle.prefab_path, DMM_OVERWRITE_OBJS)
-			logTheThing("admin", src, null, "replaced the shuttle with [shuttle].")
-			logTheThing("diary", src, null, "replaced the shuttle with [shuttle].", "admin")
-			message_admins("[key_name(src)] replaced the shuttle with [shuttle].")
+		var/list/shuttles = get_prefab_shuttles()
+		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		if(shuttle.load())
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 

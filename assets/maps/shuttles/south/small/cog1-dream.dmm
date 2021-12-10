@@ -1,0 +1,406 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"b" = (
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"d" = (
+/obj/decal/stage_edge/dojo,
+/obj/decal/stone_lamp{
+	desc = "An incredibly heavy stone lamp. No human could possibly hope to even so much as budge it in the slightest.";
+	name = "lamp of atlas";
+	pixel_y = -5
+	},
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom)
+"f" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "shore-6"
+	},
+/area/shuttle/escape/centcom)
+"g" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"h" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"i" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"j" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 5;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"k" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-M"
+	},
+/obj/window/reinforced/south,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"l" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom)
+"m" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"o" = (
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"p" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "10";
+	name = "wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"q" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/shuttle/escape/centcom)
+"r" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 10;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"t" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "shore-1"
+	},
+/area/shuttle/escape/centcom)
+"u" = (
+/obj/decal/fakeobjects/dreambeach/biggest/big_palm,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom)
+"v" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "12";
+	name = "wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"w" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"y" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "shore-2"
+	},
+/area/shuttle/escape/centcom)
+"z" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"A" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 9;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"B" = (
+/turf/unsimulated/floor/dojo/stonestair,
+/area/shuttle/escape/centcom)
+"C" = (
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom)
+"D" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "shore-7"
+	},
+/area/shuttle/escape/centcom)
+"E" = (
+/obj/table/auto,
+/obj/random_item_spawner/med_kit,
+/obj/random_item_spawner/med_kit,
+/obj/random_item_spawner/med_kit,
+/obj/random_item_spawner/med_kit,
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"G" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "6";
+	name = "wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"H" = (
+/obj/indestructible/invisible_block,
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"I" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "shore-3"
+	},
+/area/shuttle/escape/centcom)
+"J" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"N" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/dojo/stone,
+/area/shuttle/escape/centcom)
+"O" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom)
+"P" = (
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 1
+	},
+/area/shuttle/escape/centcom)
+"Q" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/unsimulated/floor/dream/beach,
+/area/shuttle/escape/centcom)
+"R" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "5";
+	name = "wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"T" = (
+/turf/unsimulated/wall/auto/sengoku,
+/area/shuttle/escape/centcom)
+"U" = (
+/obj/machinery/computer/shuttle/embedded/south,
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "space-1"
+	},
+/area/shuttle/escape/centcom)
+"V" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-L"
+	},
+/obj/window/reinforced/south,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"W" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 1;
+	icon_state = "alt_heater-R"
+	},
+/obj/window/reinforced/south,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"X" = (
+/turf/unsimulated/floor/dream/beach{
+	icon_state = "beach-0"
+	},
+/area/shuttle/escape/centcom)
+"Y" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "3";
+	name = "wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+"Z" = (
+/turf/unsimulated/wall/auto/sengoku{
+	icon_state = "9";
+	name = "wall";
+	opacity = 0
+	},
+/area/shuttle/escape/centcom)
+
+(1,1,1) = {"
+b
+G
+Y
+Y
+Y
+Y
+z
+Y
+Y
+Y
+Y
+Y
+R
+J
+a
+a
+a
+"}
+(2,1,1) = {"
+A
+W
+w
+w
+d
+C
+C
+Q
+Q
+Q
+Q
+Q
+p
+Y
+R
+h
+h
+"}
+(3,1,1) = {"
+r
+k
+N
+o
+B
+C
+C
+C
+Q
+O
+Q
+C
+f
+t
+p
+R
+J
+"}
+(4,1,1) = {"
+j
+V
+w
+w
+d
+C
+C
+C
+C
+C
+C
+C
+X
+y
+q
+T
+H
+"}
+(5,1,1) = {"
+h
+Y
+Y
+Y
+v
+l
+C
+C
+u
+C
+C
+C
+X
+y
+U
+T
+P
+"}
+(6,1,1) = {"
+A
+W
+E
+g
+d
+C
+C
+C
+C
+C
+C
+C
+X
+y
+q
+T
+H
+"}
+(7,1,1) = {"
+r
+k
+m
+o
+B
+C
+C
+C
+Q
+O
+Q
+C
+D
+I
+G
+Z
+J
+"}
+(8,1,1) = {"
+j
+V
+i
+i
+d
+C
+C
+Q
+Q
+Q
+Q
+Q
+G
+Y
+Z
+h
+h
+"}
+(9,1,1) = {"
+b
+p
+Y
+Y
+Y
+Y
+z
+Y
+Y
+Y
+Y
+Y
+Z
+J
+a
+a
+a
+"}

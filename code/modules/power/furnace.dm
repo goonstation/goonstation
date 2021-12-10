@@ -29,7 +29,7 @@
 		else
 			on_inactive()
 
-		update_icon()
+		UpdateIcon()
 
 	proc/on_burn()
 		add_avail(src.genrate)
@@ -37,7 +37,7 @@
 	proc/on_inactive()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(active != last_active)
 			last_active = active
 			if(src.active)

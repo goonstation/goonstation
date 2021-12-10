@@ -29,7 +29,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		if (src.butts)
@@ -40,7 +40,7 @@
 			for (var/i = 0, i < src.butts, i++)
 				new /obj/item/cigbutt(T)
 			src.butts = 0 // pff
-			src.update_icon()
+			src.UpdateIcon()
 			src.overlays = null
 
 	attackby(obj/item/W, mob/user)
@@ -49,7 +49,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.butts ++ // hehhh
-			src.update_icon()
+			src.UpdateIcon()
 			src.overlays = null
 			src.overlays += "ashtray-smoke"
 			SPAWN_DBG(80 SECONDS)
@@ -57,7 +57,7 @@
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.butts <= 0)
 			src.icon_state = "ashtray"
 		else if (src.butts == 1)

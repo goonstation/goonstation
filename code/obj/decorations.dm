@@ -293,7 +293,7 @@
 	dir = EAST
 
 	// Added ex_act and meteorhit handling here (Convair880).
-	proc/update_icon()
+	update_icon()
 		if (!src) return
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
@@ -324,7 +324,7 @@
 			else
 				boutput(user, "<span class='alert'>Why would you ever destroy your precious bonsai tree?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
 			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
@@ -332,13 +332,13 @@
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
-		src.update_icon()
+		src.UpdateIcon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message("<b><span class='alert'>[src] is ripped to pieces by the blast!</span></b>")
-		src.update_icon()
+		src.UpdateIcon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
@@ -353,7 +353,7 @@
 	var/destroyed = 0
 
 	// stole all of this from the captain's shrub lol
-	proc/update_icon()
+	update_icon()
 		if (!src) return
 		src.destroyed = 1
 		src.desc = "The scattered remains of a once-beautiful ship in a bottle."
@@ -378,7 +378,7 @@
 		if (user.mind && user.mind.assigned_role == "Captain")
 			boutput(user, "<span class='alert'>Why would you ever destroy your precious ship in a bottle?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
 			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
@@ -386,13 +386,13 @@
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
-		src.update_icon()
+		src.UpdateIcon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message("<b><span class='alert'>[src] is shattered and pulverized by the blast!</span></b>")
-		src.update_icon()
+		src.UpdateIcon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
@@ -470,13 +470,13 @@
 			src.open = force_state
 		else
 			src.open = !(src.open)
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/toggle_group()
 		if (istype(src.mySwitch))
 			src.mySwitch.toggle()
 
-	proc/update_icon()
+	update_icon()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
 			src.opacity = 1
@@ -815,7 +815,7 @@ obj/decoration/ceilingfan
 		light.set_color(col_r, col_g, col_b)
 		light.attach(src)
 
-	proc/update_icon()
+	update_icon()
 		if (src.lit == 1)
 			src.icon_state = src.icon_on
 			light.enable()
@@ -830,38 +830,38 @@ obj/decoration/ceilingfan
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
 				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/igniter))
 				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
 				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (W.burning)
 				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				src.lit = 1
-				update_icon ()
+				UpdateIcon ()
 
 	attack_hand(mob/user as mob)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 
@@ -1172,10 +1172,10 @@ obj/decoration/ceilingfan
 		light = new /datum/light/point
 		light.set_brightness(brightness)
 		light.set_color(col_r, col_g, col_b)
-		update_icon()
+		UpdateIcon()
 		light.attach(src)
 
-	proc/update_icon()
+	update_icon()
 		if (src.lit == 1)
 			src.icon_state = src.icon_on
 			light.enable()
@@ -1190,38 +1190,38 @@ obj/decoration/ceilingfan
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
 				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/igniter))
 				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
 				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
 				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 				src.lit = 1
-				update_icon()
+				UpdateIcon()
 
 			if (W.burning)
 				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 				src.lit = 1
-				update_icon ()
+				UpdateIcon ()
 
 	attack_hand(mob/user as mob)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 

@@ -522,7 +522,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
+		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
 		return
 
@@ -586,6 +586,25 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_environment = 2
 	expandable = 0
 
+/area/shuttle/battle
+	icon_state = "shuttle_escape-battle-shuttle"
+	var/warp_dir = EAST
+
+	Entered(atom/movable/Obj,atom/OldLoc)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+	Exited(atom/movable/Obj)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	teleport_blocked = 2
@@ -601,12 +620,22 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Emergency Shuttle"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
+	filler_turf = /turf/unsimulated/floor/shuttlebay
+
+/area/shuttle/escape/transit
+	name = "Emergency Shuttle Transit"
+	icon_state = "shuttle_escape"
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -724,8 +753,18 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 			var/mob/M = Obj
 			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 
-/area/shuttle/escape/transit/ew
+/area/shuttle/escape/transit
+	warp_dir = NORTH
+
+/area/shuttle/escape/transit
 	warp_dir = EAST
+
+/area/shuttle/escape/transit
+	warp_dir = WEST
+
+/area/shuttle/escape/transit
+	warp_dir = SOUTH
+
 ABSTRACT_TYPE(/area/shuttle_transit_space)
 /area/shuttle_transit_space
 	name = "Wormhole"
@@ -3652,13 +3691,13 @@ ABSTRACT_TYPE(/area/mining)
 		return
 	if (!( src.fire ))
 		src.fire = 1
-		src.updateicon()
+		src.UpdateIcon()
 		src.mouse_opacity = 0
 		var/list/cameras = list()
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
 				F.alarm_active = TRUE
-				F.update_icon()
+				F.UpdateIcon()
 		for (var/obj/machinery/camera/C in src)
 			cameras += C
 			LAGCHECK(LAG_HIGH)
@@ -3674,12 +3713,12 @@ ABSTRACT_TYPE(/area/mining)
 	if (src.fire)
 		src.fire = 0
 		src.mouse_opacity = 0
-		src.updateicon()
+		src.UpdateIcon()
 
 		for_by_tcl(F, /obj/machinery/firealarm)
 			if(get_area(F) == src)
 				F.alarm_active = FALSE
-				F.update_icon()
+				F.UpdateIcon()
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
@@ -3688,7 +3727,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
-/area/proc/updateicon()
+/area/update_icon()
 	if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
@@ -3727,7 +3766,7 @@ ABSTRACT_TYPE(/area/mining)
 		var/obj/machinery/M = X
 		M?.power_change()
 
-	updateicon()
+	UpdateIcon()
 
 /**
   * Returns the current usage of the specified channel
