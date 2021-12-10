@@ -5,7 +5,7 @@
  */
 
 import { clamp01 } from 'common/math';
-import { KEY_UP, KEY_DOWN, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_PAGEUP, KEY_ESCAPE } from 'common/keycodes';
+import { KEY_UP, KEY_DOWN, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_PAGEUP, KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from '../components';
 import { Window } from '../layouts';
@@ -62,6 +62,9 @@ export const ListInput = (props, context) => {
     }
     else if (e.keyCode === KEY_ESCAPE) {
       act("cancel");
+    }
+    else if (e.keyCode === KEY_ENTER) {
+      act("choose", { choice: selectedButton });
     }
     else if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN || e.keyCode === KEY_PAGEDOWN || e.keyCode === KEY_PAGEUP) {
       if (nextScrollTime > performance.now() || !displayedArray.length) {
