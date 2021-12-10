@@ -60,6 +60,10 @@ export const ListInput = (props, context) => {
       document.getElementById(button).focus();
     }
 
+    if (e.keyCode === KEY_ESCAPE) {
+      act("cancel");
+    }
+
     if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN || e.keyCode === KEY_PAGEDOWN || e.keyCode === KEY_PAGEUP) {
       let direction;
       switch (e.keyCode) {
