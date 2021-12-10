@@ -192,11 +192,15 @@ export const ListInput = (props, context) => {
             <Stack.Item>
               <Input
                 fluid
-                onInput={(e, value) => setDisplayedArray(
-                  buttons.filter(val => (
+                onInput={(e, value) => {
+                  let newDisplayed = buttons.filter(val => (
                     val.toLowerCase().search(value.toLowerCase()) !== -1
-                  ))
-                )}
+                  ));
+                  setDisplayedArray(newDisplayed);
+                  if (!newDisplayed.includes(selectedButton) && newDisplayed.length > 0) {
+                    setSelectedButton(newDisplayed[0]);
+                  }
+                }}
               />
             </Stack.Item>
           )}
