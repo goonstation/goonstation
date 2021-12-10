@@ -215,6 +215,7 @@
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
 
+/// Deletes any reagents that are banned in smoke clouds.
 /proc/purge_smoke_blacklist(datum/reagents/FG)
 	FG.del_reagent("thalmerite")
 	FG.del_reagent("big_bang")
