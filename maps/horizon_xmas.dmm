@@ -7426,7 +7426,7 @@
 /area/space)
 "asA" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "asB" = (
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,

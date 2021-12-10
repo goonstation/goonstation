@@ -143,7 +143,7 @@
 			return
 		if (href_list["power"])
 			var/t = text2num_safe(href_list["power"])
-			t = min(max(0.25, t), 16)
+			t = clamp(t, 0.25, 16)
 			if (src.connected)
 				src.connected.power = t
 		else
@@ -156,7 +156,7 @@
 					if (href_list["tp"])
 						var/tp = text2num_safe(href_list["tp"])
 						src.time += tp
-						src.time = min(max(round(src.time), 0), 120)
+						src.time = clamp(round(src.time), 0, 120)
 					else
 						if (href_list["door"])
 							for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])

@@ -10616,7 +10616,7 @@
 /area/station/security/main)
 "yW" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)

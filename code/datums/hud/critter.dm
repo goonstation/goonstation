@@ -223,14 +223,14 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						src.master.a_intent = INTENT_DISARM
+						src.master.set_a_intent(INTENT_DISARM)
 					else
-						src.master.a_intent = INTENT_HARM
+						src.master.set_a_intent(INTENT_HARM)
 				else
 					if (icon_y > 16)
-						src.master.a_intent = INTENT_HELP
+						src.master.set_a_intent(INTENT_HELP)
 					else
-						src.master.a_intent = INTENT_GRAB
+						src.master.set_a_intent(INTENT_GRAB)
 				src.update_intent()
 
 			if ("mintent")

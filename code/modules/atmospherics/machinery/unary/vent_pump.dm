@@ -173,7 +173,7 @@
 
 	initialize()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -214,13 +214,13 @@
 
 			if("set_internal_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				internal_pressure_bound = number
 
 			if("set_external_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number
 

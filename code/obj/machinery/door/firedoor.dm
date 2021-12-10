@@ -36,6 +36,9 @@
 	has_crush = 0
 	cant_emag = 1
 
+	xmasify()
+		return
+
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
 	icon = 'icons/obj/doors/door_fire2.dmi'
@@ -128,7 +131,7 @@
 				src.operating = 1
 
 				play_animation("opening")
-				update_icon(1)
+				UpdateIcon(1)
 				sleep(1.5 SECONDS)
 				src.set_density(0)
 				update_nearby_tiles()
@@ -143,7 +146,7 @@
 				src.operating = 1
 
 				play_animation("closing")
-				update_icon(1)
+				UpdateIcon(1)
 				src.set_density(1)
 				update_nearby_tiles()
 				sleep(1.5 SECONDS)
@@ -215,7 +218,7 @@
 
 		return 1
 
-/obj/machinery/door/firedoor/update_icon(var/toggling = 0)
+/obj/machinery/door/firedoor/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"

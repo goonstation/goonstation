@@ -94,18 +94,6 @@
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
 
-	if(round_limit > 0)
-		SPAWN_DBG (round_limit) // this has got to end soon
-			command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
-			sleep(6000) // 10 minutes to clean up shop
-			command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
-			sleep(3000) // 5 minutes until everyone dies
-			command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
-			sleep(10 SECONDS) // welp
-			for(var/mob/living/carbon/M in mobs)
-				M.gib()
-			endthisshit = 1
-
 /datum/game_mode/revolution/proc/equip_revolutionary(mob/living/carbon/human/rev_mob)
 	equip_traitor(rev_mob)
 
@@ -168,6 +156,16 @@
 
 /datum/game_mode/revolution/process()
 	..()
+	if (ticker.round_elapsed_ticks == round_limit) // this has got to end soon
+		command_alert("A revolution has been detected on [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
+	if (ticker.round_elapsed_ticks == round_limit + 10 MINUTES) // 10 minutes to clean up shop
+		command_alert("Revolution heads have been identified. Please stand by for hostile employee termination.", "Emergency Riot Update")
+	if (ticker.round_elapsed_ticks == round_limit + 15 MINUTES) // 5 minutes until everyone dies
+		command_alert("You may feel a slight burning sensation.", "Emergency Riot Update")
+		sleep(10 SECONDS) // welp
+		for(var/mob/living/carbon/M in mobs)
+			M.gib()
+		endthisshit = 1
 	if (world.time > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
