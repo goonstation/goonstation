@@ -121,6 +121,11 @@ export const ListInput = (props, context) => {
       return;
     }
 
+    if (nextScrollTime > performance.now() || !displayedArray.length) {
+      return;
+    }
+    nextScrollTime = performance.now() + 50;
+
     let foundValue;
     if (charCode === lastCharCode && searchArray.length > 0) {
       const nextIndex = searchIndex + 1;
