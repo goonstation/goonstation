@@ -43,12 +43,18 @@ export const ListInput = (props, context) => {
     e.preventDefault();
 
     if (e.keyCode === KEY_END) {
+      if (!displayedArray.length) {
+        return;
+      }
       const button = buttons[buttons.length - 1];
       setSelectedButton(button);
       setLastCharCode(null);
       document.getElementById(button).focus();
     }
     else if (e.keyCode === KEY_HOME) {
+      if (!displayedArray.length) {
+        return;
+      }
       const button = buttons[0];
       setSelectedButton(button);
       setLastCharCode(null);
@@ -58,7 +64,7 @@ export const ListInput = (props, context) => {
       act("cancel");
     }
     else if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN || e.keyCode === KEY_PAGEDOWN || e.keyCode === KEY_PAGEUP) {
-      if (nextScrollTime > performance.now()) {
+      if (nextScrollTime > performance.now() || !displayedArray.length) {
         return;
       }
       nextScrollTime = performance.now() + 50;
@@ -72,15 +78,15 @@ export const ListInput = (props, context) => {
       }
 
       let index = 0;
-      for (index; index < buttons.length; index++) {
-        if (buttons[index] === selectedButton) break;
+      for (index; index < displayedArray.length; index++) {
+        if (displayedArray[index] === selectedButton) break;
       }
       index += direction;
-      if (index < 0 && Math.abs(direction) === 1) index = buttons.length - 1;
-      else if (index >= buttons.length && Math.abs(direction) === 1) index = 0;
+      if (index < 0 && Math.abs(direction) === 1) index = displayedArray.length - 1;
+      else if (index >= displayedArray.length && Math.abs(direction) === 1) index = 0;
       else if (index < 0) index = 0;
-      else if (index >= buttons.length) index = buttons.length - 1;
-      const button = buttons[index];
+      else if (index >= displayedArray.length) index = displayedArray.length - 1;
+      const button = displayedArray[index];
       setSelectedButton(button);
       setLastCharCode(null);
       document.getElementById(button).focus();
