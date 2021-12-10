@@ -58,6 +58,8 @@ var/list/master_particle_info = list()
 	if(toNum)
 		for(var/i = 1; i <= length(.); ++i)
 			.[i] = stringToNum(.[i], restoreNull)
+	if(length(.) == 1 && (isnull(.[1]) || .[1] == ""))
+		. = null
 
 /datum/particle_editor/proc/stringToNum(str, restoreNull = FALSE)
 	. = text2num(str)
@@ -107,6 +109,8 @@ var/list/master_particle_info = list()
 		if("string") return L["value"]
 		if("float") return L["value"]
 		if("int") return L["value"]
+		if("vector") return L["value"]
+		if("vector2") return L["value"]
 		if("color") return stringToNum(L["value"], TRUE)
 		if("text") return L["value"]
 		if("list") return stringToList(L["value"], TRUE, TRUE)
@@ -137,8 +141,8 @@ var/list/master_particle_info = list()
 		if("vector") return generator(L["genType"], a, b)
 		if("box")    return generator(L["genType"], a, b)
 		if("color") //Color can be string or matrix
-			a = length(a) > 1 ? ListToMatrix(a) : a
-			b = length(a) > 1 ? ListToMatrix(b) : b
+			a = length(a) > 1 ? a : L["a"]
+			b = length(a) > 1 ? b : L["b"]
 			return generator(L["genType"], a, b)
 		if("circle") return generator(L["genType"], a, b)
 		if("sphere") return generator(L["genType"], a, b)
@@ -196,7 +200,37 @@ var/list/master_particle_info = list()
 	particles = null
 
 /atom/movable/proc/modify_particle_value(varName, varVal)
+	var/list/default_particle = list(width = 100,
+									height = 100,
+									count = 100,
+									spawning = 1,
+									bound1 = list(-1000, -1000, -1000),
+									bound2 = list(1000, 1000, 1000),
+									icon_state = "",
+									grow = list(0, 0),
+									position = list(0, 0, 0),
+									scale = list(1, 1),
+									velocity = list(0, 0, 0),
+									rotation = 0,
+									spin = 0,
+									friction = list(0, 0, 0),
+									drift = list(0, 0, 0),
+									gravity = list(0, 0, 0),
+									// The following variables either handle null or will evaluate to 0 via Particool
+									// gravity
+									// gradient
+									// transform
+									// lifespan
+									// fade
+									// fadein
+									// icon
+									// color
+									// color_change
+									)
+
 	if(particles)
+		if(isnull(varVal) && !isnull(default_particle[varName]))
+			varVal = default_particle[varName]
 		particles.vars[varName] = varVal
 
 /atom/movable/proc/transition_particle(time, list/new_params, easing, loop)

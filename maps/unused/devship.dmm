@@ -6164,7 +6164,7 @@
 /area/station/medical/medbay/lobby)
 "pq" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "pr" = (
 /obj/cable{
 	d1 = 1;

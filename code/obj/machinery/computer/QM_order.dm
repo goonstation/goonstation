@@ -63,7 +63,7 @@
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(I:registered)
 		if(account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Order Console", 0) as null|num
+			var/enterpin = user.enter_pin("Order Console")
 			if (enterpin == I:pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = I
@@ -199,7 +199,7 @@
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(I:registered)
 				if(account)
-					var/enterpin = input(usr, "Please enter your PIN number.", "Order Console", 0) as null|num
+					var/enterpin = usr.enter_pin("Order Console")
 					if (enterpin == I:pin)
 						boutput(usr, "<span class='notice'>Card authorized.</span>")
 						src.scan = I

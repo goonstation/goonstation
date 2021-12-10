@@ -47,7 +47,7 @@
 				boutput(user, "<span class='notice'>You put [src] in [W].</span>")
 				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
 				if (oreamt == W:maxitems) boutput(user, "<span class='notice'>[W] is now full!</span>")
-				W:satchel_updateicon()
+				W:UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
@@ -73,7 +73,7 @@
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
 			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable)
 				src.set_loc(S.satchel)
-				S.satchel.satchel_updateicon()
+				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
 					playsound(H, "sound/machines/chime.ogg", 20, 1)
@@ -902,7 +902,7 @@
 					if (istype(S))
 						S.hud.remove_object(O)
 			if (istype(B) && .)
-				B.satchel_updateicon()
+				B.UpdateIcon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)

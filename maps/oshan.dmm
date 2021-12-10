@@ -33862,7 +33862,7 @@
 /area/station/hallway/secondary/exit)
 "bFU" = (
 /turf/space/fluid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "bFV" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/camera{
@@ -42073,7 +42073,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/backroom)
 "cbB" = (
-/obj/landmark/santa_mail,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
 "cbC" = (

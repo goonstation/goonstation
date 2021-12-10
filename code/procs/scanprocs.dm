@@ -75,9 +75,9 @@
 		if (blood_system)
 			var/bp_col
 			switch (L.blood_pressure["total"])
-				if (-INFINITY to 374) // very low (90/60)
+				if (-INFINITY to 299) // very low (70/50)
 					bp_col = "red"
-				if (375 to 414) // low (100/65)
+				if (300 to 414) // low (100/65)
 					bp_col = "#CC7A1D"
 				if (415 to 584) // normal (120/80)
 					bp_col = "#138015"

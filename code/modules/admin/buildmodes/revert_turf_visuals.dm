@@ -55,5 +55,5 @@ Ctrl + RMB on buildmode button     = Reset selection<br>
 			object.icon = initial(object.icon)
 			if (istype(object, /turf/simulated/wall/auto))
 				var/turf/simulated/wall/auto/W = object
-				W.update_icon()
+				W.UpdateIcon()
 				W.update_neighbors()

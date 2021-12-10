@@ -18,7 +18,7 @@
 /datum/effects/system/ion_trail_follow/proc/on_vehicle_move(atom/movable/vehicle, atom/previous_loc, direction)
 	var/turf/T = get_turf(vehicle)
 	if(T != src.oldposition)
-		if(istype(T, /turf/space) || (istype(vehicle, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
+		if(istype(oldposition, /turf) && istype(T, /turf/space) || (istype(vehicle, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
 			if (istext(istate) && istate != "blank")
 				var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 				src.oldposition.vis_contents += I
