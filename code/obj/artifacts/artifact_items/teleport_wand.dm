@@ -72,7 +72,7 @@
 		return
 
 	proc/can_teleport_here(var/turf/T,mob/user)
-		if(!istype(user.loc,/obj/dummy/spell_invis/))
+		if(istype(user.loc,/obj/dummy/spell_invis/))
 			return FALSE
 		if(isrestrictedz(T.z))
 			return FALSE
