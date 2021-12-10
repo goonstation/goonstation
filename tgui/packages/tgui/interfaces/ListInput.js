@@ -89,6 +89,11 @@ export const ListInput = (props, context) => {
     const charCode = String.fromCharCode(e.keyCode).toLowerCase();
     if (!charCode) return;
 
+    else if (charCode === "f" && e.ctrlKey) {
+      setShowSearchBar(!showSearchBar);
+      return;
+    }
+
     let foundValue;
     if (charCode === lastCharCode && searchArray.length > 0) {
       const nextIndex = searchIndex + 1;
