@@ -29,6 +29,7 @@
 	var/previous_heal = 0
 	var/portable = 0 //Are we part of a port-a-clone?
 	var/id = null
+	var/emagged = FALSE
 
 	var/cloneslave = 0 //Is a traitor enslaving the clones?
 	var/mob/implant_master = null // Who controls the clones?
@@ -528,6 +529,7 @@
 		return ..()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		src.emagged = TRUE
 		if (isnull(src.occupant))
 			return 0
 		if (user)
@@ -717,9 +719,10 @@
 
 		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
+		if (src.emagged) //huck em
+			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
 		src.occupant = null
 		src.UpdateIcon()
-		return
 
 	proc/malfunction()
 		if (src.occupant)

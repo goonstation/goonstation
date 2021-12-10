@@ -16879,12 +16879,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -19079,9 +19078,8 @@
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "VC" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
@@ -20318,9 +20316,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "YT" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
