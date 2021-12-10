@@ -450,6 +450,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/obj/critter/frog/froggo = new(M.loc)
 			SPAWN_DBG(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
+				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
+				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
 				froggo.name = froggo.real_name
 			return 1
 
