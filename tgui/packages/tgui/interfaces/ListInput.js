@@ -5,7 +5,7 @@
  */
 
 import { clamp01 } from 'common/math';
-import { KEY_UP, KEY_DOWN, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_PAGEUP, KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
+import { KEY_UP, KEY_DOWN, KEY_PAGEDOWN, KEY_END, KEY_HOME, KEY_PAGEUP, KEY_ESCAPE, KEY_ENTER, KEY_TAB } from 'common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Section, Input, Stack } from '../components';
 import { Window } from '../layouts';
@@ -40,9 +40,13 @@ export const ListInput = (props, context) => {
     context, 'selected_button', buttons[0]);
 
   const handleKeyDown = e => {
-    e.preventDefault();
+    let searchBarInput = showSearchBar ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    let searchBarFocused = document.activeElement === searchBarInput;
+    if (!searchBarFocused) {
+      e.preventDefault();
+    }
 
-    if (e.keyCode === KEY_END) {
+    if (!searchBarFocused && e.keyCode === KEY_END) {
       if (!displayedArray.length) {
         return;
       }
@@ -51,7 +55,7 @@ export const ListInput = (props, context) => {
       setLastCharCode(null);
       document.getElementById(button).focus();
     }
-    else if (e.keyCode === KEY_HOME) {
+    else if (!searchBarFocused && e.keyCode === KEY_HOME) {
       if (!displayedArray.length) {
         return;
       }
@@ -65,6 +69,16 @@ export const ListInput = (props, context) => {
     }
     else if (e.keyCode === KEY_ENTER) {
       act("choose", { choice: selectedButton });
+    }
+    else if (e.keyCode === KEY_TAB) {
+      let selectedButtonElement = document.getElementById(selectedButton);
+      if (searchBarFocused && selectedButtonElement) {
+        selectedButtonElement.focus();
+      }
+      else if (searchBarInput && !searchBarFocused) {
+        searchBarInput.focus();
+      }
+      e.preventDefault();
     }
     else if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN || e.keyCode === KEY_PAGEDOWN || e.keyCode === KEY_PAGEUP) {
       if (nextScrollTime > performance.now() || !displayedArray.length) {
@@ -100,6 +114,10 @@ export const ListInput = (props, context) => {
 
     else if (charCode === "f" && e.ctrlKey) {
       setShowSearchBar(!showSearchBar);
+      return;
+    }
+
+    if (searchBarFocused) {
       return;
     }
 
@@ -141,7 +159,8 @@ export const ListInput = (props, context) => {
       width={325}
       height={325}>
       {timeout !== undefined && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content
+        onKeyDown={handleKeyDown}>
         <Stack fill vertical>
           <Stack.Item grow>
             <Section
@@ -150,7 +169,6 @@ export const ListInput = (props, context) => {
               className="ListInput__Section"
               title={message}
               tabIndex={0}
-              onKeyDown={handleKeyDown}
               buttons={(
                 <Button
                   compact
@@ -195,6 +213,7 @@ export const ListInput = (props, context) => {
             <Stack.Item>
               <Input
                 fluid
+                id="search_bar"
                 onInput={(e, value) => {
                   let newDisplayed = buttons.filter(val => (
                     val.toLowerCase().search(value.toLowerCase()) !== -1
