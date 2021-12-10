@@ -46,7 +46,7 @@ export const ListInput = (props, context) => {
       if (!displayedArray.length) {
         return;
       }
-      const button = buttons[buttons.length - 1];
+      const button = displayedArray[buttons.length - 1];
       setSelectedButton(button);
       setLastCharCode(null);
       document.getElementById(button).focus();
@@ -55,7 +55,7 @@ export const ListInput = (props, context) => {
       if (!displayedArray.length) {
         return;
       }
-      const button = buttons[0];
+      const button = displayedArray[0];
       setSelectedButton(button);
       setLastCharCode(null);
       document.getElementById(button).focus();
