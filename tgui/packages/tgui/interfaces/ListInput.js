@@ -41,10 +41,6 @@ export const ListInput = (props, context) => {
 
   const handleKeyDown = e => {
     e.preventDefault();
-    if (nextScrollTime > performance.now()) {
-      return;
-    }
-    nextScrollTime = performance.now() + 125;
 
     if (e.keyCode === KEY_END) {
       const button = buttons[buttons.length - 1];
@@ -52,19 +48,21 @@ export const ListInput = (props, context) => {
       setLastCharCode(null);
       document.getElementById(button).focus();
     }
-
-    if (e.keyCode === KEY_HOME) {
+    else if (e.keyCode === KEY_HOME) {
       const button = buttons[0];
       setSelectedButton(button);
       setLastCharCode(null);
       document.getElementById(button).focus();
     }
-
-    if (e.keyCode === KEY_ESCAPE) {
+    else if (e.keyCode === KEY_ESCAPE) {
       act("cancel");
     }
+    else if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN || e.keyCode === KEY_PAGEDOWN || e.keyCode === KEY_PAGEUP) {
+      if (nextScrollTime > performance.now()) {
+        return;
+      }
+      nextScrollTime = performance.now() + 125;
 
-    if (e.keyCode === KEY_UP || e.keyCode === KEY_DOWN || e.keyCode === KEY_PAGEDOWN || e.keyCode === KEY_PAGEUP) {
       let direction;
       switch (e.keyCode) {
         case KEY_UP: direction = -1; break;
