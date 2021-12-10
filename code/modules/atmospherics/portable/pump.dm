@@ -167,12 +167,12 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 
 		if (href_list["pressure_adj"])
 			var/diff = text2num_safe(href_list["pressure_adj"])
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
+			target_pressure = clamp(target_pressure+diff, 0, 10*ONE_ATMOSPHERE)
 
 		else if (href_list["pressure_set"])
 			var/change = input(usr,"Target Pressure (0-[10*ONE_ATMOSPHERE]):","Enter target pressure",target_pressure) as num
 			if(!isnum_safe(change)) return
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, change))
+			target_pressure = clamp(change, 0, 10*ONE_ATMOSPHERE)
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)

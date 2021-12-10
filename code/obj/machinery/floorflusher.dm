@@ -199,11 +199,6 @@
 			src.remove_dialog(user)
 			return
 
-		//fall in hilariously
-		boutput(user, "You slip and fall in.")
-		user.set_loc(src)
-		update()
-
 
 	// eject the contents of the unit
 	proc/eject()

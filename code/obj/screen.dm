@@ -130,22 +130,22 @@
 
 	if (icon_y > 16)
 		if (icon_x > 16) //Upper Right
-			user.a_intent = INTENT_DISARM
+			user.set_a_intent(INTENT_DISARM)
 			src.icon_state = "disarm"
 			if(literal_disarm && ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.limbs.l_arm.sever()
 				H.limbs.r_arm.sever()
 		else //Upper Left
-			user.a_intent = INTENT_HELP
+			user.set_a_intent(INTENT_HELP)
 			src.icon_state = "help"
 
 	else
 		if (icon_x > 16) //Lower Right
-			user.a_intent = INTENT_HARM
+			user.set_a_intent(INTENT_HARM)
 			src.icon_state = "harm"
 		else //Lower Left
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			src.icon_state = "grab"
 
 	boutput(user, "<span class='hint'>Your intent is now set to '[user.a_intent]'.</span>")

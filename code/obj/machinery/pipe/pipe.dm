@@ -979,7 +979,7 @@ var/linenums = 0
 
 			//if(dbg) world.log << "C[tag]PC1: TOTAL_MOLES([gas)], TOTAL_MOLES([ngas)] <- TOTAL_MOLES([connected.gas)]"
 			amount = min(connected.c_per, capacity - TOTAL_MOLES(gas) )	// limit to space in connector
-			amount = max(0, min(amount, TOTAL_MOLES(connected.gas) ) )		// limit to amount in canister, or 0
+			amount = clamp(amount, 0, TOTAL_MOLES(connected.gas) )		// limit to amount in canister, or 0
 			//if(dbg) world.log << "C[tag]PC2: a=[amount]"
 			//var/ng = TOTAL_MOLES(ngas)
 			ngas.transfer_from( connected.gas, amount)
@@ -988,7 +988,7 @@ var/linenums = 0
 		else if(connected.c_status == 2)		// canister set to accept
 
 			amount = min(connected.c_per, connected.gas.maximum - TOTAL_MOLES(connected.gas))	//limit to space in canister
-			amount = max(0, min(amount, TOTAL_MOLES(gas) ) )				// limit to amount in connector, or 0
+			amount = clamp(amount, 0, TOTAL_MOLES(gas) )				// limit to amount in connector, or 0
 
 			connected.gas.transfer_from( ngas, amount)
 

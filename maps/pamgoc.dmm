@@ -67483,7 +67483,7 @@
 /area/shuttle/arrival/station)
 "cCR" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap)
+/area/shuttle/escape/station)
 "cCS" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/right_station/cogmap)

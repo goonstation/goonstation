@@ -605,7 +605,7 @@
 			return
 
 		src.health -= amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 
 		if (src.health < 1 && !src.active)
 			qdel(src)
