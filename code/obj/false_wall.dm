@@ -164,7 +164,8 @@
 			src.set_density(0)
 			src.gas_impermeable = 0
 			src.pathable = 1
-			src.update_air_properties()
+			if(global.air_master)
+				src.update_air_properties()
 			src.RL_SetOpacity(0)
 			if(!floorintact)
 				src.setIntact(FALSE)
