@@ -16,4 +16,9 @@ if grep -P 'step_[xy]' maps/**/*.dmm;	then
     st=1
 fi;
 
+if grep -P '^\s*New\s*\(|(?<!client|world)\/New\(' code/**/*.dm;	then
+    echo "ERROR: New() override detected, please replace with INIT or INIT_TYPE."
+    st=1
+fi;
+
 exit $st
