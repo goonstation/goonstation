@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				continue
 			value++
 		for (var/obj/machinery/light/L in src.contents)
-			if (L.current_lamp.light_status != 0) //See LIGHT_OK
+			if (!isnull(L.current_lamp) && L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
 		for (var/obj/window/W in src.contents)
