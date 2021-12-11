@@ -1,5 +1,12 @@
+var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
+
 /client
+#ifdef PRELOAD_RSC_URL
+	preload_rsc = PRELOAD_RSC_URL
+#else
 	preload_rsc = 1
+#endif
+	parent_type = /datum
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -21,10 +28,12 @@
 	var/player_mode_mhelp = 0
 	var/only_local_looc = 0
 	var/deadchatoff = 0
-	var/local_deadchat = 0
+	var/mute_ghost_radio = FALSE
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	/// controls whether or not the varedit page is refreshed after altering variables
+	var/refresh_varedit_onchange = TRUE
 	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
@@ -85,9 +94,6 @@
 
 	var/delete_state = DELETE_STOP
 
-	var/list/cloudsaves
-	var/list/clouddata
-
 	var/turf/stathover = null
 	var/turf/stathover_start = null//forgive me
 
@@ -96,7 +102,7 @@
 	var/datum/interfaceSizeHelper/screen/screenSizeHelper = null
 	var/datum/interfaceSizeHelper/map/mapSizeHelper = null
 
-	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
+	var/atom/movable/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
 	var/experimental_intents = 0
 
@@ -122,6 +128,8 @@
 	return
 
 /client/Del()
+	src.mob?.move_dir = 0
+
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
@@ -142,6 +150,7 @@
 		src.holder = null
 
 	src.player?.log_leave_time() //logs leave time, calculates played time on player datum
+	src.player?.cached_jobbans = null //Invalidate their job ban cache.
 
 	return ..()
 
@@ -162,10 +171,8 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
 
-	player = find_player(key)
-	if (!player)
-		player = make_player(key)
-	player.client = src
+	src.player = make_player(key)
+	src.player.client = src
 
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
@@ -193,6 +200,8 @@
 			SPAWN_DBG(0) del(src)
 			return
 */
+
+	src.volumes = default_channel_volumes.Copy()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
@@ -282,7 +291,7 @@
 								<body>
 									<h1>You have been banned.</h1>
 									<span class='banreason'>Reason: [isbanned].</span><br>
-									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
 								</body>
 							</html>
 						"}
@@ -293,6 +302,101 @@
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+//vpn check (for ban evasion purposes)
+#ifdef DO_VPN_CHECKS
+	if (vpn_blacklist_enabled)
+		var/vpn_kick_string = {"
+						<!doctype html>
+						<html>
+							<head>
+								<title>VPN or Proxy Detected</title>
+							</head>
+							<body>
+								<h1>Warning: VPN or proxy connection detected</h1>
+
+                                Please disable your VPN or proxy, close the game, and rejoin.<br>
+                                <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
+								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and request an admins assistance with  whitelisting your account.
+                                 <br> <br>
+                                 If an admin is not immediately available you may also use the <b><u>/report</u></b> command in our discord server to submit a ticket to the administration. Please be sure to include your byond ckey (aka your username), and the name of your ISP in your ticket to avoid delays.
+							</body>
+						</html>
+					"}
+		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
+
+		// We have already checked this user this round and they are indeed on a VPN, kick em
+		if (is_vpn_address)
+			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
+			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
+			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+			if(do_compid_analysis)
+				do_computerid_test(src) //Will ban yonder fucker in case they are prix
+				check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
+			if (src)
+				src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+				sleep(3 SECONDS)
+				if (src)
+					del(src)
+				return
+
+		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
+		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
+		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
+			var/list/data
+			try
+				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
+				// Goonhub API error encountered
+				if (data["error"])
+					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
+					logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
+
+				// Successful Goonhub API query
+				else
+					var/result = dpi(data)
+					if (result == 2 || data["whitelisted"])
+						// User is explicitly whitelisted from VPN checks, ignore
+						global.vpn_ip_checks["[src.address]"] = false
+
+					else
+						data = json_decode(html_decode(data["response"]))
+
+						// VPN checker service returns error responses in a "message" property
+						if (data["success"] == false)
+							// Yes, we're forcing a cache for a no-VPN response here on purpose
+							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
+							//			  so we want to avoid spamming the goonhub API this round for literally no gain
+							global.vpn_ip_checks["[src.address]"] = false
+							logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
+							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+
+						// Successful VPN check
+						// IP is a known VPN, cache locally and kick
+						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 75))
+							global.vpn_ip_checks["[src.address]"] = true
+							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
+							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
+							if(do_compid_analysis)
+								do_computerid_test(src) //Will ban yonder fucker in case they are prix
+								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
+							if (src)
+								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+								sleep(3 SECONDS)
+								if (src)
+									del(src)
+								return
+
+						// IP is not a known VPN
+						else
+							global.vpn_ip_checks["[src.address]"] = false
+
+			catch(var/exception/e)
+				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
+				logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [e.name]", "debug")
+#endif
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -335,10 +439,16 @@
 		var/image/I = globalImages[key]
 		src << I
 
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
 	SPAWN_DBG(0)
 		updateXpRewards()
+
+	//tg controls stuff
+
+	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
+	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	SPAWN_DBG(3 SECONDS)
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
@@ -382,18 +492,15 @@
 				src.cmd_ass_day_rules()
 #endif
 
-			if (src.byond_version < 513 || src.byond_build < 1526)
+			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
-				else
+/*
+ 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
-
-// Let's throw it here, why not! -ZeWaka
-#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
-#error Please update your BYOND version to the latest stable release.
-#endif
+*/
 
 		else
 			if (noir)
@@ -401,7 +508,6 @@
 			preferences.savefile_load(src)
 			load_antag_tokens()
 			load_persistent_bank()
-		src.mob.reset_keymap()
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
 		setJoinDate()
@@ -416,24 +522,31 @@
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
+#ifdef LIVE_SERVER
 		if (cdn)
-			var/http[] = world.Export( "http://spacebee.goonhub.com/api/cloudsave?list&ckey=[ckey]&api_key=[config.ircbot_api]" )
-			if( !http )
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: Couldn't reach Goonhub" )
-
-			var/list/ret = json_decode(file2text( http[ "CONTENT" ] ))
-			if( ret["status"] == "error" )
-				logTheThing( "debug", src, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
-			else
-				cloudsaves = ret["saves"]
-				clouddata = ret["cdata"]
-				load_antag_tokens()
-				load_persistent_bank()
+			if(!cloud_available())
+				src.player.cloud_fetch()
+#else
+		// dev server, uses local save file to simulate clouddata
+		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
+#endif
+			if(cloud_available())
+				src.load_antag_tokens()
+				src.load_persistent_bank()
 				var/decoded = cloud_get("audio_volume")
 				if(decoded)
-					var/cur = volumes.len
+					var/list/old_volumes = volumes.Copy()
 					volumes = json_decode(decoded)
-					volumes.len = cur
+					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+						else
+							volumes += old_volumes[i]
+
+				// Show login notice, if one exists
+				src.show_login_notice()
+
+		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
 			boutput(src, "<b>You have [src.antag_tokens] antag tokens!</b>")
@@ -455,6 +568,8 @@
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
 
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
+
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
 
 	if (is_vert_splitter)
@@ -462,7 +577,7 @@
 		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
 			src.set_widescreen(1, splitter_value)
 
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, "checkScreenAspect"))
+		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkScreenAspect))
 	else
 
 		set_splitter_orientation(0, splitter_value)
@@ -493,11 +608,6 @@
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
 
 	// cursed darkmode end
-
-	//tg controls stuff
-
-	tg_controls = winget( src, "menu.tg_controls", "is-checked" ) == "true"
-	tg_layout = winget( src, "menu.tg_layout", "is-checked" ) == "true"
 
 	//tg controls end
 
@@ -535,6 +645,20 @@
 		SPAWN_DBG(0)
 			sendItemIcons(src)
 
+	// fixing locked ability holders
+	var/datum/abilityHolder/ability_holder = src.mob.abilityHolder
+	ability_holder?.locked = FALSE
+	var/datum/abilityHolder/composite/composite = ability_holder
+	if(istype(composite))
+		for(var/datum/abilityHolder/inner_holder in composite.holders)
+			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.color = "#AAAAAA"
+
+
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -566,12 +690,19 @@
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
-	if (params.len)
-		if ((params["screenW"]/params["screenH"]) == (4/3))
-			SPAWN_DBG(6 SECONDS)
-				if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
-					set_splitter_orientation(0)
-					winset( src, "menu", "horiz_split.is-checked=true" )
+	if (!length(params))
+		return
+	if ((params["screenW"]/params["screenH"]) <= (4/3))
+		SPAWN_DBG(6 SECONDS)
+			if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
+				set_splitter_orientation(0)
+				winset( src, "menu", "horiz_split.is-checked=true" )
+
+/client/proc/checkHiRes(list/params)
+	if(!length(params))
+		return
+	if(params["screenH"] > 1000)
+		winset(src, "info", "font-size=[6 * params["screenH"] / 1080]")
 
 /client/Command(command)
 	command = html_encode(command)
@@ -768,17 +899,24 @@ var/global/curr_day = null
 	return 0
 
 /client/proc/setJoinDate()
-	set background = 1
 	joined_date = ""
-	var/list/text = world.Export("http://byond.com/members/[src.ckey]?format=text")
-	if(text)
-		var/content = file2text(text["CONTENT"])
-		var/savefile/save = new
-		save.ImportText("/", content)
-		save.cd = "general"
-		joined_date = save["joined"]
-		jd_warning(joined_date)
-	return
+
+	// Get join date from BYOND members page
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://byond.com/members/[src.ckey]?format=text", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
+		logTheThing("debug", null, null, "setJoinDate: Failed to get join date response for [src.ckey].")
+		return
+
+	var/savefile/save = new
+	save.ImportText("/", response.body)
+	save.cd = "general"
+	joined_date = save["joined"]
+	jd_warning(joined_date)
 
 /client/verb/ping()
 	set name = "Ping"
@@ -787,25 +925,11 @@ var/global/curr_day = null
 /client/verb/changeServer(var/server as text)
 	set name = "Change Server"
 	set hidden = 1
-	var/serverURL
-	var/serverName
-	switch (server)
-		if (1, "rp")
-			serverName = "Goonstation Roleplay"
-			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main")
-			serverName = "Goonstation"
-			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main2")
-			serverName = "Goonstation Roleplay Overflow"
-			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main3")
-			serverName = "Goonstation Overflow"
-			serverURL = "byond://goon4.goonhub.com:26400"
+	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
-	if (serverURL)
-		boutput(usr, "You are being redirected to [serverName]...")
-		usr << link(serverURL)
+	if (server)
+		boutput(usr, "You are being redirected to [game_server.name]...")
+		usr << link(game_server.url)
 
 
 /*
@@ -814,7 +938,7 @@ var/global/curr_day = null
 	if (!(ishuman(usr))) return
 	var/mob/living/carbon/human/H = usr
 	if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/abuttontest))
-		var/obj/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
+		var/atom/movable/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
 		U.execute_ability()
 */
 
@@ -845,7 +969,7 @@ var/global/curr_day = null
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
-		M = whois_ckey_to_mob_reference(targetCkey)
+		M = ckey_to_mob(targetCkey)
 
 	switch(href_list["action"])
 		if ("priv_msg_irc")
@@ -863,7 +987,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -888,7 +1012,7 @@ var/global/curr_day = null
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
 			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
-				t = strip_html(t,500)
+				t = strip_html(t, 1500)
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -897,7 +1021,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -924,9 +1048,9 @@ var/global/curr_day = null
 
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
-					M = whois_ckey_to_mob_reference(href_list["target"])
+					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
-					t = strip_html(t,500)
+					t = strip_html(t, 1500)
 				if (!( t ))
 					return
 				if (!src || !src.mob) //ZeWaka: Fix for null.client
@@ -934,12 +1058,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
@@ -947,9 +1074,9 @@ var/global/curr_day = null
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
-				ircmsg["name"] = src.mob.real_name
+				ircmsg["name"] = stripTextMacros(src.mob.real_name)
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-				ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
@@ -982,8 +1109,12 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
+			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
+			return
+
+		if ("loginnotice_ack")
+			src.acknowledge_login_notice()
 			return
 
 	. = ..()
@@ -1007,23 +1138,22 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
+/// Sets a cloud key value pair and sends it to goonhub
+/client/proc/cloud_put(key, value)
+	return src.player.cloud_put(key, value)
 
-//drsingh, don't read the rest of this comment; BELOW: CLOUD STUFFS
-//Sets and uploads cloud data on the client
-//Try to avoid calling often, as it contacts Goonhub and uses the dreaded spawn.
-//TODO: Pool puts, determine value of doing as such.
-/client/proc/cloud_put( var/key, var/value )
-	if( !clouddata )
-		return "Failed to talk to Goonhub; try rejoining."//oh no
-	clouddata[key] = "[value]"
-	SPAWN_DBG(0)//I do not advocate this! So basically hide your eyes for one line of code.
-		world.Export( "http://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.ircbot_api]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]" )//If it fails, oh well...
-//Returns some cloud data on the client
-/client/proc/cloud_get( var/key )
-	return clouddata ? clouddata[key] : null
-//Returns 1 if you can set or retrieve cloud data on the client
+/// Returns some cloud data on the client
+/client/proc/cloud_get(key)
+	return src.player.cloud_get(key)
+
+/// Returns 1 if you can set or retrieve cloud data on the client
 /client/proc/cloud_available()
-	return !!clouddata
+	return src.player.cloud_available()
+
+/client/proc/message_one_admin(source, message)
+	if(!src.holder)
+		return
+	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
 
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
@@ -1054,13 +1184,13 @@ var/global/curr_day = null
 
 	var/subtr_color = rgb(s_r, s_g, s_b)
 
-	var/si_r = max(min(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
-	var/si_g = max(min(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
-	var/si_b = max(min(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
+	var/si_r = clamp(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
+	var/si_g = clamp(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
+	var/si_b = clamp(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
 
 	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
 
-	var/obj/screen/S = new
+	var/atom/movable/screen/S = new
 	S.icon = 'icons/mob/whiteview.dmi'
 	S.blend_mode = BLEND_SUBTRACT
 	S.color = subtr_color
@@ -1070,7 +1200,7 @@ var/global/curr_day = null
 
 	C.screen += S
 
-	var/obj/screen/M = new
+	var/atom/movable/screen/M = new
 	M.icon = 'icons/mob/whiteview.dmi'
 	M.blend_mode = BLEND_MULTIPLY
 	M.color = multip_color
@@ -1286,7 +1416,7 @@ var/global/curr_day = null
 	src.resizeTooltipEvent()
 
 	//tell the interface helpers to recompute data
-	src.mapSizeHelper.update()
+	src.mapSizeHelper?.update()
 
 /client/verb/autoscreenshot()
 	set hidden = 1
@@ -1349,7 +1479,7 @@ var/global/curr_day = null
 </head>
 <body>
 <video autoplay style="position:fixed;top:0px;right:0px;left:0px;bottom:0px">
-<source src="http://cdn.goonhub.com/misc/cinematics/[name].mp4" type="video/mp4">
+<source src="[config.cdn]/misc/cinematics/[name].mp4" type="video/mp4">
 </video>
 
 <script type="text/javascript">
@@ -1362,6 +1492,12 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
+
+#ifndef SECRETS_ENABLED
+/client/proc/dpi(list/data)
+	return
+#endif
+
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
@@ -1402,7 +1538,10 @@ input.text-color=[_SKIN_TEXT];\
 saybutton.background-color=[_SKIN_COMMAND_BG];\
 saybutton.text-color=[_SKIN_TEXT];\
 info.tab-background-color=[_SKIN_INFO_TAB_BG];\
-info.tab-text-color=[_SKIN_TEXT]"
+info.tab-text-color=[_SKIN_TEXT];\
+mainwindow.hovertooltip.background-color=[_SKIN_BG];\
+mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
+"
 
 /client/verb/sync_dark_mode()
 	set hidden=1

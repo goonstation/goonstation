@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SNIPPING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 6.0
 	throw_speed = 2
@@ -18,7 +18,6 @@
 	stamina_damage = 15
 	stamina_cost = 10
 	stamina_crit_chance = 30
-	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 
 	New()
@@ -55,3 +54,8 @@
 	icon = 'icons/obj/items/tools/wirecutters.dmi'
 	icon_state = "wirecutters-vr"
 	item_state = "wirecutters"
+
+/obj/item/wirecutters/yellow
+	desc = "A tool used to cut wires and bars of metal. This pair has a yellow handle."
+	icon_state = "wirecutters-yellow"
+	item_state = "wirecutters-yellow"

@@ -45,10 +45,14 @@ var/list/popup_verbs_to_toggle = list(\
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
+/client/proc/toggle_ghost_respawns,\
+/client/proc/toggle_adminwho_alerts,\
+/client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
 /client/proc/toggle_literal_disarm,\
+/client/proc/toggle_spooky_light_plane,\
 /datum/admins/proc/toggleooc,\
 /datum/admins/proc/togglelooc,\
 /datum/admins/proc/toggleoocdead,\
@@ -175,6 +179,36 @@ var/global/IP_alerts = 1
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
+client/proc/toggle_ghost_respawns()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Ghost Respawn offers"
+	set desc = "Toggles receiving offers to respawn as a ghost"
+	admin_only
+
+	src.holder.ghost_respawns = !src.holder.ghost_respawns
+	boutput(usr, "<span class='notice'>Toggled ghost respawn offers [src.holder.ghost_respawns ?"on":"off"]!</span>")
+
+/client/proc/toggle_adminwho_alerts()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Who/Adminwho alerts"
+	set desc = "Toggles the alerts for players using Who/Adminwho"
+	admin_only
+
+	src.holder.adminwho_alerts = !src.holder.adminwho_alerts
+	boutput(usr, "<span class='notice'>Toggled who/adminwho alerts [src.holder.adminwho_alerts ?"on":"off"]!</span>")
+
+/client/proc/toggle_rp_word_filtering()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle \"Low RP\" Word Alerts"
+	set desc = "Toggles notifications for players saying \"fail-rp\" words (sussy, poggers, etc)"
+	admin_only
+	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
+	if(src.holder.rp_word_filtering)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE, .proc/message_one_admin)
+	else
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_SUSSY_PHRASE)
+	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
+
 /client/proc/toggle_hear_prayers()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Hearing Prayers"
@@ -183,6 +217,15 @@ var/global/IP_alerts = 1
 
 	src.holder.hear_prayers = !src.holder.hear_prayers
 	boutput(usr, "<span class='notice'>Toggled prayers [src.holder.hear_prayers ?"on":"off"]!</span>")
+
+/client/proc/toggle_atags()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle ATags"
+	set desc = "Toggle local atags on or off"
+	admin_only
+
+	src.holder.see_atags = !src.holder.see_atags
+	boutput(usr, "<span class='notice'>Toggled ATags [src.holder.see_atags ?"on":"off"]!</span>")
 
 /client/proc/toggle_buildmode_view()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -318,6 +361,42 @@ var/global/IP_alerts = 1
 
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
+
+/client/proc/iddqd()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "iddqd"
+	set popup_menu = 0
+	admin_only
+	usr.client.cmd_admin_godmode_self()
+	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
+
+/client/proc/idclip()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "idclip"
+	set popup_menu = 0
+	admin_only
+	usr.client.noclip()
+
+/client/proc/cmd_admin_omnipresence()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Your Mob's Omnipresence"
+	set popup_menu = 0
+	admin_only
+
+	var/omnipresent
+	if(!length(by_cat[TR_CAT_OMNIPRESENT_MOBS]) || !(src.mob in by_cat[TR_CAT_OMNIPRESENT_MOBS]))
+		if(alert(usr, "Are you sure you want to see all messages from the whole world? This is very experimental, possibly laggy, clientcrashing and of dubious usefulness.", "Really???", "Yes", "No") != "Yes")
+			return
+		OTHER_START_TRACKING_CAT(src.mob, TR_CAT_OMNIPRESENT_MOBS)
+		omnipresent = TRUE
+	else
+		OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_OMNIPRESENT_MOBS)
+		omnipresent = FALSE
+	boutput(usr, "<span class='notice'><b>Your omnipresence is now [omnipresent ? "ON" : "OFF"]</b></span>")
+
+	logTheThing("admin", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
+	logTheThing("diary", usr, null, "has toggled their omnipresence to [(omnipresent ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their omnipresence to [(omnipresent ? "On" : "Off")]")
 
 /client/proc/toggle_atom_verbs() // I hate calling them "atom verbs" but wtf else should they be called, fuck
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -595,6 +674,16 @@ var/global/IP_alerts = 1
 	logTheThing("diary", usr, null, "toggled Farting [farting_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Farting [farting_allowed ? "on" : "off"]")
 
+/datum/admins/proc/toggle_emote_cooldowns()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc="Let everyone spam emotes, including farts/filps/suplexes. Oh no."
+	set name="Toggle Emote Cooldowns"
+	NOT_IF_TOGGLES_ARE_OFF
+	no_emote_cooldowns = !( no_emote_cooldowns )
+	logTheThing("admin", usr, null, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
+	logTheThing("diary", usr, null, "toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled emote cooldowns [!no_emote_cooldowns ? "on" : "off"].")
+
 /datum/admins/proc/toggle_blood_system()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle the blood system on or off."
@@ -645,6 +734,7 @@ var/global/IP_alerts = 1
 	config.allow_admin_rev = !(config.allow_admin_rev)
 	deadchat_allowed = !( deadchat_allowed )
 	farting_allowed = !( farting_allowed )
+	no_emote_cooldowns = !( no_emote_cooldowns )
 	suicide_allowed = !( suicide_allowed )
 	monkeysspeakhuman = !( monkeysspeakhuman )
 	no_automatic_ending = !( no_automatic_ending )
@@ -885,3 +975,41 @@ var/global/IP_alerts = 1
 		boutput(world, "<B>The Respawn Arena has been enabled! Use the go_to_respawn_arena verb as a ghost to compete for a new life!</B>")
 	else
 		boutput(world, "<B>The Respawn Arena has been disabled.</B>")
+
+/client/proc/toggle_vpn_blacklist()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle VPN Blacklist"
+	set desc = "Toggle the ability for new players to connect through a VPN or proxy server"
+	admin_only
+	if(rank_to_level(src.holder.rank) >= LEVEL_PA)
+#ifdef DO_VPN_CHECKS
+		vpn_blacklist_enabled = !vpn_blacklist_enabled
+
+		logTheThing("admin", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].")
+		logTheThing("diary", src, null, "toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"].", "admin")
+		message_admins("[key_name(src)] toggled VPN and proxy blacklisting [vpn_blacklist_enabled ? "on" : "off"]")
+#else
+		boutput(src, "VPN Checks are currently disabled on this server!")
+#endif
+	else
+		boutput(src, "You cannot perform this action. You must be of a higher administrative rank!")
+
+/client/proc/toggle_spooky_light_plane()
+	set name = "Toggle Spooky Light Mode"
+	set desc = "toggle thresholded lighting plane"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	admin_only
+
+	var/inp = input(usr, "What lighting threshold to set? 0 - 255", "What lighting threshold to set? 0 - 255. Cancel to disable.", 255 - 24) as num|null
+	if(!isnull(inp))
+		spooky_light_mode = 255 - inp
+	else // turn off
+		spooky_light_mode = 0
+	for(var/client/C in clients)
+		var/atom/plane_parent = C.get_plane(PLANE_LIGHTING)
+		animate(plane_parent, time=4 SECONDS, color=spooky_light_mode ? list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2) : null)
+		animate(C, time=4 SECONDS, color=spooky_light_mode ? "#AAAAAA" : null)
+
+	logTheThing("admin", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	logTheThing("diary", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")

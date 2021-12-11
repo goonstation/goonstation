@@ -28,7 +28,7 @@ datum/job_controller/proc/savefile_version_pass(client/user)
 	return 1
 
 datum/job_controller/proc/savefile_save(client/user, profileNum=1)
-	profileNum = max(1, min(profileNum, CUSTOMJOB_SAVEFILE_PROFILES_MAX))
+	profileNum = clamp(profileNum, 1, CUSTOMJOB_SAVEFILE_PROFILES_MAX)
 	var/savefile/F = new /savefile(src.savefile_path(user), -1)
 	F.Lock(-1)
 
@@ -82,7 +82,7 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 
 	var/path = savefile_path(user)
 
-	profileNum = max(1, min(profileNum, CUSTOMJOB_SAVEFILE_PROFILES_MAX))
+	profileNum = clamp(profileNum, 1, CUSTOMJOB_SAVEFILE_PROFILES_MAX)
 
 	var/savefile/F = new /savefile(path, -1)
 
@@ -149,7 +149,7 @@ datum/job_controller/proc/savefile_get_job_name(client/user, var/profileNum = 1)
 		return 0
 
 	var/path = savefile_path(user)
-	profileNum = max(1, min(profileNum, CUSTOMJOB_SAVEFILE_PROFILES_MAX))
+	profileNum = clamp(profileNum, 1, CUSTOMJOB_SAVEFILE_PROFILES_MAX)
 
 	var/savefile/F = new /savefile(path, -1)
 

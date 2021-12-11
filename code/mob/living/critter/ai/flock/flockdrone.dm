@@ -16,6 +16,7 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/replicate, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/build, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/repair, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/deposit, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/open_container, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/butcher, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/rummage, list(holder, src))
@@ -27,4 +28,4 @@
 /datum/aiTask/prioritizer/flock/drone/on_reset()
 	..()
 	if(holder.owner)
-		holder.owner.a_intent = INTENT_GRAB
+		holder.owner.set_a_intent(INTENT_GRAB)

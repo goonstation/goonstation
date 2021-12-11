@@ -35,12 +35,13 @@
 
 	New()
 		..()
+		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
 		//src.sight |= SEE_TURFS //Uncomment for meson-like vision. I'm not a fan of it though. -Wire
 
 		//Set the drone name
-		if (rand(1, 1000) == 69 && ticker && ticker.mode) //heh
+		if (rand(1, 1000) == 69 && ticker?.mode) //heh
 			//Nuke op radio freq
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
@@ -70,12 +71,13 @@
 		src.tools = list(
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
-			new /obj/item/rcd/safe(src),
+			new /obj/item/rcd/material/cardboard(src),
 			new /obj/item/lamp_manufacturer(src),
 			new /obj/item/device/analyzer/atmospheric(src),
 			new /obj/item/device/t_scanner(src),
 			new /obj/item/electronics/soldering(src),
 			new /obj/item/electronics/scanner(src),
+			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
 			new /obj/item/device/light/flashlight(src)
 		)
@@ -129,8 +131,6 @@
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
-		if (src.client)
-			src.client.images.Remove(mob_static_icons)
 
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'
@@ -177,6 +177,7 @@
 		hud.update_pulling()
 
 	disposing()
+		STOP_TRACKING
 		if (src in available_ghostdrones)
 			available_ghostdrones -= src
 		..()
@@ -357,10 +358,10 @@
 			return
 
 		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
-			dir = get_dir(src, target)
+			set_dir(get_dir(src, target))
 
 		var/obj/item/equipped = src.equipped()
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
@@ -400,34 +401,17 @@
 		else
 			stat("No Cell Inserted!")
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
-				return
-			src.now_pushing = 1
-			if(ismob(AM))
-				var/mob/tmob = AM
-				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					if(prob(20))
-						src.visible_message("<span class='alert'><B>[src] fails to push [tmob]'s fat ass out of the way.</B></span>")
-						src.now_pushing = 0
-						src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-						return
-			src.now_pushing = 0
-			//..()
-			if (!istype(AM, /atom/movable))
-				return
-			if (!src.now_pushing)
-				src.now_pushing = 1
-				if (!AM.anchored)
-					var/t = get_dir(src, AM)
-					step(AM, t)
-				src.now_pushing = null
-			if(AM)
-				AM.last_bumped = world.timeofday
-				AM.Bumped(src)
+	bump(atom/movable/AM as mob|obj)
+		if ( src.now_pushing)
 			return
-		return
+		if (!istype(AM, /atom/movable))
+			return
+		if (!src.now_pushing)
+			src.now_pushing = 1
+			if (!AM.anchored)
+				var/t = get_dir(src, AM)
+				step(AM, t)
+			src.now_pushing = null
 
 	//Four very important procs follow
 	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
@@ -493,7 +477,7 @@
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
 				if(W:try_weld(user, 1))
-					src.health = max(1,min(src.health + 5,src.max_health))
+					src.health = clamp(src.health + 5, 1, src.max_health)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
@@ -506,10 +490,10 @@
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.max_health) >= 33)
-				boutput(usr, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
-			src.health = max(1,min(src.health + 5,src.max_health))
+			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 25)
@@ -822,14 +806,14 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(get_turf(src), 'sound/vox/birdwell.ogg', 50, 1)
+					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
-						playsound(get_turf(src), 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch())
+						playsound(src, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch())
+						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -845,9 +829,9 @@
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
-						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1)
+						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1)
+						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<B>[src]</B> does a flip!"
 					m_anim = 1
 					if (prob(50))
@@ -914,9 +898,9 @@
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 					if (narrator_mode)
-						playsound(get_turf(src), 'sound/vox/fart.ogg', 50, 1)
+						playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(get_turf(src), src.sound_fart, 50, 1)
+						playsound(src, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
 					game_stats.Increment("farts")
 #endif
@@ -1023,8 +1007,10 @@
 			return src.emote(copytext(message, 2),1)
 
 		UpdateOverlays(speech_bubble, "speech_bubble")
+		var/speech_bubble_time = src.last_typing
 		SPAWN_DBG(1.5 SECONDS)
-			UpdateOverlays(null, "speech_bubble")
+			if(speech_bubble_time == src.last_typing)
+				UpdateOverlays(null, "speech_bubble")
 
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
@@ -1083,7 +1069,7 @@
 		var/damage = round((((P.power/3)*P.proj_data.ks_ratio)*dmgmult), 1.0)
 		var/stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 
-		src.changeStatus("stunned", stun*10)
+		src.changeStatus("stunned", stun SECONDS)
 
 		if (src.hat) //For hats getting shot off
 			UpdateOverlays(null, "hat")
@@ -1118,9 +1104,9 @@
 		setFace(pick("happy", "sad", "mad"), random_color())
 
 		if (limiter.canISpawn(/obj/effects/sparks))
-			var/obj/sparks = unpool(/obj/effects/sparks)
+			var/obj/sparks = new /obj/effects/sparks
 			sparks.set_loc(get_turf(src))
-			SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 
 	ex_act(severity)
 		if (src.nodamage) return
@@ -1138,7 +1124,7 @@
 			if (3.0)
 				SPAWN_DBG(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
-					src.changeStatus("stunned", 50)
+					src.changeStatus("stunned", 5 SECONDS)
 
 	blob_act(var/power)
 		if (src.nodamage) return
@@ -1162,8 +1148,7 @@
 			src.TakeDamage(null, round(src.max_health / 2, 1.0))
 
 	temperature_expose(null, temp, volume)
-		if(src.material)
-			src.material.triggerTemp(src, temp)
+		src.material?.triggerTemp(src, temp)
 
 		for(var/atom/A in src.contents)
 			if(A.material)
@@ -1267,7 +1252,7 @@
 		theMind = M.mind
 
 	var/mob/living/silicon/ghostdrone/G
-	if (pickNew && islist(available_ghostdrones) && available_ghostdrones.len)
+	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
 			if (T.newDrone)
 				G = T
@@ -1291,7 +1276,7 @@
 	M.transforming = 1
 	M.canmove = 0
 	M.icon = null
-	M.invisibility = 101
+	APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse
@@ -1300,7 +1285,7 @@
 		G.lastKnownIP = M.client.address
 		M.client.mob = G
 
-	if (M && M.real_name)
+	if (M?.real_name)
 		G.oldname = M.real_name
 
 	G.job = "Ghostdrone"
@@ -1350,9 +1335,9 @@
 			src.see_in_dark = SEE_DARK_FULL
 
 			if (client.adventure_view)
-				src.see_invisible = 21
+				src.see_invisible = INVIS_ADVENTURE
 			else
-				src.see_invisible = 9
+				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
 

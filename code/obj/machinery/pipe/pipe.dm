@@ -7,16 +7,16 @@ var/linenums = 0
 /obj/machinery/pipeline/New()
 	..()
 
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
 	gasflowlist += src
 
 /obj/machinery/pipeline/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 // find the pipeline that contains the /obj/machine (including pipe)
@@ -57,10 +57,8 @@ var/linenums = 0
 	P = nodes[nodes.len]						// last node in list
 	vnode2 = P.node2							// n2 points to last machine
 
-	if(vnode1)
-		vnode1.buildnodes()
-	if(vnode2)
-		vnode2.buildnodes()
+	vnode1?.buildnodes()
+	vnode2?.buildnodes()
 
 	return
 
@@ -176,7 +174,7 @@ var/linenums = 0
 // build the pipelines (THIS HAPPENS ONCE!)
 /proc/makepipelines()
 
-	for(var/obj/machinery/pipes/P as() in machine_registry[MACHINES_PIPES])		// look for a pipe
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for a pipe
 
 		if(!P.plnum)							// if not already part of a line
 			P.buildnodes(++linenums)			// add it, and spread to all connected pipes
@@ -191,7 +189,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P as() in machine_registry[MACHINES_PIPES])		// look for pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for pipes
 
 		if(P.termination)						// true if pipe is terminated (ends in blank or a machine)
 			var/obj/machinery/pipeline/PL = plines[P.plnum]		// get the pipeline from the pipe's pl-number
@@ -204,7 +202,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P as() in machine_registry[MACHINES_PIPES])		// all pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// all pipes
 		P.setline()								// 	set the pipeline object for this pipe
 
 		if(P.tag == "dbg")		//add debug tag to line containing debug pipe
@@ -241,7 +239,7 @@ var/linenums = 0
 		newnode = node.next(prev)
 		prev = node
 
-		if(newnode && newnode.ispipe())
+		if(newnode?.ispipe())
 			node = newnode
 		else
 			break
@@ -262,9 +260,9 @@ var/linenums = 0
 /obj/machinery/pipes/next(var/obj/machinery/from)
 
 	if(from == null)		// if from null, then return the next actual pipe
-		if(node1 && node1.ispipe() )
+		if(node1?.ispipe() )
 			return node1
-		if(node2 && node2.ispipe() )
+		if(node2?.ispipe() )
 			return node2
 		return null			// else return null if no real pipe connected
 
@@ -346,11 +344,11 @@ var/linenums = 0
 		is += "-b"
 
 	if ((src.level == 1 && isturf(src.loc) && T.intact))
-		src.invisibility = 101
+		src.invisibility = INVIS_ALWAYS
 		is += "-f"
 
 	else
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 
 	src.icon_state = is
 
@@ -479,7 +477,6 @@ var/linenums = 0
 				makepowernets()
 
 		//src.master = null
-		//SN src = null
 		qdel(src)
 		return
 
@@ -530,8 +527,6 @@ var/linenums = 0
 	//src.master = null
 	defer_powernet_rebuild = 0
 	makepowernets()
-
-	//SN src = null
 	qdel(src)
 	return
 */
@@ -571,13 +566,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++
@@ -614,13 +609,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++
@@ -691,27 +686,27 @@ var/linenums = 0
 
 /obj/machinery/circulator/New()
 	..()
-	gas1 = unpool(/datum/gas_mixture)
-	gas2 = unpool(/datum/gas_mixture)
+	gas1 = new /datum/gas_mixture
+	gas2 = new /datum/gas_mixture
 
-	ngas1 = unpool(/datum/gas_mixture)
-	ngas2 = unpool(/datum/gas_mixture)
+	ngas1 = new /datum/gas_mixture
+	ngas2 = new /datum/gas_mixture
 
 	gasflowlist += src
 
 	//gas.co2 = capacity
 
-	updateicon()
+	UpdateIcon()
 
 /obj/machinery/circulator/disposing()
 	if(gas1)
-		pool(gas1)
+		qdel(gas1)
 	if(gas2)
-		pool(gas2)
+		qdel(gas2)
 	if(ngas1)
-		pool(ngas1)
+		qdel(ngas1)
 	if(ngas2)
-		pool(ngas2)
+		qdel(ngas2)
 	..()
 
 /obj/machinery/circulator/buildnodes()
@@ -746,11 +741,11 @@ var/linenums = 0
 		SPAWN_DBG(3 SECONDS)				// 3 second delay for slow-off
 			if(circ_status == 2)
 				circ_status = 0
-				updateicon()
+				UpdateIcon()
 	else if(circ_status == 0)
 		circ_status =1
 
-	updateicon()
+	UpdateIcon()
 
 
 
@@ -769,7 +764,7 @@ var/linenums = 0
 			SPAWN_DBG(3 SECONDS)
 				if(circ_status == 2)
 					circ_status = 0
-					updateicon()
+					UpdateIcon()
 	else if(circ_status == 0)
 		if(on)
 			circ_status = 1
@@ -777,10 +772,10 @@ var/linenums = 0
 		if(on)
 			circ_status = 1
 
-	updateicon()
+	UpdateIcon()
 
 
-/obj/machinery/circulator/proc/updateicon()
+/obj/machinery/circulator/UpdateIcon()
 
 	if(status & NOPOWER)
 		icon_state = "circ[side]-p"
@@ -801,7 +796,7 @@ var/linenums = 0
 
 /obj/machinery/circulator/power_change()
 	..()
-	updateicon()
+	UpdateIcon()
 
 /*
 /obj/machinery/circulator/receive_gas(var/obj/substance/gas/t_gas as obj, from as obj, amount)
@@ -984,7 +979,7 @@ var/linenums = 0
 
 			//if(dbg) world.log << "C[tag]PC1: TOTAL_MOLES([gas)], TOTAL_MOLES([ngas)] <- TOTAL_MOLES([connected.gas)]"
 			amount = min(connected.c_per, capacity - TOTAL_MOLES(gas) )	// limit to space in connector
-			amount = max(0, min(amount, TOTAL_MOLES(connected.gas) ) )		// limit to amount in canister, or 0
+			amount = clamp(amount, 0, TOTAL_MOLES(connected.gas) )		// limit to amount in canister, or 0
 			//if(dbg) world.log << "C[tag]PC2: a=[amount]"
 			//var/ng = TOTAL_MOLES(ngas)
 			ngas.transfer_from( connected.gas, amount)
@@ -993,7 +988,7 @@ var/linenums = 0
 		else if(connected.c_status == 2)		// canister set to accept
 
 			amount = min(connected.c_per, connected.gas.maximum - TOTAL_MOLES(connected.gas))	//limit to space in canister
-			amount = max(0, min(amount, TOTAL_MOLES(gas) ) )				// limit to amount in connector, or 0
+			amount = clamp(amount, 0, TOTAL_MOLES(gas) )				// limit to amount in connector, or 0
 
 			connected.gas.transfer_from( ngas, amount)
 
@@ -1118,15 +1113,15 @@ var/linenums = 0
 
 	..()
 	p_dir = dir
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 	gasflowlist += src
 
 /obj/machinery/vent/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/vent/buildnodes()
@@ -1210,15 +1205,15 @@ var/linenums = 0
 	..()
 
 	p_dir = dir
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 	gasflowlist += src
 
 /obj/machinery/inlet/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/inlet/buildnodes()
@@ -1587,7 +1582,7 @@ var/linenums = 0
 		flow_to_turf(gas2, ngas2, T)
 
 /obj/machinery/valve/dvalve/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/valve/dvalve/attack_hand(mob/user)
 	..()
@@ -1714,7 +1709,7 @@ var/linenums = 0
 		leak_to_turf(2)
 	*/ //TODO: FIX
 
-/obj/machinery/oneway/pipepump/proc/updateicon()
+/obj/machinery/oneway/pipepump/UpdateIcon()
 	icon_state = "pipepump-[(status & NOPOWER) ? "stop" : "run"]"
 
 /obj/machinery/oneway/pipepump/power_change()
@@ -1724,7 +1719,7 @@ var/linenums = 0
 
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))	// So they don't all turn off at the same time
-		updateicon()
+		UpdateIcon()
 
 // Filter inlet
 // works with filter_control
@@ -1734,14 +1729,14 @@ var/linenums = 0
 
 /obj/machinery/inlet/filter/New()
 	..()
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
 /obj/machinery/inlet/filter/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/inlet/filter/buildnodes()
@@ -1766,7 +1761,7 @@ var/linenums = 0
 	gas.copy_from(ngas)
 
 /obj/machinery/inlet/filter/process()
-	src.updateicon()
+	src.UpdateIcon()
 	if(!(status & NOPOWER))
 	/*	var/turf/T = src.loc
 		if(!T || T.density)	return
@@ -1811,10 +1806,10 @@ var/linenums = 0
 	else
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))
-		updateicon()
+		UpdateIcon()
 	return
 
-/obj/machinery/inlet/filter/proc/updateicon()
+/obj/machinery/inlet/filter/UpdateIcon()
 	/*
 	if(status & NOPOWER)
 		icon_state = "inlet_filter-0"
@@ -1841,10 +1836,10 @@ var/linenums = 0
 	else
 		status |= NOPOWER
 	SPAWN_DBG(rand(1,15))
-		updateicon()
+		UpdateIcon()
 	return
 
-/obj/machinery/vent/filter/proc/updateicon()
+/obj/machinery/vent/filter/UpdateIcon()
 	/*
 	if(status & NOPOWER)
 		icon_state = "vent_filter-0"

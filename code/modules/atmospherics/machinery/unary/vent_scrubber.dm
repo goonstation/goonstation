@@ -9,7 +9,6 @@
 
 	var/id = null
 	var/frequency = "1439"
-	var/datum/radio_frequency/radio_connection
 
 	var/on = 1
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
@@ -18,22 +17,15 @@
 	#undef _DEF_SCRUBBER_VAR
 
 	var/volume_rate = 120
-//
+
+	New()
+		..()
+		if(frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
 	initialize()
 		..()
-		if(frequency)
-			set_frequency(frequency)
-		update_icon()
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, "[frequency]")
-		frequency = new_frequency
-		if(frequency)
-			radio_connection = radio_controller.add_object(src, "[frequency]")
+		UpdateIcon()
 
 	update_icon()
 		if(on&&node)
@@ -63,7 +55,7 @@
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
 				//Filter it
-				var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 				filtered_out.temperature = removed.temperature
 
 				#define _FILTER_OUT_GAS(GAS, ...) \
@@ -75,15 +67,11 @@
 				#undef _FILTER_OUT_GAS
 
 				if(length(removed.trace_gases))
-					for(var/G in removed.trace_gases)
-						var/datum/gas/trace_gas = G
-						if(istype(trace_gas, /datum/gas/oxygen_agent_b))
-							removed.trace_gases -= trace_gas
-							if(!removed.trace_gases.len)
-								removed.trace_gases = null
-							if(!filtered_out.trace_gases)
-								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+					var/datum/gas/trace_gas = removed.get_trace_gas_by_type(/datum/gas/oxygen_agent_b)
+					if(trace_gas)
+						var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
+						filtered_gas.moles = trace_gas.moles
+						removed.remove_trace_gas(trace_gas)
 
 				//Remix the resulting gases
 				air_contents.merge(filtered_out)
@@ -136,7 +124,7 @@
 			if("set_scrubbing")
 				scrubbing = 1
 
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
 	scrub_oxygen = 0

@@ -16,6 +16,8 @@
 
 		if (!mimic_name)
 			return 1
+		if(mimic_name != last_mimiced_name)
+			phrase_log.log_phrase("voice-mimic", mimic_name, no_duplicates=TRUE)
 		last_mimiced_name = mimic_name //A little qol, probably.
 
 		var/mimic_message = html_encode(input("Choose something to say:","Mimic Message.","") as null|text)
@@ -28,7 +30,7 @@
 			H = holder.owner
 
 
-		if (H && H.ears && istype (H.ears,/obj/item/device/radio/headset))
+		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
 				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in list("head","sec","eng","sci","med","qm","civ","cap","rd","md","ce","hop","hos","clown")
@@ -41,7 +43,7 @@
 		holder.owner.say(mimic_message)
 		holder.owner.real_name = original_name
 
-		if (H && H.ears && istype (H.ears,/obj/item/device/radio/headset))
+		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override)
 				headset.icon_override = initial(headset.icon_override)

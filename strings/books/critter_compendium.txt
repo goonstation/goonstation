@@ -1,0 +1,186 @@
+			<head>
+				<style>
+					body {
+						background-color:#f6f291;
+					}
+					h1 {
+						font-family: "verdana", sans-serif;
+					}
+
+					h2 {
+						font-family: sans-serif;
+						margin: 5px 0px 5px 0px;
+						border-bottom: 1px solid black;
+					}
+
+					.critter_name {
+						font-weight:bold;
+						font-size:18px;
+					}
+					.location {
+						font-size:12px;
+					}
+					.science_name {
+						font-style:italic;
+					}
+					.disclaimer {
+						font-weight:bold;
+					}
+
+				</style>
+			</head>
+
+			<body>
+				<h1>CRITTER COMPENDIUM</h1>
+				<p class="authors">
+					Written by Adam Gaslight<br>
+					Edited by Hullabaloo Skiddoo
+				</p>
+				<h3>Preface</h3>
+				<p class="preface">
+					What follows is a study on the various space-fauna one is able to find throughout space, though if you're looking for an explanation on why everything is a SPACE bee or a SPACE bear or a SPACE whatever the hell, move along, you're not going to find an answer to that here.  I should also say that those fancy latin species names are by no means universally accepted by the scientific community, nor are they necessarily accepted at all in the scientific community.  Each entry in this Compendium is the result of multiple months of procedural research, careful examination, and poking stuff with a stick, as well as the possibly-willing sacrifice of multiple test subjects to the maw of incredibly dangerous creatures.  Some of these sacrifices may or may not have been human.<br><br>
+
+					<span class="disclaimer">DISCLAIMER: No domestic space-bees were harmed during the making of this Compendium.</span>
+				</p>
+
+				<h2>Passive</h2>
+				<p class="subtitle">Critters that make no attempt at harm under any circumstance.  Usually.</p>
+				<p>
+					<span class="critter_name">Cockroach (<span class="science_name">Periplaneta brunnea</span>)</span><br>
+					<span class="location"><B>Location:</B> Maintenance shafts</span>
+				</p>
+				<p class="description">Small insects that do nothing except crawl around being cockroaches.  They cannot attack, are easily killed by brute force, and serve no purpose other than to be cockroaches.  Strangely enough, it is important to note that these are not specified as space cockroaches: They are completely normal cockroaches, identical to those from Earth.  Just goes to show how resilient the bastards are.</p>
+
+				<p>
+				<span class="critter_name">Space seal pup (<span class="science_name">Arctocephalus gazella peur spatium</span>)</span><BR>
+				<span class="location"><B>Location:</B> Pool</span>
+				</p>
+				<p class="description">The actual most adorable things in existence.  The only specimens that one will be able to find are in Space Station 13's pool.  They never seem to age due to a quirk in their genetic code that seems to be incompatible with any other species.  Anyone who attacks them is clearly an immoral monster and are to be lynched with utmost haste.</p>
+
+				<p>
+					<span class="critter_name">Meat cube (<span class="science_name">Carnis cubus</span>)</span><br>
+					<span class="location"><B>Location:</B> Artificially created by science or anomalous energies</span>
+				</p>
+
+				<p class="description">Grotesque, animate amalgamations of flesh and meat that are alive and sentient due to varying factors, such as horrendous scientific experiments, supernatural phenomena, or perhaps the will of an angry god.  They have only been observed to flop around uselessly and pop into a burst of gibs upon expiration.</p>
+
+				<p>
+					<span class="critter_name">Lesser horned owl (<span class="science_name">Bubo magellanicus</span>)</span><br>
+					<span class="location"><B>Location:</B> SS13 Owlery</span>
+				</p>
+				<p class="description">Members of these species, with varying degrees of physical attractiveness, inhabit the station's Owlery.  Some say they hold a great treasure which will allow you to join their ranks as an extremely attractive owl.</p>
+
+				<p>
+					<span class="critter_name">Plasma spore (<span class="science_name">Crepitus globum</span>)</span><br>
+					<span class="location"><B>Location:</B> Deep space</span>
+				</p>
+				<p>These sentient conglomerates have no notable behavior patterns other than to aimlessly float around.  The creatures that make up these spores subsist entirely on plasma, which is filtered through the air as the spore floats.  This plasma is metabolized in a manner that gives the spore the energy to control its local gravitational pull, letting it freely float without any apparent means of propulsion.  However, the volatility and density of this energy makes the plasma spores very dangerous creatures, for any considerable amount of force will cause the plasma spore to burst, with the stored plasma igniting upon contact with the air and the energy shooting outwards milliseconds later, which is all an incredibly fancy way of saying that it blows the fuck up if you hit it with something.</p>
+
+
+				<h2>Neutral</h2>
+				<p class="subtitle">Critters that do not actively hunt others, but will retaliate if provoked.</p>
+				<p>
+					<span class="critter_name">Human (<span class="science_name">Homo sapiens</span>)</span><br>
+					<span class="subtitle"><B>Location:</B> Absolutely everywhere</span>
+				</p>
+				<p class="description">
+					A terrifying creature that destroys almost everything it comes in contact with.  While they don't possess many natural weapons, they seem to use tools often, usually seen wielding a welding tool, a toolbox, or a fire extinguisher.<br>
+
+					There are reports of scientists that have been able to create human beings through the use of carefully-calculated chemical reactions.  The resulting humans have been reported as exhibiting one of two behaviors: Either they are catatonic and effectively braindead, or violent and incredibly aggressive.  The second type of produced human being has been shown to exhibit a surprising amount of robustness.  Observation of precise behavioral characteristics is pending.
+				</p>
+
+				<p>
+					<span class="critter_name">Greater domestic space-bee (<span class="science_name">Pseudoapidae nanotracaceus venerandus</span>)</span><br>
+					<span class="location"><B>Location:</B> Domestic space-bee eggs, kept as pets throughout all of space
+				</p>
+				<p class="description">
+				Truly the greatest and most venerable of these critters in all the universe, as well as one of the very few good things to come out of the NT labs, the humble domestic space-bee is hatched by the mere activation of a space-bee egg.  You can even name the bee by writing its name on the egg before hatching!  Domestic space-bees are, as their name implies, domestic by nature, and will not attack a single living soul unless directly provoked by a terrible, terrible person.  When provoked, they will nibble and sting their attacker.  Contrary to terrestrial bees, the greater domestic space-bee does not die upon issuing a sting, and can sting as many times as it wishes.  Greater domestic space-bees are also fiercely protective of their owners, and will swarm anyone who directly attacks them.  For unknown reasons, the DNA of all greater domestic space-bees is comprised of 1% cat DNA.
+				</p>
+				<p>
+				<span class="critter_name">Space-mouse (<span class="science_name">Mus spatium</span>)</span><br>
+				<span class="location"><B>Location:</B> Maintenance shafts</span>
+				</p>
+				<p class="description">
+					Tiny little rodents that scamper around and eat any food they see on sight.  Easily deterred by mousetraps.  Tend to be very aggressive if provoked.  May have rabies.  If you see any frothing at the mouth, covered in battle scars, or trying to eat itself, either bring it to the attention of the proper station personnel or deal with it yourself.  Hopefully the former, to keep the Janitor from making the floors a slippy slidey water world.
+				</p>
+
+				<p>
+					<span class="critter_name">Space walrus (<span class="science_name">Odobenus rosmarus spatium</span>)</span><br>
+					<span class="location"><B>Location:</B> SS13 Pool</span>
+				</p>
+				<p class="description">
+					One of these tusked tubs of lard lazes about in the pool and does nothing other than leisurely wander around...unless you punch it, in which case it will run up to you, lunge at you to knock you down, and gore you with its tusks before resuming its lazing.  Other than that interesting little oddity, the space walrus does absolutely nothing useful aside from serving as a wall of flab.  Honestly, I have no idea why we keep one of these things on the station.
+				</p>
+
+
+				<p>
+					<span class="critter_name">Jungle owlet (<span class="science_name">Glaucidium radiatum</span>)</span><br>
+					<span class="location"><B>Location:</B> SS13 Owlery</span>
+				</p>
+				<p class="description">
+					Space Station 13 has had a long history of keeping at least one member of this species of owls on station, the reason for which is completely unknown to the vast majority of Nanotrasen employees.  It's rumored that one can turn themselves into an owl of this species through use of a mysterious artifact that has also been kept in the station's Owlery, though this is fiercely denied by just about any NT official you ask.
+				</p>
+				<p>
+					<span class="critter_name">Space pig (<span class="science_name">Sus spatium</span>)</span><br>
+					<span class="location"><B>Location:</B> Deep space</span>
+				</p>
+				<p class="description">
+					A source of delicious bacon.  They tend to collect in great heaps if your telescience managers are being idiots, which is unfortunately common.
+				</p>
+
+				<p>
+					<span class="critter_name">Space goose (<span class="science_name">Branta canadensis spatium</span>)</span>
+					<span class="location"><B>Location:</B> Unknown</span>
+				</p>
+				<p class="description">
+					Geese in space.  More specifically, a species of goose specifically made for life in space.  They are inexplicably able to open airlocks, and will relentlessly chase down and beat any motherfucker that provokes them.  There's a theory that these honking death machines were being mass-produced by the Syndicate for utilization in combat, but Syndicate officials claim to know nothing about the true origins of the space goose, leaving the matter as a mystery.
+				</p>
+
+				<p>
+					<span class="critter_name">Magma crab (<span class="science_name">Carabus petrum</span>)</span><br>
+					<span class="location"><B>Location:</B> Lava moon</span>
+				</p>
+				<p class="description">
+					Denizens of what is referred to as the 'lava moon' that do not move or take action towards most stimuli.  Research had been remarkably inconclusive as to the behavioral patterns of these species, with a hypothesis being proposed that they weren't even creatures at all, and were instead conspicuously-shaped rocks.  That is, until one scientist, in a fit of anger, kicked a magma crab in the face during on-station testing, and was promptly pinched directly in the ankle.  After the scientist in question hid behind a bush to escape the creature, the magma crab returned to its previous state of immobility.
+				</p>
+
+				<p>
+					<span class="critter_name">B-33 "BeeBuddy" (<span class="science_name">Pseudoapidae nanotracaceus machina</span>)</span><br>
+					<span class="location"><B>Location:</B> Unknown</span>
+				</p>
+				<p>
+					Somehow, through some crazy genetics shit, a hybrid of the greater domestic space-bee and the PR-6 Robuddy exists.  We don't know how those two things are capable of reproducing with one another, and to be perfectly honest, we really don't want to know.  Tests still need to be run to determine which characteristics of both species these 'BeeBuddies' possess.
+				</p>
+
+				<p>
+					<span class="critter_name">&#1050;&#1086;&#1089;&#1084;&#1086;&#1089; &#1055;&#1095;&#1077;&#1083;&#1072; (<span class="science_name">Kocmoc pchela</span>)</span><br>
+					<span class="location"><B>Location:</B> A russian ship in deep space</span>
+				</p>
+				<p class="description">
+					A manufactured, fake excuse of a bee.  Hovers around being a horrible facsimile and spouting communist propaganda.  May know nuclear launch codes.
+				</p>
+
+				<p>
+					<span class="critter_name">Bombini</span><br>
+					<span class="location"><B>Location:</B> Her ship, out in space</span>
+				</p>
+				<p class="description">
+					This bee puts the "great" in "greater domestic space-bee", as Bombini is a distinguished member of the bee family, and separates herself from the common bee with her advanced intellect, her swanky outfit, her sweet goods, and her conversational savvy. She can be found in the diner asteroid fields. Truly, a fine merchant amongst beekind.
+				</p>
+
+				<p>
+					<span class="critter_name">Heartbee (<span class="science_name">Pseudoapidae nanotracaceus organi</span>)</span><br>
+					<span class="location"><B>Location:</B> Created by a chemical reaction</span>
+				<p>
+				<p class="description">
+					Giving an entirely new meaning to the term "butterflies in your chest", these creatures are human hearts that have been transformed into bees through the use of a highly dangerous and experimental chemical.  It is unknown to what extent these creatures function like bees.
+				</p>
+
+				<p>
+					<span class="critter_name">The Overbee (<span class="science_name">Pseudoapidae nanotracaceus rex</span>)</span><br>
+					<span class="location"><B>Location:</B> Purportedly, a giant beehive in space.</span>
+				</p>
+				<p class="description">
+					Rumored to live in the depths of space, the Overbee is a variant on the greater domestic space-bee with a wild variety of superpowers.  Fortunately, it is observed to be friendly in nature...but no researchers have been able to report back with their findings after setting out to test the creature's behavior when provoked.
+				</p>
+			</body>

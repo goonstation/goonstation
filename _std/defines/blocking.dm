@@ -10,7 +10,8 @@
 //#define BLOCK_BOOK		BLOCK_SETUP; src.c_flags |= (BLOCK_CUT | BLOCK_STAB)
 //#define BLOCK_ROPE		BLOCK_BOOK
 
-#define DEFAULT_BLOCK_PROTECTION_BONUS 2 //blocking to match damage type correctly gives you a -2 bonus on protection (unless this item grants Even More protection, that overrides this)
+#define DEFAULT_BLOCK_PROTECTION_BONUS 4 //blocking to match damage type correctly gives you a +3 bonus on protection (unless this item grants Even More protection, that overrides this)
+#define UNARMED_BLOCK_PROTECTION_BONUS 2 //Unarmed blocks don't need to match damage type, but generally block less damage
 
 
 #define BLOCK_SETUP(blocktypes)	RegisterSignal(src, COMSIG_ITEM_BLOCK_BEGIN, .proc/block_prop_setup, TRUE); src.c_flags |= BLOCK_TOOLTIP; ADD_BLOCKS(blocktypes)

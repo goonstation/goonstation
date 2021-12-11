@@ -7,14 +7,17 @@
 	anchored = 1
 	var/meat = 0
 	var/occupied = 0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 
 /obj/kitchenspike/attackby(obj/item/grab/G as obj, mob/user as mob)
 	if(!istype(G, /obj/item/grab))
 		return
 	if(!ismonkey(G.affecting))
-		boutput(user, "<span class='alert'>They are too big for the spike, try something smaller!</span>")
+		boutput(user, "<span class='alert'>[G.affecting] is too big for the spike, try something smaller!</span>")
 		return
-
+	if((!isnpcmonkey(G.affecting) || G.affecting.client) && !isdead(G.affecting))
+		boutput(user, "<span class='alert'>[G.affecting] looks sentient and is struggling too much!</span>")
+		return
 	if(src.occupied == 0)
 		src.icon_state = "spikebloody"
 		src.occupied = 1
@@ -27,6 +30,7 @@
 		G.affecting.unequip_all()
 		qdel(G.affecting)
 		qdel(G)
+		JOB_XP(user, "Chef", 2)
 
 	else
 		boutput(user, "<span class='alert'>The spike already has a monkey on it, finish collecting his meat first!</span>")
@@ -38,10 +42,10 @@
 		if(src.meat > 1)
 			src.meat--
 			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat( src.loc )
-			boutput(usr, "You remove some meat from the monkey.")
+			boutput(user, "You remove some meat from the monkey.")
 		else if(src.meat == 1)
 			src.meat--
 			new /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat(src.loc)
-			boutput(usr, "You remove the last piece of meat from the monkey!")
+			boutput(user, "You remove the last piece of meat from the monkey!")
 			src.icon_state = "spike"
 			src.occupied = 0

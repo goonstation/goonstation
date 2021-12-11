@@ -47,7 +47,7 @@
 					if(lowertext(system) != "thrusters" && lowertext(system) != "weapons" && lowertext(system) != "shields")
 						print_text("Unknown sub-system: [system]")
 						return
-					if(!text2num(percentage))
+					if(!text2num_safe(percentage))
 						print_text("Invalid setting: [percentage]")
 						return
 					var/datum/signal/newsignal = get_free_signal()
@@ -267,12 +267,12 @@
 				return
 
 			if ("set_power")
-				var/percentage = text2num(signal.data["percentage"])
+				var/percentage = text2num_safe(signal.data["percentage"])
 				if(!percentage)
 					return
 				var/datum/signal/newsignal = get_free_signal()
 
-				percentage = min(max(percentage, 1), 500)
+				percentage = clamp(percentage, 1, 500)
 
 				switch(lowertext(signal.data["system"]))
 					if("thrusters")
@@ -291,7 +291,7 @@
 
 	//Return true if cruiser is valid/found.
 	proc/check_cruiser()
-		var/area/ship_interior/A = get_area(src.host)
+		var/area/cruiser/A = get_area(src.host)
 		if(istype(A))
 			cruiser = A.ship
 			return 1

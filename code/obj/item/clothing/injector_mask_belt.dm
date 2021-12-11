@@ -27,7 +27,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		..()
 		if(slot == SLOT_BELT)
 			owner = user
-			if (container && container.reagents.total_volume && condition)
+			if (container?.reagents.total_volume && condition)
 				active = 1
 				check()
 				user.show_text("[src]: Injector system initialized.", "blue")
@@ -123,13 +123,13 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		if(!is_equipped()) return
 		if(!active) return
 
-		if(condition && container && container.reagents.total_volume)
+		if(condition && container?.reagents.total_volume)
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0
 				SPAWN_DBG(min_time*10) can_trigger = 1
 
-				playsound(get_turf(src),"sound/items/injectorbelt_active.ogg", 33, 0, -5)
+				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
 				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
@@ -158,7 +158,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS  | NOSPLASH
-	c_flags = SPACEWEAR | COVERSMOUTH | MASKINTERNALS
+	c_flags =  COVERSMOUTH | MASKINTERNALS
 	mats = 10
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
@@ -175,7 +175,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		..()
 		if(slot == SLOT_WEAR_MASK)
 			owner = user
-			if (container && container.reagents.total_volume && condition)
+			if (container?.reagents.total_volume && condition)
 				active = 1
 				check()
 				user.show_text("[src]: Injector system initialized.", "blue")
@@ -275,7 +275,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		if(!is_equipped()) return
 		if(!active) return
 
-		if(condition && container && container.reagents.total_volume)
+		if(condition && container?.reagents.total_volume)
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0

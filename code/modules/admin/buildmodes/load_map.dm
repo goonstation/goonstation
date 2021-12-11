@@ -19,7 +19,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 		update_mode()
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		mode_number = (mode_number + 1) % mode_names.len
+		mode_number = (mode_number + 1) % length(mode_names)
 		update_mode()
 
 	proc/update_mode()

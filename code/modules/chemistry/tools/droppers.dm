@@ -29,10 +29,10 @@
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (!src || !istype(src))
 			return
 
@@ -61,7 +61,7 @@
 
 			target.reagents.trans_to(src, t)
 			boutput(user, "<span class='notice'>You fill the dropper with [t] units of the solution.</span>")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if ((src.customizable_settings_available && src.transfer_mode == TO_TARGET) || (!src.customizable_settings_available && src.reagents.total_volume))
 			if (src.reagents.total_volume)
@@ -90,15 +90,15 @@
 
 					for (var/mob/O in AIviewers(world.view, user))
 						O.show_message(text("<span class='alert'><B>[] drips something onto []!</B></span>", user, target), 1)
-					src.reagents.reaction(target, TOUCH, -(src.reagents.total_volume - t)) // Modify it so that the reaction only happens with the actual transferred amount.
+					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)
-				SPAWN_DBG (5)
-					if (src && src.reagents && target && target.reagents)
+				SPAWN_DBG(0.5 SECONDS)
+					if (src?.reagents && target?.reagents)
 						src.reagents.trans_to(target, t)
 
 				user.show_text("You transfer [t] units of the solution.", "blue")
-				src.update_icon()
+				src.UpdateIcon()
 			else
 				user.show_text("The [src] is empty!", "red")
 
@@ -131,7 +131,7 @@
 	Topic(href, href_list)
 		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
+		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		..()
@@ -153,7 +153,7 @@
 
 	proc/modify_transfer_amt(var/diff)
 		src.transfer_amount += diff
-		src.transfer_amount = min(max(transfer_amount, 0.1), 10) // Sanity check.
+		src.transfer_amount = clamp(transfer_amount, 0.1, 10) // Sanity check.
 		src.amount_per_transfer_from_this = src.transfer_amount
 		return
 

@@ -12,7 +12,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box-red"
 	spawn_contents = list(
-		/obj/item/paper/book/monster_manual,
+		/obj/item/paper/book/from_file/DNDrulebook,
 		/obj/item/dice,
 		/obj/item/dice/d4,
 		/obj/item/dice/d8,
@@ -82,6 +82,7 @@
 /obj/item/storage/box/holywaterkit
 	name = "do-it-yourself holy water kit"
 	desc = "Just combine the ingredients with water! Free container with sample provided."
+	icon_state = "holywaterkit"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/mercury = 3,
 	/obj/item/reagent_containers/food/drinks/bottle/wine = 3,
 	/obj/item/reagent_containers/glass/bottle/holywater)

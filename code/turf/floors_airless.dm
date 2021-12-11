@@ -1,6 +1,6 @@
 /*
  * Hey! You!
- * Remember to mirror your changes!
+ * Remember to mirror your changes (unless you use the [DEFINE_FLOORS] macro)
  * floors_unsimulated.dm & floors.dm
  */
 
@@ -29,6 +29,14 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/airless/plating/catwalk
+	name = "catwalk support"
+	icon_state = "catwalk"
+	allows_vehicles = 1
+	step_material = "step_lattice"
+	step_priority = STEP_PRIORITY_MED
+
 
 ////////////////////////////////////////////////////////////
 
@@ -59,6 +67,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
+	layer = PLATING_LAYER
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
@@ -778,7 +787,7 @@
 			icon_state = "snow3"
 		else if (prob(5))
 			icon_state = "snow4"
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/airless/snow/green
 	name = "snow-covered floor"
@@ -797,7 +806,7 @@
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /////////////////////////////////////////
 
@@ -819,7 +828,7 @@
 /turf/simulated/floor/airless/grass/random
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 /turf/simulated/floor/airless/grass/random/alt
 	icon_state = "grass_eh"

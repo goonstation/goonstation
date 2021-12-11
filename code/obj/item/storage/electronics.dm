@@ -23,7 +23,8 @@
 		/obj/item/disk/data/cartridge/nuclear,
 		/obj/item/disk/data/cartridge/syndicate,
 		/obj/item/disk/data/cartridge/ai,
-		/obj/item/disk/data/cartridge/cyborg)
+		/obj/item/disk/data/cartridge/cyborg,
+		/obj/item/disk/data/cartridge/ringtone_syndie)
 
 		var/list/spawnable = typesof(/obj/item/disk/data/cartridge)
 		spawnable -= invalid_carts
@@ -57,7 +58,7 @@
 	desc = "A useful kit for building guardbuddies. All you need is a module!"
 	spawn_contents = list(/obj/item/guardbot_frame,\
 	/obj/item/guardbot_core,\
-	/obj/item/parts/robot_parts/arm/right,\
+	/obj/item/parts/robot_parts/arm/right/standard,\
 	/obj/item/cell)
 
 /obj/item/storage/box/lightbox

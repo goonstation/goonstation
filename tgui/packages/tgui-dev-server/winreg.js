@@ -37,8 +37,7 @@ export const regQuery = async (path, key) => {
       logger.error('could not find the start of the key value');
       return null;
     }
-    const value = stdout.substring(indexOfValue + 4, indexOfEol);
-    return value;
+    return stdout.substring(indexOfValue + 4, indexOfEol);
   }
   catch (err) {
     logger.error(err);

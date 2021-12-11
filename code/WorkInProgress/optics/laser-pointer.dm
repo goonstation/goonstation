@@ -14,7 +14,7 @@
 	var/peak_output = 0.005	// max output 5 mW
 	layer = OBJ_LAYER + 0.1
 
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	m_amt = 500
 	g_amt = 100
 	w_amt = 200
@@ -26,7 +26,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if(ispryingtool(W))
 			turn_off()
-			dir = turn(dir, -90)
+			set_dir(turn(dir, -90))
 			if(on) turn_on()
 
 	attack_ai()
@@ -39,7 +39,7 @@
 		else
 			turn_off()
 
-		updateicon()
+		UpdateIcon()
 
 	Move(var/atom/newloc,var/newdir)
 		. = ..(newloc,newdir)
@@ -63,5 +63,5 @@
 		turn_off()
 		turn_on()
 
-	proc/updateicon()
+	UpdateIcon()
 		icon_state = "pointer[on]"

@@ -112,7 +112,7 @@
 		var/obj/storage/closet/coffin/vampire/coffin = new(spawnturf)
 		animate_buff_in(coffin)
 
-		V.traveling_to_coffin = coffin
+		V.the_coffin = coffin
 
 		var/obj/projectile/proj = initialize_projectile_ST(M, new/datum/projectile/special/homing/travel, spawnturf)
 		var/tries = 5

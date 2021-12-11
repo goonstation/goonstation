@@ -2,6 +2,7 @@
 	name = "The Gauntlet"
 	icon_state = "dk_yellow"
 	virtual = 1
+	dont_log_combat = TRUE
 
 	Entered(var/atom/A)
 		..()
@@ -44,7 +45,7 @@
 
 /mob/proc/is_in_gauntlet()
 	var/area/A = get_area(src)
-	if (A && A.type == /area/gauntlet)
+	if (A?.type == /area/gauntlet)
 		return 1
 	return 0
 
@@ -536,7 +537,7 @@
 var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /obj/observable
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	name = "Observable"
 	desc = "observable"
 	anchored = 1
@@ -619,7 +620,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	inactive_artifact
 		name = "An Artifact"
 		minimum_level = 20
-		supplies = list(/obj/artifact/bomb, /obj/artifact/darkness_field, /obj/artifact/healer_bio, /obj/artifact/forcefield_generator, /obj/artifact/power_giver)
+		supplies = list(/obj/machinery/artifact/bomb, /obj/artifact/darkness_field, /obj/artifact/healer_bio, /obj/artifact/forcefield_generator, /obj/artifact/power_giver)
 		max_amount = 1
 
 	hamburgers
@@ -871,7 +872,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				if (prob(10))
 					if (!M.getStatusDuration("burning"))
 						boutput(M, "<span class='alert'>You spontaneously combust!</span>")
-					M.changeStatus("burning", 70)
+					M.changeStatus("burning", 7 SECONDS)
 
 		tearDown()
 			for (var/turf/T in gauntlet_controller.gauntlet)
@@ -1001,7 +1002,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				T.overlays.len = 0
 
 /obj/zapdummy
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 

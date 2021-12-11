@@ -1,7 +1,11 @@
 // PLEASE DONT ADD STUFF TO THIS THAT ISNT DIRECTLY RELATED TO GAME SETUP
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map. will horribly break things but speeds up compile/boot times.
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map and disable all other z levels. Speeds up compile/boot times but will mess up anything relying on other z-levels
+
+#ifdef RUNTIME_CHECKING
+#define ABSTRACT_VIOLATION_CRASH
+#endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
 #define SKIP_FEA_SETUP 1
@@ -36,6 +40,7 @@
 // if you want to see all erebite explosions set this to 0 or -1 or something
 
 // gameticker
+#define GAME_STATE_MAP_LOAD   0
 #define GAME_STATE_WORLD_INIT	1
 #define GAME_STATE_PREGAME		2
 #define GAME_STATE_SETTING_UP	3
@@ -58,16 +63,20 @@
 #ifdef RP_MODE
 #define ASS_JAM 0
 #elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-#define ASS_JAM 1
+#define ASS_JAM 0 // ASS JAM DISABLED! FOR NOW! -warc
 #else
 #define ASS_JAM 0
 #endif
 
 // holiday toggles!
 
-//#define HALLOWEEN 1
-//#define XMAS 1
-//#define CANADADAY 1
+#if (BUILD_TIME_MONTH == 10)
+#define HALLOWEEN 1
+#elif (BUILD_TIME_MONTH == 12)
+#define XMAS 1
+#elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
+#define CANADADAY 1
+#endif
 
 // other toggles
 
@@ -101,7 +110,7 @@ var/ZLOG_START_TIME
 #define NON_EUCLIDEAN 1
 
 // Used for /datum/respawn_controller - DOES NOT COVER ALL RESPAWNS YET
-#define DEFAULT_RESPAWN_TIME 18000
+#define DEFAULT_RESPAWN_TIME 10 MINUTES
 #define RESPAWNS_ENABLED 0
 
 #if (defined(SERVER_SIDE_PROFILING_PREGAME) || defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
@@ -119,7 +128,7 @@ var/ZLOG_START_TIME
 
 //what counts as participation?
 #ifdef RP_MODE
-#define MAX_PARTICIPATE_TIME 80 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
+#define MAX_PARTICIPATE_TIME 60 MINUTES //the maximum shift time before it doesnt count as "participating" in the round
 #else
 #define MAX_PARTICIPATE_TIME 40 MINUTES //ditto above
 #endif
@@ -129,3 +138,6 @@ var/ZLOG_START_TIME
 #if (defined(SPACEMAN_DMM) || defined(FASTDMM))
 #define IN_MAP_EDITOR
 #endif
+
+//do we want to check incoming clients to see if theyre using a vpn?
+#define DO_VPN_CHECKS 1

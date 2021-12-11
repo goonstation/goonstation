@@ -1,4 +1,6 @@
-datum/controller/process/kudzu
+
+/// Controlls the kudzu process
+/datum/controller/process/kudzu
 	var/list/kudzu = list()
 
 	var/tmp/list/detailed_count
@@ -16,8 +18,14 @@ datum/controller/process/kudzu
 				K.Life()
 				scheck()
 
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/kudzu/old_kudzu = target
+		src.detailed_count = old_kudzu.detailed_count
+		src.count = old_kudzu.count
+		src.kudzu = old_kudzu.kudzu
+
 	tickDetail()
-		if (detailed_count && detailed_count.len)
+		if (length(detailed_count))
 			var/stats = "<b>Kudzu Stats:</b><br>"
 			var/count
 			for (var/thing in detailed_count)

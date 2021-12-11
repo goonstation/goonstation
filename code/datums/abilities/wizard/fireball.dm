@@ -16,6 +16,14 @@
 			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
 		fireflash(T, 1, 1)
 
+/datum/projectile/fireball/fire_elemental
+	is_magical = 0
+
+	on_hit(atom/hit, direction, obj/projectile/projectile)
+		var/turf/T = get_turf(hit)
+		explosion(projectile, T, -1, -1, 0, 1)
+		fireflash(T, 1, 1)
+
 /datum/targetable/spell/fireball
 	name = "Fireball"
 	desc = "Launches an explosive fireball at the target."
@@ -33,9 +41,26 @@
 	var/datum/projectile/fireball/fb_proj = new
 
 	cast(atom/target)
-		holder.owner.say("MHOL HOTTOV")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("MHOL HOTTOV")
 		..()
 
+		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		if (P)
+			P.mob_shooter = holder.owner
+			P.launch()
+
+/datum/targetable/critter/fireball
+	name = "Fireball"
+	icon_state = "fire-e-fireball"
+	desc = "Launches an explosive fireball at the target."
+	cooldown = 500
+	targeted = 1
+	target_anything = 1
+
+	var/datum/projectile/fireball/fire_elemental/fb_proj = new
+
+	cast(atom/target)
 		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
 		if (P)
 			P.mob_shooter = holder.owner

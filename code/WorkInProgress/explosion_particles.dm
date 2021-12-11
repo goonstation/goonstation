@@ -5,15 +5,12 @@
 	opacity = 0
 	anchored = 1
 	mouse_opacity = 0
+	plane = PLANE_ABOVE_LIGHTING
 
 /obj/effects/expl_particles/New()
 	..()
-	SPAWN_DBG (10)
+	SPAWN_DBG(1 SECOND)
 		dispose()
-	return
-
-/obj/effects/expl_particles/Move()
-	..()
 	return
 
 /datum/effects/system/expl_particles
@@ -40,6 +37,7 @@
 	name = "fire"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "superexpl"
+	plane = PLANE_ABOVE_LIGHTING
 	opacity = 0
 	anchored = 1
 	mouse_opacity = 0
@@ -62,7 +60,7 @@
 
 /obj/effects/explosion/New()
 	..()
-	SPAWN_DBG (30)
+	SPAWN_DBG(3 SECONDS)
 		dispose()
 	return
 

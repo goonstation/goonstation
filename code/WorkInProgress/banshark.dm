@@ -98,14 +98,15 @@
 		SPAWN_DBG(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN_DBG(0.4 SECONDS)
+				M.density = 1
+		SPAWN_DBG(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)
@@ -165,14 +166,15 @@
 		SPAWN_DBG(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(0.1 SECONDS)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN_DBG(0.4 SECONDS)
+				M.density = 1
+		SPAWN_DBG(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)
@@ -195,7 +197,7 @@
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
-			if(sharktarget2 && sharktarget2.client)
+			if(sharktarget2?.client)
 				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
 				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
 				message_admins("<span class='internal'>[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")

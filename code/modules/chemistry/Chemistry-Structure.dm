@@ -1,4 +1,4 @@
-#define chem_building_precaution if(!total_chem_reactions || !total_chem_reactions.len) build_chem_structure()
+#define chem_building_precaution if(!total_chem_reactions || !length(total_chem_reactions)) build_chem_structure()
 //initialize the thing when the world starts
 /proc/build_chem_structure()
 	var/startTime = world.timeofday

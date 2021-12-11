@@ -2,17 +2,17 @@ greetings@=Sup@,Uh, hey@,Whoa- uh@,How goes it@,Hot Dog! It's@,Well how DOoo you
 rude@=Yo@,Oi@,'ay@,Oi bruv@,Hey doofus@,Hey twit@,Whoa there chief@,'ey dude@,'ay cappo@,Dang!
 insults@=chump@,berd@,dorkus@,brungus@,idiot@,buddy@,dingus@,chief@,fucko@,buddy@,dweeber@,dork@,saucer@,spaceman@,flyguy@,chode@,'Traser@,beehead@,clown@,owl man@,astronaut@,fry boy@,pal@,friend@,broseph@,bruddy@,kid@,duderino@,brud@,cosmo@,guy@,fancy pants@,city slicker@,moon man@,chucklehead@,farmer@,rascal@,tuff guy@,scoundrel@,dingle@,bud@,bruddo@,daddio
 people@=cop@,narc@,bootlicker@,cop@,narc@,robot@,beardo@,tweaker@,beekeeper@,secman@,goon@,miner@,brobot@,toadie@,stinger@,cap'n@,creepoid@,wrencher@,druggo@,jerk@,baddie@,nano
-question@=What're@,Whatcha@,What@,The heck're@,What the heck are@,The heck@,Hell are
+question@=What're@,Whatcha@,What@,The heck're@,What the heck are@,The heck@,Hell are@,fuck's
 item@=smokes@,snacks@,butts@,cards@,drugs@,bees@,cheese@,hugs@,socks@,shoes@,dosh@,keys@,pods@,chease@,owls@,peperoany@,guns@,cards@,tubes@,model trains@,wigs@,cool hats@,stamps@,stickers@,gas@,stories@,jokes@,weird rocks@,steaks@,tunes
-drugs@='rillos@,'rillos@,doinks@,fat doinks@,smokes@,cats@,bees@,cigs@,ciggies@,donk@,the ol' wink wink nudge nudge@,fight cream@,space weeds@,tobacky@,juice@,spliffs@,death sticks@,port@,beer@,gin@,triple@,'roni@,lager@,salts@,nuts@,peperoany@,beff@,grease@,swedium@,bone sauce@,styptic@,juice@,ferbidden meats@,plazzers@,cola@,egg nog@,BBQ sauce@,nitro@,plasma@,fries@,burgle@,soup@,Dan's@,dippin' dots@,fuel@,pips@,spuds@,owl food@,chips@,ointment@,oints@,jazz cabbage@,jazz lettuce@,bebop broccoli@,y'know, the stuff@,jazz oats@,rollin' papes@,chems@,weird steaks@,wasp juice@,spider juice@,west-virginia crabgrass@,san-francisco cigarronies@,value-added meats@,smoked sausages
+drugs@='rillos@,'rillos@,doinks@,fat doinks@,smokes@,cats@,bees@,cigs@,ciggies@,donk@,the ol' wink wink nudge nudge@,fight cream@,space weeds@,tobacky@,juice@,spliffs@,death sticks@,port@,beer@,gin@,triple@,'roni@,lager@,salts@,nuts@,peperoany@,beff@,grease@,swedium@,bone sauce@,styptic@,juice@,ferbidden meats@,plazzers@,cola@,egg nog@,BBQ sauce@,nitro@,plasma@,fries@,burgle@,soup@,Dan's@,dippin' dots@,fuel@,pips@,spuds@,owl food@,chips@,ointment@,oints@,jazz cabbage@,jazz lettuce@,bebop broccoli@,y'know, the stuff@,jazz oats@,rollin' papes@,chems@,weird steaks@,wasp juice@,spider juice@,west-virginia crabgrass@,san-francisco cigarronies@,value-added meats@,smoked sausages@,fight sauce
 nouns@=face@,honker@,teeth@,duds@,shoes@,look@,'tude@,clues@,secrets@,card@,style@,name@,hair@,stuff@,tats@,day today@,stars@,space weather today@,hairdo@,day fer a grillin'
 verbs@=fight@,ride@,juice@,roll@,roll@,drink@,smoke@,dance@,grumble@,grustle@,juice@,rhyme@,fight@,sting@,smoke@,hoot@,buzz@,tussle@,go fer a ride@,grill@,grill@,cruise@,drift@,cook
-domiss@=Earth@,that old bee@,Juicer Schweets@,Bill@,workin' out@,doin' finance@,bein a juicer@,smokin' weed@,gettin' drunk@,my brother@,my mum@,my niece@,my nephew@,cold soup@,cold beer@,warm beer@,corea@,space corea@,space passover@,fight cream@,makin' fight cream@,fightin'@,juicin'@,drivin'@,drivin' a bus@,takin' vacations@,going to space@,going to the moon@,china@,towels@,shoes@,flip-flops@,juice@,beer@,lager@,those good old fashionned cigarettes@,cigars@,real cubans@,real cigars@,real tobacco@,sauce@,saucin'@,gettin' sauced@,flexin'@,bustin' up@,real bananas@,space farmin'@,grillin'
+domiss@=Earth@,that old bee@,Juicer Schweets@,Bill@,workin' out@,doin' finance@,bein a juicer@,smokin' weed@,gettin' drunk@,my brother@,my mum@,my niece@,my nephew@,cold soup@,cold beer@,warm beer@,corea@,space corea@,space passover@,fight cream@,makin' fight cream@,fightin'@,juicin'@,drivin'@,drivin' a bus@,takin' vacations@,going to space@,going to the moon@,china@,towels@,shoes@,flip-flops@,juice@,beer@,lager@,those good old fashionned cigarettes@,cigars@,real cubans@,real cigars@,real tobacco@,sauce@,saucin'@,gettin' sauced@,flexin'@,bustin' up@,real bananas@,space farmin'@,grillin'@,crackin' it@,just bein out here, suckin' it@,gettin' wide
 dontmiss@=Earth@,prison@,double prison@,tax jail@,jail@,double jail@,bee jail@,juicin' up@,goin' sober@,school@,my old man@,my aunt@,Dan@,the captain@,that owl guy@,that vampo@,that pubber@,bein a fugitive@,bein a narc@,the cops@,bein a cop@,juicin' with the old man@,rollin my own@,diggin my own@,doin' time@,bein' dead@,bein' alive@,hurtin' folks@,eating well@,bein' italian@,the italians@,Italy@,the french@,the swedes@,the finns@,the cops@,my old job@,those old boys@,the zoo@,home@,our ol' colony@,the ol' space farm
 friends@=dudes@,buddies@,guys@,juicers@,cellmates@,colleagues@,dad's old crew@,kids@,broskies@,band@,runnin' crew@,old crew@,hubby
-friendsactions@=frigged off@,took my shoes@,stole the recipe@,took all my cream@,ate all my cream@,passed out on the bus@,stole my bus@,broke my damn bus@,sold me fake engine parts@,ratted me out@,sent me to tax jail@,got lost in the rings@,went too far in the channel@,got lost in the channel@,juiced with the syndies@,hurt me bad@,turned my bro in
+friendsactions@=frigged off@,took my shoes@,stole the recipe@,took all my cream@,ate all my cream@,passed out on the bus@,stole my bus@,broke my damn bus@,sold me fake engine parts@,ratted me out@,sent me to tax jail@,got lost in the rings@,went too far in the channel@,got lost in the channel@,juiced with the syndies@,hurt me bad@,turned my bro in@,flaked out on the tab@,hosed off with my grub@,got me really pumped for new content@,spoiled my favorite fresco
 emotes@=burp@,scream@,twitch@,clap@,fart@,snap@,dance@,whistle
-deadguy@=Oh damn, there goes@,Let's smoke a fat one fer@,Light one up fer@,Take a shot fer@,That's what happens out here@,Aw naw, they've done in@,Shit, man, too soon fer@,Friggin', the mean streets got@,Hope you're hangin with my juicers in the sky@,Wow, gone right before out eyes! Poor
+deadguy@=Oh damn, there goes@,Let's smoke a fat one fer@,Light one up fer@,Take a shot fer@,That's what happens out here@,Aw naw, they've done in@,Shit, man, too soon fer@,Friggin', the mean streets got@,Hope you're hangin with my juicers in the like, place@,Wow, gone right before our eyes! Poor@,Smokin' two of em tonight. Rip to you,
 murraycompliment@=fine@,okay@,neato@,decent@,allright@,juicy
 grilladvice@=you're gonna wanna flip that@,you got a nice sear going on that@,you really gotta seal in the juices on a grilled@,all you want is salt and pepper on that@,gonna need a few more minutes on that@,I ever tell you how to grill a@,lemme show you how to grill a real@,let me at that@,what a mouthwatering@,I can already taste that@,oh man, now THAT is a good, juicy
 stories@=
@@ -93,9 +93,12 @@ stories@=
 	where to find a real banana nowadays
 	how to understand an orange
 	model trains
-	how to grill the meats They don't want you to grill
+	how to grill the meats them cops don't want you to grill
 	my illegal juicin' techniques? -wait wait, is this a setup?
 	where the real good plum sauce is hidden away
 	what they actually put in the 'rillos
 	the Sin of all Flesh
+	my pal Cousin "The Real Name" Johnson's real name
+	what really happens when they swab behind your ears
+	my coffee can
 

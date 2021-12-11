@@ -64,6 +64,8 @@
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
 	var/edible = 0
 
+	var/owner_hasentered_added = FALSE
+
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
@@ -118,6 +120,7 @@
 	proc/addTrigger(var/list/L, var/datum/materialProc/D)
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
+		D.owner = src
 		L.Add(D)
 		L[D] = 0
 		return
@@ -158,6 +161,11 @@
 	var/list/triggersOnEntered = list()
 	/// Called when someone eats a thing with this material assigned.
 	var/list/triggersOnEat = list()
+	/// Called when blob hits something with this material assigned.
+	var/list/triggersOnBlobHit = list()
+	/// Called when an obj hits something with this material assigned.
+	var/list/triggersOnHit = list()
+
 
 	proc/triggerOnFail(var/atom/owner)
 		for(var/datum/materialProc/X in triggersFail)
@@ -185,9 +193,9 @@
 			call(X,  "execute")(owner, attacker, attacked)
 		return
 
-	proc/triggerOnLife(var/mob/M, var/obj/item/I)
+	proc/triggerOnLife(var/mob/M, var/obj/item/I, mult)
 		for(var/datum/materialProc/X in triggersOnLife)
-			call(X,  "execute")(M, I)
+			call(X,  "execute")(M, I, mult)
 		return
 
 	proc/triggerOnAdd(var/location)
@@ -224,6 +232,17 @@
 		for(var/datum/materialProc/X in triggersOnEat)
 			call(X,  "execute")(M, I)
 		return
+
+	proc/triggerOnBlobHit(var/atom/owner, var/blobPower)
+		for(var/datum/materialProc/X in triggersOnBlobHit)
+			call(X,  "execute")(owner, blobPower)
+		return
+
+	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+		for(var/datum/materialProc/X in triggersOnHit)
+			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
+		return
+
 
 // Metals
 
@@ -449,7 +468,7 @@
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
-	name = "iridium-alloy"
+	name = "iridium alloy"
 	canMix = 1 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
@@ -472,7 +491,6 @@
 	New()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 // Crystals
@@ -497,7 +515,22 @@
 	New()
 		setProperty("density", 40)
 		setProperty("hard", 40)
+		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
+		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
+		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 		return ..()
+
+	beta
+		mat_id = "molitz_b"
+		name = "molitz beta"
+		color = "#ff2288"
+		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+
+		New()
+			..()
+			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp) // no need to remove molitz_on_hit, all it
+			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b()) // does is call molitz_temp
+			return
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"
@@ -531,6 +564,7 @@
 		addTrigger(triggersExp, new /datum/materialProc/erebite_exp())
 		addTrigger(triggersOnAttack, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(triggersOnAttacked, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(triggersOnHit, new /datum/materialProc/generic_explode_attack(33))
 		return ..()
 
 /datum/material/crystal/plasmastone
@@ -549,6 +583,7 @@
 
 		addTrigger(triggersTemp, new /datum/materialProc/plasmastone())
 		addTrigger(triggersExp, new /datum/materialProc/plasmastone())
+		addTrigger(triggersOnHit, new /datum/materialProc/plasmastone_on_hit())
 		return ..()
 
 /datum/material/crystal/plasmaglass
@@ -569,7 +604,6 @@
 	desc = "Quartz is somewhat valuable but not paticularly useful."
 	color = "#BBBBBB"
 	quality = 50
-	alpha = 100
 	var/gem_tier = 3
 
 	New()
@@ -766,6 +800,7 @@
 		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
 		return ..()
 
+
 /datum/material/crystal/miracle
 	mat_id = "miracle"
 	name = "miraclium"
@@ -826,9 +861,9 @@
 
 	New()
 		value = 650
-		setProperty("radioactive", 60)
 		setProperty("density", 60)
 		setProperty("hard", 60)
+		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
 		return ..()
 
 	quartz // basically wizard glass
@@ -885,10 +920,10 @@
 	edible = 1
 
 	New()
-		setProperty("corrosion", 1)
-		setProperty("density", 80)
-		setProperty("hard", 1)
-		setProperty("flammable", 80)
+		setProperty("corrosion", 30)
+		setProperty("density", 45)
+		setProperty("hard", 5)
+		setProperty("flammable", 120)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
 		return ..()
 
@@ -1011,6 +1046,8 @@
 		setProperty("density", 25)
 		setProperty("hard", 25)
 		setProperty("flammable", 67)
+		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
+		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
 		return ..()
 
 /datum/material/organic/chitin
@@ -1037,6 +1074,23 @@
 		setProperty("hard", 15)
 		return ..()
 
+/datum/material/organic/honey
+	mat_id = "honey"
+	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
+	desc = ""
+	color = "#f1da10"
+	material_flags = MATERIAL_ORGANIC
+	edible_exact = TRUE
+	edible = TRUE
+
+	New()
+		setProperty("density", 20)
+		setProperty("hard", 5)
+		setProperty("flammable", 30)
+		// addTrigger(triggersOnEat, new /datum/materialProc/oneat_honey())
+		// maybe make it sticky somehow?
+		return ..()
+
 /datum/material/organic/frozenfart
 	mat_id = "frozenfart"
 	name = "frozen fart"
@@ -1050,6 +1104,24 @@
 		setProperty("thermal", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ffart_add())
 		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
+		return ..()
+
+/datum/material/organic/hamburgris
+	mat_id = "hamburgris"
+	name = "hamburgris"
+	desc = "Ancient medium ground chuck, petrified by the ages into a sturdy composite. Or worse."
+	color = "#816962"
+	material_flags = MATERIAL_ORGANIC
+
+	New()
+		setProperty("density", 65)
+		setProperty("corrosion", 75)
+		setProperty("permeable", 25)
+		setProperty("hard", 30)
+		setProperty("thermal", 20)
+		setProperty("flammable", 10)
+		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
+
 		return ..()
 
 /datum/material/organic/pizza
@@ -1073,6 +1145,8 @@
 	desc = "Coral harvested from the sea floor."
 	color = "#990099"
 	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_ORGANIC
+	texture = "coral"
+	texture_blend = ICON_OVERLAY
 
 	New()
 		setProperty("density", 5)
@@ -1272,7 +1346,6 @@
 		setProperty("permeable", 10)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
-		addTrigger(triggersOnAdd, new /datum/materialProc/soulsteel_add())
 		return ..()
 
 /datum/material/fabric/cloth/ectofibre
@@ -1346,7 +1419,7 @@
 	mat_id = "negativematter"
 	name = "negative matter"
 	desc = "It seems to repel matter."
-	color = "#111111"
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
 	New()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())

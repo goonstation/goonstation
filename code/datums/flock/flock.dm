@@ -16,7 +16,8 @@
 	var/list/annotation_viewers = list()
 	var/list/annotations = list() // key is atom ref, value is image
 	var/mob/living/intangible/flock/flockmind/flockmind
-	var/snoop_clarity = 40 // how easily we can see silicon messages, how easily silicons can see this flock's messages
+	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
+	var/snooping = 0 //are both sides of communication currently accessible?
 	var/chui/window/flockpanel/panel
 
 /datum/flock/New()
@@ -61,8 +62,8 @@
 	// DESCRIBE VITALS (do this last so we can report list lengths)
 	var/list/vitals = list()
 	vitals["name"] = src.name
-	vitals["drones"] = dronelist.len
-	vitals["partitions"] = tracelist.len
+	vitals["drones"] = length(dronelist)
+	vitals["partitions"] = length(tracelist)
 	state["vitals"] = vitals
 
 	return state
@@ -157,7 +158,7 @@
 			I = image('icons/misc/featherzone.dmi', T, "frontier")
 			I.blend_mode = BLEND_ADD
 			I.alpha = 180
-			I.plane = PLANE_SELFILLUM + 1.1
+			I.plane = PLANE_ABOVE_LIGHTING
 			// add to subscribers for annotations
 			images_to_add |= I
 			src.annotations[T] = I
@@ -171,7 +172,7 @@
 			I = image('icons/misc/featherzone.dmi', T, "frontier")
 			I.blend_mode = BLEND_ADD
 			I.alpha = 80
-			I.plane = PLANE_SELFILLUM + 1.1
+			I.plane = PLANE_ABOVE_LIGHTING
 			// add to subscribers for annotations
 			images_to_add |= I
 			src.annotations[T] = I
@@ -185,7 +186,7 @@
 			I = image('icons/misc/featherzone.dmi', B, "hazard")
 			I.blend_mode = BLEND_ADD
 			I.pixel_y = 16
-			I.plane = PLANE_SELFILLUM + 1.1
+			I.plane = PLANE_ABOVE_LIGHTING
 			I.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 			// add to subscribers for annotations
 			images_to_add |= I
@@ -352,7 +353,7 @@
 		return
 	if(src.busy_tiles[requester.name])
 		return src.busy_tiles[requester.name] // work on your claimed tile first you JERK
-	if(priority_tiles && priority_tiles.len)
+	if(length(priority_tiles))
 		var/list/available_tiles = priority_tiles
 		for(var/owner in src.busy_tiles)
 			available_tiles -= src.busy_tiles[owner]
@@ -443,7 +444,7 @@
 					for (var/mob/M in O)
 						M.set_loc(converted)
 					qdel(O)
-					converted.dir = dir
+					converted.set_dir(dir)
 					animate_flock_convert_complete(converted)
 
 	// if floor, turn to floor, if wall, turn to wall

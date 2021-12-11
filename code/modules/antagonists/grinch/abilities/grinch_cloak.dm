@@ -22,17 +22,17 @@
 			return 1
 
 		if (ismobcritter(M)) // Placeholder because only humans use bioeffects at the moment.
-			if (M.invisibility != 0)
+			if (M.invisibility != INVIS_NONE)
 				boutput(M, __red("You are already invisible."))
 				return 1
 
-			M.invisibility = 2
+			APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, src, INVIS_CLOAK)
 			M.UpdateOverlays(image('icons/mob/mob.dmi', "icon_state" = "shield"), "shield")
 			boutput(M, __blue("<b>Your cloak will remain active for the next [src.cloak_duration / 60] minutes.</b>"))
 
 			SPAWN_DBG (src.cloak_duration * 10)
 				if (M && ismobcritter(M))
-					M.invisibility = 0
+					REMOVE_MOB_PROPERTY(M, PROP_INVISIBILITY, src)
 					M.UpdateOverlays(null, "shield")
 					boutput(M, __red("<b>You are no longer invisible.</b>"))
 

@@ -2,6 +2,8 @@
 
 [ToC]
 
+{%hackmd @ZeWaka/dark-theme %}
+
 ## :question: So, how do I get started?
 
 ### Step 1: Downloading Visual Studio Code :arrow_down: 
@@ -12,7 +14,7 @@ Visit https://code.visualstudio.com/ to download the appropriate installation fo
 
 You should be greeted with a screen that looks like this:![](https://i.imgur.com/HjDKDqj.png)
 
-Now, we need to create our own repository to contribute to! :rocket: 
+Now, we need to create our own repository to contribute to! :rocket:
 
 ### Step 2: Forking :fork_and_knife: 
 
@@ -42,16 +44,12 @@ Next, we're going to need to get some necessary extensions!
 
 ### Step 4: Extension-O-Rama :gear: 
 
-Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 6 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
+Click the Extensions button on the left bar or press `Ctrl+Shift+X`. It looks like a bunch of squares. You should see 2 recommended extensions. If you don't, type `@recommended` into the search bar. You'll want to install all of these.
 
 :::warning
 If this does not work, search for the following extensions:
- - BYOND DM Language Support - syntax highlighting for the DM language
- - DreamMaker Language Client - fancy features like debugging and jumping to definitions
- - EditorConfig for VS Code - loads the standardized editor configuration for the codebase
- - GitHub Pull Requests - lets you make a pull request directly from the editor
- - Bracket Pair Colorizer 2 - paints matching brackets the same color
- - Git Graph - lets you work with branches visually for ease of use
+ - Goonstation Extension Pack - Extension pack with all the extensions we recommend using.
+ - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime is just breaks. :shrug:
@@ -59,6 +57,14 @@ For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link
 :::warning
 If it errors, try again by launching `Sign in to GitHub` from the command palette.
 :::
+
+For the ESLint extension, you may need to select a Node environment (e.g. if you already have one installed on your computer). A box like the below may appear in the bottom right of your VS Code window.
+
+![](https://i.imgur.com/nKaS47A.png)
+
+If that happens, click `Select Node Path` in it, then `Use NODE_PATH value defined via setting ./tgui/.yarn/sdks` in the dropdown that appears.
+
+If you navigate to a `.js` or `.tsx` file (e.g. `tgui/packages/tgui/components/Section.tsx`) the word `ESLINT` should appear in the bottom right of your window, along the bar at the bottom. Simply click it and choose `Allow` in the popup to let it loose on your Goonstation files.
 
 Now, let's connect the main goonstation repository to your client.
 
@@ -208,7 +214,7 @@ There's buttons for pretty much anything you want to do with Git. When you're al
 
 Ok. We're almost there!
 :::info
-This can also be done (somewhat easier) using the GitHub interface, but this guide's goal is to stay in-editor.
+This can also be done using the GitHub interface ***(which is easier, and more simple + powerful)*** , but this guide's goal is to stay in-editor.
 :::
 Click the GitHub icon on the left sidebar. It looks like a cat in  circle. Now, you'll want to click the + sign that appears in the top left, like this:
 
@@ -243,6 +249,7 @@ It might happen that somewhere in the process of making a PR you see a message a
 
 Changes will be made to the upstream repo and it's a good idea to keep your master in sync with that.
 
+0. This step is only necessary if you're doing this for the first time! Press **Ctrl + Shift + P** and type in "fetch from all remotes" and choose the relevant command.
 1. Checkout the master branch
     You do that by clicking on the name of the current branch in the bottom left corner and then selecting "master" in the command palette.
     ![](https://i.imgur.com/z2o1Nw6.png)
@@ -254,6 +261,10 @@ Changes will be made to the upstream repo and it's a good idea to keep your mast
     ![](https://i.imgur.com/maQ0CAw.png)
 
 If you've done everything correctly this should finish without any problems and now your master is in the same state as upstream/master. But you probably also want to sync up your feature branch.
+
+:::warning
+  Resolving icon and map conflicts might be annoying when done manually. You can install an automatic merge driver for these files by running the `tools/hooks/install.bat` file first.
+:::
 
 1. Checkout your feature branch (as above)
 2. Press **Ctrl + Shift + P** and type in "git merge", choose the Git: Merge Branch... command

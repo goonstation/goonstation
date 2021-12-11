@@ -26,7 +26,7 @@
 		if (!A.phantom)
 			A.create_phantom()
 		A.phantom.loc = locate(src.x+16, src.y, src.z)
-		A.phantom.dir = A.dir
+		A.phantom.set_dir(A.dir)
 
 /turf/simulated/floor/phantom_test2
 	fullbright = 1
@@ -36,14 +36,15 @@
 	name = "rusty catwalk"
 	desc = "This one looks even less safe than usual."
 	var/collapsing = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		health = rand(5, 10)
 		..()
-		update_icon()
+		UpdateIcon()
 
-	HasEntered(atom/movable/A)
+	Crossed(atom/movable/A)
+		..()
 		if (ismob(A))
 			src.collapsing++
 			SPAWN_DBG(1 SECOND)

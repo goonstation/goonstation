@@ -58,26 +58,26 @@
 		return
 
 	// set the dir and icon_state from the angle
-	proc/set_dir()
+	proc/update_dir()
 		if(angle%2 == 1)
 			icon_state = "mirrorB"
 		else
 			icon_state = "mirrorA"
 		switch(round(angle/2)*2)
 			if(0)
-				dir = 1
+				src.set_dir(1)
 			if(2)
-				dir = 5
+				src.set_dir(5)
 			if(4)
-				dir = 4
+				src.set_dir(4)
 			if(6)
-				dir = 6
+				src.set_dir(6)
 			if(8)
-				dir = 2
+				src.set_dir(2)
 			if(10)
-				dir = 10
+				src.set_dir(10)
 			if(12)
-				dir = 8
+				src.set_dir(8)
 			if(14)
-				dir = 9
+				src.set_dir(9)
 		return

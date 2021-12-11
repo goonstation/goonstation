@@ -12,7 +12,7 @@
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
 	throwforce = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	force = 10.0
@@ -22,7 +22,6 @@
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 35
-	module_research = list("tools" = 5, "science" = 1)
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	move_triggered = 1
@@ -38,7 +37,10 @@
 	var/list/melting_reagents = list("acid",
 	"pacid",
 	"phlogiston",
-	"big_bang")
+	"big_bang",
+	"clacid",
+	"nitric_acid",
+	"firedust")
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
@@ -56,6 +58,10 @@
 	reagents.add_reagent("ff-foam", 100)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 	BLOCK_SETUP(BLOCK_TANK)
+
+/obj/item/extinguisher/on_reagent_change(add)
+	. = ..()
+	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
 /obj/item/extinguisher/get_desc(dist)
 	if (dist > 1)
@@ -137,7 +143,7 @@
 				qdel(src)
 				return
 
-		playsound(get_turf(src), "sound/effects/spray.ogg", 75, 1, -3)
+		playsound(src, "sound/effects/spray.ogg", 30, 1, -3)
 
 		var/direction = get_dir(src,target)
 
@@ -157,26 +163,26 @@
 		user.lastattacked = target
 
 		for (var/a = 0, a < reagents_per_dist, a++)
-			SPAWN_DBG (0)
+			SPAWN_DBG(0)
 				if (disposed)
 					return
 				if (!src.reagents)
 					return
-				var/obj/effects/water/W = unpool(/obj/effects/water, user)
+				var/obj/effects/water/W = new /obj/effects/water(user)
 				W.owner = user
 				if (!W) return
 				W.set_loc( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
 				W.spray_at(my_target, R, try_connect_fluid = 1)
 
-		if (istype(usr.loc, /turf/space))
+		if (istype(user.loc, /turf/space))
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
-		else if( usr.buckled && !usr.buckled.anchored )
+		else if( user.buckled && !user.buckled.anchored )
 			var/wooshdir = get_dir( target, user )
 			SPAWN_DBG(0)
-				for( var/i = 1, (usr && usr.buckled && !usr.buckled.anchored && i <= rand(3,5)), i++ )
-					step( usr.buckled, wooshdir )
+				for( var/i = 1, (user?.buckled && !user.buckled.anchored && i <= rand(3,5)), i++ )
+					step( user.buckled, wooshdir )
 					sleep( rand(1,3) )
 
 	else

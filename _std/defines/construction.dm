@@ -5,6 +5,24 @@
 #define TABLE_ADJUST 3
 #define TABLE_LOCKPICK 4
 
+//girder defines
+#define GIRDER_DISASSEMBLE 0
+#define GIRDER_UNSECURESUPPORT 1
+#define GIRDER_REMOVESUPPORT 2
+#define GIRDER_DISLODGE 3
+#define GIRDER_REINFORCE 4
+#define GIRDER_SECURE 5
+#define GIRDER_PLATE 6
+
+//wall construction defines
+#define WALL_CUTRERODS 0
+#define WALL_REMOVERERODS 1
+#define WALL_SLICECOVER 2
+#define WALL_PRYCOVER 3
+#define WALL_LOOSENSUPPORTRODS 4
+#define WALL_REMOVESUPPORTRODS 5
+#define WALL_PRYSHEATH 6
+
 //railing defines
 #define RAILING_DISASSEMBLE 0
 #define RAILING_UNFASTEN 1
@@ -25,3 +43,5 @@
 #define DECON_BUILT 128
 /// can only be deconstructed if access required is null
 #define DECON_ACCESS 256
+/// item will be saved by path instead of stored in the frame
+#define DECON_DESTRUCT 512

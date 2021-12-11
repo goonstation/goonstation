@@ -1,7 +1,7 @@
 /datum/hud/ai
 	var/mob/living/silicon/ai/master
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		health
 		cell
 		tracking
@@ -12,6 +12,7 @@
 		pda
 		laws
 		viewport
+		hologram
 		killswitch
 
 	var/list/spinner = list("/", "-", "\\", "|")
@@ -33,7 +34,7 @@
 		killswitch.maptext_height = 128
 		killswitch.maptext_x = -112
 		killswitch.maptext_y = -129
-		killswitch.invisibility = 101
+		killswitch.invisibility = INVIS_ALWAYS
 
 		cell = create_screen("cell", "Core Cell Charge", 'icons/mob/hud_ai.dmi', "cell", "EAST, NORTH", HUD_LAYER)
 		cell.underlays += "underlay"
@@ -62,6 +63,9 @@
 		viewport = create_screen("viewport", "Create Viewport", 'icons/mob/hud_ai.dmi', "viewport", "WEST, NORTH-2.5", HUD_LAYER)
 		viewport.underlays += "button"
 
+		hologram = create_screen("hologram", "Create Hologram", 'icons/mob/hud_ai.dmi', "hologram", "WEST, NORTH-3", HUD_LAYER)
+		hologram.underlays += "button"
+
 		tracking = create_screen("tracking", "Tracking", 'icons/mob/hud_ai.dmi', "track", "WEST, SOUTH", HUD_LAYER)
 		tracking.underlays += "button"
 		tracking.maptext_width = 32*15
@@ -82,10 +86,13 @@
 
 		update_health()
 			if (master.killswitch)
-				killswitch.invisibility = 0
-				killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[add_zero(master.killswitch_time - 2,2)]</span></span>"
+				var/timeleft = round((master.killswitch_at - TIME)/10, 1)
+				timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+
+				killswitch.invisibility = INVIS_NONE
+				killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[timeleft]</span></span>"
 			else
-				killswitch.invisibility = 101
+				killswitch.invisibility = INVIS_ALWAYS
 				killswitch.maptext = ""
 
 			var/pct = round(100 * master.health/master.max_health, 1)
@@ -119,7 +126,7 @@
 				tracking.maptext = ""
 
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("health")
 				//output health info
@@ -164,3 +171,8 @@
 					master.eyecam.create_viewport()
 				else
 					boutput(master, "Deploy to an AI Eye first to create a viewport.")
+			if ("hologram")
+				if(master.deployed_to_eyecam)
+					master.create_hologram()
+				else
+					boutput(master, "Deploy to an AI Eye first to create a hologram.")

@@ -20,5 +20,5 @@
 		loot_table[/obj/item/spacecash/buttcoin] = 500
 
 	setup_healths()
-		add_hh_robot(-500, 500, 1)
-		add_hh_robot_burn(-500, 500, 1)
+		add_hh_robot(500, 1)
+		add_hh_robot_burn(500, 1)

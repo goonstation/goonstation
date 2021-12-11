@@ -2,20 +2,23 @@
 	name = "Blob Tutorial Zone 1"
 	icon_state = "yellow"
 	sound_group = "blob1"
+	dont_log_combat = TRUE
 
 /area/blob/tutorial_zone_2
 	name = "Blob Tutorial Zone 2"
 	icon_state = "green"
 	sound_group = "blob2"
+	dont_log_combat = TRUE
 
 /area/blob/tutorial_zone_3
 	name = "Blob Tutorial Zone 3"
 	icon_state = "blue"
 	sound_group = "blob3"
+	dont_log_combat = TRUE
 
 var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blob/tutorial_zone_2, /area/blob/tutorial_zone_3)
 
-/datum/tutorial/blob
+/datum/tutorial_base/blob
 	name = "Blob tutorial"
 	var/tutorial_area_type = null
 	var/area/tutorial_area = null
@@ -81,6 +84,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			bowner.tutorial = null
 			bowner.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 			bowner.starter_buff = 1
+			qdel(src)
 
 	disposing()
 		if (tutorial_area_type)
@@ -97,6 +101,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		..()
 		if (!marker)
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
+			marker.filters= filter(type="outline", size=1)
 
 	SetUp()
 		..()
@@ -109,9 +114,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			must_deploy = locate(MT.initial_turf.x, MT.initial_turf.y + 1, MT.initial_turf.z)
-			must_deploy.overlays += marker
+			must_deploy.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "deploy" && context == must_deploy)
@@ -122,7 +127,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			must_deploy.overlays.len = 0
+			must_deploy.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -134,13 +139,13 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
 			for (var/dir in cardinal)
 				var/turf/Q = get_step(T, dir)
-				Q.overlays += marker
+				Q.UpdateOverlays(marker,"marker")
 				must_spread_to += Q
 
 		PerformAction(var/action, var/context)
@@ -151,7 +156,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (!(context in must_spread_to))
 				return 0
 			var/turf/T = context
-			T.overlays.len = 0
+			T.UpdateOverlays(null,"marker")
 			must_spread_to -= context
 			return 1
 
@@ -161,21 +166,21 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 	attack
 		name = "Destroying obstacles"
 		instructions = "You appear to have an inconveniently placed object next to you! While you cannot reliably tear down walls initially, you can get rid of a myriad of objects: doors, fuel tanks, computers. You can attack by using the attack button, the second button from the left by default. Break the various objects around your blob to proceed."
-		var/obj/machinery/door/airlock/external/comp
+		var/obj/storage/closet/closet
 		var/obj/machinery/door/airlock/external/door
-		var/obj/reagent_dispensers/fueltank/tank
+		var/obj/storage/crate/crate
 		var/obj/window/window
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
 
-			comp = new(get_step(get_step(T, NORTH), NORTH))
+			closet = new(get_step(get_step(T, NORTH), NORTH))
 			door = new(get_step(get_step(T, WEST), WEST))
-			tank = new(get_step(get_step(T, EAST), EAST))
+			crate = new(get_step(get_step(T, EAST), EAST))
 			window = new(get_step(get_step(T, SOUTH), SOUTH))
 
 		PerformAction(var/action, var/context)
@@ -184,14 +189,14 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (action != "attack")
 				return 0
 			var/allowed = 0
-			if (tank)
-				if (context == get_turf(tank))
+			if (crate)
+				if (context == get_turf(crate))
 					allowed = 1
 			if (door)
 				if (context == get_turf(door))
 					allowed = 1
-			if (comp)
-				if (context == get_turf(comp))
+			if (closet)
+				if (context == get_turf(closet))
 					allowed = 1
 			if (window)
 				if (context == get_turf(window))
@@ -202,9 +207,9 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		MayAdvance()
 			var/destroyed = 0
-			if (!comp)
+			if (!closet)
 				destroyed++
-			else if (!comp.density || comp.disposed)
+			else if (closet.disposed)
 				destroyed++
 			if (!window)
 				destroyed++
@@ -214,19 +219,19 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				destroyed++
 			else if (door.disposed)
 				destroyed++
-			if (!tank)
+			if (!crate)
 				destroyed++
-			else if (tank.disposed)
+			else if (crate.disposed)
 				destroyed++
 			if (destroyed >= 3)
 				return 1
 			return 0
 
 		TearDown()
-			qdel(comp)
+			qdel(closet)
 			qdel(window)
 			qdel(door)
-			qdel(tank)
+			qdel(crate)
 
 	spread2
 		name = "Continuing on"
@@ -239,7 +244,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -250,7 +255,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				T = get_step(T, NORTH)
 			spread_max_y = T.y
 
-			T.overlays += marker
+			T.UpdateOverlays(marker,"marker")
 			TT = T
 
 		PerformAction(var/action, var/context)
@@ -266,7 +271,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			TT.overlays.len = 0
+			TT.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -278,15 +283,15 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		SetUp()
 			..()
 			SPAWN_DBG(0)
-				var/datum/tutorial/blob/MT = tutorial
+				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
 				sleep(2 SECONDS)
-				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
+				var/mob/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
-				W.dir = 2
+				W.set_dir(2)
 				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
@@ -313,7 +318,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -327,11 +332,11 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			MT.bowner.bio_points_max_bonus = 50
 			MT.bowner.gen_rate_bonus = 9
 
-			T.overlays += marker
+			T.UpdateOverlays(marker,"marker")
 			TT = T
 
 		TearDown()
-			TT.overlays.len = 0
+			TT.UpdateOverlays(null,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "firewall" && context == TT)
@@ -355,15 +360,15 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		SetUp()
 			..()
 			SPAWN_DBG(0)
-				var/datum/tutorial/blob/MT = tutorial
+				var/datum/tutorial_base/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
 				sleep(2 SECONDS)
-				var/obj/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
+				var/mob/blob_tutorial_walker/W = new(locate(tx + 5, ty + 8, tz))
 				walk_to(W, locate(tx, ty + 8, tz), 0, 8)
 				sleep(5 SECONDS)
-				W.dir = 2
+				W.set_dir(2)
 				sleep(2 SECONDS)
 				W.sprayAt(locate(tx, ty + 5, tz), 8)
 				sleep(4 SECONDS)
@@ -379,7 +384,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		MayAdvance()
 			return 0
 
-		ribosomes
+	ribosomes
 		name = "Ribosomes"
 		instructions = "Your most valuable assets are the ribosomes. Ribosomes increase your biopoint generation, allowing you do do more things, faster. Place a ribosome on the marked blob tile to proceed."
 		var/turf/target
@@ -387,13 +392,13 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
 			target = locate(tx, ty - 1, tz)
 			var/obj/blob/B = locate() in target
-			B.overlays += marker
+			B.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "move")
@@ -408,27 +413,27 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 	clickmove
 		name = "Click moving"
-		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by clicking a tile, however. Click the marked tile to move there and proceed."
+		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by right-clicking a tile, however. Right-click the marked tile to move there and proceed."
 		var/turf/target
 		finished = 0
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
 			target = locate(tx + 3, ty + 3, tz)
-			target.overlays += marker
+			target.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "clickmove" && context == target)
 				finished = 1
 				return 1
-			return 0
+			return 1 // bad but prevents chat spam which leads to crashes
 
 		TearDown()
-			target.overlays.len = 0
+			target.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -440,14 +445,14 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
 			target = locate(tx, ty, tz)
 			var/obj/blob/B = locate() in target
 			B.take_damage(5, 1, "brute")
-			B.overlays += marker
+			B.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "repair" && context == target)
@@ -457,7 +462,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		TearDown()
 			var/obj/blob/B = locate() in target
-			B.overlays.len = 0
+			B.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -468,7 +473,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			MT.bowner.evo_points = 500
 
 		PerformAction(var/action, var/context)
@@ -481,11 +486,11 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			MT.bowner.evo_points = 0
 
 		MayAdvance()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			return MT.bowner.has_upgrade(/datum/blob_upgrade/launcher) && MT.bowner.has_upgrade(/datum/blob_upgrade/replicator) && MT.bowner.has_upgrade(/datum/blob_upgrade/devour_item) && MT.bowner.has_upgrade(/datum/blob_upgrade/reflective)
 
 	digestation
@@ -495,7 +500,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -516,7 +521,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				return 1
 			if (I.disposed)
 				return 1
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			if (locate(/obj/blob/deposit) in MT.tutorial_area)
 				return 1
 			return 0
@@ -528,7 +533,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -537,7 +542,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			if (istype(B, /obj/blob/deposit))
 				T = locate(tx - 2, ty, tz)
 				B = locate() in T
-			B.overlays += marker
+			B.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
 			if (action == "move")
@@ -551,7 +556,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		TearDown()
-			B.overlays -= marker
+			B.UpdateOverlays(null,"marker")
 
 		MayAdvance()
 			return finished
@@ -580,7 +585,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -615,13 +620,13 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
 			var/turf/T = locate(tx, ty, tz)
 			target = locate() in T
-			target.overlays += marker
+			target.UpdateOverlays(marker,"marker")
 			tx += 3
 			H = new(locate(tx, ty, tz))
 
@@ -634,6 +639,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 				return 1
 
 		TearDown()
+			target.UpdateOverlays(null,"marker")
 			if (H)
 				H.gib()
 
@@ -643,8 +649,6 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			return 0
 
 		MayAdvance()
-			if (target)
-				return 0
 			if (!H)
 				return 1
 			if (isdead(H))
@@ -683,7 +687,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 
 		SetUp()
 			..()
-			var/datum/tutorial/blob/MT = tutorial
+			var/datum/tutorial_base/blob/MT = tutorial
 			var/tx = MT.initial_turf.x - 3
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
@@ -715,7 +719,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			sleep(5 SECONDS)
 			tutorial.Advance()
 
-proc/AddBlobSteps(var/datum/tutorial/blob/T)
+proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/deploy)
 	T.AddStep(new /datum/tutorialStep/blob/spread)
 	T.AddStep(new /datum/tutorialStep/blob/attack)
@@ -735,12 +739,12 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/cutscene3)
 	T.AddStep(new /datum/tutorialStep/blob/finished)
 
-/obj/blob_tutorial_walker
+/mob/blob_tutorial_walker
 	name = "Pubs McFlamer"
 	desc = "Some dork with a flamethrower."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_f"
-	var/obj/item/flamethrower/assembled/loaded/L = new
+	var/obj/item/gun/flamethrower/assembled/loaded/L = new
 
 	New()
 		..()
@@ -749,7 +753,7 @@ proc/AddBlobSteps(var/datum/tutorial/blob/T)
 		L.lit = 1
 
 	proc/sprayAt(var/turf/T)
-		L.afterattack(T, src, 0)
+		L.shoot(T, src.loc, src)
 
 	disposing()
 		..()

@@ -46,17 +46,17 @@ client/proc/open_dj_panel()
 		ui.open()
 
 /datum/dj_panel/ui_data(mob/user)
-	var/list/data = list()
-	data["adminChannel"] = admin_sound_channel
-	data["loadedSound"] = "[loaded_sound]"
-	data["volume"] = sound_volume
-	data["frequency"] = sound_frequency
-	data["announceMode"] = user.client?.djmode
-
-	return data
+	. = list(
+		"adminChannel" = admin_sound_channel,
+		"loadedSound" = "[loaded_sound]",
+		"volume" = sound_volume,
+		"frequency" = sound_frequency,
+		"announceMode" = user.client?.djmode,
+	)
 
 /datum/dj_panel/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 
 	if (!config.allow_admin_sounds)
@@ -111,7 +111,7 @@ client/proc/open_dj_panel()
 			logTheThing("admin", usr, null, "played ambient sound [loaded_sound]")
 			logTheThing("diary", usr, null, "played ambient sound [loaded_sound]", "admin")
 			message_admins("[admin_key(usr.client)] played ambient sound [loaded_sound]")
-			playsound(get_turf(usr), loaded_sound, sound_volume, sound_frequency)
+			playsound(usr, loaded_sound, sound_volume, sound_frequency)
 
 		if("play-remote")
 			usr.client?.play_youtube_audio()

@@ -40,12 +40,12 @@
 	New(var/turf/iloc, var/idir = 2)
 		if (!isturf(iloc))
 			qdel(src)
-		dir = idir
+		set_dir(idir)
 		var/turf/Q = get_step(iloc, idir)
 		if (!Q)
 			qdel(src)
 			var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(Q)
-			term.dir = get_dir(Q, iloc)
+			term.set_dir(get_dir(Q, iloc))
 		..()
 
 /obj/machinery/power/smes/emp_act()
@@ -70,7 +70,7 @@
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if (term && term.dir == turn(d, 180))
+					if (term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -80,11 +80,10 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/smes/proc/updateicon()
-
+/obj/machinery/power/smes/update_icon()
 	if (status & BROKEN)
 		ClearAllOverlays()
 		return
@@ -111,7 +110,7 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 
-/obj/machinery/power/smes/process()
+/obj/machinery/power/smes/process(mult)
 
 	if (status & BROKEN)
 		return
@@ -131,7 +130,10 @@
 
 				load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
 
-				charge += load	// increase the charge
+				// Adjusting mult to other power sources would likely cause more harm than good as it would cause unusual surges
+				// of power that would only be noticed though hotwire or be unrationalizable to player.  This will extrapolate power
+				// benefits to charged value so that minimal loss occurs.
+				charge += load * mult	// increase the charge
 				add_load(load)		// add the load to the terminal side network
 
 			else					// if not enough capcity
@@ -165,7 +167,7 @@
 
 	// only update icon if state changed
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		UpdateIcon()
 
 	src.updateDialog()
 
@@ -196,26 +198,16 @@
 	loaddemand = lastout - excess
 
 	if (clev != chargedisplay())
-		updateicon()
+		UpdateIcon()
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
-//	if (terminal && terminal.powernet)
+//	if (terminal?.powernet)
 //		terminal.powernet.newavail += amount
 
 /obj/machinery/power/smes/add_load(var/amount)
-	if (terminal && terminal.powernet)
+	if (terminal?.powernet)
 		terminal.powernet.newload += amount
-
-/obj/machinery/power/smes/ui_state(mob/user)
-	return tgui_default_state
-
-/obj/machinery/power/smes/ui_status(mob/user, datum/ui_state/state)
-	return min(
-		state.can_use_topic(src, user),
-		tgui_broken_state.can_use_topic(src, user),
-		tgui_not_incapacitated_state.can_use_topic(src, user)
-	)
 
 /obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -223,34 +215,41 @@
 		ui = new(user, src, "Smes", src.name)
 		ui.open()
 
+/obj/machinery/power/smes/ui_static_data(mob/user)
+	. = list(
+		"inputLevelMax" = SMESMAXCHARGELEVEL,
+		"outputLevelMax" = SMESMAXOUTPUT,
+	)
+
 /obj/machinery/power/smes/ui_data(mob/user)
-	var/list/data = list()
-	data["capacity"] = src.capacity
-	data["charge"] = src.charge
-	data["inputAttempt"] = src.chargemode
-	data["inputting"] = src.charging
-	data["inputLevel"] = src.chargelevel
-	data["inputLevelMax"] = SMESMAXCHARGELEVEL
-	data["inputAvailable"] = src.lastexcess
-	data["outputAttempt"] = src.online
-	data["outputting"] = src.loaddemand
-	data["outputLevel"] = src.output
-	data["outputLevelMax"] = SMESMAXOUTPUT
-	return data
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge,
+
+		"inputAttempt" = src.chargemode,
+		"inputting" = src.charging,
+		"inputLevel" = src.chargelevel,
+		"inputAvailable" = src.lastexcess,
+
+		"outputAttempt" = src.online,
+		"outputting" = src.loaddemand,
+		"outputLevel" = src.output,
+	)
 
 /obj/machinery/power/smes/ui_act(action, params)
-	if(..())
+	. = ..()
+	if (.)
 		return
 	switch(action)
 		if("toggle-input")
 			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("toggle-output")
 			src.online = !src.online
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("set-input")
 			var/target = params["target"]
@@ -264,8 +263,8 @@
 			else if(adjust)
 				src.chargelevel = clamp((src.chargelevel + adjust), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
-			else if(text2num(target) != null) //set by drag
-				src.chargelevel = clamp(text2num(target), 0 , SMESMAXCHARGELEVEL)
+			else if(text2num_safe(target) != null) //set by drag
+				src.chargelevel = clamp(text2num_safe(target), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
 		if("set-output")
 			var/target = params["target"]
@@ -279,8 +278,8 @@
 			else if(adjust)
 				src.output = clamp((src.output + adjust), 0 , SMESMAXOUTPUT)
 				. = TRUE
-			else if(text2num(target) != null) //set by drag
-				src.output = clamp(text2num(target), 0 , SMESMAXOUTPUT)
+			else if(text2num_safe(target) != null) //set by drag
+				src.output = clamp(text2num_safe(target), 0 , SMESMAXOUTPUT)
 				. = TRUE
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)

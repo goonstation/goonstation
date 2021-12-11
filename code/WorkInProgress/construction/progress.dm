@@ -369,7 +369,7 @@
 	announced_message = "The station now has an operating Chemistry lab."
 	uncompleted_message = "The station no longer has an operation Chemistry lab!"
 
-	room_area = /area/station/chemistry
+	room_area = /area/station/science/chemistry
 
 /datum/progress/rooms/medbay
 	name = "Medical Bay"

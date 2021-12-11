@@ -16,7 +16,7 @@
 /area/shuttle_transit_space/west)
 "af" = (
 /turf/space/shuttle_transit,
-/area/shuttle_transit_space)
+/area/shuttle_transit_space/north
 "ag" = (
 /turf/space/shuttle_transit,
 /area/shuttle/escape/transit/donut2)
@@ -34,7 +34,7 @@
 /area/shuttle_particle_spawn/west)
 "al" = (
 /turf/space/shuttle_transit,
-/area/shuttle_particle_spawn)
+/area/shuttle_particle_spawn/north)
 "am" = (
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/south)
@@ -46,7 +46,7 @@
 /area/shuttle/escape/transit/destiny)
 "ap" = (
 /turf/space,
-/area)
+/area/space)
 "aq" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 1;
@@ -901,7 +901,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "cQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -955,7 +955,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "cZ" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
@@ -1074,32 +1074,32 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "ds" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "dt" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 4
 	},
 /turf/space,
-/area)
+/area/space)
 "du" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "dv" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "dw" = (
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 10
@@ -1201,7 +1201,7 @@
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
-/area)
+/area/space)
 "dN" = (
 /turf/simulated/shuttle/wall/escape{
 	icon_state = "walldir";
@@ -1843,7 +1843,7 @@
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "fs" = (
 /obj/machinery/r_door_control/podbay/wizard,
 /turf/simulated/shuttle/wall{
@@ -1920,7 +1920,7 @@
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "fD" = (
 /obj/shrub,
 /turf/unsimulated/floor/darkblue,
@@ -1961,7 +1961,7 @@
 	dir = 2
 	},
 /turf/space,
-/area)
+/area/space)
 "fK" = (
 /obj/machinery/door/poddoor/blast/single{
 	dir = 4;
@@ -2566,21 +2566,21 @@
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "hr" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "hs" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
 /turf/space,
-/area)
+/area/space)
 "ht" = (
 /turf/unsimulated/floor/stairs,
 /area/centcom)
@@ -3146,7 +3146,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "iV" = (
 /turf/simulated/shuttle/wall/corner{
 	icon_state = "wall_space";
@@ -3200,7 +3200,7 @@
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "jc" = (
 /turf/simulated/shuttle/wall/escape,
 /area/shuttle/escape/centcom/destiny)
@@ -3291,8 +3291,7 @@
 /obj/submachine/syndicate_teleporter,
 /obj/machinery/light{
 	dir = 1;
-	name = "light fixture";
-	rigged = 0
+	name = "light fixture"
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"

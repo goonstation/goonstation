@@ -7,7 +7,7 @@
 
 	initialize()
 		..()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		power = input("Fireball explosion power? (default should do if you want this to be doable)", "Fireball explosion", 5) as num
 		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
 		boutput(usr, "<span class='notice'>Special note: If no target is set, the fireball will launch at the nearest mob.</span>")
@@ -16,13 +16,13 @@
 		if (target)
 			target.overlays -= selection
 		if (selection)
-			pool(selection)
+			qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				target.overlays -= selection
 				target = null
@@ -36,7 +36,7 @@
 					F.target = I
 					F.power = power
 					F.trap_delay = trap_delay
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (isturf(object))
 				if (target == object)
 					target.overlays -= selection
@@ -49,7 +49,7 @@
 
 /obj/adventurepuzzle/triggerable/targetable/fireballtrap
 	name = "fireball trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	density = 0
@@ -152,7 +152,7 @@
 		..()
 		src.flags |= TABLEPASS
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		var/turf/T = get_turf(A)
 		if (T)
 			set_loc(T)

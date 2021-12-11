@@ -3,6 +3,10 @@
 // component removes itself after triggering and dropping the items
 // duplicate components' item(s) are added to the old component's list
 
+TYPEINFO(/datum/component/drop_loot_on_death)
+	initialization_args = list(
+		ARG_INFO("loot", "type", "Path or list of paths for loot to drop on death")
+	)
 /datum/component/drop_loot_on_death
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/items_to_drop
@@ -28,7 +32,7 @@
 
 // if another duplicate component of this type is added, add its items to this one
 /datum/component/drop_loot_on_death/InheritComponent(datum/component/drop_loot_on_death/C, i_am_original, _items)
-	if(C && C.items_to_drop)
+	if(C?.items_to_drop)
 		src.items_to_drop.Add(C.items_to_drop)
 	else
 		if (_items) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _items is in proper format

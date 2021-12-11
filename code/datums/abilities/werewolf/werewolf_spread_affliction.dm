@@ -68,8 +68,8 @@
 		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		var/done = world.time - started
-		var/complete = max(min((done / duration), 1), 0)
+		var/done = TIME - started
+		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.1 && last_complete < 0.1)
 			if (M.werewolf_attack(target, "spread") != 1)
 				boutput(M, __red("[target] is moving around too much."))
@@ -125,8 +125,8 @@
 					if (!HH.disease_resistance_check("/datum/ailment/disease/lycanthropy","Lycanthropy"))
 						HH.make_werewolf(1)
 						HH.full_heal()
-						HH.setStatus("weakened",150)
-						HH.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+						HH.setStatus("weakened", 15 SECONDS)
+						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						remove_antag(M, null, 0, 1)
 						boutput(W, __red("You passed your terribly affliction onto [HH]! You are no longer a werewolf!"))
 						logTheThing("combat", M, target, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")

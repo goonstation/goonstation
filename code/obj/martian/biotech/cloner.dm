@@ -55,7 +55,7 @@
 
     var/mob/living/M = src.occupant
 
-    M.changeStatus("paralysis", 60)
+    M.changeStatus("paralysis", 6 SECONDS)
     if(prob(33))
       playsound(src.loc, 'sound/effects/bubbles3.ogg', 60, 1)
 

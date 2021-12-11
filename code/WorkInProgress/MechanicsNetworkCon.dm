@@ -45,12 +45,12 @@
 
 	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
 		self_only = !self_only
-		boutput(usr, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
+		boutput(user, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
 		tooltip_rebuild = 1
 
 	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)
 		register = !register
-		boutput(usr, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
+		boutput(user, "[register ? "Now registering with mainframes.":"Now no longer registering with mainframes."]")
 		tooltip_rebuild = 1
 
 	secure()
@@ -70,8 +70,7 @@
 			src.link = null
 
 	proc/spacket(var/datum/mechanicsMessage/input)
-		if(!isReady()) return
-		unReady()
+		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		post_raw(input.signal, input.data_file?.copy_file())
 		return
 
