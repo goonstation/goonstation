@@ -1,16 +1,16 @@
 var/global/waiting_inits = null
-var/global/init_paused = FALSE
+var/global/init_paused = 0
 
 proc/pause_init()
-	if(global.init_paused)
+	global.init_paused++
+	if(global.init_paused > 1)
 		return
 	global.waiting_inits = list()
-	global.init_paused = TRUE
 
 proc/unpause_init()
-	if(!global.init_paused)
+	global.init_paused--
+	if(global.init_paused > 0)
 		return
-	global.init_paused = FALSE
 	var/list/inits_to_process = global.waiting_inits
 	global.waiting_inits = null // to make sure things happen correctly if some Init() pauses again
 	for(var/datum/D as anything in inits_to_process)
