@@ -37,6 +37,7 @@ proc/unpause_init()
 
 #define INIT(ARGS...) New(ARGS) ..(); Init(ARGS)
 #define INIT_TYPE(TYPE, ARGS...) TYPE/New(ARGS) ..(); TYPE/Init(ARGS)
+#define EXPLICIT_NEW New
 
 
 // not related directly per se but stuff related to large scale map changes follows
