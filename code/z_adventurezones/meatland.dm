@@ -154,6 +154,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	Crossed(atom/movable/A)
 		..()
+		if(!src.init_finished)
+			return
 		if(!istype(A, /obj/item/skull))
 			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
