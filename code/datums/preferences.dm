@@ -24,6 +24,7 @@ datum/preferences
 	var/employment_note
 
 	var/be_traitor = 0
+	var/be_sleeper_agent = 0
 	var/be_syndicate = 0
 	var/be_syndicate_commander = 0
 	var/be_spy = 0
@@ -887,6 +888,7 @@ datum/preferences
 				radio_music_volume = 50
 				use_click_buffer = 0
 				be_traitor = 0
+				be_sleeper_agent = 0
 				be_syndicate = 0
 				be_syndicate_commander = 0
 				be_spy = 0
@@ -1312,6 +1314,7 @@ datum/preferences
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = 0
+			src.be_sleeper_agent = 0
 			src.be_syndicate = 0
 			src.be_syndicate_commander = 0
 			src.be_spy = 0
@@ -1330,6 +1333,7 @@ datum/preferences
 
 			HTML += {"
 			<a href="byond://?src=\ref[src];preferences=1;b_traitor=1" class="[src.be_traitor ? "yup" : "nope"]">[crap_checkbox(src.be_traitor)] Traitor</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_sleeper_agent=1" class="[src.be_sleeper_agent ? "yup" : "nope"]">[crap_checkbox(src.be_sleeper_agent)] Sleeper agent</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate=1" class="[src.be_syndicate ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate)] Nuclear Operative</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
@@ -1537,6 +1541,10 @@ datum/preferences
 
 		if (link_tags["b_traitor"])
 			src.be_traitor = !( src.be_traitor)
+			src.SetChoices(user)
+			return
+		if (link_tags["b_sleeper_agent"])
+			src.be_sleeper_agent = !( src.be_sleeper_agent)
 			src.SetChoices(user)
 			return
 
