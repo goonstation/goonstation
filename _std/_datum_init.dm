@@ -15,7 +15,7 @@ proc/unpause_init()
 	global.waiting_inits = null // to make sure things happen correctly if some Init() pauses again
 	for(var/datum/D as anything in inits_to_process)
 		if(!QDELETED(D))
-			D.Init(arglist(waiting_inits[D]))
+			D.Init(arglist(inits_to_process[D]))
 
 /datum/New(...)
 	SHOULD_CALL_PARENT(TRUE)
