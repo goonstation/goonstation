@@ -279,6 +279,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		if(T.z == AST_ZLEVEL)
 			miningZ.Add(T)
 
+	begin_big_map_change()
+	pause_init()
+
 	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
 	for (var/n = 1, n <= num_to_place, n++)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
@@ -301,6 +304,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 				if (count >= 33)
 					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
 		else break
+
+	unpause_init()
+	end_big_map_change()
 
 	var/datum/mapGenerator/D
 
