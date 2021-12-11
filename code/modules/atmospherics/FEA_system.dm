@@ -233,6 +233,11 @@ datum/controller/air_system
 	process()
 		current_cycle++
 
+		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
+			for(var/datum/air_group/AG as anything in air_groups)
+				AG.check_regroup()
+				LAGCHECK(LAG_REALTIME)
+
 		process_tiles_to_space()
 		is_busy = TRUE
 
@@ -256,11 +261,6 @@ datum/controller/air_system
 
 		process_high_pressure_delta()
 		LAGCHECK(LAG_REALTIME)
-
-		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
-			for(var/datum/air_group/AG as anything in air_groups)
-				AG.check_regroup()
-				LAGCHECK(LAG_REALTIME)
 
 		is_busy = FALSE
 		return 1
