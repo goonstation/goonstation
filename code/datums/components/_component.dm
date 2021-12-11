@@ -12,7 +12,7 @@
 		*/
 	var/list/comp_lookup
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
-	var/list/list/datum/callback/signal_procs
+	var/tmp/list/list/datum/callback/signal_procs
 	/**
 		* Is this datum capable of sending signals?
 		*
