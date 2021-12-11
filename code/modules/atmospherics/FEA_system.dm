@@ -85,6 +85,7 @@ datum/controller/air_system
 	var/list/turf/tiles_to_update = list()
 	var/list/datum/air_group/groups_to_rebuild = list()
 	var/list/turf/tiles_to_space = list()
+	var/list/turf/turfs_to_find_groups_for = list()
 
 	var/current_cycle = 0
 	var/is_busy = FALSE
@@ -233,6 +234,11 @@ datum/controller/air_system
 	process()
 		current_cycle++
 
+		if(!big_map_changes_happening && length(turfs_to_find_groups_for))
+			for(var/turf/simulated/T in turfs_to_find_groups_for)
+				T.find_group()
+			turfs_to_find_groups_for.Cut()
+
 		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
 			for(var/datum/air_group/AG as anything in air_groups)
 				AG.check_regroup()
@@ -241,7 +247,7 @@ datum/controller/air_system
 		process_tiles_to_space()
 		is_busy = TRUE
 
-		if(!explosions.exploding)
+		if(!explosions.exploding && !big_map_changes_happening)
 			if(groups_to_rebuild.len > 0)
 				process_rebuild_select_groups()
 			LAGCHECK(LAG_REALTIME)

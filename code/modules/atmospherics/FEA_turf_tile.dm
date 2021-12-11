@@ -186,7 +186,10 @@ turf
 				if(air_master)
 					air_master.tiles_to_update |= src
 
-					find_group()
+					if(!big_map_changes_happening)
+						find_group()
+					else
+						air_master.turfs_to_find_groups_for |= src
 
 			else
 				if(air_master)
