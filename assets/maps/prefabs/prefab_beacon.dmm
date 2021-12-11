@@ -1,19 +1,117 @@
-"a" = (/turf/variableTurf/clear,/area/noGenerate)
-"b" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 2},/obj/machinery/light/runway_light,/turf/variableTurf/clear,/area/noGenerate)
-"c" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/obj/machinery/light/runway_light/delay5,/turf/variableTurf/clear,/area/noGenerate)
-"d" = (/obj/lattice,/turf/variableTurf/clear,/area/noGenerate)
-"e" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 10},/obj/machinery/light/runway_light/delay5,/turf/variableTurf/clear,/area/noGenerate)
-"f" = (/obj/lattice{icon_state = "lattice-dir"; dir = 9},/obj/machinery/light/runway_light/delay4,/turf/variableTurf/clear,/area/noGenerate)
-"g" = (/obj/grille/catwalk{dir = 1; icon_state = "catwalk_cross"},/obj/warp_beacon/miningasteroidbelt,/turf/variableTurf/clear,/area/noGenerate)
-"h" = (/obj/lattice{icon_state = "lattice-dir"; dir = 5},/obj/machinery/light/runway_light/delay2,/turf/variableTurf/clear,/area/noGenerate)
-"i" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 9},/obj/machinery/light/runway_light/delay5,/turf/variableTurf/clear,/area/noGenerate)
-"j" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/obj/machinery/light/runway_light/delay5,/turf/variableTurf/clear,/area/noGenerate)
-"k" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 1},/obj/machinery/light/runway_light/delay3,/turf/variableTurf/clear,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"b" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"d" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"e" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"f" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"g" = (
+/obj/grille/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/obj/warp_beacon/miningasteroidbelt,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"h" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"i" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"j" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"k" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
-aabaa
-acdea
-fdgdh
-aidja
-aakaa
+a
+a
+f
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+d
+i
+a
+"}
+(3,1,1) = {"
+b
+d
+g
+d
+k
+"}
+(4,1,1) = {"
+a
+e
+d
+j
+a
+"}
+(5,1,1) = {"
+a
+a
+h
+a
+a
 "}

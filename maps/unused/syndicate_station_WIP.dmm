@@ -1,17 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/cordon,
-/area)
+/area/space)
 "ac" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "cloaking field"
 	},
-/area)
+/area/space)
 "ad" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -660,7 +660,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "bP" = (
 /obj/cable{
 	d1 = 4;
@@ -2156,7 +2156,7 @@
 "ih" = (
 /obj/lattice,
 /turf/space,
-/area)
+/area/space)
 "jW" = (
 /obj/lattice,
 /obj/cable{
@@ -2165,7 +2165,7 @@
 	icon_state = "2-8"
 	},
 /turf/space,
-/area)
+/area/space)
 "jY" = (
 /obj/lattice{
 	dir = 9;
@@ -2173,21 +2173,21 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/space)
 "kd" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 8
 	},
 /turf/space,
-/area)
+/area/space)
 "kf" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 1
 	},
 /turf/space,
-/area)
+/area/space)
 "ky" = (
 /obj/lattice{
 	dir = 6;
@@ -2202,13 +2202,13 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/space,
-/area)
+/area/space)
 "kz" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "lo" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2216,7 +2216,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/space)
 "lp" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2224,7 +2224,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/space)
 "lq" = (
 /obj/lattice,
 /obj/cable{
@@ -2233,14 +2233,14 @@
 	icon_state = "2-4"
 	},
 /turf/space,
-/area)
+/area/space)
 "lr" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/beacon,
 /turf/space,
-/area)
+/area/space)
 "lJ" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2255,7 +2255,7 @@
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "lK" = (
 /obj/lattice{
 	dir = 6;
@@ -2270,7 +2270,7 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/space,
-/area)
+/area/space)
 "lL" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2285,7 +2285,7 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/space,
-/area)
+/area/space)
 "lO" = (
 /obj/machinery/communications_dish{
 	name = "Communications dish"
@@ -2301,7 +2301,7 @@
 	pixel_y = 0
 	},
 /turf/space,
-/area)
+/area/space)
 "lP" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -2312,7 +2312,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area)
+/area/space)
 "mr" = (
 /obj/lattice{
 	dir = 9;
@@ -2320,14 +2320,14 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /turf/space,
-/area)
+/area/space)
 "ms" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
 /turf/space,
-/area)
+/area/space)
 "oE" = (
 /obj/lattice,
 /obj/cable{
@@ -2336,7 +2336,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area)
+/area/space)
 "oI" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2344,7 +2344,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/space)
 "pn" = (
 /obj/lattice{
 	dir = 6;
@@ -2352,28 +2352,28 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/space)
 "po" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area)
+/area/space)
 "pp" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 6
 	},
 /turf/space,
-/area)
+/area/space)
 "pq" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
 /turf/space,
-/area)
+/area/space)
 "pr" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2381,7 +2381,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/space)
 "ps" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2389,7 +2389,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/space)
 "pt" = (
 /obj/lattice{
 	dir = 6;
@@ -2397,7 +2397,7 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area)
+/area/space)
 "pu" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2405,7 +2405,7 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area)
+/area/space)
 "pv" = (
 /obj/lattice{
 	dir = 6;
@@ -2413,7 +2413,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/space)
 "pw" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2421,7 +2421,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/space)
 "px" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2429,7 +2429,7 @@
 	},
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/space)
 "py" = (
 /obj/lattice{
 	dir = 6;
@@ -2437,7 +2437,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/space)
 "pz" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2445,7 +2445,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/space)
 "pA" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2453,7 +2453,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/space)
 "pB" = (
 /obj/lattice{
 	dir = 6;
@@ -2461,7 +2461,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/space)
 "pC" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -2469,19 +2469,19 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/space)
 "pD" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/space)
 "pE" = (
 /obj/lattice,
 /obj/machinery/light/runway_light,
 /turf/space,
-/area)
+/area/space)
 "pF" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2489,7 +2489,7 @@
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
-/area)
+/area/space)
 "pG" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2497,7 +2497,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area)
+/area/space)
 "pH" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2505,7 +2505,7 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area)
+/area/space)
 "pI" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
@@ -2513,7 +2513,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

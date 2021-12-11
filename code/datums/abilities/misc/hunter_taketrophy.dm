@@ -45,7 +45,7 @@
 
 			else
 				var/mob/living/carbon/human/HH = target
-				if (!ischangeling(HH) && (ismonkey(HH) || HH.bioHolder && HH.bioHolder.HasEffect("monkey"))) // Lesser form doesn't count.
+				if (isnpcmonkey(HH)) // Lesser form doesn't count.
 					boutput(M, __red("This pitiful creature isn't worth your time."))
 					return 1
 
@@ -152,7 +152,7 @@
 				tvalue += S2.value
 				no_of_skulls++
 				S2.set_loc(get_turf(SH))
-				SH.update_icon()
+				SH.UpdateIcon()
 
 			gibs(get_turf(SH))
 			qdel(SH)

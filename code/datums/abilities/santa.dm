@@ -1,5 +1,5 @@
 //stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
-/obj/screen/ability/topBar/santa
+/atom/movable/screen/ability/topBar/santa
 	clicked(params)
 		var/datum/targetable/santa/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -70,7 +70,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/santa/B = new /obj/screen/ability/topBar/santa(null)
+		var/atom/movable/screen/ability/topBar/santa/B = new /atom/movable/screen/ability/topBar/santa(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -83,7 +83,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/santa()
+			src.object = new /atom/movable/screen/ability/topBar/santa()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -220,6 +220,9 @@
 		var/A
 		A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 		var/area/thearea = get_telearea(A)
+		if(thearea.teleport_blocked)
+			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
 		playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)

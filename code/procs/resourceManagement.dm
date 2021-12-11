@@ -8,7 +8,7 @@
 /proc/resource(file, group)
 	if (!file) return
 	if (cdn)
-		. = "[cdn]/[file]?serverrev=[vcs_revision]"
+		. = "[cdn]/[file]?v=[vcs_revision]"
 	else
 		if (findtext(file, "{{resource")) //Got here via the dumb regex proc (local only)
 			file = group
@@ -33,12 +33,20 @@
 	else
 		if (cdn)
 			Z_LOG_DEBUG("Resource/Grab", "[path] - requesting from CDN")
+
 			//Actually get the file contents from the CDN
-			var/http[] = world.Export("[cdn]/[path]?serverrev=[vcs_revision]")
-			if (!http || !http["CONTENT"])
+			var/datum/http_request/request = new()
+			request.prepare(RUSTG_HTTP_METHOD_GET, "[cdn]/[path]?v=[vcs_revision]", "", "")
+			request.begin_async()
+			UNTIL(request.is_complete())
+			var/datum/http_response/response = request.into_response()
+
+			if (response.errored || !response.body)
 				Z_LOG_ERROR("Resource/Grab", "[path] - failed to get from CDN")
 				CRASH("CDN DEBUG: No file found for path: [path]")
-			file = file2text(http["CONTENT"])
+
+			file = response.body
+
 		else //No CDN, grab from local directory
 			Z_LOG_DEBUG("Resource/Grab", "[path] - locally loaded, parsing")
 			file = parseAssetLinks(file("browserassets/[path]"))
@@ -148,6 +156,7 @@
 
 //#LongProcNames #yolo
 /client/proc/loadResourcesFromList(list/rscList)
+	var/i = 1
 	for (var/r in rscList) //r is a file path
 		var/fileRef = file(r)
 		var/parsedFile = parseAssetLinks(fileRef, r)
@@ -161,8 +170,8 @@
 				world.log << "RESOURCE ERROR: Failed to convert text in '[r]' to a temporary file"
 		else //file is binary just throw it at the client as is
 			src << browse(fileRef, "file=[r];display=0")
-
-	return 1
+		if(i++ % 100 == 0)
+			sleep(1)
 
 
 //A thing for coders locally testing to use (as they might be offline = can't reach the CDN)

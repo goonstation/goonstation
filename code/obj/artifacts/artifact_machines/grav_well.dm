@@ -4,10 +4,12 @@
 
 /datum/artifact/gravity_well_generator
 	associated_object = /obj/machinery/artifact/gravity_well_generator
-	rarity_class = 1 // modified from 2 as part of art tweak
+	type_name = "Gravity Well"
+	rarity_weight = 450
 	validtypes = list("wizard","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS)
 	activated = 0
 	activ_text = "activates and begins to warp gravity around it!"
 	deact_text = "shuts down, returning gravity to normal!"
@@ -40,3 +42,6 @@
 				step_away(M,O)
 			else
 				step_towards(M,O)
+			if(O.ArtifactFaultUsed(M) == FAULT_RESULT_STOP)
+				break
+

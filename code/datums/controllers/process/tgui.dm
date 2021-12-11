@@ -5,10 +5,9 @@
  * Copyright (c) 2020 Aleksej Komarov & ZeWaka (minor porting changes)
  * SPDX-License-Identifier: MIT
  */
-
 var/global/datum/controller/process/tgui/tgui_process
 
-// handles tgui interfaces
+/// handles tgui interfaces
 /datum/controller/process/tgui
 
 	/// A list of UIs scheduled to process
@@ -22,9 +21,16 @@ var/global/datum/controller/process/tgui/tgui_process
 
 	setup()
 		name = "tgui"
-		schedule_interval = 9 DECI SECONDS
+		schedule_interval = 0.9 SECONDS
 		basehtml = grabResource("tgui/tgui.html") // |GOONSTATION-ADD|
 		tgui_process = src
+
+	copyStateFrom(datum/controller/process/target)
+		var/datum/controller/process/tgui/old_tgui = target
+		src.basehtml = old_tgui.basehtml
+		src.current_run = old_tgui.current_run
+		src.open_uis = old_tgui.open_uis
+		src.open_uis_by_src = old_tgui.open_uis_by_src
 
 	doWork()
 		src.current_run = open_uis.Copy()
@@ -34,7 +40,7 @@ var/global/datum/controller/process/tgui/tgui_process
 		while(current_run.len)
 			var/datum/tgui/ui = current_run[current_run.len]
 			current_run.len--
-			if(ui && ui.user && ui.src_object)
+			if(ui?.user && ui.src_object)
 				ui.process()
 			else
 				open_uis.Remove(ui)

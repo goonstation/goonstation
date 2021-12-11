@@ -25,7 +25,7 @@
 	hit_ground_chance = 10
 	//Can we pass windows
 	window_pass = 0
-	projectile_speed = 15
+	projectile_speed = 20
 
 	var/turf/target = null
 	var/failchance = 5

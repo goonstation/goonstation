@@ -1,0 +1,357 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
+/area/prefab/ranch)
+"e" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/ranch)
+"f" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/prefab/ranch)
+"h" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"l" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"m" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/prefab/ranch)
+"n" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/dirt,
+/area/prefab/ranch)
+"p" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/prefab/ranch)
+"r" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"s" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/ranch)
+"u" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/ranch)
+"v" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/ranch)
+"y" = (
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	id = "space_ranch"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/ranch)
+"z" = (
+/obj/submachine/ranch_feed_grinder,
+/turf/simulated/floor/green,
+/area/prefab/ranch)
+"C" = (
+/obj/submachine/chicken_incubator,
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"D" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/ranch)
+"E" = (
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"F" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
+/area/prefab/ranch)
+"G" = (
+/obj/rack,
+/obj/item/fishing_rod,
+/obj/item/fish_portal{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/turf/simulated/floor/green,
+/area/prefab/ranch)
+"H" = (
+/obj/table/auto,
+/obj/item/satchel/hydro{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/turf/simulated/floor/green,
+/area/prefab/ranch)
+"J" = (
+/obj/table/auto,
+/obj/item/paper/ranch_guide,
+/obj/item/kitchen/food_box/egg_box,
+/turf/simulated/floor/green,
+/area/prefab/ranch)
+"N" = (
+/turf/simulated/floor,
+/area/prefab/ranch)
+"O" = (
+/obj/shrub{
+	dir = 4
+	},
+/obj/item/clothing/mask/chicken,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"P" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"T" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/ranch)
+"U" = (
+/turf/simulated/floor/dirt,
+/area/prefab/ranch)
+"V" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/ranch)
+"W" = (
+/obj/machinery/r_door_control{
+	id = "space_ranch"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/ranch)
+"X" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/prefab/ranch)
+
+(1,1,1) = {"
+a
+u
+u
+u
+u
+D
+D
+u
+u
+u
+W
+a
+"}
+(2,1,1) = {"
+a
+u
+z
+m
+N
+N
+N
+e
+T
+v
+y
+a
+"}
+(3,1,1) = {"
+a
+u
+H
+f
+N
+N
+N
+e
+v
+v
+y
+a
+"}
+(4,1,1) = {"
+a
+u
+J
+f
+N
+N
+N
+e
+v
+v
+y
+a
+"}
+(5,1,1) = {"
+a
+u
+G
+p
+N
+N
+N
+e
+s
+v
+y
+a
+"}
+(6,1,1) = {"
+a
+u
+u
+u
+u
+D
+D
+u
+u
+u
+u
+a
+"}
+(7,1,1) = {"
+F
+F
+O
+P
+X
+U
+U
+b
+P
+l
+F
+F
+"}
+(8,1,1) = {"
+F
+h
+E
+E
+X
+U
+U
+b
+E
+E
+C
+F
+"}
+(9,1,1) = {"
+F
+E
+E
+E
+X
+n
+U
+b
+E
+E
+E
+F
+"}
+(10,1,1) = {"
+F
+C
+E
+E
+X
+U
+U
+b
+E
+E
+h
+F
+"}
+(11,1,1) = {"
+F
+F
+r
+E
+X
+U
+U
+b
+E
+V
+F
+F
+"}
+(12,1,1) = {"
+a
+u
+u
+u
+u
+u
+u
+u
+u
+u
+u
+a
+"}

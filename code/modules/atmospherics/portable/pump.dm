@@ -2,22 +2,43 @@
 	name = "Portable Air Pump"
 
 	icon = 'icons/obj/atmospherics/atmos.dmi'
-	icon_state = "psiphon:0"
+	icon_state = "psiphon-off"
+	dir = NORTH //so it spawns with the fan side showing
 	density = 1
 	mats = 12
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
 	var/on = 0
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
+	var/image/tank_hatch
+
+
 	desc = "A device which can siphon or release gasses."
+	custom_suicide = 1
 
 	volume = 750
 
+	New()
+		..()
+		tank_hatch = image('icons/obj/atmospherics/atmos.dmi', "")
+
 /obj/machinery/portable_atmospherics/pump/update_icon()
 	if(on)
-		icon_state = "psiphon:1"
+		icon_state = "psiphon-on"
+
+		animate(src, pixel_x = 2, easing = SINE_EASING, loop=-1, time = 0.5 SECONDS)
+		animate(pixel_x = -2, easing = SINE_EASING, loop=-1, time = 0.5 SECONDS)
 	else
-		icon_state = "psiphon:0"
+		icon_state = "psiphon-off"
+		animate(src)
+		pixel_x = 0
+
+	if (holding)
+		tank_hatch.icon_state = "psiphon-T-overlay"
+	else
+		tank_hatch.icon_state = ""
+	src.UpdateOverlays(tank_hatch, "tankhatch")
+
 
 /obj/machinery/portable_atmospherics/pump/process()
 	..()
@@ -65,7 +86,7 @@
 				air_contents.merge(removed)
 
 		src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/pump/return_air()
@@ -86,7 +107,7 @@
 /obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
 
@@ -145,18 +166,48 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
+			var/diff = text2num_safe(href_list["pressure_adj"])
+			target_pressure = clamp(target_pressure+diff, 0, 10*ONE_ATMOSPHERE)
 
 		else if (href_list["pressure_set"])
 			var/change = input(usr,"Target Pressure (0-[10*ONE_ATMOSPHERE]):","Enter target pressure",target_pressure) as num
-			if(!isnum(change)) return
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, change))
+			if(!isnum_safe(change)) return
+			target_pressure = clamp(change, 0, 10*ONE_ATMOSPHERE)
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
-		update_icon()
+		UpdateIcon()
 	else
 		usr.Browse(null, "window=pump")
 		return
 	return
+
+
+/obj/machinery/portable_atmospherics/pump/suicide(var/mob/living/carbon/human/user)
+	if (!istype(user) || !src.user_can_suicide(user))
+		return 0
+
+	if (!on) //Can't chop your head off if the fan's not spinning
+		on = 1
+		UpdateIcon()
+
+	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
+	var/obj/head = user.organHolder.drop_organ("head")
+	qdel(head)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+	var/turf/T = get_turf(user.loc)
+	if (user.blood_id)
+		T.fluid_react_single(user.blood_id, 20, airborne = 1)
+	else
+		T.fluid_react_single("blood", 20, airborne = 1)
+
+	for (var/mob/living/carbon/human/V in oviewers(user, null))
+		if (prob(33))
+			V.show_message("<span class='alert'>Oh fuck, that's going to leave a mark on your psyche.</span>", 1)
+			V.vomit()
+	if (user) //ZeWaka: Fix for null.loc
+		health_update_queue |= user
+	SPAWN_DBG(50 SECONDS)
+		if (user && !isdead(user))
+			user.suiciding = 0
+	return 1

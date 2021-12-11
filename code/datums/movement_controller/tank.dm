@@ -23,6 +23,8 @@
 	var/squeal_sfx = 0
 	var/accel_sfx = 0
 
+	var/shooting = FALSE
+
 	treads
 		can_turn_while_parked = 1
 
@@ -40,6 +42,10 @@
 		..()
 
 	keys_changed(mob/user, keys, changed)
+		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub) || !owner)
+			return
+		if(changed & KEY_SHOCK)
+			shooting = keys & KEY_SHOCK
 		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
 			if (!owner.engine) // fuck it, no better place to put this, only triggers on presses
 				boutput(user, "[owner.ship_message("WARNING! No engine detected!")]")
@@ -60,16 +66,24 @@
 				input_x -= 1
 
 			if (input_x || input_y)
-				user.attempt_move()
+				attempt_move(user)
 
 	process_move(mob/user, keys)
+		if (istype(src.owner, /obj/machinery/vehicle/tank/minisub/escape_sub))
+			return
+
+		var/can_user_act = user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user)
+
+		if(shooting && owner.m_w_system?.active && can_user_act && !GET_COOLDOWN(owner.m_w_system, "fire"))
+			owner.fire_main_weapon(user)
+
 		var/accel = 0
 		var/rot = 0
-		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
-			if (owner && owner.engine && owner.engine.active)
+		if (can_user_act)
+			if (owner?.engine?.active)
 				accel = input_y * accel_pow * (reverse_gear ? -1 : 1)
 				rot = input_x * turn_delay
-				
+
 				//We're on autopilot before the warp, NO FUCKING IT UP!
 				if (owner.engine.warp_autopilot)
 					return 0
@@ -81,7 +95,7 @@
 				rot = (rot*0.5) + ((velocity_max/velocity_magnitude) * (rot*0.5)) //you turn a little faster when you're going fast with tires. is this too weird?
 
 		if (next_rot <= world.time && rot)
-			owner.dir = turn(owner.dir,45 * (rot > 0 ? -1 : 1)  * ((reverse_gear && !can_turn_while_parked) ? -1 : 1))
+			owner.set_dir(turn(owner.dir,45 * (rot > 0 ? -1 : 1)  * ((reverse_gear && !can_turn_while_parked) ? -1 : 1)))
 			owner.facing = owner.dir
 			owner.flying = owner.dir
 			next_rot = world.time + abs(rot)
@@ -99,7 +113,7 @@
 
 		if (next_move > world.time)
 			return min(next_rot-world.time, next_move - world.time)
-		
+
 		if (owner.rcs && input_x == 0 && input_y == 0)
 			accel = -brake_pow
 
@@ -142,7 +156,7 @@
 
 			step(owner,(reverse_gear ? turn(velocity_dir,180) : velocity_dir))
 			owner.glide_size = (32 / delay) * world.tick_lag// * (world.tick_lag / CLIENTSIDE_TICK_LAG_SMOOTH)
-			owner.dir = owner.facing
+			owner.set_dir(owner.facing)
 			if (owner.loc != target_turf)
 				velocity_magnitude = 0
 				//boutput(world,"[src.owner] crashed?")
@@ -157,14 +171,9 @@
 		next_move = world.time + delay
 		return min(delay, next_rot-world.time)
 
-	update_owner_dir(var/atom/movable/ship) //after move, update ddir
+	update_owner_dir() //after move, update ddir
 		if (owner.flying && owner.facing != owner.flying)
-			owner.dir = owner.facing
-
-	hotkey(mob/user, name)
-		switch (name)
-			if ("fire")
-				owner.fire_main_weapon() // just, fuck it.
+			owner.set_dir(owner.facing)
 
 	modify_keymap(client/C)
 		..()

@@ -187,7 +187,7 @@ CritterAttack(atom/M)
   if(target == start)
     return
 
-  var/obj/projectile/A = unpool(/obj/projectile)
+  var/obj/projectile/A = new /obj/projectile
   if(!A)  return
   A.set_loc(src.loc)
   if (!current_projectile)
@@ -212,7 +212,7 @@ CritterAttack(atom/M)
     A.xo = target:x - start:x
 
   A.shooter = src
-  src.dir = get_dir(src, target)
+  src.set_dir(get_dir(src, target))
   SPAWN_DBG( 0 )
     A.process()
   return

@@ -42,17 +42,6 @@ obj/machinery/atmospherics/retrofilter
 	var/hacked = 0
 	var/emagged = 0
 
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-	var/net_id = null
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-
 	New()
 		..()
 		src.tag = ""
@@ -68,17 +57,15 @@ obj/machinery/atmospherics/retrofilter
 		if(radio_controller)
 			initialize()
 
-		air_in = unpool(/datum/gas_mixture)
-		air_out1 = unpool(/datum/gas_mixture)
-		air_out2 = unpool(/datum/gas_mixture)
+		air_in = new /datum/gas_mixture
+		air_out1 = new /datum/gas_mixture
+		air_out2 = new /datum/gas_mixture
 
 		air_in.volume = 200
 		air_out1.volume = 200
 		air_out2.volume = 200
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)
@@ -102,11 +89,11 @@ obj/machinery/atmospherics/retrofilter
 		network_in = null
 
 		if(air_in)
-			pool(air_in)
+			qdel(air_in)
 		if(air_out1)
-			pool(air_out1)
+			qdel(air_out1)
 		if(air_out2)
-			pool(air_out2)
+			qdel(air_out2)
 
 		air_in = null
 		air_out1 = null
@@ -192,7 +179,7 @@ obj/machinery/atmospherics/retrofilter
 			var/gasToToggle = text2num(href_list["toggle_gas"])
 			if (!gasToToggle)
 				return
-			gasToToggle = max(1, min(gasToToggle, 16))
+			gasToToggle = clamp(gasToToggle, 1, 16)
 			if (filter_mode & gasToToggle)
 				filter_mode &= ~gasToToggle
 			else
@@ -260,7 +247,7 @@ obj/machinery/atmospherics/retrofilter
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_in.remove_ratio(transfer_ratio)//air_in.remove(transfer_moles)
 
-			var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 			if(air_in.temperature)
 				filtered_out.temperature = air_in.temperature
 
@@ -285,15 +272,11 @@ obj/machinery/atmospherics/retrofilter
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
 				if(removed && length(removed.trace_gases))
-					for(var/G in removed.trace_gases)
-						var/datum/gas/trace_gas = G
+					for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 						if(trace_gas)
-							removed.trace_gases -= trace_gas
-							if(!removed.trace_gases.len)
-								removed.trace_gases = null
-							if(!filtered_out.trace_gases)
-								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+							var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
+							filtered_gas.moles = trace_gas.moles
+							removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
@@ -302,8 +285,7 @@ obj/machinery/atmospherics/retrofilter
 			network_in.merge(network_out2)
 			network_out2 = network_in
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
 		if(network_out2)
 			network_out2.update = 1
@@ -353,7 +335,7 @@ obj/machinery/atmospherics/retrofilter
 				return
 			src.add_fingerprint(user)
 			user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
-			if (!do_after(user, 30))
+			if (!do_after(user, 3 SECONDS))
 				return
 			src.open = !src.open
 			user.show_message("<span class='alert'>Done!</span>",1)
@@ -381,7 +363,7 @@ obj/machinery/atmospherics/retrofilter
 		else if (issnippingtool(W) && hacked)
 			src.add_fingerprint(user)
 			user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
-			if (!do_after(user, 50))
+			if (!do_after(user, 5 SECONDS))
 				return
 			src.hacked = 0
 			src.update_overlays()
@@ -446,9 +428,7 @@ obj/machinery/atmospherics/retrofilter
 				node_in = target
 				break
 
-		update_icon()
-
-		set_frequency(frequency)
+		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

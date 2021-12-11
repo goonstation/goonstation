@@ -155,5 +155,5 @@
 /datum/commodity/trader/gragg/starstone
 	comname = "Rare star-shaped jewel"
 	comtype = /obj/item/raw_material/starstone
-	price_boundary = list(3000000,3000000)
+	price_boundary = list(300000,450000)
 	possible_names = list("WANT BUY PALE BLUE STAR-SHAPED GEMSTONE. EXTREMELY RARE. SELL TO ME IF FIND.")

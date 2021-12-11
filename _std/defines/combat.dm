@@ -16,3 +16,11 @@
 #define GRAB_NECK 2
 #define GRAB_KILL 3
 #define GRAB_PIN 4
+
+// Ranged weapon melee damage values
+
+#define MELEE_DMG_PISTOL 6
+#define MELEE_DMG_REVOLVER 8
+#define MELEE_DMG_SMG 8
+#define MELEE_DMG_RIFLE 12
+#define MELEE_DMG_LARGE 15

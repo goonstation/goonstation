@@ -38,11 +38,15 @@ CONTENTS:
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "darkvoid"
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
 	mat_appearances_to_ignore = list("steel")
+#ifdef IN_MAP_EDITOR
+	icon_state = "darkvoid-map" //so we can actually the walls from the floor
+#else
+	icon_state = "darkvoid"
+#endif
 
 /turf/unsimulated/wall/void/crunch //putting these here for now
 	fullbright = 0
@@ -165,7 +169,7 @@ CONTENTS:
 		overlays_list["r_dial_0"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-on")
 		overlays_list["r_dial_1"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-jitter")
 
-		update_icons()
+		UpdateIcons()
 
 	attack_hand(mob/user)
 		..()
@@ -176,7 +180,7 @@ CONTENTS:
 		attack_hand(user)
 
 
-	proc/update_icons()
+	proc/UpdateIcons()
 		//src.overlays.Cut()
 
 		UpdateOverlays(overlays_list["cables"], "cables")
@@ -191,12 +195,12 @@ CONTENTS:
 			UpdateOverlays(overlays_list["lscreen[operating]"], "lscreen")
 			UpdateOverlays(overlays_list["rscreen[operating]"], "rscreen")
 
-			if(chair1 && chair1.buckled_guy)
+			if(chair1?.buckled_guy)
 				UpdateOverlays(overlays_list["l_dial_[operating]"], "l_dial")
 			else
 				UpdateOverlays(overlays_list["l_dial_idle"], "l_dial")
 
-			if(chair2 && chair2.buckled_guy)
+			if(chair2?.buckled_guy)
 				UpdateOverlays(overlays_list["r_dial_[operating]"], "r_dial")
 			else
 				UpdateOverlays(overlays_list["r_dial_idle"], "r_dial")
@@ -232,8 +236,8 @@ CONTENTS:
 					<A HREF='?src=\ref[src];refresh_chair_connection=1'>Re-establish</A>
 					<h3>Mental Interfaces</h3>
 					<table border=1><tr>
-						<th>Interface #1<td><B>[chair1 && chair1.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
-						<th>Interface #2<td><B>[chair2 && chair2.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
+						<th>Interface #1<td><B>[chair1?.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
+						<th>Interface #2<td><B>[chair2?.buckled_guy ? "<font color=green>Connected</font>" : "<font color=red>Disconnected</font>"]</B><tr>
 					</table>
 					<A HREF='?src=\ref[src];refresh_mind_connection=1'>Re-establish</A><BR><BR>
 					<A HREF='?src=\ref[src];execute_swap=1'><B><font bold=5 size=7>Activate</font></B></A></span>"}
@@ -298,7 +302,7 @@ CONTENTS:
 
 			else if(href_list["refresh_mind_connection"])
 				src.updateUsrDialog() //lol cheats
-				update_icons()
+				UpdateIcons()
 
 			else if(href_list["execute_swap"])
 				do_swap()
@@ -315,16 +319,16 @@ CONTENTS:
 
 		sleep(boot_duration / 2)
 		activating = 2
-		update_icons()
+		UpdateIcons()
 
 		sleep(boot_duration / 4)
 		activating = 3
-		update_icons()
+		UpdateIcons()
 
 		sleep(boot_duration / 4)
 		active = 1
 		activating = 0
-		update_icons()
+		UpdateIcons()
 
 		remain_active = remain_active_max
 
@@ -354,7 +358,7 @@ CONTENTS:
 		sleep(2 SECONDS)
 		activating = 0
 		active = 0
-		update_icons()
+		UpdateIcons()
 
 		src.updateUsrDialog()
 
@@ -365,7 +369,7 @@ CONTENTS:
 
 		if(chair1 && !chair1.on) chair1.toggle_active()
 		if(chair2 && !chair2.on) chair2.toggle_active()
-		update_icons()
+		UpdateIcons()
 
 	proc/can_operate()
 		return chair1 && ishuman(chair1.buckled_guy) && !chair1.buckled_guy:on_chair && chair2 && ishuman(chair2.buckled_guy) && !chair2.buckled_guy:on_chair
@@ -381,7 +385,7 @@ CONTENTS:
 			update_chairs()
 			if(can_operate()) //We have what we need
 				remain_active += 200 //So it won't switch itself off on us
-				update_icons()
+				UpdateIcons()
 
 				//We're not going to allow you to unbuckle during the process
 				chair1.allow_unbuckle = 0
@@ -409,19 +413,19 @@ CONTENTS:
 				SPAWN_DBG(5 SECONDS)
 					playsound(src.loc, 'sound/machines/modem.ogg', 100, 1)
 					A.show_text("<B>You feel your mind slipping...</B>", "red")
-					A.drowsyness = max(A.drowsyness, 10)
+					A.changeStatus("drowsy", 20 SECONDS)
 					B.show_text("<B>You feel your mind slipping...</B>", "red")
-					B.drowsyness = max(B.drowsyness, 10)
+					B.changeStatus("drowsy", 20 SECONDS)
 
 				sleep(10 SECONDS)
 				playsound(src.loc,'sound/effects/elec_bzzz.ogg', 60, 1)
 				if(A && B && can_operate()) //We're all here, still
 					A.emote("faint")
-					A.changeStatus("paralysis", 250)
+					A.changeStatus("paralysis", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					B.emote("faint")
-					B.changeStatus("paralysis", 250)
+					B.changeStatus("paralysis", 25 SECONDS)
 					A.shock(src, 750000, ignore_gloves=1)
 
 					if(A.mind)
@@ -470,4 +474,4 @@ CONTENTS:
 
 		SPAWN_DBG(5 SECONDS)
 			operating = 0
-			update_icons()
+			UpdateIcons()

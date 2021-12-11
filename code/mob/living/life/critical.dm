@@ -29,9 +29,9 @@
 						owner.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (isalive(owner))
-						if (owner && owner.mind)
+						if (owner?.mind)
 							owner.lastgasp() // if they were ok before dropping below zero health, call lastgasp() before setting them unconscious
-					owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 15 * mult))
+					owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 1.5 SECONDS * mult))
 				if (-99 to -80)
 					owner.take_oxygen_deprivation(1 * mult)
 					if (prob(percentmult(4, mult)))
@@ -48,7 +48,7 @@
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (prob(percentmult(6, mult)))
 						boutput(owner, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
-						owner.setStatus("weakened", max(owner.getStatusDuration("weakened"), 30))
+						owner.setStatus("weakened", max(owner.getStatusDuration("weakened"), 3 SECONDS))
 					if (prob(percentmult(3, mult)))
 						owner.changeStatus("paralysis", 2 SECONDS)
 				if (-50 to 0)
@@ -73,16 +73,16 @@
 		if (owner.get_brain_damage() >= 100) // braindeath
 			if (!is_chg)
 				boutput(owner, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
-				owner.losebreath+=10
-				owner.changeStatus("weakened", 3 SECONDS)
+				owner.losebreath += 10 * mult
+				owner.changeStatus("weakened", 3 SECONDS * mult)
 		if (owner.health <= -100)
 			if (owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine"))
 				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
-				if (prob(deathchance))
+				if (prob(percentmult(deathchance, mult)))
 					owner.death()
 			else
 				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
-				if (prob(deathchance))
+				if (prob(percentmult(deathchance, mult)))
 					owner.death()
 
 

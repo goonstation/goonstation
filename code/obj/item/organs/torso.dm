@@ -27,14 +27,14 @@
 				if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
 					src.donor_appearance = new(src)
 					src.donor_appearance.CopyOther(src.donor.bioHolder.mobAppearance)
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		if (holder)
 			holder.chest = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.donor || !src.donor_appearance)
 			return // vOv
 
@@ -50,9 +50,10 @@
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
 		..()
+
 		if (brute > 5 && holder)
 			if(prob(60))
-				src.holder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas"), 30)
+				src.holder.damage_organs(brute/5, 0, 0, list("liver", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), 30)
 			else if (prob(30))
 				src.holder.damage_organs(brute/10, 0, 0, list("spleen", "left_lung", "right_lung"), 50)
 

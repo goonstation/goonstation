@@ -1,0 +1,396 @@
+<html>
+<head>
+<style type="text/css">
+div.code
+{
+padding:5px;
+border:1px solid black;
+margin:1px;
+font-family:"courier";
+font-size:12px;
+background-color:lightgray;
+}
+div.tips
+{
+padding:10px;
+border:5px solid gray;
+margin:0px;
+font-family:"Arial";
+font-size:12px;
+font-weight:bold;
+}
+body
+{
+color:black;
+background-color:white;
+}
+h1
+{
+font-family:"Arial Black";
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+h2
+{
+font-family:"Arial Black";
+text-align:left;
+font-size:18px;
+}
+p
+{
+font-family:"Arial";
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>DWAINE for Dummies!</h1>
+<p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date.<br>
+Point your browser to <a href=http://wiki.ss13.co/TermOS>http://wiki.ss13.co/TermOS</a> if anything seems amiss.</i>
+<h2>Introduction</h2>
+<p>If you're reading this book, it is likely that you have bought a DWAINE System Vi mainframe - but have no idea how to use it! Luckily for you, this book is here to teach you the basics.</p>
+
+<h2>How to Use this Book</h2>
+<p>First off, for some bizarre reason you need to know how a book works.
+Basically it's this thing with two covers and words inside. You open it and read
+the words.<br>
+Sometimes in the middle of the words there are pictures, but not in this book.
+Pictures are for losers and babies.</p>
+<p>Now and again I'll give you advanced tips, which will appear in boxes like this one:
+<div class="tips">
+<li>Words are great!</div>
+<p>And when I need to write code, it will appear in boxes like this:</p>
+<div class="code">$: ls /butts</div>
+<br><br>
+<h2>Chapter 1: The Terminal</h2>
+<p>Operating a DWAINE mainframe is done solely through a terminal interface - graphics and icons and things are unnecessary and also are for tiny children with no understanding of REAL COMPUTERS.</p>
+<p>So, let's get started! After logging in, you will be presented with a prompt - usually following this format:</p>
+<div class="code">
+]GMelons@DWAINE - 12:00 03/04/52
+</div>
+<p>When you type in text and push the Enter key, you will notice your command is sent like this:</P>
+<div class="code">
+>things i typed
+</div>
+<p>This book will show commands you should enter as beginning with <i>">"</i>.
+<div class="tips">
+<li> Remember! The most important command is <i>"help"!</i>
+</div>
+<br><br>
+<h2>Chapter 1: Logging On</h2>
+<p>Before we can do anything, we need to log onto the network. This guide assumes you aren't already synched to your DWAINE mainframe.<br>
+Insert your ID into the ID card slot of your terminal.<br>
+Then, type
+<div class="code">
+>term_ping
+</div>
+<p>and push enter to get a list of networked devices. Find the device labeled PNET_MAINFRAME and take a note of its net_id.
+<br>
+Then, type
+<div class="code">
+>connect 0200xxxx
+</div>
+<p>where 0200xxxx is the term_id of the PNET_MAINFRAME.<br>
+Then, with your ID inserted, simply type
+<div class="code">
+>term_login
+</div>
+<p> to log into the system.
+<div class="tips">
+<li> When logged in, you can log off by typing <i>"logout" OR "logoff"</i>.
+<li> You can disconnect by typing <i>"disconnect"</i>.
+<li> You can restart by typing <i>"restart"</i>.
+</div>
+<h2>Chapter 2: Basic Concepts</h2>
+<p>
+The first thing you need to know about DWAINE is the Filesystem.<br>
+There are no drives in DWAINE, no specific devices. Everything is a folder in DWAINE.
+</p><p>
+The structure works like a tree, with everything starting at the "root" folder,
+and expanding outwards from there. A typical file path in DWAINE would look like
+this:<br>
+<div class="code">
+/home/GMelons/Pictures/pr0n_jpg
+</div><p>
+You might be wondering what the name of the root folder is, since it doesn't
+seem to be immediately obvious in that filepath. The system root is referred to
+as <i>"/"</i>. So, if we expand this path, we get this:
+<div class="code"><pre>/
+	home/
+		GMelons/
+			Pictures/
+				pr0n_jpg
+				butt_png
+			Music/
+				fart_ogg
+		JGrife/
+			Documents/</pre>
+</div>
+<p>
+So, if we wanted to listen to something, we would use this path:<br>
+<div class="code">
+/home/GMelons/Music/fart_ogg
+</div>
+<p>
+Simple, right? Well.
+</p>
+<br>
+<h2>Chapter 3: Simple Commands</h2>
+<p>First, let's discuss listing directories.<br>
+You can find out what is in the current directory by typing
+<div class="code">
+>ls</div>
+<p> and hitting Enter.<br>
+This will show you a list of files and directories inside the folder!<br>
+You can also give <i>ls</i> a directory path to look at instead: so if you wanted to snoop on JGrife's stuff, you would type:
+<div class="code">
+>ls /home/JGrife
+</div>
+<div class="tips">
+<li> Sometimes you won't be able to look at files in a directory! See Chapter 6 for details!
+<li> Additionally there may be hidden directories on the system, which contain special system files!</div>
+<p>
+Now, let's discuss changing directories.<br>
+To change which directory you are in, just type
+<div class="code">
+>cd
+</div>
+<p>
+followed by the path you want to change to.<br>
+<p>
+So, let's say we want to go to our Pictures directory.
+<div class="code">
+>cd /home/GMelons/Pictures
+</div>
+<p>
+And here we are! If you want to move one space up the file path, back to
+GMelons, you would write
+<div class="code">
+>cd ..
+</div>
+<p>
+instead. Note that using ".." as a file path works with other commands too.<br>
+If you were in GMelons and you wanted to go to Pictures, you could also
+just type
+<div class="code">
+>cd Pictures
+</div>
+<p>
+and you would go there.
+<br>
+<br>
+Next, let's try copying files around!<br>
+The copy command is:
+<div class="code">
+>cp
+</div>
+<p>
+Followed by the original file, and then the destination. Pour �xample:
+<div class="code">
+>cp /home/GMelons/Pictures/butt_png /home/JGrife/Documents
+</div>
+<p>
+This would copy the file "butt_png" to /home/JGrife/Documents.<br>
+However, you can copy and give the destination file a new name, like this:
+<div class="code">
+cp /home/GMelons/Pictures/butt_png /home/JGrife/Documents/importantfile_txt
+</div>
+<p>
+So now, JGrife sees he has an important file to open! OH NO! Butt!<br>
+<br>
+Okay, let's discuss moving files now.<br>
+The move command is:
+<div class="code">
+>mv
+</div>
+<p>
+Followed by the original file, and then the destination - exactly like copy,
+except the original is moved from one location to the other. Good for stealing
+data, like nuclear authentication codes! Or, uh. Cute pictures of duckies.
+<br>
+<br>
+<h2>Reading, Writing, and Deleting</h2>
+<p>
+"But HOW DO I MAKE FILES OR SEE WHAT'S IN THEM AAAA"<br>
+ <br>
+Stop that! Stop it! Stop!<br>
+You're a bad person.<br>
+<br>
+To read the contents of a file, use:
+<div class="code">
+>cat
+</div>
+<p>
+Followed by the path to the file. Here we go!
+<div class="code">
+>cat /home/JGrife/secret_stuff
+I like to read trashy romance novels!!!
+</div>
+<div class="tips">
+<li> Not all files can be read - some do not contain text, but are actually programs!
+<li> Run these by typing their name in the terminal.
+<li> Programs on a Research Station are usually kept in <i>/mnt/control</i> - the location of the control database.</div>
+<p>
+What a shocker, eh?
+<br>
+Writing files is a little bit different. At the time of writing this guide,
+no text editor existed for DWAINE so we have to make do with the
+<div class="code">
+>echo
+</div>
+<p>
+command.<br>
+Echo just repeats whatever you type after it back to you. That sounds useless,
+right?<br>
+Well, there's a little thing called <i>"output redirection"</i>. This means we can take
+what comes out of a command and put it somewhere else. Here's an example:
+<div class="code">
+>echo I like big smelly butts! ^/home/JGrife/my_secrets
+</div>
+<p>
+What this will do is write the text "I like big smelly butts!" into a file called "my_secrets" in JGrife's folder. The redirection is done with the
+<div class="code">
+>^
+</div>
+<p>
+symbol. Anything immediately after the symbol is where the output
+from echo will go.
+<br>
+Hooray! Hmm, we might need to organise our things better. How about we make
+a new folder?
+<div class="code">
+>mkdir name_of_folder
+</div>
+<p>
+Will do it! Just navigate to where you want the new folder to be, and use mkdir
+with the name of the new folder and it shall appear.
+<br>
+To delete a file, use the
+<div class="code">
+>rm
+</div>
+<p>
+command.
+<div class="tips">
+<li> Remember that every command has an associated help entry!
+<li> Type <i>"help rm"</i> for advanced help on deleting files.</div>
+<br><br>
+<h2>Printing & Backups</h2>
+<p>
+Let's take a moment to go over devices in DWAINE.<br>
+There is no "print" function in DWAINE. Why? Because DWAINE stores devices as
+folders, using drivers to communicate with them. Storage drives and printers
+appear in the <i>/mnt</i> folder in DWAINE.
+<br>
+So, let's say we want to print off JGrife's embarrasing secrets and share them
+around the Research Sector - how do we do that?
+<br>
+Well, DWAINE's default printer driver works like this: if you move or copy a
+file into the printer's folder, the printer reads the file and prints it off.
+Pretty simple, really!
+<div class="code">
+>cp /home/JGrife/secret_stuff /mnt/printer_name
+</div>
+<p>
+And out it comes! Printer names are usually prefixed with "lp-" by the way, so
+that you know they are printers and not storage drives.
+<br>
+To copy a file to a storage drive, simply do the following:
+<div class="code">
+>cp /home/GMelons/Pictures/pr0n_jpg /mnt/drive_name
+</div>
+<p>
+Easy!
+<br><br>
+<h2>Chapter 6: Advanced Usage</h2>
+<p>
+Sometimes you want to stop people looking at your files. Nobody likes a snooper!
+<br>
+To protect your files, you will want to use the
+<div class="code">
+>chmod
+</div>
+<p>
+command.
+<br>
+Usage of the chmod command is complicated: chmod takes an Octal number as its
+second parameter, usually formatted as a 3-digit number.
+<div class="code">
+>chmod 777 file_name
+</div>
+<p>
+For an example.
+<br>
+The number means this:
+The first digit sets what kind of access the Owner of the file has.
+<br>
+The second digit sets what kind of access the Group that the owner belongs to
+has.
+<br>
+The third digit sets what kind of access everybody else has.
+<br>
+Access digits are as follows:<br>
+<div class="tips">
+<li>7 - Full Access
+<li>6 - Read and Write
+<li>5 - Read and Modify
+<li>4 - Read Only
+<li>3 - Write and Modify
+<li>2 - Write Only
+<li>1 - Modify Only
+<li>0 - None
+</div>
+<p>
+So, to prevent absolutely anyone except yourself from reading your files, use
+<div class="code">
+>chmod 700 file_name
+</div>
+<p>
+You'll get the hang of it.<br>
+Of course, an alternate method presents itself: make that file hidden!<br>
+To make a file hidden, simply make its name begin with an underscore "_".
+<div class="code">
+>mv mysecret _mysecret
+</div>
+<p>
+To see hidden files, you must use <i>"-l"</i> (not -1) when giving the ls command:
+<div class="code">
+>ls -l /path
+</div>
+<p>
+ls -l will also show you the read,write,execute(run) status of each file, along
+with the owner.
+
+What if you want to change who owns a file?
+<br>
+Simple! Use the chown command.
+<div class="code">
+>chown user_name file
+</div>
+<p>
+The specified user now owns that file.
+<br>
+That's it folks! That's the end of this book! Captains, Research Directors, all honest members of Nanotrasen crew, do not turn the next page!<br>
+It is terribly boring and does not contain any useful information whatsoever!
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+Still reading? Good. I'm a member of the Syndicate, and I'm here to teach you how to steal data.<br>
+<div class="code">
+>su -
+</div>
+<p>
+Will elevate your priveleges to administrator level. This will let you use the <i>ls</i> command in the root directory to view hidden system files and folders.<br>
+It's possible to steal things like login credentials and session keys, enabling you to gain access as another user even if you're not authorized - and frame them for theft. <br>
+Unfortunately, the <i>su</i> command requires an administrator-level ID card. But this should not prove a challenge to a fellow agent.<br>
+<br>
+STEAL DATA. STEAL DATA. STEAL DATA.
+
+<div class="tips">
+<li> Good luck!</div>
+
+
+</body>
+</html>

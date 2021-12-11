@@ -9,13 +9,13 @@
 	var/turf/simulated/floor/west = get_step(src,WEST)
 
 	//Clear those we do not have access to
-	if(!CanPass(null, north, null, 1) || !istype(north))
+	if(!gas_cross(north) || !istype(north))
 		north = null
-	if(!CanPass(null, south, null, 1) || !istype(south))
+	if(!gas_cross(south) || !istype(south))
 		south = null
-	if(!CanPass(null, east, null, 1) || !istype(east))
+	if(!gas_cross(east) || !istype(east))
 		east = null
-	if(!CanPass(null, west, null, 1) || !istype(west))
+	if(!gas_cross(west) || !istype(west))
 		west = null
 
 	var/new_group_possible = 0
@@ -70,7 +70,8 @@
 
 	if(west)
 		if(west.parent)
-			west.parent.suspend_group_processing()
+			if(west.parent.group_processing)
+				west.parent.suspend_group_processing()
 			west.parent.members += src
 			parent = west.parent
 
@@ -81,7 +82,8 @@
 			new_group_possible = 1
 
 	if(north_votes && (north_votes >= south_votes) && (north_votes >= east_votes))
-		north.parent.suspend_group_processing()
+		if(north.parent.group_processing)
+			north.parent.suspend_group_processing()
 		north.parent.members += src
 		parent = north.parent
 
@@ -90,7 +92,8 @@
 
 
 	if(south_votes  && (south_votes >= east_votes))
-		south.parent.suspend_group_processing()
+		if(south.parent.group_processing)
+			south.parent.suspend_group_processing()
 		south.parent.members += src
 		parent = south.parent
 
@@ -98,7 +101,8 @@
 		return 1
 
 	if(east_votes)
-		east.parent.suspend_group_processing()
+		if(east.parent.group_processing)
+			east.parent.suspend_group_processing()
 		east.parent.members += src
 		parent = east.parent
 

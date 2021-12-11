@@ -6,7 +6,7 @@
 	associated_reagent = "sheltestgrog"
 	reagentcure = list("robustissin", "coffee")
 	affected_species = list("Human")
-	stage_prob = 15
+	stage_prob = 5
 
 /datum/ailment/disease/frog_flu/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())

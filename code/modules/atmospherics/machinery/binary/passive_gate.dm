@@ -53,8 +53,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 			air2.merge(removed)
 
-			if(network1)
-				network1.update = 1
+			network1?.update = 1
 
 			if(network2)
 				network2.update = 1
@@ -82,7 +81,7 @@ datum/pump_ui/passive_gate_ui/set_value(val)
 
 datum/pump_ui/passive_gate_ui/toggle_power()
 	our_gate.on = !our_gate.on
-	our_gate.update_icon()
+	our_gate.UpdateIcon()
 
 datum/pump_ui/passive_gate_ui/is_on()
 	return our_gate.on

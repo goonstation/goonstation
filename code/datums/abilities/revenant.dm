@@ -16,7 +16,7 @@
 
 	generatePoints(var/mult = 1)
 		if (relay)
-			relay.generatePoints(mult = 1)
+			relay.generatePoints(mult)
 
 	deductPoints(cost)
 		if (relay)
@@ -35,6 +35,12 @@
 			boutput(owner, relay.notEnoughPointsMessage)
 			return 0
 		return 1
+
+	onAbilityStat()
+		..()
+		.= list()
+		.["Points:"] = round(relay.points)
+		.["Gen. rate:"] = round(relay.regenRate + relay.lastBonus)
 
 /datum/bioEffect/hidden/revenant
 	name = "Revenant"
@@ -97,6 +103,7 @@
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
 		if (poorSob.traitHolder.hasTrait("training_chaplain"))
 			poorSob.visible_message("<span class='alert'>[poorSob]'s faith shields them from [owner]'s ethereal force!", "<span class='notice'>Your faith protects you from [owner]'s ethereal force!</span>")
+			JOB_XP(poorSob, "Chaplain", 2)
 			return
 		else
 			poorSob.visible_message("<span class='alert'>[poorSob] is hit by [owner]'s ethereal force!</span>", "<span class='alert'>You are hit by [owner]'s ethereal force!</span>")
@@ -122,9 +129,9 @@
 			owner.ghost.corpse = null
 			owner.ghost = null
 		src.wraith = W
-		W.invisibility = 50
+		APPLY_MOB_PROPERTY(W, PROP_INVISIBILITY, W, INVIS_WRAITH_VERY)
 		W.set_loc(src.owner)
-		W.abilityHolder.suspendAllAbilities()
+		W.abilityHolder.topBarRendered = 0
 
 		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
@@ -152,14 +159,15 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [showCoords(owner.x, owner.y, owner.z)].")
+		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
 		logTheThing("combat", usr, null, "died as a revenant at [showCoords(owner.x, owner.y, owner.z)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		src.wraith.invisibility = 10
+		APPLY_MOB_PROPERTY(src.wraith, PROP_INVISIBILITY, src.wraith, INVIS_GHOST)
 		src.wraith.set_loc(get_turf(owner))
-		src.wraith.abilityHolder.resumeAllAbilities()
+		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
 		owner:decomp_stage = 4
@@ -170,17 +178,17 @@
 		src.wraith = null
 		return
 
-	OnLife()
+	OnLife(var/mult)
 		if (!src.wraith)
 			return
 		if (ghoulTouchActive)
-			ghoulTouchActive--
+			ghoulTouchActive = max (ghoulTouchActive - mult, 0)
 			if (!ghoulTouchActive)
 				owner.show_message("<span class='alert'>You are no longer empowered by the netherworld.</span>")
 
 		src.wraith.Life()
 
-		owner.max_health -= 1.5
+		owner.max_health -= 1.5*mult
 
 		owner.ailments.Cut()
 		owner.take_toxin_damage(-INFINITY)
@@ -198,8 +206,9 @@
 		setalive(owner)
 
 
-		if (owner.health < -50)
+		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
+			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
 			owner.death(0) // todo: add custom death
 			return
 
@@ -241,7 +250,7 @@
 	theme = "wraith"
 
 	New()
-		var/obj/screen/ability/topBar/B = new /obj/screen/ability/topBar(null)
+		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -253,7 +262,7 @@
 		return
 
 	castcheck()
-		if (holder && holder.owner)
+		if (holder?.owner)
 			return 1
 		else
 			boutput(usr, "<span class='alert'>You're not a revenant, what the heck are you doing?</span>")
@@ -272,13 +281,13 @@
 	name = "Mass Command"
 	desc = "Launch an assortment of nearby objects at a target location."
 	icon_state = "masscomm"
-	special_screen_loc = "NORTH-1,WEST"
 	targeted = 1
 	target_anything = 1
 	pointCost = 500
-	cooldown = 300
+	cooldown = 30 SECONDS
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -313,14 +322,14 @@
 	icon_state = "shockwave"
 	targeted = 0
 	pointCost = 750
-	cooldown = 350 // 35s
+	cooldown = 35 SECONDS
 	var/propagation_percentage = 60
 	var/iteration_depth = 6
-	special_screen_loc = "NORTH-1,WEST+1"
 	var/static/list/prev = list("1" = NORTHWEST, "5" = NORTH, "4" = NORTHEAST, "6" = EAST,  "2" = SOUTHEAST, "10" = SOUTH, "8" = SOUTHWEST, "9" = WEST)
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
+		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
 		SPAWN_DBG(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -394,10 +403,10 @@
 	icon_state = "eviltouch"
 	targeted = 0
 	pointCost = 1000
-	cooldown = 300
-	special_screen_loc = "NORTH-1,WEST+2"
+	cooldown = 30 SECONDS
 
 	cast()
+		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -414,10 +423,10 @@
 	targeted = 1
 	target_anything = 1
 	pointCost = 50
-	cooldown = 150
-	special_screen_loc = "NORTH-1,WEST+3"
+	cooldown = 15 SECONDS
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/revpush[rand(1, 2)].ogg", 70, 0)
 		if (isturf(target))
 			holder.owner.show_message("<span class='alert'>You must target an object or mob with this ability.</span>")
 			return 1
@@ -452,10 +461,10 @@
 	icon_state = "crush"
 	targeted = 1
 	pointCost = 2500
-	cooldown = 600
-	special_screen_loc = "NORTH-1,WEST+4"
+	cooldown = 1 MINUTE
 
 	cast(atom/target)
+		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
@@ -468,6 +477,7 @@
 			return 1
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message("<span class='alert'>Some mysterious force shields [target] from your influence.</span>")
+			JOB_XP(H, "Chaplain", 2)
 			return 1
 		else if( check_target_immunity(H) )
 			holder.owner.show_message("<span class='alert'>[target] seems to be warded from the effects!</span>")
@@ -503,7 +513,7 @@
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
-				H.changeStatus("weakened", (2 + rand(0, iterations))*10)
+				H.changeStatus("weakened", (2 + rand(0, iterations)) SECONDS)
 				H.TakeDamage("chest", 4 + rand(0, iterations), 0, 0, DAMAGE_CRUSH)
 				if (prob(40))
 					H.visible_message("<span class='alert'>[H]'s bones crack loudly!</span>", "<span class='alert'>You feel like you're about to be [pick("crushed", "destroyed", "vaporized")].</span>")
@@ -524,16 +534,16 @@
 	targeted = 0
 	cooldown = 0
 	helpable = 0
-	special_screen_loc = "SOUTH,EAST"
 
 	cast(atom/target)
 		if (..())
 			return 1
 		if (holder.help_mode)
 			holder.help_mode = 0
+			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = 1
-			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='hint'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='hint'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='hint'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
 			boutput(holder.owner, "<span class='hint'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")

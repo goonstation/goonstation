@@ -22,7 +22,10 @@
 	/datum/commodity/trader/josh/tacos,
 	/datum/commodity/trader/josh/fingerless,
 	/datum/commodity/trader/josh/energydrink,
-	/datum/commodity/trader/josh/hoodie)
+	/datum/commodity/trader/josh/hoodie,
+	/datum/commodity/trader/josh/flyswatter,
+	/datum/commodity/trader/josh/robustris,
+	/datum/commodity/trader/josh/foamgun,)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
@@ -98,7 +101,7 @@
 
 /datum/commodity/trader/josh/hosuniform
 	comname = "HoS' Uniform"
-	comtype = /obj/item/clothing/under/rank/head_of_securityold
+	comtype = /obj/item/clothing/under/rank/head_of_security
 	price_boundary = list(700,7000)
 	possible_names = list("I'm going to a fancy party tonight. Got a slick nasty security uniform for me?",
 	"Got a spare uniform from the HoS? They're fancy as heck.")
@@ -116,7 +119,14 @@
 	possible_names = list("There's a mask out there that lets you consume the vapor form of chemicals. That would be sick.")
 
 /* Josh sells this stuff */
+/datum/commodity/trader/josh/robustris
+	comname = "Sick Gaming Device"
+	comtype = /obj/item/toy/handheld/robustris
+	possible_names = list("You don't have the latest equipment? Let me hook you up bro.",
+	"Looking for some hardcore gaming dude? We got a sweet set.",
+	"Get pumped with some tight games my bro-nado.")
 
+	price_boundary = list(50,300)
 /datum/commodity/trader/josh/skateboards
 	comname = "Slickin' Skateboards"
 	comtype = /obj/vehicle/skateboard
@@ -151,7 +161,7 @@
 	"Want to look as cool as me? Grab a pair of fingerless gloves.")
 
 /datum/commodity/trader/josh/energydrink
-	comname = "Brotien Shake"
+	comname = "Brotein Shake"
 	comtype = /obj/item/reagent_containers/food/drinks/energyshake
 	amount = 2
 	price_boundary = list(700,1400)
@@ -165,3 +175,18 @@
 	price_boundary = list(30,200)
 	possible_names = list("Want look stylish? Try this hoodie.",
 	"You seem a bit prone to scratches. Want some padding?")
+
+/datum/commodity/trader/josh/flyswatter
+	comname = "Radical Electrical Device"
+	comtype = /obj/item/device/flyswatter
+	price_boundary = list(500,1000)
+	possible_names = list("Bro this is out of the world. You can cook an omelette and play guitar on it at the same time!",
+	"Do you want to be the coolest on the block or nah?")
+
+/datum/commodity/trader/josh/foamgun
+	comname = "Totally Cool Foam Flingin' Tool"
+	comtype = /obj/item/gun/kinetic/foamdartrevolver
+	price_boundary = list(600,1200)
+	possible_names = list("Bro, this thing can shoot sooo fast! You gotta have one.",
+	"You could have such a sick battle if you had enough of these.",
+	"You want to become an elite dart sniper like me? You'll need one of these.")

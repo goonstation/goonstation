@@ -4,3 +4,6 @@ colors@=Azure@,Black@,Crimson@,Emerald@,Fuchsia@,Gold@,Indigo@,Jade@,Khaki@,Lave
 birds@=Albatross@,Budgerigar@,Crane@,Duck@,Eagle@,Falcon@,Goose@,Heron@,Ibis@,Kingfisher@,Magpie@,Nightingale@,Ostrich@,Pelican@,Quetzal@,Robin@,Sparrow@,Toucan@,Vulture@,Woodpecker
 mammals@=Armadillo@,Bear@,Coyote@,Dingo@,Elephant@,Fox@,Gorilla@,Hyena@,Impala@,Jackal@,Kangaroo@,Lion@,Monkey@,Ocelot@,Panther@,Rat@,Squirrel@,Tiger@,Wolverine@,Zebra
 moons@=Deimos@,Phobos@,Amalthea@,Callisto@,Europa@,Ganymede@,Io@,Dione@,Enceladus@,Hyperion@,Iapetus@,Mimas@,Phoebe@,Rhea@,Tethys@,Titan@,Ariel@,Miranda@,Oberon@,Titania@,Umbriel@,Nereid@,Triton@,Charon
+arthurian@=Arthur@,Mordred@,Lancelot@,Bedivere@,Galahad@,Robin@,Bors@,Gawain@,Geraint@,Kay@,Percival@,Tristan@,Urien@,Lamorak@,Garath@,Gaheris@,Palamedes
+scifi_writers@=Asimov@,Heinlein@,Clarke@,Shelley@,Wells@,LeGuin@,Bradbury@,Dick@,Herbert@,Orwell@,Adams@,Niven@,Vonnegut@,Banks@,Card@,Haldeman@,Crichton@,Liu@,Scalzi@,L'Engle
+princesses@=Belle@,Rapunzel@,Ariel@,Tiana@,Moana@,Cinderella@,Aurora@,Merida@,Pocahontas@,Jasmine@,Mulan@,Snow White@,Tinker Bell@,Esmeralda@,Jane Porter

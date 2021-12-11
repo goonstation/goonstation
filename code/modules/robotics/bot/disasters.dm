@@ -12,7 +12,7 @@
 		..()
 		src.name = pick("Commissar Beepevich","The Beeper","Murderbot","Killtron","Lawmaker")
 		SPAWN_DBG(1 MINUTE)
-			if (src && src.blow_up == 1)
+			if (src?.blow_up == 1)
 				src.explode()
 		return
 
@@ -27,9 +27,10 @@
 
 	New()
 		..()
+		src.pick_poison()
 		src.name = pick("Herr Doktor","Heals McGee","Wild-Eye","Jack","Boston Strangler","Insanobot")
 		SPAWN_DBG(1 MINUTE)
-			if (src && src.blow_up == 1)
+			if (src?.blow_up == 1)
 				src.explode()
 		return
 
@@ -46,7 +47,7 @@
 		..()
 		src.name = pick("Montag","Fire-Killer","Burns","Murdermaster","Guardbot","Axe Man")
 		SPAWN_DBG(1 MINUTE)
-			if (src && src.blow_up == 1)
+			if (src?.blow_up == 1)
 				src.explode()
 		return
 
@@ -63,7 +64,7 @@
 		..()
 		src.name = pick("Mr. Clean","Slip-o-Matic","The Janitor","Port-a-Lube","Galoshes-be-Gone","Slipmeister")
 		SPAWN_DBG(1 MINUTE)
-			if (src && src.blow_up == 1)
+			if (src?.blow_up == 1)
 				src.explode()
 		return
 

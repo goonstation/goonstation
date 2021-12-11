@@ -67,6 +67,16 @@
 				output += "[S] = [L[S]]\n"
 			boutput(user, "<br><span style='color:purple'><b>[src]</b> contains:\n [output]</span>")
 
+/obj/item/organ/stomach/synth
+	name = "synthstomach"
+	organ_name = "synthstomach"
+	icon_state = "plant"
+	desc = "Nearly functionally identical to a pitcher plant... weird."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
+
 /obj/item/organ/stomach/cyber
 	name = "cyberstomach"
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
@@ -74,6 +84,7 @@
 	// item_state = "heart_robo1"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 

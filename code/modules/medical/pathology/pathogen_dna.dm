@@ -71,13 +71,13 @@ datum/pathogendna
 	New(var/datum/pathogen/P)
 		..()
 		if (P)
-			reference = unpool(/datum/pathogen)
+			reference = new /datum/pathogen
 			reference.setup(0, P, 0, src)
 			recalculate()
 			reverse_engineer()
 			valid = 1
 		else
-			reference = unpool(/datum/pathogen)
+			reference = new /datum/pathogen
 			valid = 0
 
 	proc/clone()
@@ -86,7 +86,6 @@ datum/pathogendna
 
 	proc/manipulate(value, direction)
 		var/datum/pathogendna/this = src
-		src = null
 		if (direction > 0)
 			direction = 1
 		else
@@ -198,7 +197,6 @@ datum/pathogendna
 	proc/reevaluate()
 		// Move src reference so we can return false if evaluation fails (important for whatever is calling this)
 		var/datum/pathogendna/this = src
-		src = null
 		var/desc = this.reference.desc
 		var/name_base = this.reference.name_base
 		var/mutation = this.reference.mutation

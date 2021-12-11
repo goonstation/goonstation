@@ -85,8 +85,9 @@ obj/machinery/atmospherics/pipe
 
 		var/fatigue_pressure = 150*ONE_ATMOSPHERE
 
-		var/can_rupture = 0 //currently only need red pipes (insulated) to rupture
+		var/can_rupture = FALSE //currently only need red pipes (insulated) to rupture
 		var/ruptured = 0 //oh no it broke and is leaking everywhere
+		var/destroyed = FALSE // it needs to be replaced!
 		var/initial_icon_state = null //what do i change back to when repaired???
 
 		level = 1
@@ -255,13 +256,17 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
-			update_icon()
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
+			UpdateIcon()
 
 		process()
 			if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 				..()
-			if(!parent?.air || TOTAL_MOLES(parent.air) < ATMOS_EPSILON || !loc)
+			if(!parent?.air || !loc)
+				return
+
+			if(TOTAL_MOLES(parent.air) < ATMOS_EPSILON )
+				if(ruptured) leak_gas()
 				return
 
 			if(!node1)
@@ -277,21 +282,13 @@ obj/machinery/atmospherics/pipe
 					nodealert = 1
 
 			else if(ruptured)
-				var/datum/gas_mixture/gas = return_air()
-				var/pressure = min(100*ruptured, MIXTURE_PRESSURE(gas))
-
-				if(pressure > 0)
-					var/datum/gas_mixture/environment = loc.return_air()
-					var/transfer_moles = pressure*environment.volume/(gas.temperature * R_IDEAL_GAS_EQUATION)
-					var/datum/gas_mixture/removed = gas.remove(transfer_moles)
-
-					if (removed) loc.assume_air(removed)
+				leak_gas()
 
 			else if(parent)
 				var/environment_temperature = 0
 
 				if(istype(loc, /turf/simulated/))
-					if(loc:blocks_air)
+					if(loc:gas_impermeable)
 						environment_temperature = loc:temperature
 					else
 						var/datum/gas_mixture/environment = loc.return_air()
@@ -309,6 +306,29 @@ obj/machinery/atmospherics/pipe
 			var/pressure = MIXTURE_PRESSURE(gas)
 			if(!ruptured && pressure > fatigue_pressure) check_pressure(pressure)
 
+		proc/leak_gas()
+			var/datum/gas_mixture/gas = return_air()
+			var/datum/gas_mixture/environment = loc.return_air()
+
+			var/datum/gas_mixture/hi_side = gas
+			var/datum/gas_mixture/lo_side = environment
+
+			if(destroyed)
+				parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
+				return
+
+			// vacuum
+			if( MIXTURE_PRESSURE(lo_side) > MIXTURE_PRESSURE(hi_side) )
+				hi_side = environment
+				lo_side = gas
+
+			var/pressure = min(100*ruptured, MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
+
+			if(pressure > 0 && hi_side.temperature )
+				var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature * R_IDEAL_GAS_EQUATION)
+				var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
+				if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
+
 		check_pressure(pressure)
 			if (!loc)
 				return
@@ -322,22 +342,34 @@ obj/machinery/atmospherics/pipe
 				if(prob(rupture_prob))
 					rupture(pressure_difference)
 
-			return
-
-		proc/rupture(pressure)
-			if (pressure > 4*fatigue_pressure && prob(30)) ruptured = 3
-			else if (pressure > 2*fatigue_pressure && prob(60)) ruptured = 2
-			else ruptured = 1
+		proc/rupture(pressure, destroy=FALSE)
+			var/new_rupture
+			if (src.destroyed || destroy)
+				ruptured = 4
+				src.destroyed = TRUE
+				src.desc = "The remnants of a section of pipe that needs to be replaced.  Perhaps rods would be sufficient?"
+				parent?.mingle_with_turf(loc, volume)
+				node1?.disconnect(src)
+				node2?.disconnect(src)
+				UpdateIcon()
+				return
+			else if ((pressure > (4*fatigue_pressure)) && prob(30)) new_rupture = 3
+			else if ((pressure > (2*fatigue_pressure)) && prob(60)) new_rupture = 2
+			else new_rupture = 1
+			ruptured = max(ruptured, new_rupture)
 			icon_state = "exposed"
-
+			src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
 				if(1.0)
-					qdel(src)
-				if(2.0)
-					if(prob(15))
+					if(prob(5))
 						qdel(src)
+					else
+						rupture(destroy=TRUE)
+				if(2.0)
+					if(prob(10))
+						rupture(destroy=TRUE)
 					else
 						rupture()
 				if(3.0)
@@ -352,37 +384,59 @@ obj/machinery/atmospherics/pipe
 				if(!ruptured)
 					boutput(user, "<span class='alert'>That isn't damaged!</span>")
 					return
+				else if(destroyed)
+					boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
+					return
 
 				if(!W:try_weld(user, 1, noisy=2))
 					return
 
 				boutput(user, "You start to repair the [src.name].")
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "<span class='notice'>[user] repairs the [src.name].</span>", null)
 
-				if (do_after(user, 20))
-					ruptured --
-				else
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				if(!ruptured)
-					boutput(user, "You have fully repaired the [src.name].")
-					icon_state = initial_icon_state
-				else boutput(user, "You have partially repaired the [src.name].")
-				return
+			else if(destroyed && istype(W, /obj/item/rods))
+				var/duration = 15 SECONDS
+				if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+					duration = round(duration / 2)
+				var/obj/item/rods/S = W
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
+				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
+				actions.start(action_bar, user)
 
+		proc/repair_pipe()
+			src.ruptured = 0
+			icon_state = initial_icon_state
+			desc = initial(desc)
+
+		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
+			if(istype(R) && istype(M))
+				R.change_stack_amount(-1)
+				src.setMaterial(R.material)
+				src.destroyed = FALSE
+				src.icon_state = "disco"
+				src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
+				// create valid edges back to us and rebuild from here out to merge pipeline(s)
+				node1.dir = node1.initialize_directions
+				node1.initialize()
+				node2.dir = node2.initialize_directions
+				node2.initialize()
+				src.parent.build_pipeline(src)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
 			parent = null
 			..()
 
 		pipeline_expansion()
-			return list(node1, node2)
+			. = list(node1, node2)
+			if(destroyed)
+				. = list(null, null)
 
 		update_icon()
-			if(node1&&node2)
+			if(destroyed)
+				icon_state = "destroyed"
+			else if(node1 && node2)
 				icon_state = "intact"//[invisibility ? "-f" : "" ]"
 				alpha = invisibility ? 128 : 255
 
@@ -398,13 +452,14 @@ obj/machinery/atmospherics/pipe
 				alpha = invisibility ? 128 : 255
 
 				if(node1)
-					dir = get_dir(src,node1)
+					dir = get_dir(src, node1)
 
 				else if(node2)
-					dir = get_dir(src,node2)
+					dir = get_dir(src, node2)
 
-				else
-					qdel(src)
+				// Deletion should be added as part of constructable atmos
+				//else
+				//	qdel(src)
 
 		initialize()
 			var/connect_directions
@@ -444,7 +499,7 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -461,7 +516,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node2 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -523,6 +578,7 @@ obj/machinery/atmospherics/pipe
 			dir = WEST
 
 		update_icon()
+
 			if(istype(node1, /obj/machinery/atmospherics/pipe/simple/heat_exchanging))
 				dir = get_dir(src, node1)
 
@@ -566,7 +622,8 @@ obj/machinery/atmospherics/pipe
 			dir = NORTHWEST
 
 		update_icon()
-			if(node1&&node2)
+
+			if(node1 && node2)
 				icon_state = "intact"
 
 				var/node1_direction = get_dir(src, node1)
@@ -582,6 +639,7 @@ obj/machinery/atmospherics/pipe
 		volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 		dir = SOUTH
 		initialize_directions = SOUTH
+		plane = PLANE_DEFAULT
 		density = 1
 		var/obj/machinery/atmospherics/node1
 
@@ -616,7 +674,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -638,7 +696,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -660,18 +718,38 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
-				var/datum/gas/oxygen_agent_b/trace_gas = new
+				var/datum/gas/oxygen_agent_b/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-				if(!air_temporary.trace_gases)
-					air_temporary.trace_gases = list()
-				air_temporary.trace_gases += trace_gas
+				..()
+
+		rad_particles
+			icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
+			name = "Pressure Tank (Nuclear Exhaust)"
+
+			north
+				dir = NORTH
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+			New()
+				air_temporary = new /datum/gas_mixture
+				air_temporary.volume = volume
+				air_temporary.temperature = T0C
+
+				var/datum/gas/rad_particles/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/rad_particles)
+				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
+
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'
@@ -687,7 +765,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -709,7 +787,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -731,16 +809,12 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
-				var/datum/gas/sleeping_agent/trace_gas = new
+				var/datum/gas/sleeping_agent/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent/)
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				if(!air_temporary.trace_gases)
-					air_temporary.trace_gases = list()
-				air_temporary.trace_gases += trace_gas
 
 				..()
 
@@ -758,7 +832,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -785,7 +859,7 @@ obj/machinery/atmospherics/pipe
 				dir = WEST
 
 			New()
-				air_temporary = unpool(/datum/gas_mixture)
+				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
@@ -795,8 +869,7 @@ obj/machinery/atmospherics/pipe
 				..()
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -820,7 +893,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -830,7 +903,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -864,8 +937,7 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 250)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
+			node1?.disconnect(src)
 			parent = null
 			..()
 
@@ -889,7 +961,7 @@ obj/machinery/atmospherics/pipe
 					node1 = target
 					break
 
-			update_icon()
+			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -899,7 +971,7 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node1 = null
 
-			update_icon()
+			UpdateIcon()
 
 			return null
 
@@ -909,6 +981,75 @@ obj/machinery/atmospherics/pipe
 				dir = get_dir(src, node1)
 			else
 				icon_state = "exposed"
+
+	vertical_pipe
+		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+		icon_state = "vertical"
+		name = "Vertical Pipe"
+		desc = "a section of piping dropping dropping into the floor"
+		level = 1
+		volume = 250
+		dir = SOUTH
+		initialize_directions = SOUTH
+		var/obj/machinery/atmospherics/node1
+		var/obj/machinery/atmospherics/node2
+
+		north
+			dir = NORTH
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
+		New()
+			initialize_directions = dir
+			..()
+
+		process()
+			..()
+
+		disposing()
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			parent = null
+			..()
+
+		pipeline_expansion()
+			return list(node1, node2)
+
+		initialize()
+			var/turf/T = get_turf(src)
+			var/connect_direction = dir
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+				if(target.initialize_directions & get_dir(target,src))
+					node1 = target
+					break
+
+			// Search disjoint connections for vertical pipe
+			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
+			UpdateIcon()
+
+		disconnect(obj/machinery/atmospherics/reference)
+			if(reference == node1)
+				if(istype(node1, /obj/machinery/atmospherics/pipe))
+					if (parent)
+						parent.dispose()
+					parent = null
+				node1 = null
+
+			if(reference == node2)
+				if(istype(node2, /obj/machinery/atmospherics/pipe))
+					if (parent)
+						parent.dispose()
+					parent = null
+				node2 = null
+
+			UpdateIcon()
+			return null
+
 
 	manifold
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
@@ -959,8 +1100,8 @@ obj/machinery/atmospherics/pipe
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? 101 : 0
-			update_icon()
+				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
+			UpdateIcon()
 
 		pipeline_expansion()
 			return list(node1, node2, node3)
@@ -978,12 +1119,9 @@ obj/machinery/atmospherics/pipe
 				parent.mingle_with_turf(loc, 70)
 
 		disposing()
-			if(node1)
-				node1.disconnect(src)
-			if(node2)
-				node2.disconnect(src)
-			if(node3)
-				node3.disconnect(src)
+			node1?.disconnect(src)
+			node2?.disconnect(src)
+			node3?.disconnect(src)
 			parent = null
 			..()
 
@@ -1009,12 +1147,12 @@ obj/machinery/atmospherics/pipe
 					parent = null
 				node3 = null
 
-			update_icon()
+			UpdateIcon()
 
 			..()
 
 		update_icon()
-			if(node1&&node2&&node3)
+			if(node1 && node2&& node3)
 				icon_state = "manifold"//[invisibility ? "-f" : ""]"
 				alpha = invisibility ? 128 : 255
 
@@ -1076,4 +1214,4 @@ obj/machinery/atmospherics/pipe
 
 			var/turf/T = src.loc			// hide if turf is not intact
 			hide(T.intact)
-			//update_icon()
+			//UpdateIcon()

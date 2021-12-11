@@ -32,7 +32,7 @@ change the direction of created objects.<br>
 			new /obj/machinery/door/airlock(get_turf(object))
 		else if (ctrl)
 			var/obj/window/reinforced/R = new /obj/window/reinforced(get_turf(object))
-			R.dir = holder.dir
+			R.set_dir(holder.dir)
 		else if (shift)
 			new /obj/grille/steel(get_turf(object))
 
@@ -43,7 +43,7 @@ change the direction of created objects.<br>
 			return
 		else if(istype(object,/turf/simulated/floor))
 			var/turf/T = object
-			T.ReplaceWithSpace()
+			T.ReplaceWithSpaceForce()
 			return
 		else if(istype(object,/turf/simulated/wall/r_wall) || istype(object, /turf/simulated/wall/auto/reinforced))
 			var/turf/T = object

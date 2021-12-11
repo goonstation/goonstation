@@ -12,7 +12,7 @@
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(get_turf(src), "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
@@ -32,14 +32,16 @@
 
 /obj/item/reagent_containers/food/snacks/pie/apple
 	name = "apple pie"
-	desc = "It smells delicious."
-	icon_state = "pie"
+	desc = "Is there anything more Space-American?"
+	icon_state = "applepie"
 	amount = 3
 	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_apple"=15)
 
 /obj/item/reagent_containers/food/snacks/pie/lime
 	name = "key lime pie"
-	desc = "Shouldn't the topping be white? Space is weird."
+	desc = "Tart, sweet, and with a dollop of cream on top."
 	icon_state = "limepie"
 	amount = 3
 	heal_amt = 4
@@ -74,7 +76,7 @@
 
 /obj/item/reagent_containers/food/snacks/pie/strawberry
 	name = "strawberry pie"
-	desc = "It smells delicious."
+	desc = "It smells like summertime memories."
 	icon_state = "strawberrypie"
 	amount = 3
 	heal_amt = 4
@@ -118,7 +120,7 @@
 			if (randomContent != src)
 				randomContent.throw_impact(hit_atom)
 
-			hit_atom.attackby(randomContent, thr?.user)
+			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
 				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
@@ -168,12 +170,77 @@
 		if(prob(10))
 			name = pick("fart pie","butt pie","mud pie","piesterior","ham pie","dump cake","derri-eclaire")
 
+/obj/item/reagent_containers/food/snacks/pie/chocolate
+	name = "chocolate mud pie"
+	desc = "Like a chocolate cake, but a pie, and also very different."
+	icon_state = "chocolatepie"
+	heal_amt = 6
+	amount = 3
+	initial_volume = 30
+	initial_reagents = list("sugar"=20,"hugs"=10)
+	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
+
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."
-	icon_state = "pie"
+	icon_state = "chickenpie"
 	heal_amt = 6
 	amount = 3
 	initial_volume = 30
 	initial_reagents = list("chickensoup"=20)
 	food_effects = list("food_sweaty","food_hp_up_big","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/weed
+	name = "chicken \"pot\" pie"
+	desc = "Something about this pie seems off.  Guaranteed to get you pie-in-the-sky high."
+	icon_state = "weedpie"
+	heal_amt = 4
+	amount = 3
+	initial_volume = 30
+	initial_reagents = list("THC"=20,"CBD"=20)
+	food_effects = list("food_sweaty","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/fish
+	name = "stargazy pie"
+	desc = "The snack that stares back."
+	icon_state = "fishpie"
+	heal_amt = 4
+	amount = 3
+	initial_volume = 30
+	food_effects = list("food_sweaty","food_rad_wick","food_refreshed")
+
+/obj/item/reagent_containers/food/snacks/pie/raspberry
+	name = "raspberry pie"
+	desc = "Those are fresh raspberries, too. Oh man."
+	icon_state = "raspberrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_raspberry"=15)
+
+/obj/item/reagent_containers/food/snacks/pie/blackberry
+	name = "blackberry pie"
+	desc = "The stains will be oh so worth it."
+	icon_state = "blackberrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_blackberry"=15)
+
+/obj/item/reagent_containers/food/snacks/pie/blueberry
+	name = "blueberry pie"
+	desc = "Blueberries cook up purple, who knew?"
+	icon_state = "blueberrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_blueberry"=15)
+
+/obj/item/reagent_containers/food/snacks/pie/cherry
+	name = "cherry pie"
+	desc = "It looks so good, it brings a tear to you eye."
+	icon_state = "cherrypie"
+	amount = 3
+	heal_amt = 4
+	initial_volume = 30
+	initial_reagents = list("juice_cherry"=15)

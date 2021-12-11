@@ -5,7 +5,7 @@
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	rand_pos = 0
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null
@@ -15,7 +15,9 @@
 	var/list/packet_data = list()
 	var/max_logs = 8
 
-	attack_ai()
+	attack_ai(mob/user as mob)
+		if(mode)
+			src.interacted(user)
 		return
 
 	attack_hand(mob/user as mob)
@@ -55,8 +57,7 @@
 				mode = 0
 				user.visible_message("[user] detaches the [src] from the data terminal.","You detach the [src] from the data terminal.")
 				icon_state = "sniffer0"
-				if(src.link)
-					src.link.master = null
+				src.link?.master = null
 				src.link = null
 				return
 		else
@@ -86,32 +87,33 @@
 	Topic(href, href_list)
 		..()
 
-		if (usr.contents.Find(src) || usr.contents.Find(src.master) || (istype(src.loc, /turf) && get_dist(src, usr) <= 1))
+		if (!issilicon(usr) && !isAIeye(usr))
+			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && IN_RANGE(src, usr, 1)))
+				return
 			if (usr.stat || usr.restrained())
 				return
 
 			src.add_fingerprint(usr)
-			src.add_dialog(usr)
+		src.add_dialog(usr)
 
-			if(href_list["filtid"])
-				var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
-				if (!t)
-					src.filter_id = null
-					src.updateIntDialog()
+		if(href_list["filtid"])
+			var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
+			if (!t)
+				src.filter_id = null
+				src.updateIntDialog()
+				return
+
+			if (!issilicon(usr) && !isAIeye(usr))//Only check range for organics
+				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
 					return
 
-				if (!in_range(src, usr) || usr.stat || usr.restrained())
-					return
+			if(length(t) != 8 || !is_hex(t))
+				src.filter_id = null
+				src.updateIntDialog()
+				return
 
-				if(length(t) != 8 || !is_hex(t))
-					src.filter_id = null
-					src.updateIntDialog()
-					return
-
-				src.filter_id = t
-
+			src.filter_id = t
 			src.updateIntDialog()
-			return
 
 		return
 
@@ -131,7 +133,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["address_1"]
+		var/target = signal.data["sender"]
 		if(src.filter_id && src.filter_id != target)
 			return
 

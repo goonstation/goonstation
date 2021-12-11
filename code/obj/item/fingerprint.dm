@@ -74,7 +74,7 @@
 			var/t = input(user, "Holder Label:", text("[]", src.name), null)  as text
 			if (user.equipped() != P)
 				return
-			if ((!in_range(src, usr) && src.loc != user))
+			if ((!in_interact_range(src, user) && src.loc != user))
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if (t)
@@ -111,7 +111,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5
 	max_stack = 10
@@ -146,7 +146,6 @@
 		if (ishuman(user) && !user:gloves)
 			F.add_fingerprint(user)
 		if (src.amount < 1)
-			//SN src = null
 			qdel(src)
 			return
 	else
@@ -175,7 +174,7 @@
 			var/t = input(user, "Card Label:", text("[]", src.name), null)  as text
 			if (user.equipped() != W)
 				return
-			if ((!in_range(src, usr) && src.loc != user))
+			if ((!in_interact_range(src, user) && src.loc != user))
 				return
 			t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if (t)

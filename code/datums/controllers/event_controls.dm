@@ -2,24 +2,30 @@ var/datum/event_controller/random_events
 
 /datum/event_controller
 	var/list/events = list()
-	var/major_events_begin = 18000 // 30m
-	var/time_between_events_lower = 6600  // 11m
-	var/time_between_events_upper = 12000 // 20m
+	var/major_events_begin = 30 MINUTES // 30m
+	var/time_between_events_lower = 11 MINUTES  // 11m
+	var/time_between_events_upper = 20 MINUTES // 20m
 	var/events_enabled = 1
 	var/announce_events = 1
 	var/event_cycle_count = 0
 
 	var/list/minor_events = list()
-	var/minor_events_begin = 6000 // 10m
-	var/time_between_minor_events_lower = 4000 // roughly 8m
-	var/time_between_minor_events_upper = 8000 // roughly 14m
+	var/minor_events_begin = 10 MINUTES // 10m
+	var/time_between_minor_events_lower = 400 SECONDS // roughly 8m
+	var/time_between_minor_events_upper = 800 SECONDS // roughly 14m
 	var/minor_events_enabled = 1
 	var/minor_event_cycle_count = 0
 
 	var/list/antag_spawn_events = list()
+#ifdef RP_MODE
+	var/alive_antags_threshold = 0.04
+#else
+	var/alive_antags_threshold = 0.1
+#endif
 	var/list/player_spawn_events = list()
+	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 7 MINUTES
+	var/time_between_spawn_events = 8 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -55,16 +61,20 @@ var/datum/event_controller/random_events
 			special_events += RE
 
 	proc/process()
-		if (TIME >= major_events_begin)
-			if (TIME >= next_major_event)
+		// prevent random events near round end
+		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
+			return
+
+		if (ticker.round_elapsed_ticks >= major_events_begin)
+			if (ticker.round_elapsed_ticks >= next_major_event)
 				event_cycle()
 
-		if (TIME >= spawn_events_begin)
-			if (TIME >= next_spawn_event)
+		if (ticker.round_elapsed_ticks >= spawn_events_begin)
+			if (ticker.round_elapsed_ticks >= next_spawn_event)
 				spawn_event()
 
-		if (TIME >= minor_events_begin)
-			if (TIME >= next_minor_event)
+		if (ticker.round_elapsed_ticks >= minor_events_begin)
+			if (ticker.round_elapsed_ticks >= next_minor_event)
 				minor_event_cycle()
 
 	proc/event_cycle()
@@ -75,7 +85,7 @@ var/datum/event_controller/random_events
 			message_admins("<span class='internal'>A random event would have happened now, but they are disabled!</span>")
 
 		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
-		next_major_event = TIME + major_event_timer
+		next_major_event = ticker.round_elapsed_ticks + major_event_timer
 		message_admins("<span class='internal'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
 
 	proc/minor_event_cycle()
@@ -84,7 +94,7 @@ var/datum/event_controller/random_events
 			do_random_event(minor_events)
 
 		minor_event_timer = rand(time_between_minor_events_lower,time_between_minor_events_upper)
-		next_minor_event = TIME + minor_event_timer
+		next_minor_event = ticker.round_elapsed_ticks + minor_event_timer
 
 	proc/spawn_event(var/type = "player")
 		var/do_event = 1
@@ -95,45 +105,26 @@ var/datum/event_controller/random_events
 			message_admins("<span class='internal'>A spawn event would have happened now, but there is not enough players!</span>")
 			do_event = 0
 
-		if (do_event)
-			var/alive = 0
-			var/dead_dnr = 0
-			var/antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
-			var/dead_antags = 0
-
-			for (var/datum/mind/antag in ticker.mode.traitors)
-				var/mob/M = antag.current
-				if (!M) continue
-				if (!M.client || isdead(M))
-					dead_antags++
-			for (var/datum/mind/antag in ticker.mode.Agimmicks)
-				var/mob/M = antag.current
-				if (!M) continue
-				if (!M.client || isdead(M))
-					dead_antags++
-
-			for(var/client/C)
-				var/mob/M = C.mob
-				if(!M) continue
-				if (!isdead(M) && isliving(M))
-					alive++
-				else if (M.mind?.dnr)
-					dead_dnr++
-
-			if (dead_antags >= round(antags * 0.75) && (ticker?.mode?.do_antag_random_spawns))
+		if (do_event && ticker?.mode?.do_random_events)
+			var/aap = get_alive_antags_percentage()
+			var/dcp = get_dead_crew_percentage()
+			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
-				message_admins("<span class='internal'>Antag spawn event success!<br>DEAD ANTAGS: [dead_antags], TOTAL ANTAGS: [antags]</span>")
-			else if (alive <= (total_clients() - dead_dnr) * 0.6)
+				message_admins("<span class='internal'>Antag spawn event success!<br>[100 * aap]% of the alive crew were antags.</span>")
+			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
-				message_admins("<span class='internal'>Player spawn event success!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)]</span>")
+				message_admins("<span class='internal'>Player spawn event success!<br>[100 * dcp]% of the entire crew were dead.</span>")
 			else
-				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> ALIVE : [alive], TOTAL COUNTED : [(total_clients() - dead_dnr)], DEAD ANTAGS: [dead_antags]</span>")
+				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br>[100 * aap]% of the alive crew were antags and [100 * dcp]% of the entire crew were dead.</span>")
 
-		next_spawn_event = TIME + time_between_spawn_events
+		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
 			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
+			return
+		if (!ticker?.mode?.do_random_events)
+			logTheThing("debug", null, null, "<b>Random Events:</b> Random events are turned off on this game mode.")
 			return
 		var/list/eligible = list()
 		var/list/weights = list()
@@ -215,7 +206,7 @@ var/datum/event_controller/random_events
 
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
-		if(usr && usr.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
 
 		if(href_list["TriggerEvent"])
 			var/datum/random_event/RE = locate(href_list["TriggerEvent"]) in events

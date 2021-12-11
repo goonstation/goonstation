@@ -15,7 +15,7 @@
 
 	examine()
 		. = ..()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+		if(src.hiddenFrom?.Find(usr.client)) //invislist
 			return
 		if(!alive)
 			. += "<span class='alert'><B>the disgusting creature is not moving</B></span>"
@@ -44,7 +44,7 @@
 			random_brute_damage(H, 10)
 			src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
 			src.set_loc(H)
-			H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 100))
+			H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 10 SECONDS))
 			attacking = 1
 
 			var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite

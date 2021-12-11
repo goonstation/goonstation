@@ -32,14 +32,14 @@
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
 		var/mob/ownerMob = owner
-		playsound(ownerMob.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
+		playsound(ownerMob.loc, "sound/effects/mindkill.ogg", 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && (target in view(owner)) && gibstare && gibstare.cooldowncheck())
+		if(ownerMob && target && (target in view(owner)) && gibstare?.cooldowncheck())
 			logTheThing("combat", ownerMob, target, "gibs [constructTarget(target,"combat")] using martin gib stare.")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)

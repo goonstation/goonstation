@@ -1,6 +1,5 @@
 
 // a lot of these are probably gunna just be copy/paste jobs because eh.
-
 /datum/targetable/critter/bite/small
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
@@ -20,7 +19,7 @@
 /datum/targetable/critter/peck
 	name = "Peck"
 	desc = "Peck at a mob."
-	icon_state = "blind"
+	icon_state = "scuffed_peck"
 	cooldown = 100
 	targeted = 1
 	target_anything = 1
@@ -47,7 +46,7 @@
 		var/mob/MT = target
 		if (iscarbon(MT) && prob(60))
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> pecks [MT] in the eyes!</span>")
-			playsound(get_turf(target), "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+			playsound(target, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
 			if (!isdead(MT))
 				MT.emote("scream")
@@ -64,7 +63,7 @@
 				if (E)
 					holder.owner.visible_message("<span class='combat'><B>[holder.owner] [pick("tears","yanks","rips")] [MT]'s eye out! <i>Holy shit!!</i></B></span>")
 					E = H.drop_organ(chosen_eye)
-					playsound(get_turf(target), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+					playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 					if (holder.owner.put_in_hand_or_drop(E))
 						E.set_loc(holder.owner)
 					else
@@ -88,12 +87,14 @@
 			return 0
 
 /datum/targetable/critter/peck/crow
+	icon_state = "peck_crow"
 	take_eyes = 1
 
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
 	cooldown = 200
+	icon_state = "pounce_polymorph"
 	targeted = 1
 	target_anything = 1
 
@@ -131,6 +132,7 @@
 /datum/targetable/critter/trip
 	name = "Trip"
 	desc = "Weave around the legs of a mob, causing them to trip."
+	icon_state = "tail_trip"
 	cooldown = 250
 	targeted = 1
 	target_anything = 1
@@ -155,8 +157,8 @@
 		var/mob/MT = target
 		var/tostun = rand(0,3)
 		var/toweak = rand(0,3)
-		MT.changeStatus("stunned", tostun * 10)
-		MT.changeStatus("weakened", toweak * 10)
+		MT.changeStatus("stunned", tostun SECONDS)
+		MT.changeStatus("weakened", toweak SECONDS)
 		holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> weaves around [MT]'s legs!</span>",\
 		"<span class='combat'>You weave around [MT]'s legs!</span>")
 		if (toweak)
@@ -168,6 +170,7 @@
 	desc = "Sting a mob, injecting them with venom."
 	cooldown = 50
 	targeted = 1
+	icon_state = "waspbee_sting"
 	target_anything = 1
 	var/venom1 = "histamine"
 	var/amt1 = 12
@@ -214,7 +217,7 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] hoots seductively!</b></span>",\
 		"<span class='combat'>You hoot seductively!</span>")
-		playsound(get_turf(holder.owner), "sound/voice/animal/hoot.ogg", 90, 0)
+		playsound(holder.owner, "sound/voice/animal/hoot.ogg", 90, 0)
 		flick("bhooty-flap", holder.owner)
 		var/obj/decal/D = new/obj/decal(holder.owner.loc)
 		D.name = ""

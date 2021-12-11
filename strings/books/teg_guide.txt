@@ -1,0 +1,77 @@
+<head>
+<style type="text/css">
+table, th, td {
+ border: 1px solid grey;
+}
+p, li
+{
+font-family:"Arial";
+font-size:14px;
+}
+h4
+{
+padding:10px;
+}
+</style>
+</head>
+<h1>Thermo-electric Power Generation</h1>
+   <p><i>Compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2048 All Rights Reserved</i></p>
+<h3>Preface</h3>
+<p>The following is intended to provide sufficient information to ensure proper and safe operation of the Prototype Thermo-Electric Generator system.  Whether you are new to engineering, new to the Prototype TEG, attempting to handle a catastrophic emergency, suffered mental trauma, or been affected by products licensed through Thinktronic Systems, we here at Nanotrasen are here to help.</p>
+<hr/>
+<h3>Starting The Engine</h3>
+
+<p>Please follow the procedure provided with your Thermo-Electric Generator.  Failure to follow these procedures may cause catastrophic damage to Nanotrasen property.</p>
+
+<h3>Themo-Electric Power</h3>
+
+<p>Power is generated utilizing a temperature differential.  By keeping the hotloop hot and the cold loop cold you can do your part to keep the lights on. Compared to other power generation techniques this has the benefit of having no moving parts.</p>
+
+<h3>Circulator</h3>
+
+<p>The circulators play a critical role in maximum energy conduction between the hot and cold loops to the TEG itself.  Air must continue to pass through the circulator for heat transfer to control.  In order to aid in this transfer, blower units have been installed to help ensure positive airflow in the system.  The Nanotrasen multitool can be utilized to make any adjustments to blower pressure.  It is critical that adequate pressure be provided through gas compression, expansion, or use of the blower units to move the gases from the inlet to the outlet side of the circulators.</p>
+
+<h4>Lubrication System:</h4>
+
+<p>The Mark II TEG circulators come with sufficient heavy hydrocarbon oil blend.  Substances of sufficiently high viscosity should be used to maintain expected behavior of the circulator.  Alterations to the lubrication system chemistry should be logged for future analysis by Nanotrasen.</p>
+
+<p>In the event of damage or sabotage, the lubrication system can be replaced by performing the following:</p>
+<ol>
+<li>Remove the maintenance plate from the circulator with a <b>screwdriver</b>.</li>
+<li>Use a <b>welder</b> to cut the existing system into manageable segments.</li>
+<li>Carefully <b>pry</b> out the segments.</li>
+<li>(<b>5</b>) segments of lubrication piping NT-P8798-1C should be installed.  A suitable replacement can be fashioned with metal <b>rods</b> if certified parts are unavailable.</li>
+<li>Replacement piping should be <b>welded</b> into place.</li></ol>
+
+<h3>GASES</h3>
+
+<h4>Gas Loops</h4>
+<p>Gas is cycled through the loops, hot and cold, by going from a high pressure to low pressure, attempting to achieve equilibrium. Passive gates and pumps are utilized to ensure the gas flows in the desired direction.  As energy is applied to the gases the temperature will rise and so too will the pressure.  The inverse also applies to energy being removed.  Maximizing the temperature of the hot loop is a critical aspect of getting the most from the TEG.</p>
+
+<h4>Pressure & Pipes</h4>
+<p>Nanotrasen thermal shielded pipe, NT-PTS669-01, is rated for up to <i>15200 kPa</i> of pressure.  Exceeding this may cause failure of the pipe.  In the event of minor structural failure, the pipe can be <i>welded</i> to resolve any minor ruptures that may have occurred. In the event of critical failure, a replacement pipe can be fashioned with a metal rod fittings given the connectors are still structurally sound. Gas flow meters should be installed throughout the corresponding loops to ensure safe usage of Nanotrasen equipment.  Atmospheric analyzers can also be utilized to monitor pressure and gas composition through the loops.</p>
+
+<p>In the event of extreme pressure the following actions may be performed:</p>
+<ul>
+<li>Turn off any equipment or reroute gas to minimize energy and heat added to the loop.
+<li>Utilize any Pressure Tanks</li>
+<li>Open any purge or pressure release valves.  Ensure corresponding purge systems are turned on and at the desired setting.</li>
+</ul>
+<hr/>
+<h3>Appendix A: Common Gases</h4>
+<table>
+<tr><th align="right" >GAS</th><th>Heat Capacity</th><th>Notes</th></tr>
+<tr><td align="right" >O2</td><td>20</td><td>Oxygen is a critical part of both combustion and typical lung gas exchange</td></tr>
+<tr><td align="right">N2</td><td>20</td><td></td></tr>
+<tr><td align="right">CO2</td><td>30</td><td>Byproduct of typical lung gas exchange, harmful in large quantities</td></tr>
+</table><br/>
+<hr/>
+<h3>Glossary</h3>
+<ul><li>Heat Capacity: Isochore molar heat capacity C<sub>V,m</sub> J⋅mol<sup>−1</sub>⋅K<sup>−1</sup></li>
+<li>Hot loop: Gas system where energy energy is introduced.  Energy is typically added through the utilization of furnaces or a burn chamber.  Critical to maintain a temperature differential at the TEG.</li>
+<li>Cold Loop: Gas system where energy is removed.  Energy is typically removed through the utilization of freezers or transferring through the void of space.  Critical to maintaining a temperature differential at the TEG.</li>
+
+<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+<ul>><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a></li>
+<li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li></ul>
+Thank you for your service to Nanotrasen.</i></p>

@@ -35,6 +35,12 @@
 						A2 = C.add_ability_holder(/datum/abilityHolder/wrestler)
 					if (!A2 || !istype(A2, /datum/abilityHolder/))
 						return
+				if(make_inherent)
+					src.add_stam_mod_max("wrestler", 50)
+					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					src.max_health += 50
+					health_update_queue |= src
+				APPLY_MOB_PROPERTY(src, PROP_PASSIVE_WRESTLE, "wrestledoodle")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
@@ -45,22 +51,17 @@
 			var/mob/living/carbon/human/H = src
 
 			if (remove_powers == 1)
-				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(/datum/abilityHolder/wrestler)
+				var/datum/abilityHolder/wrestler/A3 = H.get_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 				if (istype(A3))
 					if (belt_check == 1 && A3.is_inherent == 1) // Wrestler/omnitraitor vs wrestling belt.
 						return
-					H.remove_ability_holder(/datum/abilityHolder/wrestler)
-				else if (fake_wrestler && istype(H.get_ability_holder(/datum/abilityHolder/wrestler/fake), /datum/abilityHolder/wrestler/fake))
-					H.remove_ability_holder(/datum/abilityHolder/wrestler)
-
-				else
 					if (!isnull(H.abilityHolder))
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/throw[fake_wrestler ? "/fake" : ""]")
 						H.abilityHolder.removeAbility("/datum/targetable/wrestler/slam[fake_wrestler ? "/fake" : ""]")
-
+					H.remove_ability_holder(fake_wrestler ? /datum/abilityHolder/wrestler/fake : /datum/abilityHolder/wrestler)
 
 				return
 
@@ -89,15 +90,20 @@
 
 				if (make_inherent == 1)
 					A5.is_inherent = 1
+					src.add_stam_mod_max("wrestler", 50)
+					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
+					src.max_health += 50
+					health_update_queue |= src
 
-		if (belt_check != 1 && (src.mind && src.mind.special_role != "omnitraitor" && src.mind.special_role != "Faustian Wrestler"))
+
+		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
 			SHOW_WRESTLER_TIPS(src)
 
 	else return
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
-/obj/screen/ability/topBar/wrestler
+/atom/movable/screen/ability/topBar/wrestler
 	clicked(params)
 		var/datum/targetable/wrestler/spell = owner
 		if (!istype(spell))
@@ -134,6 +140,12 @@
 	var/is_inherent = 0 // Are we a wrestler as opposed to somebody with a wrestling belt?
 	var/fake = 0
 
+	deepCopy()
+		. = ..()
+		var/datum/abilityHolder/wrestler/copy = .
+		if(istype(copy) && src.is_inherent == TRUE)
+			copy.is_inherent = TRUE
+
 /datum/abilityHolder/wrestler/fake
 	fake = 1
 /////////////////////////////////////////////// Wrestler spell parent ////////////////////////////
@@ -151,7 +163,7 @@
 	var/fake = 0
 
 	New()
-		var/obj/screen/ability/topBar/wrestler/B = new /obj/screen/ability/topBar/wrestler(null)
+		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -163,7 +175,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/wrestler()
+			src.object = new /atom/movable/screen/ability/topBar/wrestler()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -220,6 +232,10 @@
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
+		if (fake && !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
+			boutput(M, __red("You cannot use your \"powers\" outside of The Ring!"))
+			return 0
+
 		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
 			boutput(M, __red("You cannot use any powers in your current form."))
 			return 0
@@ -254,7 +270,7 @@
 
 		var/CD = src.cooldown
 		var/ST_mod_max = M.get_stam_mod_max()
-		var/ST_mod_regen = M.get_stam_mod_regen()
+		var/ST_mod_regen = GET_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS)
 
 		// Balanced for 200/12 and 200/13 drugs (e.g. epinephrine or meth), so stamina regeneration
 		// buffs are prioritized over total stamina modifiers.
@@ -276,6 +292,3 @@
 		SPAWN_DBG (rand(200, 900))
 			if (src.holder && src.holder.owner && ismob(src.holder.owner))
 				src.holder.owner.emote("flex")
-
-		SPAWN_DBG(calculate_cooldown() + 5)
-			holder.updateButtons()

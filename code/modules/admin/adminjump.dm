@@ -1,4 +1,4 @@
-/client/proc/Jump(var/area/A in world)
+/client/proc/Jump(var/area/A in by_type[/area])
 	set desc = "Area to jump to"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Jump"
@@ -10,7 +10,7 @@
 		if(flourish)
 			shrink_teleport(src.mob)
 		var/list/turfs = get_area_turfs(A, 1)
-		if (turfs && turfs.len)
+		if (length(turfs))
 			usr.set_loc(pick(turfs))
 		else
 			boutput(src, "Can't jump there, zero turfs in that area.")

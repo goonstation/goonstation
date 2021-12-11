@@ -15,9 +15,9 @@
 		boutput(usr, "<span class='notice'>Left click to place walls. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -65,7 +65,7 @@
 		else
 			SPAWN_DBG(0)
 				var/waited = 0
-				while (waiting && waiting.sliding)
+				while (waiting?.sliding)
 					waited++
 					if (waited == 5)
 						break
@@ -76,4 +76,4 @@
 				return
 
 	attack_hand(mob/user as mob)
-		usr.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")
+		user.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")

@@ -8,14 +8,15 @@ root = true
 
 # Goonstation Standards
 indent_style = tab
-indent_size = 2
-tab_width = 2
 
 # File standards
-end_of_line = crlf
+#end_of_line = crlf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+
+[*.dmm]
+end_of_line = lf
 
 [*.md]
 trim_trailing_whitespace = false
@@ -25,3 +26,6 @@ end_of_line = lf
 
 [*.yml]
 indent_style = space
+
+[strings/*.txt]
+insert_final_newline = false

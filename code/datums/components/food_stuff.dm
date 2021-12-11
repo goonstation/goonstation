@@ -9,6 +9,11 @@
 
 /datum/component/consume/can_eat_inedible_organs
 	var/can_eat_heads = 0
+
+TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
+	initialization_args = list(
+		ARG_INFO("can_eat_heads", "num", "If heads are also valid food (bool)", FALSE)
+	)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()
 	src.can_eat_heads = can_eat_heads
@@ -28,6 +33,10 @@
 	var/target_abilityholder = /datum/abilityHolder/lizard
 	var/static/list/organ2points = list(/obj/item/organ/head=2,/obj/item/skull=0,/obj/item/organ/brain=3,/obj/item/organ/chest=5,/obj/item/organ/heart=2,/obj/item/organ/appendix=0,/obj/item/clothing/head/butt=0)
 
+TYPEINFO(/datum/component/consume/organpoints)
+	initialization_args = list(
+		ARG_INFO("target_abilityholder", "ref", "Abilityholder to handle points for")
+	)
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
 	src.target_abilityholder = target_abilityholder
@@ -142,6 +151,10 @@
 	var/base_HPup = 5
 	var/mod_mult = 1
 
+TYPEINFO(/datum/component/consume/organheal)
+	initialization_args = list(
+		ARG_INFO("mod_mult", "num", "healing multiplier", 1)
+	)
 /datum/component/consume/organheal/Initialize(var/mod_mult)
 	..()
 	src.mod_mult = mod_mult
@@ -239,4 +252,46 @@
 
 /datum/component/consume/organheal/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	. = ..()
+
+
+/// Applies some status effects when eaten
+/datum/component/consume/food_effects
+	var/obj/item/food_parent
+	var/list/status_effects = list()
+
+TYPEINFO(/datum/component/consume/food_effects)
+	initialization_args = list(
+		ARG_INFO("status_effects", "list", "List of status effects to apply when eaten")
+	)
+/datum/component/consume/food_effects/Initialize(var/list/_status_effects)
+	..()
+	if(!istype(parent, /obj/item))
+		return COMPONENT_INCOMPATIBLE
+	src.food_parent = parent
+	src.status_effects = _status_effects
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
+
+/datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
+	if(C?.status_effects)
+		src.status_effects = C.status_effects
+		boutput(world, "[C] was already init'd. heal amt on it was [C.status_effects] is now [src.status_effects], supposed to be [_new_status_effects]")
+	else
+		if (islist(_new_status_effects)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_status_effects is a string / list
+			src.status_effects |= _new_status_effects
+			boutput(world, "[_new_status_effects] was list. [src.status_effects]")
+		else if(istext(_new_status_effects))
+			var/list/new_sfx = list(_new_status_effects)
+			src.status_effects |= new_sfx
+			boutput(world, "[_new_status_effects] not list. [src.status_effects]")
+
+
+/datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)
+	if (src.status_effects.len && isliving(M) && M.bioHolder)
+		var/mob/living/L = M
+		for (var/effect in src.status_effects)
+			L.add_food_bonus(effect, food_parent)
+
+/datum/component/consume/food_effects/UnregisterFromParent()
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 	. = ..()

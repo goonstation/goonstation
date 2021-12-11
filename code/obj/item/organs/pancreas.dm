@@ -33,6 +33,16 @@
 				holder.pancreas = null
 		..()
 
+/obj/item/organ/pancreas/synth
+	name = "synthpancreas"
+	organ_name = "synthpancreas"
+	icon_state = "plant"
+	desc = "A plant-based alternative to the normal pancreas..."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
+
 /obj/item/organ/pancreas/cyber
 	name = "cyberpancreas"
 	desc = "A fancy robotic pancreas to replace one that someone's lost!"
@@ -40,6 +50,7 @@
 	// item_state = "heart_robo1"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 

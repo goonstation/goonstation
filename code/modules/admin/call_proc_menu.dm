@@ -4,7 +4,8 @@ proc/generate_procs_by_type()
 	if(!isnull(procs_by_type)) // don't want to rebuild twice if someone is really spamming this
 		return
 	procs_by_type = list()
-	for(var/subaddr=0; TRUE; subaddr++)
+	var/subaddr = 0
+	while(TRUE)
 		var/addr = BUILD_ADDR("26", subaddr) // 26 is the type id used by procs for ref
 		var/pr = locate(addr)
 		if(!pr)
@@ -23,6 +24,7 @@ proc/generate_procs_by_type()
 		procs_by_type[owner_type][pr_name] = pr
 		if(subaddr % 100 == 0)
 			LAGCHECK(LAG_MED)
+		subaddr++
 	for(var/type in procs_by_type)
 		procs_by_type[type] = sortList(procs_by_type[type])
 		LAGCHECK(LAG_MED)

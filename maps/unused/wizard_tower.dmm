@@ -1,30 +1,30 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_6"
 	},
-/area)
+/area/space)
 "ac" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_12"
 	},
-/area)
+/area/space)
 "ad" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_10"
 	},
-/area)
+/area/space)
 "ae" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_3"
 	},
-/area)
+/area/space)
 "af" = (
 /turf/unsimulated/floor/wizard/plating,
-/area)
+/area/space)
 "ag" = (
 /obj/overlay{
 	anchored = 1;
@@ -34,20 +34,20 @@
 	name = "runes of containment"
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "ah" = (
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "ai" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_14"
 	},
-/area)
+/area/space)
 "aj" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_11"
 	},
-/area)
+/area/space)
 "ak" = (
 /obj/bookcase/directional/full{
 	dir = 10;
@@ -56,13 +56,13 @@
 	tag = "icon-bookcase_full_wall (SOUTHWEST)"
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "al" = (
 /obj/bookcase/directional/full{
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "am" = (
 /obj/bookcase/directional/full{
 	dir = 6;
@@ -71,225 +71,225 @@
 	tag = "icon-bookcase_full_wall (SOUTHEAST)"
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "an" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_5"
 	},
-/area)
+/area/space)
 "ao" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_9"
 	},
-/area)
+/area/space)
 "ap" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (NORTHWEST)";
 	icon_state = "carpet_edge";
 	dir = 9
 	},
-/area)
+/area/space)
 "aq" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (NORTH)";
 	icon_state = "carpet_edge";
 	dir = 1
 	},
-/area)
+/area/space)
 "ar" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (NORTHEAST)";
 	icon_state = "carpet_edge";
 	dir = 5
 	},
-/area)
+/area/space)
 "as" = (
 /turf/unsimulated/wall/adaptive/wizard_window,
-/area)
+/area/space)
 "at" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	base_name = "wizard_wall_";
 	icon_state = "wizard_wall_4"
 	},
-/area)
+/area/space)
 "au" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_8"
 	},
-/area)
+/area/space)
 "av" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_7"
 	},
-/area)
+/area/space)
 "aw" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (WEST)";
 	icon_state = "carpet_edge";
 	dir = 8
 	},
-/area)
+/area/space)
 "ax" = (
 /turf/unsimulated/floor/wizard/carpet,
-/area)
+/area/space)
 "ay" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (EAST)";
 	icon_state = "carpet_edge";
 	dir = 4
 	},
-/area)
+/area/space)
 "az" = (
 /turf/unsimulated/wall/adaptive/wizard_fake{
 	tag = "icon-wizard_false_wall (EAST)";
 	icon_state = "wizard_false_wall";
 	dir = 4
 	},
-/area)
+/area/space)
 "aA" = (
 /obj/bookcase/full{
 	icon_state = "bookcase_full_alone_0";
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "aB" = (
 /turf/unsimulated/floor/wizard/carpet/narrow{
 	tag = "icon-carpet_narrow (NORTHEAST)";
 	icon_state = "carpet_narrow";
 	dir = 5
 	},
-/area)
+/area/space)
 "aC" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_4"
 	},
-/area)
+/area/space)
 "aD" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_1"
 	},
-/area)
+/area/space)
 "aE" = (
 /turf/unsimulated/floor/wizard/stairs{
 	icon_state = "wizard_stairs_left"
 	},
-/area)
+/area/space)
 "aF" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs_middle";
 	icon_state = "wizard_stairs_middle"
 	},
-/area)
+/area/space)
 "aG" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs_right";
 	icon_state = "wizard_stairs_right"
 	},
-/area)
+/area/space)
 "aH" = (
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
-/area)
+/area/space)
 "aI" = (
 /turf/unsimulated/floor/wizard/carpet/narrow,
-/area)
+/area/space)
 "aJ" = (
 /turf/unsimulated/floor/arctic/snow/ice,
-/area)
+/area/space)
 "aK" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
 	tag = "icon-carpet_inner_corner_1_2 (NORTHEAST)";
 	icon_state = "carpet_inner_corner_1_2";
 	dir = 5
 	},
-/area)
+/area/space)
 "aL" = (
 /obj/bookcase/button{
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "aM" = (
 /turf/unsimulated/wall/adaptive/wizard_window{
 	tag = "icon-wizard_window (WEST)";
 	icon_state = "wizard_window";
 	dir = 8
 	},
-/area)
+/area/space)
 "aN" = (
 /turf/unsimulated/wall/adaptive/wizard_window{
 	tag = "icon-wizard_window (SOUTHEAST)";
 	icon_state = "wizard_window";
 	dir = 6
 	},
-/area)
+/area/space)
 "aO" = (
 /turf/unsimulated/floor/lava,
-/area)
+/area/space)
 "aP" = (
 /turf/unsimulated/floor/void,
-/area)
+/area/space)
 "aQ" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs_right (NORTH)";
 	icon_state = "wizard_stairs_right";
 	dir = 1
 	},
-/area)
+/area/space)
 "aR" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs_left (NORTH)";
 	icon_state = "wizard_stairs_left";
 	dir = 1
 	},
-/area)
+/area/space)
 "aS" = (
 /turf/unsimulated/floor/wizard/carpet/narrow{
 	tag = "icon-carpet_narrow (NORTHWEST)";
 	icon_state = "carpet_narrow";
 	dir = 9
 	},
-/area)
+/area/space)
 "aT" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (SOUTHWEST)";
 	icon_state = "carpet_edge";
 	dir = 10
 	},
-/area)
+/area/space)
 "aU" = (
 /turf/unsimulated/floor/wizard/carpet/edge,
-/area)
+/area/space)
 "aV" = (
 /turf/unsimulated/floor/wizard/carpet/edge{
 	tag = "icon-carpet_edge (SOUTHEAST)";
 	icon_state = "carpet_edge";
 	dir = 6
 	},
-/area)
+/area/space)
 "aW" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_2"
 	},
-/area)
+/area/space)
 "aX" = (
 /turf/unsimulated/floor/pool,
-/area)
+/area/space)
 "aY" = (
 /turf/unsimulated/wall/adaptive/wizard{
 	icon_state = "wizard_wall_13"
 	},
-/area)
+/area/space)
 "aZ" = (
 /turf/unsimulated/wall/adaptive/wizard_fake,
-/area)
+/area/space)
 "ba" = (
 /turf/unsimulated/floor/wizard/carpet/narrow{
 	tag = "icon-carpet_narrow (NORTH)";
 	icon_state = "carpet_narrow";
 	dir = 1
 	},
-/area)
+/area/space)
 "bb" = (
 /obj/overlay{
 	anchored = 1;
@@ -299,90 +299,90 @@
 	name = "column"
 	},
 /turf/unsimulated/floor/wizard,
-/area)
+/area/space)
 "bc" = (
 /turf/unsimulated/floor/wizard/carpet/narrow{
 	tag = "icon-carpet_narrow (SOUTHWEST)";
 	icon_state = "carpet_narrow";
 	dir = 10
 	},
-/area)
+/area/space)
 "bd" = (
 /turf/unsimulated/floor/wizard/carpet/narrow/crossing{
 	tag = "icon-carpet_narrow_crossing (NORTHEAST)";
 	icon_state = "carpet_narrow_crossing";
 	dir = 5
 	},
-/area)
+/area/space)
 "be" = (
 /turf/unsimulated/floor/wizard/carpet/narrow{
 	tag = "icon-carpet_narrow (SOUTHEAST)";
 	icon_state = "carpet_narrow";
 	dir = 6
 	},
-/area)
+/area/space)
 "bf" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
 	tag = "icon-carpet_inner_corner_1_2 (NORTHWEST)";
 	icon_state = "carpet_inner_corner_1_2";
 	dir = 9
 	},
-/area)
+/area/space)
 "bg" = (
 /turf/unsimulated/floor/wizard/showcase,
-/area)
+/area/space)
 "bh" = (
 /turf/unsimulated/floor/wizard/carpet/cross,
-/area)
+/area/space)
 "bi" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
 	tag = "icon-carpet_inner_corner_1_2 (SOUTHWEST)";
 	icon_state = "carpet_inner_corner_1_2";
 	dir = 10
 	},
-/area)
+/area/space)
 "bj" = (
 /turf/unsimulated/floor/wizard/carpet/inner_corner_onetwo{
 	tag = "icon-carpet_inner_corner_1_2 (SOUTHEAST)";
 	icon_state = "carpet_inner_corner_1_2";
 	dir = 6
 	},
-/area)
+/area/space)
 "bk" = (
 /turf/unsimulated/wall/adaptive/wizard_window{
 	tag = "icon-wizard_window (NORTHWEST)";
 	icon_state = "wizard_window";
 	dir = 9
 	},
-/area)
+/area/space)
 "bl" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs (EAST)";
 	icon_state = "wizard_stairs";
 	dir = 4
 	},
-/area)
+/area/space)
 "bm" = (
 /turf/unsimulated/wall/adaptive/wizard_window{
 	tag = "icon-wizard_window (SOUTHWEST)";
 	icon_state = "wizard_window";
 	dir = 10
 	},
-/area)
+/area/space)
 "bn" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs_left (WEST)";
 	icon_state = "wizard_stairs_left";
 	dir = 8
 	},
-/area)
+/area/space)
 "bo" = (
 /turf/unsimulated/floor/wizard/stairs{
 	tag = "icon-wizard_stairs_right (WEST)";
 	icon_state = "wizard_stairs_right";
 	dir = 8
 	},
-/area)
+/area/space)
 
 (1,1,1) = {"
 aa

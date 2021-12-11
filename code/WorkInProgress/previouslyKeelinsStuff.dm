@@ -413,10 +413,10 @@ var/reverse_mode = 0
 						if (prob(1))
 							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
-							user.bioHolder.AddEffect("xray", 0, 0, 1) //they're lucky enough to keep it
+							user.bioHolder.AddEffect("xray", 2, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
 							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
-							src.invisibility = 101
+							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
 							sleep(0.5 SECONDS)
@@ -459,7 +459,7 @@ var/reverse_mode = 0
 /obj/effect_sparker
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 
@@ -560,7 +560,7 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
@@ -569,7 +569,8 @@ var/reverse_mode = 0
 	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
 	return
 
-/obj/fake_attacker/HasEntered(var/mob/M, somenumber)
+/obj/fake_attacker/Crossed(atom/movable/M)
+	..()
 	if (M == my_target)
 		step_away(src,my_target,2)
 		if (prob(30))
@@ -672,8 +673,8 @@ var/reverse_mode = 0
 	while(current != target_turf)
 		if (steps > length) return 0
 		if (!current) return 0
-		if (current.density) return 0 //If we can avoid the more expensive CanPass check, let's
-		if (!current.CanPass(source, target_turf)) return 0
+		if (current.density) return 0 //If we can avoid the more expensive Cross check, let's
+		if (!current.Cross(source)) return 0
 
 		current = get_step_towards(current, target_turf)
 		steps++

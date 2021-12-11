@@ -11,17 +11,18 @@
 
 	infra_luminosity = 4
 
+/mob/living/carbon/New()
+	START_TRACKING
+	. = ..()
 
 /mob/living/carbon/disposing()
+	STOP_TRACKING
 	stomach_contents = null
 	..()
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
-		if(src.bioHolder && src.bioHolder.HasEffect("fat") && src.m_intent == "run")
-			src.bodytemperature += 2
-
 		//SLIP handling
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
@@ -39,14 +40,14 @@
 							src.inertia_dir = 0
 							return
 					if (2) //lube
-						src.pulling = null
-						src.changeStatus("weakened", 35)
+						src.remove_pulling()
+						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
-						src.pulling = null
+						src.remove_pulling()
 						src.changeStatus("weakened", 6 SECONDS)
 						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
@@ -61,7 +62,7 @@
 				if(M.client)
 					M.show_message(text("<span class='alert'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
 			var/obj/item/I = user.equipped()
-			if(I && I.force)
+			if(I?.force)
 				var/d = rand(round(I.force / 4), I.force)
 				src.TakeDamage("chest", d, 0)
 				for(var/mob/M in viewers(user, null))
@@ -72,7 +73,7 @@
 				if(prob(get_brute_damage() - 50))
 					src.gib()
 
-/mob/living/carbon/gib(give_medal)
+/mob/living/carbon/gib(give_medal, include_ejectables)
 	for(var/mob/M in src)
 		if(M in src.stomach_contents)
 			src.stomach_contents.Remove(M)
@@ -82,15 +83,15 @@
 			M.cancel_camera()
 
 		M.set_loc(src.loc)
-	. = ..(give_medal)
+	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()
 	SPAWN_DBG(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
-			playsound(get_turf(src), "sound/misc/pourdrink.ogg", 50, 1)
-			pee_target.reagents.add_reagent("urine", 20)
+			playsound(src, "sound/misc/pourdrink.ogg", 50, 1)
+			pee_target.reagents.add_reagent("urine", 4)
 			return
 
 		// possibly change the text colour to the gray emote text
@@ -117,19 +118,11 @@
 			var/perpname = src.name
 			if(src:wear_id && src:wear_id:registered)
 				perpname = src:wear_id:registered
-			// find the matching security record
-			for(var/datum/data/record/R in data_core.general)
-				if(R.fields["name"] == perpname)
-					for (var/datum/data/record/S in data_core.security)
-						if (S.fields["id"] == R.fields["id"])
-							// now add to rap sheet
 
-							S.fields["criminal"] = "*Arrest*"
-							S.fields["mi_crim"] = "Public urination."
-
-							break
-
-
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Public urination."
 
 /mob/living/carbon/swap_hand()
 	var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
@@ -161,15 +154,11 @@
 /mob/living/carbon/take_brain_damage(var/amount)
 	if (..())
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedbrain = max(0,src.pausedbrain + amount)
-		return
-#endif
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	src.brainloss = max(0,min(src.brainloss + amount,120))
+	src.brainloss = clamp(src.brainloss + amount, 0, 120)
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
@@ -184,17 +173,18 @@
 		amount = 0
 	if (..())
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedtox = max(0,src.pausedtox + amount)
-		return
-#endif
+
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))
-		src.toxloss = 0
-		return 1 //prevent organ damage
+	var/resist_toxic = src.bioHolder?.HasEffect("resist_toxic")
+
+	if(resist_toxic)
+		if(resist_toxic > 1)
+			src.toxloss = 0
+			return 1 //prevent organ damage
+		else
+			amount *= 0.33
 
 	src.toxloss = max(0,src.toxloss + amount)
 	return
@@ -208,10 +198,12 @@
 	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
-#if ASS_JAM //pausing damage for timestop
-	if(paused)
-		src.pausedoxy = max(0,src.pausedoxy + amount)
-#endif
+
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
+
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 
@@ -224,25 +216,3 @@
 /mob/living/carbon/get_oxygen_deprivation()
 	return src.oxyloss
 
-/mob/living/carbon/hitby(atom/movable/AM, datum/thrown_thing/thr)
-	if(src.find_type_in_hand(/obj/item/bat))
-		var/turf/T = get_turf(src)
-		var/turf/U = get_step(src, src.dir)
-		/*I know what you're thinking. What's up with those SPAWN_DBGs down there?
-			Wasn't the whole throwing system changed not to need those? Yes it was!
-			However, this is a bit of a special case since the item is currently in flight.
-			We need to wait until it stops. I could add some throw queue for this but...
-			afaik this is the only place that'd use it. */
-		if (prob(1))
-			SPAWN_DBG(0)
-				AM.throw_at(get_edge_target_turf(T, get_dir(T, U)), 50, 60)
-			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
-			playsound(T, 'sound/items/batcheer.ogg', 50, 1)
-			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat and scores a HOMERUN! Woah!!!!</span>")
-		else
-			SPAWN_DBG(0)
-				AM.throw_at(get_edge_target_turf(T, get_dir(T, U)), 50, 25)
-			playsound(T, 'sound/items/woodbat.ogg', 50, 1)
-			src.visible_message("<span class='alert'>[src] hits \the [AM] with the bat!</span>")
-	else
-		. = ..()

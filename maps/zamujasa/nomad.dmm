@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/space,
-/area)
+/area/space)
 "ab" = (
 /turf/cordon,
 /area/cordon)
@@ -19,7 +19,7 @@
 /area/nomad/inside)
 "af" = (
 /turf/space/no_replace,
-/area)
+/area/space)
 "ag" = (
 /obj/decal/fakeobjects/cpucontroller{
 	desc = "Probably powers some vast archive, if you had to guess. Definitely not related to the computer upstairs, since. Do you see any wires? I sure don't. Maybe they're invisible or something."
@@ -520,7 +520,7 @@
 /area/nomad/outside)
 "bu" = (
 /turf/unsimulated/wall/nothing,
-/area)
+/area/space)
 "bv" = (
 /obj/decal/cleanable/dirt,
 /obj/stone{

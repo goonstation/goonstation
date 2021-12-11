@@ -15,6 +15,7 @@
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
+	var/capacity
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -76,7 +77,7 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 
-/obj/reagent_dispensers/ants
+/obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
 	desc = "A bunch of space ants."
 	icon = 'icons/effects/effects.dmi'
@@ -90,7 +91,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		reagents.add_reagent("ants",20)
 
 	get_desc(dist, mob/user)
@@ -99,12 +100,12 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
 
-/obj/reagent_dispensers/spiders
+/obj/reagent_dispensers/cleanable/spiders
 	name = "spiders"
 	desc = "A bunch of spiders."
 	icon = 'icons/effects/effects.dmi'
@@ -119,7 +120,7 @@
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
-		src.dir = pick(NORTH, SOUTH, EAST, WEST)
+		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
 		reagents.add_reagent("spiders", 5)
@@ -130,7 +131,7 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		..(W, user)
 		SPAWN_DBG(1 SECOND)
-			if (src && src.reagents)
+			if (src?.reagents)
 				if (src.reagents.total_volume <= 1)
 					qdel(src)
 		return
@@ -152,10 +153,11 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	amount_per_transfer_from_this = 25
+	capacity = 1000
 
 	New()
 		..()
-		reagents.add_reagent("water",1000)
+		reagents.add_reagent("water",capacity)
 
 /obj/reagent_dispensers/watertank/big
 	name = "high-capacity watertank"
@@ -169,11 +171,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 0
 			return
 
@@ -189,6 +191,7 @@
 	anchored = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR
 	mats = 8
+	capacity = 500
 
 	var/has_tank = 1
 
@@ -209,12 +212,12 @@
 
 		src.cup_amount = src.cup_max
 
-		src.update_icon()
+		src.UpdateIcon()
 
 	//on_reagent_change()
-	//	src.update_icon()
+	//	src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.has_tank)
 			if (src.reagents.total_volume)
 				var/datum/color/average = reagents.get_average_color()
@@ -236,14 +239,14 @@
 
 	attackby(obj/W as obj, mob/user as mob)
 		if (has_tank)
-			if (istype(W, /obj/item/wrench))
+			if (iswrenchingtool(W))
 				user.show_text("You disconnect the bottle from [src].", "blue")
 				var/obj/item/reagent_containers/food/drinks/P = new /obj/item/reagent_containers/food/drinks/coolerbottle(src.loc)
 				P.reagents.maximum_volume = max(P.reagents.maximum_volume, src.reagents.total_volume)
 				src.reagents.trans_to(P, reagents.total_volume)
 				src.reagents.clear_reagents()
 				src.has_tank = 0
-				src.update_icon()
+				src.UpdateIcon()
 				return
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/coolerbottle))
 			user.show_text("You connect the bottle to [src].", "blue")
@@ -251,14 +254,14 @@
 			user.u_equip(W)
 			qdel(W)
 			src.has_tank = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
-		if (istype(W, /obj/item/screwdriver))
+		if (isscrewingtool(W))
 			if (src.anchored)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 30))
+				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
 					src.anchored = 0
 					return
@@ -270,7 +273,7 @@
 				else
 					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 30))
+					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
 						src.anchored = 1
 						return
@@ -288,7 +291,7 @@
 			user.put_in_hand_or_drop(P)
 			if (src.cup_amount <= 0)
 				user.show_text("That was the last cup!", "red")
-				src.update_icon()
+				src.UpdateIcon()
 
 	piss
 		New()
@@ -296,7 +299,7 @@
 			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
 			reagents.add_reagent("water",600)
-			src.update_icon()
+			src.UpdateIcon()
 		name = "discolored water fountain"
 		desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though seeing the color you feel you shouldn't"
 		color = "#ffffcc"
@@ -310,7 +313,7 @@
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
-			src.update_icon()
+			src.UpdateIcon()
 		name = "discolored water fountain"
 		desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though seeing the color you feel you shouldn't"
 		color = "#ccffcc"
@@ -340,7 +343,7 @@
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
-			L.changeStatus("burning", 100)
+			L.changeStatus("burning", 10 SECONDS)
 		SPAWN_DBG(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -350,7 +353,14 @@
 	electric_expose(var/power = 1) //lets throw in ANOTHER hack to the temp expose one above
 		if (reagents)
 			for (var/i = 0, i < 3, i++)
-				reagents.temperature_reagents(power*500, power*125)
+				reagents.temperature_reagents(power*500, power*400, 1000, 1000, 1)
+
+	Bumped(AM)
+		. = ..()
+		if (ismob(AM))
+			add_fingerprint(AM, TRUE)
+		else if (ismob(usr))
+			add_fingerprint(usr, TRUE)
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -381,7 +391,7 @@
 	icon_state = "compost"
 	anchored = 0
 	amount_per_transfer_from_this = 30
-
+	event_handler_flags = NO_MOUSEDROP_QOL
 	New()
 		..()
 
@@ -397,11 +407,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 				src.anchored = 0
 			return
 		var/load = 1
@@ -413,10 +423,10 @@
 
 		if(load)
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 			user.u_equip(W)
 			W.dropped()
-			pool( W )
+			qdel( W )
 			return
 		else ..()
 
@@ -447,9 +457,9 @@
 					amount = 2
 				else if (istype(P,/obj/item/plant/))
 					amount = 15
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
 				src.reagents.add_reagent("poo", amount)
-				pool( P )
+				qdel( P )
 				sleep(0.3 SECONDS)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		else ..()
@@ -460,33 +470,32 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "still"
 	amount_per_transfer_from_this = 25
-
-	// what was the point here exactly
-	//New()
-		//..()
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	proc/brew(var/obj/item/W as obj)
-		if (!W || !(istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant)))
+		var/brewable
+		var/list/brew_result
+
+		if(istype(W,/obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/food/F = W
+			brewable = F.brewable
+			brew_result = F.brew_result
+
+		else if(istype(W, /obj/item/plant))
+			var/obj/item/plant/P = W
+			brewable = P.brewable
+			brew_result = P.brew_result
+
+		if (!brewable || !brew_result)
 			return 0
 
-		if (!W:brewable || !W:brew_result)
-			return 0
-
-		if (istype(W,/obj/item/reagent_containers/food/snacks/snack_cake) || istype(W,/obj/item/reagent_containers/food/snacks/burrito))
-			if (islist(W:brew_result) && W:brew_result:len)
-				W:brew_result += W.reagents.reagent_list
-
-		//var/brewed_name = null
-		if (islist(W:brew_result) && W:brew_result:len)
-			for (var/i in W:brew_result)
-				//brewed_name += ", [reagent_id_to_name(i)]"
+		if (islist(brew_result) && length(brew_result))
+			for (var/i in brew_result)
 				src.reagents.add_reagent(i, 10)
-			//brewed_name = copytext(brewed_name, 3)
 		else
-			src.reagents.add_reagent(W:brew_result, 20)
-			//brewed_name = reagent_id_to_name(W:brew_result)
+			src.reagents.add_reagent(brew_result, 20)
 
-		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")// into [brewed_name]!")
+		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
 		return 1
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -500,7 +509,7 @@
 			if (load)
 				user.u_equip(W)
 				W.dropped()
-				pool(W)
+				qdel(W)
 				return
 			else  ..()
 		else ..()
@@ -526,7 +535,7 @@
 					break
 				if (src.brew(P))
 					amtload++
-					pool(P)
+					qdel(P)
 				else
 					continue
 			if (amtload)
@@ -545,7 +554,7 @@
 					user.show_text("You were interrupted!", "red")
 					break
 				if (src.brew(O))
-					pool(O)
+					qdel(O)
 				else
 					continue
 			user.visible_message("<span class='notice'><b>[user]</b> finishes stuffing items into [src].</span>",\
@@ -553,21 +562,21 @@
 		else
 			return ..()
 
-
 /* ==================================================== */
 /* --------------- Water Cooler Bottle ---------------- */
 /* ==================================================== */
 
 /obj/item/reagent_containers/food/drinks/coolerbottle
 	name = "water cooler bottle"
-	desc = "A water cooler bottle. Can hold up to 1000 units."
+	desc = "A water cooler bottle. Can hold up to 500 units."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "itemtank"
 	item_state = "flask"
-	initial_volume = 1000
-	w_class = 4.0
+	initial_volume = 500
+	w_class = W_CLASS_BULKY
 	incompatible_with_chem_dispensers = 1
+	can_chug = 0
 
 	var/image/fluid_image
 
@@ -576,11 +585,17 @@
 		fluid_image = image(src.icon, "fluid-[src.icon_state]")
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			src.icon_state = "itemtank[fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
-			fluid_image.color = average.to_rgba()
+			src.fluid_image.color = average.to_rgba()
+			src.fluid_image.icon_state = "fluid-itemtank[fluid_state]"
 			src.underlays += src.fluid_image
+		else
+			src.icon_state = initial(src.icon_state)
+

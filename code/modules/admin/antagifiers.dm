@@ -18,7 +18,7 @@
 			boutput(M, "Don't be greedy.")
 			return
 		*/
-		if (M && M.mind && !M.mind.special_role)
+		if (M?.mind && !M.mind.special_role)
 			makeAntag(M)
 			var/datum/objective/newObj = new /datum/objective(attachedObjective)
 			newObj.owner = M.mind
@@ -30,7 +30,7 @@
 
 	proc/makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
-		M.mind.special_role = "traitor"
+		M.mind.special_role = ROLE_TRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
 		SHOW_TRAITOR_RADIO_TIPS(M)
 
@@ -42,7 +42,7 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "wizard"
+		M.mind.special_role = ROLE_WIZARD
 		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
 		SHOW_ADMINWIZARD_TIPS(M)
 		M.verbs += /client/proc/gearspawn_wizard
@@ -55,7 +55,7 @@
 	icon_state = "ganglion0"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "changeling"
+		M.mind.special_role = ROLE_CHANGELING
 		M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
 		M.make_changeling()
 
@@ -68,7 +68,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "vampire"
+		M.mind.special_role = ROLE_VAMPIRE
 		M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 		M.make_vampire()
 
@@ -80,7 +80,7 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "wrestler"
+		M.mind.special_role = ROLE_WRESTLER
 		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
 		M.make_wrestler(1)
 
@@ -93,7 +93,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "hunter"
+		M.mind.special_role = ROLE_HUNTER
 		M.mind.assigned_role = "Hunter"
 		M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
 		M.make_hunter()
@@ -107,7 +107,7 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "werewolf"
+		M.mind.special_role = ROLE_WEREWOLF
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
 		M.make_werewolf()
 
@@ -119,7 +119,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = "omnitraitor"
+		M.mind.special_role = ROLE_OMNITRAITOR
 		M.verbs += /client/proc/gearspawn_traitor
 		M.verbs += /client/proc/gearspawn_wizard
 		M.make_changeling()
@@ -158,6 +158,13 @@
 	desc = "Self-extracting archive containing some sweet Syndicate stuff!"
 	var/in_use = 0
 
+	//People keep blowing up the murderbox
+	ex_act(severity)
+		return
+
+	meteorhit(obj/meteor)
+		return
+
 	attack_hand(mob/M as mob)
 
 		if (!istype(M, /mob/living/carbon/human))
@@ -178,7 +185,7 @@
 	makeAntag(mob/living/carbon/human/M as mob)
 		var/uplink = new /obj/item/uplink/syndicate/virtual(get_turf(M))
 		M.put_in_hand_or_eject(uplink) // try to eject it into the users hand, if we can
-		boutput(M, "<span class='combat'>You can spawn fancy Syndicate gear with the virual uplink! Go hog wild.</span>")
+		boutput(M, "<span class='combat'>You can spawn fancy Syndicate gear with the virtual uplink! Go hog wild.</span>")
 
 	werewolf
 		name = "WEREWOLF.EXE"
@@ -210,3 +217,14 @@
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
 			equip_wizard(M, 1, 1)
+
+	nuclear
+		name = "NUKE_TKN.EXE"
+		desc = "A syndicoin mining rig. Get some sweet syndicate requistion tokens"
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "req-token"
+
+		makeAntag(mob/living/carbon/human/M as mob)
+			var/token = new /obj/item/requisition_token/syndicate/vr(get_turf(M))
+			M.put_in_hand_or_eject(token) // try to eject it into the users hand, if we can
+			boutput(M, "<span class='combat'>Redeem your freshly mined syndicoin in the nearby weapon vendor.</span>")

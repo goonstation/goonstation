@@ -156,7 +156,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			formattedName += "[word] "
 			continue
 
-		if (!station_name_whitelist.Find(lowertext(word)))
+		if (!(lowertext(word) in station_name_whitelist))
 			valid = 0
 			break
 
@@ -184,8 +184,10 @@ var/global/lastStationNameChange = 0 //timestamp
 		if (!name)
 			return 0
 
+		phrase_log.log_phrase("stationname-[isadmin(user)?"admin":"player"]", name, no_duplicates=TRUE)
+
 		#if defined(REVERSED_MAP)
-			name = reverse_text(name)
+		name = reverse_text(name)
 		#endif
 
 		the_station_name = name
@@ -197,7 +199,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.client.key
-			ircmsg["name"] = (user && user.real_name) ? user.real_name : "NULL"
+			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["msg"] = "changed the station name to [name]"
 			ircbot.export("admin", ircmsg)
 
@@ -217,7 +219,7 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	station_name = name
 
-	if (config && config.server_name)
+	if (config?.server_name)
 		world.name = "[config.server_name]: [name]"
 	else
 		world.name = name

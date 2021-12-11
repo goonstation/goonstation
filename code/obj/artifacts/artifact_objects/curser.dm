@@ -16,7 +16,8 @@
 
 /datum/artifact/curser
 	associated_object = /obj/artifact/curser
-	rarity_class = 5
+	type_name = "Curser"
+	rarity_weight = 0
 	validtypes = list("eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)

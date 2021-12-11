@@ -151,8 +151,8 @@
 		src.add_dialog(usr)
 
 		if(href_list["cell"])
-			var/i = text2num(href_list["r"])
-			var/j = text2num(href_list["c"])
+			var/i = text2num_safe(href_list["r"])
+			var/j = text2num_safe(href_list["c"])
 
 			if(fuel_array[i][j] == null)
 				var/obj/item/I = usr.equipped()

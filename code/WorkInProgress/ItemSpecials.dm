@@ -13,6 +13,8 @@
 	src.setHarmSpecial(sel)
 
 /proc/get_dir_alt(var/atom/source, var/atom/target) //Opposite of default get dir, only returns diagonal if target perfectly diagonal
+	if(!source || !target)
+		CRASH("Invalid Params:: Source:[source] Target:[target]")
 	if(abs(source.x-target.x) > abs(source.y-target.y)) //Mostly left/right with a little up or down
 		if(source.x > target.x) //Target left
 			return WEST
@@ -103,13 +105,11 @@
 /obj/item/proc/setItemSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.special)
-				src.special.onRemove()
+			src.special?.onRemove()
 			src.special = null
 		return null
 
-	if(src.special)
-		src.special.onRemove()
+	src.special?.onRemove()
 
 	var/datum/item_special/S = new type
 	S.master = src
@@ -120,13 +120,11 @@
 /datum/limb/proc/setDisarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.disarm_special)
-				src.disarm_special.onRemove()
+			src.disarm_special?.onRemove()
 			src.disarm_special = null
 		return null
 
-	if(src.disarm_special)
-		src.disarm_special.onRemove()
+	src.disarm_special?.onRemove()
 
 	src.disarm_special = new type
 	src.disarm_special.onAdd()
@@ -135,13 +133,11 @@
 /datum/limb/proc/setHarmSpecial(var/type = null)
 	if(!ispath(type))
 		if(isnull(type))
-			if(src.harm_special)
-				src.harm_special.onRemove()
+			src.harm_special?.onRemove()
 			src.harm_special = null
 		return null
 
-	if(src.harm_special)
-		src.harm_special.onRemove()
+	src.harm_special?.onRemove()
 
 	src.harm_special = new type
 	src.harm_special.onAdd()
@@ -219,16 +215,17 @@
 		if (istype(A, /obj/itemspecialeffect))
 			var/obj/itemspecialeffect/E = A
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
-		.= ((istype(A, /obj/critter) || (ismob(A) && isliving(A))) && A != usr && A != user)
+		.= ((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
 
-	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user)
+	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
 		if(name == null || master == null) return
 		if(!user) user = usr
-		var/obj/itemspecialeffect/E = unpool(/obj/itemspecialeffect)
+		var/obj/itemspecialeffect/E = new /obj/itemspecialeffect
 		if(src.animation_color)
 			E.color = src.animation_color
+		E.alpha = alpha
 		E.setup(get_turf(user))
-		E.dir = direction
+		E.set_dir(direction)
 		E.icon_state = name
 
 	proc/usable(var/mob/user)
@@ -256,6 +253,7 @@
 	//Should be called before attacks begin. Make sure you call this when appropriate in your mouse procs etc.
 	//MBC : Removed Damage/Stamina modifications from preUse() and afterUse() and moved their to item.attack() to avoid race condition
 	proc/preUse(var/mob/person)
+		SHOULD_CALL_PARENT(1)
 		if(isliving(person))
 			var/mob/living/H = person
 
@@ -275,6 +273,9 @@
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
 	proc/afterUse(var/mob/person)
+		SHOULD_CALL_PARENT(1)
+		if(master)
+			SEND_SIGNAL(master, COMSIG_ITEM_SPECIAL_POST, person)
 		if(restrainDuration)
 			person.restrain_time = TIME + restrainDuration
 
@@ -320,7 +321,7 @@
 			var/blurX = 0
 			var/blurY = 0
 
-			user.dir = direction
+			user.set_dir(direction)
 
 			switch(direction)
 				if(NORTH)
@@ -362,10 +363,10 @@
 					break
 
 				user.set_loc(lastTurf)
-				user.dir = direction
-				var/obj/itemspecialeffect/bluefade/E = unpool(/obj/itemspecialeffect/bluefade)
+				user.set_dir(direction)
+				var/obj/itemspecialeffect/bluefade/E = new /obj/itemspecialeffect/bluefade
 				E.setup(user.loc)
-				E.filters = filter(type="motion_blur", x=blurX, y=blurY)
+				E.add_filter("bluefade_motion_blur", 0, motion_blur_filter(x=blurX, y=blurY))
 
 				animate(E, alpha=255,time=0,loop=0)
 				animate(alpha=0,pixel_x=((blurX*(-1))*3),pixel_y=((blurY*(-1))*3), time=(15+(i*3)),loop=0)
@@ -374,22 +375,22 @@
 				for(var/atom/A in lastTurf)
 					if(A in attacked) continue
 					if(isTarget(A, user) && A != user)
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
 				if(hit)
 					if(prob(1))
-						var/obj/itemspecialeffect/zantetsuken/Z = unpool(/obj/itemspecialeffect/zantetsuken)
+						var/obj/itemspecialeffect/zantetsuken/Z = new /obj/itemspecialeffect/zantetsuken
 						Z.setup(user.loc)
 					else
-						var/obj/itemspecialeffect/rushhit/R = unpool(/obj/itemspecialeffect/rushhit)
+						var/obj/itemspecialeffect/rushhit/R = new /obj/itemspecialeffect/rushhit
 						R.setup(user.loc)
 
 				sleep(0.2)
 
 			afterUse(user)
-			playsound(get_turf(master), 'sound/impact_sounds/Rush_Slash.ogg', 50, 0)
+			playsound(master, 'sound/impact_sounds/Rush_Slash.ogg', 50, 0)
 			return
 
 	throwing
@@ -414,7 +415,7 @@
 					copy.set_loc(step)
 					copy.throw_at(target, 20, 3, params)
 					afterUse(usr)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 	simple
@@ -441,7 +442,7 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(master, direction)
 
-				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
 				if(src.animation_color)
 					S.color = src.animation_color
 				S.setup(turf)
@@ -449,14 +450,14 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
 				afterUse(user)
 
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 		kendo_light
@@ -507,13 +508,13 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 		kendo_thrust
@@ -537,6 +538,7 @@
 		name = "Swipe"
 		desc = "Attack with a wide swing."
 		var/swipe_color
+		var/ignition = false	//If true, the swipe will ignite stuff in it's reach.
 
 		onAdd()
 			if(master)
@@ -544,6 +546,10 @@
 				var/obj/item/toy/sword/saber = master
 				if (istype(saber))
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
+				var/obj/item/syndicate_destruction_system/sds = master
+				if (istype(sds))
+					swipe_color = "#FFFBCC"
+					ignition = true
 			return
 
 				//Sampled these hex colors from each c-saber sprite.
@@ -585,27 +591,39 @@
 				var/turf/two = get_step(one, turn(direction, 90))
 				var/turf/three = get_step(one, turn(direction, -90))
 
-				var/obj/itemspecialeffect/swipe/swipe = unpool(/obj/itemspecialeffect/swipe)
+				var/obj/itemspecialeffect/swipe/swipe = new /obj/itemspecialeffect/swipe
 				//pick random colour from get_hex_color_from_blade if the bladecolor/swipe_color is null. Randomized color each swing cause this saber is multicolored.
 				if (swipe_color == "RAND")
 					swipe.color = pick("#FF0000","#FF9A00","#FFFF00","#00FF78","#00FFFF","#0081DF","#CC00FF","#FFCCFF","#EBE6EB")
 				else
 					swipe.color = swipe_color
 				swipe.setup(effect)
-				swipe.dir = direction
+				swipe.set_dir(direction)
 
 				var/hit = 0
 				for(var/turf/T in list(one, two, three))
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
+					if(ignition)
+						T.hotspot_expose(3000,1)
+						for(var/A in T)
+							if(ismob(A))
+								var/mob/M = A
+								M.changeStatus("burning", 8 SECONDS)
+							else if(iscritter(A))
+								var/obj/critter/crit = A
+								crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					if (!ignition)
+						playsound(master, "sound/effects/swoosh.ogg", 50, 0)
+					else
+						playsound(master, "sound/effects/flame.ogg", 50, 0)
 			return
 
 		csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -642,6 +660,57 @@
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
 
+	launch_projectile
+		cooldown = 3 SECONDS
+		staminaCost = 30
+		moveDelay = 0
+		requiresStaminaToFire = TRUE
+		staminaReqAmt = 30
+		/// projectile datum containing data for projectile objects
+		var/datum/projectile/projectile = null
+		/// type path of the special effect
+		var/special_effect_type = /obj/itemspecialeffect/simple
+
+		image = "simple"
+		name = "Cast"
+		desc = "Utilize the power of your wand to cast a bolt of magic."
+
+		pixelaction(atom/target, params, mob/user, reach)
+			. = ..()
+			if (!projectile) return
+			var/turf/T = get_turf(target)
+			if(!T) return
+			if(!usable(user)) return
+			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+				preUse(user)
+				var/pox = text2num(params["icon-x"]) - 16
+				var/poy = text2num(params["icon-y"]) - 16
+				var/obj/itemspecialeffect/S = new special_effect_type
+				S.setup(get_step(user, get_dir(user, target)))
+				shoot_projectile_ST_pixel(user, projectile, target, pox, poy)
+				afterUse(user)
+
+		disposing()
+			projectile = null
+			. = ..()
+
+		fireball
+			projectile = new/datum/projectile/fireball
+
+		monkey_organ
+			projectile = new/datum/projectile/special/spawner
+			New()
+				. = ..()
+				var/datum/projectile/special/spawner/P = projectile
+				P.damage_type = D_KINETIC
+				P.power = 5
+				P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+				P.icon = 'icons/mob/monkey.dmi'
+				P.icon_state = "monkey"
+				P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
+				P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+				P.name = "monkey"
+
 	slam
 		cooldown = 50
 		staminaCost = 30
@@ -672,7 +741,7 @@
 			if(!isturf(target.loc) && !isturf(target)) return
 			if(!usable(user)) return
 
-			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			if(params["left"] && (master || user) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 				preUse(user)
 				var/direction = get_dir_pixel(user, target, params)
 				if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -680,7 +749,7 @@
 
 				var/list/attacked = list()
 
-				var/turf/one = get_step(master, direction)
+				var/turf/one = get_step((master || user), direction)
 
 				var/turf/two = get_step(one, direction)
 				var/turf/twoB = get_step(two, direction)
@@ -691,25 +760,28 @@
 				var/turf/threeB = get_step(three, direction)
 				var/turf/fourB = get_step(four, direction)
 
-				var/obj/itemspecialeffect/cracks = unpool(/obj/itemspecialeffect/cracks)
+				var/obj/itemspecialeffect/cracks = new /obj/itemspecialeffect/cracks
 				cracks.setup(two)
-				cracks.dir = direction
+				cracks.set_dir(direction)
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							if(master)
+								A.Attackby(master, user, params, 1)
+							else
+								A.Attackhand(user, params)
 							attacked += A
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
 				afterUse(user)
-				playsound(get_turf(master), 'sound/effects/exlow.ogg', 50, 0)
+				playsound(master, 'sound/effects/exlow.ogg', 50, 0)
 			return
 
 	slam/no_item_attack //slam without item attackby
@@ -736,16 +808,16 @@
 				var/turf/threeB = get_step(three, direction)
 				var/turf/fourB = get_step(four, direction)
 
-				var/obj/itemspecialeffect/cracks = unpool(/obj/itemspecialeffect/cracks)
+				var/obj/itemspecialeffect/cracks = new /obj/itemspecialeffect/cracks
 				cracks.setup(two)
-				cracks.dir = direction
+				cracks.set_dir(direction)
 				animate(cracks, alpha=0, time=30)
 
 				for(var/mob/M in viewers())
 					shake_camera(M, 8, 24)
 
 				for(var/turf/T in list(one, two, three, four, twoB, threeB, fourB))
-					animate_shake(T)
+					animate_shake(T,5,2,2,T.pixel_x,T.pixel_y)
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
@@ -756,7 +828,7 @@
 							A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
 				afterUse(user)
-				playsound(get_turf(user), 'sound/effects/exlow.ogg', 50, 0)
+				playsound(user, 'sound/effects/exlow.ogg', 50, 0)
 			return
 
 
@@ -780,12 +852,12 @@
 					for(var/atom/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, usr, params, 1)
+							A.Attackby(master, usr, params, 1)
 							attacked += A
 
 				showEffect("whirlwind", NORTH)
 				afterUse(usr)
-				playsound(get_turf(master), 'sound/effects/swoosh_double.ogg', 100, 0)
+				playsound(master, 'sound/effects/swoosh_double.ogg', 100, 0)
 			return
 
 	//Disarm and Harm are odd ones out. They have no master item, they are attached to a limb. As such, some vars (like all of our item damage/crit modifiers) won't affect these. See the top of the limb.dm file if you want to adjust how they are enacted
@@ -824,20 +896,20 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(user, direction)
 
-				var/obj/itemspecialeffect/conc/C = unpool(/obj/itemspecialeffect/conc)
+				var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 				C.setup(turf)
 
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
 				afterUse(user)
 
 				if (!hit)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
 			return
 
 	harm
@@ -872,20 +944,20 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(user, direction)
 
-				var/obj/itemspecialeffect/conc/C = unpool(/obj/itemspecialeffect/conc)
+				var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 				C.setup(turf)
 
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						hit = 1
 						break
 
 				afterUse(user)
 
 				if (!hit)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
 			return
 
 	swipe/limb //meant for use on limbs
@@ -919,22 +991,22 @@
 				var/turf/two = get_step(one, turn(direction, 90))
 				var/turf/three = get_step(one, turn(direction, -90))
 
-				var/obj/itemspecialeffect/swipe/swipe = unpool(/obj/itemspecialeffect/swipe)
+				var/obj/itemspecialeffect/swipe/swipe = new /obj/itemspecialeffect/swipe
 				swipe.setup(effect)
-				swipe.dir = direction
+				swipe.set_dir(direction)
 
 				var/hit = 0
 				for(var/turf/T in list(one, two, three))
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attack_hand(user,params)
+							A.Attackhand(user,params)
 							attacked += A
 							hit = 1
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(user), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 	spark
@@ -956,7 +1028,7 @@
 			if(!usable(user)) return
 			if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
 			if(master && istype(master, /obj/item/baton) && !master:can_stun())
-				playsound(get_turf(master), 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
+				playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 				return
 
 			if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
@@ -966,9 +1038,9 @@
 
 				var/turf/effect = get_step(master, direction)
 
-				var/obj/itemspecialeffect/spark/spark = unpool(/obj/itemspecialeffect/spark)
+				var/obj/itemspecialeffect/spark/spark = new /obj/itemspecialeffect/spark
 				spark.setup(effect)
-				spark.dir = direction
+				spark.set_dir(direction)
 
 				var/hit = 0
 				for(var/atom/movable/A in effect)
@@ -1006,26 +1078,27 @@
 						user.show_text("The gloves have [G.uses]/[G.max_uses] charges left!", "red")
 				afterUse(user)
 				//if (!hit)
-				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
+				playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 			return
 
 
-		proc/on_hit(var/mob/hit, var/mult = 1)
+		proc/on_hit(var/hit, var/mult = 1)
 			if (ishuman(hit))
 				var/mob/living/carbon/human/H = hit
 				H.do_disorient(src.stamina_damage * mult, weakened = 10)
 
-			hit.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-			hit.bodytemperature += 4 * mult
-
-			playsound(get_turf(hit), 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			if (ismob(hit))
+				var/mob/M = hit
+				M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
+				M.bodytemperature += (4 * mult)
+				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	double
 		cooldown = 0
 		staminaCost = 0
 		moveDelay = 5
 		moveDelayDuration = 5
-		damageMult = 0.5
+		damageMult = 0.80
 
 		image = "dagger"
 		name = "Slice"
@@ -1035,7 +1108,7 @@
 
 		onAdd()
 			if(master)
-				staminaCost = master.stamina_cost * 0.2 //Inherits from the item.
+				staminaCost = master.stamina_cost * 1.6 //Inherits from the item.
 				overrideStaminaDamage = master.stamina_damage * 0.5
 			return
 
@@ -1047,32 +1120,32 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(master, direction)
 
-				var/obj/itemspecialeffect/simple2/S = unpool(/obj/itemspecialeffect/simple2)
+				var/obj/itemspecialeffect/simple2/S = new /obj/itemspecialeffect/simple2
 				S.setup(turf)
 
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 				if (!hit)
-					playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
 
 				SPAWN_DBG(secondhitdelay)
 
 					turf = get_step(master, direction)
-					var/obj/itemspecialeffect/simple2/SS = unpool(/obj/itemspecialeffect/simple2)
+					var/obj/itemspecialeffect/simple2/SS = new /obj/itemspecialeffect/simple2
 					SS.setup(turf)
 
 					hit = 0
 					for(var/atom/A in turf)
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							hit = 1
 							break
 					if (!hit)
-						playsound(get_turf(user), 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
+						playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
 
 				afterUse(user)
 
@@ -1104,10 +1177,10 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(master, direction)
 
-				var/obj/itemspecialeffect/barrier/E = unpool(/obj/itemspecialeffect/barrier)
+				var/obj/itemspecialeffect/barrier/E = new /obj/itemspecialeffect/barrier
 				E.setup(turf)
 				E.master = user
-				E.dir = direction
+				E.set_dir(direction)
 				if(master && istype(master, /obj/item/barrier))
 					var/obj/item/barrier/B = master
 					B.destroy_deployed_barrier(user)
@@ -1126,14 +1199,14 @@
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
 				if (hit)
 					E.was_clashed(0)
 				else
-					playsound(get_turf(master), 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
+					playsound(master, 'sound/items/miningtool_on.ogg', 30, 0.1, 0, 2)
 
 				afterUse(user)
 			return
@@ -1173,8 +1246,8 @@
 
 				var/turf/turf = get_step(master, direction)
 
-				var/obj/itemspecialeffect/flame/S = unpool(/obj/itemspecialeffect/flame)
-				S.dir = direction
+				var/obj/itemspecialeffect/flame/S = new /obj/itemspecialeffect/flame
+				S.set_dir(direction)
 				turf = get_step(turf,S.dir)
 
 				var/flame_succ = 0
@@ -1208,19 +1281,16 @@
 							continue
 						if(ismob(A))
 							var/mob/M = A
-							if (M.getStatusDuration("burning"))
-								M.changeStatus("burning", tiny_time)
-							else
-								M.changeStatus("burning", flame_succ ? time : tiny_time)
+							M.changeStatus("burning", flame_succ ? time : tiny_time)
 						else if(iscritter(A))
 							var/obj/critter/crit = A
 							crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
 						break
 
-					playsound(get_turf(master), 'sound/effects/flame.ogg', 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 				else
 					turf.hotspot_expose(T0C + 50, 50)
-					playsound(get_turf(master), 'sound/effects/spark_lighter.ogg', 50, 0)
+					playsound(master, 'sound/effects/spark_lighter.ogg', 50, 0)
 
 				afterUse(user)
 			return
@@ -1252,7 +1322,7 @@
 				var/turf/turf = get_step(master, direction)
 
 
-				var/obj/itemspecialeffect/conc/C = unpool(/obj/itemspecialeffect/conc)
+				var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 				C.setup(turf)
 				for (var/obj/O in turf.contents)
 					if (istype(O, /obj/blob))
@@ -1303,34 +1373,34 @@
 				//sorry about this, it's so I don't unpool a simple effect twice by mistake
 				if(istype(master, /obj/item/baton))
 					if (!master:can_stun())
-						E = unpool(/obj/itemspecialeffect/simple)
+						E = new /obj/itemspecialeffect/simple
 					else
-						E = unpool(/obj/itemspecialeffect/spark/ntso)
+						E = new /obj/itemspecialeffect/spark/ntso
 						master:process_charges(-1)
 						// master:process_charges(-1, user)
 				else
-					E = unpool(/obj/itemspecialeffect/simple)
+					E = new /obj/itemspecialeffect/simple
 
 
 				E.setup(effect)
-				E.dir = direction
+				E.set_dir(direction)
 
 				var/hit = 0
 				for(var/atom/movable/A in effect)
 					if(isTarget(A))
 						on_hit(A)
 						//fake harmbaton it
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
-						playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
+						playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 						break
 
 				afterUse(user)
 				if (!hit)
 					if (E.type == /obj/itemspecialeffect/simple)
-						playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+						playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 					else
-						playsound(get_turf(master), 'sound/effects/sparks1.ogg', 70, 0)
+						playsound(master, 'sound/effects/sparks1.ogg', 70, 0)
 
 			return
 
@@ -1342,16 +1412,17 @@
 					return 0
 			return 1
 
-		on_hit(var/mob/hit, var/mult = 1)
+		on_hit(var/hit, var/mult = 1)
 			//maybe add this in, chance to weaken. I dunno a good amount offhand so leaving out for now - kyle
 			// if (ishuman(hit))
 			// 	var/mob/living/carbon/human/H = hit
 			// 	H.do_disorient(src.stamina_damage * mult, weakened = 10)
 			if(istype(master, /obj/item))
-				hit.TakeDamage("chest", 0/*master.force*/, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
-				hit.bodytemperature += 4 * mult
-
-			playsound(get_turf(hit), 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+				if (ismob(hit))
+					var/mob/M = hit
+					M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
+					M.bodytemperature += (4 * mult)
+					playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
 
 	katana_dash
 		cooldown = 9
@@ -1410,32 +1481,32 @@
 
 				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 				K.start.loc = T1
-				K.start.dir = direction
+				K.start.set_dir(direction)
 				flick(K.start.icon_state, K.start)
 				sleep(0.1 SECONDS)
 				if (T4)
 					K.mid1.loc = T2
-					K.mid1.dir = direction
+					K.mid1.set_dir(direction)
 					flick(K.mid1.icon_state, K.mid1)
 					sleep(0.1 SECONDS)
 					K.mid2.loc = T3
-					K.mid2.dir = direction
+					K.mid2.set_dir(direction)
 					flick(K.mid2.icon_state, K.mid2)
 					sleep(0.1 SECONDS)
 					K.end.loc = T4
-					K.end.dir = direction
+					K.end.set_dir(direction)
 					flick(K.end.icon_state, K.end)
 				else if (T3)
 					K.mid1.loc = T2
-					K.mid1.dir = direction
+					K.mid1.set_dir(direction)
 					flick(K.mid1.icon_state, K.mid1)
 					sleep(0.1 SECONDS)
 					K.end.loc = T3
-					K.end.dir = direction
+					K.end.set_dir(direction)
 					flick(K.end.icon_state, K.end)
 				else if (T2)
 					K.end.loc = T2
-					K.end.dir = direction
+					K.end.set_dir(direction)
 					flick(K.end.icon_state, K.end)
 
 				//Reset the effects after they're drawn and put back into master for re-use later
@@ -1450,12 +1521,12 @@
 					if(isTarget(A))
 						on_hit(A)
 						attacked += A
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						// hit = 1
 						break
 				afterUse(user)
 				//if (!hit)
-				playsound(get_turf(master), 'sound/effects/sparks6.ogg', 70, 0)
+				playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
 			return
 
 		proc/on_hit(var/mob/hit)
@@ -1560,34 +1631,34 @@
 
 				//Draws the effects // I did this backwards maybe, but won't fix it -kyle
 				start.setup(T1)
-				start.dir = direction
+				start.set_dir(direction)
 				if (T4)
 					mid1.setup(T2)
-					mid1.dir = direction
+					mid1.set_dir(direction)
 					mid2.setup(T2)
-					mid2.dir = direction
+					mid2.set_dir(direction)
 					end.setup(T4)
-					end.dir = direction
+					end.set_dir(direction)
 				else if (T3)
 					mid1.setup(T2)
-					mid1.dir = direction
+					mid1.set_dir(direction)
 					end.setup(T3)
-					end.dir = direction
+					end.set_dir(direction)
 				else if (T2)
 					end.setup(T2)
-					end.dir = direction
+					end.set_dir(direction)
 
 				for(var/atom/movable/A in get_step(user, direction))
 					if(A in attacked) continue
 					if(isTarget(A))
 						attacked += A
-						A.attack_hand(user,params)
+						A.Attackhand(user,params)
 						// hit = 1
 						break
 
 				afterUse(user)
 				//if (!hit)
-				playsound(get_turf(user), 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
+				playsound(user, 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
 			return
 
 	nunchucks
@@ -1623,31 +1694,31 @@
 				var/turf/two = get_step(one, turn(direction, 90))
 				var/turf/three = get_step(one, turn(direction, -90))
 
-				var/obj/itemspecialeffect/nunchucks/nunchuck = unpool(/obj/itemspecialeffect/nunchucks)
+				var/obj/itemspecialeffect/nunchucks/nunchuck = new /obj/itemspecialeffect/nunchucks
 				nunchuck.setup(effect)
-				nunchuck.dir = direction
+				nunchuck.set_dir(direction)
 
 				var/hit = 0
 				for(var/turf/T in list(two, three))
 					for(var/atom/movable/A in T)
 						if(A in attacked) continue
 						if(isTarget(A))
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 							attacked += A
 							hit = 1
 
 				for(var/atom/movable/A in one)
 					if(A in attacked) continue
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						SPAWN_DBG(0.5 SECONDS)
-							A.attackby(master, user, params, 1)
+							A.Attackby(master, user, params, 1)
 						attacked += A
 						hit = 1
 
 				afterUse(user)
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 
@@ -1675,13 +1746,13 @@
 				var/direction = get_dir_pixel(user, target, params)
 				var/turf/turf = get_step(master, direction)
 
-				var/obj/itemspecialeffect/simple/S = unpool(/obj/itemspecialeffect/simple)
+				var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
 				S.setup(turf)
 
 				var/hit = 0
 				for(var/atom/A in turf)
 					if(isTarget(A))
-						A.attackby(master, user, params, 1)
+						A.Attackby(master, user, params, 1)
 						hit = 1
 						break
 
@@ -1700,7 +1771,7 @@
 							tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
 
 				if (!hit)
-					playsound(get_turf(master), 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 			return
 
 /obj/itemspecialeffect
@@ -1732,13 +1803,7 @@
 		create_time = world.time //mbc : kind of janky lightweight way of making us not clash with ourselves. compare spawn time.
 		if (del_self)
 			SPAWN_DBG(del_time)
-				pool(src)
-
-	unpooled()
-		..()
-
-	pooled()
-		..()
+				qdel(src)
 
 	attackby()
 		was_clashed()
@@ -1749,7 +1814,7 @@
 	proc/was_clashed(var/playsound = 1)
 		if (playsound)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 50, 0.1, 0, 2)
-		var/obj/itemspecialeffect/clash/C = unpool(/obj/itemspecialeffect/clash)
+		var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 		C.setup(src.loc)
 
 
@@ -1817,6 +1882,7 @@
 		can_clash = 1
 
 	spark
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "sparks_attack"
 		pixel_x = 0
@@ -1842,11 +1908,6 @@
 		pixel_x = 0
 		pixel_y = 0
 
-		pooled()
-			..()
-			transform = null
-			color = null
-
 	barrier
 		name = "energy barrier"
 		icon = 'icons/effects/effects.dmi'
@@ -1857,7 +1918,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-		event_handler_flags = USE_CANPASS
+	
 
 		//mouse_opacity = 1
 		var/bump_count = 0
@@ -1875,13 +1936,13 @@
 			..(0)
 			if (playsound)
 				playsound(src.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.5)
-			pool(src)
+			qdel(src)
 
 		proc/deactivate()
-			if (src.qdeled || src.pooled)
+			if (src.qdeled || src.disposed)
 				return
 			playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 0.1, 0, 2)
-			pool(src)
+			qdel(src)
 
 		Bumped()
 			bump_count++
@@ -1911,7 +1972,7 @@
 			loc = location
 			if (del_self)
 				SPAWN_DBG(5 SECONDS)
-					pool(src)
+					qdel(src)
 
 		was_clashed(var/playsound = 1)
 			.=0
@@ -1939,6 +2000,7 @@
 		can_clash = 0
 
 	flame
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "flame"
 		pixel_x = 0
@@ -1975,8 +2037,7 @@
 	pixel_x = 0
 	pixel_y = 0
 
-
-	unpooled()
+	New()
 		pixel_x = rand(-3,3)
 		pixel_y = rand(-15,6)
 		..()
@@ -1984,7 +2045,7 @@
 /obj/itemspecialeffect/impact/blood
 	icon_state = "blood_impact1"
 
-	unpooled()
+	New()
 		..()
 		if (prob(50))
 			icon_state = "blood_impact2"
@@ -1998,7 +2059,7 @@
 /obj/itemspecialeffect/impact/silicon
 	icon_state = "silicon_impact1"
 
-	unpooled()
+	New()
 		..()
 		if (prob(66))
 			icon_state = "silicon_impact2"

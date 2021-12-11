@@ -12,12 +12,12 @@
 
 /obj/machinery/door/feather/special_desc(dist, mob/user)
 	if(isflock(user))
-		var/special_desc = "<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received."
-		special_desc += "<br><span class='bold'>ID:</span> Solid Seal Aperture"
-		special_desc += "<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"
+		var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Solid Seal Aperture
+		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
 		if(broken)
-			special_desc += "<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span> "
-			special_desc += "<br><span class='bold'>###=-</span></span>"
+			special_desc += {"<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span>
+			<br><span class='bold'>###=-</span></span>"}
 		return special_desc
 	else
 		return null // give the standard description
@@ -39,7 +39,7 @@
 /obj/machinery/door/feather/break_me_complitely()
 	var/turf/T = get_turf(src)
 	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-	var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 	S.set_loc(T)
 	S.setMaterial(getMaterial("gnesisglass"))
 	make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
@@ -86,7 +86,7 @@
 	return
 
 /obj/machinery/door/feather/attack_hand(mob/user as mob)
-	return src.attackby(null, user)
+	return src.Attackby(null, user)
 
 /obj/machinery/door/feather/allowed(mob/M)
 	return isflock(M) // haha fuck you everyone else

@@ -38,19 +38,20 @@
 			return 0 // Cooldown because spam is bad.
 
 		M.visible_message("<span class='alert'><B>[M]'s eyes emit a blinding flash at [target]!</B></span>")
-		var/obj/itemspecialeffect/glare/E = unpool(/obj/itemspecialeffect/glare)
+		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
 		E.setup(M.loc)
 		playsound(M.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
 
 		SPAWN_DBG(1 DECI SECOND)
-			var/obj/itemspecialeffect/glare/EE = unpool(/obj/itemspecialeffect/glare)
+			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 			EE.color = "#FFFFFF"
 			EE.setup(target.loc)
 			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)
 
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
 			boutput(target, __blue("[M]'s foul gaze falters as it stares upon your righteousness!"))
+			JOB_XP(target, "Chaplain", 2)
 			target.visible_message("<span class='alert'><B>[target] glares right back at [M]!</B></span>")
 		else
 			target.apply_flash(30, 15, stamina_damage = 350)
