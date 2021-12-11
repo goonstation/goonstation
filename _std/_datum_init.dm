@@ -1,6 +1,9 @@
 var/global/waiting_inits = null
 var/global/init_paused = 0
 
+// TODO refactor this into a single state var with disposed and qdeled
+/datum/var/tmp/init_finished = FALSE
+
 proc/pause_init()
 	global.init_paused++
 	if(global.init_paused > 1)
@@ -16,6 +19,7 @@ proc/unpause_init()
 	for(var/datum/D as anything in inits_to_process)
 		if(!QDELETED(D))
 			D.Init(arglist(inits_to_process[D]))
+			D.init_finished = TRUE
 
 /datum/New(...)
 	SHOULD_CALL_PARENT(TRUE)
@@ -24,6 +28,7 @@ proc/unpause_init()
 		global.waiting_inits[src] = args.Copy()
 	else
 		Init(arglist(args))
+		src.init_finished = TRUE
 
 /datum/proc/Init(...)
 	SHOULD_CALL_PARENT(TRUE)

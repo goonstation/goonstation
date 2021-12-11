@@ -75,6 +75,7 @@ proc/qdel(var/datum/O)
 	..()
 */
 
+// TODO refactor these into a single state var maybe with initialized too
 /datum/var/tmp/disposed = 0
 /datum/var/tmp/qdeled = 0
 
