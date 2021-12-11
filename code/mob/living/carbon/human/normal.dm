@@ -7,143 +7,143 @@
 		set_clothing_icon_dirty()
 
 /mob/living/carbon/human/normal/assistant
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Staff Assistant")
 
 /mob/living/carbon/human/normal/syndicate
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Syndicate")
 
 /mob/living/carbon/human/normal/captain
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Captain")
 
 /mob/living/carbon/human/normal/headofpersonnel
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Head of Personnel")
 
 /mob/living/carbon/human/normal/chiefengineer
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Chief Engineer")
 
 /mob/living/carbon/human/normal/researchdirector
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Research Director")
 
 /mob/living/carbon/human/normal/headofsecurity
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Head of Security")
 
 /mob/living/carbon/human/normal/securityofficer
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Security Officer")
 
 /mob/living/carbon/human/normal/securityassistant
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Security Assistant")
 
 /mob/living/carbon/human/normal/detective
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Detective")
 
 /mob/living/carbon/human/normal/clown
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Clown")
 
 /mob/living/carbon/human/normal/chef
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Chef")
 
 /mob/living/carbon/human/normal/chaplain
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Chaplain")
 
 /mob/living/carbon/human/normal/bartender
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Bartender")
 
 /mob/living/carbon/human/normal/botanist
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Botanist")
 
 /mob/living/carbon/human/normal/rancher
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Rancher")
 
 /mob/living/carbon/human/normal/janitor
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Janitor")
 
 /mob/living/carbon/human/normal/mechanic
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Mechanic")
 
 /mob/living/carbon/human/normal/engineer
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Engineer")
 
 /mob/living/carbon/human/normal/miner
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Miner")
 
 /mob/living/carbon/human/normal/quartermaster
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Quartermaster")
 
 /mob/living/carbon/human/normal/medicaldoctor
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Medical Doctor")
 
 /mob/living/carbon/human/normal/geneticist
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Geneticist")
 
 /mob/living/carbon/human/normal/pathologist
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Pathologist")
 
 /mob/living/carbon/human/normal/roboticist
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Roboticist")
 
 /mob/living/carbon/human/normal/chemist
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Chemist")
 
 /mob/living/carbon/human/normal/scientist
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		JobEquipSpawned("Scientist")
 
 /mob/living/carbon/human/normal/wizard
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		if (src.gender && src.gender == "female")
 			src.real_name = pick_string_autokey("names/wizard_female.txt")
 		else
@@ -152,8 +152,8 @@
 		equip_wizard(src, 1)
 
 /mob/living/carbon/human/normal/rescue
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/color/red, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/card/id, slot_wear_id)
@@ -176,8 +176,8 @@
 		update_clothing()
 
 /mob/living/carbon/human/normal/ntso
-	initializeBioholder()
-		. = ..()
+	New()
+		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/NT, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/card/id, slot_wear_id)
