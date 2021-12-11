@@ -19,7 +19,6 @@ proc/unpause_init()
 
 /datum/New(...)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_NOT_OVERRIDE(TRUE)
 	..()
 	if(global.init_paused)
 		global.waiting_inits[src] = args.Copy()
@@ -28,12 +27,7 @@ proc/unpause_init()
 
 /datum/proc/Init(...)
 	SHOULD_CALL_PARENT(TRUE)
-	SHOULD_NOT_SLEEP(TRUE)
+	// SHOULD_NOT_SLEEP(TRUE) // uncomment when the 300+ issues are fixed
 
-#ifdef SPACEMAN_DMM
-#define INIT(ARGS...) Init(ARGS)
-#define INIT_TYPE(TYPE, ARGS...) YPE/Init(ARGS)
-#else
 #define INIT(ARGS...) New(ARGS) ..(); Init(ARGS)
 #define INIT_TYPE(TYPE, ARGS...) TYPE/New(ARGS) ..(); TYPE/Init(ARGS)
-#endif
