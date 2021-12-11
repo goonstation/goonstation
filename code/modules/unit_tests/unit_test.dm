@@ -5,7 +5,7 @@ Override /Run() to run your test code
 
 Call Fail() to fail the test (You should specify a reason)
 
-You may use /New() and /Destroy() for setup/teardown respectively
+You may use /INIT() and /Destroy() for setup/teardown respectively
 
 You can use the run_loc_floor_bottom_left and run_loc_floor_top_right to get turfs for testing
 

@@ -225,7 +225,7 @@
 			return "It's a false wall. It's open."
 
 	//Temp false walls turn back to regular walls when closed.
-	temp/New()
+	temp/INIT()
 		..()
 		SPAWN_DBG(1.1 SECONDS)
 			src.open()

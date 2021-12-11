@@ -46,9 +46,9 @@
 		return 1 // give the all clear
 
 /obj/proc/ArtifactSetup()
-	// This proc gets called in every artifact's New() proc, after src.artifact is turned from a 1 into its appropriate datum.
+	// This proc gets called in every artifact's INIT() proc, after src.artifact is turned from a 1 into its appropriate datum.
 	//It scrambles the name and appearance of the artifact so we can't tell what it is on sight or cursory examination.
-	// Could potentially go in /obj/New(), but...
+	// Could potentially go in /obj/INIT(), but...
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact

@@ -23,7 +23,7 @@
 //evil bot to evilbot.dm
 //A decal that glows after spawning to decal.dm
 // the critters are now in the critter files because NOT EVERYTHING NEEDS TO BE IN HERE OKAY
-// also /obj/item/storage/nerd_kit/New() is in storage.dm with /obj/item/storage/nerd_kit instead of RANDOMLY FLOATING AROUND IN HERE WHAT IS WRONG WITH YOU PEOPLE
+// also /obj/item/storage/nerd_kit/INIT is in storage.dm with /obj/item/storage/nerd_kit instead of RANDOMLY FLOATING AROUND IN HERE WHAT IS WRONG WITH YOU PEOPLE
 //deathbutton to deathbutton.dm
 
 /*

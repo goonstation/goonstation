@@ -43,7 +43,7 @@ INIT_TYPE(/obj/machinery)
 		SPAWN_DBG(5 DECI SECONDS)
 			src.power_change()
 			var/area/A = get_area(src)
-			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/New()
+			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/INIT()
 				A.machines += src
 
 /obj/machinery/initialize()

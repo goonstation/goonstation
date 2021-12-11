@@ -1595,7 +1595,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 
 /obj/critter/parrot/random/testing
-	INIT() // the apply_species() call in /obj/critter/parrot/random/New() will override these if we set them as the initial vars on /obj/critter/parrot/random/testing, so we set them here after apply_species() has already run
+	INIT() // the apply_species() call in /obj/critter/parrot/random/INIT() will override these if we set them as the initial vars on /obj/critter/parrot/random/testing, so we set them here after apply_species() has already run
 		..()
 		src.learn_words_chance = 100
 		src.learn_phrase_chance = 100
