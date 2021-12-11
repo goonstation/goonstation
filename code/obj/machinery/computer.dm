@@ -98,7 +98,7 @@
 	name = "Hangar"
 	icon_state = "teleport"
 
-/obj/machinery/computer/New()
+INIT_TYPE(/obj/machinery/computer)
 	..()
 	light = new/datum/light/point
 	light.set_brightness(0.4)

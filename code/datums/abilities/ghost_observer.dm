@@ -129,7 +129,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 #endif
 
-	New()
+	INIT()
 		..()
 		add_all_abilities()
 		updateButtons()
@@ -325,7 +325,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	tooltip_flags = TOOLTIP_LEFT
 	var/displaying_buttons = 0
 
-	New()
+	INIT()
 		..()
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default/click_to_close()
 		if (!object.contextActions)

@@ -35,7 +35,7 @@
 	var/stabilized = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 
-	New(var/loc,var/duration)
+	INIT(var/loc,var/duration)
 		..()
 		START_TRACKING
 		//spatial interdictor: mitigate spatial tears
@@ -85,7 +85,7 @@
 	var/no_no_zone //if the user is trying to jump over railing onto somewhere they couldn't otherwise move through...
 	var/do_bunp = TRUE
 
-	New(The_Owner, The_Tear)
+	INIT(The_Owner, The_Tear)
 		..()
 		if (The_Owner)
 			owner = The_Owner

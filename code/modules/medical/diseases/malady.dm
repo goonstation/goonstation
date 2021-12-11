@@ -8,7 +8,7 @@
 	var/robo_restart = 0 // used for cyberheart stuff
 	var/affected_area = null // used for bloodclots, can be chest (heart, eventually lung), head (brain), limb
 
-	New()
+	INIT()
 		..()
 		master = get_disease_from_path(/datum/ailment/malady)
 		master.tickcount = 0

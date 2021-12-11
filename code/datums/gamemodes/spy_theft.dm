@@ -62,7 +62,7 @@
 
 	var/reward_was_spawned = 0
 
-	New(var/datum/game_mode/spy_theft/ST)
+	INIT(var/datum/game_mode/spy_theft/ST)
 		game_mode = ST
 		..()
 

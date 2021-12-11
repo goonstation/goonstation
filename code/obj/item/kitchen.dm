@@ -23,7 +23,7 @@ TRAYS
 	stamina_cost = 15
 	stamina_crit_chance = 2
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -51,7 +51,7 @@ TRAYS
 	var/rotatable = 1 //just in case future utensils are added that dont wanna be rotated
 	var/snapped
 
-	New()
+	INIT()
 		..()
 		if(prob(60))
 			src.pixel_y = rand(0, 4)
@@ -162,7 +162,7 @@ TRAYS
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
 	dir = NORTH
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 
@@ -190,7 +190,7 @@ TRAYS
 	force = 1.0
 	throwforce = 1.0
 
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
@@ -219,7 +219,7 @@ TRAYS
 	force = 1.0
 	throwforce = 1.0
 
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
@@ -248,7 +248,7 @@ TRAYS
 	throwforce = 1.0
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
@@ -461,7 +461,7 @@ TRAYS
 		contained_food_name = "lollipop"
 		w_class = W_CLASS_SMALL
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(!ispath(src.contained_food))
@@ -552,7 +552,7 @@ TRAYS
 	tooltip_flags = REBUILD_DIST
 	var/hit_sound = "sound/items/plate_tap.ogg"
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -820,7 +820,7 @@ TRAYS
 	var/tray_health = 5 //number of times u can smash with a tray + 1, get_desc values are hardcoded so please adjust them (i know im a bad coder)
 	hit_sound = "step_lattice"
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
@@ -935,7 +935,7 @@ TRAYS
 	var/list/toppingdata = list() //(food_color)
 	var/obj/item/reagent_containers/food/snacks/sushi_roll/custom/roll//= new /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -1082,7 +1082,7 @@ TRAYS
 	icon_state = "kitchen_island"
 
 /obj/item/fish/random // used by the Wholetuna Cordata plant
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)

@@ -5,7 +5,7 @@
 	icon_state = "holo_console1"
 	var/datum/particle_maker_var_holder/P = null
 
-	New()
+	INIT()
 		..()
 		P = new /datum/particle_maker_var_holder
 

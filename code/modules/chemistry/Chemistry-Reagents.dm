@@ -52,7 +52,7 @@ datum
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
 
-		New()
+		INIT()
 			..()
 			if (src.viscosity == 0 && src.reagent_state == SOLID)
 				src.viscosity = 0.7

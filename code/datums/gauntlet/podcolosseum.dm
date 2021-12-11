@@ -376,7 +376,7 @@
 		players = 0
 		resetting = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
@@ -497,7 +497,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	var/list/barBits = list()
 	var/image/health_overlay
 
-	New(var/barLength = 4, var/is_left = 0)
+	INIT(var/barLength = 4, var/is_left = 0)
 		..()
 		for (var/i = 1, i <= barLength, i++)
 			var/atom/movable/screen/S = new /atom/movable/screen()
@@ -605,7 +605,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	var/data_displayed = null
 	var/displayed = -1
 
-	New()
+	INIT()
 		..()
 		indicated_icon = new
 		counter = new
@@ -624,7 +624,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		counter.screen_loc = "NORTH+1,WEST+[n+1]"
 
 	primary
-		New()
+		INIT()
 			..()
 			indicated_icon.screen_loc = "NORTH+1,WEST"
 			counter.screen_loc = "NORTH+1,WEST+1"
@@ -640,7 +640,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			counter.name = "Light Phaser"
 
 	secondary
-		New()
+		INIT()
 			..()
 			indicated_icon.screen_loc = "NORTH+1,WEST+2"
 			counter.screen_loc = "NORTH+1,WEST+3"
@@ -744,7 +744,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		rarity_class = 1
 		var/datum/projectile/myProj
 
-		New()
+		INIT()
 			..()
 			if (myProj)
 				myProj = new myProj()
@@ -905,7 +905,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		projectile
 			var/datum/projectile/myProj
 
-			New()
+			INIT()
 				..()
 				if (myProj)
 					myProj = new myProj()
@@ -1023,7 +1023,7 @@ proc/get_colosseum_message(var/name, var/message)
 
 	var/obj/machinery/camera/cam
 	var/datum/movement_controller/colosseum_putt/movement_controller
-	New()
+	INIT()
 		..()
 		if (!fire_overlay)
 			fire_overlay = image('icons/obj/ship.dmi', "minputt_fire")
@@ -1522,7 +1522,7 @@ proc/get_colosseum_message(var/name, var/message)
 	name = "Powerup"
 	desc = "Cross this with your vehicle to pick it up and boost your power!"
 	icon = 'icons/obj/colosseum.dmi'
-	New(var/L, var/is_template = 0)
+	INIT(var/L, var/is_template = 0)
 		..()
 
 		if (!is_template)
@@ -1533,7 +1533,7 @@ proc/get_colosseum_message(var/name, var/message)
 	system
 		var/datum/colosseumSystem/system
 
-		New(var/L, var/is_template, var/systemType)
+		INIT(var/L, var/is_template, var/systemType)
 			..()
 			if (!systemType)
 				systemType = pick(typesof(/datum/colosseumSystem) - list(/datum/colosseumSystem, /datum/colosseumSystem/primary, /datum/colosseumSystem/secondary, /datum/colosseumSystem/secondary/projectile))
@@ -1571,7 +1571,7 @@ proc/get_colosseum_message(var/name, var/message)
 		var/stat_icon = 'icons/obj/colosseum.dmi'
 		var/stat_icon_state
 
-		New()
+		INIT()
 			..()
 			overlays += image(stat_icon, stat_icon_state)
 
@@ -1715,7 +1715,7 @@ proc/get_colosseum_message(var/name, var/message)
 	density = 0
 	opacity = 0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 

@@ -33,7 +33,7 @@
 
 	//voice_type = "robo"
 
-/mob/living/silicon/New()
+INIT_TYPE(/mob/living/silicon)
 	..()
 	src.botcard = new /obj/item/card/id(src)
 

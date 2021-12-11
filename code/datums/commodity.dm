@@ -1519,7 +1519,7 @@
 	upperfluc = 5
 	lowerfluc = -5
 
-	New()
+	INIT()
 		..()
 		switch (lowertext( time2text(world.realtime, "Day") ))
 			if ("monday")
@@ -2645,7 +2645,7 @@
 	upperfluc = 200
 	lowerfluc = -100
 
-	New()
+	INIT()
 		..()
 		switch (lowertext( time2text(world.realtime, "Day") ))
 			if ("monday")

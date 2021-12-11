@@ -2,7 +2,7 @@
 /datum/aiHolder/trilobite
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/trilobite/New()
+INIT_TYPE(/datum/aiHolder/trilobite)
 	..()
 	var/datum/aiTask/timed/targeted/trilobite/D = get_instance(/datum/aiTask/timed/targeted/trilobite, list(src))
 	var/datum/aiTask/timed/B = get_instance(/datum/aiTask/timed/bury_ability, list(src))
@@ -154,7 +154,7 @@
 /datum/aiHolder/spike
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/spike/New()
+INIT_TYPE(/datum/aiHolder/spike)
 	..()
 	default_task = get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src))
 
@@ -243,7 +243,7 @@
 /datum/aiHolder/pikaia
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/pikaia/New()
+INIT_TYPE(/datum/aiHolder/pikaia)
 	..()
 	var/datum/aiTask/timed/targeted/trilobite/D = get_instance(/datum/aiTask/timed/targeted/pikaia, list(src))
 	var/datum/aiTask/timed/B = get_instance(/datum/aiTask/timed/bury_ability, list(src))

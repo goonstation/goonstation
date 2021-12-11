@@ -20,7 +20,7 @@
 	var/field_type = ART_HEALING
 	var/field_strength = 2
 
-	New()
+	INIT()
 		..()
 		src.field_radius = rand(2,9) // field radius
 		src.field_type = rand(0,1)

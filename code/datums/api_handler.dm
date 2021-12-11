@@ -10,7 +10,7 @@ var/global/datum/apiHandler/apiHandler
 	var/maxApiRetries = 5 //how many times should a query attempt to run before giving up
 	var/apiRetryDelay = 10 //base delay between query attempts, gets multiplied by attempt number
 
-	New()
+	INIT()
 		..()
 		if (!config.goonhub_api_endpoint)
 			src.enabled = 0

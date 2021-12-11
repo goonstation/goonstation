@@ -38,7 +38,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	var/spawn_insulator_name = "synthrubber"
 	var/spawn_conductor_name = "copper"
 
-	New(loc, length = STARTCOIL)
+	INIT(loc, length = STARTCOIL)
 		src.amount = length
 		pixel_x = rand(-2,2)
 		pixel_y = rand(-2,2)
@@ -130,14 +130,14 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 /obj/item/cable_coil/cut
 	icon_state = "coil2"
-	New(loc, length)
+	INIT(loc, length)
 		if (length)
 			..(loc, length)
 		else
 			..(loc, rand(1,2))
 
 /obj/item/cable_coil/cut/small
-	New(loc, length)
+	INIT(loc, length)
 		..(loc, rand(1,5))
 
 /////////////////////////////////////////////////REINFORCED CABLE
@@ -157,19 +157,19 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	cable_obj_type = /obj/cable/reinforced
 
-	New(loc, length = max_stack)
+	INIT(loc, length = max_stack)
 		..(loc, length)
 
 /obj/item/cable_coil/reinforced/cut
 	icon_state = "coil2-thick"
-	New(loc, length)
+	INIT(loc, length)
 		if (length)
 			..(loc, length)
 		else
 			..(loc, rand(1,2))
 
 /obj/item/cable_coil/reinforced/cut/small
-	New(loc, length)
+	INIT(loc, length)
 		..(loc, rand(1,5))
 
 

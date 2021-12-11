@@ -38,7 +38,7 @@
 	var/error_phrase = ""
 	var/list/powerVars = list()
 
-	New()
+	INIT()
 		..()
 		recharge_phrase = pick("crackles with static.","emits a quiet tone.","bristles with energy!","heats up.")
 		error_phrase = pick("shudders briefly.","grows heavy for a moment.","emits a quiet buzz.","makes a small pop sound.")

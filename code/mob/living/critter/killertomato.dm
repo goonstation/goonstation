@@ -59,7 +59,7 @@
 		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 
-	New()
+	INIT()
 		..()
 
 	death(var/gibbed)

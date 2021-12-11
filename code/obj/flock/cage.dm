@@ -25,7 +25,7 @@
 	mat_changeappearance = 0
 
 
-	New(loc, mob/living/iced as mob, datum/flock/F=null)
+	INIT(loc, mob/living/iced as mob, datum/flock/F=null)
 		..()
 		src.flock = F
 		var/datum/reagents/R = new /datum/reagents(initial_volume)

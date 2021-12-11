@@ -13,7 +13,7 @@
 	high_volume
 		name = "Large Dual Port Air Vent"
 
-		New()
+		INIT()
 			..()
 
 			air1.volume = 1000
@@ -31,7 +31,7 @@
 	//2: Do not pass input_pressure_min
 	//4: Do not pass output_pressure_max
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 

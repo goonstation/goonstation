@@ -30,7 +30,7 @@
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
-/obj/machinery/New()
+INIT_TYPE(/obj/machinery)
 	..()
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.

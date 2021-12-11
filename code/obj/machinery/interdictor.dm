@@ -31,7 +31,7 @@
 	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
 	var/sound/sound_togglebolts = "sound/machines/click.ogg"
 
-	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
+	INIT(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
 		if(altcap)
 			altcap.set_loc(src)
 			src.intcap = altcap
@@ -417,7 +417,7 @@
 	var/obj/interdictor_frame/itdr
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			itdr = O

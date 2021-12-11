@@ -33,7 +33,7 @@
 	var/mob/living/silicon/ai/mainframe
 	var/holo_type
 
-	New(var/mob/mainframe)
+	INIT(var/mob/mainframe)
 		..()
 		src.mainframe = mainframe
 
@@ -103,7 +103,7 @@
 	var/mob/living/silicon/ai/owner
 
 
-	New(var/mob/living/silicon/ai/owner, var/holo_type)
+	INIT(var/mob/living/silicon/ai/owner, var/holo_type)
 		animate(src, alpha = 180, time = 10, easing = SINE_EASING)
 		if (istype(owner))
 			src.owner = owner

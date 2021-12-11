@@ -10,7 +10,7 @@
 	max_wclass = 2 // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
 	var/list/kit_styles = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (length(kit_styles))
@@ -243,7 +243,7 @@
 	spawn_contents = list(/obj/item/clothing/gloves/latex = 7)
 
 /obj/item/storage/box/lglo_kit/random
-	New()
+	INIT()
 		if (prob(50))
 			src.spawn_contents = list(pick(25;/obj/item/clothing/gloves/latex/blue,25;/obj/item/clothing/gloves/latex/purple,25;/obj/item/clothing/gloves/latex/teal,25;/obj/item/clothing/gloves/latex/pink) = 7)
 		..()

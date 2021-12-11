@@ -10,7 +10,7 @@
 	icon_state = "vase"
 	pixel_y = 18
 
-	New()
+	INIT()
 		..()
 		if (src.icon_state == "vase")
 			src.icon_state = "vase[rand(1,8)]"
@@ -27,7 +27,7 @@
 	w_class = W_CLASS_TINY
 	var/butts = 0 // heh
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 

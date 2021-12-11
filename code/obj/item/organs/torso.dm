@@ -15,7 +15,7 @@
 
 	var/icon/body_icon = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if (src.donor)

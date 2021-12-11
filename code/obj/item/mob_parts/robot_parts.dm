@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	stamina_cost = 23
 	stamina_crit_chance = 5
 
-	New()
+	INIT()
 		..()
 		icon_state = "[src.icon_state_base]-[appearanceString]"
 
@@ -891,7 +891,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/obj/item/parts/robot_parts/r_leg = null
 	var/obj/item/organ/brain/brain = null
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "robo_suit"; //The frame is the only exception for the composite item name thing.
 		src.UpdateIcon()
@@ -1241,7 +1241,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/datum/ai_laws/law_set = null
 	var/datum/ai_laws/old_law_set = null
 
-	New()
+	INIT()
 		..()
 		src.law_set = new /datum/ai_laws(src)
 

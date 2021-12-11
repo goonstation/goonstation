@@ -435,7 +435,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if (light_manager)
 			light_manager.lights -= L
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		if(area_space_nopower(src))
@@ -977,7 +977,7 @@ ABSTRACT_TYPE(/area/adventure)
 
 	var/list/soundSubscribers = list()
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(6 SECONDS)
@@ -1519,14 +1519,14 @@ ABSTRACT_TYPE(/area/station)
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 		START_TRACKING
 #else
 	filler_turf = null
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 		START_TRACKING
@@ -3295,7 +3295,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
 
-/area/station/ai_monitored/New()
+INIT_TYPE(/area/station/ai_monitored)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
@@ -3353,7 +3353,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
 
-/area/station/turret_protected/New()
+INIT_TYPE(/area/station/turret_protected)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
@@ -3626,7 +3626,7 @@ ABSTRACT_TYPE(/area/mining)
 			apc.name = "[name] APC"
 			apc.area = src
 
-	New()
+	INIT()
 		.=..()
 		SetName(name) //because the jerk built an APC first, because WHY NOT JERKO?!
 
@@ -3644,7 +3644,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
 	* Called when an area first loads
   */
-/area/New()
+INIT_TYPE(/area)
 	..()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
@@ -3825,13 +3825,13 @@ Don't try and do this in the editor nerd. ~Warc
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 #else
 	filler_turf = null
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 #endif
@@ -5188,7 +5188,7 @@ area/station/security/visitation
 	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
 
-/area/station2/ai_monitored/New()
+INIT_TYPE(/area/station2/ai_monitored)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
@@ -5236,7 +5236,7 @@ area/station/security/visitation
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
 
-/area/station2/turret_protected/New()
+INIT_TYPE(/area/station2/turret_protected)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load

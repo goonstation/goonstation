@@ -18,7 +18,7 @@
 	var/tmp/datum/computer/folder/holding_folder = null
 	var/tmp/list/metadata = list()
 
-	New()
+	INIT()
 		..()
 		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=COMP_ALLACC)
 
@@ -291,7 +291,7 @@
 	gen = 10
 	var/datum/computer/folder/target = null
 
-	New(var/datum/computer/folder/newtarget)
+	INIT(var/datum/computer/folder/newtarget)
 		..()
 		if (gen != 10) gen = 10
 		if(istype(newtarget))

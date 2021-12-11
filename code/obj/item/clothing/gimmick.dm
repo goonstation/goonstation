@@ -22,7 +22,7 @@
 	see_face = 0
 	item_function_flags = IMMUNE_TO_ACID
 
-	New()
+	INIT()
 		..()
 		src.vchange = new(src) // Built-in voice changer (Convair880).
 
@@ -153,7 +153,7 @@
 	desc = "A very odd outfit."
 	icon_state = "waldont1"
 	item_state = "waldont1"
-	New()
+	INIT()
 		..()
 		icon_state = "waldont[rand(1,6)]"
 		item_state = "waldont[rand(1,6)]"
@@ -175,7 +175,7 @@
 	desc = "An odd-looking hat and glasses."
 	icon_state = "waldont1"
 	item_state = "santahat"
-	New()
+	INIT()
 		..()
 		icon_state = "waldont[rand(1,5)]"
 
@@ -392,7 +392,7 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 
-	New()
+	INIT()
 		..()
 		AddComponent(/datum/component/clown_disbelief_item)
 
@@ -787,7 +787,7 @@
 	desc = "Looks good on yew innit?"
 	icon_state = "chav1"
 	item_state = "chav1"
-	New()
+	INIT()
 		..()
 		desc = pick("Looks good on yew innit?", "Aww yeah that jackets sick m8")
 		if(prob(50))
@@ -1201,7 +1201,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	material_prints = "shallow scratches"
 	mat_changename = 0 // okay let's just be "gold ring" and not "flimsy soft good gold ring" tia
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("gold"))
 

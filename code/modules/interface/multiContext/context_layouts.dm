@@ -52,7 +52,7 @@ var/list/datum/contextAction/globalContextActions = null
 	var/offsetX = 0
 	var/offsetY = 0
 
-	New(var/Width = 2, var/SpacingX = 16, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
+	INIT(var/Width = 2, var/SpacingX = 16, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
 		width = Width
 		spacingX = SpacingX
 		spacingY = SpacingY
@@ -94,7 +94,7 @@ var/list/datum/contextAction/globalContextActions = null
 	var/offsetX = 0
 	var/offsetY = 0
 
-	New(var/SpacingX = 10, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
+	INIT(var/SpacingX = 10, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0)
 		spacingX = SpacingX
 		spacingY = SpacingY
 		offsetX = OffsetX
@@ -132,7 +132,7 @@ var/list/datum/contextAction/globalContextActions = null
 	var/offsetY = 0
 	var/keyOffset = 1
 
-	New(var/SpacingX = 5, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0, var/KeyOffset = 1)
+	INIT(var/SpacingX = 5, var/SpacingY = 16, var/OffsetX = 0, var/OffsetY = 0, var/KeyOffset = 1)
 		spacingX = SpacingX
 		spacingY = SpacingY
 		offsetX = OffsetX
@@ -200,7 +200,7 @@ var/list/datum/contextAction/globalContextActions = null
 /datum/contextLayout/experimentalcircle
 	var/dist
 
-	New(var/Dist = 32)
+	INIT(var/Dist = 32)
 		dist = Dist
 		return ..()
 

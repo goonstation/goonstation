@@ -9,7 +9,7 @@
 	var/h_g = 245.0
 	var/h_b = 245.0
 
-/obj/machinery/computer/hologram_comp/New()
+INIT_TYPE(/obj/machinery/computer/hologram_comp)
 	..()
 	SPAWN_DBG( 10 )
 		src.projector = locate(/obj/machinery/hologram_proj, get_step(src.loc, NORTH))

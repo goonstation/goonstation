@@ -71,7 +71,7 @@
 	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
 	var/list/buttons_map
 
-/datum/tgui_modal/list_input/New(mob/user, message, title, list/buttons, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+INIT_TYPE(/datum/tgui_modal/list_input, mob/user, message, title, list/buttons, timeout, copyButtons = FALSE, allowIllegal = FALSE)
 	src.buttons = list()
 	src.buttons_map = list()
 
@@ -119,7 +119,7 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/buttons, callback, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+INIT_TYPE(/datum/tgui_modal/list_input/async, mob/user, message, title, list/buttons, callback, timeout, copyButtons = FALSE, allowIllegal = FALSE)
 	..(user, title, message, buttons, timeout, copyButtons, allowIllegal)
 	src.callback = callback
 

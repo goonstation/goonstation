@@ -130,7 +130,7 @@
 	var/list/moveTraits = list() // differentiate movement traits for Move()
 	var/mob/owner = null
 
-	New(var/mob/ownerMob)
+	INIT(var/mob/ownerMob)
 		owner = ownerMob
 		return ..()
 
@@ -832,7 +832,7 @@ obj/trait/pilot
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
-	New()
+	INIT()
 		..()
 		allergen = pick(allergen_id_list)
 
@@ -864,7 +864,7 @@ obj/trait/pilot
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
 	var/do_addiction = FALSE
 
-	New()
+	INIT()
 		..()
 		selected_reagent = pick(addictive_reagents)
 

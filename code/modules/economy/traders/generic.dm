@@ -32,7 +32,7 @@
 	/datum/commodity/trader/synthmodule/gmcell,
 	/datum/commodity/trader/synthmodule/upgrader)
 	*/
-	New()
+	INIT()
 		..()
 		var/pickfirstname = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer","Sketchy","100%","Sassy","Zesty")
 		var/picklastname = pick_string_autokey("names/last.txt")

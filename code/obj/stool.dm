@@ -32,7 +32,7 @@
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
 
-	New()
+	INIT()
 		if (!src.anchored && src.securable) // we're able to toggle between being secured to the floor or not, and we started unsecured
 			src.p_class = 2 // so make us easy to move
 		..()
@@ -177,7 +177,7 @@
 	var/auto_path = null
 	parts_type = /obj/item/furniture_parts/bench
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.auto && ispath(src.auto_path))
@@ -540,7 +540,7 @@
 	moveable
 		anchored = 0
 
-	New()
+	INIT()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		butt_img = image('icons/obj/furniture/chairs.dmi')
@@ -894,7 +894,7 @@
 	stamina_crit_chance = 10
 	var/c_color = null
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
@@ -947,7 +947,7 @@
 	var/arm_icon_state = "arm"
 	parts_type = /obj/item/furniture_parts/comfy_chair
 
-	New()
+	INIT()
 		..()
 		UpdateIcon()
 /* what in the unholy mother of god was this about
@@ -1069,7 +1069,7 @@
 	mat_appearances_to_ignore = list("steel")
 	mats = 15
 
-	New()
+	INIT()
 		..()
 		if (src.lying)
 			animate_rest(src, !src.lying)
@@ -1176,7 +1176,7 @@
 	var/image/arm_image = null
 	var/arm_icon_state = null
 
-	New()
+	INIT()
 		..()
 		if (arm_icon_state)
 			src.UpdateIcon()
@@ -1244,7 +1244,7 @@
 	/obj/item/spacecash/random/tourist,
 	/obj/item/spacecash/buttcoin)
 
-	New()
+	INIT()
 		..()
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)
@@ -1383,7 +1383,7 @@
 	comfort_value = -3
 	securable = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(2 SECONDS)
 			if (src)

@@ -217,7 +217,7 @@ proc/Create_Tommyname()
 	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/tommy)
 		projectiles = list(new/datum/projectile/tommy)
 		..()
@@ -403,7 +403,7 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "trumpet"
 	cell_type = /obj/item/ammo/power_cell/high_power
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt_v/trumpet)
 		projectiles = list(new/datum/projectile/energy_bolt_v/trumpet)
 		..()
@@ -415,7 +415,7 @@ proc/Create_Tommyname()
 	icon_state = "ggenoff"
 	density = 1
 	var/generating = 0
-	New()
+	INIT()
 		..()
 		//UnsubscribeProcess()
 	attack_hand(mob/user)
@@ -452,7 +452,7 @@ proc/Create_Tommyname()
 	var/validate_user = 0
 	var/initialized = 0
 
-	New(var/filename, var/windowname, var/parameters, var/datum/master)
+	INIT(var/filename, var/windowname, var/parameters, var/datum/master)
 		..()
 		target_window = windowname
 		target_params = parameters
@@ -858,7 +858,7 @@ proc/Create_Tommyname()
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 
@@ -1021,7 +1021,7 @@ proc/Create_Tommyname()
 	var/mob/living/target
 	var/obj/item/garrote/the_garrote
 
-	New(target, garrote)
+	INIT(target, garrote)
 		src.target = target
 		the_garrote=garrote
 		..()

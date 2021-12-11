@@ -8,7 +8,7 @@
 	fullbright = 1 // temporary measure
 	desc = "A magically infused wall. It appears to glow without emitting light."
 
-	New()
+	INIT()
 		..()
 		src.adapt()
 		var/turf/N = locate(x, y+1, z)
@@ -114,7 +114,7 @@
 
 	var/static/list/triggeracts = list("Do nothing" = "nop", "Open" = "open")
 
-	New(var/L)
+	INIT(var/L)
 		attached = L
 		..()
 
@@ -141,7 +141,7 @@
 	var/list/triggerables = list()
 	var/area/wizard_place/wizard_area
 
-	New()
+	INIT()
 		..()
 		ensure_wizard_area()
 
@@ -167,7 +167,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	desc = "A magically infused wall. It seems to be unstable and phase in and out of existence."
 
-	New()
+	INIT()
 		..()
 		opener = new /obj/adventurepuzzle/triggerable/false_wall_opener(src)
 		if (id)
@@ -213,7 +213,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 			src.RL_SetOpacity(0)
 
 	opened
-		New()
+		INIT()
 			..()
 			open()
 
@@ -221,7 +221,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "wizard_floor"
 
-	New()
+	INIT()
 		..()
 		var/turf/N = locate(x, y+1, z)
 		var/turf/S = locate(x, y-1, z)
@@ -305,7 +305,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		icon = 'icons/turf/adventure.dmi'
 		icon_state = "showcase_top"
 
-	New()
+	INIT()
 		..()
 		dummies += new /obj/border_dummy { dir = 1; }(src.loc)
 		dummies += new /obj/border_dummy { dir = 2; }(src.loc)
@@ -336,7 +336,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon_state = "orb_fire"
 	pedestal_name = "fire"
 
-	New()
+	INIT()
 		..()
 		icon_pedestal = image('icons/turf/adventure.dmi', "pedestal_orb_fire")
 
@@ -346,7 +346,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon_state = "orb_void"
 	pedestal_name = "void"
 
-	New()
+	INIT()
 		..()
 		icon_pedestal = image('icons/turf/adventure.dmi', "pedestal_orb_void")
 
@@ -356,7 +356,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon_state = "orb_acid"
 	pedestal_name = "acid"
 
-	New()
+	INIT()
 		..()
 		icon_pedestal = image('icons/turf/adventure.dmi', "pedestal_orb_acid")
 
@@ -366,7 +366,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon_state = "orb_magic"
 	pedestal_name = "magic"
 
-	New()
+	INIT()
 		..()
 		icon_pedestal = image('icons/turf/adventure.dmi', "pedestal_orb_magic")
 
@@ -376,7 +376,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon_state = "orb_ice"
 	pedestal_name = "ice"
 
-	New()
+	INIT()
 		..()
 		icon_pedestal = image('icons/turf/adventure.dmi', "pedestal_orb_ice")
 
@@ -386,7 +386,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	icon_state = "orb_lightning"
 	pedestal_name = "lightning"
 
-	New()
+	INIT()
 		..()
 		icon_pedestal = image('icons/turf/adventure.dmi', "pedestal_orb_lightning")
 
@@ -401,42 +401,42 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/obj/item/orb/O = null
 
 	fire
-		New()
+		INIT()
 			..()
 			O = new /obj/item/orb/fire(src)
 			overlays += O.icon_pedestal
 			name = "[O.pedestal_name] pedestal"
 
 	ice
-		New()
+		INIT()
 			..()
 			O = new /obj/item/orb/ice(src)
 			overlays += O.icon_pedestal
 			name = "[O.pedestal_name] pedestal"
 
 	acid
-		New()
+		INIT()
 			..()
 			O = new /obj/item/orb/acid(src)
 			overlays += O.icon_pedestal
 			name = "[O.pedestal_name] pedestal"
 
 	lightning
-		New()
+		INIT()
 			..()
 			O = new /obj/item/orb/lightning(src)
 			overlays += O.icon_pedestal
 			name = "[O.pedestal_name] pedestal"
 
 	magic
-		New()
+		INIT()
 			..()
 			O = new /obj/item/orb/magic(src)
 			overlays += O.icon_pedestal
 			name = "[O.pedestal_name] pedestal"
 
 	void
-		New()
+		INIT()
 			..()
 			O = new /obj/item/orb/void(src)
 			overlays += O.icon_pedestal
@@ -495,7 +495,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/static/list/white_potions = list("essence of creation" = "big_bang", "elixir of life" = "strange_reagent")
 	var/static/list/orange_potions = list("essence of fire" = "foof", "potion of restoration" = "penteticacid")
 
-	New(var/L, var/no_randomize = 0)
+	INIT(var/L, var/no_randomize = 0)
 		..()
 		if (!no_randomize)
 			generate(null, 0)
@@ -569,7 +569,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 					drink(target)
 
 	identified
-		New(var/L)
+		INIT(var/L)
 			..(L, 1)
 			generate(null, 1)
 
@@ -600,7 +600,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 
 		return BAR
 
-	New()
+	INIT()
 		..()
 		//icon_state = name
 		over_image = image(icon, name)
@@ -688,7 +688,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 		emerald
 			initial_crystal = /obj/item/wizard_crystal/emerald
 
-	New(var/L, var/D)
+	INIT(var/L, var/D)
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -827,7 +827,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			qdel(effect_overlay)
 		..()
 
-	New(var/L)
+	INIT(var/L)
 		..()
 		set_effect()
 		update_dir(dir)
@@ -864,7 +864,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	full
 		icon_state = "bookcase_full_alone"
 
-		New()
+		INIT()
 			..()
 			icon_state = "bookcase_full_alone_[rand(0,1)]"
 

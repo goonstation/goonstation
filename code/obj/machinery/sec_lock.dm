@@ -15,7 +15,7 @@
 /obj/machinery/sec_lock/attackby(nothing, user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/sec_lock/New()
+INIT_TYPE(/obj/machinery/sec_lock)
 	..()
 	SPAWN_DBG( 2 )
 		if (src.a_type == 1)

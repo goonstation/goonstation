@@ -17,7 +17,7 @@
 	rand_pos = 1
 	var/database_id = null
 
-	New()
+	INIT()
 		..()
 		var/my_seashell = rand(1,14)
 		src.icon_state = "shell_[my_seashell]"
@@ -37,9 +37,9 @@
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		if (src.random_color)
 			src.color = random_saturated_hex_color()

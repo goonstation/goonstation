@@ -147,7 +147,7 @@
 			update_equipment()
 			update_tools()
 
-	New(M)
+	INIT(M)
 		..()
 		master = M
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "blank", "1, 10 to 1, 1")

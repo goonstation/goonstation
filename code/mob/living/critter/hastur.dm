@@ -27,7 +27,7 @@ var/HasturPresent = 0
 	var/icon/eastwest = null
 	var/lastdir = null
 
-	New()
+	INIT()
 		..()
 		src.see_in_dark = SEE_DARK_FULL
 		northsouth = icon('icons/misc/hastur.dmi')

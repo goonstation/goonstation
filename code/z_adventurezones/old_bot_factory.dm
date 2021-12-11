@@ -70,7 +70,7 @@
 /obj/item/disk/data/memcard/robot_factory
 	file_amount = 2048
 
-	New()
+	INIT()
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
@@ -146,7 +146,7 @@
 /datum/computer/file/record/tds_basketball
 	name = "journal1103"
 
-	New()
+	INIT()
 		..()
 		fields = list("Personal Log - 11/03/51",
 			"Toczylowski has gone completely mad.",
@@ -160,7 +160,7 @@
 /datum/computer/file/record/tds_desperate
 	name = "journal1107"
 
-	New()
+	INIT()
 		..()
 		fields = list("Personal Log - 11/07/51",
 			"I have nothing and Toczylowski is coming back.",
@@ -178,7 +178,7 @@
 /datum/computer/file/record/tds_repairlog1
 	name = "servlog47"
 
-	New()
+	INIT()
 		..()
 		fields = list("File ID: 51-47",
 			"Technician: J. Wilhelm",
@@ -193,7 +193,7 @@
 /datum/computer/file/record/tds_repairlog2
 	name = "servlog48"
 
-	New()
+	INIT()
 		..()
 		fields = list("File ID: 51-48",
 			"Technician: J. Wilhelm",
@@ -208,7 +208,7 @@
 /datum/computer/file/record/tds_repairlog3
 	name = "servlog49"
 
-	New()
+	INIT()
 		..()
 		fields = list("File ID: 51-49",
 			"Technician: J. Wilhelm",
@@ -222,7 +222,7 @@
 /datum/computer/file/record/tds_repairlog4
 	name = "servlog50"
 
-	New()
+	INIT()
 		..()
 		fields = list("File ID: 51-50",
 			"Technician: J. Wilhelm",
@@ -237,7 +237,7 @@
 /datum/computer/file/record/tds_repairlog5
 	name = "servlog51"
 
-	New()
+	INIT()
 		..()
 		fields = list("File ID: 51-51",
 			"Technician: J. Wilhelm",
@@ -251,14 +251,14 @@
 
 /obj/item/disk/data/tape/tds_journaltape
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/record/tds_basketball(src))
 		src.root.add_file( new /datum/computer/file/record/tds_desperate(src))
 
 /obj/item/disk/data/tape/tds_replogtape
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/record/tds_repairlog1(src))
 		src.root.add_file( new /datum/computer/file/record/tds_repairlog2(src))

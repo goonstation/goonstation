@@ -69,7 +69,7 @@
 	proc/get_movement_controller(mob/user)
 		return movement_controller
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)

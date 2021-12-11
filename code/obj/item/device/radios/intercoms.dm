@@ -28,7 +28,7 @@
 		if(WEST)
 			src.pixel_x = 21
 
-/obj/item/device/radio/intercom/New()
+INIT_TYPE(/obj/item/device/radio/intercom)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this

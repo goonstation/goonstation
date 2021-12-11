@@ -16,7 +16,7 @@
 	var/mob/master
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
-	New(M, var/sloc, var/icon/I)
+	INIT(M, var/sloc, var/icon/I)
 		..()
 		master = M
 		if (sloc)

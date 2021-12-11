@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/req_contract/special)
 	var/obj/item/paper/req_sheet // physical manifest of requested items. its presence in the crate is required to send order back successfully
 	//these are contained in special_order.dm, along with the event that creates these contracts
 
-	New()
+	INIT()
 		//add entries, then call this
 		..()
 		update_requisition(req_sheet)
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 	sendingCrate = new /obj/storage/crate/wooden
 	req_sheet = new /obj/item/paper/requisition/surgery/organ_swap
 
-	New()
+	INIT()
 		var/possible_targets = list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
 		for(var/i in 1 to rand(3,6))
 			target_organs |= pick(possible_targets)
@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 	req_sheet = new /obj/item/paper/requisition/weed_sample
 	payout = 41714
 
-	New()
+	INIT()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/whiteweed,1)
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/omegaweed,1)
@@ -174,7 +174,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 		req_sheet = new /obj/item/paper/requisition/pizza_party/nt
 		payout = 3600
 
-	New()
+	INIT()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(20,30)*6)
 		..()
 
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	breakfast_order
 		name = "Breakfast Order"
 		mealflag = MEAL_TIME_BREAKFAST
-		New()
+		INIT()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
 				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
@@ -205,7 +205,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	lunch_order
 		name = "Lunch Order"
 		mealflag = MEAL_TIME_LUNCH
-		New()
+		INIT()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
 				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	dinner_order
 		name = "Dinner Order"
 		mealflag = MEAL_TIME_DINNER
-		New()
+		INIT()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
 				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
@@ -231,7 +231,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	snack_order
 		name = "Snack Order"
 		mealflag = MEAL_TIME_SNACK
-		New()
+		INIT()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
 				var/datum/rc_entry/item/nom = new /datum/rc_entry/item
@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	req_sheet = new /obj/item/paper/requisition/blood
 	payout = 0 //price in blood
 
-	New()
+	INIT()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/blood,rand(8,12)*100)
 		..()
 

@@ -1,4 +1,4 @@
 /datum/tag/select/multi
-	New()
+	INIT()
 		..()
 		setAttribute("multiple", "multiple")

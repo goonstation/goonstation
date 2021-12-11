@@ -237,7 +237,7 @@ TYPEINFO(/datum/mutantrace)
 	proc/onDeath(gibbed)
 		return
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
 			if (movement_modifier)
@@ -677,7 +677,7 @@ TYPEINFO(/datum/mutantrace)
 
 	jerk = 0 //flubber is a good goo person
 
-	New()
+	INIT()
 		..()
 		if (mob)
 			RegisterSignal(mob, COMSIG_MOVABLE_MOVED, .proc/flub)
@@ -738,7 +738,7 @@ TYPEINFO(/datum/mutantrace)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
 
-	New(var/mob/living/carbon/human/H)
+	INIT(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
 			mob.blood_color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
@@ -765,7 +765,7 @@ TYPEINFO(/datum/mutantrace)
 	jerk = 1
 	var/original_blood_color = null
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			original_blood_color = mob.blood_color
@@ -827,7 +827,7 @@ TYPEINFO(/datum/mutantrace)
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 
-	New(var/mob/living/carbon/human/H)
+	INIT(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
 			H.give_lizard_powers()
@@ -887,7 +887,7 @@ TYPEINFO(/datum/mutantrace)
 	can_infect/normal
 		strain = -1
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
@@ -1072,7 +1072,7 @@ TYPEINFO(/datum/mutantrace)
 	var/cleanable_tally = 0
 	var/const/blood_to_health_scalar = 0.5 //200 blood = 100 health
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			src.add_ability(mob)
@@ -1146,7 +1146,7 @@ TYPEINFO(/datum/mutantrace)
 	race_mutation = /datum/bioEffect/mutantrace/skeleton
 	dna_mutagen_banned = FALSE
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
 			M.mob_flags |= IS_BONER
@@ -1193,7 +1193,7 @@ TYPEINFO(/datum/mutantrace)
 	var/drains_dna_on_life = 1
 	var/ruff_tuff_and_ultrabuff = 1
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		if(ruff_tuff_and_ultrabuff && ishuman(M))
 			M.add_stam_mod_max("abomination", 1000)
 			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "abomination", 1000)
@@ -1291,7 +1291,7 @@ TYPEINFO(/datum/mutantrace)
 	hand_offset = 3
 	arm_offset = 3
 
-	New()
+	INIT()
 		..()
 		if (ishuman(mob))
 			mob.AddComponent(/datum/component/consume/organheal)
@@ -1393,7 +1393,7 @@ TYPEINFO(/datum/mutantrace)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 	// Gave them a minor stamina boost (Convair880).
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.add_stam_mod_max("hunter", 50)
@@ -1471,7 +1471,7 @@ TYPEINFO(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.add_stam_mod_max("monkey", -50)
@@ -1626,7 +1626,7 @@ TYPEINFO(/datum/mutantrace)
 	uses_human_clothes = 0
 	jerk = 1
 
-	New()
+	INIT()
 		..()
 		if(ishuman(mob))
 			mob.real_name = pick("a", "ay", "ey", "eh", "e") + pick("li", "lee", "lhi", "ley", "ll") + pick("n", "m", "nn", "en")
@@ -1648,7 +1648,7 @@ TYPEINFO(/datum/mutantrace)
 	dna_mutagen_banned = FALSE
 
 
-	New()
+	INIT()
 		..()
 		if(ishuman(mob))
 			if (isitem(mob.l_hand))
@@ -1720,7 +1720,7 @@ TYPEINFO(/datum/mutantrace)
 	typevulns = list("blunt" = 1.5, "crush" = 1.5)
 	dna_mutagen_banned = FALSE
 
-	New(mob/living/carbon/human/M)
+	INIT(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
@@ -1757,7 +1757,7 @@ TYPEINFO(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 
-	New(mob/living/carbon/human/M)
+	INIT(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
@@ -1807,7 +1807,7 @@ TYPEINFO(/datum/mutantrace)
 		return replacetext(message, "r", stutter("rrr"))
 
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(mob))
 			original_blood_color = mob.blood_color
@@ -1867,7 +1867,7 @@ TYPEINFO(/datum/mutantrace)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 
 
-	New()
+	INIT()
 		..()
 		if(ishuman(mob))
 			mob.blood_color = "#91b978"
@@ -1930,7 +1930,7 @@ TYPEINFO(/datum/mutantrace)
 	say_verb()
 		return "rasps"
 
-	New(var/mob/living/carbon/human/H)
+	INIT(var/mob/living/carbon/human/H)
 		..(H)
 		SPAWN_DBG(0)	//ugh
 			if(ishuman(mob))
@@ -2036,7 +2036,7 @@ TYPEINFO(/datum/mutantrace)
 	eye_state = "eyes-cow"
 	dna_mutagen_banned = FALSE
 
-	New(var/mob/living/carbon/human/H)
+	INIT(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(mob))
 			mob.update_face()
@@ -2140,7 +2140,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
 
-	New(var/mob/living/carbon/human/H)
+	INIT(var/mob/living/carbon/human/H)
 		if (prob(1)) // need to modify flags before calling parent
 			mutant_appearance_flags &= ~HAS_NO_SKINTONE
 			mutant_appearance_flags |= (TORSO_HAS_SKINTONE | HAS_PARTIAL_SKINTONE)

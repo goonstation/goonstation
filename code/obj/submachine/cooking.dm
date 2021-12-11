@@ -354,7 +354,7 @@ table#cooktime a#start {
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	New()
+	INIT()
 		..()
 	// Note - The order these are placed in matters! Put more complex recipes before simpler ones, or the way the
 	//        oven checks through the recipe list will make it pick the simple recipe and finish the cooking proc
@@ -1089,7 +1089,7 @@ var/list/mixer_recipes = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 
-	New()
+	INIT()
 		..()
 		src.recipes = mixer_recipes
 		if (!src.recipes)

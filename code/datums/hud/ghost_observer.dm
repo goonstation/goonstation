@@ -3,7 +3,7 @@
 	var/atom/movable/screen/respawn_timer/respawn_timer
 	var/atom/movable/screen/join_other/join_other
 
-	New(I)
+	INIT(I)
 		master = I
 		..()
 		update_ability_hotbar()

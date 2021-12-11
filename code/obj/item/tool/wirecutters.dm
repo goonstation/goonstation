@@ -20,7 +20,7 @@
 	stamina_crit_chance = 30
 	rand_pos = 1
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 

@@ -1058,7 +1058,7 @@ This is basically useless for anyone but miners.
 	telecrystal = TRUE
 	vr_allowed = 0
 	not_in_crates = 1
-	New()
+	INIT()
 		. = ..()
 		name = "[syndicate_currency]"
 	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate)
@@ -1073,7 +1073,7 @@ This is basically useless for anyone but miners.
 	telecrystal = TRUE
 	vr_allowed = 0
 	not_in_crates = 1
-	New()
+	INIT()
 		. = ..()
 		name = "Trick [syndicate_currency]"
 	run_on_spawn(var/obj/item/uplink_telecrystal/tc, mob/living/owner, in_surplus_crate=FALSE)

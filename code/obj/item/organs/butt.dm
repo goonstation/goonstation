@@ -39,7 +39,7 @@
 		donor = null
 		holder = null
 
-	New(loc, datum/organHolder/nholder)
+	INIT(loc, datum/organHolder/nholder)
 		..()
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 		if (istype(nholder) && nholder.donor)

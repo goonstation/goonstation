@@ -323,7 +323,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
-	New()
+	INIT()
 		..()
 		src.smoke = new /datum/effects/system/bad_smoke_spread/
 		src.smoke.attach(src)
@@ -376,7 +376,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state = "mustard"
 	icon_state_armed = "mustard1"
 
-	New()
+	INIT()
 		..()
 		if (usr?.loc) //Wire: Fix for Cannot read null.loc
 			src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
@@ -440,7 +440,7 @@ PIPE BOMBS + CONSTRUCTION
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
-	New()
+	INIT()
 		..()
 		src.smoke = new /datum/effects/system/bad_smoke_spread/
 		src.smoke.attach(src)
@@ -675,7 +675,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/old_light_grenade = 0
 	var/destination
 
-	New()
+	INIT()
 		..()
 		destination = locate(40,19,2)
 
@@ -925,7 +925,7 @@ PIPE BOMBS + CONSTRUCTION
 	armed = 1
 	anchored = 1
 
-	New()
+	INIT()
 		SPAWN_DBG(0)
 			src.beep(10)
 		return ..()
@@ -934,7 +934,7 @@ PIPE BOMBS + CONSTRUCTION
 	armed = 1
 	anchored = 1
 
-	New()
+	INIT()
 		SPAWN_DBG(0)
 			src.beep(10)
 		return ..()
@@ -943,7 +943,7 @@ PIPE BOMBS + CONSTRUCTION
 	armed = 1
 	anchored = 1
 
-	New()
+	INIT()
 		SPAWN_DBG(0)
 			src.beep(10)
 		return ..()
@@ -975,7 +975,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/primed = FALSE // cutting open lit fireworks is a BAD idea
 	var/bootleg_level = 0 // 0 = normal, 1 = unstable, 2 = unstable and you arm fall off
 
-	New()
+	INIT()
 		..()
 		create_reagents(10)
 		reagents.add_reagent("magnesium", 10)
@@ -1081,7 +1081,7 @@ PIPE BOMBS + CONSTRUCTION
 	name = "bootleg firework"
 	desc = "A consumer-grade pyrotechnic, often used in celebrations. This one seems to be missing a label, weird."
 
-	New()
+	INIT()
 		..()
 		create_reagents(10)
 
@@ -1772,7 +1772,7 @@ PIPE BOMBS + CONSTRUCTION
 			T.blow_hole()
 
 /obj/effects/explosion/tiny_baby
-	New()
+	INIT()
 		..()
 		src.transform = matrix(0.5, MATRIX_SCALE)
 

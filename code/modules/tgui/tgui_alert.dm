@@ -76,7 +76,7 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, copyButtons = TRUE)
+INIT_TYPE(/datum/tgui_modal, mob/user, message, title, list/buttons, timeout, copyButtons = TRUE)
 	src.title = title
 	src.message = message
 	if (copyButtons)
@@ -140,7 +140,7 @@
 	/// The callback to be invoked by the tgui_modal upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout)
+INIT_TYPE(/datum/tgui_modal/async, mob/user, message, title, list/buttons, callback, timeout)
 	..(user, title, message, buttons, timeout)
 	src.callback = callback
 

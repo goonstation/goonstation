@@ -20,7 +20,7 @@ CONTENTS:
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			process()
@@ -142,7 +142,7 @@ CONTENTS:
 
 	var/list/icon/overlays_list = list()
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			update_chairs()

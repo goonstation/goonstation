@@ -158,7 +158,7 @@
 	icon_state = "flowers1"
 	anchored = 1
 
-	New()
+	INIT()
 		src.icon_state = "flowers[rand(1,4)]"
 		src.set_dir(pick(cardinal))
 		..()

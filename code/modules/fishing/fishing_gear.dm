@@ -49,7 +49,7 @@
 	/// id for fishing action
 	id = "fishing_for_fishies"
 
-	New(var/user, var/rod, var/fishing_spot, var/target)
+	INIT(var/user, var/rod, var/fishing_spot, var/target)
 		..()
 		src.user = user
 		src.rod = rod

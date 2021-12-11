@@ -354,7 +354,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 		/datum/reagent/fooddrink/alcoholic/wine/white
 	)
 	var/static/list/cocktails = concrete_typesof(/datum/reagent/fooddrink/alcoholic)-blacklist
-	New()
+	INIT()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
 		for(var/i in 1 to DRINK_OBJ_COUNT)
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef/cake
 	var/choices[CAKE_OBJ_COUNT]
 	var/completed = FALSE
-	New()
+	INIT()
 		..()
 		var/list/names[CAKE_OBJ_COUNT]
 		for(var/i in 1 to CAKE_OBJ_COUNT)
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef/pizza
 	var/choices[PIZZA_OBJ_COUNT]
 	var/completed = FALSE
-	New()
+	INIT()
 		..()
 		var/list/names[PIZZA_OBJ_COUNT]
 		for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)

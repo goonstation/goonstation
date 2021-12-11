@@ -61,7 +61,7 @@
 	var/obj/machinery/derelict_aiboss/ai/ai
 	var/obj/item/aiboss_tape/tape
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			for(var/obj/machinery/derelict_aiboss/ai/A in get_area(src))
@@ -130,7 +130,7 @@
 	var/teaser_enabled = 0
 	var/image/face = null
 	var/tapes_loaded = 0
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)

@@ -7,7 +7,7 @@
 	*/
 #define EPHEMERAL_HIDDEN \
     ephemeral { \
-        New() { \
+        INIT() { \
             SHOULD_CALL_PARENT(FALSE); \
             src.loc = null; \
         } \

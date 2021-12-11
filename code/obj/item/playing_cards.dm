@@ -335,7 +335,7 @@
 	var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
 	card_style = "stg"
 
-	New()
+	INIT()
 		..()
 		name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
 		update_stored_info()
@@ -764,7 +764,7 @@
 	total_cards = 54
 	card_name = "playing"
 
-	New()
+	INIT()
 		..()
 		var/suit_num = 1
 		var/card_num = 1
@@ -830,7 +830,7 @@
 	total_cards = 78
 	card_name = "tarot"
 
-	New()
+	INIT()
 		..()
 		var/suit_num = 1
 		var/card_num = 1
@@ -898,7 +898,7 @@
 	total_cards = 48
 	card_name = "hanafuda"
 
-	New()
+	INIT()
 		..()
 		var/target_month = 1 //card suit
 		var/card_num = 1 //number within the card's suit
@@ -989,7 +989,7 @@
 	total_cards = 40
 	card_name = "Spacemen the Griffening"
 
-	New()
+	INIT()
 		..()
 		build_stg(1)
 
@@ -1001,7 +1001,7 @@
 	total_cards = 52
 	card_name = "Clow"
 
-	New()
+	INIT()
 		..()
 		for(var/i in 1 to total_cards)
 			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
@@ -1028,7 +1028,7 @@
 	var/obj/item/card_group/stored_deck
 	var/box_style = "white"
 
-	New()
+	INIT()
 		..()
 		icon_state = "[box_style]-box"
 
@@ -1066,7 +1066,7 @@
 	box_style = "plain"
 	name = "box of cards"
 
-	New()
+	INIT()
 		..()
 		stored_deck = new /obj/item/card_group/plain
 
@@ -1075,7 +1075,7 @@
 	box_style = "tarot"
 	w_class = W_CLASS_SMALL
 
-	New()
+	INIT()
 		..()
 		stored_deck = new /obj/item/card_group/tarot
 
@@ -1083,7 +1083,7 @@
 	name = "hanafuda box"
 	box_style = "hanafuda"
 
-	New()
+	INIT()
 		..()
 		stored_deck = new /obj/item/card_group/hanafuda
 
@@ -1092,7 +1092,7 @@
 	desc = "Contents guaranteed to not go flying off in all directions upon opening! Hopefully."
 	box_style = "clow"
 
-	New()
+	INIT()
 		..()
 		stored_deck = new /obj/item/card_group/clow
 
@@ -1104,7 +1104,7 @@
 	w_class = W_CLASS_SMALL
 	var/obj/item/card_group/stored_deck
 
-	New()
+	INIT()
 		..()
 		stored_deck = new /obj/item/card_group/stg(src)
 		update_showcase()
@@ -1141,7 +1141,7 @@
 	"becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
 	"impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!")
 
-	New(User, Box)
+	INIT(User, Box)
 		user = User
 		card_box = Box
 		..()
@@ -1175,7 +1175,7 @@
 	icon_state = "stg-booster"
 	var/obj/item/card_group/stored_deck
 
-	New()
+	INIT()
 		..()
 		stored_deck = new /obj/item/card_group(src)
 		stored_deck.desc = "A bunch of Spacemen the Griffening cards."

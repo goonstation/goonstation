@@ -8,7 +8,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/nt_faction(src)
 		..()
 

@@ -158,7 +158,7 @@ var/global/deathConfettiActive = 0
 	metabolizes = 0
 	var/datum/light/glow
 
-	New()
+	INIT()
 		..()
 		src.glow = new /datum/light/point
 		src.glow.set_brightness(0.8)

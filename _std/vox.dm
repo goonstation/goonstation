@@ -20,7 +20,7 @@
 	var/sound/soundFile
 	var/flags
 
-	New(var/id, var/file, var/flags)
+	INIT(var/id, var/file, var/flags)
 		..()
 		src.id = id
 		src.ogg = file

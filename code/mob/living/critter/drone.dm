@@ -24,7 +24,7 @@
 	var/smashes_shit = 1
 	var/list/alert_sounds = list('sound/machines/whistlealert.ogg', 'sound/machines/whistlebeep.ogg')
 
-	New()
+	INIT()
 		..()
 		setup_loot_table()
 		name = "[initial(name)] [drone_designation]-[rand(num_max)]"

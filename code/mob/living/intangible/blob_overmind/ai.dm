@@ -45,7 +45,7 @@
 
 	var/ai_ticks_queued_up = 0
 
-	New()
+	INIT()
 		ai_id = src.next_id
 		src.next_id++
 		state = STATE_DEPLOYING

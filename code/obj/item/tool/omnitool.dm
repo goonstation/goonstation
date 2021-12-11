@@ -13,7 +13,7 @@
 
 	var/omni_mode = "prying"
 
-	New()
+	INIT()
 		..()
 		src.change_mode(omni_mode)
 
@@ -272,7 +272,7 @@
 		..()
 		return
 
-	New()
+	INIT()
 		. = ..()
 		src.create_reagents(20)
 		reagents.add_reagent("fuel", 20)

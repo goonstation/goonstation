@@ -177,7 +177,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		light.dispose()
 	..()
 
-/mob/living/silicon/ai/New(loc, var/empty = 0)
+INIT_TYPE(/mob/living/silicon/ai, loc, var/empty = 0)
 	..(loc)
 	START_TRACKING
 

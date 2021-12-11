@@ -62,7 +62,7 @@ obj/machinery/air_sensor
 					signal.data["other"] = round(100*tgmoles/total_moles)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 

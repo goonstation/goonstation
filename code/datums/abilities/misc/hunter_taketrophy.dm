@@ -71,7 +71,7 @@
 	var/target
 	var/datum/targetable/hunter/hunter_taketrophy/trophy
 
-	New(Target, Trophy)
+	INIT(Target, Trophy)
 		target = Target
 		trophy = Trophy
 		..()

@@ -184,7 +184,7 @@
 	var/image/pipeimg = null
 
 	// new pipe, set the icon_state as on map
-	New()
+	INIT()
 		..()
 		base_icon_state = icon_state
 		pipeimg = image(src.icon, src.loc, src.icon_state, 3, dir)
@@ -535,7 +535,7 @@
 		desc = "An underfloor cargo pipe."
 		color = PIPEC_CARGO
 
-	New()
+	INIT()
 		..()
 		if(icon_state == "pipe-s")
 			dpdir = dir | turn(dir, 180)
@@ -600,7 +600,7 @@
 		west
 			dir = WEST
 
-	New()
+	INIT()
 		..()
 		if(icon_state == "pipe-j1")
 			dpdir = dir | turn(dir, -90) | turn(dir,180)
@@ -684,7 +684,7 @@
 		west
 			dir = WEST
 
-	New()
+	INIT()
 		..()
 		if(icon_state == "pipe-sj1")
 			switch_dir = turn(dir, -90)
@@ -836,7 +836,7 @@
 	vertical
 		dir = NORTH
 
-	New()
+	INIT()
 		..()
 
 		dpdir = dir | turn(dir, 180)
@@ -975,7 +975,7 @@
 	throwforce = 0
 	initial_volume = 1000
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("liquid spacetime",11)
 		src.setMaterial(getMaterial("negativematter"), appearance = 0, setname = 0)
@@ -991,7 +991,7 @@
 	var/loaf_factor = 1
 	var/processing = 0
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("gravy",10)
 		src.reagents.add_reagent("refried_beans",10)
@@ -1144,7 +1144,7 @@
 	west
 		dir = WEST
 
-	New()
+	INIT()
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
@@ -1274,7 +1274,7 @@
 	west
 		dir = WEST
 
-	New()
+	INIT()
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
@@ -1341,7 +1341,7 @@
 	west
 		dir = WEST
 
-	New()
+	INIT()
 		..()
 
 		dpdir = dir | turn(dir, 270) | turn(dir, 90)
@@ -1413,7 +1413,7 @@
 	vertical
 		dir = NORTH
 
-	New()
+	INIT()
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
@@ -1563,7 +1563,7 @@
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
 
-	New()
+	INIT()
 		..()
 		dpdir = dir
 		SPAWN_DBG(1 DECI SECOND)
@@ -1668,7 +1668,7 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-	New()
+	INIT()
 		..()
 		update()
 		return
@@ -1721,7 +1721,7 @@
 	west
 		dir = WEST
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(1 DECI SECOND)

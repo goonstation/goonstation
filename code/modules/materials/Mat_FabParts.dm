@@ -4,7 +4,7 @@
 	var/required_property = "hard"
 	var/proper_name = "hardness"
 
-	New()
+	INIT()
 		name = "Material [greater_than?">":"<"][required_value] [proper_name]"
 		return ..()
 

@@ -379,7 +379,7 @@
 	RL_LumB = 0.3
 	mat_appearances_to_ignore = list("pharosium")
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("pharosium"))
 
@@ -428,7 +428,7 @@
 	mat_appearances_to_ignore = list("cloth")
 	mat_changename = 0
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("cloth"))
 
@@ -655,7 +655,7 @@
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("wood"))
 
@@ -779,7 +779,7 @@
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			icon_state = "snow2"
@@ -804,7 +804,7 @@
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -818,7 +818,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("synthrubber"))
 
@@ -826,7 +826,7 @@
 	icon_state = "grass_leafy"
 
 /turf/simulated/floor/airless/grass/random
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 

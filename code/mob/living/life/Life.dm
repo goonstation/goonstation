@@ -10,7 +10,7 @@
 	var/mob/living/silicon/robot/robot_owner = null
 	var/mob/living/critter/critter_owner = null
 
-	New(new_owner,arguments)
+	INIT(new_owner,arguments)
 		..()
 		last_process = TIME
 
@@ -73,7 +73,7 @@
 	proc/get_rad_protection()
 		.= 0
 
-/mob/living/New()
+INIT_TYPE(/mob/living)
 	..()
 	//wel gosh, its important that we do this otherwisde the crew could spawn into an airless room and then immediately die
 	last_life_tick = TIME
@@ -89,7 +89,7 @@
 	var/list/heartbeatOverlays = list()
 	var/last_human_life_tick = 0
 
-/mob/living/critter/New()
+INIT_TYPE(/mob/living/critter)
 	..()
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
@@ -108,7 +108,7 @@
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/carbon/human/New()
+INIT_TYPE(/mob/living/carbon/human)
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blood)
@@ -131,7 +131,7 @@
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/carbon/cube/New()
+INIT_TYPE(/mob/living/carbon/cube)
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
@@ -143,12 +143,12 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/ai/New()
+INIT_TYPE(/mob/living/silicon/ai)
 	..()
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/hivebot/New()
+INIT_TYPE(/mob/living/silicon/hivebot)
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -157,7 +157,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/robot/New()
+INIT_TYPE(/mob/living/silicon/robot)
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -169,7 +169,7 @@
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
-/mob/living/silicon/drone/New()
+INIT_TYPE(/mob/living/silicon/drone)
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)

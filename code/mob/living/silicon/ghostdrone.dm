@@ -33,7 +33,7 @@
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		hud = new(src)
@@ -1310,7 +1310,7 @@
 /mob/living/silicon/ghostdrone/deluxe
 	robot_talk_understand = 1
 
-	New()
+	INIT()
 		..()
 
 		var/MT = list(

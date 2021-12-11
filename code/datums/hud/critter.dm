@@ -56,7 +56,7 @@
 	/// status effect right offset
 	var/wraparound_offset_right = 0
 
-/datum/hud/critter/New(M)
+INIT_TYPE(/datum/hud/critter, M)
 	..()
 	src.master = M
 

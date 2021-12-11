@@ -191,7 +191,7 @@
 
 	var/area_chance = 25
 
-	New()
+	INIT()
 		..()
 		part_list["l_arm"] = left_arm
 		part_list["r_arm"] = right_arm

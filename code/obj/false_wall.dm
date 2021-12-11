@@ -26,7 +26,7 @@
 		icon_state = "rdoor1"
 		mod = "R"
 
-	New()
+	INIT()
 		..()
 		//Hide the wires or whatever THE FUCK
 		src.levelupdate()

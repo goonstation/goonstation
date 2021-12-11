@@ -20,7 +20,7 @@
 	var/burnt = 0
 
 
-	New()
+	INIT()
 		..()
 
 	attack_self(mob/user as mob)

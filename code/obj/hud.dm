@@ -12,7 +12,7 @@
 
 	var/h_type = /atom/movable/screen
 
-obj/hud/New(var/type = 0)
+INIT_TYPE(obj/hud, var/type = 0)
 	src.instantiate(type)
 	..()
 	return

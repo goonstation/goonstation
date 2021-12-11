@@ -308,7 +308,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	butcherable = 2
 	is_pet = 1
 
-	New()
+	INIT()
 		..()
 		src.name = pick_string_autokey("names/seals.txt")
 
@@ -452,7 +452,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	var/on_fire = 0
 	var/image/fire_image = null
 
-	New()
+	INIT()
 		..()
 		src.fire_image = image('icons/effects/160x160.dmi', "")
 		START_TRACKING
@@ -517,7 +517,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	unmelting
 		melts = FALSE
 
-	New()
+	INIT()
 		..()
 		if(melts)
 			SPAWN_DBG(rand(100,500))
@@ -619,7 +619,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	anchored = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_color(0.20, 0.60, 0.90)
@@ -674,7 +674,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	assignment = "Spacemas Spirit"
 
 /mob/living/carbon/human/santa
-	New()
+	INIT()
 		..()
 		real_name = "Santa Claus"
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
@@ -893,7 +893,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		mob.see_invisible = INVIS_INFRA
 
 /mob/living/carbon/human/krampus
-	New()
+	INIT()
 		..()
 		src.mind = new
 		real_name = "Krampus"
@@ -1200,7 +1200,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	var/danger_chance = 1
 	var/booby_trapped = 0
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			icon_state = "stocking_green"

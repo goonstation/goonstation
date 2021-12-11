@@ -67,7 +67,7 @@ obj/item/engivac/equipped(var/mob/user, var/slot)
 ///				OVERRIDES FOR COMMON PROCS
 ///
 
-obj/item/engivac/New(var/spawnbox = null)
+INIT_TYPE(obj/item/engivac, var/spawnbox = null)
 	..()
 	toolbox_img = image('icons/obj/items/storage.dmi', "") //where the toolbox sprites are
 	if (ispath(spawnbox, /obj/item/storage/toolbox))

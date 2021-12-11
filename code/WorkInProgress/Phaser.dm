@@ -30,7 +30,7 @@ var/const/PHASER_SNIPER = 256
 /obj/mod_spawner
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "rup"
-	New()
+	INIT()
 		var/A = pick(typesof(/obj/item/gun_ext)-/obj/item/gun_ext)
 		new A (src.loc)
 		qdel(src)
@@ -213,7 +213,7 @@ var/const/PHASER_SNIPER = 256
 				boutput(usr, "")
 		..()
 
-	New()
+	INIT()
 		update_settings()
 		..()
 

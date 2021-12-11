@@ -13,7 +13,7 @@
 /mob/var/tmp/list/submerged_images = list()
 /mob/var/tmp/is_submerged = 0
 
-/mob/living/New()
+INIT_TYPE(/mob/living)
 	..()
 	src.create_submerged_images()
 
@@ -87,7 +87,7 @@
 /obj/submachine/flags = FPRINT | FLUID_SUBMERGE
 
 
-/obj/New()
+INIT_TYPE(/obj)
 	..()
 	if (IS_VALID_SUBMERGE_OBJ(src))
 		if (src.density)

@@ -13,7 +13,7 @@
 	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
 	var/can_pickup_item = TRUE
 
-	New(var/obj/item/parts/holder)
+	INIT(var/obj/item/parts/holder)
 		..()
 		src.holder = holder
 
@@ -1437,7 +1437,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	dam_high = 0
 
 /datum/limb/small_critter/med/dash
-	New(var/obj/item/parts/holder)
+	INIT(var/obj/item/parts/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/katana_dash/limb)
 		src.setHarmSpecial (/datum/item_special/katana_dash/limb)
@@ -1479,7 +1479,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 //test for crab attack thing
 /datum/limb/swipe_quake
-	New(var/obj/item/parts/holder)
+	INIT(var/obj/item/parts/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)

@@ -76,7 +76,7 @@
 			tutorial = null
 			return
 
-	New()
+	INIT()
 		..()
 		src.add_ability(/datum/blob_ability/plant_nucleus)
 		src.add_ability(/datum/blob_ability/set_color)
@@ -599,7 +599,7 @@
 	var/atom/movable/screen/pseudo_overlay/point_overlay
 	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
-	New()
+	INIT()
 		..()
 		ctrl_highlight = image('icons/mob/blob_ui.dmi',"ctrl")
 		shift_highlight = image('icons/mob/blob_ui.dmi',"shift")

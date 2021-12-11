@@ -7,7 +7,7 @@
 	var/tmp/selfCloses = 0
 	var/tmp/innerHtml
 
-	New(var/_tagName as text)
+	INIT(var/_tagName as text)
 		..()
 		tagName = _tagName
 

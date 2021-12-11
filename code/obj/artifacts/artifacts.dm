@@ -12,7 +12,7 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
 		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
@@ -118,7 +118,7 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
 		if (forceartiorigin)
@@ -223,7 +223,7 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
 		if (forceartiorigin)
@@ -272,7 +272,7 @@
 
 /obj/artifact_spawner
 	// pretty much entirely for debugging/gimmick use
-	New(var/loc,var/forceartiorigin = null,var/cinematic = 0)
+	INIT(var/loc,var/forceartiorigin = null,var/cinematic = 0)
 		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
@@ -289,7 +289,7 @@
 /obj/artifact_type_spawner
 	var/list/types = list()
 
-	New(var/loc)
+	INIT(var/loc)
 		..()
 		if(length(types))
 			Artifact_Spawn(src.loc, forceartitype = pick(src.types))
@@ -300,7 +300,7 @@
 
 /obj/artifact_type_spawner/vurdalak
 
-	New(var/loc)
+	INIT(var/loc)
 		src.types = concrete_typesof(/datum/artifact)
 		..()
 

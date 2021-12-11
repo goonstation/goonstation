@@ -73,7 +73,7 @@
 
 	var/datum/component/holdertargeting/medium_directional_light/light_dir
 
-	New()
+	INIT()
 		..()
 		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
 		if(ismob(src.loc))
@@ -453,7 +453,7 @@
 		..()
 		setProperty("meleeprot_head", 5)
 
-	New()
+	INIT()
 		..()
 		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
 		if(ismob(src.loc))
@@ -555,7 +555,7 @@
 	var/camera_network = "Zeta"
 	var/static/camera_counter = 0
 
-	New()
+	INIT()
 		..()
 		if(src.camera_tag == initial(src.camera_tag))
 			src.camera_tag = "Built [src.camera_tag] [src.camera_counter]"
@@ -642,7 +642,7 @@
 		..()
 		setProperty("meleeprot_head", 5)
 
-	New()
+	INIT()
 		..()
 		var/obj/ability_button/weeoo/NB = new
 		//NB.screen_loc = "NORTH-2,1"

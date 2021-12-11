@@ -2,7 +2,7 @@
 	name = "artifact curser"
 	associated_datum = /datum/artifact/curser
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 
 	ArtifactActivated(var/mob/living/user as mob)
@@ -25,7 +25,7 @@
 	deact_text = "ceases functioning."
 	react_xray = list(7,50,40,11,"HOLLOW")
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "HIGH INTERNAL CONVECTION"
 

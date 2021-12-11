@@ -11,7 +11,7 @@
 	var/amt_doors_to_mess_up = 40
 	var/amt_lights_to_mess_up = 60
 
-	New()
+	INIT()
 		..()
 		new_laws = list(
 #ifndef RP_MODE

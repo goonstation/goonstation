@@ -5,7 +5,7 @@ var/global/datum/game_servers/game_servers = new
 	var/list/by_ip_port = list()
 	var/list/message_kinds = list()
 
-	New()
+	INIT()
 		..()
 		load_servers() // see server_list.dm
 		for(var/type in concrete_typesof(/datum/cross_server_message, FALSE))
@@ -113,7 +113,7 @@ var/global/datum/game_servers/game_servers = new
 	var/ip_port = null
 	var/waiting_for_ip_port_auth = null
 
-	New(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
+	INIT(id, name, url, numeric_id, publ=TRUE, ghost_notif_target=TRUE)
 		..()
 		src.id = id
 		src.name = name

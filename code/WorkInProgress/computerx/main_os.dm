@@ -315,7 +315,7 @@
 /obj/item/disk/data/floppy/computerxboot
 	name = "data disk-'ThinkOS/2'"
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/terminalx_program/os/main_os(src))
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )

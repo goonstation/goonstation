@@ -9,7 +9,7 @@
 
 	var/leave_popup_open = FALSE
 
-	New(atom/L, is_admin)
+	INIT(atom/L, is_admin)
 		..()
 		src.is_admin = is_admin
 		if(istype(L, /mob))

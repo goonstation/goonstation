@@ -1,7 +1,7 @@
 /datum/languages
 	var/list/language_cache = list()
 
-	New()
+	INIT()
 		..()
 		for (var/T in typesof(/datum/language))
 			var/datum/language/L = new T()

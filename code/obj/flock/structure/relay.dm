@@ -27,7 +27,7 @@
 	var/datum/light/light
 	var/brightness = 0.5
 
-/obj/flock_structure/relay/New()
+INIT_TYPE(/obj/flock_structure/relay)
 	..()
 	// start playing sound
 	play_sound()

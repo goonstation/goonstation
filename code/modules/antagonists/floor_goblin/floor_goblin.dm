@@ -247,7 +247,7 @@
 	var/mob/living/carbon/human/target  //The victim
 	var/turf/floorturf
 
-	New(var/Source, var/Target, var/turf/starting_turf, var/ExtraDuration = 0)
+	INIT(var/Source, var/Target, var/turf/starting_turf, var/ExtraDuration = 0)
 		source = Source
 		target = Target
 		duration += ExtraDuration

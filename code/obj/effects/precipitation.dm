@@ -58,7 +58,7 @@ obj/effects/rain
 			pixel_y = 16
 			pixel_x = -16
 
-			New()
+			INIT()
 				..()
 				LAZYLISTINIT(z_particles)
 				var/z_level_str = "\"[src.loc.z]\""
@@ -122,7 +122,7 @@ obj/effects/snow
 		tile
 			particles = null
 
-			New()
+			INIT()
 				..()
 				LAZYLISTINIT(z_particles)
 				var/z_level_str = "\"[src.loc.z]\""

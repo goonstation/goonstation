@@ -73,7 +73,7 @@
 		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 
-	New()
+	INIT()
 		..()
 
 	setup_healths()
@@ -127,7 +127,7 @@
 		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 1
 
-	New()
+	INIT()
 		..()
 
 	setup_healths()

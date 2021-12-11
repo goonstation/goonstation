@@ -74,7 +74,7 @@
 	icon_state = "platingdmg3"
 
 /turf/unsimulated/floor/plating/random
-	New()
+	INIT()
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
@@ -406,7 +406,7 @@
 	RL_LumB = 0.3
 	mat_appearances_to_ignore = list("pharosium")
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("pharosium"))
 
@@ -455,7 +455,7 @@
 	mat_appearances_to_ignore = list("cloth")
 	mat_changename = 0
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("cloth"))
 
@@ -676,7 +676,7 @@
 	icon_state = "wooden-2"
 	mat_appearances_to_ignore = list("wood")
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("wood"))
 
@@ -853,7 +853,7 @@
 	name = "snow"
 	icon_state = "snow1"
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			icon_state = "snow2"
@@ -878,7 +878,7 @@
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -892,7 +892,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("synthrubber"))
 
@@ -900,7 +900,7 @@
 	icon_state = "grass_leafy"
 
 /turf/unsimulated/floor/grass/random
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -937,7 +937,7 @@
 	var/edge_priority_level = 0
 	var/icon_state_edge = null
 
-	New()
+	INIT()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
 		SPAWN_DBG(0.5 SECONDS) //give neighbors a chance to spawn in
@@ -963,7 +963,7 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS
 	icon_state_edge = "grassedge"
 
-	New()
+	INIT()
 		. = ..()
 		src.icon_state = "grass[rand(1,9)]"
 
@@ -991,7 +991,7 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "sand_edge"
 
-	New()
+	INIT()
 		..()
 		switch(rand(1,3))
 			if(1)
@@ -1013,7 +1013,7 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
 	icon_state_edge = "swampedge"
 
-	New()
+	INIT()
 		. = ..()
 		if (prob(8))
 			src.icon_state = "swamp[rand(1, 4)]"
@@ -1027,7 +1027,7 @@
 	icon_state_edge = "ice_edge"
 	mat_appearances_to_ignore = list("ice")
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("ice"))
 		name = initial(name)
@@ -1038,7 +1038,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "ice1"
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "ice[rand(1, 6)]"
 
@@ -1053,7 +1053,7 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_WATER
 	icon_state_edge = "swampedge"
 
-	New()
+	INIT()
 		. = ..()
 		if (prob(10))
 			src.icon_state = "swamp_decor[rand(1, 10)]"
@@ -1061,7 +1061,7 @@
 			src.icon_state = "swamp0"
 
 /turf/unsimulated/floor/auto/swamp/rain
-	New()
+	INIT()
 		. = ..()
 		var/image/R = image('icons/turf/water.dmi', "ripple", dir=pick(alldirs),pixel_x=rand(-10,10),pixel_y=rand(-10,10))
 		R.alpha = 180
@@ -1077,7 +1077,7 @@
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		. = ..()
 		if(src.type == /turf/unsimulated/floor/auto/snow && prob(10))
 			src.icon_state = "snow[rand(1,5)]"
@@ -1090,7 +1090,7 @@
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS + 2
 	icon_state_edge = "snow_r_edge"
 
-	New()
+	INIT()
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"

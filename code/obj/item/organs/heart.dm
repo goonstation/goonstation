@@ -20,7 +20,7 @@
 	var/blood_id = "blood"
 	var/squeeze_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 
-	New(loc, datum/organHolder/nholder)
+	INIT(loc, datum/organHolder/nholder)
 		. = ..()
 		reagents = new/datum/reagents(HEART_REAGENT_CAP)
 
@@ -120,7 +120,7 @@
 	transplant_XP = 6
 	squeeze_sound = 'sound/items/rubberduck.ogg'
 
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 

@@ -90,7 +90,7 @@
 		contained_item = null
 		item_amount = 20
 
-		New()
+		INIT()
 			. = ..()
 			contained_item = pick(concrete_typesof(/obj/item/sticker/glow))
 
@@ -165,7 +165,7 @@
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
-				New()
+				INIT()
 					.=..()
 					flags |= SUPPRESSATTACK
 				var/next_use = 0
@@ -258,7 +258,7 @@
 			src.box_color.color = average.to_rgba()
 			src.UpdateOverlays(src.box_color, "reagentcolour")
 
-		New()
+		INIT()
 			..()
 			build_overlay()
 
@@ -323,7 +323,7 @@
 		icon_open = "heart_box-open"
 		icon_empty = "heart_box-empty"
 
-	New()
+	INIT()
 		..()
 		if (src.contained_items_proc)
 			src.set_contained_items()

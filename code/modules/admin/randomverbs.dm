@@ -725,7 +725,7 @@
 
 	var/icon/preview_icon = null
 
-	New(var/client/newuser, var/mob/target)
+	INIT(var/client/newuser, var/mob/target)
 		..()
 		if(!newuser || !ishuman(target))
 			qdel(src)

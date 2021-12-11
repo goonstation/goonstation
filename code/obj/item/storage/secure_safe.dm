@@ -19,7 +19,7 @@
 	burn_possible = 0
 	var/random_code = 0 // sets things to already have a randomized code on spawning
 
-/obj/item/storage/secure/New()
+INIT_TYPE(/obj/item/storage/secure)
 	..()
 	if (src.random_code)
 		src.code = random_hex(4)
@@ -557,7 +557,7 @@
 
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
-	New()
+	INIT()
 		..()
 		var/iou_name = pick(uppercase_letters) + " " + pick_string_autokey("names/last.txt")
 		if (prob(1))
@@ -575,7 +575,7 @@
 	configure_mode = 0
 	random_code = 1
 
-	New()
+	INIT()
 		..()
 		var/loot = rand(1,2)
 		switch (loot)
@@ -598,7 +598,7 @@
 /obj/item/paper/thevonricken
 	name = "This is hell! Oh god!"
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "paper_singed"
 		src.desc = "It looks like someone had jotted stuff down on it in frantic haste!"
@@ -623,7 +623,7 @@
 	configure_mode = 0
 	random_code = 1
 
-	New()
+	INIT()
 		..()
 		var/loot = rand(1,2)
 		switch (loot)
@@ -643,7 +643,7 @@
 /obj/item/paper/orangeroomsafe
 	name = "Bon voyage!"
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "thermal_paper"
 		src.desc = "This piece of paper has been scribbled on with focused elegance."
@@ -665,7 +665,7 @@
 	configure_mode = 0
 	random_code = 1
 
-	New()
+	INIT()
 		..()
 		var/loot = rand(1,4)
 		switch (loot)
@@ -685,7 +685,7 @@
 /obj/item/paper/freeze
 	name = "paper-'Recipe for Freeze'"
 
-	New()
+	INIT()
 		..()
 		src.desc = "This piece of paper looks pretty worn and has a bunch of stains on it."
 		src.info = {"<li>Gin</li><br>
@@ -727,7 +727,7 @@
 	random_code = 1
 	var/disabled = 1
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 

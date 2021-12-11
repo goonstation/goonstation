@@ -59,7 +59,7 @@
 	///The glow overlay.
 	var/image/glow
 
-	New()
+	INIT()
 		..()
 		anchored = 1
 		firevuln = 0

@@ -7,7 +7,7 @@
 	var/triggerable = null
 	var/is_unpress = 0
 
-	New()
+	INIT()
 		..()
 		if(triggerer) // accidentally setting these ids on the map is so common that i'm gonna cry
 			triggerer_id = triggerer

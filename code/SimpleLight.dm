@@ -98,7 +98,7 @@
 
 /obj/overlay/simple_light/medium
 	icon_state = "medium_dir"
-	New(loc, dir=0)
+	INIT(loc, dir=0)
 		..()
 		src.set_dir(dir)
 		switch(dir)

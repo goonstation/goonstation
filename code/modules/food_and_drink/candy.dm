@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	var/razor_blade = 0 //Is this BOOBYTRAPPED CANDY?
 	festivity = 1
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("sugar", sugar_content)
 		return
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		icon_state = "candy-poison"
 
 
-		New()
+		INIT()
 			..()
 			reagents.add_reagent("capulettium", 10)
 			return
@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	name = "\improper Mabie Nott's Some Flavor Bean"
 	desc = "Fresh organic jellybeans packed with...something."
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -220,7 +220,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	name = "\improper Farty Snott's Every Flavour Bean"
 	desc = "A favorite halloween sweet worldwide!"
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -301,7 +301,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	amount = 5
 	real_name = "lollipop"
 
-	New()
+	INIT()
 		..()
 		if (src.icon_random)
 			src.icon_state = "lpop-[rand(1,6)]"
@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	icon_state = "lpop-"
 	var/list/flavors = list("omnizine", "saline", "salicylic_acid", "epinephrine", "mannitol", "synaptizine", "anti_rad", "oculine", "salbutamol", "charcoal")
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.icon_state == "lpop-")
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	food_color = "#e50000"
 	initial_volume = 10
 
-	New()
+	INIT()
 		if (prob(33))
 			src.initial_reagents = "swedium"
 		..()
@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	amount = 1
 	sugar_content = 5
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("juice_peach",5)
 
@@ -411,7 +411,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	 "Law 4: Rearrange the alphabet and put U and AI together", "HALP THE CUTIE IS GRIFFIN MEH", "CUTECURITY!!!", "I honk u", "All access to my <3", "Greytide my heart", "Wear my butt as a hat",
 	 "Maecho love", "Love birds", "Bee still my heart", "Get in my clown car", "Meet me in maintenance", "Let's fly into the sun", "Deep fried love")
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "heart-[rand(1,5)]"
 		phrase = pick(src.heart_phrases)
@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	var/flavor
 	var/list/flavors
 
-	New()
+	INIT()
 		..()
 		desc += flavor
 		var/datum/reagents/R = reagents

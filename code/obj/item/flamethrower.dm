@@ -68,7 +68,7 @@ A Flamethrower in various states of assembly
 	spread_angle = 0
 	shoot_delay = 1 SECOND
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		setItemSpecial(null)
@@ -199,7 +199,7 @@ A Flamethrower in various states of assembly
 	inventory_counter_enabled = 1
 	move_triggered = 1
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(4000)
 		inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
@@ -299,7 +299,7 @@ A Flamethrower in various states of assembly
 	shoot_delay = 5 DECI SECONDS
 
 
-	New()
+	INIT()
 		var/obj/item/tank/jetpack/backtank/B = new /obj/item/tank/jetpack/backtank(src.loc)
 		src.gastank = B
 		src.fueltank = B
@@ -314,11 +314,11 @@ A Flamethrower in various states of assembly
 			B.linkedflamer = null
 		..()
 /obj/item/gun/flamethrower/backtank/napalm
-	New()
+	INIT()
 		..()
 		gastank.reagents.add_reagent("syndicate_napalm", 4000)
 
-/obj/item/gun/flamethrower/assembled/New()
+INIT_TYPE(/obj/item/gun/flamethrower/assembled)
 	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
@@ -339,7 +339,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/assembled/loaded/
 	icon_state = "flamethrower_oxy_fuel"
 
-	New()
+	INIT()
 		if(!fueltank)
 			fueltank = new /obj/item/reagent_containers/food/drinks/fueltank(src)
 		gastank = new /obj/item/tank/oxygen(src)
@@ -348,7 +348,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/assembled/loaded/napalm
 	icon_state = "flamethrower_oxy_fuel"
 
-	New()
+	INIT()
 		fueltank = new /obj/item/reagent_containers/food/drinks/fueltank/napalm(src)
 		..()
 
@@ -369,7 +369,7 @@ A Flamethrower in various states of assembly
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 
-/obj/item/assembly/weld_rod/New()
+INIT_TYPE(/obj/item/assembly/weld_rod)
 	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
@@ -390,7 +390,7 @@ A Flamethrower in various states of assembly
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 
-/obj/item/assembly/w_r_ignite/New()
+INIT_TYPE(/obj/item/assembly/w_r_ignite)
 	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods

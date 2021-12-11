@@ -59,7 +59,7 @@
 	var/list/rep_changes_all = list()
 	var/client/master = null
 
-	New(var/client/C)
+	INIT(var/client/C)
 		if(C)
 			master = C
 		..()

@@ -9,7 +9,7 @@ Right Mouse Button on buildmode    = Select reagent<br>
 	var/reagent_id
 	var/datum/reagents/reagent_holder
 
-	New()
+	INIT()
 		..()
 		reagent_holder = new(20)
 		reagent_holder.my_atom = new /obj()

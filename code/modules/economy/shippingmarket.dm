@@ -43,7 +43,7 @@
 	/// an artifact crate is already "on the way"
 	var/artifacts_on_the_way = FALSE
 
-	New()
+	INIT()
 		..()
 
 		add_commodity(new /datum/commodity/goldbar(src))

@@ -13,7 +13,7 @@
 	//var/id = "ghostdrone"
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -137,7 +137,7 @@ var/global/list/ghostdrone_candidates = list()
 	var/worked_time = 0 // how long the current work cycle has run
 	var/single_system = 0 // for destiny, does this only need one machine in order to make all the parts?
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "factory[src.factory_section][src.working]"
 		SPAWN_DBG(1 SECOND)
@@ -309,7 +309,7 @@ var/global/list/ghostdrone_candidates = list()
 	mats = 0
 	var/stage = 1
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "drone-stage[src.stage]"
 
@@ -332,7 +332,7 @@ var/global/list/ghostdrone_candidates = list()
 	var/list/obj/machinery/drone_recharger/factory/factory_rechargers = list()
 	var/conveyors_active = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.update_conveyors()

@@ -13,7 +13,7 @@
 	var/mob/living/target
 	var/datum/targetable/critter/envelope/envelope
 
-	New(Target, Envelope)
+	INIT(Target, Envelope)
 		target = Target
 		envelope = Envelope
 		..()

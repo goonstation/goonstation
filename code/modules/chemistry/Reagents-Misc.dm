@@ -3969,7 +3969,7 @@ datum
 	var/mob/deathtarget = null
 	var/deathspeed = 3
 
-	New(pickedstart, var/mob/badmantarget)
+	INIT(pickedstart, var/mob/badmantarget)
 		deathtarget = badmantarget
 		SPAWN_DBG(0) process()
 		..()

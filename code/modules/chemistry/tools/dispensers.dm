@@ -22,7 +22,7 @@
 			W:cargoteleport(src, user)
 		return
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(4000)
 
@@ -87,7 +87,7 @@
 	anchored = 1
 	amount_per_transfer_from_this = 5
 
-	New()
+	INIT()
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
@@ -116,7 +116,7 @@
 	amount_per_transfer_from_this = 5
 	color = "#160505"
 
-	New()
+	INIT()
 		..()
 		var/scale = (rand(2, 10) / 10) + (rand(0, 5) / 100)
 		src.Scale(scale, scale)
@@ -143,7 +143,7 @@
 	icon_state = "foamtank"
 	amount_per_transfer_from_this = 25
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("ff-foam",1000)
 
@@ -155,7 +155,7 @@
 	amount_per_transfer_from_this = 25
 	capacity = 1000
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("water",capacity)
 
@@ -179,7 +179,7 @@
 				src.anchored = 0
 			return
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(10000)
 		reagents.add_reagent("water",10000)
@@ -202,7 +202,7 @@
 	var/image/fluid_sprite = null
 	var/image/tank_sprite = null
 
-	New()
+	INIT()
 		..()
 
 		src.cup_sprite = new /image(src.icon, "coolercup")
@@ -294,7 +294,7 @@
 				src.UpdateIcon()
 
 	piss
-		New()
+		INIT()
 			..()
 			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
@@ -305,7 +305,7 @@
 		color = "#ffffcc"
 
 	juicer
-		New()
+		INIT()
 			..()
 			src.create_reagents(4000)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
@@ -327,7 +327,7 @@
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("fuel",4000)
 
@@ -369,7 +369,7 @@
 	icon_state = "heliumtank"
 	amount_per_transfer_from_this = 25
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("helium",4000)
 
@@ -380,7 +380,7 @@
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("beer",1000)
 
@@ -392,7 +392,7 @@
 	anchored = 0
 	amount_per_transfer_from_this = 30
 	event_handler_flags = NO_MOUSEDROP_QOL
-	New()
+	INIT()
 		..()
 
 	get_desc(dist, mob/user)
@@ -580,7 +580,7 @@
 
 	var/image/fluid_image
 
-	New()
+	INIT()
 		..()
 		fluid_image = image(src.icon, "fluid-[src.icon_state]")
 

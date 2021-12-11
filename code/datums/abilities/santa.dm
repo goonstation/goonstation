@@ -49,7 +49,7 @@
 	var/stealthed = 0
 	var/const/MAX_POINTS = 100
 
-	New()
+	INIT()
 		..()
 
 	disposing()
@@ -69,7 +69,7 @@
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/santa/B = new /atom/movable/screen/ability/topBar/santa(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

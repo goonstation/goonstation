@@ -5,7 +5,7 @@
 	item_state = "hakama_1"
 
 /obj/item/clothing/under/gimmick/hakama/random
-	New()
+	INIT()
 		var/n = rand(1,6)
 		icon_state = "hakama_[n]"
 		item_state = "hakama_[n]"

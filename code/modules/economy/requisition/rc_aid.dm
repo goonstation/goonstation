@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 	var/list/desc_enhancer2 = list("severe","catastrophic","hazardous","critical","disastrous")
 	var/list/desc_whatborked = list("reactor failure","hull breach","core breach","hull rupture","gravimetric shear","collision","canister explosion")
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_placetype)] has [pick(desc_enhancer1)] a [pick(desc_enhancer2)] [pick(desc_whatborked)]"
 		src.flavor_desc += " and requires repair supplies as soon as possible."
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 		"Several individuals are yet unaccounted for, and may require care."
 	)
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		"The system is hard-wired into several others, and malfunctions may propagate if not repaired."
 	)
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		src.flavor_desc = "An affiliated [pick(desc_wherebork)] [pick(desc_whobork)] has [pick(desc_whybork)] [pick(desc_howmuchbork)] its [pick(desc_sys)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,40) * 10
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		" No further transmission has been sent since requisition posting."
 	)
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		var/tilter = pick(desc_shortage)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_place)] is experiencing"
@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 			/obj/item/plant/herb/tobacco
 		)
 
-	New()
+	INIT()
 		var/obj/plantalyze = pick(src.herblist)
 		src.name = initial(plantalyze.name)
 		src.typepath = plantalyze

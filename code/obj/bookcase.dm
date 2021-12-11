@@ -52,7 +52,7 @@
 	list(7,2,22,7),\
 	list(7,2,25,7))
 
-	New()
+	INIT()
 		..()
 		if (variant)
 			update_icon_suffix = "[rand(1,2)]"
@@ -264,7 +264,7 @@
 	list(1,3,28,8),\
 	list(1,3,32,8))
 
-	New()
+	INIT()
 		..()
 		pixel_y += 32 //shifts it up to the tile above it
 
@@ -346,7 +346,7 @@
 	density = 0
 	var/file_name = "data/persistent_bookshelf.json"
 
-	New()
+	INIT()
 		..()
 		for_by_tcl(other_bookshelf, /obj/bookshelf/persistent)
 			if(other_bookshelf.file_name == src.file_name)

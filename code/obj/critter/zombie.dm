@@ -322,7 +322,7 @@
 	butcherable = 0
 	defensive = 1
 
-	New()
+	INIT()
 		..()
 		src.add_simple_light("rad", list(0, 0.8 * 255, 0.3 * 255, 0.8 * 255))
 

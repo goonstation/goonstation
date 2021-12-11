@@ -30,7 +30,7 @@
 	var/is_on = 0   // used if a toggle ability
 	preferred_holder_type = /datum/abilityHolder/critter
 
-	New()
+	INIT()
 		..()
 		var/atom/movable/screen/ability/topBar/critter/B = new /atom/movable/screen/ability/topBar/critter(null)
 		B.icon = src.icon

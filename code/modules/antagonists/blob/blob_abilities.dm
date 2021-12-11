@@ -13,7 +13,7 @@
 	var/special_screen_loc = null
 	var/helpable = 1
 
-	New()
+	INIT()
 		..()
 		var/atom/movable/screen/blob/B = new /atom/movable/screen/blob(null)
 		B.icon = src.icon
@@ -594,7 +594,7 @@
 	var/mob/living/intangible/blob_overmind/blob_o
 
 	//Target (obvious),
-	New(Target, var/mob/living/intangible/blob_overmind/blob_o)
+	INIT(Target, var/mob/living/intangible/blob_overmind/blob_o)
 		..()
 		target = Target
 		if (!istype(target))
@@ -1079,7 +1079,7 @@
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
 
-	New()
+	INIT()
 		..()
 		var/atom/movable/screen/blob/B = new /atom/movable/screen/blob(null)
 		B.icon = src.icon

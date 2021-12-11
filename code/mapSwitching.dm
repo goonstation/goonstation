@@ -26,7 +26,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/list/previousVotes = list() //a list of how people voted for every vote
 
 
-	New()
+	INIT()
 		..()
 		src.setupPickableList()
 

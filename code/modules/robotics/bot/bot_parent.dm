@@ -77,7 +77,7 @@
 			return 0
 		return ..()
 
-	New()
+	INIT()
 		..()
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitbyproj)
 		if(!no_camera)
@@ -285,7 +285,7 @@
 	var/scanrate = 10
 	var/max_dist = 600
 
-	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
+	INIT(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
 		if(istype(newmaster))
 			src.master = newmaster

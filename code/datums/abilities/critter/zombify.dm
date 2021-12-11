@@ -11,7 +11,7 @@
 	var/mob/living/target
 	var/datum/targetable/critter/zombify/zombify
 
-	New(Target, Zombify)
+	INIT(Target, Zombify)
 		target = Target
 		zombify = Zombify
 		..()

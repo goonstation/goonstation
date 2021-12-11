@@ -258,7 +258,7 @@ that cannot be itched
 	var/image/scanner_status
 	hide_attack = 2
 
-	New()
+	INIT()
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
 		UpdateOverlays(scanner_status, "status")
@@ -353,7 +353,7 @@ that cannot be itched
 	organ_upgrade = 1
 	organ_scan = 1
 
-	New()
+	INIT()
 		..()
 		scanner_status.icon_state = "health_over-both"
 		UpdateOverlays(scanner_status, "status")

@@ -24,7 +24,7 @@
 	var/monitor_id = "MONITOR-1"				//set in map maker
 	var/network = "SS13"			//used in camera computer
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			video_screen = new(src.loc, owner = src)
@@ -96,7 +96,7 @@
 	var/obj/machinery/security_monitor/owner
 	var/image/blank
 
-	New(var/obj/machinery/security_monitor/owner)
+	INIT(var/obj/machinery/security_monitor/owner)
 		..()
 		src.owner = owner
 		pixel_x = owner.pixel_x

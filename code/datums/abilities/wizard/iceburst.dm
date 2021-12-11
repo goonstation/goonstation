@@ -96,7 +96,7 @@
 	var/steam_on_death = 1
 	var/add_underlay = 1
 
-	New(loc, mob/iced as mob)
+	INIT(loc, mob/iced as mob)
 		..()
 		if(iced && !isAI(iced) && !isblob(iced) && !iswraith(iced))
 			if(istype(iced.loc, /obj/icecube)) //Already in a cube?

@@ -190,7 +190,7 @@
 /obj/item/reagent_containers/emergency_injector/random
 	name = "emergency auto-injector (???)"
 	label = "black"
-	New()
+	INIT()
 		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
 		..()
 

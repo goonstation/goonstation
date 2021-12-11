@@ -33,7 +33,7 @@
 	light_g = 1
 	light_b = 0.1
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, status_display_freq)
 

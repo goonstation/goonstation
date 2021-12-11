@@ -10,7 +10,7 @@
 	anchored = 1
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.update_dir()
@@ -67,7 +67,7 @@
 	var/obj/machinery/magnet_chassis/chassis = null
 	var/mob/master = null
 
-	New(var/obj/item/magnet_parts/parts, var/obj/machinery/magnet_chassis/target, var/mob/user)
+	INIT(var/obj/item/magnet_parts/parts, var/obj/machinery/magnet_chassis/target, var/mob/user)
 		..()
 		mag_parts = parts
 		chassis = target
@@ -376,7 +376,7 @@
 				return target.check_for_unacceptable_content()
 			return 1
 
-		New()
+		INIT()
 			..()
 			if (mining_apc)
 				mining_apc = null // Don't want random apcs across the map going haywire.
@@ -470,7 +470,7 @@
 			get_encounter(rarity_mod)
 				return mining_controls.select_small_encounter(rarity_mod)
 
-	New()
+	INIT()
 		..()
 		active_overlay = image(src.icon, "active")
 		damage_overlays += image(src.icon, "damage-1")
@@ -877,7 +877,7 @@
 	object_flags = CAN_REPROGRAM_ACCESS
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.connection_scan()
@@ -1094,7 +1094,7 @@
 
 
 
-	New(var/loc)
+	INIT(var/loc)
 		src.icon_state = pick("ast1","ast2","ast3")
 		..()
 		worldgenCandidates += src
@@ -1444,7 +1444,7 @@
 		space_overlays()
 			return
 
-	New()
+	INIT()
 		..()
 		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
@@ -1534,7 +1534,7 @@
 	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
-	New()
+	INIT()
 		..()
 		if(cell_type)
 			var/cell = new cell_type
@@ -1605,7 +1605,7 @@ obj/item/clothing/gloves/concussive
 	material_prints = "industrial-grade mineral fibers"
 	var/obj/item/mining_tool/tool = null
 
-	New()
+	INIT()
 		..()
 		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
 		src.tool = T
@@ -1629,7 +1629,7 @@ obj/item/clothing/gloves/concussive
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
-	New()
+	INIT()
 		..()
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		src.power_up()
@@ -1692,7 +1692,7 @@ obj/item/clothing/gloves/concussive
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
-	New()
+	INIT()
 		..()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
 		src.power_up()
@@ -1745,7 +1745,7 @@ obj/item/clothing/gloves/concussive
 	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
@@ -1919,7 +1919,7 @@ obj/item/clothing/gloves/concussive
 	flags = ONBELT
 	mats = 4
 
-	New()
+	INIT()
 		. = ..()
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
@@ -2014,7 +2014,7 @@ obj/item/clothing/gloves/concussive
 	cell_type = /obj/item/ammo/power_cell/med_power
 	var/list/possible_targets = list()
 
-	New()
+	INIT()
 		..()
 		for(var/turf/T in world) //hate to do this but it's only once per spawn vOv
 			LAGCHECK(LAG_LOW)
@@ -2140,7 +2140,7 @@ obj/item/clothing/gloves/concussive
 	var/target = null
 	var/group = null
 
-	New()
+	INIT()
 		var/obj/item/cell/P = new/obj/item/cell(src)
 		P.charge = P.maxcharge
 		src.cell = P
@@ -2296,7 +2296,7 @@ var/global/list/cargopads = list()
 	researchoutpost
 		name = "Research Outpost Pad"
 
-	New()
+	INIT()
 		..()
 		src.overlays += image('icons/obj/objects.dmi', "cpad-rec")
 		if (src.name == "Cargo Pad")
@@ -2349,14 +2349,14 @@ var/global/list/cargopads = list()
 	var/obj/item/satchel/mining/satchel = null
 
 	prepared
-		New()
+		INIT()
 			..()
 			var/obj/item/satchel/mining/S = new /obj/item/satchel/mining(src)
 			satchel = S
 			icon_state = "scoop-bag"
 
 	borg
-		New()
+		INIT()
 			..()
 			var/obj/item/satchel/mining/large/S = new /obj/item/satchel/mining/large(src)
 			satchel = S

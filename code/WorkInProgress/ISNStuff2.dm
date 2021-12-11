@@ -145,7 +145,7 @@
 	anchored = 1
 	var/has_processing_loop = 0
 
-	New(var/turf/loc)
+	INIT(var/turf/loc)
 		..()
 		if (has_processing_loop)
 			global.processing_items.Add(src)

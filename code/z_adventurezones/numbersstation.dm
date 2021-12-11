@@ -56,7 +56,7 @@ Thanks to our agents inside the organization, we were able to identify two infil
 	sizex = 400
 	sizey = 600
 
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
@@ -183,7 +183,7 @@ Nanotrasen, Inc.<br>
 	desc = "It's blank. Well, other than the blood, anyway."
 	icon_state = "paper_caution_bloody"
 	info = "<i>The paper is full of eraser marks and scratches but there is nothing legible on here.</i>"
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
@@ -202,7 +202,7 @@ Nanotrasen, Inc.<br>
 <b>Thank</b>... <i>the rest of the invoice is covered in blood and illegible</i>"}
 	icon_state = "paper_caution_bloody"
 
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
@@ -245,7 +245,7 @@ Nanotrasen, Inc.<br>
 	var/next_warning = 0
 	var/next_play = 0
 
-	New()
+	INIT()
 		..()
 		processing_items |= src
 		if (ticker)

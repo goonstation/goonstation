@@ -21,7 +21,7 @@
 	var/made_from = "bone"
 	var/last_use = 0
 
-	New(loc, datum/organHolder/nholder)
+	INIT(loc, datum/organHolder/nholder)
 		..()
 		SPAWN_DBG(0)
 			if (istype(nholder) && nholder.donor)

@@ -73,7 +73,7 @@ var/list/master_particle_info = list()
 /datum/particle_editor
 	var/atom/movable/target
 
-/datum/particle_editor/New(atom/target)
+INIT_TYPE(/datum/particle_editor, atom/target)
 	..()
 	src.target = target
 

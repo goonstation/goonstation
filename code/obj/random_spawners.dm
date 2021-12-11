@@ -16,7 +16,7 @@
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	// TODO: initialize
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.spawn_items()
@@ -940,7 +940,7 @@
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.set_up()
@@ -1771,7 +1771,7 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 	items2spawn = null
-	New()
+	INIT()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
 
@@ -1858,7 +1858,7 @@
 		max_amt2spawn = 3
 
 /obj/random_item_spawner/organs/bloody
-	New()
+	INIT()
 		. = ..()
 		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
 			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

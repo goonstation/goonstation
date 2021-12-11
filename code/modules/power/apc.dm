@@ -140,7 +140,7 @@ var/zapLimiter = 0
 
 
 
-/obj/machinery/power/apc/New()
+INIT_TYPE(/obj/machinery/power/apc)
 	..()
 	START_TRACKING
 	// offset 24 pixels in direction of dir

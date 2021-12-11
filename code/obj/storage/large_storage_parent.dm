@@ -58,7 +58,7 @@
 
 	var/grab_stuff_on_spawn = TRUE
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		weld_image = image(src.icon, src.icon_welded)
@@ -746,7 +746,7 @@
 	var/obj/storage/the_storage
 	var/obj/item/wrench/the_wrench
 
-	New(var/obj/storage/S, var/obj/item/wrench/W, var/duration_i)
+	INIT(var/obj/storage/S, var/obj/item/wrench/W, var/duration_i)
 		..()
 		if (S)
 			the_storage = S
@@ -803,7 +803,7 @@
 	var/radio_control = FREQ_SECURE_STORAGE
 	var/net_id
 
-	New()
+	INIT()
 		..()
 		if (isnum(src.radio_control))
 			radio_control = clamp(round(radio_control), 1000, 1500)

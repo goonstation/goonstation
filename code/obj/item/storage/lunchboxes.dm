@@ -10,7 +10,7 @@
 	w_class = W_CLASS_NORMAL
 	max_wclass = 2
 
-	New()
+	INIT()
 		..()
 		var/my_lunchbox = pick("black","red","orange","yellow","purple")
 		src.icon_state = "lunchbox_[my_lunchbox]"
@@ -110,7 +110,7 @@
 	name = "note"
 	desc = "Dang, who wrote this?"
 
-	New()
+	INIT()
 		..()
 		var/which = rand(1,11)
 		switch(which)

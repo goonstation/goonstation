@@ -3,7 +3,7 @@
 /mob/living/carbon/human/cyalume_knight
 	gender = "male"
 	var/obj/item/sword/my_sword
-	New()
+	INIT()
 		..()
 
 		real_name = "Cyalume Knight"
@@ -155,7 +155,7 @@
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/cyalume_knight
 
-	New(datum/abilityHolder/holder)
+	INIT(datum/abilityHolder/holder)
 		..(holder)
 		var/atom/movable/screen/ability/topBar/cyalume_knight/B = new /atom/movable/screen/ability/topBar/cyalume_knight(null)
 		B.icon = src.icon
@@ -288,7 +288,7 @@
 	var/num_projectiles = 12
 	var/datum/projectile/fired_projectile
 
-	New()
+	INIT()
 		..()
 		fired_projectile = new /datum/projectile/force_wave()
 
@@ -371,7 +371,7 @@
 	var/list/lightning_targets
 
 
-	New(user,knightabilityholder,targetturf,lightningabil,potentiallightningtargets)
+	INIT(user,knightabilityholder,targetturf,lightningabil,potentiallightningtargets)
 		M = user
 		H = knightabilityholder
 		HH = targetturf
@@ -483,7 +483,7 @@
 	var/original_pixel_y
 
 
-	New(user,knightabilityholder,targetmob,chokeabil,potentiallightningtargets,origpixely)
+	INIT(user,knightabilityholder,targetmob,chokeabil,potentiallightningtargets,origpixely)
 		M = user
 		H = knightabilityholder
 		HH = targetmob
@@ -564,7 +564,7 @@
 	var/datum/abilityHolder/cyalume_knight/H
 	var/datum/targetable/cyalume_knight/force_choke/healability
 
-	New(user,knightabilityholder,healabil)
+	INIT(user,knightabilityholder,healabil)
 		M = user
 		H = knightabilityholder
 		healability = healabil
@@ -677,7 +677,7 @@
 	var/reinforced = 0
 	var/hardoverride = 0 // AddEffect won't add a power if the subject already has it. If this is 1, it will remove and overwrite any pre-existing mutations of the same type.
 
-	New(id, time = 0, stabilized = 0, magical = 0, power = 1, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
+	INIT(id, time = 0, stabilized = 0, magical = 0, power = 1, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
 		. = ..()
 		src.id = id
 		src.time = time
@@ -748,7 +748,7 @@
 	envelop_message = "fiery embers"
 	leaving_message = "dispersing"
 
-	New()
+	INIT()
 		. = ..()
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "fire_resist", magical = 1),
 		new /datum/mutation_orb_mutdata(id = "aura_fire", magical = 1),
@@ -812,7 +812,7 @@
 	var/property_value
 	var/inverse = 0  // stupid negative stats AAH *scream
 
-	New(incrementative, cap, property_name, property_value, inverse = 0)
+	INIT(incrementative, cap, property_name, property_value, inverse = 0)
 		. = ..()
 		src.incrementative = incrementative
 		src.cap = cap
@@ -900,7 +900,7 @@
 	prefix_to_set = "fire-imbued"
 	color_to_set = "#ff8902"
 
-	New()
+	INIT()
 		. = ..()
 		properties_to_set = list(new /datum/property_setter_property(incrementative = 0, cap = 100, property_name = "heatprot", property_value = 100))
 
@@ -912,7 +912,7 @@
 	prefix_to_set = "reinforced"
 	color_to_set = "#9ddcfa"
 
-	New()
+	INIT()
 		. = ..()
 		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = 12, property_name = "meleeprot", property_value = 4),
 		new /datum/property_setter_property(incrementative = 1, cap = 8, property_name = "rangedprot", property_value = 2))
@@ -924,7 +924,7 @@
 	prefix_to_set = "thermal"
 	color_to_set = "#fcca91"
 
-	New()
+	INIT()
 		. = ..()
 		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "coldprot", property_value = 60),
 		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "heatprot", property_value = 45))
@@ -936,7 +936,7 @@
 	prefix_to_set = "speedy"
 	color_to_set = "#0040b8"
 
-	New()
+	INIT()
 		. = ..()
 		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "movespeed", property_value = -0.15, inverse = 1),
 		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "space_movespeed", property_value = -0.15, inverse = 1))

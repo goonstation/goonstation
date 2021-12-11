@@ -40,7 +40,7 @@
 
 	var/mode = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.link_gutter()

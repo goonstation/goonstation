@@ -3,7 +3,7 @@
 	var/atom/movable/screen/intent
 	var/atom/movable/screen/health
 
-	New(M)
+	INIT(M)
 		..()
 		master = M
 		health = create_screen("health","Health", 'icons/mob/wraith_ui.dmi', "health-7", "EAST, NORTH", HUD_LAYER, tooltipTheme = "healthDam healthDam0")

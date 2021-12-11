@@ -35,7 +35,7 @@
 		/* per-tick nuke debug messages */
 		stfu = 1
 
-	New()
+	INIT()
 		..()
 
 

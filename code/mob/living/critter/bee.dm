@@ -55,7 +55,7 @@
 
 	var/non_admin_bee_allowed = 0
 
-	New()
+	INIT()
 		..()
 		// bee mobs should have their actual bee names
 		real_name = name
@@ -1058,7 +1058,7 @@ obj/effects/bees
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = new/particles/swarm/bees
 
-	New(atom/movable/A)
+	INIT(atom/movable/A)
 		..()
 		if(istype(A))
 			A.vis_contents += src

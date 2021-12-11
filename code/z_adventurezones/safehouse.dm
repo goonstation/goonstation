@@ -115,7 +115,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	mode = 1
 	initial_reagents = "blood"
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 
@@ -132,7 +132,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	var/allowed_bioHolders = null
 	var/cooldown = 1 SECOND
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		UnsubscribeProcess()
@@ -185,7 +185,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	layer = 3.1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 
 		light = new /datum/light/point
@@ -297,7 +297,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = 1
 
 /obj/item/disk/data/fixed_disk/safehouse_rdrive
-	New()
+	INIT()
 		..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder()
@@ -330,7 +330,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "One of those briefcases spies leave at park benches."
 	spawn_contents = list(/obj/item/paper/safehouse/cloner_note)
 
-	New()
+	INIT()
 		..()
 		var/obj/item/spacecash/random/tourist/S1 = new /obj/item/spacecash/random/tourist
 		S1.setup(src)
@@ -476,7 +476,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new/datum/light/point //We want this to stand out in the dark & draw the player to examine it.
 		light.set_brightness(0.3)
@@ -582,12 +582,12 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		"}
 
 /datum/computer/file/record/saferoom/
-	New()
+	INIT()
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"
 
 	medical_appointment
-		New()
+		INIT()
 			..()
 			fields = list("PublicNT", //Mailnet
 "*ALL", //Workgroup
@@ -612,7 +612,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "Sarah Rudd")
 
 	handscanner_ceo
-		New()
+		INIT()
 			..()
 			fields = list("PublicNT", //Mailnet
 "*ALL", //Workgroup
@@ -653,7 +653,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "Your security is our priority.")
 
 	package_delivery
-		New()
+		INIT()
 			..()
 			fields = list("PublicNT", //Mailnet
 "*ALL", //Workgroup
@@ -682,7 +682,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "EZATMOS")
 
 	party_plans
-		New()
+		INIT()
 			..()
 			fields = list("PublicNT", //Mailnet
 "*ALL", //Workgroup
@@ -704,7 +704,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 "Double T")
 
 	medical_results
-		New()
+		INIT()
 			..()
 			fields = list("PublicNT", //Mailnet
 "*ALL", //Workgroup

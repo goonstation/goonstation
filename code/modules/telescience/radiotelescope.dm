@@ -8,7 +8,7 @@
 
 	var/tracking_id = "" //id of the event we're tracking/targeting.
 
-	New()
+	INIT()
 		..()
 
 	attack_ai(mob/user as mob)

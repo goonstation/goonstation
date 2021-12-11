@@ -79,7 +79,7 @@
 	var/list/definitions = list()
 	var/list/instances = list()
 
-	New()
+	INIT()
 
 		var/list/added_for_fill = list()
 
@@ -210,7 +210,7 @@
 
 /* commented out until tobba can fix it (please fix it tobba I do not know how) and replacement added below with the blinded_l & blinded_r overlays
 /datum/overlayComposition/blinded
-	New()
+	INIT()
 		var/datum/overlayDefinition/spot = new()
 		spot.d_icon = 'icons/effects/overlays/knockout2.dmi'
 		spot.d_icon_state = "knockout2"
@@ -228,7 +228,7 @@
 		return ..()
 */
 /datum/overlayComposition/flashed
-	New()
+	INIT()
 		var/datum/overlayDefinition/beam = new()
 		beam.d_icon = 'icons/effects/overlays/beamout.dmi'
 		beam.d_icon_state = "beamout"
@@ -245,7 +245,7 @@
 		return ..()
 
 /datum/overlayComposition/smoke
-	New()
+	INIT()
 		var/datum/overlayDefinition/spot = new()
 		spot.d_icon = 'icons/effects/overlays/knockout.dmi'
 		spot.d_icon_state = "knockout"
@@ -270,7 +270,7 @@
 		return ..()
 
 /datum/overlayComposition/heat
-	New()
+	INIT()
 		var/datum/overlayDefinition/part1 = new()
 		part1.d_icon = 'icons/effects/overlays/meatysmall.dmi'
 		part1.d_icon_state = "meatysmall"
@@ -289,7 +289,7 @@
 		return ..()
 
 /datum/overlayComposition/anima
-	New()
+	INIT()
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon = 'icons/effects/overlays/beamout.dmi'
 		zero.d_icon_state = "beamout"
@@ -300,7 +300,7 @@
 		return ..()
 
 /datum/overlayComposition/triplemeth
-	New()
+	INIT()
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon = 'icons/effects/overlays/meatysmall.dmi'
 		zero.d_icon_state = "meatysmall"
@@ -329,7 +329,7 @@
 
 /datum/overlayComposition/static_noise
 	var/special_blend = BLEND_DEFAULT
-	New()
+	INIT()
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon = 'icons/effects/overlays/noise.dmi'
 		zero.d_icon_state = "noise"
@@ -345,7 +345,7 @@
 
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/blinded
-	New()
+	INIT()
 		var/datum/overlayDefinition/dither = new()
 		dither.d_icon = 'icons/effects/overlays/knockout2t.dmi'
 		dither.d_icon_state = "knockout2t"
@@ -364,7 +364,7 @@
 		return ..()
 
 /datum/overlayComposition/blinded_r_eye
-	New()
+	INIT()
 		var/datum/overlayDefinition/dither = new()
 		dither.d_icon = 'icons/effects/overlays/Rtrans.dmi'
 		dither.d_icon_state = "Rtrans"
@@ -384,7 +384,7 @@
 		return ..()
 
 /datum/overlayComposition/blinded_l_eye
-	New()
+	INIT()
 		var/datum/overlayDefinition/dither = new()
 		dither.d_icon = 'icons/effects/overlays/Ltrans.dmi'
 		dither.d_icon_state = "Ltrans"
@@ -406,7 +406,7 @@
 
 /datum/overlayComposition/shuttle_warp
 	var/warp_dir = "warp"
-	New()
+	INIT()
 		var/datum/overlayDefinition/warp = new()
 		warp.d_icon = 'icons/effects/overlays/warp.dmi'
 		warp.d_icon_state = src.warp_dir
@@ -421,7 +421,7 @@
 	warp_dir = "warp_ew"
 
 /datum/overlayComposition/flockmindcircuit
-	New()
+	INIT()
 		var/datum/overlayDefinition/flockmindcircuit = new()
 		flockmindcircuit.d_icon = 'icons/effects/overlays/flockmindcircuit.dmi'
 		flockmindcircuit.d_icon_state = "flockmindcircuit"
@@ -432,7 +432,7 @@
 		return ..()
 
 /datum/overlayComposition/sniper_scope
-	New()
+	INIT()
 		var/datum/overlayDefinition/sniper_scope = new()
 		sniper_scope.d_icon = 'icons/effects/overlays/sniper_scope.dmi'
 		sniper_scope.d_icon_state = "sniper_scope"
@@ -442,7 +442,7 @@
 		return ..()
 
 /datum/overlayComposition/insanity
-	New()
+	INIT()
 		var/datum/overlayDefinition/insanity = new()
 		insanity.d_icon = 'icons/effects/overlays/insanity.dmi'
 		insanity.d_icon_state = "insanity"

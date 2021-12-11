@@ -22,7 +22,7 @@ chui/window/security_cameras
 			vp.clickToMove = 1
 			vp.SetViewport(startPos, 8, 8)
 
-	New(var/obj/machinery/computer/security/seccomp)
+	INIT(var/obj/machinery/computer/security/seccomp)
 		..()
 		owner = seccomp
 		theAtom = owner

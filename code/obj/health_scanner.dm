@@ -6,7 +6,7 @@
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			src.find_partners(src.find_in_range)
@@ -37,7 +37,7 @@
 	var/list/partners // who do we know?
 	var/examine_range = (SQUARE_TILE_WIDTH - 1) / 2 // from how far away can people examine the screen
 
-	New()
+	INIT()
 		src.partners = list()
 		..()
 
@@ -82,7 +82,7 @@
 	var/time_between_scans = 3 SECONDS
 	var/on_cooldown = FALSE
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 

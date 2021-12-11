@@ -68,7 +68,7 @@ obj/machinery/atmospherics/valve
 		var/frequency = 0
 		var/id = null
 
-		New()
+		INIT()
 			..()
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -104,7 +104,7 @@ obj/machinery/atmospherics/valve
 		else
 			icon_state = "valve[open]"
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		switch(dir)
@@ -352,7 +352,7 @@ obj/machinery/atmospherics/manifold_valve
 		else
 			icon_state = "manifold_valve[divert]"
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		switch(dir)

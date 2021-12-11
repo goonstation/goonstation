@@ -15,7 +15,7 @@
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
 
-	New()
+	INIT()
 		..()
 		check_ability_owner()
 
@@ -1473,7 +1473,7 @@
 	var/green = 0
 	var/blue = 0
 
-	New()
+	INIT()
 		..()
 		red = rand(5,10) / 10
 		green = rand(5,10) / 10
@@ -1510,7 +1510,7 @@
 	icon_state = null
 	var/datum/light/light
 
-	New(var/loc,var/color_R,var/color_G,var/color_B,var/strength = 7,var/time = 300)
+	INIT(var/loc,var/color_R,var/color_G,var/color_B,var/strength = 7,var/time = 300)
 		..()
 		light = new /datum/light/point
 		light.set_brightness(strength / 7)
@@ -1542,7 +1542,7 @@
 	var/time = 0
 	var/size = 0
 
-	New()
+	INIT()
 		..()
 		size = rand(4, 6)
 		time = rand(100, 300)
@@ -2066,7 +2066,7 @@
 	ability_path = /datum/targetable/geneticsAbility/ink
 	var/color = "#888888"
 
-	New()
+	INIT()
 		..()
 		color = random_color()
 

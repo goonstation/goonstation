@@ -139,7 +139,7 @@ var/fartcount = 0
 	nude
 		nude = 1
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_JOHNBILLS)
 		if(nude)
@@ -680,7 +680,7 @@ Urs' Hauntdog critter
 	gender = NEUTER
 	max_health = 50
 
-	New()
+	INIT()
 		..()
 		src.ai = new /datum/aiHolder/human/geneticist(src)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/dress_shoes, slot_shoes)

@@ -247,7 +247,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	var/no_spam = null
 	var/can_put_up = 1
 
-	New()
+	INIT()
 		..()
 		if (src.pixel_var)
 			src.pixel_y = rand(-9,9)
@@ -319,7 +319,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 	var/list/plist = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.poster_HTML)

@@ -13,7 +13,7 @@
 /obj/item/disk/data/memcard/main2
 	file_amount = 4096
 
-	New()
+	INIT()
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
@@ -140,7 +140,7 @@
 	name = "ThinkTape-'Master Tape'"
 	//Not sure what all to put here yet.
 
-	New()
+	INIT()
 		..()
 		//First off, buddy stuff.
 		src.root.add_file( new /datum/computer/file/guardbot_task/security(src) )
@@ -166,7 +166,7 @@
 		desc = "A reel of magnetic data tape.  The casing has been modified so as to prevent write access."
 		icon_state = "r_tape"
 
-		New()
+		INIT()
 			..()
 			src.read_only = 1
 
@@ -175,7 +175,7 @@
 	desc = "A reel of magnetic data tape containing operating software.  The casing has been modified so as to prevent write access."
 	icon_state = "r_tape"
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/shell(src) )
@@ -220,7 +220,7 @@
 	name = "ThinkTape-'Test'"
 	desc = "A reel of magnetic data tape containing various test files."
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/mainframe_program/shell(src) )
 		src.root.add_file( new /datum/computer/file/document(src) )
@@ -232,7 +232,7 @@
 	name = "ThinkTape-'PR-6S Config'"
 	desc = "A reel of magnetic data tape containing configuration and support files for PR-6S Guardbuddies."
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/guardbot_task/security(src) )
 		src.root.add_file( new /datum/computer/file/guardbot_task/security/purge(src) )
@@ -251,7 +251,7 @@
 	name = "ThinkTape-'Artifact Research'"
 	desc = "A reel of magnetic data tape containing modern research software."
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/mainframe_program/test_interface(src)  )
 		src.root.add_file( new /datum/computer/file/record/artlab_activate(src))

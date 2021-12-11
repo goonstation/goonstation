@@ -40,7 +40,7 @@
 			icon_state = "down"
 			reciprocal_name = "up"
 
-		New()
+		INIT()
 			..()
 			if(!id)
 				CRASH("Disjoint Connector missing ID [log_loc(src)]")
@@ -67,7 +67,7 @@
 			reciprocal_name = "up"
 			icon_state = "down"
 
-		New()
+		INIT()
 			..()
 			var/turf/source = get_turf(src)
 			var/turf/destination = locate(conn_x, conn_y, conn_z)

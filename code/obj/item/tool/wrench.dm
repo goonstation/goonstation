@@ -18,7 +18,7 @@
 	m_amt = 150
 	rand_pos = 1
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 

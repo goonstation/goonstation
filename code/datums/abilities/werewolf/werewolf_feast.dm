@@ -52,7 +52,7 @@
 	var/times_attacked = 0
 	var/do_we_get_points = FALSE // For the specialist objective. Did we feed on the target enough times?
 
-	New(Target, Feast)
+	INIT(Target, Feast)
 		target = Target
 		feast = Feast
 		..()

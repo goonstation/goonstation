@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	hint_range = 20
 	hint_prob = 75
 
-	New()
+	INIT()
 		..()
 		stimulus_amount = rand(3,30)
 
@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	stimulus_required = "heat"
 	hint_range = 20
 
-	New()
+	INIT()
 		..()
 		stimulus_amount = rand(320,400)
 
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	stimulus_type = "<="
 	hint_range = 20
 
-	New()
+	INIT()
 		..()
 		stimulus_amount = rand(200,300)
 
@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	hint_range = 2
 	hint_prob = 75
 
-	New()
+	INIT()
 		..()
 		stimulus_type = pick(">=","<=")
 		stimulus_amount = rand(1,10)
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	hint_range = 500
 	hint_prob = 66
 
-	New()
+	INIT()
 		..()
 		stimulus_type = pick(">=","<=")
 		stimulus_amount = rand(5,5000)
@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	hint_prob = 100
 	used = 0
 
-	New()
+	INIT()
 		..()
 		stimulus_amount = rand(10,100)
 

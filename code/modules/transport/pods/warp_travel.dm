@@ -94,7 +94,7 @@
 		else
 			..()
 
-/obj/warp_beacon/New()
+INIT_TYPE(/obj/warp_beacon)
 	..()
 	START_TRACKING
 
@@ -122,7 +122,7 @@
 	SPAWN_DBG(0)
 		src.teleport(AM)
 
-/obj/warp_portal/New()
+INIT_TYPE(/obj/warp_portal)
 	..()
 	SPAWN_DBG(0)
 		// animate_portal_appear(src)
@@ -185,7 +185,7 @@
 	var/deploying = null
 	var/beaconid = null
 
-	New()
+	INIT()
 		src.beaconid = rand(1000,9999)
 		src.name = "warp buoy unit [beaconid]"
 		..()
@@ -231,7 +231,7 @@
 /obj/beacon_deployer/syndicate
 	name = "syndicate warp buoy unit"
 
-	New()
+	INIT()
 		src.beaconid = rand(1000,9999)
 		src.name = "syndicate warp buoy unit [beaconid]"
 		..()
@@ -269,7 +269,7 @@
 	var/obj/beaconkit/beacon
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			beacon = O

@@ -4,7 +4,7 @@
 
 /datum/computer/file/record/accesslog_default_config
 	name = "accesslog"
-	New()
+	INIT()
 		..()
 		fields = list("logdir" = DEFAULT_LOG_PATH)
 
@@ -33,7 +33,7 @@
 	var/timed_out = 0
 	var/spoofed = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			src.net_id = generate_net_id(src)

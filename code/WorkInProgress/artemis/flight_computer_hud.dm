@@ -35,7 +35,7 @@
 	var/obj/machinery/sim/vr_bed/flight_chair/master
 	var/coffee_level = 3
 
-	New(P)
+	INIT(P)
 		var/throttle_slide_xy = "[round(17/32)+1]:[17%32],[round(2/32)+1]:[2%32]"
 		var/throttle_stick_xy = "[round(2/32)+1]:[2%32],[round(6/32)+1]:[6%32]"
 		var/engine_health_xy = "[round(97/32)+1]:[97%32],[round(4/32)+1]:[4%32]"

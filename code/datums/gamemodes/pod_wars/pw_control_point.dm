@@ -13,7 +13,7 @@
 	var/crate_rewards_tier = 0			//var 0-3 none/low/med/high. Should correlate to holding the point for <5 min, <10 min, <15
 	var/datum/game_mode/pod_wars/mode
 
-	New(var/obj/control_point_computer/computer, var/area/capture_area, var/name, var/true_name, var/datum/game_mode/pod_wars/mode)
+	INIT(var/obj/control_point_computer/computer, var/area/capture_area, var/name, var/true_name, var/datum/game_mode/pod_wars/mode)
 		..()
 		src.computer = computer
 		src.capture_area = capture_area

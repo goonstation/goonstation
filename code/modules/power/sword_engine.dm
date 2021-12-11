@@ -131,7 +131,7 @@
 	return
 
 
-/obj/machinery/power/sword_engine/New()
+INIT_TYPE(/obj/machinery/power/sword_engine)
 	..()
 	src.glow = image('icons/misc/retribution/SWORD_loot.dmi', "engine_o")
 	src.glow.plane = PLANE_SELFILLUM

@@ -24,7 +24,7 @@
 	//var/area/area = 0
 	var/emagged = 0
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 

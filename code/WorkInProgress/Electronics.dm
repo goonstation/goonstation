@@ -11,7 +11,7 @@
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/electronics/New()
+INIT_TYPE(/obj/item/electronics)
 	..()
 	desc = "A [src.name] used in electronic projects."
 
@@ -24,7 +24,7 @@
 	name = "battery"
 	icon_state = "batt1"
 
-/obj/item/electronics/battery/New()
+INIT_TYPE(/obj/item/electronics/battery)
 	src.icon_state = pick("batt1", "batt2", "batt3")
 	randompix()
 	..()
@@ -33,7 +33,7 @@
 	name = "board"
 	icon_state = "board1"
 
-/obj/item/electronics/board/New()
+INIT_TYPE(/obj/item/electronics/board)
 	src.icon_state = pick("board1", "board2", "board3")
 	randompix()
 	..()
@@ -42,7 +42,7 @@
 	name = "fuse"
 	icon_state = "fuse1"
 
-/obj/item/electronics/fuse/New()
+INIT_TYPE(/obj/item/electronics/fuse)
 	src.icon_state = pick("fuse1", "fuse2", "fuse3")
 	randompix()
 	..()
@@ -51,7 +51,7 @@
 	name = "switch"
 	icon_state = "switch1"
 
-/obj/item/electronics/switc/New()
+INIT_TYPE(/obj/item/electronics/switc)
 	src.icon_state = pick("switch1", "switch2", "switch3")
 	randompix()
 	..()
@@ -59,7 +59,7 @@
 /obj/item/electronics/keypad
 	name = "keypad"
 	icon_state = "keypad1"
-/obj/item/electronics/keypad/New()
+INIT_TYPE(/obj/item/electronics/keypad)
 	src.icon_state = pick("keypad1", "keypad2", "keypad3")
 	randompix()
 	..()
@@ -67,7 +67,7 @@
 /obj/item/electronics/screen
 	name = "screen"
 	icon_state = "screen1"
-/obj/item/electronics/screen/New()
+INIT_TYPE(/obj/item/electronics/screen)
 	src.icon_state = pick("screen1", "screen2", "screen3")
 	randompix()
 	..()
@@ -75,7 +75,7 @@
 /obj/item/electronics/capacitor
 	name = "capacitor"
 	icon_state = "capacitor1"
-/obj/item/electronics/capacitor/New()
+INIT_TYPE(/obj/item/electronics/capacitor)
 	src.icon_state = pick("capacitor1", "capacitor2", "capacitor3")
 	randompix()
 	..()
@@ -83,14 +83,14 @@
 /obj/item/electronics/buzzer
 	name = "buzzer"
 	icon_state = "buzzer"
-/obj/item/electronics/buzzer/New()
+INIT_TYPE(/obj/item/electronics/buzzer)
 	randompix()
 	..()
 ////////////////////////////////////////////////////////////////
 /obj/item/electronics/resistor
 	name = "resistor"
 	icon_state = "resistor1"
-/obj/item/electronics/resistor/New()
+INIT_TYPE(/obj/item/electronics/resistor)
 	src.icon_state = pick("resistor1", "resistor2")
 	randompix()
 	..()
@@ -98,7 +98,7 @@
 /obj/item/electronics/bulb
 	name = "bulb"
 	icon_state = "bulb1"
-/obj/item/electronics/bulb/New()
+INIT_TYPE(/obj/item/electronics/bulb)
 	src.icon_state = pick("bulb1", "bulb2")
 	randompix()
 	..()
@@ -106,7 +106,7 @@
 /obj/item/electronics/relay
 	name = "relay"
 	icon_state = "relay1"
-/obj/item/electronics/bulb/New()
+INIT_TYPE(/obj/item/electronics/bulb)
 	src.icon_state = pick("relay1", "relay2")
 	randompix()
 	..()
@@ -337,7 +337,7 @@
 	icon_state = "working"
 	var/obj/item/electronics/frame/F
 
-	New(Frame)
+	INIT(Frame)
 		F = Frame
 		..()
 
@@ -460,7 +460,7 @@
 	var/boot_time = null
 	var/data_initialized = FALSE
 
-/obj/machinery/rkit/New()
+INIT_TYPE(/obj/machinery/rkit)
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
@@ -976,7 +976,7 @@
 	icon_state = "decon"
 	var/obj/O
 	var/obj/item/deconstructor/D
-	New(Obj, Decon, ExtraTime)
+	INIT(Obj, Decon, ExtraTime)
 		O = Obj
 		D = Decon
 		duration += ExtraTime

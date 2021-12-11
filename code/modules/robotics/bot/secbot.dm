@@ -174,7 +174,7 @@
 	baton_charge_duration = BATON_CHARGE_DURATION_BEEPSKY
 	hat = "nt"
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -237,7 +237,7 @@
 
 
 /obj/machinery/bot/secbot
-	New()
+	INIT()
 		..()
 		src.icon_state = "secbot[src.on]"
 		if (!src.our_baton || !istype(src.our_baton))
@@ -1233,7 +1233,7 @@
 	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
 
-	New(var/obj/machinery/bot/secbot/the_bot)
+	INIT(var/obj/machinery/bot/secbot/the_bot)
 		src.master = the_bot
 		..()
 
@@ -1335,7 +1335,7 @@
 	icon_state = "stunbaton_active"
 	var/obj/machinery/bot/secbot/master
 
-	New(var/the_bot, var/M)
+	INIT(var/the_bot, var/M)
 		src.master = the_bot
 		..()
 

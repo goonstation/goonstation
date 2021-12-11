@@ -170,7 +170,7 @@
 		master = null
 		..()
 
-	New(M)
+	INIT(M)
 		..()
 		if(isnull(M))
 			CRASH("human HUD created with no master")

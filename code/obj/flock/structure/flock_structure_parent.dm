@@ -27,7 +27,7 @@
 	/// the tile which its "connected to" and handles the group
 	var/turf/simulated/floor/feather/grouptile = null
 
-/obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
+INIT_TYPE(/obj/flock_structure, var/atom/location, var/datum/flock/F=null)
 	..()
 	health_max = health
 	time_started = world.timeofday

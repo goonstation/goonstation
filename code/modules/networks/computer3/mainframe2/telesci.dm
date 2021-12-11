@@ -65,7 +65,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/obj/perm_portal/end_portal
 	var/image/disconnectedImage
 
-	New()
+	INIT()
 		..()
 		if (!telesci_modifiers_set)
 			telesci_modifiers_set = 1
@@ -821,7 +821,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)

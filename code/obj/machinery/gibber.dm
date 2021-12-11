@@ -26,7 +26,7 @@
 	output_south
 		output_direction = SOUTH
 
-/obj/machinery/gibber/New()
+INIT_TYPE(/obj/machinery/gibber)
 	..()
 	UnsubscribeProcess()
 

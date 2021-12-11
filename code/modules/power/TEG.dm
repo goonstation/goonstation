@@ -82,7 +82,7 @@
 		..()
 		ui = new/datum/pump_ui/circulator_ui(src)
 
-	New()
+	INIT()
 		. = ..()
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12)
 		create_reagents(400)
@@ -424,7 +424,7 @@
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			circ = O
@@ -508,7 +508,7 @@ datum/pump_ui/circulator_ui
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/circulatorTemp/our_circ
 
-	New(obj/machinery/atmospherics/binary/circulatorTemp/C)
+	INIT(obj/machinery/atmospherics/binary/circulatorTemp/C)
 		..()
 		src.our_circ = C
 		pump_name = "Blower Manual Override"
@@ -639,7 +639,7 @@ datum/pump_ui/circulator_ui
 			if(src.z == instructions.z) // Ensure instructions are only updated for relevant Z level.
 				instructions.info = initial(instructions.info) + instructions_footnote
 
-	New()
+	INIT()
 		..()
 
 		//List init
@@ -1156,7 +1156,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			generator = O
@@ -1231,7 +1231,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			generator = O
@@ -1379,7 +1379,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			break
 		return
 
-	New()
+	INIT()
 		..()
 		heat_filter.init_basic(0.25)
 		get_connector()
@@ -1466,7 +1466,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/message_delay = 1 MINUTE
 
 
-	New()
+	INIT()
 		. = ..()
 		pump_infos = new/list()
 		src.AddComponent( \

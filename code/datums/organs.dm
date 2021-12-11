@@ -44,7 +44,7 @@
 	var/icon_name = null
 	var/datum/bone/bones = null
 
-	New()
+	INIT()
 		..()
 		if (src.owner)
 			src.bones = new /datum/bone(src)
@@ -81,7 +81,7 @@
 	icon_name = "l_arm"
 	organ_id = "l_arm"
 
-	New()
+	INIT()
 		..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = src.owner
@@ -93,7 +93,7 @@
 	icon_name = "l_leg"
 	organ_id = "l_leg"
 
-	New()
+	INIT()
 		..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = src.owner
@@ -105,7 +105,7 @@
 	icon_name = "r_arm"
 	organ_id = "r_arm"
 
-	New()
+	INIT()
 		..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = src.owner
@@ -117,7 +117,7 @@
 	icon_name = "r_leg"
 	organ_id = "r_leg"
 
-	New()
+	INIT()
 		..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = src.owner

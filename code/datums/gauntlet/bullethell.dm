@@ -100,7 +100,7 @@
 	var/datum/action/bar/bullethell/healthbar //Hack.
 	var/list/dirs = list("NORTH" = NORTH, "SOUTH" = SOUTH, "WEST" = WEST, "EAST" = EAST, "NORTHWEST" = NORTHWEST, "NORTHEAST" = NORTHEAST, "SOUTHWEST" = SOUTHWEST, "SOUTHEAST" = SOUTHEAST)
 
-	New()
+	INIT()
 		..()
 		setup_schedules()
 		setup_maxticks()

@@ -11,7 +11,7 @@ var/global/datum/antagWeighter/antagWeighter
 	var/minPlayed = 5 //minimum amount of rounds participated in required for the antag weighter to consider a person a valid choice
 
 
-	New(debugMode)
+	INIT(debugMode)
 		..()
 		src.debug = debugMode ? debugMode : 0
 

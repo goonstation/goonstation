@@ -39,7 +39,7 @@
 	var/error_phrase = ""
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
-	New()
+	INIT()
 		..()
 		particle_color = copytext(random_color(),1,0)
 		particle_sprite = pick("8x8circle","8x8ring","8x8triangle","8x8square","8x8bubblegrid")

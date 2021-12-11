@@ -35,7 +35,7 @@
 					/obj/critter/lion,
 					/obj/critter/fermid)
 
-/obj/item/toy/sponge_capsule/New()
+INIT_TYPE(/obj/item/toy/sponge_capsule)
 	..()
 	color = pick(colors)
 	animal_to_spawn = pick(animals)
@@ -107,7 +107,7 @@
 	caps_type = /obj/item/toy/sponge_capsule/syndicate
 	caps_amt = 6
 
-/obj/item/spongecaps/New()
+INIT_TYPE(/obj/item/spongecaps)
 	..()
 	UpdateIcon()
 

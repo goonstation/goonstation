@@ -17,7 +17,7 @@
 	var/balloon_color = "white"
 	var/last_reag_total = 0
 
-	New()
+	INIT()
 		..()
 		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
@@ -215,7 +215,7 @@
 	w_class = W_CLASS_SMALL
 
 /obj/item/balloon_animal/random
-	New()
+	INIT()
 		..()
 		var/animal = pick("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
 		src.name = "[animal]-shaped balloon"

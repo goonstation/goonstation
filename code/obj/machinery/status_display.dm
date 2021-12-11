@@ -47,7 +47,7 @@
 
 	// new display
 	// register for radio system
-	New()
+	INIT()
 		..()
 		src.layer -= 0.2
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
@@ -279,7 +279,7 @@
 
 	var/datum/light/screen_glow
 
-	New()
+	INIT()
 		..()
 		face_image = image('icons/obj/status_display.dmi', icon_state = "", layer = FLOAT_LAYER)
 		glow_image = image('icons/obj/status_display.dmi', icon_state = "ai_glow", layer = FLOAT_LAYER - 1)

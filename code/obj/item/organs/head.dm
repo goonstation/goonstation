@@ -51,7 +51,7 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.donor)

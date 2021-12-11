@@ -20,7 +20,7 @@
 	name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.mind = new(src)
@@ -35,7 +35,7 @@
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Staff Assistant")
@@ -93,7 +93,7 @@
 
 /mob/living/carbon/human/npc/syndicate
 	ai_aggressive = 1
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
@@ -107,7 +107,7 @@
 
 /mob/living/carbon/human/npc/syndicate_weak
 	ai_aggressive = 1
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.real_name = "Junior Syndicate Agent"
@@ -115,7 +115,7 @@
 
 /mob/living/carbon/human/npc/syndicate_weak/no_ammo
 	ai_aggressive = 1
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.real_name = "Junior Syndicate Agent"

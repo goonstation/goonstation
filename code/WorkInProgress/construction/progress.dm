@@ -27,7 +27,7 @@
 	var/list/completed_space = list()
 	var/turf/completed_origin = null
 
-	New()
+	INIT()
 		..()
 		for (var/objt in required)
 			var/obj/O = locate(objt)

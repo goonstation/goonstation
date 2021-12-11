@@ -34,7 +34,7 @@
 		item_state = "backpackg"
 		desc = "A thick, wearable container made of synthetic fibers. The green variation reminds you of a botanist's garden..."
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
@@ -396,7 +396,7 @@
 	stamina_crit_chance = 5
 	spawn_contents = list(/obj/item/storage/box/starter)
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 
@@ -436,7 +436,7 @@
 	stamina_crit_chance = 5
 	w_class = W_CLASS_BULKY
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 
@@ -494,7 +494,7 @@
 	/obj/item/deconstructor)
 	in_list_or_max = 1
 
-	New()
+	INIT()
 		..()
 		processing_items.Add(src)
 
@@ -687,7 +687,7 @@
 
 	control
 		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/baton, /obj/item/barrier)
-		New()
+		INIT()
 			..()
 			can_hold += /obj/item/gun/energy/tasershotgun
 
@@ -823,7 +823,7 @@
 	w_class = W_CLASS_NORMAL
 	mats = 5 // I dunno???
 
-	New()
+	INIT()
 		..()
 		setProperty("negate_fluid_speed_penalty", 0.2)
 
@@ -840,7 +840,7 @@
 	item_state = "pool_ring-flamingo"
 
 /obj/item/inner_tube/random
-	New()
+	INIT()
 		..()
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"

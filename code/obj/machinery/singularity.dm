@@ -118,7 +118,7 @@ hello I've lost my remaining sanity by dredging this code from the depths of hel
 for some reason I brought it back and tried to clean it up a bit and I regret everything but it's too late now I can't put it back please forgive me
 - haine
 */
-/obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
+INIT_TYPE(/obj/machinery/the_singularity, loc, var/E = 100, var/Ti = null,var/rad = 2)
 	START_TRACKING
 	src.energy = E
 	maxradius = rad
@@ -472,7 +472,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		boutput(user, "The field generator needs to be firmly secured to the floor first.")
 	src.add_fingerprint(user)
 
-/obj/machinery/field_generator/New()
+INIT_TYPE(/obj/machinery/field_generator)
 	START_TRACKING
 	..()
 	SPAWN_DBG(0.6 SECONDS)
@@ -780,7 +780,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/field_generator/gen_secondary
 	var/datum/light/light
 
-/obj/machinery/containment_field/New(var/obj/machinery/field_generator/A, var/obj/machinery/field_generator/B)
+INIT_TYPE(/obj/machinery/containment_field, var/obj/machinery/field_generator/A, var/obj/machinery/field_generator/B)
 	src.gen_primary = A
 	src.gen_secondary = B
 	light = new /datum/light/point
@@ -906,7 +906,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
 	mats = 10
 
-/obj/machinery/emitter/New()
+INIT_TYPE(/obj/machinery/emitter)
 	..()
 	SPAWN_DBG(0.6 SECONDS)
 		if(!src.link && (state == WELDED))
@@ -1159,7 +1159,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 
-/obj/machinery/power/collector_array/New()
+INIT_TYPE(/obj/machinery/power/collector_array)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		UpdateIcon()
@@ -1288,7 +1288,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAW = null
 	var/obj/machinery/the_singularity/S1 = null
 
-/obj/machinery/power/collector_control/New()
+INIT_TYPE(/obj/machinery/power/collector_control)
 	..()
 	START_TRACKING
 	SPAWN_DBG(1 SECOND)

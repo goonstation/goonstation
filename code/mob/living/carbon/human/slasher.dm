@@ -5,7 +5,7 @@
 	var/last_bdna = null
 	var/last_btype = null
 
-	New(loc)
+	INIT(loc)
 		..()
 		src.gender = MALE
 		src.abilityHolder = new /datum/abilityHolder/slasher(src)

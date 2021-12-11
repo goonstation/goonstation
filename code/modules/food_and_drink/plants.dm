@@ -14,7 +14,7 @@
 
 	var/made_reagents = 0
 
-	New()
+	INIT()
 		..()
 
 		if(ispath(src.planttype))
@@ -379,7 +379,7 @@
 	amount = 1
 	initial_volume = 6
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("juice_grapefruit",5)
 
@@ -790,7 +790,7 @@
 	heal_amt = 2
 	food_color = "#DEBA5F"
 
-	New()
+	INIT()
 		..()
 		if(prob(10))
 			src.desc = pick("These peaches do not come from a can, they were not put there by a man.",
@@ -952,7 +952,7 @@
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
-	New()
+	INIT()
 		flick("pumpkin_summon", src)
 		..()
 

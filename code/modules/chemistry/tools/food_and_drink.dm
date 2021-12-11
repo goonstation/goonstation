@@ -95,7 +95,7 @@
 	// Used in Special Order events
 	var/meal_time_flags = 0
 
-	New()
+	INIT()
 		..()
 		start_amount = amount
 		start_icon = icon
@@ -443,7 +443,7 @@
 	var/can_recycle = 1
 	var/can_chug = 1
 
-	New()
+	INIT()
 		..()
 		update_gulp_size()
 
@@ -803,7 +803,7 @@
 	initial_volume = 50
 	g_amt = 60
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 
@@ -1338,7 +1338,7 @@
 	var/mob/target
 	var/obj/item/reagent_containers/food/drinks/glass
 
-	New(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
+	INIT(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
 		..()
 		target = Target
 		glass = Glass
@@ -1492,7 +1492,7 @@
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1
-	New()
+	INIT()
 		..()
 		pick_style()
 
@@ -1523,7 +1523,7 @@
 	var/list/whitelist = null
 	var/list/blacklist = list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry")
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -1584,7 +1584,7 @@
 	can_recycle = FALSE
 	var/image/fluid_image
 
-	New()
+	INIT()
 		..()
 		fluid_image = image(src.icon, "fluid-duo")
 		UpdateIcon()
@@ -1653,7 +1653,7 @@
 	item_state = "mug"
 
 /obj/item/reagent_containers/food/drinks/mug/random_color
-	New()
+	INIT()
 		..()
 		src.color = random_saturated_hex_color(1)
 
@@ -1827,7 +1827,7 @@
 	can_recycle = 0
 	can_chug = 0
 
-	New()
+	INIT()
 		..()
 		src.reagents.inert = 1
 

@@ -31,7 +31,7 @@
 		Brain.depletion_threshold = -100
 		Brain.last_value = 0
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.updateButtons()
@@ -152,7 +152,7 @@
 		ghostize()
 		qdel(src)
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/inject)
 		abilityHolder.addAbility(/datum/targetable/critter/scarylook)
@@ -250,7 +250,7 @@
 	var/mob/living/target
 	var/datum/targetable/critter/mechanimate/mechanimate
 
-	New(Target, Mechanimate)
+	INIT(Target, Mechanimate)
 		target = Target
 		mechanimate = Mechanimate
 		..()
@@ -386,7 +386,7 @@
 	Profound_Medical01
 		name = "Profound_Medical01"
 
-		New()
+		INIT()
 			..()
 			fields = strings("replicant/replicant_records.txt","Profound_Medical01")
 			/*list("Despite our best efforts to correct the irrational",
@@ -405,7 +405,7 @@
 	Profound_Medical02
 		name = "Profound_Medical02"
 
-		New()
+		INIT()
 			..()
 			fields = strings("replicant/replicant_records.txt","Profound_Medical02")
 			/*list("Fucking hell.. How am I going to explain to anyone that",
@@ -422,7 +422,7 @@
 	desc = "Huh, was this disk inside that creepy robot?"
 	title = "Profound Medical"
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/record/replicants/Profound_Medical01 {name = "Profound_Medical01";} (src))
 		src.root.add_file( new /datum/computer/file/record/replicants/Profound_Medical02 {name = "Profound_Medical02";} (src))
@@ -447,7 +447,7 @@
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 16 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
-	New()
+	INIT()
 		..()
 		playsound(src.loc, "sound/effects/glitchy1.ogg", 50, 0)
 
@@ -559,7 +559,7 @@
 	var/icon/eastwest = null
 	var/lastdir = null
 
-	New()
+	INIT()
 		northsouth = icon('icons/misc/bigrobot.dmi')
 		eastwest = icon('icons/misc/bigrobot.dmi')
 		changeIcon()

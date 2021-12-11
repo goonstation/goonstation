@@ -38,7 +38,7 @@
 	circuit_type = /obj/item/circuitboard/tetris
 	var/datum/game/tetris
 
-/obj/machinery/computer/tetris/New()
+INIT_TYPE(/obj/machinery/computer/tetris)
 	..()
 	src.tetris = new /datum/game/tetris(src)
 
@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/datum/game)
 	var/highscoreholder
 	var/highscorekey
 
-	New(var/owner)
+	INIT(var/owner)
 		..()
 		START_TRACKING
 		src.owner = owner

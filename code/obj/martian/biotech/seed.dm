@@ -19,7 +19,7 @@
   var/obj/martianBiotech/spawn_path = null
   var/active = 0
 
-/obj/item/martianSeed/New(var/atom/loc, var/obj/martianBiotech/thing_to_spawn)
+INIT_TYPE(/obj/item/martianSeed, var/atom/loc, var/obj/martianBiotech/thing_to_spawn)
   ..()
   if(thing_to_spawn)
     src.spawn_path = thing_to_spawn
@@ -80,7 +80,7 @@
   var/growth_time = 0 // how long the thing needs to grow for before it's considered complete
   var/active = 0
 
-/obj/martianBiotech/structureSpawner/New(var/atom/loc, var/obj/martianBiotech/thing_to_spawn)
+INIT_TYPE(/obj/martianBiotech/structureSpawner, var/atom/loc, var/obj/martianBiotech/thing_to_spawn)
   ..()
   if(thing_to_spawn)
     src.spawn_path = thing_to_spawn

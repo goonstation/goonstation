@@ -64,7 +64,7 @@
 
 	var/sound_load = 'sound/weapons/gunload_light.ogg'
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!src.disposed)
@@ -1025,7 +1025,7 @@
 	var/unusualCell = 0
 	var/rechargable = TRUE
 
-	New()
+	INIT()
 		..()
 		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate, rechargable)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
@@ -1249,7 +1249,7 @@
 	var/obj/item/ammo/power_cell/cell
 	var/obj/item/gun/energy/gun
 
-	New(User, Cell, Gun)
+	INIT(User, Cell, Gun)
 		user = User
 		cell = Cell
 		gun = Gun

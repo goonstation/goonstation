@@ -193,7 +193,7 @@
 	item_state = "beaker"
 	initial_volume = 50
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("strange_reagent", 50)
 
@@ -204,7 +204,7 @@
 	code = "54321"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	New()
+	INIT()
 		..()
 /*
 		new /obj/item/gun/fiveseven/hjam(src)
@@ -226,7 +226,7 @@
 /obj/item/disk/data/fixed_disk/hjam_rdrive
 	title = "HJam_HDD"
 
-	New()
+	INIT()
 		..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -257,7 +257,7 @@
 /obj/item/disk/data/fixed_disk/outpost_rdrive
 	title = "VR_HDD"
 
-	New()
+	INIT()
 		..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -444,7 +444,7 @@
 		return
 
 /datum/particleSystem/skull_rain
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "skull_rain", 100)
 
 	Run()
@@ -476,7 +476,7 @@
 			animate(time = 60, alpha = 1, easing = LINEAR_EASING)
 
 /datum/particleSystem/spooky_mist
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "spooky_mist", 300)
 
 	Run()

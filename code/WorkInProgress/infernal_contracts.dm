@@ -187,7 +187,7 @@ proc/is_weak_rollable_contract(type)
 	color = "#FF0000"
 	font_color = "#FF0000"
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 
@@ -225,7 +225,7 @@ proc/is_weak_rollable_contract(type)
 	burn_possible = 0 //Only makes sense since it's from hell.
 	info = {"<b>You shouldn't be seeing this yet!</b>"}
 
-	New()
+	INIT()
 		..()
 		info = {"<center><b>SO YOU WANT TO STEAL SOULS?</b></center><ul>
 			<li>Step One: Grab a complimentary extra-sharp demonic pen and your infernal contract of choice from your devilish briefcase.</li>
@@ -262,7 +262,7 @@ proc/is_weak_rollable_contract(type)
 	spawn_contents = list(/obj/item/paper/soul_selling_kit, /obj/item/storage/box/evil, /obj/item/clothing/under/misc/lawyer/red/demonic)
 	var/merchant = null
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 
@@ -381,7 +381,7 @@ END GUIDE
 	var/merchant = null //who is *buying* the soul?
 	showTooltipDesc = 0
 
-	New()
+	INIT()
 		..()
 		src.color = random_color()
 

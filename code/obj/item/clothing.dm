@@ -33,7 +33,7 @@
 	var/can_stain = 1
 	var/list/stains = null
 
-	New()
+	INIT()
 		..()
 		src.real_name = src.name // meh will probably grab any custom names like this
 

@@ -6,7 +6,7 @@ var/list/prefab_shuttles = list()
 	var/dir = null
 	var/small = FALSE
 
-	New(prefab_path, name, dir, small=FALSE)
+	INIT(prefab_path, name, dir, small=FALSE)
 		..()
 		src.prefab_path = prefab_path
 		src.name = name

@@ -33,7 +33,7 @@
 		delay_divisor = 12.5
 		turn_delay = 2
 
-	New(owner)
+	INIT(owner)
 		..()
 		src.owner = owner
 

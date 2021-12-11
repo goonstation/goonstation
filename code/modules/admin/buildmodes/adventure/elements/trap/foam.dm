@@ -38,7 +38,7 @@
 
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
-	New()
+	INIT()
 		src.create_reagents(5000)
 		..()
 

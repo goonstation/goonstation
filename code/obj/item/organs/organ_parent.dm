@@ -110,7 +110,7 @@
 		..()
 
 
-	New(loc, datum/organHolder/nholder)
+	INIT(loc, datum/organHolder/nholder)
 		..()
 		if (istype(nholder) && nholder.donor)
 			src.holder = nholder

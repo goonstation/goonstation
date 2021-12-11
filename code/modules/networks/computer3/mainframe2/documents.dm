@@ -13,7 +13,7 @@
 /datum/computer/file/record/dwaine_help
 	name = "help"
 
-	New()
+	INIT()
 		..()
 		src.fields["basics1"] = "DWAINE is a multi-user Unix-like operating system produced by Thinktronic Data Systems.  The primary user interface is through a text-based terminal shell.|nApplications may be invoked simply by typing their filename, followed by a list of arguments if necessary.  A set of primary commands, those covering basic system tasks (Such as ls and cd), are made available to all users regardless of location in the filesystem.  Otherwise, applications must be in the user's current working directory to run."
 		src.fields["basics2"] = "Directory navigation is accomplished primarily through the ls and cd commands.|nLS, an abbreviation of \"list\" will list the contents of the current directory.  The argument -l will cause it to also display extended file information and hidden files.|nCD, or \"change directory\" will set the current directory to the provided path, if valid.  A filepath takes a form such as \"/mnt/drive0\"  Paths starting with / descend from the root directory  \"..\" refers to the directory one level up from the current, while \".\" refers to the current directory.|nEx: \"cd ../hams\" would specify a directory named ham with the same parent as the current working one."
@@ -45,7 +45,7 @@
 /datum/computer/file/record/pr6_readme
 	name = "readme"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("Readme for PR-6 Control Interface",
 						  "Notice: Superuser access may be required to run prman application",
@@ -62,7 +62,7 @@
 /datum/computer/file/record/patrol_script
 	name = "patrol_script"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "#demonstration patrol script",
@@ -81,7 +81,7 @@
 /datum/computer/file/record/bodyguard_script
 	name = "guard_script"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "#simple bodyguard script",
@@ -97,7 +97,7 @@
 /datum/computer/file/record/roomguard_script
 	name = "roomguard_script"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "#Bot will only look for targets in the same area.",
@@ -110,7 +110,7 @@
 /datum/computer/file/record/bodyguard_conf
 	name = "demo_conf"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#demonstration of configuration file",
 						  "#for bodyguard and secure tasks",
@@ -130,7 +130,7 @@
 /datum/computer/file/record/artlab_activate
 	name = "act"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | echo Error: Please specify equipment to activate! | break",
@@ -139,7 +139,7 @@
 /datum/computer/file/record/artlab_deactivate
 	name = "deact"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | echo Error: Please specify equipment to deactivate! | break",
@@ -148,7 +148,7 @@
 /datum/computer/file/record/artlab_read
 	name = "read"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | echo Error: Please specify equipment to read test results from! | break",
@@ -157,7 +157,7 @@
 /datum/computer/file/record/artlab_info
 	name = "info"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | echo Error: Please specify equipment to get information on! | break",
@@ -166,7 +166,7 @@
 /datum/computer/file/record/artlab_xray
 	name = "xray"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | gptio peek xray radstrength",
@@ -175,7 +175,7 @@
 /datum/computer/file/record/artlab_heater
 	name = "temp"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | gptio peek heater temptarget",
@@ -184,7 +184,7 @@
 /datum/computer/file/record/artlab_elecbox
 	name = "elec"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | gptio peek elecbox voltage",
@@ -195,7 +195,7 @@
 /datum/computer/file/record/artlab_pitcher
 	name = "pitcher"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | gptio peek pitcher power",
@@ -204,7 +204,7 @@
 /datum/computer/file/record/artlab_impactpad
 	name = "stand"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | gptio peek impactpad stand",
@@ -219,7 +219,7 @@
 
 /datum/computer/file/record/random_email
 
-	New(mailName as text)
+	INIT(mailName as text)
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"
 		if (mailName)

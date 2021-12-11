@@ -125,7 +125,7 @@
 	hand_count = 1
 	var/absorbed_dna = 0
 
-	New()
+	INIT()
 		..()
 		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
 		//todo : move to add_abilities list because its cleaner that way
@@ -321,7 +321,7 @@
 	base_walk_delay = 3
 	layer = 2.89
 
-	New()
+	INIT()
 		..()
 		abilityHolder = new /datum/abilityHolder/critter/eyespider(src)
 		// TODO: ACTUAL ABILITIES
@@ -439,7 +439,7 @@
 		HH.limb = new /datum/limb/leg_hand
 		HH.can_hold_items = 0
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/powerkick)
 		abilityHolder.addAbility(/datum/targetable/critter/writhe)
@@ -516,7 +516,7 @@
 				return 2
 		return ..()
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/changeling/sting/fartonium)
 		abilityHolder.addAbility(/datum/targetable/changeling/sting/simethicone)
@@ -587,7 +587,7 @@
 		HH.limb = new /datum/limb
 		HH.can_hold_items = 0
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.updateButtons()

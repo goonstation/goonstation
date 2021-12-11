@@ -73,7 +73,7 @@ datum/mind
 
 	var/show_respawn_prompts = TRUE
 
-	New(mob/M)
+	INIT(mob/M)
 		..()
 		if (M)
 			current = M

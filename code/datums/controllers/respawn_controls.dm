@@ -39,7 +39,7 @@ var/datum/respawn_controls/respawn_controller
 	var/rp_alert = 0
 
 
-	New()
+	INIT()
 		..()
 		respawnees = list()
 
@@ -234,7 +234,7 @@ var/datum/respawn_controls/respawn_controller
 		if(href_list["action"] == "close")
 			src.maptext= null
 
-	New(loc, server_id=null, server_name=null)
+	INIT(loc, server_id=null, server_name=null)
 		..()
 		if(!isnull(server_id))
 			src.server_id = server_id

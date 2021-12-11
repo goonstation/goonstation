@@ -124,7 +124,7 @@
 		else
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 
-/obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
+INIT_TYPE(/obj/cable, var/newloc, var/obj/item/cable_coil/source)
 	..()
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	d1 = text2num( icon_state )

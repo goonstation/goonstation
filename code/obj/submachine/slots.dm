@@ -19,7 +19,7 @@
 	var/max_roll = 2250
 	var/wager = 20
 
-	New()
+	INIT()
 		AddComponent(/datum/component/mechanics_holder)
 		..()
 

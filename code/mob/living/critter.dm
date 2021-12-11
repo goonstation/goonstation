@@ -83,7 +83,7 @@
 
 	blood_id = "blood"
 
-	New()
+	INIT()
 //		if (ispath(default_task))
 //			default_task = new default_task
 //		if (ispath(current_task))

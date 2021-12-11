@@ -319,7 +319,7 @@
 
 
 /datum/aiHolder/human/geneticist
-	New()
+	INIT()
 		..()
 		var/datum/aiTask/timed/targeted/human/genetics/G = get_instance(/datum/aiTask/timed/targeted/human/genetics, list(src))
 		default_task = G

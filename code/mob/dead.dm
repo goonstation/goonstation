@@ -3,7 +3,7 @@
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
 // dead
-/mob/dead/New()
+INIT_TYPE(/mob/dead)
 	..()
 	src.flags |= UNCRUSHABLE
 

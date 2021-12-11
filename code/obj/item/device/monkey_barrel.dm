@@ -11,7 +11,7 @@
 	is_syndicate = 1
 	spawn_contents = list(/mob/living/carbon/human/npc/monkey/angry = 6)
 
-	New()
+	INIT()
 		..()
 		var/obj/item/barrel_signaller/M = new /obj/item/barrel_signaller(src.loc)
 		new /obj/item/clothing/suit/monkey(src.loc)

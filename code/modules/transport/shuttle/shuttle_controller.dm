@@ -70,7 +70,7 @@ datum/shuttle_controller
 
 	emergency_shuttle
 
-		New()
+		INIT()
 			..()
 			for_by_tcl(S, /obj/machinery/computer/airbr)
 				if (S.emergency && !(S in src.airbridges))

@@ -82,7 +82,7 @@
 	var/mob/M
 	var/obj/submachine/claw_machine/CM
 
-/datum/action/bar/icon/claw_machine/New(mob, machine)
+INIT_TYPE(/datum/action/bar/icon/claw_machine, mob, machine)
 	M = mob
 	CM = machine
 	..()

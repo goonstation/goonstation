@@ -79,7 +79,7 @@
 	var/datum/movement_controller/artemis/controller
 	var/controller_type = null
 
-	New()
+	INIT()
 		..()
 		if(controller_type)
 			var/path = text2path("/datum/movement_controller/artemis/[controller_type]")

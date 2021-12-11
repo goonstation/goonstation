@@ -19,7 +19,7 @@
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 
-	New()
+	INIT()
 		..()
 		pixel_y = 0
 		effect = new
@@ -92,7 +92,7 @@
 	var/obj/effects/music/effect
 	var/overheated = FALSE
 
-	New()
+	INIT()
 		..()
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
@@ -168,7 +168,7 @@
 	var/static/image/rocked_out_img
 	var/sound_clip
 
-	New()
+	INIT()
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
@@ -348,7 +348,7 @@
 	var/looped
 	var/last_strum
 
-	New(Instrument, Effect)
+	INIT(Instrument, Effect)
 		instrument = Instrument
 		song = Effect
 		looped = 0
@@ -638,7 +638,7 @@ obj/effects/music
 	alpha = 200
 	particles = new/particles/music
 
-	New()
+	INIT()
 		..()
 		add_filter("outline", 1, outline_filter(size=0.5, color="#444"))
 		src.particles.spawning = 0

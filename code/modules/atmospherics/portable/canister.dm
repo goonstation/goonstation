@@ -81,7 +81,7 @@
 	icon_state = "empty"
 	casecolor = "empty"
 
-/obj/machinery/portable_atmospherics/canister/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister)
 	..()
 	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
 	bomb_dmi = image('icons/obj/canisterbomb.dmi')
@@ -688,7 +688,7 @@
 		return
 	return
 
-/obj/machinery/portable_atmospherics/canister/toxins/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister/toxins)
 
 	..()
 
@@ -697,7 +697,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/oxygen/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister/oxygen)
 
 	..()
 
@@ -706,7 +706,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 
 	..()
 
@@ -716,7 +716,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/nitrogen/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister/nitrogen)
 
 	..()
 
@@ -726,7 +726,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 
 	..()
 	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
@@ -735,7 +735,7 @@
 	return 1
 
 
-/obj/machinery/portable_atmospherics/canister/air/New()
+INIT_TYPE(/obj/machinery/portable_atmospherics/canister/air)
 
 	..()
 	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)

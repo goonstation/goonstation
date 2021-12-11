@@ -18,7 +18,7 @@
 	flags = FPRINT
 
 
-	New()
+	INIT()
 		..()
 		cell = new(src)
 		cell.charge = 1000
@@ -270,7 +270,7 @@
 	flags = FPRINT
 
 
-	New()
+	INIT()
 		..()
 		cell = new(src)
 		cell.charge = 1000

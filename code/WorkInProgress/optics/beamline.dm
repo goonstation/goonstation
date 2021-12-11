@@ -11,7 +11,7 @@
 	var/obj/beam/custom/beam = null
 	var/setup_beam_length = 48
 
-	New ()
+	INIT()
 		..()
 		if (!src.lens)
 			src.lens = new/obj/item/lens(src)

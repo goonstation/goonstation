@@ -85,7 +85,7 @@
 	var/list/beakerSpecs = list()
 	var/list/temps = list()
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 

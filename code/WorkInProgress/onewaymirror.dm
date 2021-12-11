@@ -35,7 +35,7 @@ mob/Move()
 turf
     var/image/viewblock
 
-    New()
+    INIT()
         ..()
         viewblock = image('icons/misc/old_or_unused.dmi',src,"black",BLOCK_LAYER)
 
@@ -44,7 +44,7 @@ client
         ViewFilter = list()
         SeenTurfs = list()
 
-    New()
+    INIT()
         ..()
         SeenTurfs = list()
 

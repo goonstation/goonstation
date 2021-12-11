@@ -19,7 +19,7 @@
 	icon = 'icons/misc/artemis/galactic_object_map.dmi'
 	icon_state = "nav_sat"
 
-	New()
+	INIT()
 		..()
 		flick("nav_sat_extend",src)
 

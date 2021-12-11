@@ -5,6 +5,6 @@
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR
 	vis_flags = VIS_INHERIT_DIR
 
-	New()
+	INIT()
 		..()
 		src.render_target = "*\ref[src]"

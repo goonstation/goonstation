@@ -17,7 +17,7 @@
 
 	level = 1
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 

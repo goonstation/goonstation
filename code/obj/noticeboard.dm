@@ -94,7 +94,7 @@
 	var/static/data = null
 	var/persistent_id = null
 
-/obj/noticeboard/persistent/New()
+INIT_TYPE(/obj/noticeboard/persistent)
 	. = ..()
 	if(isnull(src.persistent_id))
 		CRASH("A noticeboard has null id.")

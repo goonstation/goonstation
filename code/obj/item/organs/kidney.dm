@@ -129,7 +129,7 @@
 	icon_state = "plant"
 	desc = "A bean based kidney!"
 	synthetic = 1
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
@@ -201,7 +201,7 @@
 	organ_holder_name = "left_kidney"
 	body_side = L_ORGAN
 	failure_disease = /datum/ailment/disease/kidney_failure/left
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_kidney_L", "plant_kidney_L_bloom")
 
@@ -214,7 +214,7 @@
 	organ_holder_name = "right_kidney"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/kidney_failure/right
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_kidney_R", "plant_kidney_R_bloom")
 

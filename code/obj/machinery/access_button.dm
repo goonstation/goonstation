@@ -30,7 +30,7 @@ obj/machinery/access_button
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, AIRLOCK_CONTROL_RANGE)
 		flick("access_button_cycle", src)
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)

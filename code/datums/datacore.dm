@@ -328,7 +328,7 @@
 	var/target_byond_key = null
 	var/issuer_byond_key = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			statlog_ticket(src, usr)
@@ -350,7 +350,7 @@
 	var/issuer_byond_key = null
 	var/approver_byond_key = null
 
-	New()
+	INIT()
 		..()
 		generate_ID()
 		SPAWN_DBG(1 SECOND)

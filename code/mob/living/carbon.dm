@@ -11,7 +11,7 @@
 
 	infra_luminosity = 4
 
-/mob/living/carbon/New()
+INIT_TYPE(/mob/living/carbon)
 	START_TRACKING
 	. = ..()
 

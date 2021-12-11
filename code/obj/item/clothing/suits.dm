@@ -38,7 +38,7 @@
 	var/hood = 0
 	var/hcolor = null
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 		src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
@@ -118,7 +118,7 @@
 		hcolor = "red"
 
 /obj/item/clothing/suit/hoodie/random
-	New()
+	INIT()
 		if (prob(50))
 			hcolor = null
 		else
@@ -158,7 +158,7 @@
 			setProperty("coldprot", 10)
 
 		random_color
-			New()
+			INIT()
 				..()
 				src.color = random_saturated_hex_color(1)
 
@@ -179,7 +179,7 @@
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
 
-		New()
+		INIT()
 			..()
 			var/random_design = rand(1,10)
 			src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
@@ -358,7 +358,7 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.02
 
-	New()
+	INIT()
 		. = ..()
 		AddComponent(/datum/component/wearertargeting/geiger, list(SLOT_WEAR_SUIT))
 
@@ -500,7 +500,7 @@
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
 
-	New()
+	INIT()
 		..()
 
 	attack_self()
@@ -654,7 +654,7 @@
 		..()
 		setProperty("coldprot", 10)
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
@@ -844,7 +844,7 @@
 	bcolor = "psych"
 
 /obj/item/clothing/suit/bedsheet/random
-	New()
+	INIT()
 		..()
 		src.bcolor = pick("", "red", "orange", "yellow", "green", "blue", "pink", "black")
 		src.UpdateIcon()
@@ -1004,7 +1004,7 @@
 		item_state = "sweater_green"
 		desc = "A pretty warm-looking knit sweater, made by your grandma.  Yes, YOUR grandma!  Even if you stole this from someone else."
 
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(2 SECONDS)
 				src.name = initial(src.name)
@@ -1053,7 +1053,7 @@
 	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
-	New()
+	INIT()
 		..()
 		if(!istype(get_area(src), /area/station))
 			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
@@ -1366,7 +1366,7 @@
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0)
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -1509,7 +1509,7 @@
 		name = "robes of dungeon mastery"
 		desc = "Neeeeerds."
 
-		New()
+		INIT()
 			. = ..()
 			src.enchant(min(rand(1, 5), rand(1, 5)))
 

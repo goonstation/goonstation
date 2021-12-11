@@ -192,7 +192,7 @@
 	var/obj/maptext_junk/indicator
 	var/mob/carrier = 0
 	var/mob/tosser = 0
-	New()
+	INIT()
 		..()
 		indicator = new(src)
 		indicator.maptext_y = 38

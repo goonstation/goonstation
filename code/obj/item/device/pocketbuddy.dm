@@ -93,7 +93,7 @@
 // event system: subscribers and publishers to the event datum, as required
 // also good for debugging and tracking would be capturing event messages for logging
 
-/obj/item/device/pocketbuddy/New()
+INIT_TYPE(/obj/item/device/pocketbuddy)
   ..()
   AddComponent(src, /datum/component/cell_holder, new/obj/item/ammo/power_cell) // TODO: a more buddy-specific cell (maybe even a new power cell type?)
   // TODO: subscribe to global event system/child system thereof for pocketbuddies?

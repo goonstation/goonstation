@@ -42,7 +42,7 @@ obj/machinery/atmospherics/retrofilter
 	var/hacked = 0
 	var/emagged = 0
 
-	New()
+	INIT()
 		..()
 		src.tag = ""
 		switch(dir)

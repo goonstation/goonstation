@@ -47,7 +47,7 @@
 			sizex = 1033
 			sizey = 724
 
-			New()
+			INIT()
 				..()
 				pixel_x = rand(-8, 8)
 				pixel_y = rand(-8, 8)

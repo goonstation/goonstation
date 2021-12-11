@@ -11,7 +11,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	icon = 'icons/turf/internal.dmi'
 	name = ""
 
-	New()
+	INIT()
 		..()
 		place()
 

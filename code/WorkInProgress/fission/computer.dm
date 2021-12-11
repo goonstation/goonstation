@@ -16,7 +16,7 @@
 	var/obj/machinery/power/fission/engine/theEngine = null
 	var/obj/machinery/fission/reactor/selectedReactor = null
 
-	New()
+	INIT()
 		..()
 
 	process()

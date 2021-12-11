@@ -2,7 +2,7 @@
 	var/mob/living/object/master
 	var/atom/movable/screen/intent
 
-	New(M)
+	INIT(M)
 		..()
 		master = M
 		var/atom/movable/screen/S = create_screen("release", "release", 'icons/mob/screen1.dmi', "x", "NORTH,EAST", HUD_LAYER)

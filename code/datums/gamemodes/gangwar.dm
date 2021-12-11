@@ -681,7 +681,7 @@
 	var/obj/item/spray_paint/S
 	var/mob/M
 
-	New(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
+	INIT(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
 		src.target_turf = target_turf
 		src.target_area = get_area(target_turf)
 		src.S = S
@@ -768,7 +768,7 @@
 	var/HTML = null
 	var/list/buyable_items = list()
 
-	New()
+	INIT()
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
@@ -1675,7 +1675,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 
 /obj/item/implanter/gang
 	icon_state = "implanter1-g"
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return

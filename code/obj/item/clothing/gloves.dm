@@ -39,7 +39,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("viralprot", 10)
 		setProperty("conductivity", 0.5)
 
-	New()
+	INIT()
 		..() // your parents miss you
 		flags |= HAS_EQUIP_CLICK
 		SPAWN_DBG(2 SECONDS)
@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	color = "#ff9bc6"
 
 /obj/item/clothing/gloves/latex/random
-	New()
+	INIT()
 		..()
 		if (prob(66))
 			src.color = pick("#91d5e9","#d888d8","#73e8b6","#ff9bc6")
@@ -376,7 +376,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("conductivity", 0)
-	New()
+	INIT()
 		..()
 		setSpecialOverride(/datum/item_special/spark, src)
 
@@ -459,7 +459,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | NOSHIELD
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 

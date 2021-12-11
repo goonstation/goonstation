@@ -4,7 +4,7 @@ var/datum/disease_controller/disease_controls
 	var/list/standard_diseases = list()
 	var/list/custom_diseases = list()
 
-	New()
+	INIT()
 		..()
 		for (var/X in typesof(/datum/ailment))
 			if (X == /datum/ailment || X == /datum/ailment/disease || X == /datum/ailment/parasite || X == /datum/ailment/disability)

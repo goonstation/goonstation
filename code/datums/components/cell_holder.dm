@@ -147,7 +147,7 @@ TYPEINFO(/datum/component/cell_holder)
 	var/atom/movable/cell
 	var/obj/item/cell_holder
 
-	New(User, Cell, Cell_holder)
+	INIT(User, Cell, Cell_holder)
 		src.user = User
 		src.cell = Cell
 		src.cell_holder = Cell_holder

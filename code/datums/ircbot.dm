@@ -12,7 +12,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/list/queue = list()
 	var/debugging = 0
 
-	New()
+	INIT()
 		..()
 		if (!src.load())
 			SPAWN_DBG(1 SECOND)

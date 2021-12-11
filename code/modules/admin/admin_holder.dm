@@ -41,7 +41,7 @@
 
 	var/mob/respawn_as_self_mob = null
 
-	New()
+	INIT()
 		..()
 		src.hidden_categories = list()
 		SPAWN_DBG(1 DECI SECOND)

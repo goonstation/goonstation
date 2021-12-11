@@ -18,7 +18,7 @@
 	var/d_state = 0
 	var/connect_across_areas = TRUE
 
-	New()
+	INIT()
 		..()
 		if (map_setting && ticker)
 			src.update_neighbors()
@@ -538,7 +538,7 @@
 	var/d_state = 0
 	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 
-	New()
+	INIT()
 		..()
 		if (map_setting && ticker)
 			src.update_neighbors()
@@ -688,7 +688,7 @@
 	desc = "that sure is a wall, yep."
 
 /turf/unsimulated/wall/auto/coral
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("coral"))
 
@@ -740,7 +740,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 	var/obj/item/the_tool
 	var/interaction = WALL_CUTRERODS
 
-	New(var/obj/table/wall, var/obj/item/tool, var/interact, var/duration_i)
+	INIT(var/obj/table/wall, var/obj/item/tool, var/interact, var/duration_i)
 		..()
 		if (wall)
 			the_wall = wall

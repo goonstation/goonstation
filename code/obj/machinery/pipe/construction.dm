@@ -15,7 +15,7 @@ Buildable meters
 	w_class = W_CLASS_BULKY
 	level = 2
 
-/obj/item/weapon/pipe/New()
+INIT_TYPE(/obj/item/weapon/pipe)
 	..()
 	update()
 

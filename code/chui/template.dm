@@ -1,7 +1,7 @@
 chui/template
 	var/chui/window/winder
 
-	New(var/window)
+	INIT(var/window)
 		..()
 		winder = window
 
@@ -16,7 +16,7 @@ chui/template
 /*
 /bysql/value/function/chui
 	var/chui/template/bysql/tmpl
-	New( chui/template/bysql/template )
+	INIT( chui/template/bysql/template )
 		src.tmpl = template
 	proc/Call()
 		//fart
@@ -42,7 +42,7 @@ chui/template/bysql
 		hooks[ id ] = list( func, data )
 
 	var/rendered = ""
-	New(var/chui/window/window)
+	INIT(var/chui/window/window)
 		template = new
 		template.LoadLibs( "chui", "chui", src )
 		..()

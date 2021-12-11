@@ -1,6 +1,6 @@
 // *** pipefilter
 
-/obj/machinery/pipefilter/New()
+INIT_TYPE(/obj/machinery/pipefilter)
 	..()
 	p_dir = (NORTH|SOUTH|EAST|WEST) ^ turn(dir, 180)
 

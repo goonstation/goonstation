@@ -439,7 +439,7 @@
 	var/not_when_handcuffed = 0
 	var/unlock_message = null
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

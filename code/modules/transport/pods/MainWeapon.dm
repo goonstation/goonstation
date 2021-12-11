@@ -241,7 +241,7 @@
 	var/datum/projectile/hlaser = new/datum/projectile/laser/heavy
 	var/mode = 0
 
-	New()
+	INIT()
 		..()
 		current_projectile = ufo
 

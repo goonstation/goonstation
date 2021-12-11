@@ -38,7 +38,7 @@ var/datum/event_controller/random_events
 	var/list/special_events = list()
 	var/minimum_population = 15 // Minimum amount of players connected for event to occur
 
-	New()
+	INIT()
 		..()
 		for (var/X in childrentypesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X

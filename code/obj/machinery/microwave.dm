@@ -73,7 +73,7 @@
 		return 1
 
 /// After making the recipe in datums\recipes.dm, add it in here!
-/obj/machinery/microwave/New()
+INIT_TYPE(/obj/machinery/microwave)
 	..()
 	src.available_recipes += new /datum/recipe/donut(src)
 	src.available_recipes += new /datum/recipe/synthburger(src)

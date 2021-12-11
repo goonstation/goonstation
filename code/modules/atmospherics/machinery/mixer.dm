@@ -61,7 +61,7 @@ obj/machinery/atmospherics/mixer
 		if (network_out == reference)
 			network_out = null
 
-	New()
+	INIT()
 		..()
 		switch(dir)
 			if(NORTH)

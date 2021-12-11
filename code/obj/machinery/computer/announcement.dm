@@ -27,7 +27,7 @@
 	light_g = 1
 	light_b = 0.1
 
-	New()
+	INIT()
 		..()
 		if (src.announces_arrivals)
 			src.announcement_radio = new(src)

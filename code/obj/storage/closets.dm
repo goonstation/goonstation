@@ -5,7 +5,7 @@
 	can_flip_bust = 1
 	p_class = 3
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -171,7 +171,7 @@
 	anchored = 1
 
 /* let us never forget this - haine
-/obj/closet/thunderdome/New()
+INIT_TYPE(/obj/closet/thunderdome)
 	..()
 	sleep(0.2 SECONDS)*/
 
@@ -289,7 +289,7 @@
 	var/throw_strength = 100
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		src.open()
 		return

@@ -772,7 +772,7 @@
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
 	var/output_target = null
 
-	New()
+	INIT()
 		..()
 		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
 		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
@@ -1143,7 +1143,7 @@
 		WIRE_POWER = 3
 		WIRE_INERT = 4
 
-	New()
+	INIT()
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 

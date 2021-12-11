@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 	var/list/possible_rings = null	//instead of picking from all spell types, pick from this list of spells to make the ring. should be the lowest level path name of the ring
 
-	New()
+	INIT()
 		..()
 
 		var/path

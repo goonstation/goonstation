@@ -121,7 +121,7 @@ obj/structure/ex_act(severity)
 	var/obj/item/the_tool
 	var/interaction = GIRDER_DISASSEMBLE
 
-	New(var/obj/table/girdr, var/obj/item/tool, var/interact, var/duration_i)
+	INIT(var/obj/table/girdr, var/obj/item/tool, var/interact, var/duration_i)
 		..()
 		if (girdr)
 			the_girder = girdr

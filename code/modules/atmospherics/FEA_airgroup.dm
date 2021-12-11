@@ -44,7 +44,7 @@
 	air = null
 	..()
 
-/datum/air_group/New()
+INIT_TYPE(/datum/air_group)
 	..()
 	air = new /datum/gas_mixture
 

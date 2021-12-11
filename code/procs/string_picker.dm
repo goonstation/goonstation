@@ -41,7 +41,7 @@ var/global/list/smart_string_pickers = list()
 
 	var/list/definitions = list()
 
-	New(input_file)
+	INIT(input_file)
 		..()
 		if(!isfile(input_file))
 			input_file = file(input_file)

@@ -174,7 +174,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 	var/text_style = null
 	var/list/messages = list()
 
-	New()
+	INIT()
 		. = ..()
 		if(prob(25))
 			src.say_instead = TRUE
@@ -248,7 +248,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 /datum/artifact_fault/messager/emoji
 	type_name = "Alien messages"
 	var/list/allowed_emoji = null
-	New()
+	INIT()
 		..()
 		if(prob(70))
 			allowed_emoji = list()

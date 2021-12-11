@@ -69,7 +69,7 @@
 	pixel_y = -96
 	pixel_x = -96
 
-	New()
+	INIT()
 		..()
 		src.Scale(0,0)
 		animate(src, matrix(1.4, MATRIX_SCALE), time = 6, color = "#ffdddd", easing = LINEAR_EASING)

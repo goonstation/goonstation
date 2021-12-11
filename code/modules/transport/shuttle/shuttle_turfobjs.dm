@@ -29,7 +29,7 @@
 /turf/space/shuttle_transit
 	icon_state = "tplaceholder"
 
-	New()
+	INIT()
 		..()
 		if (icon_state == "tplaceholder") icon_state = "near_blank"
 
@@ -189,7 +189,7 @@
 	gas_impermeable = 1
 	pathable = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(6 SECONDS) // patch up some ugly corners in derelict mode
 			if (derelict_mode)

@@ -77,7 +77,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/icon = 'icons/mob/genetics_powers.dmi'
 	var/icon_state = "unknown"
 
-	New(for_global_list = 0)
+	INIT(for_global_list = 0)
 		if (!for_global_list)
 			global_instance = bioEffectList[src.id]
 			if (istype(global_instance, /datum/bioEffect/power))
@@ -153,7 +153,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	/// List of CURRENT blocks for this mutation. This is local and represents the research people are doing.
 	var/list/datum/basePair/blockListCurr = list()
 
-	New(holder)
+	INIT(holder)
 		owner = holder
 		return ..()
 
@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/datum/bioEffect/power/linked_power = null
 	var/mob/living/owner = null
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/genetics/B = new /atom/movable/screen/ability/topBar/genetics(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

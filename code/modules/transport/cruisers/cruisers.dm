@@ -189,7 +189,7 @@
 			explosion_new(source, source, clamp(4 - severity, 1, 3))
 		return
 
-	New()
+	INIT()
 		..()
 		if(interior_area)
 			interior_area = locate(interior_area)
@@ -830,7 +830,7 @@
 	anchored = 1
 	density = 0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -848,7 +848,7 @@
 	var/image/barMid
 	var/image/barBot
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		barTop = image('icons/obj/ship.dmi',src,"statpanel1",src.layer+1)
@@ -897,7 +897,7 @@
 	name_broken = "hole"
 	repair_time = 180
 
-	New()
+	INIT()
 		icon_broken = pick("hole1", "hole1a", "hole1b", "hole1c", "hole1d")
 		..()
 
@@ -1283,7 +1283,7 @@
 		rebooting = 0
 		return "Reboot complete."
 
-	New()
+	INIT()
 		..()
 		interior = get_area(src)
 		icon_state = icon_state_empty
@@ -1392,7 +1392,7 @@
 	id = "cruiser"
 	var/obj/machinery/cruiser/ship
 
-	New()
+	INIT()
 		..()
 		var/area/cruiser/A = get_area(src)
 		if (istype(A, /area/cruiser))

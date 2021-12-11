@@ -33,7 +33,7 @@
 	var/y_edge = 0
 	var/turf/T = 0
 
-	New()
+	INIT()
 		src.cancel_camera()
 		last_loc = src.loc
 		..()

@@ -44,7 +44,7 @@ chui/window
 	var/flags = CHUI_FLAG_SIZABLE | CHUI_FLAG_MOVABLE | CHUI_FLAG_CLOSABLE
 
 	//If overriden, be sure to call ..()
-	New(var/atom/adam)
+	INIT(var/atom/adam)
 		..()
 		if(!chui) chui = new()
 		theme = chui.GetTheme( theme )

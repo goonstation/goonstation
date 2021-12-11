@@ -175,7 +175,7 @@ var/list/telescope_computers = list()
 	</script>
 	"}
 
-	New() //TBI REMOVE FROM LIST ON DELETION
+	INIT() //TBI REMOVE FROM LIST ON DELETION
 		telescope_computers.Add(src)
 		..()
 

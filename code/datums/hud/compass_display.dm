@@ -15,7 +15,7 @@ atom/movable/screen/compass_display
 	var/degree = 0
 
 
-	New(turf/loc, var/owner, var/target)
+	INIT(turf/loc, var/owner, var/target)
 		..()
 		src.owner = owner
 		src.target = target

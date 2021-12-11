@@ -13,7 +13,7 @@
 #endif
 	static_type_override = /datum/mutantrace/monkey
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
@@ -33,7 +33,7 @@
 	real_name = "Mr. Muggles"
 	gender = "male"
 	ai_offhand_pickup_chance = 1 // very civilized
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/color/blue, slot_w_uniform)
@@ -43,7 +43,7 @@
 	real_name = "Mrs. Muggles"
 	gender = "female"
 	ai_offhand_pickup_chance = 1 // also very civilized
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/color/magenta, slot_w_uniform)
@@ -54,7 +54,7 @@
 	gender = "male"
 	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
 	ai_poke_thing_chance = 0.3 // don't mess up the engine too much
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/engineer, slot_w_uniform)
@@ -65,7 +65,7 @@
 	gender = "male"
 	ai_offhand_pickup_chance = 10 // more curious than most monkeys
 	ai_poke_thing_chance = 3
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space, slot_wear_suit)
@@ -76,7 +76,7 @@
 	real_name = "Von Braun"
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatching stuff
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
@@ -94,7 +94,7 @@
 	ai_aggression_timeout = 0
 	var/preferred_card_type = /obj/item/card/id/syndicate
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
@@ -120,7 +120,7 @@
 /mob/living/carbon/human/npc/monkey/oppenheimer/pod_wars
 	preferred_card_type = /obj/item/card/id/pod_wars/syndicate
 
-	New()
+	INIT()
 		START_TRACKING_CAT(TR_CAT_PW_PETS)
 		..()
 	disposing()
@@ -141,7 +141,7 @@
 	name = "????"
 	real_name = "????"
 	gender = "male"
-	New()
+	INIT()
 		..()
 		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
 		ai_poke_thing_chance = rand(50)
@@ -153,7 +153,7 @@
 	real_name = "Tanhony"
 	gender = "female"
 	ai_offhand_pickup_chance = 5 // your base monkey
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, slot_head)
@@ -163,7 +163,7 @@
 	real_name = "Krimpus"
 	gender = "female"
 	ai_offhand_pickup_chance = 2.5 // some of the botany fruit is very dangerous, Krimpus learned not to eat
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
@@ -175,7 +175,7 @@
 	gender = "male"
 	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
 	ai_poke_thing_chance = 5 // maybe finds tools... breaks out of prison...
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
@@ -199,7 +199,7 @@
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		if (!src.disposed)
@@ -497,7 +497,7 @@
 	var/mob/living/carbon/human/target  	//The target of the action
 	var/slot						    	//The slot number
 
-	New(var/Source, var/Target, var/Slot)
+	INIT(var/Source, var/Target, var/Slot)
 		source = Source
 		target = Target
 		slot = Slot
@@ -582,7 +582,7 @@
 	ai_aggression_timeout = null
 	max_health = 150
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
@@ -607,7 +607,7 @@
 	static_type_override = /datum/mutantrace/monkey/seamonkey
 	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
@@ -625,7 +625,7 @@
 	ai_aggressive = 1
 	ai_calm_down = 0
 	ai_aggression_timeout = null
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
@@ -638,7 +638,7 @@
 	ai_aggressive = 1
 	ai_calm_down = 0
 	ai_aggression_timeout = null
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
@@ -652,7 +652,7 @@
 	ai_aggressive = 1
 	ai_calm_down = 0
 	ai_aggression_timeout = null
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/head/crown, slot_head)
@@ -661,7 +661,7 @@
 	name = "Kimmy"
 	real_name = "Kimmy"
 	gender = "female"
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
@@ -672,7 +672,7 @@
 	name = "Mr. Wigglesby"
 	real_name = "Mr. Wigglesby"
 	gender = "male"
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/suit, src.slot_w_uniform)

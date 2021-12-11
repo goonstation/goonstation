@@ -98,7 +98,7 @@
 	var/bypassing = 0
 	var/catalyst_active = FALSE
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		set_dir(pick(cardinal))

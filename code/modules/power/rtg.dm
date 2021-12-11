@@ -95,6 +95,6 @@
 	w_class = W_CLASS_TINY
 
 	cerenkite
-		New()
+		INIT()
 			..()
 			src.setMaterial(getMaterial("cerenkite"))

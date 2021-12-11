@@ -22,7 +22,7 @@
 	var/roundstart_icon_state
 	var/roundstart_dir
 
-	New()
+	INIT()
 		..()
 		if (has_material)
 			if (isnull(plate_mat))
@@ -175,7 +175,7 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/plating/random
-	New()
+	INIT()
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
@@ -204,7 +204,7 @@
 		return
 
 /turf/simulated/floor/plating/airless/random
-	New()
+	INIT()
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
@@ -575,7 +575,7 @@
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("pharosium"))
 
@@ -626,7 +626,7 @@
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("cloth"))
 
@@ -990,7 +990,7 @@ DEFINE_FLOORS(minitiles/black,
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("wood"))
 
@@ -1190,7 +1190,7 @@ DEFINE_FLOORS(minitiles/black,
 	step_priority = STEP_PRIORITY_MED
 	mat_appearances_to_ignore = list("steel")
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			icon_state = "snow2"
@@ -1202,7 +1202,7 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/snow/snowball
 
-	New()
+	INIT()
 		..()
 		AddComponent(/datum/component/snowballs)
 
@@ -1243,7 +1243,7 @@ DEFINE_FLOORS(snowrough/border,
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -1309,7 +1309,7 @@ DEFINE_FLOORS(techfloor/green,
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
@@ -1347,7 +1347,7 @@ DEFINE_FLOORS(techfloor/green,
 	icon_state = "grass_leafy"
 
 /turf/simulated/floor/grass/random
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -1410,7 +1410,7 @@ DEFINE_FLOORS(grasslush/thin,
 	//fullbright = 1
 	allows_vehicles = 1
 
-	New()
+	INIT()
 		..()
 		name = "plating"
 
@@ -1451,7 +1451,7 @@ DEFINE_FLOORS(grasslush/thin,
 	default_melt_cap = 80
 	allows_vehicles = 1
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("blob"))
 
@@ -2191,7 +2191,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "swampgrass"
 
-		New()
+		INIT()
 			..()
 			set_dir(pick(1,2,4,8))
 			return

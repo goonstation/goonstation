@@ -359,7 +359,7 @@
 	var/timelimit = 6
 	var/tysonspeed = 1
 
-	New()
+	INIT()
 		SPAWN_DBG(0) process()
 		..()
 
@@ -437,7 +437,7 @@
 	var/tysonspeed = 1
 	var/mob/caller = null
 
-	New()
+	INIT()
 		SPAWN_DBG(0) process()
 		..()
 

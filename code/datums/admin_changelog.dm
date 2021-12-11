@@ -12,7 +12,7 @@ ATTENTION: The changelog has moved into its own file: strings/admin_changelog.tx
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-/datum/admin_changelog/New()
+INIT_TYPE(/datum/admin_changelog)
 	..()
 	//Changelog has moved to its own file.
 	//Note: deliberately using double quotes so that it won't be included in the RSC -SpyGuy

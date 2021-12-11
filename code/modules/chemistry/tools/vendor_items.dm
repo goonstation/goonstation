@@ -114,7 +114,7 @@
 	initial_volume = 50
 
 /obj/item/reagent_containers/vending/bag/random
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -126,7 +126,7 @@
 				src.reagents.add_reagent(chem, 5)
 
 /obj/item/reagent_containers/vending/vial/random
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)

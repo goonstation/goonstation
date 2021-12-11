@@ -108,7 +108,7 @@
 	var/health_max = 100
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 
-/obj/storage/closet/flock/New()
+INIT_TYPE(/obj/storage/closet/flock)
 	..()
 	setMaterial("gnesis")
 
@@ -185,7 +185,7 @@
 	on = 1
 	removable_bulb = 0
 
-/obj/machinery/light/flock/New()
+INIT_TYPE(/obj/machinery/light/flock)
 	..()
 	light.set_color(0.45, 0.75, 0.675)
 
@@ -217,7 +217,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-/obj/lattice/flock/New()
+INIT_TYPE(/obj/lattice/flock)
 	..()
 	setMaterial("gnesis")
 
@@ -276,7 +276,7 @@
 			if(76 to INFINITY)
 				icon_state = initial(src.icon_state) + "-0"
 
-/obj/grille/flock/New()
+INIT_TYPE(/obj/grille/flock)
 	..()
 	setMaterial("gnesis")
 	src.UpdateIcon()

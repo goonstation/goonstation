@@ -10,7 +10,7 @@
 	var/datum/light/light
 	event_handler_flags = USE_FLUID_ENTER
 
-/obj/portal/New()
+INIT_TYPE(/obj/portal)
 	..()
 	light = new /datum/light/point
 	light.set_color(0.1, 0.1, 0.9)

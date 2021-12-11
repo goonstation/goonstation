@@ -7,7 +7,7 @@
 
 /obj/item/reagent_containers/pill/sheltestgrog
 	name = "pill"
-	New()
+	INIT()
 		. = ..()
 		src.reagents.add_reagent("sheltestgrog", 100)
 
@@ -50,7 +50,7 @@
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 
-	New()
+	INIT()
 		ammo = new/obj/item/ammo/bullets/beepsky
 		set_current_projectile(new/datum/projectile/special/spawner/beepsky)
 		..()
@@ -69,7 +69,7 @@
 			..()
 
 /obj/item/gun/kinetic/beepsky/one_bullet
-	New()
+	INIT()
 		. = ..()
 		src.ammo.amount_left = 1
 		src.ammo.max_amount = 1
@@ -165,7 +165,7 @@
 	var/loc_maptext_height = 32
 	var/loc_maptext_x = 0
 	var/loc_maptext_y = 0
-	New()
+	INIT()
 		..()
 		loc.maptext = loc_maptext
 		loc.maptext_width = loc_maptext_width
@@ -187,7 +187,7 @@
 	var/number_left = 5
 	var/critter_type = /obj/critter/zombie
 
-/obj/hellportal/New()
+INIT_TYPE(/obj/hellportal)
 	..()
 	src.transform = matrix() * 0
 	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
@@ -224,7 +224,7 @@
 	var/shift_x = 0
 	var/shift_y = 0
 
-	New()
+	INIT()
 		..()
 		add_filter("rays", 1, rays_filter(size=64, density=src.ray_density, factor=1, offset=rand(1000), threshold=0, color=src.color, x=shift_x, y=shift_y))
 
@@ -241,7 +241,7 @@
 	icon_state = "candle"
 	var/obj/effect/ray_light_source/light
 
-	New()
+	INIT()
 		. = ..()
 		light = new/obj/effect/ray_light_source{color="#ffcc77"; shift_y=6; shift_x=2}(src)
 		src.vis_contents += light
@@ -291,7 +291,7 @@
 	var/obj/item/implant/access/access
 	var/obj/item/last_item_bump
 
-	New()
+	INIT()
 		. = ..()
 		access = new /obj/item/implant/access(src)
 		access.owner = src
@@ -409,7 +409,7 @@
 /obj/spawner/amongus_clothing
 	var/cursed = FALSE
 
-	New()
+	INIT()
 		. = ..()
 		var/h = rand(360)
 		var/s = rand() * 20 + 80

@@ -16,7 +16,7 @@
 	var/atom/attached
 	var/list/random_icons = list()
 
-	New()
+	INIT()
 		..()
 		if (islist(src.random_icons) && length(src.random_icons))
 			src.icon_state = pick(src.random_icons)
@@ -406,7 +406,7 @@
 
 	var/HTML = null
 
-	New()
+	INIT()
 		..()
 		if (islist(src.skins))
 			var/new_skin = pick(src.skins)
@@ -605,7 +605,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	var/col_b = 0
 	var/brightness = 0.6
 
-	New()
+	INIT()
 		. = ..()
 		color = rgb(col_r*255, col_g*255, col_b*255)
 		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)

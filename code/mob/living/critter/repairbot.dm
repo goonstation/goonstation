@@ -25,7 +25,7 @@
 			return 1
 		return 0
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
 		src.real_name = src.name

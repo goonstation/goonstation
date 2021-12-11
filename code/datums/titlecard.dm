@@ -101,7 +101,7 @@
 	meteorhit(obj/meteor)
 		return
 
-	New()
+	INIT()
 		..()
 		icon = file("assets/icons/widescreen.dmi")
 	#if defined(MAP_OVERRIDE_OSHAN)

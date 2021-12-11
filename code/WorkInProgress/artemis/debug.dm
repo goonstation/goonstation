@@ -4,7 +4,7 @@
 	. = ..()
 	master_mode = "freeroam"
 
-/mob/living/carbon/human/New()
+INIT_TYPE(/mob/living/carbon/human)
 	. = ..()
 	SPAWN_DBG(4 SECONDS)
 		if(src.client)

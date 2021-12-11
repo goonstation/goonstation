@@ -27,7 +27,7 @@ obj/machinery/air_vendor
 	var/target_pressure = ONE_ATMOSPHERE
 	var/air_cost = 0.1 // units: credits / ( kPa * L )
 
-	New()
+	INIT()
 		..()
 		gas_prototype = new /datum/gas_mixture
 

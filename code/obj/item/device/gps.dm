@@ -205,7 +205,7 @@
 		return
 
 
-	New()
+	INIT()
 		..()
 		serial = rand(4201,7999)
 		START_TRACKING

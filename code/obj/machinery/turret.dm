@@ -31,7 +31,7 @@
 	layer = OBJ_LAYER+0.5
 	density = 0
 
-/obj/machinery/turret/New()
+INIT_TYPE(/obj/machinery/turret)
 	..()
 	var/area/station/turret_protected/TP = get_area(src)
 	if(istype(TP))
@@ -263,7 +263,7 @@
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.6 SECONDS)
 			src.net_id = generate_net_id(src)
@@ -352,7 +352,7 @@
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS
 
-	New()
+	INIT()
 		..()
 		if (!src.turretArea)
 			var/area/A = get_area(src)

@@ -51,7 +51,7 @@
 	var/flavor = ""
 	dropped_item = /obj/item/stick
 
-	New()
+	INIT()
 		..()
 		var/datum/reagents/R = reagents
 		if(prob(1))

@@ -219,7 +219,7 @@ ABSTRACT_TYPE(/datum/plant)
 	// Species allele controls name, appearance, crop produce and mutations
 	// 1 is dominant, else recessive
 
-	New(var/loc,var/random_alleles = 1)
+	INIT(var/loc,var/random_alleles = 1)
 		..()
 		if (random_alleles)
 			src.alleles[1] = rand(0,1)
@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/datum/plant)
 		icon = 'icons/mob/screen1.dmi'
 		icon_state = "grabbed"
 
-	New(var/obj/machinery/plantpot/POT,var/mob/living/carbon/human/sourcerelay,var/duration2)
+	INIT(var/obj/machinery/plantpot/POT,var/mob/living/carbon/human/sourcerelay,var/duration2)
 		if(POT)
 			plant_pot = POT
 		if(sourcerelay)

@@ -16,7 +16,7 @@
 	var/list/disks = list()			//Disks inside the machine
 
 /*
-/obj/machinery/sim/transmitter/New()
+INIT_TYPE(/obj/machinery/sim/transmitter)
 	SPAWN_DBG(1 SECOND)
 		Connect()
 	..()
@@ -198,7 +198,7 @@
 	var/last_tick = 0
 	//var/emagged = 0
 
-/obj/machinery/sim/vr_bed/New()
+INIT_TYPE(/obj/machinery/sim/vr_bed)
 	..()
 	src.UpdateIcon()
 

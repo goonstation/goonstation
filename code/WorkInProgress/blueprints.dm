@@ -38,7 +38,7 @@
 
 	var/list/markers = new/list()
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 
@@ -461,7 +461,7 @@
 
 		return
 
-	New()
+	INIT()
 		..()
 
 	proc/removeOverlays()

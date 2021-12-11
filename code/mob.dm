@@ -231,7 +231,7 @@
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
 
 // mob procs
-/mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
+INIT_TYPE(/mob, loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
 	hallucinations = new

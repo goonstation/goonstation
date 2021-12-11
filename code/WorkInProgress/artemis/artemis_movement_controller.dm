@@ -2,7 +2,7 @@
 
 	var/obj/artemis/ship
 
-	New(var/obj/artemis/A)
+	INIT(var/obj/artemis/A)
 		..()
 		ship = A
 
@@ -138,7 +138,7 @@
 
 /datum/movement_controller/artemis/manta
 
-	New(var/obj/artemis/manta/M)
+	INIT(var/obj/artemis/manta/M)
 		..()
 		ship = M
 

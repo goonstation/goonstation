@@ -265,7 +265,7 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
 
 
-/obj/machinery/computer3/New()
+INIT_TYPE(/obj/machinery/computer3)
 	..()
 
 	light = new/datum/light/point
@@ -984,7 +984,7 @@ function lineEnter (ev)
 	var/obj/machinery/computer3/luggable/luggable = null
 	var/luggable_type = /obj/machinery/computer3/luggable
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(!luggable)
@@ -1031,7 +1031,7 @@ function lineEnter (ev)
 		user.visible_message("<b>[user]</b> deploys [src.luggable]!","You deploy [src.luggable]!")
 
 /obj/machinery/computer3/luggable
-	New()
+	INIT()
 		..()
 		src.cell = new /obj/item/cell(src)
 		src.cell.maxcharge = setup_charge_maximum

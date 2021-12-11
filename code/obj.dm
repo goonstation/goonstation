@@ -23,7 +23,7 @@
 	var/_health = 100
 	var/_max_health = 100
 
-	New()
+	INIT()
 		. = ..()
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
@@ -99,7 +99,7 @@
 		qdel(src)
 		return
 
-	New()
+	INIT()
 		setupProperties()
 		. = ..()
 
@@ -477,7 +477,7 @@
 		return
 
 /obj/overlay/self_deleting
-	New(newloc, deleteTimer)
+	INIT(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
 			SPAWN_DBG(deleteTimer)

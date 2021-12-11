@@ -70,7 +70,7 @@
 	var/card_spooky = FALSE
 	var/solitaire_offset = 3
 
-	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
+	INIT(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky, cardsolitaire)
 		..()
 		if (cardname) src.card_name = cardname
 		if (carddesc) src.card_desc = carddesc

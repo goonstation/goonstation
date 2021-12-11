@@ -43,7 +43,7 @@
 	var/mob/living/target
 	var/datum/targetable/werewolf/werewolf_spread_affliction/spread
 	var/last_complete = 0
-	New(Target, Spread)
+	INIT(Target, Spread)
 		target = Target
 		spread = Spread
 		..()

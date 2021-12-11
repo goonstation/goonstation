@@ -1,7 +1,7 @@
 /obj/item/tank/jetpack/kyle
 	abilities = list(/obj/ability_button/jetpack_toggle_kyle, /obj/ability_button/tank_valve_toggle)
 	var/datum/movement_controller/jetpack_controller = null
-	New()
+	INIT()
 		jetpack_controller = new/datum/movement_controller/jetpack()
 		..()
 
@@ -51,7 +51,7 @@
 
 		last_dir = 0
 
-	New(owner, jetpack)
+	INIT(owner, jetpack)
 		..()
 		src.owner = owner
 		src.jetpack = jetpack

@@ -62,7 +62,7 @@
 				return
 	return
 
-/obj/machinery/computer/pod/New()
+INIT_TYPE(/obj/machinery/computer/pod)
 	..()
 	SPAWN_DBG( 5 )
 		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])

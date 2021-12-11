@@ -125,7 +125,7 @@
 		recharger
 			recharges_contents = 1
 
-	New()
+	INIT()
 		..()
 
 		if(!recharges_contents)

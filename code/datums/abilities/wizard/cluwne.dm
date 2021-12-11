@@ -32,7 +32,7 @@
 	var/datum/targetable/spell/cluwne/spell
 	var/mob/living/carbon/human/target
 
-	New(Target, Spell)
+	INIT(Target, Spell)
 		target = Target
 		spell = Spell
 		..()

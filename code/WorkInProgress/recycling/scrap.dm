@@ -24,7 +24,7 @@
 #define MAX_SCRAP	15000	// maximum content amount of a scrap pile
 
 
-/obj/item/scrap/New()
+INIT_TYPE(/obj/item/scrap)
 	..()
 	update()
 

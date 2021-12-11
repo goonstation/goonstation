@@ -2,7 +2,7 @@
 	real_name = "Target Dummy"
 	var/shutup = FALSE
 //	nodamage = 1
-	New()
+	INIT()
 		. = ..()
 		src.maptext_y = 32
 

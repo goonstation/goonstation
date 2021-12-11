@@ -210,7 +210,7 @@
 		initial_reagents = list("bread"=5,"cornsyrup"=5,"honey"=10)
 		meal_time_flags = MEAL_TIME_DINNER
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
@@ -267,7 +267,7 @@
 		food_effects = list("food_warm", "food_all")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
@@ -296,7 +296,7 @@
 		initial_volume = 35
 		initial_reagents = list("bread"=5,"cheese"=5,"essenseofelvis"=25)
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
@@ -325,7 +325,7 @@
 		initial_volume = 35
 		initial_reagents = list("bread"=5,"porktonium"=5,"essenseofelvis"=25)
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
@@ -352,11 +352,11 @@
 		real_name ="eggs on elvis toast"
 		meal_time_flags = MEAL_TIME_SNACK
 
-		New()
+		INIT()
 			..()
 			reagents.add_reagent("essenceofelvis",25)
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-3,3)
 		src.pixel_y += rand(-3,3)
@@ -375,7 +375,7 @@
 	stamina_cost = 1
 	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)

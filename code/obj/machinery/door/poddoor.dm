@@ -12,7 +12,7 @@
 
 	var/id = 1.0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -32,7 +32,7 @@
 	desc = "This door neatly separates the setup area from the spectator booths."
 	icon = 'icons/effects/VR.dmi'
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(5 SECONDS)
 			open()
@@ -1052,7 +1052,7 @@
 	icon_base = "bdoor"
 	var/doordir = "mid"
 
-/obj/machinery/door/poddoor/blast/New()
+INIT_TYPE(/obj/machinery/door/poddoor/blast)
 	..()
 	if(icon_state == "[icon_base]mid1")
 		doordir = "mid"

@@ -7,7 +7,7 @@
 
 	var/on = 0
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(3000)
 
@@ -101,7 +101,7 @@
 	var/mob/living/carbon/human/myuser = null
 	var/default_reagent = "water"
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(500)
 

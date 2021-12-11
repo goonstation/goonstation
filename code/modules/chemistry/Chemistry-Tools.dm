@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	var/last_new_initial_reagents = 0 //fuck
 
-	New(loc, new_initial_reagents)
+	INIT(loc, new_initial_reagents)
 		..()
 		last_new_initial_reagents = new_initial_reagents
 		ensure_reagent_holder()

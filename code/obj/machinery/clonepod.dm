@@ -62,7 +62,7 @@
 
 	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
-	New()
+	INIT()
 		..()
 		req_access = list(access_medical_lockers) //For premature unlocking.
 		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
@@ -820,7 +820,7 @@
 	var/auto_strip = 1 // disabled when emagged (people were babies about this when it being turned off was the default) :V
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		src.create_reagents(100)
@@ -1145,7 +1145,7 @@
 	var/obj/machinery/clonegrinder/grinder
 	var/obj/item/grab/grab
 
-	New(var/mob/living/carbon/human/ntarg, var/obj/machinery/clonegrinder/ngrind, var/obj/item/grab/ngrab, var/duration_i)
+	INIT(var/mob/living/carbon/human/ntarg, var/obj/machinery/clonegrinder/ngrind, var/obj/item/grab/ngrab, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg

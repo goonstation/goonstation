@@ -12,7 +12,7 @@
 	m_amt = 100
 	mats = 15
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/elecflash)
 

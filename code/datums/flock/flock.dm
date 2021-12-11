@@ -20,7 +20,7 @@
 	var/snooping = 0 //are both sides of communication currently accessible?
 	var/chui/window/flockpanel/panel
 
-/datum/flock/New()
+INIT_TYPE(/datum/flock)
 	..()
 	src.name = "[pick(consonants_lower)][pick(vowels_lower)].[pick(consonants_lower)][pick(vowels_lower)]"
 	flocks[src.name] = src

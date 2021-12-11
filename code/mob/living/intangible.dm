@@ -8,7 +8,7 @@
 	anchored = 1
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
-	New()
+	INIT()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF

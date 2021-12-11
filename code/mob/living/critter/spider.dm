@@ -42,7 +42,7 @@
 
 	var/bite_transfer_amt = 1
 
-	New()
+	INIT()
 		..()
 		if (src.icon_state == "big_spide")
 			src.icon_state = "big_spide[pick("", "-red", "-green", "-blue")]"
@@ -218,7 +218,7 @@
 	max_skins = 1
 	adultpath = /mob/living/critter/spider/ice
 
-	New()
+	INIT()
 		..()
 		if (prob(1))
 			src.adultpath = /mob/living/critter/spider/ice/queen
@@ -355,7 +355,7 @@
 		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 		max_defensive_babies = 150
 
-	New()
+	INIT()
 		..()
 		babies = list()
 

@@ -1,5 +1,5 @@
 /datum/tag/css
-	New()
+	INIT()
 		..("style")
 		setAttribute("type", "text/css")
 

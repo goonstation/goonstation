@@ -51,7 +51,7 @@
 	var/list/glitch_con = list("kind of","a little bit","somewhat","a bit","slightly","quite","rather")
 	var/list/glitch_adj = list("scary","weird","freaky","crazy","demented","horrible","ghastly","egregious","unnerving")
 
-	New()
+	INIT()
 		..()
 		name = "Drone [rand(1,9)]*[rand(10,99)]"
 		base_name = name
@@ -477,7 +477,7 @@
 	desc = "The most cost-effective movement available for drones. Won't do very good in space, though!"
 	var/speed = 0
 
-	New()
+	INIT()
 		..()
 		drone_overlay = image('icons/mob/drone.dmi',"wheels")
 
@@ -485,6 +485,6 @@
 	name = "drone plating"
 	desc = "Armor for a remote controlled drone."
 
-	New()
+	INIT()
 		..()
 		drone_overlay = image('icons/mob/drone.dmi',"plating-0")

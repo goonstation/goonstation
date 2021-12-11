@@ -25,7 +25,7 @@
 	var/datum/flock_tile_group/group = null //the group its connected to
 
 
-/turf/simulated/floor/feather/New()
+INIT_TYPE(/turf/simulated/floor/feather)
 	..()
 	setMaterial(getMaterial("gnesis"))
 	light = new /datum/light/point
@@ -255,7 +255,7 @@ turf/simulated/floor/feather/proc/bfs(turf/start)//breadth first search, made by
 	mat_appearances_to_ignore = list("steel","gnesis")
 	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door/feather)
 
-/turf/simulated/wall/auto/feather/New()
+INIT_TYPE(/turf/simulated/wall/auto/feather)
 	..()
 	setMaterial(getMaterial("gnesis"))
 

@@ -18,7 +18,7 @@
 
 	volume = 750
 
-	New()
+	INIT()
 		..()
 		tank_hatch = image('icons/obj/atmospherics/atmos.dmi', "")
 

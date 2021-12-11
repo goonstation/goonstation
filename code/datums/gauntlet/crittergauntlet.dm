@@ -75,7 +75,7 @@
 	on_cgreen = 1
 	on_cblue = 1
 
-	New()
+	INIT()
 		..()
 		on()
 
@@ -360,7 +360,7 @@
 		if (critters_left[name] <= 0)
 			critters_left -= name
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			viewing = locate() in world
@@ -549,7 +549,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	var/has_camera = 0
 	var/cam_network = null
 
-	New()
+	INIT()
 		..()
 		if (has_camera)
 			src.cam = new /obj/machinery/camera(src)

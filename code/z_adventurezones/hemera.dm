@@ -62,7 +62,7 @@ Obsidian Crown
 /obj/item/disk/data/memcard/h7
 	file_amount = 1024
 
-	New()
+	INIT()
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
@@ -138,7 +138,7 @@ Obsidian Crown
 	name = "ThinkTape-'Logs'"
 	desc = "A reel of magnetic data tape containing various log files."
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/record/h7_analysislog(src) )
 		src.root.add_file( new /datum/computer/file/record/h7_memo1(src) )
@@ -149,7 +149,7 @@ Obsidian Crown
 	name = "ThinkTape-'CAUTION'"
 	desc = "A reel of magnetic data tape with a big warning on the label."
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/mainframe_program/nuke_interface(src) )
 
@@ -157,7 +157,7 @@ Obsidian Crown
 /datum/computer/file/record/h7_analysislog
 	name = "analysis_log"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
 "Object Analysis Log - TH JUN 09 2050",
@@ -185,7 +185,7 @@ Obsidian Crown
 /datum/computer/file/record/h7_memo1
 	name = "1281"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
 "MEMORANDUM 1.281 - MO MAY 30 2050",
@@ -208,7 +208,7 @@ Obsidian Crown
 /datum/computer/file/record/h7_memo2
 	name = "1306"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
 "MEMORANDUM 1.306 - WE JUN 08 2050",
@@ -238,7 +238,7 @@ Obsidian Crown
 /datum/computer/file/record/h7_memo3
 	name = "1307"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
 "MEMORANDUM 1.307 - WE JUN 08 2050",

@@ -699,7 +699,7 @@
 
 		monkey_organ
 			projectile = new/datum/projectile/special/spawner
-			New()
+			INIT()
 				. = ..()
 				var/datum/projectile/special/spawner/P = projectile
 				P.damage_type = D_KINETIC
@@ -1791,7 +1791,7 @@
 	var/clash_time = 6
 
 	var/do_flick = 1
-	New()
+	INIT()
 		..()
 
 
@@ -1918,7 +1918,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-	
+
 
 		//mouse_opacity = 1
 		var/bump_count = 0
@@ -2037,7 +2037,7 @@
 	pixel_x = 0
 	pixel_y = 0
 
-	New()
+	INIT()
 		pixel_x = rand(-3,3)
 		pixel_y = rand(-15,6)
 		..()
@@ -2045,7 +2045,7 @@
 /obj/itemspecialeffect/impact/blood
 	icon_state = "blood_impact1"
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			icon_state = "blood_impact2"
@@ -2059,7 +2059,7 @@
 /obj/itemspecialeffect/impact/silicon
 	icon_state = "silicon_impact1"
 
-	New()
+	INIT()
 		..()
 		if (prob(66))
 			icon_state = "silicon_impact2"
@@ -2078,7 +2078,7 @@
 	var/params = null
 	duration = -1
 
-	New(var/datum/item_special/rush/D, var/mob/U, var/atom/T)
+	INIT(var/datum/item_special/rush/D, var/mob/U, var/atom/T)
 		..()
 		if(!istype(D, /datum/item_special/rush))
 			interrupt(INTERRUPT_ALWAYS)

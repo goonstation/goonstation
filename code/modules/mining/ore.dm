@@ -7,7 +7,7 @@
 	throwforce = 10
 	//metal = 1
 	//conductor = 1
-	New()
+	INIT()
 		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
 		return ..()
 

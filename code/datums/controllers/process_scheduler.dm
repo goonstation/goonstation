@@ -50,7 +50,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	var/tmp/cpuAverage = 0
 
 
-/datum/controller/processScheduler/New()
+INIT_TYPE(/datum/controller/processScheduler)
 	..()
 	scheduler_sleep_interval = world.tick_lag
 

@@ -6,7 +6,7 @@
 	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	New()
+	INIT()
 		..()
 
 /obj/machinery/teleport/portal_ring
@@ -18,7 +18,7 @@
 	var/datum/light/light
 	power_usage = 0
 
-	New()
+	INIT()
 		..()
 		find_links()
 		light = new /datum/light/point
@@ -89,7 +89,7 @@
 	var/list/linked_rings = list()
 	power_usage = 250
 
-	New()
+	INIT()
 		..()
 		find_links()
 

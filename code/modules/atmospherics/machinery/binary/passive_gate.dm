@@ -71,7 +71,7 @@ datum/pump_ui/passive_gate_ui
 	incr_lg = 1000
 	var/obj/machinery/atmospherics/binary/passive_gate/our_gate
 
-datum/pump_ui/passive_gate_ui/New(obj/machinery/atmospherics/binary/passive_gate/our_gate)
+INIT_TYPE(datum/pump_ui/passive_gate_ui, obj/machinery/atmospherics/binary/passive_gate/our_gate)
 	..()
 	src.our_gate = our_gate
 	pump_name = our_gate.name

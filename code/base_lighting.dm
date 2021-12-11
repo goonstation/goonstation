@@ -17,7 +17,7 @@
 		force_fullbright = 0
 		ambient_light = null //rgb(0.025 * 255, 0.025 * 255, 0.025 * 255)
 
-	New()
+	INIT()
 		..()
 		if (force_fullbright)
 			overlays += /image/fullbright
@@ -40,7 +40,7 @@
 	var
 		fullbright = 0
 
-	New()
+	INIT()
 		..()
 		var/area/A = loc
 

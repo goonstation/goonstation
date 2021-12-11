@@ -13,7 +13,7 @@
 	health = 30 // fragile little thing
 	var/decal_made = 0 // for splashing stuff on throw
 
-/obj/flock_structure/egg/New(var/atom/location, var/datum/flock/F=null)
+INIT_TYPE(/obj/flock_structure/egg, var/atom/location, var/datum/flock/F=null)
 	..()
 	if(src.flock)
 		src.flock.registerUnit(src)

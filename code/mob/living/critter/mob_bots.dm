@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/mob/living/critter/bot)
 	var/burn_hp = 25
 	var/emagged = FALSE
 
-	New()
+	INIT()
 		. = ..()
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/mob/living/critter/bot)
 		icon_state = "cleanbot1"
 		icon_state_base = "cleanbot"
 
-		New()
+		INIT()
 			. = ..()
 			if(prob(50))
 				icon_state = "cleanbot-red1"
@@ -122,7 +122,7 @@ ABSTRACT_TYPE(/mob/living/critter/bot)
 			brute_hp = 50
 			burn_hp = 50
 			emagged = TRUE
-			New()
+			INIT()
 				. = ..()
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/lube)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	var/turf/T
 	var/const/cleaning_reagent = "cleaner"
 
-	New(mob/user, atom/target)
+	INIT(mob/user, atom/target)
 		..()
 		src.master = user
 		src.T = get_turf(target)
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	icon_state = "firebot1"
 	icon_state_base = "firebot"
 
-	New()
+	INIT()
 		. = ..()
 		color = pick(list(
 			null,\
@@ -271,7 +271,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		brute_hp = 50
 		burn_hp = 50
 		emagged = TRUE
-		New()
+		INIT()
 			. = ..()
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_fire)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/throw_humans)

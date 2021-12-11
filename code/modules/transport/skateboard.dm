@@ -41,7 +41,7 @@
 	alpha = 0
 	pixel_x = -32
 
-	New(var/location = null, var/state = null)
+	INIT(var/location = null, var/state = null)
 		..()
 		if(location)
 			src.set_loc(location)
@@ -76,7 +76,7 @@
 	var/list/bumped_queue = list()
 	density = 0
 
-/obj/vehicle/skateboard/New()
+INIT_TYPE(/obj/vehicle/skateboard)
 	..()
 
 /obj/vehicle/skateboard/proc/adjustSickness(var/mod)

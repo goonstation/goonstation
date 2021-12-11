@@ -32,7 +32,7 @@
 		popup_win = 0
 		var/pixel_var = 0
 
-		New()
+		INIT()
 			..()
 			if (src.pixel_var)
 				src.pixel_y += rand(-4,4)
@@ -386,7 +386,7 @@
 			name = "DON'T PANIC"
 			desc = "A sign which suggests that you remain calm, as everything is surely just fine."
 			icon_state = "centcomfail"
-			New()
+			INIT()
 				..()
 				icon_state = pick("centcomfail", "centcomfail2")
 
@@ -654,7 +654,7 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "teaparty"
 
-			New()
+			INIT()
 				..()
 
 				var/which = pick(
@@ -806,7 +806,7 @@
 			icon_state = "rddiploma"
 			pixel_y = -6
 
-			New()
+			INIT()
 				..()
 				var/obj/item/M = new award_type(src.loc)
 				M.desc = src.desc
@@ -1025,7 +1025,7 @@
 		src.colored = FALSE
 		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
 
-	New()
+	INIT()
 		. = ..()
 		var/static/image/banner_holder = image(src.icon, "banner_holder")
 		banner_holder.appearance_flags = RESET_COLOR

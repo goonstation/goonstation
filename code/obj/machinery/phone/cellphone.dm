@@ -18,7 +18,7 @@
 	var/ringsound = "sound/machines/phones/ring_incoming.ogg"
 
 
-	New()
+	INIT()
 		src.cell.give(7500) // Charge it up
 		return
 
@@ -144,7 +144,7 @@
 	var/obj/item/machinery/phone/cellphone/phone = null
 	var/registering_name = "Anonymous"
 
-	New(var/icon,var/obj/item/machinery/phone/cellphone/newphone,var/newid_name)
+	INIT(var/icon,var/obj/item/machinery/phone/cellphone/newphone,var/newid_name)
 		icon_state = icon
 		src.phone = newphone
 		registering_name = newid_name

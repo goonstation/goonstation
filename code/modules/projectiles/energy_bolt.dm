@@ -276,7 +276,7 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "shockwave"
 
-	New(var/x_val, var/y_val)
+	INIT(var/x_val, var/y_val)
 		..()
 		pixel_x = x_val
 		pixel_y = y_val

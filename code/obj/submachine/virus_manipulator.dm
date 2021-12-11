@@ -19,7 +19,7 @@
 	var/dataprob = "N/A"
 	var/working = 0
 
-	New()
+	INIT()
 		..()
 		src.overlays += image('icons/obj/objects.dmi', "DAn-Oe")
 

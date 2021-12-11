@@ -51,7 +51,7 @@
 	var/extinguisher = 0 //Is the extinguisher added?
 	var/created_name = "Firebot"
 
-/obj/machinery/bot/firebot/New()
+INIT_TYPE(/obj/machinery/bot/firebot)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)

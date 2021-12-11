@@ -167,7 +167,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/list/voicetypes = list("One" = "1","Two" = "2","Three" = "3","Four" = "4")
 
-	New()
+	INIT()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
@@ -358,7 +358,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
 	var/uid_hash
 
-	New(var/mob/owneri)
+	INIT(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
 		uid_hash = md5(Uid)

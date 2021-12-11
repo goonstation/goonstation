@@ -22,7 +22,7 @@
 	west
 		dir = WEST
 
-	New()
+	INIT()
 		initialize_directions = dir
 		..()
 

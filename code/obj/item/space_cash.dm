@@ -28,7 +28,7 @@
 	var/default_min_amount = 0
 	var/default_max_amount = 0
 
-	New(var/atom/loc, var/amt = 1 as num)
+	INIT(var/atom/loc, var/amt = 1 as num)
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount) //take higher
 		..(loc)
@@ -159,7 +159,7 @@
 	desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
 	icon_state = "cashblue"
 
-	New()
+	INIT()
 		..()
 		processing_items |= src
 
@@ -204,7 +204,7 @@
 
 
 /obj/item/spacecash/bag // hufflaw cashbags
-	New(var/atom/loc)
+	INIT(var/atom/loc)
 		..(loc)
 		amount = rand(1,10000)
 		name = "money bag"
@@ -240,7 +240,7 @@
 	stack_type = /obj/item/spacebux
 
 
-	New(var/atom/loc, var/amt = null)
+	INIT(var/atom/loc, var/amt = null)
 		..(loc)
 		if (amt != null)
 			src.amount = amt

@@ -17,7 +17,7 @@ var/list/genetek_hair_styles = list()
 	var/net_id = null
 	var/frequency = FREQ_PDA
 
-	New()
+	INIT()
 		..()
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
@@ -286,7 +286,7 @@ var/list/genetek_hair_styles = list()
 
 	var/datum/character_preview/multiclient/preview = null
 
-	New(mob/target)
+	INIT(mob/target)
 		..()
 		if(!ishuman(target))
 			qdel(src)

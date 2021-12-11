@@ -49,7 +49,7 @@
 	var/stealthed = 0
 	var/const/MAX_POINTS = 100
 
-	New()
+	INIT()
 		..()
 
 
@@ -72,7 +72,7 @@
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/gang/B = new /atom/movable/screen/ability/topBar/gang(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

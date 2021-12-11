@@ -496,7 +496,7 @@
 	stamina_crit_chance = 10
 	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)

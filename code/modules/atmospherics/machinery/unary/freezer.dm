@@ -44,7 +44,7 @@
 		west
 			dir = WEST
 
-	New()
+	INIT()
 		..()
 		pipe_direction = src.dir
 		initialize_directions = pipe_direction

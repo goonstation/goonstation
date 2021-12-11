@@ -9,7 +9,7 @@
 	var/net_id = null //Network ID of connected device.
 	var/term_type = null //Terminal type ID of connected device.  i.e. PNET_MAINFRAME or HUI_TERMINAL
 
-	New(var/obj/machinery/networked/newmaster, var/new_id, var/newterm_type)
+	INIT(var/obj/machinery/networked/newmaster, var/new_id, var/newterm_type)
 		..()
 		if(istype(newmaster))
 			src.master = newmaster
@@ -60,7 +60,7 @@
 		//setup_starting_os = /datum/computer/file/mainframe_program/os/main_os
 		setup_drive_type = /obj/item/disk/data/memcard/main2
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 

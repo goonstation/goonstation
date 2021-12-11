@@ -30,7 +30,7 @@
 		desc = "Now with 200% more value!"
 		icon_state = "cart-fancy"
 		file_amount = 128
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
@@ -54,7 +54,7 @@
 		desc = "Not quite identity fraud on the go, but close."
 		icon_state = "cart-records"
 		file_amount = 64
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
@@ -71,7 +71,7 @@
 		desc = "Wait, how did you even get this?"
 		icon_state = "cart-ai"
 		file_amount = 1024
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
@@ -98,7 +98,7 @@
 		desc = "What does it mean if this internal cartridge is now external?"
 		icon_state = "cart-ai"
 		file_amount = 1024
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
@@ -123,7 +123,7 @@
 		desc = "There is a torn 'for ages 5 and up' sticker on the back."
 		icon_state = "cart-rd2"
 		file_amount = 64
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
@@ -139,7 +139,7 @@
 		desc = "All the power of a Med-U cartridge but none of the red."
 		icon_state = "cart-md"
 		file_amount = 64
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
@@ -157,7 +157,7 @@
 		name = "\improper Med-U cartridge"
 		desc = "Has a built-in health scanner program, if your would-be patient ever stood still."
 		icon_state = "cart-med"
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
@@ -172,7 +172,7 @@
 		desc = "More like, copyright infringement made easy."
 		icon_state = "cart-network"
 		file_amount = 64
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
@@ -186,7 +186,7 @@
 		desc = "Reliably Ordered By Useless Security Teams."
 		icon_state = "cart-sec"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
@@ -201,7 +201,7 @@
 		icon_state = "cart-forensics"
 		file_amount = 128
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
@@ -219,7 +219,7 @@
 		desc = "Someone registered the shareware version of the R.O.B.U.S.T. cartridge!"
 		icon_state = "cart-hos"
 		file_amount = 128
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
@@ -239,7 +239,7 @@
 		desc = "It's like a signaling device, but stuffed in another device!"
 		icon_state = "cart-signalace"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
@@ -250,7 +250,7 @@
 		desc = "There was, at one point, a time when this cartridge often got use."
 		icon_state = "cart-med"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
@@ -263,7 +263,7 @@
 		desc = "Perfect for the Quartermaster on the go!"
 		icon_state = "cart-qm"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
@@ -275,7 +275,7 @@
 		desc = "Great for the enterprising engineer in everyone!"
 		icon_state = "cart-engine"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
@@ -289,7 +289,7 @@
 		icon_state = "cart-engine"
 		file_amount = 64
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
@@ -307,7 +307,7 @@
 		desc = "There are some <em>very</em> questionable stains on this thing. Is that blood?"
 		icon_state = "cart-clown2"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/honk_synth(src))
 			src.root.add_file( new /datum/computer/file/pda_program/arcade(src))
@@ -319,7 +319,7 @@
 		desc = "When you've mopped till you've dropped, this helps you pick it back up again. Special built-in radio picks up frequenies of nearby mops."
 		icon_state = "cart-j"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/mopfinder(src))
 			src.root.add_file( new /datum/computer/file/pda_program/arcade(src))
@@ -330,7 +330,7 @@
 		desc = "For when you've fallen and you can't get up."
 		icon_state = "cart-alert"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.read_only = 1
@@ -340,7 +340,7 @@
 		desc = "A must for any botanist. It's the ROMpost to your compost!"
 		icon_state = "cart-hydro"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
@@ -353,7 +353,7 @@
 		icon_state = "cart-deto"
 		mats = 0
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/bomb(src))
 			var/datum/computer/file/pda_program/missile/detofile = new /datum/computer/file/pda_program/missile(src)
@@ -367,7 +367,7 @@
 		desc = "This cart uses only the finest-quality recycled soviet steel."
 		icon_state = "cart-deto"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bomb(src))
@@ -383,7 +383,7 @@
 		desc = "Built-in radio supports a wide frequency range, making it capable of snooping on many devices."
 		icon_state = "cart-network"
 		file_amount = 64
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
@@ -398,7 +398,7 @@
 		desc = "Irata Inc ports another of their finest titles to your handheld PDA!"
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/codebreaker(src))
 			src.read_only = 1
@@ -408,7 +408,7 @@
 		desc = "Perfect for restoring default audio settings to any Thinktronic Systems handheld device."
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone(src))
 			src.read_only = 1
@@ -418,7 +418,7 @@
 		desc = "RIDE OR DIE WE HOWL TOGETHER AND PROWL TOGETHER"
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/dogs(src))
 			src.read_only = 1
@@ -428,7 +428,7 @@
 		desc = "Blossom into brilliance! For ages 4-6."
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/numbers(src))
 			src.read_only = 1
@@ -438,7 +438,7 @@
 		desc = "Take flight with these enlightening soultones..."
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/basic(src))
 			src.read_only = 1
@@ -448,7 +448,7 @@
 		desc = "Jangle with us in the spacewind, together."
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/chimes(src))
 			src.read_only = 1
@@ -458,7 +458,7 @@
 		desc = "Blipous family heirloom Spaceblips."
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/beepy(src))
 			src.read_only = 1
@@ -468,7 +468,7 @@
 		desc = "HI-QUALITY and REALISTIC sound effects for your PDA or project!"
 		icon_state = "cart-c"
 
-		New()
+		INIT()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/ringtone/syndie(src))
 			src.read_only = 1

@@ -2,7 +2,7 @@
  #define VOID_BIOME_RANDOM_SQUARE_DRIFT 2
 
 /obj/decal/floatingtiles/random
-	New()
+	INIT()
 		..()
 		icon_state = "floattiles[rand(1,6)]"
 		dir = pick(cardinal)

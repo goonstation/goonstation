@@ -178,7 +178,7 @@
 				INVOKE_ASYNC(src, /obj/machinery/clonepod/pod_wars.proc/growclone_a_ghost)
 		return..()
 
-	New()
+	INIT()
 		..()
 		animate_rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
@@ -274,7 +274,7 @@
 
 	//Might be nice to allow players to "repair"  Dead turrets to speed up their timer, but not now. too lazy - kyle
 
-	New(var/direction)
+	INIT(var/direction)
 		..(direction=direction)
 
 	//just "deactivates"
@@ -512,7 +512,7 @@
 	desc = "A must for any one who braves the vast emptiness of space."
 	icon_state = "cart-network"
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 		src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
@@ -527,7 +527,7 @@
 	var/to_spawn = /obj/item/reagent_containers/food/drinks/bottle/champagne/breakaway_glass
 	var/turf/T 		//the turf this obj spawns at.
 
-	New()
+	INIT()
 		..()
 		T = get_turf(src)
 		while (T)
@@ -610,7 +610,7 @@
 	var/datum/control_point/ctrl_pt
 	var/can_be_captured = 0		//can't capture this point until it's set to TRUE. Will be done by control points at 15 MIN atm.
 
-	New()
+	INIT()
 		..()
 		light = new/datum/light/point
 		light.set_brightness(0.8)
@@ -812,7 +812,7 @@
 	var/object_type = /obj/barricade 		//object to deploy
 	var/build_duration = 2 SECONDS
 
-	New(loc)
+	INIT(loc)
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 
@@ -886,7 +886,7 @@
 	var/team_num = 0						//should be 1 or 2
 	var/tier = 1							//acceptable values, 1-3.
 
-	New(turf/loc, var/team_num, var/tier)
+	INIT(turf/loc, var/team_num, var/tier)
 		..()
 		src.team_num = team_num
 		src.tier = tier

@@ -12,7 +12,7 @@
 	/// what type of item do we get when butchering the fish
 	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 

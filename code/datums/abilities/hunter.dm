@@ -267,7 +267,7 @@
 	var/not_when_handcuffed = 0
 	var/hunter_only = 0
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/hunter/B = new /atom/movable/screen/ability/topBar/hunter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

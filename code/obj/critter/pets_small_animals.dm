@@ -68,7 +68,7 @@
 	skinresult = /obj/item/material_piece/cloth/leather //YEP
 	max_skins = 1
 
-	New()
+	INIT()
 		..()
 		if (prob(10))
 			//diseased = 1
@@ -169,7 +169,7 @@
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 1
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -234,7 +234,7 @@
 	var/catnip = 0
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
-	New()
+	INIT()
 		if(src.name == "jons the catte")
 			src.is_pet = 1
 		..()
@@ -408,7 +408,7 @@
 
 /obj/critter/cat/goddamnittobba
 	aggressive = 1
-	New()
+	INIT()
 		..()
 		src.catnip = rand(50,250)
 
@@ -431,7 +431,7 @@
 	generic = 0
 	desc = "Although this cat is vegan, it's still a carnivore."
 
-	New()
+	INIT()
 		name = pick_string_autokey("names/cats.txt")
 		..()
 
@@ -472,7 +472,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	butcherable = 0
 	generic = 0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -573,7 +573,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	doggy = "shiba"
 	var/randomize_shiba = 1
 
-	New()
+	INIT()
 		..()
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
@@ -896,7 +896,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/feather_color = "#ba1418"				// color(s) of feathers the bird can randomly spawn
 	var/last_feather_time = 0					// last world time a feather was spawned
 
-	New(loc, nspecies)
+	INIT(loc, nspecies)
 		..()
 		if (nspecies)
 			src.apply_species(nspecies, 0)
@@ -1444,7 +1444,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	desc = "A spacefaring species of <i>eclectus roratus</i>."
 	species = null
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("eclectus","eclectusf"))
@@ -1458,7 +1458,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	health = 50
 	generic = 0
 
-	New()
+	INIT()
 		already_a_dominic = 1
 		..()
 
@@ -1476,7 +1476,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	hops = 1
 	hat_offset_y = -6
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("bcaique","wcaique"))
@@ -1487,7 +1487,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = null
 	hat_offset_y = -6
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("gbudge","bbudge","bgbudge"))
@@ -1498,7 +1498,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = null
 	hat_offset_y = -6
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("tiel","wtiel","luttiel","blutiel"))
@@ -1509,7 +1509,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = null
 	hat_offset_y = -4
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("too","too","utoo","mtoo"))
@@ -1520,7 +1520,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = null
 	hat_offset_y = -4
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("toucan","kbtoucan"))
@@ -1534,7 +1534,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	hat_offset_y = -3
 	hat_offset_x = 16
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("smacaw","bmacaw","mmacaw","hmacaw"))
@@ -1545,7 +1545,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	species = null
 	hat_offset_y = -6
 
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			src.apply_species(pick("love","lovey","lovem","loveb","lovef"))
@@ -1573,7 +1573,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	destroys_treasure = 0
 	sells_furniture = 1
 
-	New()
+	INIT()
 		..()
 		src.treasure = new /obj/item/paper/ikea_catalogue(src)
 
@@ -1585,7 +1585,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 /obj/critter/parrot/random
 	species = null
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			if (prob(1) && prob(10))
@@ -1595,7 +1595,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			return
 
 /obj/critter/parrot/random/testing
-	New() // the apply_species() call in /obj/critter/parrot/random/New() will override these if we set them as the initial vars on /obj/critter/parrot/random/testing, so we set them here after apply_species() has already run
+	INIT() // the apply_species() call in /obj/critter/parrot/random/New() will override these if we set them as the initial vars on /obj/critter/parrot/random/testing, so we set them here after apply_species() has already run
 		..()
 		src.learn_words_chance = 100
 		src.learn_phrase_chance = 100
@@ -1717,7 +1717,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/feather_color = "#212121"
 	var/last_feather_time = 0
 
-	New()
+	INIT()
 		..()
 		if (prob(5))
 			src.name = replacetext(src.name, "crow", "raven")
@@ -1902,7 +1902,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	var/lazy_state = "ferret-lazy"
 	var/lock_color = 0
 
-	New()
+	INIT()
 		..()
 
 		//50% chance to be a dark-colored ferret
@@ -2028,7 +2028,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	skinresult = /obj/item/clothing/head/raccoon
 	max_skins = 1
 
-	New()
+	INIT()
 		..()
 		if (prob(10))
 			src.atk_diseases = list(/datum/ailment/disease/berserker, /datum/ailment/disease/space_madness)

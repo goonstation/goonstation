@@ -298,7 +298,7 @@
 	if (src.module)
 		src.module.relay_drop(user)
 
-/obj/item/device/pda2/New()
+INIT_TYPE(/obj/item/device/pda2)
 	..()
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)

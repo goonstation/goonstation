@@ -15,7 +15,7 @@
 	var/allow_staple = 1
 	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
-	New()
+	INIT()
 		..()
 		if (c_flags & COVERSMOUTH | MASKINTERNALS)
 			special_grab = /obj/item/grab/force_mask
@@ -151,8 +151,8 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 1
-	
-/obj/item/clothing/mask/moustache/Italian 
+
+/obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
@@ -213,7 +213,7 @@
 	is_syndicate = 1
 	mats = 6
 
-	New()
+	INIT()
 		..()
 		src.vchange = new(src)
 
@@ -431,7 +431,7 @@
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 10)
 
-	New()
+	INIT()
 		..()
 		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
 		var/image/onhead = image('icons/mob/mask.dmi', "")

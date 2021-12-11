@@ -444,7 +444,7 @@ obj/machinery/embedded_controller
 	radio
 		var/frequency
 
-		New()
+		INIT()
 			..()
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 

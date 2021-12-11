@@ -267,6 +267,6 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		if(ismob(hit) && ON_COOLDOWN(hit, "prismaticed", 1.5 SECONDS))
 			. = TRUE
 
-	New()
+	INIT()
 		..()
 		src.randomise()

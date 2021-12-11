@@ -168,7 +168,7 @@
 
 
 		/*
-		New()
+		INIT()
 			..()
 			if (!islist(src.ability_buttons))
 				ability_buttons = list()
@@ -195,11 +195,11 @@
 				src.icon_state = "tractor-sec"
 				weeoo_in_progress = 0 */
 
-	New()
+	INIT()
 		..()
 		src.add_mdir_light("light", list(255, 255, 255, 150))
 
-	New()
+	INIT()
 		..()
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))

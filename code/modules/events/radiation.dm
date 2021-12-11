@@ -39,7 +39,7 @@
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
 
-	New(var/loc,var/lifespan = 120)
+	INIT(var/loc,var/lifespan = 120)
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -91,7 +91,7 @@
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
 
-	New(var/loc,var/lifespan = 45)
+	INIT(var/loc,var/lifespan = 45)
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -154,7 +154,7 @@
 // Particle FX
 
 /datum/particleSystem/rads_warning
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "rads_warning", 5)
 
 	Run()

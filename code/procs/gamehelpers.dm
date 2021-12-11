@@ -531,7 +531,7 @@ var/obj/item/dummy/click_dummy = new
 	var/b = null
 	var/a = null
 
-	New(_r,_g,_b,_a=255)
+	INIT(_r,_g,_b,_a=255)
 		..()
 		r = _r
 		g = _g

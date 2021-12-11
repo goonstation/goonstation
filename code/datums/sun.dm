@@ -5,7 +5,7 @@
 	var/counter = 20 // to make the vars update during 1st call
 	var/rate
 
-/datum/sun/New()
+INIT_TYPE(/datum/sun)
 	..()
 	rate = rand(75,125)/50 // 75% - 125% of standard rotation
 	if(prob(50))

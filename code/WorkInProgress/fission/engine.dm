@@ -26,7 +26,7 @@ ENGINE
 	// Maximum of 3 reactors attached the fission computer
 	var/list/obj/machinery/fission/reactor/reactors = list()
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			setupLinks()
@@ -158,7 +158,7 @@ REACTOR
 	proc/setEnergyZero()
 		src.setEnergyZero = 1
 
-	New()
+	INIT()
 		..()
 		daughter = new/obj/fission(get_step(src, EAST))
 		setupCherenkovRad()

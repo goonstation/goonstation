@@ -88,7 +88,7 @@ TYPEINFO(/datum/component/foldable)
 
 	var/atom/movable/thingInside
 
-	New(var/loc, var/obj/object)
+	INIT(var/loc, var/obj/object)
 		..(loc)
 		src.set_loc(loc)
 		if(object)

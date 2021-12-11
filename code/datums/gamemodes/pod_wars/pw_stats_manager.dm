@@ -257,7 +257,7 @@ Player Stats
 	var/alcohol_metabolized = 0
 	var/farts = 0
 
-	New(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
+	INIT(var/datum/mind/mind, var/initial_name, var/team_num, var/rank)
 		..()
 		src.mind = mind
 		src.initial_name = initial_name

@@ -6,7 +6,7 @@
 /datum/aiTask/prioritizer/flock
 	name = "base thinking (should never see this)"
 
-/datum/aiTask/prioritizer/flock/New()
+INIT_TYPE(/datum/aiTask/prioritizer/flock)
 	..()
 
 /datum/aiTask/prioritizer/flock/on_tick()
@@ -39,7 +39,7 @@
 	weight = 6
 	can_be_adjacent_to_target = 0
 
-/datum/aiTask/sequence/goalbased/replicate/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/replicate, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/replicate, list(holder)))
 
@@ -97,7 +97,7 @@
 	weight = 5
 	max_dist = 2
 
-/datum/aiTask/sequence/goalbased/build/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/build, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/build, list(holder)))
 
@@ -184,7 +184,7 @@
 	name = "repairing"
 	weight = 4
 
-/datum/aiTask/sequence/goalbased/repair/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/repair, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/repair, list(holder)))
 
@@ -250,7 +250,7 @@
 	name = "depositing"
 	weight = 4
 
-/datum/aiTask/sequence/goalbased/deposit/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/deposit, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/deposit, list(holder)))
 
@@ -318,7 +318,7 @@
 	weight = 3
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/open_container/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/open_container, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/open_container, list(holder)))
 
@@ -374,7 +374,7 @@
 	weight = 3
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/rummage/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/rummage, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rummage, list(holder)))
 
@@ -462,7 +462,7 @@
 	weight = 2
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/harvest/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/harvest, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/harvest, list(holder)))
 
@@ -654,7 +654,7 @@
 	name = "butchering"
 	weight = 3
 
-/datum/aiTask/sequence/goalbased/butcher/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/butcher, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/butcher, list(holder)))
 

@@ -45,7 +45,7 @@
 	Love and solutions,<BR/>
 	%TARGET%"}
 
-	New()
+	INIT()
 		..()
 		info = replacetext(info, "%TARGET%", pick("X̶e̸e̶ ̵P̶'̸X'", "TOM", "Smith Smithington", "Mx. Grey"))
 		src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
@@ -56,7 +56,7 @@
 	Thanks this could really save the day,<BR/>
 	%TARGET%"}
 
-	New()
+	INIT()
 		..()
 		var/target_name = ""
 		if(prob(50))
@@ -75,7 +75,7 @@
 		%ITEMS%
 		Don't let a fellow employee down!<BR/>
 		%TARGET%"}
-		New()
+		INIT()
 			..()
 			var/target_name = ""
 			if(prob(50))
@@ -94,7 +94,7 @@
 	%ITEMS%
 	<BR/>"}
 
-	New()
+	INIT()
 		..()
 		if(prob(2))
 			if(prob(50))
@@ -114,7 +114,7 @@
 	<BR/><p>Return individual once complete for evaluation.</p><BR/>
 	<BR/><BR/>
 	<i>All information included or obtained regarding the individual should be ignored and are all part of the training exercise.</i>"}
-	New()
+	INIT()
 		..()
 		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "stamp-classified.png", "stamp-syndicate")
 
@@ -126,7 +126,7 @@
 	%ITEMS%
 	"}
 	var/static/list/company = list("SpaceHub Delivery Services", "SnackAttack - Hunger Destroyer", "FoodDirect", "CelestialEats Delivery", "Technically Fresh")
-	New()
+	INIT()
 		..()
 
 		info = replacetext(info, "%FOOD_COMPANY%", pick(company))
@@ -154,7 +154,7 @@
 	///weighting for event pick
 	var/weight = 100
 
-	New()
+	INIT()
 		..()
 		var/list/datum/commodity/shopping_list = list()
 		update_requisition(requisition)
@@ -325,7 +325,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 	breakfast_order
 		name = "Breakfast Order"
 
-		New()
+		INIT()
 			if(!breakfast)
 				breakfast = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 	lunch_order
 		name = "Lunch Order"
 
-		New()
+		INIT()
 			if(!lunch)
 				lunch = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
@@ -353,7 +353,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 	dinner_order
 		name = "Dinner Order"
 
-		New()
+		INIT()
 			if(!dinner)
 				dinner = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
@@ -367,7 +367,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 	snack_order
 		name = "Snack Order"
 
-		New()
+		INIT()
 			if(!snacks)
 				snacks = list()
 				for(var/food_type in concrete_typesof(/obj/item/reagent_containers/food/snacks))
@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 	var/target_organs = list()
 	rewards = list(/obj/item/vending/restock_cartridge/medical = 3, /obj/item/vending/restock_cartridge/portamed = 1)
 
-	New()
+	INIT()
 		..()
 		var/possible_targets = list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
 		for(var/i in 1 to rand(3,6))

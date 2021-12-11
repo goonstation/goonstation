@@ -9,7 +9,7 @@
 
 	flags = TABLEPASS | CONDUCT | FPRINT | NOSPLASH
 
-	New()
+	INIT()
 		..()
 		var/datum/reagents/R = new /datum/reagents(5)
 		src.reagents = R
@@ -49,7 +49,7 @@
 	var/starving = 5
 	rc_flags = 0
 
-	New()
+	INIT()
 		..()
 		for (var/nutrient in pathogen_controller.nutrients)
 			nutrition += nutrient
@@ -260,7 +260,7 @@
 		else
 			icon_state = "vial1"
 
-	New()
+	INIT()
 		var/datum/reagents/R = new /datum/reagents(5)
 		R.my_atom = src
 		src.reagents = R
@@ -274,7 +274,7 @@
 	item_state = "vial"
 	var/datum/microbody/FM = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
@@ -310,7 +310,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("parasiticmedium", 50)
 
@@ -320,7 +320,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("egg", 50)
 
@@ -330,7 +330,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("dna_mutagen", 50)
 
@@ -340,7 +340,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("bacterialmedium", 50)
 
@@ -350,7 +350,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("fungalmedium", 50)
 
@@ -360,7 +360,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("antiviral", 50)
 
@@ -370,7 +370,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("biocide", 50)
 
@@ -380,7 +380,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("spaceacillin", 50)
 
@@ -390,7 +390,7 @@
 
 	icon_state = "beaker"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("inhibitor", 50)
 
@@ -404,7 +404,7 @@
 	var/is_cure = 0
 	var/is_vaccine = 0
 
-	New(Location, var/datum/pathogen/P, cure, vaccine)
+	INIT(Location, var/datum/pathogen/P, cure, vaccine)
 		if (P && istype(P))
 			src.name = "[src.name] (strain [P.name_base])"
 			icon_state = "serum"

@@ -14,7 +14,7 @@
 
 	var/static/list/triggeracts = list("Trigger" = "trigger")
 
-	New(loc, var/to_set)
+	INIT(loc, var/to_set)
 		..()
 		if (to_set)
 			var_object = to_set

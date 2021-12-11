@@ -77,7 +77,7 @@
 	//lagg : k
 	var/static/list/cleanbottargets = list()
 
-	New()
+	INIT()
 		..()
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
@@ -352,7 +352,7 @@
 		idle_delay = 175 // DA RED WUNZ GO FASTA
 		bucket_type_on_destruction = /obj/item/reagent_containers/glass/bucket/red
 
-		New()
+		INIT()
 			name = pick("red cleanbot", "unnaturally red cleanbot", "crimson cleanbot", "battle-hardened cleanbot", "slayer cleanbot", "mess krusha")
 			..() // calling parent later in case we add custom-naming functionality for cleanbots like we do for the other ones
 
@@ -369,7 +369,7 @@
 	var/obj/machinery/bot/cleanbot/master
 	var/turf/T
 
-	New(var/obj/machinery/bot/cleanbot/bot, var/turf/target)
+	INIT(var/obj/machinery/bot/cleanbot/bot, var/turf/target)
 		..()
 		src.master = bot
 		src.T = target

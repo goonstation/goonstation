@@ -18,7 +18,7 @@
 												// and maximum health will be increased by the maximum value of this
 												// The mob still dies at health = 0
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		holder = M
 		value = maximum_value

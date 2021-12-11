@@ -14,7 +14,7 @@
 	return {"<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%
 	<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"}
 
-/obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
+INIT_TYPE(/obj/flock_structure/ghost, var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
 	..(location, F)
 	if(building)
 		var/atom/b = building

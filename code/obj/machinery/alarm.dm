@@ -20,7 +20,7 @@
 	var/e_gas = 0
 	var/last_safe = 2
 
-/obj/machinery/alarm/New()
+INIT_TYPE(/obj/machinery/alarm)
 	..()
 	MAKE_SENDER_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
 	MAKE_SENDER_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?

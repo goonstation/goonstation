@@ -5,7 +5,7 @@ var/global/list/datum/client_image_group/client_image_groups
 	var/list/mob_to_associated_images_lookup
 	var/list/subscribed_mobs_with_subcount
 
-	New()
+	INIT()
 		. = ..()
 		images = list()
 		/// Associative list containing images for a given mob.

@@ -59,7 +59,7 @@ obj/item/coin/bombini
 
 /obj/machinery/shower/puzzle/part_one
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			src.b = locate(/obj/machinery/shower/puzzle/part_two, orange(2,src))

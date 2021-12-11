@@ -9,7 +9,7 @@
 	var/datum/db_record/mainaccount = null
 
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 

@@ -21,7 +21,7 @@
 
 	var/atom/movable/screen/hud/hud = new
 
-	New(var/is_control = 0)
+	INIT(var/is_control = 0)
 		..()
 		SPAWN_DBG(0)
 			if (src.holder)
@@ -516,7 +516,7 @@
 	var/provide_plumbobs = 1
 #endif
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
@@ -658,7 +658,7 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
 
-	New(var/mob/living/L)
+	INIT(var/mob/living/L)
 		..()
 		owner = L
 		simsController.register_simsHolder(src)
@@ -767,7 +767,7 @@ var/global/datum/simsControl/simsController = new()
 	pixel_y = 32
 	var/mob/living/owner
 
-	New()
+	INIT()
 		..()
 		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
 		add_simple_light("plumbob", list(255, 255, 255, 100))

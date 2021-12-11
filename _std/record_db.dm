@@ -2,7 +2,7 @@
 	var/list/datum/db_record/records = list()
 	var/list/indices = null
 
-	New(list/index_keys)
+	INIT(list/index_keys)
 		..()
 		if(length(index_keys) > 0)
 			indices = list()
@@ -93,7 +93,7 @@
 	VAR_PRIVATE/datum/record_database/db
 	VAR_PRIVATE/list/fields
 
-	New(datum/record_database/db=null, list/fields=null)
+	INIT(datum/record_database/db=null, list/fields=null)
 		..()
 		if(db)
 			src.db = db

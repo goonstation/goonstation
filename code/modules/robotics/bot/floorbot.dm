@@ -68,7 +68,7 @@
 	var/clear_invalid_targets_interval = 30 SECONDS // How frequently?
 
 
-/obj/machinery/bot/floorbot/New()
+INIT_TYPE(/obj/machinery/bot/floorbot)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
@@ -473,7 +473,7 @@
 	var/obj/machinery/bot/floorbot/master
 	var/new_tile
 
-	New(var/the_bot, var/_target)
+	INIT(var/the_bot, var/_target)
 		src.master = the_bot
 		if(!istype(src.master))
 			interrupt(INTERRUPT_ALWAYS)
@@ -545,7 +545,7 @@
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
 
-	New(var/the_bot, var/_target)
+	INIT(var/the_bot, var/_target)
 		src.master = the_bot
 
 		master.anchored = 1

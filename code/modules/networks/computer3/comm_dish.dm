@@ -16,7 +16,7 @@
 	mats = 25
 	deconstruct_flags = DECON_NONE
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		SPAWN_DBG(0.6 SECONDS)

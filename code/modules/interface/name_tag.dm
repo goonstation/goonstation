@@ -22,7 +22,7 @@
 	var/cur_name = null
 	var/cur_extra = null
 
-	New()
+	INIT()
 		..()
 		inner = new
 		hover_image = new(null, src)

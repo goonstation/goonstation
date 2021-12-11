@@ -29,7 +29,7 @@
 
 	skinresult = /obj/item/material_piece/cloth/wendigohide
 
-	New()
+	INIT()
 		src.left_arm = new /obj/item/parts/human_parts/arm/left/wendigo(src)
 		src.right_arm = new /obj/item/parts/human_parts/arm/right/wendigo(src)
 		..()
@@ -400,7 +400,7 @@
 
 	skinresult = /obj/item/material_piece/cloth/kingwendigohide
 
-	New()
+	INIT()
 		..()
 		quality = 200 // for the limbs
 

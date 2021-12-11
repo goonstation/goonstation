@@ -1,7 +1,7 @@
 obj/item/paper/yachtdice
 	name = "yacht dice sheet"
 
-obj/item/paper/yachtdice/New()
+INIT_TYPE(obj/item/paper/yachtdice)
 	..()
 	info = {"Aces (Sum of Match): [src.build_fields(2)]
 	<BR>Twos (Sum of Match): [src.build_fields(2)]

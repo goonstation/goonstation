@@ -13,7 +13,7 @@
 	var/created_time = 0
 	gas_impermeable = TRUE
 
-	New()
+	INIT()
 		..()
 		created_time += world.time
 		processing_items += src
@@ -58,7 +58,7 @@
 	_health = baseHealth
 	var/strength = 0 // 1=poor, 2=ok, 3=good, 4=perfect
 
-	New()
+	INIT()
 		..()
 
 		flick("concrete_drying", src)

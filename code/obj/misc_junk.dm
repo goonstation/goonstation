@@ -69,7 +69,7 @@
 	stamina_crit_chance = 5
 	var/last_laugh = 0
 
-	New()
+	INIT()
 		..()
 		processing_items.Add(src)
 		START_TRACKING
@@ -123,7 +123,7 @@
 	stamina_damage = 5
 	stamina_cost = 1
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -278,7 +278,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS
 	force = 0
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
@@ -294,7 +294,7 @@
 
 	earthquake
 
-		New()
+		INIT()
 			..()
 			src.setItemSpecial(/datum/item_special/slam)
 
@@ -316,7 +316,7 @@
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
-	New()
+	INIT()
 		..()
 		src.smoke = new /datum/effects/system/bad_smoke_spread/
 		src.smoke.attach(src)
@@ -427,7 +427,7 @@
 	item_state = "medivape"
 	icon_state = "medivape"
 
-	New()
+	INIT()
 		..()
 		safe_smokables += chem_whitelist
 		src.reagents.clear_reagents()
@@ -436,7 +436,7 @@
 /obj/item/reagent_containers/vape/medical/o2 //sweet oxygen
 	desc = "Smoking, now in a doctor approved form! This one comes preloaded with salbutamol."
 
-	New()
+	INIT()
 		..()
 		src.reagents.clear_reagents()
 		src.reagents.add_reagent("salbutamol", 50)
@@ -518,7 +518,7 @@
 	var/changed = 0
 	var/pickup_time = 0
 
-	New()
+	INIT()
 		..()
 		name = "The [pick("Most Holey","Sacred","Hallowed","Divine")] relic of [pick("Azzdey","Ah Sday","Ahsh dei","A s'dai","Ahes d'hei")]"
 		processing_items.Add(src)

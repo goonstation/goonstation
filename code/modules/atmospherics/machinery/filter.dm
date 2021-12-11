@@ -34,7 +34,7 @@ Filter types:
 4: Other Gases (i.e. Sleeping Agent & Other trace gases)
 */
 
-	New()
+	INIT()
 		..()
 		switch(dir)
 			if(NORTH)

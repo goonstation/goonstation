@@ -27,7 +27,7 @@
 	var/feedings_required = 0
 	var/stable = 0
 
-	New(var/loc,var/lifespan = 2.5 MINUTES)
+	INIT(var/loc,var/lifespan = 2.5 MINUTES)
 		..()
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
@@ -110,7 +110,7 @@
 	var/move_prob = 12
 	var/time_to_die = 0
 
-	New(var/loc,duration, move_prob = -1)
+	INIT(var/loc,duration, move_prob = -1)
 		..()
 		if (duration < 1)
 			duration = rand(5 SECONDS,30 SECONDS)
@@ -245,7 +245,7 @@
 // Particle FX
 
 /datum/particleSystem/bhole_warning
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "bhole_warning", 300)
 
 	Run()

@@ -54,7 +54,7 @@
 	qdel(src)
 	return
 
-/obj/machinery/dispenser/New()
+INIT_TYPE(/obj/machinery/dispenser)
 	..()
 	UnsubscribeProcess()
 	UpdateIcon()

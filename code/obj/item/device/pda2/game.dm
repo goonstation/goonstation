@@ -345,7 +345,7 @@
 	var/relx = 0
 	var/rely = 0 //Coordinates relative to an origin block.
 
-	New(var/starting_x=0,var/starting_y=0,var/datum/robustris_block/origin)
+	INIT(var/starting_x=0,var/starting_y=0,var/datum/robustris_block/origin)
 		..()
 		gridx = starting_x
 		gridy = starting_y
@@ -367,7 +367,7 @@
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
 
-	New(obj/holding as obj)
+	INIT(obj/holding as obj)
 		..()
 
 		var/name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Evil ", "the Dread King ", "the Space ", "Lord ")

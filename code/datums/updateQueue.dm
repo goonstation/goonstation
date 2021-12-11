@@ -18,7 +18,7 @@
 	var/tmp/currentKillCount
 	var/tmp/totalKillCount
 
-/datum/updateQueue/New(list/objects = list(), procName = "update", list/arguments = list(), workerTimeout = 2, inplace = 0)
+INIT_TYPE(/datum/updateQueue, list/objects = list(), procName = "update", list/arguments = list(), workerTimeout = 2, inplace = 0)
 	..()
 
 	uq_dbg("Update queue created.")

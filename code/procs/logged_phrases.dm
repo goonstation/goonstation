@@ -41,7 +41,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
 
-	New()
+	INIT()
 		..()
 		src.load()
 		src.cached_api_phrases = list()

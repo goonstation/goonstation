@@ -3,7 +3,7 @@
 	var/obj/machinery/power/generatorTemp/generator
 	var/static/list/datum/teg_transformation/possible_transformations
 
-	New(teg)
+	INIT(teg)
 		. = ..()
 		generator = teg
 		if(!possible_transformations)

@@ -60,7 +60,7 @@
 	var/image/image_blow
 	volume = 750
 
-	New()
+	INIT()
 		..()
 		image_fan = image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fan")
 		image_fab = image('icons/obj/atmospherics/atmos.dmi', "pressurizer-fab")

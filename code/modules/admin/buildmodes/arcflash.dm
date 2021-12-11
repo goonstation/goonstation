@@ -8,7 +8,7 @@ Left Mouse Button on turf/mob/obj      = SHOCK!<br>
 	var/wattage = 5000
 	var/obj/dummy
 
-	New()
+	INIT()
 		dummy = new()
 		dummy.anchored = 0
 		dummy.set_density(0)

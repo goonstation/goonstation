@@ -78,7 +78,7 @@
 	dead
 		icon_state = "martianS-dead"
 		health = 0
-		New()
+		INIT()
 			..()
 			CritterDeath()
 			icon_state = initial(icon_state)
@@ -122,7 +122,7 @@
 	dead
 		icon_state = "martianP-dead"
 		health = 0
-		New()
+		INIT()
 			..()
 			CritterDeath()
 			icon_state = initial(icon_state)
@@ -188,7 +188,7 @@
 	dead
 		icon_state = "martianW-dead"
 		health = 0
-		New()
+		INIT()
 			..()
 			CritterDeath()
 			icon_state = initial(icon_state)

@@ -7,7 +7,7 @@
 	mat_changedesc = 0
 	can_recycle = FALSE
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/watercan/AS = new /datum/artifact/watercan(src)
 		if (forceartiorigin)
@@ -170,6 +170,6 @@
 	react_xray = list(2,90,15,11,"HOLLOW")
 
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "HIGH INTERNAL CONVECTION"

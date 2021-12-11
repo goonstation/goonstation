@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/objective)
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(text)
+	INIT(text)
 		..()
 		if(text)
 			src.explanation_text = text
@@ -1325,7 +1325,7 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
-	New(datum/mind/enemy)
+	INIT(datum/mind/enemy)
 		..()
 		if(!istype(enemy))
 			return 1

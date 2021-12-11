@@ -14,7 +14,7 @@
 	var/mob/user = null
 	var/image/shield_overlay = null
 
-	New()
+	INIT()
 		..()
 		work()
 

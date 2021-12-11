@@ -47,7 +47,7 @@
 	var/destruction_point_z
 	var/datum/component/holdertargeting/simple_light/light
 
-	New()
+	INIT()
 		..()
 		light = src.AddComponent(/datum/component/holdertargeting/simple_light, 255, 250, 245, 150)
 		light.update(0)
@@ -69,7 +69,7 @@
 			stamina_damage = inactive_stamina_dmg
 			stamina_cost = inactive_stamina_cost
 			w_class = W_CLASS_SMALL
-			
+
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Destruction System!</span>", 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
 			tooltip_rebuild = 1
@@ -177,7 +177,7 @@
 	icon_state = null
 	var/image/activation
 
-	New()
+	INIT()
 		..()
 		activation = image('icons/misc/retribution/SWORD_loot.dmi', "SDS_tile_activate")
 		activation.plane = PLANE_SELFILLUM
@@ -194,7 +194,7 @@
 	icon_state = null
 	var/image/activation
 
-	New()
+	INIT()
 		..()
 		activation = image('icons/misc/retribution/SWORD_loot.dmi', "SDS_tile_scan")
 		activation.plane = PLANE_SELFILLUM
@@ -210,7 +210,7 @@
 	icon_state = null
 	var/image/beam
 
-	New()
+	INIT()
 		..()
 		beam = image('icons/misc/retribution/SWORD/abilities_o.dmi', "linearPurge_beamBody")
 		beam.plane = PLANE_SELFILLUM
@@ -226,7 +226,7 @@
 	icon_state = null
 	var/image/beam
 
-	New()
+	INIT()
 		..()
 		beam = image('icons/misc/retribution/SWORD/abilities_o.dmi', "linearPurge_beamEnd")
 		beam.plane = PLANE_SELFILLUM

@@ -24,7 +24,7 @@
 	var/sound_shutoff = 'sound/machines/shieldgen_shutoff.ogg' // 35
 	var/lastuse = 0
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 		SPAWN_DBG(0.6 SECONDS)

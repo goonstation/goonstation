@@ -13,7 +13,7 @@
 	var/oldname
 	var/laugh_rate = 12
 
-	New()
+	INIT()
 		..()
 		name = "[pick("CluwN","ClUrn","CLeWn","CloOon","ClerWn")][pick("eiNg","inge","UneIng","aEng","Oeoing")]"
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"

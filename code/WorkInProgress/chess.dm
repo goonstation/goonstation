@@ -27,7 +27,7 @@ turf/unsimulated/floor/chess
 
 	var/obj/item/chesspiece/enpassant = null
 
-	New()
+	INIT()
 		..()
 		chessboard += src
 
@@ -104,7 +104,7 @@ obj/item/chesspiece
 	var/chess_color = 0
 	var/isking = 0
 
-	New()
+	INIT()
 		..()
 		name = "[chess_color ? "black" : "white" ] [name]"
 
@@ -170,7 +170,7 @@ obj/item/chesspiece/pawn
 	black
 		chess_color = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = (chess_color ? "pawn_black" : "pawn_white")
 		movdir = chess_color ? 1 : -1
@@ -226,7 +226,7 @@ obj/item/chesspiece/king
 	black
 		chess_color = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = (chess_color ? "king_black" : "king_white")
 
@@ -273,7 +273,7 @@ obj/item/chesspiece/rook
 	black
 		chess_color = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = (chess_color ? "rook_black" : "rook_white")
 
@@ -309,7 +309,7 @@ obj/item/chesspiece/queen
 	black
 		chess_color = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = (chess_color ? "queen_black" : "queen_white")
 
@@ -355,7 +355,7 @@ obj/item/chesspiece/bishop
 	black
 		chess_color = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = (chess_color ? "bishop_black" : "bishop_white")
 
@@ -388,7 +388,7 @@ obj/item/chesspiece/knight
 	black
 		chess_color = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = (chess_color ? "knight_black" : "knight_white")
 		if(prob(1))

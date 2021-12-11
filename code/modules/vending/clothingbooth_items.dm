@@ -7,7 +7,7 @@
 	var/amount = 0 // UNUSED FOR NOW but keeping it here for possible future purposes
 	var/hidden = 0 // also unused, maybe you'll need to bribe the goblin inside the booth with snacks in the future? :)
 
-/datum/clothingbooth_item/New()
+INIT_TYPE(/datum/clothingbooth_item)
 	..()
 	if(!name)
 		var/obj/O = src.path

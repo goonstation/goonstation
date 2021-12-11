@@ -86,7 +86,7 @@
 			C.overlays = list()
 		qdel(C)
 
-/atom/New()
+INIT_TYPE(/atom)
 	if(contextActions != null)
 		if(isnull(globalContextActions))
 			buildContextActions()

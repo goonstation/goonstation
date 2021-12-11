@@ -67,7 +67,7 @@
 	name = "ThinkTape-'Logs'"
 	desc = "A reel of magnetic data tape containing various log files."
 
-	New()
+	INIT()
 		..()
 		src.root.add_file( new /datum/computer/file/record/seq_cloner_instructions(src) )
 		src.root.add_file( new /datum/computer/file/record/seq_cloner_memo1(src) )
@@ -79,7 +79,7 @@
 /datum/computer/file/record/seq_cloner_instructions
 	name = "instructions"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("Welcome Agent.",
     "Your goal here it to produce more",
@@ -96,7 +96,7 @@
 /datum/computer/file/record/seq_cloner_memo1
 	name = "1306"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
     "MEMORANDUM 1.306 - WE JUN 08 2050",
@@ -113,7 +113,7 @@
 /datum/computer/file/record/seq_cloner_memo2
 	name = "1312"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
     "MEMORANDUM 1.312 - WE JUN 13 2050",
@@ -134,7 +134,7 @@
 /datum/computer/file/record/seq_cloner_memo3
 	name = "1314"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
     "MEMORANDUM 1.314 - WE JUN 15 2050",
@@ -155,7 +155,7 @@
 /datum/computer/file/record/seq_cloner_memo4
 	name = "1315"
 
-	New()
+	INIT()
 		..()
 		src.fields = list("-----------------|HEAD|-----------------",
     "MEMORANDUM 1.315 - WE JUN 16 2050",
@@ -180,7 +180,7 @@
 /obj/item/disk/data/memcard/seq_cloner
 	file_amount = 1024
 
-	New()
+	INIT()
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"

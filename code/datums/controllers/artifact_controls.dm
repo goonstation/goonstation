@@ -13,7 +13,7 @@ var/datum/artifact_controller/artifact_controls
 	var/spawner_type = null
 	var/spawner_cine = 0
 
-	New()
+	INIT()
 		..()
 		artifact_rarities["all"] = list()
 
@@ -214,7 +214,7 @@ var/datum/artifact_controller/artifact_controls
 	var/list/nouns_small = list("item","device","relic","widget","utensil","gadget","accessory","gizmo")
 	var/list/touch_descriptors = list("You can't really tell how it feels.")
 
-	New()
+	INIT()
 		..()
 		if ("all" in fault_types)
 			fault_types += concrete_typesof(/datum/artifact_fault)

@@ -178,7 +178,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	var/curr_win = ""
 	var/kill = 0 //just making sure ...
 
-	New(var/A)
+	INIT(var/A)
 		for(var/client/C in clients)
 			C.verbs += /client/proc/viewnewvote
 			may_vote += C.ckey
@@ -264,7 +264,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	vote_name = "Change gamemode"
 	vote_length = 1200 //2 Minutes
 
-	New(var/A)
+	INIT(var/A)
 		details = "Change gamemode to '[A]' ?"
 		vote_name = "Change gamemode to [A]"
 		..()
@@ -304,7 +304,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	var/backup_computerid = ""
 	var/backup_ip = " "
 
-	New(var/A)
+	INIT(var/A)
 		for(var/client/C in clients)
 			C.verbs += /client/proc/viewnewvote
 			may_vote += C.ckey
@@ -343,7 +343,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	var/backup_computerid = ""
 	var/backup_ip = " "
 
-	New(var/A)
+	INIT(var/A)
 		for(var/client/C in clients)
 			C.verbs += /client/proc/viewnewvote
 			may_vote += C.ckey

@@ -33,7 +33,7 @@
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 
-/obj/item/assembly/detonator/New()
+INIT_TYPE(/obj/item/assembly/detonator)
 	..()
 	var/list/WireFuncs
 	WireColors = list("Alabama Crimson", "Antique White", "Burnt Umber", "China Rose", "Dodger Blue", "Field Drab", "Harvest Gold", "Jonquil", "Midori", "Neon Carrot", "Oxford Blue", "Periwinkle", "Purple Pizzazz", "Stil De Grain Yellow", "Toolbox Purple", "Urobilin", "Vivid Tangerine", "Yale Blue")
@@ -343,7 +343,7 @@
 //For testing and I'm too lazy to hand-assemble these whenever I need one =I
 /obj/item/assembly/detonator/finished
 
-	New()
+	INIT()
 		..()
 		var/obj/item/tank/plasma/ptank = new /obj/item/tank/plasma(src)
 		ptank.air_contents.toxins = 30

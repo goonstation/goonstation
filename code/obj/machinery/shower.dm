@@ -18,7 +18,7 @@
 							//Don't set it to 50 or below thanks (reagents need to clear)
 
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(320)
 

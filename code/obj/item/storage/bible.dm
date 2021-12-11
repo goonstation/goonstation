@@ -16,7 +16,7 @@ var/global/list/bible_contents = list()
 	var/mob/affecting = null
 	var/heal_amt = 10
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		#ifdef SECRETS_ENABLED
@@ -255,7 +255,7 @@ var/global/list/bible_contents = list()
 /obj/item/storage/bible/loaded
 	spawn_contents = list(/obj/item/gun/kinetic/faith)
 
-	New()
+	INIT()
 		..()
 		desc += " This is the chaplain's personal copy."
 

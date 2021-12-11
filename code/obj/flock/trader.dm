@@ -36,7 +36,7 @@
 	icon_state = "shuttle-bay"
 	allows_vehicles = 1
 
-/turf/simulated/floor/shuttlebay/flock/New()
+INIT_TYPE(/turf/simulated/floor/shuttlebay/flock)
 	..()
 	setMaterial(getMaterial("gnesis"))
 
@@ -120,7 +120,7 @@
 	var/active = 1
 	var/range = 4
 
-	New()
+	INIT()
 		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
@@ -158,7 +158,7 @@
 	var/increase_rate = 1.5
 
 
-/obj/npc/trader/flock/New()
+INIT_TYPE(/obj/npc/trader/flock)
 	..()
 
 	src.goods_buy += new/datum/commodity/flock/desired/videocard(src)

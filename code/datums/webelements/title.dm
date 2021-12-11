@@ -1,5 +1,5 @@
 /datum/tag/title
-	New()
+	INIT()
 		..("title")
 
 	proc/setText(txt as text)

@@ -458,7 +458,7 @@
 
 		..()
 
-	New()
+	INIT()
 		..()
 		known_devices = list()
 		known_device_start_offset = 0
@@ -936,7 +936,7 @@
 	var/displayingAlertFlag = 1
 	var/list/deviceProfiles = list()
 
-	New()
+	INIT()
 		..()
 
 		entries = list("","","","","|cLoading...","","","")

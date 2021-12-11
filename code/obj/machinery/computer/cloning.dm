@@ -81,7 +81,7 @@
 	w_class = W_CLASS_TINY
 	throwforce = 1
 
-/obj/machinery/computer/cloning/New()
+INIT_TYPE(/obj/machinery/computer/cloning)
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.7 SECONDS)
@@ -417,7 +417,7 @@ proc/find_ghost_by_key(var/find_key)
 	allow_drop()
 		return 0
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(100)
 

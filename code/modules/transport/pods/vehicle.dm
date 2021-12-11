@@ -60,7 +60,7 @@
 	///////Life Support Stuff ////////////////////////////
 	/////////////////////////////////////////////////////
 
-	New()
+	INIT()
 		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 		src.facing = src.dir
 
@@ -1065,7 +1065,7 @@
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
-	New(Vehicle, Mob)
+	INIT(Vehicle, Mob)
 		V=Vehicle
 		M=Mob
 		..()
@@ -1107,7 +1107,7 @@
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
-	New(Vehicle,Mob)
+	INIT(Vehicle,Mob)
 		V=Vehicle
 		M=Mob
 		..()
@@ -1402,7 +1402,7 @@
 	src.ion_trail = new /datum/effects/system/ion_trail_follow()
 	src.ion_trail.set_up(src)
 
-/obj/machinery/vehicle/New()
+INIT_TYPE(/obj/machinery/vehicle)
 	..()
 	name += "[pick(rand(1, 999))]"
 	if(prob(1))
@@ -1705,7 +1705,7 @@
 	ram_self_damage_multiplier = 0.14
 	//var/datum/movement_controller/pod/movement_controller
 
-	New()
+	INIT()
 		..()
 		name = "minisub"
 
@@ -1753,7 +1753,7 @@
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
 
-	New()
+	INIT()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
 
@@ -1763,7 +1763,7 @@
 	maxhealth = 150
 
 
-	New()
+	INIT()
 		..()
 		src.com_system.deactivate()
 		qdel(src.engine)
@@ -1786,7 +1786,7 @@
 	maxhealth = 150
 	init_comms_type = /obj/item/shipcomponent/communications/security
 
-	New()
+	INIT()
 		..()
 		name = "security patrol minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
@@ -1802,7 +1802,7 @@
 	maxhealth = 150
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
-	New()
+	INIT()
 		..()
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
@@ -1817,7 +1817,7 @@
 	health = 130
 	maxhealth = 130
 
-	New()
+	INIT()
 		..()
 		name = "mining minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
@@ -1827,7 +1827,7 @@
 	body_type = "minisub"
 	icon_state = "whitesub_body"
 
-	New()
+	INIT()
 		..()
 		name = "civilian minisub"
 
@@ -1837,7 +1837,7 @@
 	health = 130
 	maxhealth = 130
 
-	New()
+	INIT()
 		..()
 		name = "heavy minisub"
 
@@ -1847,7 +1847,7 @@
 	health = 150
 	maxhealth = 150
 
-	New()
+	INIT()
 		..()
 		name = "industrial minisub"
 
@@ -1857,7 +1857,7 @@
 	health = 175
 	maxhealth = 175
 
-	New()
+	INIT()
 		..()
 		name = "strange minisub"
 
@@ -1865,7 +1865,7 @@
 	body_type = "minisub"
 	icon_state = "graysub_body"
 
-	New()
+	INIT()
 		..()
 		name = "engineering minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/foamer(src))
@@ -1889,7 +1889,7 @@
 	var/succeeding = 0
 	var/did_warp = 0
 
-	New()
+	INIT()
 		. = ..()
 		src.components -= src.engine
 		qdel(src.engine)
@@ -2042,7 +2042,7 @@
 	icon_state = "truck_body"
 	req_smash_velocity = 7
 
-	New()
+	INIT()
 		..()
 		name = "little truck"
 		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
@@ -2062,7 +2062,7 @@
 	health = 90
 	maxhealth = 90
 
-	New()
+	INIT()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
 
@@ -2108,7 +2108,7 @@
 		health = 110
 		maxhealth = 110
 
-		New()
+		INIT()
 			..()
 			name = "security patrol car"
 			desc = "A Toriyama-Okawara SV-93 personal mobility vehicle, outfitted with a taser gun, siren system and a security livery."
@@ -2122,7 +2122,7 @@
 		body_type =
 		icon_state =
 
-		New()
+		INIT()
 			..()
 			name = "engineering car
 			desc = "A Toriyama-Okawara EV-94 personal mobility vehicle, painted in engineering colours."

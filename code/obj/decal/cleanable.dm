@@ -41,7 +41,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	plane = PLANE_NOSHADOW_BELOW
 
-	New(var/loc,var/list/viral_list)
+	INIT(var/loc,var/list/viral_list)
 		..()
 		setup(loc,viral_list)
 
@@ -267,7 +267,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/can_track = 1
 	var/reagents_max = 10
 
-	New()
+	INIT()
 		src.create_reagents(reagents_max)
 		if (ling_blood)
 			src.reagents.add_reagent("bloodc", 10)
@@ -535,7 +535,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 
 /obj/decal/cleanable/blood/drip
-	New()
+	INIT()
 		..()
 		src.pixel_y += rand(0,16)
 
@@ -699,7 +699,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "paper"
 	sample_verb = "scrape"
 
-	New()
+	INIT()
 		..()
 		pixel_y += rand(-4,4)
 		pixel_x += rand(-4,4)
@@ -796,7 +796,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	words = ""
 	var/max_message = 128
 
-	New()
+	INIT()
 		..()
 		pixel_y += rand(-12,12)
 		pixel_x += rand(-12,12)
@@ -1246,7 +1246,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "space_fungus"
 	sample_verb = "scrape"
 
-	New()
+	INIT()
 		if (prob(5))
 			src.amount += rand(1,2)
 			src.UpdateIcon()
@@ -1407,7 +1407,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	dry_time = 1200
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(0.4)
@@ -1435,7 +1435,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_verb = "scrape"
 	var/health = 30
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 		var/turf/T = get_turf(src)
@@ -1535,7 +1535,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/on_fire = null
 	var/burn_time = 4
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
@@ -1698,7 +1698,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		for(var/obj/decal/cleanable/gangtag/T in get_turf(src))
 			if(T.owners == src.owners && T != src) qdel(T)
 
-	New()
+	INIT()
 		..()
 		for(var/obj/decal/cleanable/gangtag/T in get_turf(src))
 			T.layer = 3

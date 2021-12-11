@@ -76,7 +76,7 @@
 	initial_reagents = "vomit"
 
 /obj/item/reagent_containers/food/snacks/ice_cream/random
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -88,7 +88,7 @@
 				src.reagents.add_reagent(flavor, 40)
 
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
-	New()
+	INIT()
 		src.initial_reagents = pick("coffee","chocolate","vanilla")
 		..()
 

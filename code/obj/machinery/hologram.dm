@@ -17,7 +17,7 @@
 	var/h_b = 245.0
 	anchored = 1.0
 
-/obj/machinery/hologram_ai/New()
+INIT_TYPE(/obj/machinery/hologram_ai)
 	..()
 
 /obj/machinery/hologram_ai/attack_ai(user as mob)

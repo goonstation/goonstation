@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	var/datum/lifeprocess/aquatic_breathing/aquabreath_process = null
 
-/mob/living/critter/aquatic/New(loc)
+INIT_TYPE(/mob/living/critter/aquatic, loc)
 	if(isnull(src.is_pet))
 		src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
 	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
-	New(new_owner,arguments)
+	INIT(new_owner,arguments)
 		..()
 		if(length(arguments) >= 2)
 			in_water_buff = arguments[1]
@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	HH.limb_name = "mouth"
 	HH.can_hold_items = 0
 
-/mob/living/critter/aquatic/fish/New()
+INIT_TYPE(/mob/living/critter/aquatic/fish)
 	..()
 	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
@@ -318,7 +318,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	desc = "An ocean-dwelling regal (or hippo) tang from the <i>Acanthuridae</i> family."
 	icon_state = "tang_regal"
 
-	New()
+	INIT()
 		..()
 		if (prob(5))
 			desc += " This one looks quite wide-eyed and out of it."
@@ -353,7 +353,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	desc = "An ocean-dwelling ocellaris (or false percula) clownfish from the <i>Pomacentridae</i> family."
 	icon_state = "clownfish"
 
-	New()
+	INIT()
 		..()
 		if (prob(5))
 			desc += " This one looks quite alarmed."
@@ -422,7 +422,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	HH.name = "pincer"
 	HH.limb_name = "pincer"
 
-/mob/living/critter/aquatic/king_crab/New()
+INIT_TYPE(/mob/living/critter/aquatic/king_crab)
 	..()
 	SPAWN_DBG(0)
 		if(src.client)

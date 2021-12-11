@@ -13,7 +13,7 @@
 	var/broken = FALSE
 	var/initialized_at
 
-/datum/tgui_panel/New(client/client)
+INIT_TYPE(/datum/tgui_panel, client/client)
 	src.client = client
 	window = new(client, "browseroutput")
 	window.subscribe(src, .proc/on_message)

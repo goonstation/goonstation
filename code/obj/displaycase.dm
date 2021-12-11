@@ -9,7 +9,7 @@
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
 
-	New()
+	INIT()
 		if (displayed)
 			displayed.set_loc(src)
 			displayed.pixel_x = 0
@@ -184,7 +184,7 @@
 	var/list/our_projectiles = null
 	var/obj/item/ammo/power_cell/our_cell = null
 
-	New()
+	INIT()
 		src.stability = rand(6,20)
 		..()
 		return

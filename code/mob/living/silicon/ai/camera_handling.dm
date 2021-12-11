@@ -203,7 +203,7 @@
 	var/success_delay = 10	//How long between refreshes if we succeeded in tracking someone?
 	var/fail_delay = 50		// Same but in case we failed
 
-	New(var/mob/living/silicon/ai/A)
+	INIT(var/mob/living/silicon/ai/A)
 		..()
 		owner = A
 		global.tracking_list += src

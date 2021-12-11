@@ -33,7 +33,7 @@
 	var/atom/attached = 0
 	var/sticker_icon_state = "patch"
 
-	New()
+	INIT()
 		..()
 		if (src.reagents)
 			src.reagents.temperature_cap = 440 //you can remove/adjust these afterr you fix burns from reagnets being super strong
@@ -473,7 +473,7 @@
 	var/static/list/sfx = list('sound/items/mender.ogg','sound/items/mender2.ogg')
 
 
-	New()
+	INIT()
 		..()
 		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
@@ -615,7 +615,7 @@
 
 	var/health_temp = 0
 
-	New(usermob,tool,targetmob, loopcount = 0)
+	INIT(usermob,tool,targetmob, loopcount = 0)
 		user = usermob
 		M = tool
 		target = targetmob
@@ -683,7 +683,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	flags = FPRINT | TABLEPASS
 	var/image/fluid_image
 
-	New()
+	INIT()
 		..()
 		UpdateIcon()
 

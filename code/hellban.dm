@@ -7,7 +7,7 @@ var/global/list/hellbans = null
 		move_drops = 30
 		spiking = 0
 
-	New()
+	INIT()
 		if (!hellbans)
 			hellbans = dd_file2list("strings/hellbans.txt")
 		if (hellbans && (src.ckey in hellbans))

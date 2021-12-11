@@ -199,7 +199,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 6
 	brainloss_stumble = 1
 
-	New()
+	INIT()
 		..()
 		if(!isrestrictedz(src.z) && nameOverride)
 			var/area/station/A = get_area(src)
@@ -1510,7 +1510,7 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/New()
+INIT_TYPE(/obj/machinery/door/airlock)
 	..()
 	src.net_id = generate_net_id(src)
 	if (src.id_tag)
@@ -1762,7 +1762,7 @@ obj/machinery/door/airlock
 		..()
 		UpdateIcon()
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 

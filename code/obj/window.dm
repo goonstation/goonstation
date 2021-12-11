@@ -32,7 +32,7 @@
 	anchored = 1
 	the_tuff_stuff
 		explosion_resistance = 3
-	New()
+	INIT()
 		..()
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1)
@@ -533,7 +533,7 @@
 	var/obj/window/the_window
 	var/obj/item/the_tool
 
-	New(var/obj/window/windw, var/obj/item/tool)
+	INIT(var/obj/window/windw, var/obj/item/tool)
 		..()
 		if (windw)
 			the_window = windw
@@ -646,7 +646,7 @@
 	rotate()
 		set hidden = 1
 
-	New()
+	INIT()
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.UpdateIcon()
 */
@@ -729,7 +729,7 @@
 	alpha = 160
 	the_tuff_stuff
 		explosion_resistance = 3
-	New()
+	INIT()
 		..()
 
 		if (map_setting && ticker)
@@ -791,7 +791,7 @@
 /obj/window/auto/reinforced/indestructible
 	desc = "A window. A particularly robust one at that."
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			ini_dir = 5//gurgle
@@ -830,7 +830,7 @@
 	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
 	var/initialPos
 	anchored = 2
-	New()
+	INIT()
 		..()
 		initialPos = loc
 
@@ -898,7 +898,7 @@
 	var/full_win = 0 // adds a full window as well
 	var/no_dirs = 0 //ignore directional
 
-	New()
+	INIT()
 		..()
 		if(current_state >= GAME_STATE_WORLD_INIT)
 			SPAWN_DBG(0)
@@ -1011,7 +1011,7 @@
 	shattersound = 'sound/impact_sounds/Metal_Hit_Light_1.ogg'
 	default_material = null
 
-	New()
+	INIT()
 		..()
 
 	update_nearby_tiles(need_rebuild, selfnotify)

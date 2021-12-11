@@ -8,7 +8,7 @@
 	desc = "I wonder what this is."
 	anchored = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(prob(25))

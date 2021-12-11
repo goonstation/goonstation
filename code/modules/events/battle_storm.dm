@@ -8,7 +8,7 @@
 	var/list/area/safe_locations = list()
 	var/activations = 0
 
-	New()
+	INIT()
 		..()
 		safe_locations = get_accessible_station_areas()
 

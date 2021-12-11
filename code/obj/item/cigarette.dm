@@ -36,7 +36,7 @@
 		setProperty("heatprot", 0)
 		setProperty("meleeprot", 0)
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(60)
 
@@ -378,7 +378,7 @@
 	name = "laced cigarette"
 	desc = "A cigarette which seems to have been laced with something."
 
-	New()
+	INIT()
 		if (all_functional_reagent_ids.len > 0)
 			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
@@ -424,7 +424,7 @@
 	rand_pos = 1
 	var/flavor = null
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(30)
 
@@ -462,7 +462,7 @@
 
 /obj/item/clothing/mask/cigarette/cigarillo/flavoured
 
-	New()
+	INIT()
 		src.flavor = pick("rum","menthol","chocolate","coffee","juice_lemon","juice_orange","juice_lime","juice_peach","bourbon","vermouth")
 		src.name = "[reagent_id_to_name(src.flavor)]-flavoured cigarillo"
 		..()
@@ -472,7 +472,7 @@
 	desc = "A cigarillo which seems to have been laced with everything."
 	buttdesc = "Ain't half the 'Rillo it used to be."
 
-	New()
+	INIT()
 		src.flavor = pick("CBD","CBD","CBD","CBD","THC","THC","THC","THC","silicate","antihol","mutadone","rum","mutagen","toxin","water_holy","fuel","salbutamol","haloperidol",
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
@@ -495,7 +495,7 @@
 /obj/item/clothing/mask/cigarette/propuffs
 	desc = "Pro Puffs - a new taste thrill in every cigarette."
 
-	New()
+	INIT()
 		src.flavor = pick("silicate","antihol","mutadone","rum","mutagen","toxin","water_holy","fuel","salbutamol","haloperidol",
 		"cryoxadone","cryostylane","omnizine","jenkem","vomit","carpet","charcoal","blood","cheese","bilk","atropine",
 		"lexorin","teporone","mannitol","spaceacillin","saltpetre","anti_rad","insulin","gvomit","milk","colors","diluted_fliptonium",
@@ -514,7 +514,7 @@
 	desc = "There could be anything in this."
 	flags = FPRINT|TABLEPASS|OPENCONTAINER
 
-	New()
+	INIT()
 		..()
 		src.reagents.maximum_volume = 600
 		src.reagents.clear_reagents()
@@ -544,7 +544,7 @@
 	stamina_cost = 3
 	rand_pos = 1
 
-	New()
+	INIT()
 		..()
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
@@ -667,7 +667,7 @@
 	stamina_cost = 3
 	rand_pos = 1
 
-/obj/item/cigarbox/New()
+INIT_TYPE(/obj/item/cigarbox)
 	..()
 	src.UpdateIcon()
 
@@ -904,7 +904,7 @@
 	rand_pos = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(1)
 		reagents.add_reagent("phosphorus", 1)
@@ -1117,7 +1117,7 @@
 	col_b = 0.27
 	var/infinite_fuel = 0 //1 is infinite fuel. Borgs use this apparently.
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(20)
 		reagents.add_reagent("fuel", 20)
@@ -1322,7 +1322,7 @@
 	col_b = 0
 	is_syndicate = 1
 
-	New()
+	INIT()
 		. = ..()
 		RegisterSignal(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
 

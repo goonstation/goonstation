@@ -18,7 +18,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	var/static/regex/whitespace_regex = new(@{"[\s\n]+"})
 
 
-/datum/spacebee_extension_system/New()
+INIT_TYPE(/datum/spacebee_extension_system)
 	. = ..()
 	src.commands = list()
 	src.active_callbacks = list()

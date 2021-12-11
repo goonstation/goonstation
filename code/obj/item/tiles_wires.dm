@@ -24,7 +24,7 @@ TILES
 	stamina_cost = 25
 	stamina_crit_chance = 15
 
-	New()
+	INIT()
 
 		src.pixel_x = rand(1, 14)
 		src.pixel_y = rand(1, 14)

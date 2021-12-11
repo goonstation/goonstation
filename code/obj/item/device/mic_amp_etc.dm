@@ -73,7 +73,7 @@
 	layer = FLY_LAYER
 	var/obj/item/device/microphone/myMic = null
 
-	New()
+	INIT()
 		SPAWN_DBG(1 DECI SECOND)
 			if (!myMic)
 				myMic = new(src)
@@ -127,7 +127,7 @@
 	density = 1
 	mats = 15
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 

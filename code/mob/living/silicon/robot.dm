@@ -105,7 +105,7 @@
 	var/oil = 0
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 
 		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
@@ -3096,16 +3096,16 @@
 ///////////////////////////////////////////////////
 
 /mob/living/silicon/robot/spawnable // can be spawned via the admin panel in properly unlike the parent
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+	INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/standard
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
 			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
@@ -3119,19 +3119,19 @@
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 	metalman
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 			..(loc, frame, starter, syndie, frame_emagged)
 			src.metalman_skin = 1
 			src.update_appearance()
 
 
 /mob/living/silicon/robot/spawnable/standard_thruster
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
 			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
@@ -3146,7 +3146,7 @@
 
 
 /mob/living/silicon/robot/spawnable/sturdy
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
 			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
@@ -3160,12 +3160,12 @@
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/spawnable/heavy
-	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
 		if (!src.part_chest)
 			src.part_chest = new/obj/item/parts/robot_parts/chest/standard(src)
 			src.part_chest.wires = 1
@@ -3179,13 +3179,13 @@
 		..(loc, frame, starter, syndie, frame_emagged)
 
 	shell
-		New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
+		INIT(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 1, var/syndie = 0, var/frame_emagged = 0)
 			src.shell = 1
 			..(loc, frame, starter, syndie, frame_emagged)
 
 /mob/living/silicon/robot/uber
 
-	New()
+	INIT()
 		src.cell = new /obj/item/cell/cerenkite/charged(src)
 
 		src.max_upgrades = 10
@@ -3214,7 +3214,7 @@
 	health = 1000
 	custom = 1
 
-	New()
+	INIT()
 		..(usr.loc, null, 1)
 		qdel(src.cell)
 		var/obj/item/cell/cerenkite/CELL = new /obj/item/cell/cerenkite(src)
@@ -3237,7 +3237,7 @@
 	health = 1000
 	custom = 1
 
-	New()
+	INIT()
 		..(usr.loc, null, 1)
 
 	update_bodypart(var/part)

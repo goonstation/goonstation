@@ -658,7 +658,7 @@ datum
 			touch_modifier = 0.5 //Half the dose lands on the floor
 			blob_damage = 1
 
-			New()
+			INIT()
 				..()
 				if(prob(10))
 					description += " Keep away from forums."

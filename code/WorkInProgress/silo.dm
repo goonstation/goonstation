@@ -14,7 +14,7 @@
 /turf/simulated/floor/phantom_test
 	fullbright = 1
 
-	New()
+	INIT()
 		..()
 		src.create_phantom()
 		src.phantom.loc = locate(src.x+16, src.y, src.z)
@@ -38,7 +38,7 @@
 	var/collapsing = 0
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		health = rand(5, 10)
 		..()
 		UpdateIcon()

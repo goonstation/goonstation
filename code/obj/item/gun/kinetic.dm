@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	// 1.57 - 40mm shell
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 
-	New()
+	INIT()
 		if(silenced)
 			current_projectile.shot_sound = 'sound/machines/click.ogg'
 		..()
@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	small
 		icon_state = "small"
 		desc = "Seems to be a small pistol cartridge."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-small-0[rand(1,6)].ogg", 20, 0.1)
@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	medium
 		icon_state = "medium"
 		desc = "Seems to be a common revolver cartridge."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
@@ -271,7 +271,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	rifle
 		icon_state = "rifle"
 		desc = "Seems to be a rifle cartridge."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.8)
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	rifle_loud
 		icon_state = "rifle"
 		desc = "Seems to be a rifle cartridge."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 25, 0.1)
@@ -288,7 +288,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	derringer
 		icon_state = "medium"
 		desc = "A fat and stumpy bullet casing. Looks pretty old."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1)
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	deagle
 		icon_state = "medium"
 		desc = "An uncomfortably large pistol cartridge."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(1, 3))
 				playsound(src.loc, "sound/weapons/casings/casing-0[rand(1,9)].ogg", 20, 0.1, 0, 0.9)
@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		gray
 			icon_state = "shotgun_gray"
 			desc = "An gray shotgun shell."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(4, 7))
 				playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 20, 0.1)
@@ -325,7 +325,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		icon_state = "rifle"
 		desc = "A cannon shell."
 		w_class = W_CLASS_SMALL
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(2, 4))
 				playsound(src.loc, "sound/weapons/casings/casing-large-0[rand(1,4)].ogg", 35, 0.1, 0, 0.8)
@@ -334,14 +334,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		w_class = W_CLASS_SMALL
 		icon_state = "40mm"
 		desc = "A 40mm grenade round casing. Huh."
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(3, 6))
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
 
-	New()
+	INIT()
 		..()
 		src.pixel_y += rand(-12,12)
 		src.pixel_x += rand(-12,12)
@@ -358,7 +358,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 200
 	default_magazine = /obj/item/ammo/bullets/vbullet
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/vbullet)
 		..()
@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/failured = 0
 	default_magazine = /obj/item/ammo/bullets/bullet_22
 
-	New()
+	INIT()
 
 		ammo = new default_magazine
 		ammo.amount_left = 0 // start empty
@@ -427,7 +427,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
 		..()
@@ -449,7 +449,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_22HP
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/HP)
 		..()
@@ -478,7 +478,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/minigun
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
 		..()
@@ -503,7 +503,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/ak47
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/ak47)
 		..()
@@ -525,7 +525,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/rifle_3006
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
 		..()
@@ -546,7 +546,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart)
 		..()
@@ -568,7 +568,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO
 
-	New()
+	INIT()
 		if (prob(70))
 			icon_state = "glocktan"
 			item_state = "glocktan"
@@ -660,7 +660,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/open = FALSE
 
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO/burst)
 		..()
@@ -730,7 +730,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/a357
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
 		..()
@@ -748,7 +748,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/a38/stun
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
 		..()
@@ -769,7 +769,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 	var/pulled = 0
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		ammo.amount_left = 1
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
@@ -828,7 +828,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
@@ -850,7 +850,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/blow_darts/single
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/blow_dart)
 		..()
@@ -877,13 +877,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			..()
 		return
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/derringer)
 		..()
 
 /obj/item/gun/kinetic/derringer/empty
-	New()
+	INIT()
 		..()
 		ammo.amount_left = 0
 		UpdateIcon()
@@ -909,12 +909,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		force = MELEE_DMG_REVOLVER
 		caliber = 0.38
 		default_magazine = /obj/item/ammo/bullets/a38/stun
-		New()
+		INIT()
 			..()
 			ammo = new default_magazine
 			set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_45)
 		..()
@@ -955,7 +955,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/flintlock
 	var/failure_chance = 1
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
 		..()
@@ -987,7 +987,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/a12
 
-	New()
+	INIT()
 		if(prob(10))
 			name = pick("SPEZZ-12", "SPESS-12", "SPETZ-12", "SPOCK-12", "SCHPATZL-12", "SABRINA-12", "SAURUS-12", "SABER-12", "SOSIG-12", "DINOHUNTER-12", "PISS-12", "ASS-12", "SPES-12", "SHIT-12", "SHOOT-12", "SHOTGUN-12", "FAMILYGUY-12", "SPAGOOTER-12")
 		ammo = new default_magazine
@@ -1013,7 +1013,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		return 1
 
 	engineer
-		New()
+		INIT()
 			..()
 			src.name = replacetext("[src.name]", "12", "6") //only half as good
 			ammo = new/obj/item/ammo/bullets/a12/weak
@@ -1039,7 +1039,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
@@ -1114,7 +1114,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/flare/single
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flare)
 		..()
@@ -1140,7 +1140,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/bullet/nails)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
@@ -1259,7 +1259,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 2
 	default_magazine = /obj/item/ammo/bullets/rod
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
@@ -1277,7 +1277,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/smoke)
 		..()
@@ -1324,7 +1324,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/rpg
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
 		set_current_projectile(new /datum/projectile/bullet/rpg)
@@ -1342,7 +1342,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			H.update_inhands()
 
 	loaded
-		New()
+		INIT()
 			..()
 			ammo.amount_left = 1
 			src.UpdateIcon()
@@ -1365,7 +1365,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/antisingularity
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
 		set_current_projectile(new /datum/projectile/bullet/antisingularity)
@@ -1389,7 +1389,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = MELEE_DMG_SMG
 	default_magazine = /obj/item/ammo/bullets/gun
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		ammo.amount_left = 6 //spawn full please
 		set_current_projectile(new /datum/projectile/special/spawner/gun)
@@ -1406,7 +1406,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/airzooka
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/airzooka)
 		..()
@@ -1432,7 +1432,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/meowitzer
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/special/meowitzer)
 		..()
@@ -1449,7 +1449,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 /obj/item/gun/kinetic/meowitzer/inert
 	default_magazine = /obj/item/ammo/bullets/meowitzer
-	New()
+	INIT()
 		..()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/special/meowitzer/inert)
@@ -1472,14 +1472,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
 		..()
 
 /obj/item/gun/kinetic/pistol/empty
 
-	New()
+	INIT()
 		..()
 		ammo.amount_left = 0
 		UpdateIcon()
@@ -1492,7 +1492,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = 0.22
 	default_magazine = /obj/item/ammo/bullets/bullet_22/smartgun
 
-	New()
+	INIT()
 		..()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/smartgun)
@@ -1517,14 +1517,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
 		..()
 
 /obj/item/gun/kinetic/smg/empty
 
-	New()
+	INIT()
 		..()
 		ammo.amount_left = 0
 		UpdateIcon()
@@ -1544,7 +1544,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/tranq_dart/syndicate/pistol)
 		..()
@@ -1564,7 +1564,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/)
 		..()
@@ -1587,7 +1587,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 0
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
@@ -1647,7 +1647,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/lmg)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
@@ -1685,7 +1685,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/cannon/single
 
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/cannon)
 		..()
@@ -1712,7 +1712,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		ammo.amount_left = max_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
@@ -1765,7 +1765,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	var/datum/movement_controller/snipermove = null
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_762_NATO)
 		snipermove = new/datum/movement_controller/sniper_look()
@@ -1862,7 +1862,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 
 
-	New()
+	INIT()
 		ammo = new/obj/item/ammo/bullets/cannon
 		set_current_projectile(new/datum/projectile/bullet/cannon)
 		snipermove = new/datum/movement_controller/sniper_look()

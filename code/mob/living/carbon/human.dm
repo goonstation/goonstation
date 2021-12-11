@@ -168,7 +168,7 @@
 	blood_id = "blood"
 	blood_volume = 500
 
-/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+INIT_TYPE(/mob/living/carbon/human, loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
@@ -258,7 +258,7 @@
 	var/l_leg_bleed = 0
 	var/r_leg_bleed = 0
 
-	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
+	INIT(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
 		if (holder && !ling) create(holder.AH_we_spawned_with)

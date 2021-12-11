@@ -82,7 +82,7 @@
 
 	var/currently_selling = 0 //Are we currently processing an order?
 
-	New()
+	INIT()
 		..()
 		src.current_message = pick(src.dialogue_greet)
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
@@ -221,7 +221,7 @@
 	var/alt_type_chance = 0              // The chance it will be one of those alternate things
 	var/list/price_boundary = list(0,0)  // Minimum and maximum price for this commodity
 
-	New()
+	INIT()
 		..()
 		if(src.possible_names.len)
 			src.listed_name = pick(src.possible_names)

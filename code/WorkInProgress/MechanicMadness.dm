@@ -31,7 +31,7 @@
 	var/can_be_welded=false
 	var/can_be_anchored=false
 	custom_suicide=true
-	New()
+	INIT()
 		..()
 		src.light = new /datum/light/point
 		src.light.attach(src)
@@ -236,7 +236,7 @@
 				user.drop_item()
 				return
 			return MouseDrop(user)
-		New()
+		INIT()
 			..()
 			src.light.set_color(0,0.7,1)
 		attack_self(mob/user as mob)
@@ -263,7 +263,7 @@
 		num_f_icons=1
 		icon_state="housing_handheld"
 		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
-		New()
+		INIT()
 			..()
 			src.light.set_color(0.2,0,0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
@@ -298,7 +298,7 @@
 	anchored= 1
 	level=1
 	w_class = W_CLASS_BULKY
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -357,7 +357,7 @@
 	var/list/particle_list
 	var/mob/owner = null
 
-	New()
+	INIT()
 		particle_list = new/list()
 		AddComponent(/datum/component/mechanics_holder)
 		processing_items |= src
@@ -517,7 +517,7 @@
 		. += {"<br><span class='notice'>Collected money: [collected]<br>
 		Current price: [price] credits</span>"}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", "emoney")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -634,7 +634,7 @@
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
 
-	New()
+	INIT()
 		. = ..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"flush", "flushp")
 
@@ -713,7 +713,7 @@
 	cabinet_banned = true
 	plane = PLANE_DEFAULT
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"print", "print")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name","setPaperName")
@@ -751,7 +751,7 @@
 	var/del_paper = 1
 	var/thermal_only = 1
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Paper Consumption","toggleConsume")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode","toggleThermal")
@@ -801,7 +801,7 @@
 
 	var/obj/item/mechanics/triplaser/holder
 
-	New(var/loc, var/obj/item/mechanics/triplaser/t)
+	INIT(var/loc, var/obj/item/mechanics/triplaser/t)
 		holder = t
 		..()
 
@@ -829,7 +829,7 @@
 	var/active = 0
 	var/sendstr = "1"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -895,7 +895,7 @@
 	icon_state = "comp_hscan"
 	var/send_name = 0
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Type","toggleSig")
 
@@ -933,7 +933,7 @@
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateproc")
 
@@ -994,7 +994,7 @@
 	one_per_tile = true
 	var/zap_power = 2
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
@@ -1027,7 +1027,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Current Delay: [delay]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delay", "delayproc")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -1084,7 +1084,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Current Time Frame: [timeframe]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
@@ -1146,7 +1146,7 @@
 	icon_state = "comp_or"
 	var/triggerSignal = "1"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire")
@@ -1191,7 +1191,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Current Trigger Field: [triggerSignal]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", "split")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field","setTrigger")
@@ -1237,7 +1237,7 @@
 		$` will be replaced with the text that came before the match, and $' will be replaced by the text after the match.<br/>
 		$0 or $& will be the entire matched string."}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", "checkstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", "setPatternSignal")
@@ -1332,7 +1332,7 @@
 		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expression))]<br>
 		Replace Signal is [replacesignal ? "on.":"off."]</span>"}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", "checkstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", "setregex")
@@ -1409,7 +1409,7 @@
 		Replace Signal is [changesig ? "on.":"off."]<br>
 		Currently checking for: [sanitize(html_encode(triggerSignal))]</span>"}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", "checkstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", "settrigger")
@@ -1477,7 +1477,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Exact match mode: [exact_match ? "on" : "off"]<br>Single output mode: [single_output ? "on" : "off"]</span>"
 
-	New()
+	INIT()
 		..()
 		src.outgoing_filters = list()
 		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
@@ -1565,7 +1565,7 @@
 		Current starting String: [html_encode(sanitize(bstr))]<br>"
 		Current ending String: [html_encode(sanitize(astr))]</span>"}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string", "addstr")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", "addstrsend")
@@ -1658,7 +1658,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Replace Signal is [changesig ? "on.":"off."]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"relay", "relay")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
@@ -1691,7 +1691,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Stored file:[stored_file ? "<br>Name: [src.stored_file.name]<br>Extension: [src.stored_file.extension]<br>Contents: [src.stored_file.asText()]" : " NONE"]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send file", "sendfile")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add file to signal and send", "addandsendfile")
@@ -1757,7 +1757,7 @@
 		Current Frequency: [frequency]<br>
 		Current NetID: [net_id]</span>"}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", "send")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
@@ -1920,7 +1920,7 @@
 		Currently contains [length(signals)] Items:<br></span>
 		[signals.Join("<br>")]"}
 
-	New()
+	INIT()
 		..()
 		signals = new/list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", "additem")
@@ -2144,7 +2144,7 @@
 		Current ON Signal: [signal_on]<br>
 		Current OFF Signal: [signal_off]</span>"}
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate and send", "activateplus")
@@ -2244,7 +2244,7 @@
 		. += {"<br><span class='notice'>Current ID: [teleID].<br>
 		Send only Mode: [send_only ? "On":"Off"].</span>"}
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
@@ -2346,7 +2346,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Current Color: [selcolor].</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "turnon")
@@ -2432,7 +2432,7 @@
 	icon_state = "comp_mic"
 	var/add_sender = 0
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Show-Source","toggleSender")
 
@@ -2469,7 +2469,7 @@
 	get_desc()
 		. += "<br><span style=\"color:blue\">Current Frequency: [frequency]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
@@ -2534,7 +2534,7 @@
 	icon_state = "comp_synth"
 	cooldown_time = 2 SECONDS
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", "fire")
 
@@ -2555,7 +2555,7 @@
 	icon_state = "comp_pressure"
 	var/tmp/limiter = 0
 	cabinet_banned = true // non-functional
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
@@ -2583,7 +2583,7 @@
 	plane = PLANE_DEFAULT
 	density = 1
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
@@ -2631,7 +2631,7 @@
 		for (var/button in src.active_buttons)
 			. += "<br><span class='notice'>Label: [button], Value: [src.active_buttons[button]]</span>"
 
-	New()
+	INIT()
 		..()
 		active_buttons = list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button","addButton")
@@ -2713,7 +2713,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"fire", "fire")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Gun","removeGun")
@@ -2794,7 +2794,7 @@
 		. = ..() // Please don't remove this again, thanks.
 		. += charging ? "<br><span class='notice'>Component is charging.</span>" : null
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recharge", "recharge")
 
@@ -2865,7 +2865,7 @@
 	get_desc()
 		. += "<br><span class='notice'>Current Instrument: [instrument ? "[instrument]" : "None"]</span>"
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"play", "fire")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Instrument","removeInstrument")
@@ -2961,7 +2961,7 @@
 		icon_state = "comp_arith1"
 	loosen()
 		icon_state = "comp_arith"
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", "setA")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", "setB")
@@ -3046,7 +3046,7 @@
 	var/list/map
 	var/mode = 0 // 0=Mutable, 1=Immutable, 2=List
 
-	New()
+	INIT()
 		..()
 		map = list()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", "addItems")
@@ -3209,7 +3209,7 @@
 	loosen()
 		src.display_letter = null
 		src.icon_state = "comp_screen"
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", "fire")

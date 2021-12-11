@@ -19,7 +19,7 @@
 	var/list/mailgroups = list(MGO_SILICON, MGD_PARTY)
 	var/list/alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
 
-/obj/item/robot_module/New()
+INIT_TYPE(/obj/item/robot_module)
 	..()
 	// add contents
 	if (src.include_common_tools)

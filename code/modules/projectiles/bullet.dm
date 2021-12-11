@@ -1437,7 +1437,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	icon_turf_hit = null
 
-	New()
+	INIT()
 		..()
 		src.name = pick("weird", "puzzling", "odd", "strange", "baffling", "creepy", "unusual", "confusing", "discombobulating") + " bullet"
 		src.name = corruptText(src.name, 66)
@@ -1466,7 +1466,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	icon_turf_hit = null
 
-	New()
+	INIT()
 		..()
 
 	on_hit(atom/hit)

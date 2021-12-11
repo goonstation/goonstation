@@ -288,7 +288,7 @@
 	icon_background = ""
 	var/ability_code = 0
 
-	New(code as num)
+	INIT(code as num)
 		..()
 		src.ability_code = code
 		switch(code)

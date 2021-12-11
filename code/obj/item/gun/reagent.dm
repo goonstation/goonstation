@@ -16,7 +16,7 @@
 	inventory_counter_enabled = 1
 	move_triggered = 1
 
-	New()
+	INIT()
 		src.create_reagents(capacity)
 		..()
 
@@ -126,7 +126,7 @@
 	dump_reagents_on_turf = 1
 	tooltip_flags = REBUILD_DIST
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/syringe)
 		. = ..()
 
@@ -149,7 +149,7 @@
 	ammo_reagents = list()
 	var/safe = 1
 
-	New()
+	INIT()
 		..()
 		if (src.safe && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.ammo_reagents = global.chem_whitelist
@@ -168,7 +168,7 @@
 		return 1
 
 /obj/item/gun/reagent/syringe/NT/emagged
-	New()
+	INIT()
 		..()
 		src.emag_act()
 
@@ -182,7 +182,7 @@
 	ammo_reagents = list("love", "hugs")
 	custom_reject_message = "This Gun was built for Love, not War!"
 
-	New()
+	INIT()
 		..()
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
@@ -199,7 +199,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 	force = 7.0
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/ectoblaster)
 		projectiles = list(current_projectile)
 		..()

@@ -9,7 +9,7 @@
 	mouse_opacity = 0
 	var/float_anim = 1
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(10)
 		reagents.add_reagent("cleaner", 5)
@@ -56,7 +56,7 @@
 
 	elm_random
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
-		New()
+		INIT()
 			. = ..()
 			src.dir = pick(cardinal - SOUTH)
 
@@ -64,14 +64,14 @@
 		icon_state = "snowtree"
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
 		pixel_x = -32
-		New()
+		INIT()
 			. = ..()
 			src.dir = pick(cardinal)
 
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
- 	New()
+ 	INIT()
 		var/image/tile10 = image('icons/misc/worlds.dmi',null,"1,0",10)
 		tile10.pixel_x = 32
 
@@ -127,7 +127,7 @@
 	density=1
 
 	random
-		New()
+		INIT()
 			. = ..()
 			src.dir = pick(alldirs)
 
@@ -137,7 +137,7 @@
 		plane = PLANE_NOSHADOW_BELOW // has snow accents to meld with turf
 
 		random
-			New()
+			INIT()
 				. = ..()
 				src.dir = pick(alldirs)
 
@@ -159,7 +159,7 @@
 	var/override_default_behaviour = 0 // When this is set to 1, the additional_items list will be used to dispense items.
 	var/list/additional_items = list() // See above.
 
-	New()
+	INIT()
 		..()
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
@@ -259,7 +259,7 @@
 			return
 
 	random
-		New()
+		INIT()
 			. = ..()
 			src.dir = pick(alldirs)
 
@@ -268,7 +268,7 @@
 		icon_state = "snowshrub"
 
 		random
-			New()
+			INIT()
 				. = ..()
 				src.dir = pick(cardinal)
 
@@ -276,7 +276,7 @@
 //It'll show up on multitools
 /obj/shrub/syndicateplant
 	var/net_id
-	New()
+	INIT()
 		. = ..()
 		var/turf/T = get_turf(src.loc)
 		var/obj/machinery/power/data_terminal/link = locate() in T
@@ -403,7 +403,7 @@
 	anchored = 1
 	density = 0
 
-	New()
+	INIT()
 		..()
 		if (src.icon_state == "ppot0") // only randomize a plant if it's not set to something specific
 			src.icon_state = "ppot[rand(1,5)]"
@@ -442,7 +442,7 @@
 	var/id = null
 	var/obj/blind_switch/mySwitch = null
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -533,7 +533,7 @@
 	var/id = null
 	var/list/myBlinds = list()
 
-	New()
+	INIT()
 		..()
 		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
@@ -624,7 +624,7 @@
 	var/on = 0
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		light = new
 		light.set_brightness(1)
@@ -808,7 +808,7 @@ obj/decoration/ceilingfan
 	var/lit = 0
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(brightness)
@@ -1116,7 +1116,7 @@ obj/decoration/ceilingfan
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_SOFT)
 
@@ -1167,7 +1167,7 @@ obj/decoration/ceilingfan
 	var/datum/light/light
 	var/deconstructable = 1
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(brightness)

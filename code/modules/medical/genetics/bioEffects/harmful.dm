@@ -436,7 +436,7 @@
 	var/mutation_type = "either"
 	icon_state  = "bad"
 
-	New()
+	INIT()
 		..()
 		if (prob(25))
 			mutation_type = "bad"
@@ -873,7 +873,7 @@
 	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordstart.ogg')
 	icon_state  = "bad"
 
-	New(var/for_global_list = 0)
+	INIT(var/for_global_list = 0)
 		..()
 		if (!for_global_list)
 			name = "Booster Gene"

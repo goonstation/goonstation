@@ -192,7 +192,7 @@ var/global/meteor_shower_active = 0
 			name = "small shark chunk"
 			desc = "A chunk of shark debris. You might want to stop staring at it and run. Trust me, this came from a shark."
 
-	New(var/atom/my_spawn, var/atom/trg)
+	INIT(var/atom/my_spawn, var/atom/trg)
 		if(!my_spawn || !trg)
 			..()
 			return

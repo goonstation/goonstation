@@ -42,7 +42,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	var/next_crate = 0
 	var/last_switch = 0
 
-	New()
+	INIT()
 		..()
 		processing_items.Add(src)
 
@@ -137,7 +137,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	light_g = 0.7
 	light_b = 0.03
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 

@@ -21,7 +21,7 @@
 	rand_pos = 1
 	custom_suicide = 1
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/tile_fling)
 		BLOCK_SETUP(BLOCK_ROD)

@@ -39,7 +39,7 @@
 		icon_state = "penguin"
 		pick_random_icon_state = 0
 
-	New()
+	INIT()
 		. = ..()
 		if(src.icon_state in icon_states_with_supported_eyes)
 			eye_light = image('icons/obj/plushies.dmi', "[src.icon_state]-eyes")

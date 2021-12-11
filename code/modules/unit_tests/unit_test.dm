@@ -103,7 +103,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	var/list/allocated
 	var/list/fail_reasons
 
-/datum/unit_test/New()
+INIT_TYPE(/datum/unit_test)
 	..()
 	allocated = new
 	if(landmarks[LANDMARK_BOTTOM_LEFT])

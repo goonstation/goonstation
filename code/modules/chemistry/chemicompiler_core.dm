@@ -52,7 +52,7 @@
 	var/minStored = 1
 	var/maxStored = 6
 
-/datum/chemicompiler_core/New(datum/holder)
+INIT_TYPE(/datum/chemicompiler_core, datum/holder)
 	..()
 	if(!istype(holder))
 		qdel(src)
@@ -583,7 +583,7 @@
 /datum/testChemicompilerHolder
 	var/datum/chemicompiler_core/cc
 
-	New()
+	INIT()
 		..()
 		cc = new /datum/chemicompiler_core/testCore(src)
 	proc
@@ -636,7 +636,7 @@
 	var/datum/chemicompiler_core/core
 	var/obj/item/reagent_containers/glass/ejection_reservoir = null
 
-/datum/chemicompiler_executor/New(datum/holder, corePath = /datum/chemicompiler_core/portableCore)
+INIT_TYPE(/datum/chemicompiler_executor, datum/holder, corePath = /datum/chemicompiler_core/portableCore)
 	..()
 	if(!istype(holder))
 		qdel(src)

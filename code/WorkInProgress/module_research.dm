@@ -514,7 +514,7 @@
 	var/data_points = 0
 	var/last_generation = 0
 
-	New()
+	INIT()
 		..()
 		setup()
 		processing_items.Add(src)
@@ -643,7 +643,7 @@ var/global/datum/module_research_controller/module_control = new
 	var/module_icon_state = "unknown"
 	var/list/users = list()
 
-	New()
+	INIT()
 		..()
 		if (module_control)
 			module_control.setup()

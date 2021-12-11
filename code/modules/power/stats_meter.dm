@@ -5,7 +5,7 @@
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = 1.0
 
-/obj/machinery/power/stats_meter/New()
+INIT_TYPE(/obj/machinery/power/stats_meter)
 	..()
 	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 	return 1

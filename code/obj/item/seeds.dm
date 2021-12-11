@@ -16,7 +16,7 @@
 	stamina_cost = 0
 	rand_pos = 1
 
-	New(var/loc,var/do_color = 1)
+	INIT(var/loc,var/do_color = 1)
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
 		// Set up the base genes. Note we don't need to set up the planttype here - that's because
@@ -141,7 +141,7 @@
 	seedcolor = "#00FF00"
 	auxillary_datum = /datum/plant/herb/cannabis
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
 
@@ -155,7 +155,7 @@
 	name = "strange seed"
 	isstrange = 1
 
-	New()
+	INIT()
 		..()
 		gen_plant_type()
 

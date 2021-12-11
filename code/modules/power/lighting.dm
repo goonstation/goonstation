@@ -102,7 +102,7 @@
 	var/removable_bulb = 1
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		inserted_lamp = new light_type()
 		current_lamp = inserted_lamp
@@ -231,7 +231,7 @@
 	broken //Made at first to replace a decal in cog1's wreckage area
 		name = "shattered light bulb"
 
-		New()
+		INIT()
 			..()
 			current_lamp.light_status = LIGHT_BROKEN
 
@@ -239,7 +239,7 @@
 	sticky
 		nostick = 0
 
-		New()
+		INIT()
 			..()
 			autoposition()
 
@@ -287,7 +287,7 @@
 	plane = PLANE_FLOOR
 	allowed_type = /obj/item/light/bulb
 
-	New()
+	INIT()
 		..()
 
 	netural
@@ -426,7 +426,7 @@
 /obj/machinery/light/worn
 	desc = "A rather old-looking lighting fixture."
 	brightness = 1
-	New()
+	INIT()
 		..()
 		current_lamp.breakprob = 6.25
 
@@ -456,7 +456,7 @@
 	base_state = "green"
 	desc = "A green-shaded desk lamp"
 
-	New()
+	INIT()
 		..()
 		light.set_color(0.45, 0.85, 0.25)
 
@@ -466,7 +466,7 @@
 	allowed_type = /obj/item/light/tube
 	nostick = 0
 
-	New()
+	INIT()
 		..()
 		autoposition()
 
@@ -517,7 +517,7 @@
 
 
 // create a new lighting fixture
-/obj/machinery/light/New()
+INIT_TYPE(/obj/machinery/light)
 	..()
 	light = new
 	light.set_brightness(brightness)
@@ -1319,7 +1319,7 @@
 				desc = "A broken [name]."
 
 
-/obj/item/light/New()
+INIT_TYPE(/obj/item/light)
 	..()
 	update()
 

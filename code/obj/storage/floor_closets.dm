@@ -39,7 +39,7 @@
 
 /obj/storage/closet/syndi/hidden
 	anchored = 1
-	New()
+	INIT()
 		..()
 		var/turf/T = get_turf(src.loc)
 		if (T)

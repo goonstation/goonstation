@@ -14,7 +14,7 @@
 	name = "Placeholder Object"
 	var/spawn_path = "/obj/item/space_thing" //Cardinal sin (can runtime), but will enable paths that don't exist to be used
 
-	New(turf/loc)
+	INIT(turf/loc)
 		..()
 		#ifdef SECRETS_ENABLED
 		new spawn_path(loc)

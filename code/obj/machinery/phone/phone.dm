@@ -28,7 +28,7 @@
 
 
 
-	New()
+	INIT()
 		..() // Set up power usage, subscribe to loop, yada yada yada
 		src.icon_state = "[phoneicon]"
 		src.location = get_area(src)
@@ -246,7 +246,7 @@
 	windowSize = "350x700"
 	var/obj/machinery/phone/owner = null
 
-	New(var/obj/machinery/phone/creator)
+	INIT(var/obj/machinery/phone/creator)
 		..()
 		src.owner = creator
 
@@ -277,7 +277,7 @@
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
 
-	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
+	INIT(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
 			return
 		..()

@@ -19,7 +19,7 @@
 	var/recharge_time = 600
 	var/recharging = 0
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "SUPERFICIAL DAMAGE DETECTED"
 		if(prob(20))

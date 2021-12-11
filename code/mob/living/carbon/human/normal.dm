@@ -1,5 +1,5 @@
 /mob/living/carbon/human/normal
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			randomize_look(src, 1, 1, 1, 1, 1, 1, src)
@@ -10,169 +10,169 @@
 			set_clothing_icon_dirty()
 
 /mob/living/carbon/human/normal/assistant
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Staff Assistant")
 
 /mob/living/carbon/human/normal/syndicate
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Syndicate")
 
 /mob/living/carbon/human/normal/captain
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Captain")
 
 /mob/living/carbon/human/normal/headofpersonnel
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Head of Personnel")
 
 /mob/living/carbon/human/normal/chiefengineer
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Chief Engineer")
 
 /mob/living/carbon/human/normal/researchdirector
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Research Director")
 
 /mob/living/carbon/human/normal/headofsecurity
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Head of Security")
 
 /mob/living/carbon/human/normal/securityofficer
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Security Officer")
 
 /mob/living/carbon/human/normal/securityassistant
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Security Assistant")
 
 /mob/living/carbon/human/normal/detective
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Detective")
 
 /mob/living/carbon/human/normal/clown
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Clown")
 
 /mob/living/carbon/human/normal/chef
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Chef")
 
 /mob/living/carbon/human/normal/chaplain
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Chaplain")
 
 /mob/living/carbon/human/normal/bartender
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Bartender")
 
 /mob/living/carbon/human/normal/botanist
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Botanist")
 
 /mob/living/carbon/human/normal/rancher
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Rancher")
 
 /mob/living/carbon/human/normal/janitor
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Janitor")
 
 /mob/living/carbon/human/normal/mechanic
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Mechanic")
 
 /mob/living/carbon/human/normal/engineer
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Engineer")
 
 /mob/living/carbon/human/normal/miner
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Miner")
 
 /mob/living/carbon/human/normal/quartermaster
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Quartermaster")
 
 /mob/living/carbon/human/normal/medicaldoctor
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Medical Doctor")
 
 /mob/living/carbon/human/normal/geneticist
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Geneticist")
 
 /mob/living/carbon/human/normal/pathologist
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Pathologist")
 
 /mob/living/carbon/human/normal/roboticist
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Roboticist")
 
 /mob/living/carbon/human/normal/chemist
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Chemist")
 
 /mob/living/carbon/human/normal/scientist
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Scientist")
 
 /mob/living/carbon/human/normal/wizard
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.gender && src.gender == "female")
@@ -184,7 +184,7 @@
 		return
 
 /mob/living/carbon/human/normal/rescue
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
@@ -209,7 +209,7 @@
 			update_clothing()
 
 /mob/living/carbon/human/normal/ntso
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)

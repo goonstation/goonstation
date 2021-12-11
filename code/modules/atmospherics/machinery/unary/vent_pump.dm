@@ -78,12 +78,12 @@
 			west
 				dir = WEST
 
-		New()
+		INIT()
 			..()
 
 			air_contents.volume = 1000
 
-	New()
+	INIT()
 		..()
 		if(frequency)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)

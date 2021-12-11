@@ -20,7 +20,7 @@
 			src.color = rgb(0,255,0)
 			boutput(user, "You open the fluid pipe valve.")
 
-	New()
+	INIT()
 		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
@@ -62,7 +62,7 @@
 			src.color = rgb(0,255,0)
 			boutput(user, "You open the fluid pipe valve.")
 
-	New()
+	INIT()
 		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 

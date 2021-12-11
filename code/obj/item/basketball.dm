@@ -99,7 +99,7 @@
 	var/active = 0
 	var/probability = 40
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 

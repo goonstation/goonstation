@@ -49,7 +49,7 @@
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
 	mats = 8
 
-	New(location)
+	INIT(location)
 		..()
 		if(istype(location,/obj/machinery/computerx))
 			src.installed(location)
@@ -148,7 +148,7 @@
 			frequency = FREQ_STATUS_DISPLAY
 			setup_netmode_norange = 0
 
-	New()
+	INIT()
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("wireless", frequency)
@@ -273,7 +273,7 @@
 	func_tag = "NET_ADAPTER"
 	var/obj/machinery/power/data_terminal/link = null //For communicating with the powernet.
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.

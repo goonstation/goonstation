@@ -57,7 +57,7 @@ var/list/clothingbooth_items = list()
 	density = 1
 	//power_usage = 100
 	var/datum/light/light
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		light = new /datum/light/point

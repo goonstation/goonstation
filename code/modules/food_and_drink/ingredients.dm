@@ -101,7 +101,7 @@
 	initial_reagents = list("porktonium"=10)
 	blood = 0
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
@@ -127,7 +127,7 @@
 	initial_volume = 15
 	doants = 0 // imagine 1000 nuggets on one tile all checking the other 999 nuggets if they aren't a table, yeah
 
-	New()
+	INIT()
 		..()
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
@@ -169,7 +169,7 @@
 	initial_volume = 20
 	food_effects = list("food_brute", "food_cateyes")
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("egg", 5)
 
@@ -293,7 +293,7 @@
 	initial_reagents = list("honey"=15)
 	brewable = 1
 	brew_result = "mead"
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("honey"), appearance = 0, setname = 0)
 
@@ -534,7 +534,7 @@
 	amount = 1
 	custom_food = 1
 
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
@@ -555,7 +555,7 @@
 	amount = 1
 	icon_state = "tortillabase"
 	food_color = "#FFFFFF"
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-8, 8)
 		src.pixel_y = rand(-8, 8)
@@ -781,7 +781,7 @@
 	heal_amt = 0
 	amount = 1
 
-	New()
+	INIT()
 		..()
 		name = "[random_spaghetti_name()] noodles"
 

@@ -83,7 +83,7 @@ var/global/list/atomTooltips = new()
 	var/inPod = 0 //for fuck sake
 
 
-	New(client/C)
+	INIT(client/C)
 		..()
 		if (!C) return 0
 		src.owner = C
@@ -210,7 +210,7 @@ var/global/list/atomTooltips = new()
 	var/list/savedOptions
 
 
-	New(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
+	INIT(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
 		..()
 		if (!C) return 0
 		src.owner = C

@@ -438,7 +438,7 @@ var/syndicate_name = null
 
 
 
-	New()
+	INIT()
 		..()
 		var/wins = world.load_intra_round_value("nukie_win")
 		var/losses = world.load_intra_round_value("nukie_loss")

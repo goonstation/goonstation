@@ -23,7 +23,7 @@
 	var/datum/healthBar/health_bar
 	var/obj/machinery/vehicle/master
 
-	New(P)
+	INIT(P)
 		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")

@@ -18,7 +18,7 @@
 	speechverb_ask = "queries"
 	metabolizes = 0
 
-	New()
+	INIT()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_THERMALVISION, src)
 		var/image/eye_light = image(icon, "mars_sec_bot_eye")

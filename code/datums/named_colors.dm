@@ -11,7 +11,7 @@
 	var/g = 0		//
 	var/b = 0		//
 
-	New(textname, red, green, blue)
+	INIT(textname, red, green, blue)
 		. = ..()
 		name = textname
 		r = red

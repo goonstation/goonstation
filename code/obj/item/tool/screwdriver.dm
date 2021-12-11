@@ -22,7 +22,7 @@
 	rand_pos = 1
 	custom_suicide = 1
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 

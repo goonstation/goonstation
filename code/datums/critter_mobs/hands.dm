@@ -23,7 +23,7 @@
 
 	var/obj/item/parts/limbholder				// technically a dummy, do not set.
 
-	New()
+	INIT()
 		..()
 		obscurer = image('icons/mob/critter_ui.dmi', icon_state="hand_cooldown", layer=HUD_LAYER+2)
 

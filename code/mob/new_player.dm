@@ -19,7 +19,7 @@ mob/new_player
 
 	var/chui/window/spend_spacebux/bank_menu
 
-	New()
+	INIT()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO

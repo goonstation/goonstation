@@ -60,7 +60,7 @@ datum
 		var/postfoam = 0 //attempt at killing infinite foam
 		var/can_be_heated = TRUE //can be heated by external sources
 
-		New(maximum=100)
+		INIT(maximum=100)
 			..()
 			maximum_volume = maximum
 

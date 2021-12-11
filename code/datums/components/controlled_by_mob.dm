@@ -2,7 +2,7 @@
 	mouse_opacity = 0
 	var/datum/movement_controller/movement_controller
 
-	New(loc, movement_controller)
+	INIT(loc, movement_controller)
 		. = ..()
 		src.movement_controller = movement_controller
 

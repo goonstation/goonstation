@@ -84,7 +84,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	var/mob/living/carbon/human/target
 	var/mob/living/carbon/human/M
 
-	New(Target, Spell)
+	INIT(Target, Spell)
 		target = Target
 		spell = Spell
 		M = spell.holder.owner

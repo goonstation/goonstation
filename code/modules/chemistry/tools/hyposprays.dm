@@ -30,11 +30,11 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	inventory_counter_enabled = 1
 
 	emagged
-		New() // as it turns out it is me who is the dumb
+		INIT() // as it turns out it is me who is the dumb
 			..()
 			src.emag_act()
 
-	New()
+	INIT()
 		..()
 		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist

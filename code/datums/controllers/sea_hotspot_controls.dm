@@ -11,7 +11,7 @@
 
 	var/sound_env_test = 0
 
-	New()
+	INIT()
 		..()
 		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
@@ -281,7 +281,7 @@
 	var/last_colorping = 0
 
 
-	New()
+	INIT()
 		..()
 		drift_dir = pick(NORTH,SOUTH,EAST,WEST,NORTHWEST,SOUTHWEST,NORTHEAST,SOUTHEAST)
 		//if (prob(25))
@@ -436,7 +436,7 @@
 	var/y = 0
 	var/z = 0
 
-	New(x=0,y=0,z=0)
+	INIT(x=0,y=0,z=0)
 		..()
 		src.x = x
 		src.y = y
@@ -480,7 +480,7 @@
 	var/datum/sea_hotspot/closest_hotspot = 0
 
 	var/placed = 0
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 
@@ -725,7 +725,7 @@
 
 	var/built = 1
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
@@ -848,7 +848,7 @@
 	var/set_anchor = 1
 
 
-	New()
+	INIT()
 		..()
 		cell = new(src)
 		cell.charge = 1000
@@ -1001,7 +1001,7 @@
 	var/turf/T
 	var/obj/item/vent_capture_unbuilt/V
 
-	New(Vent, Loc)
+	INIT(Vent, Loc)
 		V = Vent
 		T = Loc
 		..()
@@ -1039,7 +1039,7 @@
 	icon_state = "working"
 	var/obj/machinery/power/vent_capture/V
 
-	New(Vent)
+	INIT(Vent)
 		V = Vent
 		..()
 
@@ -1071,7 +1071,7 @@
 	icon_state = "working"
 	var/turf/T
 
-	New(Turf)
+	INIT(Turf)
 		T = Turf
 		..()
 		playsound(T, 'sound/effects/shovel1.ogg', 50, 1, 0.3)

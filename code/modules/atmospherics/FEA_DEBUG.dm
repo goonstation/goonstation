@@ -10,7 +10,7 @@ datum/gas_mixture
 
 /*
 turf/simulated
-	New()
+	INIT()
 		..()
 
 		if(air)

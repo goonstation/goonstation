@@ -106,7 +106,7 @@ obj/machinery/atmospherics/pipe
 		northwest
 			dir = NORTHWEST
 
-		New()
+		INIT()
 			..()
 			switch(dir)
 				if(SOUTH)
@@ -652,7 +652,7 @@ obj/machinery/atmospherics/pipe
 		west
 			dir = WEST
 
-		New()
+		INIT()
 			initialize_directions = dir
 			..()
 
@@ -673,7 +673,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -695,7 +695,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -717,7 +717,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
@@ -740,7 +740,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
@@ -764,7 +764,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -786,7 +786,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -808,7 +808,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -831,7 +831,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -858,7 +858,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -927,7 +927,7 @@ obj/machinery/atmospherics/pipe
 		west
 			dir = WEST
 
-		New()
+		INIT()
 			initialize_directions = dir
 			..()
 
@@ -1003,7 +1003,7 @@ obj/machinery/atmospherics/pipe
 		west
 			dir = WEST
 
-		New()
+		INIT()
 			initialize_directions = dir
 			..()
 
@@ -1085,7 +1085,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-		New()
+		INIT()
 			switch(dir)
 				if(NORTH)
 					initialize_directions = EAST|SOUTH|WEST

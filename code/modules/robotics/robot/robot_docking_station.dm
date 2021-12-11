@@ -21,7 +21,7 @@
 	var/mob/occupant = null
 	power_usage = 50
 
-/obj/machinery/recharge_station/New()
+INIT_TYPE(/obj/machinery/recharge_station)
 	..()
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)

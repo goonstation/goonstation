@@ -30,7 +30,7 @@
 	var/maximum_time = 3 MINUTES
 	var/injection_delay = 5 SECONDS
 
-	New()
+	INIT()
 		..()
 		if (src.find_sleeper_in_range)
 			SPAWN_DBG(0.5 SECONDS)
@@ -267,7 +267,7 @@
 
 	var/allow_self_service = 1
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 		SPAWN_DBG(0.6 SECONDS)
@@ -679,7 +679,7 @@
 	/// Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
-	New()
+	INIT()
 		..()
 		if (!islist(portable_machinery))
 			portable_machinery = list()
@@ -770,7 +770,7 @@
 	icon_state = "compact_sleeper"
 	anchored = 1
 
-	New()
+	INIT()
 		..()
 		if (!islist(portable_machinery))
 			portable_machinery = list()

@@ -96,7 +96,7 @@
 	var/original_controller_name = null
 	var/original_controller_real_name = null
 
-	New(var/mob/living/carbon/human/M)
+	INIT(var/mob/living/carbon/human/M)
 		..()
 		if (M)
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
@@ -303,7 +303,7 @@
 	var/can_use_in_container = 0
 	preferred_holder_type = /datum/abilityHolder/changeling
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/changeling/B = new /atom/movable/screen/ability/topBar/changeling(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

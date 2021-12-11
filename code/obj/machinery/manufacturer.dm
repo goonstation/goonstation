@@ -75,7 +75,7 @@
 #define WIRE_MALF 3
 #define WIRE_SHOCK 4
 
-	New()
+	INIT()
 		START_TRACKING
 		..()
 		var/area/area = get_area(src)
@@ -1908,7 +1908,7 @@
 
 
  	//TODO : pooling i guess cause other paper does
-	New(var/loc,var/schematic = null)
+	INIT(var/loc,var/schematic = null)
 		..()
 		if(istype(schematic, /datum/manufacture))
 			src.blueprint = schematic
@@ -2577,7 +2577,7 @@
 	var/obj/machinery/manufacturer/MA
 	var/completed = 0
 
-	New(machine, dur)
+	INIT(machine, dur)
 		MA = machine
 		duration = dur
 		..()

@@ -1,7 +1,7 @@
 /datum/movement_controller/torpedo_control
 	var/obj/machinery/torpedo_console/master
 
-	New(master)
+	INIT(master)
 		..()
 		src.master = master
 

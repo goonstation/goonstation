@@ -12,7 +12,7 @@ var/global/datum/limiter/limiter
 	var/list/limits
 	var/list/spawned
 
-/datum/limiter/New()
+INIT_TYPE(/datum/limiter)
 	..()
 	limits = list()
 	spawned = list()

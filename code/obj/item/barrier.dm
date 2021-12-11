@@ -24,7 +24,7 @@
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = 0
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 		c_flags &= ~BLOCK_TOOLTIP

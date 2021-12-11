@@ -96,7 +96,7 @@
 	var/image/trgImage = null
 	var/obj/machinery/torpedo_console/master = null
 
-	New(var/obj/machinery/torpedo_console/C)
+	INIT(var/obj/machinery/torpedo_console/C)
 		. = ..()
 		master = C
 		trgImage = image('icons/effects/effects.dmi', src, "target")
@@ -120,7 +120,7 @@
 	var/list/validTrg = list()
 	var/inUse = 0
 
-	New()
+	INIT()
 		movement_controller = new(src)
 		targeter = new(src.loc, src)
 		return ..()
@@ -240,7 +240,7 @@
 
 	bound_height = 96
 
-	New()
+	INIT()
 		. =..()
 		light = image('icons/obj/large/32x96.dmi')
 
@@ -432,7 +432,7 @@
 	var/icon/eastwest = null
 	var/lastdir = null
 
-	New()
+	INIT()
 		northsouth = icon('icons/obj/large/32x64.dmi')
 		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
@@ -533,7 +533,7 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
-	New()
+	INIT()
 		..()
 		var/obj/torpedo/explosive/T = new/obj/torpedo/explosive
 		src.loaded = T
@@ -545,7 +545,7 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
-	New()
+	INIT()
 		..()
 		var/obj/torpedo/hiexplosive/T = new/obj/torpedo/hiexplosive
 		src.loaded = T
@@ -557,7 +557,7 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
-	New()
+	INIT()
 		..()
 		var/obj/torpedo/hiexplosive/T = new/obj/torpedo/incendiary
 		src.loaded = T
@@ -569,7 +569,7 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
-	New()
+	INIT()
 		..()
 		var/obj/torpedo/hiexplosive/T = new/obj/torpedo/toxic
 		src.loaded = T
@@ -580,7 +580,7 @@
 /obj/torpedo_tray/random_loaded
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
-	New()
+	INIT()
 		..()
 		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
 		src.loaded = T
@@ -616,7 +616,7 @@
 	var/stepsAfterPierce = 0 //Will blow up this many steps after first pierce at most.
 	var/sleepPerStep = 2 //How long to sleep between steps.
 
-	New()
+	INIT()
 		northsouth = icon('icons/obj/large/32x64.dmi')
 		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()

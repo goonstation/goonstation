@@ -161,7 +161,7 @@
 		waitforit = 0
 		..()
 
-	New()
+	INIT()
 		..()
 		src.last_add_time = world.time
 

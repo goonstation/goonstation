@@ -58,7 +58,7 @@
 	var/linked_hole = null
 
 
-	New()
+	INIT()
 		..()
 
 		if (randomIcon)
@@ -292,7 +292,7 @@
 	edge
 		icon_state = "pit_wall"
 
-		New()
+		INIT()
 			. = ..()
 			START_TRACKING
 
@@ -329,7 +329,7 @@
 
 
 /turf/space/fluid/warp_z5/realwarp
-	New()
+	INIT()
 		..()
 		if (get_step(src, NORTH).type != /turf/space/fluid/warp_z5/realwarp)
 			icon_state = "pit_wall"
@@ -415,7 +415,7 @@
 	desc = "A deep flooded sinkhole."
 	randomIcon = 0
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
 
@@ -444,7 +444,7 @@
 	icon_state = "moon_shaft"
 	var/const/area_type = /area/shuttle/sea_elevator/upper
 
-	New()
+	INIT()
 		..()
 
 		var/turf/n = get_step(src,NORTH)

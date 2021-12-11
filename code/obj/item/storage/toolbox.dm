@@ -23,7 +23,7 @@
 	stamina_cost = 20
 	stamina_crit_chance = 10
 
-	New()
+	INIT()
 		..()
 		if (src.type == /obj/item/storage/toolbox)
 			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
@@ -318,7 +318,7 @@
 	var/obj/item/storage/toolbox/memetic/progenitor = null
 	stage_prob = 8
 
-	New()
+	INIT()
 		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 

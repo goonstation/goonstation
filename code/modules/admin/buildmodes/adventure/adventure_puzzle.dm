@@ -4,7 +4,7 @@
 
 	var/static/list/wizards = list()
 
-	New()
+	INIT()
 		..()
 		build_wizard_cache()
 

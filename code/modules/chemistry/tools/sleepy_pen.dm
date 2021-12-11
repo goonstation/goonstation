@@ -4,7 +4,7 @@
 	hide_attack = 1
 	move_triggered = 1
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
@@ -36,7 +36,7 @@
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
 	hide_attack = 2
 
-	New()
+	INIT()
 		..()
 		src.reagents.clear_reagents()
 		src.reagents.maximum_volume = 30

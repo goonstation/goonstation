@@ -7,7 +7,7 @@
 	var/god_epithet = null
 	var/god_domain = null
 
-	New()
+	INIT()
 		..()
 		src.addAbility(/datum/targetable/chaplain/chooseReligion)
 
@@ -23,7 +23,7 @@
 	target_anything = 1
 	var/disabled = 0
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

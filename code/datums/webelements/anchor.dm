@@ -1,5 +1,5 @@
 /datum/tag/anchor
-	New()
+	INIT()
 		..("a")
 
 	proc/setHref(var/href as text)

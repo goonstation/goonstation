@@ -14,7 +14,7 @@
 	var/obj/machinery/optable/table = null
 	id = 0
 
-/obj/machinery/computer/operating/New()
+INIT_TYPE(/obj/machinery/computer/operating)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		connection_scan()

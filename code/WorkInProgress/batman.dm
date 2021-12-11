@@ -2,7 +2,7 @@
 // 4 arfur
 // xoxo procitizen
 /mob/living/carbon/human/batman
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if(src.bioHolder)

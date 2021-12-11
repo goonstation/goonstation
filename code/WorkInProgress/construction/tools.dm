@@ -5,7 +5,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
@@ -24,7 +24,7 @@
 
 	var/processing = 0
 
-	New()
+	INIT()
 		..()
 		src.overlays += image('icons/mob/ai.dmi', "topopen")
 		src.overlays += image('icons/mob/ai.dmi', "batterymode")
@@ -101,7 +101,7 @@
 	density = 1
 	var/firesat = "humanoids"
 
-	New()
+	INIT()
 		..()
 		scan()
 
@@ -241,7 +241,7 @@
 	prefix = "bio"
 	metal_ammo = 20
 	inventory_counter_enabled = 1
-	New()
+	INIT()
 		..()
 		inventory_counter.update_number(metal_ammo)
 
@@ -543,7 +543,7 @@
 
 	alpha = 128
 
-	New(var/initial_loc, var/initial_state)
+	INIT(var/initial_loc, var/initial_state)
 		..()
 		color = rgb(0, 255, 0)
 		icon_state = initial_state
@@ -578,7 +578,7 @@
 
 	alpha = 128
 
-	New(var/initial_loc)
+	INIT(var/initial_loc)
 		..()
 		color = rgb(255, 0, 0)
 		calculate_orientation(1)

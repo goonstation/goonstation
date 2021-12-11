@@ -9,7 +9,7 @@
 	var/locked = 0
 	var/homeloc = null
 
-	New()
+	INIT()
 		..()
 
 		if (!islist(portable_machinery))

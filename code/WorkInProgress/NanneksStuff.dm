@@ -21,7 +21,7 @@
 	var/projection_enabled = 1
 
 
-	New()
+	INIT()
 		..()
 		for(var/area/projection/P in world)
 			LAGCHECK(LAG_LOW)
@@ -205,7 +205,7 @@ This works
 	var/id = 0
 	var/obj/projection/proj = null
 
-	New()
+	INIT()
 		for(var/obj/projection/P in world)
 			LAGCHECK(LAG_LOW)
 			if(P.id == src.id)

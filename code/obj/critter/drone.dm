@@ -53,7 +53,7 @@
 		task = "chasing"
 
 
-	New()
+	INIT()
 		..()
 		name = "Drone SC-[rand(1,999)]"
 		START_TRACKING
@@ -444,7 +444,7 @@
 		projectile_type = /datum/projectile/bullet/glitch
 		current_projectile = new/datum/projectile/bullet/glitch
 
-		New()
+		INIT()
 			..()
 			name = "Dr~n³ *§#-[rand(1,999)]"
 			return
@@ -461,7 +461,7 @@
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
 		attack_cooldown = 40
-		New()
+		INIT()
 			..()
 			name = "Drone HK-[rand(1,999)]"
 			return
@@ -481,7 +481,7 @@
 			projectile_type = /datum/projectile/laser
 			current_projectile = new/datum/projectile/laser
 
-			New()
+			INIT()
 				..()
 				name = "Drone LZ-[rand(1,999)]"
 
@@ -496,7 +496,7 @@
 			projectile_type = /datum/projectile/laser/mining
 			current_projectile = new/datum/projectile/laser/mining
 
-			New()
+			INIT()
 				..()
 				name = "Drone PC-[rand(1,999)]"
 
@@ -511,7 +511,7 @@
 			projectile_type = /datum/projectile/laser/asslaser
 			current_projectile = new/datum/projectile/laser/asslaser
 
-			New()
+			INIT()
 				..()
 				name = "Drone BR-[rand(1,999)]"
 
@@ -526,7 +526,7 @@
 			projectile_type = /datum/projectile/special/acid
 			current_projectile = new/datum/projectile/special/acid
 
-			New()
+			INIT()
 				..()
 				name = "Drone CA-[rand(1,999)]"
 
@@ -544,7 +544,7 @@
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
-		New()
+		INIT()
 			..()
 			name = "Drone AR-[rand(1,999)]"
 			return
@@ -563,7 +563,7 @@
 		projectile_type = /datum/projectile/bullet/ak47
 		current_projectile = new/datum/projectile/bullet/ak47
 		attack_cooldown = 20
-		New()
+		INIT()
 			..()
 			name = "Drone BML-[rand(1,999)]"
 			return
@@ -626,7 +626,7 @@
 				if(istype(target_r, /obj/railgun_trg_dummy)) qdel(target_r)
 			return
 
-		New()
+		INIT()
 			..()
 			name = "Drone X-[rand(1,999)]"
 			return
@@ -667,7 +667,7 @@
 					attacking = 0
 			return
 
-		New()
+		INIT()
 			..()
 			name = "Drone CR-[rand(1,999)]"
 			return
@@ -688,7 +688,7 @@
 			event_handler_flags = IMMUNE_MANTA_PUSH
 			//TODO : TEENSY REDRAW TO ICON TO MAKE IT A LITTLE MORE ROBOTTY
 
-			New()
+			INIT()
 				..()
 				name = "FishDrone CR-[rand(1,999)]b"
 				return
@@ -719,7 +719,7 @@
 		projectile_spread = 13
 		event_handler_flags = IMMUNE_MANTA_PUSH
 
-		New()
+		INIT()
 			..()
 			name = "SharkDrone BML-[rand(1,999)]b"
 			return
@@ -735,7 +735,7 @@
 		projectile_type = /datum/projectile/laser
 		current_projectile = new/datum/projectile/laser
 
-		New()
+		INIT()
 			..()
 			name = "Drone LZ-[rand(1,999)]"
 
@@ -750,7 +750,7 @@
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
 
-		New()
+		INIT()
 			..()
 			name = "Drone PC-[rand(1,999)]"
 
@@ -765,7 +765,7 @@
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
 
-		New()
+		INIT()
 			..()
 			name = "Drone BR-[rand(1,999)]"
 
@@ -780,7 +780,7 @@
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
 
-		New()
+		INIT()
 			..()
 			name = "Drone CA-[rand(1,999)]"
 
@@ -876,7 +876,7 @@
 			SPAWN_DBG(0)
 				P2.launch()
 
-		New()
+		INIT()
 			..()
 			name = "Battledrone Omega-[rand(1,10)]"
 			return
@@ -1054,7 +1054,7 @@
 			for (var/obj/O in lineObjs)
 				qdel(O)
 
-	New()
+	INIT()
 		..()
 
 		//name = "X Æ Y-[rand(10,15)]" //lmfao
@@ -1093,7 +1093,7 @@
 	generic = 0
 	smashes_shit = 1
 
-	New()
+	INIT()
 		..()
 		name = "Battledronì4?½&?aÄ	ÏbçÇ~¥D??õ®×³?£-[rand(1,5)]"
 
@@ -1204,7 +1204,7 @@
 			playsound(src,"sound/effects/heartbeat.ogg", 60, 0) //for the spooky effect
 		return
 
-	New()
+	INIT()
 		..()
 		name = "[pick("War", "Death", "Pestilence", "Famine")]"
 
@@ -1284,7 +1284,7 @@
 
 	var/voice_gender = "male"
 
-	New()
+	INIT()
 		..()
 		voice_gender = pick("male","female")
 		name = "miniature Syndicate Operative"

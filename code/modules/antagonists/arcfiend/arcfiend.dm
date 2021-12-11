@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/atom/movable/target
 	var/datum/abilityHolder/holder
 
-	New(user, target, holder)
+	INIT(user, target, holder)
 		. = ..()
 		src.user = user
 		src.target = target
@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	maxDuration = 30 SECONDS
 	var/image/aura = null
 
-	New()
+	INIT()
 		. = ..()
 		aura = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		aura.color = "#FF0"
@@ -365,7 +365,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/datum/abilityHolder/holder
 	var/wattage = 0
 
-	New(user, target, holder, wattage)
+	INIT(user, target, holder, wattage)
 		. = ..()
 		src.user = user
 		src.target = target
@@ -411,7 +411,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/obj/dummy/voltron/D = null
 	var/step_cost = 3
 
-	New(datum/abilityHolder/holder)
+	INIT(datum/abilityHolder/holder)
 		. = ..()
 		var/obj/cable/ctype = /obj/cable
 		var/cicon = initial(ctype.icon)
@@ -499,7 +499,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
 	var/datum/targetable/arcfiend/voltron/abil
 
-	New(abil)
+	INIT(abil)
 		. = ..()
 		src.abil = abil
 

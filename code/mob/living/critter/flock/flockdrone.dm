@@ -35,7 +35,7 @@
 	var/antigrab_fires_at = 100
 
 
-/mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
+INIT_TYPE(/mob/living/critter/flock/drone, var/atom/location, var/datum/flock/F=null)
 	// ai setup
 	src.ai = new /datum/aiHolder/flock/drone(src)
 

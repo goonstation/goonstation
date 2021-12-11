@@ -16,7 +16,7 @@ obj/machinery/computer/general_air_control
 	light_g = 1
 	light_b = 0.1
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -351,7 +351,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/computer/general_alert
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", frequency)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("respond", respond_frequency)
@@ -464,7 +464,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 	frequency = FREQ_AIR_ALARM_CONTROL
 
-	New()
+	INIT()
 		..()
 		src.AddComponent( \
 			/datum/component/packet_connected/radio, \

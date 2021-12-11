@@ -97,7 +97,7 @@
 	var/datum/projectile/bullet/g11/small/smallproj = new
 	default_magazine = /obj/item/ammo/bullets/g11
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/bullet/g11)
 		ammo = new default_magazine
 		. = ..()
@@ -197,7 +197,7 @@
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	silenced = 1
 	max_ammo_capacity = 30
-	New()
+	INIT()
 		..()
 		ammo.amount_left = 30
 		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
@@ -218,7 +218,7 @@
 	spread_angle = 10
 	mode = 1 //magic number bad
 
-	New()
+	INIT()
 		. = ..()
 		fueltank = new/obj/item/reagent_containers/glass/beaker/extractor_tank/thick(src)
 		gastank = new/obj/item/tank/oxygen(src)
@@ -241,7 +241,7 @@
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/gyrojet
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
@@ -293,7 +293,7 @@
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/deagle50cal
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
 		ammo = new default_magazine
 		. = ..()
@@ -303,7 +303,7 @@
 		force = 18.0 //mmm, pistol whip
 		throwforce = 50 //HEAVY pistol
 		default_magazine = /obj/item/ammo/bullets/deagle50cal/decapitation
-		New()
+		INIT()
 			. = ..()
 			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
 			ammo = new default_magazine
@@ -415,7 +415,7 @@
 	var/taken_suggestion = 0
 	var/list/turf/floors = null
 
-	New()
+	INIT()
 		. = ..()
 		floors = list()
 		for(var/turf/T in orange(1, src))
@@ -450,7 +450,7 @@
 	envelop_message = "fur"
 	leaving_message = "meowing softly and vanishing"
 
-	New()
+	INIT()
 		. = ..()
 		color = list(0.3, 0.4, 0.3, 0, 1, 0, 0, 0, 1)
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cat", magical = 1),
@@ -470,7 +470,7 @@
 )
 
 /obj/table/wood/auto/desk/lily
-	New()
+	INIT()
 		..()
 		var/obj/item/storage/desk_drawer/lily/L = new(src)
 		src.desk_drawer = L
@@ -513,7 +513,7 @@
 	throw_range = 10
 	mats = 5
 
-	New()
+	INIT()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
 		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
@@ -535,7 +535,7 @@
 	icon_state = "1"
 	color = "#b74909"
 
-	New()
+	INIT()
 		. = ..()
 		processing_items += src
 

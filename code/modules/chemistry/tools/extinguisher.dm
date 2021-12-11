@@ -52,7 +52,7 @@
 			i++
 		.= i
 
-/obj/item/extinguisher/New()
+INIT_TYPE(/obj/item/extinguisher)
 	..()
 	src.create_reagents(100)
 	reagents.add_reagent("ff-foam", 100)

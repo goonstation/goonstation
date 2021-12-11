@@ -6,7 +6,7 @@
 	layer = HUD_LAYER
 	var/mob/living/object/owner = null
 
-	New()
+	INIT()
 		..()
 		underlays += image('icons/mob/screen1.dmi', "block")
 

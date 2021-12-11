@@ -108,7 +108,7 @@
 
 		return press_desc
 
-	New()
+	INIT()
 		..()
 		// theres probably a way to do this that isnt stupid but: fuck u i dont give a shite
 		if (is_fuckled(EAST))

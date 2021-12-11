@@ -50,7 +50,7 @@ Contents:
 	temperature = 100
 	fullbright = 0
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -62,7 +62,7 @@ Contents:
 	icon_state = "ice1"
 	fullbright = 0
 
-	New()
+	INIT()
 		..()
 		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
 
@@ -124,7 +124,7 @@ Contents:
 	fullbright = 0
 	can_replace_with_stuff = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = "[pick("snow_cliff1","snow_cliff2","snow_cliff3","snow_cliff4")]"
 
@@ -166,6 +166,6 @@ Contents:
 	icon_state = "ice1"
 	fullbright = 0
 
-	New()
+	INIT()
 		..()
 		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"

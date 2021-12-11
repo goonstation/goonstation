@@ -85,7 +85,7 @@ Contents:
 	skip_sims = 1
 	sims_score = 0
 
-	New()
+	INIT()
 		..()
 
 		overlays += image(icon = 'icons/obj/dojo.dmi', icon_state = "sakura_overlay", layer = EFFECTS_LAYER_BASE)
@@ -102,7 +102,7 @@ Contents:
 	sound_loop_vol = 50
 
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			process()
@@ -125,7 +125,7 @@ Contents:
 	ai_aggressive = 1
 	unobservable = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			JobEquipSpawned("Samurai")
@@ -187,7 +187,7 @@ Contents:
 	var/temperature = T20C
 	var/strikes_to_complete = 400
 
-	New()
+	INIT()
 		..()
 
 	attackby(obj/item/H as obj, mob/user as mob)
@@ -266,7 +266,7 @@ Contents:
 	var/flashing = FALSE
 	var/outline
 
-	New(usermob, tool, targetmob, anvil, loopcount = 0)
+	INIT(usermob, tool, targetmob, anvil, loopcount = 0)
 		user = usermob
 		H = tool
 		target = targetmob
@@ -394,7 +394,7 @@ Contents:
 
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		light = new
 		light.set_brightness(0.7)
@@ -443,7 +443,7 @@ Contents:
 
 	var/temperature = T0C + 870
 
-	New()
+	INIT()
 		..()
 		effect = new /obj/effects/tatara(src)
 		vis_contents += effect
@@ -557,7 +557,7 @@ Contents:
 
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		light = new
 		light.set_brightness(0.7)
@@ -570,7 +570,7 @@ Contents:
 
 		var/datum/light/point/light2
 
-		New()
+		INIT()
 			..()
 			light = new
 			light.set_brightness(1.6)

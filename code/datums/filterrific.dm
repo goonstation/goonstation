@@ -12,7 +12,7 @@
 /datum/filter_editor
 	var/atom/target
 
-/datum/filter_editor/New(atom/target)
+INIT_TYPE(/datum/filter_editor, atom/target)
 	. = ..()
 	src.target = target
 

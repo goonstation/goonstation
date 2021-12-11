@@ -54,7 +54,7 @@
 	name = LANDMARK_GPS_WAYPOINT
 	name_override = LANDMARK_GPS_WAYPOINT
 
-	New()
+	INIT()
 		if(name != name_override)
 			src.data = name
 		else
@@ -261,7 +261,7 @@ world/proc/updateCameraVisibility()
 			t.aiImage.alpha = 255
 			t.aiImage.icon_state = "static"
 	..()
-/obj/machinery/camera/New()
+INIT_TYPE(/obj/machinery/camera)
 	..()
 	for(var/turf/t in view(7,get_turf(src)))
 		if(!t.cameraTotal && t.aiImage)
@@ -288,7 +288,7 @@ world/proc/updateCameraVisibility()
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
 
-	New()
+	INIT()
 		..()
 		world.updateCameraVisibility()
 		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF

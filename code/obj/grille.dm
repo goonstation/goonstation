@@ -23,7 +23,7 @@
 	layer = GRILLE_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		if(src.auto)
 			SPAWN_DBG(0) //fix for sometimes not joining on map load
@@ -46,7 +46,7 @@
 #ifdef IN_MAP_EDITOR
 		icon_state = "grille0-0"
 #endif
-		New()
+		INIT()
 			..()
 			var/datum/material/M = getMaterial("steel")
 			src.setMaterial(M)

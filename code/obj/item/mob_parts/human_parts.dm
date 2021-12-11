@@ -67,7 +67,7 @@
 
 		return
 
-	New(mob/new_holder, var/datum/appearanceHolder/AHolAlmostThere)
+	INIT(mob/new_holder, var/datum/appearanceHolder/AHolAlmostThere)
 		..()
 		if(AHolAlmostThere && istype(AHolAlmostThere, /datum/appearanceHolder))
 			src.holder_ahol = AHolAlmostThere
@@ -443,7 +443,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
 
-	New(new_holder, var/obj/item/I)
+	INIT(new_holder, var/obj/item/I)
 		..()
 		if (I)
 			src.set_item(I)
@@ -593,7 +593,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
 
-	New(new_holder, var/obj/item/I)
+	INIT(new_holder, var/obj/item/I)
 		..()
 		if (I)
 			src.set_item(I)
@@ -718,7 +718,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_WENDIGO)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -746,7 +746,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_WENDIGO)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -773,7 +773,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -793,7 +793,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_HOT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -815,7 +815,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -844,7 +844,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -873,7 +873,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -900,7 +900,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -927,7 +927,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -954,7 +954,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1008,7 +1008,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ABOM)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1035,7 +1035,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ABOM)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1064,7 +1064,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1085,7 +1085,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1107,7 +1107,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_WENDIGO)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1135,7 +1135,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_WENDIGO)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1161,7 +1161,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1187,7 +1187,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1213,7 +1213,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1239,7 +1239,7 @@
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1265,7 +1265,7 @@
 	skintoned = 0
 	kind_of_limb = (LIMB_MUTANT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1283,7 +1283,7 @@
 	skintoned = 0
 	kind_of_limb = (LIMB_MUTANT)
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1304,7 +1304,7 @@
 	handfoot_overlay_1_state = null
 	handfoot_overlay_1_color = CUST_2
 
-	New()
+	INIT()
 		handfoot_overlay_1_state = "[src.partlistPart]"
 		. = ..()
 
@@ -1343,7 +1343,7 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		. = ..()
 		if(prob(1))
 			src.desc += " Bears the brand of a legendary roleplayer."
@@ -1673,7 +1673,7 @@
 	limb_type = /datum/limb/abomination/werewolf
 	show_on_examine = 1
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1692,7 +1692,7 @@
 	handlistPart = "hand_right"
 	show_on_examine = 1
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -1911,7 +1911,7 @@
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
-	New(mob/new_holder)
+	INIT(mob/new_holder)
 		. = ..()
 		if(prob(10))
 			src.desc = "A chicken's left drumstick."
@@ -1925,7 +1925,7 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
-	New(mob/new_holder)
+	INIT(mob/new_holder)
 		. = ..()
 		if(prob(10))
 			src.desc = "A chicken's right drumstick."
@@ -1946,7 +1946,7 @@
 	easy_attach = 1 // These plants really like humanoid flesh
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
-	New()
+	INIT()
 		limb_overlay_1_state = "[src.slot]_kudzu"
 		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
 		severed_overlay_1_state = "[src.icon_state]_kudzu"
@@ -1965,7 +1965,7 @@
 	easy_attach = 1
 	kind_of_limb = (LIMB_MUTANT | LIMB_PLANT)
 
-	New()
+	INIT()
 		limb_overlay_1_state = "[src.slot]_kudzu"
 		handfoot_overlay_1_state = "[src.handlistPart]_kudzu"
 		severed_overlay_1_state = "[src.icon_state]_kudzu"
@@ -2033,7 +2033,7 @@
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()
@@ -2052,7 +2052,7 @@
 	show_on_examine = 1
 	limb_is_unnatural = TRUE
 
-	New(var/atom/holder)
+	INIT(var/atom/holder)
 		if (holder != null)
 			set_loc(holder)
 		..()

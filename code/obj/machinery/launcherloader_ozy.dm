@@ -8,55 +8,55 @@
 	destinations = list("Catering","Engineering","Hydroponics","Medbay","Mining","QM","Research","Vessel Dock")
 
 /obj/machinery/cargo_router/ozy/research_nw
-	New()
+	INIT()
 		destinations = list("Ejection" = WEST, "Research" = EAST, "Vessel Dock" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/ozy/research_se
-	New()
+	INIT()
 		destinations = list("Research" = EAST, "Vessel Dock" = SOUTH)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/ozy/medical
-	New()
+	INIT()
 		destinations = list("Ejection" = NORTH, "Medbay" = SOUTH, "Research" = NORTH, "Vessel Dock" = NORTH)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/ozy/grandcentral_north
-	New()
+	INIT()
 		destinations = list("Engineering" = NORTH, "Hydroponics" = WEST)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/ozy/grandcentral_mid
-	New()
+	INIT()
 		destinations = list("Catering" = EAST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/ozy/grandcentral_south
-	New()
+	INIT()
 		destinations = list("Catering" = WEST, "Ejection" = EAST, "Engineering" = EAST, "Hydroponics" = WEST, "Medbay" = EAST, "Research" = EAST, "Vessel Dock" = EAST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/ozy/qm_west
-	New()
+	INIT()
 		destinations = list("Catering" = NORTH, "Ejection" = NORTH, "Engineering" = NORTH, "Hydroponics" = NORTH, "Medbay" = NORTH, "Mining" = NORTH, "Research" = NORTH, "Vessel Dock" = NORTH)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/ozy/qm_mid
-	New()
+	INIT()
 		destinations = list("Catering" = NORTH, "Ejection" = NORTH, "Engineering" = NORTH, "Hydroponics" = NORTH, "Medbay" = NORTH, "Research" = NORTH, "Vessel Dock" = NORTH)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/ozy/qm_east
-	New()
+	INIT()
 		destinations = list("Mining" = SOUTH)
 		default_direction = WEST
 		..()

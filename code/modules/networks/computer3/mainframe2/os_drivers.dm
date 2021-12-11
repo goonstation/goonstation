@@ -375,7 +375,7 @@
 
 	var/datum/computer/file/mainframe_program/driver/mountable/driver = null
 
-	New(var/datum/computer/file/mainframe_program/driver/mountable/newdriver)
+	INIT(var/datum/computer/file/mainframe_program/driver/mountable/newdriver)
 		..()
 		if (gen != 10) gen = 10
 		if(istype(newdriver))
@@ -1979,7 +1979,7 @@
 /datum/computer/folder/radio_channel
 	var/datum/computer/file/mainframe_program/driver/mountable/radio/ourDriver
 
-	New(var/datum/computer/file/mainframe_program/driver/mountable/radio/newDriver)
+	INIT(var/datum/computer/file/mainframe_program/driver/mountable/radio/newDriver)
 		..()
 
 		if (istype(newDriver))

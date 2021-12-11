@@ -29,7 +29,7 @@
 
 		shooting = FALSE
 
-	New(owner)
+	INIT(owner)
 		..()
 		src.owner = owner
 		M = matrix()

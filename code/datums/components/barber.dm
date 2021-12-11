@@ -461,7 +461,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	proc/getHairStyles()
 		return list()
 
-	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
+	INIT(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
 		src.M = barbee
 		src.user = barber
 		src.degree_of_success = succ

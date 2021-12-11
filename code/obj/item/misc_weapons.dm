@@ -58,7 +58,7 @@
 	stunner
 		do_stun = 1
 
-	New()
+	INIT()
 		..()
 		if(src.bladecolor == "invalid")
 			src.bladecolor = pick(valid_colors)
@@ -471,7 +471,7 @@
 	stamina_crit_chance = 50
 	pickup_sfx = "sound/items/blade_pull.ogg"
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -605,7 +605,7 @@
 	stamina_crit_chance = 60
 	// pickup_sfx = "sound/items/blade_pull.ogg"
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/nunchucks)
 		BLOCK_SETUP(BLOCK_ROPE)
@@ -637,7 +637,7 @@
 	var/one_handed_force = 7
 	var/two_handed_force = 13
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/simple)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -692,7 +692,7 @@
 	hit_type = DAMAGE_STAB
 	var/makemeat = 1
 
-/obj/item/knife/butcher/New()
+INIT_TYPE(/obj/item/knife/butcher)
 	..()
 	BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -795,7 +795,7 @@
 	stamina_crit_chance = 5
 
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -898,7 +898,7 @@
 		set_values()
 		return ..()
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -920,7 +920,7 @@
 	stamina_crit_chance = 15
 	mats = list("wood" = 8)
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
@@ -940,7 +940,7 @@
 	stamina_cost = 25
 	stamina_crit_chance = 35
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -1008,7 +1008,7 @@
 		force = 12
 		contraband = 5
 
-	New()
+	INIT()
 		..()
 		start = new/obj/itemspecialeffect/katana_dash/start(src)
 		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
@@ -1116,7 +1116,7 @@
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
@@ -1138,7 +1138,7 @@
 		else
 			. = "Looks like some sort of cheap historical recreation sword. You'd have to be a total dork to own this thing."
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab) //more of a stab than a swing cuz its a sword you stab with
 
@@ -1173,7 +1173,7 @@
 	delimb_prob = 20
 	contraband = 4
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
@@ -1210,7 +1210,7 @@
 	var/ih_sheath_state = "sheathhand"
 	var/sword_path = /obj/item/katana
 
-	New()
+	INIT()
 		..()
 		var/obj/item/katana/K = new sword_path()
 		sword_inside = K
@@ -1370,7 +1370,7 @@
 	two_handed = 1
 	pickup_sfx = "sound/items/blade_pull.ogg"
 
-	New()
+	INIT()
 		..()
 		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("T'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
 		src.setItemSpecial(/datum/item_special/swipe)
@@ -1414,7 +1414,7 @@ obj/item/fragile_sword
 	var/minimum_force = 5
 	var/maximum_force = 70
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -1478,7 +1478,7 @@ obj/item/whetstone
 	var/mode = 1
 	var/maximum_force = 100
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		AddComponent(/datum/component/itemblock/saberblock)
@@ -1547,7 +1547,7 @@ obj/item/whetstone
 	stamina_damage = 60
 	stamina_cost = 30
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -1569,7 +1569,7 @@ obj/item/whetstone
 	w_class = W_CLASS_NORMAL
 	var/slasher_key = ""
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 		src.setItemSpecial(/datum/item_special/swipe)

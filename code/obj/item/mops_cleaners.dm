@@ -30,7 +30,7 @@ WET FLOOR SIGN
 	..()
 	return FALSE // this needs to be here for ranged clicking I think, I hate it
 
-/obj/item/spraybottle/New()
+INIT_TYPE(/obj/item/spraybottle)
 	..()
 	create_reagents(100)
 
@@ -38,7 +38,7 @@ WET FLOOR SIGN
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("luminol", 100)
 
@@ -50,7 +50,7 @@ WET FLOOR SIGN
 	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("cleaner", 100)
 
@@ -84,7 +84,7 @@ WET FLOOR SIGN
 	alpha = 175
 	anchored = 1
 
-	New(var/_loc, var/atom/target)
+	INIT(var/_loc, var/atom/target)
 		..()
 		set_loc(_loc)
 		create_reagents(10)
@@ -282,7 +282,7 @@ WET FLOOR SIGN
 	icon_state = "mop_orange"
 	item_state = "mop_orange"
 
-/obj/item/mop/New()
+INIT_TYPE(/obj/item/mop)
 	..()
 	src.create_reagents(20)
 	src.setItemSpecial(/datum/item_special/rangestab)
@@ -458,7 +458,7 @@ WET FLOOR SIGN
 	var/hit_face_prob = 30 // MODULAR SPONGES
 	var/spam_flag = 0 // people spammed snapping their fucking fingers, so this is probably necessary
 
-/obj/item/sponge/New()
+INIT_TYPE(/obj/item/sponge)
 	..()
 	// We use this instead of create_reagents because sponges need a special reagent holder to grow in size
 	reagents = new/datum/reagents/sponge(50)
@@ -663,7 +663,7 @@ WET FLOOR SIGN
 	stamina_cost = 4
 	stamina_crit_chance = 10
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_SOFT)
 
@@ -681,7 +681,7 @@ WET FLOOR SIGN
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/obj/item/reagent_containers/payload
 
-	New()
+	INIT()
 		. = ..()
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
 		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
@@ -795,7 +795,7 @@ WET FLOOR SIGN
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
 
-	New(var/_loc)
+	INIT(var/_loc)
 		set_loc(_loc)
 
 		light = new /datum/light/point
@@ -846,7 +846,7 @@ WET FLOOR SIGN
 	var/obj/item/reagent_containers/glass/bucket/bucket
 	var/obj/item/clothing/under/trash_bag/trashbag
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/suck)
 		src.bucket = new(src)
@@ -1047,7 +1047,7 @@ WET FLOOR SIGN
 	name = "overcharged handheld vacuum"
 	mats = list("neutronium"=3, "MET-1"=10)
 	color = list(0,0,1, 0,1,0, 1,0,0)
-	New()
+	INIT()
 		..()
 		var/datum/item_special/suck/suck = src.special
 		suck.suck_mobs = TRUE
@@ -1143,7 +1143,7 @@ WET FLOOR SIGN
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "push"
 
-	New(atom/loc, dir)
+	INIT(atom/loc, dir)
 		..()
 		src.dir = dir
 		src.alpha = 0

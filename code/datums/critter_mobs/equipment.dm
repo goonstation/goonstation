@@ -15,7 +15,7 @@
 
 	var/equipment_layer = MOB_CLOTHING_LAYER
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		holder = M
 

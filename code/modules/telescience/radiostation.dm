@@ -137,7 +137,7 @@
 	var/const/max_voices = 9
 	var/say_popup = FALSE
 
-/obj/submachine/mixing_desk/New()
+INIT_TYPE(/obj/submachine/mixing_desk)
 	. = ..()
 	src.voices = list()
 	if(!src.accents)
@@ -244,7 +244,7 @@
 	var/is_playing = 0
 	var/obj/item/record/record_inside = null
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
@@ -314,7 +314,7 @@
 	throw_range = 8
 	force = 2
 
-/obj/item/record/New()
+INIT_TYPE(/obj/item/record)
 	..()
 	if (add_overlay)
 		src.UpdateOverlays(new /image(src.icon, "record_[rand(1,10)]"), "recordlabel")
@@ -461,7 +461,7 @@ ABSTRACT_TYPE(/obj/item/record/random)
 
 ABSTRACT_TYPE(/obj/item/record/random/nostalgic)
 /obj/item/record/random/nostalgic
-	New()
+	INIT()
 		. = ..()
 		src.desc += {" Nostalgic sounds from SS13 yesteryears."}
 
@@ -492,7 +492,7 @@ ABSTRACT_TYPE(/obj/item/record/random/nostalgic)
 
 ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/record/random/chronoquest
-	New()
+	INIT()
 		. = ..()
 		src.desc += {" Created by <a href="https://soundcloud.com/wizardofthewestside">Chronoquest</a>."}
 
@@ -532,13 +532,13 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = "sound/radio_station/music/key_lime.ogg"
 	add_overlay = FALSE
 
-	New()
+	INIT()
 		..()
 		src.UpdateOverlays(new /image(src.icon, "record_6"), "recordlabel") //it should always be green because I'm so funny.
 
 ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal
-	New()
+	INIT()
 		. = ..()
 		src.desc += {" A space metal record, rock on!"}
 
@@ -559,7 +559,7 @@ ABSTRACT_TYPE(/obj/item/record/random/metal)
 
 ABSTRACT_TYPE(/obj/item/record/random/funk)
 /obj/item/record/random/funk
-	New()
+	INIT()
 		. = ..()
 		src.desc += {" A space funk record to groove to!"}
 
@@ -580,7 +580,7 @@ ABSTRACT_TYPE(/obj/item/record/random/funk)
 
 ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/record/random/notaquario
-	New()
+	INIT()
 		. = ..()
 		src.desc += {" A record from the Aquario and Not Tom Mixtape, looks pretty old!"}
 
@@ -604,7 +604,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	record_name = "Biodome"
 	song = "sound/radio_station/music/biodome.ogg"
 
-/obj/item/record/spacebux/New()
+INIT_TYPE(/obj/item/record/spacebux)
 	..()
 	var/obj/item/record/record_type = pick(concrete_typesof(/obj/item/record/random))
 	src.name = initial(record_type.name)
@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/storage/box/record/radio
 	desc = "A sturdy record sleeve, designed to hold multiple records. The art on the cover is very lovely."
 
-/obj/item/storage/box/record/radio/New()
+INIT_TYPE(/obj/item/storage/box/record/radio)
 	..()
 	icon_state = "sleeve_[rand(4,36)]"
 
@@ -757,7 +757,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
-/obj/item/storage/box/record/radio/host/New()
+INIT_TYPE(/obj/item/storage/box/record/radio/host)
 	..()
 	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
 	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
@@ -952,7 +952,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /*/obj/table/wood/auto/desk/radio
 	var/list/stuff = list()
 
-	New()
+	INIT()
 		..()
 		for (var/thing in src.stuff)
 			new thing(src.desk_drawer)
@@ -1020,7 +1020,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/disk/data/fixed_disk/radioship
 
-/obj/item/disk/data/fixed_disk/radioship/New()
+INIT_TYPE(/obj/item/disk/data/fixed_disk/radioship)
 	..()
 
 	var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -1047,13 +1047,13 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /datum/computer/file/record/radioship/testlog
 	name = "nav_logs"
 
-/datum/computer/file/record/radioship/testlog/New()
+INIT_TYPE(/datum/computer/file/record/radioship/testlog)
 	..()
 	fields = strings("radioship/radioship_records.txt","log_1")
 
 /datum/computer/file/record/radioship/testlog2
 	name = "inter-ship_communications"
 
-/datum/computer/file/record/radioship/testlog2/New()
+INIT_TYPE(/datum/computer/file/record/radioship/testlog2)
 	..()
 	fields = strings("radioship/radioship_records.txt","log_2")

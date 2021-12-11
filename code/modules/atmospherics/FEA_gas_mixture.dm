@@ -54,7 +54,7 @@ What are the archived variables for?
 		trace_gas_refs = null
 	..()
 
-/datum/gas_mixture/New()
+INIT_TYPE(/datum/gas_mixture)
 	..()
 	total_gas_mixtures++
 

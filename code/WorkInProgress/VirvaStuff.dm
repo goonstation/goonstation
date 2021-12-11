@@ -41,7 +41,7 @@
 		. = ..()
 
 /mob/living/carbon/human/repo
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/clothing/suit/space/repo, slot_wear_suit)
@@ -65,7 +65,7 @@
 // Komentaja
 /mob/living/carbon/human/mari
 
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
@@ -100,7 +100,7 @@
 	icon_state = "beret_base"
 	blocked_from_petasusaphilic = TRUE
 
-	New()
+	INIT()
 		..()
 		src.color = "#890000"
 
@@ -112,7 +112,7 @@
 /obj/item/casing/polymer
 	icon_state = "polymer"
 	desc = "An odd plastic casing, entirely hollow and slightly melted."
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(rand(1, 3))
 			playsound(src.loc, "sound/weapons/casings/casing-shell-0[rand(1,7)].ogg", 15, 0.1, 0, 0.7)
@@ -166,7 +166,7 @@ obj/item/ammo/bullets/flechette_mag
 	spread_angle = 3
 	default_magazine = /obj/item/ammo/bullets/flechette_mag
 
-	New()
+	INIT()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()

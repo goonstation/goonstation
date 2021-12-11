@@ -27,12 +27,12 @@ if there are any violations).
 */
 
 #ifdef ABSTRACT_VIOLATION_CRASH
-/datum/New()
+INIT_TYPE(/datum)
 	..()
 	if(IS_ABSTRACT(src.type))
 		CRASH("Attempt to instantiate abstract type '[src.type]'.")
 #elif defined(ABSTRACT_VIOLATION_WARN)
-/datum/New()
+INIT_TYPE(/datum)
 	..()
 	if(IS_ABSTRACT(src.type))
 		logTheThing("debug", src, null, "Attempt to instantiate abstract type '[src.type]'.")

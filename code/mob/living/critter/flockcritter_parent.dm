@@ -38,7 +38,7 @@
 	add_hh_robot(src.health_brute, src.health_brute_vuln)
 	add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
-/mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
+INIT_TYPE(/mob/living/critter/flock, var/atom/L, var/datum/flock/F=null)
 	..()
 
 	// throw away the ability holder
@@ -152,7 +152,7 @@
 	var/turf/simulated/target
 	var/obj/decal/decal
 
-	New(var/turf/simulated/ntarg, var/duration_i)
+	INIT(var/turf/simulated/ntarg, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
@@ -224,7 +224,7 @@
 	var/cost = 25
 
 
-	New(var/turf/simulated/ntarg, var/structurepath_i, var/duration_i)
+	INIT(var/turf/simulated/ntarg, var/structurepath_i, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
@@ -281,7 +281,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 80
 
-	New(var/duration_i)
+	INIT(var/duration_i)
 		..()
 		if (duration_i)
 			duration = duration_i
@@ -324,7 +324,7 @@
 
 	var/atom/target
 
-	New(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
+	INIT(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
@@ -391,7 +391,7 @@
 	var/mob/living/target
 	var/obj/decal/decal
 
-	New(var/mob/living/ntarg, var/duration_i)
+	INIT(var/mob/living/ntarg, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
@@ -448,7 +448,7 @@
 
 	var/atom/target
 
-	New(var/atom/ntarg, var/duration_i)
+	INIT(var/atom/ntarg, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
@@ -510,7 +510,7 @@
 	duration = default_duration
 	var/obj/flock_structure/ghost/target = null
 
-	New(var/obj/flock_structure/ghost/target, var/duration = default_duration)
+	INIT(var/obj/flock_structure/ghost/target, var/duration = default_duration)
 		..()
 		src.target = target
 		src.duration = duration

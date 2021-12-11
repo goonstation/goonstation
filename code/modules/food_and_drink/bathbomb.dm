@@ -110,7 +110,7 @@
 		src.visible_message("<span class='alert'>[src] bursts into a furry mass!</span>")
 		return
 
-	New()
+	INIT()
 		..()
 		src.event_handler_flags |= USE_FLUID_ENTER
 

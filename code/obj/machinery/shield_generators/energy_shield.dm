@@ -13,7 +13,7 @@
 	direction = "dir"
 	layer = 3
 
-	New()
+	INIT()
 		..()
 		display_active.icon_state = "energyShieldOn"
 		src.power_usage = 5

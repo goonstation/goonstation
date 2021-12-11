@@ -30,7 +30,7 @@
 		[register ? "Registering with mainframes.":"Not registering with mainframes."]<br>
 		Current NetID: [net_id]</span>"}
 
-	New()
+	INIT()
 		. = ..()
 		src.net_id = generate_net_id(src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send packet", "spacket")

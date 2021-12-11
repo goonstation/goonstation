@@ -2,7 +2,7 @@
 /datum/keymap
 	var/list/keys = list()
 
-	New(data)
+	INIT(data)
 		..()
 		if (data)
 			for (var/key in data)

@@ -17,7 +17,7 @@
 	var/obj/beam/laser/prev
 	var/obj/master
 
-	New(var/atom/newloc, var/dirn, var/lambda, var/omega=1, var/half=0)
+	INIT(var/atom/newloc, var/dirn, var/lambda, var/omega=1, var/half=0)
 
 		if(!isturf(loc))
 			return

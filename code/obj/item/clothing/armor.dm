@@ -28,7 +28,7 @@
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("carbonfibre"), appearance = 0, setname = 0)
 		return .
@@ -88,7 +88,7 @@
 	var/obj/item/reagent_containers/glass/beaker/beaker = null
 	var/payload = ""
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (src && !src.part_vest)

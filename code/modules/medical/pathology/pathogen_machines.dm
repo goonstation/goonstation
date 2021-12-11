@@ -403,7 +403,7 @@
 	var/predictive_data = ""
 	var/datum/spyGUI/gui = null
 	var/manipulating = false //are we currently irradiating the pathogen?
-	New()
+	INIT()
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
@@ -1063,7 +1063,7 @@
 
 	var/obj/machinery/computer/pathology/comp = null
 
-	New()
+	INIT()
 		..()
 		flags |= NOSPLASH
 
@@ -1209,7 +1209,7 @@
 	var/sel_vial = 0
 	var/const/synthesize_pathogen_cost = 100 // used to be 2000
 
-	New()
+	INIT()
 		..()
 		src.reagents = new(100)
 		src.reagents.my_atom = src
@@ -1713,7 +1713,7 @@
 	icon_broken = "med-broken"
 	icon_fallen = "med-fallen"
 
-	New()
+	INIT()
 		..()
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
@@ -1741,7 +1741,7 @@
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null
 
-	New()
+	INIT()
 		..()
 		flags |= NOSPLASH
 

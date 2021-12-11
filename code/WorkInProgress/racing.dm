@@ -46,7 +46,7 @@
 	var/spawn_time = 0
 	var/wait = 0
 
-	New()
+	INIT()
 		processing_items += src
 		spawnit()
 		..()
@@ -74,7 +74,7 @@
 	opacity = 0
 	var/source_car = null
 
-	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
+	INIT(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
 		..()
 		src.set_loc(spawnloc)
 		src.set_dir(spawndir)
@@ -106,7 +106,7 @@
 	opacity = 0
 	var/source_car = null
 
-	New(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
+	INIT(var/atom/spawnloc, var/spawndir, var/atom/sourcecar)
 		..()
 		src.set_loc(spawnloc)
 		src.set_dir(spawndir)
@@ -151,7 +151,7 @@
 	var/delete = 1
 	var/spawn_time = 0
 
-	New()
+	INIT()
 		..()
 		spawn_time = world.time
 		if (delete)
@@ -506,7 +506,7 @@
 	var/returndir = null
 	var/turf/returnloc = null
 
-	New()
+	INIT()
 		..()
 		returndir = dir
 		if(returnpoint)

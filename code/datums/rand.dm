@@ -3,7 +3,7 @@
 	var/seed
 	var/mangled_rand
 
-	New(seed)
+	INIT(seed)
 		..()
 		if(seed)
 			src.seed = seed

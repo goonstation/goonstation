@@ -26,7 +26,7 @@
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 2
 
-	New()
+	INIT()
 		..()
 		src.left_arm = new /obj/item/parts/human_parts/arm/left/bear(src)
 		src.right_arm = new /obj/item/parts/human_parts/arm/right/bear(src)
@@ -127,7 +127,7 @@ obj/critter/bear/care
 	icon_state = "carebear"
 	chase_text = "snuggles"
 
-	New()
+	INIT()
 		..()
 		src.name = pick("Lovealot Bear", "Stuffums", "World Destroyer", "Pookie", "Colonel Sanders", "Hugbeast", "Lovely Bear", "HUG ME", "Empathy Bear", "Steve", "Mr. Pants", "wonk")
 
@@ -159,7 +159,7 @@ obj/critter/bear/care
 	skinresult = /obj/item/material_piece/cloth/leather
 	max_skins = 2
 
-	New()
+	INIT()
 		..()
 		src.atk_delay = 4
 		src.seek_target()
@@ -284,7 +284,7 @@ obj/critter/bear/care
 		src.reagents.add_reagent("shark_dna", 50, null)
 		return
 
-	New()
+	INIT()
 		..()
 		src.seek_target()
 

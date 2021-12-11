@@ -19,7 +19,7 @@
 	var/recharge_time = 300
 	var/ready = 1
 
-	New()
+	INIT()
 		..()
 		power_granted = pick("blind","mute","clumsy","fire_resist","cold_resist","resist_electric",
 		"psy_resist","glowy","hulk","xray","horns","stinky","monkey","mattereater","jumpy","telepathy","empath",

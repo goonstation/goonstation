@@ -22,7 +22,7 @@
 	/// Amount of time in seconds before connected blast doors should close
 	var/door_delay = 3 // Multiplied by SECONDS on New()
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			door_delay = door_delay SECONDS
@@ -199,7 +199,7 @@
 		return src.destinations[pick(src.destinations)]
 
 /obj/machinery/cargo_router/exampleRouter
-	New()
+	INIT()
 		destinations = list("Medical-Science Dock" = SOUTH, "Catering Dock" = NORTH, "EVA Dock" = WEST, "Disposals" = EAST)
 		default_direction = EAST //By default send things to disposals, for this example, if they dont have a code or we don't have a destination.
 		//You could leave one direction open and use that as default to send things with invalid destinations back to QM or something.
@@ -208,85 +208,85 @@
 
 // cogwerks notes: I'm starting with the first router from QM and moving sorta clockwise.
 /obj/machinery/cargo_router/Router1
-	New()
+	INIT()
 		destinations = list("Airbridge" = WEST, "Cafeteria" = NORTH, "EVA" = WEST, "Disposals" = NORTH, "QM" = NORTH, "Engine" = NORTH, "Catering" = NORTH, "MedSci" = NORTH, "Security" = NORTH)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/Router2 //airbridge loader
-	New()
+	INIT()
 		destinations = list("Airbridge" = SOUTH, "Cafeteria" = WEST, "EVA" = WEST, "Disposals" = WEST, "QM" = WEST, "Engine" = WEST, "Catering" = WEST, "MedSci" = WEST, "Security" = WEST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/Router3 //eva loader
-	New()
+	INIT()
 		destinations = list("Airbridge" = EAST, "Cafeteria" = EAST, "EVA" = NORTH, "Disposals" = EAST, "QM" = EAST, "Engine" = EAST, "Catering" = EAST, "MedSci" = EAST, "Security" = EAST)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/Router4 //cafeteria
-	New()
+	INIT()
 		destinations = list("Airbridge" = EAST, "Cafeteria" = NORTH, "EVA" = EAST, "Disposals" = EAST, "QM" = EAST, "Engine" = EAST, "Catering" = EAST, "MedSci" = EAST, "Security" = EAST)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/Router5 //disposals
-	New()
+	INIT()
 		destinations = list("Airbridge" = SOUTH, "Cafeteria" = SOUTH, "EVA" = SOUTH, "Disposals" = EAST, "QM" = EAST, "Engine" = SOUTH, "Catering" = EAST, "MedSci" = EAST, "Security" = EAST)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/Router6 //crusher or QM?
-	New()
+	INIT()
 		destinations = list("Airbridge" = SOUTH, "Cafeteria" = SOUTH, "EVA" = SOUTH, "Disposals" = EAST, "QM" = SOUTH, "Engine" = SOUTH, "Catering" = SOUTH, "MedSci" = SOUTH, "Security" = SOUTH)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/Router7 // shortcut - bypasses the central hub
-	New()
+	INIT()
 		destinations = list("Airbridge" = WEST, "Cafeteria" = WEST, "EVA" = WEST, "Disposals" = NORTH, "QM" = NORTH, "Engine" = WEST, "Catering" = NORTH, "MedSci" = NORTH, "Security" = NORTH)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/Router8 // engine dock
-	New()
+	INIT()
 		destinations = list("Airbridge" = WEST, "Cafeteria" = WEST, "EVA" = WEST, "Disposals" = WEST, "QM" = WEST, "Engine" = SOUTH, "Catering" = WEST, "MedSci" = WEST, "Security" = WEST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/Router9 // to outer router -> out
-	New()
+	INIT()
 		destinations = list("Airbridge" = SOUTH, "Cafeteria" = SOUTH, "EVA" = SOUTH, "Disposals" = SOUTH, "QM" = SOUTH, "Engine" = SOUTH, "Catering" = EAST, "MedSci" = EAST, "Security" = EAST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/Router10 // to outer router -> in
-	New()
+	INIT()
 		destinations = list("Airbridge" = WEST, "Cafeteria" = WEST, "EVA" = WEST, "Disposals" = WEST, "QM" = SOUTH, "Engine" = WEST, "Catering" = WEST, "MedSci" = WEST, "Security" = WEST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/Router11 // outer router -> up
-	New()
+	INIT()
 		destinations = list("Airbridge" = SOUTH, "Cafeteria" = SOUTH, "EVA" = SOUTH, "Disposals" = SOUTH, "QM" = SOUTH, "Engine" = SOUTH, "Catering" = NORTH, "MedSci" = SOUTH, "Security" = NORTH)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/Router12 // outer router -> down
-	New()
+	INIT()
 		destinations = list("Airbridge" = WEST, "Cafeteria" = WEST, "EVA" = SOUTH, "Disposals" = WEST, "QM" = WEST, "Engine" = WEST, "Catering" = NORTH, "MedSci" = SOUTH, "Security" = NORTH)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/Router13 // catering outer router -> east-west
-	New()
+	INIT()
 		destinations = list("Airbridge" = SOUTH, "Cafeteria" = SOUTH, "EVA" = SOUTH, "Disposals" = SOUTH, "QM" = SOUTH, "Engine" = SOUTH, "Catering" = SOUTH, "MedSci" = SOUTH, "Security" = WEST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/Router14 // catering outer router -> west-east
-	New()
+	INIT()
 		destinations = list("Airbridge" = EAST, "Cafeteria" = EAST, "EVA" = EAST, "Disposals" = EAST, "QM" = EAST, "Engine" = EAST, "Catering" = SOUTH, "MedSci" = EAST, "Security" = EAST)
 		default_direction = EAST
 		..()
@@ -294,14 +294,14 @@
 
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
-	New()
+	INIT()
 		destinations = list("North" = NORTH, "South" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/oshan_south
 	trigger_when_no_match = 0
-	New()
+	INIT()
 		destinations = list("South" = SOUTH, "North" = WEST)
 		default_direction = SOUTH
 		..()
@@ -403,7 +403,7 @@
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
 
-	New()
+	INIT()
 		..()
 
 	attack_hand(var/mob/user as mob)

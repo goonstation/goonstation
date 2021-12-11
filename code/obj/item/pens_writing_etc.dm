@@ -183,7 +183,7 @@
 	uses_handwriting = 1
 	clicknoise = 0
 
-	New()
+	INIT()
 		..()
 		if (prob(25))
 			src.icon_state = pick("pencil-b", "pencil-g")
@@ -240,7 +240,7 @@
 		font_color = "#FF00FF"
 
 	random
-		New()
+		INIT()
 			..()
 			src.color = random_color()
 			src.font_color = src.color
@@ -321,12 +321,12 @@
 		color_name = "golden"
 		material_uses = 123456 // it's not plated. its solid gold-wax alloy!
 
-		New()
+		INIT()
 			..()
 			src.setMaterial(getMaterial("gold"))
 
 	random
-		New()
+		INIT()
 			..()
 			src.color = random_color()
 			src.font_color = src.color
@@ -362,7 +362,7 @@
 			maptext_crayon = TRUE
 			font_size = 16
 			font = "Small Fonts"
-			New()
+			INIT()
 				..()
 				src.name = "[src.color_name] pixel crayon"
 
@@ -370,7 +370,7 @@
 	rainbow
 		name = "strange crayon"
 		color = "#FFFFFF"
-		New()
+		INIT()
 			..()
 			if (!ticker) // trying to avoid pre-game-start runtime bullshit
 				SPAWN_DBG(3 SECONDS)
@@ -404,7 +404,7 @@
 				user.suiciding = 0
 		return 1
 
-	New()
+	INIT()
 		. = ..()
 		src.create_inventory_counter()
 
@@ -550,7 +550,7 @@
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
-		New()
+		INIT()
 			..()
 			src.color = "#[num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)][num2hex(rand(0, 255),2)]"
 			src.font_color = src.color
@@ -809,7 +809,7 @@
 	stamina_cost = 1
 	stamina_crit_chance = 5
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -932,7 +932,7 @@
 		return
 
 /obj/item/clipboard/with_pen
-	New()
+	INIT()
 		..()
 		src.pen = new /obj/item/pen(src)
 		src.update()
@@ -1015,7 +1015,7 @@
 
 	var/list/obj/item/paper/pages = new/list()
 
-	New()
+	INIT()
 		..()
 		if (!offset)
 			return
@@ -1140,7 +1140,7 @@
 
 	// @TODO
 	// HOLY SHIT REMOVE THIS THESE OLD POST ITS ARE GONE or something idk fuck
-	New()
+	INIT()
 		..()
 		new /obj/item/item_box/postit(get_turf(src))
 
@@ -1198,7 +1198,7 @@
 	var/obj/item/paper/stored_paper = null
 	var/obj/item/pen/pen
 
-	New()
+	INIT()
 		..()
 		if(isnull(src.pen))
 			src.pen = new /obj/item/pen/typewriter(src)

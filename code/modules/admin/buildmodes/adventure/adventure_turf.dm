@@ -1,5 +1,5 @@
 /datum/adventure_submode/turf
-	New()
+	INIT()
 		..()
 		marker = new /obj/adventurepuzzle/marker()
 	var/turf/A = null

@@ -12,7 +12,7 @@
 	var/mob/living/target
 	var/datum/targetable/changeling/devour/devour
 
-	New(Target, Devour)
+	INIT(Target, Devour)
 		target = Target
 		devour = Devour
 		..()
@@ -108,7 +108,7 @@
 	var/datum/targetable/changeling/absorb/devour
 	var/last_complete = 0
 
-	New(Target, Devour)
+	INIT(Target, Devour)
 		target = Target
 		devour = Devour
 		..()

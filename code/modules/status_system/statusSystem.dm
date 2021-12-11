@@ -25,7 +25,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	var/datum/statusEffect/ownerStatus = null
 	var/image/overImg = null
 
-	New()
+	INIT()
 		overImg = image('icons/ui/statussystem.dmi')
 
 		src.maptext_y = -12

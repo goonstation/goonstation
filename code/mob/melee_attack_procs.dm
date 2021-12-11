@@ -802,7 +802,7 @@
 
 	var/force_stamina_target = null
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		owner = M
 

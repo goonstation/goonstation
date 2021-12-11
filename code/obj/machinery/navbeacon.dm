@@ -22,7 +22,7 @@
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS
 
-	New()
+	INIT()
 		..()
 
 		UnsubscribeProcess()
@@ -338,7 +338,7 @@ Transponder Codes:<UL>"}
 		//src.icon_state = "wirednav[invisibility ? "-f" : ""]"
 		alpha = invisibility ? 128 : 255
 
-	New()
+	INIT()
 		..()
 
 		var/turf/T = get_turf(src)
@@ -869,7 +869,7 @@ Transponder Codes:<UL>"}
 		name = "tour beacon - start"
 		location = "tour0"
 		codes_txt = "tour;next_tour=tour1;desc=Hello, vital crew member! You have been awakened for a shift on the NSS Destiny. This is year... five! of this exciting exploratory mission in the %system% system. If you would like to be re-familiarized with the ship layout, please follow me in an orderly manner!"
-		New()
+		INIT()
 			var/system_name = pick(uppercase_letters) + pick(vowels_upper) + pick(consonants_upper)
 			src.codes_txt = replacetext(src.codes_txt, "%system%", system_name)
 			..()

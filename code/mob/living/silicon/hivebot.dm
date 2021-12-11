@@ -50,7 +50,7 @@
 /mob/living/silicon/hivebot/get_burn_damage()
 	return fireloss
 
-/mob/living/silicon/hivebot/New(loc, mainframe)
+INIT_TYPE(/mob/living/silicon/hivebot, loc, mainframe)
 	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 	UpdateIcon()
 
@@ -936,7 +936,7 @@ Frequency:
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
 	var/jeton = 0
 
-	New()
+	INIT()
 		..()
 		hud = new(src)
 		src.attach_hud(hud)

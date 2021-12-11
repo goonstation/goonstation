@@ -48,7 +48,7 @@
 		add_hh_flesh(150, 1.15)
 		add_health_holder(/datum/healthHolder/brain)
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/cauterize)
 		abilityHolder.addAbility(/datum/targetable/critter/flamethrower/throwing)

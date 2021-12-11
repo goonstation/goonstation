@@ -13,7 +13,7 @@
 	mats = list("CRY-1", "CON-2")
 
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/elecflash)
 

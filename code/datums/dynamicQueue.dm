@@ -5,7 +5,7 @@
 	var/list/queue = new /list()
 	var/binSize
 
-	New(var/BinSize = QUEUE_BIN_SIZE)
+	INIT(var/BinSize = QUEUE_BIN_SIZE)
 		..()
 		src.binSize = BinSize
 

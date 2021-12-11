@@ -19,7 +19,7 @@
 	food_effects = list()
 	var/image/fluid_icon
 
-	New(var/datum/custom_soup/S)
+	INIT(var/datum/custom_soup/S)
 		if(!S || !istype(S))
 			qdel(src)
 			return
@@ -305,7 +305,7 @@
 	var/datum/custom_soup/my_soup
 	tooltip_flags = REBUILD_DIST
 
-	New()
+	INIT()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "souppot-f")
 		src.create_reagents(max_reagents)
@@ -472,7 +472,7 @@
 	var/datum/custom_soup/my_soup
 	var/image/fluid_icon
 
-	New()
+	INIT()
 		..()
 		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "ladle-f")
 		if(prob(1))

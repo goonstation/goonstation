@@ -20,7 +20,7 @@
   var/martianName = "organic machine"
   var/martianDesc = "It doesn't appear to serve any specific function."
 
-/obj/martianBiotech/New()
+INIT_TYPE(/obj/martianBiotech)
   ..()
   maxHealth = health
   SubscribeToProcess()

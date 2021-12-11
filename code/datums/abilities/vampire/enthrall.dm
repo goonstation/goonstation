@@ -83,7 +83,7 @@
 	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/enthrall/enslave
 
-	New(Target, Enslave)
+	INIT(Target, Enslave)
 		target = Target
 		enslave = Enslave
 		..()

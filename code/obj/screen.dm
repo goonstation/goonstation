@@ -62,7 +62,7 @@
 	var/last_update = 0
 	layer = HUD_LAYER-1
 
-	New(var/mob/living/carbon/C)
+	INIT(var/mob/living/carbon/C)
 		..(null)
 		src.loc = null
 		if (C && istype(C))

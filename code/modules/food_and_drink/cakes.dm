@@ -48,7 +48,7 @@
 	var/litfam = FALSE //is the cake lit (candle)
 	var/list/datum/contextAction/cakeActions
 
-	New()
+	INIT()
 		..()
 		contextLayout = new /datum/contextLayout/default()
 
@@ -550,7 +550,7 @@
 	heal_amt = 1
 	doants = 0
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("nectar", 10)
 		reagents.add_reagent("honey", 10)
@@ -564,7 +564,7 @@
 	initial_volume = 50
 	initial_reagents = list("sugar"=30)
 
-	New()
+	INIT()
 		..()
 		UpdateOverlays(new /image(src.icon,"cake1-base_cream"),"first")
 		cake_bases = list("base_cream")
@@ -576,7 +576,7 @@
 	initial_volume = 50
 	initial_reagents = "chocolate"
 
-	New()
+	INIT()
 		..()
 		UpdateOverlays(new /image(src.icon,"cake1-base_gateau"),"first")
 		cake_bases = list("base_gateau")
@@ -585,7 +585,7 @@
 	name = "Extravagant Chocolate Gateau"
 	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!"
 
-	New()
+	INIT()
 		..()
 		UpdateOverlays(new /image(src.icon,"cake1-base_gateau"),"first")
 		UpdateOverlays(new /image(src.icon,"cake1-cherry"),"cake1-cherry")
@@ -607,7 +607,7 @@
 	initial_volume = 50
 	initial_reagents = "blood"
 
-	New()
+	INIT()
 		..()
 		UpdateOverlays(new /image(src.icon,"cake1-base_meat"),"first")
 		cake_bases = list("base_meat")
@@ -619,7 +619,7 @@
 	initial_volume = 250
 	initial_reagents = "porktonium"
 
-	New()
+	INIT()
 		..()
 		UpdateOverlays(new /image(src.icon,"cake1-base_bacon"),"first")
 		cake_bases = list("base_bacon")
@@ -629,7 +629,7 @@
 	desc = "this bacon is too dense for the universe to contain..."
 	initial_reagents = list("badgrease"=20,"msg"=40)
 
-	New()
+	INIT()
 		..()
 		UpdateOverlays(new /image(src.icon,"cake1-base_true"),"first")
 		cake_bases = list("base_true")

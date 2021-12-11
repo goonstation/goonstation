@@ -7,7 +7,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/keypanel(src)
 		..()
 

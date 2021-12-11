@@ -11,7 +11,7 @@
 		icon_state += "-broken"
 		src.set_density(0)
 
-/obj/rack/New()
+INIT_TYPE(/obj/rack)
 	..()
 	var/bonus = 0
 	for (var/obj/O in loc)
@@ -119,7 +119,7 @@
 	var/obj/rack/the_rack
 	var/obj/item/the_tool
 
-	New(var/obj/rack/rak, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/rack/rak, var/obj/item/tool, var/duration_i)
 		..()
 		if (rak)
 			the_rack = rak

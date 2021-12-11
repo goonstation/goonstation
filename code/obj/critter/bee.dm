@@ -65,7 +65,7 @@
 
 	var/lastattacker
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(honey_production_amount)
 
@@ -656,7 +656,7 @@
 	hat_x_offset_right = 24
 	hat_x_offset_left = 15
 
-	New()
+	INIT()
 		..()
 		if (prob(10))
 			src.royal = 1
@@ -827,7 +827,7 @@
 		/obj/item/clothing/head/void_crown
 	)
 
-	New()
+	INIT()
 		src.tier = world.load_intra_round_value("heisenbee_tier")
 		src.original_tier = src.tier
 		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
@@ -897,7 +897,7 @@
 #ifdef HALLOWEEN
 	var/masked = 1
 
-	New()
+	INIT()
 		..()
 		if (masked)
 			if (prob(50))
@@ -990,7 +990,7 @@
 	hat_y_offset = 2
 	var/cleaned = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(2 SECONDS)
 			if (time2text(world.realtime, "MM DD") == "10 31")
@@ -1474,7 +1474,7 @@
 		custom_bee_queen = /obj/critter/domestic_bee/queen/buddy
 		grow_anim = "grow-buddybee"
 
-	New()
+	INIT()
 		..()
 		if (src.reagents)
 			src.reagents.maximum_volume = 50; // semi-arbitrarily chosen, the parent ..() creates a reagent holder with a max volume of 100, most bees only have 50 so I set it as such, special bees will raise the max if necessary
@@ -1646,7 +1646,7 @@
 
 	var/tmp/blog = "egg blog|"
 
-	New()
+	INIT()
 		..()
 		if (reagents)
 			reagents.add_reagent("bee", 10)
@@ -1759,7 +1759,7 @@
 		icon_state = "moonbee_egg"
 		bee_name = "moon larva"
 
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(2 SECONDS)
 				if (derelict_mode)
@@ -1841,7 +1841,7 @@
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/ourEgg
 	var/open = 0
 
-	New()
+	INIT()
 		..()
 		ourEgg = new /obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
 
@@ -1905,7 +1905,7 @@
 	doants = 0
 	initial_volume = 50
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("nectar", 10)
 		reagents.add_reagent("honey", 10)

@@ -76,7 +76,7 @@ var/sword_summoned_before = false
 	desc = "This device has a menacing aura around it. It requires 8 nodes of metadata to properly send and encrypt it's signal."
 	contraband = 5
 
-	New()
+	INIT()
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_DRONE_DEATH, .proc/metadata_increase)	//Thanks a bunch to ZeWaka, MarkNstein and Yass for helping me understand what the actual fuck signals are and how they work.
 		..()
 

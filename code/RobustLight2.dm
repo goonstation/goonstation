@@ -164,7 +164,7 @@ datum/light
 	var/apply_level = 0
 #endif
 
-	New(x=0, y=0, z=0)
+	INIT(x=0, y=0, z=0)
 		..()
 		src.x = x
 		src.y = y

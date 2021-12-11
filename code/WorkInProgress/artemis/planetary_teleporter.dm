@@ -4,7 +4,7 @@
 	var/ship_id = "artemis"
 	var/obj/artemis/my_ship = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			for(var/obj/artemis/A in world)
@@ -95,7 +95,7 @@
 	var/obj/machinery/lrteleporter/planetary_teleporter/my_teleporter = null
 	var/busy = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			for(var/obj/machinery/lrteleporter/planetary_teleporter/P in world)

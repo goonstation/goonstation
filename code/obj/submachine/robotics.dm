@@ -65,7 +65,7 @@
 	var/list/setting_context_actions
 	contextLayout = new /datum/contextLayout/experimentalcircle
 
-	New()
+	INIT()
 		..()
 		setting_context_actions = list()
 		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer)) //see context_actions.dm for those
@@ -393,7 +393,7 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 120
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("oil", 60)
 
@@ -488,7 +488,7 @@ ported and crapped up by: haine
 	var/obj/item/reagent_containers/borghose_tank/active_tank = null // what tank is active
 	tooltip_flags = REBUILD_DIST //if anyone implements this, add some rebuilds
 
-	New() // So this goes through and adds all the reagents to the hose on creation. Pretty good for expandability.
+	INIT() // So this goes through and adds all the reagents to the hose on creation. Pretty good for expandability.
 		..()
 		for (var/reagent in hydro_reagents)
 			create_tank(reagent)

@@ -21,7 +21,7 @@
 
 	var/output_target = null
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 

@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/recharge_delay = 0
 	examine_hint = "It is covered in very conspicuous markings."
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
 
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/exp_hevy = 2
 	var/exp_lite = 3
 
-	New()
+	INIT()
 		..()
 		src.exp_deva = rand(0,3)
 		src.exp_hevy = rand(3,6)
@@ -174,7 +174,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	recharge_delay = 10 MINUTES
 	animationScale = 6
 
-	New()
+	INIT()
 		..()
 		src.exp_deva *= rand(2,4)
 		src.exp_hevy *= rand(3,5)
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	name = "artifact chemical bomb"
 	associated_datum = /datum/artifact/bomb/chemical
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(rand(100,1000))
 

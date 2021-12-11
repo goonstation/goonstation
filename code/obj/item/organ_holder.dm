@@ -48,7 +48,7 @@
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
 
-	New(var/mob/living/L, var/ling)
+	INIT(var/mob/living/L, var/ling)
 		..()
 		if (!ishuman(L))
 			return
@@ -1227,7 +1227,7 @@
 
 /datum/organHolder/critter //for the animals. same stuff as human, but with a brain as the only organ
 
-	New(var/mob/living/L, var/obj/item/organ/brain/custom_brain_type)
+	INIT(var/mob/living/L, var/obj/item/organ/brain/custom_brain_type)
 		..()
 		if (!ismobcritter(L))
 			return
@@ -1341,7 +1341,7 @@
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
 		B.name = src.name
 		B.desc = src.desc
@@ -1513,7 +1513,7 @@
 	cooldown = 5
 	is_on = 0
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "[initial(src.icon_state)]_cd"
 
@@ -1592,7 +1592,7 @@
 	cooldown = 5
 	is_on = 0
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "[initial(src.icon_state)]_cd"
 

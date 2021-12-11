@@ -198,7 +198,7 @@
 			update_equipment()
 			update_tools()
 
-	New(M)
+	INIT(M)
 		..()
 		master = M
 

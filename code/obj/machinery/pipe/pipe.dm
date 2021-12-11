@@ -4,7 +4,7 @@
 //number of pipelines
 var/linenums = 0
 
-/obj/machinery/pipeline/New()
+INIT_TYPE(/obj/machinery/pipeline)
 	..()
 
 	gas = new /datum/gas_mixture
@@ -537,7 +537,7 @@ var/linenums = 0
 /obj/machinery/pipes
 	machine_registry_idx = MACHINES_PIPES
 
-/obj/machinery/pipes/New()
+INIT_TYPE(/obj/machinery/pipes)
 
 	..()
 
@@ -684,7 +684,7 @@ var/linenums = 0
 
 // ***** circulator
 
-/obj/machinery/circulator/New()
+INIT_TYPE(/obj/machinery/circulator)
 	..()
 	gas1 = new /datum/gas_mixture
 	gas2 = new /datum/gas_mixture
@@ -884,7 +884,7 @@ var/linenums = 0
 		return gas2
 
 /*
-/obj/machinery/connector/New()
+INIT_TYPE(/obj/machinery/connector)
 	..()
 
 	gas = new /datum/gas_mixture()
@@ -1016,7 +1016,7 @@ var/linenums = 0
 	*/
 
 
-/obj/machinery/junction/New()
+INIT_TYPE(/obj/machinery/junction)
 	..()
 	gas = new/datum/gas_mixture(src)
 	ngas = new/datum/gas_mixture()
@@ -1109,7 +1109,7 @@ var/linenums = 0
 	flow_to_turf(gas, ngas, T)
 
 
-/obj/machinery/vent/New()
+INIT_TYPE(/obj/machinery/vent)
 
 	..()
 	p_dir = dir
@@ -1200,7 +1200,7 @@ var/linenums = 0
 
 // inlet - equilibrates between pipe contents and turf
 // very similar to vent, except that a vent always dumps pipe gas into turf
-/obj/machinery/inlet/New()
+INIT_TYPE(/obj/machinery/inlet)
 
 	..()
 
@@ -1330,7 +1330,7 @@ var/linenums = 0
 
 // on-off valve
 
-/obj/machinery/valve/mvalve/New()
+INIT_TYPE(/obj/machinery/valve/mvalve)
 	..()
 	gas1 = new/datum/gas_mixture/(src)
 	ngas1 = new/datum/gas_mixture/()
@@ -1462,7 +1462,7 @@ var/linenums = 0
 
 // Digital Valve
 
-/obj/machinery/valve/dvalve/New()
+INIT_TYPE(/obj/machinery/valve/dvalve)
 	..()
 	gas1 = new/datum/gas_mixture/(src)
 	ngas1 = new/datum/gas_mixture/()
@@ -1602,7 +1602,7 @@ var/linenums = 0
 
 // one way pipe
 
-/obj/machinery/oneway/New()
+INIT_TYPE(/obj/machinery/oneway)
 	..()
 	gas1 = new/datum/gas_mixture/(src)
 	ngas1 = new/datum/gas_mixture/()
@@ -1727,7 +1727,7 @@ var/linenums = 0
 /obj/machinery/inlet/filter
 	machine_registry_idx = MACHINES_INLETS
 
-/obj/machinery/inlet/filter/New()
+INIT_TYPE(/obj/machinery/inlet/filter)
 	..()
 	gas = new /datum/gas_mixture
 	ngas = new /datum/gas_mixture

@@ -383,7 +383,7 @@
 	max_flash_power = 5000
 	min_flash_power = 500
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(!src.cell)

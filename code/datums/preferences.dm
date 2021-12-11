@@ -93,7 +93,7 @@ datum/preferences
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
-	New()
+	INIT()
 		character_name_validation = regex("\\w+") //TODO: Make this regex a bit sturdier (capitalization requirements, character whitelist, etc)
 		randomize_name()
 		randomizeLook()

@@ -28,7 +28,7 @@
 	inventory_counter_enabled = 1
 	var/capacity = 20
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(capacity)
 		reagents.add_reagent("fuel", capacity)

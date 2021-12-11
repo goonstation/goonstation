@@ -49,7 +49,7 @@
 		Brain.depletion_threshold = -100
 		Brain.last_value = 0
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/psyblast/martian)
 		abilityHolder.addAbility(/datum/targetable/critter/teleport)
@@ -160,7 +160,7 @@
 		icon_state = "martianP"
 		icon_state_dead = "martianP-dead"
 
-		New()
+		INIT()
 			..()
 			abilityHolder.addAbility(/datum/targetable/critter/gibstare)
 			abilityHolder.addAbility(/datum/targetable/critter/telepathy)
@@ -171,7 +171,7 @@
 		real_name = "martian initiate"
 		martian_type = "initiate"
 
-		New()
+		INIT()
 			..()
 			abilityHolder.removeAbility(/datum/targetable/critter/gibstare) // enough is enough
 
@@ -182,7 +182,7 @@
 		icon_state = "martianSP"
 		icon_state_dead = "martianSP-dead"
 
-		New()
+		INIT()
 			..()
 			abilityHolder.addAbility(/datum/targetable/critter/seed)
 
@@ -194,7 +194,7 @@
 		icon_state_dead = "martianL-dead"
 		leader = 1
 
-		New()
+		INIT()
 			..()
 			abilityHolder.addAbility(/datum/targetable/critter/summon)
 			abilityHolder.addAbility(/datum/targetable/critter/telepathy)
@@ -279,7 +279,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		Brain.depletion_threshold = -100
 		Brain.last_value = 0
 
-	New()
+	INIT()
 		..()
 		// TEMPORARY THING TO ESTABLISH THESE DUDES AS EXPLICITLY ANTAGS OK
 		SPAWN_DBG(1 DECI SECOND)
@@ -303,7 +303,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	icon_state_dead = "martianST-dead"
 	leader = 1
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/summon)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)

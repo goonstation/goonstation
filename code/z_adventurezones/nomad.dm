@@ -18,7 +18,7 @@
 	sound_group = "nomad"
 	sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
 
-	New()
+	INIT()
 		..()
 
 		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
@@ -33,7 +33,7 @@
 	sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
 	sound_environment = 15
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			process()
@@ -257,7 +257,7 @@
 
 /obj/item/disk/data/fixed_disk/nomad_computer
 
-	New()
+	INIT()
 		..()
 
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -289,7 +289,7 @@
 */
 	setup_drive_type = /obj/item/disk/data/fixed_disk/nomad_computer
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(3 SECONDS)
 			set_broken()
@@ -302,7 +302,7 @@
 	size = 15
 	tags = TAG_PLANET | TAG_TELEPORT_LOC
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeNomad(src)*/
 

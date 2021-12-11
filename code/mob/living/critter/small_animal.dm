@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 
 
-	New(loc)
+	INIT(loc)
 		if(isnull(src.is_pet))
 			src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
 		if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 8
 
 
-	New()
+	INIT()
 		..()
 		fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 		eye_color = "#FFFFF"
@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/randomize_look = 1
 	var/catnip = 0
 
-	New()
+	INIT()
 		..()
 		if (src.randomize_name)
 			src.name = pick_string_autokey("names/cats.txt")
@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	dogtype = "shiba"
 	var/randomize_shiba = 1
 
-	New()
+	INIT()
 		..()
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
@@ -736,7 +736,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 15
 	pull_w_class = W_CLASS_BULKY
 
-	New(loc, nspecies)
+	INIT(loc, nspecies)
 		..()
 		if (nspecies)
 			src.apply_species(nspecies, 0)
@@ -952,7 +952,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/random
 	species = null
-	New()
+	INIT()
 		..()
 		if (!src.species)
 			if (prob(1) && prob(10))
@@ -965,7 +965,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/bird/selected
 	species = null
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (!src.species && src.client && islist(parrot_species) && islist(special_parrot_species))
@@ -1119,7 +1119,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	species = null
 	gender = FEMALE
 
-	New()
+	INIT()
 		..()
 		var/set_gender = initial(src.gender)
 		if (!src.species)
@@ -1177,7 +1177,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 35
 	good_grip = 1
 
-	New()
+	INIT()
 		. = ..()
 		src.remove_stam_mod_max("small_animal")
 
@@ -1234,7 +1234,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	species = "crow"
 	add_abilities = list(/datum/targetable/critter/peck/crow)
 
-	New()
+	INIT()
 		..()
 		if (prob(5))
 			src.name = replacetext(src.name, "crow", "raven")
@@ -1299,7 +1299,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 
-	New()
+	INIT()
 		..()
 		fur_color =	"#ac5e41"
 		eye_color = "#000000"
@@ -1377,7 +1377,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "robin"
 	icon_state_dead = "robin-dead"
 
-	New()
+	INIT()
 		..()
 		fur_color =	"#836857"
 		eye_color = "#000000"
@@ -1565,7 +1565,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/freakout = 0
 	add_abilities = list(/datum/targetable/critter/trip)
 
-	New()
+	INIT()
 		..()
 
 		//50% chance to be a dark-colored ferret
@@ -1639,7 +1639,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
 
-	New()
+	INIT()
 		if (prob(80))
 			if (prob(1))
 				src.icon_state = "frog-space"
@@ -1690,7 +1690,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pet_text = list("gently baps", "pets", "cuddles")
 	var/playing_dead = 0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -1961,7 +1961,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 
-	New()
+	INIT()
 		..()
 		if (prob(1))
 			src.name = replacetext(src.name, "bat", "bart")
@@ -2112,7 +2112,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	pull_w_class = W_CLASS_BULKY
 
-	New()
+	INIT()
 		..()
 		if (prob(1))
 			src.name = replacetext(src.name, "raccoon", "washbear")
@@ -2233,7 +2233,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/butterflytype = 1
 	isFlying = 1
 
-	New()
+	INIT()
 		..()
 		butterflytype = rand(1,5)
 		src.icon_state = "butterfly[butterflytype]"
@@ -2295,7 +2295,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "moth"
 	desc = "Ew a moth. Hope it doesn't get into the wardrobe."
 
-	New()
+	INIT()
 		..()
 		var/type = pick("silk","cecropia","deathshead","rosymaple")
 		icon_state = "moth-[type]"
@@ -2325,7 +2325,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	isFlying = 1
 
-	New()
+	INIT()
 		..()
 		abilityHolder = new /datum/abilityHolder/critter(src)
 		//todo : move to add_abilities list because its cleaner that way
@@ -2389,7 +2389,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	isFlying = 1
 
-	New()
+	INIT()
 		..()
 		abilityHolder = new /datum/abilityHolder/critter(src)
 		//todo : move to add_abilities list because its cleaner that way
@@ -2596,7 +2596,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = W_CLASS_NORMAL
 	var/pick_random_icon_state = 1
 
-	New()
+	INIT()
 		..()
 		if(pick_random_icon_state)
 			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
@@ -2655,7 +2655,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/datum/figure_info/info = 0
 	var/voice_gender = "male"
 
-	New()
+	INIT()
 		..()
 
 		if (prob(50))
@@ -2760,7 +2760,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 35
 	health_burn = 35
 
-	New()
+	INIT()
 		..()
 		/*src.fur_color = "#c486ec"
 		src.eye_color = "#000000"
@@ -2880,7 +2880,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_exclaim = "mouse-admin-exclaim"
 	pull_w_class = W_CLASS_BULKY
 
-	New()
+	INIT()
 		..()
 		/*src.fur_color = "#d43b3b"
 		src.setup_overlays()*/
@@ -2926,7 +2926,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return null
 
 
-	New()
+	INIT()
 		..()
 
 	setup_hands()
@@ -2969,7 +2969,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<b><span class='alert'>[src] blurbles!</span></b>"
 		return null
 
-	New()
+	INIT()
 		..()
 
 	setup_hands()
@@ -3010,7 +3010,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 //	var/mob/living/target = null
 
-	New()
+	INIT()
 		..()
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("trilobite", -(STAMINA_MAX-10))
@@ -3052,7 +3052,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	ai_controlled
 		is_npc = 1
-		New()
+		INIT()
 			..()
 			src.ai = new /datum/aiHolder/trilobite(src)
 			//todo later : move this lifeprocess stuff to a component
@@ -3088,7 +3088,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 //	var/mob/living/target = null
 
-	New()
+	INIT()
 		..()
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("hallucigenia", -(STAMINA_MAX-100))
@@ -3125,7 +3125,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	ai_controlled
 		is_npc = 1
-		New()
+		INIT()
 			..()
 			src.ai = new /datum/aiHolder/spike(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)
@@ -3159,7 +3159,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 //	var/mob/living/target = null
 
-	New()
+	INIT()
 		..()
 		src.remove_stam_mod_max("small_animal")
 		src.add_stam_mod_max("pikaia", -(STAMINA_MAX-140))
@@ -3217,7 +3217,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	ai_controlled
 		is_npc = 1
-		New()
+		INIT()
 			..()
 			src.ai = new /datum/aiHolder/pikaia(src)
 			remove_lifeprocess(/datum/lifeprocess/blindness)

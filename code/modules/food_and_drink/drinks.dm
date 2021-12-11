@@ -58,7 +58,7 @@
 	initial_volume = 50
 	initial_reagents = list("chocolate"=45)
 
-	New()
+	INIT()
 		if (prob(10))
 			src.initial_reagents["grognardium"] = 5
 		..()
@@ -88,7 +88,7 @@
 	initial_volume = 50
 	initial_reagents = list("cola"=20)
 
-	New()
+	INIT()
 		switch(rand(1,16))
 			if (1)
 				src.name += "Crunchy Kidney Stone Lemonade flavor"
@@ -239,7 +239,7 @@
 	var/is_sealed = 1 //can you drink out of it?
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			src.icon_state = "cola-2"
@@ -300,7 +300,7 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 
-	New()
+	INIT()
 		..()
 		name = "[pick_string("chemistry_tools.txt", "COLA_prefixes")] [pick_string("chemistry_tools.txt", "COLA_suffixes")]"
 		var/n = rand(1,26)
@@ -351,7 +351,7 @@
 		else
 			src.icon_state = "milk"
 
-	New()
+	INIT()
 		..()
 		if(canberandom == 1)
 			if(prob(10))
@@ -396,7 +396,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 	heal_amt = 1
 	initial_volume = 50
 
-	New()
+	INIT()
 		..()
 		if(prob(1)) // hi im cirr i fuck with peoples' patches hurr
 			name = "Wired Dan's Chilled Covfefe"

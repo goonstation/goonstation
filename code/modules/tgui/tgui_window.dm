@@ -29,7 +29,7 @@
  * required client /client
  * required id string A unique window identifier.
  */
-/datum/tgui_window/New(client/client, id, tgui_pooled = FALSE)
+INIT_TYPE(/datum/tgui_window, client/client, id, tgui_pooled = FALSE)
 	..()
 	src.id = id
 	src.client = client

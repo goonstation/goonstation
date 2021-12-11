@@ -26,7 +26,7 @@
 
 	var/datum/action/holdAction
 
-	New(mob/user)
+	INIT(mob/user)
 		..()
 		processing_items |= src
 		if (user)

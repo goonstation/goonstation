@@ -13,7 +13,7 @@
 	var/leakChem = null
 	var/smoky = FALSE
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		var/datum/artifact/powercell/AS = new /datum/artifact/powercell(src)
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
@@ -87,7 +87,7 @@
 	react_xray = list(10,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"
 

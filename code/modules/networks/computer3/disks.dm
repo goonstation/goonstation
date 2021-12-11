@@ -32,7 +32,7 @@
 	var/portable = 1
 	var/title = "Data Disk"
 
-	New()
+	INIT()
 		..()
 		src.root = new /datum/computer/folder
 		src.root.holder = src
@@ -87,7 +87,7 @@
 /obj/item/disk/data/floppy
 	var/random_color = 1
 
-/obj/item/disk/data/floppy/New()
+INIT_TYPE(/obj/item/disk/data/floppy)
 	. = ..()
 	if(random_color)
 		var/diskcolor = pick(0,1,2)
@@ -138,7 +138,7 @@
 	file_amount = 128
 	portable = 0
 
-	New()
+	INIT()
 		. = ..()
 		src.root.gen = 99 //No subfolders!!
 
@@ -169,7 +169,7 @@
 /obj/item/disk/data/floppy/computer3boot
 	name = "data disk-'ThinkDOS'"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/os/main_os(src))
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -186,7 +186,7 @@
 	desc = "A collection of network management tools."
 	title = "Network Help"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/background/ping(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
@@ -201,7 +201,7 @@
 	desc = "The future of professional medical record management"
 	title = "Med-Trak 4"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/medical_records(src))
 		src.read_only = 1
@@ -211,7 +211,7 @@
 	desc = "It manages security records.  It is the law."
 	title = "SecMate 6"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
@@ -222,7 +222,7 @@
 	desc = "A disk containing a popular robotics research application."
 	title = "Research"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/robotics_research(src))
 		src.read_only = 1
@@ -232,7 +232,7 @@
 	desc = "A disk of research programs."
 	title = "Research"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/artifact_research(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/disease_research(src))
@@ -244,7 +244,7 @@
 	desc = "A boot-disk for terminal systems."
 	title = "TermOS"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/os/terminal_os(src))
 		src.read_only = 1
@@ -254,7 +254,7 @@
 	desc = "A disk for station communication programs."
 	title = "COMMaster"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
@@ -265,7 +265,7 @@
 	desc = "A disk with an engine startup program."
 	title = "EngineDisk"
 
-	New()
+	INIT()
 		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/engine_control(src))
 		src.read_only = 1
@@ -282,7 +282,7 @@
 	random_color = 0
 	file_amount = 32.0
 
-	New()
+	INIT()
 		. = ..()
 		SPAWN_DBG(1 SECOND) //Give time to actually generate network passes I guess.
 			if (!root) return
@@ -301,7 +301,7 @@
 
 //A fixed disk with some structure already set up for the main os I guess
 /obj/item/disk/data/fixed_disk/computer3
-	New()
+	INIT()
 		. = ..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -322,7 +322,7 @@
 
 //A computer disk with the hottest software, for nerds
 /obj/item/disk/data/fixed_disk/techcomputer3
-	New()
+	INIT()
 		. = ..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"

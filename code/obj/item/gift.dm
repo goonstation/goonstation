@@ -14,7 +14,7 @@
 	tooltip_flags = REBUILD_DIST
 	var/style = "r"
 
-	New()
+	INIT()
 		..()
 		src.style = rand(1,8)
 		src.icon_state = "wrap_paper-[src.style]"
@@ -22,7 +22,7 @@
 /obj/item/wrapping_paper/xmas
 	desc = "This wrapping paper is especially festive."
 
-	New()
+	INIT()
 		..()
 		src.style = pick("r", "rs", "g", "gs")
 		src.icon_state = "wrap_paper-[src.style]"
@@ -154,7 +154,7 @@
 	var/random_icons = 1
 	var/list/giftpaths = null
 
-	New()
+	INIT()
 		..()
 		if (src.random_icons)
 			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"

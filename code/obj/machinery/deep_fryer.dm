@@ -14,7 +14,7 @@
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
 	var/max_wclass = 3
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		src.create_reagents(50)

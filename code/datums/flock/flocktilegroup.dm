@@ -9,7 +9,7 @@
 	var/datum/flock/flock = null
 	var/debugid = 0 //debuggin id
 
-/datum/flock_tile_group/New(var/datum/flock/f = null)
+INIT_TYPE(/datum/flock_tile_group, var/datum/flock/f = null)
 	..()
 	if(f)
 		flock = f

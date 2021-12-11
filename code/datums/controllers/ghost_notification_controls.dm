@@ -21,7 +21,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	var/last_time
 	var/chui/window/ghost_notification_config/config_window
 
-/datum/ghost_notification_controller/New()
+INIT_TYPE(/datum/ghost_notification_controller)
 	..()
 	src.last_time = world.timeofday
 	src.config_window = new(src)
@@ -248,7 +248,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	var/noticeBody = ""
 	var/datum/ghost_notification/associated
 
-	New(var/datum/ghost_notification/associated)
+	INIT(var/datum/ghost_notification/associated)
 		..(null) // pass null to our parent because we do NOT have an ATOM that depends on the window being drawn
 		src.associated = associated
 
@@ -278,7 +278,7 @@ var/datum/ghost_notification_controller/ghost_notifier
 	windowSize = "450x400"
 	var/datum/ghost_notification_controller/associated
 
-	New(var/datum/ghost_notification_controller/associated)
+	INIT(var/datum/ghost_notification_controller/associated)
 		..()
 		src.associated = associated
 

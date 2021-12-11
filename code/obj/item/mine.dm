@@ -15,7 +15,7 @@
 	var/used_up = FALSE
 	var/obj/item/device/timer/our_timer = null
 
-	New()
+	INIT()
 		..()
 		if (src.armed)
 			src.UpdateIcon()

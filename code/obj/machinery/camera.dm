@@ -90,7 +90,7 @@
 	var/obj/machinery/camera/television/cam
 	var/secstate
 
-	New(Camera, Secstate)
+	INIT(Camera, Secstate)
 		cam = Camera
 		secstate = Secstate
 		..()
@@ -120,7 +120,7 @@
 	icon_state = "mobilevision"
 	securedstate = null //No bugginess thank you
 
-/obj/machinery/camera/New()
+INIT_TYPE(/obj/machinery/camera)
 	..()
 
 	START_TRACKING

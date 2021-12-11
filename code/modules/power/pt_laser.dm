@@ -37,7 +37,7 @@
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
 
-/obj/machinery/power/pt_laser/New()
+INIT_TYPE(/obj/machinery/power/pt_laser)
 	..()
 
 	range = max(world.maxx,world.maxy)
@@ -487,7 +487,7 @@
 	var/datum/light/light
 
 
-/obj/lpt_laser/New()
+INIT_TYPE(/obj/lpt_laser)
 	light = new /datum/light/point
 	light.attach(src)
 	light.set_color(0, 0.8, 0.1)

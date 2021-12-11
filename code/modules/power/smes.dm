@@ -37,7 +37,7 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full."}
 
 /obj/machinery/power/smes/construction
-	New(var/turf/iloc, var/idir = 2)
+	INIT(var/turf/iloc, var/idir = 2)
 		if (!isturf(iloc))
 			qdel(src)
 		set_dir(idir)
@@ -62,7 +62,7 @@
 		src.online = initial(src.online)
 	return
 
-/obj/machinery/power/smes/New()
+INIT_TYPE(/obj/machinery/power/smes)
 	..()
 
 	SPAWN_DBG(0.5 SECONDS)

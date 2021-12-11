@@ -27,7 +27,7 @@ obj/machinery/atmospherics/binary/volume_pump
 
 	var/datum/pump_ui/volume_pump_ui/ui
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -117,7 +117,7 @@ datum/pump_ui/volume_pump_ui
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/volume_pump/our_pump
 
-datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/our_pump)
+INIT_TYPE(datum/pump_ui/volume_pump_ui, obj/machinery/atmospherics/binary/volume_pump/our_pump)
 	..()
 	src.our_pump = our_pump
 	src.pump_name = our_pump.name

@@ -10,7 +10,7 @@
 	var/running = 0
 	var/next_move = 0
 
-	New(master)
+	INIT(master)
 		..()
 		src.master = master
 

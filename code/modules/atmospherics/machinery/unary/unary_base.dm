@@ -8,7 +8,7 @@
 
 	var/datum/pipe_network/network
 
-	New()
+	INIT()
 		..()
 		initialize_directions = dir
 		air_contents = new /datum/gas_mixture

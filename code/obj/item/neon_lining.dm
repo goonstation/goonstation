@@ -27,7 +27,7 @@
 
 	var/lining_item_color = "blue"
 
-	New(loc, length = STARTLINING)
+	INIT(loc, length = STARTLINING)
 		src.amount = length
 		pixel_x = rand(-2,2)
 		pixel_y = rand(-2,2)
@@ -85,18 +85,18 @@
 		return
 
 /obj/item/neon_lining/cut
-	New(loc, length)
+	INIT(loc, length)
 		if (length)
 			..(loc, length)
 		else
 			..(loc, rand(1,2))
 
 /obj/item/neon_lining/cut/small
-	New(loc, length)
+	INIT(loc, length)
 		..(loc, rand(1,5))
 
 /obj/item/neon_lining/shipped
-	New(loc, length)
+	INIT(loc, length)
 		..(loc, 20)
 
 /obj/item/neon_lining/attack_self(mob/user as mob)

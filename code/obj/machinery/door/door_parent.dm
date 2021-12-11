@@ -160,7 +160,7 @@
 		.= 1
 
 /obj/machinery/door
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		AddComponent(/datum/component/mechanics_holder)
@@ -713,7 +713,7 @@
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from
 
-/obj/machinery/door/unpowered/wood/New()
+INIT_TYPE(/obj/machinery/door/unpowered/wood)
 	..()
 	if (!src.simple_lock)
 		src.verbs -= /obj/machinery/door/unpowered/wood/verb/simple_lock
@@ -815,7 +815,7 @@
 	var/obj/machinery/door/unpowered/wood/the_door
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			the_door = O

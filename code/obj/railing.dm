@@ -82,7 +82,7 @@
 			return
 
 
-	New()
+	INIT()
 		..()
 		if(src.is_reinforced)
 			src.flags |= ALWAYS_SOLID_FLUID
@@ -222,7 +222,7 @@
 	/// list of types exempt from bump checks when checking landing turf validity
 	var/list/collision_whitelist = null
 
-	New(The_Owner, The_Railing, use_owner_dir = FALSE)
+	INIT(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
 		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge)
 		if (The_Owner)
@@ -335,7 +335,7 @@
 	var/obj/item/tool // the tool the owner is using on the railing
 	var/interaction = RAILING_DISASSEMBLE
 
-	New(The_Owner, The_Railing, var/obj/item/The_Tool, The_Interaction, The_Duration)
+	INIT(The_Owner, The_Railing, var/obj/item/The_Tool, The_Interaction, The_Duration)
 		..()
 		if (The_Railing)
 			the_railing = The_Railing

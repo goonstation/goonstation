@@ -171,7 +171,7 @@ turf
 					if (gas_icon_overlay)
 						qdel(gas_icon_overlay)
 						gas_icon_overlay = null
-		New()
+		INIT()
 			..()
 
 			if(!gas_impermeable)

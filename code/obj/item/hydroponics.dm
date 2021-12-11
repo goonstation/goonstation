@@ -49,7 +49,7 @@
 		active = 1
 		force = 12
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
@@ -439,7 +439,7 @@
 	rand_pos = 1
 	var/image/plantyboi
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -475,7 +475,7 @@
 	initial_volume = 120
 	can_recycle = FALSE
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("water", 120)
 
@@ -515,7 +515,7 @@
 	rc_flags = 0
 	initial_volume = 60
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("poo", 60)
 
@@ -529,7 +529,7 @@
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("weedkiller", 40)
 
@@ -541,7 +541,7 @@
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("mutagen", 40)
 
@@ -553,7 +553,7 @@
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("ammonia", 40)
 
@@ -565,7 +565,7 @@
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("potash", 40)
 
@@ -577,7 +577,7 @@
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("saltpetre", 40)
 
@@ -589,7 +589,7 @@
 	amount_per_transfer_from_this = 10
 	initial_volume = 40
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("mutadone", 40)
 

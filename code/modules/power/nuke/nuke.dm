@@ -81,7 +81,7 @@
 	var/displayHtml = ""
 	var/datum/nuke_knobset = null
 
-	New()
+	INIT()
 		src.nuke_knobset = new /datum/nuke_knobset()
 		nuke_core = src
 		nuke_knobs = src.nuke_knobset

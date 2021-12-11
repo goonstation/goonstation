@@ -615,7 +615,7 @@
 
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		light = new
 		light.set_brightness(0.9)
@@ -635,7 +635,7 @@
 
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		light = new
 		light.set_brightness(0.8)
@@ -688,7 +688,7 @@
 	density = 0
 	var/id = null
 
-	New()
+	INIT()
 		..()
 		if (!id)
 			id = "generic"
@@ -717,7 +717,7 @@
 //MOVE THIS TO SEEDS.DM LATER//
 
 /obj/item/seed/alien/hellshroom
-	New()
+	INIT()
 		..()
 		src.planttype = HY_get_species_from_path(/datum/plant/artifact/hellshroom, src)
 
@@ -847,7 +847,7 @@
 	ai_aggressive = 1
 	unobservable = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			bioHolder.mobAppearance.underwear = "briefs"
@@ -906,7 +906,7 @@
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
 
-	New(var/_loc)
+	INIT(var/_loc)
 		set_loc(_loc)
 
 		light = new /datum/light/point
@@ -1113,7 +1113,7 @@
 
 	var/prob_clonk = 0
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -1283,7 +1283,7 @@
 	var/obj/decoration/scenario/crate/thecrate
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			thecrate = O

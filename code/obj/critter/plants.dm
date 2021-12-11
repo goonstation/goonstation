@@ -18,7 +18,7 @@
 	meat_type = /obj/item/reagent_containers/food/snacks/salad
 	generic = 0 // get this using the plant quality
 
-	New()
+	INIT()
 		..()
 		playsound(src.loc, pick("sound/voice/MEilive.ogg"), 45, 0)
 

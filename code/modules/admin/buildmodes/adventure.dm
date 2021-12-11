@@ -10,7 +10,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 	var/datum/adventure_submode/submode
 	var/list/submodes = list()
 
-	New()
+	INIT()
 		..()
 		adventure_mode = new(null, holder, src)
 		extra_buttons += adventure_mode
@@ -56,7 +56,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 	var/datum/buildmode_holder/holder
 	var/datum/buildmode/adventure/adventure
 
-	New(H, A)
+	INIT(H, A)
 		..()
 		holder = H
 		adventure = A
@@ -82,7 +82,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 	var/datum/buildmode_holder/holder = null
 	var/datum/buildmode/adventure/parent = null
 
-	New(L, H, A)
+	INIT(L, H, A)
 		..()
 		holder = H
 		parent = A

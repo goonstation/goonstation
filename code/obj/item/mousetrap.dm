@@ -30,7 +30,7 @@
 		cleaner
 			name = "cleantrap"
 
-			New()
+			INIT()
 				..()
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
 				src.grenade = new /obj/item/chem_grenade/cleaner(src)
@@ -374,7 +374,7 @@
 	var/obj/item/pipebomb/frame/frame = null
 	var/payload = ""
 
-	New(ourLoc, var/obj/item/mousetrap/newtrap, obj/item/pipebomb/frame/newframe)
+	INIT(ourLoc, var/obj/item/mousetrap/newtrap, obj/item/pipebomb/frame/newframe)
 		..()
 
 		if (newtrap)

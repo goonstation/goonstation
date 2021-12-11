@@ -42,7 +42,7 @@
 	var/atom/movable/target
 	var/classic
 
-	New(atom/movable/target, ignore_z = FALSE)
+	INIT(atom/movable/target, ignore_z = FALSE)
 		. = ..()
 		var/turf/T = get_turf(target)
 		src.target = target
@@ -213,7 +213,7 @@
 	if(status & (NOPOWER|BROKEN))	return
 	use_power(500)
 
-/obj/machinery/crusher/New()
+INIT_TYPE(/obj/machinery/crusher)
 	..()
 	var/turf/T = get_turf(src)
 	if (T.contents.len > 100) //if it has to check too much stuff, it might lag?

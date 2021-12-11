@@ -71,7 +71,7 @@
 	var/bloodiness = 0		// count of bloodiness
 	var/nocellspawn = 0 //Used for spawning a MULE w/o a cell.
 
-	New()
+	INIT()
 		..()
 
 		var/global/mulecount = 0

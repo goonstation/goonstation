@@ -195,7 +195,7 @@
 
 /turf/space/no_replace
 
-/turf/space/New()
+INIT_TYPE(/turf/space)
 	..()
 	//icon = 'icons/turf/space.dmi'
 	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
@@ -300,7 +300,7 @@ proc/generate_space_color()
 	proc/process_cell()
 		return
 
-/turf/New()
+INIT_TYPE(/turf)
 	..()
 	if (density)
 		pathable = 0
@@ -1081,7 +1081,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "poolwaterfloor"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
 
@@ -1090,7 +1090,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
 /turf/simulated/pool
@@ -1098,7 +1098,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "poolwaterfloor"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
 
@@ -1107,7 +1107,7 @@ proc/generate_space_color()
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "poolwaterfloor"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
 
@@ -1162,7 +1162,7 @@ proc/generate_space_color()
 	icon_state = "grass"
 
 /turf/unsimulated/nicegrass/random
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -1172,7 +1172,7 @@ proc/generate_space_color()
 	icon_state = "grass"
 
 /turf/simulated/nicegrass/random
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 

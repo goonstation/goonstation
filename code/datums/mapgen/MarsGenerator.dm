@@ -102,7 +102,7 @@
 
 /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
-	New()
+	INIT()
 		src.rocks = prob(10)
 		..()
 
@@ -161,7 +161,7 @@
 /turf/unsimulated/wall/setpieces/martian/auto
 	plane = PLANE_FLOOR
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(3 SECONDS)
 			if(istype(src))
