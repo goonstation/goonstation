@@ -19,6 +19,7 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, overwrite as num)
+		pause_init()
 		var/datum/loadedProperties/props = new()
 		props.sourceX = coordX
 		props.sourceY = coordY
@@ -124,7 +125,7 @@ dmm_suite
 					)
 				sleep(-1)
 			sleep(-1)
-		//
+		unpause_init()
 		return props
 
 	/*-- load_map ------------------------------------
