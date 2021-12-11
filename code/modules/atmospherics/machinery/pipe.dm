@@ -1172,9 +1172,6 @@ obj/machinery/atmospherics/pipe
 
 				icon_state = "manifold_[connected]_[unconnected]"
 
-				if(!connected)
-					qdel(src)
-
 			return
 
 		initialize()
