@@ -999,12 +999,8 @@
 		//turrets can fire on humans, mobcritters and pods
 		for (var/mob/living/M in view(firing_range, src))
 			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned) || issilicon(M)) && !isdead(M) && !check_target_immunity(M))
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (isnpcmonkey(M))
-						targets_secondary += M
-					else
-						targets_primary += M
+				if (isnpcmonkey(M))
+					targets_secondary += M
 				else
 					targets_primary += M
 
