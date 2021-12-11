@@ -308,6 +308,7 @@ INIT_TYPE(/turf)
 		src.Entered(AM)
 	if(!RL_Started)
 		RL_Init()
+	src.levelupdate()
 
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
@@ -565,8 +566,6 @@ INIT_TYPE(/turf)
 
 	if (handle_dir)
 		new_turf.set_dir(old_dir)
-
-	new_turf.levelupdate()
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
