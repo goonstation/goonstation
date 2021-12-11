@@ -236,17 +236,20 @@ dmm_suite
 			return instance
 
 		loadAttribute(value, list/strings)
+			var/first_char = copytext(value, 1, 2)
 			//Check for string
-			if(copytext(value, 1, 2) == "\"")
+			if(first_char == "\"")
 				return strings[value]
 			//Check for number
 			var num = text2num(value)
 			if(isnum(num))
 				return num
 			//Check for file
-			else if(copytext(value,1,2) == "'")
+			else if(first_char == "'")
 				return get_cached_file(copytext(value,2,length(value)))
 				// return file(copytext(value,2,length(value)))
+			else if(first_char == "/")
+				return text2path(value)
 			// Check for lists
 				// To Do
 
