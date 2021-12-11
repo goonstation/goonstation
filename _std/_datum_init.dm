@@ -20,6 +20,7 @@ proc/unpause_init()
 		if(!QDELETED(D))
 			D.Init(arglist(inits_to_process[D]))
 			D.init_finished = TRUE
+			LAGCHECK(LAG_HIGH)
 
 /datum/New(...)
 	SHOULD_CALL_PARENT(TRUE)
