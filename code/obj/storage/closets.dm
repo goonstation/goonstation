@@ -138,8 +138,8 @@
 #endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
-	/obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/suit/space/santa,
+	/obj/item/clothing/head/helmet/space/santahat/noslow,
+	/obj/item/clothing/suit/space/santa/noslow,
 #else
 	/obj/item/clothing/head/helmet/space/syndicate,
 	/obj/item/clothing/suit/space/syndicate,
