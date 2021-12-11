@@ -36,3 +36,17 @@ proc/unpause_init()
 
 #define INIT(ARGS...) New(ARGS) ..(); Init(ARGS)
 #define INIT_TYPE(TYPE, ARGS...) TYPE/New(ARGS) ..(); TYPE/Init(ARGS)
+
+
+// not related directly per se but stuff related to large scale map changes follows
+
+
+/// var that signifies some large-scale map geometry modification is happening, for example prefab loading or explosions, pauses some processes
+/// Don't edit manually. Use the procs below.
+var/global/big_map_changes_happening = 0
+
+proc/begin_big_map_change()
+	big_map_changes_happening++
+
+proc/end_big_map_change()
+	big_map_changes_happening--
