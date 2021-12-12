@@ -260,7 +260,8 @@
 	// if visible, use regular icon_state
 	update_icon()
 
-		icon_state = base_icon_state
+		if(init_finished)
+			icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255
 		return
 
