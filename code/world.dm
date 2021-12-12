@@ -231,6 +231,7 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		Z_LOG_DEBUG("Preload", "Initializing radio controller...")
 		radio_controller = new /datum/controller/radio()
 
 		Z_LOG_DEBUG("Preload", "Loading config...")
@@ -260,6 +261,10 @@ var/f_color_selector_handler/F_Color_Selector
 		if (config.env == "dev") //WIRE TODO: Only do this (fallback to local files) if the coder testing has no internet
 			Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 			recursiveFileLoader("browserassets/")
+
+		Z_LOG_DEBUG("Preload", "Initializing API handler...")
+		//This is used by bans for checking, so we want it very available
+		apiHandler = new()
 
 		Z_LOG_DEBUG("Preload", "Adding overlays...")
 		var/overlayList = childrentypesof(/datum/overlayComposition)
@@ -399,11 +404,18 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
 		fluid_turf_setup(first_time=TRUE)
 
-		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
+
+		Z_LOG_DEBUG("Preload", "  pausing Init etc.")
+		begin_big_map_change()
+		pause_init()
+		Z_LOG_DEBUG("Preload", "Preload stage complete")
 
 /world/New()
 	Z_LOG_DEBUG("World/New", "World New()")
+	unpause_init()
+	Z_LOG_DEBUG("World/New", "  unpaused Init")
+	end_big_map_change()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
@@ -418,9 +430,6 @@ var/f_color_selector_handler/F_Color_Selector
 	diary = file("data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log")
 	diary_name = "data/logs/[time2text(world.realtime, "YYYY/MM-Month/DD-Day")].log"
 	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
-
-	//This is used by bans for checking, so we want it very available
-	apiHandler = new()
 
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
@@ -594,6 +603,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
+
+	UPDATE_TITLE_STATUS("Initializing objects")
+	Z_LOG_DEBUG("World/Init", "Waiting for init to finish...")
+	UNTIL(!global.init_unpausing)
 
 	#if SKIP_Z5_SETUP == 0
 	UPDATE_TITLE_STATUS("Building mining level")
