@@ -619,12 +619,35 @@
 // Azrun TODO Move to Event File
 /datum/random_event/minor/artemis_transponder
 	name = "Artemis Transponder"
+	customization_available = TRUE
 	disabled = 1
 	weight = 10
 	var/list/event_transmissions
 
-	event_effect()
+	var/options = list(
+		"Martians"=10,
+		"Zombies"=10,
+		"Flock"=1,
+		"Assault"=2,
+		"Disappeared"=4
+		)
+
+	admin_call(var/source)
+		if (..())
+			return
+
+		var/scenario = tgui_input_list(usr,"What happened to Artemis crew?", "Artemis Incident", src.options)
+
+		src.event_effect(source, scenario)
+
+	event_effect(source, scenario)
 		..()
+
+		if(!scenario)
+			scenario = weighted_pick(src.options)
+
+		spawn_scenario(scenario)
+
 		var/command_report = "Transponder data has been detected from the NSS Artemis.  Encryption key uploaded to Quantum telescope to allow for asset recovery."
 		tele_man.addManualEvent(eventType=/datum/telescope_event/artemis, active=TRUE)
 
@@ -632,7 +655,74 @@
 		command_announcement(replacetext(command_report, "\n", "<br>"), "Priority Broadcast Received", sound_to_play, do_sanitize=0);
 		return
 
+
 	is_event_available(var/ignore_time_lock = 0)
 		return 0
+
+	proc/spawn_scenario(scenario)
+		var/list/mob_types
+		var/mob_count
+		var/body_count
+		var/artemis_turfs = get_area_turfs(/area/ship/artemis, 1)
+		var/broken_lights = rand(0,5)
+		switch(scenario)
+			if("Martians")
+				mob_types = list(/obj/critter/martian=50, /obj/critter/martian/soldier=10, /obj/critter/martian/psychic=1, /obj/critter/martian/psychic/weak=5, /obj/critter/martian/warrior=10, null=5)
+				mob_count = 10
+				body_count = 8
+			if("Zombies")
+				mob_types = list(/obj/critter/zombie/scientist=5,/obj/critter/zombie/radiation=2, /obj/critter/zombie/security=2, /obj/critter/zombie=10, null=1)
+				mob_count = 8
+				body_count = 2
+			if("Flock")
+				mob_types = list(/mob/living/critter/flock/drone=1,/mob/living/critter/flock/bit=5)
+				mob_count = 2
+				body_count = 8
+			if("Assault")
+				mob_types = list(/obj/decal/skeleton/decomposed_corpse=5,/obj/decoration/syndcorpse5=1,/obj/decoration/syndcorpse10=1,/obj/dialogueobj/engineerscorpse=4,/obj/dialogueobj/securitycorpse1=4,/obj/dialogueobj/securitycorpse6=4,/obj/dialogueobj/securitycorpse7=1,/obj/dialogueobj/syndiecorpse7=1)
+				mob_count = 6
+				body_count = 4
+				broken_lights = 5
+				for(var/i in 1 to rand(6,10))
+					var/turf/T = pick(artemis_turfs)
+					if(prob(70))
+						for(var/j in 1 to rand(2,5))
+							new /obj/item/casing/small(T)
+					else if(prob(70))
+						for(var/j in 1 to rand(2,3))
+							new /obj/item/casing/shotgun/red(T)
+					else
+						new /obj/item/casing/rifle(T)
+
+
+		var/bodies_to_gib
+		if(body_count)
+			bodies_to_gib = list()
+			for(var/i in 1 to body_count)
+				if(prob(10))
+					bodies_to_gib += new /mob/living/carbon/human/npc(pick(artemis_turfs))
+				else
+					gibs(pick(artemis_turfs))
+
+		if(mob_types && mob_count)
+			for(var/i in 1 to mob_count)
+				var/mob_path = weighted_pick(mob_types)
+				if(mob_path != "null")
+					new mob_path(pick(artemis_turfs))
+
+		if(broken_lights)
+			var/obj/machinery/light/L
+			var/list/obj/machinery/light/lights = list()
+
+			var/area/A = get_area_by_type(/area/ship/artemis)
+			for(L in A.machines)
+				lights += L
+			for(var/i in 1 to broken_lights)
+				L = pick(lights)
+				L.broken()
+
+		sleep(10 SECONDS)
+		for(var/mob/living/carbon/human/M in bodies_to_gib)
+			M.gib()
 
 #endif
