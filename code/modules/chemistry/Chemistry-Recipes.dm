@@ -2477,6 +2477,8 @@ datum
 							continue
 						if (!M.ears_protected_from_sound())
 							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+						else
+							continue
 
 						var/checkdist = get_dist(M, location)
 						var/weak = max(0, 2 * (3 - checkdist))
@@ -2506,6 +2508,8 @@ datum
 								continue
 							if (!M.ears_protected_from_sound())
 								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+							else
+								continue
 
 							var/checkdist = get_dist(M, location)
 							var/weak = max(0, 2 * (3 - checkdist))
