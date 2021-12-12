@@ -88,23 +88,6 @@ var/global/list/atomTooltips = new()
 		if (!C) return 0
 		src.owner = C
 
-		//For local-testing fallback
-		if (!cdn)
-			var/list/tooltipResources = list(
-				"browserassets/js/jquery.min.js",
-				"browserassets/js/jquery.waitForImages.js",
-				"browserassets/js/errorHandler.js",
-				"browserassets/js/animatePopup.js",
-				"browserassets/js/tooltip.js",
-				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
-				"browserassets/css/fonts/fontawesome-webfont.ttf",
-				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/css/font-awesome.css",
-				"browserassets/css/tooltip.css"
-			)
-			src.owner.loadResourcesFromList(tooltipResources)
-
 		src.transient = src.add(clone = 0, stuck = 0)
 
 		return 1
