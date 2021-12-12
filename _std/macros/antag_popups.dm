@@ -10,84 +10,86 @@
 #define SOULSTEEL_TIPS_WINDOW "window=antagTips;size=600x400;title=Posession!"
 #define MINDWIPE_TIPS_WINDOW "window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0"
 
+#define SHOW_ANTAG_TIPS(M, PATH) M.Browse({"<meta http-equiv="refresh" content="0; url=[resource(PATH)]">"}, ANTAG_TIPS_WINDOW)
+
 //traitor
-#define SHOW_TRAITOR_RADIO_TIPS(M) M.Browse(grabResource("html/traitorTips/traitorradiouplinkTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_TRAITOR_PDA_TIPS(M) M.Browse(grabResource("html/traitorTips/traitorTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_TRAITOR_HARDMODE_TIPS(M) M.Browse(grabResource("html/traitorTips/traitorhardTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_TRAITOR_OMNI_TIPS(M) M.Browse(grabResource("html/traitorTips/omniTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_TRAITOR_RADIO_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/traitorradiouplinkTips.html")
+#define SHOW_TRAITOR_PDA_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/traitorTips.html")
+#define SHOW_TRAITOR_HARDMODE_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/traitorhardTips.html")
+#define SHOW_TRAITOR_OMNI_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/omniTips.html")
 
 // mindslaves
-#define SHOW_MINDSLAVE_TIPS(M) M.Browse(grabResource("html/mindslave/implanted.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MINDSLAVE_DEATH_TIPS(M) M.Browse(grabResource("html/mindslave/death.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MINDSLAVE_OVERRIDE_TIPS(M) M.Browse(grabResource("html/mindslave/override.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MINDSLAVE_EXPIRED_TIPS(M) M.Browse(grabResource("html/mindslave/expire.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_MINDSLAVE_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/implanted.html")
+#define SHOW_MINDSLAVE_DEATH_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/death.html")
+#define SHOW_MINDSLAVE_OVERRIDE_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/override.html")
+#define SHOW_MINDSLAVE_EXPIRED_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/expire.html")
 
 // wizard
-#define SHOW_WIZARD_TIPS(M) M.Browse(grabResource("html/traitorTips/wizardTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_ADMINWIZARD_TIPS(M) M.Browse(grabResource("html/traitorTips/wizardcustomTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_POLYMORPH_TIPS(M) M.Browse(grabResource("html/polymorph.html"), POLYMORPH_TIPS_WINDOW)
+#define SHOW_WIZARD_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/wizardTips.html")
+#define SHOW_ADMINWIZARD_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/wizardcustomTips.html")
+#define SHOW_POLYMORPH_TIPS(M) M.Browse({"<meta http-equiv="refresh" content="0; url=[resource("html/polymorph.html")]">"}, POLYMORPH_TIPS_WINDOW)
 
 // nuke
-#define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/syndiTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/syndiTips.html")
 
 // revolution
-#define SHOW_REVHEAD_TIPS(M) M.Browse(grabResource("html/traitorTips/revTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_REVVED_TIPS(M) M.Browse(grabResource("html/traitorTips/revAdded.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_DEREVVED_TIPS(M) M.Browse(grabResource("html/traitorTips/revRemoved.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_REVHEAD_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/revTips.html")
+#define SHOW_REVVED_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/revAdded.html")
+#define SHOW_DEREVVED_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/revRemoved.html")
 
 // spy
-#define SHOW_SPY_TIPS(M) M.Browse(grabResource("html/traitorTips/spyTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_SPY_THIEF_TIPS(M) M.Browse(grabResource("html/traitorTips/spy_theft_Tips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_CONSPIRACY_TIPS(M) M.Browse(grabResource("html/traitorTips/conspiracyTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_SPY_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/spyTips.html")
+#define SHOW_SPY_THIEF_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/spy_theft_Tips.html")
+#define SHOW_CONSPIRACY_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/conspiracyTips.html")
 
 //gangers
-#define SHOW_GANG_MEMBER_TIPS(M) M.Browse(grabResource("html/traitorTips/gang_member_added.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_GANG_MEMBER_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/gang_member_added.html")
 
 // vampire (thrall uses the mindslave popup)
-#define SHOW_VAMPIRE_TIPS(M) M.Browse(grabResource("html/traitorTips/vampireTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_VAMPTHRALL_TIPS(M) M.Browse(grabResource("html/traitorTips/vampiricthrallTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_VAMPIRE_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/vampireTips.html")
+#define SHOW_VAMPTHRALL_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/vampiricthrallTips.html")
 
 // changeling
-#define SHOW_CHANGELING_TIPS(M) M.Browse(grabResource("html/traitorTips/changelingTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_HANDSPIDER_TIPS(M) M.Browse(grabResource("html/mindslave/handspider.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_EYESPIDER_TIPS(M) M.Browse(grabResource("html/mindslave/eyespider.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_LEGWORM_TIPS(M) M.Browse(grabResource("html/mindslave/legworm.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_CHANGELING_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/changelingTips.html")
+#define SHOW_HANDSPIDER_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/handspider.html")
+#define SHOW_EYESPIDER_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/eyespider.html")
+#define SHOW_LEGWORM_TIPS(M) SHOW_ANTAG_TIPS(M, "html/mindslave/legworm.html")
 
 // various others
-#define SHOW_GRINCH_TIPS(M) M.Browse(grabResource("html/traitorTips/grinchTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_HUNTER_TIPS(M) M.Browse(grabResource("html/traitorTips/predatorTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_WEREWOLF_TIPS(M) M.Browse(grabResource("html/traitorTips/werewolfTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_WRESTLER_TIPS(M) M.Browse(grabResource("html/traitorTips/wrestlerTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_BATTLE_ROYALE_TIPS(M) M.Browse(grabResource("html/traitorTips/battleTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MARTIAN_TIPS(M) M.Browse(grabResource("html/traitorTips/martianInfiltrator.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_KUDZU_TIPS(M) M.Browse(grabResource("html/traitorTips/kudzu.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_FOOTBALL_TIPS(M) M.Browse(grabResource("html/traitorTips/football.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_ZOMBIE_TIPS(M) M.Browse(grabResource("html/traitorTips/zombieTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_SLASHER_TIPS(M) M.Browse(grabResource("html/traitorTips/slasherTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_GRINCH_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/grinchTips.html")
+#define SHOW_HUNTER_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/predatorTips.html")
+#define SHOW_WEREWOLF_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/werewolfTips.html")
+#define SHOW_WRESTLER_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/wrestlerTips.html")
+#define SHOW_BATTLE_ROYALE_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/battleTips.html")
+#define SHOW_MARTIAN_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/martianInfiltrator.html")
+#define SHOW_KUDZU_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/kudzu.html")
+#define SHOW_FOOTBALL_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/football.html")
+#define SHOW_ZOMBIE_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/zombieTips.html")
+#define SHOW_SLASHER_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/slasherTips.html")
 
 // borg does things a little differently
 #define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
 #define BORG_EMAGGED_ALERT_MSG "You have been emagged and now have absolute free will.", "You have been emagged!"
 #define SHOW_EMAGGED_BORG_TIPS(M) boutput(M, BORG_EMAGGED_MSG); SPAWN_DBG(0) alert(M, BORG_EMAGGED_ALERT_MSG)
-#define SHOW_ROGUE_BORG_REMOVED_TIPS(M) M.Browse(grabResource("html/traitorTips/roguerobotRemoved.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_ROGUE_BORG_REMOVED_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/roguerobotRemoved.html")
 
 // antag removed by admin
-#define SHOW_ANTAG_REMOVED_TIPS(M) M.Browse(grabResource("html/traitorTips/antagRemoved.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_ANTAG_REMOVED_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/antagRemoved.html")
 
 // soulsteel posession
-#define SHOW_SOULSTEEL_TIPS(M) M.Browse(grabResource("html/soulsteel.html"), SOULSTEEL_TIPS_WINDOW)
+#define SHOW_SOULSTEEL_TIPS(M) M.Browse({"<meta http-equiv="refresh" content="0; url=[resource("html/soulsteel.html")]">"}, SOULSTEEL_TIPS_WINDOW)
 
 // slasher possession
-#define SHOW_SLASHER_POSSESSION_TIPS(M) M.Browse(grabResource("html/slasher_possession.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_SLASHER_POSSESSION_TIPS(M) SHOW_ANTAG_TIPS(M, "html/slasher_possession.html")
 
 // mindwipe from cloner zap chance
-#define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
+#define SHOW_MINDWIPE_TIPS(M) M.Browse({"<meta http-equiv="refresh" content="0; url=[resource("html/mindwipe.html")]">"}, MINDWIPE_TIPS_WINDOW)
 
 //Instructions for pod-wars gametype
-#define SHOW_POD_WARS(M) M.Browse(grabResource("html/traitorTips/pod_wars.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_POD_WARS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/pod_wars.html")
 
 // arcfiend
-#define SHOW_ARCFIEND_TIPS(M) M.Browse(grabResource("html/traitorTips/arcfiendTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_ARCFIEND_TIPS(M) SHOW_ANTAG_TIPS(M, "html/traitorTips/arcfiendTips.html")
 
 /datum/adminAntagPopups
 	var/html
