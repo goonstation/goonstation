@@ -30,6 +30,8 @@
 
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
+	if(!init_finished || init_unpausing)
+		return
 	if(AM.flags & UNCRUSHABLE)
 		return
 
