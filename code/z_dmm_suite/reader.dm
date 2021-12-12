@@ -262,20 +262,20 @@ turf
 	var
 		dmm_suite/preloader/dmm_preloader
 
-INIT_TYPE(atom, turf/newLoc)
-    if(isturf(newLoc))
-        var /dmm_suite/preloader/preloader = newLoc.dmm_preloader
-        if(preloader)
-            newLoc.dmm_preloader = null
-            preloader.load(src)
-    . = ..()
+	EXPLICIT_NEW(atom, turf/newLoc)
+		if(isturf(newLoc))
+			var /dmm_suite/preloader/preloader = newLoc.dmm_preloader
+			if(preloader)
+				newLoc.dmm_preloader = null
+				preloader.load(src)
+		. = ..()
 
 dmm_suite
 	preloader
 		parent_type = /datum
 		var
 			list/attributes
-		INIT(turf/loadLocation, list/_attributes)
+		EXPLICIT_NEW(turf/loadLocation, list/_attributes)
 			loadLocation.dmm_preloader = src
 			attributes = _attributes
 			. = ..()
