@@ -646,7 +646,7 @@
 				light.attach(src)
 			light.set_brightness(1)
 			light.set_color(0.4, 1, 0.4)
-			light.set_height(3)
+			light.set_height(1.2)
 			light.enable()
 
 	disposing()

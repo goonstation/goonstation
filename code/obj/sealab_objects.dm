@@ -146,7 +146,7 @@
 				light.attach(src)
 			light.set_brightness(1)
 			light.set_color(C.r/255, C.g * 0.25/255, C.b * 0.25/255)
-			light.set_height(3)
+			light.set_height(1.2)
 			light.enable()
 
 /obj/sea_plant/kelp
