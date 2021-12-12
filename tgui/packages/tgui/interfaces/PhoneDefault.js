@@ -12,21 +12,32 @@ export const PhoneDefault = (props, context) => {
     pendingCallMembers, // since i cant fucking figure out how to make an object constructor in jsx
     callHost,
     phonecallID,
+    elementSettings,
   } = data;
 
-  let processedContactList = Object.entries(contactList);
+  const hangupButton = (
+    <Button
+      onClick={() => act("leaveCall")}
+    >
+      Hang up
+    </Button>
+  );
 
   return (
     <Window>
       <Window.Content scrollable>
+        {!!elementSettings["hangupButton"] && (
+          hangupButton
+        )}
         <Section title="Contact List">
           <Box>
-            {processedContactList.map((contact) => (
+            {contactList.map((contact) => (
               <LabeledList label={contact["name"]} key={contact["id"]}>
                 {
-                  <Button>
-                    onClick={() => act("makeCall", { target: contact["id"], name: contact["name"] })}
-                    Make Call
+                  <Button
+                    onClick={() => act("makeCall", { target: contact["id"] })}
+                  >
+                    {contact["name"]}
                   </Button>
                 }
               </LabeledList>

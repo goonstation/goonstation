@@ -1,3 +1,343 @@
+/obj/machinery/phoneBeta
+	name = "phone"
+	icon = 'icons/obj/machines/phones.dmi'
+	desc = "A landline phone. In space. Where there is no land. Hmm."
+	icon_state = "phone"
+	anchored = 1
+	density = 0
+	mats = 25
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	_health = 50
+	var/emagged = FALSE
+	var/labelling = FALSE
+	var/obj/item/phoneHandsetBeta/handset = null
+	var/lastRing = 0
+	var/phoneIcon = "phone"
+	var/ringingIcon = "phone_ringing"
+	var/answeredIcon = "phone_answered"
+	var/dialIcon = "phone_dial"
+	var/connected = TRUE
+	var/nameOverride = FALSE // for mappers who want to have custom phone names; set the actual name var of the phone, and this to TRUE
+
+	var/datum/phone/phoneDatum = null
+
+// a good deal of this code is copied from the old phone code, so there might be oversights/bugs remaining that I failed to catch - nex
+
+	New()
+		..() // Set up power usage, subscribe to loop, yada yada yada
+		icon_state = "[phoneIcon]"
+		var/area/location = get_area(src)
+
+		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
+		if(istype(location,/area/station/security))
+			color = "#ff0000"
+		else if(istype(location,/area/station/bridge))
+			color = "#00aa00"
+		else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
+			color = "#aaaa00"
+		else if(istype(location, /area/station/science))
+			color = "#9933ff"
+		else if(istype(location, /area/station/medical))
+			color = "#0000ff"
+		else
+			color = "#663300"
+		overlays += image('icons/obj/machines/phones.dmi',"[dialIcon]")
+		// Generate a name for the phone.
+
+		phoneDatum = new /datum/phone/landline(src)
+
+		if(isnull(phoneDatum.phoneName) && !nameOverride)
+			var/temp_name = name
+			if(temp_name == initial(name) && location)
+				temp_name = location.name
+			var/name_counter = 1
+			for_by_tcl(M, /datum/phone)
+				if(M.phoneName && M.phoneName == temp_name)
+					name_counter++
+			if(name_counter > 1)
+				temp_name = "[temp_name] [name_counter]"
+			setName(temp_name)
+		else if(!nameOverride)
+			setName(phoneDatum.phoneName)
+		else
+			phoneDatum.phoneName = name
+
+		START_TRACKING
+
+
+	proc/setName(var/newName = "")
+		phoneDatum.phoneName = newName
+		name = "phone ([newName])"
+
+
+	disposing()
+
+		qdel(phoneDatum)
+		phoneDatum = null
+
+		if (handset)
+			handset.parent = null
+		handset = null
+
+		STOP_TRACKING
+		..()
+
+
+	attack_hand(mob/living/user as mob)
+		..(user)
+		if(handset)
+			if(!connected)
+				boutput(user,"<span class='alert'>As you reach for the dial you notice that the cord has been cut, you can't possibly try to make a call!</span>")
+			if(handset?.loc == user)
+				phoneDatum.ui_interact(user)
+			return
+
+		icon_state = "[answeredIcon]"
+		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0) // we dont call handset.outputSound() since we're guaranteed to have a user here
+
+		handset = new /obj/item/phoneHandsetBeta(src,user)
+		user.put_in_hand_or_drop(handset)
+
+		if(!connected)
+			boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
+			return
+		if(phoneDatum.incomingCall)
+			phoneDatum.joinPhoneCall(phoneDatum.incomingCall)
+			icon_state = "[answeredIcon]"
+			playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
+			return
+		phoneDatum.ui_interact(user)
+
+
+
+	attackby(obj/item/P as obj, mob/living/user as mob)
+		if(istype(P, /obj/item/phoneHandsetBeta))
+			var/obj/item/phoneHandsetBeta/PH = P
+			if(PH.parent == src)
+				user.drop_item(PH)
+				hangUp()
+			else if(user)
+				boutput(user,"<span class='alert'>That handset doesn't belong to that phone, it won't fit back into it, clearly!</span>")
+			return
+		if(istype(P,/obj/item/wirecutters))
+				handleCutWire(user)
+			return
+		if(istype(P,/obj/item/device/multitool))
+			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
+			t = sanitize(html_encode(t))
+			if(t && length(t) > 50)
+				return
+			if(t)
+				src.setName(t)
+			return
+		..()
+		src._health -= P.force
+		attack_particle(user,src)
+		if(src._health <= 0)
+			src.hangUp()
+			src.gib(src.loc)
+			qdel(src)
+
+	attack_ai(mob/user as mob)
+		return
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		src.icon_state = "[ringingIcon]"
+		if (!src.emagged)
+			if(user)
+				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
+			src.emagged = TRUE
+			return TRUE
+		return FALSE
+
+	process()
+		if(src.emagged)
+			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
+			if(!handset)
+				src.icon_state = "[ringingIcon]"
+			return
+		if(!src.connected)
+			return
+		if(..())
+			return
+
+		src.doRing()
+
+	/// callStart is only TRUE when we an incoming call is first received, forcing it to immediately ring
+	proc/doRing(callStart = FALSE)
+		var/pendingCallMembers = phoneDatum.currentPhoneCall?.pendingMembers
+		lastRing++
+		if(phoneDatum.incomingCall && ((src.lastRing >= 2) || callStart))
+			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,40,0)
+			src.icon_state = "[ringingIcon]"
+			src.lastRing = 0
+
+		else if((length(pendingCallMembers) > 0) && ((src.lastRing >= 2) || callStart))
+			src.lastRing = 0
+			handset.outputSound("sound/machines/phones/ring_outgoing.ogg" ,40,0)
+
+
+	proc/hangUp()
+		phoneDatum.disconnectFromCall()
+		if(handset) // this should always be the case but just in case it's not for some absolutely bizarre reason
+			playsound(loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+			qdel(handset)
+
+
+	/// Called when we get a new incoming phonecall and need to start ringing
+	proc/receiveCall()
+		doRing(callStart = TRUE)
+
+
+	proc/handleCutWire(var/mob/user)
+		if(connected)
+			if(user)
+				boutput(user,"<span class='alert'>You cut the phone line leading to the phone.</span>")
+			connected = FALSE
+			phoneDatum.disconnectFromCall()
+		else
+			if(user)
+				boutput(user,"<span class='alert'>You repair the line leading to the phone.</span>")
+			connected = TRUE
+
+
+
+/obj/item/phoneHandsetBeta
+	name = "phone handset"
+	icon = 'icons/obj/machines/phones.dmi'
+	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
+	var/obj/machinery/phoneBeta/parent = null
+	flags = TALK_INTO_HAND
+	w_class = 1
+
+	New(var/obj/machinery/phoneBeta/parentPhone)
+		if(!parentPhone)
+			return
+		..()
+		icon_state = "handset"
+		parent = parentPhone
+		color = parentPhone.color
+		processing_items.Add(src)
+
+	disposing()
+		parent.handset = null
+		parent = null
+		processing_items.Remove(src)
+		..()
+
+	process()
+		if(!src.parent)
+			qdel(src)
+			return
+		if(get_dist(src,src.parent) > 1)
+			var/mob/living/holder = null
+			if(istype(src.loc, /mob/living))
+				holder = src.loc
+				boutput(holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
+				holder.drop_item(src)
+			src.parent.hangUp()
+
+	talk_into(mob/M as mob, text, secure, real_name, lang_id)
+		..()
+		if(!src.parent)
+			return // how did we get here?
+		if(src.loc != M)
+			return // not the person holding us talking, ignore em!
+		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phoneDatum.phoneName]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
+		parent.phoneDatum.sendSpeech(M, processed, secure, real_name, lang_id)
+
+
+	proc/outputSpeech(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
+		var/mob/user
+		if(!istype(src.loc, /mob/living))
+			return
+		user = src.loc
+		if(!(src in user.equipped_list()))
+			return // handsets shouldn't be able to go anywhere except hands so this is fine; replace with an in_hands proc or w/e if one is made please!!
+		user.show_message(text, 2)
+		for(var/obj/item/device/radio/intercom/I in range(3, user))
+			I.talk_into(M, text, null, M.real_name, lang_id)
+
+	/// Handles all the logic for if we should even be trying to output sound in the first place
+	proc/outputSound(soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+		if(!istype(src.loc, /mob/living))
+			return
+		var/mob/living/user = src.loc
+		if(!(src in user.equipped_list()))
+			return
+		user.playsound_local(user, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+
+/datum/phone/landline
+	var/obj/machinery/phoneBeta/ourHolder = null // we can't override holder, so we make our own for when we need to refer to a handset or something
+	var/dialing = FALSE // for temporarily disabling the ability to dial, so you can't just spam-click the UI
+
+
+	New(var/atom/creator)
+		..()
+		ourHolder = creator
+
+	startPhoneCall(var/call_list, var/forceStart, var/doGroupCall = FALSE)
+		if(!ourHolder.connected)
+			return FALSE
+		if(currentPhoneCall) // we have duplicate checks here with the base proc because we don't wanna make the dial noise if they fail
+			if(forceStart)
+				disconnectFromCall()
+			else return
+		if(!call_list && !forceStart)
+			return
+		if(dialing)
+			return
+
+		handleSound("sound/machines/phones/dial.ogg",50,0)
+		dialing = TRUE
+		SPAWN_DBG(4 SECONDS)
+			dialing = FALSE
+			if(!ourHolder.handset)
+				return // did we hang up in these 4 seconds?
+			. = ..()
+			if(.)
+				ourHolder.doRing(callStart = TRUE)
+
+	receiveInvite()
+		if(ourHolder.handset)
+			return FALSE // we can't receive an invite if we're holding the handset!!
+		if(!ourHolder.connected)
+			return FALSE
+		. = ..()
+		if(.)
+			ourHolder.doRing(callStart = TRUE)
+
+	canContact()
+		if(!ourHolder.connected)
+			return FALSE
+		. = ..()
+
+	getContacts()
+		if(!ourHolder.connected)
+			return
+		. = ..()
+
+	speechReceived(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
+		ourHolder.handset?.outputSpeech(source, M, text, secure, real_name, lang_id)
+
+	onDisconnect(datum/phonecall/leftPhoneCall)
+		..()
+		if(ourHolder.handset)
+			return
+		ourHolder.icon_state = ourHolder.phoneIcon
+		ourHolder.lastRing = 0
+
+	onRemoteDisconnect()
+		handleSound("sound/machines/phones/remote_hangup.ogg",50,0)
+
+	onRemoteJoin()
+		handleSound("sound/machines/phones/remote_answer.ogg",50,0)
+
+	handleSound(soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+		ourHolder.handset?.outputSound(soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+
+
+/* ======= DEPRECATED ======= */
 /obj/machinery/phone
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
