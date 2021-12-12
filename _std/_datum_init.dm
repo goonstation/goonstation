@@ -7,6 +7,7 @@ var/global/init_unpausing = FALSE
 /datum/var/tmp/init_finished = FALSE
 
 proc/pause_init()
+	UNTIL(!init_unpausing) // wait till last unpausing finishes
 	global.init_paused++
 	if(global.init_paused > 1)
 		return
