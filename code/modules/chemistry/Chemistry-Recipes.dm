@@ -2481,11 +2481,11 @@ datum
 							continue
 
 						var/checkdist = get_dist(M, location)
-						var/weak = max(0, 2 * (3 - checkdist))
-						var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
-						var/ear_damage = max(0, 2 * (3 - checkdist))
-						var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-						var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
+						var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
+						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+						var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
+						var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+						var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
 
 						if (issilicon(M))
 							M.apply_sonic_stun(weak, 0)
@@ -2494,6 +2494,7 @@ datum
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
+					created_volume /= amt
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						if (sound_plays > 0)
 							sound_plays--
@@ -2512,11 +2513,11 @@ datum
 								continue
 
 							var/checkdist = get_dist(M, location)
-							var/weak = max(0, 2 * (3 - checkdist))
-							var/misstep = clamp(10 + 6 * (5 - checkdist), 0, 40)
-							var/ear_damage = max(0, 2 * (3 - checkdist))
-							var/ear_tempdeaf = max(0, 2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-							var/stamina = clamp(50 + 10 * (7 - checkdist), 0, 120)
+							var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
+							var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+							var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
+							var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+							var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
 
 							if (issilicon(M))
 								M.apply_sonic_stun(weak, 0)
