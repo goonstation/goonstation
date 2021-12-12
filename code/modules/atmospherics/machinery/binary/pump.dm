@@ -29,6 +29,7 @@ obj/machinery/atmospherics/binary/pump
 	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		ui = new/datum/pump_ui/basic_pump_ui(src)
 
 	attack_hand(mob/user)
 		//on = !on
@@ -93,11 +94,6 @@ obj/machinery/atmospherics/binary/pump
 
 	var/frequency = 0
 	var/id = null
-
-	initialize()
-		..()
-		ui = new/datum/pump_ui/basic_pump_ui(src)
-
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

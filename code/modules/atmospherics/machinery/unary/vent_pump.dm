@@ -87,6 +87,7 @@
 		..()
 		if(frequency)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		UpdateIcon()
 
 	update_icon()
 		if(on&&node)
@@ -170,10 +171,6 @@
 
 	var/frequency = 0
 	var/id = null
-
-	initialize()
-		..()
-		UpdateIcon()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

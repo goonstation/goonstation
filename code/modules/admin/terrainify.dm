@@ -274,8 +274,7 @@ var/datum/station_zlevel_repair/station_repair = new
 
 					if (prob(8))
 						var/obj/plant = pick(childrentypesof(/obj/sea_plant))
-						var/obj/sea_plant/P = new plant(space_turf)
-						P.initialize()
+						new plant(space_turf)
 
 					if(hostile_mob_toggle)
 						if (prob(1) && prob(2))
@@ -286,16 +285,13 @@ var/datum/station_zlevel_repair/station_repair = new
 							var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
 							new fish(space_turf)
 						else if (prob(1) && prob(9) && prob(90))
-							var/obj/naval_mine/O = 0
 							if (prob(20))
 								if (prob(70))
-									O = new /obj/naval_mine/standard(space_turf)
+									new /obj/naval_mine/standard(space_turf)
 								else
-									O = new /obj/naval_mine/vandalized(space_turf)
+									new /obj/naval_mine/vandalized(space_turf)
 							else
-								O = new /obj/naval_mine/rusted(space_turf)
-							if (O)
-								O.initialize()
+								new /obj/naval_mine/rusted(space_turf)
 
 						if (prob(2) && prob(25))
 							new /obj/overlay/tile_effect/cracks/spawner/trilobite(space_turf)
@@ -309,8 +305,7 @@ var/datum/station_zlevel_repair/station_repair = new
 
 					if (prob(1) && prob(9))
 						var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
-						var/obj/storage/crate/trench_loot/created_loot = new C(space_turf)
-						created_loot.initialize()
+						new C(space_turf)
 
 					LAGCHECK(LAG_MED)
 				shippingmarket.clear_path_to_market()

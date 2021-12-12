@@ -10,7 +10,8 @@
 	plane = PLANE_FLOOR // hence, they should be on the same plane!
 	var/merge_with_turf = 1
 
-	initialize()
+	INIT()
+		..()
 		if (src.merge_with_turf)
 			var/turf/T = get_turf(src)
 			if (!T)
@@ -25,10 +26,6 @@
 			//world.log << md5hasho
 			if (T.UpdateOverlays(I, md5hasho))
 				qdel(src)
-			else
-				return ..()
-		else
-			return ..()
 
 	Move()
 		return 0

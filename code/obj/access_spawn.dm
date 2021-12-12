@@ -10,13 +10,6 @@
 
 	INIT()
 		..()
-		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(5 DECI SECONDS)
-				src.setup()
-				qdel(src)
-
-	initialize()
-		..()
 		src.setup()
 		qdel(src)
 

@@ -6,7 +6,6 @@ obj/machinery/atmospherics/filter
 	name = "Gas filter"
 
 	dir = SOUTH
-	initialize_directions = SOUTH|NORTH|WEST
 
 	var/on = 0
 
@@ -36,18 +35,6 @@ Filter types:
 
 	INIT()
 		..()
-		switch(dir)
-			if(NORTH)
-				initialize_directions = NORTH|EAST|SOUTH
-			if(SOUTH)
-				initialize_directions = NORTH|SOUTH|WEST
-			if(EAST)
-				initialize_directions = EAST|WEST|SOUTH
-			if(WEST)
-				initialize_directions = NORTH|EAST|WEST
-		if(radio_controller)
-			initialize()
-
 		air_in = new /datum/gas_mixture
 		air_out1 = new /datum/gas_mixture
 		air_out2 = new /datum/gas_mixture
@@ -55,6 +42,41 @@ Filter types:
 		air_in.volume = 200
 		air_out1.volume = 200
 		air_out2.volume = 200
+
+		if(node_out1 && node_in) return
+
+		var/node_in_connect = turn(dir, -180)
+		var/node_out1_connect = turn(dir, -90)
+		var/node_out2_connect = dir
+
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_out1_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node_out1 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_out2_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node_out2 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_in_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node_in = target
+				break
+
+		UpdateIcon()
+
+	get_connect_directions()
+		switch(dir)
+			if(NORTH)
+				. = NORTH|EAST|SOUTH
+			if(SOUTH)
+				. = NORTH|SOUTH|WEST
+			if(EAST)
+				. = EAST|WEST|SOUTH
+			if(WEST)
+				. = NORTH|EAST|WEST
 
 	disposing()
 
@@ -212,33 +234,6 @@ Filter types:
 		new_network.normal_members += src
 
 		return null
-
-
-
-	initialize()
-		if(node_out1 && node_in) return
-
-		var/node_in_connect = turn(dir, -180)
-		var/node_out1_connect = turn(dir, -90)
-		var/node_out2_connect = dir
-
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_out1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node_out1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_out2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node_out2 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_in_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node_in = target
-				break
-
-		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

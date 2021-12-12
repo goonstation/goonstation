@@ -48,10 +48,6 @@ INIT_TYPE(/obj/machinery/conveyor)
 	basedir = dir
 	setdir()
 
-/obj/machinery/conveyor/initialize()
-	..()
-	setdir()
-
 /obj/machinery/conveyor/process()
 	if(status & NOPOWER || !operating)
 		return

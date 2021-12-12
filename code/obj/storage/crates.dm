@@ -639,15 +639,6 @@
 
 	INIT()
 		..()
-		if (current_state == GAME_STATE_PLAYING)
-			initialize()
-
-	disposing()
-		light = 0
-		..()
-
-	initialize()
-		..()
 		if (!init)
 			init = 1
 			if (!light)
@@ -657,6 +648,10 @@
 			light.set_color(0.4, 1, 0.4)
 			light.set_height(3)
 			light.enable()
+
+	disposing()
+		light = 0
+		..()
 
 	meds
 		spawn_contents = list(/obj/item/storage/firstaid/old = 2,

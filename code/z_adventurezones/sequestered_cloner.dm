@@ -17,8 +17,8 @@
 	noalerts = 1
 	aidisabled = 1
 
-	initialize()
-		. = ..()
+	INIT()
+		..()
 		for(var/obj/cable/C in src.loc)
 			C.update_network()
 			break

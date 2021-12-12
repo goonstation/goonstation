@@ -11,7 +11,7 @@ obj/machinery/atmospherics/binary/passive_gate
 	var/target_pressure = ONE_ATMOSPHERE
 	var/datum/pump_ui/ui
 
-	initialize()
+	INIT()
 		..()
 		ui = new/datum/pump_ui/passive_gate_ui(src)
 

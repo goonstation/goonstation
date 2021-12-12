@@ -4,7 +4,6 @@
 	name = "Connector Port"
 	desc = "For connecting portables devices related to atmospherics control."
 	dir = SOUTH
-	initialize_directions = SOUTH
 	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/portable_atmospherics/connected_device
 	var/obj/machinery/atmospherics/node
@@ -23,8 +22,20 @@
 		dir = WEST
 
 	INIT()
-		initialize_directions = dir
 		..()
+		if(node) return
+
+		var/node_connect = dir
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node = target
+				break
+
+		UpdateIcon()
+
+	get_connect_directions()
+		. = dir
 
 	network_disposing(datum/pipe_network/reference)
 		if (network == reference)
@@ -81,18 +92,6 @@
 		node = null
 
 		..()
-
-	initialize()
-		if(node) return
-
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
-		UpdateIcon()
 
 	build_network()
 		if(!network && node)

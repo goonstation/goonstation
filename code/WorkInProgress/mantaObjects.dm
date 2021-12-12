@@ -808,7 +808,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		light = 0
 		..()
 
-	initialize()
+	INIT()
 		..()
 		if (!init)
 			init = 1

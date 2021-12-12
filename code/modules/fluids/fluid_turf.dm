@@ -163,16 +163,12 @@
 		if (spawningFlags & SPAWN_PLANTS)
 			if (prob(8))
 				var/obj/plant = pick( src.z == 5 ? childrentypesof(/obj/sea_plant) : (childrentypesof(/obj/sea_plant) - /obj/sea_plant/anemone/lit) )
-				var/obj/sea_plant/P = new plant(src)
-				//mbc : bleh init() happens BFORRE this, most likely
-				P.initialize()
+				new plant(src)
 
 		if (spawningFlags & SPAWN_PLANTSMANTA)
 			if (prob(8))
 				var/obj/plant = pick( src.z == 5 ? childrentypesof(/obj/sea_plant_manta) : (childrentypesof(/obj/sea_plant_manta) - /obj/sea_plant_manta/anemone/lit) )
-				var/obj/sea_plant_manta/P = new plant(src)
-				//mbc : bleh init() happens BFORRE this, most likely
-				P.initialize()
+				new plant(src)
 
 		if(spawningFlags & SPAWN_FISH) //can spawn bad fishy
 			if (src.z == 5 && prob(1) && prob(2))
@@ -183,16 +179,13 @@
 				var/mob/fish = pick(childrentypesof(/mob/living/critter/aquatic/fish))
 				new fish(src)
 			else if (src.z == 5 && prob(1) && prob(9) && prob(90))
-				var/obj/naval_mine/O = 0
 				if (prob(20))
 					if (prob(70))
-						O = new /obj/naval_mine/standard(src)
+						new /obj/naval_mine/standard(src)
 					else
-						O = new /obj/naval_mine/vandalized(src)
+						new /obj/naval_mine/vandalized(src)
 				else
-					O = new /obj/naval_mine/rusted(src)
-				if (O)
-					O.initialize()
+					new /obj/naval_mine/rusted(src)
 
 		if(spawningFlags & SPAWN_TRILOBITE)
 			if (prob(17))
@@ -209,8 +202,7 @@
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))
 				var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
-				var/obj/storage/crate/trench_loot/created_loot = new C(src)
-				created_loot.initialize()
+				new C(src)
 
 	levelupdate()
 		for(var/obj/O in src)

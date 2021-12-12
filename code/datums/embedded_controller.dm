@@ -466,7 +466,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	var/exterior_door_tag
 	var/interior_door_tag
 
-	initialize()
+	INIT()
 		..()
 
 		var/datum/computer/file/embedded_program/access_controller/new_prog = new
@@ -535,7 +535,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	var/sensor_tag
 	var/sanitize_external
 
-	initialize()
+	INIT()
 		..()
 
 		var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
@@ -614,7 +614,7 @@ obj/machinery/embedded_controller/radio/department_controller
 	var/door_tag
 	var/locked = 1
 
-	initialize()
+	INIT()
 		..()
 
 		var/datum/computer/file/embedded_program/department_controller/new_prog = new

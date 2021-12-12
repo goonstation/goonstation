@@ -39,15 +39,16 @@
 		light.set_color(0, 0.8, 0.5)
 		build_icon()
 		pipe_direction = src.dir
-		initialize_directions = pipe_direction
 
-	initialize()
 		if(node) return
 		var/node_connect = pipe_direction
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
+			if(target.get_connect_directions() & get_dir(target,src))
 				node = target
 				break
+
+	get_connect_directions()
+		. = dir
 
 	disposing()
 		for (var/mob/M in src)

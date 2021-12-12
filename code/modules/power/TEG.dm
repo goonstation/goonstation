@@ -78,12 +78,9 @@
 
 	var/datum/pump_ui/ui
 
-	initialize()
-		..()
-		ui = new/datum/pump_ui/circulator_ui(src)
-
 	INIT()
 		. = ..()
+		ui = new/datum/pump_ui/circulator_ui(src)
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12)
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)

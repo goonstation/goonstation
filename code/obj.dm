@@ -227,8 +227,6 @@
 		else
 			return null
 
-	proc/initialize()
-
 	attackby(obj/item/I as obj, mob/user as mob)
 // grabsmash
 		if (istype(I, /obj/item/grab/))

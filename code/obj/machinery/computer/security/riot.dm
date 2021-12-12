@@ -17,7 +17,8 @@
 	var/authed = 0
 	var/area/armory_area
 
-	initialize()
+	INIT()
+		..()
 		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
 		if (!armory_area || armory_area.contents.len <= 1)
 			armory_area = get_area_by_type(/area/station/security/armory)
@@ -29,7 +30,6 @@
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		*/
-		..()
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)

@@ -47,9 +47,9 @@
 	var/A_test_html_out = ""
 	var/A_header
 
-	initialize()
-		src.first()
-		return
+	EXPLICIT_NEW()
+		..()
+		REGISTER_POST_INIT(first)
 
 	process()
 		if(!power) return

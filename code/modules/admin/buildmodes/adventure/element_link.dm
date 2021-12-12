@@ -15,14 +15,10 @@
 		if(triggerable)
 			triggerable_id = triggerable
 			triggerable = null
-		if(current_state > GAME_STATE_PREGAME)
-			SPAWN_DBG(0.1 SECONDS)
-				src.initialize()
 
-	initialize()
-		src.link_elements()
+	EXPLICIT_NEW()
 		..()
-		qdel(src)
+		REGISTER_POST_INIT(link_elements)
 
 	proc/link_elements()
 
@@ -70,3 +66,4 @@
 
 					X.triggered += Y
 					X.triggered[Y] = act_type
+		qdel(src)

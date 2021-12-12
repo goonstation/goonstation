@@ -30,6 +30,7 @@ obj/machinery/atmospherics/binary/volume_pump
 	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		ui = new/datum/pump_ui/volume_pump_ui(src)
 
 	update_icon()
 		if(node1&&node2)
@@ -75,10 +76,6 @@ obj/machinery/atmospherics/binary/volume_pump
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 		return 1
-
-	initialize()
-		..()
-		ui = new/datum/pump_ui/volume_pump_ui(src)
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))

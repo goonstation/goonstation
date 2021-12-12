@@ -4,7 +4,6 @@ obj/machinery/atmospherics/valve
 	name = "manual valve"
 	desc = "A pipe valve"
 	dir = SOUTH
-	initialize_directions = SOUTH|NORTH
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	var/open = 0
@@ -107,11 +106,48 @@ obj/machinery/atmospherics/valve
 	INIT()
 		..()
 		UnsubscribeProcess()
+
+		if(node1 && node2) return
+
+		var/connect_directions
+
+		switch(dir)
+			if(NORTH)
+				connect_directions = NORTH|SOUTH
+			if(SOUTH)
+				connect_directions = NORTH|SOUTH
+			if(EAST)
+				connect_directions = EAST|WEST
+			if(WEST)
+				connect_directions = EAST|WEST
+			else
+				connect_directions = dir
+
+		for(var/direction in cardinal)
+			if(direction&connect_directions)
+				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+					if(target.get_connect_directions() & get_dir(target,src))
+						connect_directions &= ~direction
+
+						node1 = target
+						break
+				break
+
+		for(var/direction in cardinal)
+			if(direction&connect_directions)
+				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+					if(target.get_connect_directions() & get_dir(target,src))
+
+						node2 = target
+						break
+				break
+
+	get_connect_directions()
 		switch(dir)
 			if(NORTH, SOUTH)
-				initialize_directions = NORTH|SOUTH
+				. = NORTH|SOUTH
 			if(EAST, WEST)
-				initialize_directions = EAST|WEST
+				. = EAST|WEST
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
@@ -226,44 +262,6 @@ obj/machinery/atmospherics/valve
 		if(open && (!node1 || !node2))
 			close()
 
-		return
-
-	initialize()
-		if(node1 && node2) return
-
-		var/connect_directions
-
-		switch(dir)
-			if(NORTH)
-				connect_directions = NORTH|SOUTH
-			if(SOUTH)
-				connect_directions = NORTH|SOUTH
-			if(EAST)
-				connect_directions = EAST|WEST
-			if(WEST)
-				connect_directions = EAST|WEST
-			else
-				connect_directions = dir
-
-		for(var/direction in cardinal)
-			if(direction&connect_directions)
-				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-					if(target.initialize_directions & get_dir(target,src))
-						connect_directions &= ~direction
-
-						node1 = target
-						break
-				break
-
-		for(var/direction in cardinal)
-			if(direction&connect_directions)
-				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-					if(target.initialize_directions & get_dir(target,src))
-
-						node2 = target
-						break
-				break
-
 	build_network()
 		if(!network_node1 && node1)
 			network_node1 = new /datum/pipe_network()
@@ -321,7 +319,6 @@ obj/machinery/atmospherics/manifold_valve
 	desc = "A pipe valve"
 
 	dir = SOUTH
-	initialize_directions = EAST|WEST|NORTH
 
 	var/divert = 0
 
@@ -355,15 +352,40 @@ obj/machinery/atmospherics/manifold_valve
 	INIT()
 		..()
 		UnsubscribeProcess()
+		if(node1 && node2 && node3) return
+
+		var/node1_connect = turn(dir, 90)
+		var/node2_connect = turn(dir, -90)
+		var/node3_connect = turn(dir, 180)
+
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node1 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node2 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node3 = target
+				break
+
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
+	get_connect_directions()
 		switch(dir)
 			if(SOUTH)
-				initialize_directions = EAST|WEST|NORTH
+				. = EAST|WEST|NORTH
 			if(NORTH)
-				initialize_directions = WEST|EAST|SOUTH
+				. = WEST|EAST|SOUTH
 			if(EAST)
-				initialize_directions = NORTH|SOUTH|WEST
+				. = NORTH|SOUTH|WEST
 			if(WEST)
-				initialize_directions = SOUTH|NORTH|EAST
+				. = SOUTH|NORTH|EAST
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 		if(reference == node1)
@@ -490,31 +512,6 @@ obj/machinery/atmospherics/manifold_valve
 		signal.data["timestamp"] = air_master.current_cycle
 		signal.data["valve_diverting"] = divert
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-	initialize()
-		if(node1 && node2 && node3) return
-
-		var/node1_connect = turn(dir, 90)
-		var/node2_connect = turn(dir, -90)
-		var/node3_connect = turn(dir, 180)
-
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node3 = target
-				break
-
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()
 		if(!network_node1 && node1)

@@ -571,7 +571,7 @@ INIT_TYPE(/obj/machinery/light)
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
 /obj/machinery/light/proc/seton(var/s)
-	on = (s && current_lamp.light_status == LIGHT_OK)
+	on = (s && (!init_finished || current_lamp.light_status == LIGHT_OK))
 	update()
 
 // examine verb

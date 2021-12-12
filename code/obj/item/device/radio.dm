@@ -1017,8 +1017,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		src.icon_state = "transmitter"
 		boutput(user, "No longer transmitting.")
 
-/obj/item/device/radio/intercom/loudspeaker/initialize()
-
+INIT_TYPE(/obj/item/device/radio/intercom/loudspeaker)
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()

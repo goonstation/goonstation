@@ -1214,6 +1214,13 @@ obj/machinery/embedded_controller/radio/maintpanel
 					src.wired_connection = test_link
 					src.wired_connection.master = src
 
+		var/datum/computer/file/embedded_program/maintpanel/new_prog = new
+		new_prog.master = src
+		program = new_prog
+
+		if (setup_string)
+			new_prog.do_setup(setup_string)
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (user && src.allowed(user))
@@ -1239,17 +1246,6 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 		else
 			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 100)
-
-	initialize()
-		..()
-
-		var/datum/computer/file/embedded_program/maintpanel/new_prog = new
-		new_prog.master = src
-		program = new_prog
-
-		if (setup_string)
-			new_prog.do_setup(setup_string)
-
 
 	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!signal || signal.encryption)

@@ -135,7 +135,7 @@
 		light = 0
 		..()
 
-	initialize()
+	INIT()
 		..()
 		if (!init)
 			init = 1

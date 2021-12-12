@@ -13,7 +13,8 @@ Pipelines + Other Objects -> Pipe network
 obj/machinery/atmospherics
 	anchored = 1
 
-	var/initialize_directions = 0
+	proc/get_connect_directions()
+		return 0
 
 	process()
 		build_network()

@@ -12,7 +12,6 @@ obj/machinery/atmospherics/mixer
 	name = "Gas mixer"
 
 	dir = SOUTH
-	initialize_directions = SOUTH|NORTH|WEST
 
 	var/flipped = 0
 
@@ -63,28 +62,6 @@ obj/machinery/atmospherics/mixer
 
 	INIT()
 		..()
-		switch(dir)
-			if(NORTH)
-				if(flipped)
-					initialize_directions = NORTH|WEST|SOUTH
-				else
-					initialize_directions = NORTH|EAST|SOUTH
-			if(EAST)
-				if(flipped)
-					initialize_directions = EAST|NORTH|WEST
-				else
-					initialize_directions = EAST|SOUTH|WEST
-			if(SOUTH)
-				if(flipped)
-					initialize_directions = SOUTH|EAST|NORTH
-				else
-					initialize_directions = SOUTH|WEST|NORTH
-			if(WEST)
-				if(flipped)
-					initialize_directions = WEST|SOUTH|EAST
-				else
-					initialize_directions = WEST|NORTH|EAST
-
 		air_in1 = new /datum/gas_mixture
 		air_in2 = new /datum/gas_mixture
 		air_out = new /datum/gas_mixture
@@ -92,6 +69,53 @@ obj/machinery/atmospherics/mixer
 		air_in1.volume = 200
 		air_in2.volume = 200
 		air_out.volume = 300
+
+		if(node_in1 && node_out) return
+
+		var/node_out_connect = dir
+		var/node_in1_connect = flipped ? turn(dir, 90) : turn(dir, -90)
+		var/node_in2_connect = turn(dir, -180)
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_in1_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node_in1 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_in2_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node_in2 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_out_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node_out = target
+				break
+
+		UpdateIcon()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
+	get_connect_directions()
+		switch(dir)
+			if(NORTH)
+				if(flipped)
+					. = NORTH|WEST|SOUTH
+				else
+					. = NORTH|EAST|SOUTH
+			if(EAST)
+				if(flipped)
+					. = EAST|NORTH|WEST
+				else
+					. = EAST|SOUTH|WEST
+			if(SOUTH)
+				if(flipped)
+					. = SOUTH|EAST|NORTH
+				else
+					. = SOUTH|WEST|NORTH
+			if(WEST)
+				if(flipped)
+					. = WEST|SOUTH|EAST
+				else
+					. = WEST|NORTH|EAST
 
 	disposing()
 
@@ -313,33 +337,6 @@ obj/machinery/atmospherics/mixer
 		new_network.normal_members += src
 
 		return null
-
-
-
-	initialize()
-		if(node_in1 && node_out) return
-
-		var/node_out_connect = dir
-		var/node_in1_connect = flipped ? turn(dir, 90) : turn(dir, -90)
-		var/node_in2_connect = turn(dir, -180)
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_in1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node_in1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_in2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node_in2 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_out_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node_out = target
-				break
-
-		UpdateIcon()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()
 		if(!network_in1 && node_in1)

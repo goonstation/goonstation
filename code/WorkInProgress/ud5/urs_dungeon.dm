@@ -10,16 +10,9 @@
 	var/list/triggerables = list()
 	var/is_unpress = 0
 
-	INIT()
+	EXPLICIT_NEW()
 		..()
-		if(current_state > GAME_STATE_PREGAME)
-			SPAWN_DBG(0.1 SECONDS)
-				src.initialize()
-
-	initialize()
-		src.link_elements()
-		..()
-		qdel(src)
+		REGISTER_POST_INIT(link_elements)
 
 	proc/link_elements()
 
@@ -75,6 +68,7 @@
 
 							X.triggered += Y
 							X.triggered[Y] = act_type
+		qdel(src)
 
 
 /obj/adventurepuzzle/triggerable/bomb

@@ -22,9 +22,6 @@
 		..()
 		if(frequency)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
-
-	initialize()
-		..()
 		UpdateIcon()
 
 	update_icon()

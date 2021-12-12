@@ -18,7 +18,8 @@
 
 		return
 
-	initialize()
+	INIT()
+		..()
 		if(!partner)
 			var/partner_connect = turn(dir,180)
 
@@ -27,8 +28,6 @@
 					partner = target
 					partner.partner = src
 					break
-
-		..()
 
 	process()
 		..()

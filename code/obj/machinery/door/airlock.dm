@@ -1758,13 +1758,10 @@ obj/machinery/door/airlock
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	initialize()
-		..()
-		UpdateIcon()
-
 	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		UpdateIcon()
 
 /obj/machinery/door/airlock/emp_act()
 	..()
