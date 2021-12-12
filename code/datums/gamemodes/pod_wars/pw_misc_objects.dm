@@ -530,12 +530,13 @@
 	INIT()
 		..()
 		T = get_turf(src)
-		while (T)
-			if (!locate(to_spawn) in T.contents)
-				var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne/breakaway_glass(T)
-				champers.pixel_y = 10
-				champers.pixel_x = 1
-			sleep(8 SECONDS)
+		SPAWN_DBG(0)
+			while (T)
+				if (!locate(to_spawn) in T.contents)
+					var/obj/item/champers = new /obj/item/reagent_containers/food/drinks/bottle/champagne/breakaway_glass(T)
+					champers.pixel_y = 10
+					champers.pixel_x = 1
+				sleep(8 SECONDS)
 
 	disposing()
 		T = null

@@ -766,8 +766,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		else if(prob(20))
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
 		walk(src, pick(cardinal), 1)
-		sleep(rand(150, 600))
-		illusion_expire()
+		SPAWN_DBG(rand(150, 600))
+			illusion_expire()
 
 	initializeBioholder()
 		. = ..()

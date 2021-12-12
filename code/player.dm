@@ -38,7 +38,7 @@
 	var/list/clouddata = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
-	INIT(key)
+	EXPLICIT_NEW(key)
 		..()
 		START_TRACKING
 		src.key = key

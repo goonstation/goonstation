@@ -3439,6 +3439,7 @@ var/list/lag_list = new/list()
 		return ..()
 
 	proc/loop()
+		set waitfor = FALSE
 
 		if(active)
 			SPAWN_DBG(3 SECONDS) loop()

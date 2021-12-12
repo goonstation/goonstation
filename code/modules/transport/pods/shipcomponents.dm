@@ -30,6 +30,7 @@
 
 //What the component does when activated
 /obj/item/shipcomponent/proc/activate()
+	set waitfor = FALSE
 	if(src.active == 1 || !ship)//NYI find out why ship is null
 		return
 	if(ship.powercapacity < (ship.powercurrent + power_used))

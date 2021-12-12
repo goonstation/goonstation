@@ -736,8 +736,8 @@
 		src.usercl = newuser
 		src.load_mob_data(src.target_mob)
 		src.update_menu()
-		src.process()
-		return
+		SPAWN_DBG(0)
+			src.process()
 
 	disposing()
 		if(usercl?.mob)

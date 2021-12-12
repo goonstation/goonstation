@@ -539,7 +539,8 @@
 		light.set_brightness(0.4)
 
 		if(src.active) // does it start on?
-			src.activate()
+			SPAWN_DBG(0)
+				src.activate()
 
 		if(function == "electrical")
 			SPAWN_DBG(4 SECONDS)

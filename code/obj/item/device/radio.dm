@@ -1018,6 +1018,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		boutput(user, "No longer transmitting.")
 
 INIT_TYPE(/obj/item/device/radio/intercom/loudspeaker)
+	..()
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()

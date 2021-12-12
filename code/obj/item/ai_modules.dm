@@ -260,8 +260,12 @@ AI MODULES
 
 	INIT()
 		..()
-		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
 		src.lawNumber = rand(4, 100)
+		src.generate_law()
+
+	proc/generate_law()
+		set waitfor = FALSE
+		src.law_text = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
 
 	get_law_text(for_silicons)
 		return src.law_text

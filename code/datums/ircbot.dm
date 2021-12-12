@@ -12,12 +12,12 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/list/queue = list()
 	var/debugging = 0
 
-	INIT()
+	EXPLICIT_NEW()
 		..()
-		if (!src.load())
-			SPAWN_DBG(1 SECOND)
-				if (!src.loaded)
-					src.load()
+		SPAWN_DBG(0 SECOND)
+			while (!src.loaded)
+				src.load()
+				sleep(1 SECOND)
 
 	proc
 		//Load the config variables necessary for connections

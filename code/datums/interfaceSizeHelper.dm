@@ -13,7 +13,7 @@
 	var/list/lastData = new()
 	var/list/onLoadCallbacks = new()
 
-	INIT(client/C)
+	EXPLICIT_NEW(client/C)
 		..()
 		if (!C) return
 		src.owner = C

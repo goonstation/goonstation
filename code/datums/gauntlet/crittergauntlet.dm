@@ -1218,6 +1218,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		types = list(/obj/critter/floateye)
 
 /proc/queryGauntletMatches(data)
+	set waitfor = FALSE
 	if (islist(data) && data["data_hub_callback"])
 		logTheThing("<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
 		for (var/userkey in data["keys"])

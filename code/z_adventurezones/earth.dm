@@ -454,12 +454,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		..()
 		var/obj/item/sticker/sticker_heart = new /obj/item/sticker/heart
 		sticker_heart.stick_to(src, -6, -4)
-		sleep(0.5 SECONDS)
-		var/obj/item/sticker/sticker_rainbow = new /obj/item/sticker/rainbow
-		sticker_rainbow.stick_to(src, -3, 1)
-		sleep(0.5 SECONDS)
-		var/obj/item/sticker/sticker_robuddy = new /obj/item/sticker/robuddy
-		sticker_robuddy.stick_to(src, 2, -3)
+		SPAWN_DBG(0.5 SECONDS)
+			var/obj/item/sticker/sticker_rainbow = new /obj/item/sticker/rainbow
+			sticker_rainbow.stick_to(src, -3, 1)
+			sleep(0.5 SECONDS)
+			var/obj/item/sticker/sticker_robuddy = new /obj/item/sticker/robuddy
+			sticker_robuddy.stick_to(src, 2, -3)
 
 
 /datum/computer/file/record/adhara_office

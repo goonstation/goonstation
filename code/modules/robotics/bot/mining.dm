@@ -28,11 +28,11 @@ INIT_TYPE(/obj/machinery/bot/mining)
 	..()
 	src.ui = new/datum/digbot_ui(src)
 	setupOverlayVars()
-	sleep(5)
-	if(on)
-		turnOn()
-	else
-		setEffectOverlays()
+	SPAWN_DBG(5)
+		if(on)
+			turnOn()
+		else
+			setEffectOverlays()
 
 /obj/machinery/bot/mining/proc/setupOverlayVars()
 	src.display_hover = image('icons/obj/bots/aibots.dmi', "digbot hover")

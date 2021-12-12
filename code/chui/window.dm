@@ -207,6 +207,7 @@ chui/window
 	//Calls a Javascript function with a set number of arguments on everyone subscribed.
 	//For prediction, you can include a client to exclude from this.
 	proc/CallJSFunction( var/fname, var/list/arguments, var/client/exclude )
+		set waitfor = FALSE
 		for( var/client/c in subscribers )
 			if( !Validate( c ) )
 				Unsubscribe( c )
