@@ -49,7 +49,7 @@
 				return . += "<font color='red'>ERROR: NO CONNECTED SCANNERS</font>"
 			var/data = null
 			for (var/obj/health_scanner/floor/my_partner in src.partners)
-				data += my_partner.scan()
+				data += my_partner.scan(ignore_cooldown = TRUE)
 			if (data)
 				. += "<br>It says:<br>[data]"
 			else
@@ -80,7 +80,6 @@
 	icon_state = "floorscan1"
 	plane = PLANE_FLOOR
 	var/time_between_scans = 3 SECONDS
-	var/on_cooldown = FALSE
 
 	New()
 		..()
@@ -101,20 +100,17 @@
 		if (ishuman(AM))
 			boutput(AM, src.scan(TRUE))
 
-	proc/scan(var/alert = FALSE)
+	proc/scan(var/alert = FALSE, ignore_cooldown = FALSE)
 		var/data = null
-		if (on_cooldown)
+		if (!ignore_cooldown && ON_COOLDOWN(src, "scan_cooldown", time_between_scans))
 			data += "<font color='red'>ERROR: SCANNER ON COOLDOWN</font>"
 		else
-			on_cooldown = TRUE
 			for (var/mob/living/carbon/human/H in get_turf(src))
 				data += "[scan_health(H, 1, 1, 1, 1)]"
 				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
 			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
-			SPAWN_DBG(time_between_scans)
-				on_cooldown = FALSE
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)
