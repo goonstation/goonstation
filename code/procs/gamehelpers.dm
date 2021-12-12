@@ -83,7 +83,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
-	return 0
+	return null
 
 /proc/get_area_by_type(var/type_path)
 	if (!ispath(type_path))
