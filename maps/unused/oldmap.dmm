@@ -262,7 +262,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/simulated/wall,
@@ -502,15 +501,6 @@
 	},
 /turf/simulated/floor,
 /area/engine/engineering)
-"bw" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	icon_state = "intact-f";
-	initialize_directions = 12;
-	layer = 3
-	},
-/turf/simulated/floor,
-/area/engine/engineering)
 "bx" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -520,16 +510,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
-	layer = 3
-	},
-/turf/simulated/floor,
-/area/engine/engineering)
-"by" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -782,7 +762,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -1056,7 +1035,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/machinery/atmospherics/pipe/simple,
@@ -1066,7 +1044,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -1075,7 +1052,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/wall,
@@ -1146,7 +1122,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/simulated/wall/r_wall,
@@ -1338,7 +1313,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/wall/r_wall,
@@ -1447,7 +1421,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/wall,
@@ -1759,7 +1732,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -3006,7 +2978,7 @@
 	name = "Captain"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)
@@ -3322,7 +3294,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -3588,7 +3559,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -3607,7 +3577,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -3700,7 +3669,7 @@
 /area/crew_quarters/courtroom)
 "is" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
@@ -3840,7 +3809,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact";
-	initialize_directions = 10;
 	layer = 3;
 	level = 2
 	},
@@ -3912,7 +3880,7 @@
 /obj/table,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/medical/medbay)
@@ -4042,7 +4010,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -4888,7 +4855,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -4902,7 +4868,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -4915,7 +4880,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -4929,7 +4893,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -4943,7 +4906,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -4961,7 +4923,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -4975,7 +4936,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/machinery/atmospherics/pipe/simple,
@@ -4990,7 +4950,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -5013,16 +4972,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
-	layer = 3
-	},
-/turf/simulated/floor/white,
-/area/medical/research)
-"lu" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/white,
@@ -5031,7 +4980,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/machinery/door/window/eastleft{
@@ -5583,7 +5531,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/wall,
@@ -5820,7 +5767,7 @@
 "nl" = (
 /obj/secure_closet/personal,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -6805,7 +6752,7 @@
 /obj/item/cleaner,
 /obj/item/cleaner,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -6825,7 +6772,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/simulated/floor,
@@ -6943,7 +6889,7 @@
 	network = "SS13"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/security/main)
@@ -7062,7 +7008,7 @@
 /area/hallway/secondary/exit)
 "qb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
@@ -7232,7 +7178,6 @@
 	dir = 1;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -7271,7 +7216,7 @@
 "qF" = (
 /obj/closet/wardrobe/pink,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
@@ -7340,7 +7285,7 @@
 /area/atmos)
 "qO" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
@@ -7776,7 +7721,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact";
-	initialize_directions = 10;
 	layer = 3;
 	level = 2
 	},
@@ -7798,7 +7742,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/wall/r_wall,
@@ -7969,7 +7912,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact";
-	initialize_directions = 10;
 	layer = 3;
 	level = 2
 	},
@@ -8046,7 +7988,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact";
-	initialize_directions = 10;
 	layer = 3;
 	level = 2
 	},
@@ -8282,7 +8223,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact";
-	initialize_directions = 10;
 	layer = 3;
 	level = 2
 	},
@@ -8390,7 +8330,7 @@
 	c_tag = "Bar"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
@@ -8439,7 +8379,7 @@
 /area/crew_quarters/cafeteria)
 "tr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
@@ -8841,7 +8781,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact";
-	initialize_directions = 10;
 	layer = 3;
 	level = 2
 	},
@@ -8989,7 +8928,6 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	icon_state = "manifold";
-	initialize_directions = 11;
 	level = 2
 	},
 /turf/simulated/floor,
@@ -9033,7 +8971,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/space,
@@ -9045,7 +8982,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -9075,7 +9011,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -9520,7 +9455,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/space,
@@ -9530,7 +9464,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/space,
@@ -9539,7 +9472,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/space,
@@ -9620,7 +9552,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/simulated/floor/plating,
@@ -9702,7 +9633,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -9713,7 +9643,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -9738,7 +9667,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/machinery/door/window{
@@ -9774,7 +9702,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -9801,7 +9728,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -9820,7 +9746,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -9939,7 +9864,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/machinery/door/window{
@@ -9955,7 +9879,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -9966,7 +9889,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /obj/machinery/door/window{
@@ -9984,7 +9906,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -9995,7 +9916,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /obj/crate/internals,
@@ -10059,7 +9979,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /obj/window{
@@ -10081,7 +10000,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/machinery/door/window{
@@ -10095,7 +10013,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/window{
@@ -10117,7 +10034,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /obj/item/storage/toolbox/mechanical,
@@ -10162,7 +10078,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
-	initialize_directions = 6;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -10173,7 +10088,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/crate/medical,
@@ -10185,7 +10099,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -10196,7 +10109,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /obj/item/storage/firstaid/regular,
@@ -10208,7 +10120,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -10255,7 +10166,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /obj/table{
@@ -10273,7 +10183,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/space,
@@ -10292,7 +10201,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/space,
@@ -10323,7 +10231,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -10422,7 +10329,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
 	icon_state = "intact-f";
-	initialize_directions = 9;
 	layer = 3
 	},
 /turf/simulated/shuttle/wall{
@@ -10499,7 +10405,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -10510,7 +10415,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
 	icon_state = "intact-f";
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -10583,7 +10487,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
-	initialize_directions = 12;
 	layer = 3
 	},
 /turf/simulated/floor/shuttle{
@@ -10657,7 +10560,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	icon_state = "intact-f";
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/space,
@@ -12433,7 +12335,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
@@ -14252,7 +14154,6 @@
 	dir = 2;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -15497,7 +15398,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -28843,7 +28743,7 @@ jK
 jI
 kw
 jI
-lu
+kA
 lU
 mu
 iy
@@ -28995,7 +28895,7 @@ jK
 jI
 kx
 jI
-lu
+kA
 lW
 mv
 iy
@@ -29118,7 +29018,7 @@ aa
 aa
 au
 aB
-bw
+bt
 bM
 ce
 cu
@@ -29270,7 +29170,7 @@ aa
 aa
 au
 aB
-bw
+bt
 bJ
 cf
 cu
@@ -29422,7 +29322,7 @@ aa
 aa
 au
 aB
-bw
+bt
 bJ
 cb
 cu
@@ -29574,7 +29474,7 @@ aa
 aa
 au
 aB
-bw
+bt
 bK
 cc
 cu
@@ -29726,7 +29626,7 @@ aa
 aa
 au
 aB
-bw
+bt
 bN
 cg
 cu
@@ -29878,7 +29778,7 @@ aa
 au
 au
 bd
-bw
+bt
 bJ
 cb
 cu
@@ -30030,7 +29930,7 @@ aa
 aN
 au
 aB
-bw
+bt
 bJ
 cb
 au
@@ -30182,7 +30082,7 @@ aa
 aN
 au
 ba
-bw
+bt
 bO
 ch
 cv
@@ -30486,7 +30386,7 @@ aa
 aN
 au
 bf
-by
+cj
 bQ
 ci
 bH

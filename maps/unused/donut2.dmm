@@ -2238,7 +2238,6 @@
 	dir = 2;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -3669,7 +3668,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;

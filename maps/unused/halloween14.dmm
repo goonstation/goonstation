@@ -2735,7 +2735,6 @@
 	dir = 2;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -4092,7 +4091,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -11614,7 +11612,7 @@
 /area/station/crew_quarters/quarters)
 "axr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -26030,7 +26028,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -34575,7 +34573,7 @@
 /area/station/crew_quarters/juryroom)
 "brd" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
@@ -35050,7 +35048,7 @@
 "brZ" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38855,7 +38853,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

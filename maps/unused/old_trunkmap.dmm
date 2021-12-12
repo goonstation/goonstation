@@ -19640,7 +19640,6 @@
 	dir = 0;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -21988,7 +21987,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -25913,7 +25911,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "misc_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -26842,7 +26839,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "tox_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -27488,7 +27484,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "co2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -28437,7 +28432,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -28484,7 +28478,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
