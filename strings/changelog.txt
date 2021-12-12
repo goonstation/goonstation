@@ -1,5 +1,9 @@
 
 (t)sun dec 12 21
+(u)Terra_GS
+(p)6888
+(e)🎨|sprites
+(+)Updated the launcher/ignition switch sprites.
 (u)Jan.antilles
 (*)Shrubs now have Spacemas lights.
 (t)thu dec 09 21
