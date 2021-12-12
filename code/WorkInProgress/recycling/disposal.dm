@@ -41,6 +41,9 @@
 		else
 			src.set_loc(D)
 
+		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
@@ -48,7 +51,7 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-
+			LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process
