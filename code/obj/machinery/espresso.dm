@@ -302,7 +302,7 @@
 	icon_state = "mugrack4" //changes based on cup_ammount in updateicon
 	anchored = 1
 	var/cup_amount = 4
-	var/contained_cup = /obj/item/reagent_containers/food/drinks/mug/random_color
+	var/contained_cup = /obj/item/reagent_containers/food/drinks/mug
 	var/contained_cup_name = "mug"
 
 	get_desc(dist, mob/user)
@@ -311,6 +311,10 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, src.contained_cup) & src.cup_amount < 7)
+			if (W.reagents.total_volume > 0)
+				var/turf/T = get_turf(src)
+				W.reagents.reaction(T)
+				boutput(user, "The [src.contained_cup_name] wasn't empty! You spill its contents on the floor.")
 			user.drop_item()
 			qdel(W)
 			src.cup_amount ++
@@ -325,7 +329,7 @@
 		else
 			boutput(user, "You take \a [src.contained_cup_name] off of \the [src].")
 			src.cup_amount--
-			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/mug
+			var/obj/item/reagent_containers/food/drinks/espressocup/P = new contained_cup
 			user.put_in_hand_or_drop(P)
 			src.UpdateIcon()
 

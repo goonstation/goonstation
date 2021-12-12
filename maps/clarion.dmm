@@ -14123,9 +14123,8 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
@@ -14583,9 +14582,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aDi" = (
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
@@ -14980,9 +14978,8 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
@@ -31860,8 +31857,14 @@
 "bpK" = (
 /obj/machinery/optable,
 /obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "xtra_bigstripe-edge2"
+	dir = 10;
+	tag = ""
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 5
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 5
 	},
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
@@ -46474,9 +46477,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "isb" = (
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "ivP" = (
@@ -48988,10 +48989,8 @@
 	},
 /area/station/science/lobby)
 "oYG" = (
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/shrub,
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "oYI" = (
