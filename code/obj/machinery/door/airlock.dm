@@ -10,7 +10,7 @@
 	isWireCut - returns 1 if that wire (e.g. AIRLOCK_WIRE_DOOR_BOLTS) is cut, or 0 if not
 	canAIControl - 1 if the AI can control the airlock, 0 if not (then check canAIHack to see if it can hack in)
 	canAIHack - 1 if the AI can hack into the airlock to recover control, 0 if not. Also returns 0 if the AI does not *need* to hack it.
-	arePowerSystemsOn - 1 if the main or backup power are functioning, 0 if not. Does not check whether the power grid is charged or an APC has equipment on or anything like that. (Check (status & NOPOWER) for that)
+	arePowerSystemsOn - 1 if the main or backup power are functioning, 0 if not. Does not check whether the power grid is charged or anAPC has equipment on or anything like that. (Check (status & NOPOWER) for that)m
 	requiresIDs - 1 if the airlock is requiring IDs, 0 if not
 	isAllPowerCut - 1 if the main and backup power both have cut wires.
 	regainMainPower - handles the effects of main power coming back on.
@@ -264,7 +264,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = 1
 	aiControlDisabled = 1
 	object_flags = BOTS_DIRBLOCK
-	mats = 0
+	is_syndicate = TRUE
 
 	meteorhit()
 		return
@@ -345,7 +345,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/pyro/command/syndicate
 	req_access = list(access_syndicate_commander)
-	mats = 0
+	is_syndicate = TRUE
 
 /obj/machinery/door/airlock/pyro/weapons
 	icon_state = "manta_closed"
@@ -461,7 +461,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
-	mats = 0
+	is_syndicate = TRUE
 
 	meteorhit()
 		return
