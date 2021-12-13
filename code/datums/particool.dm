@@ -136,20 +136,29 @@ var/list/master_particle_info = list()
 	var/a = length(stringToList(L["a"],TRUE)) > 1 ? stringToList(L["a"],TRUE) : text2num(L["a"])
 	var/b = length(stringToList(L["b"],TRUE)) > 1 ? stringToList(L["b"],TRUE) : text2num(L["b"])
 
+	var/rand_type = parse_rand_type(L["rand"])
+
 	switch(L["genType"])
-		if("num")    return generator(L["genType"], a, b)
-		if("vector") return generator(L["genType"], a, b)
-		if("box")    return generator(L["genType"], a, b)
+		if("num")    return generator(L["genType"], a, b, rand_type)
+		if("vector") return generator(L["genType"], a, b, rand_type)
+		if("box")    return generator(L["genType"], a, b, rand_type)
 		if("color") //Color can be string or matrix
 			a = length(a) > 1 ? a : L["a"]
 			b = length(b) > 1 ? b : L["b"]
-			return generator(L["genType"], a, b)
-		if("circle") return generator(L["genType"], a, b)
-		if("sphere") return generator(L["genType"], a, b)
-		if("square") return generator(L["genType"], a, b)
-		if("cube")   return generator(L["genType"], a, b)
+			return generator(L["genType"], a, b, rand_type)
+		if("circle") return generator(L["genType"], a, b, rand_type)
+		if("sphere") return generator(L["genType"], a, b, rand_type)
+		if("square") return generator(L["genType"], a, b, rand_type)
+		if("cube")   return generator(L["genType"], a, b, rand_type)
 	return null
 
+/datum/particle_editor/proc/parse_rand_type(rand_type)
+	switch(rand_type)
+		TEXT_TO_MACRO(UNIFORM_RAND)
+		TEXT_TO_MACRO(LINEAR_RAND)
+		TEXT_TO_MACRO(NORMAL_RAND)
+		TEXT_TO_MACRO(SQUARE_RAND)
+	CRASH("Unknown rand type [rand_type]")
 
 /datum/particle_editor/proc/debugOutput(L, nodeName)
 	if(istype(L,/list))
