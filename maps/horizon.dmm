@@ -18394,7 +18394,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26
 	},
 /turf/simulated/floor/bluewhite,
@@ -36863,7 +36863,7 @@
 /area/station/maintenance/southwest)
 "bPo" = (
 /obj/table/wood/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /obj/machinery/coffeemaker/botany,
@@ -42021,7 +42021,7 @@
 /obj/table/auto,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = -24
 	},
 /obj/disposalpipe/segment/morgue{
@@ -48333,7 +48333,7 @@
 	})
 "crF" = (
 /obj/table/reinforced/bar/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /obj/machinery/coffeemaker/research,
@@ -56226,7 +56226,7 @@
 	dir = 8
 	},
 /obj/machinery/coffeemaker/security,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 6
 	},

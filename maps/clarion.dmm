@@ -14686,7 +14686,7 @@
 /area/station/crew_quarters/bar)
 "aDx" = (
 /obj/machinery/chem_heater,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -17038,7 +17038,7 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /obj/machinery/coffeemaker/research,
@@ -24626,7 +24626,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/white,
@@ -34048,7 +34048,7 @@
 "bty" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/orangeblack,
@@ -47167,7 +47167,7 @@
 	pixel_y = 18
 	},
 /obj/machinery/coffeemaker/security,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 24;
 	pixel_y = 5
 	},
@@ -49168,7 +49168,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/green/side{

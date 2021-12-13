@@ -6968,7 +6968,7 @@
 /area/station/hallway/primary/central)
 "aCf" = (
 /obj/table/reinforced/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 29
 	},
 /obj/machinery/coffeemaker/medbay{
@@ -15424,7 +15424,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 29
 	},
 /obj/machinery/camera{
@@ -17992,7 +17992,7 @@
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 29
 	},
 /turf/simulated/floor,
@@ -18339,7 +18339,7 @@
 	icon_state = "line1"
 	},
 /obj/item/paper/book/from_file/hydroponicsguide,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 29
 	},
 /turf/simulated/floor/blue/side{
@@ -32380,7 +32380,7 @@
 /obj/machinery/coffeemaker{
 	pixel_y = 4
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 29
 	},
 /turf/simulated/floor/yellow/corner,
@@ -35534,7 +35534,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 6;
 	pixel_y = 29
 	},
@@ -40153,7 +40153,7 @@
 	layer = 4
 	},
 /obj/machinery/light,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = -26
 	},
 /turf/simulated/floor/specialroom/bar,

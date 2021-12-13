@@ -260,7 +260,7 @@
 /area/centcom/outside)
 "gy" = (
 /obj/table/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 4
 	},

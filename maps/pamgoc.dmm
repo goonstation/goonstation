@@ -42868,7 +42868,7 @@
 /area/ghostdrone_factory)
 "bDz" = (
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 28
 	},
 /obj/item/reagent_containers/food/drinks/espressocup,
@@ -44150,7 +44150,7 @@
 "bFO" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -26
 	},
 /turf/simulated/floor/yellow/side,
@@ -51577,7 +51577,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/delivery,
@@ -53272,7 +53272,7 @@
 	pixel_x = -3;
 	pixel_y = 4
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner{
@@ -60161,7 +60161,7 @@
 /obj/machinery/coffeemaker/botany{
 	pixel_y = 3
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -26
 	},
 /turf/simulated/floor/green/side,
@@ -61496,7 +61496,7 @@
 "ckP" = (
 /obj/table/auto,
 /obj/machinery/shieldgenerator/meteorshield,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26
 	},
 /obj/machinery/coffeemaker{
@@ -69288,7 +69288,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "qsV" = (
-/obj/mug_rack,
+/obj/drink_rack/mug,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "qsW" = (

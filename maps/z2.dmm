@@ -41293,7 +41293,7 @@
 	pixel_z = 10
 	},
 /obj/decal/fakeobjects/plantpot,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
@@ -58170,7 +58170,7 @@
 "dcV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/map/light/brighterwhite,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/black,
@@ -63439,7 +63439,7 @@
 /obj/item/reagent_containers/food/snacks/plant/pineapple,
 /obj/item/reagent_containers/food/snacks/burger/luauburger,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 24
 	},
 /obj/decal/cleanable/rust/jen,
