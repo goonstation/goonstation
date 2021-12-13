@@ -53,7 +53,7 @@
 	dialogue_out_of_stock = list("Whoops, ha ha, guess I already smo.. er, sold all of that.",
 	"Sorry man, none of that left.")
 
-	New()
+	INIT()
 		..()
 		if(prob(10))
 			// sometimes he is really, REALLY fucking high and can barely function as a trader

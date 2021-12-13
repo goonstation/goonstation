@@ -38,7 +38,7 @@
 		"this_time" = list("this week", "last week", "this month", "yesterday", "today", "a few days ago") \
 	)
 
-	New()
+	INIT()
 		..()
 		// How we add new news outlets, with decreasing probability to add every article.
 		if (!length(news_outlets) || (length(news_outlets) && !prob(100 / (length(news_outlets) + 1))))

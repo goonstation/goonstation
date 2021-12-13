@@ -21,7 +21,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	var/list/fxlist = null
 	var/list/soundSubscribers = null
 
-	New()
+	INIT()
 		..()
 		//fxlist =
 		if (ambientSound)
@@ -90,7 +90,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	force_fullbright = 0
 	ambientSound = 'sound/ambience/industrial/Timeship_Tones.ogg'
 
-	New()
+	INIT()
 		..()
 		fxlist = timewarp_interior_sounds
 
@@ -111,7 +111,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	setup_default_startup_task = /datum/computer/file/guardbot_task/future
 	setup_default_tool_path = /obj/item/device/guardbot_tool/taser
 
-	New()
+	INIT()
 		..()
 
 	turn_on()
@@ -297,7 +297,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 
 
 	dead_man_sleeping
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(1 SECOND)
 				src.occupant = new /mob/living/carbon/human/future (src)
@@ -314,7 +314,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 	var/death_countdown = 5
 	var/had_thought = 0
 
-	New()
+	INIT()
 		..()
 
 		bioHolder.AddEffect("psy_resist") // Heh
@@ -357,7 +357,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 //////////////////// audio tapes
 
 /obj/item/audio_tape/timewarp_00
-	New()
+	INIT()
 		..()
 		messages = list("been so long, I think the recorder is overwriting itself at this point.",
 	"God, like it even matters.  Like any of this even matters.",
@@ -371,12 +371,12 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 
 /obj/item/device/audio_log/timewarp_00
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/timewarp_00(src)
 
 /obj/item/audio_tape/timewarp_01
-	New()
+	INIT()
 		..()
 		messages = list("we can conclude that the shift in observed space cannot be explained through normal travel.",
 						"Teleportation?  God, I hope not.  I think we'd all be dead already if that was the case.",
@@ -389,12 +389,12 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 
 /obj/item/device/audio_log/timewarp_01
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/timewarp_01(src)
 
 /obj/item/audio_tape/timewarp_02
-	New()
+	INIT()
 		..()
 
 		messages = list("I've already tried that.  I don't think we can just fly out of this field. Not without burning most of our fuel.",
@@ -414,7 +414,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 ////////////////////floating decals
 
 /obj/decal/float
-	New()
+	INIT()
 		..()
 		.= rand(5, 20)
 
@@ -429,7 +429,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "ghostclock0"
 
-		New()
+		INIT()
 			..()
 			icon_state += pick("", "1","2")
 

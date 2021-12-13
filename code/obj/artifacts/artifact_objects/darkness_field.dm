@@ -14,7 +14,7 @@
 	var/max_alpha = 255
 	var/list/obj/overlay/darkness_field/darkfields = list()
 
-	New()
+	INIT()
 		..()
 		field_radius = rand(5, 30)
 		if (prob(1))
@@ -53,7 +53,7 @@
 	plane = PLANE_LIGHTING
 	anchored = 2
 
-	New(var/loc, var/duration=null, var/radius=7.5, var/max_alpha=255)
+	INIT(var/loc, var/duration=null, var/radius=7.5, var/max_alpha=255)
 		..()
 		var/matrix/tr = matrix()
 		tr.Scale(radius / 7)

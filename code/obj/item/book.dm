@@ -44,7 +44,7 @@ Custom Books
 /obj/item/paper/book/from_file //books from txt strings
 	var/file_path = null
 
-	New()
+	INIT()
 		..()
 		if(isnull(src.file_path))
 			CRASH("from_file book has no file path")
@@ -53,7 +53,7 @@ Custom Books
 /obj/item/paper/from_file
 	var/file_path = null
 
-	New()
+	INIT()
 		..()
 		if(isnull(src.file_path))
 			CRASH("from_file paper has no file path")
@@ -313,7 +313,7 @@ Custom Books
 	item_state = "paper"
 	layer = OBJ_LAYER
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -333,7 +333,7 @@ Custom Books
 /obj/item/storage/photo_album/beepsky
 	name = "Beepsky's photo album"
 
-	New()
+	INIT()
 		..()
 		new /obj/item/photo/beepsky1(src)
 		new /obj/item/photo/beepsky2(src)
@@ -463,7 +463,7 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 	var/flair_colorable = 0 //set this to 1 if your flair is colourable
 	var/ink_color = "#000000" //what color is the text written in?
 
-	New()
+	INIT()
 		..()
 		src.build_custom_book()
 

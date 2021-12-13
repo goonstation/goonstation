@@ -93,7 +93,7 @@ datum/preferences
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
-	New()
+	INIT()
 		character_name_validation = regex("\\w+") //TODO: Make this regex a bit sturdier (capitalization requirements, character whitelist, etc)
 		randomize_name()
 		randomizeLook()
@@ -449,7 +449,7 @@ datum/preferences
 				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
 
 				if (new_age)
-					src.age = max(min(round(text2num(new_age)), 80), 20)
+					src.age = clamp(round(text2num(new_age)), 20, 80)
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -473,7 +473,7 @@ datum/preferences
 				else
 					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
 					if (new_pin)
-						src.pin = max(min(round(text2num(new_pin)), 9999), 1000)
+						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
 						src.profile_modified = TRUE
 						return TRUE
 
@@ -1617,21 +1617,27 @@ datum/preferences
 
 		src.ShowChoices(user)
 
-	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0)//LOOK SORRY, I MADE THIS /mob/living iF THIS BREAKS SOMETHING YOU SHOULD PROBABLY NOT BE CALLING THIS ON A NON LIVING MOB
+	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0, skip_post_new_stuff=FALSE)
 		sanitize_null_values()
 		if (!ignore_randomizer)
-			var/namebanned = jobban_isbanned(user, "Custom Names")
-			if (be_random_name || namebanned)
+			if (be_random_name)
 				randomize_name()
 
-			if (be_random_look || namebanned)
+			if (be_random_look)
 				randomizeLook()
 
 			if (character.bioHolder)
-				if (random_blood || namebanned)
+				if (random_blood)
 					character.bioHolder.bloodType = random_blood_type()
 				else
 					character.bioHolder.bloodType = blType
+
+			SPAWN_DBG(0) // avoid blocking
+				if(jobban_isbanned(user, "Custom Names"))
+					randomize_name()
+					randomizeLook()
+					character.bioHolder?.bloodType = random_blood_type()
+					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
 		src.real_name = src.name_first + " " + src.name_last
@@ -1650,12 +1656,9 @@ datum/preferences
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
-			if (H?.organHolder?.head?.donor_appearance) // aaaa
-				H.organHolder.head.donor_appearance.CopyOther(AH)
 
-		if (traitPreferences.isValid() && character.traitHolder)
-			for (var/T in traitPreferences.traits_selected)
-				character.traitHolder.addTrait(T)
+		if (!skip_post_new_stuff)
+			apply_post_new_stuff(character)
 
 		character.update_face()
 		character.update_body()
@@ -1668,6 +1671,15 @@ datum/preferences
 			var/mob/living/carbon/human/H = character
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+	proc/apply_post_new_stuff(mob/living/character)
+		if(ishuman(character))
+			var/mob/living/carbon/human/H = character
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
+		if (traitPreferences.isValid() && character.traitHolder)
+			for (var/T in traitPreferences.traits_selected)
+				character.traitHolder.addTrait(T)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))

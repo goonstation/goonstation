@@ -595,7 +595,7 @@ obj/hallucinated_item
 	opacity = 0
 	var/mob/owner = null
 
-	New(myloc, myowner, var/obj/prototype)
+	INIT(myloc, myowner, var/obj/prototype)
 		..()
 		myowner = owner
 		name = prototype?.name || "something unknown"

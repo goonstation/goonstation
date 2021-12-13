@@ -77,7 +77,7 @@
 
 	var/guard
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_SWORD)
 

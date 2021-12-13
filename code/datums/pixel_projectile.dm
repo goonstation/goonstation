@@ -197,7 +197,7 @@ atom/disposing()
 	if (isturf(loc)) loc:collidable_change(src, 0)
 	..()
 
-turf/New()
+INIT_TYPE(turf)
 	..()
 	SPAWN_DBG(1 DECI SECOND)
 		for(var/A in contents)
@@ -258,7 +258,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	var/list/projectiles = null
 	var/current_projectile_num = 1
 
-	New()
+	INIT()
 		return
 
 /obj/item/pixel_gun/attack(mob/M as mob, mob/user as mob)
@@ -379,7 +379,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	var/robocharge = 800
 	var/obj/item/ammo/power_cell/cell = null
 
-	New()
+	INIT()
 		cell = new/obj/item/ammo/power_cell/med_power
 		current_projectile = new/datum/projectile/energy_bolt
 		projectiles = list(current_projectile,new/datum/projectile/laser)

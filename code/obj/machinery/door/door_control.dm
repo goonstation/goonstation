@@ -19,7 +19,7 @@
 	podbay
 		name = "pod bay door control"
 
-		New()
+		INIT()
 			..()
 			if (!isnull(src.id))
 				src.name = "[src.name] ([src.id])"
@@ -388,7 +388,7 @@
 				west
 					pixel_x = -24
 
-/obj/machinery/door_control/New()
+INIT_TYPE(/obj/machinery/door_control)
 	..()
 	UnsubscribeProcess()
 
@@ -927,7 +927,7 @@
 					pixel_y = -19
 				west
 					pixel_x = -22
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)

@@ -57,7 +57,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> Bullet Power: [current_projectile.power] - [current_projectile.ks_ratio * 100]% lethal"
 		lastTooltipContent = .
 
-	New()
+	INIT()
 		SPAWN_DBG(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -165,7 +165,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/user_turf
 	var/target_turf
 
-	New(_gun, _pox, _poy, _uturf, _tturf, _time, _icon, _icon_state)
+	INIT(_gun, _pox, _poy, _uturf, _tturf, _time, _icon, _icon_state)
 		ownerGun = _gun
 		pox = _pox
 		poy = _poy

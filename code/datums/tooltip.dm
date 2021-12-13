@@ -83,27 +83,10 @@ var/global/list/atomTooltips = new()
 	var/inPod = 0 //for fuck sake
 
 
-	New(client/C)
+	INIT(client/C)
 		..()
 		if (!C) return 0
 		src.owner = C
-
-		//For local-testing fallback
-		if (!cdn)
-			var/list/tooltipResources = list(
-				"browserassets/js/jquery.min.js",
-				"browserassets/js/jquery.waitForImages.js",
-				"browserassets/js/errorHandler.js",
-				"browserassets/js/animatePopup.js",
-				"browserassets/js/tooltip.js",
-				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
-				"browserassets/css/fonts/fontawesome-webfont.ttf",
-				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/css/font-awesome.css",
-				"browserassets/css/tooltip.css"
-			)
-			src.owner.loadResourcesFromList(tooltipResources)
 
 		src.transient = src.add(clone = 0, stuck = 0)
 
@@ -210,7 +193,7 @@ var/global/list/atomTooltips = new()
 	var/list/savedOptions
 
 
-	New(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
+	INIT(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
 		..()
 		if (!C) return 0
 		src.owner = C

@@ -18,7 +18,7 @@
 	var/net_id = null
 	var/pdafrequency = FREQ_PDA
 
-	New()
+	INIT()
 		..()
 		if (src.autoname == 1 && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
@@ -362,7 +362,7 @@
 /obj/machinery/disposal/mail/small/autoname
 	autoname = 1
 /*
-	New() // Would be more elegant, but I want them to be aligned properly in the map editor.
+	INIT() // Would be more elegant, but I want them to be aligned properly in the map editor.
 		..()
 		if (src.dir == NORTH)
 			src.pixel_y = 32

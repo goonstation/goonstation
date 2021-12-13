@@ -2,7 +2,7 @@
 	var/frequency
 	var/datum/packet_network/radio/packet_network
 
-	New(frequency)
+	INIT(frequency)
 		..()
 		src.frequency = frequency
 		packet_network = new(frequency)

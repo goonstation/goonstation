@@ -17,7 +17,7 @@
 	var/face = null
 	block_vision = 1
 
-	New()
+	INIT()
 		..()
 		if (face)
 			src.UpdateOverlays(image(src.icon, "face-[face]"), "face")
@@ -89,7 +89,7 @@
 	face = "HS"
 	var/text2speech = 1
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		if (prob(50))

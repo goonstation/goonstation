@@ -53,7 +53,7 @@
 	preferred_holder_type = /datum/abilityHolder/cruiser
 	ignore_sticky_cooldown = 1
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/cruiser/B = new /atom/movable/screen/ability/topBar/cruiser(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

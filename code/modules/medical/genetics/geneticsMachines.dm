@@ -39,7 +39,7 @@
 
 	var/registered_id = null
 
-/obj/machinery/computer/genetics/New()
+INIT_TYPE(/obj/machinery/computer/genetics)
 	..()
 	START_TRACKING
 	SPAWN_DBG(0.5 SECONDS)

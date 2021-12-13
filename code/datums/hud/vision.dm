@@ -5,7 +5,7 @@
 		dither
 		flash
 
-	New()
+	INIT()
 		..()
 		scan = create_screen("", "", 'icons/mob/hud_common.dmi', "scan", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_1)
 		scan.mouse_opacity = 0

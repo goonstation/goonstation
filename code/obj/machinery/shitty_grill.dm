@@ -17,7 +17,7 @@
 	var/datum/light/light
 	var/datum/particleSystem/barrelSmoke/smoke_part
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		src.create_reagents(50)

@@ -1,7 +1,7 @@
 /mob/living/carbon/human/clone
 	real_name = "cloned human"
 
-	New()
+	INIT()
 		. = ..()
 
 		// Randomize gender and blood type

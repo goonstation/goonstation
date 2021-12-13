@@ -262,7 +262,7 @@ proc/find_all_references_to(var/datum/D)
 
 #ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 var/global/list/all_references
-/datum/New()
+INIT_TYPE(/datum)
 	if(!all_references) all_references = list("GLOB")
 	all_references["\ref[src]"] = 1
 	..()

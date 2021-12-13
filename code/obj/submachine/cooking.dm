@@ -354,7 +354,7 @@ table#cooktime a#start {
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	New()
+	INIT()
 		..()
 	// Note - The order these are placed in matters! Put more complex recipes before simpler ones, or the way the
 	//        oven checks through the recipe list will make it pick the simple recipe and finish the cooking proc
@@ -648,6 +648,16 @@ table#cooktime a#start {
 						if (!OVEN_checkitem(R.item4, R.amt4)) continue
 
 					output = R.specialOutput(src)
+
+					//Complete pizza crew objectives if possible
+					if(istype(output,/obj/item/reagent_containers/food/snacks/pizza/))
+						var/obj/item/reagent_containers/food/snacks/pizza/P = output
+						if (usr.mind?.objectives)
+							for (var/datum/objective/crew/chef/pizza/objective in usr.mind.objectives)
+								var/list/matching_toppings = P.topping_types & objective.choices
+								if(length(matching_toppings) >= PIZZA_OBJ_COUNT)
+									objective.completed = TRUE
+
 					if (isnull(output))
 						output = R.output
 
@@ -1079,7 +1089,7 @@ var/list/mixer_recipes = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 
-	New()
+	INIT()
 		..()
 		src.recipes = mixer_recipes
 		if (!src.recipes)

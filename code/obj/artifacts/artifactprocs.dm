@@ -46,9 +46,9 @@
 		return 1 // give the all clear
 
 /obj/proc/ArtifactSetup()
-	// This proc gets called in every artifact's New() proc, after src.artifact is turned from a 1 into its appropriate datum.
+	// This proc gets called in every artifact's INIT() proc, after src.artifact is turned from a 1 into its appropriate datum.
 	//It scrambles the name and appearance of the artifact so we can't tell what it is on sight or cursory examination.
-	// Could potentially go in /obj/New(), but...
+	// Could potentially go in /obj/INIT(), but...
 	if (!src.ArtifactSanityCheck())
 		return
 	var/datum/artifact/A = src.artifact
@@ -487,7 +487,7 @@
 	var/datum/artifact/A = src.artifact
 
 	A.health -= dmg_amount
-	A.health = max(0,min(A.health,100))
+	A.health = clamp(A.health, 0, 100)
 
 	if (A.health <= 0)
 		src.ArtifactDestroyed()
@@ -553,7 +553,7 @@
 
 	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
-	faultprob = max(0,min(faultprob,100))
+	faultprob = clamp(faultprob, 0, 100)
 
 	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)

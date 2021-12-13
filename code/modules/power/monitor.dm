@@ -11,7 +11,7 @@
 	var/list/history
 	var/const/history_max = 50
 
-/obj/machinery/computer/power_monitor/New()
+INIT_TYPE(/obj/machinery/computer/power_monitor)
 	..()
 	history = list()
 

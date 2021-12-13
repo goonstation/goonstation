@@ -462,7 +462,7 @@ var/datum/action_controller/actions
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
+	INIT(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, interrupt_flags, call_proc_on)
 		..()
 		if (owner)
 			src.owner = owner
@@ -555,7 +555,7 @@ var/datum/action_controller/actions
 	var/list/proc_args = null
 
 
-	New(var/owner, var/mob/holdingmob, var/obj/item/helditem, var/target, var/call_proc_on, var/duration, var/proc_path, var/list/proc_args, var/icon, var/icon_state, var/end_message)
+	INIT(var/owner, var/mob/holdingmob, var/obj/item/helditem, var/target, var/call_proc_on, var/duration, var/proc_path, var/list/proc_args, var/icon, var/icon_state, var/end_message)
 		..()
 		if (owner)
 			src.owner = owner
@@ -637,7 +637,7 @@ var/datum/action_controller/actions
 	var/obj/item/sheet/sheet2 // in case you need to pull from more than one sheet
 	var/cost2 // same as above
 	var/spot
-	New(var/obj/item/sheet/csheet, var/cobjtype, var/ccost, var/datum/material/cmat, var/camount, var/cicon, var/cicon_state, var/cobjname, var/post_action_callback = null, var/obj/item/sheet/csheet2, var/ccost2, var/spot)
+	INIT(var/obj/item/sheet/csheet, var/cobjtype, var/ccost, var/datum/material/cmat, var/camount, var/cicon, var/cicon_state, var/cobjname, var/post_action_callback = null, var/obj/item/sheet/csheet2, var/ccost2, var/spot)
 		..()
 		icon = cicon
 		icon_state = cicon_state
@@ -710,7 +710,7 @@ var/datum/action_controller/actions
 	var/obj/machinery/cruiser_destroyable/repairing
 	var/obj/item/using
 
-	New(var/obj/machinery/cruiser_destroyable/D, var/obj/item/U, var/duration_i)
+	INIT(var/obj/machinery/cruiser_destroyable/D, var/obj/item/U, var/duration_i)
 		..()
 		repairing = D
 		using = U
@@ -805,7 +805,7 @@ var/datum/action_controller/actions
 	var/hidden
 
 
-	New(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
+	INIT(var/Source, var/Target, var/Item, var/Slot, var/ExtraDuration = 0, var/Hidden = 0)
 		source = Source
 		target = Target
 		item = Item
@@ -951,7 +951,7 @@ var/datum/action_controller/actions
 	var/mob/living/carbon/human/target
 	var/remove_internals
 
-	New(Target)
+	INIT(Target)
 		target = Target
 		..()
 
@@ -1006,7 +1006,7 @@ var/datum/action_controller/actions
 	var/mob/living/carbon/human/target
 	var/obj/item/handcuffs/cuffs
 
-	New(Target, Cuffs)
+	INIT(Target, Cuffs)
 		target = Target
 		cuffs = Cuffs
 		..()
@@ -1090,7 +1090,7 @@ var/datum/action_controller/actions
 	icon_state = "handcuff"
 	var/mob/living/carbon/human/target
 
-	New(Target)
+	INIT(Target)
 		target = Target
 		..()
 
@@ -1132,7 +1132,7 @@ var/datum/action_controller/actions
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
 
-	New(var/dur)
+	INIT(var/dur)
 		duration = dur
 		..()
 
@@ -1171,7 +1171,7 @@ var/datum/action_controller/actions
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	icon_state = "orange1"
 
-	New(var/dur)
+	INIT(var/dur)
 		duration = dur
 		..()
 
@@ -1218,7 +1218,7 @@ var/datum/action_controller/actions
 	plane = PLANE_HUD + 1
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
-	New()
+	INIT()
 		..()
 		img = image('icons/ui/actions.dmi',src,"bar",6)
 
@@ -1232,7 +1232,7 @@ var/datum/action_controller/actions
 	plane = PLANE_HUD + 1
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | TILE_BOUND
 	var/image/img
-	New()
+	INIT()
 		..()
 		img = image('icons/ui/actions.dmi',src,"border",5)
 
@@ -1252,7 +1252,7 @@ var/datum/action_controller/actions
 	var/obj/item/target = null //This will contain the object we are trying to pick up.
 	var/obj/item/magtractor/picker = null //This is the magpicker.
 
-	New(Target, Picker)
+	INIT(Target, Picker)
 		target = Target
 		picker = Picker
 		..()
@@ -1303,7 +1303,7 @@ var/datum/action_controller/actions
 
 	var/obj/item/magtractor/picker = null //This is the magpicker.
 
-	New(Picker, hpm)
+	INIT(Picker, hpm)
 		if (hpm)
 			src.interrupt_flags &= ~INTERRUPT_MOVE
 		picker = Picker
@@ -1340,7 +1340,7 @@ var/datum/action_controller/actions
 	id = "butcherlivingcritter"
 	var/mob/living/critter/target
 
-	New(Target,var/dur = null)
+	INIT(Target,var/dur = null)
 		if(dur)
 			duration = dur
 		target = Target
@@ -1376,7 +1376,7 @@ var/datum/action_controller/actions
 	var/mob/living/target
 	var/obj/item/device/flash/revolution/flash
 
-	New(Flash, Target)
+	INIT(Flash, Target)
 		flash = Flash
 		target = Target
 		..()
@@ -1418,7 +1418,7 @@ var/datum/action_controller/actions
 	var/atom/target
 	var/obj/item/mop/mop
 
-	New(Mop, Target)
+	INIT(Mop, Target)
 		mop = Mop
 		target = Target
 		duration = istype(target,/obj/fluid) ? 0 : 10
@@ -1451,7 +1451,7 @@ var/datum/action_controller/actions
 	icon_state = "cpr" //placeholder
 	var/mob/living/target
 
-	New(target)
+	INIT(target)
 		..()
 		src.target = target
 
@@ -1520,7 +1520,7 @@ var/datum/action_controller/actions
 	var/atom/target
 	var/obj/item/uplink/integrated/pda/spy/uplink
 
-	New(Target, Uplink)
+	INIT(Target, Uplink)
 		target = Target
 		uplink = Uplink
 		..()
@@ -1562,7 +1562,7 @@ var/datum/action_controller/actions
 	icon_state = "dumb_bomb"
 	density = 1
 
-	New()
+	INIT()
 		actions.start(new/datum/action/bar/private/bombtest(), src)
 		..()
 
@@ -1579,7 +1579,7 @@ var/datum/action_controller/actions
 	var/pixely = 0
 	var/up = 1
 
-	New()
+	INIT()
 		..()
 
 	onUpdate()
@@ -1644,7 +1644,7 @@ var/datum/action_controller/actions
 	icon_state = "pickup"
 	icon_plane = PLANE_HUD+2
 
-	New(Target)
+	INIT(Target)
 		target = Target
 		..()
 
@@ -1678,7 +1678,7 @@ var/datum/action_controller/actions
 		var/atom/over_object
 		var/params
 
-		New(Target, Over, Parameters)
+		INIT(Target, Over, Parameters)
 			target = Target
 			over_object = Over
 			params = Parameters
@@ -1693,7 +1693,7 @@ var/datum/action_controller/actions
 		var/atom/over_object
 		var/params
 
-		New(Target, Over, Parameters)
+		INIT(Target, Over, Parameters)
 			target = Target
 			over_object = Over
 			params = Parameters
@@ -1716,7 +1716,7 @@ var/datum/action_controller/actions
 	var/obj/item/tool
 	var/unanchor = FALSE
 
-	New(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
+	INIT(var/obj/target, var/obj/item/tool, var/unanchor=null, var/duration=null)
 		..()
 		if (target)
 			src.target = target

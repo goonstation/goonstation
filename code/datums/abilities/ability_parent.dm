@@ -38,7 +38,7 @@
 	var/points_last = 0
 
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		owner = M
 		hud = new()
@@ -504,7 +504,7 @@
 
 	var/datum/abilityHolder/owner = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND) //sorry, some race condition i couldt figure out
 			if (ishuman(owner?.owner))
@@ -552,7 +552,7 @@
 	var/last_x = 0
 	var/last_y = 0
 
-	New()
+	INIT()
 		..()
 		var/atom/movable/screen/pseudo_overlay/T = new /atom/movable/screen/pseudo_overlay(src)
 		var/atom/movable/screen/pseudo_overlay/S = new /atom/movable/screen/pseudo_overlay(src)
@@ -842,7 +842,7 @@
 		tooltip_flags = null
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
-	New(datum/abilityHolder/holder)
+	INIT(datum/abilityHolder/holder)
 		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
 		src.holder = holder

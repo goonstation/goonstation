@@ -29,7 +29,7 @@
 	var/image/spin_sprite = null
 	var/image/tank_sprite = null
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)

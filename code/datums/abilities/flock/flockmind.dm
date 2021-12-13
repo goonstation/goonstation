@@ -24,7 +24,7 @@
 	preferred_holder_type = /datum/abilityHolder/flockmind
 	theme = "flock"
 
-/datum/targetable/flockmindAbility/New()
+INIT_TYPE(/datum/targetable/flockmindAbility)
 	var/atom/movable/screen/ability/topBar/flockmind/B = new /atom/movable/screen/ability/topBar/flockmind(null)
 	B.icon = src.icon
 	B.icon_state = src.icon_state

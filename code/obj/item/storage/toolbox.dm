@@ -23,7 +23,7 @@
 	stamina_cost = 20
 	stamina_crit_chance = 10
 
-	New()
+	INIT()
 		..()
 		if (src.type == /obj/item/storage/toolbox)
 			message_admins("BAD: [src] ([src.type]) spawned at [showCoords(src.x, src.y, src.z)]")
@@ -318,7 +318,7 @@
 	var/obj/item/storage/toolbox/memetic/progenitor = null
 	stage_prob = 8
 
-	New()
+	INIT()
 		..()
 		master = get_disease_from_path(/datum/ailment/disability/memetic_madness)
 
@@ -383,7 +383,7 @@
 					progenitor.consume(affected_mob)
 					return
 
-			progenitor.hunger += min(max((progenitor.force / 10), 1), 10)
+			progenitor.hunger += clamp((progenitor.force / 10), 1, 10)
 
 		else if(D.stage == 4)
 			if(get_dist(get_turf(progenitor),src) <= 7)

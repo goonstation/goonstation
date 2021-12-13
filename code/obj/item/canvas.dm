@@ -45,7 +45,7 @@
 	stamina_crit_chance = 0
 
 
-	New()
+	INIT()
 		..()
 
 		base = icon('icons/obj/canvas.dmi', icon_state = "[canvas_width]x[canvas_height]_base")

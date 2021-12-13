@@ -39,7 +39,7 @@
 	anchored = 1
 	density = 1
 
-	New()
+	INIT()
 		..()
 		for (var/obj/O in src.loc)
 			src.underlays += O

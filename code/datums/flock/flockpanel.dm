@@ -9,7 +9,7 @@
 	var/list/tabs = list()
 
 
-	New(var/datum/flock/associated)
+	INIT(var/datum/flock/associated)
 		..(null) // there is no atom for this window, pass null
 		src.associated = associated
 		var/list/tabtypes = typesof(/datum/chui/tab/flock) - /datum/chui/tab/flock

@@ -60,7 +60,7 @@
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
-	New()
+	INIT()
 		..()
 		initial_name = name
 
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	rounds_needed_to_play = 20
 #endif
 
-	New()
+	INIT()
 		..()
 		src.access = get_all_accesses()
 
@@ -231,7 +231,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #endif
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Head of Personnel")
 		return
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 #endif
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Head of Security")
 		return
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/job/command)
 			return
 		M.traitHolder.addTrait("training_engineer")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Chief Engineer")
 		return
@@ -377,7 +377,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/rd)
 	items_in_backpack = list(/obj/item/device/flash)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Research Director")
 		return
@@ -410,7 +410,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/robodefibrillator)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Medical Director")
 		return
@@ -441,7 +441,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
 	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/device/flash)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Communications Officer")
 		return
@@ -483,7 +483,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	slot_poc2 = list(/obj/item/requisition_token/security)
 	rounds_needed_to_play = 30 //higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Security Officer")
 		return
@@ -510,7 +510,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
 		rounds_needed_to_play = 5
 
-		New()
+		INIT()
 			..()
 			src.access = get_access("Security Assistant")
 			return
@@ -553,7 +553,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	items_in_backpack = list(/obj/item/clothing/glasses/vr,/obj/item/storage/box/detectivegun)
 	map_can_autooverride = 0
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Detective")
 		return
@@ -586,7 +586,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Geneticist")
 		return
@@ -614,7 +614,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	#endif
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Pathologist")
 		return
@@ -634,7 +634,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_poc1 = list(/obj/item/reagent_containers/mender/brute)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Roboticist")
 		return
@@ -660,7 +660,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	slot_poc1 = list(/obj/item/pen = 50, /obj/item/pen/fancy = 25, /obj/item/pen/red = 5, /obj/item/pen/pencil = 20)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Scientist")
 		return
@@ -682,7 +682,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Medical Doctor")
 		return
@@ -729,7 +729,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/quartermaster)
 	slot_poc2 = list(/obj/item/device/appraisal)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Quartermaster")
 		return
@@ -771,7 +771,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 							/obj/item/paper/book/from_file/pocketguide/mining)
 	#endif
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Miner")
 		return
@@ -798,7 +798,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_poc1 = list(/obj/item/device/pda2/mechanic)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Mechanic")
 		return
@@ -827,7 +827,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			return
 		M.traitHolder.addTrait("training_engineer")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Engineer")
 		return
@@ -866,7 +866,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/kitchen/rollingpin, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/bell/kitchen)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Chef")
 		return
@@ -891,7 +891,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
 	items_in_backpack = list(/obj/item/gun/kinetic/riotgun)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Bartender")
 		return
@@ -917,7 +917,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/paper/botany_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Botanist")
 		return
@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/fishing_rod, /obj/item/chicken_carrier, /obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Rancher")
 		return
@@ -949,7 +949,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Janitor")
 		return
@@ -964,7 +964,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_lhan = list(/obj/item/storage/bible/loaded)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Chaplain")
 		return
@@ -988,7 +988,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/rank)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1010,7 +1010,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/clown)
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Clown")
 		return
@@ -1098,7 +1098,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.traitHolder.addTrait("training_engineer")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Construction Worker")
 		return
@@ -1119,7 +1119,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/command/md)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Medical Director") - access_medical_director
 
@@ -1141,7 +1141,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_rhan = list(/obj/item/paper/book/from_file/space_law)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Lawyer")
 		return
@@ -1164,7 +1164,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Vice Officer")
 		return
@@ -1183,7 +1183,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
 	items_in_backpack = list(/obj/item/tank/emergency_oxygen)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Forensic Technician")
 		return
@@ -1200,7 +1200,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/tank/air)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Toxins Researcher")
 		return
@@ -1215,7 +1215,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Chemist")
 		return
@@ -1229,7 +1229,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/color/white)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Research Assistant")
 		return
@@ -1243,7 +1243,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/color/white)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Medical Assistant")
 		return
@@ -1261,7 +1261,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	items_in_backpack = list(/obj/item/tank/emergency_oxygen,/obj/item/crowbar)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Atmospheric Technician")
 		return
@@ -1275,7 +1275,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/color/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Technical Assistant")
 		return
@@ -1290,7 +1290,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alt_names = list("Boxer", "Fighter", "Wrestler")
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Boxer")
 		return
@@ -1305,7 +1305,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Barber")
 		return
@@ -1322,7 +1322,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Mailman")
 		return
@@ -1366,7 +1366,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/whip)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Space Cowboy")
 		return
@@ -1387,7 +1387,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/baguette)
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Mime")
 		return
@@ -1412,7 +1412,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/suit/purple)
 	//change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		if (prob(40))
 			limit = 1
@@ -1431,7 +1431,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/baton/cane)
 	alt_names = list("Senator", "President", "CEO", "Board Member", "Mayor", "Vice-President", "Governor")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("VIP")
 		return
@@ -1465,9 +1465,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_lhan = list(/obj/item/storage/briefcase)
+	slot_rhan = list(/obj/item/device/ticket_writer)
 	items_in_backpack = list(/obj/item/device/flash)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Inspector")
 		return
@@ -1501,7 +1502,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/clipboard/with_pen)
 	items_in_backpack = list(/obj/item/device/flash)
 
-	New()
+	INIT()
 		..()
 		src.access = get_all_accesses()
 
@@ -1515,7 +1516,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = 1
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Diplomat")
 		return
@@ -1641,7 +1642,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Apiculturist")
 		return
@@ -1669,7 +1670,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_suit = list(/obj/item/clothing/suit/apron)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Sous-Chef")
 		return
@@ -1684,7 +1685,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/plate/tray)
 	items_in_backpack = list(/obj/item/storage/box/glassbox,/obj/item/storage/box/cutlery)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Waiter")
 		return
@@ -1700,7 +1701,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/storage/pill_bottle/cyberpunk)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Pharmacist")
 		return
@@ -1739,7 +1740,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alt_names = list("Radio Show Host", "Talk Show Host")
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Radio Show Host")
 		return
@@ -1759,7 +1760,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/luggable_computer/personal, /obj/item/clipboard/with_pen, /obj/item/paper_bin, /obj/item/stamp)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Psychiatrist")
 		return
@@ -1787,7 +1788,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Clown")
 		return
@@ -1811,7 +1812,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/storage/pill_bottle/catdrugs)
 	items_in_backpack = list(/obj/item/storage/goodybag, /obj/item/kitchen/everyflavor_box, /obj/item/item_box/heartcandy, /obj/item/kitchen/peach_rings)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Salesman")
 		return
@@ -1829,7 +1830,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/candy/candy_corn)
 	slot_poc2 = list(/obj/item/item_box/assorted/stickers/stickers_limited)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1855,7 +1856,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy)
 	items_in_backpack = list(/obj/item/reagent_containers/food/snacks/b_cupcake, /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Botanist")
 		return
@@ -1881,7 +1882,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/reagent_containers/glass/beaker/large)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1904,7 +1905,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_belt = list(/obj/item/device/pda2)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1925,7 +1926,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_belt = list(/obj/item/device/pda2)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1951,7 +1952,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/shaker/ketchup)
 	slot_poc2 = list(/obj/item/shaker/mustard)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1969,7 +1970,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/toy/figure)
 	slot_poc2 = list(/obj/item/toy/figure)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -1995,7 +1996,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/ingredient/sugar)
 	slot_poc2 = list(/obj/item/sticker/ribbon/first_place)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -2038,7 +2039,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	alt_names = list("Paranormal Activities Investigator", "Spooks Specialist")
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -2056,7 +2057,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/coin)
 	slot_poc2 = list(/obj/item/plant/herb/cannabis/white/spawnable)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Chaplain")
 		return
@@ -2097,7 +2098,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc1 = list(/obj/item/pen/fancy/satan)
 	slot_poc2 = list(/obj/item/contract/juggle)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Chaplain")
 		return
@@ -2126,7 +2127,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_back = list()
 	slot_poc2 = list(/obj/item/device/pda2)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Staff Assistant")
 		return
@@ -2322,7 +2323,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge)
 
-	New()
+	INIT()
 		..()
 		src.access = syndicate_spec_ops_access()
 
@@ -2382,7 +2383,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/storage/pouch/powercell_medium,
 							/obj/item/gun/kinetic/pistol)
 
-	New()
+	INIT()
 		..()
 		src.access = get_all_accesses()
 		return
@@ -2424,7 +2425,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/head/helmet/space/ntso,
 							/obj/item/clothing/suit/space/ntso)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Security Officer") + list(access_heads)
 		return
@@ -2451,7 +2452,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
 	items_in_backpack = list(/obj/item/tank/emergency_oxygen,/obj/item/crowbar)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Head of Mining")
 		return
@@ -2559,7 +2560,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_glov = list(/obj/item/clothing/gloves/boxing)
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Boxer")
 		return
@@ -2580,7 +2581,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	items_in_backpack = list(/obj/item/baguette)
 	change_name_on_spawn = 1
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Mime")
 		return
@@ -2600,7 +2601,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc1 = list(/obj/item/scissors)
 	slot_poc2 = list(/obj/item/razor_blade)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Barber")
 		return
@@ -2617,7 +2618,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Mailman")
 		return
@@ -2633,7 +2634,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_lhan = list(/obj/item/storage/briefcase)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Lawyer")
 		return
@@ -2680,7 +2681,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security/assistant)
 
-	New()
+	INIT()
 		..()
 		src.access = get_access("Vice Officer")
 		return

@@ -60,7 +60,7 @@ proc/filter_is_character_setup_ringtone(type)
 	/// Extrarange added to all ringtones here
 	var/extrarange_adjustment = -27
 
-	New(var/obj/item/device/pda2/thisPDA)
+	INIT(var/obj/item/device/pda2/thisPDA)
 		..()
 		if (istype(thisPDA))
 			src.holder = thisPDA
@@ -191,7 +191,7 @@ proc/filter_is_character_setup_ringtone(type)
 	var/explode = 1
 	var/detonating
 
-	New()
+	INIT()
 		. = ..()
 		src.agentname = "[capitalize(pick_string("agent_callsigns.txt", "colors"))] [capitalize(pick_string("agent_callsigns.txt", "birds"))]"
 		src.alertList = list("You've found (one) Numbermal!",\
@@ -252,7 +252,7 @@ proc/filter_is_character_setup_ringtone(type)
 	nameText = "Role:"
 	descText = "Motivation:"
 
-	New(obj/item/device/pda2/thisPDA)
+	INIT(obj/item/device/pda2/thisPDA)
 		. = ..()
 		src.desc = {"INT. MALL OF SPACEMERICA - DAY<br>
 A SAD, CRYING CLOWN is frantically gesticulating in a large crowd of people who seem to be ignoring her.
@@ -584,7 +584,7 @@ bathing in her ennui and showering her with money.
 	previewSender = "pda_ringtones.dm,576: Cannot read null.previewSender"
 	canSpawnWith = 0
 
-	New(obj/item/device/pda2/thisPDA)
+	INIT(obj/item/device/pda2/thisPDA)
 		. = ..()
 		src.desc = {"proc name: return text (/datum/computer/file/pda_program/ringtone/return_text)<br>
   source file: ringtone.dm,58<br>

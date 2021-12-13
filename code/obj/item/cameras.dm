@@ -30,7 +30,7 @@
 	var/takes_voodoo_pics = 0
 	var/steals_souls = FALSE
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(null)
 
@@ -104,7 +104,7 @@
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
 
-	New()
+	INIT()
 		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
@@ -199,7 +199,7 @@
 	var/image/my_writing = null
 	tooltip_flags = REBUILD_DIST
 
-	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
+	INIT(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
 		if (istype(IM))
 			fullImage = IM

@@ -140,7 +140,7 @@
 	animate(A, color="#808080", transform=pivot, time=30, easing=BOUNCE_EASING)
 	animate(color="#FFFFFF", alpha=0, transform=shrink, time=10, easing=SINE_EASING)
 
-/mob/New()
+INIT_TYPE(/mob)
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
 	src.attack_particle.appearance_flags = TILE_BOUND
@@ -789,9 +789,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (!isnum(amount) || !isnum(x_severity) || !isnum(y_severity))
 		return
-	amount = max(1,min(amount,50))
-	x_severity = max(-32,min(x_severity,32))
-	y_severity = max(-32,min(y_severity,32))
+	amount = clamp(amount, 1, 50)
+	x_severity = clamp(x_severity, -32, 32)
+	y_severity = clamp(y_severity, -32, 32)
 
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
@@ -1280,7 +1280,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 
-	New()
+	INIT()
 		. = ..()
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
 
@@ -1328,7 +1328,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 
 /obj/overlay/tile_effect/sliding_turf
 	mouse_opacity = 0
-	New(turf/T)
+	INIT(turf/T)
 		. = ..()
 		src.icon = T.icon
 		src.icon_state = T.icon_state

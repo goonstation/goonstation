@@ -220,7 +220,7 @@
 	else
 		boutput(src, "ability buttons are broken call 1-800-CODER!!!")
 
-/mob/dead/observer/New(mob/corpse)
+INIT_TYPE(/mob/dead/observer, mob/corpse)
 	. = ..()
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, ghost_invisibility)
 	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)

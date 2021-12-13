@@ -65,7 +65,7 @@
 	var/icon/dead_icon
 	var/dead_icon_state
 
-	New()
+	INIT()
 		..()
 		loot_table = new()
 
@@ -1423,7 +1423,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/shockwave_text = "%src% stomps the ground!"
 	var/sound/shockwave_sound
 
-	New()
+	INIT()
 		..()
 		dummyHolder = new()
 		ability = new()
@@ -1494,7 +1494,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/sound/spawn_sound
 	abstract = 0
 
-	New()
+	INIT()
 		..()
 		template = new /obj/critter/domestic_bee
 		stattype = /obj/critter/domestic_bee
@@ -1677,7 +1677,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 "'Run coward'" = 'sound/voice/MEruncoward.ogg', "Shock 1" = 'sound/effects/electric_shock.ogg', "Shock 2" = 'sound/effects/elec_bzzz.ogg', "Shock 3" = 'sound/effects/elec_bigzap.ogg', "Splat" = 'sound/impact_sounds/Slimy_Splat_1.ogg', \
 "Thunder" = 'sound/effects/thunder.ogg')
 
-	New()
+	INIT()
 		..()
 		create_template()
 

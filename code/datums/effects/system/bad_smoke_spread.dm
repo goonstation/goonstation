@@ -18,7 +18,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 	var/direction
 	var/color = null
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 

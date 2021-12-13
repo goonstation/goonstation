@@ -18,7 +18,7 @@ ABSTRACT_TYPE(/datum/asset)
 /datum/asset/proc/get_associated_urls()
 	return list()
 
-/datum/asset/New()
+INIT_TYPE(/datum/asset)
 	..()
 	global_asset_datum_list[src.type] = src
 	init()

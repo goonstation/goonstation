@@ -69,7 +69,7 @@
 	proc/get_movement_controller(mob/user)
 		return movement_controller
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
@@ -77,7 +77,7 @@
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
-		src.a_intent = "disarm"
+		src.set_a_intent("disarm")
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50

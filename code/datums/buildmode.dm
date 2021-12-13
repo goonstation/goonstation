@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/atom/movable/screen/buildmode/hotkey/hotkey_button = null
 	var/button_mode_text
 
-	New(var/datum/buildmode_holder/H)
+	INIT(var/datum/buildmode_holder/H)
 		..()
 		holder = H
 		update_button_text()
@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/is_active = 0
 	var/dir = SOUTH
 
-	New(var/client/C)
+	INIT(var/client/C)
 		..()
 		hotkey_bar = list()
 		hotkey_bar.len = 10
@@ -249,7 +249,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	screen_loc = "NORTH,WEST"
 	var/datum/buildmode_holder/holder = null
 
-	New(L, H)
+	INIT(L, H)
 		..()
 		holder = H
 
@@ -290,7 +290,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	screen_loc = "NORTH,WEST+1"
 	var/datum/buildmode_holder/holder = null
 
-	New(L, H)
+	INIT(L, H)
 		..()
 		holder = H
 
@@ -309,7 +309,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	screen_loc = "NORTH,WEST+3"
 	var/datum/buildmode_holder/holder = null
 
-	New(L, H)
+	INIT(L, H)
 		..()
 		holder = H
 
@@ -328,7 +328,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	screen_loc = "NORTH,WEST+2"
 	var/datum/buildmode_holder/holder = null
 
-	New(L, H)
+	INIT(L, H)
 		..()
 		holder = H
 
@@ -355,7 +355,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/datum/buildmode_holder/holder = null
 	var/datum/buildmode/mode = null
 
-	New(L, H, datum/buildmode/mode)
+	INIT(L, H, datum/buildmode/mode)
 		..()
 		holder = H
 		src.mode = mode

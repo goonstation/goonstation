@@ -107,7 +107,7 @@
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
 
-/datum/configuration/New()
+INIT_TYPE(/datum/configuration)
 	..()
 	var/list/L = childrentypesof(/datum/game_mode)
 	for (var/T in L)

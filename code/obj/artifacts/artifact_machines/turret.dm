@@ -29,7 +29,7 @@
 	var/mob/living/current_target = null
 	examine_hint = "It is covered in very conspicuous markings."
 
-	New()
+	INIT()
 		..()
 		bullet = new /datum/projectile/artifact
 		shot_range = rand(2,6)

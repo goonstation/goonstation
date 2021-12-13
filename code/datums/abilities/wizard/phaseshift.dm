@@ -194,7 +194,7 @@
 	//var/image/overlay_image
 	var/use_cloakofdarkness = 0
 
-	New(loc,ownermob,cloak)
+	INIT(loc,ownermob,cloak)
 		..()
 
 		if(ownermob)
@@ -348,7 +348,7 @@
 		flags = TABLEPASS
 		stamina_mult = 1.1
 
-		New()
+		INIT()
 			..()
 			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 1.8)
 

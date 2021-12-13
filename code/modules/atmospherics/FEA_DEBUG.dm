@@ -10,7 +10,7 @@ datum/gas_mixture
 
 /*
 turf/simulated
-	New()
+	INIT()
 		..()
 
 		if(air)
@@ -249,7 +249,7 @@ obj/machinery/atmospherics
 
 				if(node_in1)
 					var/node_ratio = input(usr, "Node 1 Ratio? ([dir2text(get_dir(src, node_in1))])") as num
-					node_ratio = min(max(0,node_ratio),1)
+					node_ratio = clamp(node_ratio, 0, 1)
 
 					node1_concentration = node_ratio
 					node2_concentration = 1-node_ratio

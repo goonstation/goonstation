@@ -34,7 +34,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/datum/syndicate_buylist/reading_about = null
 
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal)))
@@ -975,7 +975,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	m_amt = 100
 	var/vr = 0
 
-	New(var/in_vr = 0)
+	INIT(var/in_vr = 0)
 		..()
 		if (in_vr)
 			vr = 1

@@ -9,7 +9,7 @@ var/maniac_previous_victim = "Unknown"
 	anchored = 1
 	var/mob/target = null
 
-	New()
+	INIT()
 		SPAWN_DBG(1 DECI SECOND) process()
 		..()
 
@@ -41,7 +41,7 @@ var/maniac_previous_victim = "Unknown"
 	var/targeting = 0
 
 
-	New()
+	INIT()
 		name = maniac_previous_victim
 		..()
 

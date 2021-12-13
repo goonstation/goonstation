@@ -71,7 +71,7 @@
 	var/obj/item/the_tool
 	var/interaction = "rewind"
 
-	New(var/obj/item/lightbreaker/brkr, var/obj/item/tool, var/interact, var/duration_i)
+	INIT(var/obj/item/lightbreaker/brkr, var/obj/item/tool, var/interact, var/duration_i)
 		..()
 		if (brkr)
 			the_breaker = brkr

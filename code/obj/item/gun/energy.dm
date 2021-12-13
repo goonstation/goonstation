@@ -15,7 +15,7 @@
 	muzzle_flash = null
 	inventory_counter_enabled = 1
 
-	New()
+	INIT()
 		var/cell = null
 		if(cell_type)
 			cell = new cell_type
@@ -117,7 +117,7 @@
 	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/heavyion)
 		projectiles = list(current_projectile)
 		..()
@@ -137,7 +137,7 @@
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	muzzle_flash = "muzzle_flash_elec"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/burst)
 		..()
@@ -164,7 +164,7 @@
 	name = "richochet taser gun"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
 
-	New()
+	INIT()
 		..()
 		set_current_projectile(new/datum/projectile/energy_bolt/bouncy)
 		projectiles = list(current_projectile)
@@ -189,14 +189,14 @@
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/laser)
 		projectiles = list(current_projectile)
 		..()
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
-		New()
+		INIT()
 			..()
 			set_current_projectile(new /datum/projectile/laser/virtual)
 			projectiles.len = 0
@@ -222,7 +222,7 @@
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
-	New()
+	INIT()
 		if (!src.current_projectile)
 			src.set_current_projectile(new /datum/projectile/laser)
 		if (isnull(src.projectiles))
@@ -250,7 +250,7 @@
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/laser/light)
 		projectiles = list(current_projectile)
 		..()
@@ -284,7 +284,7 @@
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	muzzle_flash = null
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/rad_bolt)
 		projectiles = list(current_projectile)
 		..()
@@ -315,7 +315,7 @@
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
@@ -360,7 +360,7 @@
 	spread_angle = 6
 	cell_type = /obj/item/ammo/power_cell/med_power
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt/ntburst)
 		projectiles = list(current_projectile,new/datum/projectile/laser/ntburst)
 		..()
@@ -396,7 +396,7 @@
 	shoot_delay = 6
 	muzzle_flash = "muzzle_flash_elec"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread)
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgun)
 		..()
@@ -428,7 +428,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	is_syndicate = 1
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt_v)
 		projectiles = list(current_projectile)
 		..()
@@ -458,7 +458,7 @@
 	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/claw)
 		projectiles = list(current_projectile)
 		..()
@@ -487,7 +487,7 @@
 	force = 6.0
 	muzzle_flash = "muzzle_flash_wavep"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/wavegun)
 		projectiles = list(current_projectile,new/datum/projectile/wavegun/transverse,new/datum/projectile/wavegun/bouncy)
 		..()
@@ -529,7 +529,7 @@
 	desc = "I think it stands for Banned For Griefing?"
 	cell_type = /obj/item/ammo/power_cell/high_power
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/bfg)
 		projectiles = list(new/datum/projectile/bfg)
 		..()
@@ -563,7 +563,7 @@
 	var/obj/item/our_target = null
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
 
-	New()
+	INIT()
 		set_current_projectile(new /datum/projectile/tele_bolt)
 		projectiles = list(current_projectile)
 		..()
@@ -680,7 +680,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	muzzle_flash = "muzzle_flash_waveg"
 
-	New()
+	INIT()
 		set_current_projectile(new /datum/projectile/energy_bolt_antighost)
 		projectiles = list(current_projectile)
 		..()
@@ -704,7 +704,7 @@
 	var/obj/item/gun_parts/bottom_rail/bottom_rail = null
 	var/heat = 0 // for overheating stuff
 
-	New()
+	INIT()
 		if (!emitter)
 			emitter = new /obj/item/gun_parts/emitter
 		if(!current_projectile)
@@ -717,7 +717,7 @@
 	//handle gun mods at a workbench
 
 
-	New()
+	INIT()
 		set_current_projectile(new /datum/projectile/laser/blaster)
 		projectiles = list(current_projectile)
 		..()
@@ -769,7 +769,7 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 
 
-	New()
+	INIT()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
 		..()
@@ -797,7 +797,7 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 
-	New()
+	INIT()
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
 		projectiles = list(current_projectile)
 		flags |= ONBACK
@@ -883,7 +883,7 @@
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/owl)
 		projectiles = list(current_projectile,new/datum/projectile/owl/owlate)
 		..()
@@ -905,7 +905,7 @@
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/owl)
 		projectiles = list(current_projectile)
 		..()
@@ -928,7 +928,7 @@
 	cell_type = /obj/item/ammo/power_cell/self_charging/big //gotta have power for the frog
 	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/bullet/frog)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
 		..()
@@ -943,7 +943,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_multiple_icon_states = 1
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/shrink_beam)
 		projectiles = list(current_projectile)
 		..()
@@ -957,7 +957,7 @@
 
 /obj/item/gun/energy/shrinkray/growray
 	name = "Grow ray"
-	New()
+	INIT()
 		..()
 		set_current_projectile(new/datum/projectile/shrink_beam/grow)
 		projectiles = list(current_projectile)
@@ -973,7 +973,7 @@
 	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/bullet/glitch/gun)
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
@@ -996,7 +996,7 @@
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
-	New()
+	INIT()
 		..()
 		set_current_projectile(new/datum/projectile/laser/pred)
 		projectiles = list(new/datum/projectile/laser/pred)
@@ -1041,7 +1041,7 @@
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/pickpocket/steal)
 		projectiles = list(current_projectile, new/datum/projectile/pickpocket/plant, new/datum/projectile/pickpocket/harass)
 		..()
@@ -1138,7 +1138,7 @@
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/laser/alastor)
 		projectiles = list(current_projectile)
 		..()
@@ -1176,7 +1176,7 @@
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
@@ -1436,7 +1436,7 @@
 	muzzle_flash = "muzzle_flash_bluezap"
 	cell_type = /obj/item/ammo/power_cell/high_power //300 PU
 
-	New()
+	INIT()
 		..()
 		set_current_projectile(new/datum/projectile/energy_bolt/pulse)//uses 35PU per shot, so 8 shots
 		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
@@ -1468,7 +1468,7 @@
 	silenced = 1
 	custom_cell_max_capacity = 100
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/special/spreader/quadwasp)
 		projectiles = list(current_projectile)
 		..()
@@ -1485,7 +1485,7 @@
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/howitzer
 
-	New()
+	INIT()
 		..()
 		set_current_projectile(new/datum/projectile/special/howitzer)
 		projectiles = list(new/datum/projectile/special/howitzer )
@@ -1502,7 +1502,7 @@
 	can_swap_cell = 0
 	var/shotcount = 0
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt/signifer_tase)
 		projectiles = list(current_projectile,new/datum/projectile/laser/signifer_lethal)
 		..()
@@ -1575,7 +1575,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	muzzle_flash = "muzzle_flash_elec"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt/smgburst)
 
 		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/smgauto)
@@ -1612,7 +1612,7 @@
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_laser"
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/energy_bolt/raybeam)
 		projectiles = list(new/datum/projectile/energy_bolt/raybeam)
 		..()

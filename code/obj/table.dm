@@ -21,7 +21,7 @@
 	var/hulk_immune = FALSE
 
 
-	New(loc, obj/a_drawer)
+	INIT(loc, obj/a_drawer)
 		..()
 		if (src.has_storage)
 			if (a_drawer)
@@ -614,7 +614,7 @@
 	var/list/stuff = list()
 	name = "beaker storage"
 
-	New()
+	INIT()
 		..()
 		desc += " This one holds beakers in it! Wow!!"
 		for (var/B=0, B<=7, B++)
@@ -669,7 +669,7 @@
 		auto
 			auto = 1
 
-	New()
+	INIT()
 		..()
 		if (!src.material && default_material)
 			var/datum/material/M
@@ -1014,7 +1014,7 @@
 	var/obj/item/the_tool
 	var/interaction = TABLE_DISASSEMBLE
 
-	New(var/obj/table/tabl, var/obj/item/tool, var/interact, var/duration_i)
+	INIT(var/obj/table/tabl, var/obj/item/tool, var/interact, var/duration_i)
 		..()
 		if (tabl)
 			the_table = tabl
@@ -1114,7 +1114,7 @@
 	var/obj/table/the_table
 	var/obj/item/the_tool
 
-	New(var/obj/table/tabl, var/obj/item/tool)
+	INIT(var/obj/table/tabl, var/obj/item/tool)
 		..()
 		if (tabl)
 			the_table = tabl

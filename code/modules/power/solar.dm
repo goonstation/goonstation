@@ -109,7 +109,7 @@
 		id = "silverglass"
 
 
-/obj/machinery/power/solar/New()
+INIT_TYPE(/obj/machinery/power/solar)
 	..()
 	SPAWN_DBG(1 SECOND)
 		UpdateIcon()
@@ -254,7 +254,7 @@
 	silverglass
 		solar_id = "silverglass"
 
-/obj/machinery/computer/solar_control/New()
+INIT_TYPE(/obj/machinery/computer/solar_control)
 	..()
 	SPAWN_DBG(1.5 SECONDS)
 		var/datum/powernet/powernet = src.get_direct_powernet()

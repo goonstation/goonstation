@@ -14,7 +14,7 @@
 	stamina_cost = 25
 	stamina_crit_chance = 10
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
@@ -98,7 +98,7 @@
 
 	var/obj/item/plank/plank
 
-	New(var/obj/item/plank/P, var/duration_i)
+	INIT(var/obj/item/plank/P, var/duration_i)
 		..()
 		plank = P
 		if (duration_i)
@@ -137,7 +137,7 @@
 	var/obj/item/plank/plank
 	var/obj/item/plank/otherplank
 
-	New(var/obj/item/plank/P, var/obj/item/plank/PP, var/duration_i)
+	INIT(var/obj/item/plank/P, var/obj/item/plank/PP, var/duration_i)
 		..()
 		plank = P
 		otherplank = PP
@@ -180,7 +180,7 @@
 	var/obj/item/plank/plank
 	var/obj/structure/woodwall/wall
 
-	New(var/obj/item/plank/plank, var/obj/structure/woodwall/wall, var/duration_i)
+	INIT(var/obj/item/plank/plank, var/obj/structure/woodwall/wall, var/duration_i)
 		..()
 		src.plank = plank
 		src.wall = wall

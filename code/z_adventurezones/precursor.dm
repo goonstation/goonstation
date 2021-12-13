@@ -78,7 +78,7 @@
 	sound_environment = 15
 	skip_sims = 1
 	sims_score = 30
-	New()
+	INIT()
 		..()
 		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
 
@@ -118,7 +118,7 @@
 	sound_group = "precursor"  //Differs from the caves it's in, for a mysterious sound-blocking effect.
 	sound_loop = 'sound/ambience/industrial/Precursor_Drone1.ogg'
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			process()
@@ -299,7 +299,7 @@
 	var/assembled = 0
 	var/ready = 0
 
-	New()
+	INIT()
 		..()
 		if(assembled)
 			src.icon_state = "orb_activated"
@@ -397,7 +397,7 @@
 	var/default_state = 0 //0: closed, 1: open
 	var/pitch = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			src.default_state = src.opened
@@ -523,7 +523,7 @@
 	var/id = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("quirky","wierd","strange","cold","odd","janky","metallic","smooth","oblong","swag")] [pick("device","doodad","gizmo","machine","emitter","statue","thingmabob")]"
 		effect_icon = icon(icon, "[icon_state]fx") // figure out what to flick ahead of time
@@ -539,7 +539,8 @@
 		light.set_brightness(0.4)
 
 		if(src.active) // does it start on?
-			src.activate()
+			SPAWN_DBG(0)
+				src.activate()
 
 		if(function == "electrical")
 			SPAWN_DBG(4 SECONDS)
@@ -630,7 +631,7 @@
 	var/setting_green = 0
 	var/setting_blue = 0
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("ominous","tall","bulky","chilly","pointy","spinny","metallic","smooth","oblong","dapper")] [pick("device","doodad","gizmo","machine","column","thing","thingmabob")]"
 		//boutput(world, "[src] is checking for controller")
@@ -725,7 +726,7 @@
 	var/target_blue = 0
 	////////////////////////////
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("little","odd","shiny","janky","quirky","swag")] [pick("indicator","relay","panel","trinket","fixture","whatsit")]"
 		src.tag = "controller_[id]"
@@ -836,7 +837,7 @@
 	var/changing_state = 0
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(0.8)
@@ -894,7 +895,7 @@
 	var/id = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		src.tag = "sphere_[id]"
 		light = new /datum/light/point
@@ -956,7 +957,7 @@
 /obj/item/disk/data/fixed_disk/icemoon_rdrive
 	title = "VR_HDD"
 
-	New()
+	INIT()
 		..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -1125,7 +1126,7 @@
 	var/oversuit = null
 	var/overarmor = null
 
-	New()
+	INIT()
 		..()
 		if(jumpsuit)
 			overlays += image('icons/mob/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
@@ -1176,7 +1177,7 @@
 	var/end_float_effect = 0
 	var/horseneigh = 0 //what am I doing with my life
 
-	New(spawnloc)
+	INIT(spawnloc)
 		..()
 
 		range += rand(-1,2)
@@ -1295,7 +1296,7 @@
 /obj/projectile/precursor_sphere
 	var/homing = 1
 
-	New()
+	INIT()
 		..()
 		homing += rand(0,3)
 
@@ -1462,7 +1463,7 @@ var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',
 /obj/item/disk/data/fixed_disk/dronelab
 	title = "DRONE_HDD"
 
-	New()
+	INIT()
 		..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -1515,7 +1516,7 @@ var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',
 	icon_state = "bone_king"
 	var/list/bones = list()
 
-	New()
+	INIT()
 		..()
 
 		animate(src, pixel_y = 16, time = 6, loop=-1, easing = SINE_EASING)

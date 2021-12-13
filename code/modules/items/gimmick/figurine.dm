@@ -26,7 +26,7 @@
 		rare_prob = 100
 
 
-	New(loc, var/datum/figure_info/newInfo)
+	INIT(loc, var/datum/figure_info/newInfo)
 		..()
 		if (istype(newInfo))
 			src.info = newInfo
@@ -224,7 +224,7 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 	var/list/rare_varieties = list() // rare versions to be picked sometimes
 	var/list/alt_names = list()
 
-	New()
+	INIT()
 		..()
 		if (src.alt_names.len)
 			src.name = pick(src.alt_names)
@@ -470,7 +470,7 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 	macho
 		name = "macho man"
 		icon_state = "macho"
-		New()
+		INIT()
 			..()
 			src.name = pick("\improper M", "m") + pick("a", "ah", "ae") + pick("ch", "tch", "tz") + pick("o", "oh", "oe") + " " + pick("M","m") + pick("a","ae","e") + pick("n","nn")
 
@@ -696,7 +696,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "neoxzilon"
 		ckey = "retrino"
 
-		New()
+		INIT()
 			..()
 			if(prob(50))
 				src.name = "\improper Matcha Usucha" //retrino's second character
@@ -762,7 +762,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/image/cap_image = null
 	var/itemstate = "cap-fig"
 
-	New()
+	INIT()
 		..()
 		src.ccolor = pick("y", "r", "g", "b")
 		src.UpdateIcon()

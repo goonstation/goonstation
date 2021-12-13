@@ -44,7 +44,7 @@ chui/window
 	var/flags = CHUI_FLAG_SIZABLE | CHUI_FLAG_MOVABLE | CHUI_FLAG_CLOSABLE
 
 	//If overriden, be sure to call ..()
-	New(var/atom/adam)
+	INIT(var/atom/adam)
 		..()
 		if(!chui) chui = new()
 		theme = chui.GetTheme( theme )
@@ -207,6 +207,7 @@ chui/window
 	//Calls a Javascript function with a set number of arguments on everyone subscribed.
 	//For prediction, you can include a client to exclude from this.
 	proc/CallJSFunction( var/fname, var/list/arguments, var/client/exclude )
+		set waitfor = FALSE
 		for( var/client/c in subscribers )
 			if( !Validate( c ) )
 				Unsubscribe( c )

@@ -788,7 +788,7 @@
 		return 1
 
 
-	New(loc)
+	INIT(loc)
 		if(!src.reagents) src.create_reagents(100)
 		wander_check = rand(5,20)
 		START_TRACKING_CAT(TR_CAT_CRITTERS)
@@ -1003,7 +1003,7 @@
 	var/parent = null
 	rand_pos = 1
 
-	New()
+	INIT()
 		..()
 		var/amt_to_mod = round(src.warm_count / 10, 1)
 		src.warm_count += rand(-amt_to_mod,amt_to_mod)

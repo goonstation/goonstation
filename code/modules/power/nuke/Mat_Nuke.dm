@@ -43,7 +43,7 @@ datum
 				absorb = 0.90
 				k_factor = 0.3
 
-				New()
+				INIT()
 					..()
 					setProperty("density", 75)
 					setProperty("fissile", 10)
@@ -68,7 +68,7 @@ datum
 				absorb = 0.80
 				k_factor = 3.0
 
-				New()
+				INIT()
 					..()
 					setProperty("density", 75)
 					setProperty("fissile", 75)
@@ -93,7 +93,7 @@ datum
 				absorb = 0.85
 				k_factor = 5.0
 
-				New()
+				INIT()
 					..()
 					setProperty("density", 85)
 					setProperty("radioactive", 65)
@@ -118,7 +118,7 @@ datum
 				absorb = 1.0
 				k_factor = 20.0
 
-				New()
+				INIT()
 					..()
 					setProperty("density", 90)
 					setProperty("radioactive", 100)

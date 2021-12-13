@@ -210,7 +210,7 @@
 	msgLose = "You feel much more hygenic."
 	var/personalized_stink = null
 
-	New()
+	INIT()
 		..()
 		if (prob(5))
 			src.personalized_stink = stinkString()
@@ -355,7 +355,7 @@
 	reagent_threshold = 500 //it never stops
 	add_per_tick = 5 //even more difficult to remove without calomel or hunchback
 
-	New()
+	INIT()
 		..()
 		if (all_functional_reagent_ids.len > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
@@ -407,7 +407,7 @@
 	var/ovl_sprite = null
 	var/color_hex = null
 
-	New()
+	INIT()
 		..()
 		ovl_sprite = pick("aurapulse","aurapulse-fast","aurapulse-slow","aurapulse-offset")
 		color_hex = random_color()
@@ -470,7 +470,7 @@
 	var/ovl_sprite = null
 	var/color_hex = null
 
-	New()
+	INIT()
 		..()
 		color_hex = random_color()
 

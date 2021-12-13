@@ -157,7 +157,7 @@
 		icon_state = "banh_mi"
 		food_effects = list("food_energized_big", "food_hp_up_big")
 
-		New()
+		INIT()
 			..()
 			reagents.add_reagent("honey", 10)
 
@@ -186,7 +186,7 @@
 	initial_reagents = list("fartonium"=10)
 	food_effects = list("food_sweaty_big")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
-	New()
+	INIT()
 		..()
 		if(prob(10))
 			name = pick("cleveland steamed ham","very sloppy joe","buttconator","bootyburg","quarter-mooner","ass whooper","hambuttger","big crack")
@@ -199,7 +199,7 @@
 	food_effects = list("food_sweaty_big", "food_hp_up_big")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("love", 15)
 
@@ -251,7 +251,7 @@
 	initial_reagents = null
 	food_effects = list("food_bad_breath")
 
-	New()
+	INIT()
 		..()
 		#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
 		wrap_pathogen(reagents, generate_flu_pathogen(), 7)
@@ -278,7 +278,7 @@
 	initial_reagents = null
 	var/roundstart_pathogens = 1
 
-	New()
+	INIT()
 		..()
 		if(roundstart_pathogens)
 			wrap_pathogen(reagents, generate_random_pathogen(), 15)

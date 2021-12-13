@@ -42,7 +42,7 @@
 	/// ha ha NO.
 	dynamic_processing = 0
 
-/obj/machinery/bot/duckbot/New()
+INIT_TYPE(/obj/machinery/bot/duckbot)
 	. = ..()
 	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 

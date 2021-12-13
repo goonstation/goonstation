@@ -8,7 +8,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartiorigin, var/min_charge)
+	INIT(var/loc, var/forceartiorigin, var/min_charge)
 		//src.artifact = new /datum/artifact/energyammo(src)
 		src.max_charge = rand(5,100)
 		src.max_charge *= 10
@@ -70,6 +70,6 @@
 	react_xray = list(8,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "VOLATILE REACTION DETECTED"

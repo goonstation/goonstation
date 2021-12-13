@@ -10,7 +10,7 @@
 	var/static/list/product_name_cache = list(/obj/item/reagent_containers/mender/brute = "brute auto-mender", /obj/item/reagent_containers/mender/burn = "burn auto-mender")
 
 
-	New(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
+	INIT(productpath, amount=0, cost=0, hidden=0, logged_on_vend=FALSE)
 		..()
 		if (istext(productpath))
 			productpath = text2path(productpath)
@@ -117,7 +117,7 @@
 
 	var/window_size = "400x475"
 
-	New()
+	INIT()
 		src.create_products()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", "vendinput")
@@ -996,7 +996,7 @@
 	icon_state = "crowbar"
 	var/obj/machinery/vending/vendor = null
 
-	New(vending_machine, var/Owner)
+	INIT(vending_machine, var/Owner)
 		src.vendor = vending_machine
 		src.owner = Owner
 		..()
@@ -1653,7 +1653,7 @@
 	var/image/icon
 	var/label
 	product_amount = 1
-	New(obj/item/product,price)
+	INIT(obj/item/product,price)
 		. = ..()
 		contents = list()
 		if (!product)
@@ -1704,7 +1704,7 @@
 	var/wiresdesc
 	var/glassdesc
 	var/readydesc
-	New()
+	INIT()
 		. = ..()
 		basedesc = desc
 		boarddesc = "[desc] Seems to be missing the module, and everything else."
@@ -1851,7 +1851,7 @@
 	var/image/promoimage = null
 	player_list = list()
 
-	New()
+	INIT()
 		. = ..()
 		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 		crtoverlay.layer = src.layer + 0.2
@@ -2064,7 +2064,7 @@
 			src.generate_HTML(1, 0)
 
 /obj/machinery/vending/player/fallen
-	New()
+	INIT()
 		. = ..()
 		src.fall()
 //Somewhere out in the vast nothingness of space, a chef (and an admin) is crying.
@@ -2173,7 +2173,7 @@
 		return
 
 /obj/machinery/vending/pizza/fallen
-	New()
+	INIT()
 		. = ..()
 		src.fall()
 
@@ -2349,7 +2349,7 @@
 	light_g = 0.3
 	light_b = 1
 #endif
-	New()
+	INIT()
 		..()
 		light.set_color(0.8, 0.4, 1)
 
@@ -2700,7 +2700,7 @@
 	light_g = 0.4
 	light_b = 1
 
-	New()
+	INIT()
 		..()
 		gas_prototype = new /datum/gas_mixture
 
@@ -2774,7 +2774,7 @@
 		if(href_list["changepressure"])
 			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
 			if(isnum_safe(change))
-				target_pressure = min(max(10.1325, change),1013.25)
+				target_pressure = clamp(change, 10.1325, 1013.25)
 				src.updateUsrDialog()
 
 		if(href_list["fill"])

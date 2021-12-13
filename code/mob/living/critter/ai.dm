@@ -17,7 +17,7 @@ var/list/ai_move_scheduled = list()
 
 	var/exclude_from_mobs_list = 0
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		owner = M
 		if(istype(M, /mob/living/carbon/human))
@@ -156,7 +156,7 @@ var/list/ai_move_scheduled = list()
 	var/name = "task"
 	var/datum/aiHolder/holder = null
 
-	New(parentHolder)
+	INIT(parentHolder)
 		..()
 		holder = parentHolder
 
@@ -225,7 +225,7 @@ var/list/ai_move_scheduled = list()
 	var/frustration_threshold = 10
 	var/datum/aiTask/transition_task = null
 
-	New(parentHolder, transTask)
+	INIT(parentHolder, transTask)
 		transition_task = transTask
 		..()
 
@@ -258,7 +258,7 @@ var/list/ai_move_scheduled = list()
 	var/list/action_params = null
 	var/datum/aiTask/transition_task = null
 
-	New(parentHolder, transTask, action)
+	INIT(parentHolder, transTask, action)
 		transition_task = transTask
 		action_path = action
 		..()
@@ -300,7 +300,7 @@ var/list/ai_move_scheduled = list()
 	var/datum/aiTask/transition_task = null // the task to go to after our sequence either fails or ends
 	var/terminated = 0
 
-	New(parentHolder, transTask)
+	INIT(parentHolder, transTask)
 		transition_task = transTask
 		..()
 

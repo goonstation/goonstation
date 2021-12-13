@@ -5,7 +5,7 @@ Override /Run() to run your test code
 
 Call Fail() to fail the test (You should specify a reason)
 
-You may use /New() and /Destroy() for setup/teardown respectively
+You may use /INIT() and /Destroy() for setup/teardown respectively
 
 You can use the run_loc_floor_bottom_left and run_loc_floor_top_right to get turfs for testing
 
@@ -103,7 +103,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	var/list/allocated
 	var/list/fail_reasons
 
-/datum/unit_test/New()
+INIT_TYPE(/datum/unit_test)
 	..()
 	allocated = new
 	if(landmarks[LANDMARK_BOTTOM_LEFT])

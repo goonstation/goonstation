@@ -27,7 +27,7 @@
 	var/sound/hitsound = null
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
-	New()
+	INIT()
 		..()
 		src.damtype = pick("brute", "fire", "toxin")
 		src.dmg_amount = rand(3,6)

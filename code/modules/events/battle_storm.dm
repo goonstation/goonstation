@@ -8,7 +8,7 @@
 	var/list/area/safe_locations = list()
 	var/activations = 0
 
-	New()
+	INIT()
 		..()
 		safe_locations = get_accessible_station_areas()
 
@@ -83,7 +83,7 @@
 			for(var/i = 0, i < 20, i++)
 				sleep(1 SECOND)
 				for(var/mob/living/M in mobs)
-					if(istype(get_area(M),/area/shuttle/escape/transit/battle_shuttle) || inafterlife(M))
+					if(istype(get_area(M),/area/shuttle/battle) || inafterlife(M))
 						continue
 					var/area/mob_area = get_area(M)
 					if(mob_area?.storming)

@@ -95,7 +95,7 @@
 
 	var/output_target = null
 
-	New()
+	INIT()
 		for(var/R in blueprints)
 			recipes.Add(new R())
 		..()
@@ -376,7 +376,7 @@
 
 	var/datum/matfab_recipe/recipe = null
 
-	New(var/loc,var/schematic = null)
+	INIT(var/loc,var/schematic = null)
 		..()
 		if (!src.recipe)
 			qdel(src)

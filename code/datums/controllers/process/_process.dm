@@ -94,7 +94,7 @@
 	/// Settable last object this loop was processing
 	var/tmp/last_object
 
-/datum/controller/process/New(datum/controller/processScheduler/scheduler)
+INIT_TYPE(/datum/controller/process, datum/controller/processScheduler/scheduler)
 	. = ..()
 	main = scheduler
 	previousStatus = "idle"

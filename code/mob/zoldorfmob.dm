@@ -21,7 +21,7 @@
 	var/soulcolor
 	var/emoting
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)

@@ -227,7 +227,7 @@
 							if (isnum(duration))
 								duration = round(duration)
 								if (duration < 1 || duration > 255)
-									duration = max(1, min(duration, 255))
+									duration = clamp(duration, 1, 255)
 									message_user("Warning: Pulse duration out of bounds \[1 - 255]. Value clamped.")
 							else
 								duration = 1
@@ -255,7 +255,7 @@
 									if (isnum(duration))
 										duration = round(duration)
 										if (duration < 1 || duration > 255)
-											duration = max(1, min(duration, 255))
+											duration = clamp(duration, 1, 255)
 											message_user("Warning: Pulse duration out of bounds \[1 - 255]. Value clamped.")
 									else
 										duration = 1
@@ -458,7 +458,7 @@
 
 		..()
 
-	New()
+	INIT()
 		..()
 		known_devices = list()
 		known_device_start_offset = 0
@@ -936,7 +936,7 @@
 	var/displayingAlertFlag = 1
 	var/list/deviceProfiles = list()
 
-	New()
+	INIT()
 		..()
 
 		entries = list("","","","","|cLoading...","","","")

@@ -39,7 +39,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 	var/list/allNodes = null //Complete list of nodes in the master.
 	var/wait_to_speak = 0 SECONDS // time to wait for more natural visible conversations
 
-	New(var/datum/M)
+	INIT(var/datum/M)
 		master = M
 		if(ispath(start))
 			var/datum/dialogueNode/instance = new start(src)
@@ -231,7 +231,7 @@ Links are ignored on this node. It uses the target node's links.
 	var/showBackToMain = 1 //Show button leading back to first screen on this node? Careful: Without this people might get stuck. Plan your dialogue.
 	var/datum/dialogueMaster/master = null
 
-	New(var/datum/dialogueMaster/M)
+	INIT(var/datum/dialogueMaster/M)
 		master = M
 		..()
 

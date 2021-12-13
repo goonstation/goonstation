@@ -24,7 +24,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = ""
 	mouse_opacity = 0
 
-	New()
+	INIT()
 		START_TRACKING
 		..()
 
@@ -64,7 +64,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/locked = 1 //Starts off locked.
 	req_access = list(access_heads)
 
-	New()
+	INIT()
 		mantaLever = src
 		UpdateIcon()
 		..()
@@ -195,7 +195,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/repairstate = 0
 	var/broken = 0
 
-	New()
+	INIT()
 		..()
 		stateOff = "sea_propulsion_off"
 		stateOn = "sea_propulsion"
@@ -270,7 +270,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if(health == 0)
 			setOn(0)
 			repairstate = 1
@@ -313,7 +313,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	bound_width = 64
 	appearance_flags = TILE_BOUND
 
-	New()
+	INIT()
 		. = ..()
 		stateOff = "bigsea_propulsion_off"
 		stateOn = "bigsea_propulsion"
@@ -329,7 +329,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	anchored = 2
 	density = 1
 
-	New()
+	INIT()
 		..()
 
 	seaheater_right
@@ -385,7 +385,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 
-	New()
+	INIT()
 		START_TRACKING
 		. = ..()
 		UpdateIcon()
@@ -530,7 +530,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -600,7 +600,7 @@ var/obj/manta_speed_lever/mantaLever = null
 							actions.start(new /datum/action/bar/icon/magnettether_fix(src, I, 30), user)
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -627,7 +627,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	bound_height = 32
 	bound_width = 32
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -698,7 +698,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	click_delay = 30
 	force = 50
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -742,7 +742,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/drop_type = 0
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		if (src.random_color)
 			src.color = random_saturated_hex_color()
@@ -808,7 +808,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		light = 0
 		..()
 
-	initialize()
+	INIT()
 		..()
 		if (!init)
 			init = 1
@@ -819,7 +819,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				light.attach(src)
 			light.set_brightness(1)
 			light.set_color(C.r/255, C.g * 0.25/255, C.b * 0.25/255)
-			light.set_height(3)
+			light.set_height(1.2)
 			light.enable()
 
 /obj/sea_plant_manta/kelp
@@ -854,7 +854,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/on = TRUE
 	var/list/L = list()
 
-	New()
+	INIT()
 		START_TRACKING
 		. = ..()
 		stateOff = "manta_sand"
@@ -911,7 +911,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/obj/machinery/mantapropulsion/propeller
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			propeller = O
@@ -1049,7 +1049,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/obj/machinery/junctionbox/box
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			box = O
@@ -1140,7 +1140,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/obj/machinery/magneticbeacon/magnet
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			magnet = O
@@ -1429,7 +1429,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/id = "polarisdoor"
 	var/used = 0
 
-/obj/machinery/hanscanner/New()
+INIT_TYPE(/obj/machinery/hanscanner)
 	..()
 	UnsubscribeProcess()
 

@@ -13,7 +13,7 @@
 	high_volume
 		name = "Large Dual Port Air Vent"
 
-		New()
+		INIT()
 			..()
 
 			air1.volume = 1000
@@ -31,7 +31,7 @@
 	//2: Do not pass input_pressure_min
 	//4: Do not pass output_pressure_max
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -163,19 +163,19 @@
 
 			if("set_input_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				input_pressure_min = number
 
 			if("set_output_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				output_pressure_max = number
 
 			if("set_external_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number
 

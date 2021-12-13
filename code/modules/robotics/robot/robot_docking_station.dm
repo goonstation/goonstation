@@ -21,7 +21,7 @@
 	var/mob/occupant = null
 	power_usage = 50
 
-/obj/machinery/recharge_station/New()
+INIT_TYPE(/obj/machinery/recharge_station)
 	..()
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
@@ -568,11 +568,11 @@
 						C.legs_mod = mod
 				if ("fx")
 					C.fx[1] = input(usr,"How much red? (0 to 255)" ,"Eye and Glow", 0) as num
-					C.fx[1] = max(min(C.fx[1], 255), 0)
+					C.fx[1] = clamp(C.fx[1], 0, 255)
 					C.fx[2] = input(usr,"How much green? (0 to 255)" ,"Eye and Glow", 0) as num
-					C.fx[2] = max(min(C.fx[2], 255), 0)
+					C.fx[2] = clamp(C.fx[2], 0, 255)
 					C.fx[3] = input(usr,"How much blue? (0 to 255)" ,"Eye and Glow", 0) as num
-					C.fx[3] = max(min(C.fx[3], 255), 0)
+					C.fx[3] = clamp(C.fx[3], 0, 255)
 			R.update_appearance()
 			R.update_bodypart()
 

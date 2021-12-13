@@ -47,7 +47,7 @@
 
 	var/chainReactionPossible = 0
 
-	New()
+	INIT()
 		..()
 		maxAmount = amount
 
@@ -89,7 +89,7 @@
 /obj/item/rod/fuel/uranium/TwoThreeNine
 	name = "uranium 239 fuel rod"
 
-	New()
+	INIT()
 		..()
 		src.process()
 
@@ -157,7 +157,7 @@
 
 	icon_state = "fr2"
 
-	New()
+	INIT()
 		..()
 		src.process()
 

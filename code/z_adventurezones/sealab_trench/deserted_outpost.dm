@@ -5,12 +5,12 @@ Audio Log for Outpost
 4 Audio Tapes
 */
 /obj/item/device/audio_log/outpost
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/outpost_01(src)
 
 /obj/item/audio_tape/outpost_01
-	New()
+	INIT()
 		..()
 		speakers = list("Daniel","???","Low voice","Daniel","Daniel","???","Daniel","???",
 		"Daniel","Low voice","???","Low voice","???","Daniel","???","Low voice","???","???","Daniel",
@@ -46,7 +46,7 @@ Audio Log for Outpost
 		"*click*")
 
 /obj/item/audio_tape/outpost_02
-	New()
+	INIT()
 		..()
 		speakers = list("Female voice","Daniel","???","???","Female voice","???","Daniel","Daniel","???",
 		"Daniel","Female voice","Daniel","???","Daniel","Daniel","Daniel","Daniel","Female voice","Daniel",
@@ -101,7 +101,7 @@ Audio Log for Outpost
 		"*silence*")
 
 /obj/item/audio_tape/outpost_03
-	New()
+	INIT()
 		..()
 		speakers = list("Female voice","Daniel","Daniel","Female voice","Daniel","Female","???","Daniel","???",
 		"Daniel","???","Daniel","Female voice","???","Female voice", "Female voice", "Female voice",
@@ -149,7 +149,7 @@ Audio Log for Outpost
 		"Take your time. Think.")
 
 /obj/item/audio_tape/outpost_04
-	New()
+	INIT()
 		..()
 		speakers = list("Male voice","Female voice","Male voice","Female voice","Male voice","Female voice",
 		"???","???","Male voice","???","Female voice","Male voice","Female voice","Male voice","Female voice",

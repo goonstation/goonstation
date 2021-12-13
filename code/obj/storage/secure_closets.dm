@@ -278,7 +278,7 @@
 		name = "\improper Automatic Locker (Genpop South)"
 		id = "genpop_s"
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
@@ -691,7 +691,7 @@
 	weld_image_offset_X = 3
 
 /obj/storage/secure/closet/fridge/opened
-	New()
+	INIT()
 		..()
 		name = "busted refrigerator"
 		desc = "The newest cooling technology...now with - oh god! What happened to the poor door?!"

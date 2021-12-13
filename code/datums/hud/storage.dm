@@ -7,7 +7,7 @@
 	var/list/obj_locs = null // hi, haine here, I'm gunna crap up this efficient code with REGEX BULLSHIT YEAHH!!
 	var/empty_obj_loc = null
 
-	New(master)
+	INIT(master)
 		..()
 		src.master = master
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "block", ui_storage_area)

@@ -9,7 +9,7 @@
 	var/id
 	var/noiselimiter = 0
 
-/obj/machinery/meter/New()
+INIT_TYPE(/obj/machinery/meter)
 	..()
 	SPAWN_DBG(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc

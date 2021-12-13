@@ -59,6 +59,6 @@
 		add_health_holder(/datum/healthHolder/suffocation)
 		add_health_holder(/datum/healthHolder/brain)
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)

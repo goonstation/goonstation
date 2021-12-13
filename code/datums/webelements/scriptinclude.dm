@@ -1,5 +1,5 @@
 /datum/tag/scriptinclude
-	New()
+	INIT()
 		..("script")
 		setAttribute("type", "text/javascript")
 

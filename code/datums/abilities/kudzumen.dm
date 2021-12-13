@@ -52,7 +52,7 @@
 
 	var/const/MAX_POINTS = 100
 
-	New()
+	INIT()
 		..()
 		if (hud)
 			nutrients_meter = new/atom/movable/screen/kudzu/meter(src)
@@ -100,7 +100,7 @@
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/kudzu/B = new /atom/movable/screen/ability/topBar/kudzu(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -212,7 +212,7 @@
 	icon_state = "kudzu-benign-1"
 	var/health = 10
 
-	New(var/location as turf)
+	INIT(var/location as turf)
 		..()
 		icon_state = "kudzu-benign-[rand(1,3)]"
 		var/turf/T = get_turf(location)
@@ -503,7 +503,7 @@
 	var/obj/item/kudzu/kudzumen_vine/vine = null
 	var/active = 0
 
-	New(var/datum/abilityHolder/kudzu/holder)
+	INIT(var/datum/abilityHolder/kudzu/holder)
 		..(holder)
 
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
@@ -569,7 +569,7 @@
 /atom/movable/screen/kudzu
 	var/datum/abilityHolder/kudzu/holder
 
-	New(var/datum/abilityHolder/kudzu/holder)
+	INIT(var/datum/abilityHolder/kudzu/holder)
 		..()
 		src.holder = holder
 
@@ -614,7 +614,7 @@
 	var/datum/controller/process/kudzu/kudzu_controller
 	var/amount = 0
 
-	New(var/datum/abilityHolder/kudzu/holder, var/datum/controller/process/kudzu/K)
+	INIT(var/datum/abilityHolder/kudzu/holder, var/datum/controller/process/kudzu/K)
 		..(holder)
 		if (istype(K))
 			kudzu_controller = K
@@ -688,7 +688,7 @@
 	cant_other_remove = 1
 	cant_drop = 1		//if they drop it, we'll just try to find the ability holder, otherwise, destroy itself. Non-kudzumen shouldn't see this item.
 
-	New()
+	INIT()
 		..()
 		src.build_buttons()
 		src.setItemSpecial(/datum/item_special/rangestab)
@@ -736,7 +736,7 @@
 	var/obj/spacevine/kudzu
 	var/creation_path
 
-	New(var/obj/spacevine/kudzu, var/obj/item/kudzu/kudzumen_vine/vine_arm, var/creation_path, var/extra_time as num)
+	INIT(var/obj/spacevine/kudzu, var/obj/item/kudzu/kudzumen_vine/vine_arm, var/creation_path, var/extra_time as num)
 		src.kudzu = kudzu
 		src.vine_arm = vine_arm
 		src.creation_path = creation_path

@@ -19,7 +19,7 @@
 	var/swapSouls = FALSE
 	var/deep_count = 0
 
-	New()
+	INIT()
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
 		evil_delay = rand(0,imprison_time)

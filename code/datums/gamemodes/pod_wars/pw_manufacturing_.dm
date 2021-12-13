@@ -40,7 +40,7 @@
 		/datum/manufacture/pod/weapon/ass_laser,
 	)
 
-	New()
+	INIT()
 		START_TRACKING
 		..()
 		add_team_armor()
@@ -259,7 +259,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 /obj/machinery/manufacturer/mining/pod_wars/
 	var/team_num = 0
 
-	New()
+	INIT()
 		START_TRACKING
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 /obj/machinery/manufacturer/mining/pod_wars/syndicate
 	team_num = TEAM_SYNDICATE
 
-	New()
+	INIT()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
 		available += /datum/manufacture/pod_wars/jetpack/syndicate
 		..()
@@ -292,13 +292,13 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen
 	team_num = TEAM_NANOTRASEN
 
-	New()
+	INIT()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		available += /datum/manufacture/pod_wars/jetpack
 		..()
 
 /obj/machinery/manufacturer/medical/pod_wars
-	New()
+	INIT()
 		available += /datum/manufacture/medical_backpack
 		available += /datum/manufacture/pod_wars/medical_refill
 		..()
@@ -425,7 +425,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	"menthol", "antihistamine", "smelling_salt")
 
 /obj/machinery/manufacturer/general/pod_wars
-	New()
+	INIT()
 		#ifdef RP_MODE
 		available += /datum/manufacture/pod_wars/handcuffs
 		#endif

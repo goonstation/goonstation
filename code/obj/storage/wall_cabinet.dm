@@ -195,7 +195,7 @@
 	icon_state = "clothingrack" //They start full so might as well
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
-	New()
+	INIT()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -281,7 +281,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	can_hold = list(/obj/item/clothing/head)
 
 
-	New()
+	INIT()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -332,7 +332,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon_state = "toolshelf"
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
-	New()
+	INIT()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -356,7 +356,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
-	New()
+	INIT()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)

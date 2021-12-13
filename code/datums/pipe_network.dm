@@ -10,7 +10,7 @@ datum/pipe_network
 	var/update = 1
 	var/datum/gas_mixture/air_transient = null
 
-	New()
+	INIT()
 		air_transient = new /datum/gas_mixture
 
 		..()

@@ -43,7 +43,7 @@
 
 	flags = FPRINT | TABLEPASS
 
-	New()
+	INIT()
 		..()
 		health = maxhealth
 		src.process()

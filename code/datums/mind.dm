@@ -71,7 +71,9 @@ datum/mind
 	//avoid some otherwise frequent istype checks
 	var/stealth_objective = 0
 
-	New(mob/M)
+	var/show_respawn_prompts = TRUE
+
+	INIT(mob/M)
 		..()
 		if (M)
 			current = M

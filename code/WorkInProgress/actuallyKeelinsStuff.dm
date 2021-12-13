@@ -313,7 +313,7 @@ Returns:
 
 		add_filter("layer", 1, layering_filter(render_source="*portaltrg"))
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(50) setup()
 
@@ -516,7 +516,7 @@ Returns:
 	var/target_tag = null
 	var/datum/light/light
 
-	New()
+	INIT()
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
 		light.set_brightness(0.5)
@@ -605,7 +605,7 @@ Returns:
 		switch(variable)
 			if ("targetZ")
 				updateVis()
-	New()
+	INIT()
 		updateVis()
 		for(var/obj/hole/H in range(1, src.loc))
 			H.updateVis()
@@ -924,7 +924,7 @@ Returns:
 		return
 
 
-	New()
+	INIT()
 		..()
 
 /*
@@ -949,7 +949,7 @@ Returns:
 	pixel_x = -16
 	pixel_y = -16
 	blend_mode = 2
-	New()
+	INIT()
 		SPAWN_DBG(10 SECONDS)
 			name = "growing wormhole"
 			desc = "a slowly growing wormhole"
@@ -982,7 +982,7 @@ Returns:
 	anchored = 1
 	layer = EFFECTS_LAYER_1
 
-	New()
+	INIT()
 		SPAWN_DBG(2 SECONDS)
 			qdel(src)
 		..()
@@ -1025,7 +1025,7 @@ Returns:
 	icon = null
 	icon_state = "sabre"
 	anchored = 1
-	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
+	INIT(var/obj/item/experimental/melee/spear/S,var/atom/location)
 		src.set_loc(location)
 		var/image/I = image(S)
 		I.appearance_flags = 0
@@ -1139,7 +1139,7 @@ Returns:
 	duration = -1
 	icon_y_off = 29
 
-	New(var/obj/item/experimental/melee/dagger/D, var/mob/U, var/atom/T)
+	INIT(var/obj/item/experimental/melee/dagger/D, var/mob/U, var/atom/T)
 		..()
 		if(!D || !U || !T)
 			interrupt(INTERRUPT_ALWAYS)
@@ -1309,7 +1309,7 @@ Returns:
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	hit_type = DAMAGE_STAB
 
-	New()
+	INIT()
 		setHeadMaterial(getMaterial("telecrystal"))
 		setShaftMaterial(getMaterial("bohrum"))
 		buildOverlays()
@@ -1556,7 +1556,7 @@ Returns:
 	icon_state = "statuefloorpills"
 	density = 1
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("slag"))
 		name = "Statue of Dr.Floorpills"
@@ -1699,7 +1699,7 @@ Returns:
 	desc = "it's an improvised spear."
 	icon = null
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -1861,7 +1861,7 @@ Returns:
 	var/words_min = 7
 	var/words_max = 10
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 		BLOCK_SETUP(BLOCK_BOOK)
@@ -1967,7 +1967,7 @@ Returns:
 	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
 
-	New()
+	INIT()
 		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
 		light = new /datum/light/point
 		light.attach(src)
@@ -2091,7 +2091,7 @@ Returns:
 	var/image/oimage = null
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		oimage = image('icons/misc/exploration.dmi',src,"sfrag")
 		orbicons.Add(oimage)
 		return ..()
@@ -2401,7 +2401,7 @@ Returns:
 			boutput(usr, "<span class='success'>*** All done ***</span>")
 		return
 
-	New()
+	INIT()
 		SPAWN_DBG(0) runIt()
 		return ..()
 
@@ -2480,7 +2480,7 @@ Returns:
 	opacity = 0
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(0.7)
@@ -2507,7 +2507,7 @@ Returns:
 
 	var/datum/light/point/light
 
-	New()
+	INIT()
 		..()
 		light = new
 		light.set_brightness(0.7)
@@ -2550,7 +2550,7 @@ Returns:
 	var/xo = null
 	var/current = null
 
-	New()
+	INIT()
 		..()
 
 	proc
@@ -2564,7 +2564,7 @@ Returns:
 
 	process()
 		if ((!( src.current ) || src.loc == src.current))
-			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
+			src.current = locate(clamp(src.x + src.xo, 1, world.maxx), clamp(src.y + src.yo, 1, world.maxy), src.z)
 		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 			qdel(src)
 			return
@@ -2827,7 +2827,7 @@ Returns:
 		var/turf/trg = source.loc
 		AM.set_loc(trg)
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -2923,7 +2923,7 @@ Returns:
 
 	var/prob_clonk = 0
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_LARGE)
 
@@ -3081,7 +3081,7 @@ Returns:
 	var/target_tag = null
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
@@ -3181,7 +3181,7 @@ Returns:
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "r_wall"
 
-	New()
+	INIT()
 		..()
 		update()
 
@@ -3433,12 +3433,13 @@ var/list/lag_list = new/list()
 	name = "apparition"
 	var/turf/startloc
 
-	New()
+	INIT()
 		startloc = get_turf(src)
 		loop()
 		return ..()
 
 	proc/loop()
+		set waitfor = FALSE
 
 		if(active)
 			SPAWN_DBG(3 SECONDS) loop()
@@ -3785,7 +3786,7 @@ var/list/lag_list = new/list()
 		src.add_fingerprint(usr)
 		return
 
-	New()
+	INIT()
 		..()
 		for(var/D in typesof(/datum/engibox_mode) - /datum/engibox_mode)
 			modes += new D
@@ -3818,7 +3819,7 @@ var/list/lag_list = new/list()
 	sound_loop = 'sound/ambience/loop/Shore.ogg'
 	sound_loop_vol = 100
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			process()
@@ -3874,7 +3875,7 @@ var/list/lag_list = new/list()
 		else
 			return 0.75
 
-/mob/living/intangible/aicamera/New()
+INIT_TYPE(/mob/living/intangible/aicamera)
 	. = ..()
 	src.invisibility = INVIS_NONE
 	src.sight = SEE_THRU

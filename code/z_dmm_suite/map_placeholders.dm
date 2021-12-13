@@ -11,7 +11,7 @@
 	layer = FLY_LAYER+1
 	var/coordinates
 	var/dimensions
-	New()
+	INIT()
 		. = ..()
 		// Must assign at runtime so initial() != runtime when saving
 		icon = null
@@ -20,7 +20,7 @@
 
 //-- Used in generating turf underlay stacks -----
 turf/dmm_suite/underlay
-	New()
+	INIT()
 		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)
 
@@ -29,7 +29,7 @@ turf/dmm_suite/clear_turf
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "clear_turf"
 	layer = FLY_LAYER
-	New()
+	INIT()
 		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)
 //-- Fills maps when writing with IGNORE_AREAS ---
@@ -37,6 +37,6 @@ area/dmm_suite/clear_area
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "clear_area"
 	layer = FLY_LAYER
-	New()
+	INIT()
 		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)

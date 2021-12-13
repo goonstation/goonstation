@@ -10,7 +10,7 @@
 	fits_under_table = 1
 	flags = TABLEPASS
 
-/mob/living/critter/flock/bit/New(var/atom/location, var/datum/flock/F=null)
+INIT_TYPE(/mob/living/critter/flock/bit, var/atom/location, var/datum/flock/F=null)
 	..(src, F)
 
 	src.ai = new /datum/aiHolder/flock/bit(src)

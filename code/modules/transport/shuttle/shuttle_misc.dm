@@ -2,7 +2,7 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 
@@ -185,7 +185,7 @@
 	force = 40
 	throw_speed = 0.3
 
-	New()
+	INIT()
 		src.setMaterial(getMaterial("plasmastone"), appearance = 1, setname = 0)
 		src.setMaterial(getMaterial("erebite"), appearance = 0, setname = 0)
 		src.setMaterial(getMaterial("plasmaglass"), appearance = 1, setname = 0)

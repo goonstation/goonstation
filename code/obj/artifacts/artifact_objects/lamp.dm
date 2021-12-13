@@ -7,7 +7,7 @@
 	var/light_b = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light_brightness = max(0.5, (rand(5, 20) / 10))
 		light_r = rand(25,100) / 100

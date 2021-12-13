@@ -34,7 +34,7 @@ var/compx_gridx_max = 5
 	var/setup_starting_peripheral1 = /obj/item/peripheralx/drive
 	var/setup_starting_peripheral2 = /obj/item/peripheralx/drive
 
-	New()
+	INIT()
 		..()
 
 		if(!compx_grid_spacer)

@@ -99,7 +99,7 @@ datum/controller/process/lighting
 	var/const/increase_size_amt = 100
 
 
-	New(ListSize = 500)
+	INIT(ListSize = 500)
 		..()
 		list = list()
 		list.len = ListSize

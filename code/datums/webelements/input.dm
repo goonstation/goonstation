@@ -1,5 +1,5 @@
 /datum/tag/input
-	New(var/type as text)
+	INIT(var/type as text)
 		..("input")
 		selfCloses = 1
 

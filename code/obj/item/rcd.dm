@@ -155,7 +155,7 @@ Broken RCD + Effects
 				. += "???"
 		. += " mode."
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 		return
@@ -924,7 +924,7 @@ Broken RCD + Effects
 	var/mode = 1
 	var/broken = 0 //Fully broken, that is.
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "bad_rcd[rand(0,2)]"
 
@@ -1006,7 +1006,7 @@ Broken RCD + Effects
 	var/lifespan = 4
 	var/rangeout = 0
 
-	New()
+	INIT()
 		..()
 		lifespan = rand(2,4)
 		rangeout = lifespan

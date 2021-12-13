@@ -202,7 +202,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 		html += "</ul>"
 		return html.Join()
 
-/datum/changelog/New()
+INIT_TYPE(/datum/changelog)
 	..()
 //<img alt="Goonstation 13" src="[resource("images/changelog/postcardsmall.jpg")]" class="postcard" />
 

@@ -46,7 +46,7 @@
 		name = "Drawbridge Controller"
 		original_turf = /turf/simulated/floor/plating/airless/asteroid
 
-	New()
+	INIT()
 		START_TRACKING
 		..()
 
@@ -273,18 +273,11 @@
 
 	var/emergency = 0 // 1 to automatically extend when the emergency shuttle docks
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
-
-	initialize()
-		..()
-		update_status()
-		if (starts_established && length(links))
-			SPAWN_DBG(1 SECOND)
-				do_initial_extend()
 
 	disposing()
 		STOP_TRACKING

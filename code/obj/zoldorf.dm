@@ -82,7 +82,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 	var/usurping = 0
 	var/YN
 
-	New()
+	INIT()
 		. = ..()
 		o1.mouse_opacity = 0
 		o2.mouse_opacity = 0

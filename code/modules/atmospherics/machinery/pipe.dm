@@ -75,7 +75,6 @@ obj/machinery/atmospherics/pipe
 		volume = 70
 
 		dir = SOUTH
-		initialize_directions = SOUTH|NORTH
 
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
@@ -106,27 +105,67 @@ obj/machinery/atmospherics/pipe
 		northwest
 			dir = NORTHWEST
 
-		New()
+		INIT()
 			..()
-			switch(dir)
-				if(SOUTH)
-					initialize_directions = SOUTH|NORTH
-				if(NORTH)
-					initialize_directions = SOUTH|NORTH
-				if(EAST)
-					initialize_directions = EAST|WEST
-				if(WEST)
-					initialize_directions = EAST|WEST
-				if(NORTHEAST)
-					initialize_directions = NORTH|EAST
-				if(NORTHWEST)
-					initialize_directions = NORTH|WEST
-				if(SOUTHEAST)
-					initialize_directions = SOUTH|EAST
-				if(SOUTHWEST)
-					initialize_directions = SOUTH|WEST
 			initial_icon_state = icon_state
 
+			var/connect_directions
+
+			switch(dir)
+				if(NORTH)
+					connect_directions = NORTH|SOUTH
+				if(SOUTH)
+					connect_directions = NORTH|SOUTH
+				if(EAST)
+					connect_directions = EAST|WEST
+				if(WEST)
+					connect_directions = EAST|WEST
+				else
+					connect_directions = dir
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.get_connect_directions() & get_dir(target,src))
+							node1 = target
+							break
+
+					connect_directions &= ~direction
+					break
+
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.get_connect_directions() & get_dir(target,src))
+							node2 = target
+							break
+
+					connect_directions &= ~direction
+					break
+
+			var/turf/T = src.loc			// hide if turf is not intact
+			hide(T.intact)
+			//UpdateIcon()
+
+		get_connect_directions()
+			switch(dir)
+				if(SOUTH)
+					. = SOUTH|NORTH
+				if(NORTH)
+					. = SOUTH|NORTH
+				if(EAST)
+					. = EAST|WEST
+				if(WEST)
+					. = EAST|WEST
+				if(NORTHEAST)
+					. = NORTH|EAST
+				if(NORTHWEST)
+					. = NORTH|WEST
+				if(SOUTHEAST)
+					. = SOUTH|EAST
+				if(SOUTHWEST)
+					. = SOUTH|WEST
 		overfloor
 			level = 2
 			alpha = 255
@@ -392,7 +431,7 @@ obj/machinery/atmospherics/pipe
 					return
 
 				boutput(user, "You start to repair the [src.name].")
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "You repair the [src.name].", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, list(), W.icon, W.icon_state, "<span class='notice'>[user] repairs the [src.name].</span>", null)
 
 			else if(destroyed && istype(W, /obj/item/rods))
 				var/duration = 15 SECONDS
@@ -416,10 +455,11 @@ obj/machinery/atmospherics/pipe
 				src.icon_state = "disco"
 				src.desc = "A one meter section of regular pipe has been placed but needs to be welded into place."
 				// create valid edges back to us and rebuild from here out to merge pipeline(s)
-				node1.dir = node1.initialize_directions
-				node1.initialize()
-				node2.dir = node2.initialize_directions
-				node2.initialize()
+				// TODO this is highly sus
+				node1.dir = node1.get_connect_directions()
+				// node1.initialize()
+				node2.dir = node2.get_connect_directions()
+				// node2.initialize()
 				src.parent.build_pipeline(src)
 
 		disposing()
@@ -460,46 +500,6 @@ obj/machinery/atmospherics/pipe
 				// Deletion should be added as part of constructable atmos
 				//else
 				//	qdel(src)
-
-		initialize()
-			var/connect_directions
-
-			switch(dir)
-				if(NORTH)
-					connect_directions = NORTH|SOUTH
-				if(SOUTH)
-					connect_directions = NORTH|SOUTH
-				if(EAST)
-					connect_directions = EAST|WEST
-				if(WEST)
-					connect_directions = EAST|WEST
-				else
-					connect_directions = dir
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node1 = target
-							break
-
-					connect_directions &= ~direction
-					break
-
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node2 = target
-							break
-
-					connect_directions &= ~direction
-					break
-
-			var/turf/T = src.loc			// hide if turf is not intact
-			hide(T.intact)
-			//UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -638,7 +638,6 @@ obj/machinery/atmospherics/pipe
 		desc = "A large vessel containing pressurized gas."
 		volume = 1620 //in liters, 0.9 meters by 0.9 meters by 2 meters
 		dir = SOUTH
-		initialize_directions = SOUTH
 		plane = PLANE_DEFAULT
 		density = 1
 		var/obj/machinery/atmospherics/node1
@@ -652,9 +651,20 @@ obj/machinery/atmospherics/pipe
 		west
 			dir = WEST
 
-		New()
-			initialize_directions = dir
+		INIT()
 			..()
+
+			var/connect_direction = dir
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+				if(target.get_connect_directions() & get_dir(target,src))
+					node1 = target
+					break
+
+			UpdateIcon()
+
+		get_connect_directions()
+			. = dir
 
 		process()
 			..()
@@ -673,7 +683,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -695,7 +705,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -717,7 +727,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
@@ -740,7 +750,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
@@ -764,7 +774,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -786,7 +796,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -808,7 +818,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -831,7 +841,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -858,7 +868,7 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-			New()
+			INIT()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
@@ -885,16 +895,6 @@ obj/machinery/atmospherics/pipe
 			else
 				icon_state = "exposed"
 
-		initialize()
-			var/connect_direction = dir
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-				if(target.initialize_directions & get_dir(target,src))
-					node1 = target
-					break
-
-			UpdateIcon()
-
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
 				if(istype(node1, /obj/machinery/atmospherics/pipe))
@@ -915,7 +915,6 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		volume = 250
 		dir = SOUTH
-		initialize_directions = SOUTH
 		var/obj/machinery/atmospherics/node1
 
 		north
@@ -927,9 +926,19 @@ obj/machinery/atmospherics/pipe
 		west
 			dir = WEST
 
-		New()
-			initialize_directions = dir
+		INIT()
 			..()
+			var/connect_direction = dir
+
+			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+				if(target.get_connect_directions() & get_dir(target,src))
+					node1 = target
+					break
+
+			UpdateIcon()
+
+		get_connect_directions()
+			. = dir
 
 		process()
 			..()
@@ -952,16 +961,6 @@ obj/machinery/atmospherics/pipe
 
 			else
 				icon_state = "exposed"
-
-		initialize()
-			var/connect_direction = dir
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-				if(target.initialize_directions & get_dir(target,src))
-					node1 = target
-					break
-
-			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -990,7 +989,6 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		volume = 250
 		dir = SOUTH
-		initialize_directions = SOUTH
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
 
@@ -1003,12 +1001,22 @@ obj/machinery/atmospherics/pipe
 		west
 			dir = WEST
 
-		New()
-			initialize_directions = dir
+		INIT()
 			..()
+			var/turf/T = get_turf(src)
+			var/connect_direction = dir
 
-		process()
-			..()
+			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
+				if(target.get_connect_directions() & get_dir(target,src))
+					node1 = target
+					break
+
+			// Search disjoint connections for vertical pipe
+			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
+			UpdateIcon()
+
+		get_connect_directions()
+			. = dir
 
 		disposing()
 			node1?.disconnect(src)
@@ -1018,19 +1026,6 @@ obj/machinery/atmospherics/pipe
 
 		pipeline_expansion()
 			return list(node1, node2)
-
-		initialize()
-			var/turf/T = get_turf(src)
-			var/connect_direction = dir
-
-			for(var/obj/machinery/atmospherics/target in get_step(src,connect_direction))
-				if(target.initialize_directions & get_dir(target,src))
-					node1 = target
-					break
-
-			// Search disjoint connections for vertical pipe
-			node2 = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_ATMOS_MACHINERY, /obj/machinery/atmospherics/pipe/vertical_pipe)
-			UpdateIcon()
 
 		disconnect(obj/machinery/atmospherics/reference)
 			if(reference == node1)
@@ -1059,7 +1054,6 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		volume = 105
 		dir = SOUTH
-		initialize_directions = EAST|NORTH|WEST
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
 		var/obj/machinery/atmospherics/node3
@@ -1085,18 +1079,56 @@ obj/machinery/atmospherics/pipe
 			west
 				dir = WEST
 
-		New()
+		INIT()
+			..()
+			var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.get_connect_directions() & get_dir(target,src))
+							node1 = target
+							break
+
+					connect_directions &= ~direction
+					break
+
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.get_connect_directions() & get_dir(target,src))
+							node2 = target
+							break
+
+					connect_directions &= ~direction
+					break
+
+
+			for(var/direction in cardinal)
+				if(direction&connect_directions)
+					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+						if(target.get_connect_directions() & get_dir(target,src))
+							node3 = target
+							break
+
+					connect_directions &= ~direction
+					break
+
+			var/turf/T = src.loc			// hide if turf is not intact
+			hide(T.intact)
+			//UpdateIcon()
+
+		get_connect_directions()
 			switch(dir)
 				if(NORTH)
-					initialize_directions = EAST|SOUTH|WEST
+					. = EAST|SOUTH|WEST
 				if(SOUTH)
-					initialize_directions = WEST|NORTH|EAST
+					. = WEST|NORTH|EAST
 				if(EAST)
-					initialize_directions = SOUTH|WEST|NORTH
+					. = SOUTH|WEST|NORTH
 				if(WEST)
-					initialize_directions = NORTH|EAST|SOUTH
-
-			..()
+					. = NORTH|EAST|SOUTH
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
@@ -1172,46 +1204,4 @@ obj/machinery/atmospherics/pipe
 
 				icon_state = "manifold_[connected]_[unconnected]"
 
-				if(!connected)
-					qdel(src)
-
 			return
-
-		initialize()
-			var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node1 = target
-							break
-
-					connect_directions &= ~direction
-					break
-
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node2 = target
-							break
-
-					connect_directions &= ~direction
-					break
-
-
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node3 = target
-							break
-
-					connect_directions &= ~direction
-					break
-
-			var/turf/T = src.loc			// hide if turf is not intact
-			hide(T.intact)
-			//UpdateIcon()

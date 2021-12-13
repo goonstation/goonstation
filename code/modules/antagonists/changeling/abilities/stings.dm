@@ -95,7 +95,7 @@
 		pointCost = 4
 		var/datum/targetable/changeling/dna_target_select/targeting = null
 
-		New()
+		INIT()
 			..()
 
 		onAttach(var/datum/abilityHolder/H)

@@ -91,7 +91,7 @@ var/mutable_appearance/fluid_ma
 
 	var/do_iconstate_updates = 1
 
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location)
 		if(location) //unpool starts this thing without a loc. if none is defined, don't immediate delete
 			if (!waterflow_enabled)

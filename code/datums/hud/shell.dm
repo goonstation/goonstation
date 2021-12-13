@@ -11,7 +11,7 @@
 	var/show_tool_selector = 0
 	var/mob/living/silicon/hivebot/master
 
-	New(M)
+	INIT(M)
 		..()
 		master = M
 

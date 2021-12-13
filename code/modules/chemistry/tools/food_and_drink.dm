@@ -95,7 +95,7 @@
 	// Used in Special Order events
 	var/meal_time_flags = 0
 
-	New()
+	INIT()
 		..()
 		start_amount = amount
 		start_icon = icon
@@ -443,7 +443,7 @@
 	var/can_recycle = 1
 	var/can_chug = 1
 
-	New()
+	INIT()
 		..()
 		update_gulp_size()
 
@@ -563,7 +563,7 @@
 
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
-				src.reagents.reaction(M, INGEST, max(min(reagents.total_volume, gulp_size, (M.reagents?.maximum_volume-M.reagents?.total_volume)), CHEM_EPSILON))
+				src.reagents.reaction(M, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(gulp_size, (M.reagents?.maximum_volume - M.reagents?.total_volume))))
 				SPAWN_DBG(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
@@ -803,7 +803,7 @@
 	initial_volume = 50
 	g_amt = 60
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 
@@ -1338,7 +1338,7 @@
 	var/mob/target
 	var/obj/item/reagent_containers/food/drinks/glass
 
-	New(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
+	INIT(mob/Target, obj/item/reagent_containers/food/drinks/Glass)
 		..()
 		target = Target
 		glass = Glass
@@ -1378,7 +1378,7 @@
 	onEnd()
 
 		if (glass.reagents.total_volume) //Take a sip
-			glass.reagents.reaction(target, INGEST, max(min(glass.reagents.total_volume, glass.gulp_size, (target.reagents?.maximum_volume-target.reagents?.total_volume)), CHEM_EPSILON))
+			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
 			target.urine += 0.1
@@ -1492,7 +1492,7 @@
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
 	rand_pos = 1
-	New()
+	INIT()
 		..()
 		pick_style()
 
@@ -1523,7 +1523,7 @@
 	var/list/whitelist = null
 	var/list/blacklist = list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry")
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			if (src.reagents)
@@ -1584,7 +1584,7 @@
 	can_recycle = FALSE
 	var/image/fluid_image
 
-	New()
+	INIT()
 		..()
 		fluid_image = image(src.icon, "fluid-duo")
 		UpdateIcon()
@@ -1653,7 +1653,7 @@
 	item_state = "mug"
 
 /obj/item/reagent_containers/food/drinks/mug/random_color
-	New()
+	INIT()
 		..()
 		src.color = random_saturated_hex_color(1)
 
@@ -1827,7 +1827,7 @@
 	can_recycle = 0
 	can_chug = 0
 
-	New()
+	INIT()
 		..()
 		src.reagents.inert = 1
 
@@ -1842,6 +1842,11 @@
 			src.reagents.inert = 1
 			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
 				JOB_XP(user, "Bartender", 2)
+			if (user.mind && user.mind.objectives)
+				for (var/datum/objective/crew/bartender/drinks/O in user.mind.objectives)
+					for (var/i in 1 to length(O.ids))
+						if(src.reagents.has_reagent(O.ids[i]))
+							O.completed |= 1 << i-1
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
 

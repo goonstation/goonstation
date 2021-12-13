@@ -70,7 +70,7 @@
 	var/opensdoors = null //bool
 	var/wanderer = null // bool
 
-	New()
+	INIT()
 		..()
 		src.underlays += image('icons/obj/randompuzzles.dmi', "critter_spawn")
 		if (src.aggressive != null)

@@ -31,7 +31,7 @@
 	icon_state = "grabbed"
 	var/datum/targetable/werewolf/werewolf_transform/transform
 
-	New(Transform)
+	INIT(Transform)
 		transform = Transform
 		..()
 

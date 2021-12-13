@@ -97,7 +97,7 @@
 	name = "synthbrain"
 	item_state = "plant"
 	desc = "An artificial mass of grey matter. Not actually, as one might assume, very good at thinking."
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_brain", "plant_brain_bloom")
 

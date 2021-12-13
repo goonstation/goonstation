@@ -10,7 +10,7 @@
 	var/default_material = null
 	var/static/list/valid_icon_states = null
 
-	New()
+	INIT()
 		..()
 		if (istext(default_material))
 			var/datum/material/M = getMaterial(default_material)

@@ -160,7 +160,7 @@ proc/filter_trait_hats(var/type)
 	var/datum/light/light
 	var/on = 0
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(0.6)
@@ -285,7 +285,7 @@ proc/filter_trait_hats(var/type)
 	var/max_cigs = 15
 	var/list/cigs
 
-	New()
+	INIT()
 		..()
 		items = list("bodybag" = /obj/item/body_bag,
 									"scanner" = /obj/item/device/detective_scanner,
@@ -443,7 +443,7 @@ proc/filter_trait_hats(var/type)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 5)
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("gold"))
 
@@ -616,7 +616,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "fdora"
 	item_state = "fdora"
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("fancy", "suave", "manly", "sexerific", "sextacular", "intellectual", "majestic", "euphoric")] fedora"
 
@@ -849,14 +849,14 @@ proc/filter_trait_hats(var/type)
 	desc = "A blue beret with no affiliations to NanoTrasen."
 	icon_state = "beret_base"
 
-	New()
+	INIT()
 		..()
 		src.color = "#002289"
 
 	random_color
 		desc = "A colorful beret."
 
-		New()
+		INIT()
 			..()
 			src.color = random_saturated_hex_color(1)
 
@@ -864,7 +864,7 @@ proc/filter_trait_hats(var/type)
 	name = "prisoner's beret"
 	desc = "This is a prisoner's beret. <i>Allons enfants de la Patrie, Le jour de gloire est arrivé!</i>"
 
-	New()
+	INIT()
 		..()
 		src.color = "#FF8800"
 
@@ -876,7 +876,7 @@ proc/filter_trait_hats(var/type)
 	random_color
 		desc = "A colorful bandana."
 
-		New()
+		INIT()
 			..()
 			src.color = random_saturated_hex_color(1)
 
@@ -952,7 +952,7 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 6)
 
-	New()
+	INIT()
 		..()
 		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
 		light_c.update(1)
@@ -1181,7 +1181,7 @@ proc/filter_trait_hats(var/type)
 	desc = "All the coolest party people wear these hats!"
 	var/style = null
 
-	New()
+	INIT()
 		..()
 		if(!style)
 			src.style = rand(1,8)
@@ -1377,7 +1377,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 			qdel(src)
 
 	random
-		New()
+		INIT()
 			..()
 			var/color = pick("white","gray","black","red","orange","yellow","green","blue","purple")
 			name = "[color] cat ears"
@@ -1717,7 +1717,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	var/hatflip = FALSE
 	var/hatcolour = "black"
 
-	New()
+	INIT()
 		..()
 		name = "[hatcolour] baseball cap"
 		item_state = "basecap_[hatcolour]"

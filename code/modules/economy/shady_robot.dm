@@ -94,7 +94,7 @@
 	var/list/rare_products = list(/datum/commodity/contraband/radiojammer,/datum/commodity/contraband/stealthstorage,/datum/commodity/medical/injectorbelt,/datum/commodity/medical/injectormask,/datum/commodity/junk/voltron,/datum/commodity/laser_gun,/datum/commodity/relics/crown,/datum/commodity/contraband/egun,/datum/commodity/relics/armor,/datum/commodity/contraband/spareid,/datum/commodity/contraband/voicechanger,/datum/commodity/contraband/chamsuit,/datum/commodity/contraband/dnascram)
 	var/num_rare_products = 2 //how many of these to pick for sale
 
-	New()
+	INIT()
 		..()
 		teleport()
 		process()
@@ -344,7 +344,7 @@
 		if (href_list["duration"])
 			var/input = input("Duration in seconds (1-600)?","Temporary ID") as num
 			if(isnum_safe(input))
-				src.card_duration = min(max(input,1),600)
+				src.card_duration = clamp(input, 1, 600)
 
 			updatecardprice()
 			href = "temp_card=1"

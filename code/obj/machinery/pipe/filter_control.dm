@@ -1,7 +1,7 @@
 // Currently only used to control /obj/machinery/inlet/filter
 // todo: expand to vent control as well?
 
-/obj/machinery/filter_control/New()
+INIT_TYPE(/obj/machinery/filter_control)
 	..()
 	SPAWN_DBG(0.5 SECONDS)	//wait for world
 		for(var/obj/machinery/inlet/filter/F as anything in machine_registry[MACHINES_INLETS])

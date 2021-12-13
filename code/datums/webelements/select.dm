@@ -1,5 +1,5 @@
 /datum/tag/select
-	New()
+	INIT()
 		..("select")
 
 	proc/setName(var/name as text)

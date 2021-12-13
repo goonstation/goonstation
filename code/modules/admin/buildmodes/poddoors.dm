@@ -10,7 +10,7 @@ Ctrl + RMB                             = Remove pod door or door control<br>
 	var/counter = 0
 	var/id
 
-	New()
+	INIT()
 		..()
 		id = "[holder.owner.ckey]0"
 

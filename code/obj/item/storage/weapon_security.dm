@@ -240,7 +240,7 @@
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
 		/obj/item/bowling_ball = 4)
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -254,7 +254,7 @@
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
 		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 
-	New()
+	INIT()
 		if (prob(50))
 			spawn_contents = list(/obj/item/clothing/suit/armor/football/red,/obj/item/clothing/head/helmet/football/red,\
 			/obj/item/clothing/under/football/red,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
@@ -270,7 +270,7 @@
 	w_class = W_CLASS_SMALL
 	max_wclass = 3
 
-	New()
+	INIT()
 		..()
 		src.cloaked = 0
 
@@ -332,7 +332,7 @@
 	name = "Menacing note"
 	desc = "There's a few lines of important-looking text here."
 
-	New()
+	INIT()
 		..()
 		var/gender = prob(50) ? 0 : 1
 		var/name = gender ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")

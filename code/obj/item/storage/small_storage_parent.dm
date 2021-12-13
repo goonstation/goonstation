@@ -33,7 +33,7 @@
 		lastTooltipContent = .
 
 	// TODO: initalize
-	New()
+	INIT()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -371,7 +371,7 @@
 	// Don't use up more slots, certain job datums put items in the briefcase the player spawns with.
 	// And nobody needs six sheets of paper right away, realistically speaking.
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -426,7 +426,7 @@
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(null)
 

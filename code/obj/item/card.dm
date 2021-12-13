@@ -103,7 +103,7 @@ GAUNTLET CARDS
 	registered_owner()
 		.= registered
 
-/obj/item/card/id/New()
+INIT_TYPE(/obj/item/card/id)
 	..()
 	src.pin = rand(1000,9999)
 	START_TRACKING
@@ -155,7 +155,7 @@ GAUNTLET CARDS
 	assignment = "Captain"
 	keep_icon = TRUE
 	var/touched = FALSE
-	New()
+	INIT()
 		access = get_access("Captain")
 		..()
 
@@ -219,7 +219,7 @@ GAUNTLET CARDS
 	var/dabbed_on_count = 0
 	var/arm_count = 0
 	var/brain_damage_count = 0
-	New()
+	INIT()
 		access = list()
 		..()
 
@@ -350,7 +350,7 @@ GAUNTLET CARDS
 	var/timer = 0 //if 1, description shows time remaining
 	var/end_time = 0
 
-/obj/item/card/id/temporary/New()
+INIT_TYPE(/obj/item/card/id/temporary)
 	..()
 	SPAWN_DBG(0) //to give time for duration and starting access to be set
 		starting_access = access
@@ -367,7 +367,7 @@ GAUNTLET CARDS
 /obj/item/card/id/gauntlet
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "id_clown"
-	New(var/L, var/mob/user)
+	INIT(var/L, var/mob/user)
 		..()
 		if (!user)
 			registered = "???"
@@ -424,7 +424,7 @@ GAUNTLET CARDS
 	icon_state="fingerprint1"
 	var/mob/owner = null
 
-	New()
+	INIT()
 		..()
 		processing_items.Add(src)
 

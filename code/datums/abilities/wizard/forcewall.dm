@@ -66,7 +66,7 @@
 /obj/forcefield/artifact
 	var/obj/artifact/forcefield_generator/source = null
 
-	New(var/obj/artifact/forcefield_generator/S)
+	INIT(var/obj/artifact/forcefield_generator/S)
 		. = ..()
 		source = S
 

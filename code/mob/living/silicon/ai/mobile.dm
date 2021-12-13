@@ -19,7 +19,7 @@
 	var/mob/living/silicon/hivebot/drone/drone = null
 	var/setup_charge_maximum = 1200
 
-	New()
+	INIT()
 		..()
 
 		src.cell = new /obj/item/cell(src)
@@ -189,7 +189,7 @@
 	anchored = 1
 	var/bitdir = 0 //Valid direction bitflags
 
-	New()
+	INIT()
 		..()
 		setup_bitdir()
 		return
@@ -225,7 +225,7 @@
 	layer = MOB_LAYER
 	anchored = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.6 SECONDS)
 			var/obj/overlay/U1 = new

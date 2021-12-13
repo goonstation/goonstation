@@ -94,7 +94,7 @@
 	var/timelimit = 6
 	var/sharkspeed = 1
 
-	New()
+	INIT()
 		SPAWN_DBG(0) process()
 		..()
 
@@ -162,7 +162,7 @@
 	var/sharkspeed = 1
 	var/mob/caller = null
 
-	New()
+	INIT()
 		SPAWN_DBG(0) process()
 		..()
 

@@ -175,7 +175,7 @@
 			src.Attackhand(M)
 	return
 
-/obj/machinery/autolathe/New()
+INIT_TYPE(/obj/machinery/autolathe)
 	..()
 	// screwdriver removed
 	src.L += new /obj/item/wirecutters(src)

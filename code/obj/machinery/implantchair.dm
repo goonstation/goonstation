@@ -7,7 +7,7 @@
 	density = 0
 	var/obj/item/implant/imp = null
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 

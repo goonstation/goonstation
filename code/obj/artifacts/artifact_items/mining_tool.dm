@@ -7,7 +7,7 @@
 	var/dig_sound = 'sound/effects/exlow.ogg'
 	// mining.dm line 373
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 		src.dig_power = rand(3,5) // It was 1-5, changed to 3-5 because what's the point of a mining artifact if it's crappier than stuff you can print roundstart?!
 		if (prob(33))

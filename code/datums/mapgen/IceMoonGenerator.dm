@@ -115,7 +115,7 @@
 	icon_state = "ice1"
 	fullbright = 0
 
-	New()
+	INIT()
 		..()
 		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
 
@@ -128,7 +128,7 @@
 		return src
 
 /turf/unsimulated/floor/arctic/snow/autocliff
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(3 SECONDS)
 			if(istype(src))

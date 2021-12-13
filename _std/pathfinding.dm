@@ -76,7 +76,7 @@
 	/// Nodes store the endgoal so they can process their heuristic without a reference to the pathfind datum
 	var/list/turf/node_goals
 
-/datum/jps_node/New(turf/our_tile, datum/jps_node/incoming_previous_node, jumps_taken, list/turf/incoming_goals)
+INIT_TYPE(/datum/jps_node, turf/our_tile, datum/jps_node/incoming_previous_node, jumps_taken, list/turf/incoming_goals)
 	..()
 	tile = our_tile
 	jumps = jumps_taken
@@ -141,7 +141,7 @@
 	/// Whether we only want cardinal steps
 	var/cardinal_only = FALSE
 
-/datum/pathfind/New(atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, cardinal_only=FALSE)
+INIT_TYPE(/datum/pathfind, atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, cardinal_only=FALSE)
 	..()
 	src.caller = caller
 	ends = list()

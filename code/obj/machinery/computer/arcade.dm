@@ -23,7 +23,7 @@
 	light_g = 0.96
 	light_b = 0.96
 
-/obj/machinery/computer/arcade/New()
+INIT_TYPE(/obj/machinery/computer/arcade)
 	..()
 	var/name_action
 	var/name_part1

@@ -13,7 +13,7 @@
 
 	var/atom/output_location = null
 
-	New()
+	INIT()
 		..()
 
 	process()
@@ -346,7 +346,7 @@
 	var/obj/item/second_part = null
 	var/resultName = "???"
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src, 1.5, 1.5)
@@ -521,7 +521,7 @@
 	var/datum/material/output = null
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -553,7 +553,7 @@
 	var/datum/material/output = null
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src, 1.5, 1.5)
@@ -750,6 +750,6 @@
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)

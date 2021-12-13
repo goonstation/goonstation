@@ -28,7 +28,7 @@
 			location.hotspot_expose(1000,500,1)
 	return 1
 
-/obj/machinery/igniter/New()
+INIT_TYPE(/obj/machinery/igniter)
 	..()
 	icon_state = "igniter[on]"
 
@@ -54,7 +54,7 @@
 	var/datum/light/light
 	anchored = 1
 
-/obj/machinery/sparker/New()
+INIT_TYPE(/obj/machinery/sparker)
 	..()
 	light = new /datum/light/point
 	light.attach(src)

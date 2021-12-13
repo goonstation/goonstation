@@ -249,7 +249,7 @@
 	preferred_holder_type = /datum/abilityHolder/revenant
 	theme = "wraith"
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

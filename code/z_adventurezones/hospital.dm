@@ -14,7 +14,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	var/list/soundSubscribers = null
 	sound_group = "ainley"
 
-	New()
+	INIT()
 		..()
 		fxlist = hospital_fx_sounds
 		if (ambientSound)
@@ -190,7 +190,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	var/targeting = 0
 
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			process()
@@ -292,7 +292,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	configure_mode = 0
 	code = "5555"
 
-	New()
+	INIT()
 		..()
 
 		new /obj/item/reagent_containers/food/drinks/bottle/hospital (src)
@@ -300,12 +300,12 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 /obj/item/device/audio_log/hospital_01
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/hospital_01(src)
 
 /obj/item/audio_tape/hospital_01
-	New()
+	INIT()
 		..()
 		speakers = list("Female voice","Male voice","Female voice","Male voice","Female voice", "???", "Male voice", "Female voice", "Female voice", "Male voice", "Male voice", "Male voice", "Female voice", "Male voice", "Male voice")
 		messages = list("Who the hell do you think you are?",
@@ -335,12 +335,12 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 
 /obj/item/device/audio_log/hospital_02
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/hospital_02(src)
 
 /obj/item/audio_tape/hospital_02
-	New()
+	INIT()
 		..()
 		speakers = list("Male voice", "Male voice", "Male voice", "Distant voice", "Male voice", "Distant voice (Sir ?)", "Male Voice", "Distant voice that isn't really distant but relative to a really little, bad microphone it is", "Male voice", "Distant voice", "Male voice", "Male voice", "Male voice", "Male voice")
 		messages = list("*panicked breaths*",
@@ -362,24 +362,24 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 /obj/item/device/audio_log/hospital_03
 	desc = "A portable audio tape recorder.  This one looks pretty beat up, like somebody tried to scratch the tape door open.  Like a lion man or something.  (Note:  lion men do not exist)"
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/hospital_03(src)
 
 /obj/item/audio_tape/hospital_03
-	New()
+	INIT()
 		..()
 		speakers = list("???"  )
 		messages = list("*static*")
 
 /obj/item/device/audio_log/hospital_04
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/hospital_04(src)
 
 /obj/item/audio_tape/hospital_04
-	New()
+	INIT()
 		..()
 		src.speakers = list("Male voice","Different male voice", "Myron Roberts", "Myron Roberts",
 		"Myron Roberts", "Myron Roberts", "Myron Roberts", "Myron Roberts", "???","Tape cut",
@@ -478,7 +478,7 @@ var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 
 	beacon_freq = 1440
 	control_freq = FREQ_AINLEY_BUDDY
 
-	New()
+	INIT()
 		..()
 #ifndef SAMOSTREL_LIVE
 		del(src)

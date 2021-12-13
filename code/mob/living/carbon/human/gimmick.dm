@@ -1,7 +1,7 @@
 // cluwne
 
 /mob/living/carbon/human/cluwne
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.gender = "male"
@@ -39,7 +39,7 @@
 	plane = PLANE_UNDERFLOOR
 
 	var/name_override = "floor cluwne"
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			ailments.Cut()
@@ -57,7 +57,7 @@
 	plane = PLANE_DEFAULT
 	nodamage = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.add_ability_holder(/datum/abilityHolder/gimmick)
@@ -73,7 +73,7 @@
 	anchored = 1
 	layer = 0
 	plane = PLANE_UNDERFLOOR
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.gender = "male"
@@ -88,7 +88,7 @@
 	layer = 4
 	plane = PLANE_DEFAULT
 
-	New()
+	INIT()
 		..()
 		src.add_ability_holder(/datum/abilityHolder/gimmick)
 		src.real_name = "Satan"
@@ -122,7 +122,7 @@
 
 /mob/living/carbon/human/jester
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.real_name = "Jester"
@@ -147,7 +147,7 @@
 	name_override = "anti-cheat cluwne"
 
 mob/living/carbon/human/cluwne/satan
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.bioHolder.AddEffect("horns", 0, 0, 0, 1)
@@ -157,7 +157,7 @@ mob/living/carbon/human/cluwne/satan
 			src.bioHolder.AddEffect("melt", 0, 0, 0, 1)
 
 mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this for an admin gimmick.
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.unkillable = 1 //for the megasatan in you
@@ -172,7 +172,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 #ifdef IN_MAP_EDITOR
 	icon_state = "m-none"
 #endif
-	New()
+	INIT()
 		. = ..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (!src.disposed)
@@ -181,12 +181,12 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 /mob/living/carbon/human/chicken/ai_controlled
 	is_npc = TRUE
 	uses_mobai = TRUE
-	New()
+	INIT()
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
 
 /datum/aiHolder/wanderer
-	New()
+	INIT()
 		. = ..()
 		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
 		W.transition_task = W
@@ -196,7 +196,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 // how you gonna have father ted and father jack and not father dougal? smh
 
 /mob/living/carbon/human/fatherted
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/rank/chaplain, slot_w_uniform)
@@ -207,7 +207,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		src.real_name = "Father Ted"
 
 /mob/living/carbon/human/fatherjack
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
@@ -249,7 +249,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 			//	BT.protect_from(M, src)
 
 /mob/living/carbon/human/fatherjack/cow
-	New()
+	INIT()
 		..()
 		src.bioHolder.AddEffect("cow")
 
@@ -377,7 +377,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 #endif
 
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
@@ -501,7 +501,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -678,7 +678,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
@@ -689,13 +689,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
-				J.a_intent = INTENT_HARM
+				J.set_a_intent(INTENT_HARM)
 
 
 /mob/living/carbon/human/biker/cow
 	real_name = "Beefy Bill"
 
-	New()
+	INIT()
 		..()
 		src.bioHolder.AddEffect("cow")
 
@@ -703,7 +703,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // merchant
 
 /mob/living/carbon/human/merchant
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.gender = "male"
@@ -717,7 +717,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // myke
 
 /mob/living/carbon/human/myke
-	New()
+	INIT()
 		..()
 		src.gender = "male"
 		src.real_name = "Myke"
@@ -740,7 +740,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // Where's WAL[DO/LY]???
 
 /mob/living/carbon/human/waldo
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.gender = "male"
@@ -754,7 +754,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 /mob/living/carbon/human/fake_waldo
 	nodamage = 1
-	New()
+	INIT()
 		..()
 		var/shoes = text2path("/obj/item/clothing/shoes/" + pick("black","brown","red"))
 		src.equip_new_if_possible(shoes, slot_shoes)
@@ -766,8 +766,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		else if(prob(20))
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
 		walk(src, pick(cardinal), 1)
-		sleep(rand(150, 600))
-		illusion_expire()
+		SPAWN_DBG(rand(150, 600))
+			illusion_expire()
 
 	initializeBioholder()
 		. = ..()
@@ -806,7 +806,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	real_name = "Donald \"Don\" Glabs"
 	gender = MALE
 
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/suit/red, slot_w_uniform)
@@ -846,7 +846,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/don_glab/cow
 	real_name = "Donald \"Don\" Glabs" //NEED COW JOKE NAME!
 
-	New()
+	INIT()
 		..()
 		src.bioHolder.AddEffect("cow")
 
@@ -856,7 +856,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	sound_list_scream = list('sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg', 'sound/voice/tommy_did-not-hit-hehr.ogg')
 	sound_list_flap = list('sound/voice/tommy_weird-chicken-noise.ogg')
 
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_w_uniform)
@@ -879,7 +879,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/waiter
 	real_name = "Cade Plids"
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 		JobEquipSpawned("Waiter")
@@ -897,7 +897,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	unobservable = 1
 
 /datum/aiHolder/human/yank
-	New()
+	INIT()
 		..()
 		var/datum/aiTask/timed/targeted/human/suplex/A = get_instance(/datum/aiTask/timed/targeted/human/suplex, list(src))
 		var/datum/aiTask/timed/targeted/human/boxing/B = get_instance(/datum/aiTask/timed/targeted/human/boxing, list(src))
@@ -929,7 +929,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/spacer
 	is_npc = 1
 	uses_mobai = 1
-	New()
+	INIT()
 		..()
 		src.say("Hey there [JOHN_PICK("insults")]")//debug
 
@@ -965,7 +965,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	is_npc = 1
 	uses_mobai = 1
 
-	New()
+	INIT()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/orange, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/rank/chief_engineer, slot_w_uniform)

@@ -119,7 +119,7 @@
 	heal_amt = 3
 	initial_volume = 20
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("cholesterol", 20)
 

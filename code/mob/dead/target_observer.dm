@@ -9,7 +9,7 @@ var/list/observers = list()
 	var/mob/corpse = null
 	var/mob/dead/observer/my_ghost = null
 
-	New()
+	INIT()
 		..()
 		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
@@ -157,7 +157,7 @@ var/list/observers = list()
 	name = "spooky not-quite ghost"
 	var/start_time
 
-	New()
+	INIT()
 		..()
 		start_time = world.time
 

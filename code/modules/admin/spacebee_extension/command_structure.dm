@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command)
 	/// the spacebee extension system this command is bound to
 	var/datum/spacebee_extension_system/system
 
-/datum/spacebee_extension_command/New(datum/spacebee_extension_system/system)
+INIT_TYPE(/datum/spacebee_extension_command, datum/spacebee_extension_system/system)
 	SHOULD_CALL_PARENT(TRUE)
 	. = ..()
 	src.system = system

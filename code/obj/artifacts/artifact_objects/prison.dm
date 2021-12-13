@@ -16,7 +16,7 @@
 	var/mob/living/prisoner = null
 	var/imprison_time = 0
 
-	New()
+	INIT()
 		..()
 		imprison_time = rand(5 SECONDS, 2 MINUTES)
 

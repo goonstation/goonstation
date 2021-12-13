@@ -79,7 +79,7 @@
 	var/wizard_key = "" // The owner of this staff.
 	var/eldritch = 0	//was for robe and wizard hat, now nothing.
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
@@ -168,7 +168,7 @@
 	hitsound = 'sound/effects/ghost2.ogg'
 	eldritch = 1
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -230,7 +230,7 @@
 	icon_state = "staffmonkey"
 	item_state = "staffmonkey"
 
-	New()
+	INIT()
 		. = ..()
 		src.setItemSpecial(/datum/item_special/launch_projectile/monkey_organ)
 

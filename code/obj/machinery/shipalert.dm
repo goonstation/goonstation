@@ -19,7 +19,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	var/lastActivated = 0
 	var/cooldownPeriod = 2000 //2 minutes, change according to player abuse
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 

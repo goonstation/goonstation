@@ -151,7 +151,7 @@ var/datum/explosion_controller/explosions
 	var/user
 	var/turf_safe
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE)
+	INIT(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE)
 		..()
 		src.source = source
 		src.epicenter = epicenter

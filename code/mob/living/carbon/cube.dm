@@ -173,7 +173,7 @@
 		icon_state = "meatcube-squish"
 
 
-		New() // rather than doing this every single time the scream is needed, let's just pick it once and be done with it
+		INIT() // rather than doing this every single time the scream is needed, let's just pick it once and be done with it
 			..()
 			if(src.gender == MALE)
 				sound_scream = 'sound/voice/screams/male_scream.ogg'
@@ -202,7 +202,7 @@
 			life_timer = INFINITY
 			icon_state = "krampus2-squish"
 
-			New()
+			INIT()
 				..()
 				real_name = pick("Krampus", "Krampus 3.0", "The Krampmeister", "The Krampster") //For deadchat
 				SPAWN_DBG(2 SECONDS) //I do not know where the hell you get a bioholder from =I

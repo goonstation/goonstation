@@ -21,7 +21,7 @@
 	var/turf/target = null // if set this overrides default landing as is *the only place* where we can stop
 	var/missile_z = Z_LEVEL_STATION
 
-	New()
+	INIT()
 		..()
 		src.ion_trail = new /datum/effects/system/ion_trail_follow()
 		src.ion_trail.set_up(src)

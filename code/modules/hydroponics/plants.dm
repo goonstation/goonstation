@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/datum/plant)
 		var/datum/plantgenes/DNA = S.plantgenes
 
 		var/damage_prob = 100 - (src.endurance + DNA.endurance)
-		damage_prob = max(0,min(100,damage_prob))
+		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
 			if ("phlogiston","infernite","thalmerite","sorium")
@@ -156,17 +156,17 @@ ABSTRACT_TYPE(/datum/plant)
 				damage_amt = rand(5,15)
 				HYPmutateDNA(DNA,1)
 				HYPnewcommutcheck(src,DNA, 2)
-				HYPnewmutationcheck(src,DNA,null,1)
+				HYPnewmutationcheck(src,DNA,null,1,S)
 			if ("dna_mutagen")
 				HYPmutateDNA(DNA,1)
 				HYPnewcommutcheck(src,DNA, 2)
-				HYPnewmutationcheck(src,DNA,null,1)
+				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
-				HYPnewmutationcheck(src,DNA,null,1)
+				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
@@ -219,7 +219,7 @@ ABSTRACT_TYPE(/datum/plant)
 	// Species allele controls name, appearance, crop produce and mutations
 	// 1 is dominant, else recessive
 
-	New(var/loc,var/random_alleles = 1)
+	INIT(var/loc,var/random_alleles = 1)
 		..()
 		if (random_alleles)
 			src.alleles[1] = rand(0,1)
@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/datum/plant)
 		icon = 'icons/mob/screen1.dmi'
 		icon_state = "grabbed"
 
-	New(var/obj/machinery/plantpot/POT,var/mob/living/carbon/human/sourcerelay,var/duration2)
+	INIT(var/obj/machinery/plantpot/POT,var/mob/living/carbon/human/sourcerelay,var/duration2)
 		if(POT)
 			plant_pot = POT
 		if(sourcerelay)

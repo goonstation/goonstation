@@ -216,7 +216,7 @@
 						else
 							splice_chance += S.splice_mod
 
-				splice_chance = max(0,min(splice_chance,100))
+				splice_chance = clamp(splice_chance, 0, 100)
 
 				dat += "<b>Chance of Successful Splice:</b> [splice_chance]%<br>"
 				dat += "<A href='?src=\ref[src];splice=1'>(Proceed)</A> <A href='?src=\ref[src];splice_cancel=1'>(Cancel)</A><BR>"
@@ -494,7 +494,7 @@
 							splice_chance += S.splice_mod
 
 			// Cap probability between 0 and 100
-			splice_chance = max(0,min(splice_chance,100))
+			splice_chance = clamp(splice_chance, 0, 100)
 			if (prob(splice_chance)) // We're good, so start splicing!
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes
@@ -772,7 +772,7 @@
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
 	var/output_target = null
 
-	New()
+	INIT()
 		..()
 		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
 		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
@@ -1143,7 +1143,7 @@
 		WIRE_POWER = 3
 		WIRE_INERT = 4
 
-	New()
+	INIT()
 		..()
 		for (var/A in concrete_typesof(/datum/plant)) src.available += new A(src)
 

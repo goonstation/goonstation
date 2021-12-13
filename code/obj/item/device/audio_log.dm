@@ -92,7 +92,7 @@
 		continuous = 0
 		//self_destruct = 1
 
-		New(newloc, var/nuke_area)
+		INIT(newloc, var/nuke_area)
 			..()
 			if(!nuke_area)
 				nuke_area = "an unknown area. I think mission control fucked up somewhere."
@@ -119,7 +119,7 @@
 		desc = "There's blood on it."
 		continuous = 0
 
-		New(newloc)
+		INIT(newloc)
 			..()
 			audiolog_speakers += "Scientist #1"
 			src.audiolog_messages += "Earlier today we began research on the Artifact recovered by our exploration team."
@@ -217,7 +217,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if (!src.tape)

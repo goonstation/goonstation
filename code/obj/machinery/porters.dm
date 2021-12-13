@@ -304,7 +304,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	var/unlock_timer_req = 2.5 MINUTES
 	var/processing = 0
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))
@@ -467,7 +467,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	var/obj/machinery/port_a_brig/brig
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 
-	New(obj/machinery/port_a_brig/brig, mob/user, mob/victim, obj/item/grab/G)
+	INIT(obj/machinery/port_a_brig/brig, mob/user, mob/victim, obj/item/grab/G)
 		..()
 		src.owner = user
 		src.brig = brig
@@ -530,7 +530,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	var/mob/occupant = null
 	var/homeloc = null
 
-	New()
+	INIT()
 		..()
 		if (!islist(portable_machinery))
 			portable_machinery = list()
@@ -680,7 +680,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	var/force_failure = 0
 	var/force_body_swap = 0
 
-	New()
+	INIT()
 		..()
 		if (!islist(portable_machinery))
 			portable_machinery = list()
@@ -840,7 +840,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	window_size = "400x675"
 	var/homeloc = null
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))

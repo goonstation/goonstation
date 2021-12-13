@@ -60,7 +60,7 @@
 	icon_state = "1-2"
 	var/indestructible = 0
 
-	New()
+	INIT()
 		..()
 		setup_dirs()
 
@@ -126,7 +126,7 @@
 	proc/adapt(var/ad_adj)
 
 	adaptive
-		New()
+		INIT()
 			..()
 			adapt()
 
@@ -170,7 +170,7 @@
 					return 0
 
 		adaptive
-			New()
+			INIT()
 				..()
 				adapt()
 
@@ -185,7 +185,7 @@
 			V.on_trigger()
 
 		adaptive
-			New()
+			INIT()
 				..()
 				adapt()
 
@@ -233,7 +233,7 @@
 	anchored = 1
 	var/road_rage_force = 40
 
-	New()
+	INIT()
 		..()
 		railway_vehicles.Add(src)
 		if (isturf(loc) && (locate(/obj/railway) in loc))

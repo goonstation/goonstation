@@ -8,7 +8,7 @@
 	anchored = 1
 	density = 0
 
-	New()
+	INIT()
 		if(istype(src.loc, /turf/space))
 			qdel(src)
 			return

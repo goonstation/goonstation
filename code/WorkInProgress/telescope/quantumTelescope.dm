@@ -12,7 +12,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 
 	var/tracking_id = "" //id of the event we're tracking/targeting.
 
-	New()
+	INIT()
 		processing_items.Add(src)
 		..()
 

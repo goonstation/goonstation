@@ -14,7 +14,7 @@
 	anchored = 1
 	directwired = 0		// must have a cable on same turf connecting to terminal
 
-/obj/machinery/power/terminal/New(var/new_loc)
+INIT_TYPE(/obj/machinery/power/terminal, var/new_loc)
 	..()
 	var/turf/T = new_loc
 	if(istype(T) && level==1) hide(T.intact)
@@ -64,6 +64,7 @@
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
+				LAGCHECK(LAG_MED)
 
 			//qdel(signal)
 			return
@@ -94,7 +95,7 @@
 
 /obj/machinery/power/data_terminal
 
-	New(var/new_loc)
+	INIT(var/new_loc)
 		..()
 
 		var/turf/T = new_loc
@@ -133,6 +134,7 @@
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
+				LAGCHECK(LAG_MED)
 
 			if(signal)
 				qdel(signal)
@@ -147,7 +149,7 @@
 	icon_state = "vterm"
 	mats = 0 // uh no thanks
 
-	New()
+	INIT()
 		..()
 		var/turf/T = get_turf(src)
 		if(!src.netnum && !length(T.connections) )

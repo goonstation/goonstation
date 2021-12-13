@@ -13,7 +13,7 @@
 	var/obj/machinery/playerzoldorf/homebooth
 	var/mob/originalmob
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 
 	is_spacefaring()

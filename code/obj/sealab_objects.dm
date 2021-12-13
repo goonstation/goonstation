@@ -17,7 +17,7 @@
 	rand_pos = 1
 	var/database_id = null
 
-	New()
+	INIT()
 		..()
 		var/my_seashell = rand(1,14)
 		src.icon_state = "shell_[my_seashell]"
@@ -37,9 +37,9 @@
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		if (src.random_color)
 			src.color = random_saturated_hex_color()
@@ -135,7 +135,7 @@
 		light = 0
 		..()
 
-	initialize()
+	INIT()
 		..()
 		if (!init)
 			init = 1
@@ -146,7 +146,7 @@
 				light.attach(src)
 			light.set_brightness(1)
 			light.set_color(C.r/255, C.g * 0.25/255, C.b * 0.25/255)
-			light.set_height(3)
+			light.set_height(1.2)
 			light.enable()
 
 /obj/sea_plant/kelp

@@ -38,7 +38,7 @@
 	pixel_y = -16
 	var/gib_mobs = TRUE
 
-	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
+	INIT(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
 		src.set_loc(location)
 		SPAWN_DBG(preDropTime)
 			if (gib_mobs)
@@ -61,7 +61,7 @@
 	var/dropTime = 30
 	var/gib_mobs = TRUE
 
-	New(atom/loc, var/obj_path, var/no_lootbox)
+	INIT(atom/loc, var/obj_path, var/no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
 		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 75, 0)
@@ -95,7 +95,7 @@
 	pixel_x = -32
 	pixel_y = -32
 
-	New()
+	INIT()
 		SPAWN_DBG(3 SECONDS)
 			qdel(src)
 		..()
@@ -111,7 +111,7 @@
 	opacity = 0
 	var/obj_path
 
-	New(atom/loc, var/obj_path_arg)
+	INIT(atom/loc, var/obj_path_arg)
 		add_filter("loot drop", 1, drop_shadow_filter(x=0, y=0, size=5, offset=0, color=rgb(240,202,133)))
 		obj_path = obj_path_arg
 		return ..()
@@ -240,7 +240,7 @@
 	icon_state = "meteor_shield"
 
 
-	New()
+	INIT()
 		if(usr.client)
 			transform = matrix((round(usr.client.getClientView(1))*32), (round(usr.client.getClientView(0))*32), MATRIX_TRANSLATE)
 			filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
@@ -251,7 +251,7 @@
 	screen_loc = "1,1"
 	name = ""
 
-	New()
+	INIT()
 		if(usr.client)
 			transform = matrix((round(usr.client.getClientView(1))*32)-160+16, (round(usr.client.getClientView(0))*32)-160+16, MATRIX_TRANSLATE)
 		..()
@@ -270,7 +270,7 @@
 		var/opened = 0
 		var/obj_path = null
 
-		New(atom/loc, var/obj_path_arg)
+		INIT(atom/loc, var/obj_path_arg)
 			obj_path = obj_path_arg
 			..()
 

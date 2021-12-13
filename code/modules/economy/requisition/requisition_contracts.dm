@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 	var/exactpath = FALSE //evaluates precise path, instead of path and subtypes
 	var/commodity //commodity path. if defined, will automatically adjust feemod and (if unset) typepath
 
-	New()
+	INIT()
 		if(src.commodity)
 			var/datum/commodity/CM = src.commodity
 			if(!src.typepath) src.typepath = initial(CM.comtype)
@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath_alt //use when an item can have two stackable forms, such as with a raw and refined ore (can use this along commodity)
 	var/commodity //commodity path. if defined, will automatically adjust feemod and (if unset) typepath
 
-	New()
+	INIT()
 		if(src.commodity)
 			var/datum/commodity/CM = src.commodity
 			src.typepath = initial(CM.comtype)
@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 	// available keys (strings): Maturation, Production, Lifespan, Yield, Potency, Endurance
 	// number paired with key should be a negative integer for maturation or production, or a positive integer otherwise
 
-	New()
+	INIT()
 		src.gene_factors = length(src.gene_reqs)
 		..()
 
@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 	var/name = "something" // what the reward is, description wise
 	var/count // how many of the reward you'll get; optional, used for front end descriptive purposes
 
-	New()
+	INIT()
 		..()
 
 	proc/build_reward() // this should return an item or list of items, for requisition handler to pack
@@ -192,7 +192,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 	///Tracks whether contract is pinned; one contract at a time may be pinned, reserving it for QM and preventing it from leaving with market shift
 	var/pinned = FALSE
 
-	New() //in individual definitions, create entries and THEN call this, it'll get things set up for you
+	INIT() //in individual definitions, create entries and THEN call this, it'll get things set up for you
 		..()
 		if(!src.req_code)
 			var/flavoraffix = rand(0,9)

@@ -21,7 +21,7 @@
 	usesgroups = TRUE
 	icon_state = "collector"
 
-/obj/flock_structure/collector/New(var/atom/location, var/datum/flock/F=null)
+INIT_TYPE(/obj/flock_structure/collector, var/atom/location, var/datum/flock/F=null)
 	..(location, F)
 
 /obj/flock_structure/collector/building_specific_info()

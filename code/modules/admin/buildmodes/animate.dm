@@ -50,7 +50,7 @@ Left Mouse Button on turf/mob/obj      = Animate!<br>
 		/proc/animate_ripple
 	)
 
-	New()
+	INIT()
 		..()
 		animation = null
 		update_button_text("Animate")

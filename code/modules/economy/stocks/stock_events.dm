@@ -32,7 +32,7 @@ ABSTRACT_TYPE(/datum/stock/event)
 	var/datum/stock/article/product_article = null
 	var/effect = 0
 
-	New(datum/stock/ticker/S)
+	INIT(datum/stock/ticker/S)
 		..()
 		company = S
 		var/mins = rand(5,20)
@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/datum/stock/event)
 	var/effect = 0
 	var/bailout_millions = 0
 
-	New(datum/stock/ticker/S)
+	INIT(datum/stock/ticker/S)
 		..()
 		hidden = TRUE
 		company = S
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/stock/event)
 	var/offenses = "murder"
 	var/effect = 0
 
-	New(datum/stock/ticker/S)
+	INIT(datum/stock/ticker/S)
 		..()
 		hidden = TRUE
 		company = S

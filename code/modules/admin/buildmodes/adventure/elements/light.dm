@@ -17,7 +17,7 @@
 
 	var/static/list/triggeracts = list("Do nothing" = "nop", "Toggle" = "toggle", "Turn on" = "on", "Turn off" = "off")
 
-	New()
+	INIT()
 		..()
 		src.light = new /datum/light/point
 		src.light.attach(src)

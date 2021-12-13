@@ -38,7 +38,7 @@
 	theme = "wraith"
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -472,7 +472,7 @@
 	var/list/effects_buttons = list()
 
 
-	New()
+	INIT()
 		..()
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)//, -32, -32)
 		if (!object.contextActions)
@@ -748,7 +748,7 @@
 	mouse_opacity = 0
 	alpha = 100
 
-	New()
+	INIT()
 		..()
 		var/matrix/M = matrix()
 		M.Scale(0.75,0.75)

@@ -265,12 +265,20 @@
 			setup_starting_peripheral2 = /obj/item/peripheral/sound_card
 
 
-/obj/machinery/computer3/New()
+INIT_TYPE(/obj/machinery/computer3)
 	..()
 
 	light = new/datum/light/point
 	light.set_brightness(0.4)
 	light.attach(src)
+
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
 
 	SPAWN_DBG(0.4 SECONDS)
 
@@ -317,14 +325,6 @@
 		src.tag = null
 
 		src.base_icon_state = src.icon_state
-
-		if(glow_in_dark_screen)
-			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
 
 		src.post_system()
 
@@ -984,7 +984,7 @@ function lineEnter (ev)
 	var/obj/machinery/computer3/luggable/luggable = null
 	var/luggable_type = /obj/machinery/computer3/luggable
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(!luggable)
@@ -1031,7 +1031,7 @@ function lineEnter (ev)
 		user.visible_message("<b>[user]</b> deploys [src.luggable]!","You deploy [src.luggable]!")
 
 /obj/machinery/computer3/luggable
-	New()
+	INIT()
 		..()
 		src.cell = new /obj/item/cell(src)
 		src.cell.maxcharge = setup_charge_maximum

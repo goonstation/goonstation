@@ -79,7 +79,7 @@
 	maptext_x = -32
 	maptext_width = 96
 
-	New(var/change = 0)
+	INIT(var/change = 0)
 		..()
 		if (abs(change) < 1)
 			qdel(src)
@@ -114,7 +114,7 @@
 	alpha = 0
 	var/bumped = 0
 
-	New(mob/M as mob, msg, style = "")
+	INIT(mob/M as mob, msg, style = "")
 		..()
 		for (var/obj/maptext_junk/speech/O in M.vis_contents)
 			if (!istype(O))
@@ -188,7 +188,7 @@
 	invisibility = INVIS_NONE
 	var/busy = 0
 
-	New()
+	INIT()
 		..()
 		if (!id)
 			id = icon_state
@@ -258,7 +258,7 @@
 	var/obj/maptext_junk/tracker = null
 	var/working = 0
 
-	New()
+	INIT()
 		..()
 		total_score = world.load_intra_round_value("afterlife_donations")
 		tracker = new /obj/maptext_junk()
@@ -399,7 +399,7 @@
 	var/area/sim/gunsim/gunsim
 	var/active = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			gunsim = locate() in world
@@ -619,7 +619,7 @@
 	deleted_on_start = TRUE
 	add_to_landmarks = FALSE
 
-	New()
+	INIT()
 		football_spawns[src.name] += src.loc
 		..()
 
@@ -676,7 +676,7 @@
 	var/last_count = -1
 
 
-	New()
+	INIT()
 		..()
 		src.process()
 
@@ -736,7 +736,7 @@
 	var/update_delay = 0
 	var/require_var_or_list = 1
 
-	New()
+	INIT()
 		..()
 		src.maptext_x = -100
 		src.maptext_width = 232
@@ -927,7 +927,7 @@
 			display_mode = "time2"
 			update_delay = 1 SECOND
 
-			New()
+			INIT()
 				src.monitored = emergency_shuttle
 				src.monitored_proc = "timeleft"
 				..()
@@ -966,7 +966,7 @@
 			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 			update_delay = 1
 
-			New()
+			INIT()
 				..()
 				src.pixel_y += 34
 
@@ -986,7 +986,7 @@
 		monitored_list = "stats"
 		ding_on_change = 1
 
-		New()
+		INIT()
 			src.monitored = game_stats
 			..()
 
@@ -1030,7 +1030,7 @@
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
 	budget
-		New()
+		INIT()
 			src.monitored = wagesystem
 			..()
 
@@ -1123,7 +1123,7 @@
 /obj/overlay/zamujasa/football_wave_timer
 	name = "football wave countdown"
 
-	New()
+	INIT()
 		..()
 		src.maptext_x = -100
 		src.maptext_height = 64
@@ -1143,7 +1143,7 @@
 /obj/overlay/zamujasa/help_text
 	name = "new player tutorial maptext"
 
-	New()
+	INIT()
 		..()
 		src.maptext_x = -100
 		src.maptext_height = 64
@@ -1161,7 +1161,7 @@ Read the rules, don't grief, and have fun!</div>"}
 /obj/overlay/zamujasa/round_start_countdown
 	var/maptext_area = "status"
 
-	New()
+	INIT()
 		..()
 		if (length(landmarks[LANDMARK_LOBBY_STATUS]))
 			src.set_loc(landmarks[LANDMARK_LOBBY_STATUS][1])
@@ -1190,7 +1190,7 @@ Read the rules, don't grief, and have fun!</div>"}
 	timer
 		maptext_area = "timer"
 
-		New()
+		INIT()
 			..()
 			if (length(landmarks[LANDMARK_LOBBY_TIMER]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_TIMER][1])
@@ -1216,7 +1216,7 @@ Read the rules, don't grief, and have fun!</div>"}
 	encourage
 		maptext_area = "leftside"
 
-		New()
+		INIT()
 			..()
 			if (length(landmarks[LANDMARK_LOBBY_LEFTSIDE]))
 				src.set_loc(landmarks[LANDMARK_LOBBY_LEFTSIDE][1])
@@ -1250,7 +1250,7 @@ Other Goonstation servers:[serverList]</span>"})
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	var/static/matrix/infinity_matrix = matrix().Turn(90).Translate(18, 1)
 
-	New()
+	INIT()
 		..()
 		maptext_width = 64
 		maptext_x = -34
@@ -1409,7 +1409,7 @@ Other Goonstation servers:[serverList]</span>"})
 
 
 
-	New()
+	INIT()
 		..()
 		src.pixel_y += 34
 		src.maptext_x = -20

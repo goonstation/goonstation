@@ -97,7 +97,7 @@
 				return
 		return
 
-	New()
+	INIT()
 		..()
 		if(!src.randomized) return
 		src.generate_edges()
@@ -224,7 +224,7 @@
 	fullbright = 0
 	var/rocks = 1
 
-	New()
+	INIT()
 		..()
 		if(src.rocks)
 			icon_state = "[pick("mars1","mars1","mars1","mars2","mars3")]"
@@ -319,7 +319,7 @@
 	var/active = 0
 	var/startup = 1
 
-	New()
+	INIT()
 		..()
 		icon_state = "mars_bot-0"
 
@@ -595,7 +595,7 @@
 	var/sound/mysound = null
 	sound_group = "mars"
 
-	New()
+	INIT()
 		..()
 		var/sound/S = new/sound()
 		mysound = S
@@ -648,7 +648,7 @@
 	name = "Barren Planet"
 	icon_state = "yellow"
 
-	New()
+	INIT()
 		..()
 		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
 

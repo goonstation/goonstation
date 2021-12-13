@@ -27,7 +27,7 @@
 	var/angle = 0		// normal of mirror, 0-15. 0=N, 1=NNE, 2=NE, 3=ENE, 4=E etc
 
 
-	New()
+	INIT()
 		..()
 		set_angle()
 

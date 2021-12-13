@@ -12,7 +12,7 @@
 	var/datum/light/light
 	var/light_type = /datum/light/point
 
-	New()
+	INIT()
 		..()
 		if(ispath(light_type))
 			light = new light_type
@@ -59,7 +59,7 @@
 	brightness = 4.6
 
 	var/datum/component/holdertargeting/simple_light/light_dir
-	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
+	INIT(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
 		col_g = G
@@ -137,7 +137,7 @@
 	light_type = null
 	var/datum/component/holdertargeting/sm_light/light_c
 
-	New()
+	INIT()
 		..()
 		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
@@ -209,7 +209,7 @@
 	col_g = 0.9
 	col_b = 0.1
 	color_name = "green"
-	New()
+	INIT()
 		..()
 		turnon()
 
@@ -378,7 +378,7 @@
 	desc = "It's a big candle. It's also floating."
 	anchored = 1
 
-	New()
+	INIT()
 		..()
 		var/spookydegrees = rand(5, 20)
 
@@ -387,7 +387,7 @@
 			animate(pixel_y = 0, transform = matrix(spookydegrees * -1, MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
 /obj/item/device/light/candle/spooky/summon
-	New()
+	INIT()
 		flick("candle-summon", src)
 		..()
 
@@ -397,7 +397,7 @@
 	edible = 1 // eat a haunted goddamn candle every day
 	var/did_thing = 0
 
-	New()
+	INIT()
 		..()
 
 		if (!src.reagents)
@@ -456,7 +456,7 @@
 			src.light.disable()
 
 /obj/item/device/light/lava_lamp/activated
-	New()
+	INIT()
 		..()
 		on = 1
 		set_icon_state(src.icon_on)

@@ -7,7 +7,7 @@
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "f_spawn"
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.setup()
@@ -51,7 +51,7 @@
 	welded_icon_state = "fdoor_welded"
 	layer = 3.1 // might just be me but I think these look better when they're over the doors
 
-/obj/machinery/door/firedoor/New()
+INIT_TYPE(/obj/machinery/door/firedoor)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		var/list/zones = list()

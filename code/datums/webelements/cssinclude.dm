@@ -1,5 +1,5 @@
 /datum/tag/cssinclude
-	New()
+	INIT()
 		..("link")
 		setAttribute("rel", "stylesheet")
 		setAttribute("type", "text/css")

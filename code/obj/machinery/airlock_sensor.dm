@@ -49,6 +49,6 @@ obj/machinery/airlock_sensor
 
 		UpdateIcon()
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)

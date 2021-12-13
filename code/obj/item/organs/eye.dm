@@ -14,7 +14,7 @@
 	var/color_b = 1
 	var/show_on_examine = 0 // do we get mentioned when our donor is examined?
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			src.UpdateIcon()
@@ -324,7 +324,7 @@
 	made_from = "pharosium"
 	change_iris = 0
 
-	New()
+	INIT()
 		..()
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.camera_tag

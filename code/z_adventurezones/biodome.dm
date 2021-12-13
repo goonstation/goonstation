@@ -112,7 +112,7 @@ SYNDICATE DRONE FACTORY AREAS
 		sound_group = "swamp_heights"
 		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
 
-		New()
+		INIT()
 			..()
 
 			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
@@ -135,7 +135,7 @@ SYNDICATE DRONE FACTORY AREAS
 		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
 		sound_environment = 19
 
-		New()
+		INIT()
 			..()
 
 			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
@@ -172,7 +172,7 @@ SYNDICATE DRONE FACTORY AREAS
 		sound_loop = 'sound/ambience/station/Underwater/ocean_ambi2.ogg'
 
 
-		New()
+		INIT()
 			..()
 
 			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "swampwater-overlay", layer = EFFECTS_LAYER_BASE)
@@ -300,7 +300,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sound_group = "spooky_swamp"
 	sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
 
-	New()
+	INIT()
 		..()
 
 		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
@@ -652,7 +652,7 @@ SYNDICATE DRONE FACTORY AREAS
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
-	New()
+	INIT()
 		. = ..()
 		src.special = null
 
@@ -698,7 +698,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	opacity = 0
 
-	New(var/atom/sloc)
+	INIT(var/atom/sloc)
 		..()
 		src.set_loc(sloc)
 		SPAWN_DBG(0) go()
@@ -930,7 +930,7 @@ SYNDICATE DRONE FACTORY AREAS
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -966,7 +966,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "Rock Wall"
 	var/id = "alchemy"
 
-	New()
+	INIT()
 		..()
 		if (!id)
 			id = "generic"
@@ -1010,7 +1010,7 @@ SYNDICATE DRONE FACTORY AREAS
 	attack()
 		return
 
-	New()
+	INIT()
 		..()
 		src.visible_message("<span class='notice'><b>[src] appears out of thin air!</b></span>")
 		new /obj/effects/shockwave {name = "mystical energy";} (src.loc)
@@ -1049,21 +1049,21 @@ SYNDICATE DRONE FACTORY AREAS
 
 /obj/item/paper/alchemy/north
 	name = "notebook page 2"
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["north"]] stands above all else ..."
 
 /obj/item/paper/alchemy/southeast
 	name = "notebook page 3"
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... in the place the sun rises, [alchemy_symbols["southeast"]] is required ..."
 
 /obj/item/paper/alchemy/southwest
 	name = "notebook page 4"
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(10 SECONDS)
 			info = "... [alchemy_symbols["southwest"]] where light fades ..."
@@ -1206,7 +1206,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(activated) return
 
 
-	New(var/location)
+	INIT(var/location)
 		..()
 		var/list/types = new/list()
 		var/obj/item/alchemy/symbol/S = null
@@ -1294,7 +1294,7 @@ var/satellite_crash_event_status = -1
 	pixel_y = -16
 	pixel_x = -16
 
-	New()
+	INIT()
 		..()
 
 		if (satellite_crash_event_status != 0)

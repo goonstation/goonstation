@@ -243,7 +243,7 @@
 	var/withdrawal_duration = 4800
 	var/max_severity = "HIGH"
 
-	New()
+	INIT()
 		..()
 		master = get_disease_from_path(/datum/ailment/addiction)
 

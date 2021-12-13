@@ -47,7 +47,7 @@
 	desc = "Blueprints for EOD Armor"
 	category = "Blueprints"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Hard material"; required_amount = 5; required_value = 70; greater_than = 1; required_property = "hard"; proper_name = "hardness"} ())
 		required_parts.Add(new/datum/matfab_part/variable {part_name = "Dense material"; required_amount = 2; required_value = 60; greater_than = 1; required_property = "density"; proper_name = "density"} ())
@@ -63,7 +63,7 @@
 	desc = "A complete space suit."
 	category = "Clothing"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Fabric"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Reinforcement"; required_amount = 3} ())
@@ -86,7 +86,7 @@
 	desc = "A mod for mining tools. Increases AOE."
 	category = "Mining Tools"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Internal"; required_amount = 45} ())
 		required_parts.Add(new/datum/matfab_part/charge {part_name = "Charge"; required_amount = 1} ())
@@ -102,7 +102,7 @@
 	desc = "A Pick head. Picks have high power but no AOE."
 	category = "Mining Tools"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
@@ -122,7 +122,7 @@
 	desc = "A Blaster head. Blasters have lower power but very high AOE."
 	category = "Mining Tools"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
@@ -141,7 +141,7 @@
 	desc = "A Hammer head. Hammers have a wide AOE and normal power."
 	category = "Mining Tools"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
@@ -160,7 +160,7 @@
 	desc = "A Drill head. Hammers have a long AOE and normal power."
 	category = "Mining Tools"
 
-	New()
+	INIT()
 		..()
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Base"; required_amount = 5} ())
 
@@ -179,7 +179,7 @@
 	desc = "A tool for mining asteroids. Type of tool depends on components used. Optional modifier slot."
 	category = "Mining Tools"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Body"; required_amount = 10} ())
 		required_parts.Add(new/datum/matfab_part/any_mtool_head {part_name = "Tool Head"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/optionalmat_mining {part_name = "Tool Mod"; required_amount = 1} ())
@@ -234,7 +234,7 @@
 	desc = "A small coil used in various objects."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 1} ())
 		..()
 
@@ -253,7 +253,7 @@
 	desc = "A large coil used in various objects."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 2} ())
 		..()
 
@@ -272,7 +272,7 @@
 	desc = "An Arrowhead that can be used for arrows or in other objects."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
 		..()
 
@@ -290,7 +290,7 @@
 	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
 	category = "Weapons"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Head"; required_amount = 1} ())
 		..()
@@ -313,7 +313,7 @@
 	desc = "A simple arrow used as ammunition for bows."
 	category = "Weapons"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Arrowhead"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 1} ())
 		..()
@@ -337,7 +337,7 @@
 	desc = "A simple bow."
 	category = "Weapons"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Bow"; required_amount = 3} ())
 		..()
 
@@ -356,7 +356,7 @@
 	desc = "A quiver for arrows."
 	category = "Weapons"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/clothorrubber {part_name = "Quiver"; required_amount = 2} ())
 		..()
 
@@ -375,7 +375,7 @@
 	desc = "A Lens used as a component in various objects."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Lens"; required_amount = 1} ())
 		..()
 
@@ -394,7 +394,7 @@
 	desc = "Some gears used as parts in various objects."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Gears"; required_amount = 1} ())
 		..()
 
@@ -413,7 +413,7 @@
 	desc = "A tripod."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Tripod"; required_amount = 1} ())
 		..()
 
@@ -432,7 +432,7 @@
 	desc = "Armor plates used in various objects."
 	category = "Components"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Armor"; required_amount = 1} ())
 		..()
 
@@ -451,7 +451,7 @@
 	desc = "A pair of non-corrective glasses."
 	category = "Clothing"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Glasses"; required_amount = 1} ())
 		..()
 
@@ -473,7 +473,7 @@
 	desc = "A custom made jumpsuit. Has no special properties."
 	category = "Clothing"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Jumpsuit"; required_amount = 3} ())
 		..()
 
@@ -492,7 +492,7 @@
 	desc = "Custom insulating gloves. Inherits thermally and electrically insulating properties."
 	category = "Clothing"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Gloves"; required_amount = 2} ())
 		..()
 
@@ -511,7 +511,7 @@
 	desc = "Custom armored gloves. Inherits physical properties like toughness and hardness."
 	category = "Clothing"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Gloves"; required_amount = 2} ())
 		..()
 
@@ -530,7 +530,7 @@
 	desc = "A custom pair of shoes."
 	category = "Clothing"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Upper"; required_amount = 2} ())
 		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Sole"; required_amount = 2} ())
 		required_parts.Add(new/datum/matfab_part/optionalanymat {part_name = "Optional Toe Tip"; required_amount = 2} ())
@@ -557,7 +557,7 @@
 	desc = "A simple flashlight. Light color is affected by lens color."
 	category = "Lights"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
@@ -586,7 +586,7 @@
 	desc = "A replacement light tube. Lens color affects light color."
 	category = "Lights"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
@@ -612,7 +612,7 @@
 	desc = "A replacement light bulb. Lens color affects light color."
 	category = "Lights"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
@@ -638,7 +638,7 @@
 	desc = "a replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/lens {part_name = "Lens"; required_amount = 1} ())
 		..()
@@ -661,7 +661,7 @@
 	desc = "Sheets for construction purposes."
 	category = "Tools"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
 		..()
 
@@ -687,7 +687,7 @@
 	desc = "A small energy cell used in guns and small portable devices."
 	category = "Tools"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 2} ())
 		..()
 
@@ -706,7 +706,7 @@
 	desc = "A large enery cell, often used in APCs or cyborgs."
 	category = "Tools"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 4} ())
 		..()
 
@@ -725,7 +725,7 @@
 	desc = "Infuse a stack of provided material with a supplied chemical. Requires a Starstone as catalyst."
 	category = "Refining"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/chemical {part_name = "Chemical"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/anymat_canmix {part_name = "Unprocessed Material"; required_amount = 10} ())
 		required_parts.Add(new/datum/matfab_part/starstone {part_name = "Starstone"; required_amount = 1} ())
@@ -764,7 +764,7 @@
 	desc = "Fuel suitable for use in a fission reactor"
 	category = "Tools"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/fissile {part_name = "Fissile Fuel 1"; required_amount = 1} ())
 		..()
 
@@ -783,7 +783,7 @@
 	desc = "Composite fuel suitable for use in a fission reactor"
 	category = "Tools"
 
-	New()
+	INIT()
 		required_parts.Add(new/datum/matfab_part/fissile {part_name = "Fissile Fuel"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Flux Catalyst"; required_amount = 1} ())
 		..()
@@ -887,7 +887,7 @@
 	proc/postProcess(var/obj/item/I)
 		return
 
-	New()
+	INIT()
 		..()
 		for(var/A in materials)
 			var/numReq = materials[A]

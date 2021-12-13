@@ -111,7 +111,7 @@
 	var/not_when_handcuffed = 0
 	var/unlock_message = null
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/vampiric_thrall/B = new /atom/movable/screen/ability/topBar/vampiric_thrall(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

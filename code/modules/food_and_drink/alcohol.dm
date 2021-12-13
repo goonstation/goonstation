@@ -21,7 +21,7 @@
 	initial_volume = 50
 	initial_reagents = list("beer"=25,"ethanol"=5)
 
-	New()
+	INIT()
 		..()
 		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "BEER_suffixes")]"
 		src.UpdateName()
@@ -69,7 +69,7 @@
 	initial_volume = 100
 	initial_reagents = list("wine"=80,"ethanol"=20)
 
-	New()
+	INIT()
 		..()
 		src.real_name = "[pick_string("chemistry_tools.txt", "BOOZE_prefixes")] [pick_string("chemistry_tools.txt", "WINE_suffixes")]"
 		src.UpdateName()
@@ -345,7 +345,7 @@
 		desc = "A tiny little umbrella, to put into drinks. I guess it makes you feel like you're on the beach, even when you're actually in a vomit-, piss- and blood-covered bar in the middle of some shitty dump of a space station. Maybe."
 		icon_state = "umbrella1"
 
-		New()
+		INIT()
 			..()
 			src.icon_state = "umbrella[rand(1,6)]"
 

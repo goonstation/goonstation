@@ -10,7 +10,7 @@
 	permeability_coefficient = 0.50
 	var/list/clothing_choices = list()
 
-	New()
+	INIT()
 		..()
 		for(var/U in (typesof(/datum/chameleon_jumpsuit_pattern)))
 			var/datum/chameleon_jumpsuit_pattern/P = new U

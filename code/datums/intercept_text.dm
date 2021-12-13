@@ -13,7 +13,7 @@
 	var/list/anomalies = list()
 	var/list/SWF_names = list()
 
-/datum/intercept_text/New()
+INIT_TYPE(/datum/intercept_text)
 	..()
 	src.org_names_1.Add("Blighted", "Defiled", "Unholy", "Murderous", "Ugly", "French", "Blue", "Psychotic", "Farmer")
 	src.org_names_2.Add("Reapers", "Swarm", "Rogues", "Menace", "Jeff Worshippers", "Drunks", "Strikers", "Creed")

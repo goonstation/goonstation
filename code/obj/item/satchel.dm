@@ -12,7 +12,7 @@
 	inventory_counter_enabled = 1
 
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 
@@ -262,7 +262,7 @@
 				icon_state = "figurinecase"
 
 /obj/item/satchel/figurines/full
-	New()
+	INIT()
 		. = ..()
 		for(var/i = 0, i < maxitems, i++)
 			var/obj/item/toy/figure/F = new()

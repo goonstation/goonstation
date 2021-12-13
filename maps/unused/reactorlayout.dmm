@@ -50,7 +50,6 @@
 "i" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	initialize_directions = 10;
 	layer = 3
 	},
 /turf/space,
@@ -121,7 +120,6 @@
 "t" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
-	initialize_directions = 5;
 	layer = 3
 	},
 /turf/space,

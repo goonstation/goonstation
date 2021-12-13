@@ -28,7 +28,7 @@
 	var/detonating = 0
 
 
-	New()
+	INIT()
 		..()
 		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
 		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
@@ -244,7 +244,7 @@
 	stage = 2
 	is_dangerous = FALSE
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -265,7 +265,7 @@
 	stage = 2
 	is_dangerous = FALSE
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -285,7 +285,7 @@
 	stage = 2
 	is_dangerous = FALSE
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -305,7 +305,7 @@
 	icon_state_armed = "cleaner1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -329,7 +329,7 @@
 	is_syndicate = 1
 	mats = 6
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -393,7 +393,7 @@
 	icon_state_armed = "cryo1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 
@@ -409,7 +409,7 @@
 	icon_state_armed = "incendiary1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		B1.reagents.add_reagent("infernite", 20)
@@ -423,7 +423,7 @@
 	icon_state_armed = "incendiary-highrange1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		B1.reagents.add_reagent("firedust", 20)
@@ -442,7 +442,7 @@
 	icon_state_armed = "shock1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 
@@ -458,7 +458,7 @@
 	icon_state_armed = "pepper1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -479,7 +479,7 @@
 	icon_state_armed = "sarin1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -502,7 +502,7 @@
 	stage = 2
 	is_dangerous = FALSE
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -525,7 +525,7 @@
 	stage = 2
 	is_dangerous = FALSE
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
@@ -547,7 +547,7 @@
 	icon_state_armed = "incendiary1"
 	stage = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)

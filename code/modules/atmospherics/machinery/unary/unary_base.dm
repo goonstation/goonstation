@@ -1,6 +1,5 @@
 /obj/machinery/atmospherics/unary
 	dir = SOUTH
-	initialize_directions = SOUTH
 
 	var/datum/gas_mixture/air_contents
 
@@ -8,12 +7,25 @@
 
 	var/datum/pipe_network/network
 
-	New()
+	INIT()
 		..()
-		initialize_directions = dir
 		air_contents = new /datum/gas_mixture
 
 		air_contents.volume = 200
+
+		if(node) return
+
+		var/node_connect = dir
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node = target
+				break
+
+		UpdateIcon()
+
+	get_connect_directions()
+		. = dir
 
 	disposing()
 		if(node)
@@ -44,18 +56,6 @@
 		new_network.normal_members += src
 
 		return null
-
-	initialize()
-		if(node) return
-
-		var/node_connect = dir
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node = target
-				break
-
-		UpdateIcon()
 
 	build_network()
 		if(!network && node)

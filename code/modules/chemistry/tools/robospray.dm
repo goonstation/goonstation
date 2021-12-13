@@ -25,7 +25,7 @@
 	hide_attack = 2
 	inventory_counter_enabled = 1
 
-	New()
+	INIT()
 		..()
 		processing_items.Add(src)
 		src.UpdateIcon()

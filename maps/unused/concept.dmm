@@ -2276,7 +2276,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/crew_quarters/market)
@@ -2624,7 +2624,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
@@ -3486,7 +3486,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/janitor)
@@ -3530,7 +3530,7 @@
 /area/maintenance/fsmaint)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
@@ -4160,7 +4160,7 @@
 /obj/item/storage/mousetraps,
 /obj/item/storage/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/janitor)
@@ -5887,7 +5887,7 @@
 /area/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8649,7 +8649,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10816,7 +10816,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/maintenance/east)
@@ -22597,7 +22597,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -24783,7 +24782,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -26968,7 +26966,6 @@
 	dir = 1;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -53090,7 +53087,6 @@
 	dir = 2;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -54452,7 +54448,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;

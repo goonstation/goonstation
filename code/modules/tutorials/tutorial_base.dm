@@ -5,7 +5,7 @@
 	var/current_step = 0
 	var/finished = 0
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		owner = M
 

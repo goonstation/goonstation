@@ -319,7 +319,7 @@ var/list/cached_colors = new/list()
 /obj/item/paint_can/random
 	name = "random paint can"
 	uses = 5
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			var/colorname = "Weird"
@@ -352,7 +352,7 @@ var/list/cached_colors = new/list()
 	desc = "This Paint Can contains rich, thick, rainbow paint. No, we don't know how it works either."
 	var/colorlist[]
 	var/currentcolor
-	New()
+	INIT()
 		..()
 
 		//A rainbow of colours! Joy!
@@ -379,7 +379,7 @@ var/list/cached_colors = new/list()
 	var/patternlist[]
 	var/currentpattern
 
-	New()
+	INIT()
 		..()
 
 		src.patternlist = list("tartan", "strongplaid", "polka", "hearts")

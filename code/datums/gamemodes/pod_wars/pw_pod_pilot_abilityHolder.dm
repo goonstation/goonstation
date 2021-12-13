@@ -8,7 +8,7 @@
 	points = 0
 	pointName = "points"
 
-	New()
+	INIT()
 		..()
 		add_all_abilities()
 
@@ -36,7 +36,7 @@
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/pod_pilot/B = new /atom/movable/screen/ability/topBar/pod_pilot(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

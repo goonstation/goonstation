@@ -26,7 +26,7 @@
 	//instance projectile datum for non-random usage, randomise() is called on this
 	var/datum/projectile/artifact/prismatic_projectile/ps_proj = new
 
-	New()
+	INIT()
 		..()
 		for (var/X in filtered_concrete_typesof(/datum/projectile, .proc/filter_projectile))
 			var/datum/projectile/A = new X

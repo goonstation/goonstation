@@ -30,7 +30,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 	//plane = -2
 
-	New()
+	INIT()
 		..()
 		appearance_flags |= PIXEL_SCALE
 		if(istype(src,/obj/background_star/galactic_object))
@@ -161,14 +161,14 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	//plane = -3
 	fullbright = 1
 
-	New()
+	INIT()
 		..()
 
 /obj/landmark/ship_marker
 	var/ship_id = "artemis"
 	var/num_stars = 200
 
-	New()
+	INIT()
 		var/obj/background_star/S = null
 		for(var/i=0,i<num_stars,i++)
 			S = new/obj/background_star()

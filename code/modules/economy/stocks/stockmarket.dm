@@ -5,7 +5,7 @@
 	var/list/balances
 	var/list/last_read
 
-	New()
+	INIT()
 		..()
 		stocks = list()
 		stockBrokers = list()

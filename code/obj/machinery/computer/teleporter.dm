@@ -11,7 +11,7 @@
 	light_g = 0.3
 	light_b = 0.9
 
-/obj/machinery/computer/teleporter/New()
+INIT_TYPE(/obj/machinery/computer/teleporter)
 	src.id = text("[]", rand(1000, 9999))
 	..()
 	return

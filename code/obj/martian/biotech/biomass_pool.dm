@@ -16,7 +16,7 @@
   var/static/list/meatValues = null // list instantiated on first attempt to access (hooray lazy init)
   var/static/list/biomassPoolReagents = list("synthflesh"=0.05, "blood"=0.02, "martian_flesh"=0.1, "beff" = 0.01, "pepperoni" = 0.01, "meat_slurry" = 0.05, "bloodc" = 0.03) // alien blood processed better? ALIEN CONSPIRACY
 
-/obj/martianBiotech/biomassPool/New()
+INIT_TYPE(/obj/martianBiotech/biomassPool)
   ..()
   src.create_reagents(100)
 
@@ -147,7 +147,7 @@
   var/obj/item/grab/grab
   var/meatValue
 
-  New(var/mob/living/ntarg, var/nmeatValue, var/obj/martianBiotech/biomassPool/npool, var/obj/item/grab/ngrab, var/duration_i)
+  INIT(var/mob/living/ntarg, var/nmeatValue, var/obj/martianBiotech/biomassPool/npool, var/obj/item/grab/ngrab, var/duration_i)
     ..()
     if (ntarg)
       target = ntarg

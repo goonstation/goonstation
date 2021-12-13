@@ -47,7 +47,7 @@
 	icon_state = "plant"
 	desc = "The large intestine is made from a root like material... that's a bit unsettling."
 	synthetic = 1
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
 

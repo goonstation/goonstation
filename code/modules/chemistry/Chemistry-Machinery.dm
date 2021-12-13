@@ -27,7 +27,7 @@
 	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
-	New()
+	INIT()
 		..()
 		output_target = src.loc
 
@@ -121,14 +121,14 @@
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustM"])
-			target_temp = min(max(0, target_temp-change),1000)
+			target_temp = clamp(target_temp-change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustP"])
-			target_temp = min(max(0, target_temp+change),1000)
+			target_temp = clamp(target_temp+change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
@@ -136,7 +136,7 @@
 			if (!beaker.reagents.total_volume) return
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
 			if(!change || !isnum_safe(change)) return
-			target_temp = min(max(0, change),1000)
+			target_temp = clamp(change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
@@ -311,7 +311,7 @@
 	var/pill_bottle = 1
 	var/output_target = null
 
-	New()
+	INIT()
 		..()
 		if (!src.emagged && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
@@ -688,7 +688,7 @@ datum/chemicompiler_core/stationaryCore
 	var/datum/chemicompiler_executor/executor
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
@@ -795,7 +795,7 @@ datum/chemicompiler_core/stationaryCore
 	var/obj/item/reagent_containers/glass/beaker/extractor_tank/overflow = null
 	var/obj/item/reagent_containers/user_beaker = null
 
-	New()
+	INIT()
 		..()
 		src.bottoms = new
 		src.tops = new
@@ -909,7 +909,7 @@ datum/chemicompiler_core/stationaryCore
 	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
 	var/output_target = null
 
-	New()
+	INIT()
 		..()
 		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/large(src)
 		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/large(src)

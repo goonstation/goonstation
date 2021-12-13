@@ -26,7 +26,7 @@
 
 	var/temperature = T20C // Start at room temperature
 
-	New()
+	INIT()
 		..()
 
 	process()

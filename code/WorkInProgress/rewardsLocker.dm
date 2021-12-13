@@ -1447,7 +1447,7 @@
 /chui/window/contributorrewards
 	name = "Contributor Rewards"
 
-	New()
+	INIT()
 		..()
 
 	var/rewardses = list("sillyscream" = "Silly Screams")
@@ -1483,7 +1483,7 @@
 	mobonly = 0
 
 	var/chui/window/contributorrewards/contributorRewardMenu
-	New()
+	INIT()
 		..()
 
 	rewardActivate(var/mob/activator)

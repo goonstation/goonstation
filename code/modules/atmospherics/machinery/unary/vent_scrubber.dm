@@ -18,13 +18,10 @@
 
 	var/volume_rate = 120
 
-	New()
+	INIT()
 		..()
 		if(frequency)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
-
-	initialize()
-		..()
 		UpdateIcon()
 
 	update_icon()

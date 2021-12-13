@@ -9,7 +9,7 @@
 	var/id = "shuttle" //The main location of the teleporter
 	var/recharge = 20 //A short recharge time between teleports
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 

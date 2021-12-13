@@ -60,7 +60,7 @@
 								"I'm being more than generous here, I think you'll agree.",
 								"This is my final offer. Can't do better than this.")
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/traderGeneric(src)
 		..()
 
@@ -567,7 +567,7 @@
 	angrynope = "Not right now..."
 	whotext = ""
 
-	New()
+	INIT()
 		..()
 		icon_state = pick("martian","martianP","martianW","martianSP","mars_bot","welder","petbee","lavacrab","boogie","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]")
 		if (icon_state in list("owl","goose","swan","gull"))
@@ -679,7 +679,7 @@
 	angrynope = "Not now, human."
 	whotext = "I am a simple martian, looking to trade."
 
-	New()
+	INIT()
 		..()
 		src.goods_sell += new /datum/commodity/ore/uqill(src) // cogwerks - changed from molitz, who the hell ever needs that
 		src.goods_sell += new /datum/commodity/ore/plasmastone(src) // no guns, no, bad
@@ -747,7 +747,7 @@
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
 
-	New()
+	INIT()
 		..()
 		switch(productset)
 			if(1) // drugs and pod stuff
@@ -973,7 +973,7 @@
 	name = "Bombini" // like the tribe of bumblebees
 	trader_area = "/area/bee_trader"
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
@@ -1059,7 +1059,7 @@
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
 	var/honk = 0
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
@@ -1149,7 +1149,7 @@
 	angrynope = "Not now."
 	whotext = "I am a trader."
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
@@ -1205,7 +1205,7 @@
 	angrynope = "Piss off, bro!"
 	whotext = "What does it look like, man?"
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
@@ -1258,7 +1258,7 @@
 	name = "A hand sticking out from a toilet"
 	trader_area = "/area/diner/bathroom"
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
@@ -1327,7 +1327,7 @@
 	bound_width = 64
 	bound_height = 32
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////
@@ -1389,7 +1389,7 @@
 	angrynope = "Not cool, champ!"
 	whotext = "Yo, buddy, name's Flexx. Whaddup?"
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////

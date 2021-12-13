@@ -39,7 +39,7 @@
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 
-	New()
+	INIT()
 		..()
 
 
@@ -158,7 +158,7 @@
 	randomized_pitch = 0
 	use_new_interface = 1
 
-	New()
+	INIT()
 		notes = list("c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6","c-6", "d6", "d-6", "e6","f6","f-6","g6", "g-6","a6","a-6","b6","c7")
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
@@ -222,7 +222,7 @@
 	//Start at G
 	key_offset = 8
 
-	New()
+	INIT()
 		notes = list("g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
@@ -251,7 +251,7 @@
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
@@ -268,7 +268,7 @@
 	sounds_instrument = null
 	randomized_pitch = 0
 
-	New()
+	INIT()
 		if (sounds_instrument == null)
 			sounds_instrument = list()
 			for (var/i in 1 to 12)
@@ -498,7 +498,7 @@
 	sounds_instrument = null
 	randomized_pitch = 0
 
-	New()
+	INIT()
 		if (sounds_instrument == null)
 			sounds_instrument = list()
 			for (var/i in 1 to 12)
@@ -573,7 +573,7 @@
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
 
-	New()
+	INIT()
 		sounds_instrument = list()
 		for (var/i in 1 to 12)
 			sounds_instrument += "sound/musical_instruments/violin/violin_[i].ogg"
@@ -629,7 +629,7 @@
 	randomized_pitch = 0
 	volume = 80
 
-	New()
+	INIT()
 		sounds_instrument = list()
 		for (var/i in 1 to 3)
 			sounds_instrument += "sound/musical_instruments/cowbell/cowbell_[i].ogg"
@@ -645,7 +645,7 @@
 	randomized_pitch = 0
 	volume = 90
 
-	New()
+	INIT()
 		sounds_instrument = list()
 		for (var/i in 1 to 2)
 			sounds_instrument += "sound/musical_instruments/triangle/triangle_[i].ogg"
@@ -661,7 +661,7 @@
 	randomized_pitch = 0
 	volume = 80
 
-	New()
+	INIT()
 		sounds_instrument = list()
 		for (var/i in 1 to 4)
 			sounds_instrument += "sound/musical_instruments/tambourine/tambourine_[i].ogg"

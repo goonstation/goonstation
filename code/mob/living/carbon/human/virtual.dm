@@ -5,7 +5,7 @@
 	var/escape_vr = 0
 
 
-	New()
+	INIT()
 		..()
 		sound_burp = 'sound/voice/virtual_gassy.ogg'
 		//sound_malescream = 'sound/voice/virtual_scream.ogg'

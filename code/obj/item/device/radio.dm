@@ -45,7 +45,7 @@
 	// Moved initializaiton to world/New
 var/list/headset_channel_lookup
 
-/obj/item/device/radio/New()
+INIT_TYPE(/obj/item/device/radio)
 	..()
 	if ((src.frequency < R_FREQ_MINIMUM || src.frequency > R_FREQ_MAXIMUM) && !src.locked_frequency)
 		// if the frequency is somehow set outside of the normal range, put it back in range
@@ -594,7 +594,7 @@ var/list/headset_channel_lookup
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
 	burn_possible = 0
 
-/obj/item/device/radio/beacon/New()
+INIT_TYPE(/obj/item/device/radio/beacon)
 	..()
 	START_TRACKING
 
@@ -1017,8 +1017,8 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		src.icon_state = "transmitter"
 		boutput(user, "No longer transmitting.")
 
-/obj/item/device/radio/intercom/loudspeaker/initialize()
-
+INIT_TYPE(/obj/item/device/radio/intercom/loudspeaker)
+	..()
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -1038,7 +1038,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 	density = 0
 	desc = "A Loudspeaker."
 
-	New()
+	INIT()
 		..()
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)

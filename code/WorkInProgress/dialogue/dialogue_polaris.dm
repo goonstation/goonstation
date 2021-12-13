@@ -10,7 +10,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse1(src)
 		..()
 
@@ -54,7 +54,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse2(src)
 		..()
 
@@ -89,7 +89,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse7(src)
 		..()
 
@@ -133,7 +133,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse8(src)
 		..()
 
@@ -196,7 +196,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse11(src)
 		..()
 
@@ -241,7 +241,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse5(src)
 		..()
 
@@ -285,7 +285,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/syndicatecorpse10(src)
 		..()
 
@@ -336,7 +336,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/securitycorpse1(src)
 		..()
 
@@ -380,7 +380,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/securitycorpse2(src)
 		..()
 
@@ -424,7 +424,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/securitycorpse6(src)
 		..()
 
@@ -469,7 +469,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/securitycorpse3(src)
 		..()
 
@@ -514,7 +514,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/securitycorpse7(src)
 		..()
 
@@ -560,7 +560,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/sergeantscomputer(src)
 		..()
 
@@ -677,7 +677,7 @@
 	pixel_y = 12
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/plantoflosthope(src)
 		..()
 
@@ -732,7 +732,7 @@
 	icon_state = "bustedmantapc"
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/bustedmantapc(src)
 		..()
 
@@ -784,7 +784,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/engineeringcomputer(src)
 		..()
 
@@ -885,7 +885,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/engineerscorpse(src)
 		..()
 
@@ -953,7 +953,7 @@
 	anchored = 2
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/polariscrate(src)
 		..()
 

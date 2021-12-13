@@ -337,7 +337,7 @@
 
 				return null
 
-	New(obj/holding as obj)
+	INIT(obj/holding as obj)
 		..()
 		if(holding)
 			src.holder = holding

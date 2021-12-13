@@ -161,7 +161,7 @@
 	var/not_when_handcuffed = 0
 	var/fake = 0
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/wrestler/B = new /atom/movable/screen/ability/topBar/wrestler(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state

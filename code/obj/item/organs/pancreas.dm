@@ -39,7 +39,7 @@
 	icon_state = "plant"
 	desc = "A plant-based alternative to the normal pancreas..."
 	synthetic = 1
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 

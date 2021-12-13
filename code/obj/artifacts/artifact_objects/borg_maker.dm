@@ -18,7 +18,7 @@
 	var/escapable = TRUE //Can you be dragged out to cancel the borgifying
 	var/loops_per_conversion_step //Number of 0.4 second loops per 'step'- on each step a robolimb is added, and if all 4 limbs are robotic, they're borged
 
-	New()
+	INIT()
 		..()
 		if (prob(15))
 			escapable = FALSE

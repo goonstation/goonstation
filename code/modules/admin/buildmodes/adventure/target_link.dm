@@ -3,7 +3,7 @@
 	var/triggerable_id = null
 	var/obj/adventurepuzzle/triggerable/targetable/trap
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.target_me()

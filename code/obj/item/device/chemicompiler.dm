@@ -18,7 +18,7 @@
 	icon_state = "chemicompiler"
 	var/datum/chemicompiler_executor/executor
 
-	New()
+	INIT()
 		..()
 		executor = new(src, /datum/chemicompiler_core/portableCore)
 		processing_items += src

@@ -31,7 +31,7 @@ proc/pick_landmark(name, default=null)
 	if(src.deleted_on_start)
 		qdel(src)
 
-/obj/landmark/New()
+INIT_TYPE(/obj/landmark)
 	if(current_state > GAME_STATE_MAP_LOAD)
 		SPAWN_DBG(0)
 			src.init()
@@ -48,7 +48,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "x"
 	add_to_landmarks = FALSE
 
-	New()
+	INIT()
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
 				job_start_locations[src.name] = list(src.loc)
@@ -72,33 +72,22 @@ var/global/list/job_start_locations = list()
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
-	var/shuttle = SHUTTLE_NODEF
 
-	New()
-		src.data = src.shuttle// save dir
+	INIT()
+		src.data = src.dir
 		..()
 
 	north
 		dir = NORTH
-		shuttle = SHUTTLE_NORTH
-
-		donut3
-			shuttle = SHUTTLE_DONUT3
 
 	south
 		dir = SOUTH
-		shuttle = SHUTTLE_SOUTH
 
 	east
 		dir = EAST
-		shuttle = SHUTTLE_EAST
-
-		oshan
-			shuttle = SHUTTLE_OSHAN
 
 	west
 		dir = WEST
-		shuttle = SHUTTLE_WEST
 
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
@@ -126,7 +115,7 @@ var/global/list/job_start_locations = list()
 	icon_state = "x"
 	dir = NORTH
 
-	New()
+	INIT()
 		src.data = src.dir // save dir
 		..()
 	north
@@ -144,7 +133,7 @@ var/global/list/job_start_locations = list()
 	interesting = ""
 	add_to_landmarks = FALSE
 
-	New() //use initialize() later and test ok
+	INIT() //use initialize() later and test ok
 		var/turf/T = src.loc
 		T.interesting = src.interesting
 		..()
@@ -153,7 +142,7 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_ARTIFACT_SPAWN
 	icon_state = "x3"
 	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
-	New()
+	INIT()
 		src.data = src.spawnchance
 		..()
 
@@ -190,14 +179,7 @@ var/global/list/job_start_locations = list()
 		"dolly" = /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 	)
 
-	New()
-		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
-			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
-				if(!src.disposed)
-					initialize()
-		..()
-
-	initialize()
+	INIT()
 		if(prob(spawnchance))
 			spawn_the_thing()
 		..()
@@ -211,7 +193,7 @@ var/global/list/job_start_locations = list()
 		qdel(src)
 
 /obj/landmark/spawner/inside
-	New()
+	INIT()
 		var/obj/storage/S = locate() in src.loc
 		src.set_loc(S)
 		..()
@@ -231,7 +213,7 @@ var/global/list/job_start_locations = list()
 	name = "lrt landmark"
 	name_override = LANDMARK_LRT
 
-	New()
+	INIT()
 		src.data = src.name // store name
 		..()
 
@@ -264,7 +246,7 @@ var/global/list/job_start_locations = list()
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
 	var/novis = FALSE
 
-	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
+	INIT(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
 		if (man_targetZ) src.targetZ = man_targetZ
@@ -306,25 +288,3 @@ var/global/list/job_start_locations = list()
 		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
 		if(L)
 			vistarget.vis_contents -= L
-
-/obj/landmark/load_prefab_shuttledmm
-	name = "custom shuttle dmm loading location"
-	desc = "Tells the dmm loader where to put the bottom left corner of the shuttle prefab."
-	icon = 'icons/effects/mapeditor.dmi'
-	icon_state = "landmark"
-	color = "#ff0000"
-
-	cog1
-		name = LANDMARK_SHUTTLE_COG1
-	cog2
-		name = LANDMARK_SHUTTLE_COG2
-	sealab
-		name = LANDMARK_SHUTTLE_SEALAB
-	manta
-		name = LANDMARK_SHUTTLE_MANTA
-	donut2
-		name = LANDMARK_SHUTTLE_DONUT2
-	donut3
-		name = LANDMARK_SHUTTLE_DONUT3
-	destiny
-		name = LANDMARK_SHUTTLE_DESTINY

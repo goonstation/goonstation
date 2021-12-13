@@ -13,9 +13,10 @@
 	var/hivebot_name = null
 	var/force_mind = 0
 
-/mob/living/silicon/hive_mainframe/New()
+INIT_TYPE(/mob/living/silicon/hive_mainframe)
 	. = ..()
-	Namepick()
+	SPAWN_DBG(0)
+		Namepick()
 
 /mob/living/silicon/hive_mainframe/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

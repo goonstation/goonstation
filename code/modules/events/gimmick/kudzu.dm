@@ -134,7 +134,7 @@
 			return 0
 		return 1
 
-	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+	INIT(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		src.to_spread = to_spread
 		var/turf/T = get_turf(loc)
 		if (istype(T, /turf/space))
@@ -345,7 +345,7 @@
 	vinepath = /obj/spacevine/alien/living
 	aggressive = 1
 
-	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+	INIT(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
 		if (..(loc, to_spread))
 			return 1
 		SPAWN_DBG(0)
@@ -362,7 +362,7 @@
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 
-	New()
+	INIT()
 		if (..())
 			return 1
 		src.set_dir(pick(alldirs))
@@ -392,7 +392,7 @@
 	add_underlay = 0
 	health = 20
 
-	New(loc, mob/M as mob)
+	INIT(loc, mob/M as mob)
 		..()
 		if (ishuman(M))
 			SPAWN_DBG(bulb_time)
@@ -410,7 +410,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN_DBG(1 SECOND)
 						qdel(src)
-					
+
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)

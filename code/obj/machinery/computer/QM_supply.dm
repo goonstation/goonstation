@@ -42,7 +42,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	var/next_crate = 0
 	var/last_switch = 0
 
-	New()
+	INIT()
 		..()
 		processing_items.Add(src)
 
@@ -80,7 +80,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 					var/datum/pathogen/P = patho[uid]
 					var/datum/cdc_contact_analysis/D = new
 					D.uid = uid
-					var/sym_count = max(min(length(P.effects), 7), 2)
+					var/sym_count = clamp(length(P.effects), 2, 7)
 					D.time_factor = sym_count * rand(10, 15) // 200, 600
 					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
 					D.name = P.name
@@ -137,7 +137,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	light_g = 0.7
 	light_b = 0.03
 
-	New()
+	INIT()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 

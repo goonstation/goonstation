@@ -26,7 +26,7 @@
 		icon_state = "rdoor1"
 		mod = "R"
 
-	New()
+	INIT()
 		..()
 		//Hide the wires or whatever THE FUCK
 		src.levelupdate()
@@ -164,7 +164,8 @@
 			src.set_density(0)
 			src.gas_impermeable = 0
 			src.pathable = 1
-			src.update_air_properties()
+			if(global.air_master)
+				src.update_air_properties()
 			src.RL_SetOpacity(0)
 			if(!floorintact)
 				src.setIntact(FALSE)
@@ -225,7 +226,7 @@
 			return "It's a false wall. It's open."
 
 	//Temp false walls turn back to regular walls when closed.
-	temp/New()
+	temp/INIT()
 		..()
 		SPAWN_DBG(1.1 SECONDS)
 			src.open()

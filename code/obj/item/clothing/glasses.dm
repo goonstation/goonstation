@@ -369,7 +369,7 @@
 		..()
 		setProperty("disorient_resist_eye", 28)
 
-	New()
+	INIT()
 		SPAWN_DBG(2 SECONDS)
 			if (src)
 				src.name += " - '[src.network]'" // They otherwise all look the same (Convair880).

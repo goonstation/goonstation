@@ -40,7 +40,7 @@ var/datum/particleMaster/particleMaster = new
 	var/list/active_particles = list()
 	var/allowed_particles_per_tick = 7
 
-	New()
+	INIT()
 		..()
 		particleTypes = list()
 		particleSystems = list()
@@ -167,7 +167,7 @@ var/datum/particleMaster/particleMaster = new
 	var/matrix/second = null
 	var/matrix/third = null
 
-	New()
+	INIT()
 		..()
 		MatrixInit()
 
@@ -1012,7 +1012,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	var/atom/location = null
 	var/atom/target = null
 
-	New(var/atom/location = null, var/particleTypeName = null, var/particleTime = null, var/particleColor = null, var/atom/target = null, particleSprite = null)
+	INIT(var/atom/location = null, var/particleTypeName = null, var/particleTime = null, var/particleColor = null, var/atom/target = null, particleSprite = null)
 		..()
 		if (location && particleTypeName)
 			src.location = location
@@ -1021,11 +1021,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			src.particleColor = particleColor
 			src.particleSprite = particleSprite
 			src.target = target
-			Init()
+			InitPar()
 		else
 			Die()
 
-	proc/Init()
+	proc/InitPar()
 		sleepCounter = 1
 
 	proc/Run()
@@ -1062,10 +1062,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Die()
 
 /datum/particleSystem/energysp
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "elecpart_green", 15, "#00DD00")
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1078,7 +1078,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/sparkles
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "sparkle", 10, "#FFFFDD")
 	Run()
 		if (..())
@@ -1087,10 +1087,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/sparklesagentb
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "sparkle", 10, "#ff0000")
 
-	Init()
+	InitPar()
 		sleepCounter = 3
 
 	Run()
@@ -1102,7 +1102,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			else
 				Die()
 /datum/particleSystem/sparkles_disco
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "sparkle", 10, "#FFFFFF")
 	Run()
 		if (..())
@@ -1114,7 +1114,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/glitter
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "glitter", 10)
 	Run()
 		if (..())
@@ -1129,10 +1129,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(4)
 
 /datum/particleSystem/swoosh
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "swoosh", 45, "#5C0E80")
 
-	Init()
+	InitPar()
 		sleepCounter = 30
 
 	Run()
@@ -1145,10 +1145,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/elecburst
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "elecpart", 15, "#5577CC")
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1162,10 +1162,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/firespray
-	New(var/atom/location, var/atom/destination)
+	INIT(var/atom/location, var/atom/destination)
 		..(location, "fireSpray", 10, null, destination)
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1179,7 +1179,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/localSmoke
-	New(var/col = "#ffffff", var/duration = 20, var/atom/location = null)
+	INIT(var/col = "#ffffff", var/duration = 20, var/atom/location = null)
 		..(location, "localSmoke", 26, col)
 		sleepCounter = duration
 
@@ -1195,7 +1195,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 
 /datum/particleSystem/barrelSmoke
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "barrelSmoke", 26, "#222222")
 
 	Run()
@@ -1204,7 +1204,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/cruiserSmoke
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "cruiserSmoke", 26, "#777777")
 
 	Run()
@@ -1215,7 +1215,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 /datum/particleSystem/areaSmoke
 
-	New(var/col = "#ffffff", var/duration = 10, var/atom/location = null)
+	INIT(var/col = "#ffffff", var/duration = 10, var/atom/location = null)
 		..(location, "areaSmoke", 26, col)
 		sleepCounter = duration
 
@@ -1230,11 +1230,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/areaSmoke/blueTest
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..("#3333ff", 1000, location)
 
 /datum/particleSystem/fireworks
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "fireworks", 35)
 
 	Run()
@@ -1244,7 +1244,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Die()
 
 /datum/particleSystem/confetti
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "confetti", 35)
 
 	Run()
@@ -1254,7 +1254,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Die()
 
 /datum/particleSystem/confetti_more
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "confetti", 35)
 
 	Run()
@@ -1264,7 +1264,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Die()
 
 /datum/particleSystem/explosion
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "exppart", 25)
 
 	Run()
@@ -1274,10 +1274,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Die()
 
 /datum/particleSystem/tpbeam
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "tpbeam", 28)
 
-	Init()
+	InitPar()
 		sleepCounter = 6
 
 	Run()
@@ -1291,10 +1291,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/tpbeamdown
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "tpbeamdown", 28)
 
-	Init()
+	InitPar()
 		sleepCounter = 6
 
 	Run()
@@ -1308,10 +1308,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/fireTest
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "fireTest", 21)
 
-	Init()
+	InitPar()
 		sleepCounter = 1000
 
 	Run()
@@ -1325,7 +1325,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/stinkTest
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "stink", 21)
 
 	Run()
@@ -1334,10 +1334,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/radevent_warning
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "radevent_warning", 50)
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1350,10 +1350,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/radevent_pulse
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "radevent_pulse", 7)
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1366,10 +1366,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/bhole_warning
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "bhole_warning", 108)
 
-	Init()
+	InitPar()
 		sleepCounter = 100
 
 	Run()
@@ -1382,10 +1382,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/sonic_burst
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "soundwave", 4)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(5,12)
 
 	Run()
@@ -1400,7 +1400,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/tele_wand
 	var/particle_sprite = null
 
-	New(var/atom/location,var/p_sprite,var/p_color)
+	INIT(var/atom/location,var/p_sprite,var/p_color)
 		..(location, "tele_wand", 6, p_color, null, p_sprite)
 
 	Run()
@@ -1411,10 +1411,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 
 /datum/particleSystem/blobattack
-	New(var/atom/location = null, var/color)
+	INIT(var/atom/location = null, var/color)
 		..(location, "blob_attack", 70, color)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(2,5)
 
 	Run()
@@ -1427,10 +1427,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/blobheal
-	New(var/atom/location = null, var/color)
+	INIT(var/atom/location = null, var/color)
 		..(location, "blob_heal", 60, color)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(3,4)
 
 	Run()
@@ -1449,7 +1449,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	var/list/banned_reagents = list("smokepowder", "propellant", "thalmerite", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
 	var/smoke_size = 3
 
-	New(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)
+	INIT(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)
 		smoke_size = size
 		var/part_id = "localSmoke"
 		if (size < 3)
@@ -1514,13 +1514,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
 
-	New(var/atom/location, var/atom/destination, var/datum/reagents/source)
+	INIT(var/atom/location, var/atom/destination, var/datum/reagents/source)
 		..(location, "chemSpray", 10, null, destination)
 		copied = new/datum/reagents(source.maximum_volume)
 		source.copy_to(copied)
 		particleColor = copied.get_master_color(1)
 
-	Init()
+	InitPar()
 		sleepCounter = 2
 
 	Die()
@@ -1539,10 +1539,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/mechanic
-	New(var/atom/location, var/atom/destination)
+	INIT(var/atom/location, var/atom/destination)
 		..(location, "mechpart", get_dist(location, destination) * 5,  "#00FF00", destination)
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1555,10 +1555,10 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				state = PS_READY
 
 /datum/particleSystem/gravaccel
-	New(var/atom/location, var/direction)
+	INIT(var/atom/location, var/direction)
 		..(location, "gravaccel", 25, "#1155ff", get_step(location, direction))
 
-	Init()
+	InitPar()
 		sleepCounter = 30
 
 	Run()
@@ -1572,7 +1572,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/warp_star
-	New(var/atom/location = null, var/star_dir = null)
+	INIT(var/atom/location = null, var/star_dir = null)
 		..(location, "warp_star[star_dir]", 35, "#FFFFFF")
 
 	Run()
@@ -1581,7 +1581,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke
-	New(var/atom/location = null, var/blow_dir = null)
+	INIT(var/atom/location = null, var/blow_dir = null)
 		var/dir_append = "_n"
 		switch(blow_dir)
 			if (EAST)
@@ -1595,7 +1595,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		SpawnParticle()	//want this particle system to display asap - needs to show up at the same time as its flavor text, not after
 
 
-	Init()
+	InitPar()
 		sleepCounter = 2
 
 	Run()
@@ -1608,6 +1608,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/glow_stick_dance
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "glow_stick_dance", 9.9, "#66ff33")
 		SpawnParticle()

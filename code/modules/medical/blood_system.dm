@@ -847,7 +847,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 

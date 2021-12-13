@@ -23,7 +23,7 @@
 	var/_health = 100
 	var/_max_health = 100
 
-	New()
+	INIT()
 		. = ..()
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
@@ -99,7 +99,7 @@
 		qdel(src)
 		return
 
-	New()
+	INIT()
 		setupProperties()
 		. = ..()
 
@@ -226,8 +226,6 @@
 				return remove_air(breath_request)
 		else
 			return null
-
-	proc/initialize()
 
 	attackby(obj/item/I as obj, mob/user as mob)
 // grabsmash
@@ -455,6 +453,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
+	flags = FPRINT | UNCRUSHABLE
 	density = 0
 
 	updateHealth()
@@ -477,7 +476,7 @@
 		return
 
 /obj/overlay/self_deleting
-	New(newloc, deleteTimer)
+	INIT(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
 			SPAWN_DBG(deleteTimer)

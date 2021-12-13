@@ -154,7 +154,7 @@
 
 		return clonestore
 
-	New()
+	INIT()
 		..()
 		if(!bank_id)
 			bank_id = "GENERIC"
@@ -1042,7 +1042,7 @@
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
-	New()
+	INIT()
 		..()
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
@@ -1364,7 +1364,7 @@
 	power_usage = 100
 	var/last_ping = 0
 
-	New()
+	INIT()
 		..()
 
 		src.net_id = generate_net_id(src)
@@ -1605,12 +1605,12 @@
 				if (data["_command"])
 					switch (lowertext(data["_command"]))
 						if ("add")
-							var/newFreq = "[round(max(1000, min(text2num_safe(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(clamp(text2num_safe(data["_freq"]), 1000, 1500))]"
 							if (newFreq && !(newFreq in frequencies))
 								add_frequency(newFreq)
 
 						if ("remove")
-							var/newFreq = "[round(max(1000, min(text2num_safe(data["_freq"]), 1500)))]"
+							var/newFreq = "[round(clamp(text2num_safe(data["_freq"]), 1000, 1500))]"
 							if (newFreq && (newFreq in frequencies))
 								qdel(frequencies[newFreq])
 								frequencies -= newFreq
@@ -1625,7 +1625,7 @@
 							src.post_status(target,"command","term_message","data","command=status&status=failure")
 					return
 
-				var/newFreq = round(max(1000, min(text2num_safe(data["_freq"]), 1500)))
+				var/newFreq = round(clamp(text2num_safe(data["_freq"]), 1000, 1500))
 				data -= "_freq"
 				if (!newFreq || !radio_controller || !length(data))
 					src.post_status(target,"command","term_message","data","command=status&status=failure")
@@ -1690,7 +1690,7 @@
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?
 #define MAX_PRINTBUFFER_SIZE 10
 
-	New()
+	INIT()
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
@@ -2157,7 +2157,7 @@
 	setup_accept_tapes = 0
 	power_usage = 200
 
-	New()
+	INIT()
 		..()
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
@@ -2392,7 +2392,7 @@
 
 	var/datum/light/light
 
-	New()
+	INIT()
 		..() //Set detector ID if not already set, generate net ID, then update icon.
 		if(!detector_id)
 			src.detector_id = "GENERIC"
@@ -2788,7 +2788,7 @@
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
-	New(location, newLimit)
+	INIT(location, newLimit)
 		..()
 		if (newLimit != null)
 			src.limit = newLimit
@@ -2855,7 +2855,7 @@
 
 	var/setup_beam_length = 48
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(0.5 SECONDS)
@@ -3211,7 +3211,7 @@
 	flags = TABLEPASS
 	var/datum/light/light
 
-	New(location, newLimit, newPower)
+	INIT(location, newLimit, newPower)
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -3387,7 +3387,7 @@
 	power_usage = 200
 	var/dragload = 0 // can we click-drag a machinery-type artifact into this machine?
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(0.5 SECONDS)
@@ -3731,7 +3731,7 @@
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
-					duration = round(max(1, min(duration, 255)))
+					duration = round(clamp(duration, 1, 255))
 				else
 					src.active = 0
 					message_host("command=nack")
@@ -4171,7 +4171,7 @@
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration) && !src.active)
-					duration = round(max(1, min(duration, 255)))
+					duration = round(clamp(duration, 1, 255))
 				else
 					src.active = 0
 					message_host("command=nack")
@@ -4406,7 +4406,7 @@
 	// Heat Plate - returns Artifact Temp, Heat Response, Cold Response
 	power_usage = 200
 
-	New()
+	INIT()
 		..()
 		heat_overlay = image('icons/obj/networked.dmi', "")
 
@@ -4725,7 +4725,7 @@
 			//Pressure, Temperature, gases, trace gases sum
 	var/list/sensed = null
 
-	New()
+	INIT()
 		..()
 		if (src.setup_tag)
 			setup_test_id = "GAS_[uppertext( copytext(src.setup_tag,1,9) )]"
@@ -4803,7 +4803,7 @@
 	var/tmp/datum/mechanicsMessage/lastSignal = null
 	power_usage = 200
 
-	New()
+	INIT()
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
@@ -4895,7 +4895,7 @@
 			if ("pulse")
 				var/duration = text2num_safe(packetData["duration"])
 				if (isnum(duration))
-					src.pulses = max(0, min(round(duration), 255))
+					src.pulses = clamp(round(duration), 0, 255)
 				else
 					message_host("command=nack")
 					return

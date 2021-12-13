@@ -123,7 +123,7 @@
 	var/datum/light/light
 	var/list/datum/ticket_rewards = list()
 
-	New()
+	INIT()
 		..()
 		ticket_rewards += new/datum/ticket_reward/cap
 		ticket_rewards += new/datum/ticket_reward/magnifying_glass

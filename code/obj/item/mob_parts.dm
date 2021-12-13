@@ -76,7 +76,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	/// Can we roll this limb as a random limb?
 	var/random_limb_blacklisted = 0
 
-	New(atom/new_holder)
+	INIT(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))
 			src.holder = new_holder

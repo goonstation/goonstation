@@ -42,7 +42,7 @@
 	m_amt = 10000
 	g_amt = 5000
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
 		AddComponent(/datum/component/transfer_on_attack)
@@ -86,7 +86,7 @@
 	m_amt = 10000
 	g_amt = 5000
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
 		AddComponent(/datum/component/transfer_on_attack)
@@ -151,7 +151,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "tonic1"
 	initial_volume = 50
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("hairgrownium", 40)
 
@@ -300,7 +300,7 @@
 
 	var/obj/item/dye_bottle/bottle = null
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 

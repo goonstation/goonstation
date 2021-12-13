@@ -136,7 +136,7 @@
 	var/obj/airlock_door/d_right = null
 	var/d_right_state = "gen-right"
 
-	New()
+	INIT()
 		..()
 		src.d_right = new(src.loc)
 		src.d_right.icon_state = src.d_right_state

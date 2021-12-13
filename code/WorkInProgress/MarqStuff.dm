@@ -246,7 +246,7 @@
 	var/progression = 0.34
 	var/moved = 0
 
-	New(var/mob/M, var/obj/item/gun/bow/B)
+	INIT(var/mob/M, var/obj/item/gun/bow/B)
 		owner = M
 		bow = B
 		..()
@@ -302,7 +302,7 @@
 	appearance_flags = RESET_COLOR | RESET_ALPHA | LONG_GLIDE | PIXEL_SCALE
 	move_triggered = 1
 
-	New()
+	INIT()
 		..()
 		shaft = image(icon, "arrow_base")
 		head = image(icon, "arrow_head")
@@ -471,7 +471,7 @@
 	desc = "An arrow."
 	var/obj/item/arrow/arrow = null
 
-	New()
+	INIT()
 		..()
 		implant_overlay = image(icon='icons/mob/human.dmi', icon_state="arrow_stick_[rand(0,4)]", layer=MOB_EFFECT_LAYER)
 
@@ -611,7 +611,7 @@
 	contraband = 0
 	move_triggered = 1
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/arrow)
 		. = ..()
 

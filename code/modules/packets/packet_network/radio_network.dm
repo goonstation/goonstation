@@ -3,7 +3,7 @@
 	channel_name = null
 	transmission_method = TRANSMISSION_RADIO
 
-/datum/packet_network/radio/New(frequency)
+INIT_TYPE(/datum/packet_network/radio, frequency)
 	..()
 	src.frequency = frequency
 	src.channel_name = "[frequency]"

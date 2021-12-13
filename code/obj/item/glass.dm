@@ -244,7 +244,7 @@ SHARDS
 		return
 	return
 
-/obj/item/shard/New()
+INIT_TYPE(/obj/item/shard)
 
 	//****RM
 	//boutput(world, "New shard at [x],[y],[z]")
@@ -300,7 +300,7 @@ SHARDS
 	throwforce = 20.0
 	item_state = "shard-glass"
 	g_amt = 0
-	New()
+	INIT()
 		src.icon_state = pick("clarge", "cmedium", "csmall")
 		switch(src.icon_state)
 			if("csmall")

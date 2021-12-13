@@ -6306,7 +6306,6 @@
 /obj/machinery/atmospherics/unary/vent_pump{
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	pressure_checks = 2;
 	pump_direction = 0
@@ -9939,7 +9938,6 @@
 	dir = 4;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	pressure_checks = 2;
 	pump_direction = 0
@@ -10780,7 +10778,7 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -14722,7 +14720,7 @@
 "aFP" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /obj/decal/garland{
 	dir = 6;
@@ -20675,7 +20673,7 @@
 /area/station/engine/inner)
 "aTm" = (
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -20687,7 +20685,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /turf/simulated/floor/yellow/checker{
 	icon_state = "yellowchecker";
@@ -31905,7 +31903,7 @@
 "bup" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -31918,7 +31916,7 @@
 "buq" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/security{
-
+	
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -31931,7 +31929,7 @@
 "bur" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/medical{
-
+	
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/decal/xmas_lights{
@@ -31945,7 +31943,7 @@
 "bus" = (
 /obj/table/wood/round/auto,
 /obj/item/device/radio/intercom/science{
-
+	
 	},
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -36898,7 +36896,7 @@
 /area/station/hallway/secondary/exit)
 "bFU" = (
 /turf/space/fluid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "bFV" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/camera{
@@ -44127,7 +44125,7 @@
 /area/station/security/brig)
 "bXr" = (
 /obj/item/device/radio/intercom/security{
-
+	
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)

@@ -3,7 +3,7 @@ var/global/datum/galaxy/GALAXY = new
 /datum/galaxy
 	var/list/bodies = list()
 
-	New()
+	INIT()
 		src.bodies += new/datum/galactic_object/test()
 		src.bodies += new/datum/galactic_object/eyesenhower()
 
@@ -124,7 +124,7 @@ var/global/datum/galaxy/GALAXY = new
 
 	plane = -1
 
-	New()
+	INIT()
 		..()
 		if(src.destination_name)
 			SPAWN_DBG(1 SECOND)

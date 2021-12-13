@@ -13,7 +13,7 @@
 	var/max_dist = 5 // the maximum tile distance that we look for targets
 	var/can_be_adjacent_to_target = 1 // do we need to be AT the target specifically, or is being in 1 tile of it fine?
 
-/datum/aiTask/sequence/goalbased/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move, list(holder)))
 	// SECOND TASK IS SUBGOAL SPECIFIC

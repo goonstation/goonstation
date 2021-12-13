@@ -107,7 +107,7 @@
 
 	return
 
-/obj/item/handcuffs/New()
+INIT_TYPE(/obj/item/handcuffs)
 	..()
 	BLOCK_SETUP(BLOCK_ROPE)
 

@@ -111,7 +111,7 @@ var/bad_spill_dirs = list(0, 3, 12)
 				icon_state = "f[corners]-[(spill_bits | cover_bit_masks[antispill+1]) & spill_masks[corners+1]]"
 			return spills
 
-		New()
+		INIT()
 			var/obj/marching_squares/spill/extra_spill = locate() in src.loc
 			if (extra_spill)
 				qdel(extra_spill)

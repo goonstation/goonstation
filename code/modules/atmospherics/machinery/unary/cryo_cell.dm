@@ -30,7 +30,7 @@
 	west
 		dir = WEST
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -39,15 +39,16 @@
 		light.set_color(0, 0.8, 0.5)
 		build_icon()
 		pipe_direction = src.dir
-		initialize_directions = pipe_direction
 
-	initialize()
 		if(node) return
 		var/node_connect = pipe_direction
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
+			if(target.get_connect_directions() & get_dir(target,src))
 				node = target
 				break
+
+	get_connect_directions()
+		. = dir
 
 	disposing()
 		for (var/mob/M in src)
@@ -100,10 +101,10 @@
 			move_inside()
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))

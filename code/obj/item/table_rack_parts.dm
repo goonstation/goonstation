@@ -22,7 +22,7 @@ RACK PARTS
 	var/build_duration = 50
 	var/obj/contained_storage = null // used for desks' drawers atm, if src is deconstructed it'll dump its contents on the ground and be deleted
 
-	New(loc, obj/storage_thing)
+	INIT(loc, obj/storage_thing)
 		..()
 		if (storage_thing)
 			src.contained_storage = storage_thing
@@ -182,7 +182,7 @@ RACK PARTS
 	var/has_glass = 1
 	var/default_material = "glass"
 
-	New()
+	INIT()
 		..()
 		if (!src.material && default_material)
 			var/datum/material/M
@@ -521,7 +521,7 @@ RACK PARTS
 	var/obj/item/furniture_parts/fparts
 	var/fname = "piece of furniture"
 
-	New(var/obj/item/furniture_parts/fp, var/fn, var/duration_i)
+	INIT(var/obj/item/furniture_parts/fp, var/fn, var/duration_i)
 		..()
 		fparts = fp
 		fname = fn
@@ -567,7 +567,7 @@ RACK PARTS
 	var/obj/the_furniture
 	var/obj/item/the_tool
 
-	New(var/obj/O, var/obj/item/tool, var/duration_i)
+	INIT(var/obj/O, var/obj/item/tool, var/duration_i)
 		..()
 		if (O)
 			the_furniture = O

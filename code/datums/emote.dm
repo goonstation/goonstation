@@ -72,7 +72,7 @@
 
 var/list/emotecache = list()
 /mob/var/list/emotes = list()
-/mob/New()
+INIT_TYPE(/mob)
 	if(islist( emotes ))
 		if( emotecache[emotes] )
 			emotes = emotecache[emotes]

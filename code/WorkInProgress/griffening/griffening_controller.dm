@@ -45,7 +45,7 @@
 	var/phase = null
 	var/phase_arguments = null
 
-	New(var/obj/griffening_central/F)
+	INIT(var/obj/griffening_central/F)
 		..()
 		field_center = F
 
@@ -762,7 +762,7 @@ td, th {
 	anchored = 1
 	density = 1
 
-	New(var/loc, var/ctrl)
+	INIT(var/loc, var/ctrl)
 		..()
 		src.controller = ctrl
 
@@ -794,7 +794,7 @@ td, th {
 	anchored = 1
 	density = 1
 
-	New(var/loc, var/ctrl)
+	INIT(var/loc, var/ctrl)
 		..()
 		src.controller = ctrl
 
@@ -854,7 +854,7 @@ td, th {
 
 	var/datum/griffening_controller/controller = null
 
-	New()
+	INIT()
 		..()
 		controller = new(src)
 		controller.spawn_field()

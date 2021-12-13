@@ -24,15 +24,15 @@
 	var/image/display_tool_animated = null
 	var/datum/digbot_ui/ui = null
 
-/obj/machinery/bot/mining/New()
+INIT_TYPE(/obj/machinery/bot/mining)
 	..()
 	src.ui = new/datum/digbot_ui(src)
 	setupOverlayVars()
-	sleep(5)
-	if(on)
-		turnOn()
-	else
-		setEffectOverlays()
+	SPAWN_DBG(5)
+		if(on)
+			turnOn()
+		else
+			setEffectOverlays()
 
 /obj/machinery/bot/mining/proc/setupOverlayVars()
 	src.display_hover = image('icons/obj/bots/aibots.dmi', "digbot hover")
@@ -207,7 +207,7 @@
 	var/obj/machinery/bot/mining/bot
 	var/turf/simulated/wall/asteroid/target
 
-	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/asteroid/target)
+	INIT(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/asteroid/target)
 		..()
 		src.bot = bot
 		src.target = target
@@ -266,7 +266,7 @@
 /datum/digbot_ui
 	var/obj/machinery/bot/mining/bot = null
 
-/datum/digbot_ui/New(obj/machinery/bot/mining/bot)
+INIT_TYPE(/datum/digbot_ui, obj/machinery/bot/mining/bot)
 	..()
 	src.bot = bot
 

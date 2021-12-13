@@ -13,7 +13,7 @@
 	var/max_occupants = INFINITY
 
 
-	New()
+	INIT()
 		..()
 		src.occupant_buckets = list()
 		src.occupant_buckets.len = 8 // based on processing_tier

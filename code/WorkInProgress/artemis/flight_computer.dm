@@ -8,7 +8,7 @@
 	var/datum/hud/flight_computer/myhud = null
 	var/list/datum/hud/human/stored_huds = list()
 
-	New()
+	INIT()
 		..()
 		src.myhud = new /datum/hud/flight_computer(src)
 		SPAWN_DBG(1 SECOND)

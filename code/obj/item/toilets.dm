@@ -17,7 +17,7 @@ TOILET
 	icon_state = "toilet"
 	rand_pos = 0
 
-/obj/item/storage/toilet/New()
+INIT_TYPE(/obj/item/storage/toilet)
 	..()
 	START_TRACKING
 
@@ -157,7 +157,7 @@ TOILET
 	return 1
 
 /obj/item/storage/toilet/random
-	New()
+	INIT()
 		..()
 		if (prob(1))
 			var/something = pick(trinket_safelist)
@@ -165,7 +165,7 @@ TOILET
 				new something(src)
 
 /obj/item/storage/toilet/random/gold // important!!
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("gold"))
 
@@ -180,6 +180,6 @@ TOILET
 	icon_state = "goldentoilet"
 	desc = "The result of years of stolen Nanotrasen funds."
 
-	New()
+	INIT()
 		..()
 		particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(src))

@@ -16,7 +16,7 @@
 	var/setup_use_menu_badge = 0  //Should we have a line in the main menu?
 	var/setup_allow_os_config = 0 //Do we support a big config page?
 
-	New()
+	INIT()
 		..()
 		if(istype(src.loc, /obj/item/device/pda2))
 			src.host = src.loc
@@ -107,7 +107,7 @@
 	var/light_g = 255
 	var/light_b = 255
 
-	New()
+	INIT()
 		..()
 		if (!use_simple_light && !use_medium_light)
 			light = new /datum/light/line
@@ -237,7 +237,7 @@
 	abilities = list(/obj/ability_button/pda_tray_toggle)
 	var/obj/item/device/t_scanner/pda/scanner
 
-	New()
+	INIT()
 		..()
 		scanner = new(src)
 

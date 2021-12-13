@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	var/sanity_check_exemption = 0
 	var/apply_material = 0
 
-	New()
+	INIT()
 		..()
 		if(isnull(item_paths) && length(item_outputs) == 1) // TODO generalize to multiple outputs (currently no such manufacture recipes exist)
 			// sadly we can't use initial() because it's a list :/

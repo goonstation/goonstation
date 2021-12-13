@@ -12,7 +12,7 @@
 	anchored = 1.0
 	mouse_opacity = 0
 
-/obj/effects/sparks/New()
+INIT_TYPE(/obj/effects/sparks)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		playsound(src.loc, "sparks", 100, 1)
@@ -41,7 +41,7 @@
 	pixel_x = -16
 	pixel_y = -32
 	layer = EFFECTS_LAYER_1
-	New()
+	INIT()
 		icon_state = "sparks[rand(1,5)]"
 		..()
 		playsound(src.loc, "sparks", 100, 1)

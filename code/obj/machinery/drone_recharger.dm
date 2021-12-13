@@ -15,7 +15,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 
-	New()
+	INIT()
 		..()
 
 	disposing()

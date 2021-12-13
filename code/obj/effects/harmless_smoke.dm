@@ -11,7 +11,7 @@
 	pixel_y = -32
 
 /*
-/obj/effects/harmless_smoke/New()
+INIT_TYPE(/obj/effects/harmless_smoke)
 	..()
 	SPAWN_DBG(10 SECONDS)
 		qdel(src)

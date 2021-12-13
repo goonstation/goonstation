@@ -168,7 +168,7 @@
 	blood_id = "blood"
 	blood_volume = 500
 
-/mob/living/carbon/human/New()
+INIT_TYPE(/mob/living/carbon/human, loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
@@ -243,6 +243,8 @@
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
 
+	init_preferences?.apply_post_new_stuff(src)
+
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 
@@ -256,7 +258,7 @@
 	var/l_leg_bleed = 0
 	var/r_leg_bleed = 0
 
-	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
+	INIT(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
 		if (holder && !ling) create(holder.AH_we_spawned_with)
@@ -921,19 +923,19 @@
 /mob/living/carbon/human/hotkey(name)
 	switch (name)
 		if ("help")
-			src.a_intent = INTENT_HELP
+			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("disarm")
-			src.a_intent = INTENT_DISARM
+			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("grab")
-			src.a_intent = INTENT_GRAB
+			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("harm")
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("drop")
@@ -1098,34 +1100,34 @@
 						src.throw_item(target, params)
 					else
 						params["left"] = 1 //hacky :)
-						src.a_intent = INTENT_DISARM
+						src.set_a_intent(INTENT_DISARM)
 						.=..()
-						src.a_intent = INTENT_DISARM
+						src.set_a_intent(INTENT_DISARM)
 				/*else if (params["middle"])
 					params["middle"] = 0
 					params["left"] = 1 //hacky again :)
 					var/prev = src.a_intent
-					src.a_intent = INTENT_GRAB
+					src.set_a_intent(INTENT_GRAB)
 					.=..()
-					src.a_intent = prev
+					src.set_a_intent(prev)
 					return*/
 				else
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 					.=..()
-					src.a_intent = INTENT_DISARM
+					src.set_a_intent(INTENT_DISARM)
 				return
 			if (src.client.check_key(KEY_PULL))
 				if (params["left"] && ismob(target))
 					params["ctrl"] = 0 //hacky wows :)
 					var/prev = src.a_intent
-					src.a_intent = INTENT_GRAB
+					src.set_a_intent(INTENT_GRAB)
 					.=..()
-					src.a_intent = prev
+					src.set_a_intent(prev)
 					return
 				else
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 					.=..()
-					src.a_intent = INTENT_DISARM
+					src.set_a_intent(INTENT_DISARM)
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
@@ -1144,18 +1146,18 @@
 				else
 					src.set_cursor('icons/cursors/combat_barehand.dmi')
 				src.client.show_popup_menus = 0
-				src.a_intent = INTENT_DISARM
+				src.set_a_intent(INTENT_DISARM)
 				src.hud.update_intent()
 				return
 			else if (src.client.check_key(KEY_PULL))
 				src.set_cursor('icons/cursors/combat_grab.dmi')
 				src.client.show_popup_menus = 0
-				src.a_intent = INTENT_GRAB
+				src.set_a_intent(INTENT_GRAB)
 				src.hud.update_intent()
 				return
 			else if (src.client.show_popup_menus == 0)
 				src.client.show_popup_menus = 1
-				src.a_intent = INTENT_HELP
+				src.set_a_intent(INTENT_HELP)
 				src.hud.update_intent()
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
@@ -3028,6 +3030,7 @@
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
+	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
 		i.on_spin_emote(src)

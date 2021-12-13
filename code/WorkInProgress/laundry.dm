@@ -22,7 +22,7 @@
 	var/load_max = 12
 	var/HTML = null
 
-/obj/submachine/laundry_machine/New()
+INIT_TYPE(/obj/submachine/laundry_machine)
 	..()
 	src.UpdateIcon()
 

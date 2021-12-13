@@ -43,7 +43,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	var/use_alarm = 0
 	sound_group = "meat"
 
-	New()
+	INIT()
 		..()
 		fxlist = meatland_fx_sounds
 		if (ambientSound)
@@ -132,7 +132,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	desc = "A pool of stomach acid.  Lovely."
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "acid_floor"
-	New()
+	INIT()
 		..()
 		set_dir(pick(NORTH,SOUTH))
 
@@ -146,7 +146,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	plane = PLANE_NOSHADOW_ABOVE
 	mouse_opacity = 0
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(25)
 		reagents.add_reagent("acid",20)
@@ -154,6 +154,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 	Crossed(atom/movable/A)
 		..()
+		if(!src.init_finished)
+			return
 		if(!istype(A, /obj/item/skull))
 			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
@@ -174,7 +176,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	var/brightness = 3
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -228,7 +230,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		layer = FLOOR_EQUIP_LAYER1
 		plane = PLANE_FLOOR
 
-		New()
+		INIT()
 			..()
 			if (src.loc)
 				src.loc.invisibility = INVIS_ALWAYS_ISH //Hide the floor below us so people don't just right click and see two floors.
@@ -330,7 +332,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	var/static/list/default_meat_head_dialog = list("hello hello", "... it's not viral, it's some kind of ... stress ... hello", "what is that ...", "... hurts ...",
 "...FACILITY IS ON RED ALERT...","...why...","...proper safety precautions were not....","...is it...", "...this isn't...")
 
-	New()
+	INIT()
 		..()
 		dialog = default_meat_head_dialog.Copy()
 		START_TRACKING
@@ -485,7 +487,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	generic = 0
 	death_text = "%src% collapses into viscera..."
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
 		src.icon_state = pick("meaty_mouth", "polyp", "goop")
@@ -576,7 +578,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 /obj/item/disk/data/fixed_disk/meatland
 
-	New()
+	INIT()
 		..()
 
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -601,7 +603,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 /obj/item/disk/data/fixed_disk/meatland_medical
 
-	New()
+	INIT()
 		..()
 
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -633,7 +635,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	clueless
 		name = "log_20510321"
 
-		New()
+		INIT()
 			..()
 			fields = strings("meatland/meatland_records.txt","log_20510321")
 			/*list("Even with the recent acquisition of Hemera",
@@ -651,7 +653,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	solarium_ha_ha_ha
 		name = "log_20510324"
 
-		New()
+		INIT()
 			..()
 			fields = strings("meatland/meatland_records.txt","log_20510324")
 			/*list("The patterns on the acquired telecrystal core",
@@ -667,7 +669,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	david_is_dead
 		name = "mail_20510415"
 
-		New()
+		INIT()
 			..()
 			fields = strings("meatland/meatland_records.txt","mail_20510415")
 
@@ -683,7 +685,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	whiskerdeath0
 		name = "MEDLOG07"
 
-		New()
+		INIT()
 			..()
 			fields = strings("meatland/meatland_records.txt","MEDLOG07")
 			/*list("The degradation effect has continued to",
@@ -698,7 +700,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	whiskerdeath1
 		name = "MEDLOG09"
 
-		New()
+		INIT()
 			..()
 			fields =  strings("meatland/meatland_records.txt","MEDLOG09")
 			/*list("Patient's condition has continued to worsen. Same",
@@ -711,7 +713,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	technobabble_bs
 		name = "system_brief"
 
-		New()
+		INIT()
 			..()
 			fields = strings("meatland/meatland_records.txt","system_brief")
 			/*list("The heart of the teleportation system is",
@@ -733,7 +735,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /obj/item/device/audio_log/meatland_00
 	continuous = 0
 
-	New()
+	INIT()
 		..()
 		audiolog_messages = strings("meatland/meatland_audiologs.txt","meatland_00_audio")
 		/*list("*indistinct muttering*",
@@ -755,7 +757,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /obj/item/device/audio_log/meatland_01
 
 	continuous = 0
-	New()
+	INIT()
 		..()
 		audiolog_messages = strings("meatland/meatland_audiologs.txt","meatland_01_audio")
 		/*list("*brushing noises*",
@@ -778,7 +780,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /obj/item/device/audio_log/meatland_02
 	continuous = 0
 
-	New()
+	INIT()
 		..()
 		audiolog_messages = strings("meatland/meatland_audiologs.txt","meatland_02_audio")
 					/*list("Progress log for the tenth of March, 2051",
@@ -819,7 +821,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /obj/item/device/audio_log/meatland_03
 	continuous = 0
 
-	New()
+	INIT()
 		..()
 		audiolog_messages = strings("meatland/meatland_audiologs.txt","meatland_03_audio")
 			/*list("I saw an angel in them.  In the crystals.  She's been talking to me.  About a lot of things.",
@@ -854,7 +856,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 /obj/item/device/audio_log/meatland_04
 	continuous = 0
 
-	New()
+	INIT()
 		..()
 		audiolog_messages = strings("meatland/meatland_audiologs.txt","meatland_04_audio")
 						/*list("*thunk noise*",
@@ -898,7 +900,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	self_destruct = 1
 	continuous = 0
 
-	New()
+	INIT()
 		..()
 		audiolog_messages = strings("meatland/meatland_audiologs.txt","meatland_grody_audio")
 					/*list("*wheezing*",
@@ -948,7 +950,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	var/locked = 1
 	var/code = "heh"
 
-	New()
+	INIT()
 		..()
 
 		src.code = ""
@@ -1377,7 +1379,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	var/open_mode = 0 //0 for closed->open, 1 for open->closed
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 
 		light = new /datum/light/point
@@ -1545,7 +1547,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	var/inputs_required = 1
 	var/input_counter = 0
 
-	New()
+	INIT()
 		..()
 
 		id = output_ids

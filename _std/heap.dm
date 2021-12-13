@@ -6,7 +6,7 @@
 	var/list/L
 	var/cmp
 
-/datum/heap/New(compare)
+INIT_TYPE(/datum/heap, compare)
 	..()
 	L = new()
 	cmp = compare

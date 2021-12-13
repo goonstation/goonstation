@@ -42,7 +42,7 @@
 		theName = theName  + "[pick(" the Poltergeist", " the Mischievous", " the Playful", " the Trickster", " the Sneaky", " the Child", " the Kid", " the Ass", " the Inquisitive", " the Exiled")]"
 		return theName
 
-	New(var/turf/T, var/mob/wraith/master, var/obj/spookMarker/marker)
+	INIT(var/turf/T, var/mob/wraith/master, var/obj/spookMarker/marker)
 		..(T)
 		src.master = master
 		src.marker = marker

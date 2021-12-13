@@ -244,7 +244,7 @@ var/list/pw_rewards_tier3 = null
 
 	// varied layers
 
-	New()
+	INIT()
 		..()
 
 	//Don't think this can go in new.
@@ -632,7 +632,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 	alpha = 150
 
 	//builds all the pieces and adds em to the score_board whose sprite is the backboard
-	New()
+	INIT()
 		..()
 		border = new(src)
 		border.name = "border"
@@ -798,7 +798,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
 	speed = 1.7
 
-	New()
+	INIT()
 		..()
 		/obj/item/shipcomponent/mainweapon/phaser/short
 
@@ -835,7 +835,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			name = "NT Mining Dingy"
 			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining
 
-			New()
+			INIT()
 				..()
 				equip_mining()
 
@@ -848,7 +848,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			name = "Syndicate Mining Dingy"
 			weapon_type = /obj/item/shipcomponent/mainweapon/bad_mining
 
-			New()
+			INIT()
 				equip_mining()
 				..()
 
@@ -959,7 +959,7 @@ proc/setup_pw_crate_lists()
 
 
 
-	New()
+	INIT()
 		..()
 		var/nt_wins = world.load_intra_round_value("nt_win")
 		var/nt_deaths = world.load_intra_round_value("nt_death")
@@ -994,7 +994,7 @@ proc/setup_pw_crate_lists()
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 
-	New()
+	INIT()
 		..()
 		var/sy_wins = world.load_intra_round_value("sy_win")
 		var/sy_deaths = world.load_intra_round_value("sy_death")

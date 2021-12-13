@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
 	var/list/desc_whystudy = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		var/dombler = pick(concrete_typesof(/datum/rc_entry/item/organ))
 		var/datum/rc_entry/organic = new dombler
@@ -70,7 +70,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		" Any damage to included materials not caused by shipping will be reported to your regional manager."
 	)
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc_wherestudy)] seeking vital components for [pick(desc_whystudy)] research.[pick(desc_bonusflavor)]"
 		src.payout += rand(0,40) * 10
@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		" Ensure any seed coatings used are non-flammable; test conditions may become harsh."
 	)
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc_wherestudy)] is seeking multiple pure [pick(desc_seeds)] with certain desired genetic traits. [pick(desc_bonusflavor)]"
 		src.payout += rand(0,30) * 10
@@ -162,7 +162,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	crop
 		crop_genpath = /datum/plant/crop
 
-	New()
+	INIT()
 		var/datum/plant/plantalyze = pick(concrete_typesof(crop_genpath))
 		src.cropname = initial(plantalyze.name)
 

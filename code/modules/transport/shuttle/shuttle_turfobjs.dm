@@ -29,7 +29,7 @@
 /turf/space/shuttle_transit
 	icon_state = "tplaceholder"
 
-	New()
+	INIT()
 		..()
 		if (icon_state == "tplaceholder") icon_state = "near_blank"
 
@@ -80,6 +80,7 @@
 	connect_overlay = 1
 	connects_to = list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
 	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
+	connect_across_areas = FALSE
 /*
 	update_neighbors()
 		..()
@@ -188,7 +189,7 @@
 	gas_impermeable = 1
 	pathable = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(6 SECONDS) // patch up some ugly corners in derelict mode
 			if (derelict_mode)

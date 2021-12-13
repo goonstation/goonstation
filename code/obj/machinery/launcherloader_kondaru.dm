@@ -1,122 +1,122 @@
 //list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM")
 
 /obj/machinery/cargo_router/kd_med_left
-	New()
+	INIT()
 		destinations = list("Disposal" = WEST,"Pod Bay" = NORTH)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/kd_med_lmid
-	New()
+	INIT()
 		destinations = list("Disposal" = WEST,"Pod Bay" = WEST)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/kd_med_rmid
-	New()
+	INIT()
 		destinations = list("Medbay" = EAST,"Disposal" = WEST,"Pod Bay" = WEST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/kd_med_right
-	New()
+	INIT()
 		destinations = list("Medbay" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_sci_left
-	New()
+	INIT()
 		destinations = list("Disposal" = NORTH,"Pod Bay" = NORTH,"Medbay" = NORTH,"Ejection" = WEST) // research gets a bonus destination
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/kd_sci_eject
-	New()
+	INIT()
 		destinations = list("Catering" = EAST,"Disposal" = EAST,"Pod Bay" = EAST,"Medbay" = EAST,"Research" = EAST,"Export" = EAST,"Security" = EAST,"Mining" = EAST,"Engineering" = EAST,"QM" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_sci_right
-	New()
+	INIT()
 		destinations = list("Research" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_shunt_center
-	New()
+	INIT()
 		destinations = list("Export" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_shunt_nw
-	New()
+	INIT()
 		destinations = list("Disposal" = WEST,"Pod Bay" = WEST,"Medbay" = WEST,"Research" = WEST)
 		default_direction = NORTH
 		..()
 
 
 /obj/machinery/cargo_router/kd_sec_exoflap
-	New()
+	INIT()
 		destinations = list("Security" = EAST,"Disposal" = SOUTH,"Pod Bay" = SOUTH,"Medbay" = SOUTH,"Research" = SOUTH)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_sec_flap
-	New()
+	INIT()
 		destinations = list("Security" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_qm_exoflap
-	New()
+	INIT()
 		destinations = list("Catering" = NORTH,"Disposal" = EAST,"Pod Bay" = EAST,"Medbay" = EAST,"Research" = EAST,"Security" = EAST,"Mining" = NORTH,"Engineering" = NORTH)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_qm_flap
-	New()
+	INIT()
 		destinations = list("Catering" = EAST,"Disposal" = EAST,"Pod Bay" = EAST,"Medbay" = EAST,"Research" = EAST,"Security" = EAST,"Mining" = EAST,"Engineering" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_qm_inner
-	New()
+	INIT()
 		destinations = list("Catering" = EAST,"Disposal" = EAST,"Pod Bay" = EAST,"Medbay" = EAST,"Research" = EAST,"Export" = SOUTH,"Security" = EAST,"Mining" = EAST,"Engineering" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_mining
-	New()
+	INIT()
 		destinations = list("Mining" = WEST)
 		default_direction = EAST
 		..()
 
 /obj/machinery/cargo_router/kd_mining_exoflap
-	New()
+	INIT()
 		destinations = list("Mining" = WEST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/kd_cater_exoflap
-	New()
+	INIT()
 		destinations = list("Catering" = EAST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/kd_cater_flap
-	New()
+	INIT()
 		destinations = list("Catering" = EAST)
 		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_depot_south
-	New()
+	INIT()
 		destinations = list("Catering" = WEST,"Engineering" = WEST,"Mining" = WEST)
 		default_direction = SOUTH
 		..()
 
 /obj/machinery/cargo_router/kd_depot_north
-	New()
+	INIT()
 		destinations = list("Engineering" = NORTH,"Catering" = EAST)
 		default_direction = SOUTH
 		..()

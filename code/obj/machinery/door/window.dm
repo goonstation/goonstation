@@ -21,7 +21,7 @@
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK
 
-	New()
+	INIT()
 		..()
 
 		if (src.req_access && length(src.req_access))

@@ -31,7 +31,7 @@
 
 			return 0
 
-	New(obj/holding as obj)
+	INIT(obj/holding as obj)
 		..()
 		if(holding)
 			src.holder = holding
@@ -216,7 +216,7 @@
 		name = ""
 		icon_state = null
 
-	New(var/datum/computer/file/terminalx_program/new_owner)
+	INIT(var/datum/computer/file/terminalx_program/new_owner)
 		..()
 		if(istype(new_owner))
 			src.owner = new_owner
@@ -245,7 +245,7 @@
 	var/skinbase = "cxwind_console"
 	var/datum/computer/file/terminalx_program/owner = null
 
-	New(var/datum/computer/file/terminalx_program/newOwner)
+	INIT(var/datum/computer/file/terminalx_program/newOwner)
 		..()
 
 		if (istype(newOwner))

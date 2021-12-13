@@ -30,7 +30,7 @@
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
 	mats = 8
 
-	New(location)
+	INIT(location)
 		..()
 		if(istype(location,/obj/machinery/computer3))
 			host = location
@@ -149,7 +149,7 @@
 			frequency = FREQ_STATUS_DISPLAY
 			setup_netmode_norange = 0
 
-	New()
+	INIT()
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		if(send_only)
@@ -284,7 +284,7 @@
 	var/net_number = null
 	var/obj/machinery/power/data_terminal/link = null //For communicating with the powernet.
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(src.host && !src.link) //Wait for the map to load and hook up if installed() hasn't done it.
@@ -561,7 +561,7 @@
 	var/frequency = FREQ_FREE
 	var/wireless_range = 8
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if(src.host && !src.wired_link) //Wait for the map to load and hook up if installed() hasn't done it.
@@ -704,7 +704,7 @@
 				else if (mode < 2)
 					. = text2num_safe(command)
 					if (isnum(.))
-						. = round( max(1000, min(., 1500)) )
+						. = round( clamp(., 1000, 1500) )
 						get_radio_connection_by_id(src, "wireless").update_frequency(.)
 						src.frequency = .
 						return 0

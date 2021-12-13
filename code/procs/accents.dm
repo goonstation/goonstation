@@ -11,7 +11,7 @@
 	var/next_next_char = ""
 	var/next_next_next_char = ""
 
-	New(var/str)
+	INIT(var/str)
 		..()
 		if(isnull(str))	qdel(src)
 		string = str

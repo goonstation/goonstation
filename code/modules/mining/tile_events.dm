@@ -116,7 +116,7 @@
 	restrict_to_turf_type = /turf/simulated/wall/asteroid
 	var/image/warning_overlay = null
 
-	New()
+	INIT()
 		..()
 		warning_overlay = image('icons/turf/asteroid.dmi', "unstable")
 

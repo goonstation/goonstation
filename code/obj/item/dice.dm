@@ -29,7 +29,7 @@ var/list/rollList = list()
 	var/initialName = "die"
 	var/initialDesc = "A six-sided die."
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			initialName = name
@@ -507,7 +507,7 @@ var/list/rollList = list()
 	can_have_pals = FALSE
 	flags = SUPPRESSATTACK
 
-	New()
+	INIT()
 		..()
 		name = "[initial(name)] (d[sides])"
 		desc = "A device for the calculation of random probabilities. Especially ones between one and [get_english_num(sides)]."

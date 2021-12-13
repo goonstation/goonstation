@@ -62,7 +62,7 @@
 			ship.intercom.broadcasting = 0
 			ship.intercom.listening = 0
 
-	New()
+	INIT()
 		..()
 		rc_ship = new /obj/item/device/ship_radio_control( src )
 		rc_ship.com = src
@@ -95,7 +95,7 @@
 	var/net_id = null
 	var/obj/item/shipcomponent/communications/com = null
 
-	New()
+	INIT()
 		..()
 		src.net_id = format_net_id("\ref[src]")
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)

@@ -25,7 +25,7 @@
 			maximum_pressure = max((src.material.getProperty("hard") * 4 + src.material.getProperty("density")) * ONE_ATMOSPHERE, ONE_ATMOSPHERE * 2)
 		return
 
-	New()
+	INIT()
 		..()
 
 		air_contents = new /datum/gas_mixture

@@ -40,7 +40,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
 
 
-	New(w,h,cs,z)
+	INIT(w,h,cs,z)
 		..()
 		cols = w / cs
 		rows = h / cs

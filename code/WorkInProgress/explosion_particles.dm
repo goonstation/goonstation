@@ -7,7 +7,7 @@
 	mouse_opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
 
-/obj/effects/expl_particles/New()
+INIT_TYPE(/obj/effects/expl_particles)
 	..()
 	SPAWN_DBG(1 SECOND)
 		dispose()
@@ -47,18 +47,18 @@
 
 	dangerous // cogwerks testing thing, use with caution. a spreading infestation of this is FUCKING AWESOME to watch
 
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(rand(0,1))
 				explosion(src, src.loc, -1,0,1,1)
 			return
 
 	tiny_baby
-		New()
+		INIT()
 			..()
 			src.transform = matrix(0.5, MATRIX_SCALE)
 
-/obj/effects/explosion/New()
+INIT_TYPE(/obj/effects/explosion)
 	..()
 	SPAWN_DBG(3 SECONDS)
 		dispose()

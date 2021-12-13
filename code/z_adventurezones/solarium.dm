@@ -29,7 +29,7 @@ var/global/the_sun = null
 	var/datum/light/light
 	anchored = 2 // This stopped being funny weeks ago.
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src, 2.5, 2.5)
@@ -76,7 +76,7 @@ var/global/derelict_mode = 0
 	anchored = 1
 	density = 1
 
-	New()
+	INIT()
 		..()
 
 		if (!it_is_okay_to_do_the_endgame_thing)

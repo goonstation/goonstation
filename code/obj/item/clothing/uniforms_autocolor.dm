@@ -23,7 +23,7 @@
 				coloroverlay2.Blend(rgb(src.detail_r, src.detail_g, src.detail_b), ICON_ADD)
 				src.overlays += image("icon" = coloroverlay2)
 
-	New()
+	INIT()
 		..()
 		src.autojump_updateworldicon()
 
@@ -111,7 +111,7 @@
 /obj/item/clothing/under/autocolor/random
 	name = "strange jumpsuit"
 	desc = "The fuck kinda color is this?"
-	New()
+	INIT()
 		base_r = rand(0,190)
 		base_g = rand(0,190)
 		base_b = rand(0,190)
@@ -161,7 +161,7 @@
 /obj/item/clothing/under/autocolor/stripe/random
 	name = "strange jumpsuit"
 	desc = "Who the hell dyed this thing? A blind clown?"
-	New()
+	INIT()
 		base_r = rand(0,190)
 		base_g = rand(0,190)
 		base_b = rand(0,190)
@@ -201,7 +201,7 @@
 /obj/item/clothing/under/autocolor/jacket/random
 	name = "strange jumpsuit"
 	desc = "It's like Cthulhu took a shit on a rainbow. Jesus christ."
-	New()
+	INIT()
 		base_r = rand(0,190)
 		base_g = rand(0,190)
 		base_b = rand(0,190)
@@ -254,7 +254,7 @@
 /obj/item/clothing/under/autocolor/science/random
 	name = "strange jumpsuit"
 	desc = "Ah, the methodology of throwing random paint at a jumpsuit."
-	New()
+	INIT()
 		base_r = rand(0,190)
 		base_g = rand(0,190)
 		base_b = rand(0,190)

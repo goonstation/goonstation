@@ -3,7 +3,7 @@
 	var/list/random_icon_states = list()
 	var/random_dir = 0
 
-	New()
+	INIT()
 		..()
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
@@ -64,7 +64,7 @@
 	mouse_opacity = 0
 	blend_mode = 2
 
-	New()
+	INIT()
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
@@ -87,7 +87,7 @@
 		anchored = 0
 
 		summon
-			New()
+			INIT()
 				flick("skeleton_summon", src)
 				..()
 
@@ -120,7 +120,7 @@
 	pixel_y = -16
 	pixel_x = -16
 	mouse_opacity = 0
-	New(var/atom/location)
+	INIT(var/atom/location)
 		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
@@ -135,7 +135,7 @@
 	pixel_y = -16
 	pixel_x = -16
 	mouse_opacity = 0
-	New(var/atom/location)
+	INIT(var/atom/location)
 		src.set_loc(location)
 		SPAWN_DBG(2 SECONDS) qdel(src)
 		return ..(location)
@@ -205,7 +205,7 @@ obj/decal/fakeobjects
 	layer = OBJ_LAYER
 	var/true_name = "fuck you erik"	//How else will players banish it or place curses on it?? honestly people
 
-	New()
+	INIT()
 		..()
 		true_name = name
 
@@ -409,7 +409,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
@@ -437,7 +437,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	rotatable = 0
 	foldable = 0
@@ -492,7 +492,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "alienflower"
 	random_dir = 8
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(alldirs))
 		src.pixel_y += rand(-8,8)
@@ -503,7 +503,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "avine_l1"
 	random_icon_states = list("avine_l1", "avine_l2", "avine_l3")
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 		if (prob(20))
@@ -550,7 +550,7 @@ obj/decal/fakeobjects/teleport_pad
 		icon_state = "mule_beacon"
 		var/auto_dropoff_spawn = 1
 
-		New()
+		INIT()
 			..()
 			var/turf/T = get_turf(src)
 			if (T && isturf(T) && src.auto_dropoff_spawn == 1)
@@ -599,7 +599,7 @@ obj/decal/fakeobjects/teleport_pad
 	var/color_b = 0.21
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)

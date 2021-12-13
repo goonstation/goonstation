@@ -13,7 +13,7 @@
 	anchored = 0
 	var/locked = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			scanner = new /obj/machinery/clone_scanner(src) //Built-in scanner.

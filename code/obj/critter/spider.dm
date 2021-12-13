@@ -101,7 +101,7 @@
 	skinresult = /obj/item/material_piece/cloth/spidersilk
 	max_skins = 4
 
-	New()
+	INIT()
 		..()
 		if (!icon_state && !babyspider)
 			icon_state = pick("big_spide", "big_spide-red", "big_spide-green", "big_spide-blue")
@@ -460,7 +460,7 @@
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 
-	New(var/parent = null)
+	INIT(var/parent = null)
 		..()
 		src.parent = parent
 

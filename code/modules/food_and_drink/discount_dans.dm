@@ -10,7 +10,7 @@
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=10,"msg"=9,"salt"=10,"nicotine"=8)
 
-	New()
+	INIT()
 		//..()
 		//var/datum/reagents/R = reagents
 		//R.add_reagent("chickensoup", 10)
@@ -191,7 +191,7 @@
 	brew_result = list("sewage", "ethanol")
 	food_effects = list("food_sweaty")
 
-	New()
+	INIT()
 		if (prob(75))
 			src.initial_reagents["grease"] = 3
 		else
@@ -344,7 +344,7 @@
 		color_prob = 10
 		brew_result = list("sewage", "mucus")
 
-	New()
+	INIT()
 		..()
 		//reagents.add_reagent("badgrease",3)
 		//reagents.add_reagent("VHFCS",9)
@@ -381,7 +381,7 @@
 	stamina_cost = 0
 	rand_pos = 1
 
-	New()
+	INIT()
 		src.traytype = rand(1,9)
 		switch(src.traytype)
 			if (1)
@@ -444,7 +444,7 @@
 	initial_volume = 50
 	food_effects = list("food_hp_up")
 
-	New(loc, var/traytype = 0)
+	INIT(loc, var/traytype = 0)
 
 		if(!islist(initial_reagents)) initial_reagents = list()
 		if (prob(75))
@@ -580,7 +580,7 @@
 	initial_reagents = list("juice_strawberry"=15,"vanilla"=6)
 	food_effects = list("food_energized")
 
-	New()
+	INIT()
 		..()
 
 		var/i = 3

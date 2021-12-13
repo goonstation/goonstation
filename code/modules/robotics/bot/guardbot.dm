@@ -20,7 +20,7 @@
 	var/delay = 3
 	var/max_dist = 100
 
-	New(var/newmaster, max_dist=100)
+	INIT(var/newmaster, max_dist=100)
 		..()
 		if(istype(newmaster, /obj/machinery/bot/guardbot))
 			src.master = newmaster
@@ -226,7 +226,7 @@
 		shotcount = 2	// If anyone'd be good with a gun, it'd be Harner
 		gunfire_cooldown = 1.5 SECONDS
 
-		New()
+		INIT()
 			..()
 			src.hat = new /obj/item/clothing/head/mj_hat(src)
 			src.hat.name = "Eldritch shape-shifting hat."
@@ -255,7 +255,7 @@
 		setup_charge_maximum = 4500
 		setup_charge_percentage = 100
 
-		New()
+		INIT()
 			..()
 			src.hat = new /obj/item/clothing/head/helmet/hardhat
 			src.hat.name = "Klaus' hardhat"
@@ -266,7 +266,7 @@
 		desc = "A PR-6S Guardbuddy programmed to be sort of a jerk."
 		setup_default_startup_task = /datum/computer/file/guardbot_task/bodyguard/heckle
 
-		New()
+		INIT()
 			..()
 			SPAWN_DBG(1 SECOND)
 				for (var/mob/living/carbon/human/H in view(7, src))
@@ -347,7 +347,7 @@
 		desc = "This guardbuddy doesn't look quite right..."
 		setup_default_tool_path = /obj/item/device/guardbot_tool/pie_launcher
 
-		New()
+		INIT()
 			..()
 			src.costume_icon = image(src.icon, "bcostume-clown", , FLY_LAYER)
 			src.UpdateIcon()
@@ -363,13 +363,13 @@
 		desc = "The PR-6PS Mailbuddy is a postal delivery ace.  This may seem like an extremely specialized robot application, but that's just because it is exactly that."
 		icon = 'icons/obj/mailbud.dmi'
 
-		New()
+		INIT()
 			..()
 			src.hat = new /obj/item/clothing/head/mailcap(src)
 			src.UpdateIcon()
 
 
-	New()
+	INIT()
 		..()
 		if(src.on)
 			src.warm_boot = 1
@@ -1923,7 +1923,7 @@
 		src.mover = new /datum/guardbot_mover(src)
 		src.mover.max_dist = max_dist
 
-		src.mover.delay = max(min(move_delay,5),2)
+		src.mover.delay = clamp(move_delay, 2, 5)
 		src.mover.master_move(the_target,adjacent)
 
 		return 0
@@ -1938,7 +1938,7 @@
 	var/obj/machinery/bot/guardbot/master
 	var/datum/computer/file/guardbot_task/security/task
 
-	New(the_bot, the_task)
+	INIT(the_bot, the_task)
 		src.master = the_bot
 		src.task = the_task
 		..()
@@ -2154,7 +2154,7 @@
 		var/stun_reagent = "ketamine"
 		var/kill_reagent = "neurotoxin"
 
-		New()
+		INIT()
 			..()
 			src.create_reagents(500)
 
@@ -3599,7 +3599,7 @@
 		var/tmp/recent_nav_attempts = 0
 		var/tmp/distracted = FALSE
 
-		New()
+		INIT()
 			..()
 			START_TRACKING
 
@@ -4198,7 +4198,7 @@
 	var/buddy_model = 6 //What type of guardbot does this belong to (Default is PR-6, but Murray and Marty are PR-4s)
 	var/spawned_bot_type = /obj/machinery/bot/guardbot
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.6 SECONDS)
 			src.icon_state = "robuddy_frame-[buddy_model]-[stage]"
@@ -4295,7 +4295,7 @@
 	//A reset button is useful for when the system gets all confused.
 	var/last_reset = 0 //Last world.time we were manually reset.
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.8 SECONDS)
 			if(!src.net_id)
@@ -4768,7 +4768,7 @@
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.8 SECONDS)
 			linked_bot = locate() in orange(1, src)
@@ -4953,7 +4953,7 @@
 	created_name = "Goldbuddy"
 	buddy_model = 4
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.6 SECONDS)
 			src.icon_state = "goldbuddy_frame-[buddy_model]-[stage]"
@@ -5037,7 +5037,7 @@
 	flashlight_lum = 4
 	var/HatToWear = /obj/item/clothing/head/safari
 
-	New()
+	INIT()
 		..()
 		#ifdef XMAS
 		src.HatToWear = /obj/item/clothing/head/helmet/space/santahat
@@ -5058,7 +5058,7 @@
 	beacon_freq = FREQ_TOUR_NAVBEACON
 	HatToWear = /obj/item/clothing/head/sea_captain
 
-	New()
+	INIT()
 		..()
 		src.hat.name = "Moby's ship captain hat"
 
@@ -5069,7 +5069,7 @@
 	beacon_freq = FREQ_TOUR_NAVBEACON
 	HatToWear = /obj/item/clothing/head/NTberet
 
-	New()
+	INIT()
 		..()
 		src.hat.name = "Mabel's beret"
 

@@ -16,7 +16,7 @@
 	var/list/wish_granted = list()
 	var/evil = 0
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			evil = 1

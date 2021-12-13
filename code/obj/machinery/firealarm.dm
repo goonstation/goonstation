@@ -29,7 +29,7 @@
 
 	desc = "A fire sensor and alarm system. When it detects fire or is manually activated, it closes all firelocks in the area to minimize the spread of fire."
 
-/obj/machinery/firealarm/New()
+INIT_TYPE(/obj/machinery/firealarm)
 	..()
 	START_TRACKING
 	if(!alarm_zone)

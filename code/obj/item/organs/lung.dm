@@ -142,7 +142,7 @@
 					donor.changeStatus("radiation", (1 + RV_pp) * mult/LUNG_COUNT)
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
-			var/lung_burn = min(max(breath.temperature - temp_tolerance, 0) / 3, 10)
+			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
 			if(prob(20))
 				boutput(donor, "<span class='alert'>This air is searing hot!</span>")
@@ -248,7 +248,7 @@
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/overloading = 0
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
@@ -306,7 +306,7 @@
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_lung_L", "plant_lung_L_bloom")
 
@@ -317,7 +317,7 @@
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_lung_R", "plant_lung_R_bloom")
 

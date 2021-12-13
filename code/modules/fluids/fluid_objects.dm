@@ -34,7 +34,7 @@
 		drain_min = 6
 		drain_max = 14
 
-	New()
+	INIT()
 		my_turf = get_turf(src)
 		START_TRACKING
 		..()
@@ -122,7 +122,7 @@
 	flags = ALWAYS_SOLID_FLUID
 	var/required_to_pass = 150 //fluid on the side that my Dir points to will need this amount to be able to cross
 
-	New()
+	INIT()
 		..()
 		src.invisibility = INVIS_ALWAYS_ISH
 
@@ -144,7 +144,7 @@
 
 	event_handler_flags = IMMUNE_MANTA_PUSH
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(delay)
 			R = new /datum/reagents(amount)
@@ -234,7 +234,7 @@
 
 	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
 
-	New()
+	INIT()
 		..()
 		src.reagents = new /datum/reagents(bladder)
 		src.reagents.my_atom = src
@@ -431,7 +431,7 @@
 	var/c_color = null
 	mats = 7
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
@@ -484,7 +484,7 @@
 
 	var/boom_str = 26
 
-	New()
+	INIT()
 		..()
 		animate_bumble(src)
 		add_simple_light("naval_mine", list(255, 102, 102, 40))

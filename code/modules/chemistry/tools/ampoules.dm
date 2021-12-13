@@ -9,7 +9,7 @@
 	var/expended = FALSE //Whether or not the ampoule has been used.
 	var/color_id = "1"
 
-/obj/item/reagent_containers/ampoule/New()
+INIT_TYPE(/obj/item/reagent_containers/ampoule)
 	..()
 	color_id = pick("1", "2", "3", "4")
 	UpdateIcon()
@@ -52,6 +52,6 @@
 /obj/item/reagent_containers/ampoule/smelling_salts
 	name = "ampoule (smelling salts)"
 
-/obj/item/reagent_containers/ampoule/smelling_salts/New()
+INIT_TYPE(/obj/item/reagent_containers/ampoule/smelling_salts)
 	..()
 	reagents.add_reagent("smelling_salt", 5)

@@ -30,7 +30,7 @@
 	var/connected = 0	//determine if gen is wrenched over a wire.
 	var/backup = 0		//if equip power went out while connected to wire, this should be true. Used to automatically turn gen back on if power is restored
 	var/first = 0		//tic when the power goes out.
-	New()
+	INIT()
 		PCEL = new /obj/item/cell/supercell(src)
 		PCEL.charge = PCEL.maxcharge
 
@@ -161,7 +161,7 @@
 		if(get_dist(user,src) > 1)
 			boutput(user, "<span class='alert'>You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
 			return
-		the_range = max(src.min_range,min(the_range,src.max_range))
+		the_range = clamp(the_range, src.min_range, src.max_range)
 		src.range = the_range
 		var/outcome_text = "You set the range to [src.range]."
 		if(src.active)
@@ -430,7 +430,7 @@
 
 	flags = 0
 
-	New(Loc, var/obj/machinery/shieldgenerator/deployer, var/update_tiles)
+	INIT(Loc, var/obj/machinery/shieldgenerator/deployer, var/update_tiles)
 		..()
 		src.update_tiles = update_tiles
 		src.deployer = deployer
@@ -620,7 +620,7 @@
 /obj/forcefield/energyshield/perma/doorlink
 	name = "Door-linked Atmospheric/Liquid Forcefield"
 	desc = "A door-linked force field that prevents gas and liquids from passing through it."
-	New()
+	INIT()
 		..()
 		setactive(0)
 		SPAWN_DBG(1 SECOND)//yucky...

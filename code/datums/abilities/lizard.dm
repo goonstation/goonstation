@@ -168,7 +168,7 @@
 	var/region_name
 	var/datum/appearanceHolder/AHliz
 
-	New(var/mob/living/carbon/human/M, var/clr, var/part, var/partname, var/AHs)
+	INIT(var/mob/living/carbon/human/M, var/clr, var/part, var/partname, var/AHs)
 		L = M
 		if (!AHs)
 			interrupt(INTERRUPT_ALWAYS) // how...

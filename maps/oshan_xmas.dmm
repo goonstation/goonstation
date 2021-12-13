@@ -5976,7 +5976,6 @@
 /obj/machinery/atmospherics/unary/vent_pump{
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	pressure_checks = 2;
 	pump_direction = 0
@@ -9549,7 +9548,6 @@
 	dir = 4;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	pressure_checks = 2;
 	pump_direction = 0
@@ -35777,7 +35775,7 @@
 /area/station/hallway/secondary/exit)
 "bFU" = (
 /turf/space/fluid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "bFV" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/camera{

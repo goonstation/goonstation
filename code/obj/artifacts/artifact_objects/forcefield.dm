@@ -21,7 +21,7 @@
 	var/next_activate = 0
 	var/list/forcefields = list()
 
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("shieldsparkles","empdisable","greenglow","enshield","energyorb","forcewall","meteor_shield")
 		src.field_radius = rand(2,6) // forcefield radius

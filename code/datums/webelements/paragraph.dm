@@ -1,5 +1,5 @@
 /datum/tag/paragraph
-	New()
+	INIT()
 		..("p")
 
 	proc/setText(txt as text)

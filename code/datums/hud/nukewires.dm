@@ -5,7 +5,7 @@
 	var/obj/machinery/nuclearbomb/master
 
 
-	New(master)
+	INIT(master)
 		..()
 		src.master = master
 		src.boxes = create_screen("boxes", "Wiring Panel", 'icons/mob/screen1.dmi', "block", "6, 6 to 10, 10")

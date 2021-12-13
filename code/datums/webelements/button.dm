@@ -1,5 +1,5 @@
 /datum/tag/button
-	New()
+	INIT()
 		..("button")
 
 	proc/setText(var/txt as text)

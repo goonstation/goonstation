@@ -49,7 +49,7 @@ Contains:
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 
-/obj/item/assembly/time_ignite/New()
+INIT_TYPE(/obj/item/assembly/time_ignite)
 	..()
 	SPAWN_DBG(0)
 		if(!part1)
@@ -260,7 +260,7 @@ Contains:
 		return
 	return
 
-/obj/item/assembly/prox_ignite/New()
+INIT_TYPE(/obj/item/assembly/prox_ignite)
 	..()
 	SPAWN_DBG(0)
 		if(!part1)
@@ -460,7 +460,7 @@ Contains:
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 
-/obj/item/assembly/rad_ignite/New()
+INIT_TYPE(/obj/item/assembly/rad_ignite)
 	..()
 	SPAWN_DBG(0)
 		if(!part1)
@@ -658,7 +658,7 @@ Contains:
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
 
-/obj/item/assembly/anal_ignite/New()
+INIT_TYPE(/obj/item/assembly/anal_ignite)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src && !src.part1)
@@ -705,7 +705,7 @@ Contains:
 	status = 0.0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
-/obj/item/assembly/radio_horn/New()
+INIT_TYPE(/obj/item/assembly/radio_horn)
 	..()
 	SPAWN_DBG(0)
 		if(!part1)

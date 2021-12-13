@@ -333,7 +333,7 @@
 	if (src.master)
 		return src.master.Attackhand(a, b, c, d, e)
 
-/atom/movable/overlay/New()
+INIT_TYPE(/atom/movable/overlay)
 	..()
 	for(var/x in src.verbs)
 		src.verbs -= x
@@ -358,11 +358,11 @@
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/turf/last_turf = 0
-	var/last_move = null
+	var/tmp/turf/last_turf = 0
+	var/tmp/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
-	var/l_move_time = 1
+	var/tmp/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -383,7 +383,7 @@
 
 
 //some more of these event handler flag things are handled in set_loc far below . . .
-/atom/movable/New()
+INIT_TYPE(/atom/movable)
 	..()
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet

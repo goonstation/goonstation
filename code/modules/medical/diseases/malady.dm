@@ -8,7 +8,7 @@
 	var/robo_restart = 0 // used for cyberheart stuff
 	var/affected_area = null // used for bloodclots, can be chest (heart, eventually lung), head (brain), limb
 
-	New()
+	INIT()
 		..()
 		master = get_disease_from_path(/datum/ailment/malady)
 		master.tickcount = 0
@@ -32,7 +32,7 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = max(0,min(advance_prob,100))
+		advance_prob = clamp(advance_prob, 0, 100)
 
 		if (prob(advance_prob))
 			if (state == "Remissive")

@@ -15,7 +15,7 @@
 	var/field_radius = 7
 	var/list/helpers = list("water") // make it a bit more modular
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "SUPERFICIAL DAMAGE DETECTED"
 		src.field_radius = rand(2,9) // field radius

@@ -8,7 +8,7 @@
 
 	var/health = 25
 
-	New()
+	INIT()
 		SPAWN_DBG(90 SECONDS)
 			if(src.health > 0)
 				src.open()

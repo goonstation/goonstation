@@ -26,7 +26,7 @@
 	var/output_target = null
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
 
-	New()
+	INIT()
 		..()
 		update_account()
 

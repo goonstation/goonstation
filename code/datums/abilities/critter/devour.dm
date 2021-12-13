@@ -11,7 +11,7 @@
 	var/mob/living/target
 	var/datum/targetable/critter/devour/devour
 
-	New(Target, Devour)
+	INIT(Target, Devour)
 		target = Target
 		devour = Devour
 		..()

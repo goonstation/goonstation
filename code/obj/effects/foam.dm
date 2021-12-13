@@ -21,7 +21,7 @@
 	var/repeated_applications = 0 //bandaid for foam being abuseable by spamming chem group... diminishing returns. only works if the repeated application is on the same tile (chem dispensers!!)
 
 /*
-/obj/effects/foam/New(loc, var/ismetal=0)
+INIT_TYPE(/obj/effects/foam, loc, var/ismetal=0)
 	..(loc)
 
 */

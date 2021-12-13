@@ -106,7 +106,7 @@
 	var/list/toolbox_list = list("blue", "red", "yellow", "green")
 	var/switcharoo = 10 // set to 0 for mimics that always are mimics and never toolboxes
 
-	New()
+	INIT()
 		..()
 		src.toolbox_style = pick(src.toolbox_list)
 		src.UpdateIcon()
@@ -479,7 +479,7 @@
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 16 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
-	New()
+	INIT()
 		..()
 		playsound(src.loc, "sound/items/Scissor.ogg", 50, 0)
 
@@ -603,7 +603,7 @@
 	is_pet = FALSE
 	var/reagent_id = null
 
-	New()
+	INIT()
 		..()
 
 		src.create_reagents(1000)
@@ -1260,7 +1260,7 @@
 	var/expiration_id = 1
 	var/had_keep_together = 0
 
-	New(loc, var/atom/movable/stick)
+	INIT(loc, var/atom/movable/stick)
 		..()
 		// build mode shenaningans, spawn a snek in something for it to become a snek
 		if(!istype(loc, /turf))

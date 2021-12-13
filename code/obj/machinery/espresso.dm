@@ -17,7 +17,7 @@
 	var/image/image_top = null
 	var/image/image_cup = null
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		src.update()
@@ -196,7 +196,7 @@
 	var/default_carafe = /obj/item/reagent_containers/food/drinks/carafe
 	var/image/fluid_image
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		if (ispath(src.default_carafe))

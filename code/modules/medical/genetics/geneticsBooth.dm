@@ -9,7 +9,7 @@
 	var/registered_sale_id = null
 	var/locked = FALSE
 
-	New(bioeffect, description, price, registered)
+	INIT(bioeffect, description, price, registered)
 		BE = bioeffect
 		name = BE.name
 		id = BE.id
@@ -68,7 +68,7 @@
 	var/light_g = 0.88
 	var/light_b = 1
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)

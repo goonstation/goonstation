@@ -30,7 +30,7 @@
 	var/image/image_light = null
 	p_class = 1.5
 
-	New()
+	INIT()
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
@@ -392,7 +392,7 @@
 	icon_state = "screwdriver"
 	var/obj/machinery/nuclearbomb/the_bomb = null
 
-	New(Target)
+	INIT(Target)
 		the_bomb = Target
 		..()
 

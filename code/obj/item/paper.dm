@@ -70,7 +70,7 @@
 	var/list/form_fields = list()
 	var/field_counter = 1
 
-/obj/item/paper/New()
+INIT_TYPE(/obj/item/paper)
 	..()
 	src.create_reagents(10)
 	reagents.add_reagent("paper", 10)
@@ -415,7 +415,7 @@
 /obj/item/paper/Map
 	name = "'Station Blueprint'"
 
-	New()
+	INIT()
 		..()
 		src.info = {"<IMG SRC="[resource("images/map.png")]">
 <BR>
@@ -581,7 +581,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 "}
 	// Provide tracking so training material can be updated by TEG.  This removes reliance on a search criteria that becomes
 	// a limitation on map design.  Performant for that one time...
-	New()
+	INIT()
 		..()
 		START_TRACKING
 
@@ -913,7 +913,7 @@ as it may become compromised.
 	var/static/list/sol = list("He plunged into the sea.", "Follow the NSS Polaris.", "Across the Channel.", "It's in the Void.")
 	var/static/initialized = FALSE
 
-	New()
+	INIT()
 		var/randme = rand(1,10)
 		var/fortune = "Blah."
 
@@ -986,7 +986,7 @@ as it may become compromised.
 
 	var/list/fortune_read = list("read","seen","foreseen","inscribed","beheld","witnessed")
 
-	New()
+	INIT()
 		var/sentence_1 = "You shall soon [pick(fortune_verbs)] the [pick(fortune_adjectives)] [pick(fortune_nouns)]"
 		var/sentence_2 = "remember to drink more grones"
 		var/sentence_3 = "for reals"
@@ -1024,7 +1024,7 @@ as it may become compromised.
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
-/obj/item/paper/photograph/New()
+INIT_TYPE(/obj/item/paper/photograph)
 
 	..()
 	src.pixel_y = 0
@@ -1051,7 +1051,7 @@ as it may become compromised.
 	var/print_icon = 'icons/effects/sstv.dmi'
 	var/print_icon_state = "sstv_1"
 
-	New()
+	INIT()
 		..()
 		src.info = {"<IMG SRC="sstv_cachedimage.png">"}
 		return
@@ -1212,7 +1212,7 @@ as it may become compromised.
 	var/current_mode = "stamp-sprite-ok"
 	var/current_state = null
 
-/obj/item/stamp/New()
+INIT_TYPE(/obj/item/stamp)
 	..()
 	if(special_mode)
 		available_modes += special_mode
@@ -1536,7 +1536,7 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	sizex = 1066
 	sizey = 735
 
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
@@ -1549,7 +1549,7 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	sizex = 970
 	sizey = 690
 
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
@@ -1562,7 +1562,7 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	sizex = 1100
 	sizey = 800
 
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)

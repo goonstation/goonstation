@@ -31,7 +31,7 @@ Contains:
 	stamina_cost = 23
 	stamina_crit_chance = 10
 
-	New()
+	INIT()
 		..()
 		src.air_contents = new /datum/gas_mixture
 		src.air_contents.vacuum()
@@ -86,7 +86,7 @@ Contains:
 		return 1
 
 	proc/set_release_pressure(var/pressure as num)
-		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -281,7 +281,7 @@ Contains:
 	desc = "This tank is labelled that it contains an anaesthetic capable of keeping somebody unconscious while they breathe it."
 	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
 
-	New()
+	INIT()
 		..()
 		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
@@ -306,7 +306,7 @@ Contains:
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	c_flags = IS_JETPACK
 
-	New()
+	INIT()
 		..()
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
@@ -361,7 +361,7 @@ Contains:
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 	compatible_with_TTV = 0
 
-	New()
+	INIT()
 		..()
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
@@ -408,7 +408,7 @@ Contains:
 	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible receptacle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain oxygen."
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
-	New()
+	INIT()
 		..()
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
@@ -429,7 +429,7 @@ Contains:
 	wear_image_icon = 'icons/mob/belt.dmi'
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
-	New()
+	INIT()
 		..()
 		src.air_contents.volume = 6 // Change to 3 once atmos is fixed
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4.5)*70/(R_IDEAL_GAS_EQUATION*T20C) // cogwerks: drastically reduced capacity of emerg tanks
@@ -446,7 +446,7 @@ Contains:
 	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain nitrogen and oxygen."
 	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
 
-	New()
+	INIT()
 		..()
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 		src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
@@ -462,7 +462,7 @@ Contains:
 	item_state = "plasma"
 	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
 
-	New()
+	INIT()
 		..()
 		src.air_contents.toxins = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return
@@ -613,7 +613,7 @@ Contains:
 	desc = "An upgraded jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
-	New()
+	INIT()
 		..()
 		src.air_contents.volume = 100
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*100/(R_IDEAL_GAS_EQUATION*T20C)
@@ -660,7 +660,7 @@ Contains:
 	item_state = "redjetpack"
 	desc = "A syndicate jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
 
-	New()
+	INIT()
 		..()
 		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
 		return

@@ -62,7 +62,7 @@
 
 	var/reward_was_spawned = 0
 
-	New(var/datum/game_mode/spy_theft/ST)
+	INIT(var/datum/game_mode/spy_theft/ST)
 		game_mode = ST
 		..()
 
@@ -159,7 +159,7 @@
 	var/num_spies = 2 //minimum
 
 	if (traitor_scaling)
-		num_spies = max(2, min(round((num_players + randomizer) / pop_divisor), spies_possible))
+		num_spies = clamp(round((num_players + randomizer) / pop_divisor), 2, spies_possible)
 
 	var/list/possible_spies = get_possible_enemies(ROLE_SPY_THIEF, num_spies)
 

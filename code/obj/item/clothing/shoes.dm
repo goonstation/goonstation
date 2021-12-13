@@ -304,7 +304,7 @@
 		return ..()
 
 
-/obj/item/clothing/shoes/clown_shoes/New()
+INIT_TYPE(/obj/item/clothing/shoes/clown_shoes)
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
 	AddComponent(/datum/component/wearertargeting/crayonwalk, list(SLOT_SHOES))
@@ -318,7 +318,7 @@
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
 
-	New()
+	INIT()
 		..()
 		setProperty("negate_fluid_speed_penalty",0.6)
 
@@ -486,7 +486,7 @@
 	var/obj/item/tank/tank = null
 	tooltip_flags = REBUILD_ALWAYS
 
-	New()
+	INIT()
 		..()
 		src.tank = new /obj/item/tank/emergency_oxygen(src)
 

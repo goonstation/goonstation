@@ -92,7 +92,7 @@
 	access_lookup = "Head Surgeon"
 	text2speech = 1
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 
@@ -144,7 +144,7 @@
 	var/skin = null // same as the bots themselves: options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
 	w_class = W_CLASS_NORMAL
 
-/obj/item/firstaid_arm_assembly/New()
+INIT_TYPE(/obj/item/firstaid_arm_assembly)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src.skin)
@@ -184,7 +184,7 @@
 	UpdateOverlays(medbot_overlays, "medbot_overlays")
 	return
 
-/obj/machinery/bot/medbot/New()
+INIT_TYPE(/obj/machinery/bot/medbot)
 	..()
 	add_simple_light("medbot", list(220, 220, 255, 0.5*255))
 	SPAWN_DBG(0.5 SECONDS)
@@ -618,7 +618,7 @@
 	var/list/reagent_id
 	var/did_spooky = 0
 
-	New(var/the_bot, var/list/reagentid)
+	INIT(var/the_bot, var/list/reagentid)
 		src.master = the_bot
 		src.reagent_id = reagentid
 		if(master.terrifying)

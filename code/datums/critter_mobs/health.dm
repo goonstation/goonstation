@@ -18,7 +18,7 @@
 												// and maximum health will be increased by the maximum value of this
 												// The mob still dies at health = 0
 
-	New(var/mob/M)
+	INIT(var/mob/M)
 		..()
 		holder = M
 		value = maximum_value
@@ -31,7 +31,7 @@
 		if (!bypass_multiplier)
 			amt *= damage_multiplier
 		if (minimum_value < maximum_value)
-			value = max(minimum_value, min(value - amt, maximum_value))
+			value = clamp(value - amt, minimum_value, maximum_value)
 		else
 			value = min(value - amt, maximum_value)
 		health_update_queue |= holder

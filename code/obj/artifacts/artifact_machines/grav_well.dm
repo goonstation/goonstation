@@ -21,7 +21,7 @@
 	var/gravity_type = 0 // push or pull?
 	examine_hint = "It is covered in very conspicuous markings."
 
-	New()
+	INIT()
 		..()
 		src.field_radius = rand(4,9) // well radius
 		src.gravity_type = rand(0,1) // 0 for pull, 1 for push

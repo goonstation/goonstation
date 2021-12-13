@@ -46,7 +46,7 @@
 		..()
 
 
-	New()
+	INIT()
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
@@ -151,7 +151,7 @@
 	pickup_sfx = "sound/items/blade_pull.ogg"
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 	syndicate

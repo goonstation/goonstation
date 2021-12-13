@@ -2,9 +2,15 @@
 	name = "crate"
 	desc = "A small, cuboid object with a hinged top and empty interior."
 	is_short = 1
+	#ifdef XMAS
+	icon_state = "xmascrate"
+	icon_opened = "xmascrateopen"
+	icon_closed = "xmascrate"
+	#else
 	icon_state = "crate"
 	icon_closed = "crate"
 	icon_opened = "crateopen"
+	#endif
 	icon_welded = "welded-crate"
 	soundproofing = 3
 	throwforce = 50 //ouch
@@ -268,7 +274,7 @@
 	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
 
-	New()
+	INIT()
 		..()
 		spawn_items()
 
@@ -313,7 +319,7 @@
 	icon_welded = "welded-short-horizontal"
 	weld_image_offset_Y = -10
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
@@ -378,7 +384,7 @@
 	desc = "A packing crate."
 	icon_state = "packingcrate1"
 
-	New()
+	INIT()
 		var/n = rand(1,12)
 		switch(n)
 			if(1 to 3)
@@ -399,7 +405,7 @@
 	name = "wooden crate"
 	desc = "A wooden crate."
 	icon_state = "woodencrate1"
-	New()
+	INIT()
 		var/n = rand(1,9)
 		switch(n)
 			if(1 to 3)
@@ -429,14 +435,14 @@
 	icon_opened = "chest-open"
 	icon_closed = "chest"
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 
 /obj/storage/crate/chest/coins
 	var/coins_count_min = 5
 	var/coins_count_max = 50
-	New()
+	INIT()
 		..()
 		var/coins_count = rand(coins_count_min, coins_count_max)
 		for(var/i in 1 to coins_count)
@@ -445,7 +451,7 @@
 			coin.pixel_y = rand(0, 6)
 
 /obj/storage/crate/chest/spacebux
-	New()
+	INIT()
 		..()
 		var/bux_count = rand(3, 10)
 		for(var/i in 1 to bux_count)
@@ -631,16 +637,7 @@
 	var/datum/light/point/light = 0
 	var/init = 0
 
-	New()
-		..()
-		if (current_state == GAME_STATE_PLAYING)
-			initialize()
-
-	disposing()
-		light = 0
-		..()
-
-	initialize()
+	INIT()
 		..()
 		if (!init)
 			init = 1
@@ -649,8 +646,12 @@
 				light.attach(src)
 			light.set_brightness(1)
 			light.set_color(0.4, 1, 0.4)
-			light.set_height(3)
+			light.set_height(1.2)
 			light.enable()
+
+	disposing()
+		light = 0
+		..()
 
 	meds
 		spawn_contents = list(/obj/item/storage/firstaid/old = 2,

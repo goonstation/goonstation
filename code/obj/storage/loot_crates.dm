@@ -10,7 +10,7 @@
 	var/datum/loot_crate_lock/lock = null
 	var/datum/loot_crate_trap/trap = null
 
-	New()
+	INIT()
 		..()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
 
@@ -413,7 +413,7 @@
 	var/attempts_allowed = 0
 	var/attempts_remaining = 0
 
-	New()
+	INIT()
 		..()
 		scramble_code()
 
@@ -648,7 +648,7 @@
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
 
-	New()
+	INIT()
 		..()
 		if(!primary)
 			return
@@ -725,7 +725,7 @@
 	var/text_file = null
 	var/list/pick_from_these_files = list()
 
-	New()
+	INIT()
 		if (text_file)
 			info = file2text(text_file)
 		else

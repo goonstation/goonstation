@@ -11,7 +11,7 @@
 	mouse_opacity = 0
 	var/amount = 6.0
 
-/obj/effects/mustard_gas/New()
+INIT_TYPE(/obj/effects/mustard_gas)
 	..()
 	SPAWN_DBG(10 SECONDS)
 		dispose()

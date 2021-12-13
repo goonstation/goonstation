@@ -310,7 +310,7 @@ var/reverse_mode = 0
 	var/using = 0
 	var/beingUsed = 0
 
-	New()
+	INIT()
 		..()
 		loop()
 
@@ -463,7 +463,7 @@ var/reverse_mode = 0
 	anchored = 1
 	density = 0
 
-	New()
+	INIT()
 		src.sparks()
 		return ..()
 
@@ -577,7 +577,7 @@ var/reverse_mode = 0
 			for(var/mob/O in oviewers(world.view , my_target))
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
-/obj/fake_attacker/New(location, target)
+INIT_TYPE(/obj/fake_attacker, location, target)
 	..()
 	SPAWN_DBG(30 SECONDS)	qdel(src)
 	src.my_target = target

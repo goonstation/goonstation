@@ -108,7 +108,7 @@
 	var/health_max = 100
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 
-/obj/storage/closet/flock/New()
+INIT_TYPE(/obj/storage/closet/flock)
 	..()
 	setMaterial("gnesis")
 
@@ -139,7 +139,7 @@
 /obj/storage/closet/flock/proc/take_damage(var/force, var/mob/user as mob)
 	if (!isnum(force) || force <= 0)
 		return
-	src.health_attack = max(0,min(src.health_attack - force,src.health_max))
+	src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
 	if (src.health_attack <= 0)
 		var/turf/T = get_turf(src)
 		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
@@ -185,7 +185,7 @@
 	on = 1
 	removable_bulb = 0
 
-/obj/machinery/light/flock/New()
+INIT_TYPE(/obj/machinery/light/flock)
 	..()
 	light.set_color(0.45, 0.75, 0.675)
 
@@ -217,7 +217,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-/obj/lattice/flock/New()
+INIT_TYPE(/obj/lattice/flock)
 	..()
 	setMaterial("gnesis")
 
@@ -276,7 +276,7 @@
 			if(76 to INFINITY)
 				icon_state = initial(src.icon_state) + "-0"
 
-/obj/grille/flock/New()
+INIT_TYPE(/obj/grille/flock)
 	..()
 	setMaterial("gnesis")
 	src.UpdateIcon()

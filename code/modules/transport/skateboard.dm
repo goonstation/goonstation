@@ -25,7 +25,7 @@
 
 	onUpdate()
 		if (bar)
-			var/complete = max(min((sCurr / sMax), 1), 0)
+			var/complete = clamp((sCurr / sMax), 0, 1)
 			var/matrix/newMtx = matrix(complete, 1, MATRIX_SCALE)
 			animate( bar, transform = newMtx, pixel_x = -nround( ((30 - (30 * complete)) / 2) ), time = 3 )
 		//..()
@@ -41,7 +41,7 @@
 	alpha = 0
 	pixel_x = -32
 
-	New(var/location = null, var/state = null)
+	INIT(var/location = null, var/state = null)
 		..()
 		if(location)
 			src.set_loc(location)
@@ -76,12 +76,12 @@
 	var/list/bumped_queue = list()
 	density = 0
 
-/obj/vehicle/skateboard/New()
+INIT_TYPE(/obj/vehicle/skateboard)
 	..()
 
 /obj/vehicle/skateboard/proc/adjustSickness(var/mod)
 	var/oldSick = sickness
-	sickness = min(100, max(0, sickness + mod))
+	sickness = clamp(sickness + mod, 0, 100)
 	var/howSick = round(sickness / 5)
 	if(howSick > round(oldSick / 5))
 		trickPopup(howSick)

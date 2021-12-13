@@ -22,7 +22,7 @@
 /datum/roboresearch/drones
 	name = "Basic Drone Schematics"
 
-	New()
+	INIT()
 		..()
 		src.schematics += new /datum/manufacture/secbot(src)
 		src.schematics += new /datum/manufacture/medbot(src)
@@ -33,7 +33,7 @@
 /datum/roboresearch/implants1
 	name = "Sensory Prostheses"
 
-	New()
+	INIT()
 		..()
 		src.schematics += new /datum/manufacture/visor(src)
 		src.schematics += new /datum/manufacture/deafhs(src)
@@ -44,7 +44,7 @@
 /datum/roboresearch/upgrades1
 	name = "Basic Cyborg Upgrades"
 
-	New()
+	INIT()
 		..()
 		src.schematics += new /datum/manufacture/robup_jetpack(src)
 		src.schematics += new /datum/manufacture/robup_recharge(src)
@@ -75,7 +75,7 @@
 /datum/roboresearch/upgrades2
 	name = "Improved Cyborg Upgrades"
 
-	New()
+	INIT()
 		..()
 		src.schematics += new /datum/manufacture/robup_aware(src)
 		src.schematics += new /datum/manufacture/robup_physshield(src)
@@ -103,7 +103,7 @@
 /datum/roboresearch/upgrades3
 	name = "Superior Cyborg Upgrades"
 
-	New()
+	INIT()
 		..()
 		src.schematics += new /datum/manufacture/robup_efficiency(src)
 		src.schematics += new /datum/manufacture/robup_repair(src)
@@ -112,7 +112,7 @@
 /datum/roboresearch/implants2
 	name = "Improved Implants"
 
-	New()
+	INIT()
 		..()
 		src.schematics += new /datum/manufacture/implant_robotalk(src)
 //		src.schematics += new /datum/manufacture/implant_bloodmonitor(src) // does nothing

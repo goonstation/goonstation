@@ -44,23 +44,23 @@
 		west
 			dir = WEST
 
-	New()
+	INIT()
 		..()
 		pipe_direction = src.dir
-		initialize_directions = pipe_direction
 
-	initialize()
 		if(node) return
 
 		var/node_connect = pipe_direction
 
 		for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-			if(target.initialize_directions & get_dir(target,src))
+			if(target.get_connect_directions() & get_dir(target,src))
 				node = target
 				break
 
 		UpdateIcon()
 
+	get_connect_directions()
+		. = src.dir
 
 	update_icon()
 
@@ -111,7 +111,7 @@
 			if (href_list["settemp"])
 				var/change = input(usr,"Target Temperature (-200 C - 20 C):","Enter target temperature",current_temperature - T0C) as num
 				if(!isnum_safe(change)) return
-				current_temperature = min(max(73.15, change + T0C),293.15)
+				current_temperature = clamp(change + T0C, 73.15, 293.15)
 				src.updateUsrDialog()
 				return
 

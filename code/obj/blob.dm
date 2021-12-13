@@ -40,7 +40,7 @@
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		if (!poisoned_image)
@@ -421,7 +421,7 @@
 
 
 		src.health -= amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
 			src.onKilled()
@@ -466,7 +466,7 @@
 		if (src.poison)
 			amount /= 4
 		src.health += amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
 		src.UpdateIcon()
 		healthbar.onUpdate()
@@ -653,7 +653,7 @@
 	poison_depletion = 3
 	var/nextAttackMsg = 0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -741,7 +741,7 @@
 	var/building = 0
 	movable = 1
 
-	New()
+	INIT()
 		..()
 		if (!overlay_image)
 			overlay_image = image('icons/mob/blob.dmi', "deposit-material")
@@ -826,7 +826,7 @@
 		var/datum/reagents/converting = null
 		var/datum/action/bar/blob_replicator/progress = new
 
-		New()
+		INIT()
 			..()
 			progress.owner = src
 			progress.onStart()
@@ -941,7 +941,7 @@
 	var/datum/projectile/slime/current_projectile = new
 	var/static/image/underlay_image = null
 
-	New()
+	INIT()
 		..()
 		if (!underlay_image)
 			underlay_image = image('icons/mob/blob.dmi', "deposit-reagent")
@@ -1140,7 +1140,7 @@
 	var/removed = 0
 	var/dead = 0
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -1325,7 +1325,7 @@
 	//state_overlay =
 	layer = 4
 
-	New(nloc, mat, blob)
+	INIT(nloc, mat, blob)
 		..(nloc)
 		src.overmind = blob
 		setMaterial(copyMaterial(mat))

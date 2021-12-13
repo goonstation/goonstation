@@ -68,7 +68,7 @@ datum/pathogendna
 
 	var/datum/pathogen/reference = null
 
-	New(var/datum/pathogen/P)
+	INIT(var/datum/pathogen/P)
 		..()
 		if (P)
 			reference = new /datum/pathogen

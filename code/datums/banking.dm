@@ -31,7 +31,7 @@
 	var/clones_for_cash = 0
 	var/clone_cost = 2500 // I wanted to make this a var on SOMETHING so that it can be changed during rounds
 
-	New()
+	INIT()
 		..()
 		// 5 minutes = 3000 milliseconds
 		time_between_paydays = 3000
@@ -1016,7 +1016,7 @@
 	var/winner = 0
 
 	// Give a random set of numbers
-	New()
+	INIT()
 		..()
 		START_TRACKING
 

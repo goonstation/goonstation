@@ -14,7 +14,7 @@
 	var/metal = 1		// 1=aluminium, 2=iron
 	gas_impermeable = TRUE
 
-	New()
+	INIT()
 		..()
 
 		if(istype(loc, /turf/space))

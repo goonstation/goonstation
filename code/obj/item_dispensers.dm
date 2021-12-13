@@ -20,7 +20,7 @@
 	var/last_dispense_time = 0		//Time when an item was last dispensed.
 	var/display_amount = 1 			//displays amount of item in dispenser
 
-	New()
+	INIT()
 		..()
 		src.empty_icon_state = "[src.filled_icon_state]0"
 		src.UpdateIcon()

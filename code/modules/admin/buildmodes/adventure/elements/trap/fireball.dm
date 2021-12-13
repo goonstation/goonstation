@@ -148,7 +148,7 @@
 	var/power = 5
 	var/exploding = 0
 
-	New()
+	INIT()
 		..()
 		src.flags |= TABLEPASS
 

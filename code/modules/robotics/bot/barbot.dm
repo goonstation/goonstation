@@ -52,7 +52,7 @@
 							/obj/item/reagent_containers/food/snacks/plant/lemon/wedge, \
 							/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge)
 
-	New()
+	INIT()
 		..()
 		src.setEmotion("happy")
 		// Start by getting a few initial things

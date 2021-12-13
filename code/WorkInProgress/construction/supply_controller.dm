@@ -17,7 +17,7 @@
 
 	var/demand_change_text = null
 
-	New()
+	INIT()
 		..()
 		var/new_packs = list()
 		for (var/P in commodities)
@@ -102,7 +102,7 @@
 	var/comhandheld
 	var/comlarge
 
-	New()
+	INIT()
 		..()
 		comhandheld = new /datum/commodity/smallartifact()
 		comlarge = new /datum/commodity/largeartifact()
@@ -228,7 +228,7 @@
 			if (next_resupply_text)
 				next_resupply_text = null
 
-	New()
+	INIT()
 		..()
 		var/new_packs = list()
 		for (var/P in supply_packs)
@@ -607,7 +607,7 @@
 			if (IN)
 				in_target = IN
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(5 SECONDS)
 			recheck()

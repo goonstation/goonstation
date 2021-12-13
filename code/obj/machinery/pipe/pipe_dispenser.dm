@@ -44,7 +44,7 @@
 			src.Attackhand(M)
 	return
 
-/obj/machinery/pipedispenser/New()
+INIT_TYPE(/obj/machinery/pipedispenser)
 	..()
 */
 

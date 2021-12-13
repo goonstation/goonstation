@@ -14,7 +14,7 @@
 	react_xray = list(15,75,90,3,"ANOMALOUS")
 	var/recall_delay = 10
 
-	New()
+	INIT()
 		..()
 		src.recall_delay = rand(2,600) SECONDS // how long it takes for the recall to happen
 

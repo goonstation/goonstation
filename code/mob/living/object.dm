@@ -24,7 +24,7 @@
 	var/last_life_update = 0
 	var/const/life_tick_spacing = 20
 
-	New(var/atom/loc as mob|obj|turf, var/mob/controller)
+	INIT(var/atom/loc as mob|obj|turf, var/mob/controller)
 		..()
 
 		if (istype(loc,/obj/machinery/the_singularity))

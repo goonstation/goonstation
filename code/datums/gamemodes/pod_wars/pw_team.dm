@@ -31,7 +31,7 @@
 	var/sl_amt_objective_lost_reliant
 	var/sl_amt_objective_lost_uvb67
 
-	New(var/datum/game_mode/pod_wars/mode, team_num)
+	INIT(var/datum/game_mode/pod_wars/mode, team_num)
 		..()
 		src.mode = mode
 		src.team_num = team_num

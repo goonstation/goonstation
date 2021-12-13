@@ -62,7 +62,7 @@ obj/machinery/recharger
 
 		//this version just autopositions itself onto walls depending what direction it's facing
 		sticky
-			New()
+			INIT()
 				..()
 				var/turf/T = null
 				for (var/dir in cardinal)

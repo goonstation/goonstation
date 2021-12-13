@@ -35,7 +35,7 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = ""
 	ambient_light = rgb(20, 22, 40)
 
-	New()
+	INIT()
 		..()
 		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
 

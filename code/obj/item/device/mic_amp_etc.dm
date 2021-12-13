@@ -57,7 +57,7 @@
 				if (H in mobs_messaged)
 					continue
 				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[min(src.max_font, max(0, speakers - round(get_dist(H, S) / 2), 1))]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
+				H.show_text("<font size=[clamp(speakers - round(get_dist(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
 				mobs_messaged += H
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for_by_tcl(S, /obj/loudspeaker)
@@ -73,7 +73,7 @@
 	layer = FLY_LAYER
 	var/obj/item/device/microphone/myMic = null
 
-	New()
+	INIT()
 		SPAWN_DBG(1 DECI SECOND)
 			if (!myMic)
 				myMic = new(src)
@@ -127,7 +127,7 @@
 	density = 1
 	mats = 15
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 

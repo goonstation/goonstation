@@ -52,7 +52,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			update_appearance()
@@ -606,14 +606,14 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
 
-	New()
+	INIT()
 		..()
 		var/datum/material/M = getMaterial("steel")
 		src.setMaterial(M)
 
 	reinforced
 		icon_state = "sheet-m-r_5"
-		New()
+		INIT()
 			..()
 			var/datum/material/M = getMaterial("steel")
 			src.set_reinforcement(M)
@@ -624,28 +624,28 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-glass"
 
-	New()
+	INIT()
 		..()
 		var/datum/material/M = getMaterial("glass")
 		src.setMaterial(M)
 
 	reinforced
 		icon_state = "sheet-g-r_5"
-		New()
+		INIT()
 			..()
 			var/datum/material/M = getMaterial("steel")
 			src.set_reinforcement(M)
 
 	crystal
 
-		New()
+		INIT()
 			..()
 			var/datum/material/M = getMaterial("plasmaglass")
 			src.setMaterial(M)
 
 		reinforced
 			icon_state = "sheet-g-r_5"
-			New()
+			INIT()
 				..()
 				var/datum/material/M = getMaterial("steel")
 				src.set_reinforcement(M)
@@ -672,7 +672,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			update_stack_appearance()
@@ -846,7 +846,7 @@ MATERIAL
 	var/head_offset = 0 //so the ones at the botton don't teleport upwards when a head is removed
 	var/bloodiness = 0 //
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0) //wait for the head to be added
 			update()
@@ -989,7 +989,7 @@ MATERIAL
 
 /obj/item/rods/steel
 
-	New()
+	INIT()
 		..()
 		var/datum/material/M = getMaterial("steel")
 		src.setMaterial(M)
@@ -1016,7 +1016,7 @@ MATERIAL
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
 
-	New(make_amount = 0)
+	INIT(make_amount = 0)
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
@@ -1151,13 +1151,13 @@ MATERIAL
 
 /obj/item/tile/steel
 
-	New()
+	INIT()
 		..()
 		var/datum/material/M = getMaterial("steel")
 		src.setMaterial(M)
 
 /obj/item/sheet/electrum
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("electrum"))
 

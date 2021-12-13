@@ -25,7 +25,7 @@ var/list/asteroid_blocked_turfs = list()
 
 	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/grille/catwalk,/obj/grille/catwalk/cross, /obj/overlay)
 
-	New()
+	INIT()
 		..()
 		for (var/X in childrentypesof(/datum/ore) - /datum/ore/event)
 			var/datum/ore/O = new X

@@ -22,7 +22,7 @@ datum/character_preview
 	var/mob/living/carbon/human/preview_mob
 	var/obj/overlay/background = null
 
-	New(client/viewer, window_id, control_id = null)
+	INIT(client/viewer, window_id, control_id = null)
 		. = ..()
 		START_TRACKING
 
@@ -107,7 +107,7 @@ datum/character_preview
 /// Manages its own window.
 /// Basically a simplified version for when you don't need to put other stuff in the preview window.
 datum/character_preview/window
-	New(client/viewer)
+	INIT(client/viewer)
 		var/winid = "preview_[max_preview_id]"
 
 		winclone(viewer, "blank-map", winid)
@@ -141,7 +141,7 @@ datum/character_preview/window
 datum/character_preview/multiclient
 	var/list/viewers = list()
 
-	New(control_id = null)
+	INIT(control_id = null)
 		. = ..(null, "unused", control_id)
 
 	disposing()

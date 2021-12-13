@@ -77,7 +77,7 @@
 	desc = "What part of this even makes any sense."
 	default_butt = /obj/item/clothing/head/butt/synth
 
-/obj/machinery/bot/buttbot/New(var/_butt, var/_arm)
+INIT_TYPE(/obj/machinery/bot/buttbot, var/_butt, var/_arm)
 	..()
 	if(istype(_butt, /obj/item/clothing/head/butt))
 		src.butt = _butt

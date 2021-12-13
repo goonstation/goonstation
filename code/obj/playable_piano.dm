@@ -28,7 +28,7 @@
 	var/list/compiled_notes = list() //holds our compiled filenames for the note
 	var/list/linked_pianos = list() //list that stores our linked pianos, including the main one
 
-	New()
+	INIT()
 		..()
 //		linked_pianos += src
 		if (!items_claimed)

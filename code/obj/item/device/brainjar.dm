@@ -16,7 +16,7 @@
 	var/list/icon/overlays_list = list()
 	var/crafting_stage = 0
 	var/crafting_stage_max = 5
-	New()
+	INIT()
 		..()
 
 		overlays_list["wires"] = new /icon('icons/obj/items/device.dmi', "bjwires")
@@ -44,13 +44,13 @@
 		..()
 
 	complete
-		New()
+		INIT()
 			rad = new(src)
 			crafting_stage = crafting_stage_max
 			..()
 
 	complete/signaller
-		New()
+		INIT()
 			signal = new(src.controller)
 			..()
 

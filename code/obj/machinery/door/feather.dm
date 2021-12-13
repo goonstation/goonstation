@@ -91,7 +91,7 @@
 /obj/machinery/door/feather/allowed(mob/M)
 	return isflock(M) // haha fuck you everyone else
 
-/obj/machinery/door/feather/New()
+INIT_TYPE(/obj/machinery/door/feather)
 	..()
 	setMaterial("gnesis")
 

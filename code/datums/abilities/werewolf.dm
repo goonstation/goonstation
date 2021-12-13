@@ -369,7 +369,7 @@
 	var/datum/reagents/tainted_saliva_reservoir = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
-	New()
+	INIT()
 		..()
 		awaken_time = rand(5, 10)*100
 		src.tainted_saliva_reservoir = new/datum/reagents(500)
@@ -404,7 +404,7 @@
 	var/not_when_handcuffed = 0
 	var/werewolf_only = 0
 
-	New()
+	INIT()
 		..()
 		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
 		B.icon = src.icon

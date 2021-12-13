@@ -199,7 +199,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 6
 	brainloss_stumble = 1
 
-	New()
+	INIT()
 		..()
 		if(!isrestrictedz(src.z) && nameOverride)
 			var/area/station/A = get_area(src)
@@ -557,6 +557,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if (src.density)
 			src.autoclose = 0
 		..(user)
+
+	xmasify()
+		return
 
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
@@ -1308,8 +1311,12 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
-			return
+		if (issilicon(AM))
+			if (aiControlDisabled || cant_emag)
+				return
+			var/mob/silicon = AM
+			if (!silicon.mind)
+				return
 
 		src.last_bump = world.time
 		if (src.isElectrified())
@@ -1503,7 +1510,7 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/New()
+INIT_TYPE(/obj/machinery/door/airlock)
 	..()
 	src.net_id = generate_net_id(src)
 	if (src.id_tag)
@@ -1751,13 +1758,10 @@ obj/machinery/door/airlock
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
 
-	initialize()
-		..()
-		UpdateIcon()
-
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		UpdateIcon()
 
 /obj/machinery/door/airlock/emp_act()
 	..()

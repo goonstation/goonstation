@@ -57,7 +57,7 @@
 	base_state = "judgementowl1"
 	anchored = 1
 
-	New()
+	INIT()
 		..()
 		base_state = "judgementowl[rand(1,32)]"
 		icon_state = base_state

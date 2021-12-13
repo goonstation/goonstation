@@ -3,7 +3,7 @@
 	var/tmp/datum/tag/head = new /datum/tag("head")
 	var/tmp/datum/tag/body = new /datum/tag("body")
 
-	New()
+	INIT()
 		..("html")
 
 		addChildElement(head)

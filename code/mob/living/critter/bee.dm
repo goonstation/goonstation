@@ -55,7 +55,7 @@
 
 	var/non_admin_bee_allowed = 0
 
-	New()
+	INIT()
 		..()
 		// bee mobs should have their actual bee names
 		real_name = name
@@ -481,10 +481,6 @@
 			if (MT.reagents.get_reagent_amount(venom1) < 10)
 				MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
-			var/datum/ailment_data/disease/plague = MT.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				MT.cure_disease(plague)
 		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_STAB)//armor piercing stingers
 		return 0
 
@@ -1062,7 +1058,7 @@ obj/effects/bees
 	plane = PLANE_NOSHADOW_ABOVE
 	particles = new/particles/swarm/bees
 
-	New(atom/movable/A)
+	INIT(atom/movable/A)
 		..()
 		if(istype(A))
 			A.vis_contents += src

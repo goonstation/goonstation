@@ -8,7 +8,7 @@
 	var/list/planes = list()
 	var/kind
 
-	New(var/client/viewer, var/kind)
+	INIT(var/client/viewer, var/kind)
 		..()
 		src.kind = kind
 

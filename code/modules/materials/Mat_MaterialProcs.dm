@@ -76,7 +76,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/lastTrigger = 0
 	var/trigger_chance = 100
 
-	New(var/chance = 100)
+	INIT(var/chance = 100)
 		trigger_chance = chance
 		..()
 
@@ -117,7 +117,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/reagent_id = ""
 	var/reagent_amount = 0
 
-	New(var/reagid = "carbon", var/amt = 2, var/chance = 100, var/limit_t = 0, var/tdelay = 50)
+	INIT(var/reagid = "carbon", var/amt = 2, var/chance = 100, var/limit_t = 0, var/tdelay = 50)
 		trigger_chance = chance
 		limit = limit_t
 		trigger_delay = tdelay
@@ -142,7 +142,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 	desc = "It looks dangerously unstable."
 
-	New(var/chance = 100, var/limit = 0)
+	INIT(var/chance = 100, var/limit = 0)
 		trigger_chance = chance
 		explode_limit = limit
 		..()
@@ -201,7 +201,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/reag_chance = 10
 	var/charges_left = 10
 
-	New(var/reagent_id = "carbon", var/amount = 1, var/chance = 10, var/charges = 10)
+	INIT(var/reagent_id = "carbon", var/amount = 1, var/chance = 10, var/charges = 10)
 		reag_id = reagent_id
 		reag_amt = amount
 		reag_chance = chance
@@ -222,7 +222,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/reag_amt = 1
 	var/reag_chance = 10
 
-	New(var/reagent_id = "carbon", var/amount = 1, var/chance = 10)
+	INIT(var/reagent_id = "carbon", var/amount = 1, var/chance = 10)
 		reag_id = reagent_id
 		reag_amt = amount
 		reag_chance = chance
@@ -237,7 +237,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/reag_id = "carbon"
 	var/reag_amt = 1
 
-	New(var/reagent_id = "carbon", var/amount = 1)
+	INIT(var/reagent_id = "carbon", var/amount = 1)
 		reag_id = reagent_id
 		reag_amt = amount
 		..()
@@ -253,7 +253,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_volume = 0
 	var/added = 0
 
-	New(var/reagent_id = "carbon", var/amount = 1, var/maxadd = 50)
+	INIT(var/reagent_id = "carbon", var/amount = 1, var/maxadd = 50)
 		reag_id = reagent_id
 		reag_amt = amount
 		max_volume = maxadd

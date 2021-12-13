@@ -12,7 +12,7 @@
 	icon = 'icons/misc/galactic_objects.dmi'
 	icon_state = "generic"
 
-	New()
+	INIT()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 
@@ -47,7 +47,7 @@
 	icon = 'icons/misc/artemis/galactic_object_map.dmi'
 	icon_state = "eh_idle_closed"
 
-	New()
+	INIT()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
 

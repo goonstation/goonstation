@@ -41,7 +41,7 @@
 
 	var/mob/respawn_as_self_mob = null
 
-	New()
+	INIT()
 		..()
 		src.hidden_categories = list()
 		SPAWN_DBG(1 DECI SECOND)
@@ -193,6 +193,13 @@
 		if (saved_attacktoggle == 0 && attacktoggle != 0)
 			src.owner:toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
+
+		var/saved_toggle_ghost_respawns = AP["ghost_respawns"]
+		if (isnull(saved_toggle_ghost_respawns))
+			saved_toggle_ghost_respawns = 1
+		if (saved_toggle_ghost_respawns == 0 && ghost_respawns != 0)
+			src.owner:toggle_ghost_respawns()
+		ghost_respawns = saved_toggle_ghost_respawns
 
 		var/saved_adminwho_alerts = AP["adminwho_alerts"]
 		if (isnull(saved_adminwho_alerts))

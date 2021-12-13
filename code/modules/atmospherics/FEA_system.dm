@@ -52,6 +52,16 @@ Important Procedures
 
 */
 
+#define SCHECK(ALWAYS) \
+	if(ALWAYS || scheck_counter++ % 500 == 0){ \
+		if(isnull(parent_controller)) { return } else { parent_controller.scheck() } \
+	}
+
+#define SCHECK_DONT_RETURN(ALWAYS) \
+	if(ALWAYS || scheck_counter++ % 500 == 0){ \
+		if(isnull(parent_controller)) { LAGCHECK(LAG_HIGH) } else { parent_controller.scheck() } \
+	}
+
 /atom/Cross(atom/movable/mover)
 	return (!density)
 
@@ -85,10 +95,13 @@ datum/controller/air_system
 	var/list/turf/tiles_to_update = list()
 	var/list/datum/air_group/groups_to_rebuild = list()
 	var/list/turf/tiles_to_space = list()
+	var/list/turf/turfs_to_find_groups_for = list()
 
 	var/current_cycle = 0
 	var/is_busy = FALSE
 	var/datum/controller/process/air_system/parent_controller = null
+
+	var/scheck_counter = 0
 
 	var/turf/space/space_sample = 0 //instead of repeatedly using locate() to find space, we should just cache a space tile ok
 
@@ -231,38 +244,49 @@ datum/controller/air_system
 		return null
 
 	process()
+		if(is_busy) // dont process twice simultaneously due to process hanging and restarting pls
+			return
+		src.process_internal()
+		is_busy = FALSE
+
+	proc/process_internal()
 		current_cycle++
 
-		process_tiles_to_space()
-		is_busy = TRUE
-
-		if(!explosions.exploding)
-			if(groups_to_rebuild.len > 0)
-				process_rebuild_select_groups()
-			LAGCHECK(LAG_REALTIME)
-
-			if(tiles_to_update.len > 0)
-				process_update_tiles()
-			LAGCHECK(LAG_REALTIME)
-
-		process_groups()
-		LAGCHECK(LAG_REALTIME)
-
-		process_singletons()
-		LAGCHECK(LAG_REALTIME)
-
-		process_super_conductivity()
-		LAGCHECK(LAG_REALTIME)
-
-		process_high_pressure_delta()
-		LAGCHECK(LAG_REALTIME)
+		if(!big_map_changes_happening && length(turfs_to_find_groups_for))
+			for(var/turf/simulated/T in turfs_to_find_groups_for)
+				if(isnull(T.parent))
+					T.find_group()
+			turfs_to_find_groups_for.Cut()
 
 		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
 			for(var/datum/air_group/AG as anything in air_groups)
 				AG.check_regroup()
-				LAGCHECK(LAG_REALTIME)
+				SCHECK(FALSE)
 
-		is_busy = FALSE
+		process_tiles_to_space()
+		is_busy = TRUE
+
+		if(!explosions.exploding && !big_map_changes_happening)
+			if(groups_to_rebuild.len > 0)
+				process_rebuild_select_groups()
+			SCHECK(TRUE)
+
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			SCHECK(TRUE)
+
+		process_groups()
+		SCHECK(TRUE)
+
+		process_singletons()
+		SCHECK(TRUE)
+
+		process_super_conductivity()
+		SCHECK(TRUE)
+
+		process_high_pressure_delta()
+		SCHECK(TRUE)
+
 		return 1
 
 	process_tiles_to_space()
@@ -274,6 +298,7 @@ datum/controller/air_system
 	process_update_tiles()
 		for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
 			T.update_air_properties()
+			SCHECK_DONT_RETURN(FALSE)
 		tiles_to_update.len = 0
 
 	process_rebuild_select_groups()
@@ -287,37 +312,39 @@ datum/controller/air_system
 				turf_list += T
 			air_master.air_groups -= turf_AG
 			turf_AG.members.len = 0
-		LAGCHECK(LAG_REALTIME)
+		SCHECK_DONT_RETURN(TRUE)
 
 		for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
 			if(!S.parent)
 				assemble_group_turf(S)
-		LAGCHECK(LAG_REALTIME)
+		SCHECK_DONT_RETURN(TRUE)
 
 		for(var/turf/simulated/S as anything in turf_list)
 			S.update_air_properties()
-		LAGCHECK(LAG_REALTIME)
+		SCHECK_DONT_RETURN(TRUE)
 
 		groups_to_rebuild.len = 0
 
 	process_groups()
 		for(var/datum/air_group/AG as anything in air_groups)
 			AG?.process_group(parent_controller)
-			LAGCHECK(LAG_REALTIME)
+			SCHECK(FALSE)
 
 	process_singletons()
 		for(var/turf/simulated/loner as anything in active_singletons)
 			loner.process_cell()
-			LAGCHECK(LAG_REALTIME)
+			SCHECK(FALSE)
 
 	process_super_conductivity()
 		for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
 			hot_potato.super_conduct()
-			LAGCHECK(LAG_REALTIME)
+			SCHECK(FALSE)
 
 	process_high_pressure_delta()
 		for(var/turf/simulated/pressurized as anything in high_pressure_delta)
 			pressurized.high_pressure_movements()
-			LAGCHECK(LAG_REALTIME)
+			SCHECK_DONT_RETURN(FALSE)
 
 		high_pressure_delta.len = 0
+
+#undef SCHECK

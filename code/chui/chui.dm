@@ -35,7 +35,7 @@ chui/engine
 	var/global/list/chui/theme/themes
 	var/chui/window/staticinst
 
-	New()
+	INIT()
 		..()
 		themes = list()
 		for( var/thm in typesof( "/chui/theme" ) )

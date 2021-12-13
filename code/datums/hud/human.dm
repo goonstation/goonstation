@@ -170,7 +170,7 @@
 		master = null
 		..()
 
-	New(M)
+	INIT(M)
 		..()
 		if(isnull(M))
 			CRASH("human HUD created with no master")
@@ -433,17 +433,17 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						master.a_intent = INTENT_DISARM
+						master.set_a_intent(INTENT_DISARM)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_HARM
+						master.set_a_intent(INTENT_HARM)
 						master.check_for_intent_trigger()
 				else
 					if (icon_y > 16)
-						master.a_intent = INTENT_HELP
+						master.set_a_intent(INTENT_HELP)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_GRAB
+						master.set_a_intent(INTENT_GRAB)
 						master.check_for_intent_trigger()
 				src.update_intent()
 

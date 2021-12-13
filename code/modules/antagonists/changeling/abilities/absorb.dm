@@ -12,7 +12,7 @@
 	var/mob/living/target
 	var/datum/targetable/changeling/devour/devour
 
-	New(Target, Devour)
+	INIT(Target, Devour)
 		target = Target
 		devour = Devour
 		..()
@@ -108,7 +108,7 @@
 	var/datum/targetable/changeling/absorb/devour
 	var/last_complete = 0
 
-	New(Target, Devour)
+	INIT(Target, Devour)
 		target = Target
 		devour = Devour
 		..()
@@ -128,7 +128,7 @@
 			return
 
 		var/done = TIME - started
-		var/complete = max(min((done / duration), 1), 0)
+		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
 			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] extends a proboscis!</B></span>"))

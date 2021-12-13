@@ -18,7 +18,7 @@
 	var/datum/light/light
 
 
-/obj/machinery/light_switch/New()
+INIT_TYPE(/obj/machinery/light_switch)
 	..()
 	UnsubscribeProcess()
 	light = new /datum/light/point
@@ -129,7 +129,7 @@
 /obj/machinery/light_switch/auto
 	name = "light switch"
 
-	New()
+	INIT()
 		var/turf/T = null
 		SPAWN_DBG(1 DECI SECOND)
 			for (var/dir in cardinal)

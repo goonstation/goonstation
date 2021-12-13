@@ -22,7 +22,7 @@
 	mat_changedesc = 0
 	mat_changeappearance = 0
 
-/obj/item/reagent_containers/gnesis/New()
+INIT_TYPE(/obj/item/reagent_containers/gnesis)
 	..()
 	src.create_reagents(50)
 	reagents.add_reagent("flockdrone_fluid", 50)
@@ -68,7 +68,7 @@
 	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	custom_cell_max_capacity = 100
 
-/obj/item/gun/energy/flock/New()
+INIT_TYPE(/obj/item/gun/energy/flock)
 	set_current_projectile(new/datum/projectile/energy_bolt/flockdrone)
 	projectiles = list(current_projectile)
 	..()

@@ -19,7 +19,7 @@
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 
-	New()
+	INIT()
 		..()
 		pixel_y = 0
 		effect = new
@@ -92,7 +92,7 @@
 	var/obj/effects/music/effect
 	var/overheated = FALSE
 
-	New()
+	INIT()
 		..()
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
@@ -168,7 +168,7 @@
 	var/static/image/rocked_out_img
 	var/sound_clip
 
-	New()
+	INIT()
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
@@ -216,7 +216,7 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, "sound/musical_instruments/bard/tapping1.ogg", 45, 1, 5)
+				playsound(src, "sound/musical_instruments/bard/tapping1.ogg", 60, 1, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
@@ -249,7 +249,7 @@
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
-			playsound(src, "sound/musical_instruments/bard/riff.ogg", 45, 1, 5)
+			playsound(src, "sound/musical_instruments/bard/riff.ogg", 60, 1, 5)
 			. = ..()
 
 	ultrasound
@@ -265,7 +265,7 @@
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
-			playsound(src, "sound/musical_instruments/bard/tapping2.ogg", 45, 1, 5)
+			playsound(src, "sound/musical_instruments/bard/tapping2.ogg", 60, 1, 5)
 			. = ..()
 
 	focus
@@ -348,7 +348,7 @@
 	var/looped
 	var/last_strum
 
-	New(Instrument, Effect)
+	INIT(Instrument, Effect)
 		instrument = Instrument
 		song = Effect
 		looped = 0
@@ -377,13 +377,13 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/M = owner
-		playsound(M, song.sound_clip, 45, 1, 5)
+		playsound(M, song.sound_clip, 60, 1, 5)
 		instrument.play_notes()
 
 	onRestart()
 		..()
 		var/mob/M = owner
-		playsound(M, song.sound_clip, 45, 1, 5)
+		playsound(M, song.sound_clip, 60, 1, 5)
 		last_strum = instrument.strums
 		blast_to_speakers()
 		icon_image.alpha = 200
@@ -638,7 +638,7 @@ obj/effects/music
 	alpha = 200
 	particles = new/particles/music
 
-	New()
+	INIT()
 		..()
 		add_filter("outline", 1, outline_filter(size=0.5, color="#444"))
 		src.particles.spawning = 0

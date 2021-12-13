@@ -41,7 +41,7 @@
 	var/light_height = 3
 	var/generateLight = 1
 
-	New()
+	INIT()
 		..()
 		if (generateLight)
 			src.make_light() /*

@@ -354,7 +354,7 @@
 	var/mob/living/carbon/human/HH
 	var/datum/targetable/vampire/blood_steal/ability
 
-	New(user,vampabilityholder,target,biteabil)
+	INIT(user,vampabilityholder,target,biteabil)
 		M = user
 		H = vampabilityholder
 		HH = target
@@ -502,7 +502,7 @@
 	var/mob/living/carbon/human/HH
 	var/datum/targetable/vampire/vampire_bite/B
 
-	New(user,vampabilityholder,target,biteabil)
+	INIT(user,vampabilityholder,target,biteabil)
 		M = user
 		H = vampabilityholder
 		HH = target

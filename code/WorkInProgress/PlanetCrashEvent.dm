@@ -86,7 +86,7 @@ Notes:
 	var/tempTarget = 373 //100c
 	var/heatAmount = 5.2
 
-	New(turf/simulated/spot)
+	INIT(turf/simulated/spot)
 		src.spot = spot
 
 		var/datum/controller/process/planetCrash/C = planetCrash.getController()

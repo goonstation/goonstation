@@ -2,7 +2,7 @@
 #define CRYOTRON_MESSAGE_DELAY 3 SECONDS
 
 /obj/cryotron_spawner
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 #ifdef RP_MODE
@@ -34,7 +34,7 @@
 	var/list/stored_crew_names = list() // stores real_names and only removes names if you leave cryo, not ghost
 	var/tmp/busy = 0
 
-	New()
+	INIT()
 		..()
 		// x += 1 here, with bound_x / pixel_x -= 32, keeps it centered while
 		// ensuring that its location is actually the center of the damn thing

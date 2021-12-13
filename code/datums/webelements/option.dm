@@ -1,5 +1,5 @@
 /datum/tag/option
-	New()
+	INIT()
 		..("option")
 
 	proc/setValue(var/val as text)

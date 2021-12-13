@@ -10,16 +10,9 @@
 	var/list/triggerables = list()
 	var/is_unpress = 0
 
-	New()
+	EXPLICIT_NEW()
 		..()
-		if(current_state > GAME_STATE_PREGAME)
-			SPAWN_DBG(0.1 SECONDS)
-				src.initialize()
-
-	initialize()
-		src.link_elements()
-		..()
-		qdel(src)
+		REGISTER_POST_INIT(link_elements)
 
 	proc/link_elements()
 
@@ -75,6 +68,7 @@
 
 							X.triggered += Y
 							X.triggered[Y] = act_type
+		qdel(src)
 
 
 /obj/adventurepuzzle/triggerable/bomb
@@ -95,7 +89,7 @@
 
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
-	New()
+	INIT()
 		src.create_reagents(5000)
 		..()
 
@@ -133,7 +127,7 @@
 
 	var/static/list/triggeracts = list("Disable" = "off", "Do nothing" = "nop", "Enable" = "on")
 
-	New()
+	INIT()
 		..()
 		if(start_on)
 			SPAWN_DBG(1 SECOND)
@@ -170,7 +164,7 @@
 	var/target = null
 	var/doing_login = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			for(var/obj/adventurepuzzle/invisible/target_link/T)
@@ -198,8 +192,7 @@
 			src.set_loc(get_turf(H))
 			H.unequip_all()
 
-			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH)
-			H.client.preferences.copy_to(V,H,1)
+			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
 			if (!H.mind)
 				H.mind = new /datum/mind()
 				H.mind.ckey = H.ckey
@@ -231,7 +224,7 @@
 	item_state = "sunglasses"
 	color = "#00CCCC"
 
-	New()
+	INIT()
 		..()
 
 	equipped(var/mob/user, var/slot)
@@ -339,7 +332,7 @@
 
 	var/static/list/triggeracts = list("Do nothing" = "nop", "Toggle" = "toggle", "Turn on" = "on", "Turn off" = "off", "Add Red" = "ared", "Remove Red" = "rred","Add Blue" = "ablue", "Remove Blue" = "rblue", "Add Green" = "agreen", "Remove Green" = "rgreen")
 
-	New()
+	INIT()
 		..()
 		update_color()
 
@@ -616,7 +609,7 @@
 
 var/johnbill_ursdungeon_code = 0420
 
-/area/diner/arcade/New()
+INIT_TYPE(/area/diner/arcade)
 		..()
 		var/list/insults = strings("johnbill.txt", "insults")
 		johnbill_ursdungeon_code = random_hex(4)
@@ -626,7 +619,7 @@ var/johnbill_ursdungeon_code = 0420
 	configure_mode = 0
 	random_code = 0
 	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
-	New()
+	INIT()
 		..()
 		src.code = johnbill_ursdungeon_code
 

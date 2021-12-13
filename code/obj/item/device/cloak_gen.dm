@@ -16,7 +16,7 @@
 	mats = 12
 	contraband = 2
 
-	New()
+	INIT()
 		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
 		SPAWN_DBG(0)

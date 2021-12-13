@@ -192,7 +192,7 @@
 	var/obj/maptext_junk/indicator
 	var/mob/carrier = 0
 	var/mob/tosser = 0
-	New()
+	INIT()
 		..()
 		indicator = new(src)
 		indicator.maptext_y = 38
@@ -253,12 +253,13 @@
 	ex_act(severity)
 		return
 
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
-	..()
+	. = ..()
 
 /obj/item/football/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-	..(hit_atom)
+	. = ..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)
 		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)

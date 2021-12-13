@@ -44,7 +44,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 
 	var/dbgmode = 0
 
-	New()
+	INIT()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")

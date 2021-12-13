@@ -42,7 +42,7 @@ CONTAINS:
 	var/mob/Poisoner = null
 	move_triggered = 1
 
-	New()
+	INIT()
 		..()
 		if (src.icon_state == "scalpel1")
 			icon_state = pick("scalpel1", "scalpel2")
@@ -113,7 +113,7 @@ CONTAINS:
 	var/mob/Poisoner = null
 	move_triggered = 1
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 		if (src.icon_state == "saw1")
@@ -181,7 +181,7 @@ CONTAINS:
 	var/mob/Poisoner = null
 	move_triggered = 1
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
@@ -603,7 +603,7 @@ CONTAINS:
 	icon_base = "cell"
 	makeshift = 1
 
-	New(var/location, var/obj/item/cell/newcell)
+	INIT(var/location, var/obj/item/cell/newcell)
 		..()
 		if (!istype(newcell))
 			newcell = new /obj/item/cell/charged(src)
@@ -859,7 +859,7 @@ CONTAINS:
 	var/brute_heal
 	var/burn_heal
 
-	New(Target, Tool, Time, Zone, Status, Repair, brute_heal, burn_heal, Vrb)
+	INIT(Target, Tool, Time, Zone, Status, Repair, brute_heal, burn_heal, Vrb)
 		src.target = Target
 		src.tool = Tool
 		src.duration = Time
@@ -1061,7 +1061,7 @@ CONTAINS:
 			return ..()
 
 	update_icon()
-		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
+		var/iv_state = clamp(round(src.volume, 10) / 10, 0, 100)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)
 			if (90 to INFINITY)
@@ -1111,7 +1111,7 @@ CONTAINS:
 	var/image/open_image = null
 	var/sound_zipper = 'sound/items/zipper.ogg'
 
-	New()
+	INIT()
 		..()
 		src.open_image = image(src.icon, src, "bodybag-open1", EFFECTS_LAYER_BASE)
 
@@ -1349,7 +1349,7 @@ CONTAINS:
 	stamina_cost = 1
 	stamina_crit_chance = 1
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("synthrubber"))
 
@@ -1552,7 +1552,7 @@ keeping this here because I want to make something else with it eventually
 						break
 */
 
-	New()
+	INIT()
 		..()
 		src.layer -= 0.01
 		if (!islist(src.attached_objs))
@@ -1677,7 +1677,7 @@ keeping this here because I want to make something else with it eventually
 	move_triggered = 1
 	var/image/handle = null
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(5)
 		handle = image('icons/obj/surgery.dmi', "")
@@ -1700,7 +1700,7 @@ keeping this here because I want to make something else with it eventually
 			reagents.move_trigger(M, kindof)
 
 	bloody
-		New()
+		INIT()
 			. = ..()
 			SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
 				make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)

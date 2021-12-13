@@ -6,7 +6,7 @@
 	mat_changename = 0
 	can_recycle = 0
 
-	New(var/loc, var/forceartiorigin)
+	INIT(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/pitcher/AS = new /datum/artifact/pitcher(src)
 		if (forceartiorigin)
@@ -190,6 +190,6 @@
 	react_xray = list(2,85,12,8,"HOLLOW")
 
 
-	New()
+	INIT()
 		..()
 		src.react_heat[2] = "HIGH INTERNAL CONVECTION"

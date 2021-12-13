@@ -48,10 +48,10 @@ datum
 
 		var/list/addiction_tally = null
 
-		var/list/datum/chemical_reaction/possible_reactions = list()
-		var/list/datum/chemical_reaction/active_reactions = list()
+		var/tmp/list/datum/chemical_reaction/possible_reactions = list()
+		var/tmp/list/datum/chemical_reaction/active_reactions = list()
 
-		var/list/covered_cache = 0
+		var/tmp/list/covered_cache = 0
 		var/covered_cache_volume = 0
 
 		var/temperature_cap = 10000
@@ -60,7 +60,7 @@ datum
 		var/postfoam = 0 //attempt at killing infinite foam
 		var/can_be_heated = TRUE //can be heated by external sources
 
-		New(maximum=100)
+		INIT(maximum=100)
 			..()
 			maximum_volume = maximum
 

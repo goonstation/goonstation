@@ -71,7 +71,7 @@
 	var/expected_y = 0
 
 
-	New(var/atom/loc, var/TTL=0)
+	INIT(var/atom/loc, var/TTL=0)
 		..(loc)
 		if(TTL)
 			SPAWN_DBG(TTL)
@@ -152,7 +152,7 @@
 	var/spam_timer = 8		// time used to determine how long spam_flag is active
 	var/initial_reagent = null
 
-	New()
+	INIT()
 		..()
 		if (!src.reagents && src.initial_reagent)
 			var/datum/reagents/R = new /datum/reagents(5)
@@ -534,7 +534,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	amount = 1
 	max_stack = 20
 
-	New()
+	INIT()
 		..()
 		src.update_stack_appearance()
 
@@ -656,7 +656,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/run_time = 40
 	var/last_result = null
 
-	New()
+	INIT()
 		..()
 		var/turf/T = get_step(src, EAST)
 		src.partner = locate() in T
@@ -703,7 +703,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/obj/roulette_table_w/partner = null
 	var/list/bets = null
 
-	New()
+	INIT()
 		..()
 		var/turf/T = get_step(src, WEST)
 		src.partner = locate() in T
@@ -805,7 +805,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/image/overlay_light = null
 	var/image/overlay_id = null
 
-	New()
+	INIT()
 		..()
 		var/datum/playing_card/Card
 		var/list/card_suits = list("hearts", "diamonds", "clubs", "spades")
@@ -864,7 +864,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/last_dispenser_search = null
 	var/list/glassware = list()
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			randomize_look(src)
@@ -1276,7 +1276,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_cost = 5
 	stamina_crit_chance = 35
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -1324,7 +1324,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/possible_bling_uncommon = list(/obj/item/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("gold"))
 
@@ -1410,7 +1410,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/open = 0
 	var/image/image_stick = null
 
-	New()
+	INIT()
 		..()
 		src.choose_random_color()
 
@@ -1457,7 +1457,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/mob/living/carbon/human/target
 	var/obj/item/pen/crayon/lipstick/makeup
 
-	New(ntarg, nmake, ndur)
+	INIT(ntarg, nmake, ndur)
 		target = ntarg
 		makeup = nmake
 		duration = ndur
@@ -1510,7 +1510,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand"
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -1857,7 +1857,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 // http://en.wikipedia.org/wiki/Crack_cocaine
 
 /datum/overlayComposition/cocaine
-	New()
+	INIT()
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2 //add
@@ -1871,7 +1871,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		return ..()
 
 /datum/overlayComposition/cocaine_minor_od
-	New()
+	INIT()
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
@@ -1885,7 +1885,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		return ..()
 
 /datum/overlayComposition/cocaine_major_od
-	New()
+	INIT()
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2

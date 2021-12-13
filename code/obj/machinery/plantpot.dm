@@ -13,7 +13,7 @@
 	name = "high-tech hydroponics tray"
 	desc = "A mostly debug-only plant tray that is capable of revealing more information about your plants."
 
-	New()
+	INIT()
 		..()
 
 	proc/update_maptext()
@@ -102,7 +102,7 @@
 	var/list/datum/plant_gene_strain/spawn_commuts = list()
 	var/auto_water = TRUE
 
-	New()
+	INIT()
 		SPAWN_DBG(0) // delay for prefab attribute assignment
 			var/datum/plant/P
 			//Adjust processing tier to slow down server burden unless necessary
@@ -182,22 +182,22 @@
 				src.reagents.add_reagent("water", 200)
 
 	flower
-		New()
+		INIT()
 			spawn_plant = pick(/datum/plant/flower/rose)
 			..()
 
 	crop
-		New()
+		INIT()
 			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/crop/soy)
 			..()
 
 	tree
-		New()
+		INIT()
 			spawn_plant = pick(/datum/plant/crop/tree, /datum/plant/fruit/cherry, /datum/plant/fruit/apple, /datum/plant/fruit/peach)
 			..()
 
 	weed
-		New()
+		INIT()
 			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
 			..()
 
@@ -248,7 +248,7 @@
 		// Originally plantpots updated constantly but this was found to be rather expensive, so
 		// now it only does that if it needs to.
 	var/actionpassed 	//holds defines for action bar harvesting yay :D
-	New()
+	INIT()
 		..()
 		src.plantgenes = new /datum/plantgenes(src)
 		src.create_reagents(400)
@@ -1446,7 +1446,7 @@
 			if(src.health >= growing.starthealth * 4)
 				// If we have excellent health, its a +20% chance for an extra harvest.
 				extra_harvest_chance += 20
-				extra_harvest_chance = max(0,min(100,extra_harvest_chance))
+				extra_harvest_chance = clamp(extra_harvest_chance, 0, 100)
 				if(prob(extra_harvest_chance))
 					boutput(user, "<span class='notice'>The plant glistens with good health!</span>")
 					// We got the bonus so don't reduce harvests.
@@ -1781,7 +1781,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	boutput(user, message)
 	return
 
-proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/frequencymult = 1)
+proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/machinery/plantpot/PP, var/frequencymult = 1, var/obj/item/seed/S = null)
 	// The check to see if a new mutation will be generated. The criteria check for whether
 	// or not the mutation will actually appear is HYPmutationcheck_full.
 	if(!P || !DNA)
@@ -1797,13 +1797,18 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 						chance -= M.chance_mod
 					else
 						chance += M.chance_mod
-			chance = max(0,min(chance*frequencymult,100))
+			chance = clamp(chance*frequencymult, 0, 100)
 			if(prob(chance))
 				if(HYPmutationcheck_full(P,DNA,MUT))
 					DNA.mutation = HY_get_mutation_from_path(MUT.type)
 					if(PP)
+						playsound(PP, MUT.mutation_sfx, 10, 1)
 						PP.UpdateIcon()
 						PP.update_name()
+						animate_wiggle_then_reset(PP, 1, 2)
+					else if(S)
+						// If it is not in a pot, it is most likely in PlantMaster Mk3
+						playsound(S, MUT.mutation_sfx, 20, 1)
 					break
 
 proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
@@ -1900,7 +1905,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	var/datum/light/light
 	power_usage = 100
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -1964,7 +1969,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	var/active = 0
 	var/mode = 1
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(5000)
 		reagents.add_reagent("water", 1000)

@@ -30,7 +30,7 @@
 	icon_state = "grabbed"
 	var/datum/targetable/hunter/hunter_gearspawn/transform
 
-	New(Transform)
+	INIT(Transform)
 		transform = Transform
 		..()
 

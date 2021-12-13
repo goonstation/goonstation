@@ -28,7 +28,7 @@
 	var/image/costume_shell = null
 	var/image/costume_dead = null
 
-	New(loc)
+	INIT(loc)
 		. = ..()
 		START_TRACKING
 		if (costume_name)
@@ -237,7 +237,7 @@
 	costume_name = "sylv_costume_1"
 	#endif
 
-	New()
+	INIT()
 		..()
 		UpdateIcon()
 	ai_think()
@@ -432,7 +432,7 @@
 	wearing_beret = 1
 	icon_state = "turtle-beret"
 
-	New()
+	INIT()
 		..()
 		//Make the beret
 		var/obj/item/clothing/head/hos_hat/beret = new/obj/item/clothing/head/hos_hat(src)
@@ -450,7 +450,7 @@
 
 	preferred_hat = /obj/item/clothing/head/NTberet/commander 	//if this is not null then the only hat type he will wear is this path.
 
-	New()
+	INIT()
 		..()
 		var/obj/item/clothing/head/NTberet/commander/beret = new/obj/item/clothing/head/NTberet/commander(src)
 		//fold it

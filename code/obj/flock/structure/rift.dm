@@ -15,7 +15,7 @@
 	var/list/eject = list()
 	var/mainflock = null // for when a flockmind is spawning the little shits(read:drones) get assigned to it
 
-/obj/flock_structure/rift/New(var/atom/location, var/datum/flock/F=null)
+INIT_TYPE(/obj/flock_structure/rift, var/atom/location, var/datum/flock/F=null)
 	..()
 	if(src.flock)
 		src.flock.registerUnit(src)

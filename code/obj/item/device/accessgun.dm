@@ -145,7 +145,7 @@
 	icon_state = "reprog"
 	var/obj/O
 	var/obj/item/device/accessgun/A
-	New(Obj,AccessGun)
+	INIT(Obj,AccessGun)
 		O = Obj
 		A = AccessGun
 		..()
@@ -186,7 +186,7 @@
 	ID_card = 1
 	var/list/scanned_access = null
 
-	New()
+	INIT()
 		scanned_access = list()
 		req_access = list()
 		. = ..()

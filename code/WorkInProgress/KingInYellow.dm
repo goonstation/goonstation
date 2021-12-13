@@ -35,7 +35,7 @@
 	layer = EFFECTS_LAYER_BASE
 	var/image/effect = null
 
-	New(var/atom/location, var/atom/trg)
+	INIT(var/atom/location, var/atom/trg)
 		..()
 		if(trg != null)
 			set_loc(location)
@@ -54,7 +54,7 @@
 	var/image/showimg = null
 	var/created = null
 
-	New(var/atom/location, var/atom/trg)
+	INIT(var/atom/location, var/atom/trg)
 		..()
 		set_loc(location)
 		target = trg
@@ -95,7 +95,7 @@
 	var/atom/curr_phantom = null
 	var/processing = 0
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 

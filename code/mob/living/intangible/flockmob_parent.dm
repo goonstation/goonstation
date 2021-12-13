@@ -16,7 +16,7 @@
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
-/mob/living/intangible/flock/New()
+INIT_TYPE(/mob/living/intangible/flock)
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD

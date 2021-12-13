@@ -161,7 +161,7 @@
 		waitforit = 0
 		..()
 
-	New()
+	INIT()
 		..()
 		src.last_add_time = world.time
 
@@ -526,7 +526,7 @@
 				depth_changed = 1
 
 			if (my_depth_level)
-				var/splash_level = max(1,min(my_depth_level, 3))
+				var/splash_level = clamp(my_depth_level, 1, 3)
 				F.step_sound = "sound/misc/splash_[splash_level].ogg"
 
 			F.movement_speed_mod = F.last_depth_level <= 1 ? 0 : (viscosity_SLOW_COMPONENT(F.avg_viscosity,F.max_viscosity,F.max_speed_mod) + DEPTH_SLOW_COMPONENT(F.amt,F.max_reagent_volume,F.max_speed_mod))

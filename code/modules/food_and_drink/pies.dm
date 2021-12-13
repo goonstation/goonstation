@@ -50,7 +50,7 @@
 	initial_volume = 30
 	initial_reagents = list("juice_lime"=15)
 
-	New()
+	INIT()
 		..()
 		if (prob(6) && !had_key)
 			had_key = 1
@@ -165,7 +165,7 @@
 	amount = 3
 	heal_amt = 2
 	food_effects = list("food_sweaty_big","food_refreshed")
-	New()
+	INIT()
 		..()
 		if(prob(10))
 			name = pick("fart pie","butt pie","mud pie","piesterior","ham pie","dump cake","derri-eclaire")

@@ -19,6 +19,8 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, overwrite as num)
+		begin_big_map_change()
+		pause_init()
 		var/datum/loadedProperties/props = new()
 		props.sourceX = coordX
 		props.sourceY = coordY
@@ -124,7 +126,8 @@ dmm_suite
 					)
 				sleep(-1)
 			sleep(-1)
-		//
+		unpause_init()
+		end_big_map_change()
 		return props
 
 	/*-- load_map ------------------------------------
@@ -235,17 +238,20 @@ dmm_suite
 			return instance
 
 		loadAttribute(value, list/strings)
+			var/first_char = copytext(value, 1, 2)
 			//Check for string
-			if(copytext(value, 1, 2) == "\"")
+			if(first_char == "\"")
 				return strings[value]
 			//Check for number
 			var num = text2num(value)
 			if(isnum(num))
 				return num
 			//Check for file
-			else if(copytext(value,1,2) == "'")
+			else if(first_char == "'")
 				return get_cached_file(copytext(value,2,length(value)))
 				// return file(copytext(value,2,length(value)))
+			else if(first_char == "/")
+				return text2path(value)
 			// Check for lists
 				// To Do
 
@@ -256,20 +262,20 @@ turf
 	var
 		dmm_suite/preloader/dmm_preloader
 
-atom/New(turf/newLoc)
-    if(isturf(newLoc))
-        var /dmm_suite/preloader/preloader = newLoc.dmm_preloader
-        if(preloader)
-            newLoc.dmm_preloader = null
-            preloader.load(src)
-    . = ..()
+	EXPLICIT_NEW(atom, turf/newLoc)
+		if(isturf(newLoc))
+			var /dmm_suite/preloader/preloader = newLoc.dmm_preloader
+			if(preloader)
+				newLoc.dmm_preloader = null
+				preloader.load(src)
+		. = ..()
 
 dmm_suite
 	preloader
 		parent_type = /datum
 		var
 			list/attributes
-		New(turf/loadLocation, list/_attributes)
+		EXPLICIT_NEW(turf/loadLocation, list/_attributes)
 			loadLocation.dmm_preloader = src
 			attributes = _attributes
 			. = ..()

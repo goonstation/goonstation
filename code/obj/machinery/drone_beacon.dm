@@ -13,7 +13,7 @@
 	_max_health = 500
 	_health = 500
 
-	New()
+	INIT()
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitby_proj)

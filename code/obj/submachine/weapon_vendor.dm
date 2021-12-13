@@ -106,7 +106,7 @@
 	desc = "An automated quartermaster service for supplying your security team with weapons and gear."
 	token_accepted = /obj/item/requisition_token/security
 	log_purchase = TRUE
-	New()
+	INIT()
 		..()
 		materiel_stock += new/datum/materiel/loadout/standard
 		materiel_stock += new/datum/materiel/loadout/offense
@@ -156,7 +156,7 @@
 	ex_act()
 		return
 
-	New()
+	INIT()
 		..()
 		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/sidearm/smartgun

@@ -4356,7 +4356,7 @@
 /area/station/bridge)
 "ajz" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -9957,7 +9957,7 @@
 "awC" = (
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -13443,7 +13443,7 @@
 /area/station/hallway/secondary/exit)
 "aFn" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "aFo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -14442,7 +14442,7 @@
 /area/station/crew_quarters/bar)
 "aHL" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -16688,7 +16688,7 @@
 /area/station/crew_quarters/cafeteria)
 "aNB" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
@@ -17351,7 +17351,7 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -17592,7 +17592,7 @@
 /obj/item/crowbar,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/flash,
 /turf/simulated/floor/red/side{
@@ -18239,7 +18239,7 @@
 /area/station/hallway/primary/central)
 "aQW" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18475,7 +18475,7 @@
 /area/station/quartermaster/office)
 "aRA" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -19379,7 +19379,7 @@
 /area/station/quartermaster/storage)
 "aTH" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -19640,7 +19640,6 @@
 	dir = 0;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -20520,7 +20519,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
@@ -20584,7 +20583,7 @@
 /area/station/science/lab)
 "aWi" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -21988,7 +21987,6 @@
 	dir = 8;
 	external_pressure_bound = 0;
 	icon_state = "in";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -22125,7 +22123,7 @@
 /area/station/hydroponics/bay)
 "aZF" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -23362,7 +23360,7 @@
 "bcq" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -24542,7 +24540,7 @@
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/white,
@@ -25564,7 +25562,7 @@
 /area/station/crew_quarters/fitness)
 "bhp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -25913,7 +25911,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "misc_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -25999,7 +25996,7 @@
 /area/station/hallway/primary/south)
 "biD" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -26842,7 +26839,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "tox_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -27488,7 +27484,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "co2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 0;
 	pressure_checks = 2;
@@ -27876,7 +27871,7 @@
 /area/station/crew_quarters/locker)
 "bmN" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -28437,7 +28432,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "n2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;
@@ -28484,7 +28478,6 @@
 	frequency = 1441;
 	icon_state = "in";
 	id = "o2_out";
-	initialize_directions = 1;
 	internal_pressure_bound = 4000;
 	on = 1;
 	pressure_checks = 2;

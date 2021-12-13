@@ -317,7 +317,7 @@
 	var/vowel_lower = "a"
 	var/vowel_upper = "A"
 
-	New()
+	INIT()
 		..()
 		var/picker = rand(1,5)
 		switch(picker)
@@ -458,7 +458,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-	New()
+	INIT()
 		src.msgGain = zalgoify(src.msgGain, rand(0,8), rand(0, 2), rand(0, 8))
 		..()
 
@@ -487,7 +487,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-	New()
+	INIT()
 		src.msgGain = voidSpeak(src.msgGain)
 		..()
 

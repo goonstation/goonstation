@@ -137,7 +137,7 @@
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/morgue/connected = null
 	anchored = 1.0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		src.connected?.connected = null
@@ -189,7 +189,7 @@
 	var/locked = 0
 	var/obj/machinery/crema_switch/igniter = null
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 
@@ -380,7 +380,7 @@
 	var/obj/crematorium/connected = null
 	anchored = 1.0
 	var/datum/light/light //Only used for tanning beds.
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		src.connected?.connected = null
@@ -437,7 +437,7 @@
 		src.crematoriums = null
 		. = ..()
 
-/obj/machinery/crema_switch/New()
+INIT_TYPE(/obj/machinery/crema_switch)
 	..()
 	UnsubscribeProcess()
 
@@ -641,7 +641,7 @@
 			var/obj/crematorium/tanning/tanningbed = src.connected
 			tanningbed.tanningcolor = tubecolor
 
-	New()
+	INIT()
 		..()
 		tanningtube = new /obj/item/light/tube(src)
 		tanningtube.name = "stock tanning light tube"
@@ -704,7 +704,7 @@
 	var/obj/crematorium/tanning/linked = null //The linked tanning bed
 
 
-	New()
+	INIT()
 		..()
 		get_link()
 

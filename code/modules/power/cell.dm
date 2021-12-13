@@ -59,7 +59,7 @@
 	desc = "A custom large power cell."
 	maxcharge = 3000
 
-	New()
+	INIT()
 		..()
 		processing_items |= src
 
@@ -94,7 +94,7 @@
 /obj/item/cell/shell_cell/charged
 	charge = 4000
 
-/obj/item/cell/New()
+INIT_TYPE(/obj/item/cell)
 	..()
 
 // I think this relic of a by-gone age is only used by APCs (in New()). Did result in absurd numbers for these
@@ -270,7 +270,7 @@
 	specialicon = 1
 	unusualCell = 1
 
-/obj/item/cell/potato/New(var/loc, var/potency, var/endurance)
+INIT_TYPE(/obj/item/cell/potato, var/loc, var/potency, var/endurance)
 	src.maxcharge += rand(1,100) //slight deviation by specimen
 	src.maxcharge += round(potency*(6+rand(1,4))) //more deviation
 	src.genrate = round(endurance/rand(12,16))
@@ -299,7 +299,7 @@
 	max_charge = 10.0
 	recharge_rate = 0.0
 
-/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
+INIT_TYPE(/obj/item/ammo/power_cell/self_charging/potato, var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()
 	src.max_charge += round(potency/rngfactor)
 	src.recharge_rate = 0.5 * round(endurance/rand(25,30))

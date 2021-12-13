@@ -1,7 +1,7 @@
 obj/effects/tatara
 	var/obj/spark_generator/sparks = new/obj/spark_generator
 
-	New()
+	INIT()
 		..()
 		sparks.mouse_opacity = 0
 		vis_contents += sparks

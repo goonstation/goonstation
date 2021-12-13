@@ -39,7 +39,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	var/list/fxlist = null
 	var/list/soundSubscribers = null
 
-	New()
+	INIT()
 		..()
 		fxlist = lunar_fx_sounds
 		if (ambientSound)
@@ -139,7 +139,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	pathable = 0
 	var/isHemera = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (istype( get_step(src, WEST), src.type))
@@ -182,7 +182,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	oxygen = 0
 	fullbright = 1
 
-	New()
+	INIT()
 		..()
 		//icon_state = "moon[rand(1,3)]"
 
@@ -236,12 +236,12 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	/obj/item/clothing/suit/esdjacket)
 
 /datum/computer/file/record/moon_mail
-	New()
+	INIT()
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"
 
 	renovation_it
-		New()
+		INIT()
 			..()
 			fields = list("MLH_INTERNAL",
 "*ALL",
@@ -257,7 +257,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "World Museum of Lunar History Information Technology Services")
 
 	no_journalists
-		New()
+		INIT()
 			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
@@ -277,7 +277,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "Recommended action: Detention of agent and confiscation of recording materials.")
 
 	no_radicals
-		New()
+		INIT()
 			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
@@ -297,7 +297,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "Recommended action: Detention of agent.")
 
 	ex_employee
-		New()
+		INIT()
 			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
@@ -319,7 +319,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "agent turns violent or attempts to enter secure area.")
 
 	saw_a_thing
-		New()
+		INIT()
 			..()
 			fields = list("MLH_GENERAL",
 "*SEC",
@@ -343,7 +343,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "what kind of fuckin monster am I stuck in here with")
 
 	saw_a_thing2
-		New()
+		INIT()
 			..()
 			fields = list("MLH_GENERAL",
 "*SEC",
@@ -355,7 +355,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 
 	weird_guest
-		New()
+		INIT()
 			..()
 			fields = list("MLH_GENERAL",
 "*ALL",
@@ -378,7 +378,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "Anyway, see you at the tournament.  Laters, Zack.")
 
 	weirder_guest
-		New()
+		INIT()
 			..()
 			fields = list("MLH_GENERAL",
 "*ALL",
@@ -397,7 +397,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 
 	earthrise00
-		New()
+		INIT()
 			..()
 			fields = list("LNN_GENERAL",
 "*ALL",
@@ -418,7 +418,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 "uninterested in investigating someone cleansing the city of \"undesirables\"?")
 
 /obj/item/audio_tape/earthrise
-	New()
+	INIT()
 		..()
 
 		messages = list("-fucking idiot?  I can't keep cleaning up after you every time you decide to go loud.  Do you have any idea how difficult you are making my job?!",
@@ -457,7 +457,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		"???")
 
 /obj/item/disk/data/fixed_disk/lunar
-	New()
+	INIT()
 		..()
 
 		var/datum/computer/folder/currentFolder = new /datum/computer/folder {name="mails";} (src)
@@ -488,7 +488,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 
 /obj/item/audio_tape/lunar_01
-	New()
+	INIT()
 		..()
 
 		messages = list("This the stuff from that journo?",
@@ -513,13 +513,13 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 /obj/item/device/audio_log/lunar_01
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/lunar_01(src)
 
 /obj/item/device/audio_log/lunar_02
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/earthrise(src)
 
@@ -532,7 +532,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	setup_charge_percentage = 100
 	flashlight_lum = 4
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(1 SECOND)
@@ -624,7 +624,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	tour7
 		location = "tour7"
-		New()
+		INIT()
 			var/goofy_story = pick_string("lunar.txt", "mary_stories")
 			codes_txt = "tour;next_tour=tour8;desc=This is the lunar surf..oh! You probably can't hear me, being that we are outside and my audio systems aren't hooked to the radio.  Ha ha.  I guess I can just say anything I want now.  [goofy_story]"
 			..()
@@ -964,7 +964,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	var/broken = 0
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 
@@ -1036,7 +1036,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	density = 1
 	layer = MOB_LAYER + 1
 
-	New()
+	INIT()
 		..()
 
 		var/image/stand = image('icons/misc/lunar.dmi', "moonstand")
@@ -1192,7 +1192,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	var/the_goddamn_regex = "/\\s/gm"
 	//req_access
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -1213,6 +1213,13 @@ obj/machinery/embedded_controller/radio/maintpanel
 				if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 					src.wired_connection = test_link
 					src.wired_connection.master = src
+
+		var/datum/computer/file/embedded_program/maintpanel/new_prog = new
+		new_prog.master = src
+		program = new_prog
+
+		if (setup_string)
+			new_prog.do_setup(setup_string)
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
@@ -1239,17 +1246,6 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 		else
 			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 100)
-
-	initialize()
-		..()
-
-		var/datum/computer/file/embedded_program/maintpanel/new_prog = new
-		new_prog.master = src
-		program = new_prog
-
-		if (setup_string)
-			new_prog.do_setup(setup_string)
-
 
 	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!signal || signal.encryption)
@@ -1632,7 +1628,7 @@ datum/computer/file/embedded_program/maintpanel
 	var/tmp/selected_entry = 0
 	var/tmp/list/sessions = list()
 
-	New()
+	INIT()
 		..()
 		for (var/line = 1, line <= 13, line++)
 			memory += "display[line]"
@@ -1856,7 +1852,7 @@ datum/maintpanel_device_entry
 		var/open = 0
 		var/locked = 0
 
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, obj/machinery/door/airlock/targetDoor, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, obj/machinery/door/airlock/targetDoor, entryName)
 			..()
 
 			if (!istype(newMaster) || !istype(targetDoor))
@@ -1922,7 +1918,7 @@ datum/maintpanel_device_entry
 		name = "BLASTDOOR"
 		var/obj/machinery/door/poddoor/ourDoor
 
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, obj/machinery/door/poddoor/targetDoor, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, obj/machinery/door/poddoor/targetDoor, entryName)
 			..()
 
 			if (!istype(newMaster) || !istype(targetDoor))
@@ -1977,7 +1973,7 @@ datum/maintpanel_device_entry
 			"  ACTIVE: [(ourMannequin?.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
 			"  CONDITION: [ourMannequin?.alive ? "OK" : "REPAIRS NEEDED"]")
 
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, obj/critter/mannequin/mannequin, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, obj/critter/mannequin/mannequin, entryName)
 			..()
 
 			if (!istype(newMaster) || !istype(mannequin))
@@ -2017,7 +2013,7 @@ datum/maintpanel_device_entry
 
 	dummy	//This is a fake entry that exists to fill space, not to be confused with the mannequin type.
 
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
 			..()
 
 			if (istype(newMaster))
@@ -2036,7 +2032,7 @@ datum/maintpanel_device_entry
 
 	dummyreactor
 
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
 			..()
 
 			if (istype(newMaster))
@@ -2049,7 +2045,7 @@ datum/maintpanel_device_entry
 			return list("  CLASS MSTAR-80A", "  STATUS:  INACTIVE", "  OUTPUT: 0 W", "", " !! CHECK COOLANT PUMPS !!", " !! TURBINE TRIP !!")
 
 	dummyatmos
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
 			..()
 
 			if (istype(newMaster))
@@ -2062,7 +2058,7 @@ datum/maintpanel_device_entry
 			return list("  ATMOS PROCESSOR","  STATUS: LOW FUNCTION", "  REFRIGERANT LEVELS LOW","  FILTER 0 STATUS: OK", "  FILTER 1 STATUS: REPLACE", "  FILTER 2 STATUS: REPLACE")
 
 	dummywhat
-		New(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
+		INIT(datum/computer/file/embedded_program/maintpanel/newMaster, entryName)
 			..()
 
 			if (istype(newMaster))
@@ -2084,7 +2080,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	locked = 1
 	setup_string = "fakewhat,HOW"
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(1 SECOND)

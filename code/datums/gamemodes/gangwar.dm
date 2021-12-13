@@ -55,7 +55,7 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
+	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > leaders_possible.len)
@@ -107,19 +107,8 @@
 		// uniform_prompt(leaderMind)
 
 	find_potential_hot_zones()
-
-	SPAWN_DBG (10 MINUTES)
-		process_hot_zones()
-
-	SPAWN_DBG (15 MINUTES)
-		process_kidnapping_event()
-
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-	SPAWN_DBG (50 MINUTES)
-		force_shuttle()
-
 	return 1
 
 /datum/game_mode/gang/proc/force_shuttle()
@@ -211,6 +200,13 @@
 		return
 	else
 		slow_process = 0
+
+	if (ticker.round_elapsed_ticks == 10 MINUTES)
+		process_hot_zones()
+	if (ticker.round_elapsed_ticks == 15 MINUTES)
+		process_kidnapping_event()
+	if (ticker.round_elapsed_ticks == 55 MINUTES)
+		force_shuttle()
 
 	for(var/datum/gang/G in gangs)
 		var/tmp_turf_points = G.num_areas_controlled()*15
@@ -685,7 +681,7 @@
 	var/obj/item/spray_paint/S
 	var/mob/M
 
-	New(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
+	INIT(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
 		src.target_turf = target_turf
 		src.target_area = get_area(target_turf)
 		src.S = S
@@ -772,7 +768,7 @@
 	var/HTML = null
 	var/list/buyable_items = list()
 
-	New()
+	INIT()
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
@@ -1679,7 +1675,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 
 /obj/item/implanter/gang
 	icon_state = "implanter1-g"
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return

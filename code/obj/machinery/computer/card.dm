@@ -26,7 +26,7 @@
 	light_g = 1
 	light_b = 0.1
 
-/obj/machinery/computer/card/New()
+INIT_TYPE(/obj/machinery/computer/card)
 	..()
 	src.allowed_access_list = civilian_access_list + engineering_access_list + supply_access_list + research_access_list + command_access_list + security_access_list - access_maxsec
 /obj/machinery/computer/card/console_upper
@@ -50,7 +50,7 @@
 	burn_possible = 1
 	health = 10
 
-	New(var/loc, var/obj/object)
+	INIT(var/loc, var/obj/object)
 		..(loc)
 		src.set_loc(loc)
 		src.name = "foldable portable identification computer"
@@ -84,7 +84,7 @@
 	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 	var/deployed = 1
 
-	New()
+	INIT()
 		..()
 		src.AddComponent(/datum/component/foldable,/obj/item/objBriefcase/blue_green_stripe)
 		src.cell = new /obj/item/cell(src)

@@ -46,7 +46,7 @@
 	var/beepsky_held_this = 0 // Did a certain validhunter hold this?
 	var/flipped = false //is it currently rotated so that youre grabbing it by the head?
 
-	New()
+	INIT()
 		..()
 		var/cell = null
 		if(cell_type)
@@ -317,7 +317,7 @@
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
 	cell_type = /obj/item/ammo/power_cell
-	New()
+	INIT()
 		. = ..()
 		AddComponent(/datum/component/cell_holder, FALSE)
 
@@ -348,7 +348,7 @@
 	cost_normal = 0
 	can_swap_cell = 0
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/simple) //override spark of parent
 
@@ -387,7 +387,7 @@
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
 	var/state = CLOSED_AND_OFF
 
-	New()
+	INIT()
 		..()
 		src.setItemSpecial(/datum/item_special/spark/ntso) //override spark of parent
 

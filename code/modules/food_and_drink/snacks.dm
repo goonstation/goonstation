@@ -72,6 +72,7 @@
 	var/sliced = FALSE
 	var/topping = FALSE
 	var/num = 0
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
 	var/sliced_icon = "pslice"
@@ -83,7 +84,7 @@
 
 	food_effects = list("food_deep_burp", "food_all")
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
 		if (prob(1))
@@ -215,7 +216,7 @@
 	topping = TRUE
 	topping_color = "#C90E0E"
 
-	New()
+	INIT()
 		..()
 		src.add_topping(0)
 
@@ -225,7 +226,7 @@
 	topping = TRUE
 	topping_color = "#663300"
 
-	New()
+	INIT()
 		..()
 		src.add_topping(0)
 
@@ -236,7 +237,7 @@
 	topping_color = "#CFCFCF"
 	food_effects = list("food_disease_resist")
 
-	New()
+	INIT()
 		..()
 		src.add_topping(0)
 
@@ -246,7 +247,7 @@
 	topping = TRUE
 	topping_color = "#3CFF00"
 
-	New()
+	INIT()
 		..()
 		src.add_topping(0)
 
@@ -315,7 +316,7 @@
 	food_effects = list("food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK
 
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
@@ -432,7 +433,7 @@
 	food_effects = list("food_refreshed")
 	meal_time_flags = MEAL_TIME_SNACK
 
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
@@ -654,7 +655,7 @@
 	food_effects = list("food_brute")
 	meal_time_flags = MEAL_TIME_BREAKFAST
 
-	New()
+	INIT()
 		..()
 		if (randomized)
 			src.name = "[pick("cranberry", "apple cinnamon", "maple", "cran-apple";5, "blueberry-maple";5, "peaches and cream", "bananas and cream", "strawberries and cream", "plain", "cinnamon", "raisins, dates, and walnuts";5)] oatmeal"
@@ -721,7 +722,7 @@
 	w_class = W_CLASS_SMALL
 	var/prize = 10 //Chance of a rad prize inside!
 
-	New()
+	INIT()
 		..()
 		if (prize > 0)
 			prize = prob(prize)
@@ -789,7 +790,7 @@
 	var/hasPrize = 0
 	food_effects = list("food_refreshed")
 
-	New(loc, prize_inside)
+	INIT(loc, prize_inside)
 		..()
 		hasPrize = (prize_inside == 1)
 
@@ -852,7 +853,7 @@
 		name = "warm donk-pocket"
 		warm = DONK_WARM
 
-		New()
+		INIT()
 			..()
 			src.cooltime()
 			return
@@ -898,7 +899,7 @@
 		if(M.reagents)
 			M.reagents.add_reagent("omnizine",15)
 			M.reagents.add_reagent("teporone", 15)
-			M.reagents.add_reagent("synaptizine", 15)
+			M.reagents.add_reagent("smelling_salt", 15)
 			M.reagents.add_reagent("saline", 15)
 			M.reagents.add_reagent("salbutamol", 15)
 			M.reagents.add_reagent("methamphetamine", 15)
@@ -990,7 +991,7 @@
 		else
 			..()
 
-	New()
+	INIT()
 		..()
 		processing_items |= src
 
@@ -1139,7 +1140,7 @@
 	food_effects = list("food_brute","food_burn")
 
 
-	New()
+	INIT()
 		. = ..()
 		if (random_name)
 			name = "[random_spaghetti_name()] noodles"
@@ -1191,7 +1192,7 @@
 	food_effects = list("food_energized","food_explosion_resist")
 	initial_reagents = list("milk"=50)
 
-	New()
+	INIT()
 		. = ..()
 		name = "boneless [random_spaghetti_name()]"
 
@@ -1209,7 +1210,7 @@
 	food_effects = list("food_energized","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
 
-	New()
+	INIT()
 		. = ..()
 		name = "[random_spaghetti_name()] with tomato sauce"
 
@@ -1256,7 +1257,7 @@
 	food_effects = list("food_energized","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
 
-	New()
+	INIT()
 		. = ..()
 		name = "[random_spaghetti_name()] arrabbiata"
 
@@ -1272,7 +1273,7 @@
 	food_effects = list("food_energized","food_hp_up","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
 
-	New()
+	INIT()
 		. = ..()
 		name = "[random_spaghetti_name()] and meatballs"
 
@@ -1327,7 +1328,7 @@
 	food_effects = list("food_sweaty")
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
-	New()
+	INIT()
 		. = ..()
 		name = "pizza-ghetti"
 
@@ -1446,7 +1447,7 @@
 			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=12,"salicylic_acid"=12)
 
 		random
-			New()
+			INIT()
 				if(rand(1,3) == 1)
 					src.icon_state = "donut2"
 					src.name = "frosted donut"
@@ -1475,7 +1476,7 @@
 	food_effects = list("food_explosion_resist")
 	meal_time_flags = MEAL_TIME_BREAKFAST
 
-	New()
+	INIT()
 		..()
 		if(rand(1,3) == 1)
 			src.icon_state = "seedbagel"
@@ -1540,7 +1541,7 @@
 	initial_reagents = list("ectoplasm" = 10)
 	food_effects = list("food_hp_up_small", "food_damage_tox")
 
-	New()
+	INIT()
 		..()
 		flick("ectoplasm-a", src)
 		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
@@ -2126,7 +2127,7 @@
 	name = "INVISIBLE GHOST OF PANCHO VILLA'S BAKER BROTHER, GARY VILLA"
 	desc = "IGNORE ME"
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (isturf(src.loc))
@@ -2144,7 +2145,7 @@
 	heal_amt = 1
 	food_effects = list("food_energized")
 
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
@@ -2161,7 +2162,7 @@
 	name = "wonton spawner"
 	desc = "You shouldn't see this."
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (isturf(src.loc))
@@ -2217,7 +2218,7 @@
 			src.reagents = W.reagents
 			return
 
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-6, 6)
 		src.pixel_y = rand(-6, 6)
@@ -2380,7 +2381,7 @@
 	initial_volume = 30
 	food_effects = list("food_burn","food_tox")
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("caledonium",20)
 
@@ -2411,7 +2412,7 @@
 	isbutt = 1
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("fartonium",10)
 
@@ -2565,7 +2566,7 @@
 	heal_amt = 2
 	food_effects = list("food_energized_big")
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "nigiri[rand(1,3)]"
 
@@ -2689,7 +2690,7 @@
 	initial_volume = 28
 	food_effects = list("food_rad_resist")
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("saline",7)
 		reagents.add_reagent("charcoal",7)
@@ -2707,7 +2708,7 @@
 	initial_volume = 16
 	food_effects = list("food_energized_big")
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("epinephrine",8)
 		reagents.add_reagent("synaptizine",8)

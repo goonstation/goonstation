@@ -29,6 +29,7 @@
 	var/previous_heal = 0
 	var/portable = 0 //Are we part of a port-a-clone?
 	var/id = null
+	var/emagged = FALSE
 
 	var/cloneslave = 0 //Is a traitor enslaving the clones?
 	var/mob/implant_master = null // Who controls the clones?
@@ -61,7 +62,7 @@
 
 	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
-	New()
+	INIT()
 		..()
 		req_access = list(access_medical_lockers) //For premature unlocking.
 		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
@@ -528,6 +529,7 @@
 		return ..()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		src.emagged = TRUE
 		if (isnull(src.occupant))
 			return 0
 		if (user)
@@ -717,9 +719,10 @@
 
 		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		src.occupant.set_loc(get_turf(src))
+		if (src.emagged) //huck em
+			src.occupant.throw_at(get_edge_target_turf(src, pick(alldirs)), 10, 3)
 		src.occupant = null
 		src.UpdateIcon()
-		return
 
 	proc/malfunction()
 		if (src.occupant)
@@ -817,7 +820,7 @@
 	var/auto_strip = 1 // disabled when emagged (people were babies about this when it being turned off was the default) :V
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 		src.create_reagents(100)
@@ -1142,7 +1145,7 @@
 	var/obj/machinery/clonegrinder/grinder
 	var/obj/item/grab/grab
 
-	New(var/mob/living/carbon/human/ntarg, var/obj/machinery/clonegrinder/ngrind, var/obj/item/grab/ngrab, var/duration_i)
+	INIT(var/mob/living/carbon/human/ntarg, var/obj/machinery/clonegrinder/ngrind, var/obj/item/grab/ngrab, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg

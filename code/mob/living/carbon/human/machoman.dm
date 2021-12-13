@@ -14,7 +14,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 /mob/living/carbon/human/machoman
 	var/list/macho_arena_turfs // NOTE: remove this and the clean_up_arena_turfs proc on the mob if we get around to getting rid of the macho verbs
-	New(loc, shitty)
+	INIT(loc, shitty)
 		..()
 		//src.mind = new
 		src.gender = "male"
@@ -1244,7 +1244,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 /turf/unsimulated/floor/specialroom/gym/macho_arena
 	var/previous_turf_type
 
-	New(var/loc,var/turf_type)
+	INIT(var/loc,var/turf_type)
 		..()
 		previous_turf_type = turf_type
 
@@ -1267,7 +1267,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	density = 0
 	angertext = "rages at"
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			playsound(src.loc, pick(snd_macho_rage), 50, 1, 0, 1.75)
@@ -1405,7 +1405,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	amount = 5
 	initial_volume = 50
 	initial_reagents = list("capsaicin"=20,"porktonium"=30)
-	New()
+	INIT()
 		..()
 
 	attack(var/mob/M, var/mob/user, def_zone)
@@ -1471,7 +1471,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 	//Restricting possible leap areas to prevent NERDSS from finding secrets when they get turned into a matzo man
 	var/list/possible_areas = list()
 
-	New()
+	INIT()
 		. = ..()
 		possible_areas += get_areas(/area/station)
 		possible_areas += get_areas(/area/diner)

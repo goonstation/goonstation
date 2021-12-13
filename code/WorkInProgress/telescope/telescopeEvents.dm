@@ -51,7 +51,7 @@
 	tags = TAG_WRECKAGE | TAG_NPC
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeValiant(src)
 
@@ -63,7 +63,7 @@
 	tags = TAG_ANOMALY
 	rarity = 3
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopePen(src)
 
@@ -79,7 +79,7 @@
 	size = 15
 	tags = TAG_PLANET | TAG_TELEPORT_LOC
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeGeminorum(src)
 
@@ -90,7 +90,7 @@
 	size = 25
 	tags = TAG_TELEPORT_LOC
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
@@ -101,7 +101,7 @@
 	size = 25
 	tags = TAG_TELEPORT_LOC
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeCow(src)
 
@@ -114,7 +114,7 @@
 	rarity = 40
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -133,7 +133,7 @@
 	rarity = 100
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -152,7 +152,7 @@
 	rarity = 20
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -170,7 +170,7 @@
 	rarity = 80
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -189,7 +189,7 @@
 	rarity = 100
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -207,7 +207,7 @@
 	rarity = 100
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -225,7 +225,7 @@
 	rarity = 50
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -243,7 +243,7 @@
 	rarity = 90
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -261,7 +261,7 @@
 	rarity = 14
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue
@@ -279,7 +279,7 @@
 	rarity = 10
 	size = 15
 
-	New()
+	INIT()
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeAsteroidDialogue(src)
 		var/datum/dialogueMaster/telescopeAsteroidDialogue/D = telescopeDialogue

@@ -30,7 +30,7 @@ var/global/the_automaton = null
 	var/spin_lock = null // for making sure the sun keeps spinning in the direction it's already going
 	var/got_cheget_key = 0 // Don't keep handing me this you fuck
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			if (!the_automaton)

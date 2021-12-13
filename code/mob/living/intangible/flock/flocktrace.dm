@@ -10,7 +10,7 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flocktrace"
 
-/mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
+INIT_TYPE(/mob/living/intangible/flock/trace, atom/loc, datum/flock/F)
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)

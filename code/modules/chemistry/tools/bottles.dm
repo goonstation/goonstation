@@ -16,7 +16,7 @@
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
-	New()
+	INIT()
 		if (!src.bottle_style)
 			src.bottle_style = "[rand(1,4)]"
 		..()
@@ -123,7 +123,7 @@
 	initial_volume = 40
 	amount_per_transfer_from_this = 5
 
-	New()
+	INIT()
 		var/poison = pick_string("chemistry_tools.txt", "traitor_poison_bottle")
 		src.initial_reagents = poison
 		logTheThing("debug", src, null, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")

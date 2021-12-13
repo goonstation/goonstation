@@ -27,7 +27,7 @@
 	var/feedings_required = 0
 	var/stable = 0
 
-	New(var/loc,var/lifespan = 2.5 MINUTES)
+	INIT(var/loc,var/lifespan = 2.5 MINUTES)
 		..()
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it
@@ -50,25 +50,23 @@
 			shake_camera(M, 5, 16)
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,0.5)
 
-		sleep(lifespan / 2)
-		if (!stable)
-			src.visible_message("<span class='alert'><b>[src] begins to collapse in on itself!</b></span>")
-			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
-			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
-		if (random_events.announce_events)
-			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
+		SPAWN_DBG(lifespan / 2)
+			if (!stable)
+				src.visible_message("<span class='alert'><b>[src] begins to collapse in on itself!</b></span>")
+				playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
+				animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
+			if (random_events.announce_events)
+				command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
 
-		sleep(lifespan)
-		if (!stable)
-			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
-			playsound(src,'sound/machines/satcrash.ogg',100,0,5,0.5)
-			new /obj/bhole(get_turf(src),300,12)
-		else
-			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
+			sleep(lifespan)
+			if (!stable)
+				src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
+				playsound(src,'sound/machines/satcrash.ogg',100,0,5,0.5)
+				new /obj/bhole(get_turf(src),300,12)
+			else
+				src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
 
-		SPAWN_DBG(0)
 			qdel(src)
-		return
 
 	Bumped(atom/A)
 		if (!src.stable)
@@ -110,7 +108,7 @@
 	var/move_prob = 12
 	var/time_to_die = 0
 
-	New(var/loc,duration, move_prob = -1)
+	INIT(var/loc,duration, move_prob = -1)
 		..()
 		if (duration < 1)
 			duration = rand(5 SECONDS,30 SECONDS)
@@ -245,7 +243,7 @@
 // Particle FX
 
 /datum/particleSystem/bhole_warning
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "bhole_warning", 300)
 
 	Run()

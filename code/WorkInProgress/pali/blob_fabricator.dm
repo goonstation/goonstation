@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 		/datum/manufacture/mechanics/blob_overmind
 	)
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("blob"), setname=FALSE)
 

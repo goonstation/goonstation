@@ -13,7 +13,7 @@
 	var/list/obj/item/active_tools = list(null, null, null)
 	var/list/obj/item/tools = list()
 
-	New()
+	INIT()
 		..()
 		bioHolder = new(src)
 

@@ -18,7 +18,7 @@
 	var/icon_tag = "st"
 	var/quick_deploy_fuel = 2
 
-	New()
+	INIT()
 		..()
 		icon_state = "[src.icon_tag]_deployer"
 
@@ -96,7 +96,7 @@
 	var/quick_deploy_fuel = 2 // number of quick deploys the turret has left
 	var/spread = 0
 
-	New(var/direction)
+	INIT(var/direction)
 		..()
 		src.set_dir(direction)
 		src.set_initial_angle()
@@ -574,7 +574,7 @@
 	icon_tag = "nt"
 	quick_deploy_fuel = 0
 
-	New(var/direction)
+	INIT(var/direction)
 		..(direction=direction)
 		/*
 		SPAWN_DBG(src.wait_time)

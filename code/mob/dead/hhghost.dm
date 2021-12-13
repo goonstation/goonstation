@@ -13,7 +13,7 @@
 	original = null
 	..()
 
-/mob/dead/hhghost/New()
+INIT_TYPE(/mob/dead/hhghost)
 	. = ..()
 	APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_HHGHOST)
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF

@@ -16,7 +16,7 @@ var/global/list/adventure_elements_by_id = list()
 	desc = "AND YOU DAMN WELL SHOULDN'T EXAMINE IT"
 	var/id = null
 
-	New()
+	INIT()
 		if (src.opacity)
 			src.opacity = 0
 			RL_SetOpacity(1)
@@ -222,7 +222,7 @@ var/global/list/adventure_elements_by_id = list()
 	desc = "AND YOU DAMN WELL SHOULDN'T EXAMINE IT"
 	var/id = null
 
-	New()
+	INIT()
 		if(!(src.id in adventure_elements_by_id))
 			adventure_elements_by_id[src.id] = list(src)
 		else

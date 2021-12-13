@@ -108,7 +108,7 @@
 
 		return press_desc
 
-	New()
+	INIT()
 		..()
 		// theres probably a way to do this that isnt stupid but: fuck u i dont give a shite
 		if (is_fuckled(EAST))
@@ -121,11 +121,10 @@
 				for(var/mob/M in view(7, src.loc))
 					shake_camera(M, 20, 16)
 
-				sleep(2 SECONDS)
-				new /obj/item/electronics/frame/press_frame(src.loc)
-				src.visible_message("[src] finishes deploying its you-blew-it payload and folds back up into a frame so you can try again.")
-				qdel(src)
-				return
+				SPAWN_DBG(2 SECONDS)
+					new /obj/item/electronics/frame/press_frame(src.loc)
+					src.visible_message("[src] finishes deploying its you-blew-it payload and folds back up into a frame so you can try again.")
+					qdel(src)
 
 			src.x -= 1
 		UpdateIcon()

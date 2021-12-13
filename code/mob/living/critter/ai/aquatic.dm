@@ -18,7 +18,7 @@
 /datum/aiHolder/aquatic/king_crab
 	var/turf/get_away = null
 
-/datum/aiHolder/aquatic/king_crab/New()
+INIT_TYPE(/datum/aiHolder/aquatic/king_crab)
 	..()
 	default_task = get_instance(/datum/aiTask/crab_behavior, list(src))
 
@@ -26,7 +26,7 @@
 	name = "crab behavior"
 	var/datum/aiTask/next = null
 
-/datum/aiTask/crab_behavior/New(parentHolder)
+INIT_TYPE(/datum/aiTask/crab_behavior, parentHolder)
 	..(parentHolder)
 
 /datum/aiTask/crab_behavior/on_tick()
@@ -52,7 +52,7 @@
 	var/datum/sea_hotspot/my_hotspot = null
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/aquatic/fish/New()
+INIT_TYPE(/datum/aiHolder/aquatic/fish)
 	..()
 	task_cache += get_instance(/datum/aiTask/find_hotspot, list(src))
 	task_cache += get_instance(/datum/aiTask/timed/wander/aquatic, list(src, task_cache[/datum/aiTask/find_hotspot]))
@@ -88,7 +88,7 @@
 /datum/aiTask/sequence/hotspot_routine
 	name = "hotspot routine"
 
-/datum/aiTask/sequence/hotspot_routine/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/hotspot_routine, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/evaluate_hotspot, list(holder)))
 	add_task(holder.get_instance(/datum/aiTask/succeedable/follow_hotspot, list(holder)))
@@ -177,7 +177,7 @@
 /datum/aiTask/find_hotspot
 	name = "find hotspot"
 
-/datum/aiTask/find_hotspot/New(parentHolder)
+INIT_TYPE(/datum/aiTask/find_hotspot, parentHolder)
 	..(parentHolder)
 
 /datum/aiTask/find_hotspot/on_tick()

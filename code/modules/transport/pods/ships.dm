@@ -17,7 +17,7 @@
 	maxhealth = 200
 	weapon_class = 1
 
-/obj/machinery/vehicle/recon/New()
+INIT_TYPE(/obj/machinery/vehicle/recon)
 	..()
 	/////////Weapon Setup
 	src.m_w_system = new /obj/item/shipcomponent/mainweapon( src )
@@ -40,7 +40,7 @@
 	health = 200
 	maxhealth = 200
 
-/obj/machinery/vehicle/cargo/New()
+INIT_TYPE(/obj/machinery/vehicle/cargo)
 	..()
 	src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
 	src.sec_system.ship = src
@@ -61,7 +61,7 @@
 	var/image/damaged = null
 	var/antispam = 0
 
-	New()
+	INIT()
 		..()
 		name = "Flying Saucer"
 		src.sec_system = new /obj/item/shipcomponent/secondary_system/UFO( src )
@@ -103,7 +103,7 @@
 			src.paint_pod(W, user)
 		else return ..(W, user)
 
-	New()
+	INIT()
 		..()
 		//Cargo hold
 		src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo/small( src )
@@ -128,7 +128,7 @@
 ////////armed civ putt
 
 obj/machinery/vehicle/miniputt/pilot
-	New()
+	INIT()
 		. = ..()
 		src.com_system.deactivate()
 		qdel(src.engine)
@@ -145,7 +145,7 @@ obj/machinery/vehicle/miniputt/pilot
 		return
 
 /obj/machinery/vehicle/miniputt/armed
-	New()
+	INIT()
 		..()
 		//Phaser
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon
@@ -165,7 +165,7 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 200
 	init_comms_type = /obj/item/shipcomponent/communications/wizard
 
-	New()
+	INIT()
 		..()
 		//Phaser
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon
@@ -189,7 +189,7 @@ obj/machinery/vehicle/miniputt/pilot
 	speed = 0.8
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
-	New()
+	INIT()
 		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
@@ -203,7 +203,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "syndiputt spawner"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "syndi_mini_spawn"
-	New()
+	INIT()
 		..()
 #ifdef UNDERWATER_MAP
 		new/obj/machinery/vehicle/tank/minisub/syndisub(src.loc)
@@ -234,7 +234,7 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 225
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
-	New()
+	INIT()
 		..()
 		src.m_w_system = new /obj/item/shipcomponent/mainweapon/russian(src)
 		src.m_w_system.ship = src
@@ -254,7 +254,7 @@ obj/machinery/vehicle/miniputt/pilot
 	desc = "A smaller version of the I-class industrial pod, the IndyPutt is useful for emergency repair work and small-scale mining operations."
 
 	armed
-		New()
+		INIT()
 			..()
 			src.m_w_system = new /obj/item/shipcomponent/mainweapon/foamer(src)
 			src.m_w_system.ship = src
@@ -741,7 +741,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 75
 	maxhealth = 75
 
-/obj/machinery/vehicle/pod_civ/New()
+INIT_TYPE(/obj/machinery/vehicle/pod_civ)
 	..()
 	src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
 	src.sec_system.ship = src
@@ -824,7 +824,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			src.paint_pod(W, user)
 		else return ..(W, user)
 
-	New()
+	INIT()
 		..()
 		src.sec_system = new /obj/item/shipcomponent/secondary_system/cargo( src )
 		src.sec_system.ship = src
@@ -954,20 +954,20 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
-		New()
+		INIT()
 			..()
 			src.sec_system = new /obj/item/shipcomponent/pod_weapon/gun( src )
 			src.sec_system.ship = src
 			src.components += src.sec_system
 			return*/
 
-	New()
+	INIT()
 		..()
 		myhud.update_systems()
 		myhud.update_states()
 		return
 
-	New()
+	INIT()
 		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
@@ -1399,7 +1399,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	var/succeeding = 0
 	var/did_warp = 0
 
-	New()
+	INIT()
 		. = ..()
 		src.components -= src.engine
 		qdel(src.engine)

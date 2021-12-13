@@ -16,7 +16,7 @@ obj/item/rocko
 	var/mob/living/holder
 	var/obj/item/clothing/head/hat
 
-	New()
+	INIT()
 		. = ..()
 		if(prob(20))
 			src.bright = TRUE

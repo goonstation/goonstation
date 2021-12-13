@@ -129,7 +129,7 @@ For hairball DynAssemblies see: jonescity.dm
 	var/obj/item/dynassembly/assembly
 	var/mob/user
 
-	New(Assembly, User, Duration=150)
+	INIT(Assembly, User, Duration=150)
 		assembly = Assembly
 		user = User
 		duration = Duration
@@ -161,7 +161,7 @@ For hairball DynAssemblies see: jonescity.dm
 	var/obj/item/dynassembly/assembly
 	var/mob/user
 
-	New(Assembly, User, Duration=150)
+	INIT(Assembly, User, Duration=150)
 		assembly = Assembly
 		user = User
 		duration = Duration
@@ -306,7 +306,7 @@ For hairball DynAssemblies see: jonescity.dm
 		icon_state = "part_hrod"
 
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0)
 			update_appearance()

@@ -9,7 +9,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	New(var/loc, var/forceartiorigin, var/list/datum/projectile/artifact/forceBullets)
+	INIT(var/loc, var/forceartiorigin, var/list/datum/projectile/artifact/forceBullets)
 		..()
 		var/datum/artifact/energygun/AS = new /datum/artifact/energygun(src)
 		if (forceartiorigin)
@@ -106,7 +106,7 @@
 	var/list/datum/projectile/artifact/bullets = list()
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
-	New()
+	INIT()
 		..()
 		var/datum/projectile/artifact/bullet = null
 		var/mode_amount = pick(7;1, 2;2, 1;3) // 70% 1 mode, 20% 2 modes, 10% 3 modes

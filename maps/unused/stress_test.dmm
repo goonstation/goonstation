@@ -1738,7 +1738,6 @@
 "dJ" = (
 /obj/machinery/atmospherics/filter{
 	dir = 4;
-	initialize_directions = 14;
 	filter_type = 1
 	},
 /turf/simulated/floor,
@@ -1754,7 +1753,6 @@
 "dL" = (
 /obj/machinery/atmospherics/filter{
 	dir = 4;
-	initialize_directions = 14;
 	filter_type = 2
 	},
 /turf/simulated/floor,
@@ -1791,7 +1789,6 @@
 "dQ" = (
 /obj/machinery/atmospherics/mixer{
 	dir = 8;
-	initialize_directions = 13;
 	node1_concentration = 0.9;
 	node2_concentration = 0.1
 	},

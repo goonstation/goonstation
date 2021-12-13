@@ -14,7 +14,7 @@
 	var/image/color_underlay = null
 	rc_flags = 0
 
-	New()
+	INIT()
 		..()
 		jars += src
 
@@ -130,7 +130,7 @@ proc/load_intraround_jars()
 	name = "ethereal pickle"
 	desc = "You can't see anything, but there is an unmistakable presence of vinegar and spices here.  Kosher dill."
 
-	New(newloc, var/obj/item/reagent_containers/pickled)
+	INIT(newloc, var/obj/item/reagent_containers/pickled)
 		..(newloc)
 		if (istype(pickled))
 

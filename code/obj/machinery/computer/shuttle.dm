@@ -403,7 +403,7 @@
 
 	return
 
-/obj/machinery/computer/research_shuttle/New()
+INIT_TYPE(/obj/machinery/computer/research_shuttle)
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		src.net_id = generate_net_id(src)

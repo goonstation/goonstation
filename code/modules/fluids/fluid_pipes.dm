@@ -17,7 +17,7 @@
 	var/visited = 0 // Used by DFS when creating networks
 	var/datum/flow_network/network = null // Which network is mine?
 
-	New()
+	INIT()
 		START_TRACKING
 		..()
 
@@ -196,7 +196,7 @@ proc/find_unvisited_node()
 	#define TURBINE 2
 	var/last = 0
 
-	New(var/obj/fluid_pipe/root)
+	INIT(var/obj/fluid_pipe/root)
 		..()
 		pipe_cont.net = src
 		START_TRACKING
@@ -333,5 +333,5 @@ proc/DFS_LOUD(var/obj/fluid_pipe/root)
 
 /datum/reagents/fp_holder
 	var/datum/flow_network/net
-	New()
+	INIT()
 		..()

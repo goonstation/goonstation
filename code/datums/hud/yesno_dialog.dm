@@ -15,7 +15,7 @@
 	var/datum/contextLayout/contextLayout = null
 
 	//you could enter some maptext stuff here and then have buttons auto expand
-	New(var/mob/M, var/question)
+	INIT(var/mob/M, var/question)
 		user = M
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 

@@ -17,7 +17,7 @@ var/global/datum/ui_state/tgui_not_incapacitated_state/tgui_not_incapacitated_tu
 /datum/ui_state/tgui_not_incapacitated_state
 	var/turf_check = FALSE
 
-/datum/ui_state/tgui_not_incapacitated_state/New(loc, no_turfs = FALSE)
+INIT_TYPE(/datum/ui_state/tgui_not_incapacitated_state, loc, no_turfs = FALSE)
 	..()
 	turf_check = no_turfs
 

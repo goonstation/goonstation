@@ -2,7 +2,7 @@
 /datum/hud/critter/flock/drone
 	hud_icon = 'icons/mob/flock_ui.dmi'
 
-	New(M)
+	INIT(M)
 		..(M)
 		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "NORTH,WEST", HUD_LAYER+1, tooltipTheme = "flock")
 		releaseButton.desc = "Remove yourself from this drone and become intangible."

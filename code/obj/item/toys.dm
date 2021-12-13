@@ -19,7 +19,7 @@
 	var/sound_attackF1 = 'sound/weapons/female_toyattack.ogg'
 	var/sound_attackF2 = 'sound/weapons/female_toyattack2.ogg'
 
-	New()
+	INIT()
 		..()
 		src.bladecolor = pick("R","O","Y","G","C","B","P","Pi","W")
 		if (prob(1))
@@ -105,7 +105,7 @@
 	var/redeemer = null
 	var/receiver = null
 
-/obj/item/toy/diploma/New()
+INIT_TYPE(/obj/item/toy/diploma)
 	..()
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
@@ -165,7 +165,7 @@
 	var/datum/game/tetris
 	var/datum/mail
 
-	New()
+	INIT()
 		src.contextLayout = new /datum/contextLayout/instrumental(16)
 		src.contextActions = childrentypesof(/datum/contextAction/cellphone)
 		//Email was never even coded so ???
@@ -196,7 +196,7 @@
 	var/datum/game/gameholder = null
 	var/datum/gametype = /datum/game/tetris
 
-	New()
+	INIT()
 		. = ..()
 		if (!arcademode)
 			gameholder = new gametype(src)
@@ -224,7 +224,7 @@
 	icon_state = "arcade-adventure"
 /obj/item/item_box/figure_capsule/gaming_capsule
 	name = "game capsule"
-	New()
+	INIT()
 		contained_item = pick(30;/obj/item/toy/handheld/arcade, 70;/obj/item/toy/handheld/robustris)
 		. = ..()
 		if (ispath(contained_item, /obj/item/toy/handheld/robustris))

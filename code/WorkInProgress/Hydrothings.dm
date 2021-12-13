@@ -16,7 +16,7 @@ obj/decal/floor/displays/owlsign
 	sizex = 1040
 	sizey = 705
 
-	New()
+	INIT()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
@@ -257,7 +257,7 @@ obj/item/paper/hootagenhint
 			</p>"}
 
 /obj/item/audio_tape/beecrash
-	New()
+	INIT()
 		..()
 		messages = list("Jeez B, I think we emptied out your keg, you sure it's safe to be flying around this late?",
 	"*rowdy buzzing*",
@@ -274,7 +274,7 @@ obj/item/paper/hootagenhint
 		speakers = list("Robotic voice", "Bombini", "Unknown Owl", "???", "***", "!!!", "???", "...", "Robotic voice", "Bombini", "Unknown Owl", "Robotic voice")
 
 /obj/item/audio_tape/beepoker
-	New()
+	INIT()
 		..()
 		messages = list("Come on B, cheer up! You're on quite the winning streak tonight!",
 	"*buzzing*",
@@ -375,7 +375,7 @@ obj/item/gnomechompski/elf
 	var/shotsLeft = 0
 	var/shotsMax = 6
 
-	New()
+	INIT()
 		src.shotsLeft = rand(1,shotsMax)
 		..()
 		return
@@ -542,7 +542,7 @@ obj/item/gnomechompski/elf
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "owlfeed"
 
-	New()
+	INIT()
 		..()
 		reagents.remove_reagent("beer",1000)
 		reagents.add_reagent("omnizine",150)
@@ -558,7 +558,7 @@ obj/item/gnomechompski/elf
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "owlfeed"
 
-	New()
+	INIT()
 		..()
 		reagents.remove_reagent("beer",1000)
 		reagents.add_reagent("bread",800)
@@ -665,7 +665,7 @@ obj/item/gnomechompski/elf
 	custom_cell_max_capacity = 100
 	cell_type = /obj/item/ammo/power_cell/self_charging
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/wonk)
 		projectiles = list(current_projectile)
 		..()
@@ -997,7 +997,7 @@ obj/critter/madnessowl/switchblade
 		src.visible_message("<span class='alert'><b>[src]</b> rotates its head a full 360 degrees and begins chasing [src.target]!</span>")
 		task = "chasing"
 
-	New()
+	INIT()
 		..()
 		name = "The Hootening"
 		return
@@ -1286,7 +1286,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	teleport_blocked = 1
 	sound_environment = 12
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			process()
@@ -1469,7 +1469,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	desc = "Oh hey its Greg! Everyone loves him, but you don't seem to remember why."
 	trader_area = "/area/owlery/staffhall"
 
-	New()
+	INIT()
 		..()
 		/////////////////////////////////////////////////////////
 		//// sell list //////////////////////////////////////////

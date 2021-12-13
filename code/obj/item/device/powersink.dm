@@ -27,7 +27,7 @@
 	var/obj/cable/attached		// the attached cable
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(2)

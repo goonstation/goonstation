@@ -43,7 +43,7 @@
 	var/mob/living/target
 	var/datum/targetable/werewolf/werewolf_spread_affliction/spread
 	var/last_complete = 0
-	New(Target, Spread)
+	INIT(Target, Spread)
 		target = Target
 		spread = Spread
 		..()
@@ -69,7 +69,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/done = TIME - started
-		var/complete = max(min((done / duration), 1), 0)
+		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.1 && last_complete < 0.1)
 			if (M.werewolf_attack(target, "spread") != 1)
 				boutput(M, __red("[target] is moving around too much."))

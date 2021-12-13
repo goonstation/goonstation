@@ -19,7 +19,7 @@
 	var/sound/sound_off = 'sound/effects/shielddown2.ogg'
 	var/sound/sound_battwarning = 'sound/machines/pod_alarm.ogg'
 
-	New()
+	INIT()
 		PCEL = new /obj/item/cell/supercell(src)
 		PCEL.charge = PCEL.maxcharge
 
@@ -172,6 +172,6 @@
 		build_icon()
 
 	active
-		New()
+		INIT()
 			..()
 			turn_on()

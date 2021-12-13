@@ -573,7 +573,7 @@
 	var/y_mult = 0
 	var/zoomed = 0
 
-	New()
+	INIT()
 		icon_state = off_icon
 		..()
 
@@ -690,7 +690,7 @@
 
 	var/mob/the_mob = null
 
-	New()
+	INIT()
 		if (islist(src.abilities))
 			for(var/A in abilities)
 				if(!ispath(A,/obj/ability_button))

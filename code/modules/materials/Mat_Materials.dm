@@ -2,7 +2,7 @@
 	var/datum/owner = null
 	var/procname = null
 
-	New(var/datum/D, var/name)
+	INIT(var/datum/D, var/name)
 		..()
 		owner = D
 		procname = name
@@ -258,7 +258,7 @@
 	color = "#ACACAC"
 	texture = "rock"
 
-	New()
+	INIT()
 		setProperty("density", 20)
 		setProperty("hard", 20)
 		setProperty("stability", 20)
@@ -271,7 +271,7 @@
 	color = "#44ACAC"
 	quality = 5
 
-	New()
+	INIT()
 		setProperty("electrical", 80)
 		setProperty("density", 5)
 		setProperty("hard", 5)
@@ -281,7 +281,7 @@
 	mat_id = "steel"
 	name = "steel"
 	desc = "Terrestrial steel from Earth."
-	New()
+	INIT()
 		setProperty("density", 30)
 		setProperty("hard", 15)
 		return ..()
@@ -291,7 +291,7 @@
 	name = "mauxite"
 	desc = "Mauxite is a sturdy common metal."
 	color = "#574846"
-	New()
+	INIT()
 		setProperty("density", 50)
 		setProperty("hard", 15)
 		return ..()
@@ -301,7 +301,7 @@
 	name = "copper"
 	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
 	color = "#B87333" //the hex value known as copper in RGB colorspace
-	New()
+	INIT()
 		setProperty("stability", 30)
 		setProperty("electrical", 51)
 		setProperty("density", 5)
@@ -313,7 +313,7 @@
 	name = "pharosium"
 	desc = "Pharosium is a conductive metal."
 	color = "#E39362"
-	New()
+	INIT()
 		setProperty("stability", 60)
 		setProperty("electrical", 65)
 		setProperty("density", 15)
@@ -325,7 +325,7 @@
 	name = "cobryl"
 	desc = "Cobryl is a somewhat valuable metal."
 	color = "#84D5F0"
-	New()
+	INIT()
 		value = 175
 		return ..()
 
@@ -334,7 +334,7 @@
 	name = "bohrum"
 	desc = "Bohrum is a heavy and highly durable metal."
 	color = "#3D692D"
-	New()
+	INIT()
 		setProperty("density", 40)
 		setProperty("hard", 30)
 		return ..()
@@ -347,7 +347,7 @@
 	color = "#CDBDFF"
 	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
 
-	New()
+	INIT()
 		value = 200
 
 		setProperty("electrical", 55)
@@ -363,7 +363,7 @@
 	color = "#FAF5D4"
 	quality = 30
 
-	New()
+	INIT()
 		value = 400
 
 		setProperty("density", 5)
@@ -380,7 +380,7 @@
 	color = "#F5BE18"
 	quality = 30
 
-	New()
+	INIT()
 		value = 300
 
 		setProperty("density", 2)
@@ -398,7 +398,7 @@
 	color = "#C1D1D2"
 	quality = 5
 
-	New()
+	INIT()
 		value = 250
 
 		setProperty("density", 1)
@@ -414,7 +414,7 @@
 	color = "#937d99"
 	alpha = 255
 
-	New()
+	INIT()
 		setProperty("density", 75)
 		setProperty("hard", 30)
 		return ..()
@@ -427,7 +427,7 @@
 	material_flags = MATERIAL_ENERGY | MATERIAL_METAL
 	alpha = 255
 
-	New()
+	INIT()
 		setProperty("density", 100) //👀
 		setProperty("hard", 10)
 		setProperty("electrical", 70)
@@ -445,7 +445,7 @@
 	color = "#26170F"
 	quality = -50
 
-	New()
+	INIT()
 		value = 10
 
 		setProperty("density", 1)
@@ -460,7 +460,7 @@
 	desc = "*BUFFERING*"
 	color = "#0F0A08"
 
-	New()
+	INIT()
 		setProperty("stability", 95)
 		setProperty("density", 80)
 		setProperty("hard", 5)
@@ -475,7 +475,7 @@
 	material_flags = MATERIAL_METAL | MATERIAL_CRYSTAL
 	quality = 60
 
-	New()
+	INIT()
 		setProperty("density", 80)
 		setProperty("hard", 80)
 		return ..()
@@ -488,7 +488,7 @@
 	color = "#73DFF0"
 	material_flags = MATERIAL_METAL | MATERIAL_ENERGY
 
-	New()
+	INIT()
 		setProperty("density", 65)
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 		return ..()
@@ -512,7 +512,7 @@
 	color = "#FFFFFF"
 	alpha = 180
 
-	New()
+	INIT()
 		setProperty("density", 40)
 		setProperty("hard", 40)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
@@ -526,7 +526,7 @@
 		color = "#ff2288"
 		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
 
-		New()
+		INIT()
 			..()
 			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp) // no need to remove molitz_on_hit, all it
 			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b()) // does is call molitz_temp
@@ -538,7 +538,7 @@
 	desc = "Claretine is a highly conductive salt."
 	color = "#C2280A"
 
-	New()
+	INIT()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("electrical", 75)
@@ -551,7 +551,7 @@
 	color = "#FF3700"
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 
-	New()
+	INIT()
 		setProperty("density", 20)
 		setProperty("hard", 20)
 		setProperty("electrical", 60)
@@ -574,7 +574,7 @@
 	color = "#A114FF"
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 
-	New()
+	INIT()
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("electrical", 50)
@@ -593,7 +593,7 @@
 	color = "#A114FF"
 	alpha = 180
 
-	New()
+	INIT()
 		setProperty("density", 30)
 		setProperty("hard", 75)
 		return ..()
@@ -606,7 +606,7 @@
 	quality = 50
 	var/gem_tier = 3
 
-	New()
+	INIT()
 		switch(gem_tier)
 			if(1)
 				value = 700
@@ -754,7 +754,7 @@
 		color = "#615757"
 		alpha = 180
 
-	New()
+	INIT()
 		setProperty("density", 75)
 		setProperty("hard", 65)
 		setProperty("corrosion", 60)
@@ -775,7 +775,7 @@
 		color = "#ffffff"
 		alpha = 180
 
-	New()
+	INIT()
 		setProperty("density", 5) // incredibly brittle
 		setProperty("hard", 50) // very dense
 		setProperty("reflective", 90) // shiny
@@ -791,7 +791,7 @@
 	material_flags = MATERIAL_CRYSTAL | MATERIAL_ENERGY
 	alpha = 100
 
-	New()
+	INIT()
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("reflective", 80)
@@ -807,7 +807,7 @@
 	desc = "Miraclium is a bizarre substance that can have a wide variety of effects."
 	color = "#FFFFFF"
 
-	New()
+	INIT()
 		addTrigger(triggersOnAdd, new /datum/materialProc/miracle_add())
 		quality = rand(-50, 100)
 		alpha = rand(20, 255)
@@ -826,7 +826,7 @@
 	alpha = 80
 	quality = 45
 
-	New()
+	INIT()
 		value = 1000
 		setProperty("reflective", 90)
 		setProperty("density", 85)
@@ -846,7 +846,7 @@
 	edible_exact = 1
 	edible = 1
 
-	New()
+	INIT()
 		setProperty("electrical", 70)
 		setProperty("density", 15)
 		setProperty("hard", 15)
@@ -859,7 +859,7 @@
 	quality = 50
 	alpha = 100
 
-	New()
+	INIT()
 		value = 650
 		setProperty("density", 60)
 		setProperty("hard", 60)
@@ -919,7 +919,7 @@
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
 
-	New()
+	INIT()
 		setProperty("corrosion", 30)
 		setProperty("density", 45)
 		setProperty("hard", 5)
@@ -938,7 +938,7 @@
 	edible_exact = 0.6 //Just barely edible.
 	edible = 1
 
-	New()
+	INIT()
 		setProperty("density", 35)
 		setProperty("hard", 5)
 		//addTrigger(triggersOnEat, new /datum/materialProc/oneat_flesh())
@@ -955,7 +955,7 @@
 	desc = "Char is a fossil energy source similar to coal."
 	color = "#555555"
 
-	New()
+	INIT()
 		setProperty("flammable", 60)
 		setProperty("hard", 15)
 		setProperty("density", 15)
@@ -968,7 +968,7 @@
 	color = "#600066"
 	material_flags = MATERIAL_ORGANIC | MATERIAL_CRYSTAL
 
-	New()
+	INIT()
 		setProperty("hard", 55)
 		setProperty("reflective", 60)
 		setProperty("radioactive", 20)
@@ -985,7 +985,7 @@
 	edible_exact = 0.6 //Just barely edible.
 	edible = 1
 
-	New()
+	INIT()
 		setProperty("density", 65)
 		setProperty("hard", 3)
 		setProperty("corrosion", 70)
@@ -1000,7 +1000,7 @@
 	color = "#DDDDDD"
 	material_flags = MATERIAL_ORGANIC
 
-	New()
+	INIT()
 		setProperty("density", 20)
 		setProperty("hard", 64)
 		return ..()
@@ -1014,7 +1014,7 @@
 	texture = "wood"
 	texture_blend = ICON_MULTIPLY
 
-	New()
+	INIT()
 		setProperty("density", 55)
 		setProperty("hard", 52)
 		setProperty("flammable", 67)
@@ -1029,7 +1029,7 @@
 	texture = "bamboo"
 	texture_blend = ICON_MULTIPLY
 
-	New()
+	INIT()
 		setProperty("density", 45)
 		setProperty("flammable", 67)
 		setProperty("stability", 53)
@@ -1042,7 +1042,7 @@
 	color = "#d3b173"
 	material_flags = MATERIAL_ORGANIC
 
-	New()
+	INIT()
 		setProperty("density", 25)
 		setProperty("hard", 25)
 		setProperty("flammable", 67)
@@ -1057,7 +1057,7 @@
 	color = "#118800"
 	material_flags = MATERIAL_ORGANIC | MATERIAL_METAL
 
-	New()
+	INIT()
 		setProperty("density", 25)
 		setProperty("hard", 65)
 		return ..()
@@ -1069,7 +1069,7 @@
 	color = "#C8BB62"
 	material_flags = MATERIAL_ORGANIC
 
-	New()
+	INIT()
 		setProperty("density", 15)
 		setProperty("hard", 15)
 		return ..()
@@ -1083,7 +1083,7 @@
 	edible_exact = TRUE
 	edible = TRUE
 
-	New()
+	INIT()
 		setProperty("density", 20)
 		setProperty("hard", 5)
 		setProperty("flammable", 30)
@@ -1098,7 +1098,7 @@
 	color = "#003300"
 	material_flags = MATERIAL_ORGANIC
 
-	New()
+	INIT()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 10)
@@ -1113,7 +1113,7 @@
 	color = "#816962"
 	material_flags = MATERIAL_ORGANIC
 
-	New()
+	INIT()
 		setProperty("density", 65)
 		setProperty("corrosion", 75)
 		setProperty("permeable", 25)
@@ -1135,7 +1135,7 @@
 	edible_exact = 1
 	edible = 1
 
-	New()
+	INIT()
 		setProperty("hard", 2)
 		return ..()
 
@@ -1148,7 +1148,7 @@
 	texture = "coral"
 	texture_blend = ICON_OVERLAY
 
-	New()
+	INIT()
 		setProperty("density", 5)
 		setProperty("hard", 50)
 		return ..()
@@ -1173,7 +1173,7 @@
 	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
 	material_flags = MATERIAL_RUBBER
 
-	New()
+	INIT()
 		setProperty("density", 5)
 		setProperty("hard", 5)
 		setProperty("electrical", 29)
@@ -1187,7 +1187,7 @@
 	color = "#FF0000" //But this is red okay.
 	material_flags = MATERIAL_RUBBER
 
-	New()
+	INIT()
 		setProperty("density", 26)
 		setProperty("hard", 11)
 		setProperty("electrical", 20)
@@ -1201,7 +1201,7 @@
 	color = "#1EA082"
 	material_flags = MATERIAL_RUBBER
 
-	New()
+	INIT()
 		setProperty("density", 55)
 		setProperty("hard", 10)
 		setProperty("electrical", 14)
@@ -1215,7 +1215,7 @@
 	color = "#8A3B11"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 65)
 		setProperty("hard", 5)
 		setProperty("thermal", 29)
@@ -1229,7 +1229,7 @@
 	color = "#BB3B11"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 60)
 		setProperty("hard", 10)
 		setProperty("thermal", 35)
@@ -1243,7 +1243,7 @@
 	color = "#CCCCCC"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 5)
 		setProperty("hard", 5)
 		setProperty("thermal", 20)
@@ -1257,7 +1257,7 @@
 	color = "#EFEEEE"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 10)
@@ -1271,7 +1271,7 @@
 	color = "#FFFFFF"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 16)
 		setProperty("hard", 16)
 		setProperty("thermal", 38)
@@ -1286,7 +1286,7 @@
 	color = "#E0FFF6"
 	material_flags = MATERIAL_CLOTH | MATERIAL_CRYSTAL
 
-	New()
+	INIT()
 		setProperty("density", 30)
 		setProperty("hard", 30)
 		setProperty("thermal", 20)
@@ -1295,7 +1295,7 @@
 		setProperty("electrical", 45)
 		return ..()
 
-	New()
+	INIT()
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
 		return ..()
 
@@ -1306,7 +1306,7 @@
 	color = "#CCCCCC"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 70)
 		setProperty("hard", 1)
 		setProperty("thermal", 40)
@@ -1321,7 +1321,7 @@
 	color = "#333333"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 70)
 		setProperty("hard", 60)
 		setProperty("thermal", 90)
@@ -1338,7 +1338,7 @@
 
 	material_flags = MATERIAL_CLOTH | MATERIAL_METAL | MATERIAL_ENERGY
 
-	New()
+	INIT()
 		setProperty("density", 10)
 		setProperty("hard", 10)
 		setProperty("stability", 100)
@@ -1356,7 +1356,7 @@
 	material_flags = MATERIAL_CLOTH | MATERIAL_ENERGY | MATERIAL_CRYSTAL
 	alpha = 128
 
-	New()
+	INIT()
 		setProperty("density", 70)
 		setProperty("hard", 10)
 		setProperty("thermal", 90)
@@ -1373,7 +1373,7 @@
 	color = "#333333"
 	material_flags = MATERIAL_CLOTH
 
-	New()
+	INIT()
 		setProperty("density", 70)
 		setProperty("hard", 60)
 		setProperty("corrosion", 65)
@@ -1391,7 +1391,7 @@
 	texture = "bee"
 	texture_blend = ICON_OVERLAY
 
-	New()
+	INIT()
 		setProperty("hard", 21)
 		setProperty("density", 21)
 		setProperty("flammable", 65)
@@ -1408,7 +1408,7 @@
 	desc = "Ghostly residue. Not terribly useful on it's own."
 	color = "#ccffcc"
 
-	New()
+	INIT()
 		setProperty("density", 1)
 		setProperty("hard", 1)
 		setProperty("stability", 3)
@@ -1421,7 +1421,7 @@
 	desc = "It seems to repel matter."
 	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
 
-	New()
+	INIT()
 		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
 		return ..()
 

@@ -17,7 +17,7 @@
 	var/image/color_overlay
 	var/color_overlay_alpha = 180
 
-	New()
+	INIT()
 		..()
 		init()
 
@@ -142,7 +142,7 @@
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("charcoal", 20)
 
@@ -151,7 +151,7 @@
 	desc = "Can be used to purge impurities, but is highly toxic itself."
 	icon_state = "pill3"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("calomel", 15)
 
@@ -160,7 +160,7 @@
 	desc = "Highly lethal."
 	icon_state = "pill5"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("cyanide", 50)
 
@@ -169,7 +169,7 @@
 	desc = "Used to treat severe pain. Highly addictive."
 	icon_state = "pill8"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("morphine", 30)
 
@@ -178,7 +178,7 @@
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill4"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("salicylic_acid", 10)
 
@@ -187,7 +187,7 @@
 	desc = "This pill looks kinda cool. It's used to treat moderate burns and fevers."
 	icon_state = "pill21"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("menthol", 10)
 
@@ -196,7 +196,7 @@
 	desc = "Used to treat burns, but it's not meant to be ingested. Welp."
 	icon_state = "pill11"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("silver_sulfadiazine", 30)
 
@@ -205,7 +205,7 @@
 	desc = "Used to stabilize patients in crisis."
 	icon_state = "pill20"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("epinephrine", 10)
 
@@ -214,7 +214,7 @@
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill16"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("salbutamol", 20)
 
@@ -223,7 +223,7 @@
 	desc = "Used to cure genetic abnormalities."
 	icon_state = "pill18"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("mutadone", 20)
 
@@ -232,7 +232,7 @@
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill19"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("mannitol", 20)
 
@@ -241,7 +241,7 @@
 	desc = "Used to treat radiation poisoning."
 	icon_state = "pill9"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("anti_rad", 20)
 
@@ -250,7 +250,7 @@
 	desc = "The #1 hair growth product on the market! WARNING: Some side effects may occur."
 	icon_state = "pill6"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("hairgrownium", 5)
 
@@ -261,7 +261,7 @@
 	desc = "Methamphetamine is a highly effective and dangerous stimulant drug."
 	icon_state = "pill9"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("methamphetamine", 10)
 
@@ -270,7 +270,7 @@
 	desc = "A cheap and dirty stimulant drug, commonly used by space biker gangs."
 	icon_state = "pill4"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("crank", 10)
 
@@ -279,7 +279,7 @@
 	desc = "Sometimes packaged as a refreshing bathwater additive, these crystals are definitely not for human consumption."
 	icon_state = "pill1"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("bathsalts", 10)
 
@@ -288,7 +288,7 @@
 	desc = "Uhhh..."
 	icon_state = "pill5"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("catdrugs", 10)
 
@@ -297,7 +297,7 @@
 	desc = "A cocktail of illicit designer drugs, who knows what might be in here."
 	random_icon = 1
 
-	New()
+	INIT()
 		..()
 		name = "[pick_string("chemistry_tools.txt", "CYBERPUNK_drug_prefixes")] [pick_string("chemistry_tools.txt", "CYBERPUNK_drug_suffixes")]"
 
@@ -321,7 +321,7 @@
 	desc = "Used to treat cranial swelling."
 	icon_state = "pill1"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("mannitol", 20)
 
@@ -330,7 +330,7 @@
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill2"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("charcoal", 20)
 
@@ -339,7 +339,7 @@
 	desc = "Commonly used to treat moderate pain and fevers."
 	icon_state = "pill3"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("salicylic_acid", 10)
 
@@ -348,7 +348,7 @@
 	desc = "Used to treat respiratory distress."
 	icon_state = "pill4"
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("salbutamol", 20)
 
@@ -358,6 +358,6 @@
 	icon_state = "pill13"
 	initial_volume = 5
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("ipecac", 5)

@@ -20,7 +20,7 @@
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 
-	New()
+	INIT()
 		..()
 		var/obj/plan_marker/wall/P = locate() in src
 		if (P)
@@ -94,7 +94,7 @@
 					var/obj/stocking/stocking = new(T)
 					stocking.pixel_y = 26
 
-/turf/simulated/wall/New()
+INIT_TYPE(/turf/simulated/wall)
 	..()
 	if(!ticker && istype(src.loc, /area/station/maintenance) && prob(7))
 		make_cleanable( /obj/decal/cleanable/fungus,src)

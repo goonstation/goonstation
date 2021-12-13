@@ -17,7 +17,7 @@
 
 	level = 1
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -103,7 +103,7 @@
 
 			if("set_volume_rate")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), air_contents.volume)
+				number = clamp(number, 0, air_contents.volume)
 
 				volume_rate = number
 

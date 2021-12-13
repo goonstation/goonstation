@@ -107,7 +107,7 @@
 	var/mob/living/carbon/target = null
 	var/obj/item/genetics_injector/injector = null
 
-	New(Target,Injector)
+	INIT(Target,Injector)
 		target = Target
 		injector = Injector
 		..()

@@ -12,7 +12,7 @@ var/global/datum/participationRecorder/participationRecorder
 	var/list/queue = list() //if holding, queue holds data to send once hold is removed
 
 
-	New(debugMode)
+	INIT(debugMode)
 		..()
 		src.debug = debugMode ? debugMode : 0
 

@@ -26,9 +26,10 @@ obj/machinery/atmospherics/binary/pump
 
 	var/datum/pump_ui/ui
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		ui = new/datum/pump_ui/basic_pump_ui(src)
 
 	attack_hand(mob/user)
 		//on = !on
@@ -94,11 +95,6 @@ obj/machinery/atmospherics/binary/pump
 	var/frequency = 0
 	var/id = null
 
-	initialize()
-		..()
-		ui = new/datum/pump_ui/basic_pump_ui(src)
-
-
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
 			return 0
@@ -118,7 +114,7 @@ obj/machinery/atmospherics/binary/pump
 
 			if("set_output_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				target_pressure = number
 
@@ -140,7 +136,7 @@ datum/pump_ui/basic_pump_ui
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/pump/our_pump
 
-datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
+INIT_TYPE(datum/pump_ui/basic_pump_ui, obj/machinery/atmospherics/binary/pump/our_pump)
 	..()
 	src.our_pump = our_pump
 	pump_name = our_pump.name

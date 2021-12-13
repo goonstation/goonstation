@@ -16,7 +16,7 @@ obj/machinery/computer/general_air_control
 	light_g = 1
 	light_b = 0.1
 
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -215,7 +215,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 
 			if(href_list["adj_pressure"])
 				var/change = text2num_safe(href_list["adj_pressure"])
-				pressure_setting = min(max(0, pressure_setting + change), 50*ONE_ATMOSPHERE)
+				pressure_setting = clamp(pressure_setting + change, 0, 50*ONE_ATMOSPHERE)
 
 			SPAWN_DBG(0.7 SECONDS)
 				attack_hand(usr)
@@ -351,7 +351,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/computer/general_alert
-	New()
+	INIT()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", frequency)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("respond", respond_frequency)
@@ -464,7 +464,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 	frequency = FREQ_AIR_ALARM_CONTROL
 
-	New()
+	INIT()
 		..()
 		src.AddComponent( \
 			/datum/component/packet_connected/radio, \
@@ -591,7 +591,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			var/amount = 0
 			if (href_list["pressure_adj"])
 				var/diff = text2num_safe(href_list["pressure_adj"])
-				amount = max(0, min(pressure + diff, MAX_PRESSURE))
+				amount = clamp(pressure + diff, 0, MAX_PRESSURE)
 
 			else if (href_list["pressure_set"])
 				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
@@ -605,7 +605,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (!isnum_safe(change))
 					return 0
 
-				amount = max(0, min(change, MAX_PRESSURE))
+				amount = clamp(change, 0, MAX_PRESSURE)
 
 			signal.data["command"] = "set_pressure"
 			signal.data["parameter"] = num2text(amount)

@@ -27,37 +27,6 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
 
-// Experimental composite jumpsuit
-
-/obj/item/clothing/under/experimental
-	name = "experimental hi-tech jumpsuit"
-	desc = "The very height of fabric technology."
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_experiment.dmi'
-	icon_state = "white"
-	item_state = "white"
-	var/list/component_images = list("jacket","sleeves","pants", "stripe_sides", "zipper")
-	var/list/component_colors = list("#FFFFFF","#FFFFFF","#FFFFFF", "#FFFFFF","#666666")
-	var/list/component_alphas = list(255,255,255,255,255)
-	var/list/images = list()
-
-	New()
-		..()
-		update_images()
-
-	proc/update_images()
-		var/list_counter = 0
-		src.images = list()
-
-		for (var/C as anything in src.component_images)
-			list_counter++
-			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
-			suit_image.icon_state = C
-			suit_image.alpha = src.component_alphas[list_counter]
-			suit_image.color = src.component_colors[list_counter]
-			src.images += suit_image
-
-		src.color = src.component_colors[1]
-
 
 /obj/item/clothing/under/crafted
 	name = "jumpsuit"
@@ -249,7 +218,7 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. This one is made of advanced fibres that can change color."
 		var/list/options
 
-		New()
+		INIT()
 			..()
 			options = icon_states(src.icon) // gonna assume that the dmi will only ever have pride jumpsuits
 
@@ -609,7 +578,7 @@
 	icon_state = "clown"
 	item_state = "clown"
 
-	New()
+	INIT()
 		..()
 		AddComponent(/datum/component/clown_disbelief_item)
 
@@ -644,7 +613,7 @@
 	icon_state = "viceW"
 	item_state = "viceW"
 
-	New()
+	INIT()
 		..()
 		if(prob(50))
 			src.icon_state = "viceG"
@@ -862,7 +831,7 @@
 		item_state = "literaltrash"
 
 	random
-		New()
+		INIT()
 			..()
 			src.color = random_saturated_hex_color(1)
 
@@ -908,7 +877,7 @@
 	random
 		name = "basketball jersey"
 		desc = "A jersey for playing basketball. You can't use it for anything else, only playing basketball. That's how this works."
-		New()
+		INIT()
 			..()
 			src.color = random_saturated_hex_color(1)
 
@@ -949,7 +918,7 @@
 
 	random
 		name = "swimsuit"
-		New()
+		INIT()
 			..()
 			src.color = random_saturated_hex_color(1)
 
@@ -970,7 +939,7 @@
 	icon_state = "shirt_n_pant-b"
 	item_state = "shirt_n_pant-b"
 
-	New()
+	INIT()
 		..()
 		src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
 		src.item_state = "[src.icon_state]"
@@ -1162,7 +1131,7 @@
 		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
-		New()
+		INIT()
 			..()
 			if(prob(50))
 				src.icon_state = "scrub-pr"
@@ -1216,7 +1185,7 @@
 		..()
 		setProperty("coldprot", 10)
 
-	New()
+	INIT()
 		..()
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
@@ -1342,7 +1311,7 @@
 	desc = "A colourful and cozy jumper."
 	icon_state = "sweater1"
 	item_state = "sweater1"
-	New()
+	INIT()
 		icon_state = "sweater[pick(1,2,3)]"
 		..()
 

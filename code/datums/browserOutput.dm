@@ -67,7 +67,7 @@ var/global
 	/// Contains the connection history passed from chat cookie
 	var/list/connectionHistory = list()
 
-/datum/chatOutput/New(client/C)
+INIT_TYPE(/datum/chatOutput, client/C)
 	..()
 
 	if (C)

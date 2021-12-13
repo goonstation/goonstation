@@ -90,7 +90,7 @@ proc/is_weak_rollable_contract(type)
 		H.stuttering = 120
 		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
-		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
 		H.change_misstep_chance(66)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
@@ -187,7 +187,7 @@ proc/is_weak_rollable_contract(type)
 	color = "#FF0000"
 	font_color = "#FF0000"
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 
@@ -225,7 +225,7 @@ proc/is_weak_rollable_contract(type)
 	burn_possible = 0 //Only makes sense since it's from hell.
 	info = {"<b>You shouldn't be seeing this yet!</b>"}
 
-	New()
+	INIT()
 		..()
 		info = {"<center><b>SO YOU WANT TO STEAL SOULS?</b></center><ul>
 			<li>Step One: Grab a complimentary extra-sharp demonic pen and your infernal contract of choice from your devilish briefcase.</li>
@@ -262,7 +262,7 @@ proc/is_weak_rollable_contract(type)
 	spawn_contents = list(/obj/item/paper/soul_selling_kit, /obj/item/storage/box/evil, /obj/item/clothing/under/misc/lawyer/red/demonic)
 	var/merchant = null
 
-	New()
+	INIT()
 		..()
 		START_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 
@@ -381,7 +381,7 @@ END GUIDE
 	var/merchant = null //who is *buying* the soul?
 	showTooltipDesc = 0
 
-	New()
+	INIT()
 		..()
 		src.color = random_color()
 

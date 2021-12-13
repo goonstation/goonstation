@@ -26,7 +26,7 @@
 	var/sound/wand_sound = 'sound/effects/mag_forcewall.ogg'
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 
-	New()
+	INIT()
 		..()
 		src.wall_duration = rand(3,30)
 		src.wall_size = rand(1,4)
@@ -60,7 +60,7 @@
 	desc = "Some kind of strange energy barrier. You can't get past it."
 	var/obj/artifact/forcefield_generator/source = null
 
-	New(var/loc,var/duration,var/wallsprite,var/obj/artifact/forcefield_generator/S = null)
+	INIT(var/loc,var/duration,var/wallsprite,var/obj/artifact/forcefield_generator/S = null)
 		..()
 		icon_state = wallsprite
 		source = S

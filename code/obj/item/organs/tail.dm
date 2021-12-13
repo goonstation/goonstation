@@ -25,7 +25,7 @@
 	var/image/tail_image_2
 	var/image/tail_image_oversuit
 
-	New()
+	INIT()
 		..()
 		if(src.colorful) // Set us some colors
 			colorize_tail()

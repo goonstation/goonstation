@@ -11,7 +11,7 @@
 	var/mob/living/target
 	var/datum/targetable/critter/gibstare/gibstare
 
-	New(Target, Gibstare)
+	INIT(Target, Gibstare)
 		target = Target
 		gibstare = Gibstare
 		..()

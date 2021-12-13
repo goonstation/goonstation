@@ -403,7 +403,7 @@
 	var/predictive_data = ""
 	var/datum/spyGUI/gui = null
 	var/manipulating = false //are we currently irradiating the pathogen?
-	New()
+	INIT()
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
@@ -1063,7 +1063,7 @@
 
 	var/obj/machinery/computer/pathology/comp = null
 
-	New()
+	INIT()
 		..()
 		flags |= NOSPLASH
 
@@ -1209,7 +1209,7 @@
 	var/sel_vial = 0
 	var/const/synthesize_pathogen_cost = 100 // used to be 2000
 
-	New()
+	INIT()
 		..()
 		src.reagents = new(100)
 		src.reagents.my_atom = src
@@ -1623,11 +1623,11 @@
 		var/datum/pathogen/P = R.pathogens[uid]
 		var/is_cure = 0
 		if ((src.antiagent || !use_antiagent) && (src.suppressant || !use_suppressant))
-			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, min(max(P.suppression_threshold, 5), 50)))
+			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, clamp(P.suppression_threshold, 5, 50)))
 				var/found = 0
 				if (use_suppressant)
 					for (var/id in P.suppressant.cure_synthesis)
-						if (src.suppressant.reagents.has_reagent(id, min(max(P.suppression_threshold, 5), 50)))
+						if (src.suppressant.reagents.has_reagent(id, clamp(P.suppression_threshold, 5, 50)))
 							found = 1
 							break
 					if (found)
@@ -1713,7 +1713,7 @@
 	icon_broken = "med-broken"
 	icon_fallen = "med-fallen"
 
-	New()
+	INIT()
 		..()
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 12)
@@ -1741,7 +1741,7 @@
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null
 
-	New()
+	INIT()
 		..()
 		flags |= NOSPLASH
 

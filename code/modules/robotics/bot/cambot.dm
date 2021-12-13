@@ -32,7 +32,7 @@
 	var/photographing = 0 // Are we currently photographing something?
 	var/list/photographed = null // what we've already photographed
 
-/obj/machinery/bot/cambot/New()
+INIT_TYPE(/obj/machinery/bot/cambot)
 	..()
 	src.clear_invalid_targets = TIME
 	SPAWN_DBG(0.5 SECONDS)

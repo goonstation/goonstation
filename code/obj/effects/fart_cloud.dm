@@ -24,7 +24,7 @@
 		else
 			src.Life()
 
-/obj/effects/fart_cloud/New(loc,var/mob/living/owner)
+INIT_TYPE(/obj/effects/fart_cloud, loc,var/mob/living/owner)
 	..()
 	if (owner)
 		fartowner = owner

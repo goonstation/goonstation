@@ -21,7 +21,7 @@
 
 	var/atom/movable/screen/hud/hud = new
 
-	New(var/is_control = 0)
+	INIT(var/is_control = 0)
 		..()
 		SPAWN_DBG(0)
 			if (src.holder)
@@ -115,7 +115,7 @@
 		var/prev_value = value
 		var/affection_mod = amt < 0 ? drain_rate : gain_rate //Negative change, use drain modifier, positive, use gain modifier
 
-		value = max(min(value + (amt * affection_mod), 100), 0)
+		value = clamp(value + (amt * affection_mod), 0, 100)
 		if (prev_value < 100 && value >= 100)
 			onFill()
 		else if (prev_value > 0 && value <= 0)
@@ -516,7 +516,7 @@
 	var/provide_plumbobs = 1
 #endif
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
@@ -658,7 +658,7 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
 
-	New(var/mob/living/L)
+	INIT(var/mob/living/L)
 		..()
 		owner = L
 		simsController.register_simsHolder(src)
@@ -767,7 +767,7 @@ var/global/datum/simsControl/simsController = new()
 	pixel_y = 32
 	var/mob/living/owner
 
-	New()
+	INIT()
 		..()
 		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
 		add_simple_light("plumbob", list(255, 255, 255, 100))

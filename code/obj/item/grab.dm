@@ -18,7 +18,7 @@
 	var/can_pin = 1
 	var/dropped = 0
 
-	New(atom/loc, mob/assailant = null, mob/affecting = null)
+	INIT(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
 		if(!affecting || affecting.disposed)
 			qdel(src)
@@ -441,7 +441,7 @@
 	var/mob/living/target
 	var/obj/item/grab/G
 
-	New(Target, Grab)
+	INIT(Target, Grab)
 		target = Target
 		G = Grab
 		..()
@@ -488,7 +488,7 @@
 	var/obj/item/grab/G
 	var/turf/T
 
-	New(Target, Grab, Turf)
+	INIT(Target, Grab, Turf)
 		target = Target
 		G = Grab
 		T = Turf
@@ -699,7 +699,7 @@
 /obj/item/grab/gunpoint
 	var/shot = 0
 
-	New()
+	INIT()
 		..()
 
 	post_item_setup()
@@ -743,7 +743,7 @@
 	hide_attack = 1
 
 
-	New()
+	INIT()
 		..()
 		if (isitem(src.loc))
 			var/obj/item/I = src.loc
@@ -875,7 +875,7 @@
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/rag_muffle
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(10)
 

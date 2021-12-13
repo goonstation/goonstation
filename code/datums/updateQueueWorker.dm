@@ -8,7 +8,7 @@ datum/updateQueueWorker
 	var/tmp/cpuThreshold
 	var/tmp/cpuDeferCount
 
-datum/updateQueueWorker/New(var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
+INIT_TYPE(datum/updateQueueWorker, var/list/objects, var/procName, var/list/arguments, var/cpuThreshold = 90)
 	..()
 	uq_dbg("updateQueueWorker created.")
 

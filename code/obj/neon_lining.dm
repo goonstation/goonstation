@@ -13,7 +13,7 @@
 	var/datum/light/light														//The light. Obviously.
 	var/image/glow																//The overlay image which hosts the glowing parts.
 
-	New()
+	INIT()
 		. = ..()
 		glow = image('icons/obj/decals/neon_lining.dmi', "blue2_1")
 		glow.plane = PLANE_SELFILLUM

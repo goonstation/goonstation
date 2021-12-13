@@ -11,7 +11,7 @@ var/datum/job_controller/job_controls
 	var/last_client = null
 	var/load_another_ckey = null
 
-	New()
+	INIT()
 		..()
 		if (derelict_mode)
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),

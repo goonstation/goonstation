@@ -78,15 +78,16 @@
 			west
 				dir = WEST
 
-		New()
+		INIT()
 			..()
 
 			air_contents.volume = 1000
 
-	New()
+	INIT()
 		..()
 		if(frequency)
 			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		UpdateIcon()
 
 	update_icon()
 		if(on&&node)
@@ -171,10 +172,6 @@
 	var/frequency = 0
 	var/id = null
 
-	initialize()
-		..()
-		UpdateIcon()
-
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
 			return 0
@@ -214,13 +211,13 @@
 
 			if("set_internal_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				internal_pressure_bound = number
 
 			if("set_external_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				external_pressure_bound = number
 

@@ -11,7 +11,7 @@
 	light_g = 0.7
 	light_b = 0.03
 
-	New()
+	INIT()
 		..()
 		console_location = get_area(src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)

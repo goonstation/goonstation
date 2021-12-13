@@ -268,7 +268,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
-		New()
+		INIT()
 			..()
 			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
 	wire
@@ -366,13 +366,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 
 	snow
 		name = "snow"
-		New()
+		INIT()
 			..()
 			set_dir(pick(cardinal))
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
-		New()
+		INIT()
 			..()
 			set_dir(pick(cardinal))
 		icon_state = "grass"
@@ -410,7 +410,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	icon_state = "cat1"
 	randomize_cat = 0
 
-	New()
+	INIT()
 		..()
 		var/randx = (rand(7, 20) / 10)
 		var/randy = (rand(7, 20) / 10)
@@ -420,7 +420,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /obj/item/disk/data/fixed_disk/adharas_laptop
 	file_amount = 512 //very big
 
-	New()
+	INIT()
 		..()
 
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -450,16 +450,16 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	desc = "Isn't this a cute little laptop?"
 	luggable_type = /obj/machinery/computer3/luggable/personal/adhara_laptop
 
-	New() //lets set up our stickers
+	INIT() //lets set up our stickers
 		..()
 		var/obj/item/sticker/sticker_heart = new /obj/item/sticker/heart
 		sticker_heart.stick_to(src, -6, -4)
-		sleep(0.5 SECONDS)
-		var/obj/item/sticker/sticker_rainbow = new /obj/item/sticker/rainbow
-		sticker_rainbow.stick_to(src, -3, 1)
-		sleep(0.5 SECONDS)
-		var/obj/item/sticker/sticker_robuddy = new /obj/item/sticker/robuddy
-		sticker_robuddy.stick_to(src, 2, -3)
+		SPAWN_DBG(0.5 SECONDS)
+			var/obj/item/sticker/sticker_rainbow = new /obj/item/sticker/rainbow
+			sticker_rainbow.stick_to(src, -3, 1)
+			sleep(0.5 SECONDS)
+			var/obj/item/sticker/sticker_robuddy = new /obj/item/sticker/robuddy
+			sticker_robuddy.stick_to(src, 2, -3)
 
 
 /datum/computer/file/record/adhara_office
@@ -467,7 +467,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	diary_goals
 		name = "diary_goals"
 
-		New()
+		INIT()
 			..()
 			src.fields = list("im gonna try to store these",\
 			"notes on my computer. update it",\
@@ -477,7 +477,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	prs
 		name = "prs"
 
-		New()
+		INIT()
 			..()
 			src.fields = list("i always have so many ideas!",\
 			"youd think that maybe id manage to get",\
@@ -493,7 +493,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	kyle
 		name = "kyle"
 
-		New()
+		INIT()
 			..()
 			src.fields = list("kyle asked me to fix my code today.",\
 			"but im lazy and i dont really want to fix",\
@@ -503,7 +503,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	mhelps
 		name = "mhelps"
 
-		New()
+		INIT()
 			..()
 			src.fields = list("so i guess im hired as an admin now.",\
 			"kinda crazy. lotta new responsibilities.",\
@@ -520,7 +520,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	macncheese
 		name = "mac_n_cheese"
 
-		New()
+		INIT()
 			..()
 			src.fields = list("i fuckin love this stuff")
 
@@ -535,21 +535,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
 		src.cant_self_remove = true
 		src.cant_other_remove = true
-		sleep(1 SECOND)
-		if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
-			boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
-		else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
-			boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
-			sleep(1 SECOND)
-			boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
-			sleep(1 SECOND)
-			user.bioHolder.AddEffect("accent_scots")
-			boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
-		else
-			boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
-			src.rejected_mobs.Add(user)
-		src.cant_self_remove = true
-		src.cant_other_remove = false
+		SPAWN_DBG(1 SECOND)
+			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
+				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
+			else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
+				boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
+				sleep(1 SECOND)
+				boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
+				sleep(1 SECOND)
+				user.bioHolder.AddEffect("accent_scots")
+				boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
+			else
+				boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
+				src.rejected_mobs.Add(user)
+			src.cant_self_remove = true
+			src.cant_other_remove = false
 
 
 /area/centcom/offices/enakai
@@ -589,7 +589,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 	mouse_opacity = 0
 	var/bumping = FALSE
 
-	New(atom/loc, mob/living/clone)
+	INIT(atom/loc, mob/living/clone)
 		..()
 		src.vis_contents += clone
 
@@ -620,7 +620,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		clone.set_loc(get_centcom_mob_cloner_spawn_loc())
 	if(!indirect)
 		L.density = TRUE
-		L.a_intent = INTENT_HARM
+		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
 	playsound(clone, "sound/machines/ding.ogg", 50, 1)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")

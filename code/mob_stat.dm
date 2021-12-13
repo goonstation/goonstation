@@ -14,7 +14,7 @@
 	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Local Time:","Shuttle")
 	//above : ORDER IS IMPORANT
 
-	New()
+	INIT()
 		..()
 		//-1 indicates a blank space to be inserted (These are set in update() but for ease of reading I have labeled the spacers here)
 		//this shit is kind of messy to read but it is Quicker than repopulating the list each update()

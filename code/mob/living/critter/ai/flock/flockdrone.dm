@@ -1,6 +1,6 @@
 /datum/aiHolder/flock/drone
 
-/datum/aiHolder/flock/drone/New()
+INIT_TYPE(/datum/aiHolder/flock/drone)
 	..()
 	default_task = get_instance(/datum/aiTask/prioritizer/flock/drone, list(src))
 
@@ -10,7 +10,7 @@
 /datum/aiTask/prioritizer/flock/drone
 	name = "thinking"
 
-/datum/aiTask/prioritizer/flock/drone/New()
+INIT_TYPE(/datum/aiTask/prioritizer/flock/drone)
 	..()
 	// populate the list of tasks
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/replicate, list(holder, src))
@@ -28,4 +28,4 @@
 /datum/aiTask/prioritizer/flock/drone/on_reset()
 	..()
 	if(holder.owner)
-		holder.owner.a_intent = INTENT_GRAB
+		holder.owner.set_a_intent(INTENT_GRAB)

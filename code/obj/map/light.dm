@@ -12,7 +12,7 @@
 
 		datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)

@@ -9,7 +9,7 @@
 	var/h_g = 245.0
 	var/h_b = 245.0
 
-/obj/machinery/computer/hologram_comp/New()
+INIT_TYPE(/obj/machinery/computer/hologram_comp)
 	..()
 	SPAWN_DBG( 10 )
 		src.projector = locate(/obj/machinery/hologram_proj, get_step(src.loc, NORTH))
@@ -64,25 +64,25 @@
 			if (href_list["h_r"])
 				if (src.projector.projection)
 					src.h_r += text2num_safe(href_list["h_r"])
-					src.h_r = min(max(src.h_r, 0), 255)
+					src.h_r = clamp(src.h_r, 0, 255)
 					render()
 			else
 				if (href_list["h_g"])
 					if (src.projector.projection)
 						src.h_g += text2num_safe(href_list["h_g"])
-						src.h_g = min(max(src.h_g, 0), 255)
+						src.h_g = clamp(src.h_g, 0, 255)
 						render()
 				else
 					if (href_list["h_b"])
 						if (src.projector.projection)
 							src.h_b += text2num_safe(href_list["h_b"])
-							src.h_b = min(max(src.h_b, 0), 255)
+							src.h_b = clamp(src.h_b, 0, 255)
 							render()
 					else
 						if (href_list["light"])
 							if (src.projector.projection)
 								src.lumens += text2num_safe(href_list["light"])
-								src.lumens = min(max(src.lumens, -185.0), 35)
+								src.lumens = clamp(src.lumens, -185.0, 35)
 								render()
 						else
 							if (href_list["reset"])

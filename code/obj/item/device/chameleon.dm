@@ -82,7 +82,7 @@
 	is_syndicate = 1
 	mats = 14
 
-	New()
+	INIT()
 		..()
 		src.anim = new /obj/overlay(src)
 		src.anim.icon = 'icons/effects/effects.dmi'

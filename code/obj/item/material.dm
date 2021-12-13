@@ -17,7 +17,7 @@
 	max_stack = INFINITY
 	event_handler_flags = USE_FLUID_ENTER
 
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(0 - wiggle, wiggle)
 		src.pixel_y = rand(0 - wiggle, wiggle)
@@ -550,7 +550,7 @@
 	icon_state = "scrap"
 	burn_possible = 0
 
-	New()
+	INIT()
 		..()
 		icon_state += "[rand(1,5)]"
 
@@ -577,7 +577,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
-	New()
+	INIT()
 		..()
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)

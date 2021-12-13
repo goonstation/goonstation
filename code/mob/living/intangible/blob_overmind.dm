@@ -76,7 +76,7 @@
 			tutorial = null
 			return
 
-	New()
+	INIT()
 		..()
 		src.add_ability(/datum/blob_ability/plant_nucleus)
 		src.add_ability(/datum/blob_ability/set_color)
@@ -529,7 +529,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(t, 0, 1000)
 		var/points
 
 		if (t < 514)
@@ -599,7 +599,7 @@
 	var/atom/movable/screen/pseudo_overlay/point_overlay
 	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
-	New()
+	INIT()
 		..()
 		ctrl_highlight = image('icons/mob/blob_ui.dmi',"ctrl")
 		shift_highlight = image('icons/mob/blob_ui.dmi',"shift")

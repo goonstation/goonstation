@@ -42,14 +42,10 @@
 
 	// create a conveyor
 
-/obj/machinery/conveyor/New()
+INIT_TYPE(/obj/machinery/conveyor)
 	src.flags |= UNCRUSHABLE
 	..()
 	basedir = dir
-	setdir()
-
-/obj/machinery/conveyor/initialize()
-	..()
 	setdir()
 
 /obj/machinery/conveyor/process()
@@ -277,7 +273,7 @@
 
 // create a diverter
 // set up divert_to and divert_from directions depending on dir state
-/obj/machinery/diverter/New()
+INIT_TYPE(/obj/machinery/diverter)
 
 	..()
 
@@ -400,7 +396,7 @@
 	/// time last used
 	var/last_used = 0
 
-	New()
+	INIT()
 		. = ..()
 		UnsubscribeProcess()
 		START_TRACKING
@@ -491,7 +487,7 @@
 	var/startdir = NORTH
 	var/altdir = NORTH
 
-	New()
+	INIT()
 		..()
 		startdir = src.dir
 
@@ -560,7 +556,7 @@
 	var/search_interval = 1 MINUTES
 	var/last_search = 0
 
-	New()
+	INIT()
 		..()
 		attached = locate() in get_turf(src)
 

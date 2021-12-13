@@ -39,7 +39,7 @@ datum/pathogen_cdc
 	var/list/infections = list()
 	var/list/mutations = list()
 
-	New(var/pathogen_uid)
+	INIT(var/pathogen_uid)
 		..()
 		creation_time = world.time / 600
 		src.uid = pathogen_uid
@@ -565,7 +565,7 @@ datum/controller/pathogen
 		P.base_mutation = 0
 		src.cdc_creator[key] = P
 
-	New()
+	INIT()
 		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
@@ -876,7 +876,7 @@ datum/pathogen
 		generate_components(cdc)
 		generate_attributes(strength)
 
-	New()
+	INIT()
 		..()
 		setup(0, null, 0)
 

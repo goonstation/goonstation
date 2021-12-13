@@ -45,7 +45,7 @@
 /mob/living/critter/singularity/mobkiller
   affects_mobs = 1
 
-/mob/living/critter/singularity/New()
+INIT_TYPE(/mob/living/critter/singularity)
   ..()
   src.glow = new /datum/light/point
   src.glow.set_brightness(0.8)

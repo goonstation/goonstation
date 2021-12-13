@@ -21,7 +21,7 @@
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/zoldorf
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/zoldorf/B = new /atom/movable/screen/ability/topBar/zoldorf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -51,7 +51,7 @@
 	var/list/sentencesShort
 	//other zoldorf fortune information
 
-	New()
+	INIT()
 		src.fortune_mystical = strings("zoldorf.txt", "mystical")
 		src.fortune_nouns = strings("zoldorf.txt", "nouns")
 		src.fortune_verbs = strings("zoldorf.txt", "verbs")

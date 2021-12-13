@@ -26,7 +26,7 @@
 	// hey you know what would be really cool? if these could be overlays on the same object so we could animate them sanely
 	// haha fuck you of course mouse_opacity on overlays is never gonna work
 	// fucking christ lummox
-	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
+	INIT(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
 		src.name = name
 		src.plane = plane
 		src.appearance_flags = PLANE_MASTER | appearance_flags
@@ -51,7 +51,7 @@
 /atom/movable/screen/plane_display
 	plane = PLANE_MASTER_GAME
 
-	New(atom/movable/screen/plane_parent/pl)
+	INIT(atom/movable/screen/plane_parent/pl)
 		if(pl)
 			src.name = pl.name
 			src.render_source = pl.render_target
@@ -78,7 +78,7 @@ client
 	var/list/plane_displays = list()
 	var/atom/movable/screen/plane_display/master/game_display
 
-	New()
+	INIT()
 		Z_LOG_DEBUG("Cient/New", "[src.ckey] - Adding plane_parents")
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))

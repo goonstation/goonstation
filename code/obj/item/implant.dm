@@ -34,7 +34,7 @@ THROWING DARTS
 	var/net_id = null
 	var/pda_alert_frequency = FREQ_PDA
 
-	New()
+	INIT()
 		..()
 		if (uses_radio)
 			if (!src.net_id)
@@ -199,7 +199,7 @@ THROWING DARTS
 	impcolor = "b"
 	var/area/scanned_here
 
-	New()
+	INIT()
 		..()
 		src.scanned_here = get_area(src)
 
@@ -314,7 +314,7 @@ THROWING DARTS
 /obj/item/implant/health/security
 	name = "health implant - security issue"
 
-	New()
+	INIT()
 		mailgroups.Add(MGD_SECURITY)
 		..()
 
@@ -330,7 +330,7 @@ THROWING DARTS
 	impcolor = "r"
 	var/activation_emote = "chuckle"
 
-	New()
+	INIT()
 		src.activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 		src.uses = rand(1, 5)
 		..()
@@ -371,7 +371,7 @@ THROWING DARTS
 	var/id = 1.0
 	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 
@@ -697,7 +697,8 @@ THROWING DARTS
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
-			alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+			SPAWN_DBG(0)
+				alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
 
 		if (M.mind && ticker.mode)
@@ -935,13 +936,13 @@ THROWING DARTS
 				. += "This one has unlimited charges."
 
 		assistant
-			New()
+			INIT()
 				..()
 				access.access = get_access("Staff Assistant")
 
 		shittybill //give im some access
 
-			New()
+			INIT()
 				..()
 				access.access = get_access("Medical Doctor") + get_access("Janitor") + get_access("Botanist") + get_access("Chef") + get_access("Scientist")
 
@@ -966,7 +967,7 @@ THROWING DARTS
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
 
-	New()
+	INIT()
 		..()
 		src.update()
 		return
@@ -1065,7 +1066,7 @@ THROWING DARTS
 	var/mob/living/target
 	var/obj/item/implanter/implanter
 
-	New(Implanter, Target)
+	INIT(Implanter, Target)
 		implanter = Implanter
 		target = Target
 		..()
@@ -1091,28 +1092,28 @@ THROWING DARTS
 	icon_state = "implanter1-g"
 	name = "Security Implanter"
 
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/sec( src )
 		..()
 		return
 
 /obj/item/implanter/freedom
 	icon_state = "implanter1-g"
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/freedom( src )
 		..()
 		return
 
 /obj/item/implanter/mindslave
 	icon_state = "implanter1-g"
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/mindslave( src )
 		..()
 		return
 
 /obj/item/implanter/super_mindslave
 	icon_state = "implanter1-g"
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/mindslave/super( src )
 		..()
 		return
@@ -1121,7 +1122,7 @@ THROWING DARTS
 	name = "microbomb implanter"
 	icon_state = "implanter1-g"
 	sneaky = 1
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/microbomb( src )
 
 		..()
@@ -1131,7 +1132,7 @@ THROWING DARTS
 	name = "macrobomb implanter"
 	icon_state = "implanter1-g"
 	sneaky = 1
-	New()
+	INIT()
 		src.imp = new /obj/item/implant/microbomb/macrobomb( src )
 		..()
 		return
@@ -1140,7 +1141,7 @@ THROWING DARTS
 	name = "macrobomb implanter"
 	icon_state = "implanter1-g"
 	sneaky = 1
-	New()
+	INIT()
 		var/obj/item/implant/microbomb/macrobomb/newbomb = new/obj/item/implant/microbomb/macrobomb( src )
 		newbomb.explosionPower = rand(20,30)
 		src.imp = newbomb
@@ -1151,7 +1152,7 @@ THROWING DARTS
 	name = "microbomb implanter"
 	icon_state = "implanter1-g"
 	sneaky = 1
-	New()
+	INIT()
 		var/obj/item/implant/microbomb/newbomb = new/obj/item/implant/microbomb( src )
 		newbomb.explosionPower = prob(75) ? 2 : 3
 		src.imp = newbomb
@@ -1253,7 +1254,7 @@ THROWING DARTS
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
 
-/obj/item/implantcase/New(obj/item/implant/usedimplant = null)
+INIT_TYPE(/obj/item/implantcase, obj/item/implant/usedimplant = null)
 	if (usedimplant && istype(usedimplant))
 		src.imp = usedimplant
 		imp.set_loc(src)
@@ -1547,7 +1548,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	contraband = 1
 	var/obj/item/implant/my_implant = null
 
-	New()
+	INIT()
 		set_current_projectile(new/datum/projectile/implanter)
 		..()
 

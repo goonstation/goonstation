@@ -12,7 +12,7 @@
 	var/vision_radius = 3
 	var/mob/the_user = null
 	//Prolonged use causes damage.
-	New(atom/location, mob/target)
+	INIT(atom/location, mob/target)
 		..()
 		src.set_loc(location)
 		if(target)
@@ -102,7 +102,7 @@
 	var/power_icon = ""
 	var/list/cableimgs = list()
 	var/vision_radius = 2
-	New()
+	INIT()
 		handle_overlay()
 		SPAWN_DBG(0)
 			check()//ohly fucke pls rewrite me

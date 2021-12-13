@@ -36,7 +36,6 @@
 	var/flying = 0 // holds the direction the ship is currently drifting, or 0 if stopped
 	var/facing = SOUTH // holds the direction the ship is currently facing
 	var/going_home = 0 // set to 1 when the com system locates the station, next z level crossing will head to 1
-	var/fire_delay = 0 // stop people from firing like crazy
 	var/image/fire_overlay = null
 	var/image/damage_overlay = null
 	var/exploding = 0 // don't blow up a bunch of times sheesh
@@ -61,8 +60,9 @@
 	///////Life Support Stuff ////////////////////////////
 	/////////////////////////////////////////////////////
 
-	New()
+	INIT()
 		src.contextActions = childrentypesof(/datum/contextAction/vehicle)
+		src.facing = src.dir
 
 		. = ..()
 		START_TRACKING
@@ -488,7 +488,7 @@
 	get_desc()
 		if (src.keyed > 0)
 			var/t = strings("descriptors.txt", "keyed")
-			var/t_ind = max(min(round(keyed/10),10),0)
+			var/t_ind = clamp(round(keyed/10), 0, 10)
 			. += "It has been keyed [keyed] time[s_es(keyed)]! [t_ind ? t[t_ind] : null]"
 
 	proc/paint_pod(var/obj/item/pod/paintjob/P as obj, var/mob/user as mob)
@@ -1065,7 +1065,7 @@
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
-	New(Vehicle, Mob)
+	INIT(Vehicle, Mob)
 		V=Vehicle
 		M=Mob
 		..()
@@ -1107,7 +1107,7 @@
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
-	New(Vehicle,Mob)
+	INIT(Vehicle,Mob)
 		V=Vehicle
 		M=Mob
 		..()
@@ -1402,7 +1402,7 @@
 	src.ion_trail = new /datum/effects/system/ion_trail_follow()
 	src.ion_trail.set_up(src)
 
-/obj/machinery/vehicle/New()
+INIT_TYPE(/obj/machinery/vehicle)
 	..()
 	name += "[pick(rand(1, 999))]"
 	if(prob(1))
@@ -1545,34 +1545,30 @@
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
-/obj/machinery/vehicle/proc/fire_main_weapon()
-	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+/obj/machinery/vehicle/proc/fire_main_weapon(mob/user)
+	if(is_incapacitated(user))
+		boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
 		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
+	if(istype(user.loc, /obj/machinery/vehicle/))
+		var/obj/machinery/vehicle/ship = user.loc
 		if(ship.stall)
 			return
 		if(ship.m_w_system)
-			if(ship.m_w_system.active && !ship.fire_delay)
+			if(ship.m_w_system.active)
 				if(ship.m_w_system.r_gunner)
-					if(usr == ship.m_w_system.gunner)
+					if(user == ship.m_w_system.gunner)
 						ship.stall += 1
-						ship.fire_delay += 1
-						ship.m_w_system.Fire(usr, src.facing)
-						SPAWN_DBG(1.5 SECONDS)
-							ship.fire_delay -= 1 // cogwerks: no more spamming lasers until the server dies
-							if (ship.fire_delay > 0) ship.fire_delay = 0
+						ship.m_w_system.Fire(user, src.facing)
 					else
-						boutput(usr, "[ship.ship_message("You must be in the gunner seat!")]")
+						boutput(user, "[ship.ship_message("You must be in the gunner seat!")]")
 				else
-					ship.m_w_system.Fire(usr, src.facing)
+					ship.m_w_system.Fire(user, src.facing)
 			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
+				boutput(user, "[ship.ship_message("SYSTEM OFFLINE")]")
 		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
+			boutput(user, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(user, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/use_external_speaker()
 	if(is_incapacitated(usr))
@@ -1709,7 +1705,7 @@
 	ram_self_damage_multiplier = 0.14
 	//var/datum/movement_controller/pod/movement_controller
 
-	New()
+	INIT()
 		..()
 		name = "minisub"
 
@@ -1757,7 +1753,7 @@
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
 
-	New()
+	INIT()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/treads(src))
 
@@ -1767,7 +1763,7 @@
 	maxhealth = 150
 
 
-	New()
+	INIT()
 		..()
 		src.com_system.deactivate()
 		qdel(src.engine)
@@ -1790,7 +1786,7 @@
 	maxhealth = 150
 	init_comms_type = /obj/item/shipcomponent/communications/security
 
-	New()
+	INIT()
 		..()
 		name = "security patrol minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/taser(src))
@@ -1806,7 +1802,7 @@
 	maxhealth = 150
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
-	New()
+	INIT()
 		..()
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
@@ -1821,7 +1817,7 @@
 	health = 130
 	maxhealth = 130
 
-	New()
+	INIT()
 		..()
 		name = "mining minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/bad_mining(src))
@@ -1831,7 +1827,7 @@
 	body_type = "minisub"
 	icon_state = "whitesub_body"
 
-	New()
+	INIT()
 		..()
 		name = "civilian minisub"
 
@@ -1841,7 +1837,7 @@
 	health = 130
 	maxhealth = 130
 
-	New()
+	INIT()
 		..()
 		name = "heavy minisub"
 
@@ -1851,7 +1847,7 @@
 	health = 150
 	maxhealth = 150
 
-	New()
+	INIT()
 		..()
 		name = "industrial minisub"
 
@@ -1861,7 +1857,7 @@
 	health = 175
 	maxhealth = 175
 
-	New()
+	INIT()
 		..()
 		name = "strange minisub"
 
@@ -1869,7 +1865,7 @@
 	body_type = "minisub"
 	icon_state = "graysub_body"
 
-	New()
+	INIT()
 		..()
 		name = "engineering minisub"
 		Install(new /obj/item/shipcomponent/mainweapon/foamer(src))
@@ -1893,7 +1889,7 @@
 	var/succeeding = 0
 	var/did_warp = 0
 
-	New()
+	INIT()
 		. = ..()
 		src.components -= src.engine
 		qdel(src.engine)
@@ -2046,7 +2042,7 @@
 	icon_state = "truck_body"
 	req_smash_velocity = 7
 
-	New()
+	INIT()
 		..()
 		name = "little truck"
 		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
@@ -2066,7 +2062,7 @@
 	health = 90
 	maxhealth = 90
 
-	New()
+	INIT()
 		..()
 		Install(new /obj/item/shipcomponent/locomotion/wheels(src))
 
@@ -2112,7 +2108,7 @@
 		health = 110
 		maxhealth = 110
 
-		New()
+		INIT()
 			..()
 			name = "security patrol car"
 			desc = "A Toriyama-Okawara SV-93 personal mobility vehicle, outfitted with a taser gun, siren system and a security livery."
@@ -2126,7 +2122,7 @@
 		body_type =
 		icon_state =
 
-		New()
+		INIT()
 			..()
 			name = "engineering car
 			desc = "A Toriyama-Okawara EV-94 personal mobility vehicle, painted in engineering colours."

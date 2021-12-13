@@ -17,7 +17,7 @@ var/list/genetek_hair_styles = list()
 	var/net_id = null
 	var/frequency = FREQ_PDA
 
-	New()
+	INIT()
 		..()
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
@@ -69,10 +69,10 @@ var/list/genetek_hair_styles = list()
 			move_mob_inside(target)
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
@@ -286,7 +286,7 @@ var/list/genetek_hair_styles = list()
 
 	var/datum/character_preview/multiclient/preview = null
 
-	New(mob/target)
+	INIT(mob/target)
 		..()
 		if(!ishuman(target))
 			qdel(src)

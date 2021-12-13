@@ -27,7 +27,7 @@ area/map_gen
 	icon = 'icons/turf/map_gen.dmi'
 	icon_state = "genarea"
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 

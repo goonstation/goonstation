@@ -18,7 +18,7 @@
 	var/list/spinner = list("/", "-", "\\", "|")
 	var/spinner_num = 1
 
-	New(M)
+	INIT(M)
 		..()
 		master = M
 

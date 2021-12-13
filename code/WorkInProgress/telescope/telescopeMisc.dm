@@ -15,7 +15,7 @@ var/list/magnet_locations = list()
 	layer = 2
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
-	New()
+	INIT()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "mechcompsend")
@@ -246,7 +246,7 @@ var/list/magnet_locations = list()
 				attacking = 0
 		return
 
-	New()
+	INIT()
 		..()
 		name = "Nanite Swarm Cluster NN-[rand(1,999)]"
 		return

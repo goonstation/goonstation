@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
 	var/emagged = FALSE
 
-	New()
+	INIT()
 		. = ..()
 		START_TRACKING
 		booster_image = image('icons/mob/robots.dmi', "up-speed") //default booster_image is the same as used for speed boost upgrade on cyborgs
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
 
-/obj/vehicle/segway/New()
+INIT_TYPE(/obj/vehicle/segway)
 	..()
 	light = new /datum/light/point
 	light.set_brightness(0.7)
@@ -634,7 +634,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	soundproofing = 0
 	throw_dropped_items_overboard = 1
 
-	New()
+	INIT()
 		..()
 		src.create_reagents(1250)
 		if(zamboni)
@@ -1344,7 +1344,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	desc = "A funny-looking car designed for circus events. Seats 30, very roomy! Comes with a free set of clown clothes!"
 	icon_state = "clowncar"
 
-	New()
+	INIT()
 		..()
 		new /obj/item/storage/box/costume/clown(src.loc)
 
@@ -2000,7 +2000,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	mouse_opacity = 0
 	//blend_mode = BLEND_MULTIPLY
 
-	New()
+	INIT()
 		..()
 		src.Scale(9,9)
 */
@@ -2038,7 +2038,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	var/power_bomberbus_chance = 25
 	var/power_bomberbus_type = /obj/bomberman
 
-	New()
+	INIT()
 		..()
 
 		P2.spread_projectile_type = /datum/projectile/fireball
@@ -2156,7 +2156,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	attacks_fast_eject = 0
 	delay = 2.5
 
-/obj/vehicle/forklift/New()
+INIT_TYPE(/obj/vehicle/forklift)
 	..()
 	src.add_sm_light("forklift\ref[src]", list(0.5*255,0.5*255,0.5*255,255*0.67), directional = 1)
 

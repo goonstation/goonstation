@@ -48,7 +48,7 @@
 		HH.icon_state = "handr"				// the icon state of the hand UI background
 		HH.limb_name = "right wendigo arm"
 
-	New()
+	INIT()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/fadeout/wendigo)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)

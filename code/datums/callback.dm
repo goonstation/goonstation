@@ -45,7 +45,7 @@
 	var/delegate
 	var/list/arguments
 
-/datum/callback/New(thingToCall, procToCall, ...)
+INIT_TYPE(/datum/callback, thingToCall, procToCall, ...)
 	..()
 	if (thingToCall)
 		src.object = thingToCall

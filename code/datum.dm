@@ -23,12 +23,6 @@ var/global/list/deletedObjects = new
 	..()
 #endif
 
-#ifdef SPACEMAN_DMM
-/datum/New()
-	SHOULD_CALL_PARENT(TRUE)
-	. = ..()
-#endif
-
 /// called when a variable is admin-edited
 /datum/proc/onVarChanged(variable, oldval, newval)
 

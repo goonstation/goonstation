@@ -38,7 +38,7 @@
 	circuit_type = /obj/item/circuitboard/tetris
 	var/datum/game/tetris
 
-/obj/machinery/computer/tetris/New()
+INIT_TYPE(/obj/machinery/computer/tetris)
 	..()
 	src.tetris = new /datum/game/tetris(src)
 
@@ -70,20 +70,24 @@ ABSTRACT_TYPE(/datum/game)
 
 /datum/game/tetris
 	var/obj/owner
-	var/code
+	var/code = null
 	var/highscore = 0
 	var/highscoreholder
 	var/highscorekey
 
-	New(var/owner)
+	INIT(var/owner)
 		..()
 		START_TRACKING
 		src.owner = owner
-		src.code = grabResource("html/tetris.html")
 
 	disposing()
 		..()
 		STOP_TRACKING
+
+	proc/get_code()
+		if(isnull(code))
+			src.code = grabResource("html/tetris.html")
+		return src.code
 
 	Topic(href, href_list)
 		if (owner.Topic(href, href_list))
@@ -100,7 +104,7 @@ ABSTRACT_TYPE(/datum/game)
 		return
 
 	new_game(mob/user as mob)
-		var/dat = replacetext(code, "{{HIGHSCORE}}", num2text(highscore))
+		var/dat = replacetext(src.get_code(), "{{HIGHSCORE}}", num2text(highscore))
 		dat = replacetext(dat, "{{TOPICURL}}", "'?src=\ref[src];highscore='+this.ScoreCur;")
 
 		user.Browse(dat, "window=tetris;size=375x500")

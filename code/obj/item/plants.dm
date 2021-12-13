@@ -11,7 +11,7 @@
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
 
-	New()
+	INIT()
 		..()
 		make_reagents()
 
@@ -409,7 +409,7 @@
 	"Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan", "Alexander", "Ethan",
 	"Jacob", "Michael", "Daniel", "Henry", "Jackson", "Sebastian", "Aiden", "Matthew")
 
-	New()
+	INIT()
 		..()
 		desc = desc + pick(names) + "."
 

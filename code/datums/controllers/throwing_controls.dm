@@ -22,8 +22,8 @@
 	var/dist_travelled = 0
 	var/speed_error = 0
 
-	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
-			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,
+	INIT(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,\
+			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,\
 			bonus_throwforce=0, end_throw_callback=null)
 		src.thing = thing
 		src.target = target

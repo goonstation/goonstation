@@ -49,7 +49,7 @@
 	var/stealthed = 0
 	var/const/MAX_POINTS = 100
 
-	New()
+	INIT()
 		..()
 
 	disposing()
@@ -69,7 +69,7 @@
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 
-	New()
+	INIT()
 		var/atom/movable/screen/ability/topBar/santa/B = new /atom/movable/screen/ability/topBar/santa(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
@@ -220,6 +220,9 @@
 		var/A
 		A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 		var/area/thearea = get_telearea(A)
+		if(thearea.teleport_blocked)
+			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
 		playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)

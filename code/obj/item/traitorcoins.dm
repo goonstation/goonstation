@@ -39,7 +39,7 @@
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "telecrystal_pure"
 
-	New()
+	INIT()
 		..()
 		name = "[syndicate_currency]"
 

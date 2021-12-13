@@ -12,7 +12,7 @@
 	name = "helplib"
 	size = 2
 
-	New()
+	INIT()
 		..()
 		src.fields["topics"] = "General: cls, cd, dir, root, rename, copy, paste, makedir, title, delete, run, drive, read, print, login, logout, user, time<br>System Functions: help, logging, periph, backprog, accounts, version"
 		src.fields["logging"] = "All console commands are logged in /logs/syslog.text by default. Initlogs re-activates logging if it has been disabled."
@@ -294,7 +294,7 @@
 /datum/computer/file/record/dronefact_log1
 	name = "SR0210A"
 
-	New()
+	INIT()
 		..()
 
 		fields = list("Service Request #02-10A",
@@ -309,7 +309,7 @@
 /datum/computer/file/record/dronefact_log2
 	name = "SR0220C"
 
-	New()
+	INIT()
 		..()
 		fields = list("Service Request #02-20C",
 		"Problem description: Drone unable to identify targets.",
@@ -324,7 +324,7 @@
 /datum/computer/file/record/dronefact_log3
 	name = "IRIDIUM"
 
-	New()
+	INIT()
 		..()
 		fields = list(" *** CONFIDENTIAL DOCUMENT *** ",
 			" ** TOP EYES ONLY, FOR REAL **",

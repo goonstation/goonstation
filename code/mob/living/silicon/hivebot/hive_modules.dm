@@ -16,19 +16,19 @@
 /obj/item/hive_module/engineering
 	name = "HiveBot engineering robot module"
 
-/obj/item/hive_module/New()//Shit all the mods have
+INIT_TYPE(/obj/item/hive_module)//Shit all the mods have
 	..()
 	src.tools += new /obj/item/device/flash(src)
 
 
-/obj/item/hive_module/standard/New()
+INIT_TYPE(/obj/item/hive_module/standard)
 	..()
 	src.tools += new /obj/item/baton/secbot(src)
 	src.tools += new /obj/item/extinguisher(src)
 //	var/obj/item/gun/mp5/M = new /obj/item/gun/mp5(src)
 
 
-/obj/item/hive_module/mining/New()
+INIT_TYPE(/obj/item/hive_module/mining)
 	..()
 	src.tools += new /obj/item/extinguisher(src)
 
@@ -36,7 +36,7 @@
 	R.matter = 30
 	src.tools += R
 
-/obj/item/hive_module/engineering/New()
+INIT_TYPE(/obj/item/hive_module/engineering)
 	..()
 
 	src.tools += new /obj/item/extinguisher(src)
@@ -52,7 +52,7 @@
 	src.tools += new /obj/item/device/analyzer/atmospheric(src)
 
 
-/obj/item/hive_module/construction/New()
+INIT_TYPE(/obj/item/hive_module/construction)
 	..()
 
 	src.tools += new /obj/item/crowbar(src)
@@ -75,7 +75,7 @@
 	src.tools += W
 
 
-///obj/item/hive_module/security/New()
+//INIT_TYPE(/obj/item/hive_module/security)
 //	..()
 //	src.tools += new /obj/item/baton/secbot(src)
 //	src.tools += new /obj/item/gun/energy/laser_gun(src)

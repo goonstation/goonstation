@@ -44,7 +44,7 @@
 	air = null
 	..()
 
-/datum/air_group/New()
+INIT_TYPE(/datum/air_group)
 	..()
 	air = new /datum/gas_mixture
 
@@ -326,6 +326,8 @@
 		var/totalPressure = 0
 		var/maxTemperature = 0
 		for(var/turf/simulated/member as anything in members)
+			if(!member.init_finished)
+				continue
 			ATMOS_TILE_OPERATION_DEBUG(member)
 			member.process_cell()
 			ADD_MIXTURE_PRESSURE(member.air, totalPressure)

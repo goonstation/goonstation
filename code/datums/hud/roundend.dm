@@ -2,7 +2,7 @@
 	click_check = 0
 	var/atom/movable/screen/countdown
 
-	New()
+	INIT()
 
 		src.countdown = create_screen("roundend", "Round End Countdown", null, "", "NORTH,CENTER", HUD_LAYER_3)
 		countdown.maptext = ""

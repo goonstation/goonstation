@@ -50,7 +50,7 @@
 	carbon_dioxide = 20
 	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
-	New()
+	INIT()
 		..()
 		if (prob(33))
 			src.icon_state = "panelscorched"
@@ -102,7 +102,7 @@ var/sound/iomoon_alarm_sound = null
 
 
 
-	New()
+	INIT()
 		..()
 		fxlist = iomoon_exterior_sounds
 		if (ambientSound)
@@ -198,7 +198,7 @@ var/sound/iomoon_alarm_sound = null
 	ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
 	use_alarm = 1
 
-	New()
+	INIT()
 		..()
 		fxlist = iomoon_powerplant_sounds
 
@@ -207,7 +207,7 @@ var/sound/iomoon_alarm_sound = null
 
 	ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
 
-	New()
+	INIT()
 		..()
 		fxlist = iomoon_basement_sounds
 
@@ -221,7 +221,7 @@ var/sound/iomoon_alarm_sound = null
 
 	radiation_level = 0.75
 
-	New()
+	INIT()
 		..()
 		fxlist = iomoon_exterior_sounds
 
@@ -237,7 +237,7 @@ var/sound/iomoon_alarm_sound = null
 	radiation_level = 0.8
 	ambientSound = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
 
-	New()
+	INIT()
 		..()
 		fxlist = iomoon_ancient_sounds
 
@@ -250,7 +250,7 @@ var/sound/iomoon_alarm_sound = null
 
 //Logs
 /obj/item/audio_tape/iomoon_00
-	New()
+	INIT()
 		..()
 		messages = list("...s is Janet Habicht, Operations Manager.",
 "Something is very wrong with the plant, stay awa-",
@@ -261,7 +261,7 @@ var/sound/iomoon_alarm_sound = null
 		speakers = list("Female Voice","Female Voice","Female Voice","Female Voice","Female Voice","Female Voice")
 
 /obj/item/audio_tape/iomoon_01
-	New()
+	INIT()
 		..()
 		speakers = list("Female Voice",
 		"Female Voice",
@@ -282,7 +282,7 @@ var/sound/iomoon_alarm_sound = null
 
 /obj/item/device/audio_log/iomoon_01
 
-	New()
+	INIT()
 		..()
 		src.tape = new /obj/item/audio_tape/iomoon_01(src)
 
@@ -293,7 +293,7 @@ var/sound/iomoon_alarm_sound = null
 
 /obj/item/disk/data/fixed_disk/iomoon
 
-	New()
+	INIT()
 		..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -389,7 +389,7 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/disk/data/memcard/iomoon
 	file_amount = 1024
 
-	New()
+	INIT()
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
@@ -473,12 +473,12 @@ var/sound/iomoon_alarm_sound = null
 		return
 
 /datum/computer/file/record/iomoon_mail
-	New()
+	INIT()
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"
 
 	flights
-		New()
+		INIT()
 			..()
 			fields = list("PUBLIC_XG",
 			"*ALL",
@@ -500,7 +500,7 @@ var/sound/iomoon_alarm_sound = null
 			"Xiang-Giesel Advanced Power Systems")
 
 	rad_advisory
-		New()
+		INIT()
 			..()
 			fields = list("PUBLIC_XG",
 			"*ALL",
@@ -518,7 +518,7 @@ var/sound/iomoon_alarm_sound = null
 			"THIS IS NOT A DRILL")
 
 	cleanliness
-		New()
+		INIT()
 			..()
 			fields = list("PUBLIC_XG",
 			"*ALL",
@@ -536,7 +536,7 @@ var/sound/iomoon_alarm_sound = null
 			"*The break room doesn't clean itself!  Trash goes in the trash bins!")
 
 	magma_chamber
-		New()
+		INIT()
 			..()
 			fields = list("PUBLIC_XG",
 			"*ALL",
@@ -615,7 +615,7 @@ var/sound/iomoon_alarm_sound = null
 		atkcarbon = 1
 		atksilicon = 1
 
-	New()
+	INIT()
 		..()
 		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
 
@@ -718,7 +718,7 @@ var/sound/iomoon_alarm_sound = null
 	heal_amt = 1
 	initial_volume = 60
 
-	New()
+	INIT()
 		..()
 		reagents.add_reagent("chickensoup", 10)
 		reagents.add_reagent("salt", 10)
@@ -735,7 +735,7 @@ var/sound/iomoon_alarm_sound = null
 	item_state = "yoyo"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
 
@@ -744,7 +744,7 @@ var/sound/iomoon_alarm_sound = null
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x3"
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			var/spawntype = pick(/obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/ammo/power_cell/self_charging/artifact, /obj/item/artifact/forcewall_wand)
@@ -1008,7 +1008,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				//sleep(5 SECONDS)
 				death()
 */
-		New()
+		INIT()
 			..()
 			if (!tag)
 				tag = "IOMOON_BOSS"
@@ -1325,7 +1325,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	anchored = 1
 	density = 1
 
-	New()
+	INIT()
 		..()
 		var/image/I = image(src.icon, icon_state="tallsmes1")
 		I.pixel_y = 32
@@ -1348,7 +1348,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		icon_state = "ladder_wall_broken"
 		broken = TRUE
 
-	New()
+	INIT()
 		..()
 		if (!id)
 			id = "generic"
@@ -1404,7 +1404,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/changing_state = 0
 	var/default_state = 0 //0: closed, 1: open
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			src.default_state = src.opened
@@ -1483,7 +1483,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/length = 1
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.attach(src)
@@ -1571,7 +1571,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/changing_state = 0
 	var/atom/activator = null
 
-	New()
+	INIT()
 		..()
 		if (findtext(id, ";"))
 			id = params2list(id)
@@ -1745,7 +1745,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		locktype = 1
 		icon_state = "lock-red"
 
-	New()
+	INIT()
 		..()
 
 		if (findtext(id, ";"))
@@ -1804,7 +1804,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/latching = 0 //Remain on indefinitely.
 	var/open_mode = 0 //0 for closed->open, 1 for open->closed
 
-	New()
+	INIT()
 		..()
 
 		if (findtext(id, ";"))

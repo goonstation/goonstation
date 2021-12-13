@@ -25,12 +25,12 @@
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
 	var/cap_base_tick_spacing = 60
-	var/last_process
+	var/tmp/last_process
 	var/requires_power = TRUE // machine requires power, used in tgui_broken_state
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
-/obj/machinery/New()
+INIT_TYPE(/obj/machinery)
 	..()
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.
@@ -39,18 +39,13 @@
 	var/static/machines_counter = 0
 	src.processing_bucket = machines_counter++ & 31 // this is just modulo 32 but faster due to power-of-two memes
 	SubscribeToProcess()
-	if (current_state > GAME_STATE_WORLD_INIT)
-		SPAWN_DBG(5 DECI SECONDS)
-			src.power_change()
-			var/area/A = get_area(src)
-			if (A && src) //fixes a weird runtime wrt qdeling crushers in crusher/New()
-				A.machines += src
 
-/obj/machinery/initialize()
-	..()
-	src.power_change()
 	var/area/A = get_area(src)
 	A?.machines += src
+
+/obj/machinery/EXPLICIT_NEW()
+	..()
+	REGISTER_POST_INIT(power_change)
 
 /obj/machinery/disposing()
 	if (!isnull(initial(machine_registry_idx)))

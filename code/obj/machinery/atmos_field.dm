@@ -7,7 +7,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	gas_impermeable = TRUE
 
-	New()
+	INIT()
 		..()
 		update_nearby_tiles()
 
@@ -40,7 +40,7 @@
 	var/list/obj/atmos_field/fields = list()
 	layer = OBJ_LAYER+0.6
 
-	New()
+	INIT()
 		..()
 		src.UpdateIcon()
 

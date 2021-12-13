@@ -25,7 +25,7 @@
 	var/hudarrow_color = "#67cd22"
 	var/max_range = null
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		arrow = image('icons/obj/items/pinpointers.dmi', icon_state = "")

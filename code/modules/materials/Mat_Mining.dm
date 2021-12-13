@@ -52,7 +52,7 @@
 
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | ONBELT
 
-	New()
+	INIT()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 

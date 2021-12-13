@@ -72,7 +72,7 @@
 	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/hypnotize/hypno
 
-	New(U,T,H)
+	INIT(U,T,H)
 		M = U
 		target = T
 		hypno = H

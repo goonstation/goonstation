@@ -6,7 +6,7 @@
 /datum/aiTask/prioritizer/flock
 	name = "base thinking (should never see this)"
 
-/datum/aiTask/prioritizer/flock/New()
+INIT_TYPE(/datum/aiTask/prioritizer/flock)
 	..()
 
 /datum/aiTask/prioritizer/flock/on_tick()
@@ -39,7 +39,7 @@
 	weight = 6
 	can_be_adjacent_to_target = 0
 
-/datum/aiTask/sequence/goalbased/replicate/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/replicate, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/replicate, list(holder)))
 
@@ -97,7 +97,7 @@
 	weight = 5
 	max_dist = 2
 
-/datum/aiTask/sequence/goalbased/build/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/build, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/build, list(holder)))
 
@@ -184,7 +184,7 @@
 	name = "repairing"
 	weight = 4
 
-/datum/aiTask/sequence/goalbased/repair/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/repair, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/repair, list(holder)))
 
@@ -198,7 +198,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HELP
+		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -250,7 +250,7 @@
 	name = "depositing"
 	weight = 4
 
-/datum/aiTask/sequence/goalbased/deposit/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/deposit, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/deposit, list(holder)))
 
@@ -264,7 +264,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HELP
+		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -318,7 +318,7 @@
 	weight = 3
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/open_container/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/open_container, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/open_container, list(holder)))
 
@@ -374,7 +374,7 @@
 	weight = 3
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/rummage/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/rummage, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rummage, list(holder)))
 
@@ -462,7 +462,7 @@
 	weight = 2
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/harvest/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/harvest, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/harvest, list(holder)))
 
@@ -628,7 +628,7 @@
 		else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
 			if(owncritter.active_hand != 2) // nanite spray
 				owncritter.set_hand(2)
-				owncritter.a_intent = INTENT_DISARM
+				owncritter.set_a_intent(INTENT_DISARM)
 				owncritter.hud.update_intent()
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target)
@@ -654,7 +654,7 @@
 	name = "butchering"
 	weight = 3
 
-/datum/aiTask/sequence/goalbased/butcher/New(parentHolder, transTask)
+INIT_TYPE(/datum/aiTask/sequence/goalbased/butcher, parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/butcher, list(holder)))
 
@@ -663,7 +663,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HARM
+		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 

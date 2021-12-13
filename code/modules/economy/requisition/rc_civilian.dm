@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 		"okay i gout out of the template. dont throw in any hogg. it would be dope but they wouldnt sejd it to us."
 	)
 
-	New()
+	INIT()
 		src.flavor_desc = "A [pick(desc_event)] is being held for [pick(desc_honorific)][pick(desc_origin)] [pick(desc_role)]. [pick(desc_bonusflavor)]"
 		src.payout += rand(0,50) * 10
 
@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	var/list/desc_whatitis = list("vessel","station","platform","outpost")
 	var/list/desc_furnroom = list("its commissary","the docking wing","crew quarters","staff facilities","additional operating space","a storage bay")
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc_whatitdoes)] [pick(desc_whatitis)] requires supplies to furnish [pick(desc_furnroom)]. Please use standard compact packing techniques."
 		src.payout += rand(0,50) * 10
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	var/list/desc_hiring = list("hired","acquired","recruited","reassigned","graduated")
 	var/list/desc_noobs = list("personnel","crew members","staff","interns")
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		var/task = pick(desc_task) //subvariation
 		src.flavor_desc = "An affiliated [task] [pick(desc_place)] requires sets of attire for newly [pick(desc_hiring)] [pick(desc_noobs)]."
@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		"here at our requisitions handling center"
 	)
 
-	New()
+	INIT()
 		src.name = pick(namevary)
 		//let's get personal!
 		var/whodat = prob(50)

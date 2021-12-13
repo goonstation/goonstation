@@ -29,7 +29,7 @@
 
 		sv_ratio = 1.22
 
-		New()
+		INIT()
 			..()
 			var/datum/material/fissile/u238/m1 = new/datum/material/fissile/u235()
 			material = m1
@@ -43,7 +43,7 @@
 
 		sv_ratio = 1.22
 
-		New()
+		INIT()
 			..()
 			var/datum/material/fissile/pu239/D = new/datum/material/fissile/pu239()
 			material = D
@@ -58,7 +58,7 @@
 
 		sv_ratio = 1.22
 
-		New()
+		INIT()
 			..()
 			var/datum/material/fissile/kremfuel/D = new/datum/material/fissile/kremfuel
 			material = D

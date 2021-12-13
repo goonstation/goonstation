@@ -1,3 +1,3 @@
 /datum/tag/div
-	New()
+	INIT()
 		..("div")

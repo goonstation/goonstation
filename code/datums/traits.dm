@@ -130,7 +130,7 @@
 	var/list/moveTraits = list() // differentiate movement traits for Move()
 	var/mob/owner = null
 
-	New(var/mob/ownerMob)
+	INIT(var/mob/ownerMob)
 		owner = ownerMob
 		return ..()
 
@@ -832,7 +832,7 @@ obj/trait/pilot
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
-	New()
+	INIT()
 		..()
 		allergen = pick(allergen_id_list)
 
@@ -861,18 +861,21 @@ obj/trait/pilot
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
-	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
+	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
+	var/do_addiction = FALSE
 
-	New()
+	INIT()
 		..()
 		selected_reagent = pick(addictive_reagents)
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
-			addAddiction(owner)
+			SPAWN_DBG(rand(4 MINUTES, 8 MINUTES))
+				addAddiction(owner)
+				do_addiction = TRUE
 
 	onLife(var/mob/owner, var/mult) //Just to be safe.
-		if(isliving(owner) && probmult(1))
+		if(isliving(owner) && do_addiction && probmult(1))
 			var/mob/living/M = owner
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))

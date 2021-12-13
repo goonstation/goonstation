@@ -11,7 +11,7 @@
 	var/shotsMax = 6
 	inventory_counter_enabled = 1
 
-	New()
+	INIT()
 		src.shotsLeft = rand(1,shotsMax)
 		..()
 		inventory_counter.update_number(1)
@@ -70,7 +70,7 @@
 	name = "revolver"
 	shotsMax = 1 //griff
 	var/fakeshots = 0
-	New()
+	INIT()
 		fakeshots = rand(2, 7)
 		desc = "There are [fakeshots] bullets left! Each shot will currently use 1 bullets!"
 		..()

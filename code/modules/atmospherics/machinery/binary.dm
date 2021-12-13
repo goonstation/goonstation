@@ -1,6 +1,5 @@
 obj/machinery/atmospherics/binary
 	dir = SOUTH
-	initialize_directions = SOUTH|NORTH
 //
 	var/datum/gas_mixture/air1
 	var/datum/gas_mixture/air2
@@ -11,22 +10,41 @@ obj/machinery/atmospherics/binary
 	var/datum/pipe_network/network1
 	var/datum/pipe_network/network2
 
-	New()
+	INIT()
 		..()
-		switch(dir)
-			if(NORTH)
-				initialize_directions = NORTH|SOUTH
-			if(SOUTH)
-				initialize_directions = NORTH|SOUTH
-			if(EAST)
-				initialize_directions = EAST|WEST
-			if(WEST)
-				initialize_directions = EAST|WEST
 		air1 = new /datum/gas_mixture
 		air2 = new /datum/gas_mixture
 
 		air1.volume = 200
 		air2.volume = 200
+
+		if(node1 && node2) return
+
+		var/node2_connect = dir
+		var/node1_connect = turn(dir, 180)
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node1 = target
+				break
+
+		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
+			if(target.get_connect_directions() & get_dir(target,src))
+				node2 = target
+				break
+
+		UpdateIcon()
+
+	get_connect_directions()
+		switch(dir)
+			if(NORTH)
+				. = NORTH|SOUTH
+			if(SOUTH)
+				. = NORTH|SOUTH
+			if(EAST)
+				. = EAST|WEST
+			if(WEST)
+				. = EAST|WEST
 
 // Housekeeping and pipe network stuff below
 	network_disposing(datum/pipe_network/reference)
@@ -81,24 +99,6 @@ obj/machinery/atmospherics/binary
 		air2 = null
 
 		..()
-
-	initialize()
-		if(node1 && node2) return
-
-		var/node2_connect = dir
-		var/node1_connect = turn(dir, 180)
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-
-		UpdateIcon()
 
 	build_network()
 		if(!network1 && node1)

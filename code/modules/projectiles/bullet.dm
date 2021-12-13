@@ -868,61 +868,6 @@ toxic - poisons
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 5)
 
-//1.12
-/datum/projectile/bullet/antisingularity
-	name = "Singularity buster rocket"
-	window_pass = 0
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "regrocket"
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	power = 5
-	dissipation_delay = 30
-	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
-	caliber = 1.12
-	icon_turf_hit = "bhole-large"
-	implanted = null
-
-	on_hit(atom/hit)
-		var/obj/machinery/the_singularity/S = hit
-		if(istype(S))
-			new /obj/bhole(S.loc,rand(100,300))
-			qdel(S)
-		else
-			new /obj/effects/rendersparks(hit.loc)
-			if(ishuman(hit))
-				var/mob/living/carbon/human/M = hit
-				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
-				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
-				M.do_disorient(stunned = 40)
-				if (!M.stat)
-					M.emote("scream")
-
-/datum/projectile/bullet/mininuke //Assday only.
-	name = "miniature nuclear warhead"
-	window_pass = 0
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "mininuke"
-	damage_type = D_KINETIC
-	hit_type = DAMAGE_BLUNT
-	power = 120
-	dissipation_delay = 30
-	cost = 1
-	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
-	caliber = 1.12
-	icon_turf_hit = "bhole-large"
-	implanted = null
-
-	on_hit(atom/hit)
-		var/turf/T = get_turf(hit)
-		if (T)
-			T.hotspot_expose(700,125)
-			explosion_new(null, T, 300, 1)
-		return
-
 //1.57
 datum/projectile/bullet/autocannon
 	name = "HE grenade"
@@ -1033,7 +978,7 @@ datum/projectile/bullet/autocannon
 				sign = 1
 
 			var/relang = arccos(dot)
-			P.rotateDirection(max(-max_turn_rate, min(max_turn_rate, sign * relang)))
+			P.rotateDirection(clamp(max_turn_rate, -max_turn_rate, sign * relang))
 
 		pod_seeking
 			name = "pod-seeking grenade"
@@ -1328,6 +1273,61 @@ datum/projectile/bullet/autocannon
 			explosion_new(null, T, 36, 0.45)
 		return
 
+/datum/projectile/bullet/antisingularity
+	name = "Singularity buster rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "regrocket"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 5
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1.0
+	caliber = 1.58
+	icon_turf_hit = "bhole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		var/obj/machinery/the_singularity/S = hit
+		if(istype(S))
+			new /obj/bhole(S.loc,rand(100,300))
+			qdel(S)
+		else
+			new /obj/effects/rendersparks(hit.loc)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				M.do_disorient(stunned = 40)
+				if (!M.stat)
+					M.emote("scream")
+
+/datum/projectile/bullet/mininuke //Assday only.
+	name = "miniature nuclear warhead"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "mininuke"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	power = 120
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1.0
+	caliber = 1.58
+	icon_turf_hit = "bhole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		if (T)
+			T.hotspot_expose(700,125)
+			explosion_new(null, T, 300, 1)
+		return
+
+
 //3.0 the gungun/briefcase of guns is in a different file.
 //4.6
 /datum/projectile/bullet/airzooka
@@ -1437,7 +1437,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	icon_turf_hit = null
 
-	New()
+	INIT()
 		..()
 		src.name = pick("weird", "puzzling", "odd", "strange", "baffling", "creepy", "unusual", "confusing", "discombobulating") + " bullet"
 		src.name = corruptText(src.name, 66)
@@ -1466,7 +1466,7 @@ datum/projectile/bullet/autocannon
 	casing = null
 	icon_turf_hit = null
 
-	New()
+	INIT()
 		..()
 
 	on_hit(atom/hit)

@@ -12,7 +12,7 @@ This file serves as an example for various things that could be done with dialog
 
 	var/datum/dialogueMaster/dialogue = null
 
-	New()
+	INIT()
 		dialogue = new/datum/dialogueMaster/ntFaction(src)
 		..()
 

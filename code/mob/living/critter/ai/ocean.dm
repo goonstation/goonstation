@@ -2,7 +2,7 @@
 /datum/aiHolder/trilobite
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/trilobite/New()
+INIT_TYPE(/datum/aiHolder/trilobite)
 	..()
 	var/datum/aiTask/timed/targeted/trilobite/D = get_instance(/datum/aiTask/timed/targeted/trilobite, list(src))
 	var/datum/aiTask/timed/B = get_instance(/datum/aiTask/timed/bury_ability, list(src))
@@ -80,9 +80,9 @@
 
 		if (dist < 4)
 			if (istype(M) && M.equipped()) //might be attacking a sub
-				owncritter.a_intent = prob(66) ? INTENT_DISARM : INTENT_HARM
+				owncritter.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
 			else
-				owncritter.a_intent = INTENT_HARM
+				owncritter.set_a_intent(INTENT_HARM)
 
 			owncritter.hud.update_intent()
 			owncritter.set_dir(get_dir(owncritter, M))
@@ -154,7 +154,7 @@
 /datum/aiHolder/spike
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/spike/New()
+INIT_TYPE(/datum/aiHolder/spike)
 	..()
 	default_task = get_instance(/datum/aiTask/timed/targeted/flee_and_shoot, list(src))
 
@@ -211,7 +211,7 @@
 
 		holder.move_away(holder.target,target_range)
 
-		owncritter.a_intent = INTENT_HARM
+		owncritter.set_a_intent(INTENT_HARM)
 
 		owncritter.hud.update_intent()
 		owncritter.set_dir(get_dir(owncritter, holder.target))
@@ -243,7 +243,7 @@
 /datum/aiHolder/pikaia
 	exclude_from_mobs_list = 1
 
-/datum/aiHolder/pikaia/New()
+INIT_TYPE(/datum/aiHolder/pikaia)
 	..()
 	var/datum/aiTask/timed/targeted/trilobite/D = get_instance(/datum/aiTask/timed/targeted/pikaia, list(src))
 	var/datum/aiTask/timed/B = get_instance(/datum/aiTask/timed/bury_ability, list(src))
@@ -318,7 +318,7 @@
 				if(!holder.target)
 					return ..() // try again next tick
 			if (dist <= 1)
-				owncritter.a_intent = INTENT_GRAB
+				owncritter.set_a_intent(INTENT_GRAB)
 				owncritter.hud.update_intent()
 				owncritter.set_dir(get_dir(owncritter, M))
 

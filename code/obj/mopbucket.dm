@@ -11,7 +11,7 @@
 	var/image/fluid_image
 	p_class = 1.2
 
-	New()
+	INIT()
 		. = ..()
 		src.fluid_image = image(src.icon, "fluid", -1)
 
@@ -27,7 +27,7 @@
 		..()
 		src.UpdateIcon()
 
-/obj/mopbucket/New()
+INIT_TYPE(/obj/mopbucket)
 	..()
 	create_reagents(400)
 	START_TRACKING

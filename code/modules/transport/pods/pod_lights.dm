@@ -40,7 +40,7 @@
 
 		// Turns on four lights because I can't figure out how to do two lights out front facing the direction the pod is heading
 		// TODO : fix this, it's 2x the load than we need out of this
-		New()
+		INIT()
 			..()
 			var/brightness = 2
 			light1 = new /datum/light/line

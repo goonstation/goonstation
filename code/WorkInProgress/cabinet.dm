@@ -14,7 +14,7 @@
 	var/list/slots = list("1","2","3","4","5","6") //I hate byond
 	var/list/deniedTypes = list(/obj/item/tool/omnitool) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
 
-	New()
+	INIT()
 		rebuildOverlays()
 		..()
 
@@ -163,7 +163,7 @@
 
 /obj/cabinet/pathology
 
-	New()
+	INIT()
 		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		slots["1"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
@@ -177,7 +177,7 @@
 
 /obj/cabinet/chemistry
 
-	New()
+	INIT()
 		slots["1"] = new/obj/item/reagent_containers/glass/beaker(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/beaker(src)
 		slots["3"] = new/obj/item/reagent_containers/glass/beaker(src)
@@ -189,7 +189,7 @@
 
 /obj/cabinet/chemistry2
 
-	New()
+	INIT()
 		slots["1"] = new/obj/item/reagent_containers/glass/flask(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/flask(src)
 		slots["3"] = new/obj/item/reagent_containers/dropper/mechanical(src)
@@ -201,7 +201,7 @@
 
 /obj/cabinet/chemicals
 
-	New()
+	INIT()
 		slots["1"] = new/obj/item/reagent_containers/glass/bottle/oil(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/bottle/phenol(src)
 		slots["3"] = new/obj/item/reagent_containers/glass/bottle/acetone(src)
@@ -213,7 +213,7 @@
 
 /obj/cabinet/restrictedmedical
 
-	New()
+	INIT()
 		slots["1"] = new/obj/item/reagent_containers/glass/bottle/pfd(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/bottle/pentetic(src)
 		slots["3"] = new/obj/item/reagent_containers/glass/bottle/omnizine(src)
@@ -225,7 +225,7 @@
 
 /obj/cabinet/medical
 
-	New()
+	INIT()
 		slots["1"] = new/obj/item/storage/firstaid/brain(src)
 		slots["2"] = new/obj/item/storage/firstaid/regular(src)
 		slots["3"] = new/obj/item/storage/firstaid/fire(src)
@@ -237,7 +237,7 @@
 
 /obj/cabinet/medicalmenders
 
-	New()
+	INIT()
 		slots["1"] = new/obj/item/reagent_containers/mender/brute(src)
 		slots["2"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
 		slots["3"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
@@ -249,7 +249,7 @@
 
 /obj/cabinet/psychiatry
 
-	New()
+	INIT()
 		slots["1"] = new /obj/item/device/audio_log(src)
 		slots["2"] = new /obj/item/paper_bin(src)
 		slots["3"] = new /obj/item/storage/box/crayon(src)
@@ -261,7 +261,7 @@
 
 /obj/cabinet/taffy // for psychiatrists to prescribe
 
-	New()
+	INIT()
 		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
 		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
 		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
@@ -272,7 +272,7 @@
 		return ..()
 
 /obj/cabinet/ammo // for the shooting range prefab
-	New()
+	INIT()
 		slots["1"] = new /obj/item/ammo/bullets/foamdarts(src)
 		slots["2"] = new /obj/item/ammo/bullets/foamdarts(src)
 		slots["3"] = new /obj/item/ammo/bullets/foamdarts(src)

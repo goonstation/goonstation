@@ -39,20 +39,18 @@
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
 
-	New(var/loc,var/lifespan = 120)
+	INIT(var/loc,var/lifespan = 120)
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
-		sleep(lifespan)
-		playsound(src,pulse_sound,50,1)
-		irradiate_turf(get_turf(src))
-		for (var/turf/T in circular_range(src,pulse_range))
-			irradiate_turf(T)
-		SPAWN_DBG(0)
+		SPAWN_DBG(lifespan)
+			playsound(src,pulse_sound,50,1)
+			irradiate_turf(get_turf(src))
+			for (var/turf/T in circular_range(src,pulse_range))
+				irradiate_turf(T)
 			qdel(src)
-		return
 
 	disposing()
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
@@ -91,20 +89,18 @@
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
 
-	New(var/loc,var/lifespan = 45)
+	INIT(var/loc,var/lifespan = 45)
 		..()
 		animate(src, alpha = 0, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
-		sleep(lifespan)
-		playsound(src,pulse_sound,50,1)
-		irradiate_turf(get_turf(src))
-		for (var/turf/T in circular_range(src,pulse_range))
-			irradiate_turf(T)
-		SPAWN_DBG(0)
+		SPAWN_DBG(lifespan)
+			playsound(src,pulse_sound,50,1)
+			irradiate_turf(get_turf(src))
+			for (var/turf/T in circular_range(src,pulse_range))
+				irradiate_turf(T)
 			qdel(src)
-		return
 
 	disposing()
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
@@ -154,7 +150,7 @@
 // Particle FX
 
 /datum/particleSystem/rads_warning
-	New(var/atom/location = null)
+	INIT(var/atom/location = null)
 		..(location, "rads_warning", 5)
 
 	Run()

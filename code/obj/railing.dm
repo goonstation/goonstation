@@ -8,7 +8,7 @@
 	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
@@ -82,7 +82,7 @@
 			return
 
 
-	New()
+	INIT()
 		..()
 		if(src.is_reinforced)
 			src.flags |= ALWAYS_SOLID_FLUID
@@ -211,6 +211,7 @@
 	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
+	resumable = FALSE
 	var/mob/ownerMob
 	var/obj/railing/the_railing
 	var/turf/jump_target //where the mob will move to when they complete the jump!
@@ -221,7 +222,7 @@
 	/// list of types exempt from bump checks when checking landing turf validity
 	var/list/collision_whitelist = null
 
-	New(The_Owner, The_Railing, use_owner_dir = FALSE)
+	INIT(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
 		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge)
 		if (The_Owner)
@@ -334,7 +335,7 @@
 	var/obj/item/tool // the tool the owner is using on the railing
 	var/interaction = RAILING_DISASSEMBLE
 
-	New(The_Owner, The_Railing, var/obj/item/The_Tool, The_Interaction, The_Duration)
+	INIT(The_Owner, The_Railing, var/obj/item/The_Tool, The_Interaction, The_Duration)
 		..()
 		if (The_Railing)
 			the_railing = The_Railing

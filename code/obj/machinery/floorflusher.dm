@@ -66,7 +66,7 @@
 
 	// create a new floor flusher
 	// find the attached trunk (if present) and init gas resvr.
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			trunk = locate() in src.loc
@@ -199,11 +199,6 @@
 			src.remove_dialog(user)
 			return
 
-		//fall in hilariously
-		boutput(user, "You slip and fall in.")
-		user.set_loc(src)
-		update()
-
 
 	// eject the contents of the unit
 	proc/eject()
@@ -321,7 +316,7 @@
 	desc = "Totally just a giant disposal chute"
 	icon = 'icons/obj/delivery.dmi'
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 SECOND)
 			openup()

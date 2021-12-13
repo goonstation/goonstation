@@ -7,7 +7,7 @@
 	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/assembly/shock_kit/New()
+INIT_TYPE(/obj/item/assembly/shock_kit)
 	..()
 	SPAWN_DBG(2 SECONDS)
 		if (src)

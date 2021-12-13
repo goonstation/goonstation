@@ -115,7 +115,7 @@
 			qdel(effect_overlay)
 		..()
 
-	New(var/L)
+	INIT(var/L)
 		..()
 		effect_overlay = new/obj/overlay/tile_effect/secondary/bookcase(loc)
 		update_dir(dir)

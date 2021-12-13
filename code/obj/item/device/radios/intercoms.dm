@@ -28,7 +28,7 @@
 		if(WEST)
 			src.pixel_x = 21
 
-/obj/item/device/radio/intercom/New()
+INIT_TYPE(/obj/item/device/radio/intercom)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
@@ -67,7 +67,8 @@
 	device_color = "#aa5c00"
 	protected_radio = 1
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 // -------------------- VR --------------------
@@ -85,7 +86,8 @@
 	broadcasting = 0
 	device_color = "#0093FF"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/security
@@ -94,7 +96,8 @@
 	broadcasting = 0
 	device_color = "#FF2000"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/brig
@@ -103,7 +106,8 @@
 	broadcasting = 0
 	device_color = "#FF5000"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/science
@@ -112,7 +116,8 @@
 	broadcasting = 0
 	device_color = "#C652CE"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/engineering
@@ -121,7 +126,8 @@
 	broadcasting = 0
 	device_color = "#BBBB00"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/cargo
@@ -130,7 +136,8 @@
 	broadcasting = 0
 	device_color = "#9A8B0D"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/catering
@@ -139,7 +146,8 @@
 	broadcasting = 0
 	device_color = "#C16082"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/botany
@@ -148,7 +156,8 @@
 	broadcasting = 0
 	device_color = "#78ee48"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/AI
@@ -157,7 +166,8 @@
 	broadcasting = 1
 	device_color = "#7F7FE2"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/bridge
@@ -166,7 +176,8 @@
 	broadcasting = 1
 	device_color = "#339933"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 
@@ -179,7 +190,8 @@
 	broadcasting = 0
 	device_color = "#3344AA"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 /obj/item/device/radio/intercom/adventure/syndcommand
@@ -189,7 +201,8 @@
 	broadcasting = 1
 	device_color = "#BB3333"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)
 
 
@@ -199,5 +212,6 @@
 	broadcasting = 1
 	device_color = "#3333AA"
 
-	initialize()
+	INIT()
+		..()
 		set_frequency(frequency)

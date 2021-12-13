@@ -152,9 +152,9 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			screw_up_prob -= 5
 
 	if (surgeon.traitHolder.hasTrait("training_medical"))
-		screw_up_prob = max(0, min(100, screw_up_prob)) // if they're a doctor they can have no chance to mess up
+		screw_up_prob = clamp(screw_up_prob, 0, 100) // if they're a doctor they can have no chance to mess up
 	else
-		screw_up_prob = max(5, min(100, screw_up_prob)) // otherwise there'll always be a slight chance
+		screw_up_prob = clamp(screw_up_prob, 5, 100) // otherwise there'll always be a slight chance
 
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon]) has screw_up_prob set to [screw_up_prob]</b>")
 

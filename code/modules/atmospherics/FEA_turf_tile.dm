@@ -171,7 +171,7 @@ turf
 					if (gas_icon_overlay)
 						qdel(gas_icon_overlay)
 						gas_icon_overlay = null
-		New()
+		INIT()
 			..()
 
 			if(!gas_impermeable)
@@ -186,7 +186,10 @@ turf
 				if(air_master)
 					air_master.tiles_to_update |= src
 
-					find_group()
+					if(!big_map_changes_happening)
+						find_group()
+					else
+						air_master.turfs_to_find_groups_for |= src
 
 			else
 				if(air_master)
@@ -288,7 +291,6 @@ turf
 			air_check_directions = 0
 
 			for(var/direction in cardinal)
-				LAGCHECK(LAG_REALTIME)
 				if(gas_cross(get_step(src,direction)))
 					air_check_directions |= direction
 
@@ -301,7 +303,6 @@ turf
 
 				group_border = 0
 				for(var/direction in cardinal)
-					LAGCHECK(LAG_REALTIME)
 					if(air_check_directions & direction)
 						var/turf/simulated/T = get_step(src,direction)
 

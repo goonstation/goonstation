@@ -22,7 +22,7 @@
 	var/roundstart_icon_state
 	var/roundstart_dir
 
-	New()
+	INIT()
 		..()
 		if (has_material)
 			if (isnull(plate_mat))
@@ -70,46 +70,85 @@
 				if("corner_west")
 					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
 				if("floor_hazard_misc")
-					if(src.dir == SOUTH)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
-					if(src.dir == NORTH)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
-					if(src.dir == EAST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
-					if(src.dir == WEST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
-					if(src.dir == SOUTHEAST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
 				if("engine_caution_misc")
-					if(src.dir == SOUTH)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
-					if(src.dir == NORTH)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
-					if(src.dir == EAST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
-					if(src.dir == WEST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
-					if(src.dir == SOUTHEAST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
 				if("engine_caution_corners")
-					if(src.dir == SOUTH)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
-					if(src.dir == NORTH)
-						new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
-					if(src.dir == EAST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
-					if(src.dir == WEST)
-						new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+				if("floor_hazard_corners")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=SOUTH}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=NORTH}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=EAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=WEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHEAST}(src)
+						if(SOUTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHWEST}(src)
+						if(NORTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHEAST}(src)
+						if(NORTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHWEST}(src)
+				if("engine_caution_corners2")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=SOUTH}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=NORTH}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=EAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=WEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHEAST}(src)
+						if(SOUTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHWEST}(src)
+						if(NORTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHEAST}(src)
+						if(NORTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHWEST}(src)
 		#endif
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
@@ -136,7 +175,7 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/plating/random
-	New()
+	INIT()
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
@@ -165,7 +204,7 @@
 		return
 
 /turf/simulated/floor/plating/airless/random
-	New()
+	INIT()
 		..()
 		if (prob(20))
 			src.icon_state = pick("panelscorched", "platingdmg1", "platingdmg2", "platingdmg3")
@@ -536,7 +575,7 @@
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("pharosium"))
 
@@ -587,7 +626,7 @@
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("cloth"))
 
@@ -951,7 +990,7 @@ DEFINE_FLOORS(minitiles/black,
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("wood"))
 
@@ -1151,7 +1190,7 @@ DEFINE_FLOORS(minitiles/black,
 	step_priority = STEP_PRIORITY_MED
 	mat_appearances_to_ignore = list("steel")
 
-	New()
+	INIT()
 		..()
 		if (prob(50))
 			icon_state = "snow2"
@@ -1163,7 +1202,7 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/snow/snowball
 
-	New()
+	INIT()
 		..()
 		AddComponent(/datum/component/snowballs)
 
@@ -1204,7 +1243,7 @@ DEFINE_FLOORS(snowrough/border,
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -1270,7 +1309,7 @@ DEFINE_FLOORS(techfloor/green,
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
 
-	New()
+	INIT()
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
@@ -1308,7 +1347,7 @@ DEFINE_FLOORS(techfloor/green,
 	icon_state = "grass_leafy"
 
 /turf/simulated/floor/grass/random
-	New()
+	INIT()
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -1371,7 +1410,7 @@ DEFINE_FLOORS(grasslush/thin,
 	//fullbright = 1
 	allows_vehicles = 1
 
-	New()
+	INIT()
 		..()
 		name = "plating"
 
@@ -1412,7 +1451,7 @@ DEFINE_FLOORS(grasslush/thin,
 	default_melt_cap = 80
 	allows_vehicles = 1
 
-	New()
+	INIT()
 		..()
 		setMaterial(getMaterial("blob"))
 
@@ -2152,7 +2191,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		icon = 'icons/misc/worlds.dmi'
 		icon_state = "swampgrass"
 
-		New()
+		INIT()
 			..()
 			set_dir(pick(1,2,4,8))
 			return

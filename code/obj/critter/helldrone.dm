@@ -23,7 +23,7 @@
 
 	var/activated = 0
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(2 SECONDS)
 			if (!activated)

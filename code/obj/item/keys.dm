@@ -40,7 +40,7 @@
 	icon = 'icons/obj/items/randomkeys.dmi'
 	icon_state = "null"
 
-	New(var/loca)
+	INIT(var/loca)
 		randomize()
 		return ..(loca)
 
@@ -116,7 +116,7 @@
 	desc = "A key crafted of polygons and VRML."
 	icon_state = "key_vr"
 
-	New()
+	INIT()
 		..()
 		. = rand(5, 20)
 		SPAWN_DBG(rand(1,10))

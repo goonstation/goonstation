@@ -72,7 +72,7 @@
 		var
 			datum/light/light
 
-		New()
+		INIT()
 			..()
 			light = new /datum/light/point
 			light.set_brightness(1.2)
@@ -96,7 +96,7 @@
 			beacon_name = "beacon"
 			datum/light/light
 
-		New()
+		INIT()
 			..()
 			light = new /datum/light/point
 			light.set_brightness(0.6)

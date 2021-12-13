@@ -44,7 +44,7 @@
 	radio
 		btype = 0
 
-/obj/spawner/bomb/New()
+INIT_TYPE(/obj/spawner/bomb)
 	..()
 
 	switch (src.btype)
@@ -106,7 +106,7 @@
 
 	qdel(src)
 
-/obj/spawner/newbomb/New()
+INIT_TYPE(/obj/spawner/newbomb)
 	..()
 
 	switch (src.btype)
@@ -182,7 +182,7 @@
 	qdel(src)
 
 
-/obj/spawner/briefcasebomb/New()
+INIT_TYPE(/obj/spawner/briefcasebomb)
 	..()
 
 	var/obj/item/device/transfer_valve/briefcase/V = new(src.loc)
@@ -213,7 +213,7 @@
 	density = 1
 	var/exploding = 0
 
-	New()
+	INIT()
 		..()
 		if(!isturf(src.loc))
 			dispose()

@@ -2,7 +2,7 @@
 /obj/effects/pressurizer
 	invisibility = INVIS_ALWAYS_ISH
 
-	New()
+	INIT()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.do_pressurize()

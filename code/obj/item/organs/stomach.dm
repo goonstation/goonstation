@@ -73,7 +73,7 @@
 	icon_state = "plant"
 	desc = "Nearly functionally identical to a pitcher plant... weird."
 	synthetic = 1
-	New()
+	INIT()
 		..()
 		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
 

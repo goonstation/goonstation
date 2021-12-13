@@ -1,5 +1,5 @@
 /datum/tag/span
-	New(var/type as text)
+	INIT(var/type as text)
 		..("span")
 
 	proc/setText(var/txt as text)

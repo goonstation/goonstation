@@ -186,7 +186,7 @@
 	occur_in_genepools = 0
 	var/personalized_stink = null
 
-	New()
+	INIT()
 		..()
 		if (prob(5))
 			src.personalized_stink = stinkString()

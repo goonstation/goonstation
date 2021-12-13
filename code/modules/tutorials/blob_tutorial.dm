@@ -25,7 +25,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 	var/mob/living/intangible/blob_overmind/bowner = null
 	var/turf/initial_turf = null
 
-	New()
+	INIT()
 		..()
 		AddBlobSteps(src)
 		if (blob_tutorial_areas.len)
@@ -97,7 +97,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 	var/static/image/marker = null
 	var/finished = 0
 
-	New()
+	INIT()
 		..()
 		if (!marker)
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
@@ -746,7 +746,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
 	icon_state = "body_f"
 	var/obj/item/gun/flamethrower/assembled/loaded/L = new
 
-	New()
+	INIT()
 		..()
 		overlays += image('icons/mob/inhand/hand_weapons.dmi', "flamethrower1-R")
 		L.set_loc(src)

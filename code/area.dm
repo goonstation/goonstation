@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				continue
 			value++
 		for (var/obj/machinery/light/L in src.contents)
-			if (L.current_lamp.light_status != 0) //See LIGHT_OK
+			if (!isnull(L.current_lamp) && L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
 		for (var/obj/window/W in src.contents)
@@ -435,7 +435,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if (light_manager)
 			light_manager.lights -= L
 
-	New()
+	INIT()
 		..()
 		START_TRACKING
 		if(area_space_nopower(src))
@@ -522,7 +522,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
+		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
 		return
 
@@ -586,6 +586,25 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_environment = 2
 	expandable = 0
 
+/area/shuttle/battle
+	icon_state = "shuttle_escape-battle-shuttle"
+	var/warp_dir = EAST
+
+	Entered(atom/movable/Obj,atom/OldLoc)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+	Exited(atom/movable/Obj)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	teleport_blocked = 2
@@ -601,12 +620,22 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Emergency Shuttle"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
+	filler_turf = /turf/unsimulated/floor/shuttlebay
+
+/area/shuttle/escape/transit
+	name = "Emergency Shuttle Transit"
+	icon_state = "shuttle_escape"
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -724,8 +753,18 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 			var/mob/M = Obj
 			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 
-/area/shuttle/escape/transit/ew
+/area/shuttle/escape/transit
+	warp_dir = NORTH
+
+/area/shuttle/escape/transit
 	warp_dir = EAST
+
+/area/shuttle/escape/transit
+	warp_dir = WEST
+
+/area/shuttle/escape/transit
+	warp_dir = SOUTH
+
 ABSTRACT_TYPE(/area/shuttle_transit_space)
 /area/shuttle_transit_space
 	name = "Wormhole"
@@ -938,7 +977,7 @@ ABSTRACT_TYPE(/area/adventure)
 
 	var/list/soundSubscribers = list()
 
-	New()
+	INIT()
 		..()
 
 		SPAWN_DBG(6 SECONDS)
@@ -1480,14 +1519,14 @@ ABSTRACT_TYPE(/area/station)
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 		START_TRACKING
 #else
 	filler_turf = null
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 		START_TRACKING
@@ -3256,7 +3295,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
 
-/area/station/ai_monitored/New()
+INIT_TYPE(/area/station/ai_monitored)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
@@ -3314,7 +3353,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
 
-/area/station/turret_protected/New()
+INIT_TYPE(/area/station/turret_protected)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
@@ -3587,7 +3626,7 @@ ABSTRACT_TYPE(/area/mining)
 			apc.name = "[name] APC"
 			apc.area = src
 
-	New()
+	INIT()
 		.=..()
 		SetName(name) //because the jerk built an APC first, because WHY NOT JERKO?!
 
@@ -3605,7 +3644,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
 	* Called when an area first loads
   */
-/area/New()
+INIT_TYPE(/area)
 	..()
 	src.icon = 'icons/effects/alert.dmi'
 	src.layer = EFFECTS_LAYER_BASE
@@ -3786,13 +3825,13 @@ Don't try and do this in the editor nerd. ~Warc
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 #else
 	filler_turf = null
 
-	New()
+	INIT()
 		..()
 		initial_structure_value = calculate_structure_value()
 #endif
@@ -5149,7 +5188,7 @@ area/station/security/visitation
 	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
 
-/area/station2/ai_monitored/New()
+INIT_TYPE(/area/station2/ai_monitored)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load
@@ -5197,7 +5236,7 @@ area/station/security/visitation
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
 
-/area/station2/turret_protected/New()
+INIT_TYPE(/area/station2/turret_protected)
 	..()
 	// locate and store the motioncamera
 	SPAWN_DBG(2 SECONDS) // spawn on a delay to let turfs/objs load

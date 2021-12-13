@@ -173,7 +173,7 @@
 	density = 1
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
-/obj/machinery/flasher/New()
+INIT_TYPE(/obj/machinery/flasher)
 	..()
 	light = new /datum/light/point
 	light.attach(src)

@@ -1121,7 +1121,7 @@ proc/debug_map_apc_count(delim,zlim)
 	alpha = 128
 	var/mutable_appearance/debug_overlay_appearance/app = new
 
-	New()
+	INIT()
 		..()
 		app.plane = FLOAT_PLANE
 

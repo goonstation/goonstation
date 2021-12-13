@@ -75,7 +75,7 @@
 #define WIRE_MALF 3
 #define WIRE_SHOCK 4
 
-	New()
+	INIT()
 		START_TRACKING
 		..()
 		var/area/area = get_area(src)
@@ -604,7 +604,7 @@
 					if (src.hacked)
 						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
-					newset = max(1,min(newset,upperbound))
+					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
 
 			if (href_list["clearQ"])
@@ -1485,7 +1485,7 @@
 			return
 		var/mcheck = check_enough_materials(M)
 		if(mcheck)
-			var/make = max(0,min(M.create,src.output_cap))
+			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop
 					while (make > 0)
@@ -1807,7 +1807,7 @@
 		if (!damage_amount)
 			return
 		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 		if (damage_amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
@@ -1908,7 +1908,7 @@
 
 
  	//TODO : pooling i guess cause other paper does
-	New(var/loc,var/schematic = null)
+	INIT(var/loc,var/schematic = null)
 		..()
 		if(istype(schematic, /datum/manufacture))
 			src.blueprint = schematic
@@ -2577,7 +2577,7 @@
 	var/obj/machinery/manufacturer/MA
 	var/completed = 0
 
-	New(machine, dur)
+	INIT(machine, dur)
 		MA = machine
 		duration = dur
 		..()

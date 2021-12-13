@@ -7,10 +7,10 @@
 /obj/item/cable_coil/_color/cable_obj_type = /obj/cable/_color;\
 /obj/item/cable_coil/_color/cut;\
 /obj/item/cable_coil/_color/cut/icon_state = "coil2";\
-/obj/item/cable_coil/_color/cut/New(loc, length)\
+INIT_TYPE(/obj/item/cable_coil/_color/cut, loc, length)\
 {if (length){..(loc, length)};else{..(loc, rand(1,2))};}\
 /obj/item/cable_coil/_color/cut/small;\
-/obj/item/cable_coil/_color/cut/small/New(loc, length){..(loc, rand(1,5))};\
+INIT_TYPE(/obj/item/cable_coil/_color/cut/small, loc, length){..(loc, rand(1,5))};\
 /obj/cable/_color;\
 /obj/cable/_color/name = ""+#_color+" power cable";\
 /obj/cable/_color/color = _hexcolor;\

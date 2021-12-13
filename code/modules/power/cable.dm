@@ -124,7 +124,7 @@
 		else
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
 
-/obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
+INIT_TYPE(/obj/cable, var/newloc, var/obj/item/cable_coil/source)
 	..()
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	d1 = text2num( icon_state )
@@ -175,7 +175,8 @@
 	UpdateIcon()
 
 /obj/cable/update_icon()
-	icon_state = "[d1]-[d2][iconmod]"
+	if(src.init_finished)
+		icon_state = "[d1]-[d2][iconmod]"
 	alpha = invisibility ? 128 : 255
 	//if (cableimg)
 	//	cableimg.icon_state = icon_state

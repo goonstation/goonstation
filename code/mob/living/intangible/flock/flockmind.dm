@@ -11,7 +11,7 @@
 	var/started = 0
 	var/last_time // when i say per second I MEAN PER SECOND DAMMIT
 
-/mob/living/intangible/flock/flockmind/New()
+INIT_TYPE(/mob/living/intangible/flock/flockmind)
 	..()
 
 	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)

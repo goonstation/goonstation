@@ -9,7 +9,7 @@
 	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
 							// if set to 0, requires a 0-X cable on this turf
 
-/obj/machinery/power/New(var/new_loc)
+INIT_TYPE(/obj/machinery/power, var/new_loc)
 	..()
 	if (current_state > GAME_STATE_PREGAME)
 		SPAWN_DBG(0.1 SECONDS) // aaaaaaaaaaaaaaaa

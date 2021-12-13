@@ -52,7 +52,7 @@ toxic - poisons
 	density = 0
 	opacity = 0
 	anchored = 1
-	New()
+	INIT()
 		..()
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)

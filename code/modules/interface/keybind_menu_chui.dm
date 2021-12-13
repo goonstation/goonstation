@@ -8,7 +8,7 @@ chui/window/keybind_menu
 	var/last_interact_time //To rate-limit
 	var/const/rate_limit_time = 1 SECOND
 
-	New(client/my_client)
+	INIT(client/my_client)
 		..()
 		owner = my_client
 		theAtom = owner.mob

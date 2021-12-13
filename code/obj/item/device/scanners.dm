@@ -92,7 +92,7 @@ Contains:
 					playsound(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
-					if(M?.invisibility != INVIS_CLOAK && IN_RANGE(src, M, 1))
+					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
 						continue
 				else if(isobj(A))
 					var/obj/O = A
@@ -258,7 +258,7 @@ that cannot be itched
 	var/image/scanner_status
 	hide_attack = 2
 
-	New()
+	INIT()
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
 		UpdateOverlays(scanner_status, "status")
@@ -353,7 +353,7 @@ that cannot be itched
 	organ_upgrade = 1
 	organ_scan = 1
 
-	New()
+	INIT()
 		..()
 		scanner_status.icon_state = "health_over-both"
 		UpdateOverlays(scanner_status, "status")

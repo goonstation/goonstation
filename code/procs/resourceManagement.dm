@@ -141,7 +141,7 @@
 	for(var/i in flist(dir))
 		if (copytext(i, -1) == "/") //Is Directory
 			//Skip certain directories
-			if (i == "unused/" || i == "html/" || i == "node_modules/" || i == "build/")
+			if (i == "unused/" || i == "node_modules/" || i == "build/")
 				continue
 			else
 				LAGCHECK(LAG_HIGH)

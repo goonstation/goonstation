@@ -62,7 +62,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "bull"
 
-	New()
+	INIT()
 		..()
 		src.alpha = 245
 		animate(src, alpha = 1, time = 30)

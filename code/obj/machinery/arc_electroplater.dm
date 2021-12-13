@@ -16,7 +16,7 @@
 	var/max_wclass = 3
 	var/obj/item/material_piece/my_bar = null
 
-	New()
+	INIT()
 		..()
 		UnsubscribeProcess()
 

@@ -2,7 +2,7 @@
 	var/list/glitchy_noises = list('sound/machines/romhack1.ogg', 'sound/machines/romhack3.ogg', 'sound/machines/fortune_greeting_broken.ogg',
 	'sound/effects/glitchy1.ogg', 'sound/effects/glitchy2.ogg', 'sound/effects/glitchy3.ogg', 'sound/musical_instruments/WeirdHorn_12.ogg')
 
-	New()
+	INIT()
 		..()
 		src.rename_self()
 		sound_burp = pick(glitchy_noises)

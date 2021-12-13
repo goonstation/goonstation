@@ -1,7 +1,7 @@
 /datum/dialogueMaster/traderGeneric
 	dialogueName = "Trader"
 	start = /datum/dialogueNode/traderStartGeneric
-	New(var/atom/M)
+	INIT(var/atom/M)
 		..()
 		dialogueName = master.name
 

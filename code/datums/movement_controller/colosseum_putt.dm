@@ -2,7 +2,7 @@
 	var/obj/machinery/colosseum_putt/master
 
 	var/next_move = 0
-	New(master)
+	INIT(master)
 		..()
 		src.master = master
 

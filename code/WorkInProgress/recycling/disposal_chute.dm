@@ -35,7 +35,7 @@
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
-	New()
+	INIT()
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN_DBG(0.5 SECONDS)
@@ -550,7 +550,7 @@
 	var/net_id = null
 	var/frequency = FREQ_PDA
 
-	New()
+	INIT()
 		..()
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
@@ -652,7 +652,7 @@
 	var/mob/user
 	var/mob/target
 
-	New(var/obj/machinery/disposal/chute, var/mob/target, var/mob/user)
+	INIT(var/obj/machinery/disposal/chute, var/mob/target, var/mob/user)
 		..()
 		src.chute = chute
 		src.user = user

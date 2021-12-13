@@ -3,7 +3,7 @@
 	associated_datum = /datum/artifact/power_gen
 	var/datum/light/light
 
-	New()
+	INIT()
 		..()
 		light = new /datum/light/point
 		light.set_brightness(1)
@@ -30,7 +30,7 @@
 	var/obj/cable/attached
 	var/list/spark_sounds = list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg','sound/effects/sparks5.ogg','sound/effects/sparks6.ogg')
 
-	New()
+	INIT()
 		..()
 		// Previously generated a super lame amount of power from 5 KW to 5 MW. Let's make things... INTERESTING? Maybe 500 KW to 500 MW will be more interesting.
 		gen_level = rand(1,10) // levels from 1-10
