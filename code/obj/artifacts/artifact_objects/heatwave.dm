@@ -15,7 +15,7 @@
 	react_xray = list(12,35,85,5,"POROUS") //has pores for flames idk
 	examine_hint = "It is covered in very conspicuous markings."
 	var/recharge_time = 20 SECONDS
-	var/recharging = 0
+	var/recharging = FALSE
 	post_setup()
 		..()
 
@@ -26,9 +26,9 @@
 		if (recharging)
 			return
 		if (recharge_time > 0)
-			recharging = 1
+			recharging = TRUE
 		playsound(O.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
 		T.visible_message("<span class='alert'><b>[O]</b> erupts into a huge column of flames! Holy shit!</span>")
 		fireflash_sm(T, 4, 7000, 2000)
 		SPAWN_DBG(recharge_time) //so some chemist doesnt discover how to make a liquid that can turn this thing on 900000 times in a second
-			recharging = 0
+			recharging = FALSE
