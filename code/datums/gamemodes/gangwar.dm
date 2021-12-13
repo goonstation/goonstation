@@ -204,15 +204,14 @@
 
 /datum/game_mode/gang/process()
 	..()
+	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
+		shuttle_called = TRUE
+		force_shuttle()
 	slow_process ++
 	if (slow_process < 60)
 		return
 	else
 		slow_process = 0
-
-	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
-		shuttle_called = TRUE
-		force_shuttle()
 
 	for(var/datum/gang/G in gangs)
 		var/tmp_turf_points = G.num_areas_controlled()*15
