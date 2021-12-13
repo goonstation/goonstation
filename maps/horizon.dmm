@@ -58294,7 +58294,7 @@
 "rhG" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/security/armory)

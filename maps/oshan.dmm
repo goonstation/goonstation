@@ -20266,9 +20266,9 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXq" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -44529,7 +44529,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},

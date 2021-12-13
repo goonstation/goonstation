@@ -53706,7 +53706,7 @@
 /area/station/hallway/primary/central)
 "bXY" = (
 /obj/shrub,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},

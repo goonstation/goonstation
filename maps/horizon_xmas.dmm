@@ -17075,9 +17075,9 @@
 	dir = 4
 	},
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "aOL" = (

@@ -37776,9 +37776,9 @@
 	},
 /obj/item/device/radio/intercom/security,
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
