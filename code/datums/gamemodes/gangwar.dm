@@ -108,14 +108,16 @@
 		// uniform_prompt(leaderMind)
 
 	find_potential_hot_zones()
+
 	SPAWN_DBG (10 MINUTES)
 		process_hot_zones()
+
 	SPAWN_DBG (15 MINUTES)
 		process_kidnapping_event()
+
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-	SPAWN_DBG (rand(waittime_l, waittime_h))
-		send_intercept()
+
 	return 1
 
 /datum/game_mode/gang/proc/force_shuttle()
