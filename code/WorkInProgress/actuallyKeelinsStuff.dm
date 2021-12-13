@@ -1963,6 +1963,7 @@ Returns:
 	density = 1
 	anchored = 1
 	opacity = 0
+	particles = new/particles/barrel_embers
 
 	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
