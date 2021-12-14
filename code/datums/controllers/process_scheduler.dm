@@ -89,6 +89,8 @@ var/global/datum/controller/processScheduler/processScheduler
 		// already created and set up so just add it.
 		addProcess(process, TRUE)
 
+	global.lag_detection_process.setup()
+
 /datum/controller/processScheduler/proc/start()
 	isRunning = 1
 	SPAWN_DBG(0)

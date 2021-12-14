@@ -191,7 +191,7 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat(src.loc)
 				meat.name = "cube steak"
 				meat.desc = "Grody."
-			playsound(src.loc, "sound/effects/splat.ogg", 75, 1)
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
 			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 

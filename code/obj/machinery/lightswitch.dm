@@ -32,7 +32,7 @@
 			name = "light switch"
 
 		src.on = src.area.lightswitch
-		updateicon()
+		UpdateIcon()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
@@ -50,7 +50,7 @@
 	return
 
 
-/obj/machinery/light_switch/proc/updateicon()
+/obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
 		icon_state = "light-p"
 		light.disable()
@@ -85,7 +85,7 @@
 
 	for(var/obj/machinery/light_switch/L in area.machines)
 		L.on = on
-		L.updateicon()
+		L.UpdateIcon()
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
@@ -108,7 +108,7 @@
 		else
 			status |= NOPOWER
 
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/light_switch/north
 	name = "N light switch"

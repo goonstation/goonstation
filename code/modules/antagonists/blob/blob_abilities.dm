@@ -518,7 +518,7 @@
 				return
 
 			B.heal_damage(20)
-			B.update_icon()
+			B.UpdateIcon()
 			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()

@@ -21,7 +21,7 @@
 		if (IsGuestKey(user.key))
 			return 0
 
-		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
 		var/savefile/F
 		if (returnSavefile)
@@ -154,7 +154,7 @@
 			path = savefile_path(user)
 			if (!fexists(path))
 				return 0
-			profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+			profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 			F = new /savefile(path, -1)
 
 		var/version = null
@@ -389,7 +389,7 @@
 		if (!fexists(path))
 			return 0
 
-		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
 		var/savefile/F = new /savefile(path, -1)
 

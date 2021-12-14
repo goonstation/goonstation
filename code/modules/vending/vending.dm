@@ -1771,7 +1771,7 @@
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
-			C.updateicon()
+			C.UpdateIcon()
 			wiresinstalled = FALSE
 		else if (state == "DECONSTRUCTED")
 			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
@@ -2774,7 +2774,7 @@
 		if(href_list["changepressure"])
 			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
 			if(isnum_safe(change))
-				target_pressure = min(max(10.1325, change),1013.25)
+				target_pressure = clamp(change, 10.1325, 1013.25)
 				src.updateUsrDialog()
 
 		if(href_list["fill"])

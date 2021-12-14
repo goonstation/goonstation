@@ -109,7 +109,7 @@
 
 /obj/item/spongecaps/New()
 	..()
-	update_icon()
+	UpdateIcon()
 
 /obj/item/spongecaps/get_desc()
 	if(caps_amt >= 1)
@@ -117,7 +117,7 @@
 	else
 		. += "<br>It's empty."
 
-/obj/item/spongecaps/proc/update_icon()
+/obj/item/spongecaps/update_icon()
 	overlays = null
 	if(caps_amt <= 0)
 		icon_state = initial(icon_state)
@@ -135,6 +135,6 @@
 			if(caps_amt != -1)
 				caps_amt--
 				tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 	else
 		return ..()

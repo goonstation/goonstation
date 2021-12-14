@@ -87,7 +87,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
-		if(istype(get_area(player.current),/area/shuttle/escape/transit/battle_shuttle))
+		if(istype(get_area(player.current),/area/shuttle/battle))
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
 			player.current.nodamage = 0
@@ -133,7 +133,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		// oh and tell anyone on the shuttle it moved I guess
 		for(var/client/C)
 			if (C.mob)
-				if(istype(get_area(C.mob),/area/shuttle/escape/transit/battle_shuttle))
+				if(istype(get_area(C.mob),/area/shuttle/battle))
 					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Is it time for a storm

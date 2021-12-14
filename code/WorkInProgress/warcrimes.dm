@@ -207,7 +207,7 @@ var/fartcount = 0
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -244,7 +244,7 @@ var/fartcount = 0
 			snacc.Eat(src,src,1)
 
 	proc/pacify()
-		src.a_intent = INTENT_HELP
+		src.set_a_intent(INTENT_HELP)
 		src.target = null
 		src.ai_state = 0
 		src.ai_target = null
@@ -467,7 +467,7 @@ var/fartcount = 0
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
@@ -478,7 +478,7 @@ var/fartcount = 0
 					M.add_karma(-1)
 				S.target = M
 				S.ai_set_active(1)
-				S.a_intent = INTENT_HARM
+				S.set_a_intent(INTENT_HARM)
 
 
 
@@ -608,7 +608,7 @@ Urs' Hauntdog critter
 		H.food_effects = list("food_all","food_brute")
 		if (H.reagents)
 			H.reagents.add_reagent("ectoplasm", 10)
-		H.update_icon()
+		H.UpdateIcon()
 
 		qdel(src)
 

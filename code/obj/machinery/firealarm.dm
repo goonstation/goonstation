@@ -44,8 +44,8 @@
 	alarm_overlay.plane = PLANE_LIGHTING
 	alarm_overlay.blend_mode = BLEND_ADD
 	alarm_overlay.layer = LIGHTING_LAYER_BASE
-	alarm_overlay.alpha = 127
-	update_icon()
+	alarm_overlay.alpha = 80
+	UpdateIcon()
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleinput")
@@ -55,7 +55,7 @@
 	STOP_TRACKING
 	..()
 
-/obj/machinery/firealarm/proc/update_icon()
+/obj/machinery/firealarm/update_icon()
 	if (status & NOPOWER)
 		icon_state = "firep"
 		ClearSpecificOverlays("alarm_base_overlay")
@@ -129,11 +129,11 @@
 			var/area/A = get_area(src)
 			A.firereset()
 		status &= ~NOPOWER
-		update_icon()
+		UpdateIcon()
 	else
 		SPAWN_DBG(rand(0,15))
 			status |= NOPOWER
-			update_icon()
+			UpdateIcon()
 
 /obj/machinery/firealarm/attack_hand(mob/user as mob)
 	if(user.stat || status & (NOPOWER|BROKEN))

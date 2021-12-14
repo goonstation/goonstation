@@ -20,9 +20,9 @@
 		if(cell_type)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		processing_items -= src
@@ -42,6 +42,7 @@
 			. += "<span class='alert'>*ERROR* No output selected!</span>"
 
 	update_icon()
+
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
@@ -51,7 +52,7 @@
 
 	emp_act()
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 /*
@@ -73,7 +74,7 @@
 		if (src.cell.charge == src.cell.max_charge) // Keep them in the loop, as we might fire the gun later (Convair880).
 			return
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 */
 
@@ -154,7 +155,7 @@
 
 	attack_self()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -227,7 +228,7 @@
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		..()
@@ -338,7 +339,7 @@
 				muzzle_flash = "muzzle_flash_elec"
 	attack_self(var/mob/M)
 		..()
-		update_icon()
+		UpdateIcon()
 		M.update_inhands()
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -377,7 +378,7 @@
 				src.icon_state = "ntneutral[ratio]"
 	attack_self()
 		..()
-		update_icon()
+		UpdateIcon()
 
 
 
@@ -515,7 +516,7 @@
 
 	attack_self(mob/user as mob)
 		..()
-		update_icon()
+		UpdateIcon()
 		user.update_inhands()
 
 ////////////////////////////////////BFG
@@ -1002,6 +1003,7 @@
 
 	update_icon()
 		..()
+
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
@@ -1015,6 +1017,7 @@
 	icon_state = "wavegun"
 
 	update_icon() // Necessary. Parent's got a different sprite now (Convair880).
+
 		return
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
@@ -1239,7 +1242,7 @@
 			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 			item_state = "lawg-detain"
 			M.update_inhands()
-			update_icon()
+			UpdateIcon()
 
 		var/text = msg[1]
 		text = sanitize_talk(text)
@@ -1296,7 +1299,7 @@
 					return
 
 		M.update_inhands()
-		update_icon()
+		UpdateIcon()
 
 	//Are you really the law? takes the mob as speaker, and the text spoken, sanitizes it. If you say "i am the law" and you in fact are NOT the law, it's gonna blow. Moved out of the switch statement because it that switch is only gonna run if the owner speaks
 	proc/are_you_the_law(mob/M as mob, text)
@@ -1544,7 +1547,7 @@
 
 		setTwoHanded(!src.two_handed)
 		src.can_dual_wield = !src.two_handed
-		update_icon()
+		UpdateIcon()
 
 		M.update_inhands()
 
@@ -1597,7 +1600,7 @@
 			spread_angle = 8
 		else
 			spread_angle = 2
-		update_icon()
+		UpdateIcon()
 
 ///////////////////////////////////////Ray Gun
 /obj/item/gun/energy/raygun

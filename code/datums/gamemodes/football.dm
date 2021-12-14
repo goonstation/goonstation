@@ -269,8 +269,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 					if (!player.current || isdead(player.current))
 						if (!player.current.client)
 							continue //ZeWaka: fix for null.preferences
-						var/mob/living/carbon/human/newbody = new()
-						player.current.client.preferences.copy_to(newbody, player.current, 1)
+						var/mob/living/carbon/human/newbody = new(null, null, player.current.client.preferences, TRUE)
 
 						if (player) //Mind transfer also handles key transfer.
 							player.transfer_to(newbody)

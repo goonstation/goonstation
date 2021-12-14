@@ -15,7 +15,7 @@
 			insertedRod = null
 		return
 
-	proc/updateicon()
+	update_icon()
 		if(status & NOPOWER)
 			icon_state = "neutinj"
 			return
@@ -25,7 +25,7 @@
 			icon_state = "neutinj"
 
 	process()
-		updateicon()
+		UpdateIcon()
 
 		if(status & NOPOWER)
 			return

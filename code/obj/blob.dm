@@ -45,7 +45,7 @@
 		START_TRACKING
 		if (!poisoned_image)
 			poisoned_image = image('icons/mob/blob.dmi', "poison")
-		src.update_icon()
+		src.UpdateIcon()
 		update_surrounding_blob_icons(get_turf(src))
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B?.blobs += src
@@ -135,7 +135,7 @@
 			update_overlays(overmind?.organ_color || src.color)
 		if(isturf(old_loc))
 			update_surrounding_blob_icons(old_loc)
-		update_icon()
+		UpdateIcon()
 		if(isturf(newloc))
 			update_surrounding_blob_icons(newloc)
 
@@ -421,7 +421,7 @@
 
 
 		src.health -= amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
 			src.onKilled()
@@ -430,7 +430,7 @@
 			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
-			src.update_icon()
+			src.UpdateIcon()
 			if (healthbar) //ZeWaka: Fix for null.onUpdate
 				healthbar.onUpdate()
 		return
@@ -466,12 +466,13 @@
 		if (src.poison)
 			amount /= 4
 		src.health += amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
-		src.update_icon()
+		src.UpdateIcon()
 		healthbar.onUpdate()
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src)
 			return
 
@@ -811,8 +812,8 @@
 		var/turf/T = B.loc
 		B.set_loc(loc)
 		set_loc(T)
-		update_icon()
-		B.update_icon()
+		UpdateIcon()
+		B.UpdateIcon()
 
 	replicator
 		name = "replicator"
@@ -997,13 +998,9 @@
 
 		//turrets can fire on humans, mobcritters and pods
 		for (var/mob/living/M in view(firing_range, src))
-			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.mutantrace)
-						targets_secondary += M
-					else
-						targets_primary += M
+			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned) || issilicon(M)) && !isdead(M) && !check_target_immunity(M))
+				if (isnpcmonkey(M))
+					targets_secondary += M
 				else
 					targets_primary += M
 
@@ -1260,6 +1257,7 @@
 		added = 0.1
 
 	update_icon()
+
 		return
 
 	disposing()
@@ -1291,6 +1289,7 @@
 		..(amount, damage_mult, damtype, user)
 
 	update_icon()
+
 		return
 
 /obj/blob/firewall
@@ -1310,7 +1309,7 @@
 			return ..(amount/3,mult,damtype,user)
 		else return ..()
 
-	update_icon()
+	update_icon(override_parent)
 		return
 
 /obj/material_deposit
@@ -1444,4 +1443,4 @@
 	if (!istype(T))
 		return
 	for (var/obj/blob/B in orange(1,T))
-		B.update_icon()
+		B.UpdateIcon()
