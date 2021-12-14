@@ -1673,7 +1673,7 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (!num || !length(english_num))
 		return
 
-	DEBUG_MESSAGE("<b>get_english_num recieves num \"[num]\"</b>")
+	DEBUG_MESSAGE("<b>get_english_num receives num \"[num]\"</b>")
 
 	if (istext(num))
 		num = text2num(num)
