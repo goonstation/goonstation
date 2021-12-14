@@ -15485,9 +15485,7 @@
 /area/station/crew_quarters/clown)
 "azf" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,

@@ -17617,9 +17617,7 @@
 /obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/clipboard,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/toy/sword,
@@ -37216,8 +37214,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crunch)
 "cfh" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /turf/unsimulated/floor,
@@ -37565,8 +37562,7 @@
 /area/owlery/staffhall)
 "cge" = (
 /obj/item/relic,
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /turf/unsimulated/floor/caution/corner/nw{
@@ -37582,8 +37578,7 @@
 	},
 /area/crunch)
 "cgg" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/reagent_containers/food/snacks/ectoplasm,
