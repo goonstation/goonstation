@@ -60,7 +60,7 @@ particles/spark
 		drift = generator("sphere", 0.2, 1)
 
 /// firey embers, for use with burning_barrel
-particles/barrel_embers
+/particles/barrel_embers
 	color = generator("color", "#FF2200", "#FF9933", UNIFORM_RAND)
 	spawning = 0.5
 	count = 30
