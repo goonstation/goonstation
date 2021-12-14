@@ -14,7 +14,7 @@
 	react_xray = list(8,60,80,6,"TUBULAR")
 	var/fart_range = 10
 	var/recharge_time = 10 SECONDS
-	var/recharging = FALSE
+
 	post_setup()
 		. = ..()
 		switch(artitype.name)
@@ -27,11 +27,9 @@
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		if (recharging)
+		if (ON_COOLDOWN(O, "brownnote_art" , recharge_time))
 			boutput(user, "<span class='alert'>The artifact emits a weak toot, but nothing else happens.</span>")
 			return
-		if (recharge_time > 0)
-			recharging = TRUE
 		T.visible_message("<b>[O]</b> emits a weird noise!")
 		playsound(O.loc, 'sound/musical_instruments/WeirdHorn_0.ogg', 50, 0)
 		var/count = 0
@@ -40,6 +38,4 @@
 				if(count++ > 15) break
 				if(!(locate(/obj/item/storage/bible) in get_turf(L)))
 					L.emote("fart")
-		SPAWN_DBG(recharge_time)
-			recharging = FALSE
 		O.ArtifactFaultUsed(user)
