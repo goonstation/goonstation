@@ -16,12 +16,15 @@
 	var/teleports = 0 //how many times has the artifact moved
 	var/grab_range = 2 //at what range can we "grab" living people
 	var/teleport_range = 8
-
+	var/wormholer = FALSE // wormholes instead of random offsets
 	post_setup()
 		..()
+		if (prob(30))
+			wormholer = TRUE
 		max_teleports = rand(1,6)
 		grab_range = rand(2,5)
-		teleport_range = rand(8,12)
+		if (!wormholer)
+			teleport_range = rand(8,12)
 
 	effect_process(var/obj/O)
 		if (..())
@@ -35,7 +38,7 @@
 			teleports = 0
 			return
 		else
-			var/loc = get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range))
+			var/loc = (wormholer ? pick(wormholeturfs) : get_offset_target_turf(T, rand(-teleport_range, teleport_range), rand(-teleport_range, teleport_range)) )
 			playsound(O.loc, "warp", 50)
 			for (var/mob/living/M in orange(grab_range,O))
 				M.set_loc(get_offset_target_turf(loc, rand(-grab_range, grab_range), rand(-grab_range, grab_range)))
