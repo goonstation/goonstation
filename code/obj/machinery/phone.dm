@@ -1,4 +1,4 @@
-/obj/machinery/phoneBeta
+/obj/machinery/phone
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
@@ -18,6 +18,8 @@
 	var/dialIcon = "phone_dial"
 	var/connected = TRUE
 	var/nameOverride = FALSE // for mappers who want to have custom phone names; set the actual name var of the phone, and this to TRUE
+	var/phoneDatumType = /datum/phone/landline // so you can set the datum in a child obj if you wanna use a modified landline datum
+	var/unlisted = FALSE
 
 	var/datum/phone/phoneDatum = null
 
@@ -50,12 +52,12 @@
 			var/temp_name = name
 			if(temp_name == initial(name) && location)
 				temp_name = location.name
-			var/name_counter = 1
+			/*var/name_counter = 1
 			for_by_tcl(M, /datum/phone)
 				if(M.phoneName && M.phoneName == temp_name)
 					name_counter++
 			if(name_counter > 1)
-				temp_name = "[temp_name] [name_counter]"
+				temp_name = "[temp_name] [name_counter]"*/// This doesn't work and findtext() won't be foolproof and i dont wanna regex so fuck it
 			setName(temp_name)
 		else if(!nameOverride)
 			setName(phoneDatum.phoneName)
@@ -77,7 +79,7 @@
 
 		if (handset)
 			handset.parent = null
-		handset = null
+		handset = null // we let it exist so people can beat others to death with it
 
 		STOP_TRACKING
 		..()
@@ -116,11 +118,12 @@
 			if(PH.parent == src)
 				user.drop_item(PH)
 				hangUp()
+				icon_state = phoneIcon
 			else if(user)
 				boutput(user,"<span class='alert'>That handset doesn't belong to that phone, it won't fit back into it, clearly!</span>")
 			return
 		if(istype(P,/obj/item/wirecutters))
-				handleCutWire(user)
+			handleCutWire(user)
 			return
 		if(istype(P,/obj/item/device/multitool))
 			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
@@ -178,7 +181,7 @@
 
 
 	proc/hangUp()
-		phoneDatum.disconnectFromCall()
+		phoneDatum.hangUp()
 		if(handset) // this should always be the case but just in case it's not for some absolutely bizarre reason
 			playsound(loc,"sound/machines/phones/hang_up.ogg" ,50,0)
 			qdel(handset)
@@ -206,11 +209,11 @@
 	name = "phone handset"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
-	var/obj/machinery/phoneBeta/parent = null
+	var/obj/machinery/phone/parent = null
 	flags = TALK_INTO_HAND
 	w_class = 1
 
-	New(var/obj/machinery/phoneBeta/parentPhone)
+	New(var/obj/machinery/phone/parentPhone)
 		if(!parentPhone)
 			return
 		..()
@@ -225,22 +228,21 @@
 		processing_items.Remove(src)
 		..()
 
+
 	process()
-		if(!src.parent)
-			qdel(src)
-			return
 		if(get_dist(src,src.parent) > 1)
 			var/mob/living/holder = null
 			if(istype(src.loc, /mob/living))
 				holder = src.loc
 				boutput(holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 				holder.drop_item(src)
+			parent.icon_state = parent.phoneIcon
 			src.parent.hangUp()
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
 		if(!src.parent)
-			return // how did we get here?
+			return // we're not usable as a phone anymore
 		if(src.loc != M)
 			return // not the person holding us talking, ignore em!
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phoneDatum.phoneName]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
@@ -268,35 +270,46 @@
 		user.playsound_local(user, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
 
 /datum/phone/landline
-	var/obj/machinery/phoneBeta/ourHolder = null // we can't override holder, so we make our own for when we need to refer to a handset or something
+	var/obj/machinery/phone/ourHolder = null // we can't override holder, so we make our own for when we need to refer to a handset or something
 	var/dialing = FALSE // for temporarily disabling the ability to dial, so you can't just spam-click the UI
 
+	canVape = TRUE
+	canVoltron = TRUE
 
 	New(var/atom/creator)
 		..()
 		ourHolder = creator
 
-	startPhoneCall(var/call_list, var/forceStart, var/doGroupCall = FALSE)
+	startPhoneCall(var/toCall, var/forceStart, var/doGroupCall = FALSE)
 		if(!ourHolder.connected)
 			return FALSE
 		if(currentPhoneCall) // we have duplicate checks here with the base proc because we don't wanna make the dial noise if they fail
 			if(forceStart)
 				disconnectFromCall()
-			else return
-		if(!call_list && !forceStart)
+			else if(!currentPhoneCall.isGroupCall)
+				return
+		if(!call_list && !targetNumber && !forceStart)
 			return
 		if(dialing)
 			return
 
-		handleSound("sound/machines/phones/dial.ogg",50,0)
-		dialing = TRUE
-		SPAWN_DBG(4 SECONDS)
-			dialing = FALSE
+
+		if(targetNumber)
 			if(!ourHolder.handset)
-				return // did we hang up in these 4 seconds?
+				return // just in case??
 			. = ..()
 			if(.)
 				ourHolder.doRing(callStart = TRUE)
+		else
+			handleSound("sound/machines/phones/dial.ogg",50,0)
+			dialing = TRUE
+			SPAWN_DBG(4 SECONDS)
+				dialing = FALSE
+				if(!ourHolder.handset)
+					return // did we hang up in these 4 seconds?
+				. = ..()
+				if(.)
+					ourHolder.doRing(callStart = TRUE)
 
 	receiveInvite()
 		if(ourHolder.handset)
@@ -307,8 +320,14 @@
 		if(.)
 			ourHolder.doRing(callStart = TRUE)
 
-	canContact()
+	hangUp()
+		cancelInvite(src)
+		..()
+
+	canSee()
 		if(!ourHolder.connected)
+			return FALSE
+		if(ourHolder.unlisted)
 			return FALSE
 		. = ..()
 
@@ -336,9 +355,39 @@
 	handleSound(soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 		ourHolder.handset?.outputSound(soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
 
+	onVape(var/datum/reagents/_buffer, var/obj/item/reagent_containers/vape/vape, var/mob/living/sourceMob, var/datum/phone/sourcePhone)
+		if(ourHolder.handset)
+			_buffer.my_atom = ourHolder.handset // we do this so the actual smoke reaction occurs on the handset and not the person who vaped
+			if(ismob(ourHolder.handset.loc))
+				var/mob/user = ourHolder.handset.loc
+				boutput(user,"<span class='alert'><B>[sourceMob] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
+		..()
+
+	onVoltron(var/mob/living/sourceMob, var/obj/item/device/voltron/voltron, var/datum/phone/sourcePhone, var/isOrgan = FALSE, var/override)
+		override = ourHolder?.handset
+		. = ..(sourceMob, voltron, sourcePhone, isOrgan, override)
+
+/obj/machinery/phone/testing
+
+	New()
+		..()
+		qdel(phoneDatum) // to-do: MAKE IT SO YOU DONT HAVE TO DO THIS YOU KNOB
+		phoneDatum = new /datum/phone/landline/testing(src)
+
+/datum/phone/landline/testing
+
+	var/doGroupCalls = TRUE
+
+	New()
+		..()
+		maxConnected = 10
+		prioritizeOurMax = TRUE
+
+	startPhoneCall(var/toCall, var/forceStart, var/doGroupCall = doGroupCalls)
+		..(toCall, forceStart, doGroupCall)
 
 /* ======= DEPRECATED ======= */
-/obj/machinery/phone
+/*/obj/machinery/phone
 	name = "phone"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
@@ -458,7 +507,6 @@
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
 				user.drop_item(PH)
-				qdel(PH)
 				hang_up()
 			return
 		if(istype(P,/obj/item/wirecutters))
@@ -661,7 +709,7 @@
 	attack_hand(mob/living/user as mob)
 		..(user)
 		holder = user
-
+*/
 /obj/machinery/phone/wall
 	name = "wall phone"
 	icon = 'icons/obj/machines/phones.dmi'
@@ -671,10 +719,10 @@
 	density = 0
 	mats = 25
 	_health = 50
-	phoneicon = "wallphone"
-	ringingicon = "wallphone_ringing"
-	answeredicon = "wallphone_answered"
-	dialicon = "wallphone_dial"
+	phoneIcon = "wallphone"
+	ringingIcon = "wallphone_ringing"
+	answeredIcon = "wallphone_answered"
+	dialIcon = "wallphone_dial"
 
 /obj/machinery/phone/unlisted
 	unlisted = TRUE

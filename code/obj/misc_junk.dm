@@ -411,7 +411,7 @@
 		else
 			PH = usr.r_hand
 
-		var/obj/machinery/phoneBeta/parentPhone = PH.parent
+		var/obj/machinery/phone/parentPhone = PH.parent
 		var/datum/phone/phoneDatum = parentPhone.phoneDatum
 		var/datum/phonecall/phonecall = phoneDatum.currentPhoneCall
 		var/victimCount = phonecall.relayVape(src, usr, phoneDatum)
