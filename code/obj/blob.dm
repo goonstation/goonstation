@@ -421,7 +421,7 @@
 
 
 		src.health -= amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
 			src.onKilled()
@@ -466,7 +466,7 @@
 		if (src.poison)
 			amount /= 4
 		src.health += amount
-		src.health = max(0,min(src.health_max,src.health))
+		src.health = clamp(src.health, 0, src.health_max)
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
 		src.UpdateIcon()
 		healthbar.onUpdate()
@@ -998,13 +998,9 @@
 
 		//turrets can fire on humans, mobcritters and pods
 		for (var/mob/living/M in view(firing_range, src))
-			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned)) && !isdead(M) && !check_target_immunity(M))
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					if (H.mutantrace)
-						targets_secondary += M
-					else
-						targets_primary += M
+			if ((ishuman(M) || (ismobcritter(M) && !M:ghost_spawned) || issilicon(M)) && !isdead(M) && !check_target_immunity(M))
+				if (isnpcmonkey(M))
+					targets_secondary += M
 				else
 					targets_primary += M
 

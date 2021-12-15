@@ -173,7 +173,7 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..()
+		. = ..(loc, null, null, FALSE)
 
 		hud = new(src)
 		src.attach_hud(hud)
@@ -1114,7 +1114,7 @@
 				W.set_loc(src)
 				src.upgrades.Add(W)
 				boutput(user, "You insert [W].")
-				boutput(src, "<span class='notice'>You recieved [W]! It can be activated from your panel.</span>")
+				boutput(src, "<span class='notice'>You received [W]! It can be activated from your panel.</span>")
 				hud.update_upgrades()
 				src.update_appearance()
 
@@ -1689,10 +1689,10 @@
 	hotkey(name)
 		switch (name)
 			if ("help")
-				src.a_intent = INTENT_HELP
+				src.set_a_intent(INTENT_HELP)
 				hud.update_intent()
 			if ("harm")
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 				hud.update_intent()
 			if ("unequip")
 				src.uneq_active()
@@ -2321,7 +2321,7 @@
 
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 5), 0)
+		sleeping = clamp(sleeping, 0, 5)
 		if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
 		if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
 		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)

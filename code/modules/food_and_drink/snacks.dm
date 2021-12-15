@@ -72,6 +72,7 @@
 	var/sliced = FALSE
 	var/topping = FALSE
 	var/num = 0
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
 	var/sliced_icon = "pslice"
@@ -898,7 +899,7 @@
 		if(M.reagents)
 			M.reagents.add_reagent("omnizine",15)
 			M.reagents.add_reagent("teporone", 15)
-			M.reagents.add_reagent("synaptizine", 15)
+			M.reagents.add_reagent("smelling_salt", 15)
 			M.reagents.add_reagent("saline", 15)
 			M.reagents.add_reagent("salbutamol", 15)
 			M.reagents.add_reagent("methamphetamine", 15)

@@ -1152,7 +1152,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
-							fireflash(location, min(max(0,volume/40),8))
+							fireflash(location, clamp(volume/40, 0, 8))
 							if (covered.len < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -1712,7 +1712,7 @@ datum
 					M = holder.my_atom
 
 				if (M.a_intent == INTENT_HARM)
-					M.a_intent = INTENT_HELP
+					M.set_a_intent(INTENT_HELP)
 
 				if (probmult(8))
 					. = ""

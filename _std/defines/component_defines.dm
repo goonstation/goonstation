@@ -17,6 +17,9 @@
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
 
+/// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
+#define LoadComponent(arguments...) _LoadComponent(list(##arguments))
+
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
 	*
@@ -185,6 +188,9 @@
 
 /// sent when a mob throws something that lands nearby
 #define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
+
+/// sent when a mob sets their a_intent var (mob, intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"

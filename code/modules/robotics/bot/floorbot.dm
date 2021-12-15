@@ -159,7 +159,9 @@
 			src.updateUsrDialog()
 		else
 			..()
-
+			src.health -= W.force * 0.5
+			if (src.health <= 0)
+				src.explode()
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if (..())
@@ -461,6 +463,9 @@
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	new /obj/item/tile/steel(src.loc)
+	new /obj/item/device/prox_sensor(src.loc)
+	new /obj/item/storage/toolbox/mechanical/empty(src.loc)
 	qdel(src)
 	return
 

@@ -2331,6 +2331,9 @@ var/global/noir = 0
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				M.unlock_medal( "Contributor", 1 )
@@ -2341,6 +2344,9 @@ var/global/noir = 0
 				alert("You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				var/suc = M.revoke_medal( "Contributor" )

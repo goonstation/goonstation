@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
+			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
@@ -962,7 +962,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot()
 		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+			failure_chance = clamp(round(current_projectile.caliber * (current_projectile.power/2)), 10, 33)
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
@@ -1264,43 +1264,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
 
-//1.12
-/obj/item/gun/kinetic/antisingularity
-	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
-	name = "Singularity Buster rocket launcher"
-	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "ntlauncher"
-	item_state = "ntlauncher"
-	w_class = W_CLASS_BULKY
-	throw_speed = 2
-	throw_range = 4
-	force = MELEE_DMG_LARGE
-	caliber = 1.12 //Based on APILAS
-	max_ammo_capacity = 1
-	can_dual_wield = 0
-	two_handed = 1
-	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/antisingularity
-
-	New()
-		ammo = new default_magazine
-		ammo.amount_left = 0 // Spawn empty.
-		set_current_projectile(new /datum/projectile/bullet/antisingularity)
-		..()
-		return
-
-	setupProperties()
-		..()
-		setProperty("movespeed", 0.8)
-
 //1.57
 /obj/item/gun/kinetic/riot40mm
 	desc = "A 40mm riot control launcher."
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = MELEE_DMG_LARGE
-	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_SMG
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
@@ -1377,6 +1347,34 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			ammo.amount_left = 1
 			src.UpdateIcon()
 			return
+
+/obj/item/gun/kinetic/antisingularity
+	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
+	name = "Singularity Buster rocket launcher"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "ntlauncher"
+	item_state = "ntlauncher"
+	w_class = W_CLASS_BULKY
+	throw_speed = 2
+	throw_range = 4
+	force = MELEE_DMG_LARGE
+	caliber = 1.58 //based on the fact that it's funny to fire an RPG rocket out of this thing
+	max_ammo_capacity = 1
+	can_dual_wield = 0
+	two_handed = 1
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/antisingularity
+
+	New()
+		ammo = new default_magazine
+		ammo.amount_left = 0 // Spawn empty.
+		set_current_projectile(new /datum/projectile/bullet/antisingularity)
+		..()
+		return
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 0.8)
 
 
 //3.0

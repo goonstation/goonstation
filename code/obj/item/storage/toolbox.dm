@@ -383,7 +383,7 @@
 					progenitor.consume(affected_mob)
 					return
 
-			progenitor.hunger += min(max((progenitor.force / 10), 1), 10)
+			progenitor.hunger += clamp((progenitor.force / 10), 1, 10)
 
 		else if(D.stage == 4)
 			if(get_dist(get_turf(progenitor),src) <= 7)

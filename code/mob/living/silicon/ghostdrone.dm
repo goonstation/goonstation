@@ -477,7 +477,7 @@
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
 				if(W:try_weld(user, 1))
-					src.health = max(1,min(src.health + 5,src.max_health))
+					src.health = clamp(src.health + 5, 1, src.max_health)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.max_health)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
@@ -493,7 +493,7 @@
 				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
-			src.health = max(1,min(src.health + 5,src.max_health))
+			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 25)

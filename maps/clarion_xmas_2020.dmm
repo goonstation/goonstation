@@ -693,7 +693,7 @@
 /area/station/maintenance/northeast)
 "abG" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "abH" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -35566,7 +35566,7 @@
 	},
 /area/station/crew_quarters/hos)
 "bmA" = (
-/obj/cup_rack,
+/obj/drink_rack/cup,
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/bar)
 "bmB" = (

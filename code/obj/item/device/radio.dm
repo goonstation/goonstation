@@ -828,7 +828,7 @@ Code:
 	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
-	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."
+	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
 
 /*
 /obj/item/device/radio/signaler/examine()

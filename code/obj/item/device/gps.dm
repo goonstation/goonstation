@@ -292,7 +292,7 @@
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
-				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal received from GPS [senderName].\".")
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return

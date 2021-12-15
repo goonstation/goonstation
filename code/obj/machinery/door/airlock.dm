@@ -558,6 +558,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			src.autoclose = 0
 		..(user)
 
+	xmasify()
+		return
+
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
 	icon_base = "windoor2"
@@ -1308,8 +1311,12 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
-			return
+		if (issilicon(AM))
+			if (aiControlDisabled || cant_emag)
+				return
+			var/mob/silicon = AM
+			if (!silicon.mind)
+				return
 
 		src.last_bump = world.time
 		if (src.isElectrified())

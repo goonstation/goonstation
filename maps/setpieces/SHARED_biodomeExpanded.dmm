@@ -736,7 +736,7 @@
 "fEb" = (/obj/table/folding,/obj/item/reagent_containers/glass/bucket,/obj/item/fishing_rod,/turf/unsimulated/floor/wood/eight{dir = 8},/area/swampzone/ground)
 "fEs" = (/obj/decal/mushrooms/type3,/obj/decal/cleanable/dirt,/turf/unsimulated/floor/cave,/area/crater/cave)
 "fEv" = (/turf/unsimulated/floor/stairs/wood2/wide,/area/swampzone/interiors/bonktek/waffletek)
-"fEN" = (/obj/table/auto,/obj/mug_rack{pixel_y = 6},/turf/unsimulated/floor/wood,/area/swampzone/interiors/bonktek/waffletek)
+"fEN" = (/obj/table/auto,/obj/drink_rack/mug{pixel_y = 6},/turf/unsimulated/floor/wood,/area/swampzone/interiors/bonktek/waffletek)
 "fFc" = (/obj/railing/cyan{dir = 4},/obj/lattice{dir = 6; icon_state = "lattice-dir"},/obj/railing/cyan,/turf/unsimulated/floor/auto/grass/leafy,/area/swampzone/ground)
 "fFl" = (/obj/grille/catwalk{dir = 6; icon_state = "catwalk_cross"},/obj/channel{required_to_pass = 1e+009},/turf/unsimulated/floor/plating/scorched,/area/crater)
 "fFv" = (/obj/decal/woodclutter{pixel_x = 24; pixel_y = -11},/turf/unsimulated/floor/auto/grass/leafy,/area/swampzone/ground)

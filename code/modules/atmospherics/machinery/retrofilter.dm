@@ -179,7 +179,7 @@ obj/machinery/atmospherics/retrofilter
 			var/gasToToggle = text2num(href_list["toggle_gas"])
 			if (!gasToToggle)
 				return
-			gasToToggle = max(1, min(gasToToggle, 16))
+			gasToToggle = clamp(gasToToggle, 1, 16)
 			if (filter_mode & gasToToggle)
 				filter_mode &= ~gasToToggle
 			else
