@@ -298,7 +298,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien.</B>")
 	dispose()
 	return
@@ -331,7 +331,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien queen.</B>")
 	dispose()
 	return

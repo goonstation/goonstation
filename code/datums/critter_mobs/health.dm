@@ -31,7 +31,7 @@
 		if (!bypass_multiplier)
 			amt *= damage_multiplier
 		if (minimum_value < maximum_value)
-			value = max(minimum_value, min(value - amt, maximum_value))
+			value = clamp(value - amt, minimum_value, maximum_value)
 		else
 			value = min(value - amt, maximum_value)
 		health_update_queue |= holder

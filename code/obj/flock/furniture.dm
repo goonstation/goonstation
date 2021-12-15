@@ -139,7 +139,7 @@
 /obj/storage/closet/flock/proc/take_damage(var/force, var/mob/user as mob)
 	if (!isnum(force) || force <= 0)
 		return
-	src.health_attack = max(0,min(src.health_attack - force,src.health_max))
+	src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
 	if (src.health_attack <= 0)
 		var/turf/T = get_turf(src)
 		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)

@@ -33,7 +33,7 @@
 
 	update_icon()
 		if (src.reagents && src.reagents.total_volume)
-			var/iv_state = max(min(round((src.reagents.total_volume / src.reagents.maximum_volume) * 100, 10) / 10, 100), 0) //Look away, you fool! Like the sun, this section of code is harmful for your eyes if you look directly at it
+			var/iv_state = clamp(round((src.reagents.total_volume / src.reagents.maximum_volume) * 100, 10) / 10, 0, 100) //Look away, you fool! Like the sun, this section of code is harmful for your eyes if you look directly at it
 			if (!src.fluid_image)
 				src.fluid_image = image(src.icon, "IV-0")
 			src.fluid_image.icon_state = "IV-[iv_state]"

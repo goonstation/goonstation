@@ -166,7 +166,7 @@
 
 		amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 
 		if (src.health == 0 && nosmash)
 			qdel(src)
@@ -184,7 +184,7 @@
 		if (amount <= 0)
 			return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -199,7 +199,7 @@
 		if (amount <= 0)
 			return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -210,7 +210,7 @@
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
 		if (amount <= 0)
 			return
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -225,7 +225,7 @@
 
 		if (amount <= 0)
 			return
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			if (nosmash)
 				qdel(src)
