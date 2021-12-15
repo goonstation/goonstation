@@ -264,7 +264,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = 1
 	aiControlDisabled = 1
 	object_flags = BOTS_DIRBLOCK
-	mats = 0
+	is_syndicate = TRUE
 
 	meteorhit()
 		return
@@ -345,7 +345,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/pyro/command/syndicate
 	req_access = list(access_syndicate_commander)
-	mats = 0
+	is_syndicate = TRUE
 
 /obj/machinery/door/airlock/pyro/weapons
 	icon_state = "manta_closed"
@@ -461,7 +461,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
-	mats = 0
+	is_syndicate = TRUE
 
 	meteorhit()
 		return
