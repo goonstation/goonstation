@@ -8,7 +8,7 @@
 	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	icon_state = "ljacket"
 	item_state = "ljacket"
 	wear_layer = MOB_ARMOR_LAYER
@@ -129,7 +129,7 @@
 	name = "jacket"
 	desc = "Should you be seeing this? The answer is no!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	body_parts_covered = TORSO|ARMS
 	bloodoverlayimage = SUITBLOOD_COAT
 
@@ -230,7 +230,7 @@
 	icon_state = "bio_suit"
 	item_state = "bio_suit"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	var/armored = 0
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -260,10 +260,6 @@
 	desc = "A suit that protects against biological contamination. This one has purple boots."
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
-	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-
 
 /obj/item/clothing/suit/bio_suit/paramedic
 	name = "paramedic suit"
@@ -332,7 +328,7 @@
 	name = "\improper SUV suit"
 	desc = "Engineered to do some doohickey with radiation or something. Man this thing is cool."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hev"
 	item_state = "hev"
@@ -353,7 +349,7 @@
 	icon_state = "rad"
 	item_state = "rad"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
 	permeability_coefficient = 0.02
@@ -389,7 +385,7 @@
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	icon_state = "ntarmor"
 	setupProperties()
 		..()
@@ -400,7 +396,7 @@
 	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	icon_state = "hoscoat"
 	setupProperties()
 		..()
@@ -918,7 +914,7 @@
 	desc = "A suit that protects against fire and heat."
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	icon_state = "fire"
 	item_state = "fire_suit"
 	permeability_coefficient = 0.50
@@ -978,7 +974,7 @@
 	name = "diamond sweater"
 	desc = "A pretty warm-looking knit sweater. This is one of those I.N. designer sweaters."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "sweater_blue"
 	item_state = "sweater_blue"
@@ -1017,7 +1013,7 @@
 	name = "long sleeved shirt"
 	desc = "A long sleeved shirt. It has a sinister looking cyborg head printed on the front."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "lshirt"
 	item_state = "lshirt"
 	body_parts_covered = TORSO|ARMS
@@ -1045,7 +1041,7 @@
 	desc = "A suit that protects against low pressure environments."
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	icon_state = "space"
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
@@ -1477,7 +1473,7 @@
 	name = "cultist robe"
 	desc = "The unholy vestments of a cultist."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "cultist"
 	item_state = "cultist"
@@ -1517,7 +1513,7 @@
 	name = "weird cultist robe"
 	desc = "Only unpopular nerds would ever wear this."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
@@ -1637,7 +1633,7 @@
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "hi-vis"
 	item_state = "hi-vis"
@@ -1662,7 +1658,7 @@
 	name = "witchfinder general's coat"
 	desc = "Who's coming to get you, I'm coming to take you away."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "witchfinder"
 	item_state = "witchfinder"
@@ -1678,7 +1674,7 @@
 	name = "nurse dress"
 	desc = "A traditional dress worn by a nurse."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "nursedress"
 	item_state = "nursedress"
@@ -1688,7 +1684,7 @@
 	name = "chemical protection suit"
 	desc = "A bulky suit made from thick rubber. This should protect against most harmful chemicals."
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
@@ -1700,7 +1696,7 @@
 	desc = "An official badge for a Nanotrasen Security Worker."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	w_class = W_CLASS_TINY
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge"
 	item_state = "security_badge"
@@ -1720,7 +1716,7 @@
 	desc = ""
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	w_class = W_CLASS_TINY
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"
 
@@ -1734,7 +1730,7 @@
 	name = "snow suit"
 	desc = "A thick padded suit that protects against extreme cold temperatures."
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	icon_state = "snowcoat"
 	item_state = "snowcoat"
