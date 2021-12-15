@@ -506,8 +506,7 @@ var/global/list/module_editors = list()
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
 			src.real_name = borgify_name("Robot")
-			src.UpdateName()
-			return
+			break
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
@@ -516,13 +515,18 @@ var/global/list/module_editors = list()
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
-					src.UpdateName()
-					return 1
+					break
 				else
 					continue
 	if (!newname)
 		src.real_name = borgify_name("Robot")
-		src.name = src.real_name
+
+	src.UpdateName()
+
+/mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
+	. = ..()
+	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
 	if (!start_name) // somehow

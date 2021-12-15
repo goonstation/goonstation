@@ -1,4 +1,135 @@
 
+(t)sun dec 12 21
+(u)Terra_GS
+(p)6888
+(e)🎨|sprites
+(+)Updated the launcher/ignition switch sprites.
+(u)Jan.antilles
+(*)Shrubs now have Spacemas lights.
+(t)thu dec 09 21
+(u)tarmunora
+(e)⚖|balance
+(*)Lethal hypotension starts after missing 200u of blood instead of 125u.
+(u)pali
+(+)For the low price of 6000 spacebux you can now adopt a frog.
+(t)wed dec 08 21
+(u)112358sam
+(p)6244
+(e)🆕|feature
+(*)Added seven new crew objectives.
+(+)Added the furnace objective that the CE has to the possible engineer objectives.
+(u)Sord and Pali
+(p)6782
+(e)🗺|mapping
+(*)Nanotrasen has bought all new, larger, escape shuttles!
+(+)All new large sized shuttles for all space maps, new Centcomm dock
+(t)tue dec 07 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Riot launchers no longer a bulky item.
+(u)Jawns
+(p)6865
+(e)🐛|bug
+(+)SecMate can now properly choose a printer and print records on it.
+(u)aloe
+(e)🆕|feature
+(+)You can wring hearts out to dump a quarter of their reagents on the ground. Has a 2 second cooldown between squeezes. Sound effects are placeholders (probably????)
+(t)mon dec 06 21
+(u)Vocalpocal
+(p)6466
+(e)🆕|feature
+(*)Hydroponic plants now make a sound when they mutate
+(t)sun dec 05 21
+(u)Nexusuxen
+(p)6502
+(e)|
+(*)TermOS messaging with the AI has been significantly improved. See the PR or minor changelog for more details!
+(+)TermOS messaging for AIs now include audio feedback, properly route everything to shells and eye, with a new window to log and view your conversations! Accessed with the 'View Message Log' AI command.
+(u)pali
+(*)You no longer need to mash space to shoot in pods. Holding it down is enough now!
+(u)Flaborized
+(p)6519
+(e)🎨|sprites
+(*)Resprited the cyborg HUD elements.
+(t)sat dec 04 21
+(u)Arthur Holiday
+(p)6380
+(e)⚖|balance
+(+)Polymorph now has an action bar.
+(t)thu dec 02 21
+(u)pali
+(*)You can now slide glasses across tables. Just stand next to a table and click on another table far away with a drinking glass in hand
+(t)wed dec 01 21
+(u)sovexe
+(p)6836
+(e)|
+(*)Refactored a bunch of update_icon procs. Please report if you see any bugs such as invisible items.
+(u)Tarmunora
+(e)⚖|balance
+(*)booster enzyme now exothermic and depletes faster.
+(u)Gannets
+(p)6843
+(e)🎨|sprites
+(*)The merry month of Spacemas is here! Come contribute a spacemas tree decoration on the forums!  https://forum.ss13.co/showthread.php?tid=17615
+(u)Flourish
+(e)🆕|feature
+(*)Send a letter to Spacebe - er, Santa! Find their helper under the Spacemas tree.
+(u)pali
+(*)When entering your PIN into things the input popup now defaults to your actual PIN. The future is now.
+(t)mon nov 29 21
+(u)Momoberry
+(p)6258
+(e)🆕⚖⛔|feature, balance, removal
+(+)Modifies the polymorph List for wizard, adds naming convention to poly victims.
+(u)Sovexe
+(p)6832
+(e)🐛🆕🎨|bug, feature, sprites
+(+)Fire alarm status lights now shine through the darkness
+(+)Toggling the lights / power off no longer breaks fire alarms
+(u)pali
+(*)The say popup (on pressing T) should now appear instantly. But as a downside the typing chatbubbly might now persist if you cancel the popup. Please report any other bugs related to speaking and/or chat bubbles.
+(*)The status bar which shows what you are hovering over has now been squished next to the command bar. Also its colour now respects dark mode.
+(t)sun nov 28 21
+(u)Flaborized + Flourish
+(e)🆕|feature
+(*)Pugs can now choose from several different color variants in character setup using the "Special Style" option. Sprites by Flab!
+(u)Nexusuxen
+(p)6685
+(e)🗺|mapping
+(+)Cog2's Medsci Router now has a shuttle for scientists to take them to the Research Outpost.
+(t)sat nov 27 21
+(u)Aloe, Flaborized, Flourish, and mbc
+(p)6806
+(e)🆕|feature
+(*)Added playable pugs. The pug trait costs 4 points, as pugs are intended as a challenge mode for players who’d like to show off their prowess.
+(*)Most notably, pugs take double oxy damage, are poisoned by chocolate, can sprint til they run out of stamina, have a small chance of throwing themselves towards thrown items, and have a special *sleuth emote. Check out the <a href="https://github.com/goonstation/goonstation/pull/6806">PR page</a> for full details.
+(u)pali
+(*)T-ray scanners now only visible to the user, they penetrate walls and have higher range.
+(t)fri nov 26 21
+(u)LeahTheTech
+(p)6769
+(e)|
+(+)Thralls can no longer be made to look human again using the genetics console.
+(u)Sovexe
+(p)6771
+(e)🆕|feature
+(+)Conveyor belt switches now affect their linked belts instantly.
+(u)Sovexe
+(p)6750
+(e)🆕|feature
+(+)You no longer need to remove the battery from an energy/meteor shield generator to connect it to a wire.
+(u)anonymous
+(p)6784
+(e)🗺|mapping
+(*)Clarion kitchen changes: Added a stove, soup pot and ladle. Shrunk the Kitchen Freezer horizontally by one tile. Reshuffled all of the Kitchen to make more walk space and put things where they make sense to be.
+(t)thu nov 25 21
+(u)Sovexe
+(p)6708
+(e)⚖|balance
+(*)Blob rounds can now have up to 4 blobs at once.
+(u)Flourish
+(e)🗺|mapping
+(*)Oshan's cloning, EVA, security lobby, and armory are all a tiny bit more spacious now.
 (t)wed nov 24 21
 (u)pali
 (*)You can now search by rank (job) in SecMate and MedTrak. Also both of those programs now allow searching by partial matches.
@@ -18,7 +149,7 @@
 (*)Customs now has a cool service bell. Ring it a bunch to annoy the HoP.<br>The chef also gets a cool dinner bell in their backpack. Sprite by Arthur Holiday!
 (u)Flourish
 (e)🆕|feature
-(*)You can now emag segways. Emagged segways are faster and don't throw you off when you crash into other people.
+(*)You can now emag segways. Emagged segways don't throw you off when you crash into other people.
 (t)mon nov 22 21
 (u)Flourish
 (e)⚖|balance

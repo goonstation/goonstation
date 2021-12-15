@@ -106,19 +106,16 @@ PIPE BOMBS + CONSTRUCTION
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-/obj/item/old_grenade/banana
+ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
+/obj/item/old_grenade/spawner
 	desc = "It is set to detonate in 3 seconds."
-	name = "banana grenade"
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	icon_state = "banana"
-	item_state = "banana"
 	is_syndicate = 1
 	sound_armed = "sound/weapons/armbomb.ogg"
-	icon_state_armed = "banana1"
 	is_dangerous = FALSE
-	var/payload = /obj/item/bananapeel
+	var/payload = null
 
 	prime()
 		var/turf/T = ..()
@@ -132,6 +129,31 @@ PIPE BOMBS + CONSTRUCTION
 					new payload(T)
 		qdel(src)
 		return
+
+/obj/item/old_grenade/spawner/banana
+	name = "banana grenade"
+	icon_state = "banana"
+	icon_state_armed = "banana1"
+	payload = /obj/item/bananapeel
+
+/obj/item/old_grenade/spawner/cheese_sandwich
+	name = "cheese sandwich grenade"
+	icon_state = "banana-old"
+	icon_state_armed = "banana1-old"
+	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
+
+/obj/item/old_grenade/spawner/banana_corndog
+	name = "banana corndog grenade"
+	icon_state = "banana-old"
+	icon_state_armed = "banana1-old"
+	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
+
+/obj/item/old_grenade/spawner/wasp
+	name = "suspicious looking grenade"
+	icon_state = "wasp"
+	icon_state_armed = "wasp1"
+	payload = /obj/critter/spacebee
+	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
@@ -159,25 +181,6 @@ PIPE BOMBS + CONSTRUCTION
 					thing.throw_at(target, rand(0, 10), rand(1, 4))
 		qdel(src)
 		return
-
-/obj/item/old_grenade/banana/cheese_sandwich
-	name = "cheese sandwich grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
-	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
-
-/obj/item/old_grenade/banana/banana_corndog
-	name = "banana corndog grenade"
-	icon_state = "banana-old"
-	icon_state_armed = "banana1-old"
-	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
-
-/obj/item/old_grenade/banana/wasp
-	name = "suspicious looking grenade"
-	icon_state = "wasp"
-	icon_state_armed = "wasp1"
-	payload = /obj/critter/spacebee
-	is_dangerous = TRUE
 
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
@@ -816,7 +819,7 @@ PIPE BOMBS + CONSTRUCTION
 			if (M.client)
 				if(isturf(source))
 					var/dx = source.x - M.x
-					S.pan = max(-100, min(100, dx/8.0 * 100))
+					S.pan = clamp(dx/8.0 * 100, -100, 100)
 				M << S
 
 	attack_self(mob/user as mob)
@@ -1587,8 +1590,8 @@ PIPE BOMBS + CONSTRUCTION
 		armed = 1
 		var/area/A = get_area(src)
 		if(!A.dont_log_combat)
-			message_admins("[key_name(user)] arms a [src] (power [strength]) at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "arms a [src] (power [strength]) at [log_loc(src)])")
+			message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
 			SPAWN_DBG(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!

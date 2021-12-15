@@ -487,7 +487,7 @@
 	var/datum/artifact/A = src.artifact
 
 	A.health -= dmg_amount
-	A.health = max(0,min(A.health,100))
+	A.health = clamp(A.health, 0, 100)
 
 	if (A.health <= 0)
 		src.ArtifactDestroyed()
@@ -553,7 +553,7 @@
 
 	if (A.artitype.name == "eldritch")
 		faultprob *= 2 // eldritch artifacts fucking hate you and are twice as likely to go faulty
-	faultprob = max(0,min(faultprob,100))
+	faultprob = clamp(faultprob, 0, 100)
 
 	if (prob(faultprob) && length(A.fault_types))
 		var/new_fault = weighted_pick(A.fault_types)

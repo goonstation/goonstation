@@ -103,7 +103,7 @@
 		if(holder.target && holder.target.z == holder.ownhuman.z)
 			var/dist = get_dist(holder.ownhuman, holder.target)
 			if(dist <= 1)
-				holder.ownhuman.a_intent = INTENT_DISARM
+				holder.ownhuman.set_a_intent(INTENT_DISARM)
 				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
 				var/list/params = list()
 				params["left"] = 1
@@ -157,7 +157,7 @@
 		if(holder.target && holder.target.z == holder.ownhuman.z)
 			var/dist = get_dist(holder.ownhuman, holder.target)
 			if(dist <= 1)
-				holder.ownhuman.a_intent = INTENT_DISARM
+				holder.ownhuman.set_a_intent(INTENT_DISARM)
 				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
 				var/list/params = list()
 				params["left"] = 1
@@ -212,7 +212,7 @@
 					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 					holder.ownhuman.throw_item(holder.target,params)
 				if (dist <= 1)
-					holder.ownhuman.a_intent = INTENT_HARM
+					holder.ownhuman.set_a_intent(INTENT_HARM)
 					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
 					holder.ownhuman.hand_attack(M, params)
@@ -258,7 +258,7 @@
 					if(!holder.target)
 						return ..() // try again next tick
 				if (dist <= 1)
-					holder.ownhuman.a_intent = INTENT_GRAB
+					holder.ownhuman.set_a_intent(INTENT_GRAB)
 
 					holder.ownhuman.set_dir(get_dir(holder.ownhuman, M))
 
@@ -305,7 +305,7 @@
 					holder.target = pick(possible)
 		if(holder.target && holder.target.z == holder.ownhuman.z)
 			var/dist = get_dist(holder.ownhuman, holder.target)
-			holder.ownhuman.a_intent = INTENT_GRAB
+			holder.ownhuman.set_a_intent(INTENT_GRAB)
 			if (dist >= 1)
 				if (prob(80))
 					holder.move_to(holder.target,0)

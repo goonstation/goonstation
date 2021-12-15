@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
 			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
-				M.changeStatus("stunned", 8 SECONDS)
+				M.changeStatus("stunned", 5 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.force_laydown_standup()
 				src.log_me(src.rider, M, "impact")
@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 						continue
 					C.show_message("<span class='alert'><B>[M] is kept upright by magical sandals!</B></span>", 1)
 		else
-			M.changeStatus("stunned", 8 SECONDS)
+			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
 			src.log_me(src.rider, M, "impact")
 		if(prob(10))
@@ -609,7 +609,6 @@ ABSTRACT_TYPE(/obj/vehicle)
 /obj/vehicle/segway/emag_act(mob/user, obj/item/card/emag/E)
 	if (!src.emagged)
 		src.emagged = TRUE
-		src.delay = 1.5
 		src.weeoo()
 		src.desc = src.desc + " It looks like the safety circuits have been shorted out."
 		src.visible_message("<span class='alert'><b>[src] beeps ominously.</b></span>")

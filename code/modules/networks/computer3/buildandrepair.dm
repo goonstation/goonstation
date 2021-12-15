@@ -140,7 +140,7 @@
 				src.icon_state = "2"
 				var/obj/item/cable_coil/A = new /obj/item/cable_coil( src.loc )
 				A.amount = 5
-				A.updateicon()
+				A.UpdateIcon()
 				if(src.hd)
 					src.hd.set_loc(src.loc)
 					src.hd = null

@@ -41,17 +41,21 @@
 	else
 		last_pregame_html += {"#overlay{background-image:url([resource(src.overlay_image_url)]);background-color:transparent;left:0;top:0;right:0;bottom:0;position:fixed;}"}
 	last_pregame_html += {".area{white-space:pre;color:#fff;text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;font:1em 'PxPlus IBM VGA9';-webkit-text-stroke:0.083em black;}a{text-decoration:none;}#leftside{position:fixed;left:0;bottom:0;}#status,#timer{text-align:center;position:fixed;right:0;bottom:0;height:12%;width:40%;}#timer{bottom:15%;}</style></head><body><script>document.onclick=function(){location="byond://winset?id=mapwindow.map&focus=true";};function set_area(id,text){document.getElementById(id).innerHTML=text||"";};onresize=function(){document.body.style.fontSize=Math.min(innerWidth/672,innerHeight/480)*16+"px";};onload=function(){onresize();location="byond://winset?command=.send-lobby-text";};</script><div id="overlay"></div><div id="status" class="area"></div><div id="timer" class="area"></div><div id="leftside" class="area"></div>[src.add_html]</body></html>"}
-	pregameHTML = last_pregame_html
 	for(var/client/C)
 		if(istype(C.mob, /mob/new_player))
-			C << browse(pregameHTML, "window=pregameBrowser")
+			C << browse(last_pregame_html, "window=pregameBrowser")
 			if(C)
 				winshow(C, "pregameBrowser", 1)
+	pregameHTML = last_pregame_html
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text
 	if(isnull(pregameHTML))
 		return
+#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+	if(current_state <= GAME_STATE_PREGAME)
+		return
+#endif
 	if (last_pregame_html == pregameHTML)
 		for(var/client/C)
 			if(istype(C.mob, /mob/new_player))
@@ -72,6 +76,10 @@
 	if(isnull(pregameHTML))
 		return
 
+#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+	if(current_state <= GAME_STATE_PREGAME)
+		return
+#endif
 	for (var/id in maptext_areas)
 		C << output(list2params(list(id, maptext_areas[id])), "pregameBrowser:set_area")
 

@@ -1215,9 +1215,6 @@
 /obj/item/scissors,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"cZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/exit)
 "da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -1709,16 +1706,6 @@
 "en" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"eo" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white/checker,
-/area/station/hallway/secondary/exit)
 "ep" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3613,7 +3600,7 @@
 "ju" = (
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /obj/table/wood/round/auto,
@@ -8807,6 +8794,9 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"vh" = (
+/turf/space,
+/area/shuttle/escape/station)
 "vi" = (
 /obj/stool/chair/red{
 	anchored = 0;
@@ -10344,9 +10334,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
-"yW" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)
@@ -13266,6 +13253,16 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"Gx" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "Gy" = (
 /obj/storage/crate/robotics_supplies,
 /obj/machinery/light/small/sticky,
@@ -14752,6 +14749,12 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"Kg" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "Kh" = (
 /obj/machinery/atmospherics/portables_connector/north,
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -16876,12 +16879,11 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -17269,6 +17271,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"Qq" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/caution/west,
+/area/station/hallway/secondary/exit)
 "Qr" = (
 /obj/machinery/disposal/small{
 	dir = 8
@@ -19068,9 +19078,8 @@
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "VC" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
@@ -20307,9 +20316,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "YT" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
@@ -72406,16 +72414,16 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-yX
-aa
-aa
+vh
+vh
+vh
 aa
 aa
 aa
@@ -72706,20 +72714,20 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+yX
+vh
+vh
+vh
+vh
+vh
+vh
 aa
 aa
 aa
@@ -73008,20 +73016,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
 aa
 aa
@@ -73310,21 +73318,21 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 PS
@@ -73612,21 +73620,21 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 PS
@@ -73914,21 +73922,21 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 PS
 PS
 PS
@@ -74216,20 +74224,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 PS
 PS
 aa
@@ -74518,20 +74526,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 PS
 aa
 nB
@@ -74820,20 +74828,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 ap
 cR
 cR
@@ -75122,22 +75130,22 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aB
-aR
+Qq
 aR
 bs
 VF
@@ -75424,25 +75432,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aB
-bc
-bc
-bs
-cf
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+cR
+gs
+gs
+cR
+cI
 cf
 cf
 ek
@@ -75726,27 +75734,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-ap
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 cR
+gs
+gs
 cR
-br
 cg
-cI
-cI
+cf
+cf
 ek
 eZ
 ew
@@ -76028,28 +76036,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-PS
-aa
-cl
-cR
-cR
-cR
-cZ
-eo
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+aB
+Gx
+bc
+bs
+cf
+cf
+cf
+ek
 ew
 ew
 fJ
@@ -76330,26 +76338,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-PS
-PS
-aa
-aa
-aa
-cl
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+ap
+cR
+cR
+br
+cR
+cR
 ch
 cG
 ew
@@ -76632,25 +76640,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 PS
-PS
-PS
-PS
+aa
+aa
+aa
+aa
 aa
 ch
 dk
@@ -76935,23 +76943,23 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aa
-aa
-aa
-aa
+PS
+PS
+PS
+PS
 PS
 aa
 cz
@@ -77239,16 +77247,16 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
 aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -77266,7 +77274,7 @@ gY
 iS
 iA
 iS
-kG
+Kg
 ct
 oT
 ct
@@ -77541,16 +77549,16 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
 aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -77843,15 +77851,15 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -78146,13 +78154,13 @@ aa
 aa
 aa
 aa
+vh
+vh
+vh
+vh
+vh
+vh
 aa
-aa
-aa
-aa
-yW
-yW
-yW
 aa
 aa
 aa

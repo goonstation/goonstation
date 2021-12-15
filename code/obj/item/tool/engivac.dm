@@ -41,7 +41,7 @@ obj/item/engivac
 ///				SPRITE-ALTERING PROCS
 ///
 
-obj/item/engivac/proc/update_icon(mob/M = null)
+obj/item/engivac/update_icon(mob/M = null)
 	item_state = "engivac_" + (held_toolbox ? held_toolbox.icon_state : "")
 	wear_state = item_state
 	underlays = null
@@ -60,7 +60,7 @@ obj/item/engivac/equipped(var/mob/user, var/slot)
 		wear_image = image('icons/mob/back.dmi')
 	if (slot == SLOT_BELT)
 		wear_image = image('icons/mob/belt.dmi')
-	update_icon(user)
+	UpdateIcon(user)
 
 
 ///
@@ -72,7 +72,7 @@ obj/item/engivac/New(var/spawnbox = null)
 	toolbox_img = image('icons/obj/items/storage.dmi', "") //where the toolbox sprites are
 	if (ispath(spawnbox, /obj/item/storage/toolbox))
 		held_toolbox = new spawnbox
-		update_icon()
+		UpdateIcon()
 	rebuild_collection_list()
 
 
@@ -108,7 +108,7 @@ obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 		user.u_equip(I)
 		held_toolbox = I
 		I.set_loc(src)
-		update_icon(user)
+		UpdateIcon(user)
 		var/obj/item/storage/toolbox/toolbox = I
 		if(user.s_active == toolbox.hud)
 			user.detach_hud(user.s_active)
@@ -123,7 +123,7 @@ obj/item/engivac/attack_hand(mob/living/user as mob)
 			placing_tiles = FALSE
 			current_stack = null
 			toolbox_col = ""
-			update_icon(user)
+			UpdateIcon(user)
 			return
 	..()
 	//copy-pasted from mounted defibs ewww
@@ -164,7 +164,7 @@ obj/item/engivac/attack_self(mob/user)
 			placing_tiles = FALSE
 			current_stack = null
 			toolbox_col = ""
-			update_icon(user)
+			UpdateIcon(user)
 
 
 obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
@@ -195,6 +195,10 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 
 
 obj/item/engivac/get_desc(dist)
+	if(held_toolbox)
+		. += "<br>There's \a [held_toolbox] loaded in it."
+	else
+		. += "<br>It seems like you need to load an empty toolbox into it first."
 	if (dist <= 2) //List settings
 		. += "<br>It is set to [collect_buildmats ? "collect" : "leave"] building materials and [collect_debris ? "collect" : "leave"] debris."
 		. += "<br>It is currently [placing_tiles? "" : "not "]automatically placing floor tiles."

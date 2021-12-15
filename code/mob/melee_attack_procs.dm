@@ -938,11 +938,11 @@
 							if (owner.zone_sel)
 								target.zone_sel.selecting = owner.zone_sel.selecting
 						var/prev_intent = target.a_intent
-						target.a_intent = INTENT_HARM
+						target.set_a_intent(INTENT_HARM)
 
 						target.Attackby(I, target)
 
-						target.a_intent = prev_intent
+						target.set_a_intent(prev_intent)
 						if (old_zone_sel)
 							target.zone_sel.selecting = old_zone_sel
 

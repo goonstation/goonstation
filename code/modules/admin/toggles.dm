@@ -45,6 +45,7 @@ var/list/popup_verbs_to_toggle = list(\
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
+/client/proc/toggle_ghost_respawns,\
 /client/proc/toggle_adminwho_alerts,\
 /client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
@@ -178,6 +179,15 @@ var/global/IP_alerts = 1
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
+client/proc/toggle_ghost_respawns()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Ghost Respawn offers"
+	set desc = "Toggles receiving offers to respawn as a ghost"
+	admin_only
+
+	src.holder.ghost_respawns = !src.holder.ghost_respawns
+	boutput(usr, "<span class='notice'>Toggled ghost respawn offers [src.holder.ghost_respawns ?"on":"off"]!</span>")
+
 /client/proc/toggle_adminwho_alerts()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Who/Adminwho alerts"
@@ -251,7 +261,7 @@ var/global/IP_alerts = 1
 			src.toggle_popup_verbs()
 		boutput(usr, "<span class='notice'>Player mode now OFF.</span>")
 	else
-		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to recieve") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
+		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to receive") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
 		switch (choice)
 			if ("ASAY, AHELP & MHELP")
 				player_mode = 1
