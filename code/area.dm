@@ -1957,13 +1957,11 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Construction Area"
 	icon_state = "construction"
 	workplace = 1
-	do_not_irradiate = 1
 
 /area/station/hallway/secondary/construction2
 	name = "Secondary Construction Area"
 	icon_state = "construction"
 	workplace = 1
-	do_not_irradiate = 1
 
 /area/station/hallway/secondary/entry
 	name = "Main Hallway"
@@ -2224,7 +2222,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"
-	do_not_irradiate = 1
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -2232,7 +2229,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
 	icon_state = "storage"
-	do_not_irradiate = 1
 
 /area/station/crew_quarters/bathroom
 	name = "Bathroom"
@@ -2854,7 +2850,6 @@ ABSTRACT_TYPE(/area/station/quartermaster)
 	name = "Quartermaster's Storage"
 	icon_state = "quartstorage"
 	sound_environment = 2
-	do_not_irradiate = 1
 
 /area/station/quartermaster/magnet
 	name = "Magnet Control Room"
@@ -2904,7 +2899,6 @@ ABSTRACT_TYPE(/area/station/janitor)
 	icon_state = "yellow"
 	sound_environment = 5
 	workplace = 1
-	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science
@@ -3063,7 +3057,6 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hangar"
 	icon_state = "hangar"
 	workplace = 1
-	do_not_irradiate = 1
 
 /area/station/hangar/main
 		name = "Pod Bay"
@@ -3117,33 +3110,28 @@ ABSTRACT_TYPE(/area/station/garden)
 	name = "Garden"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 
 /area/station/garden/owlery
 	name = "Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
-	do_not_irradiate = 1
 	requires_power = FALSE
 
 /area/station/garden/aviary
 	name = "Aviary"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 
 /area/station/garden/habitat
 	name = "Habitat Dome"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 	force_fullbright = 1
 
 /area/station/garden/zen
 	name = "Zen Garden"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
@@ -3397,7 +3385,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
 	sound_environment = 12
-	do_not_irradiate = 1
 
 /area/station/turret_protected/ai_module_storage
 	name = "AI Module Storage"
@@ -3413,7 +3400,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
 	sound_environment = 12
-	do_not_irradiate = 1
 
 /area/station/turret_protected/AIbasecore1
 	name = "AI Core 1"
@@ -3424,7 +3410,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "AI Satellite"
 	icon_state = "ai_satellite"
 	sound_environment = 12
-	do_not_irradiate = 1
 
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"
