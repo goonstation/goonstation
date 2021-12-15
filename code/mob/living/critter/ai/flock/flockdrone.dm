@@ -28,4 +28,4 @@
 /datum/aiTask/prioritizer/flock/drone/on_reset()
 	..()
 	if(holder.owner)
-		holder.owner.a_intent = INTENT_GRAB
+		holder.owner.set_a_intent(INTENT_GRAB)

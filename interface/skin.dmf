@@ -2,118 +2,27 @@ macro "base_macro"
 	elem
 		name = "Tab"
 		command = ".winset \"mainwindow.input.focus=true?map.focus=true:mainwindow.input.focus=true\""
-	elem "escape"
-		name = "Escape"
-		command = ".winset \"mapwindow.map.focus=true;mainwindow.input.text=\"\"\""
-		is-disabled = true
-	elem "salute"
-		name = "CTRL+A"
-		command = "say \"*salute\""
-		is-disabled = true
-	elem "burp"
-		name = "CTRL+B"
-		command = "say \"*burp\""
-		is-disabled = true
+	elem "asaymacro"
+		name = "CTRL+T"
+		command = "asay"
+	elem "dsaymacro"
+		name = "ALT+T"
+		command = "dsay"
+	elem "startsay"
+		name = "T"
+		command = ".starttyping\nsay"
+	elem "radiosay"
+		name = ";"
+		command = "say_main_radio"
 	elem "ooc"
-		name = "ALT+C"
-		command = ".force_keyup ALT+C\nooc"
-		is-disabled = true
-	elem "dance"
-		name = "CTRL+D"
-		command = "say \"*dance\""
-		is-disabled = true
-	elem "eyebrow"
-		name = "CTRL+E"
-		command = "say \"*eyebrow\""
-		is-disabled = true
-	elem "fart"
-		name = "CTRL+F"
-		command = "say \"*fart\""
-		is-disabled = true
-	elem "gasp"
-		name = "CTRL+G"
-		command = "say \"*gasp\""
-		is-disabled = true
-	elem "raisehand"
-		name = "CTRL+H"
-		command = "say \"*raisehand\""
-		is-disabled = true
+		name = "O"
+		command = "ooc"
 	elem "looc"
 		name = "ALT+L"
-		command = ".force_keyup ALT+L\nlooc"
-		is-disabled = true
-	elem "laugh"
-		name = "CTRL+L"
-		command = "say \"*laugh\""
-		is-disabled = true
-	elem "nod"
-		name = "CTRL+N"
-		command = "say \"*nod\""
-		is-disabled = true
-	elem
-		name = "CTRL+P"
-		command = ".action togglepoint"
-		is-disabled = true
-	elem "wave"
-		name = "CTRL+Q"
-		command = "say \"*wave\""
-		is-disabled = true
-	elem "flip"
-		name = "CTRL+R"
-		command = "say \"*flip\""
-		is-disabled = true
-	elem "scream"
-		name = "CTRL+S"
-		command = "say \"*scream\""
-		is-disabled = true
-	elem
-		name = "ALT+T"
-		command = ".force_keyup ALT+T\ndsay"
-		is-disabled = true
-	elem
-		name = "CTRL+T"
-		command = ".force_keyup CTRL+T\nasay"
-		is-disabled = true
-	elem
+		command = "looc"
+	elem "whisper"
 		name = "ALT+W"
-		command = ".force_keyup ALT+W\nwhisper"
-		is-disabled = true
-	elem "wink"
-		name = "CTRL+W"
-		command = "say \"*wink\""
-		is-disabled = true
-	elem "flex"
-		name = "CTRL+X"
-		command = "say \"*flex\""
-		is-disabled = true
-	elem "yawn"
-		name = "CTRL+Y"
-		command = "say \"*yawn\""
-		is-disabled = true
-	elem "snap"
-		name = "CTRL+Z"
-		command = "say \"*snap\""
-		is-disabled = true
-	elem "adminhelp"
-		name = "F1"
-		command = "adminhelp"
-		is-disabled = true
-	elem "options"
-		name = "CTRL+SHIFT+F1"
-		command = ".force_keyup CTRL+SHIFT+F1\n.options"
-		is-disabled = true
-	elem "autoscreenshot"
-		name = "F2"
-		command = ".screenshot auto\n.output browseroutput:output Screenshot taken"
-		is-disabled = true
-	elem "screenshot"
-		name = "SHIFT+F2"
-		command = ".force_keyup SHIFT+F2\n.screenshot"
-		is-disabled = true
-	elem "mentorhelp"
-		name = "F3"
-		command = "mentorhelp"
-		is-disabled = true
+		command = "whisper"
 	elem
 		name = "Any"
 		command = ".keydown [[*]]"
@@ -314,12 +223,6 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 		is-checked = true
-	elem "hide_status_bar"
-		name = "&Hide status bar"
-		command = ".winset \"hide_status_bar.is-checked=true?mainwindow.statusbar=false:mainwindow.statusbar=true\""
-		category = "&Window"
-		can-check = true
-		saved-params = "is-checked"
 	elem "hide_menu"
 		name = "&Hide menu"
 		command = ".winset \"hide_menu.is-checked=true?mainwindow.menu='';menub.is-visible = true\""
@@ -786,6 +689,8 @@ window "mainwindow"
 		icon = 'icons\\goon_64.png'
 		macro = "base_macro"
 		menu = "menu"
+		statusbar = false
+		on-status = ".winset\"mainwindow.hovertooltip.text=[[*]]\""
 	elem "mainvsplit"
 		type = CHILD
 		pos = 0,0
@@ -805,9 +710,19 @@ window "mainwindow"
 		background-color = #d3b5b5
 		saved-params = ""
 		text = ""
+	elem "hovertooltip"
+		type = LABEL
+		pos = 2,402
+		size = 180x18
+		anchor1 = 0,100
+		anchor2 = none
+		font-size = 9
+		align = "left"
+		saved-params = ""
+		text = "hover"
 	elem "input"
 		type = INPUT
-		pos = 5,402
+		pos = 185,402
 		size = 600x18
 		anchor1 = 0,100
 		anchor2 = 100,100
@@ -867,6 +782,7 @@ window "mapwindow"
 		can-minimize = false
 		can-resize = false
 		is-pane = true
+		transparent-color = #1b1e1b
 	elem "map"
 		type = MAP
 		pos = 0,0

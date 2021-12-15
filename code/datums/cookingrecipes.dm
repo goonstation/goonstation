@@ -799,6 +799,7 @@
 			customPizza.overlays += P.overlays
 			customPizza.num = P.num
 			customPizza.topping = P.topping
+			customPizza.topping_types = P.topping_types
 			customPizza.topping_colors = P.topping_colors
 			customPizza.heal_amt = P.heal_amt
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
@@ -1466,7 +1467,7 @@
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
-		playsound(ourCooker.loc, "sound/effects/splat.ogg", 50, 1)
+		playsound(ourCooker.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
 		return fruitcake
 
@@ -1494,6 +1495,7 @@
 		B.UpdateOverlays(overlay,"first")
 		B.cake_bases = list("base_custom")
 		if(S)
+			B.cake_types += S.type
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
 			if(S.real_name)
@@ -1824,6 +1826,6 @@
 			lipstick.font_color = C.font_color
 			lipstick.color_name = hex2color_name(lipstick.font_color)
 			lipstick.name = "[lipstick.color_name] lipstick"
-			lipstick.update_icon()
+			lipstick.UpdateIcon()
 		return lipstick
 

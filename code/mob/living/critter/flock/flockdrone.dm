@@ -145,7 +145,7 @@
 	src.anchored = 1 // unfun nerds ruin everything yet again
 	src.is_npc = 0 // technically false, but it turns off the AI
 	src.icon_state = "drone-dormant"
-	src.a_intent = INTENT_DISARM // stop swapping places
+	src.set_a_intent(INTENT_DISARM ) // stop swapping places
 
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = 0
@@ -154,7 +154,7 @@
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
-	src.a_intent = INTENT_HELP // default
+	src.set_a_intent(INTENT_HELP ) // default
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = 0
@@ -308,7 +308,7 @@
 	var/obj/item/I = absorber.item
 
 	if(I)
-		var/absorb = min(src.absorb_rate, max(0, I.health))
+		var/absorb = clamp(src.absorb_rate, 0, I.health)
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
 		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)

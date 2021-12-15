@@ -144,8 +144,8 @@
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
 
-		logTheThing("say", user, null, "created a command report: [message]")
-		logTheThing("diary", user, null, "created a command report: [message]", "say")
+		logTheThing("say", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
+		logTheThing("diary", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user

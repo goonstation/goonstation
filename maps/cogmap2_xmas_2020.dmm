@@ -12063,7 +12063,7 @@
 /area/station/crew_quarters/cafeteria)
 "aAZ" = (
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/drinks/espressocup,
@@ -59581,7 +59581,7 @@
 /area/station/hallway/secondary/exit)
 "cxj" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "cxk" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,

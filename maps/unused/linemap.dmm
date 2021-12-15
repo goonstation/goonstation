@@ -17534,7 +17534,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -20546,7 +20546,7 @@
 /area/station/chapel/sanctuary)
 "aWa" = (
 /turf/space,
-/area/shuttle/escape/station/donut2)
+/area/shuttle/escape/station)
 "aWb" = (
 /turf/simulated/floor/escape{
 	dir = 10

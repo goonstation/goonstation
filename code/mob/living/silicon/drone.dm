@@ -113,7 +113,7 @@
 					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
 				if(W:try_weld(user, 1))
-					src.health = max(1,min(src.health + 10,src.health_max))
+					src.health = clamp(src.health + 10, 1, src.health_max)
 					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.health_max)
 						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
@@ -127,7 +127,7 @@
 				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
-			src.health = max(1,min(src.health + 10,src.health_max))
+			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
 			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 			if (src.health >= 50)
@@ -141,7 +141,7 @@
 		if (!isnum(amount))
 			return
 
-		src.health = max(0,min(src.health - amount,100))
+		src.health = clamp(src.health - amount, 0, 100)
 
 		if (amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
@@ -170,7 +170,7 @@
 			if (src.active_tool && isitem(src.active_tool))
 				var/obj/item/I = src.active_tool
 				I.dropped(src) // Handle light datums and the like.
-			switchto = max(1,min(switchto,5))
+			switchto = clamp(switchto, 1, 5)
 			active_tool = equipment_slots[switchto]
 			if (isitem(src.active_tool))
 				var/obj/item/I2 = src.active_tool
@@ -338,7 +338,7 @@
 			user.drop_item()
 			item_used.set_loc(src)
 
-		icon_state = "frame-" + max(0,min(change_to,6))
+		icon_state = "frame-" + clamp(change_to, 0, 6)
 		overlays = list()
 		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay

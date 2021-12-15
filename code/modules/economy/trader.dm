@@ -102,7 +102,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == I:pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
@@ -347,7 +347,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I
@@ -705,7 +705,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "You recieve visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "You receive visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
 		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
 

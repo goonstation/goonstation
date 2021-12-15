@@ -25,9 +25,9 @@
 			src.mode = S_INJECT
 		else if (!src.reagents.total_volume && src.mode == S_INJECT)
 			src.mode = S_DRAW
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		// drsingh for cannot read null.total_volume
 		var/rounded_vol = reagents ? round(reagents.total_volume,5) : 0;
 		icon_state = "[rounded_vol]"
@@ -51,21 +51,21 @@
 
 	pickup(mob/user)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
-			update_icon()
+			UpdateIcon()
 
 	attack_self(mob/user as mob)
 		src.mode = !(src.mode)
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-		update_icon()
+		UpdateIcon()
 
 	attack_hand(mob/user as mob)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		return

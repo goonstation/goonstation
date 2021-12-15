@@ -643,6 +643,7 @@
 	var/topping = 0
 	var/topping_color = null
 	var/list/toppings = list()
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/toppingstext = null
 
@@ -669,6 +670,7 @@
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			topping = 1
 			food_effects += F.food_effects
+			topping_types += W.type
 			if (F.real_name)
 				toppings += F.real_name
 			else

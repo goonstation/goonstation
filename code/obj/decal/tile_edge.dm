@@ -36,28 +36,60 @@
 /obj/decal/tile_edge/stripe
 	name = "hazard stripe"
 	icon = 'icons/obj/hazard_stripes.dmi'
+	#ifndef XMAS
 	icon_state = "stripe-edge"
+	#else
+	icon_state = "xmas"
+	#endif
 
 /obj/decal/tile_edge/stripe/big
+	#ifndef XMAS
 	icon_state = "bigstripe-edge"
+	#else
+	icon_state = "xmas"
+	#endif
 
 /obj/decal/tile_edge/stripe/extra_big
+	#ifndef XMAS
 	icon_state = "xtra_bigstripe-edge"
+	#else
+	icon_state = "xmas"
+	#endif
 
 /obj/decal/tile_edge/stripe/corner
+	#ifndef XMAS
 	name = "hazard stripe corner"
+	#else
+	icon_state = "xmas-corner"
+	#endif
 
 /obj/decal/tile_edge/stripe/corner/big
+	#ifndef XMAS
 	icon_state = "bigstripe-corner"
+	#else
+	icon_state = "xmas-corner"
+	#endif
 
 /obj/decal/tile_edge/stripe/corner/big2
+	#ifndef XMAS
 	icon_state = "bigstripe-corner2"
+	#else
+	icon_state = "xmas-corner2"
+	#endif
 
 /obj/decal/tile_edge/stripe/corner/extra_big
+	#ifndef XMAS
 	icon_state = "xtra_bigstripe-corner"
+	#else
+	icon_state = "xmas-corner"
+	#endif
 
 /obj/decal/tile_edge/stripe/corner/extra_big2
+	#ifndef XMAS
 	icon_state = "xtra_bigstripe-corner2"
+	#else
+	icon_state = "xmas-corner2"
+	#endif
 
 /obj/decal/tile_edge/stripe/corner/xmas
 	icon_state = "xmas-corner"
@@ -138,7 +170,7 @@
 	density = 1
 	anchored = 1
 	dir = NORTH
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
