@@ -4293,11 +4293,7 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /obj/item/cigpacket/cigarillo/juicer,
 /obj/item/cigpacket/cigarillo/juicer,
@@ -4726,11 +4722,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "anj" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
 /area/space)
@@ -4761,11 +4753,7 @@
 	},
 /area/space)
 "ann" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /obj/item/reagent_containers/food/snacks/slimjim,
 /obj/item/device/audio_log/ht_1,
@@ -4844,11 +4832,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
 /area/space)
@@ -8067,9 +8051,7 @@
 /obj/item/electronics/capacitor,
 /obj/item/light/tube/blacklight,
 /obj/item/card_group/stg,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
@@ -9701,9 +9683,7 @@
 "azz" = (
 /obj/item/basketball,
 /obj/item/kitchen/food_box/donut_box,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/crevice{
 	pixel_x = -30
 	},
@@ -9872,9 +9852,9 @@
 /turf/simulated/martian/wall,
 /area/evilreaver/storage/tools)
 "azW" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -12769,9 +12749,7 @@
 	dir = 8
 	},
 /obj/item/cell/cerenkite,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/peripheral/card_scanner/register,
 /obj/item/clothing/under/gimmick/jetson,
 /turf/simulated/floor/airless/plating/scorched,
@@ -13311,9 +13289,7 @@
 /obj/item/raw_material/plasmastone,
 /obj/item/raw_material/plasmastone,
 /obj/item/raw_material/plasmastone,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "aJl" = (
@@ -14358,9 +14334,7 @@
 /obj/item/skull,
 /obj/item/raw_material/miracle,
 /obj/item/raw_material/miracle,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/shipcomponent/sensor/ecto,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
@@ -14655,9 +14629,7 @@
 /area/derelict_ai_sat/solar)
 "aMB" = (
 /obj/item/paint_can/rainbow,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paint_can/rainbow/plaid,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
@@ -20700,9 +20672,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/shieldwallgen,
 /obj/item/shieldwallgen,
 /turf/simulated/floor/airless/scorched,
@@ -20725,9 +20695,7 @@
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/uqill,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "bbx" = (
@@ -21363,9 +21331,7 @@
 /obj/item/clothing/under/gimmick/mj_clothes,
 /obj/item/clothing/suit/mj_suit,
 /obj/item/clothing/head/mj_hat,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bds" = (
@@ -21514,9 +21480,7 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/horseshoe,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
@@ -21861,9 +21825,7 @@
 	desc = "It looks pretty fancy.";
 	name = "NT-S.O. Helmet"
 	},
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "beM" = (
@@ -24026,9 +23988,7 @@
 	},
 /area/salyut)
 "bks" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -24047,9 +24007,7 @@
 	},
 /area/salyut)
 "bkv" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/space,
 /area/space)
 "bkw" = (
@@ -24337,9 +24295,7 @@
 "blq" = (
 /obj/item/clothing/under/gimmick/snazza,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "blr" = (

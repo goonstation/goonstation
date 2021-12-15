@@ -11969,7 +11969,7 @@
 /area/station/crew_quarters/cafeteria)
 "aAZ" = (
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/drinks/espressocup,
@@ -15463,7 +15463,7 @@
 	},
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -26
 	},
 /turf/simulated/floor/green/side{
@@ -31817,7 +31817,7 @@
 /obj/table/auto,
 /obj/machinery/light,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -24
 	},
 /turf/simulated/floor/yellow/side,
@@ -34113,7 +34113,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "bzL" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -26
 	},
 /obj/table/reinforced/auto,
@@ -55896,7 +55896,7 @@
 "ctd" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/purple/side{
@@ -58009,10 +58009,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
 "cxP" = (
-/obj/decal/tile_edge/stripe{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2";
-	tag = ""
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
@@ -58725,23 +58723,19 @@
 /obj/landmark/start{
 	name = "Cyborg"
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2";
-	tag = ""
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 4
 	},
 /area/station/medical/robotics)
 "czs" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2";
-	tag = ""
-	},
 /obj/landmark/start{
 	name = "Cyborg"
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -61800,7 +61794,7 @@
 	name = "E APC";
 	pixel_x = 24
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = -24
 	},
 /turf/simulated/floor/purple,
@@ -68442,7 +68436,7 @@
 "cVj" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /turf/simulated/floor/blue,
@@ -72889,10 +72883,8 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "deW" = (
-/obj/decal/tile_edge/stripe{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2";
-	tag = ""
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -79633,6 +79625,12 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"prj" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/arrivals)
 "prn" = (
 /obj/machinery/mass_driver{
 	name = "cargo driver"
@@ -80276,6 +80274,12 @@
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"tuo" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/escape)
 "tuu" = (
 /obj/cable{
 	d1 = 4;
@@ -81070,6 +81074,12 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"yiG" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/quartersA)
 
 (1,1,1) = {"
 aaa
@@ -138267,7 +138277,7 @@ aJY
 aLr
 aML
 aQG
-aNX
+yiG
 aNX
 aNX
 aNX
@@ -147012,7 +147022,7 @@ aqF
 aqF
 auB
 awb
-aux
+prj
 azm
 aqF
 aaB
@@ -147714,7 +147724,7 @@ qaU
 aag
 cKv
 cQk
-cKt
+tuo
 cTr
 cTr
 cKv

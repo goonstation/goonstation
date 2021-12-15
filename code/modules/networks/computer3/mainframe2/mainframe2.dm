@@ -247,6 +247,7 @@
 
 
 	process()
+		set waitfor = 0
 		..()
 		if(status & (NOPOWER|BROKEN|MAINT) || !processing)
 			return

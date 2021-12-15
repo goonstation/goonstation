@@ -22006,7 +22006,7 @@
 	pixel_x = -10
 	},
 /obj/table/reinforced/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /obj/machinery/espresso_machine,
@@ -40614,7 +40614,7 @@
 "dIN" = (
 /obj/machinery/manufacturer/general,
 /obj/machinery/light_switch/west,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/yellow/side{
@@ -45523,7 +45523,7 @@
 /obj/item/storage/box/syringes,
 /obj/item/device/reagentscanner,
 /obj/item/clothing/glasses/spectro,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/green/side{
@@ -45855,7 +45855,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /turf/simulated/floor/purplewhite{
@@ -53881,7 +53881,7 @@
 	tag = ""
 	},
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -56784,7 +56784,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/bluewhite{
