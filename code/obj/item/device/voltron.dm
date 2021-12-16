@@ -293,26 +293,9 @@
 			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
 			deactivate()
 		else
-			if(istype(user.l_hand,/obj/item/phoneHandsetBeta) || istype(user.r_hand,/obj/item/phoneHandsetBeta)) // travel through space line
-/*
-			if(!ishuman(user))
-				return returnList
-			var/mob/living/carbon/human/M = user
-			var/obj/item/organ/O
-			var/list/organ_list = shuffle_list(list("left_eye", "right_eye", "left_lung", "right_lung"))
-			organ_list += "FUCK" // very end of the list so we know when we've gone through the whole list
-			for(var/Org in organ_list)
-				if(M.organHolder.drop_organ(Org, M.loc))
-					O = Org
-					break // just in case somehow someone with no organs uses this while guaranteeing we otherwise lose an organ
-				else if(Org == "FUCK")
-					DEBUG_MESSAGE("[user] voltron'd through a phone (from datums \ref[source] to \ref[target]) while missing most of their organs. What the fuck?") //idk
-					return return_list
-			return_list += O
-*/
-
-				var/obj/item/phoneHandsetBeta/PH = null
-				if(istype(user.l_hand,/obj/item/phoneHandsetBeta))
+			if(istype(user.l_hand,/obj/item/phoneHandset) || istype(user.r_hand,/obj/item/phoneHandset)) // travel through space line
+				var/obj/item/phoneHandset/PH = null
+				if(istype(user.l_hand,/obj/item/phoneHandset))
 					PH = user.l_hand
 				else
 					PH = user.r_hand

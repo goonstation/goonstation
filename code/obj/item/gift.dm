@@ -57,7 +57,7 @@
 						user.put_in_hand_or_drop(C)
 						qdel(src)
 					return
-			if(istype(W, /obj/item/phoneHandsetBeta/))
+			if(istype(W, /obj/item/phoneHandset/))
 				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
 				return
 			var/a_used = 2 ** (src.w_class - 1)

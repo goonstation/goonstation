@@ -2,9 +2,14 @@
 // lets see if this makes ends up any sense wheeeeeee
 // god help my newbie coder soul
 
+// Bitflags for whether or not an attempt to relay something through a phone failed, and how it failed; mostly used for voltrons/vapes
+#define PHONE_RELAY_NO_PHONECALL (1<<0)
+#define PHONE_RELAY_NO_TARGETS (1<<1)
+#define PHONE_RELAY_SUCCESS (1<<2)
+
 
 /datum/phone
-	var/atom/holder = null // the atom we belong to; set type in child datum so you can call necessary procs
+	var/atom/holder = null // the atom we belong to; you'll have to define a new var for your specific atom type if you need to
 	var/phoneName = null // This is the name the user will see when we're displayed in a contact list
 	var/phoneNumber = null // unique identifier for our phone. doubles as a way to directly try and contact a phone
 	var/formattedPhoneNumber = null // string version of phone number in xxx-xxxx format. mostly just for displaying to users
@@ -51,6 +56,7 @@
 	// Default sounds, override at your leisure
 	var/sound/dialtone = 'sound/machines/phones/phone_busy.ogg'
 	var/sound/diallingSound = 'sound/machines/phones/dial.ogg'
+	var/sound/outgoingRing = "sound/machines/phones/ring_outgoing.ogg"
 
 	/// Call as New(src)
 	New(var/atom/creator)
@@ -285,19 +291,18 @@
 			return
 		switch(action)
 			if("makeCall")
-				var/trueNumber = text2num_safe(params["target"])
-				var/datum/phone/contact = tryGetPhoneFromNumber(trueNumber)
-				if(!contact)
-					callFailed()
-					return
-				// as a note, inviteToCall already includes checks for if we can even call them in the first place; no checks needed here
-				startPhoneCall(contact)
+				uiMakeCall(params["target"])
 			if("leaveCall")
 				disconnectFromCall()
 			if("dialpad")
 				handleDialPad(params["text"])
 				. = TRUE // we wanna make the dialpad responsive!
 
+	proc/uiMakeCall(target)
+		startPhoneCall(target)
+
+	proc/uiLeaveCall()
+		disconnectFromCall()
 
 	proc/tryGetPhoneFromNumber(var/number)
 		if(!(number >= 1000000) || !(number <= 9999999)) // we use ! here to make triple certain it's an actual number in the valid number range even if it's null or something

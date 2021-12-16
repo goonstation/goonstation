@@ -10,7 +10,7 @@
 	_health = 50
 	var/emagged = FALSE
 	var/labelling = FALSE
-	var/obj/item/phoneHandsetBeta/handset = null
+	var/obj/item/phoneHandset/handset = null
 	var/lastRing = 0
 	var/phoneIcon = "phone"
 	var/ringingIcon = "phone_ringing"
@@ -23,7 +23,7 @@
 
 	var/datum/phone/phoneDatum = null
 
-// a good deal of this code is copied from the old phone code, so there might be oversights/bugs remaining that I failed to catch - nex
+// some of this code is copied from the old phone code, so there might be oversights/bugs remaining that I failed to catch - nex
 
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
@@ -97,7 +97,7 @@
 		icon_state = "[answeredIcon]"
 		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0) // we dont call handset.outputSound() since we're guaranteed to have a user here
 
-		handset = new /obj/item/phoneHandsetBeta(src,user)
+		handset = new /obj/item/phoneHandset(src,user)
 		user.put_in_hand_or_drop(handset)
 
 		if(!connected)
@@ -113,8 +113,8 @@
 
 
 	attackby(obj/item/P as obj, mob/living/user as mob)
-		if(istype(P, /obj/item/phoneHandsetBeta))
-			var/obj/item/phoneHandsetBeta/PH = P
+		if(istype(P, /obj/item/phoneHandset))
+			var/obj/item/phoneHandset/PH = P
 			if(PH.parent == src)
 				user.drop_item(PH)
 				hangUp()
@@ -179,7 +179,7 @@
 			src.lastRing = 0
 			handset.outputSound("sound/machines/phones/ring_outgoing.ogg" ,40,0)
 
-
+	/// Physically hang up the phone; distinct from /datum/phone/hangUp() which only disconnects from calls/incoming calls
 	proc/hangUp()
 		phoneDatum.hangUp()
 		if(handset) // this should always be the case but just in case it's not for some absolutely bizarre reason
@@ -205,7 +205,7 @@
 
 
 
-/obj/item/phoneHandsetBeta
+/obj/item/phoneHandset
 	name = "phone handset"
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
@@ -221,11 +221,15 @@
 		parent = parentPhone
 		color = parentPhone.color
 		processing_items.Add(src)
+		RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/onDrop)
+		RegisterSignal(src, COMSIG_ITEM_PICKUP, .proc/onPickup)
+
 
 	disposing()
 		parent.handset = null
 		parent = null
 		processing_items.Remove(src)
+		UnregisterSignal(src, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP))
 		..()
 
 
@@ -248,7 +252,7 @@
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phoneDatum.phoneName]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		parent.phoneDatum.sendSpeech(M, processed, secure, real_name, lang_id)
 
-
+	/// Handles taking incoming speech from a phonecall and outputting it to the mob holding the phone
 	proc/outputSpeech(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
 		var/mob/user
 		if(!istype(src.loc, /mob/living))
@@ -269,6 +273,25 @@
 			return
 		user.playsound_local(user, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
 
+	proc/onDrop(var/mob/user)
+		UnregisterSignal(user, COMSIG_VAPE_INTO)
+		//UnregisterSignal(user, COMSIG_VOLTRON_INTO)
+
+	proc/onPickup(var/mob/user)
+		RegisterSignal(user, COMSIG_VAPE_INTO, .proc/vapeInto)
+		//RegisterSignal(user, COMSIG_VOLTRON_INTO, .proc/voltronInto)
+
+	proc/vapeInto(var/mob/user, var/obj/item/reagent_containers/vape/vape)
+		var/datum/phone/phoneDatum = parent.phoneDatum
+		var/datum/phonecall/phonecall = phoneDatum?.currentPhoneCall
+		if(!phonecall)
+			return PHONE_RELAY_NO_PHONECALL
+		var/victimCount = phonecall.relayVape(vape, user, phoneDatum)
+		if(victimCount)
+			return PHONE_RELAY_SUCCESS
+		else
+			return PHONE_RELAY_NO_TARGETS
+
 /datum/phone/landline
 	var/obj/machinery/phone/ourHolder = null // we can't override holder, so we make our own for when we need to refer to a handset or something
 	var/dialing = FALSE // for temporarily disabling the ability to dial, so you can't just spam-click the UI
@@ -283,33 +306,26 @@
 	startPhoneCall(var/toCall, var/forceStart, var/doGroupCall = FALSE)
 		if(!ourHolder.connected)
 			return FALSE
-		if(currentPhoneCall) // we have duplicate checks here with the base proc because we don't wanna make the dial noise if they fail
+		if(currentPhoneCall)
 			if(forceStart)
 				disconnectFromCall()
-			else if(!currentPhoneCall.isGroupCall)
-				return
-		if(!call_list && !targetNumber && !forceStart)
-			return
-		if(dialing)
-			return
+			else if(!currentPhoneCall.isGroupCall && (currentPhoneCall.host != src))
+				return FALSE
 
+		if(!toCall && !forceStart)
+			return FALSE  // we have duplicate checks here with the base proc because we don't wanna make the dial noise if they fail
 
-		if(targetNumber)
+		if(!ourHolder.handset)
+			return // just in case??
+		. = ..()
+		if(.)
+			ourHolder.doRing(callStart = TRUE)
+		else
 			if(!ourHolder.handset)
-				return // just in case??
+				return // did we hang up in these 4 seconds?
 			. = ..()
 			if(.)
 				ourHolder.doRing(callStart = TRUE)
-		else
-			handleSound("sound/machines/phones/dial.ogg",50,0)
-			dialing = TRUE
-			SPAWN_DBG(4 SECONDS)
-				dialing = FALSE
-				if(!ourHolder.handset)
-					return // did we hang up in these 4 seconds?
-				. = ..()
-				if(.)
-					ourHolder.doRing(callStart = TRUE)
 
 	receiveInvite()
 		if(ourHolder.handset)
@@ -351,6 +367,13 @@
 
 	onRemoteJoin()
 		handleSound("sound/machines/phones/remote_answer.ogg",50,0)
+
+	uiMakeCall(target)
+		handleSound("sound/machines/phones/dial.ogg",50,0)
+		dialing = TRUE
+		SPAWN_DBG(4 SECONDS)
+			dialing = FALSE
+			..()
 
 	handleSound(soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 		ourHolder.handset?.outputSound(soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)

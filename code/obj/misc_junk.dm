@@ -370,60 +370,82 @@
 			src.reagents.add_reagent("nicotine", 50)
 			qdel(E) //this technically implies that vapes infinitely eat these refills. I say the catriges are made of pure nicotine and are slowly absorbed
 
-	attack_self()
+	attack_self(var/mob/user)
 		if(world.time - last_used <= 60)
-			usr.show_text("It's still resetting, be patient!", "red")
+			user.show_text("It's still resetting, be patient!", "red")
 			return
 		if (!reagents.total_volume)
-			usr.show_text("You breathe in nothing and exhale nothing. You feel really lame!", "red") //wamp wamp
+			user.show_text("You breathe in nothing and exhale nothing. You feel really lame!", "red") //wamp wamp
 			return
 		else
-			if(istype(usr.l_hand,/obj/item/phoneHandsetBeta) || istype(usr.r_hand,/obj/item/phoneHandsetBeta)) // You can vape over the phone now. Why am I doing this.
-				if(phoneVape()) // did we vape into anyone?? (if no valid vape targets are in a call we'll resort to normal vape protocols)
-					return
+			var/obj/item/equippedOffHand = null
+			var/vapeAttemptedAndFailed = FALSE // to prevent duplicate boutput() to the user
+			if(!istype(user.l_hand,/obj/item/reagent_containers/vape))
+				equippedOffHand = user.l_hand
+			else
+				equippedOffHand = user.r_hand // doesn't matter if offhand is a vape, fortunately, since why would you be able to vape into it
+			if(equippedOffHand)
+				var/result = SEND_SIGNAL(equippedOffHand, COMSIG_VAPE_INTO, src, user)
+				if(result)
+					if(result & PHONE_RELAY_SUCCESS) // our smoke blows out the other end whee
+						user.visible_message("<span class='alert'><B>[user] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
+						"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
+						logTheThing("combat", user, null, "vapes a cloud of [log_reagents(src)] into [equippedOffHand], transmitting to one or more phone(s).")
+						last_used = world.time
+						return
+					else if(result & PHONE_RELAY_NO_TARGETS) // non-radical :(
+						user.visible_message("<span class='alert'><B>[user] tries to blow a cloud of smoke into the phone but nothing goes in! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
+						"<span class='alert'>You puff on the ecig and try to blow a cloud of smoke into the phone, but nothing goes through! You feel [pick("disappointed", "non-radical", "disappointed", "you've just been betrayed", "like everybody almost respected you", "you're still the latest trendsetter")].</span>")
+						vapeAttemptedAndFailed = TRUE
+					else if(result & PHONE_RELAY_NO_PHONECALL)
+						user.visible_message("<span class='alert'><B>[user] tries to blow a cloud of smoke into the phone but nothing goes in! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
+						"<span class='alert'>You puff on the ecig and try to blow a cloud of smoke into the phone, but you're not even in a phone call yet! You feel [pick("disappointed", "non-radical", "disappointed", "like you've just been betrayed", "like everybody almost respected you", "like you're still the latest trendsetter")].</span>")
+						vapeAttemptedAndFailed = TRUE
+
 			var/datum/reagents/R = new /datum/reagents(5)
 			var/target_loc = src.loc
 			R.my_atom = src
-			src.reagents.trans_to(usr, 5)
+			src.reagents.trans_to(user, 5)
 			src.reagents.trans_to_direct(R, 5)
-			smoke_reaction(R, range, get_turf(usr))
+			smoke_reaction(R, range, get_turf(user))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, NORTH))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, SOUTH))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, EAST))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, WEST))
-			usr.restrain_time = TIME + 40
+			user.restrain_time = TIME + 40
 			src.smoke.set_up(1, 0, target_loc,null,R.get_average_color())
 			src.smoke.attach(target_loc)
 			SPAWN_DBG(0) //vape is just the best for not annoying crowds I swear
 				src.smoke.start()
 				sleep(1 SECOND)
 
-			usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
-			"<span class='alert'>You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
+			if(!vapeAttemptedAndFailed)
+				user.visible_message("<span class='alert'><B>[user] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
+				"<span class='alert'>You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
 
-			logTheThing("combat", usr, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
+			logTheThing("combat", user, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
 
-	proc/phoneVape()
-		var/obj/item/phoneHandsetBeta/PH = null
-		if(istype(usr.l_hand,/obj/item/phoneHandsetBeta))
-			PH = usr.l_hand
+	/*proc/phoneVape()
+		var/obj/item/phoneHandset/PH = null
+		if(istype(user.l_hand,/obj/item/phoneHandset))
+			PH = user.l_hand
 		else
-			PH = usr.r_hand
+			PH = user.r_hand
 
 		var/obj/machinery/phone/parentPhone = PH.parent
 		var/datum/phone/phoneDatum = parentPhone.phoneDatum
 		var/datum/phonecall/phonecall = phoneDatum.currentPhoneCall
-		var/victimCount = phonecall.relayVape(src, usr, phoneDatum)
+		var/victimCount = phonecall.relayVape(src, user, phoneDatum)
 
-		usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
+		user.visible_message("<span class='alert'><B>[user] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
 		"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
 
 		if(victimCount)
-			logTheThing("combat", usr, null, "vapes a cloud of [log_reagents(src)] into [parentPhone], transmitting to [victimCount] phone(s).")
+			logTheThing("combat", user, null, "vapes a cloud of [log_reagents(src)] into [parentPhone], transmitting to [victimCount] phone(s).")
 			last_used = world.time
 
-		return(victimCount)
+		return(victimCount)*/
 
 
 

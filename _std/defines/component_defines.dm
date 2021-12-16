@@ -310,3 +310,10 @@
 #define COMSIG_AREA_DEACTIVATED "area_deactivated"
 
 #define COMSIG_SUSSY_PHRASE "sussy"
+
+
+/// Attempts to vape into a held object (user, vape)
+#define COMSIG_VAPE_INTO "vape_into"
+
+/// Attempts to voltron into a held object (user, voltron)
+#define COMSIG_VOLTRON_INTO "voltron_into"
