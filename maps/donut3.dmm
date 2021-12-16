@@ -52094,6 +52094,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -54698,6 +54699,7 @@
 /obj/stool/chair/green{
 	dir = 1
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "pQe" = (
@@ -59759,6 +59761,10 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
+"ril" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "rim" = (
 /obj/cable{
 	d1 = 4;
@@ -130029,7 +130035,7 @@ mjo
 umb
 aRI
 oad
-ihv
+ril
 ihv
 ihv
 qPy
