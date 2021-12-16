@@ -1,5 +1,8 @@
 
 (t)thu dec 16 21
+(u)tarmunora
+(e)⚖|balance
+(+)Werewolf and tentacle arms become weaker when severed.
 (u)RSG250
 (p)6915
 (e)|
