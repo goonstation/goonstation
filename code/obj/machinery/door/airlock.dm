@@ -555,7 +555,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..(user)
 
 	attack_hand(mob/user as mob)
-		if (src.density)0.
+		if (src.density)
 			src.autoclose = 0
 		..(user)
 
