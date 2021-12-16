@@ -426,29 +426,6 @@
 			logTheThing("combat", user, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
 
-	/*proc/phoneVape()
-		var/obj/item/phoneHandset/PH = null
-		if(istype(user.l_hand,/obj/item/phoneHandset))
-			PH = user.l_hand
-		else
-			PH = user.r_hand
-
-		var/obj/machinery/phone/parentPhone = PH.parent
-		var/datum/phone/phoneDatum = parentPhone.phoneDatum
-		var/datum/phonecall/phonecall = phoneDatum.currentPhoneCall
-		var/victimCount = phonecall.relayVape(src, user, phoneDatum)
-
-		user.visible_message("<span class='alert'><B>[user] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
-		"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
-
-		if(victimCount)
-			logTheThing("combat", user, null, "vapes a cloud of [log_reagents(src)] into [parentPhone], transmitting to [victimCount] phone(s).")
-			last_used = world.time
-
-		return(victimCount)*/
-
-
-
 
 /obj/item/reagent_containers/vape/medical //medical cannabis got nothing on this!!
 	name = "Medi-Vape"
