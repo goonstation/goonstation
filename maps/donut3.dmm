@@ -2840,7 +2840,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/light_switch/east,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aBv" = (
@@ -4329,7 +4328,6 @@
 /obj/shrub{
 	dir = 9
 	},
-/obj/machinery/light_switch/south,
 /turf/simulated/floor/greenblack,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -5677,6 +5675,7 @@
 "bul" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "buv" = (
@@ -11617,6 +11616,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -37178,6 +37178,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -44817,6 +44818,7 @@
 	icon_state = "line2"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "mXi" = (
@@ -60090,6 +60092,10 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/asylum/medbay)
+"rmu" = (
+/obj/machinery/light_switch/south,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/elect)
 "rmv" = (
 /obj/machinery/light/runway_light,
 /obj/lattice{
@@ -61116,6 +61122,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -63997,6 +64004,13 @@
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"ssP" = (
+/obj/decal/tile_edge/line/purple{
+	icon_state = "line1"
+	},
+/obj/machinery/light_switch/south,
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "ssY" = (
 /obj/table/wood/round/auto,
 /turf/simulated/floor/carpet{
@@ -71256,6 +71270,15 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"uEk" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
+/area/station/ranch)
 "uEm" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -76173,6 +76196,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/white/checker{
 	dir = 6
 	},
@@ -77716,7 +77740,6 @@
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "morgue"
 	},
-/obj/machinery/light_switch/auto,
 /obj/storage/closet/medicalclothes,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -121093,7 +121116,7 @@ kfp
 pJN
 vDQ
 hAg
-prl
+ssP
 oPf
 oPf
 oPf
@@ -132744,7 +132767,7 @@ ePf
 qrn
 mfs
 mfs
-tGj
+uEk
 tGj
 tGj
 tGj
@@ -142767,7 +142790,7 @@ naX
 qPb
 bOo
 ewz
-fdz
+rmu
 xLg
 ehR
 kQv
