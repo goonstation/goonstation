@@ -279,6 +279,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = 1
 	aiControlDisabled = 1
 	object_flags = BOTS_DIRBLOCK
+	mats = 0
 
 	meteorhit()
 		return
