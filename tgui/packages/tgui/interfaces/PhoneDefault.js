@@ -17,10 +17,15 @@ String.spliceSlice = (str, index, count, add) => { // god bless stack overflow
 const formattedDialledNumber = (number) => {
   // We wanna render in format of xxx-xxxx(xxxxx...
   // We then slice it down to the last 9 digits for us to render
-  let toReturn;
+  const numberString = String(number);
+  let toReturn = number;
 
-  toReturn = String.spliceSlice(number, 3, 0, "-");
-  toReturn = String.spliceSlice(toReturn, 8, 0, "(");
+  if (numberString.length > 3) {
+    toReturn = String.spliceSlice(number, 3, 0, "-"); }
+
+  if (numberString.length > 7) {
+    toReturn = String.spliceSlice(toReturn, 8, 0, "("); }
+
   toReturn = toReturn.slice(-9);
 
   return toReturn;
