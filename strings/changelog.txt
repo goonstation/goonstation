@@ -1,4 +1,9 @@
 
+(t)thu dec 16 21
+(u)Flaborized
+(p)6932
+(e)🎨|sprites
+(*)Updated many jumpsuit item sprites to be more consistent with their worn states.
 (t)sun dec 12 21
 (u)Terra_GS
 (p)6888
