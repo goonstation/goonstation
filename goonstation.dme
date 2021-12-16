@@ -1038,6 +1038,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\packets\components\packet_connected.dm"
 #include "code\modules\packets\packet_network\packet_network.dm"
 #include "code\modules\packets\packet_network\radio_network.dm"
+#include "code\modules\phones\landline.dm"
+#include "code\modules\phones\phones.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cablecolors.dm"
