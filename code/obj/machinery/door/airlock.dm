@@ -547,6 +547,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	layer = 3.5
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	bumpopen(mob/user as mob)
 		if (src.density)
@@ -554,9 +555,76 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		..(user)
 
 	attack_hand(mob/user as mob)
-		if (src.density)
+		if (src.density)0.
 			src.autoclose = 0
 		..(user)
+
+	Cross(atom/movable/mover)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if (P.proj_data.window_pass)
+				return 1
+
+		if (get_dir(loc, mover) == dir) // Check for appropriate border.
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
+			return !density
+		else
+			return 1
+
+	gas_cross(turf/target)
+		if(get_dir(loc, target) == dir)
+			return !density
+		else
+			return TRUE
+
+	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if (P.proj_data.window_pass)
+				return 1
+
+		if (get_dir(loc, target) == dir)
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
+			return !density
+		else
+			return 1
+
+	update_nearby_tiles(need_rebuild)
+		if (!air_master) return 0
+
+		var/turf/simulated/source = loc
+		var/turf/simulated/target = get_step(source,dir)
+
+		if (need_rebuild)
+			if (istype(source)) // Rebuild resp. update nearby group geometry.
+				if (source.parent)
+					air_master.groups_to_rebuild |= source.parent
+				else
+					air_master.tiles_to_update |= source
+
+			if (istype(target))
+				if (target.parent)
+					air_master.groups_to_rebuild |= target.parent
+				else
+					air_master.tiles_to_update |= target
+		else
+			if (istype(source)) air_master.tiles_to_update |= source
+			if (istype(target)) air_master.tiles_to_update |= target
+
+		if (istype(source))
+			source.selftilenotify() //for fluids
 
 	xmasify()
 		return
