@@ -44,13 +44,7 @@ export const PhoneDefault = (props, context) => {
     act("dialpad", { text });
   };
 
-  const hangupButton = (
-    <Button
-      onClick={() => act("leaveCall")}
-    >
-      Hang up
-    </Button>
-  );
+
 
   const dialButton = (text) => (
 
@@ -70,7 +64,35 @@ export const PhoneDefault = (props, context) => {
 
   );
 
+  const hangupButton = (
+    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'}
+      onClick={() => onDial("HANG")}
+    >
+      <div
+        style={{
+          position: 'absolute', left: '50%', top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        HANG
+      </div>
+    </Button>
+  );
 
+  const callButton = (
+    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'}
+      onClick={() => onDial("CALL")}
+    >
+      <div
+        style={{
+          position: 'absolute', left: '50%', top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        CALL
+      </div>
+    </Button>
+  );
 
   const dialScreen = (
     <Section>
@@ -91,24 +113,26 @@ export const PhoneDefault = (props, context) => {
           <Stack.Item>
             <Stack direction="row">
               <Stack direction="column">
-                {(dialButton("7"))}
-                {(dialButton("4"))}
                 {(dialButton("1"))}
+                {(dialButton("4"))}
+                {(dialButton("7"))}
                 {(dialButton("∗"))}
               </Stack>
               <Stack direction="column">
-                {(dialButton("8"))}
-                {(dialButton("5"))}
                 {(dialButton("2"))}
+                {(dialButton("5"))}
+                {(dialButton("8"))}
                 {(dialButton("0"))}
               </Stack>
               <Stack direction="column">
-                {(dialButton("9"))}
-                {(dialButton("6"))}
                 {(dialButton("3"))}
+                {(dialButton("6"))}
+                {(dialButton("9"))}
                 {(dialButton("#"))}
               </Stack>
             </Stack>
+            {(hangupButton)}
+            {(callButton)}
           </Stack.Item>
         </Box>
       </Stack>
@@ -138,11 +162,8 @@ export const PhoneDefault = (props, context) => {
 
 
   return (
-    <Window width={600} height={375} theme="retro-dark">
+    <Window width={600} height={450}>
       <Window.Content>
-        {!!elementSettings["hangupButton"] && (
-          hangupButton
-        )}
         <Stack.Item>
           <Stack direction="row">
             <Stack.Item grow={1}>

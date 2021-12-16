@@ -311,9 +311,10 @@
 
 #define COMSIG_SUSSY_PHRASE "sussy"
 
-
+#define VAPE_INTO_FAIL (1<<0) // valid target but it failed for some generic reason; return 0 if not valid target
 /// Attempts to vape into a held object (user, vape)
 #define COMSIG_VAPE_INTO "vape_into"
 
+#define VOLTRON_INTO_FAIL (1<<0) // ditto
 /// Attempts to voltron into a held object (user, voltron)
 #define COMSIG_VOLTRON_INTO "voltron_into"

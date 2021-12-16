@@ -385,7 +385,7 @@
 			else
 				equippedOffHand = user.r_hand // doesn't matter if offhand is a vape, fortunately, since why would you be able to vape into it
 			if(equippedOffHand)
-				var/result = SEND_SIGNAL(equippedOffHand, COMSIG_VAPE_INTO, src, user)
+				var/result = SEND_SIGNAL(equippedOffHand, COMSIG_VAPE_INTO, user, src)
 				if(result)
 					if(result & PHONE_RELAY_SUCCESS) // our smoke blows out the other end whee
 						user.visible_message("<span class='alert'><B>[user] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\

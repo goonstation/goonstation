@@ -1,11 +1,35 @@
+/* WELCOME TO MY FILE 😎
 
-// lets see if this makes ends up any sense wheeeeeee
-// god help my newbie coder soul
+The phone and phonecall datum system is intended to be highly flexible and modular; much of the logic is broken up between dozens of procs to be overridden as needed
+The /phone datum essentially functions as an interface and controller between your atom and phonecalls, so you'll need to make a child tailored to your atom
+You do NOT need to make a child of /datum/phonecall; it is very unlikely that you will need to, only if you can't just safely add the functionality you need to the base datum
+
+Several key procs are blank, such as speechReceived(). This is intentional, override them to get them to work with your atom.
+This does mean you can't just slap a phone datum in and call it a day; however, it does give you a lot of freedom over its behavior. See landline.dm in this folder for an example
+
+As a note, this doesn't strictly need to be a 'phone'. This can (in theory) work with ANYTHING with a phone datum in it, such as a machine which can receive remote commands via dialpad
+
+For consistency, I would recommend defining a typecasted var (the type of the holder atom specifically) '/ourHolder' to function almost identically to holder when you need to refer to vars/functions for said type
+Things will route to the holder atom by default, but naturally you'll want to specify where speech, vapes, etc. route into and out of
+
+See landline phones for functionality on how vaping/voltronning into phones should work; if you don't make your non-machine phone able to transmit some badass vape I give you a nicotine addiction
+
+If you have any questions/feedback, contact @Nexusuxen on the discord or Aft2001 on the forums; hopefully I'll have remembered how this all worked! :)
+
+Some planned features:
+Expanded/improved group call functionality & TGUI control panel for managing hosted group calls
+Ability to relay sounds and stop them when a call is ended or something idk
+Reservable phone numbers, likely to be defined in this file and in the secret submodule
+ - Possibility to include 911 as a way to call all Security phones and when one picks up, hang up on all the others (no promises)
+
+Other types of phones, especially AI internal phones :)
+
+*/
 
 // Bitflags for whether or not an attempt to relay something through a phone failed, and how it failed; mostly used for voltrons/vapes
-#define PHONE_RELAY_NO_PHONECALL (1<<0)
-#define PHONE_RELAY_NO_TARGETS (1<<1)
-#define PHONE_RELAY_SUCCESS (1<<2)
+#define PHONE_RELAY_NO_PHONECALL (1<<1)
+#define PHONE_RELAY_NO_TARGETS (1<<2)
+#define PHONE_RELAY_SUCCESS (1<<3)
 
 
 /datum/phone
@@ -39,6 +63,7 @@
 
 	var/datum/phonecall/incomingCall // who's calling us???
 	var/datum/phonecall/currentPhoneCall = null
+	var/startingCall = FALSE // are we currently trying to make a phone call?
 
 	var/canVoltron = FALSE
 	var/canVape = FALSE // you better make this true when possible, dweeb
@@ -46,7 +71,6 @@
 
 	// These vars are for enabling or disabling certain elements of the UI, such as hangup buttons
 	var/elementSettings = list(
-		"hangupButton" = FALSE,
 		"groupCallControl" = FALSE,
 		"contactPanel" = TRUE,
 		"dialPad" = TRUE,
@@ -54,9 +78,10 @@
 	)
 
 	// Default sounds, override at your leisure
-	var/sound/dialtone = 'sound/machines/phones/phone_busy.ogg'
+	var/sound/toneBusy = 'sound/machines/phones/phone_busy.ogg'
 	var/sound/diallingSound = 'sound/machines/phones/dial.ogg'
 	var/sound/outgoingRing = "sound/machines/phones/ring_outgoing.ogg"
+	var/sound/dialTone = "sound/machines/phones/dialtone.ogg" // https://freesound.org/people/ramicio/sounds/158427/
 
 	/// Call as New(src)
 	New(var/atom/creator)
@@ -69,8 +94,13 @@
 		STOP_TRACKING
 		..()
 
+
+
 	/// Handles joining *and* inviting to phonecalls, and creating them as necessary. toCall may be a phone datum, a phone number, or a list of either or both
-	proc/startPhoneCall(var/toCall, var/forceStart, var/doGroupCall = FALSE)
+	proc/startPhoneCall(var/toCall, var/forceStart, var/doGroupCall = FALSE, var/manuallyDialled = FALSE)
+		if(startingCall)
+			return FALSE // forcestart won't work here since we can't stop currently playing dial sounds; there's a 4 second window where we can't start a new call
+
 		if(currentPhoneCall)
 			if(forceStart)
 				disconnectFromCall()
@@ -82,16 +112,22 @@
 
 		toCall = validatePhones(toCall)
 
+		startingCall = TRUE
 		var/joinCallAttempt = tryJoinGroup(toCall, doGroupCall)
+		// We're either joining an existing group call, or starting a call ourselves
 		if(!isnull(joinCallAttempt)) // only null if we aren't joining a valid group call, but if we are we return whether or not it was successful
-			return joinCallAttempt ? TRUE : FALSE
-
-		if(!currentPhoneCall) // if it's not an existing call we make a new one
-			currentPhoneCall = new phoneCallType(src, maxConnected, prioritizeOurMax, doGroupCall)
-
-		. += inviteToCall(toCall)  // we can to let our proc caller know if we're successfully ringing them or not, and how many people we were able to start ringing
-		if(!.)
-			callFailed()
+			. = joinCallAttempt ? TRUE : FALSE
+		else
+			if(!currentPhoneCall) // if it's not an existing call we make a new one
+				currentPhoneCall = new phoneCallType(src, maxConnected, prioritizeOurMax, doGroupCall)
+			. += inviteToCall(toCall)  // we can to let our proc caller know if we're successfully ringing them or not, and how many people we were able to start ringing
+		if(manuallyDialled)
+			handleSound(dialTone,50,0)
+		SPAWN_DBG(manuallyDialled ? 3 SECONDS : 0 SECONDS) // if they auto-dialled then they already went through a short delay, dont make em wait more
+			if(!.)
+				callFailed()
+			startingCall = FALSE
+		return
 
 
 	/// Handles logic for if we should join a group call when we attempt to call a single phone; if they are a group call's host, this proc will by default request to join their group call
@@ -120,6 +156,7 @@
 		incomingCall?.callDenied(src)
 		disconnectFromCall()
 		dialledNumber = ""
+		handleSound("sound/machines/phones/remote_hangup.ogg", 50, 0)
 
 
 	/// Rejects an incoming phone call and alerts the phonecall datum of this
@@ -131,7 +168,7 @@
 	proc/callFailed(var/datum/phone/denyingPhone) // no need to reference the phonecall when we're hosting it (if it exists), but it might be helpful to know who denied the call, if applicable
 		if(currentPhoneCall?.isGroupCall)
 			return
-		handleSound(dialtone,50,0)
+		handleSound(toneBusy,50,0)
 
 
 	/// For if you wish to cancel someone's invite to your call; particularly useful for group calls
@@ -182,15 +219,16 @@
 	proc/onRemoteDisconnect(var/datum/phone/disconnectedPhone)
 
 
+
 	// Ripped straight from obj/item/proc/talk_into(), hopefully contains enough information for a wide variety of override cases
-	proc/sendSpeech(mob/M as mob, text, secure, real_name, lang_id)
+	proc/sendSpeech(mob/M as mob, text, secure, real_name, lang_id, initialText)
 		if(!currentPhoneCall)
 			return
-		currentPhoneCall.relaySpeech(src, M, text, secure, real_name, lang_id)
+		currentPhoneCall.relaySpeech(src, M, text, secure, real_name, lang_id, initialText)
 
 
 	/// Called by currentPhoneCall whenever it's relaying speech to us. Override in child proc to make this actually do something
-	proc/speechReceived(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
+	proc/speechReceived(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id, initialText)
 
 
 	/// You need to override this in your child phone datum to actually play sound. All attempts by this datum to play sound will route through here.
@@ -228,6 +266,12 @@
 		return L
 
 
+	proc/tryGetPhoneFromNumber(var/number)
+		if(!(number >= 1000000) || !(number <= 9999999)) // we use ! here to make triple certain it's an actual number in the valid number range even if it's null or something
+			return FALSE
+		return phoneNumberHash[number]
+
+
 	/// Handles logic needed for inviting a target phone to a call, whether it be a group call or not
 	proc/inviteToCall(var/target)
 		if(!istype(target, /datum/phone) && !islist(target))
@@ -256,8 +300,6 @@
 			return FALSE
 		incomingCall = pendingCall
 		return TRUE
-
-
 
 
 
@@ -292,8 +334,6 @@
 		switch(action)
 			if("makeCall")
 				uiMakeCall(params["target"])
-			if("leaveCall")
-				disconnectFromCall()
 			if("dialpad")
 				handleDialPad(params["text"])
 				. = TRUE // we wanna make the dialpad responsive!
@@ -304,30 +344,31 @@
 	proc/uiLeaveCall()
 		disconnectFromCall()
 
-	proc/tryGetPhoneFromNumber(var/number)
-		if(!(number >= 1000000) || !(number <= 9999999)) // we use ! here to make triple certain it's an actual number in the valid number range even if it's null or something
-			return FALSE
-		return phoneNumberHash[number]
 
-
-	/// Handles dial pad operation. Default logic: If dialled key was not a #, add key to dialledNumber. If #, set dialledNumber to "", if no *, call specified number even if mid-call, and if *, return TRUE
+	/// Handles dialpad input and what to do on each key press. Accepts any single valid dialpad key
 	proc/handleDialPad(key)
-		if((lastDial + 0.2 SECONDS) > world.time) // 0.2s because that's the length of a single dial tone
+		if((lastDial + 0.2 SECONDS) > world.time) // 0.2s because that's the length of a single key tone
 			return
 		lastDial = world.time
 		key2SoundOutput(key)
-		if(key != "#")
+		currentPhoneCall?.relayKeyPress(src, key)
+
+		if((key != "CALL") && (key != "HANG")) // can't do length(key) here since APPARENTLY ∗ isn't one character?? idfk
 			dialledNumber += key
 			return
-		else if(!findtextEx(dialledNumber, "∗"))
+
+		else if(!findtextEx(dialledNumber, "∗") && !findtextEx(dialledNumber, "#") && (key == "CALL"))
 			var/trueDialledNumber = text2num_safe(dialledNumber)
-			dialledNumber = "" // we reset it because the user hit #
-			startPhoneCall(trueDialledNumber, forceStart = TRUE)
-		else if(currentPhoneCall || incomingCall)
+			dialledNumber = ""
+			startPhoneCall(trueDialledNumber, forceStart = TRUE, manuallyDialled = TRUE) // we do this so we don't play the dialtone sound for auto-dialling, which already plays it
+
+		else if(key == "HANG")
+			dialledNumber = ""
 			hangUp()
-		else
-			dialledNumber = "" // we reset it because the user hit #
-			return TRUE // we return TRUE so you can continue from here by doing if(..()) or something, if you wanna use * commands or whatever, you fucking nerd
+
+		else if(key == "CALL") // not sure how this would fail at this point but ya never know
+			dialledNumber = "" // we reset it because the user hit CALL with * or # in the dialled number
+			return TRUE // we return TRUE so you can continue from here by doing if(..()) or something, if you wanna use * commands or whatever, you fucking nerd. be sure to save diallednumber to a var though
 
 
 	/// Attempts to play a sound based on the key the user pressed
@@ -340,7 +381,7 @@
 
 
 	/// Called whenever someone in a call we're in hits a dial button; used for any advanced commands/functions you may wanna add
-	proc/receiveDial(source, key)
+	proc/receiveForeignKeyPress(source, key)
 
 
 	/// Will take any input and output any valid phone datums it finds in a list; accepts lists and single vars of phone datums or phone numbers in both numerical and string form
@@ -359,6 +400,7 @@
 						returnList += target
 		return returnList // lets us slap validatePhones into a for loop since it still parses empty lists
 
+
 	/// Generates a unique 7 digit phone number and automatically logs it in the phone number hash
 	proc/generatePhoneNumber()
 		var/testNumber
@@ -371,13 +413,15 @@
 		formattedPhoneNumber = splicetext(text2num(phoneNumber, 7), 4, 4, "-")
 
 
-	/// Handles what should happen when someone vapes through us. You might need to override this to change *where* the vape comes from, if holder is something like a pda module
-	proc/onVape(var/datum/reagents/_buffer, var/obj/item/reagent_containers/vape/vape, var/mob/living/sourceMob, var/datum/phone/sourcePhone)
-		smoke_reaction(_buffer, vape.range, get_turf(holder))
+	/// Handles what should happen when someone vapes through us.
+	/// You'll need to override this; set _buffer.my_atom to wherever you want the smoke to emerge from
+	proc/onVape(var/datum/reagents/_buffer, var/obj/item/reagent_containers/vape/vape, var/mob/living/sourceMob, var/datum/phone/sourcePhone, var/turf/locOverride)
+		smoke_reaction(_buffer, vape.range, get_turf(_buffer.my_atom))
 		particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(holder.loc, NORTH))
 		particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(holder.loc, SOUTH))
 		particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(holder.loc, EAST))
 		particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(holder.loc, WEST))
+		logTheThing("combat", sourceMob, null, "vaped over their phone, outputting to phone datum [src], owned by [holder].")
 		SPAWN_DBG(0) //vape is just the best for not annoying crowds I swear
 			vape.smoke.start()
 			sleep(1 SECOND)
@@ -385,7 +429,8 @@
 		//boutput(user,"<span class='alert'><B>[sourceMob] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
 
-	/// Handles final check for if someone can voltron to us once we've been targetted for it - checks for canVoltron already have been done by the point this is intended to be called. Returns whatever atom the person will visibly emerge from.
+	/// Handles final check for if someone can voltron to us once we've been targetted for it - checks for canVoltron already have been done by the point this is intended to be called.
+	/// Returns whatever atom the person will visibly emerge from.
 	proc/onVoltron(var/mob/living/sourceMob, var/obj/item/device/voltron/voltron, var/datum/phone/sourcePhone, var/isOrgan = FALSE, var/override) // isOrgan for if a mishap occured; an organ will be emerging, not a person
 		if(isnull(override)) //if you called ..() with override you can still safely call ..()
 			. = holder
@@ -398,10 +443,12 @@
 
 
 
+// Nex Note: I'm planning to implement better group management functionality in the future; I'll still need to build the UI section for it and such, so for the moment I'd advise against making group call systems
+// (this is because this initial PR adding all this is already really fucking big and it isn't needed for landlines to work)
+// This also means group calls may still be buggy, as nothing has yet been developed for them. But, everything is preemptively designed to work with them to make eventual implementation easier
 
-
-// Be careful overriding this too much, make sure you account for other phone datums that may try to connect to this!
-/// Handles routing all the speech, data, and members in a phone call
+/// Handles all the members and routing all the speech, sound, and data in a phone call
+/// Be careful overriding this too much, make sure you account for other phone datums that may try to connect to this
 /datum/phonecall
 	var/doCustomNew = FALSE // if you wanna override New() then set this to true; ..() will only call the parent ..() in this case
 	var/disposing = FALSE
@@ -496,20 +543,24 @@
 
 
 	/// Relays incoming speech from call members to the rest of the members in the call
-	proc/relaySpeech(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
-		for(var/datum/phone/target in getMembers())
-			target.speechReceived(source, M, text, secure, real_name, lang_id)
+	proc/relaySpeech(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id, initialText)
+		var/recipients = getMembers()
+		recipients -= source
+		for(var/datum/phone/target in recipients)
+			target.speechReceived(source, M, text, secure, real_name, lang_id, initialText)
 
 
-	/// Handles relaying dials to other members of a call. By default this has no effect, but may find use in machine-linked phone systems
-	proc/relayDial(var/datum/phone/source, var/key)
+	/// Handles relaying key presses to other members of a call. By default this has no effect, but may find use in machine-linked phone systems
+	proc/relayKeyPress(var/datum/phone/source, var/key)
 		var/recipients = list()
 		recipients += getMembers()
 		recipients -= source
 		for(var/datum/phone/target in recipients)
-			target.receiveDial(source, key)
+			target.receiveForeignKeyPress(source, key)
 
-	/// The coolest proc, responsible for routing the reagents to the various onVape() procs for phone members where canVape is true. Returns the # of phones successfully vaped into
+
+	/// The coolest proc, responsible for routing the reagents to the various onVape() procs for phone members where canVape is true.
+	/// Returns the # of phones successfully vaped into
 	proc/relayVape(var/obj/item/reagent_containers/vape/vape, var/mob/living/sourceMob, var/datum/phone/sourcePhone) // doing this to group calls is a terrible idea :)
 		. = 0 // how many people did we prank with our sick vape??
 		if((sourcePhone != host) && !(sourcePhone in members))
@@ -535,7 +586,8 @@
 			.++
 
 
-	/// Attempts to find a valid voltron target in all members of a call and will return the target phone datum if successful, as well as if a Mishap occurs
+	/// Attempts to find a valid voltron target from all members of a call
+	/// Will return the target phone datum if successful in list index 1, as well as the target phone for an organ to fly out of if a Mishap occurs in index 2
 	proc/getVoltronTarget(var/mob/user, var/obj/item/device/voltron/voltron, var/datum/phone/source)
 		if((source != host) && !(source in members))
 			return
@@ -557,43 +609,3 @@
 			returnList += FALSE
 
 		return returnList
-
-/datum/phone/test
-
-	speechReceived(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
-		var/obj/item/testPhone/ourHolder = holder
-		ourHolder.outputSpeech(source, M, text, secure, real_name, lang_id)
-
-/obj/item/testPhone
-	name = "TEST PHONE"
-	desc = "PHONE!!"
-	icon = 'icons/obj/cellphone.dmi'
-	icon_state = "cellphone-on"
-	flags = TALK_INTO_HAND
-	var/datum/phone/test/phoneDatum = null
-	var/datum/tgui/ui = null
-
-	New()
-		..()
-		phoneDatum = new(src)
-
-	attack_self(mob/user)
-		. = ..()
-		ui = phoneDatum.ui_interact(user, ui)
-
-	talk_into(mob/M as mob, text, secure, real_name, lang_id)
-		phoneDatum.sendSpeech(M, text, secure, real_name, lang_id)
-
-	proc/outputSpeech(var/datum/phone/source, mob/M as mob, text, secure, real_name, lang_id)
-		var/mob/user
-		if(!istype(src.loc, /mob))
-			return
-		user = src.loc
-		//var/processed = "<span class='game say'><span class='bold'>[M.name]</span> says, <span class='message'>\"[text[1]]\"</span></span>"
-		user.show_message(text, 2)
-
-/obj/item/testPhone/testPhone2
-	name = "TEST PHONE 2"
-
-/obj/item/testPhone/testPhone3
-	name = "TEST PHONE 3"

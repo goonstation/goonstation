@@ -293,79 +293,16 @@
 			boutput(target, "<span class='notice'>You deactivate the [src].</span>")
 			deactivate()
 		else
-			if(istype(user.l_hand,/obj/item/phoneHandset) || istype(user.r_hand,/obj/item/phoneHandset)) // travel through space line
-				var/obj/item/phoneHandset/PH = null
-				if(istype(user.l_hand,/obj/item/phoneHandset))
-					PH = user.l_hand
-				else
-					PH = user.r_hand
+			var/obj/item/equippedOffHand = null
+			if(!istype(user.l_hand, /obj/item/device/voltron) && !isnull(user.l_hand))
+				equippedOffHand = user.l_hand
+			else
+				equippedOffHand = user.r_hand // doesn't matter if this happens to be a voltron, it won't do anything
+			if(equippedOffHand)
+				if(SEND_SIGNAL(equippedOffHand, COMSIG_VOLTRON_INTO, user, src))
+					return // the thing we're voltronning into takes care of all the work because bitflags can't carry refs, sad!
+					// don't forget to have it handle power!
 
-				 // god i hate making this many indents but it's to ensure that if the handset was disconnected we still voltron as normal through wires we're on
-				var/datum/phone/ourPhone = PH.parent?.phoneDatum
-				if(ourPhone)
-					var/returnList = ourPhone.currentPhoneCall?.getVoltronTarget(user, src, ourPhone)
-					var/datum/phone/targetPhone = returnList[1] // returns as list, index 1 is target
-					var/atom/targetDestination = targetPhone?.onVoltron(user, src, ourPhone)
-
-					if(targetDestination) // time2ride the space lines
-						user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
-						playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
-						user.drop_item(PH)
-						user.set_loc(get_turf(targetDestination))
-						playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
-						user.visible_message("[user] suddenly emerges from the [targetDestination]. [pick("","What the fuck?")]", "You emerge from the [targetDestination].", "You hear a strange sucking noise.")
-						power -= 5
-						handle_overlay()
-						if(returnList[2]) // did a mishap occur, and if so, which phone datum is handling this?
-							if(!ishuman(user))
-								return
-							targetPhone = returnList[2]
-							targetDestination = targetPhone.onVoltron(user, src, ourPhone, isOrgan = TRUE)
-							var/mob/living/carbon/human/M = user
-							var/obj/item/organ/O
-							var/list/organ_list = list("left_eye", "right_eye", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "panreas", "appendix")
-							shuffle_list(organ_list)
-							organ_list += "FUCK" // very end of the list so we know when we've gone through the whole list
-							for(var/Org in organ_list)
-								O = M.organHolder.drop_organ(Org, get_turf(targetDestination))
-								if(O)
-									break
-								else if(Org == "FUCK")
-									return // just in case somehow someone with no organs uses this (while guaranteeing we otherwise lose an organ)
-							targetDestination.visible_message("<span class='alert'><B>[O] shoots out of [targetDestination], [pick("holy shit!", "holy fuck!", "what the hell!", "what the fuck!", "Jesus Christ!", "yikes!", "oof...")]</B></span>")
-							ThrowRandom(O, 16, 4)
-							boutput(user, "<span class='alert'>[O] fell out of your body while travelling, holy fuck!</span>")
-						return
-
-					else // space lines closed :(
-						boutput(user, "You can't seem to enter the phone for some reason!")
-
-					return
-
-				// WE NEED TO NOT PUT A RETURN HERE, IF IF(OURPHONE) FAILS WE JUST DEFAULT TO NORMAL VOLTRON BEHAVIOR
-
-				/*if(PH.parent.linked && PH.parent.linked.handset)
-					if(isturf(PH.parent.linked.handset.loc))
-						target_loc = PH.parent.linked.handset.loc
-					else if(ismob(PH.parent.linked.handset.loc))
-						target_loc = PH.parent.linked.handset.loc.loc
-					else
-						boutput(user, "You can't seem to enter the phone for some reason!")
-						return
-				else
-					boutput(user, "You can't seem to enter the phone for some reason!")
-					return
-				if(isrestrictedz(user.loc.z) || isrestrictedz(target_loc.z))
-					boutput(user, "You can't seem to enter the phone for some reason!")
-					return
-				EXIT = PH.parent.linked.handset
-				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
-				user.drop_item(PH)
-				user.set_loc(target_loc)
-				playsound(user.loc, "sound/effects/singsuck.ogg", 40, 1)
-				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")*/
-			// There isn't an Else here as hopefully the above phone checks will default to us being able to voltron as normal if the handset has no connection
 			boutput(user, "<span class='notice'>You activate the [src].</span>")
 			activate(user)
 			power -= 5
