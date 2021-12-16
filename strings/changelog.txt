@@ -1,4 +1,7 @@
-
+(t)thu dec 16 21
+(u)TTerc
+(e)⚖|balance
+(+)ValuChimp restock cartridges are now only available via certain cargo traders, similarly to monkey crates.
 (t)thu dec 16 21
 (u)RSG250
 (p)6915
