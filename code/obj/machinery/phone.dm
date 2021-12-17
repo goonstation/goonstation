@@ -20,6 +20,7 @@
 	var/nameOverride = FALSE // for mappers who want to have custom phone names; set the actual name var of the phone, and this to TRUE
 	var/phoneDatumType = /datum/phone/landline // so you can set the datum in a child obj if you wanna use a modified landline datum
 	var/unlisted = FALSE
+	var/syndicate = FALSE
 
 	var/datum/phone/phoneDatum = null
 
@@ -28,6 +29,7 @@
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
 		icon_state = "[phoneIcon]"
+		phoneDatum = new /datum/phone/landline(src)
 		var/area/location = get_area(src)
 
 		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
@@ -41,28 +43,20 @@
 			color = "#9933ff"
 		else if(istype(location, /area/station/medical))
 			color = "#0000ff"
+		if(istype(location, /area/syndicate) || istype(location, /area/listeningpost))
+			color = "#ff0000"
+			phoneDatum.elementSettings["syndicate"] = TRUE
 		else
 			color = "#663300"
 		overlays += image('icons/obj/machines/phones.dmi',"[dialIcon]")
-		// Generate a name for the phone.
 
-		phoneDatum = new /datum/phone/landline(src)
-
-		if(isnull(phoneDatum.phoneName) && !nameOverride)
+		// generate a new name if we don't have a mapvar'd one
+		if(name == initial(name))
 			var/temp_name = name
 			if(temp_name == initial(name) && location)
 				temp_name = location.name
-			/*var/name_counter = 1
-			for_by_tcl(M, /datum/phone)
-				if(M.phoneName && M.phoneName == temp_name)
-					name_counter++
-			if(name_counter > 1)
-				temp_name = "[temp_name] [name_counter]"*/// This doesn't work and findtext() won't be foolproof and i dont wanna regex so fuck it
 			setName(temp_name)
-		else if(!nameOverride)
-			setName(phoneDatum.phoneName)
-		else
-			phoneDatum.phoneName = name
+		phoneDatum.phoneName = name
 
 		START_TRACKING
 

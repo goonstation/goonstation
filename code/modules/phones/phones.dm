@@ -69,12 +69,13 @@ Other types of phones, especially AI internal phones :)
 	var/canVape = FALSE // you better make this true when possible, dweeb
 	var/canTalkAcrossZLevels = FALSE
 
-	// These vars are for enabling or disabling certain elements of the UI, such as hangup buttons
+	// These vars are for enabling or disabling certain elements of the UI, such as hangup buttons, or other things like themes
 	var/elementSettings = list(
 		"groupCallControl" = FALSE,
 		"contactPanel" = TRUE,
 		"dialPad" = TRUE,
-		"dialScreen" = TRUE
+		"dialScreen" = TRUE,
+		"syndicate" = FALSE // do we got the menacing red color??
 	)
 
 	// Default sounds, override at your leisure

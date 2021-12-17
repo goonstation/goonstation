@@ -162,10 +162,14 @@ export const PhoneDefault = (props, context) => {
     </Section>
   );
 
+  let ourTheme;
 
+  if (elementSettings["syndicate"]) {
+    ourTheme = "syndicate";
+  }
 
   return (
-    <Window width={600} height={450}>
+    <Window width={600} height={450} theme={(ourTheme)} >
       <Window.Content>
         <Stack.Item>
           <Stack direction="row">
