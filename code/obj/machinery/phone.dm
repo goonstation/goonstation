@@ -20,7 +20,7 @@
 	var/nameOverride = FALSE // for mappers who want to have custom phone names; set the actual name var of the phone, and this to TRUE
 	var/phoneDatumType = /datum/phone/landline // so you can set the datum in a child obj if you wanna use a modified landline datum
 	var/unlisted = FALSE
-	var/syndicate = FALSE
+	var/showPhoneNumber = TRUE
 
 	var/datum/phone/phoneDatum = null
 
@@ -120,6 +120,17 @@
 			handleCutWire(user)
 			return
 		if(istype(P,/obj/item/device/multitool))
+			var/input = input(user, "What would you like to do?", null, null) in list("Change Name", "Toggle Visibility")
+			if(input == "Toggle Visibility")
+				if(!unlisted)
+					unlisted = TRUE
+					phoneDatum.unlisted = TRUE
+					user.visible_message("<span class='alert'>[user] disables [src]'s visibility to other phones!", "<span class='notice'>You disable the phonebook connection, rendering [src] invisible to other phones.")
+				else
+					unlisted = FALSE
+					phoneDatum.unlisted = FALSE
+					user.visible_message("<span class='alert'>[user] enables [src]'s visibility to other phones!", "<span class='notice'>You enable the phonebook connection, rendering [src] visible to other phones.")
+				return
 			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
 			t = sanitize(html_encode(t))
 			if(t && length(t) > 50)
@@ -159,6 +170,11 @@
 			return
 
 		src.doRing()
+
+	examine(var/mob/user)
+		. = ..()
+		if((get_dist(user, src)) < 2) // gotta be close to see that number!
+			. += "<br>It has a label on the side reading \"#[phoneDatum.formattedPhoneNumber]\""
 
 	/// callStart is only TRUE when we an incoming call is first received, forcing it to immediately ring the other end
 	proc/doRing(callStart = FALSE)

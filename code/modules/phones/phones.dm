@@ -413,7 +413,7 @@ Other types of phones, especially AI internal phones :)
 
 		phoneNumberHash[testNumber] = src
 		phoneNumber = testNumber
-		formattedPhoneNumber = splicetext(text2num(phoneNumber, 7), 4, 4, "-")
+		formattedPhoneNumber = splicetext(num2text(phoneNumber, 7), 4, 4, "-")
 
 
 	/// Handles what should happen when someone vapes through us.
