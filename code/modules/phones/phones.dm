@@ -602,7 +602,7 @@ Other types of phones, especially AI internal phones :)
 
 		for(var/datum/phone/target in recipients)
 			var/datum/reagents/buffer = new /datum/reagents(5)
-			buffer.my_atom = vape // honestly just copy/pasted this since im not too familiar with reagent code oops
+			buffer.my_atom = target.holder // by default vape will come out of the holder atom
 			vape.reagents.trans_to_direct(buffer, amountToTransfer)
 			target.onVape(buffer, vape, sourceMob, sourcePhone)
 			.++
