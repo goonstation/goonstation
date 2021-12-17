@@ -1,5 +1,9 @@
 (t)thu dec 16 21
 (u)TTerc
+(e)🆕|feature
+(*)Firefighting grenades are now also able to extinguish mobs.
+(t)thu dec 16 21
+(u)TTerc
 (e)⚖|balance
 (+)ValuChimp restock cartridges are now only available via certain cargo traders, similarly to monkey crates.
 (t)thu dec 16 21
