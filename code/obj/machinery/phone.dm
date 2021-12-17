@@ -43,7 +43,7 @@
 			color = "#9933ff"
 		else if(istype(location, /area/station/medical))
 			color = "#0000ff"
-		if(istype(location, /area/syndicate) || istype(location, /area/listeningpost))
+		else if(istype(location, /area/syndicate) || istype(location, /area/listeningpost))
 			color = "#ff0000"
 			phoneDatum.elementSettings["syndicate"] = TRUE
 		else
