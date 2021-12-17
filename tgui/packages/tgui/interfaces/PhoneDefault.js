@@ -68,7 +68,7 @@ export const PhoneDefault = (props, context) => {
   );
 
   const hangupButton = (
-    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'}
+    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'} backgroundColor="red"
       onClick={() => onDial("HANG")}
     >
       <div
