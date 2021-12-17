@@ -415,7 +415,7 @@
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
-			if (count_contents() >= max_capacity || length(contents) >= max_capacity)
+			if (count_contents() >= max_capacity || contents >= max_capacity)
 				user.show_text("[src] cannot fit any more items!", "red")
 				return
 			var/amt = length(W.contents)
