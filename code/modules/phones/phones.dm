@@ -345,8 +345,16 @@ Other types of phones, especially AI internal phones :)
 				handleDialPad(params["text"])
 				. = TRUE // we wanna make the dialpad responsive!
 
+
+	/// Called by ui_act() when we hit the shortcut to call a phone without having to dial their number
 	proc/uiMakeCall(target)
-		startPhoneCall(target)
+		if(startingCall)
+			return
+		handleSound(diallingSound,50,0)
+		startingCall = TRUE
+		SPAWN_DBG(4 SECONDS)
+			startingCall = FALSE
+			startPhoneCall(target)
 
 	proc/uiLeaveCall()
 		disconnectFromCall()

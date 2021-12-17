@@ -1,6 +1,5 @@
 /datum/phone/landline
-	var/obj/machinery/phone/ourHolder = null // we can't override holder, so we make our own for when we need to refer to a handset or something
-	var/dialing = FALSE // for temporarily disabling the ability to dial, so you can't just spam-click the UI
+	var/obj/machinery/phone/ourHolder = null /// we can't override holder, so we make our own for when we need to refer to a handset or something
 
 	canVape = TRUE
 	canVoltron = TRUE
@@ -59,17 +58,9 @@
 	onRemoteJoin()
 		handleSound("sound/machines/phones/remote_answer.ogg",50,0)
 
-	uiMakeCall(target)
-		if(dialing)
-			return
-		handleSound("sound/machines/phones/dial.ogg",50,0)
-		dialing = TRUE
-		SPAWN_DBG(4 SECONDS)
-			dialing = FALSE
-			..()
 
 	handleDialPad(key)
-		if(dialing) // stop touching the keypad when you're 'dialing' from the contact list, asshole
+		if(startingCall) // stop touching the keypad when you're starting a call, asshole
 			return
 		. = ..()
 
