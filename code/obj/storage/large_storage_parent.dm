@@ -191,6 +191,8 @@
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else
@@ -418,7 +420,7 @@
 						break
 					if (user.loc != staystill)
 						break
-					if (count_turf_items() >= max_capacity)
+					if (T.contents.len >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
