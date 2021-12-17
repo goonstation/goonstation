@@ -26,9 +26,6 @@
 		if(.)
 			ourHolder.doRing(callStart = TRUE)
 
-	hangUp()
-		cancelInvite(src)
-		..()
 
 	canSee()
 		if(!ourHolder.connected)

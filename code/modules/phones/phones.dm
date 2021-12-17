@@ -103,8 +103,8 @@ Other types of phones, especially AI internal phones :)
 
 		if(currentPhoneCall)
 			if(forceStart)
-				disconnectFromCall()
-			else if(!currentPhoneCall.isGroupCall && (currentPhoneCall.host != src))
+				hangUp()
+			else if(!(currentPhoneCall.isGroupCall && currentPhoneCall.host == src))
 				return FALSE
 
 		if(!toCall && !forceStart)
@@ -156,12 +156,13 @@ Other types of phones, especially AI internal phones :)
 		incomingCall?.callDenied(src)
 		disconnectFromCall()
 		dialledNumber = ""
-		handleSound("sound/machines/phones/remote_hangup.ogg", 50, 0)
+		handleSound("sound/machines/phones/remote_hangup.ogg", 30, 0)
 
 
 	/// Rejects an incoming phone call and alerts the phonecall datum of this
 	proc/denyPhoneCall(var/datum/phonecall/targetPhoneCall)
 		incomingCall.callDenied(src)
+		incomingCall = null
 
 
 	/// Called when we're hosting a phone call and someone denies our invitation (very rude). Or maybe their line was just busy.
@@ -178,8 +179,10 @@ Other types of phones, especially AI internal phones :)
 		target.incomingCall = null
 		target.onInviteCancelled(src)
 
-	proc/onInviteCancelled(var/datum/phone/canceller)
 
+	/// Called either when the host rescinds the invite or the phonecall is being disposed
+	proc/onInviteCancelled(var/datum/phone/canceller, var/datum/phonecall/cancellingCall)
+		incomingCall = null
 
 	/// Proc'd when a phone wants to join a call this phone is hosting. By default it accepts their request. Does NOT handle logic for if they can actually join, only if you want them to
 	proc/receiveJoinCallRequest(var/datum/phone/source)
@@ -317,12 +320,11 @@ Other types of phones, especially AI internal phones :)
 			contacts += list(list("phoneNumber" = number, "name" = name))
 		. = list(
 			"contactList" = contacts,
-			"phoneCallMembers" = currentPhoneCall?.members,
-			"pendingCallMembers" = currentPhoneCall?.pendingMembers,
-			"callHost" = currentPhoneCall?.host,
-			"phonecallID" = currentPhoneCall?.phonecallID,
 			"elementSettings" = elementSettings,
-			"dialledNumber" = dialledNumber)
+			"dialledNumber" = dialledNumber,
+			"incomingCall" = !!incomingCall, // sanitize the ref out, we only let it know if
+			"currentCall" = !!currentPhoneCall // we're in a call/got an incoming one or not
+			)
 
 	ui_host()
 		return holder
@@ -481,8 +483,10 @@ Other types of phones, especially AI internal phones :)
 
 	disposing()
 		disposing = TRUE
-		var/allMembers = members + pendingMembers
-		for(var/datum/phone/contact in allMembers)
+		for(var/datum/phone/pendingContact in pendingMembers)
+			pendingContact.onInviteCancelled(cancellingCall = src)
+			pendingMembers -= pendingContact
+		for(var/datum/phone/contact in members)
 			disconnect(contact)
 		disconnect(host)
 		..()
@@ -508,15 +512,16 @@ Other types of phones, especially AI internal phones :)
 		return TRUE
 
 
-	/// Handles logic for when a phone in pendingMembers denies our call
+	/// Handles logic for when a phone in pendingMembers denies our call; we assume they've already set their incomingCall to null
 	proc/callDenied(var/datum/phone/denyingPhone)
-		host.callFailed(denyingPhone)
-		disconnect(denyingPhone)
+		host.callFailed(denyingPhone) // only the host can invite so we let them know their invitation failed
+		pendingMembers -= denyingPhone
+
 
 
 	/// Handles logic for what we should do when a phone wants to disconnect from the call
 	proc/disconnect(var/datum/phone/target)
-		if(isnull(target) || (!(target in members) && !(target in pendingMembers) && target != host))
+		if(isnull(target) || (!(target in members) && target != host))
 			return
 		target.onDisconnect(src) // we let them know what /phonecall datum is calling this proc, just in case an override wants to use it
 		if(host == target)
@@ -525,7 +530,6 @@ Other types of phones, especially AI internal phones :)
 				member.onRemoteDisconnect(host) // we only wanna play this once per person
 			dispose() // the phonecall can't exist if we stop hosting!
 		else
-			pendingMembers -= target
 			members -= target
 			if(!disposing)
 				for(var/datum/phone/member in members)

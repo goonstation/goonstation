@@ -35,13 +35,11 @@ const formattedDialledNumber = (number) => {
 export const PhoneDefault = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    contactList, // a list of associative lists, where "phoneNumber" = phone number, "name" = phone name
-    phoneCallMembers, // we do this so getting an index is Easier
-    pendingCallMembers, // since i cant fucking figure out how to make an object constructor in jsx
-    callHost,
-    phonecallID,
+    contactList,
     elementSettings,
     dialledNumber,
+    incomingCall,
+    currentCall,
   } = data;
 
 
@@ -85,7 +83,7 @@ export const PhoneDefault = (props, context) => {
   );
 
   const callButton = (
-    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'}
+    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'} disabled={(currentCall | incomingCall)}
       onClick={() => onDial("CALL")}
     >
       <div
@@ -151,7 +149,7 @@ export const PhoneDefault = (props, context) => {
           {contactList.map((contact) => (
             <LabeledList.Item label={String.spliceSlice(contact["phoneNumber"], 3, 0, "-")} key={contact["phoneNumber"]}>
               {
-                <Button
+                <Button disabled={(!!(incomingCall | currentCall))}
                   onClick={() => act("makeCall", { target: contact["phoneNumber"] })}
                 >
                   {contact["name"]}
