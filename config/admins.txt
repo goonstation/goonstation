@@ -3,5 +3,3 @@
 #Most of the time, you'll want to make yourself a Host.
 #To do so, type your BYOND key with no spaces, capitals or other punctuation (including underscores!), a dash with spaces on both side, then the rank you want.
 #For example, the key "ZeWaka" would be given Host rank like this: zewaka - Host
-
-aft2001 - Host
