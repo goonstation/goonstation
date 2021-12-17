@@ -25,9 +25,9 @@
 	isBusy()
 		. = ..()
 		if(ourHolder.handset)
-			. = FALSE // the line gets busy when we pick up the handset!
+			. = TRUE // the line gets busy when we pick up the handset!
 		if(!ourHolder.connected)
-			. = FALSE
+			. = TRUE
 
 
 	canSee()
@@ -58,11 +58,6 @@
 	onRemoteJoin()
 		handleSound("sound/machines/phones/remote_answer.ogg",50,0)
 
-
-	handleDialPad(key)
-		if(startingCall) // stop touching the keypad when you're starting a call, asshole
-			return
-		. = ..()
 
 	handleSound(soundin, vol as num, vary, extrarange as num, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 		ourHolder.handset?.outputSound(soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)

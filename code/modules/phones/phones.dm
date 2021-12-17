@@ -64,6 +64,7 @@ Other types of phones, especially AI internal phones :)
 	var/datum/phonecall/incomingCall /// who's calling us???
 	var/datum/phonecall/currentPhoneCall = null
 	var/startingCall = FALSE /// are we currently trying to make a phone call?
+	var/dialing = FALSE /// are we mid-dial, but not having quite initiated a call yet? (Used for auto-dialing, mostly from contact list)
 
 	var/canVoltron = FALSE
 	var/canVape = FALSE // you better make this true when possible, dweeb
@@ -111,9 +112,15 @@ Other types of phones, especially AI internal phones :)
 		if(!toCall && !forceStart)
 			return FALSE // forceStart will let us start an empty call if need be, even if we don't have a target or our target is invalid
 
-		toCall = validatePhones(toCall)
+		toCall = validatePhones(toCall) // we leave this here and not before the above check so that invalid numbers cause a dialtone
 
 		startingCall = TRUE
+		if(manuallyDialled)
+			handleSound(dialTone,50,0)
+
+		sleep(manuallyDialled ? 3 SECONDS : 0 SECONDS) // sleep and not SPAWN_DBG to ensure we can return . properly
+		// sleep is to pause the calling operation while the dialing sounds are still playing
+		startingCall = FALSE
 		var/joinCallAttempt = tryJoinGroup(toCall, doGroupCall)
 		// We're either joining an existing group call, or starting a call ourselves
 		if(!isnull(joinCallAttempt)) // only null if we aren't joining a valid group call, but if we are we return whether or not it was successful
@@ -122,13 +129,9 @@ Other types of phones, especially AI internal phones :)
 			if(!currentPhoneCall) // if it's not an existing call we make a new one
 				currentPhoneCall = new phoneCallType(src, maxConnected, prioritizeOurMax, doGroupCall)
 			. += inviteToCall(toCall)  // we can to let our proc caller know if we're successfully ringing them or not, and how many people we were able to start ringing
-		if(manuallyDialled)
-			handleSound(dialTone,50,0)
-		SPAWN_DBG(manuallyDialled ? 3 SECONDS : 0 SECONDS) // if they auto-dialled then they already went through a short delay, dont make em wait more
-			if(!.)
-				callFailed()
-			startingCall = FALSE
-		return
+		if(!.)
+			callFailed()
+
 
 
 	/// Handles logic for if we should join a group call when we attempt to call a single phone; if they are a group call's host, this proc will by default request to join their group call
@@ -308,7 +311,7 @@ Other types of phones, especially AI internal phones :)
 
 	/// Call if you wanna see if the phone is busy - aka if you can try to call it or not. MUST return TRUE or FALSE
 	proc/isBusy()
-		. = (currentPhoneCall || incomingCall)
+		. = !!(currentPhoneCall || incomingCall || startingCall)
 
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -348,12 +351,12 @@ Other types of phones, especially AI internal phones :)
 
 	/// Called by ui_act() when we hit the shortcut to call a phone without having to dial their number
 	proc/uiMakeCall(target)
-		if(startingCall)
+		if(startingCall || dialing)
 			return
 		handleSound(diallingSound,50,0)
-		startingCall = TRUE
+		dialing = TRUE
 		SPAWN_DBG(4 SECONDS)
-			startingCall = FALSE
+			dialing = FALSE
 			startPhoneCall(target)
 
 	proc/uiLeaveCall()
@@ -362,6 +365,8 @@ Other types of phones, especially AI internal phones :)
 
 	/// Handles dialpad input and what to do on each key press. Accepts any single valid dialpad key
 	proc/handleDialPad(key)
+		if(startingCall || dialing) // stop touching the keypad when you're starting a call, asshole
+			return
 		if((lastDial + 0.2 SECONDS) > world.time) // 0.2s because that's the length of a single key tone
 			return
 		lastDial = world.time

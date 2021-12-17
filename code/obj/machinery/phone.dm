@@ -187,7 +187,7 @@
 			src.icon_state = "[ringingIcon]"
 			src.lastRing = 0
 
-		else if((length(pendingCallMembers) > 0) && ((src.lastRing >= 2)))
+		else if((length(pendingCallMembers) > 0) && ((src.lastRing >= 2) || callStart))
 			src.lastRing = 0
 			handset.outputSound("sound/machines/phones/ring_outgoing.ogg" ,40,0)
 
