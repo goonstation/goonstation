@@ -187,11 +187,11 @@ Other types of phones, especially AI internal phones :)
 		incomingCall = null
 
 
-	/// Signals to a datum/phonecall that we'd like to join the phonecall; used for accepting/answering an incoming call
+	/// Signals to a datum/phonecall that we'd like to join the phonecall; used for accepting/answering an incoming call. Ensure it returns TRUE if successfully joined
 	proc/joinPhoneCall(var/datum/phonecall/targetPhoneCall)
 		if(currentPhoneCall)
 			return
-		targetPhoneCall.tryConnect(src)
+		. = targetPhoneCall.tryConnect(src)
 
 
 	proc/answerCall()
