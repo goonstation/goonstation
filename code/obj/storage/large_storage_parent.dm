@@ -183,7 +183,7 @@
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
-			if (count_contents() >= max_capacity || length(contents) >= max_capacity)
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
 				user.show_text("[src] cannot fit any more items!", "red")
 				return
 			var/amt = length(W.contents)
@@ -191,8 +191,6 @@
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
-					if (count_contents() >= max_capacity || length(contents) >= max_capacity)
-						break
 					if (open)
 						I.set_loc(src.loc)
 					else
@@ -367,7 +365,7 @@
 		if (!src.open)
 			src.open()
 
-		if (count_contents() >= max_capacity)
+		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
 			return
 
@@ -420,7 +418,7 @@
 						break
 					if (user.loc != staystill)
 						break
-					if (count_contents() >= max_capacity)
+					if (count_turf_items() >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
@@ -589,7 +587,7 @@
 		if (src.welded || src.locked)
 			return 0
 
-	proc/count_contents()
+	proc/count_turf_items()
 		var/turf/T = get_turf(src)
 		var/crate_contents = length(T.contents)
 		for(var/obj/O in T.contents)
@@ -601,7 +599,7 @@
 		. = TRUE
 		var/turf/T = get_turf(src)
 		if (!T) return 0
-		if (count_contents() > max_capacity)
+		if (count_turf_items() > max_capacity)
 			return 0
 		for (var/obj/storage/S in T)
 			if (S != src)
