@@ -18,13 +18,17 @@
 			ourHolder.doRing(callStart = TRUE)
 
 	receiveInvite()
-		if(ourHolder.handset)
-			return FALSE // we can't receive an invite if we're holding the handset!!
-		if(!ourHolder.connected)
-			return FALSE
 		. = ..()
 		if(.)
 			ourHolder.doRing(callStart = TRUE)
+
+
+	isBusy()
+		. = ..()
+		if(ourHolder.handset)
+			. = FALSE // the line gets busy when we pick up the handset!
+		if(!ourHolder.connected)
+			. = FALSE
 
 
 	canSee()

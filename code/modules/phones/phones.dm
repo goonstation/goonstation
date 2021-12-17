@@ -145,8 +145,6 @@ Other types of phones, especially AI internal phones :)
 			return
 
 		. = FALSE // FALSE and not null because by this point we're now certain on what we wanna do, which is to join this call
-		if(!target.receiveJoinCallRequest(src))
-			return
 		var/datum/phonecall/targetCall = target.currentPhoneCall
 		if(joinPhoneCall(targetCall))
 			return TRUE // yay we joined the call!!!
@@ -185,16 +183,18 @@ Other types of phones, especially AI internal phones :)
 	proc/onInviteCancelled(var/datum/phone/canceller, var/datum/phonecall/cancellingCall)
 		incomingCall = null
 
-	/// Proc'd when a phone wants to join a call this phone is hosting. By default it accepts their request. Does NOT handle logic for if they can actually join, only if you want them to
-	proc/receiveJoinCallRequest(var/datum/phone/source)
-		return TRUE
 
-
-	/// Signals to a datum/phonecall that we'd like to join the phonecall
+	/// Signals to a datum/phonecall that we'd like to join the phonecall; used for accepting/answering an incoming call
 	proc/joinPhoneCall(var/datum/phonecall/targetPhoneCall)
 		if(currentPhoneCall)
 			return
 		targetPhoneCall.tryConnect(src)
+
+
+	proc/answerCall()
+		if(currentPhoneCall || !incomingCall)
+			return //this should never happen but eh
+		incomingCall.tryConnect(src)
 
 
 	/// Procs whenever we successfully join a call
@@ -298,13 +298,17 @@ Other types of phones, especially AI internal phones :)
 
 	/// Handles logic needed for when we receive an invitation to a call. If you override, make sure it will return TRUE or FALSE if the invitation was successful or not.
 	proc/receiveInvite(var/datum/phone/caller, var/datum/phonecall/pendingCall)
-		if(incomingCall || currentPhoneCall)
+		if(isBusy())
 			return FALSE
 		if(!canCallUs(caller))
 			return FALSE
 		incomingCall = pendingCall
 		return TRUE
 
+
+	/// Call if you wanna see if the phone is busy - aka if you can try to call it or not. MUST return TRUE or FALSE
+	proc/isBusy()
+		. = (currentPhoneCall || incomingCall)
 
 
 	ui_interact(mob/user, datum/tgui/ui)

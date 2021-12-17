@@ -171,10 +171,12 @@
 
 		src.doRing()
 
+
 	examine(var/mob/user)
 		. = ..()
 		if((get_dist(user, src)) < 2) // gotta be close to see that number!
 			. += "<br>It has a label on the side reading \"#[phoneDatum.formattedPhoneNumber]\""
+
 
 	/// callStart is only TRUE when we an incoming call is first received, forcing it to immediately ring the other end
 	proc/doRing(callStart = FALSE)
@@ -188,6 +190,7 @@
 		else if((length(pendingCallMembers) > 0) && ((src.lastRing >= 2)))
 			src.lastRing = 0
 			handset.outputSound("sound/machines/phones/ring_outgoing.ogg" ,40,0)
+
 
 	/// Physically hang up the phone; distinct from /datum/phone/hangUp() which only disconnects from calls/incoming calls
 	proc/hangUp()
