@@ -677,6 +677,12 @@ datum
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
 
+			grenade_effects(var/obj/grenade, var/atom/A)
+				if (isliving(A))
+					var/mob/living/M = A
+					if (M.hasStatus("burning"))
+						M.changeStatus("burning", -M.getStatusDuration("burning"))
+
 		silicate
 			name = "silicate"
 			id = "silicate"

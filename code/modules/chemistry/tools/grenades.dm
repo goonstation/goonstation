@@ -205,10 +205,6 @@
 				if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
 					src.reagents.grenade_effects(src, A)
 					src.reagents.reaction(A, 1, 10, 0)
-				if (isliving(A))
-					var/mob/living/M = A
-					if (istype(src, /obj/item/chem_grenade/firefighting) && M.hasStatus("burning"))
-						M.changeStatus("burning", -M.getStatusDuration("burning"))
 
 		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
 		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
