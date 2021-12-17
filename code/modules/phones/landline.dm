@@ -21,6 +21,12 @@
 		if(.)
 			ourHolder.doRing(callStart = TRUE)
 
+	onInviteCancelled(datum/phone/canceller, datum/phonecall/cancellingCall)
+		. = ..()
+		if(ourHolder.handset)
+			return
+		ourHolder.icon_state = ourHolder.phoneIcon
+		ourHolder.lastRing = 0
 
 	isBusy()
 		. = ..()
