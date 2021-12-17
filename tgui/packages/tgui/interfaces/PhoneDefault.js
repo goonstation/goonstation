@@ -68,7 +68,14 @@ export const PhoneDefault = (props, context) => {
   );
 
   const hangupButton = (
-    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'} backgroundColor="red"
+    <Button
+      m={0.5}
+      height={5}
+      width={7.75}
+      fontSize={2.25}
+      bold={1}
+      fontFamily={'Sans-serif'}
+      backgroundColor="red"
       onClick={() => onDial("HANG")}
     >
       <div
@@ -83,7 +90,14 @@ export const PhoneDefault = (props, context) => {
   );
 
   const callButton = (
-    <Button m={0.5} height={5} width={7.75} fontSize={2.25} bold={1} fontFamily={'Sans-serif'} disabled={(currentCall | incomingCall)}
+    <Button
+      m={0.5}
+      height={5}
+      width={7.75}
+      fontSize={2.25}
+      bold={1}
+      fontFamily={'Sans-serif'}
+      disabled={(currentCall | incomingCall)}
       onClick={() => onDial("CALL")}
     >
       <div
@@ -99,7 +113,13 @@ export const PhoneDefault = (props, context) => {
 
   const dialScreen = (
     <Section>
-      <Box backgroundColor="#86ab6c" textColor="black" bold={1} opacity={1} height={3} fontSize={2.9} fontFamily="monospace">
+      <Box
+        backgroundColor="#86ab6c"
+        textColor="black" bold={1}
+        opacity={1}
+        height={3}
+        fontSize={2.9}
+        fontFamily="monospace">
         <div align="right">{formattedDialledNumber(dialledNumber)}</div>
       </Box>
     </Section>
