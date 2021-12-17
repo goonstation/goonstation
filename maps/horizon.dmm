@@ -11474,14 +11474,19 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/east)
 "aEB" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	areastring = "Tool Storage";
+	dir = 1;
+	name = "Tool Storage APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating/random,
-/area/station/storage/tools)
+/area/station/maintenance/east)
 "aEC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/northeast,
@@ -11887,7 +11892,6 @@
 	},
 /area/station/maintenance/northeast)
 "aFM" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -11895,8 +11899,14 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	areastring = "North Secondary Hallway";
+	dir = 1;
+	name = "North Secondary Hallway APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/north)
+/area/station/maintenance/northeast)
 "aFN" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
 /obj/disposalpipe/segment/morgue{
@@ -11930,20 +11940,24 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aFS" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	areastring = "Medbay";
+	dir = 1;
+	name = "Medbay APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 4
 	},
-/area/station/medical/medbay)
+/area/station/maintenance/northeast)
 "aFT" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -11951,8 +11965,14 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/apc{
+	areastring = "Medbay Lobby";
+	dir = 1;
+	name = "Medbay Lobby APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
-/area/station/medical/medbay/lobby)
+/area/station/maintenance/northeast)
 "aFU" = (
 /obj/decal/poster/wallsign/stencil/left/s,
 /obj/decal/poster/wallsign/stencil/right/e,
@@ -12348,14 +12368,19 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aGZ" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/table/reinforced/auto,
 /obj/decal/cleanable/dirt,
+/obj/machinery/power/apc{
+	areastring = "East Secondary Hallway";
+	dir = 1;
+	name = "East Secondary Hallway APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating/random,
-/area/station/hallway/secondary/east)
+/area/station/maintenance/east)
 "aHa" = (
 /obj/morgue{
 	dir = 2
@@ -13366,7 +13391,6 @@
 /turf/space,
 /area/space)
 "aJv" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -13374,8 +13398,14 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/apc{
+	areastring = "Escape Shuttle Hallway";
+	dir = 1;
+	name = "Escape Shuttle Hallway APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
+/area/station/maintenance/south)
 "aJw" = (
 /obj/machinery/ore_cloud_storage_container,
 /obj/decal/cleanable/dirt,
@@ -16383,12 +16413,15 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_north,
 /obj/machinery/computer3/luggable,
+/obj/machinery/power/apc{
+	areastring = "Net Cafe";
+	dir = 1;
+	name = "Net Cafe APC";
+	pixel_y = 24
+	},
 /turf/simulated/floor/plating/random,
-/area/station/crew_quarters/info{
-	name = "Net Cafe"
-	})
+/area/station/storage/tech)
 "aQH" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -18645,9 +18678,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"aVx" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/north)
 "aVy" = (
 /obj/lattice,
 /obj/cable{
@@ -19771,9 +19801,6 @@
 "aXN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
-"aXO" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/medbay/lobby)
 "aXP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
@@ -19956,7 +19983,7 @@
 "aYm" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/vertical,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/exit)
+/area/station/crew_quarters/pool)
 "aYn" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -24140,11 +24167,16 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/disposalpipe/segment/bent/north,
 /obj/storage/crate/bloody,
+/obj/machinery/power/apc{
+	areastring = "West Primary Hallway";
+	dir = 8;
+	name = "West Primary Hallway APC";
+	pixel_x = -24
+	},
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
+/area/station/maintenance/northwest)
 "bhZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -38213,7 +38245,7 @@
 /obj/pool/perspective,
 /obj/machinery/light,
 /turf/simulated/floor/blue,
-/area/station/crew_quarters/pool)
+/area/station/maintenance/east)
 "bSG" = (
 /obj/pool/perspective{
 	dir = 6;
@@ -118189,7 +118221,7 @@ aaa
 aaa
 aaa
 aaa
-aVx
+aCg
 aFM
 aHl
 aAZ
@@ -121511,7 +121543,7 @@ aaa
 aaa
 aaa
 aaa
-aIO
+aCg
 aFS
 aHv
 aIO
@@ -121813,7 +121845,7 @@ aaa
 aaa
 aaa
 aaa
-aXO
+aCg
 aFT
 aHw
 aIO
@@ -131774,7 +131806,7 @@ aaa
 aaa
 aaa
 aaa
-asp
+arH
 aEB
 aBx
 asv
@@ -132076,7 +132108,7 @@ aaa
 aaa
 aaa
 aaa
-aHQ
+arH
 aGZ
 aBy
 aVS
