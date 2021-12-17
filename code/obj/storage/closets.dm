@@ -412,11 +412,10 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/counted_turf_items = count_turf_items()
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
-			if (counted_turf_items >= max_capacity || length(contents) >= max_capacity)
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
 				user.show_text("[src] cannot fit any more items!", "red")
 				return
 			var/amt = length(W.contents)
@@ -424,7 +423,7 @@
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
-					if(counted_turf_items >= max_capacity || length(contents) >= max_capacity)
+					if(length(contents) >= max_capacity)
 						break
 					if (open)
 						I.set_loc(src.loc)

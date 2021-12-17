@@ -180,11 +180,10 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/counted_turf_items = count_turf_items()
 			if(secure && locked)
 				user.show_text("Access Denied", "red")
 				return
-			if (counted_turf_items >= max_capacity || length(contents) >= max_capacity)
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
 				user.show_text("[src] cannot fit any more items!", "red")
 				return
 			var/amt = length(W.contents)
@@ -192,7 +191,7 @@
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
-					if(counted_turf_items >= max_capacity || length(contents) >= max_capacity)
+					if(length(contents) >= max_capacity)
 						break
 					if (open)
 						I.set_loc(src.loc)
@@ -321,7 +320,7 @@
 			. = TRUE
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		var/counted_turf_items = count_turf_items()
+		var/turf/T = get_turf(src)
 		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
@@ -369,7 +368,7 @@
 		if (!src.open)
 			src.open()
 
-		if (counted_turf_items >= max_capacity)
+		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
 			return
 
@@ -422,7 +421,7 @@
 						break
 					if (user.loc != staystill)
 						break
-					if (counted_turf_items >= max_capacity)
+					if (length(T.contents) >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
