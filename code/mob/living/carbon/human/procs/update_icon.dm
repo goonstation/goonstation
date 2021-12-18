@@ -234,7 +234,7 @@
 		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
-			if (islist(override_states) && ("shoe-left_[wear_state]" in override_states))
+			if (islist(override_states) && ("shoe-left_[wear_state]" in override_states)) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
 				src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.shoes.wear_image.icon_state = "shoe-left_[wear_state]"
 			else
@@ -244,7 +244,7 @@
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if(shoes_count == 1)
-				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
+				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states)) //like above, but for right shoes
 					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
 					src.shoes.wear_image.icon_state = "shoe-right_[wear_state]"
 				else
