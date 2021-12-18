@@ -159,7 +159,7 @@
 		src.gloves.wear_image.layer = src.gloves.wear_layer
 
 		src.gloves.wear_image.pixel_x = 0
-		src.gloves.wear_image.pixel_y = hand_offset
+		src.gloves.wear_image.pixel_y = 0
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
 			if (islist(override_states) && ("glove-left_[icon_name]" in override_states))
