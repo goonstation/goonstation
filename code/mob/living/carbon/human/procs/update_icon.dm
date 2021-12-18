@@ -162,7 +162,12 @@
 		src.gloves.wear_image.pixel_y = hand_offset
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			src.gloves.wear_image.icon_state = "left_[icon_name]"
+			if (islist(override_states) && ("glove-left_[icon_name]" in override_states))
+				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
+				src.gloves.wear_image.icon_state = "glove-left_[icon_name]"
+			else
+				src.gloves.wear_image.icon = src.shoes.wear_image_icon
+				src.gloves.wear_image.icon_state = "left_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_l")
@@ -170,7 +175,12 @@
 			UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			src.gloves.wear_image.icon_state = "right_[icon_name]"
+			if (islist(override_states) && ("glove-right_[icon_name]" in override_states))
+				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
+				src.gloves.wear_image.icon_state = "glove-right_[icon_name]"
+			else
+				src.gloves.wear_image.icon = src.shoes.wear_image_icon
+				src.gloves.wear_image.icon_state = "right_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")
@@ -225,7 +235,7 @@
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if (islist(override_states) && ("shoe-left_[wear_state]" in override_states))
-				src.shoes.wear_image_icon = src.mutantrace.clothing_icon_override
+				src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.shoes.wear_image.icon_state = "shoe-left_[wear_state]"
 			else
 				src.shoes.wear_image.icon = src.shoes.wear_image_icon
@@ -235,14 +245,14 @@
 			shoes_count++
 			if(shoes_count == 1)
 				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
-					src.shoes.wear_image_icon = src.mutantrace.clothing_icon_override
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
 					src.shoes.wear_image.icon_state = "shoe-right_[wear_state]"
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 					src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
 				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
-					src.shoes.wear_image_icon = src.mutantrace.clothing_icon_override
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
 					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "shoe-right_[wear_state]")
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
