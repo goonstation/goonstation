@@ -216,6 +216,7 @@
 	// Shoes
 	if (src.shoes)
 		wear_sanity_check(src.shoes)
+		var/wear_state = src.shoes.wear_state || src.shoes.icon_state
 		src.shoes.wear_image.layer = src.shoes.wear_layer
 		src.shoes.wear_image.color = src.shoes.color
 		src.shoes.wear_image.alpha = src.shoes.alpha
@@ -223,14 +224,29 @@
 		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
-			src.shoes.wear_image.icon_state = "left_[src.shoes.wear_state || src.shoes.icon_state]"
+			if (islist(override_states) && ("shoe-left_[wear_state]" in override_states))
+				src.shoes.wear_image_icon = src.mutantrace.clothing_icon_override
+				src.shoes.wear_image.icon_state = "shoe-left_[wear_state]"
+			else
+				src.shoes.wear_image.icon = src.shoes.wear_image_icon
+				src.shoes.wear_image.icon_state = "left_[wear_state]"
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if(shoes_count == 1)
-				src.shoes.wear_image.icon_state = "right_[src.shoes.wear_state || src.shoes.icon_state]"
+				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
+					src.shoes.wear_image_icon = src.mutantrace.clothing_icon_override
+					src.shoes.wear_image.icon_state = "shoe-right_[wear_state]"
+				else
+					src.shoes.wear_image.icon = src.shoes.wear_image_icon
+					src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
-				src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[src.shoes.wear_state || src.shoes.icon_state]")
+				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
+					src.shoes.wear_image_icon = src.mutantrace.clothing_icon_override
+					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "shoe-right_[wear_state]")
+				else
+					src.shoes.wear_image.icon = src.shoes.wear_image_icon
+					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[wear_state]")
 
 		if(shoes_count)
 			UpdateOverlays(src.shoes.wear_image, "wear_shoes")
