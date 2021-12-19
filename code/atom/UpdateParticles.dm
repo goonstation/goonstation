@@ -44,7 +44,3 @@
 		return
 	var/obj/O = particle_refs[key]
 	return O?.particles
-
-/atom/proc/sov()
-	var/particles/P = new/particles/swarm/bees
-	UpdateParticles(P, "bees")
