@@ -772,6 +772,7 @@ var/sound/iomoon_alarm_sound = null
 			elecflash(user,radius = 2, power = 6)
 
 			H.unkillable = 1
+			H.setStatus("maxhealth-", null, -90)
 			H.gib(1)
 			qdel(src)
 
