@@ -1963,12 +1963,12 @@ Returns:
 	density = 1
 	anchored = 1
 	opacity = 0
-	particles = new/particles/barrel_embers
 
 	var/datum/particleSystem/barrelSmoke/smoke_part
 	var/datum/light/light
 
 	New()
+		UpdateParticles(new/particles/barrel_embers, "embers")
 		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
 		light = new /datum/light/point
 		light.attach(src)

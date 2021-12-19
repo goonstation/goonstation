@@ -66,7 +66,7 @@ particles/barrel_embers
 	count = 30
 	lifespan = 30
 	fade = 5
-	position = generator("vector", list(-3,6,0), list(3,6,0), UNIFORM_RAND)
+	position = generator("vector", list(-3,6,0), list(3,6,0), NORMAL_RAND)
 	gravity = list(0, 0.2, 0)
 	color_change = 0
 	friction = 0.2
