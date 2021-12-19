@@ -49132,6 +49132,9 @@
 /obj/item/aiModule/reset{
 	pixel_y = 7
 	},
+/obj/item/circuitboard/aiupload{
+	pixel_y = 7
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "olB" = (
