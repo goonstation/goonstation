@@ -249,8 +249,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if (ishuman(L))
 			var/mob/living/carbon/human/H = A
 			//Special halloween-time Unkillable gibspam protection!
-			if (H.unkillable)
+			if (H.unkillable || H.extra_lives)
 				H.unkillable = 0
+				H.extra_lives = 0
 			if (H.mind && H.mind.assigned_role)
 				switch (H.mind.assigned_role)
 					if ("Clown")

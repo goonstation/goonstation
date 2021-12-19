@@ -84,6 +84,7 @@
 				var/mob/living/carbon/human/H = M
 				if (istype(H))
 					H.unkillable = 0
+					H.extra_lives = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
 				M.firegib() // thanks ISN!

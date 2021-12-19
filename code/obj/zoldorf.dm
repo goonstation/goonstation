@@ -401,7 +401,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		else if(istype(weapon, /obj/item/zolscroll)) //handling handing of contracts to begin the usurping process
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
-			if(h.unkillable)
+			if(h.unkillable || h.extra_lives)
 				boutput(h,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 				return
 			if(scroll.icon_state != "signed")
@@ -494,7 +494,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					var/cost = item.soul_cost()
 					if(istype(usr, /mob/living/carbon/human))
 						var/mob/living/carbon/human/user = usr
-						if(user.unkillable) //*giggles in scientist language*
+						if(user.unkillable || user.extra_lives) //*giggles in scientist language*
 							boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 							return
 					var/confirm = alert("Are you sure you want to sell [item.cost] of your soul?", "Confirm Transaction", "Yes", "No")

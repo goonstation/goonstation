@@ -2432,7 +2432,7 @@
 		if((istype(weapon, /obj/item/zolscroll)) && istype(user,/mob/living/carbon/human) && (src.z == 1))
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
-			if(h.unkillable)
+			if(h.unkillable || h.extra_lives)
 				boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 				return
 			if(scroll.icon_state != "signed")

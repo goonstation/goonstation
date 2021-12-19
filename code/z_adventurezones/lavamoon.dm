@@ -754,7 +754,7 @@ var/sound/iomoon_alarm_sound = null
 
 
 /*
- *	UNKILLABLE shield. It makes dudes unkillable, it is not unkillable itself.
+ *	UNKILLABLE shield. Gives you one extra life.
  */
 
 /obj/item/unkill_shield
@@ -771,7 +771,7 @@ var/sound/iomoon_alarm_sound = null
 			//EI NATH!!
 			elecflash(user,radius = 2, power = 6)
 
-			H.unkillable = 1
+			H.extra_lives++
 			H.gib(1)
 			qdel(src)
 

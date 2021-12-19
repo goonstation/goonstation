@@ -102,6 +102,8 @@
 
 	//The spooky UNKILLABLE MAN
 	var/unkillable = 0
+	//The less spooky killable eventually man
+	var/extra_lives = 0
 
 	var/mob/living/carbon/target = null
 	var/ai_aggressive = 0
@@ -611,7 +613,7 @@
 #endif
 
 	//The unkillable man just respawns nearby! Oh no!
-	if (src.unkillable || src.spell_soulguard)
+	if (src.unkillable || src.spell_soulguard || src.extra_lives)
 		if (src.unkillable && src.mind.dnr) //Unless they have dnr set in which case rip for good
 			logTheThing("combat", src, null, "was about to be respawned (Unkillable) but had DNR set.")
 			if (!gibbed)
@@ -620,7 +622,11 @@
 			var/obj/item/unkill_shield/U = new /obj/item/unkill_shield
 			U.set_loc(src.loc)
 		else
-			logTheThing("combat", src, null, "respawns ([src.spell_soulguard ? "Soul Guard" : "Unkillable"])")
+			if (src.extra_lives)
+				src.extra_lives--
+				logTheThing("combat", src, null, "respawns due to an extra life. Remaining lives: [src.extra_lives])")
+			else
+				logTheThing("combat", src, null, "respawns ([src.spell_soulguard ? "Soul Guard" : "Unkillable"])")
 			src.unkillable_respawn()
 
 	if(src.traitHolder && src.traitHolder.hasTrait("soggy"))
@@ -843,7 +849,8 @@
 	src.abilityHolder = null
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
-		newbody.unkillable = 1
+		if (src.extra_lives)
+			newbody.unkillable = 1
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
@@ -879,6 +886,7 @@
 		animation.icon_state = "ungibbed"
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		src.spell_soulguard = 0 // clear this as well
+		src.extra_lives = 0
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN_DBG(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
@@ -886,6 +894,7 @@
 	else
 		src.unkillable = 0
 		src.spell_soulguard = 0
+		src.extra_lives = 0
 		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN_DBG(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)

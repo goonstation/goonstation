@@ -93,6 +93,7 @@
 	force_suicide() // something else in the codebase calls this without going through the suicide checks, so shrug
 
 /mob/living/carbon/human/proc/force_suicide()
+	src.extra_lives = 0
 	src.unkillable = 0 //Get owned, nerd!
 
 	var/list/suicides = list("hold your breath")

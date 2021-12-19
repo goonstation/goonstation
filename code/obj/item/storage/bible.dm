@@ -171,7 +171,7 @@ var/global/list/bible_contents = list()
 		if (user.traitHolder?.hasTrait("atheist"))
 			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
 			return FALSE
-		else if (ishuman(user) && user:unkillable)
+		else if (ishuman(user) && (user:unkillable || user:extra_lives))
 			user.visible_message("<span class='alert'>[user] farts on the bible.</span>")
 			user:unkillable = 0
 			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")

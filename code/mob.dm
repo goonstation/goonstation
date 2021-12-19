@@ -2077,6 +2077,7 @@
 			// As much as I detest istype(src) checks, this is the simplest way to make sure the anticheat cluwne gets unkillable dudes too.
 			if(istype(src, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = src
+				H.extra_lives = 0
 				H.unkillable = 0
 		else
 			floorcluwne = new /mob/living/carbon/human/cluwne/floor
