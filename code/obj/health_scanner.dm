@@ -32,7 +32,7 @@
 
 /obj/health_scanner/wall
 	name = "health status screen"
-	desc = "A screen that shows health information recieved from connected floor scanners."
+	desc = "A screen that shows health information received from connected floor scanners."
 	icon_state = "wallscan1"
 	var/list/partners // who do we know?
 	var/examine_range = (SQUARE_TILE_WIDTH - 1) / 2 // from how far away can people examine the screen

@@ -446,7 +446,7 @@
 				src.upgrades.Remove(O)
 				R.upgrades.Add(O)
 				O.set_loc(R)
-				boutput(R, "<span class='notice'>You recieved [O]! It can be activated from your panel.</span>")
+				boutput(R, "<span class='notice'>You received [O]! It can be activated from your panel.</span>")
 				R.hud.update_upgrades()
 			if (istype(O, /obj/item/robot_module))
 				if (R.module)

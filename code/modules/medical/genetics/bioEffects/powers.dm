@@ -989,6 +989,9 @@
 				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
+			if (owner.getStatusDuration("burning"))
+				fireflash(get_turf(owner), 3 * linked_power.power)
+
 			SF.farting = 0
 			if (linked_power.power > 1)
 				for (var/turf/T in range(owner,6))

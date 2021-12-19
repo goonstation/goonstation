@@ -4298,7 +4298,7 @@
 "ajT" = (
 /obj/table/glass/reinforced/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -15393,7 +15393,7 @@
 /obj/machinery/light/incandescent/warm/very,
 /obj/table/round,
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -18558,7 +18558,7 @@
 	dir = 4
 	},
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -20200,9 +20200,7 @@
 "aXi" = (
 /obj/item/basketball,
 /obj/item/kitchen/food_box/donut_box,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/crevice{
 	pixel_x = -30
 	},
@@ -20266,9 +20264,9 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXq" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -24742,7 +24740,7 @@
 /area/evilreaver/bridge)
 "bjN" = (
 /obj/machinery/vending/alcohol,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 30
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
@@ -27976,7 +27974,7 @@
 	pixel_y = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -32790,9 +32788,7 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "bDy" = (
@@ -33636,8 +33632,7 @@
 	name = "Net Cafe"
 	})
 "bFx" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/mining_tool/powerhammer,
@@ -33777,8 +33772,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
 "bFR" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/mine/stun,
@@ -33905,8 +33899,7 @@
 	name = "Net Cafe"
 	})
 "bGj" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/clothing/suit/space/captain/blue,
@@ -34580,7 +34573,7 @@
 "bHP" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/yellow,
@@ -40630,7 +40623,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -44529,7 +44522,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -48269,7 +48262,7 @@
 "uij" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/black,
@@ -104983,7 +104976,7 @@ aqn
 aqn
 aqn
 aqn
-ces
+aqn
 cer
 "}
 (187,1,1) = {"
@@ -105285,7 +105278,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+ces
 cer
 "}
 (188,1,1) = {"
@@ -106191,7 +106184,7 @@ aqn
 aqn
 aqn
 aqn
-ces
+aqn
 cer
 "}
 (191,1,1) = {"
@@ -106493,7 +106486,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+ces
 cer
 "}
 (192,1,1) = {"

@@ -35566,7 +35566,7 @@
 	},
 /area/station/crew_quarters/hos)
 "bmA" = (
-/obj/cup_rack,
+/obj/drink_rack/cup,
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/bar)
 "bmB" = (

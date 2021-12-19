@@ -12860,7 +12860,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "WJ" = (
 /obj/stool/chair,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/red/side{
