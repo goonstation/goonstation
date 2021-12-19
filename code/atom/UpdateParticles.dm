@@ -1,6 +1,6 @@
-/atom/movable/var/list/particle_refs = null
+/atom/var/list/particle_refs = null
 
-/atom/movable/proc/UpdateParticles(particles/P, key, force=0)
+/atom/proc/UpdateParticles(particles/P, key, force=0)
 	if(!key)
 		CRASH("UpdateParticles called without a key.")
 	LAZYLISTINIT(particle_refs)
@@ -17,7 +17,7 @@
 	holder.vis_locs |= src
 	particle_refs[key] = holder
 
-/atom/movable/proc/ClearSpecificParticles(key)
+/atom/proc/ClearSpecificParticles(key)
 	if(!key)
 		CRASH("ClearSpecificParticles called without a key.")
 	if (!particle_refs)
@@ -27,7 +27,7 @@
 	holder?.vis_locs = null
 	qdel(holder)
 
-/atom/movable/proc/ClearAllParticles()
+/atom/proc/ClearAllParticles()
 	if (!particle_refs)
 		return
 	for (var/index as anything in particle_refs)
@@ -36,7 +36,7 @@
 		O.vis_locs = null
 		qdel(O)
 
-/atom/movable/proc/GetParticle(key)
+/atom/proc/GetParticle(key)
 	RETURN_TYPE(/particles)
 	if(!key)
 		CRASH("GetParticle called without a key.")
@@ -44,3 +44,7 @@
 		return
 	var/obj/O = particle_refs[key]
 	return O?.particles
+
+/atom/proc/sov()
+	var/particles/P = new/particles/swarm/bees
+	UpdateParticles(P, "bees")
