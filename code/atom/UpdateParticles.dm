@@ -37,7 +37,7 @@
 		O.particles = null
 		qdel(O)
 
-/atom/proc/GetParticle(key)
+/atom/proc/GetParticles(key)
 	RETURN_TYPE(/particles)
 	if(!key)
 		CRASH("GetParticle called without a key.")
