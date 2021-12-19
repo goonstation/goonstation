@@ -34,6 +34,7 @@
 		var/obj/O = particle_refs[index]
 		if (!O) continue
 		O.vis_locs = null
+		O.particles = null
 		qdel(O)
 
 /atom/proc/GetParticle(key)
