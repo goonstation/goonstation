@@ -162,11 +162,11 @@
 		src.gloves.wear_image.pixel_y = 0
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			if (islist(override_states) && ("glove-left_[icon_name]" in override_states))
+			if (islist(override_states) && ("glove-left_[icon_name]" in override_states)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.gloves.wear_image.icon_state = "glove-left_[icon_name]"
 			else
-				src.gloves.wear_image.icon = src.shoes.wear_image_icon
+				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 				src.gloves.wear_image.icon_state = "left_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
@@ -175,11 +175,11 @@
 			UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			if (islist(override_states) && ("glove-right_[icon_name]" in override_states))
+			if (islist(override_states) && ("glove-right_[icon_name]" in override_states)) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.gloves.wear_image.icon_state = "glove-right_[icon_name]"
 			else
-				src.gloves.wear_image.icon = src.shoes.wear_image_icon
+				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 				src.gloves.wear_image.icon_state = "right_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
