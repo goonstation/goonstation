@@ -40,7 +40,7 @@
 /atom/proc/GetParticles(key)
 	RETURN_TYPE(/particles)
 	if(!key)
-		CRASH("GetParticle called without a key.")
+		CRASH("GetParticles called without a key.")
 	if (!particle_refs)
 		return
 	var/obj/O = particle_refs[key]
