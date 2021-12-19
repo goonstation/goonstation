@@ -849,8 +849,9 @@
 	src.abilityHolder = null
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
-		if (src.extra_lives)
-			newbody.unkillable = 1
+		newbody.unkillable = 1
+	if (!antag_removal && src.extra_lives)
+		newbody.extra_lives = src.extra_lives
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)

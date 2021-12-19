@@ -771,9 +771,12 @@ var/sound/iomoon_alarm_sound = null
 			//EI NATH!!
 			elecflash(user,radius = 2, power = 6)
 
-			H.extra_lives++
-			H.gib(1)
-			qdel(src)
+			// You instantly die on pick up so we have to give you two lives...
+			logTheThing("combat", src, null, "collects the soul of shields and is gibbed.")
+			H.extra_lives += 2
+			SPAWN_DBG(0.2 SECONDS)
+				H.gib(1)
+				qdel(src)
 
 //Clothing & Associated Equipment
 /obj/item/clothing/suit/rad/iomoon
