@@ -55,7 +55,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\style.dms"
 #include "code\atom\throwing.dm"
 #include "code\atom\UpdateOverlays.dm"
-#include "code\atom\movable\UpdateParticles.dm"
+#include "code\atom\UpdateParticles.dm"
 #include "code\chui\chui.dm"
 #include "code\chui\tab.dm"
 #include "code\chui\template.dm"
