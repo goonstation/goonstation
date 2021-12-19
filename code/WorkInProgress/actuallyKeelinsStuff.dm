@@ -1969,7 +1969,7 @@ Returns:
 
 	New()
 		UpdateParticles(new/particles/barrel_embers, "embers")
-		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
@@ -1978,8 +1978,6 @@ Returns:
 		..()
 
 	disposing()
-		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-		smoke_part = null
 		light.disable()
 		light.detach()
 		light = null
