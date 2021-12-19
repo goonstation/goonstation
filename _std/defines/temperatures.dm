@@ -6,6 +6,8 @@
 #define TCMB 2.7
 /// 100 degrees celsius. Boiling point of liquid water.
 #define T100C 373.15
+/// 0 degrees fahrenheit
+#define T0F 459.67
 
 /// 48 degrees celsius. Not super realistic, but there's underwater hot vents!
 #define OCEAN_TEMP 321.15
