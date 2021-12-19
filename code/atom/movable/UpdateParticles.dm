@@ -1,0 +1,46 @@
+/atom/movable/var/list/particle_refs = null
+
+/atom/movable/proc/UpdateParticles(particles/P, key, force=0)
+	if(!key)
+		CRASH("UpdateParticles called without a key.")
+	LAZYLISTINIT(particle_refs)
+	var/obj/effects/holder
+	holder = particle_refs[key]
+	if(!holder && P)
+		holder = new /obj/effects
+	else if(!holder)
+		return
+
+	if(!force && (holder.particles == P)) //If it's the same particle as the other then do not update
+		return
+	holder.particles = P
+	holder.vis_locs |= src
+	particle_refs[key] = holder
+
+/atom/movable/proc/ClearSpecificParticles(key)
+	if(!key)
+		CRASH("ClearSpecificParticles called without a key.")
+	if (!particle_refs)
+		return
+	var/obj/effects/holder
+	holder = particle_refs[key]
+	holder?.vis_locs = null
+	qdel(holder)
+
+/atom/movable/proc/ClearAllParticles()
+	if (!particle_refs)
+		return
+	for (var/index as anything in particle_refs)
+		var/obj/O = particle_refs[index]
+		if (!O) continue
+		O.vis_locs = null
+		qdel(O)
+
+/atom/movable/proc/GetParticle(key)
+	RETURN_TYPE(/particles)
+	if(!key)
+		CRASH("GetParticle called without a key.")
+	if (!particle_refs)
+		return
+	var/obj/O = particle_refs[key]
+	return O?.particles
