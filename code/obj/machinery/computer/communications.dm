@@ -24,18 +24,18 @@
 		STATE_DELMESSAGE = 6
 		STATE_STATUSDISPLAY = 7
 
-	var/status_display_freq = "1435"
+	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
-	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
+	desc = "A computer that allows one to call and recall the emergency shuttle, as well as receive messages from Centcom."
 
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
 
-	disposing()
-		radio_controller.remove_object(src, status_display_freq)
+	New()
 		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, status_display_freq)
 
 /obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)
@@ -100,7 +100,7 @@
 			src.state = STATE_VIEWMESSAGE
 			if (!src.currmsg)
 				if(href_list["message-num"])
-					src.currmsg = text2num(href_list["message-num"])
+					src.currmsg = text2num_safe(href_list["message-num"])
 				else
 					src.state = STATE_MESSAGELIST
 		if("delmessage")
@@ -156,7 +156,7 @@
 			src.aistate = STATE_VIEWMESSAGE
 			if (!src.aicurrmsg)
 				if(href_list["message-num"])
-					src.aicurrmsg = text2num(href_list["message-num"])
+					src.aicurrmsg = text2num_safe(href_list["message-num"])
 				else
 					src.aistate = STATE_MESSAGELIST
 		if("ai-delmessage")
@@ -397,13 +397,6 @@
 	return 0
 
 /obj/machinery/computer/communications/proc/post_status(var/command, var/data1, var/data2)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(status_display_freq)
-
-	if(!frequency) return
-
-
-
 	var/datum/signal/status_signal = get_free_signal()
 	status_signal.source = src
 	status_signal.transmission_method = 1
@@ -416,7 +409,7 @@
 		if("alert")
 			status_signal.data["picture_state"] = data1
 
-	frequency.post_signal(src, status_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, status_display_freq)
 
 
 

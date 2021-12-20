@@ -21,8 +21,15 @@
 
 	proc/get_join_other()
 		RETURN_TYPE(/atom/movable/screen/join_other)
+		if(src.master.client?.holder && !src.master.client?.player_mode)
+			return
+		var/datum/game_server/buddy = global.game_servers.get_buddy()
+		if(isnull(buddy))
+			return null
+		if(!buddy.ghost_notif_target)
+			return null
 		if(isnull(src.join_other))
-			src.join_other = new
+			src.join_other = new(null, buddy.id, buddy.name)
 			src.add_object(src.join_other)
 		return src.join_other
 

@@ -4978,7 +4978,7 @@
 /area/station/chapel/sanctuary)
 "kz" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "kA" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment{

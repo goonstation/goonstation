@@ -89,7 +89,9 @@ WET FLOOR SIGN
 		set_loc(_loc)
 		create_reagents(10)
 		reagents.add_reagent("cleaner", 10)
-		var/direction = get_dir_alt(src, target)
+		var/direction = src.dir
+		if(target)
+			direction = get_dir_alt(src, target)
 		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
 			direction = turn(direction, 45)
 		switch(direction)
@@ -222,7 +224,7 @@ WET FLOOR SIGN
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
 	var/log_reagents = log_reagents(src)
-	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
+	var/travel_distance = clamp(get_dist(get_turf(src), A), 1, 3)
 	SPAWN_DBG(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)

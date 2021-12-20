@@ -192,7 +192,7 @@
 		src.answered = 0
 		if(src.linked) // Other phone needs updating
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
-				src.linked.icon_state = "[phoneicon]"
+				src.linked.icon_state = "[src.linked.phoneicon]"
 			else if(src.linked.handset && src.linked.handset.holder)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_hangup.ogg",50,0)
 			src.linked.ringing = 0

@@ -3798,7 +3798,7 @@
 "ju" = (
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /obj/table/wood/round/auto,
@@ -10616,7 +10616,7 @@
 /area/station/security/main)
 "yW" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)

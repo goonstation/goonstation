@@ -242,7 +242,8 @@
 									S.generic_seed_setup(stored)
 								HYPpassplantgenes(DNA,PDNA)
 								if (stored.hybrid)
-									var/datum/plant/hybrid = new /datum/plant(S)
+									var/plantType = stored.type
+									var/datum/plant/hybrid = new plantType(S)
 									for (var/V in stored.vars)
 										if (issaved(stored.vars[V]) && V != "holder")
 											hybrid.vars[V] = stored.vars[V]
@@ -309,6 +310,38 @@
 	afterattack(obj/target, mob/user , flag)
 		return
 
+	get_desc(dist, mob/user)
+		if(!user.traitHolder?.hasTrait("training_chef"))
+			return
+
+		if(src.quality >= 5)
+			. += "<br><span class='notice'>This is of great quality! The gained buffs will last longer! </span>"
+
+		if(length(food_effects) > 0)
+			. += "<br><span class='notice'> This food has the following effects: "
+			for(var/id in src.food_effects)
+				var/datum/statusEffect/S = getStatusPrototype(id)
+				if(isnull(S))
+					stack_trace("the foodstuff [src] returned with a statusEffect ID that does not exist in the global prototype list! status_id : [id]") //This really shouldnt happen except for var editing, typos or other wierdness, but this is here just in case.
+					continue
+				var/Sdesc = S.getChefHint()
+				. += "<a href='byond://?src=\ref[src];action=chefhint;name=[url_encode(S.name)];txt=[url_encode(Sdesc)]'>[S.name]</a>" + "; "
+			. += "</span>"
+
+
+	Topic(href, href_list)
+		..()
+		if(!usr)
+			return
+		switch(href_list["action"]) // future proofing incase someone else wants to add something to this Topic(), will remove if it noticeably slows down execution of this proc.
+			if("chefhint")
+				if(href_list["txt"] && href_list["name"])
+					boutput(usr,"<span class='notice'><b>[href_list["name"]]:</b></span> [href_list["txt"]]")
+
+
+
+
+
 	proc/on_bite(mob/eater)
 		//if (reagents?.total_volume)
 		//	reagents.reaction(M, INGEST)
@@ -323,7 +356,7 @@
 				var/mob/living/L = eater
 				L.stomach_process += B
 
-			if (src.food_effects.len && isliving(eater) && eater.bioHolder)
+			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
 				for (var/effect in src.food_effects)
 					L.add_food_bonus(effect, src)
@@ -336,7 +369,7 @@
 
 			if (desired_mask != current_mask)
 				current_mask = desired_mask
-				src.filters = list(filter(type="alpha", icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(eater)
 		eater.on_eat(src)
@@ -459,8 +492,13 @@
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
 		else
+			if (C.restrained()) // Can't chug if your arms are not available
+				if (prob(1)) // Actually you can if you're really lucky
+					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+				else
+					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+					return
 			actions.start(new /datum/action/bar/icon/chug(C, src), C)
-		return
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -483,8 +521,31 @@
 			return 0
 
 		if (iscarbon(M) || ismobcritter(M))
+			var/tasteMessage
+			if (M.mind && M.mind.assigned_role == "Bartender")
+				var/reag_list = ""
+				for (var/current_id in reagents.reagent_list)
+					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
+					if (reagents.reagent_list.len > 1 && reagents.reagent_list[reagents.reagent_list.len] == current_id)
+						reag_list += " and [current_reagent.name]"
+						continue
+					reag_list += ", [current_reagent.name]"
+				reag_list = copytext(reag_list, 3)
+				tasteMessage = "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>"
+			else
+				var/tastes = src.reagents.get_prevalent_tastes(3)
+				switch (length(tastes))
+					if (0)
+						tasteMessage = "<span class='notice'>Tastes pretty bland.</span>"
+					if (1)
+						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]].</span>"
+					if (2)
+						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]] and [tastes[2]].</span>"
+					else
+						tasteMessage = "<span class='notice'>Tastes kind of [tastes[1]], [tastes[2]], and a little bit [tastes[3]].</span>"
+
 			if (M == user)
-				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>")
+				M.visible_message("<span class='notice'>[M] takes a sip from [src].</span>","<span class='notice'>You take a sip from [src].</span>\n[tasteMessage]", group = "drinkMessages")
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
 				logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
@@ -496,30 +557,13 @@
 				if (!src.reagents || !src.reagents.total_volume)
 					boutput(user, "<span class='alert'>Nothing left in [src], oh no!</span>")
 					return
-				user.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>")
+				M.visible_message("<span class='alert'>[user] makes [M] drink from the [src].</span>",
+				"<span class='alert'>[user] makes you drink from the [src].</span>\n[tasteMessage]",
+				 group = "drinkMessages")
 
-			if (M.mind && M.mind.assigned_role == "Bartender")
-				var/reag_list = ""
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					if (reagents.reagent_list.len > 1 && reagents.reagent_list[reagents.reagent_list.len] == current_id)
-						reag_list += " and [current_reagent.name]"
-						continue
-					reag_list += ", [current_reagent.name]"
-				reag_list = copytext(reag_list, 3)
-				boutput(M, "<span class='notice'>Tastes like there might be some [reag_list] in this.</span>")
-/*			else
-				var/reag_list = ""
-
-				for (var/current_id in reagents.reagent_list)
-					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-					reag_list += "[current_reagent.taste], "
-
-				boutput(M, "<span class='notice'>You taste [reag_list]in this.</span>")
-*/
 			if (src.reagents.total_volume)
 				logTheThing("combat", user, M, "[user == M ? "takes a sip from" : "makes [constructTarget(M,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(user)].")
-				src.reagents.reaction(M, INGEST, max(min(reagents.total_volume, gulp_size, (M.reagents?.maximum_volume-M.reagents?.total_volume)), CHEM_EPSILON))
+				src.reagents.reaction(M, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(gulp_size, (M.reagents?.maximum_volume - M.reagents?.total_volume))))
 				SPAWN_DBG(0.5 SECONDS)
 					if (src?.reagents && M?.reagents)
 						src.reagents.trans_to(M, min(reagents.total_volume, gulp_size))
@@ -761,10 +805,10 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -780,7 +824,7 @@
 			return 1
 		else return ..()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (src.broken)
 			src.reagents.clear_reagents()
@@ -921,7 +965,7 @@
 			src.item_state = "broken_beer" // shattered beer inhand sprite
 			user.update_inhands()
 			src.broken = 1
-			src.update_icon() // handles reagent holder stuff
+			src.UpdateIcon() // handles reagent holder stuff
 
 		else
 			user.visible_message("<span class='alert'><b>[user] smashes [src] on [target]! \The [src] shatters completely!</span>")
@@ -946,7 +990,7 @@
 	desc = "Caution - fragile."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "glass-drink"
-	item_state = "glass-drink"
+	item_state = "drink_glass"
 	var/icon_style = "drink"
 	g_amt = 30
 	var/glass_style = "drink"
@@ -965,9 +1009,10 @@
 	var/image/image_doodad
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
+
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
@@ -1057,7 +1102,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.wedge = W
-			src.update_icon()
+			src.UpdateIcon()
 			if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 				JOB_XP(user, "Bartender", 1)
 			return
@@ -1081,7 +1126,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.in_glass = W
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		else if (istype(W, /obj/item/shaker/salt))
@@ -1092,7 +1137,7 @@
 			else
 				boutput(user, "<span class='notice'>You salt the rim of [src].</span>")
 				src.salted = 1
-				src.update_icon()
+				src.UpdateIcon()
 				S.shakes ++
 				return
 
@@ -1103,7 +1148,7 @@
 				boutput(user, "<span class='notice'>You salt the rim of [src].</span>")
 				W.reagents.remove_reagent("salt", 5)
 				src.salted = 1
-				src.update_icon()
+				src.UpdateIcon()
 				if ((user.mind.assigned_role == "Bartender") && (prob(40)))
 					JOB_XP(user, "Bartender", 1)
 				return
@@ -1146,6 +1191,12 @@
 		if (src.wedge)
 			choices += "remove [src.wedge]"
 			choices += "eat [src.wedge]"
+		if (reagents.total_volume > 0)
+			if (!length(choices))
+				if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+					attack(user, user) //Most glasses people use won't have fancy cocktail stuff, so just skip the crap and drink for dear life
+				return
+			choices += "drink from it"
 		if (!choices.len)
 			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
 			return
@@ -1171,6 +1222,10 @@
 				boutput(H, "<span class='alert'>You don't feel like you need to go.</span>")
 			return
 
+		else if (selection == "drink from it")
+			if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
+				attack(user, user)
+
 		else if (selection == "remove [src.in_glass]")
 			remove_thing = src.in_glass
 			src.in_glass = null
@@ -1191,7 +1246,7 @@
 			H.visible_message("[H] removes [remove_thing] from [src].",\
 			"<span class='notice'>You remove [remove_thing] from [src].</span>")
 			H.put_in_hand_or_drop(remove_thing)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (eat_thing)
@@ -1205,7 +1260,7 @@
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
 			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
 			qdel(eat_thing)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 	ex_act(severity)
@@ -1241,6 +1296,39 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		src.smash(A)
+
+	pixelaction(atom/target, list/params, mob/living/user, reach)
+		if(!istype(target, /obj/table))
+			return ..()
+		var/obj/table/target_table = target
+		var/obj/table/source_table = locate() in get_step(user, user.dir)
+		if(isnull(source_table))
+			for(var/dir in cardinal)
+				source_table = locate() in get_step(user, dir)
+				if(!isnull(source_table))
+					user.set_dir(dir)
+					break
+		if(isnull(source_table))
+			return
+		if(!can_reach(user, source_table))
+			return
+		if("icon-x" in params)
+			src.pixel_x = text2num(params["icon-x"]) - 16
+		if("icon-y" in params)
+			src.pixel_y = text2num(params["icon-y"]) - 16
+		user.weapon_attack(source_table, src, TRUE, list())
+		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
+		var/turf/last_turf = get_turf(source_table)
+		SPAWN_DBG(0)
+			for(var/turf/T in path)
+				if(src.loc != last_turf)
+					break
+				if(!(locate(/obj/table) in src.loc))
+					src.smash(T)
+					break
+				step_towards(src, T, 0.1 SECONDS)
+				last_turf = T
+				sleep(0.1 SECONDS)
 
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/chug
@@ -1290,7 +1378,7 @@
 	onEnd()
 
 		if (glass.reagents.total_volume) //Take a sip
-			glass.reagents.reaction(target, INGEST, max(min(glass.reagents.total_volume, glass.gulp_size, (target.reagents?.maximum_volume-target.reagents?.total_volume)), CHEM_EPSILON))
+			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
 			target.urine += 0.1
@@ -1393,6 +1481,7 @@
 		return
 
 	update_icon()
+
 		return
 
 	throw_impact(var/turf/T)
@@ -1498,12 +1587,12 @@
 	New()
 		..()
 		fluid_image = image(src.icon, "fluid-duo")
-		update_icon()
+		UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents.total_volume == 0)
 			icon_state = "duo"
 		if (src.reagents.total_volume > 0)
@@ -1588,9 +1677,9 @@
 
 	var/image/fluid_image
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
 		icon_state = "[glass_style]"
 
 		var/datum/color/average = reagents.get_average_color()
@@ -1611,9 +1700,9 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
 		if (src.reagents && src.reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()
@@ -1667,9 +1756,9 @@
 		if (src.reagents)
 			src.reagents.reaction(M)
 			qdel(src)
-		else
-			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+	else
+		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 /obj/item/reagent_containers/food/drinks/carafe/medbay
 	icon_state = "carafe-med"
@@ -1753,6 +1842,11 @@
 			src.reagents.inert = 1
 			if ((user.mind.assigned_role == "Bartender") && !ON_COOLDOWN(user, "bartender shaker xp", 180 SECONDS))
 				JOB_XP(user, "Bartender", 2)
+			if (user.mind && user.mind.objectives)
+				for (var/datum/objective/crew/bartender/drinks/O in user.mind.objectives)
+					for (var/i in 1 to length(O.ids))
+						if(src.reagents.has_reagent(O.ids[i]))
+							O.completed |= 1 << i-1
 		else
 			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
 

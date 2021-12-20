@@ -45,10 +45,10 @@
 	process()
 		if (src.light_time>0)
 			src.light_time--
-			src.updateIcon()
+			src.UpdateIcon()
 			return
 		if(src.light.enabled) // bluh
-			src.updateIcon()
+			src.UpdateIcon()
 			return
 		return
 	proc/light_up()
@@ -56,7 +56,7 @@
 		src.light_time+=CONTAINER_LIGHT_TIME
 		src.light_time%=MAX_CONTAINER_LIGHT_TIME
 		if(!orig_light_time)
-			src.updateIcon()
+			src.UpdateIcon()
 		return
 	ex_act(severity)
 		switch(severity)
@@ -69,12 +69,12 @@
 					return
 				src.open=true
 				src.welded=false
-				src.updateIcon()
+				src.UpdateIcon()
 				return
 			if (3.0)
 				if(prob(50) && !src.welded)
 					src.open=true
-					src.updateIcon()
+					src.UpdateIcon()
 				return
 		return
 	suicide(var/mob/user as mob) // lel
@@ -110,7 +110,7 @@
 				src.close_storage_menus()
 			else
 				src.light_time=0
-			src.updateIcon()
+			src.UpdateIcon()
 			return 1
 		else if (iswrenchingtool(W))
 			if(!src.can_be_anchored)
@@ -138,35 +138,37 @@
 			if(W:try_weld(user, 1))
 				src.welded=!src.welded
 				boutput(user,"<span class='notice'>You [src.welded ? "" : "un"]weld the [src]'s cover</span>")
-				src.updateIcon()
+				src.UpdateIcon()
 				return 1
 		else if (src.open || !istype(W,/obj/item/mechanics))
 			..()
-			src.updateIcon()
+			src.UpdateIcon()
 		return 1
-	proc
-		updateIcon()
-			if(src.welded)
-				src.icon_state=initial(src.icon_state)+"_w"
-			else if(src.open)
-				// ugly warning, the istype() is 1 when there's a trigger in the container
-				//	it subtracts 1 from the list of contents when there's a trigger
-				//	doing arithmatic on bools is probably not good!
-				var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
-				var/len_contents = src.contents.len - has_trigger
-				if(src.num_f_icons && len_contents)
-					src.icon_state=initial(src.icon_state)+"_f[min(src.num_f_icons-1,round((len_contents*src.num_f_icons)/(src.slots-has_trigger)))]"
-				else
-					src.icon_state=initial(src.icon_state)
+
+	update_icon()
+		if(src.welded)
+			src.icon_state=initial(src.icon_state)+"_w"
+		else if(src.open)
+			// ugly warning, the istype() is 1 when there's a trigger in the container
+			//	it subtracts 1 from the list of contents when there's a trigger
+			//	doing arithmatic on bools is probably not good!
+			var/has_trigger = istype(locate(/obj/item/mechanics/trigger/trigger) in src.contents,/obj/item/mechanics/trigger/trigger)
+			var/len_contents = src.contents.len - has_trigger
+			if(src.num_f_icons && len_contents)
+				src.icon_state=initial(src.icon_state)+"_f[min(src.num_f_icons-1,round((len_contents*src.num_f_icons)/(src.slots-has_trigger)))]"
 			else
-				src.icon_state=initial(src.icon_state)+"_closed"
-			if(src.light_time>0)
-				src.icon_state+="_e"
-				if(!src.light.enabled)
-					src.light.enable()
-			else if (src.light.enabled)
-				src.light.disable()
-			return
+				src.icon_state=initial(src.icon_state)
+		else
+			src.icon_state=initial(src.icon_state)+"_closed"
+		if(src.light_time>0)
+			src.icon_state+="_e"
+			if(!src.light.enabled)
+				src.light.enable()
+		else if (src.light.enabled)
+			src.light.disable()
+		return
+
+	proc
 		close_storage_menus() // still ugly but probably quite better performing
 			for(var/mob/chump in src.users)
 				for(var/datum/hud/storage/hud in chump.huds)
@@ -313,7 +315,7 @@
 		if(level == 1)
 			src.icon_state=icon_down
 			SPAWN_DBG(1 SECOND)
-				src.updateIcon()
+				src.UpdateIcon()
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG)
 			playsound(src,'sound/machines/keypress.ogg',30)
@@ -323,7 +325,7 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		qdel(src)// never should be outside of the gun (in someone's hands), so kill it
 		return
-	updateIcon()
+	update_icon()
 		icon_state = icon_up
 		return
 
@@ -495,10 +497,7 @@
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
-		updateIcon()
-		return
-
-	proc/updateIcon()
+		UpdateIcon()
 		return
 
 /obj/item/mechanics/cashmoney
@@ -674,6 +673,9 @@
 
 	proc/flushit()
 		if(!trunk) return
+		if(trunk.loc != src.loc)
+			trunk = null
+			return
 		LIGHT_UP_HOUSING
 		var/obj/disposalholder/H = new /obj/disposalholder
 
@@ -795,7 +797,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	anchored = 1
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/obj/item/mechanics/triplaser/holder
 
@@ -809,7 +811,8 @@
 		else
 			holder.tripped()
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM) || !AM.density) return
 		if (!istype(AM, /obj/mechbeam))
 			SPAWN_DBG(0) tripped()
@@ -928,7 +931,7 @@
 	can_rotate = 1
 	cabinet_banned = true // non-functional
 	var/active = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -970,13 +973,14 @@
 		thr?.user = (owner || usr)
 		return
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(level == 2) return
 		if(active)
 			throwstuff(AM)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
 
@@ -1009,7 +1013,7 @@
 		boutput(user, "Power set to [inp]")
 		return 1
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_zap"
 
 /obj/item/mechanics/pausecomp
@@ -1064,7 +1068,7 @@
 					active = 0
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_wait"
 		return
 
@@ -1132,7 +1136,7 @@
 
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_and"
 		return
 
@@ -1174,7 +1178,7 @@
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG,input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_or"
 		return
 
@@ -1213,7 +1217,7 @@
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_split"
 		return
 
@@ -1311,7 +1315,7 @@
 			input.signal = mod
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_regrep"
 		return
 
@@ -1388,7 +1392,7 @@
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_regfind"
 		return
 
@@ -1454,7 +1458,7 @@
 		if(level == 2) return
 		triggerSignal = input.signal
 		tooltip_rebuild = 1
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_check"
 		return
 
@@ -1544,7 +1548,7 @@
 				return src.single_output? _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER : _MECHCOMP_VALIDATE_RESPONSE_GOOD //Signal validated, let it pass
 		return 1 //Signal invalid, halt it
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_disp"
 		return
 
@@ -1641,7 +1645,7 @@
 		tooltip_rebuild = 1
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_builder"
 		return
 
@@ -1674,7 +1678,7 @@
 		SPAWN_DBG(0) SEND_SIGNAL(src,transmissionStyle,input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_relay"
 		return
 
@@ -1728,7 +1732,7 @@
 		tooltip_rebuild = 1
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_file"
 		return
 
@@ -1742,11 +1746,10 @@
 
 	var/net_id = null //What is our ID on the network?
 	var/last_ping = 0
-	var/range = 0
+	var/range = null
 
 	var/noise_enabled = true
-	var/frequency = 1419
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_FREE
 
 	get_desc()
 		. += {"<br><span class='notice'>[forward_all ? "Sending full unprocessed Signals.":"Sending only processed sendmsg and pda Message Signals."]<br>
@@ -1762,8 +1765,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering","toggleAddressFiltering")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All","toggleForwardAll")
 
-		if(radio_controller)
-			set_frequency(frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 		src.net_id = format_net_id("\ref[src]")
 
@@ -1780,6 +1782,7 @@
 
 	proc/toggleAddressFiltering(obj/item/W as obj, mob/user as mob)
 		only_directed = !only_directed
+		get_radio_connection_by_id(src, "main").update_all_hearing(!only_directed)
 		boutput(user, "[only_directed ? "Now only reacting to Messages directed at this Component":"Now reacting to ALL Messages."]")
 		tooltip_rebuild = 1
 		return 1
@@ -1793,7 +1796,7 @@
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		var/newfreq = text2num(input.signal)
+		var/newfreq = text2num_safe(input.signal)
 		if(!newfreq) return
 		set_frequency(newfreq)
 		return
@@ -1808,7 +1811,6 @@
 
 		sendsig.source = src
 		sendsig.data["sender"] = src.net_id
-		sendsig.transmission_method = TRANSMISSION_RADIO
 
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
@@ -1822,7 +1824,7 @@
 				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
-			src.radio_connection.post_signal(src, sendsig, src.range)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
 
 		animate_flash_color_fill(src,"#FF0000",2, 2)
 		return
@@ -1841,7 +1843,6 @@
 				pingsignal.data["address_1"] = signal.data["sender"]
 				pingsignal.data["command"] = "ping_reply"
 				pingsignal.data["data"] = "Wifi Component"
-				pingsignal.transmission_method = TRANSMISSION_RADIO
 
 				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
@@ -1849,7 +1850,7 @@
 						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN_DBG(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
-					src.radio_connection.post_signal(src, pingsignal, src.range)
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
 
 			if(signal.data["command"] == "text_message" && signal.data["batt_adjust"] == netpass_syndicate)
 				var/packets = ""
@@ -1881,7 +1882,7 @@
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
-				var/newfreq = text2num(signal.data["data"])
+				var/newfreq = text2num_safe(signal.data["data"])
 				if(!newfreq) return
 				set_frequency(newfreq)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -1892,11 +1893,10 @@
 		if(!radio_controller) return
 		tooltip_rebuild = 1
 		new_frequency = clamp(new_frequency, 1000, 1500)
-		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
-		radio_connection = radio_controller.add_object(src, "[frequency]")
+		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_radiosig"
 		return
 
@@ -2127,7 +2127,7 @@
 			sendCurrent(input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_selector"
 		return
 
@@ -2227,7 +2227,7 @@
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_toggle[on ? "1":""]"
 		return
 
@@ -2238,6 +2238,7 @@
 	cabinet_banned = true // potentially abusable. b&
 	var/teleID = "tele1"
 	var/send_only = 0
+	var/image/telelight
 
 	get_desc()
 		. += {"<br><span class='notice'>Current ID: [teleID].<br>
@@ -2250,6 +2251,9 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
+		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
+		telelight.plane = PLANE_SELFILLUM
+		telelight.alpha = 180
 
 	disposing()
 		STOP_TRACKING
@@ -2270,9 +2274,9 @@
 	proc/toggleSendOnly(obj/item/W as obj, mob/user as mob)
 		send_only = !send_only
 		if(send_only)
-			src.overlays += image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay")
+			src.UpdateOverlays(image('icons/misc/mechanicsExpansion.dmi', icon_state = "comp_teleoverlay"), "sendonly")
 		else
-			src.overlays.Cut()
+			src.UpdateOverlays(null, "sendonly")
 		boutput(user, "Send-only Mode now [send_only ? "on":"off"]")
 		tooltip_rebuild = 1
 		return 1
@@ -2289,7 +2293,7 @@
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc)))
+		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
 		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
 		var/list/destinations = new/list()
 
@@ -2309,9 +2313,10 @@
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			var/count_sent = 0
-			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(picked.loc)))
+			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
+				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2320,8 +2325,12 @@
 				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_tele"
+		if(src.level == 1)
+			src.UpdateOverlays(telelight, "telelight")
+		else
+			src.UpdateOverlays(null, "telelight")
 		return
 
 /obj/item/mechanics/ledcomp
@@ -2413,7 +2422,7 @@
 			turnon(input)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_led"
 		return
 
@@ -2446,7 +2455,7 @@
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_mic"
 		return
 
@@ -2456,7 +2465,6 @@
 	icon_state = "comp_radioscanner"
 
 	var/frequency = R_FREQ_DEFAULT
-	var/datum/radio_frequency/radio_connection
 
 	get_desc()
 		. += "<br><span style=\"color:blue\">Current Frequency: [frequency]</span>"
@@ -2465,10 +2473,7 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
-
-
-		if(radio_controller)
-			set_frequency(frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
@@ -2483,18 +2488,16 @@
 	proc/setfreq(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		var/newfreq = text2num(input.signal)
+		var/newfreq = text2num_safe(input.signal)
 		if (!newfreq) return
 		set_frequency(newfreq)
-		return
 
 	proc/set_frequency(new_frequency)
 		if (!radio_controller) return
 		new_frequency = sanitize_frequency(new_frequency)
 		componentSay("New frequency: [new_frequency]")
-		radio_controller.remove_object(src, "[frequency]")
 		frequency = new_frequency
-		radio_connection = radio_controller.add_object(src, "[frequency]")
+		get_radio_connection_by_id(src, "main").update_frequency(frequency)
 		tooltip_rebuild = 1
 	proc/hear_radio(atom/movable/AM, msg, lang_id)
 		if (level == 2) return
@@ -2521,7 +2524,7 @@
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u" : ""]comp_radioscanner"
 		return
 
@@ -2542,7 +2545,7 @@
 		componentSay("[input.signal]")
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "comp_synth"
 		return
 
@@ -2557,6 +2560,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (level == 2 || isobserver(AM))
 			return
 		if (limiter && (ticker.round_elapsed_ticks < limiter))
@@ -2566,7 +2570,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_pressure"
 		return
 
@@ -2610,7 +2614,7 @@
 				icon_state = icon_up
 				src.set_loc(target)
 		return
-	updateIcon()
+	update_icon()
 		icon_state = icon_up
 		return
 
@@ -2691,7 +2695,7 @@
 				src.set_loc(target)
 		return
 
-	updateIcon()
+	update_icon()
 		icon_state = icon_up
 		return
 
@@ -2773,7 +2777,8 @@
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 		return
 
-	updateIcon()
+	update_icon()
+
 		icon_state = "comp_gun"
 		return
 
@@ -2804,7 +2809,7 @@
 		if(!Gun && charging)
 			charging = 0
 			tooltip_rebuild = 1
-			updateIcon()
+			UpdateIcon()
 
 		if(!istype(Gun, /obj/item/gun/energy) || !charging)
 			return
@@ -2817,15 +2822,15 @@
 			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
-			updateIcon()
+			UpdateIcon()
 			return
 
 		else
 			if (SEND_SIGNAL(E, COMSIG_CELL_CHARGE, 15) & CELL_FULL) // Same as other recharger.
 				src.charging = 0
 				tooltip_rebuild = 1
-				src.updateIcon()
-		E.update_icon()
+				src.UpdateIcon()
+		E.UpdateIcon()
 		return
 
 	proc/recharge(var/datum/mechanicsMessage/input)
@@ -2833,7 +2838,7 @@
 		if(!istype(Gun, /obj/item/gun/energy)) return
 		charging = 1
 		tooltip_rebuild = 1
-		updateIcon()
+		UpdateIcon()
 		return
 
 	fire(var/datum/mechanicsMessage/input)
@@ -2841,7 +2846,8 @@
 		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		return ..()
 
-	updateIcon()
+	update_icon()
+
 		icon_state = charging ? "comp_gun2x" : "comp_gun2"
 		return
 
@@ -2917,7 +2923,7 @@
 	proc/fire(var/datum/mechanicsMessage/input)
 		if (level == 2 || GET_COOLDOWN(src, SEND_COOLDOWN_ID) || !instrument) return
 		LIGHT_UP_HOUSING
-		var/signum = text2num(input.signal)
+		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
 		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
@@ -2936,7 +2942,7 @@
 			playsound(src, sounds, volume, 1)
 			return
 
-	updateIcon()
+	update_icon()
 		icon_state = "comp_instrument"
 		return
 
@@ -2988,14 +2994,14 @@
 	proc/setA(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		if (!isnull(text2num(input.signal)))
-			A = text2num(input.signal)
+		if (!isnull(text2num_safe(input.signal)))
+			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
 		LIGHT_UP_HOUSING
-		if (!isnull(text2num(input.signal)))
-			B = text2num(input.signal)
+		if (!isnull(text2num_safe(input.signal)))
+			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
 	proc/evaluate()
 		switch(mode)
@@ -3171,7 +3177,7 @@
 		boutput(user, "Associations map cleared")
 		return 1
 
-	updateIcon()
+	update_icon()
 		icon_state = "[under_floor ? "u" : ""]comp_ass"
 		return
 

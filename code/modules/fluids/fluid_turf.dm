@@ -231,11 +231,17 @@
 		if(A.getStatusDuration("burning"))
 			A.changeStatus("burning", -50 SECONDS)
 
+		A.EnteredFluid(ocean_fluid_obj, A.loc)
+
 		//nah disable for now i dont wanna do istype checks on enter
 		//else if(isitem(A))
 		//	var/obj/item/O = A
 		//	if(O.burning && prob(40))
 		//		O.burning = 0
+
+	Exited(atom/movable/Obj, atom/newloc)
+		. = ..()
+		Obj.ExitedFluid(Obj, newloc)
 
 	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
@@ -568,6 +574,16 @@
 	return
 
 
+
+
+proc/fluid_turf_setup(first_time=FALSE)
+	if(QDELETED(ocean_fluid_obj))
+		ocean_fluid_obj = new
+	var/datum/fluid_group/FG = new
+	FG.add(ocean_fluid_obj)
+	ocean_fluid_obj.group = FG
+	ocean_fluid_obj.my_depth_level = 4 // maybe a good idea to change to 5 so it's possible to distinguish ocean at some point
+	FG.reagents.add_reagent(ocean_reagent_id, INFINITY)
 
 
 #undef SPAWN_DECOR

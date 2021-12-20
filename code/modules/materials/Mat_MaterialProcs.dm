@@ -367,7 +367,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		for (var/turf/simulated/floor/target in range(1,location))
 			if(ON_COOLDOWN(target, "plasmastone_plasma_generate", 10 SECONDS)) continue
-			if(!target.blocks_air && target.air)
+			if(!target.gas_impermeable && target.air)
 				if(target.parent?.group_processing)
 					target.parent.suspend_group_processing()
 
@@ -534,7 +534,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isliving(entering) && isturf(owner) && prob(75))
 			var/mob/living/L = entering
-			if(L.slip())
+			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
 				playsound(owner, "sound/misc/slip.ogg", 30, 1)
 		return
@@ -674,6 +674,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		attacker.visible_message("<span class='alert'>[attacker] cuts [owner] into a sheet.</span>","<span class='notice'>You finish cutting [owner] into a sheet.</span>","The sound of cutting cardboard stops.")
 		var/obj/item/sheet/createdsheet = new /obj/item/sheet(get_turf(owner))
 		createdsheet.setMaterial(owner.material)
+		if (istype(owner, /obj/storage))
+			var/obj/storage/S = owner
+			S.dump_contents(attacker)
 		qdel(owner)
 	else if (istype(owner, /turf))
 		if (istype(owner, /turf/simulated/wall))

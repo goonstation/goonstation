@@ -112,7 +112,7 @@
 	if(src.emagged)
 		for(var/atom/A as anything in view(5, src))
 			if(!(A.event_handler_flags & IS_FARTABLE) && !(A in src.fart_memory))
-				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 30)
+				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 15)
 				break
 	else
 		src.navigate_to(get_step_rand(src))

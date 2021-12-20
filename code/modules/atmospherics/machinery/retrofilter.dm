@@ -42,17 +42,6 @@ obj/machinery/atmospherics/retrofilter
 	var/hacked = 0
 	var/emagged = 0
 
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-	var/net_id = null
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-
 	New()
 		..()
 		src.tag = ""
@@ -77,8 +66,6 @@ obj/machinery/atmospherics/retrofilter
 		air_out2.volume = 200
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)
@@ -192,7 +179,7 @@ obj/machinery/atmospherics/retrofilter
 			var/gasToToggle = text2num(href_list["toggle_gas"])
 			if (!gasToToggle)
 				return
-			gasToToggle = max(1, min(gasToToggle, 16))
+			gasToToggle = clamp(gasToToggle, 1, 16)
 			if (filter_mode & gasToToggle)
 				filter_mode &= ~gasToToggle
 			else
@@ -441,9 +428,7 @@ obj/machinery/atmospherics/retrofilter
 				node_in = target
 				break
 
-		update_icon()
-
-		set_frequency(frequency)
+		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

@@ -70,8 +70,7 @@ export class AlertModal extends Component {
       <Window
         title={title}
         width={350}
-        height={150}
-        canClose={timeout > 0}>
+        height={150}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
           onFocus={focusCurrentButton}
@@ -90,7 +89,7 @@ export class AlertModal extends Component {
                   </Flex.Item>
                 </Flex>
               </Flex.Item>
-              <Flex.Item my={2}>
+              <Flex.Item my={8}>
                 <Flex className="AlertModal__Buttons">
                   {buttons.map((button, buttonIndex) => (
                     <Flex.Item key={buttonIndex} mx={1}>

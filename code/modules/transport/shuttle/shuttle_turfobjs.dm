@@ -80,11 +80,12 @@
 	connect_overlay = 1
 	connects_to = list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
 	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
+	connect_across_areas = FALSE
 /*
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 */
 	/////////////////////////////////////////////////////////////////OBJECTS
 
@@ -185,7 +186,7 @@
 	var/icon_style = "wall"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 	pathable = 0
 
 	New()

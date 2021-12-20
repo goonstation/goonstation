@@ -142,8 +142,6 @@
 /obj/item/device/key/hospital
 	desc = "What does this go to?"
 	name = "niobium key"
-	item_state = ""
-	icon = null
 
 //Something for the solarium nerds to obsess over for a month
 /obj/item/device/key/filing_cabinet

@@ -258,6 +258,26 @@
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/lasagna
 
+/datum/cookingrecipe/alfredo
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/alfredo
+
+/datum/cookingrecipe/chickenparm
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenparm
+
+/datum/cookingrecipe/chickenalfredo
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
+	cookbonus = 16
+	output = /obj/item/reagent_containers/food/snacks/spaghetti/chickenalfredo
+
 /datum/cookingrecipe/spaghetti_pg
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
@@ -694,7 +714,7 @@
 			customSandwich.overlays += newFilling
 
 		return customSandwich
-		
+
 /datum/cookingrecipe/pizza_fresh
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	cookbonus = 18
@@ -738,6 +758,7 @@
 			customPizza.overlays += P.overlays
 			customPizza.num = P.num
 			customPizza.topping = P.topping
+			customPizza.topping_types = P.topping_types
 			customPizza.topping_colors = P.topping_colors
 			customPizza.heal_amt = P.heal_amt
 			P.reagents.trans_to(customPizza, P.reagents.total_volume)
@@ -921,7 +942,7 @@
 /datum/cookingrecipe/cookie_jaffa
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
 	item2 = /obj/item/reagent_containers/food/snacks/plant/orange
-	item3 = /obj/item/reagent_containers/food/snacks/candy/regular
+	item3 = /obj/item/reagent_containers/food/snacks/candy/chocolate
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/jaffa
 
@@ -997,7 +1018,7 @@
 	item1 = /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
-	item3 = /obj/item/reagent_containers/food/snacks/candy/regular
+	item3 = /obj/item/reagent_containers/food/snacks/candy/chocolate
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/moon_pie/chocolate
 
@@ -1056,6 +1077,36 @@
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 
+/datum/cookingrecipe/pie_strawberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/strawberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/strawberry
+
+/datum/cookingrecipe/pie_cherry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/cherry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/cherry
+
+/datum/cookingrecipe/pie_blueberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/blueberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/blueberry
+
+/datum/cookingrecipe/pie_raspberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/raspberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/raspberry
+
+/datum/cookingrecipe/pie_blackberry
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/plant/blackberry
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/pie/blackberry
+
 /datum/cookingrecipe/pie_apple
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/plant/apple
@@ -1085,13 +1136,6 @@
 	item2 = /obj/item/reagent_containers/food/snacks/plant/pumpkin
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/pie/pumpkin
-
-/datum/cookingrecipe/pie_strawberry
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/plant/strawberry
-	amt2 = 2
-	cookbonus = 12
-	output = /obj/item/reagent_containers/food/snacks/pie/strawberry
 
 /datum/cookingrecipe/pie_cream
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
@@ -1214,7 +1258,7 @@
 
 /datum/cookingrecipe/pie_chocolate
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/candy/regular
+	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
@@ -1347,7 +1391,7 @@
 
 /datum/cookingrecipe/cake_chocolate
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
-	item2 = /obj/item/reagent_containers/food/snacks/candy/regular
+	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/chocolate
 
@@ -1383,7 +1427,7 @@
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
-		playsound(ourCooker.loc, "sound/effects/splat.ogg", 50, 1)
+		playsound(ourCooker.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
 		return fruitcake
 
@@ -1411,6 +1455,7 @@
 		B.UpdateOverlays(overlay,"first")
 		B.cake_bases = list("base_custom")
 		if(S)
+			B.cake_types += S.type
 			S.reagents.trans_to(B, 50)
 			B.food_effects += S.food_effects
 			if(S.real_name)
@@ -1739,6 +1784,6 @@
 			lipstick.font_color = C.font_color
 			lipstick.color_name = hex2color_name(lipstick.font_color)
 			lipstick.name = "[lipstick.color_name] lipstick"
-			lipstick.update_icon()
+			lipstick.UpdateIcon()
 		return lipstick
 

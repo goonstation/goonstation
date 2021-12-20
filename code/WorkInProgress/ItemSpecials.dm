@@ -13,6 +13,8 @@
 	src.setHarmSpecial(sel)
 
 /proc/get_dir_alt(var/atom/source, var/atom/target) //Opposite of default get dir, only returns diagonal if target perfectly diagonal
+	if(!source || !target)
+		CRASH("Invalid Params:: Source:[source] Target:[target]")
 	if(abs(source.x-target.x) > abs(source.y-target.y)) //Mostly left/right with a little up or down
 		if(source.x > target.x) //Target left
 			return WEST
@@ -364,7 +366,7 @@
 				user.set_dir(direction)
 				var/obj/itemspecialeffect/bluefade/E = new /obj/itemspecialeffect/bluefade
 				E.setup(user.loc)
-				E.filters = filter(type="motion_blur", x=blurX, y=blurY)
+				E.add_filter("bluefade_motion_blur", 0, motion_blur_filter(x=blurX, y=blurY))
 
 				animate(E, alpha=255,time=0,loop=0)
 				animate(alpha=0,pixel_x=((blurX*(-1))*3),pixel_y=((blurY*(-1))*3), time=(15+(i*3)),loop=0)
@@ -1880,6 +1882,7 @@
 		can_clash = 1
 
 	spark
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "sparks_attack"
 		pixel_x = 0
@@ -1915,7 +1918,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-		event_handler_flags = USE_CANPASS
+	
 
 		//mouse_opacity = 1
 		var/bump_count = 0
@@ -1997,6 +2000,7 @@
 		can_clash = 0
 
 	flame
+		plane = PLANE_ABOVE_LIGHTING
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "flame"
 		pixel_x = 0

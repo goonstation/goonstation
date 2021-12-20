@@ -9,6 +9,12 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+#ifdef RP_MODE
+	var/const/pop_divisor = 20
+#else
+	var/const/pop_divisor = 15
+#endif
+
 /datum/game_mode/changeling/announce()
 	boutput(world, "<B>The current game mode is - Changeling!</B>")
 	boutput(world, "<B>There is a <span class='alert'>CHANGELING</span> on the station. Be on your guard! Trust no one!</B>")
@@ -23,9 +29,9 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_changelings = max(1, min(round((num_players + i) / 15), changelings_possible))
+	var/num_changelings = clamp(round((num_players + i) / pop_divisor), 1, changelings_possible)
 
-	var/list/possible_changelings = get_possible_changelings(num_changelings)
+	var/list/possible_changelings = get_possible_enemies(ROLE_CHANGELING, num_changelings)
 
 	if (!possible_changelings.len)
 		return 0
@@ -67,30 +73,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/changeling/proc/get_possible_changelings(num_changelings=1)
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_changeling)
-				candidates += player.mind
-
-	if(candidates.len < num_changelings)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_changeling set to yes were ready. We need [num_changelings], so including players who don't want to be changelings in the pool.")
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player)) continue
-
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/changeling/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"

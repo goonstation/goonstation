@@ -37,6 +37,7 @@ var/list/action_names = list(
 
 	"say" = "Say",
 	"say_radio" = "Say Radio",
+	"say_main_radio" = "Say Main Radio",
 	"dsay" = "Dead Say",
 	"asay" = "Admin Say",
 	"whisper" = "Whisper",
@@ -91,7 +92,6 @@ var/list/action_names = list(
 
 ///Used for literal input of actions
 var/list/action_verbs = list(
-	"say" = "say",
 	"say_radio" = "say_radio",
 	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
@@ -108,16 +108,11 @@ var/list/action_verbs = list(
 	"wave" = "me_hotkey wave",
 	"flip" = "me_hotkey flip",
 	"scream" = "me_hotkey scream",
-	"whisper" = "whisper",
 	"wink" = "me_hotkey wink",
 	"flex" = "me_hotkey flex",
 	"yawn" = "me_hotkey yawn",
 	"snap" = "me_hotkey snap",
 	"pickup" = "pick-up",
-	"ooc" = "ooc",
-	"looc" = "looc",
-	"dsay" = "dsay",
-	"asay" = "asay",
 	"adminhelp" = "adminhelp",
 	"mentorhelp" = "mentorhelp",
 	"autoscreenshot" = ".autoscreenshot",
@@ -127,6 +122,16 @@ var/list/action_verbs = list(
 	"mainfocus" = ".winset \"mainwindow.input.focus=false;mapwindow.map.focus=true;mainwindow.input.text=\"\"\"",
 	//"lazyfocus" = ".winset \\\"mainwindow.input.focus=true\\\"",
 	"Admin Interact" = "admin_interact"
+)
+
+var/list/action_macros = list(
+	"asay" = "asaymacro",
+	"dsay" = "dsaymacro",
+	"say" = "startsay",
+	"say_main_radio" = "radiosay",
+	"ooc" = "ooc",
+	"looc" = "looc",
+	"whisper" = "whisper",
 )
 
 ///Used to translate bitflags of hotkeys into human-readable names

@@ -30,9 +30,9 @@
 	OnAdd()
 		..()
 		if (ishuman(owner))
+			check_ability_owner()
 			var/mob/living/carbon/human/H = owner
 			H.hud.update_ability_hotbar()
-			check_ability_owner()
 		return
 
 	OnRemove()
@@ -50,8 +50,7 @@
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
-			SPAWN_DBG(0)
-				AB.owner = src.owner
+			AB.owner = src.owner
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -414,19 +413,27 @@
 		if (..())
 			return 1
 
-		if (!ishuman(target))
-			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
-			return 1
 		if (target == owner)
 			boutput(owner, "<span class='alert'>While \"be yourself\" is pretty good advice, that would be taking it a bit too literally.</span>")
 			return 1
+		if (get_dist(target,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
+			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
+			return 1
+
+		if (!ishuman(target))
+			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
+			return 1
 		var/mob/living/carbon/human/H = target
-		if (!H.bioHolder)
+		if (!H.bioHolder || H.mutantrace?.dna_mutagen_banned)
 			boutput(owner, "<span class='alert'>[target] does not seem to be compatible with this ability.</span>")
 			return 1
 
-		if (get_dist(H,owner) > 1 && !owner.bioHolder.HasEffect("telekinesis"))
-			boutput(owner, "<span class='alert'>You must be within touching distance of [target] for this to work.</span>")
+		if (!ishuman(owner))
+			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
+			return 1
+		var/mob/living/carbon/human/H2= target
+		if (!H2.bioHolder || H2.mutantrace?.dna_mutagen_banned)
+			boutput(owner, "<span class='alert'>Your body doesn't seem to be compatible with this ability.</span>")
 			return 1
 
 		playsound(owner.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
@@ -854,8 +861,10 @@
 
 	cast()
 		if (..())
-			return 1
-
+			return TRUE
+		if (istype(owner.loc, /obj/dummy/spell_invis)) // stops biomass manipulation and dimension shift from messing with eachother.
+			boutput(owner, "<span class='alert'>You can't seem to turn incorporeal here.</span>")
+			return TRUE
 		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
 			if (!linked_power.safety)
 				// If unsynchronized, you don't get to keep anything you have on you.
@@ -871,8 +880,10 @@
 
 	cast_misfire()
 		if (..())
-			return 1
-
+			return TRUE
+		if (istype(owner.loc, /obj/dummy/spell_invis))
+			boutput(owner, "<span class='alert'>You can't seem to turn incorporeal here.</span>")
+			return TRUE
 		// Misfires still transform you, but bad things happen.
 
 		if (spell_invisibility(owner, 1, 0, 0, 1) == 1)
@@ -977,6 +988,9 @@
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
+
+			if (owner.getStatusDuration("burning"))
+				fireflash(get_turf(owner), 3 * linked_power.power)
 
 			SF.farting = 0
 			if (linked_power.power > 1)
@@ -1361,7 +1375,7 @@
 	OnRemove()
 		..()
 		if(active)
-			processing = 1
+			processing = TRUE
 			var/obj/dummy/spell_invis/invis_object
 			if (istype(owner.loc,/obj/dummy/spell_invis/))
 				invis_object = owner.loc
@@ -1389,24 +1403,27 @@
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 
 		if (!istype(linked_power,/datum/bioEffect/power/dimension_shift))
-			return 1
+			return TRUE
 		var/datum/bioEffect/power/dimension_shift/P = linked_power
-
 		if (!istype(owner.loc,/turf/) && !istype(owner.loc,/obj/dummy/spell_invis/))
 			boutput(owner, "<span class='alert'>That won't work here.</span>")
-			return 1
-
+			return TRUE
 		if (P.processing)
-			return 1
+			return TRUE
 
-		P.processing = 1
+		P.processing = TRUE
 
 		if (!P.active)
-			P.active = 1
-			P.last_loc = owner.loc
+			if (istype(owner.loc, /obj/dummy/spell_invis/)) // check for if theres a spell_invis object we havent placed (from biomass manipulation)
+				// before this, dimension shift and biomass manipulation resulted in strange behavior, including being sent to nullspace.
+				boutput(owner, "<span class='alert'>That won't work here.</span>")
+				P.processing = FALSE
+				return TRUE
+			P.active = TRUE
+			P.last_loc = get_turf(owner)
 			owner.canmove = 0
 			owner.restrain_time = TIME + 0.7 SECONDS
 			owner.visible_message("<span class='alert'><b>[owner] vanishes in a burst of blue light!</b></span>")
@@ -1419,13 +1436,16 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = 0
-			return 1
+			P.processing = FALSE
+			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
 			if (istype(owner.loc,/obj/dummy/spell_invis/))
 				invis_object = owner.loc
-			owner.set_loc(P.last_loc)
+			if (isnull(P.last_loc))
+				owner.set_loc(get_turf(owner)) // better safe than sorry.
+			else // now it wont nullspace you if things go wrong.
+				owner.set_loc(P.last_loc)
 			if (invis_object)
 				qdel(invis_object)
 			P.last_loc = null
@@ -1799,6 +1819,7 @@
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#333333"
@@ -1875,6 +1896,7 @@
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		..()
@@ -1984,6 +2006,7 @@
 			for(var/obj/O in F.contents)
 				owner.reagents.reaction(O,TOUCH)
 		owner.reagents.clear_reagents()
+		SEND_SIGNAL(owner, COMSIG_MOB_VOMIT, 10)
 		return 0
 
 /datum/bioEffect/power/bigpuke/acidpuke

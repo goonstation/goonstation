@@ -518,7 +518,7 @@
 				return
 
 			B.heal_damage(20)
-			B.update_icon()
+			B.UpdateIcon()
 			owner.playsound_local(owner.loc, "sound/voice/blob/blobheal[rand(1, 3)].ogg", 50, 1)
 			src.deduct_bio_points()
 			src.do_cooldown()
@@ -573,6 +573,7 @@
 
 		B.visible_message("<span class='alert'><b>The blob starts trying to absorb [M.name]!</b></span>")
 		actions.start(new /datum/action/bar/blob_absorb(M, owner), B)
+		M.was_harmed(B)
 
 
 //The owner is the blob tile object...

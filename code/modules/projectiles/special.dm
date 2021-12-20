@@ -573,7 +573,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
-				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
+				P.internal_speed = clamp(magnitude, min_speed, max_speed)
 
 		desired_x = 0
 		desired_y = 0
@@ -1114,7 +1114,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(length(O.special_data))
 			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
 			src.color_icon = O.special_data["proj_color"]
-		O.AddComponent(/datum/component/pierce_non_opaque) // Pierce anything that doesn't block LoS - if you can see it you can burn it
+		O.AddComponent(/datum/component/gaseous_projectile) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		var/turf/T = get_turf(hit)

@@ -317,7 +317,7 @@
 			if(targetTurf)
 				target = targetTurf
 			else
-				target = get_edge_target_turf(src, src.dir)
+				target = get_steps(start, src.dir, 3)
 
 			if(ismob(loaded))
 				var/mob/M = loaded
@@ -438,7 +438,7 @@
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(1)
 		return .
@@ -698,7 +698,7 @@
 			for(var/atom/movable/M in T)
 				if(M == src) continue
 				if(istype(M, /obj/machinery/the_singularity)) numPierce = 0 //detonate instantly on the singularity
-				if(!M.CanPass(src, T)) return 1
+				if(!M.Cross(src)) return 1
 				if(M.density) return 1
 		return 0
 

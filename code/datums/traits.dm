@@ -12,8 +12,9 @@
 		return TRUE
 	for(var/A in targetList)
 		var/obj/trait/T = getTraitById(A)
-		if(T.category == C.category)
-			return FALSE
+		for (var/cat in T.category)
+			if (cat in C.category)
+				return FALSE
 
 /datum/traitPreferences
 	var/list/traits_selected = list()
@@ -49,11 +50,13 @@
 			//	if(usr.client.qualifiedXpRewards != null)
 			//		if(!usr.client.qualifiedXpRewards.Find(T.requiredUnlock))
 			//			return 0
-			if(T.category != null)
-				if(T.category in categories)
-					return 0
-				else
-					categories.Add(T.category)
+			if(islist(T.category))
+				for (var/cat in T.category)
+					if (cat in categories)
+						return 0
+					else
+						categories.Add(cat)
+
 		return (calcTotal() >= 0)
 
 	proc/updateTraits(var/mob/user)
@@ -131,28 +134,53 @@
 		owner = ownerMob
 		return ..()
 
-	proc/addTrait(id)
-		if(!(id in traits) && owner)
-			var/obj/trait/T = traitList[id]
+	proc/copy(mob/newMob)
+		RETURN_TYPE(/datum/traitHolder)
+		var/datum/traitHolder/traitHolder = new(newMob)
+		for(var/id in traits)
+			traitHolder.addTrait(id, traits[id])
+		return traitHolder
+
+	proc/copy_to(datum/traitHolder/other)
+		other.removeAll()
+		for(var/id in traits)
+			other.addTrait(id, traits[id])
+
+	proc/addTrait(id, obj/trait/trait_instance=null)
+		if(!(id in traits))
+			var/obj/trait/T = null
+			if(isnull(trait_instance))
+				var/traitType = traitList[id].type
+				T = new traitType
+			else
+				T = trait_instance
 			traits[id] = T
-			if(T.isMoveTrait)
-				moveTraits.Add(id)
-			T.onAdd(owner)
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Add(id)
+				T.onAdd(owner)
 
 	proc/removeTrait(id)
-		if((id in traits) && owner)
+		if((id in traits))
+			var/obj/trait/T = traits[id]
 			traits.Remove(id)
-			var/obj/trait/T = traitList[id]
-			if(T.isMoveTrait)
-				moveTraits.Remove(id)
-			T.onRemove(owner)
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Remove(id)
+				T.onRemove(owner)
 
 	proc/removeAll()
-		for (var/obj/trait/T in traits)
-			traits.Remove(T.id)
-			if(T.isMoveTrait)
-				moveTraits.Remove(T.id)
-			T.onRemove(owner)
+		for (var/id in traits)
+			var/obj/trait/T = traits[id]
+			if(!isnull(owner))
+				if(T.isMoveTrait)
+					moveTraits.Remove(T.id)
+				T.onRemove(owner)
+		traits.Cut()
+
+	proc/getTrait(id)
+		RETURN_TYPE(/obj/trait)
+		return traits[id]
 
 	proc/hasTrait(var/id)
 		. = (id in traits)
@@ -227,7 +255,7 @@
 	icon_state = "robotarmsR"
 	points = 0
 	isPositive = 1
-	category = "body"
+	category = list("body")
 
 	onAdd(var/mob/owner)
 		SPAWN_DBG(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
@@ -248,7 +276,7 @@
 	icon_state = "robotarmsR"
 	points = -2
 	isPositive = 0
-	category = "body"
+	category = list("body")
 
 	onAdd(var/mob/owner)
 		SPAWN_DBG(4 SECONDS)
@@ -266,7 +294,7 @@
 	cleanName = "Adamantium Skeleton"
 	desc = "Halves the chance that an explosion will blow off your limbs."
 	id = "explolimbs"
-	category = "body"
+	category = list("body")
 	points = -2
 	isPositive = 1
 
@@ -276,7 +304,7 @@
 	desc = "Spawn with permanent deafness and an auditory headset."
 	id = "deaf"
 	icon_state = "deaf"
-	category = "body"
+	category = list("body")
 	points = 1
 	isPositive = 0
 
@@ -301,7 +329,7 @@
 	icon_state = "swedenY"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_swedish", 0, 0, 0, 1)
@@ -314,7 +342,7 @@
 	icon_state = "frY"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_french", 0, 0, 0, 1)
@@ -327,7 +355,7 @@
 	icon_state = "scott"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_scots", 0, 0, 0, 1)
@@ -340,7 +368,7 @@
 	icon_state = "ukY"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_chav", 0, 0, 0, 1)
@@ -353,7 +381,7 @@
 	icon_state = "elvis"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_elvis", 0, 0, 0, 1)
@@ -366,7 +394,7 @@
 	icon_state = "whatY"
 	points = 0
 //	isPositive = 1
-	category = "language"
+	category = list("language")
 	unselectable = 1 // this was not supposed to be a common thing!!
 /*
 	onAdd(var/mob/owner)
@@ -382,7 +410,7 @@
 	icon_state = "finnish"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_finnish", 0, 0, 0, 1)
@@ -395,7 +423,7 @@
 	icon_state = "yorkshire"
 	points = 0
 	isPositive = 1
-	category = "language"
+	category = list("language")
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("accent_tyke")
@@ -410,7 +438,7 @@
 	icon_state = "catseyeG"
 	points = -1
 	isPositive = 1
-	category = "vision"
+	category = list("vision")
 
 /obj/trait/infravision
 	name = "Infravision (-1) \[Vision\]"
@@ -420,7 +448,7 @@
 	icon_state = "infravisionG"
 	points = -1
 	isPositive = 0
-	category = "vision"
+	category = list("vision")
 
 /obj/trait/shortsighted
 	name = "Short-sighted (+1) \[Vision\]"
@@ -428,7 +456,7 @@
 	desc = "Spawn with permanent short-sightedness and glasses."
 	id = "shortsighted"
 	icon_state = "glassesG"
-	category = "vision"
+	category = list("vision")
 	points = 1
 	isPositive = 0
 
@@ -449,7 +477,7 @@
 	desc = "Spawn with permanent blindness and a VISOR."
 	icon_state = "blind"
 	id = "blind"
-	category = "vision"
+	category = list("vision")
 	points = 2
 	isPositive = 0
 
@@ -474,7 +502,7 @@
 	icon_state = "mildly_mutatedB"
 	points = 0
 	isPositive = 0
-	category = "genetics"
+	category = list("genetics")
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
@@ -488,7 +516,7 @@
 	icon_state = "dontmutateB"
 	points = -2
 	isPositive = 0
-	category = "genetics"
+	category = list("genetics")
 
 // TRINKETS/ITEMS - Purple Border
 
@@ -500,7 +528,7 @@
 	icon_state = "beretP"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/petasusaphilic
 	name = "Petasusaphilic (-1) \[Trinkets\]"
@@ -510,7 +538,7 @@
 	icon_state = "hatP"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/conspiracytheorist
 	name = "Conspiracy Theorist (-1) \[Trinkets\]"
@@ -520,7 +548,7 @@
 	icon_state = "conspP"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/pawnstar
 	name = "Pawn Star (-1) \[Trinkets\]"
@@ -530,7 +558,7 @@
 	icon_state = "pawnP"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/beestfriend
 	name = "BEEst friend (-1) \[Trinkets\]"
@@ -540,7 +568,7 @@
 	icon_state = "bee"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
 
 /obj/trait/lunchbox
 	name = "Lunchbox (-1) \[Trinkets\]"
@@ -550,7 +578,26 @@
 	icon_state = "lunchbox"
 	points = -1
 	isPositive = 1
-	category = "trinkets"
+	category = list("trinkets")
+
+/obj/trait/bald
+	name = "Bald (0) \[Trinkets\]"
+	cleanName = "Bald"
+	desc = "Start your shift with a wig instead of hair. I'm sure no one will be able to tell."
+	id = "bald"
+	icon_state = "placeholder"
+	points = 0
+	isPositive = 1
+	category = list("trinkets", "nopug")
+
+/obj/trait/one_armed
+	name = "One Armed Spaceman (-2)"	//it's so expensive cause right now, one arm is a benefit in that you can't be handcuffed...
+	cleanName = "One Armed Spaceman"
+	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
+	id = "onearmed"
+	icon_state = "placeholder"
+	points = -2
+	isPositive = 1
 
 // Skill - White Border
 
@@ -559,7 +606,7 @@
 	cleanName = "Smooth talker"
 	desc = "Traders will tolerate 50% more when you are haggling with them."
 	id = "smoothtalker"
-	category = "skill"
+	category = list("skill")
 	points = -1
 	isPositive = 1
 
@@ -568,7 +615,7 @@
 	cleanName = "Matrix Flopout"
 	desc = "Flipping lets you dodge bullets and attacks for a higher stamina cost!"
 	id = "matrixflopout"
-	category = "skill"
+	category = list("skill")
 	points = -2
 	isPositive = 1
 
@@ -577,7 +624,7 @@
 	cleanName = "Happyfeet"
 	desc = "Sometimes people can't help but dance along with you."
 	id = "happyfeet"
-	category = "skill"
+	category = list("skill")
 	points = -1
 	isPositive = 1
 
@@ -587,7 +634,7 @@
 	desc = "Your skill at claw machines is unparalleled."
 	id = "claw"
 	icon_state = "claw"
-	category = "skill"
+	category = list("skill")
 	points = -1
 	isPositive = 1
 
@@ -600,7 +647,7 @@
 	points = 0
 	isPositive = 1
 	unselectable = 1
-	category = "job"
+	category = list("job")
 
 	onAdd(mob/owner)
 		return
@@ -637,6 +684,12 @@
 	cleanName = "Quartermaster Training"
 	desc = "Subject is proficent at haggling."
 	id = "training_quartermaster"
+
+/obj/trait/job/chef
+	name = "Kitchen Training"
+	cleanName = "Kitchen Training"
+	desc = "Subject is experienced in foodstuffs and their effects."
+	id = "training_chef"
 
 // bartender, detective, HoS
 /obj/trait/job/drinker
@@ -676,7 +729,7 @@
 	cleanName = "Athletic"
 	desc = "Great stamina! Frail body."
 	id = "athletic"
-	category = "stats"
+	category = list("stats")
 	points = -2
 	isPositive = 1
 
@@ -691,7 +744,7 @@
 	cleanName = "Big Bruiser"
 	desc = "Stronger punches but higher stamina cost!"
 	id = "bigbruiser"
-	category = "stats"
+	category = list("stats")
 	points = -2
 	isPositive = 1
 
@@ -703,7 +756,7 @@
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
 	id = "immigrant"
 	icon_state = "stowaway"
-	category = "background"
+	category = list("background")
 	points = 1
 	isPositive = 0
 
@@ -713,7 +766,7 @@ obj/trait/pilot
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
 	id = "pilot"
 	icon_state = "pilot"
-	category = "background"
+	category = list("background")
 	points = 0
 	isPositive = 0
 
@@ -768,8 +821,9 @@ obj/trait/pilot
 	id = "randomallergy"
 	points = 0
 	isPositive = 0
+	category = list("allergy")
 
-	var/list/allergic_players = list()
+	var/allergen = null
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -778,11 +832,12 @@ obj/trait/pilot
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
-	onAdd(var/mob/owner)
-		allergic_players[owner] = pick(allergen_id_list)
+	New()
+		..()
+		allergen = pick(allergen_id_list)
 
 	onLife(var/mob/owner)
-		if (owner?.reagents?.has_reagent(allergic_players[owner]))
+		if (owner?.reagents?.has_reagent(allergen))
 			owner.reagents.add_reagent("histamine", min(1.4 / (owner.reagents.has_reagent("antihistamine") ? 2 : 1), 120-owner.reagents.get_reagent_amount("histamine"))) //1.4 units of histamine per life cycle, halved with antihistamine and capped at 120u
 
 /obj/trait/random_allergy/medical_allergy
@@ -791,6 +846,7 @@ obj/trait/pilot
 	desc = "You're allergic to some medical chemical... but you can't remember which."
 	id = "medicalallergy"
 	points = 1
+	category = list("allergy")
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -805,19 +861,22 @@ obj/trait/pilot
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
-	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
-	var/list/addicted_players = list()
+	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
+	var/do_addiction = FALSE
+
+	New()
+		..()
+		selected_reagent = pick(addictive_reagents)
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
-			addicted_players[owner] = pick(addictive_reagents)
-			selected_reagent = addicted_players[owner]
-			addAddiction(owner)
+			SPAWN_DBG(rand(4 MINUTES, 8 MINUTES))
+				addAddiction(owner)
+				do_addiction = TRUE
 
 	onLife(var/mob/owner, var/mult) //Just to be safe.
-		if(isliving(owner) && probmult(1))
+		if(isliving(owner) && do_addiction && probmult(1))
 			var/mob/living/M = owner
-			selected_reagent = addicted_players[owner]
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))
 					if(A.associated_reagent == selected_reagent) return
@@ -928,6 +987,8 @@ obj/trait/pilot
 	id = "puritan"
 	points = 2
 	isPositive = 0
+	category = list("cloner_stuff")
+
 
 /obj/trait/survivalist
 	name = "Survivalist (-1)"
@@ -993,7 +1054,7 @@ obj/trait/pilot
 		if(!owner.stat && can_act(owner) && probmult(9))
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
-					if(!I.anchored && isturf(I.loc))
+					if(!I.anchored && isturf(I.loc) && can_reach(owner, I))
 						I.Attackhand(owner)
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
@@ -1032,6 +1093,7 @@ obj/trait/pilot
 	icon_state = "placeholder"
 	points = 1
 	isPositive = 0
+	category = list("allergy")
 
 /obj/trait/allears
 	name = "All Ears (0)"
@@ -1057,7 +1119,7 @@ obj/trait/pilot
 	id = "lizard"
 	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species")
 	mutantRace = /datum/mutantrace/lizard
 
 /obj/trait/cow
@@ -1068,18 +1130,18 @@ obj/trait/pilot
 	id = "cow"
 	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species")
 	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton
-	name = "Skeleton (-2) \[Species\]"
+	name = "Skeleton (-1) \[Species\]"
 	cleanName = "Skeleton"
 	icon_state = "skeletonT"
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
-	points = -2
+	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
 /obj/trait/roach
@@ -1090,8 +1152,23 @@ obj/trait/pilot
 	id = "roach"
 	points = -1
 	isPositive = 1
-	category = "species"
+	category = list("species")
 	mutantRace = /datum/mutantrace/roach
+
+/obj/trait/pug
+	name = "Pug (-4) \[Species\]"
+	cleanName = "Pug"
+	icon_state = "pug"
+	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan... Aw, look at those little ears!"
+	id = "pug"
+	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
+	isPositive = 1 //Debatably???? also this var never gets used so Who Cares
+	category = list("species", "nopug")
+	mutantRace = /datum/mutantrace/pug
+
+	onAdd(var/mob/owner)
+		..()
+		owner.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 
 //Infernal Contract Traits
 /obj/trait/hair

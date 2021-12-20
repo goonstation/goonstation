@@ -62,6 +62,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
 	var/list/terminals = list() //Stuff connected to us over the powernet
+	var/messageLog = ""
+	/// controls whether or not the ai will hear termos message notifications
+	var/termMute = FALSE
 	var/hologramdown = 0 //is the hologram downed?
 	var/canvox = 1
 	var/can_announce = 1
@@ -178,6 +181,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	..(loc)
 	START_TRACKING
 
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
 	light.set_brightness(0.6)
@@ -223,6 +228,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio2.name = "AI Intercom Monitor"
+		src.radio2.device_color = "#7F7FE2"
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio1.broadcasting = 1
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
@@ -261,7 +267,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = 0, var/image/chat_maptext/assoc_maptext = null)
+/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	..()
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.show_message(msg, 1, 0, 0, group)
@@ -273,7 +279,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.show_text(message, color, 0, sight_check, allow_corruption, group)
 	return
 
+/// For use when you want to send text to the AI player regardless of it's in its mainframe, eye, or shell
+/// Calls show_text(), use its syntax
+/mob/living/silicon/ai/proc/textToPlayer(var/message, var/color = "#000000", var/hearing_check = 0, var/sight_check = 0, var/allow_corruption = 0, var/group)
+	if (src.deployed_shell)
+		src.deployed_shell.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
+	else
+		src.show_text(message, color, hearing_check, sight_check, allow_corruption, group)
 
+/// For use when you want to play a sound to the AI player regardless of if it's in mainframe, eye, or shell
+/// Calls playsound_local(), use its syntax
+/mob/living/silicon/ai/proc/soundToPlayer(soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
+	if (deployed_to_eyecam && src.eyecam)
+		src.eyecam.playsound_local(src.eyecam, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+	else if (src.deployed_shell)
+		src.deployed_shell.playsound_local(src.deployed_shell, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
+	else
+		src.playsound_local(src, soundin, vol, vary, extrarange, pitch, ignore_flag, channel, flags)
 
 ///mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME)
 //sound.dm
@@ -396,6 +418,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
+				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -627,7 +650,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/Topic(href, href_list)
 	..()
-	if (usr != src && usr != src.eyecam)
+	if (usr != src && usr != src.eyecam && usr != src.deployed_shell)
 		return
 
 	if (href_list["switchcamera"])
@@ -639,22 +662,41 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (href_list["termmsg"]) //Oh yeah, message that terminal!
 		var/termid = href_list["termmsg"]
 		if(!termid || !(termid in src.terminals))
-			boutput(src, "That terminal is not connected!")
+			src.textToPlayer("That terminal is not connected!")
 			return
 		var/t = input(usr, "Please enter message", termid, null) as text
 		if (!t)
 			return
 
 		if(isdead(src))
-			boutput(src, "You cannot interface with a terminal because you are dead!")
+			src.textToPlayer("You cannot interface with a terminal because you are dead!")
 			return
 
-		t = copytext(adminscrub(t), 1, 65)
+		if(!(termid in src.terminals)) // for if the jerk disconnected while we were typing a response >:(
+			src.textToPlayer("--- [termid] is disconnected!")
+			return
+
+		t = copytext(adminscrub(t), 1, 301)
+		src.textToPlayer("<b>Replied to [termid] with:</b> \"<i>[t]</i>\"")
+
 		//Send the actual message signal
-		boutput(src, "<b>([termid]):</b> [t]")
 		src.post_status(termid, "command","term_message","data",t)
+
 		//Might as well log what they said too!
 		logTheThing("diary", src, null, ": [t]", "say")
+		src.messageLog += "\[[formattedShiftTime(TRUE)]\] <i>Replied to </i><b>[termid]</b><i> with:</i><br>[t]<hr>"
+
+	if (href_list["mute"])
+		src.toggleTermMute()
+
+	if (href_list["refresh"])
+		src.view_messageLog()
+
+	if (href_list["net_id"]) // this is triggered by examine() in atom.dm, though you should be able to use this from elsewhere!
+		var/id = href_list["net_id"]
+		var/owner = href_list["owner"]
+		var/message = input(usr, "Please enter message", owner, null)
+		internal_pda.host_program.pda_message(id, owner, message)
 
 	return
 
@@ -695,7 +737,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (relay_laws_for_shell && ismob(relay_laws_for_shell))
 		vamp = relay_laws_for_shell
 	if (vamp.mind && vamp.mind.special_role == ROLE_VAMPTHRALL && vamp.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(vamp.mind.master)
+		var/mob/mymaster = ckey_to_mob(vamp.mind.master)
 		if (mymaster)
 			boutput(who, "1. Only your master [mymaster.real_name] is human. Obey and serve them to the best of your ability.")
 			return
@@ -768,6 +810,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/death(gibbed)
 	if (deployed_to_eyecam)
 		eyecam.return_mainframe()
+
+	if (deployed_shell)
+		src.return_to(deployed_shell)
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
@@ -1372,18 +1417,47 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/crew = ""
-	for(var/datum/data/record/t in data_core.general)
-		crew += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+	var/stored = ""
+	if(length(by_type[/obj/cryotron]))
+		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+		for(var/L as anything in cryo_unit.stored_crew_names)
+			stored += "<i>- [L]<i><br>"
 
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[crew]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+
 
 /mob/living/silicon/ai/proc/show_laws_verb()
 	set category = "AI Commands"
 	set name = "Show Laws"
 
 	src.show_laws(0)
-	return
+
+/mob/living/silicon/ai/proc/view_messageLog()
+	set name = "View Message Log"
+	set desc = "View all messages sent by terminal connections."
+	set category = "AI Commands"
+
+
+	var/muteText = src.termMute ? "Muted" : "Unmuted"
+	var/mute_button = "<a href='byond://?src=\ref[src];mute=mute;refresh=[TRUE]'><u>[muteText]</u></a>"
+	var/info = "<head><title>Terminal Message History</title></head><body>"
+	info += "Audio notifications are currently: [mute_button]<br>"
+	info += "<a href='byond://?src=\ref[src];refresh=[TRUE]'><u>REFRESH</u></a><br><br>"
+	info += "<b>Connected Terminals:</b><hr>"
+	if (!terminals.len)
+		info += "No terminals connected at this time.<br>"
+	else
+		for (var/address as anything in terminals)
+			info += "<a href='byond://?src=\ref[src];termmsg=[address];refresh=[TRUE]'><b>\[[address]\]</b></a><br>"
+	info += "<br><b>Message History:</b><hr>[messageLog]</body>"
+
+	usr.Browse(info, "window=Message Log")
+
+/mob/living/silicon/ai/proc/toggleTermMute()
+	src.termMute = src.termMute ? FALSE : TRUE
+
+
+
 /*
 /mob/living/silicon/ai/proc/ai_custom_arrival_alert()
 	set category = "AI Commands"
@@ -1696,7 +1770,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
-				D.update_icon()
+				D.UpdateIcon()
 				count++
 
 		message_admins("[key_name(message_mob)] globally unbolted [count] airlocks.")
@@ -1842,20 +1916,24 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if(target in src.terminals)
 				//something might be wrong here, disconnect them!
 				src.terminals.Remove(target)
-				boutput(src, "--- Connection closed with [target]!")
+				textToPlayer("--- Connection closed with [target]!")
 				SPAWN_DBG(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
 
 			src.terminals.Add(target)
-			boutput(src, "--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a>!")
+			if (!termMute)
+				src.soundToPlayer('sound/machines/bweep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
+			src.textToPlayer("--- Terminal connection from <a href='byond://?src=\ref[src];termmsg=[target]'>[target]</a> established to your mainframe!")
 			src.post_status(target, "command","term_connect","data","noreply")
 			return
 
 		if("term_disconnect")
 			if(target in src.terminals)
 				src.terminals.Remove(target)
-				boutput(src, "--- [target] has closed the connection!!")
+				if (!termMute)
+					src.soundToPlayer('sound/machines/phones/remote_hangup.ogg', 35, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
+				src.textToPlayer("--- [target] has disconnected from your mainframe!")
 				SPAWN_DBG(0.3 SECONDS)
 					src.post_status(target, "command","term_disconnect")
 				return
@@ -1871,8 +1949,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			var/message = signal.data["data"]
 			var/rendered = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a></span>"
 			rendered += "<span class='message'> [message]</span></span>"
-
-			src.show_message(rendered, 2)
+			// we need to let the game know that when a log href is clicked, we need to refresh the window
+			var/logAddress = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a></span>"
+			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br><span class='message'> [message]</span></span><hr>"
+			if (!termMute)
+				src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
+			src.textToPlayer(rendered)
 			return
 
 	return
@@ -2027,6 +2109,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 //just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
 proc/is_mob_trackable_by_AI(var/mob/M)
+	if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+		return 0
 	if (istype(M, /mob/new_player))
 		return 0
 	if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
@@ -2058,6 +2142,8 @@ proc/get_mobs_trackable_by_AI()
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
+		if (HAS_MOB_PROPERTY(M, PROP_AI_UNTRACKABLE))
+			continue
 		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
 			continue
 		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
@@ -2182,11 +2268,8 @@ proc/get_mobs_trackable_by_AI()
 		if (src.brain.owner != brain_owner)
 			return
 		if (!newname)
-			src.real_name = default_name
-			src.name = src.real_name
-			src.internal_pda.name = "[src]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
-			return
+			newname = default_name
+			break
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname))
@@ -2198,15 +2281,15 @@ proc/get_mobs_trackable_by_AI()
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
-					src.name = newname
-					src.internal_pda.name = "[src]'s Internal PDA Unit"
-					src.internal_pda.owner = "[src]"
-					return 1
+					break
 				else
 					continue
 	if (!newname)
 		src.real_name = default_name
-		src.name = src.real_name
+
+	src.UpdateName()
+	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.owner = "[src.name]"
 
 /*-----Core-Creation---------------------------------------*/
 

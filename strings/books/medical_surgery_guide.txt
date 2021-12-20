@@ -1,9 +1,13 @@
 <div><h1>Trent's Anatomy</h1>
 		<p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date. But that doesn't make this information any less correct.</i></p>
-		<h2><b>FOREWARD</b></h2>
+		<hr>
+		I, the author of this book, Trent Durinste, dedicate this book to me, the author, Trent Druinste. <br><small>I just made Dotty Spud  write the foreword, not the actual book. For space-god's sake, the name of the Book is called "Trent's Anatomy". Like the TV Show Grey's Anatomy and classic medical texbook that it inspired. Ever heard of it? What is <i>wrong</i> with you people?!</small>
+		<hr>
+		<h3><b>FOREWARD</b></h3>
 		<p>While snails share many organs in common with the human body, they have no sense of hearing.<br>
 		<i>by Dorothy "Dotty" Spud</i></p>
-		------------------------------------------------------------------<br>
+	    <hr>
+
 		<h3>Index</h3>
 		<ul>
 			<li>Introduction

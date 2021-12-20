@@ -42,7 +42,7 @@
 	var/list/atom/movable/screen/hud/inventory_bg = list()
 	var/list/obj/item/inventory_items = list()
 	var/show_inventory = 1
-	var/current_ability_set = 1
+	var/show_genetics_abilities = TRUE
 	var/icon/icon_hud = 'icons/mob/hud_human_new.dmi'
 
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -132,10 +132,8 @@
 
 
 	proc/update_status_effects()
-		for(var/atom/movable/screen/statusEffect/G in src.objects)
-			remove_screen(G)
-
 		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			remove_screen(statusUiElements[S])
 			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				qdel(statusUiElements[S])
 				src.statusUiElements.Remove(S)
@@ -312,7 +310,26 @@
 				if (I)
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
+					// you can write multiline macros with \, please god don't write 400 character macros on one line
+					#define autoequip_slot(slot, var_name)\
+						if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
+						{\
+							master.u_equip(I);\
+							var/obj/item/C = master.var_name;\
+							if (C)\
+							{\
+								/*master.u_equip(C);*/\
+								C.unequipped(master);\
+								src.remove_item(C);\
+								master.var_name = null;\
+								if(!master.put_in_hand(C))\
+								{\
+									master.drop_from_slot(C, get_turf(C))\
+								}\
+							}\
+							master.force_equip(I, master.slot);\
+							return\
+						}
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -416,17 +433,17 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						master.a_intent = INTENT_DISARM
+						master.set_a_intent(INTENT_DISARM)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_HARM
+						master.set_a_intent(INTENT_HARM)
 						master.check_for_intent_trigger()
 				else
 					if (icon_y > 16)
-						master.a_intent = INTENT_HELP
+						master.set_a_intent(INTENT_HELP)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_GRAB
+						master.set_a_intent(INTENT_GRAB)
 						master.check_for_intent_trigger()
 				src.update_intent()
 
@@ -462,15 +479,14 @@
 				//src.update_sprinting()
 
 			if ("ability")
-				switch(current_ability_set)
-					if(1)
-						current_ability_set = 2
-						boutput(master, "Now viewing genetic powers hotbar.")
-					else
-						current_ability_set = 1
-						boutput(master, "Now viewing standard hotbar.")
+				if(show_genetics_abilities)
+					show_genetics_abilities = FALSE
+					boutput(master, "No longer showing genetic abilities.")
+				else
+					show_genetics_abilities = TRUE
+					boutput(master, "Now showing genetic abilities.")
 
-				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][current_ability_set]"
+				ability_toggle.icon_state = "[layouts[layout_style]["ability_icon"]][show_genetics_abilities]"
 				update_ability_hotbar()
 
 			if ("health")
@@ -834,16 +850,17 @@
 			if (master.abilityHolder.any_abilities_displayed)
 				pos_y = master.abilityHolder.y_occupied + 1
 
-		if (current_ability_set == 1) // items + standard
-			for(var/obj/ability_button/B2 in master.item_abilities)
-				B2.screen_loc = "NORTH-[pos_y],[pos_x]"
-				master.client.screen += B2
-				pos_x++
-				if(pos_x > 15)
-					pos_x = 1
-					pos_y++
+		// always show regular abilities
+		for(var/obj/ability_button/B2 in master.item_abilities)
+			B2.screen_loc = "NORTH-[pos_y],[pos_x]"
+			master.client.screen += B2
+			pos_x++
+			if(pos_x > 15)
+				pos_x = 1
+				pos_y++
 
-		if (current_ability_set == 2) // genetics
+		// if toggled off, do not show genetics abilities
+		if (show_genetics_abilities)
 			var/datum/bioEffect/power/P
 			for(var/ID in master.bioHolder.effects)
 				P = master.bioHolder.GetEffect(ID)
@@ -884,7 +901,7 @@
 			return
 
 		var/stage = 0
-		if (master.mini_health_hud)
+		if (master?.mini_health_hud)
 			health.icon_state = "blank"
 			if (isdead(master) || master.fakedead)
 				health_brute.icon_state = "mhealth7" // rip

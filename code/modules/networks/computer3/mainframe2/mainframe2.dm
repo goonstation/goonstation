@@ -207,7 +207,7 @@
 							boutput(usr, "You insert [I].")
 
 			else if (href_list["dipsw"] && (status & NOPOWER))
-				var/switchNum = text2num(href_list["dipsw"])
+				var/switchNum = text2num_safe(href_list["dipsw"])
 				if (switchNum < 1 || switchNum > 8)
 					return 1
 
@@ -247,6 +247,7 @@
 
 
 	process()
+		set waitfor = 0
 		..()
 		if(status & (NOPOWER|BROKEN|MAINT) || !processing)
 			return
@@ -360,7 +361,9 @@
 					file = signal.data_file.copy_file()
 				if(src.os && data)
 					src.os.term_input(data, target, file)
-					//qdel(file)
+					if(!isnull(usr))
+						var/atom/source = signal.source
+						logTheThing("computers", usr, null, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
 
 				return
 

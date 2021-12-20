@@ -331,9 +331,9 @@
 				master.radio_menu()
 			if ("intent")
 				if (master.a_intent == INTENT_HELP)
-					master.a_intent = INTENT_HARM
+					master.set_a_intent(INTENT_HARM)
 				else
-					master.a_intent = INTENT_HELP
+					master.set_a_intent(INTENT_HELP)
 				update_intent()
 			if ("pulling")
 				if (master.pulling)

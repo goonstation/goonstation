@@ -2,14 +2,20 @@
 	name = "crate"
 	desc = "A small, cuboid object with a hinged top and empty interior."
 	is_short = 1
+	#ifdef XMAS
+	icon_state = "xmascrate"
+	icon_opened = "xmascrateopen"
+	icon_closed = "xmascrate"
+	#else
 	icon_state = "crate"
 	icon_closed = "crate"
 	icon_opened = "crateopen"
+	#endif
 	icon_welded = "welded-crate"
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
 
 	get_desc()
 		. = ..()
@@ -24,7 +30,7 @@
 			src.UpdateOverlays(null, "barcode")
 
 
-	CanPass(atom/movable/mover, turf/target)
+	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
 		return ..()
@@ -119,6 +125,13 @@
 	icon_closed = "freezer"
 	weld_image_offset_Y = -1
 
+/obj/storage/crate/bloody
+	name = "dented crate"
+	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it."
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
+
 /obj/storage/crate/bartending
 	name = "bartending crate"
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/bottle/soda/ = 5,
@@ -171,6 +184,7 @@
 	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
 	/obj/item/paper/book/from_file/critter_compendium,
+	/obj/item/pinpointer/category/artifacts/safe,
 	/obj/item/reagent_containers/food/drinks/milk,
 	/obj/item/reagent_containers/food/snacks/sandwich/pb,
 	/obj/item/paper/note_from_mom)
@@ -200,12 +214,12 @@
 	/obj/item/sheet/glass/fullstack,
 	/obj/item/ai_interface,
 	/obj/item/parts/robot_parts/robot_frame,
-	/obj/item/parts/robot_parts/leg/left,
-	/obj/item/parts/robot_parts/leg/right,
-	/obj/item/parts/robot_parts/arm/left,
-	/obj/item/parts/robot_parts/arm/right,
-	/obj/item/parts/robot_parts/chest,
-	/obj/item/parts/robot_parts/head,
+	/obj/item/parts/robot_parts/leg/left/standard,
+	/obj/item/parts/robot_parts/leg/right/standard,
+	/obj/item/parts/robot_parts/arm/left/standard,
+	/obj/item/parts/robot_parts/arm/right/standard,
+	/obj/item/parts/robot_parts/chest/standard,
+	/obj/item/parts/robot_parts/head/standard,
 	/obj/item/cell/supercell = 4,
 	/obj/item/cable_coil = 2)
 
@@ -236,8 +250,10 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/misc/halloween.dmi'
-	icon_state = "crate"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "bloodycrate"
+	icon_opened = "bloodycrateopen"
+	icon_closed = "bloodycrate"
 	var/triggered = 0
 
 	make_my_stuff()
@@ -254,20 +270,22 @@
 			return
 
 /obj/storage/crate/syndicate_surplus
-	var/ready = 0
+	var/nest_amt = 0
+	var/static/list/possible_items = list()
 	grab_stuff_on_spawn = FALSE
+
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
-			if (!ready)
-				spawn_items()
+		spawn_items()
 
 	proc/spawn_items(var/mob/owner)
-		ready = 1
+		#define NESTED_SCALING_FACTOR 0.8
+		if (istype(src.loc, /obj/storage/crate/syndicate_surplus)) //if someone got lucky and rolled a surplus inside a surplus, scale the inner one (and its contents) down
+			src.nest_amt++
+			src.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the crate itself
 		var/telecrystals = 0
-		var/list/possible_items = list()
 
-		if (islist(syndi_buylist_cache))
+		if (islist(syndi_buylist_cache) && !length(possible_items))
 			for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 				var/blocked = 0
 				if (ticker?.mode && S.blockedmode && islist(S.blockedmode) && length(S.blockedmode))
@@ -284,11 +302,13 @@
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
+				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
 					item_datum.run_on_spawn(I, owner, TRUE)
 					if (owner.mind)
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
+		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/pizza
 	name = "pizza box"
@@ -322,6 +342,40 @@
 				for(var/obj/item/bee_egg_carton/carton in src)
 					carton.ourEgg.blog += blog
 				return 1
+
+//There is also /obj/storage/crate/robotics_supplies_borg that's on destiny & clarion, they only have the one crate
+//This one has just the bring-your-own-brain-and-cell borg parts (but does lovely pixel offsets I stole from cog1, thanks f1!)
+/obj/storage/crate/robotparts
+	make_my_stuff() //since we want offsets we're gonna have to do this manually (mimicking office closets)
+		if(..()) //obj/storage/proc/make_my_stuff returns 1 only the first time it's run, so this is how we only spawn stuff once. It's a bit of a weird system
+			new /obj/item/cable_coil/cut(src)
+
+			var/obj/item/parts/robot_parts/robot_frame/B1 = new /obj/item/parts/robot_parts/robot_frame(src)
+			B1.pixel_y = 3
+
+			new /obj/item/parts/robot_parts/head/standard(src) //Was B2 but no offsets needed
+
+			var/obj/item/parts/robot_parts/chest/standard/B3 = new /obj/item/parts/robot_parts/chest/standard/(src)
+			B3.pixel_y = -5
+
+
+			var/obj/item/parts/robot_parts/arm/left/standard/B4 = new /obj/item/parts/robot_parts/arm/left/standard(src)
+			B4.pixel_y = 0
+			B4.pixel_x = 11
+
+			var/obj/item/parts/robot_parts/arm/right/standard/B5 = new /obj/item/parts/robot_parts/arm/right/standard(src)
+
+			B5.pixel_y = 0
+			B5.pixel_x = -12
+
+			var/obj/item/parts/robot_parts/leg/left/standard/B6 = new /obj/item/parts/robot_parts/leg/left/standard(src)
+			B6.pixel_y = -6
+			B6.pixel_x = 7
+
+			var/obj/item/parts/robot_parts/leg/right/standard/B7 = new /obj/item/parts/robot_parts/leg/right/standard(src)
+			B7.pixel_y = -6
+			B7.pixel_x = -8
+			return TRUE
 
 // New crates woo. (Gannets)
 
@@ -557,13 +611,13 @@
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
 
 	bard
-		name = "Class Crate - Rocker"
+		name = "Class Crate - Bard"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
 		/obj/item/storage/fanny/syndie,
-		/obj/item/clothing/suit/space/syndicate/specialist/firebrand, // Gannets should make a cool suit
-		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator) // Gannet should make cool helm
+		/obj/item/clothing/suit/space/syndicate/specialist/bard,
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
 
 	qm //Hi Gannets, I like your crate and wanted to use it for some QM stuff. Come yell at Azungar if this is not ok.
 		name = "Weapons crate"

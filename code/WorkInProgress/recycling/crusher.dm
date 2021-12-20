@@ -8,7 +8,7 @@
 	anchored = 1.0
 	mats = 20
 	is_syndicate = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | USE_HASENTERED
+	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
 
@@ -17,21 +17,21 @@
 	var/last_sfx = 0
 
 /obj/machinery/crusher/Bumped(atom/AM)
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid))
+	if(AM.flags & UNCRUSHABLE)
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 
-/obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
+/obj/machinery/crusher/Cross(atom/movable/mover)
 	. = ..()
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor))
-		return
+	if(mover.flags & UNCRUSHABLE)
+		. = TRUE
 
-	if(istype(AM,/mob/wraith))
-		var/mob/wraith/W = AM
-		if(!W.haunting)
-			return
+/obj/machinery/crusher/Crossed(atom/movable/AM)
+	. = ..()
+	if(AM.flags & UNCRUSHABLE)
+		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
@@ -46,7 +46,7 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		src.target = target
-		if (!ignore_z)
+		if (!ignore_z && T)
 			src.classic = isrestrictedz(T.z)
 		if(!ismob(target))
 			duration = rand(0, 20) DECI SECONDS
@@ -68,7 +68,7 @@
 
 	onUpdate()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1))
+		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
@@ -89,7 +89,7 @@
 
 	onInterrupt(flag)
 		. = ..()
-		if(ismob(target) && target.temp_flags & BEING_CRUSHERED)
+		if(ismob(target) && !QDELETED(target) && (target.temp_flags & BEING_CRUSHERED))
 			var/mob/M = target
 			random_brute_damage(M, rand(15, 45))
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
@@ -103,7 +103,7 @@
 
 	onEnd()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1))
+		if(!IN_RANGE(owner, target, 1) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

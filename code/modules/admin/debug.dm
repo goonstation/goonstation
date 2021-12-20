@@ -1,5 +1,10 @@
 var/global/debug_messages = 0
 
+#define ARG_INFO_NAME 1
+#define ARG_INFO_TYPE 2
+#define ARG_INFO_DESC 3
+#define ARG_INFO_DEFAULT 4
+
 /client/proc/debug_messages()
 	set desc = "Toggle debug messages."
 	set name = "HDM" // debug ur haines
@@ -346,27 +351,26 @@ var/global/debug_messages = 0
 	boutput(usr, "<span class='notice'>Proc returned: [pretty_returnval]</span>")
 	return
 
-/proc/get_proccall_arglist()
-	var/argnum = input("Number of arguments:","Number", 0) as null|num
+/proc/get_proccall_arglist(list/arginfo = null)
+	var/argnum = arginfo ? length(arginfo) : input("Number of arguments:","Number", 0) as null|num
 	var/list/listargs = list()
 	if (!argnum)
 		return listargs
-	for (var/i=0, i<argnum, i++)
-		var/class = input("Type of Argument #[i]","Variable Type", null) as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
+	for (var/i = 1 , i <= argnum, i++)
+		var/class = input(arginfo ? arginfo[i][ARG_INFO_DESC] + ":" : "Type of Argument #[i]", arginfo ? "Argument #[i]: " + arginfo[i][ARG_INFO_NAME] : "Variable Type", arginfo ? arginfo[i][ARG_INFO_TYPE] : null)\
+		 as null|anything in list("text","num","type","json","ref","reference","mob reference","reference atom at current turf","icon","color","file","the turf of which you are on top of right now")
 		if(!class)
 			break
 		switch(class)
-			if ("cancel")
-				break
 			if ("text")
-				listargs += input("Enter new text:","Text",null) as null|text
+				listargs += input("Enter new text:","Text", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : null) as null|text
 
 			if ("num")
-				listargs += input("Enter new number:","Num", 0) as null|num
+				listargs += input("Enter new number:","Num", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : 0) as null|num
 
 			if ("type")
 				boutput(usr, "<span class='notice'>Type part of the path of the type.</span>")
-				var/typename = input("Part of type path.", "Part of type path.", "/obj") as null|text
+				var/typename = input("Part of type path.", "Part of type path.", (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : "/obj") as null|text
 				if (typename)
 					var/match = get_one_match(typename, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 					if (match)
@@ -408,7 +412,7 @@ var/global/debug_messages = 0
 				listargs += input("Pick icon:","Icon", null) as null|icon
 
 			if ("color")
-				listargs += input("Pick color:","Color") as null|color
+				listargs += input("Pick color:","Color",  (arginfo?[i][ARG_INFO_TYPE] == class && length(arginfo[i])>=ARG_INFO_DEFAULT) ? arginfo[i][ARG_INFO_DEFAULT] : null) as null|color
 
 			if ("turf by coordinates")
 				var/x = input("X coordinate", "Set to turf at \[_, ?, ?\]", 1) as null|num
@@ -514,16 +518,16 @@ var/global/debug_messages = 0
 		alert("Invalid mob")
 */
 
-/client/proc/cmd_debug_del_all()
+/client/proc/cmd_debug_del_all(var/typename as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Del-All"
+	set desc = "Delete all instances of the selected type."
 
 	// to prevent REALLY stupid deletions
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-	var/hsbitem = input("Enter atom path:","Delete",null) as null|text
+	var/hsbitem = get_one_match(typename, /atom)
 	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
 
-	hsbitem = text2path(hsbitem)
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
@@ -557,6 +561,52 @@ var/global/debug_messages = 0
 		src.verbs -= /client/proc/cmd_debug_del_all_check
 		src.delete_state = DELETE_STOP
 
+/client/proc/cmd_debug_del_half(var/typename as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Del-Half"
+	set desc = "Delete approximately half of instances of the selected type. *snap"
+
+	// to prevent REALLY stupid deletions
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
+	var/hsbitem = get_one_match(typename, /atom)
+	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
+
+	for(var/V in blocked)
+		if(V == hsbitem)
+			boutput(usr, "Can't delete that you jerk!")
+			return
+	if(hsbitem)
+		src.delete_state = DELETE_RUNNING
+		src.verbs += /client/proc/cmd_debug_del_all_cancel
+		src.verbs += /client/proc/cmd_debug_del_all_check
+		boutput(usr, "Deleting [hsbitem]...")
+		var/numdeleted = 0
+		var/numtotal = 0
+		for(var/atom/O in world)
+			if(istype(O, hsbitem))
+				numtotal++
+				if(prob(50))
+					qdel(O)
+					numdeleted++
+				if(background == "Yes (Low)")
+					LAGCHECK(LAG_LOW)
+				else if(background == "Yes (High)")
+					LAGCHECK(LAG_REALTIME)
+			if (src.delete_state == DELETE_STOP)
+				break
+			else if (src.delete_state == DELETE_CHECK)
+				boutput(usr, "Deleted [numdeleted]/[numtotal] instances of [hsbitem] so far.")
+				src.delete_state = DELETE_RUNNING
+
+		if(numtotal == 0) boutput(usr, "No instances of [hsbitem] found!")
+		else boutput(usr, "Deleted [numdeleted]/[numtotal] instances of [hsbitem]!")
+		logTheThing("admin", src, null, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
+		logTheThing("diary", src, null, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].", "admin")
+		message_admins("[key_name(src)] has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
+		src.verbs -= /client/proc/cmd_debug_del_all_cancel
+		src.verbs -= /client/proc/cmd_debug_del_all_check
+		src.delete_state = DELETE_STOP
+
 // cancels your del_all in process, if one is running
 /client/proc/cmd_debug_del_all_cancel()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -584,12 +634,13 @@ var/global/debug_messages = 0
 	var/bris = input("Enter BRISANCE of Explosion\nLeave it on 1 if you have no idea what this is.", "Brisance", 1) as num
 	var/angle = input("Enter ANGLE of Explosion (clockwise from north)\nIf not a multiple of 45, you may encounter issues.", "Angle", 0) as num
 	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
+	var/turf_safe = alert("Do you want to make the explosion safe for turfs?", "Turf safe?", "Yes", "No") == "Yes"
 
 	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
-	explosion_new(null, T, esize, bris, angle, width)
+	explosion_new(null, T, esize, bris, angle, width, turf_safe=turf_safe)
 	return
 
 /client/proc/cmd_debug_mutantrace(var/mob/mob in world)
@@ -1340,7 +1391,9 @@ var/datum/flock/testflock
 	if(!comptype)
 		return
 
-	var/list/listargs = get_proccall_arglist()
+	var/typeinfo/datum/component/TI = get_type_typeinfo(comptype)
+
+	var/list/listargs = get_proccall_arglist(TI.initialization_args)
 
 	var/returnval = target._AddComponent(list(comptype) + listargs)
 
@@ -1364,3 +1417,61 @@ var/datum/flock/testflock
 
 	selection.RemoveComponent()
 	boutput(usr, "<span class='notice'>Removed [selection] from [target].</span>")
+
+/client/proc/delete_profiling_logs()
+	set desc = "Delete all saved profiling data, I hope you know what you're doing."
+	set name = "Delete profiling logs"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(input(usr, "Type in: 'delete profiling logs' to confirm:", "Confirmation of prof. logs deletion") != "delete profiling logs")
+		boutput(usr, "Deletion of profiling logs aborted.")
+		return
+	fdel("data/logs/profiling/")
+	logTheThing("admin", usr, null, "deleted profiling logs.")
+	logTheThing("diary", usr, null, "deleted profiling logs.")
+	message_admins("[key_name(usr)] deleted profiling logs.")
+	ircbot.export("admin_debug", list("key"=usr.ckey, "msg"="deleted profiling logs for this server."))
+
+/client/proc/cause_lag(a as num, b as num)
+	set desc = "Loops a times b times over some trivial statement."
+	set name = "cause lag"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(alert("Are you sure you want to cause lag?","Why would you do this?","Yes","No") != "Yes")
+		return
+
+	logTheThing("admin", usr, null, "decided to cause lag with parameters of [a] and [b]")
+
+	var/x = 0
+	boutput(src, "lag start [world.time] [TIME] (x=[x])")
+	for(var/i in 1 to a)
+		for(var/j in 1 to b)
+			x++
+	boutput(usr, "lag end [world.time] [TIME] (x=[x])")
+
+/client/proc/persistent_lag(cpu_usage as num)
+	set desc = "Makes it so lag is at least the set number."
+	set name = "persistent lag"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(alert("Are you sure you want to set persistent lag to [cpu_usage]?","Why would you do this?","Yes","No") != "Yes")
+		return
+
+	logTheThing("admin", usr, null, "decided to set persistent lag to [cpu_usage]%.")
+
+	var/static/target_lag = null
+	target_lag = cpu_usage
+	while(target_lag > 0)
+		var/last_tick = world.time
+		while(world.tick_usage < target_lag)
+			;
+		while(world.time == last_tick)
+			sleep(0.001)
+
+#undef ARG_INFO_NAME
+#undef ARG_INFO_TYPE
+#undef ARG_INFO_DESC
+#undef ARG_INFO_DEFAULT

@@ -234,7 +234,7 @@
 				boutput(user, "You take [myWeapon] out of [src].")
 		src.update()
 		try // : is bad, but let's try and do it anyway.
-			myWeapon:update_icon() // Update the icon of the weapon, so it shows the right level of charge.
+			myWeapon:UpdateIcon() // Update the icon of the weapon, so it shows the right level of charge.
 		catch // Did : throw an exception? Catch it! Before it gets loose!
 
 	proc/update()
@@ -254,7 +254,7 @@
 			return
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num(href_list["cutwire"])
+			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -263,7 +263,7 @@
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
+			var/twire = text2num_safe(href_list["pulsewire"])
 			if (!usr.find_tool_in_hand(TOOL_PULSING) && !isAI(usr))
 				boutput(usr, "You need a multitool or similar!")
 				return

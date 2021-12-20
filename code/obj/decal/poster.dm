@@ -740,6 +740,12 @@
 					if("edit_wiki")
 						user << link("https://wiki.ss13.co/")
 
+		lesb_flag //lesbeean prefab thingy - subtle environmental storytelling, you know?
+			name = "lesbian pride flag"
+			desc = "Neat!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "lesb"
+
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
 			desc = "No... it can't be... the original?! This is a vintage!!"
@@ -954,6 +960,7 @@
 		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
+			award_type = /obj/item/mdlicense/
 			award_name = "medical license"
 			owner_job = "Medical Director"
 			icon_glass = "mdlicense1"

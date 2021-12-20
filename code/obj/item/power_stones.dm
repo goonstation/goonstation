@@ -82,8 +82,7 @@
 		attack_hand(mob/user as mob)
 			if(!istype(user, /mob/living/carbon/human)) return
 			boutput(user,"<span class='alert'><B>God, holding it makes you feel sick.</B></span>")
-			playsound(user, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-			make_cleanable( /obj/decal/cleanable/vomit, user.loc)
+			user.vomit()
 			random_brute_damage(user, rand(5,30))
 			if(prob(50)) //The stone has a price to pay
 				var/mob/living/carbon/human/M = user

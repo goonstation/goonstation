@@ -51,43 +51,55 @@
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
 	if (src.w_uniform)
-		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] [src.w_uniform.blood_DNA ? "a bloody [src.w_uniform.name]" : "\an [src.w_uniform.name]"].</span>"
+		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
 
 	if (src.hasStatus("handcuffed"))
 		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.wear_suit)
-		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] [src.wear_suit.blood_DNA ? "a bloody [src.wear_suit.name]" : "\an [src.wear_suit.name]"] on.</span>"
+		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
 
 	if (src.ears)
-		. += "<br><span class='[src.ears.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.ears)] [src.ears.blood_DNA ? "a bloody [src.ears.name]" : "\an [src.ears.name]"] by [t_his] mouth.</span>"
+		if (istype(src.ears, /obj/item/clothing/))
+			. += "<br><span class='[src.ears.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.ears)] \an [src.ears.name] by [t_his] mouth.</span>"
+		else
+			. += "<br><span class='[src.ears.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.ears)] [src.ears.blood_DNA ? "a bloody [src.ears.name]" : "\an [src.ears.name]"] by [t_his] mouth.</span>"
 
 	if (src.head)
-		. += "<br><span class='[src.head.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.head)] [src.head.blood_DNA ? "a bloody [src.head.name]" : "\an [src.head.name]"] on [t_his] head.</span>"
+		. += "<br><span class='[src.head.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.head)] \an [src.head.name] on [t_his] head.</span>"
 
 	if (src.wear_mask)
-		. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] [src.wear_mask.blood_DNA ? "a bloody [src.wear_mask.name]" : "\an [src.wear_mask.name]"] on [t_his] face.</span>"
+		if (istype(src.l_hand, /obj/item/clothing/))
+			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] [src.wear_mask.blood_DNA ? "a bloody [src.wear_mask.name]" : "\an [src.wear_mask.name]"] on [t_his] face.</span>"
+		else
+			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] \an [src.wear_mask.name] on [t_his] face.</span>"
 
 	if (src.glasses)
 		if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
-			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.glasses)] [src.glasses.blood_DNA ? "a bloody [src.glasses.name]" : "\an [src.glasses.name]"] on [t_his] face.</span>"
+			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.glasses)] \an [src.glasses.name] on [t_his] face.</span>"
 
 	if (src.l_hand)
-		. += "<br><span class='[src.l_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.l_hand)] [src.l_hand.blood_DNA ? "a bloody [src.l_hand.name]" : "\an [src.l_hand.name]"] in [t_his] left hand.</span>"
+		if (istype(src.l_hand, /obj/item/clothing/))
+			. += "<br><span class='[src.l_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.l_hand)] \an [src.l_hand.name] in [t_his] left hand.</span>"
+		else
+			. += "<br><span class='[src.l_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.l_hand)] [src.l_hand.blood_DNA ? "a bloody [src.l_hand.name]" : "\an [src.l_hand.name]"] in [t_his] left hand.</span>"
 
 	if (src.r_hand)
-		. += "<br><span class='[src.r_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.r_hand)] [src.r_hand.blood_DNA ? "a bloody [src.r_hand.name]" : "\an [src.r_hand.name]"] in [t_his] right hand.</span>"
+		if (istype(src.r_hand, /obj/item/clothing/))
+			. += "<br><span class='[src.r_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.r_hand)] \an [src.r_hand.name] in [t_his] right hand.</span>"
+		else
+			. += "<br><span class='[src.r_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.r_hand)] [src.r_hand.blood_DNA ? "a bloody [src.r_hand.name]" : "\an [src.r_hand.name]"] in [t_his] right hand.</span>"
 
 	if (src.belt)
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
 	if (src.gloves)
-		. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.blood_DNA ? "bloody " : null][src.gloves.name] on [t_his] hands.</span>"
+		. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
 	else if (src.blood_DNA)
 		. += "<br><span class='alert'>[src.name] has bloody hands!</span>"
 
 	if (src.shoes)
-		. += "<br><span class='[src.shoes.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.shoes)] [src.shoes.blood_DNA ? "bloody " : null][src.shoes.name] on [t_his] feet.</span>"
+		. += "<br><span class='[src.shoes.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.shoes)] [src.shoes.name] on [t_his] feet.</span>"
 	else if (islist(src.tracked_blood))
 		. += "<br><span class='alert'>[src.name] has bloody feet!</span>"
 
@@ -263,9 +275,9 @@
 		switch (src.blood_pressure["total"])
 			if (-INFINITY to 0) // welp
 				. += "<br><span class='alert'><B>[src.name] is pale as a ghost!</B></span>"
-			if (1 to 374) // very low (90/60)
+			if (1 to 299) // very low (70/50)
 				. += "<br><span class='alert'><B>[src.name] is very pale!</B></span>"
-			if (374 to 414) // low (100/65)
+			if (300 to 414) // low (100/65)
 				. += "<br><span class='alert'><B>[src.name] is pale.</B></span>"
 			if (585 to 666) // high (140/90)
 				. += "<br><span class='alert'>[src.name] is a little sweaty and red in the face.</span>"
@@ -321,8 +333,8 @@
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
 			. += "<br><span class='notice'>[src] has the following traits:</span>"
-			for(var/X in src.traitHolder.traits)
-				var/obj/trait/T = getTraitById(X)
+			for(var/id in src.traitHolder.traits)
+				var/obj/trait/T = src.traitHolder.traits[id]
 				. += "<br><span class='notice'>[T.cleanName]</span>"
 		else
 			. += "<br><span class='notice'>[src] does not appear to possess any special traits.</span>"

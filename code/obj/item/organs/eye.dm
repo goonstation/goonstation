@@ -17,7 +17,7 @@
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	disposing()
 		if (holder)
@@ -27,7 +27,7 @@
 				holder.right_eye = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.change_iris)
 			return
 		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
@@ -432,3 +432,7 @@ obj/item/organ/eye/skeleton
 	desc = "This takes 'hitting the bullseye' to another level."
 	icon_state = "eye-cow"
 	blood_reagent = "milk"
+
+/obj/item/organ/eye/pug
+	name = "pug eye"
+	desc = "Poor guy."

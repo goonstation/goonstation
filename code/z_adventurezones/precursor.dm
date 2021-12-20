@@ -907,7 +907,7 @@
 			var/mob/living/carbon/user = AM
 			src.shock(user)
 
-	Bump(atom/movable/AM as mob)
+	bump(atom/movable/AM as mob)
 		if(iscarbon(AM))
 			var/mob/living/carbon/user = AM
 			src.shock(user)
@@ -1248,6 +1248,7 @@
 						else
 							T.ex_act(clamp(T_dist-2,1,3))
 							for (var/atom/A in T)
+								if(A.z != T.z) continue
 								A.ex_act(clamp(T_dist-2,1,3))
 
 						sleep(0.6 SECONDS)
@@ -1345,9 +1346,9 @@
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
@@ -1365,9 +1366,9 @@
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)

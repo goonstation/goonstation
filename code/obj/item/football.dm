@@ -145,7 +145,8 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					D.try_force_open(src)
+					SPAWN_DBG(0)
+						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 					qdel(O)
@@ -197,7 +198,7 @@
 		indicator.maptext_y = 38
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
-		src.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
 
 	pickup(mob/M)
 		..()
@@ -252,12 +253,13 @@
 	ex_act(severity)
 		return
 
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
-	..()
+	. = ..()
 
 /obj/item/football/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-	..(hit_atom)
+	. = ..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)
 		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)

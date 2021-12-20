@@ -213,7 +213,10 @@
 
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
-		M.emote("sneeze")
+		if (user.zone_sel.selecting == "head")
+			M.emote("sneeze")
+		else
+			M.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -834,7 +837,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.hand_dealer -= Card
 		src.cards = shuffle(src.cards)
 
-	proc/update_icon()
+	update_icon()
 		if (!src.overlay_light)
 			src.overlay_light = image('icons/obj/objects.dmi', "BJ-light")
 		src.overlays -= src.overlay_light
@@ -1311,6 +1314,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	mat_changename = 0
 	mat_changedesc = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	muzzle_flash = "muzzle_flash_launch"
 	var/last_shot = 0
 	var/shot_delay = 15
 	var/cash_amt = 1000
@@ -1328,6 +1332,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
+			boutput(user, "<span class='success'>\The [src] beeps, \"You're a big shot, this end needs to point in the direction of poor people!\"</span>")
 			return
 
 		if ((last_shot + shot_delay) <= world.time)
@@ -1336,6 +1341,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				return
 
 			last_shot = world.time
+
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
 			var/chosen_bling// = pick(60;/obj/item/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
@@ -1357,6 +1367,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			bling.throw_at(target, 8, 2)
 			playsound(T, "sound/effects/bamf.ogg", 40, 1)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
+
+	shoot_point_blank(mob/M, mob/user, second_shot)
+		shoot(get_turf(M), get_turf(user), user, 0, 0)
 
 	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
 		if (!istype(C))
@@ -1409,9 +1422,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.font_color = HSVtoRGB(hsv(AngleToHue(rand(310,360)), rand(180,255), rand(180,255)))
 		src.color_name = hex2color_name(src.font_color)
 		src.name = "[src.color_name] lipstick"
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "spacelipstick[src.open]"
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")
@@ -1422,7 +1435,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	attack_self(var/mob/user)
 		src.open = !src.open
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack(mob/M as mob, mob/user as mob)
 		if (ishuman(M))
