@@ -1706,28 +1706,6 @@
 "en" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"eo" = (
-/obj/table/wood/auto,
-/obj/item/storage/box/accessimp_kit,
-/obj/item/paper/CrashedHopShuttle,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
 "ep" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3619,20 +3597,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
-"ju" = (
-/obj/machinery/espresso_machine,
-/obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
-	pixel_y = 32
-	},
-/obj/table/wood/round/auto,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "jw" = (
 /obj/cable{
 	d1 = 4;
@@ -11171,6 +11135,28 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"Bc" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/accessimp_kit,
+/obj/item/paper/CrashedHopShuttle,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/heads)
 "Bd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -12645,12 +12631,6 @@
 "Fa" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/janitor/office)
-"Fb" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 10
-	},
-/turf/simulated/floor/white,
-/area/station/science/artifact)
 "Fd" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -16901,6 +16881,20 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
+"PA" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "PB" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/cable{
@@ -17187,20 +17181,6 @@
 	dir = 10
 	},
 /area/station/science/lab)
-"Qd" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 6
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "Qe" = (
 /obj/machinery/door/poddoor/pyro{
 	id = "chamber_2";
@@ -19084,6 +19064,12 @@
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
+"VC" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
 "VD" = (
 /obj/cable{
 	d1 = 1;
@@ -19147,12 +19133,6 @@
 	dir = 1
 	},
 /area/station/security/main)
-"VL" = (
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 6
-	},
-/turf/simulated/floor/white,
-/area/station/science/artifact)
 "VM" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -19471,6 +19451,20 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"WH" = (
+/obj/machinery/espresso_machine,
+/obj/item/reagent_containers/food/drinks/espressocup,
+/obj/drink_rack/cup{
+	pixel_y = 32
+	},
+/obj/table/wood/round/auto,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "WI" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -20322,6 +20316,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"YT" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
 "YV" = (
 /obj/cable{
 	d1 = 1;
@@ -64617,7 +64617,7 @@ DS
 EH
 zw
 eS
-VL
+YT
 xB
 DU
 Cs
@@ -65221,7 +65221,7 @@ DT
 EI
 Fn
 Fn
-Fb
+VC
 Qv
 DU
 Iw
@@ -71234,7 +71234,7 @@ fQ
 gA
 hj
 jF
-ju
+WH
 WZ
 Uz
 Qf
@@ -73374,7 +73374,7 @@ Do
 Ej
 Ej
 Py
-Qd
+PA
 Hc
 Dn
 Ia
@@ -78801,7 +78801,7 @@ sq
 yr
 Xv
 ZL
-eo
+Bc
 VU
 Re
 CU

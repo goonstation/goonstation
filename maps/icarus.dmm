@@ -5327,14 +5327,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
-"amd" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/espresso_machine,
-/obj/cup_rack{
-	pixel_y = 32
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "ame" = (
 /obj/submachine/chem_extractor,
 /obj/machinery/light{
@@ -9430,6 +9422,19 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
+"auO" = (
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "auP" = (
@@ -26209,19 +26214,6 @@
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/chapel/sanctuary)
-"bSX" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "bWd" = (
 /obj/cable{
 	d1 = 4;
@@ -26351,12 +26343,6 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/station/hangar/sec)
-"dgC" = (
-/obj/airbridge_controller{
-	id = "escape"
-	},
-/turf/space,
-/area/space)
 "dgN" = (
 /obj/cable{
 	d1 = 1;
@@ -26447,6 +26433,14 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/pool)
+"dTt" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine,
+/obj/drink_rack/cup{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "dVJ" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -26543,6 +26537,16 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
+"eXa" = (
+/turf/space,
+/area/shuttle/escape/station)
+"fbT" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "fbX" = (
 /obj/critter/sealpup,
 /turf/simulated/pool/no_animate,
@@ -26654,13 +26658,6 @@
 /obj/item/storage/wall/random,
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
-"huV" = (
-/obj/airbridge_controller{
-	id = "escape";
-	primary_controller = 1
-	},
-/turf/space,
-/area/space)
 "hEc" = (
 /turf/simulated/floor/sanitary,
 /area/research_outpost/indigo_rye)
@@ -26711,9 +26708,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
-"hZM" = (
-/turf/space,
-/area/shuttle/escape/station)
 "idU" = (
 /obj/table/round/auto,
 /obj/item/decoration/ashtray{
@@ -26963,6 +26957,23 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/research_outpost/indigo_rye)
+"kJY" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/pen/fancy,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "kSV" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating/airless,
@@ -27180,12 +27191,6 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
-"mLe" = (
-/obj/airbridge_controller{
-	id = "escape2"
-	},
-/turf/space,
-/area/space)
 "mZv" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = 3
@@ -27444,6 +27449,12 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/research_outpost/indigo_rye)
+"qAS" = (
+/obj/airbridge_controller{
+	id = "escape2"
+	},
+/turf/space,
+/area/space)
 "qCP" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/light_parts,
@@ -27556,13 +27567,6 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
-"snw" = (
-/obj/airbridge_controller{
-	id = "escape2";
-	primary_controller = 1
-	},
-/turf/space,
-/area/space)
 "soe" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/medbay_right,
@@ -27685,23 +27689,13 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
-"uUe" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/item_box/gold_star{
-	item_amount = 20
+"uQK" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1
 	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/turf/space,
+/area/space)
 "uVI" = (
 /obj/cable{
 	d1 = 1;
@@ -27809,14 +27803,6 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
-"vMS" = (
-/obj/machinery/light,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "vQn" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -27835,6 +27821,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"vQU" = (
+/obj/airbridge_controller{
+	id = "escape"
+	},
+/turf/space,
+/area/space)
 "vSI" = (
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -27930,6 +27922,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/indigo_rye)
+"xhW" = (
+/obj/machinery/light,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "xjm" = (
 /obj/grille/steel,
 /turf/space,
@@ -70373,7 +70373,7 @@ adM
 adn
 sKy
 aej
-uUe
+kJY
 aeH
 aeT
 afb
@@ -71309,7 +71309,7 @@ akG
 akT
 als
 aks
-amd
+dTt
 ama
 amO
 amX
@@ -75561,10 +75561,10 @@ aaU
 aaU
 aaU
 auf
-bSX
+auO
 auM
 auM
-vMS
+xhW
 auf
 auM
 axt
@@ -76165,10 +76165,10 @@ aaa
 aaa
 aaa
 aaa
-snw
+fbT
 aaa
 aaa
-huV
+uQK
 aaa
 aaa
 aem
@@ -77373,10 +77373,10 @@ aaa
 aaa
 aaa
 aaa
-mLe
+qAS
 aaa
 aaa
-dgC
+vQU
 aaa
 aaa
 aaa
@@ -77673,20 +77673,20 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -77974,21 +77974,21 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -78276,22 +78276,22 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -78575,25 +78575,25 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -78876,26 +78876,26 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -79178,25 +79178,25 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -79480,24 +79480,24 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -79782,24 +79782,24 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aAF
 aaa
 aaa
@@ -80084,25 +80084,25 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -80386,26 +80386,26 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -80689,25 +80689,25 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -80994,22 +80994,22 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -81296,21 +81296,21 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -81599,20 +81599,20 @@ aaa
 aaa
 aaa
 aaa
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
-hZM
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa

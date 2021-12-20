@@ -4288,25 +4288,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/space)
-"amg" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "tile1"
-	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
-/obj/item/paper/tug/warehouse,
-/obj/item/cigpacket/cigarillo/juicer,
-/obj/item/cigpacket/cigarillo/juicer,
-/obj/item/cigpacket/cigarillo/juicer,
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 1
-	},
-/turf/simulated/floor/industrial,
-/area/space)
 "amh" = (
 /obj/decal/pole{
 	pixel_x = 12
@@ -4725,15 +4706,6 @@
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
 /area/space)
-"anj" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
-/obj/item/paper/tug/warehouse,
-/turf/simulated/floor/industrial,
-/area/space)
 "ank" = (
 /obj/storage/crate/internals,
 /turf/simulated/floor/industrial,
@@ -4759,17 +4731,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/space)
-"ann" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
-/obj/item/paper/tug/warehouse,
-/obj/item/reagent_containers/food/snacks/slimjim,
-/obj/item/device/audio_log/ht_1,
-/turf/simulated/floor/industrial,
 /area/space)
 "ano" = (
 /obj/cable{
@@ -4838,20 +4799,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/derelict_ai_sat)
-"any" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
-/obj/item/paper/tug/warehouse,
-/turf/simulated/floor/industrial,
-/area/space)
 "anz" = (
 /obj/cable{
 	d1 = 1;
@@ -8062,17 +8009,6 @@
 /obj/machinery/door/airlock/external,
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
-"avn" = (
-/obj/decal/cleanable/dirt,
-/obj/item/electronics/capacitor,
-/obj/item/light/tube/blacklight,
-/obj/item/card_group/stg,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "avo" = (
 /obj/machinery/door_control{
 	id = "robot_factory";
@@ -9698,28 +9634,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/martian_trader)
-"azz" = (
-/obj/item/basketball,
-/obj/item/kitchen/food_box/donut_box,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/obj/crevice{
-	pixel_x = -30
-	},
-/obj/overlay{
-	desc = "Gross.";
-	dir = 4;
-	icon = 'icons/turf/martian.dmi';
-	icon_state = "sideWall";
-	name = "organic wall"
-	},
-/obj/item/coin,
-/obj/item/cigpacket/propuffs,
-/obj/item/cigpacket/propuffs,
-/obj/item/clothing/head/XComHair,
-/turf/simulated/martian/floor,
-/area/martian_trader)
 "azA" = (
 /obj/overlay{
 	desc = "Gross.";
@@ -9871,14 +9785,6 @@
 "azV" = (
 /turf/simulated/martian/wall,
 /area/evilreaver/storage/tools)
-"azW" = (
-/obj/item/old_grenade/banana,
-/obj/item/bananapeel,
-/obj/item/old_grenade/banana,
-/obj/storage/cart/trash,
-/obj/lattice,
-/turf/simulated/martian/floor,
-/area/martian_trader)
 "azX" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/map/light/dimred,
@@ -12760,22 +12666,6 @@
 	},
 /turf/simulated/shuttle/wall,
 /area/abandonedship)
-"aHO" = (
-/obj/decal/floatingtiles{
-	dir = 4
-	},
-/obj/decal/cleanable/blood,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 8
-	},
-/obj/item/cell/cerenkite,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/obj/item/peripheral/card_scanner/register,
-/obj/item/clothing/under/gimmick/jetson,
-/turf/simulated/floor/airless/plating/scorched,
-/area/abandonedship)
 "aHP" = (
 /obj/lattice{
 	dir = 6;
@@ -13297,25 +13187,6 @@
 	},
 /turf/space,
 /area/space)
-"aJk" = (
-/obj/decal/floatingtiles{
-	dir = 8
-	},
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 8
-	},
-/obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/simulated/floor/airless/plating/scorched,
-/area/abandonedship)
 "aJl" = (
 /obj/item/a_gift/festive,
 /turf/simulated/floor/airless/plating/damaged3,
@@ -14353,17 +14224,6 @@
 	dir = 1
 	},
 /area/hollowasteroid)
-"aLP" = (
-/obj/decal/cleanable/oil,
-/obj/item/skull,
-/obj/item/raw_material/miracle,
-/obj/item/raw_material/miracle,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/obj/item/shipcomponent/sensor/ecto,
-/turf/simulated/floor/airless/plating/scorched,
-/area/abandonedship)
 "aLQ" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
@@ -14653,14 +14513,6 @@
 	tag = "icon-catwalk (WEST)"
 	},
 /area/derelict_ai_sat/solar)
-"aMB" = (
-/obj/item/paint_can/rainbow,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/obj/item/paint_can/rainbow/plaid,
-/turf/simulated/floor/airless/damaged2,
-/area/abandonedship)
 "aMC" = (
 /obj/machinery/power/smes{
 	charge = 0;
@@ -20696,17 +20548,6 @@
 /obj/landmark/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
-"bbu" = (
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "floor4"
-	},
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/obj/item/shieldwallgen,
-/obj/item/shieldwallgen,
-/turf/simulated/floor/airless/scorched,
-/area/abandonedship)
 "bbv" = (
 /obj/computerframe{
 	desc = "It is highly unlikely that this still works.";
@@ -20715,20 +20556,6 @@
 	name = "smashed computer"
 	},
 /turf/simulated/floor/airless/plating/damaged1,
-/area/abandonedship)
-"bbw" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "bbx" = (
 /obj/decal/cleanable/blood/splatter{
@@ -21358,16 +21185,6 @@
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/airless/damaged4,
 /area/abandonedship)
-"bdr" = (
-/obj/item/clothing/shoes/mj_shoes,
-/obj/item/clothing/under/gimmick/mj_clothes,
-/obj/item/clothing/suit/mj_suit,
-/obj/item/clothing/head/mj_hat,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/simulated/floor/airless/plating/damaged3,
-/area/abandonedship)
 "bds" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -21506,18 +21323,6 @@
 "bdN" = (
 /obj/decal/cleanable/robot_debris,
 /obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/abandonedship)
-"bdO" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/obj/item/horseshoe,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bdP" = (
@@ -21842,28 +21647,6 @@
 /turf/space,
 /area/space)
 "beK" = (
-/turf/simulated/floor/airless/scorched,
-/area/abandonedship)
-"beL" = (
-/obj/decal/cleanable/blood/tracks,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 4
-	},
-/obj/item/clothing/under/misc/turds{
-	desc = "It has an NT logo on it.";
-	name = "NT-S.O. Jumpsuit"
-	},
-/obj/item/clothing/suit/armor/NT_alt{
-	desc = "It has the Nanotrasen logo on it and an unknown rank insignia.";
-	name = "NT-S.O. Armor"
-	},
-/obj/item/clothing/head/helmet/NT{
-	desc = "It looks pretty fancy.";
-	name = "NT-S.O. Helmet"
-	},
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "beM" = (
@@ -24025,14 +23808,6 @@
 	icon_state = "floor3"
 	},
 /area/salyut)
-"bks" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/salyut)
 "bku" = (
 /obj/decal/cleanable/machine_debris,
 /obj/window{
@@ -24046,12 +23821,6 @@
 	icon_state = "floor3"
 	},
 /area/salyut)
-"bkv" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/space,
-/area/space)
 "bkw" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects{
@@ -24333,14 +24102,6 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/abandonedship)
-"blq" = (
-/obj/item/clothing/under/gimmick/snazza,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
-/turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "blr" = (
 /obj/critter/gunbot/drone/laserdrone,
@@ -25023,22 +24784,51 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
-"bRX" = (
-/obj/decoration/decorativeplant,
-/turf/simulated/floor/carpet/purple/standard/edge/sw,
-/area/crashed_hop_shuttle)
-"cdz" = (
-/obj/table/regal/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
-	initial_volume = 0;
-	name = "Ancient Blue Label Scotch";
-	pixel_x = 9
+"bEb" = (
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
 	},
-/turf/simulated/floor/carpet/purple/standard/edge/west,
+/obj/map/light/screen,
+/turf/simulated/floor/damaged3,
 /area/crashed_hop_shuttle)
-"cuD" = (
-/turf/simulated/shuttle/wall,
+"bHZ" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/item/clothing/under/misc/turds{
+	desc = "It has an NT logo on it.";
+	name = "NT-S.O. Jumpsuit"
+	},
+/obj/item/clothing/suit/armor/NT_alt{
+	desc = "It has the Nanotrasen logo on it and an unknown rank insignia.";
+	name = "NT-S.O. Armor"
+	},
+/obj/item/clothing/head/helmet/NT{
+	desc = "It looks pretty fancy.";
+	name = "NT-S.O. Helmet"
+	},
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"chP" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space"
+	},
+/area/crashed_hop_shuttle)
+"cvg" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+/turf/simulated/floor/carpet/purple/fancy/narrow/north,
+/area/crashed_hop_shuttle)
+"cNo" = (
+/turf/simulated/shuttle/wall{
+	dir = 4
+	},
 /area/crashed_hop_shuttle)
 "cSD" = (
 /obj/wingrille_spawn/auto,
@@ -25047,27 +24837,40 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
-"cVS" = (
-/obj/lattice,
+"ddv" = (
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
+	},
+/obj/item/acesscomputerunfolder,
+/obj/table/regal/auto,
+/turf/simulated/floor/carpet/purple/standard/edge/west,
+/area/crashed_hop_shuttle)
+"dil" = (
+/turf/simulated/floor/damaged1,
+/area/crashed_hop_shuttle)
+"doT" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
 /obj/decal/floatingtiles{
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/space,
 /area/crashed_hop_shuttle)
-"dtq" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
-	},
+"dsR" = (
+/obj/item/clothing/suit/bedsheet/hop,
+/obj/stool/bed,
+/turf/simulated/floor/carpet/purple/standard/edge/se,
 /area/crashed_hop_shuttle)
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
-"dMo" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "door1";
-	name = "broken door"
-	},
+"dQX" = (
+/obj/stool/bench/blue,
+/turf/simulated/floor/airless/vr,
 /area/crashed_hop_shuttle)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
@@ -25080,56 +24883,63 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"eSb" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
+"eZz" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
 	},
-/obj/item/acesscomputerunfolder,
-/obj/table/regal/auto,
-/turf/simulated/floor/carpet/purple/standard/edge/west,
+/turf/unsimulated/floor/airless/plating/damaged3,
+/area/crashed_hop_shuttle)
+"fiO" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor,
 /area/crashed_hop_shuttle)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"fLA" = (
-/obj/stool/chair/wooden/regal{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/purple/fancy/narrow/south,
-/area/crashed_hop_shuttle)
-"fWv" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space";
-	name = "window";
-	opacity = 0
-	},
-/area/crashed_hop_shuttle)
+"ftY" = (
+/obj/item/clothing/shoes/mj_shoes,
+/obj/item/clothing/under/gimmick/mj_clothes,
+/obj/item/clothing/suit/mj_suit,
+/obj/item/clothing/head/mj_hat,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
 "fWR" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
-"gBV" = (
-/obj/lattice,
-/obj/structure/girder/displaced,
-/turf/simulated/floor/plating/airless/asteroid,
+"gPJ" = (
+/obj/stool/bench/blue,
+/turf/simulated/floor,
 /area/crashed_hop_shuttle)
 "hmp" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
 	},
 /area/space)
-"hAS" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Head of Personnel's Office";
-	req_access = null
+"hqJ" = (
+/obj/stool/chair/wooden/regal{
+	dir = 8
 	},
-/obj/access_spawn/head_of_personnel,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/purple/fancy/narrow/south,
+/area/crashed_hop_shuttle)
+"hAj" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall_space"
+	},
+/area/crashed_hop_shuttle)
+"hDL" = (
+/obj/decoration/decorativeplant,
+/turf/simulated/floor/carpet/purple/standard/edge/sw,
+/area/crashed_hop_shuttle)
+"hLZ" = (
+/turf/simulated/shuttle/wall,
 /area/crashed_hop_shuttle)
 "hOL" = (
 /obj/item/storage/secure/ssafe{
@@ -25143,13 +24953,13 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
-"hSR" = (
-/obj/item/paper_bin{
-	pixel_y = 8
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/airless/grime,
-/area/crashed_hop_shuttle)
+"hUU" = (
+/obj/storage/crate/bloody,
+/obj/item/paper/tug/warehouse,
+/obj/item/reagent_containers/food/snacks/slimjim,
+/obj/item/device/audio_log/ht_1,
+/turf/simulated/floor/industrial,
+/area/space)
 "hUW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25164,6 +24974,24 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"ijY" = (
+/obj/item/plank,
+/obj/item/plank,
+/obj/item/plank,
+/obj/item/plank,
+/obj/item/plank,
+/obj/storage/crate/bloody,
+/obj/item/horseshoe,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
+"iob" = (
+/obj/lattice,
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/crashed_hop_shuttle)
+"iqQ" = (
+/turf/simulated/floor/carpet/purple/standard/edge/east,
+/area/crashed_hop_shuttle)
 "ivG" = (
 /obj/noticeboard{
 	pixel_x = 10;
@@ -25171,21 +24999,17 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
-"iEa" = (
-/obj/table/wood/auto/desk,
-/obj/random_item_spawner/desk_stuff,
-/turf/unsimulated/floor/airless/grime,
-/area/crashed_hop_shuttle)
 "iIc" = (
 /obj/critter/gunbot/drone/heavydrone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"jpq" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/hop/april_fools,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/clothing/suit/armor/hopcoat,
-/turf/simulated/floor/carpet/purple/standard/edge/nw,
+"jiW" = (
+/obj/storage/crate/bloody,
+/obj/item/paper/tug/warehouse,
+/turf/simulated/floor/industrial,
+/area/space)
+"jPM" = (
+/turf/unsimulated/floor/airless/plating/damaged3,
 /area/crashed_hop_shuttle)
 "kag" = (
 /obj/decal/tile_edge/stripe{
@@ -25194,13 +25018,24 @@
 	},
 /turf/simulated/floor/red/side,
 /area/radiostation/hallway)
-"kvW" = (
-/obj/machinery/door/airlock/pyro/command{
-	name = "Head of Personnel's Office";
-	req_access_txt = "55"
+"kdu" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
 	},
-/obj/access_spawn/head_of_personnel,
+/obj/storage/crate/bloody,
+/obj/item/shieldwallgen,
+/obj/item/shieldwallgen,
+/turf/simulated/floor/airless/scorched,
+/area/abandonedship)
+"kDF" = (
 /turf/simulated/floor,
+/area/crashed_hop_shuttle)
+"kIE" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/suit/hop/april_fools,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/clothing/suit/armor/hopcoat,
+/turf/simulated/floor/carpet/purple/standard/edge/nw,
 /area/crashed_hop_shuttle)
 "lbt" = (
 /obj/table/auto,
@@ -25209,17 +25044,6 @@
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
-"lge" = (
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles4"
-	},
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
-"lot" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
-/area/crashed_hop_shuttle)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -25227,6 +25051,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"ltK" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_space"
+	},
+/area/crashed_hop_shuttle)
 "lwM" = (
 /obj/table/auto,
 /obj/item/camera{
@@ -25234,10 +25064,7 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"mgO" = (
-/turf/simulated/floor/damaged1,
-/area/crashed_hop_shuttle)
-"mvM" = (
+"lxZ" = (
 /obj/decal/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
@@ -25247,15 +25074,31 @@
 /obj/decal/cleanable/vomit,
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/crashed_hop_shuttle)
-"mGn" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
+"mho" = (
+/obj/storage/crate/bloody,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
 	},
+/area/salyut)
+"mDW" = (
 /obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles3"
+	dir = 8
 	},
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8
+	},
+/obj/decal/cleanable/machine_debris,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/item/raw_material/plasmastone,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"mEu" = (
+/obj/lattice,
 /turf/space,
 /area/crashed_hop_shuttle)
 "mHM" = (
@@ -25264,6 +25107,15 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"mXr" = (
+/obj/decal/cleanable/oil,
+/obj/item/skull,
+/obj/item/raw_material/miracle,
+/obj/item/raw_material/miracle,
+/obj/storage/crate/bloody,
+/obj/item/shipcomponent/sensor/ecto,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
 "npm" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -25271,6 +25123,20 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"nzs" = (
+/obj/storage/crate/bloody,
+/turf/space,
+/area/space)
+"nAo" = (
+/obj/machinery/light,
+/turf/simulated/floor/carpet/purple/standard/edge/south,
+/area/crashed_hop_shuttle)
+"obg" = (
+/obj/item/clothing/under/gimmick/snazza,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
 "odf" = (
 /obj/lattice{
 	dir = 4;
@@ -25288,6 +25154,28 @@
 /obj/decal/cleanable/robot_debris/limb,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"omp" = (
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Personnel's Office";
+	req_access_txt = "55"
+	},
+/obj/access_spawn/head_of_personnel,
+/turf/simulated/floor,
+/area/crashed_hop_shuttle)
+"oMv" = (
+/obj/decal/floatingtiles{
+	dir = 4
+	},
+/obj/decal/cleanable/blood,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8
+	},
+/obj/item/cell/cerenkite,
+/obj/storage/crate/bloody,
+/obj/item/peripheral/card_scanner/register,
+/obj/item/clothing/under/gimmick/jetson,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
 "oNd" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -25295,45 +25183,45 @@
 /obj/item/paper/book/from_file/minerals,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
-"oRB" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
-	},
-/area/crashed_hop_shuttle)
 "oWB" = (
 /mob/living/critter/spider,
 /obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
-"pru" = (
-/obj/stool/bench/blue,
-/turf/simulated/floor/airless/vr,
+"pjV" = (
+/obj/lattice,
+/obj/structure/girder/displaced,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/crashed_hop_shuttle)
-"pBw" = (
-/turf/simulated/floor/carpet/purple/standard/edge/east,
+"psn" = (
+/turf/simulated/floor/damaged3,
 /area/crashed_hop_shuttle)
-"pLk" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window";
-	opacity = 0
+"pOi" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/area/crashed_hop_shuttle)
-"pMR" = (
-/obj/machinery/light,
-/turf/simulated/floor/carpet/purple/standard/edge/south,
-/area/crashed_hop_shuttle)
-"qhj" = (
-/obj/stool/bench/blue,
-/turf/simulated/floor,
+/obj/storage/crate/bloody,
+/obj/item/paper/tug/warehouse,
+/turf/simulated/floor/industrial,
+/area/space)
+"qdC" = (
+/turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/crashed_hop_shuttle)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
+"qpU" = (
+/turf/simulated/shuttle/wall{
+	dir = 1;
+	icon_state = "wall_space";
+	name = "window";
+	opacity = 0
+	},
+/area/crashed_hop_shuttle)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -25344,19 +25232,10 @@
 	},
 /turf/space,
 /area/space)
-"qFd" = (
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
-"qMK" = (
-/obj/item/clothing/suit/bedsheet/hop,
-/obj/stool/bed,
-/turf/simulated/floor/carpet/purple/standard/edge/se,
-/area/crashed_hop_shuttle)
-"qZq" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space"
-	},
+"qGk" = (
+/obj/table/wood/auto/desk,
+/obj/random_item_spawner/desk_stuff,
+/turf/unsimulated/floor/airless/grime,
 /area/crashed_hop_shuttle)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
@@ -25369,14 +25248,6 @@
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"rnz" = (
-/mob/living/critter/small_animal/dog/corgi,
-/obj/stool/bee_bed{
-	desc = "A soft little bed the general size and shape of a corgi.";
-	name = "dog bed"
-	},
-/turf/simulated/floor/carpet/purple/standard/edge/ne,
-/area/crashed_hop_shuttle)
 "rzX" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#575A5E"
@@ -25392,16 +25263,34 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"rWd" = (
-/turf/simulated/floor/carpet/purple/standard/edge/north,
+"rTv" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Head of Personnel's Office";
+	req_access = null
+	},
+/obj/access_spawn/head_of_personnel,
+/turf/simulated/floor,
 /area/crashed_hop_shuttle)
-"sBu" = (
-/obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
+"sqG" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
+	initial_volume = 0;
+	name = "Ancient Blue Label Scotch";
+	pixel_x = 9
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/west,
 /area/crashed_hop_shuttle)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
+"sFZ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "door1";
+	name = "broken door"
+	},
+/area/crashed_hop_shuttle)
 "sQW" = (
 /obj/storage/crate/internals,
 /obj/item/clothing/mask/breath,
@@ -25418,20 +25307,13 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
 /area/space)
-"tfl" = (
+"sUL" = (
 /obj/lattice,
-/obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/crashed_hop_shuttle)
-"tqH" = (
-/obj/table/wood/auto/desk,
-/obj/table/wood/auto/desk,
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = 6;
-	pixel_y = 10
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
 	},
-/obj/item/decoration/ashtray,
-/turf/simulated/floor/damaged1,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/crashed_hop_shuttle)
 "txH" = (
 /obj/critter/gunbot/drone/cutterdrone,
@@ -25439,9 +25321,28 @@
 	stone_color = "#D1E6FF"
 	},
 /area/space)
-"ufC" = (
-/turf/simulated/floor/damaged3,
+"tDJ" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/space,
 /area/crashed_hop_shuttle)
+"tJP" = (
+/obj/item/paint_can/rainbow,
+/obj/storage/crate/bloody,
+/obj/item/paint_can/rainbow/plaid,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
+"tSw" = (
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/item/raw_material/uqill,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/damaged5,
+/area/abandonedship)
 "utd" = (
 /obj/decal/cleanable/robot_debris/gib,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -25458,15 +25359,47 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
+"uJj" = (
+/mob/living/critter/small_animal/dog/corgi,
+/obj/stool/bee_bed{
+	desc = "A soft little bed the general size and shape of a corgi.";
+	name = "dog bed"
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/ne,
+/area/crashed_hop_shuttle)
+"uUB" = (
+/turf/simulated/shuttle/wall{
+	dir = 4;
+	icon_state = "wall_space";
+	name = "window";
+	opacity = 0
+	},
+/area/crashed_hop_shuttle)
 "vel" = (
 /obj/item/storage/belt/hunter,
 /obj/item/clothing/under/misc/tourist,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
+"vlr" = (
+/obj/decal/cleanable/dirt,
+/obj/item/electronics/capacitor,
+/obj/item/light/tube/blacklight,
+/obj/item/card_group/stg,
+/obj/storage/crate/bloody,
+/turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "vrI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"vSr" = (
+/obj/item/paper_bin{
+	pixel_y = 8
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/airless/grime,
+/area/crashed_hop_shuttle)
 "wav" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
@@ -25480,21 +25413,30 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
-"wgl" = (
-/obj/lattice,
-/turf/space,
-/area/crashed_hop_shuttle)
-"wsg" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
-/turf/simulated/floor/carpet/purple/fancy/narrow/north,
-/area/crashed_hop_shuttle)
-"wxv" = (
-/turf/unsimulated/floor/airless/plating/damaged3,
-/area/crashed_hop_shuttle)
-"wKV" = (
-/turf/simulated/shuttle/wall{
-	dir = 4
+"wrt" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "tile1"
 	},
+/obj/storage/crate/bloody,
+/obj/item/paper/tug/warehouse,
+/obj/item/cigpacket/cigarillo/juicer,
+/obj/item/cigpacket/cigarillo/juicer,
+/obj/item/cigpacket/cigarillo/juicer,
+/obj/decal/fakeobjects/lightbulb_broken{
+	dir = 1
+	},
+/turf/simulated/floor/industrial,
+/area/space)
+"wyX" = (
+/obj/table/wood/auto/desk,
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/decoration/ashtray,
+/turf/simulated/floor/damaged1,
 /area/crashed_hop_shuttle)
 "wNJ" = (
 /obj/reagent_dispensers/beerkeg,
@@ -25504,29 +25446,43 @@
 	},
 /turf/simulated/floor/longtile/black,
 /area/space)
-"wOi" = (
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = 6;
-	pixel_y = -28
+"xBC" = (
+/obj/item/old_grenade/spawner/banana,
+/obj/item/bananapeel,
+/obj/item/old_grenade/spawner/banana,
+/obj/storage/cart/trash,
+/obj/lattice,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"xFs" = (
+/obj/item/basketball,
+/obj/item/kitchen/food_box/donut_box,
+/obj/storage/crate/bloody,
+/obj/crevice{
+	pixel_x = -30
 	},
-/turf/unsimulated/floor/airless/plating/damaged3,
+/obj/overlay{
+	desc = "Gross.";
+	dir = 4;
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "sideWall";
+	name = "organic wall"
+	},
+/obj/item/coin,
+/obj/item/cigpacket/propuffs,
+/obj/item/cigpacket/propuffs,
+/obj/item/clothing/head/XComHair,
+/turf/simulated/martian/floor,
+/area/martian_trader)
+"xKE" = (
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/crashed_hop_shuttle)
 "xOl" = (
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
 	},
 /area/space)
-"xPV" = (
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
-	dir = 8;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
-	},
-/obj/map/light/screen,
-/turf/simulated/floor/damaged3,
-/area/crashed_hop_shuttle)
 
 (1,1,1) = {"
 aaa
@@ -35368,7 +35324,7 @@ aaa
 aHU
 aMq
 aKi
-aMB
+tJP
 aHU
 aaa
 aaa
@@ -42268,7 +42224,7 @@ axV
 ayn
 ayn
 azf
-azz
+xFs
 axv
 axv
 aAJ
@@ -42571,7 +42527,7 @@ axW
 axW
 axW
 axW
-azW
+xBC
 axv
 azV
 aBb
@@ -52269,10 +52225,10 @@ aaa
 aaa
 aaa
 aHB
-aHO
+oMv
 aIo
 aIM
-aJk
+mDW
 aHU
 aaa
 aaa
@@ -52671,7 +52627,7 @@ aaa
 aaa
 aaa
 aHU
-bdO
+ijY
 aIv
 aHU
 aaa
@@ -57595,7 +57551,7 @@ amC
 amB
 anc
 anh
-ann
+hUU
 afR
 afR
 acS
@@ -58198,7 +58154,7 @@ amx
 amE
 amX
 ane
-anj
+jiW
 anu
 afR
 afR
@@ -58796,14 +58752,14 @@ alh
 alH
 alh
 afR
-amg
+wrt
 amm
 amy
 amG
 amY
 ang
 anl
-any
+pOi
 anz
 anz
 acS
@@ -59308,13 +59264,13 @@ aab
 aac
 aac
 aHU
-bbu
+kdu
 bbU
 bcj
 bcA
 aJz
 bdf
-bdr
+ftY
 aXB
 aIm
 aJz
@@ -60214,7 +60170,7 @@ aaa
 aaa
 aaa
 aHU
-bbw
+tSw
 bbX
 bcl
 aIr
@@ -60224,7 +60180,7 @@ aXu
 bdU
 bei
 aJn
-beL
+bHZ
 beV
 aHB
 aGD
@@ -61920,8 +61876,8 @@ aaa
 aGv
 blg
 blo
-blq
-avn
+obg
+vlr
 aGv
 aGD
 aaa
@@ -61933,7 +61889,7 @@ aLm
 aGK
 aLx
 aGv
-aLP
+mXr
 aLW
 aGv
 aLx
@@ -74592,7 +74548,7 @@ azO
 ayF
 axN
 bkm
-bks
+mho
 axA
 aGE
 aaa
@@ -75500,7 +75456,7 @@ azR
 axA
 bkw
 axA
-bkv
+nzs
 aaa
 aaa
 aaa
@@ -101718,16 +101674,16 @@ aaa
 aab
 aab
 aaa
-oRB
-wKV
-wgl
-wKV
-wKV
-wKV
-wKV
-wKV
-wKV
-dtq
+ltK
+cNo
+mEu
+cNo
+cNo
+cNo
+cNo
+cNo
+cNo
+hAj
 aaa
 aaa
 aaa
@@ -102021,16 +101977,16 @@ aab
 aab
 aab
 aab
-tfl
-sBu
-ufC
-cuD
-jpq
-eSb
-cdz
-bRX
-cuD
-lot
+iob
+xKE
+psn
+hLZ
+kIE
+ddv
+sqG
+hDL
+hLZ
+tDJ
 aaa
 aaa
 aaa
@@ -102323,16 +102279,16 @@ aaa
 aab
 aab
 aab
-qhj
-mgO
-qFd
-kvW
-rWd
-wsg
-fLA
-pMR
-cuD
-lot
+gPJ
+dil
+kDF
+omp
+qdC
+cvg
+hqJ
+nAo
+hLZ
+tDJ
 aaa
 aaa
 aaa
@@ -102624,16 +102580,16 @@ aaa
 aaa
 aab
 aab
-ufC
-cVS
-qFd
-pru
+psn
+sUL
+kDF
+dQX
 aGX
-rnz
-mvM
-pBw
-qMK
-cuD
+uJj
+lxZ
+iqQ
+dsR
+hLZ
 aaa
 aaa
 aaa
@@ -102925,17 +102881,17 @@ aaa
 aaa
 aaa
 aab
-sBu
-cVS
-mgO
-lge
-ufC
-wKV
-wKV
-wKV
-hAS
-wKV
-cuD
+xKE
+sUL
+dil
+fiO
+psn
+cNo
+cNo
+cNo
+rTv
+cNo
+hLZ
 aaa
 aaa
 aaa
@@ -103227,18 +103183,18 @@ aaa
 aaa
 aaa
 aab
-wKV
-sBu
-ufC
-wgl
-wgl
-iEa
-wgl
-ufC
-wgl
-wOi
-cuD
-lot
+cNo
+xKE
+psn
+mEu
+mEu
+qGk
+mEu
+psn
+mEu
+eZz
+hLZ
+tDJ
 aaa
 aaa
 aaa
@@ -103529,18 +103485,18 @@ aaa
 aaa
 aaa
 aaa
-qZq
-wKV
-mGn
-wgl
-lge
-hSR
-xPV
-sBu
-wxv
-tqH
-cuD
-lot
+chP
+cNo
+doT
+mEu
+fiO
+vSr
+bEb
+xKE
+jPM
+wyX
+hLZ
+tDJ
 aaa
 aaa
 aaa
@@ -103832,16 +103788,16 @@ aaa
 aaa
 aaa
 aaa
-fWv
-wKV
-dMo
-wKV
-wgl
-wKV
-gBV
-wKV
-wKV
-pLk
+qpU
+cNo
+sFZ
+cNo
+mEu
+cNo
+pjV
+cNo
+cNo
+uUB
 aaa
 aaa
 aaa

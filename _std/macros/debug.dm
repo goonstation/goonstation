@@ -63,7 +63,7 @@ proc/dm_dump(var/x)
 		else if(isfile(x) || isicon(x))
 			val = "'[x]'"
 		else if(istype(x, /generator))
-			val = "[x])" // lmao at there being no ) in there, in case that ever gets fixed remove this )
+			val = "[x]"
 		else if(isnull(x))
 			val = "null"
 		else if(istype(x, /matrix))

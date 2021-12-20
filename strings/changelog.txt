@@ -1,4 +1,33 @@
-
+(t)thu dec 16 21
+(u)tarmunora
+(e)⚖|balance
+(+)space cleaner is mild blob poison.
+(u)TTerc
+(e)🆕|feature
+(*)Firefighting grenades are now also able to extinguish mobs.
+(t)thu dec 16 21
+(u)TTerc
+(e)⚖|balance
+(+)ValuChimp restock cartridges are now only available via certain cargo traders, similarly to monkey crates.
+(t)thu dec 16 21
+(u)tarmunora
+(e)⚖|balance
+(+)Werewolf and tentacle arms become weaker when severed.
+(u)RSG250
+(p)6915
+(e)|
+(+)Gemstones make good windows again.
+(u)Flaborized
+(p)6932
+(e)🎨|sprites
+(*)Updated many jumpsuit item sprites to be more consistent with their worn states.
+(t)sun dec 12 21
+(u)Terra_GS
+(p)6888
+(e)🎨|sprites
+(+)Updated the launcher/ignition switch sprites.
+(u)Jan.antilles
+(*)Shrubs now have Spacemas lights.
 (t)thu dec 09 21
 (u)tarmunora
 (e)⚖|balance
