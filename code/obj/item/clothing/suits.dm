@@ -1218,9 +1218,9 @@
 			body_parts_covered = TORSO|LEGS|ARMS
 			permeability_coefficient = 0.01
 
-		setupProperties()
-			..()
-			setProperty("viralprot", 50)
+			setupProperties()
+				..()
+				setProperty("viralprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1228,9 +1228,9 @@
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
-		setupProperties()
-			..()
-			setProperty("space_movespeed", -0.25)
+			setupProperties()
+				..()
+				setProperty("space_movespeed", -0.25)
 
 
 		firebrand
