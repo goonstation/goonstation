@@ -447,6 +447,8 @@
 					src.ArtifactActivated()
 
 /obj/proc/ArtifactTouched(mob/user as mob)
+	if (get_dist(src, user) > 1)
+		return
 	if (isAI(user))
 		return
 	if (isobserver(user))
