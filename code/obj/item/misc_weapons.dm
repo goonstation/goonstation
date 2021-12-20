@@ -1480,9 +1480,14 @@ obj/item/whetstone
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
 

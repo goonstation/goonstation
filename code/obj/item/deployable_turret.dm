@@ -20,6 +20,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		icon_state = "[src.icon_tag]_deployer"
 
 	get_desc()
@@ -60,6 +61,10 @@
 			turret.quick_deploy()
 			qdel(src)
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 
 
 /////////////////////////////
@@ -98,6 +103,7 @@
 
 	New(var/direction)
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.set_dir(direction)
 		src.set_initial_angle()
 
@@ -116,6 +122,7 @@
 
 	disposing()
 		processing_items.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 
