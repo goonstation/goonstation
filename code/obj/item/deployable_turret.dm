@@ -2,6 +2,7 @@
 //      Deployer Code      //
 /////////////////////////////
 
+ABSTRACT_TYPE(/obj/item/turret_deployer)
 /obj/item/turret_deployer
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
