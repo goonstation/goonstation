@@ -214,7 +214,7 @@
 			if(is_syndicate)
 				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
 			else
-				. = !istype(target.ears, /obj/item/device/radio/headset/syndicate) //Nanotrasen guitar, Nanotrasen tunes
+				. = istype(target.ears, /obj/item/device/radio/headset) //Nanotrasen guitar, Nanotrasen tunes
 
 	shred
 		name = "Shred"
