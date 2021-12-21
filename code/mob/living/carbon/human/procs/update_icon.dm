@@ -365,10 +365,16 @@
 	// Glasses
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
-		src.glasses.wear_image.icon_state = src.glasses.wear_state || src.glasses.icon_state
+		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
+		if (islist(override_states) && ("eyes-[wear_state]" in override_states)) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
+			src.glasses.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.glasses.wear_image.icon_state = "eyes-[wear_state]"
+		else
+			src.glasses.wear_image.icon = src.glasses.wear_image_icon
+			src.glasses.wear_image.icon_state = wear_state
 		src.glasses.wear_image.layer = src.glasses.wear_layer
 		src.glasses.wear_image.pixel_x = 0
-		src.glasses.wear_image.pixel_y = head_offset
+		src.glasses.wear_image.pixel_y = 0
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
 		UpdateOverlays(src.glasses.wear_image, "wear_glasses")
