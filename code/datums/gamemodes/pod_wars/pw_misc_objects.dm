@@ -234,7 +234,7 @@
 	team_num = 2
 	color = "#FF6666"
 
-ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
+ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 /obj/item/turret_deployer/pod_wars
 	name = "Turret Deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
