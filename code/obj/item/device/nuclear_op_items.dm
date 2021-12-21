@@ -52,22 +52,21 @@
 /obj/item/remote/reinforcement_beacon
 	name = "Reinforcement Beacon"
 	icon = 'icons/obj/items/device.dmi'
-	desc = "A handheld beacon that allows you to call a Syndicate reinforcement to the user's current location."
+	desc = "A handheld beacon that allows you to call a Syndicate gunbot to the user's current location."
 	icon_state = "beacon" //replace later
 	item_state = "electronic"
 	density = FALSE
-	anchored = TRUE
+	anchored = FALSE
 	w_class = W_CLASS_SMALL
 	var/uses = 1
 	var/ghost_confirmation_delay = 30 SECONDS
 
 	New()
 		..()
-		sleep(1)
-		desc = "A handheld beacon that allows you to call a Syndicate reinforcement to the user's current location. It has [src.uses] charge left."
+		desc = "A handheld beacon that allows you to call a Syndicate gunbot to the user's current location. It has [src.uses] charge left."
 
 /obj/item/remote/reinforcement_beacon/attack_self(mob/user as mob)
-	if(isrestrictedz(user.z) || isrestrictedz(src.z))
+	if(!isonstationz(user.z))
 		boutput(user, "<span class='alert'>The [src] can't be used here, try again on station!</span>")
 		return
 
@@ -78,11 +77,11 @@
 		src.anchored = TRUE
 		sleep(1 SECOND)
 		src.visible_message("<span class='alert'>The [src] beeps, before locking itself to the ground.</span>")
-		src.desc = "A handheld beacon that allows you to call a Syndicate reinforcement to the user's current location. It seems to currently be transmitting something."
+		src.desc = "A handheld beacon that allows you to call a Syndicate gunbot to the user's current location. It seems to currently be transmitting something."
 		sleep(5 SECONDS)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a nuclear operative reinforcement? You may be randomly selected from the list of candidates.")
-		text_messages.Add("You are eligible to be respawned as a nuclear operative reinforcement. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to respawn as a nuclear operative gunbot? You may be randomly selected from the list of candidates.")
+		text_messages.Add("You are eligible to be respawned as a nuclear operative gunbot. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
@@ -94,12 +93,12 @@
 		var/datum/mind/chosen = pick(candidates)
 		var/mob/living/critter/gunbot/syndicate/synd = new/mob/living/critter/gunbot/syndicate
 		chosen.transfer_to(synd)
-		//H.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
+		//user.mind.transfer_to(synd) //comment out ghost messages & uncomment this to make *you* the reinforcement for testing purposes
 		synd.mind.special_role = ROLE_NUKEOP
 		synd.mind.current.antagonist_overlay_refresh(1, 0)
 		SHOW_NUKEOP_TIPS(synd.mind.current)
 		SPAWN_DBG(0)
-			launch_with_missile(synd, src.loc)
+			launch_with_missile(synd, src.loc, null, "arrival_missile_synd")
 		sleep(3 SECONDS)
 		if(src.uses <= 0)
 			elecflash(src)
@@ -109,6 +108,7 @@
 			qdel(src)
 		else
 			src.visible_message("<span class='alert'>The [src] beeps twice, before unbolting itself from the ground.</span>")
+			src.anchored = FALSE
 	else
 		boutput(user, "<span class='alert'>The [src] is out of charge and can't be used again!</span>")
 
@@ -436,12 +436,12 @@
 		for(var/obj/machinery/nuclearbomb/NB in nuclear_bombs)
 			var/turf/picked_turf = pick(possible_turfs)
 			SPAWN_DBG(0)
-				launch_with_missile(NB, picked_turf)
+				launch_with_missile(NB, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 		for(var/mob/living/carbon/C in sent_mobs)
 			var/turf/picked_turf = pick(possible_turfs)
 			SPAWN_DBG(0)
-				launch_with_missile(C, picked_turf)
+				launch_with_missile(C, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))
 				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
@@ -481,17 +481,17 @@
 	density = FALSE
 	anchored = FALSE
 	w_class = W_CLASS_SMALL
-	///How many times can this be used?
+	/// How many times can this be used?
 	var/uses = 1
-	///Movement controller for the designator's "scope"
+	/// Movement controller for the designator's "scope"
 	var/datum/movement_controller/designatormove = null
-	///TRUE if an air strike is waiting to happen/happening
+	/// TRUE if an air strike is waiting to happen/happening
 	var/in_use = FALSE
-	///The gun that "fires" the shell
+	/// The gun that "fires" the shell
 	var/obj/machinery/broadside_gun/linked_gun = null
-	///Takes a string for a ship that's set in the `linked_gun`'s vars, e.g. "Cairngorm"
+	/// Takes a string for a ship that's set in the `linked_gun`'s vars, e.g. "Cairngorm"
 	var/ship_looking_for = ""
-	///Overlay sprite for where the strike will land, set to null for no overlay
+	/// Overlay sprite for where the strike will land, set to null for no overlay
 	var/image/target_overlay = null
 
 	New()
@@ -619,18 +619,18 @@
 	anchored = 1
 	processing_tier = PROCESSING_EIGHTH
 	bound_width = 96
-	///Ship name you're firing from, important for the designator
+	/// Ship name you're firing from, important for the designator
 	var/firingfrom = ""
 	var/broken = FALSE
-	///Amount of ammo the gun has, set to -1 for infinite
+	/// Amount of ammo the gun has, set to -1 for infinite
 	var/ammo = 1
-	///In case you need to offset the gun firing's sound by offset tiles (if it's aiming left for example)
+	/// In case you need to offset the gun firing's sound by offset tiles (if it's aiming left for example)
 	var/sound_offset_length
-	///In case you need to offset the gun firing's sound dir (if it's aiming left for example)
+	/// In case you need to offset the gun firing's sound dir (if it's aiming left for example)
 	var/sound_offset_dir
-	///Holding var for the exact turf to play the gun's firing sound from
+	/// Holding var for the exact turf to play the gun's firing sound from
 	var/turf/sound_turf
-	///Overlay sprite for where the strike will land, set to null for no overlay
+	/// Overlay sprite for where the strike will land, set to null for no overlay
 	var/image/target_overlay = null
 
 
@@ -725,7 +725,7 @@
 
 /obj/item/ammo/ammobox/pistol_smg
 	name = "Pistol / SMG Ammo Box"
-	desc = "A box containing a magazine of pistol- and sub-machine gun caliber ammo."
+	desc = "A box containing a magazine of pistol and sub-machine gun caliber ammo."
 	valid_calibers = list(0.22, 0.355, 0.50, 0.512) //not adding .357 and .38 because they're special
 
 /obj/item/ammo/ammobox/revolver
@@ -1005,6 +1005,5 @@
 
 	New()
 		..()
-		sleep(5)
 		src.desc = "A bag that can fabricate specialist magazines for standard syndicate weapons. Technology! It has [src.charge] charge left."
 

@@ -146,8 +146,10 @@
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.loc = start
 
-proc/launch_with_missile(atom/movable/thing, turf/target, dir=null)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
+	if(missile_sprite)
+		missile.icon_state = "[missile_sprite]"
 	if(!target)
 		missile.reset_to_random_pos()
 	else
