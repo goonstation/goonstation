@@ -1536,9 +1536,9 @@
 			return 0
 
 		..()
-		M.update_inhands()
 		src.can_dual_wield = !src.two_handed
 		UpdateIcon()
+		M.update_inhands()
 
 	alter_projectile(obj/projectile/P)
 		. = ..()
