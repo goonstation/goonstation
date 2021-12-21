@@ -359,6 +359,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Retention Center (office)"
 	icon_state = "orange"
 
+/area/retentioncenter/recycling
+	name = "NT Retention Center (Recycling)"
+	icon_state = "pink"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors

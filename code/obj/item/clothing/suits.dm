@@ -1143,6 +1143,12 @@
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
 	team_num = TEAM_SYNDICATE
+	item_function_flags = IMMUNE_TO_ACID
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
@@ -1154,11 +1160,14 @@
 			src.dropped(user)
 			qdel(src)
 	#endif
-	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	commissar_greatcoat
 		name = "commander's great coat"
@@ -1218,9 +1227,9 @@
 			body_parts_covered = TORSO|LEGS|ARMS
 			permeability_coefficient = 0.01
 
-		setupProperties()
-			..()
-			setProperty("viralprot", 50)
+			setupProperties()
+				..()
+				setProperty("viralprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1228,9 +1237,9 @@
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
-		setupProperties()
-			..()
-			setProperty("space_movespeed", -0.25)
+			setupProperties()
+				..()
+				setProperty("space_movespeed", -0.25)
 
 
 		firebrand
@@ -1380,10 +1389,20 @@
 		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
+
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 		setupProperties()
 			..()
 			setProperty("meleeprot", 9)
 			setProperty("rangedprot", 2)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
 
 		specialist
 			name = "specialist heavy operative combat armor"
