@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/associated_deployer = null //what kind of turret deployer should this deconstruct to?
 	var/deconstructable = TRUE
 
-	New(var/direction)
+	New(var/loc, var/direction)
 		..()
 		src.set_dir(direction)
 		src.set_initial_angle()
@@ -542,7 +542,12 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 		if (istype(M))
 
-			if(!istype(M.equipped(),/obj/item/wrench))
+			if(!iswrenchingtool(M.equipped()))
+				boutput(M, "<span class='alert'>You need to be holding a wrench or similar to modify the turret's facing.</span>")
+				return
+
+			if (!my_turret.deconstructable)
+				boutput(M, "<span class='alert'>You can't modify this turret's facing- it's bolted in place!</span>")
 				return
 
 			if(!(get_turf(usr) == src.user_turf))
