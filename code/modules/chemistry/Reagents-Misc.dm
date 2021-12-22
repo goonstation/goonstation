@@ -771,6 +771,68 @@ datum
 				id = "invislube"
 				visible = 0
 
+		glue
+			name = "space glue"
+			id = "spaceglue"
+			description = "Industrial superglue that is sure to stick to everything."
+			reagent_state = LIQUID
+			depletion_rate = 0.6
+			fluid_r = 230
+			fluid_b = 60
+			fluid_g = 230
+			transparency = 180
+			viscosity = 0.8
+			block_slippy = 1
+			pierces_outerwear = 1
+			var/counter
+
+			pooled()
+				..()
+				counter = 1
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(method == TOUCH)
+					var/mob/living/L = M
+					. = 0
+
+					if(L.getStatusDuration("slowed")>100)
+						L.setStatus("stunned", max(M.getStatusDuration("staggered"), 1.5*volume_passed))
+						boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
+					if(L.getStatusDuration("slowed")<100)
+						if(volume_passed<25)
+							L.changeStatus("slowed", 4*volume_passed, optional = 4)
+						else
+							L.changeStatus("slowed", 10 SECONDS, optional = 4)
+				return
+
+			reaction_turf(var/turf/target, var/volume)
+				var/turf/simulated/T = target
+				if (istype(T))
+					if (T.wet >= 3) return
+					var/wet = image('icons/effects/water.dmi',"wet_floor")
+					T.UpdateOverlays(wet, "wet_overlay")
+					T.sticky = TRUE
+					T.wet = 0
+					SPAWN_DBG(80 SECONDS)
+						if (istype(T))
+							T.UpdateOverlays(null, "wet_overlay")
+							T.sticky = FALSE
+				return
+
+			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+				switch(counter += (1 * mult))
+					if(20 to INFINITY)
+						M.druggy = max(M.druggy, 15)
+						if (M.canmove && prob(20))
+							M.change_misstep_chance(5 * mult)
+						if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+
+				..()
+				return
+
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
 
@@ -3277,16 +3339,16 @@ datum
 			fluid_b = 254
 			transparency = 50
 
-		glue
-			name = "glue"
-			id = "glue"
-			description = "Hopefully you weren't the kind of kid to eat this stuff."
-			reagent_state = LIQUID
-			fluid_r = 250
-			fluid_g = 250
-			fluid_b = 250
-			transparency = 255
-			viscosity = 0.7
+		//glue
+		//	name = "glue"
+		//	id = "glue"
+		//	description = "Hopefully you weren't the kind of kid to eat this stuff."
+		//	reagent_state = LIQUID
+		//	fluid_r = 250
+		//	fluid_g = 250
+		//	fluid_b = 250
+		//	transparency = 255
+		//	viscosity = 0.7
 
 		magnesium_chloride
 			name = "magnesium chloride"
