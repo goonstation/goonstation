@@ -1,5 +1,9 @@
 
 (t)tue dec 21 21
+(u)Flappybat
+(p)6861
+(e)⚖|balance
+(+)Added one second cooldown on bodybag open/close. Reduced stun on bodybag open.
 (u)Dimwhat
 (p)6943
 (e)⚖|balance
