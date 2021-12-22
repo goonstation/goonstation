@@ -1533,6 +1533,13 @@ About the new airlock wires panel:
 					src.RL_SetOpacity(1)
 			src.operating = 0
 			src.UpdateIcon()
+
+	else if (src.operating == -1) //broken
+		if (src.density) //closed
+			boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! It seems completely broken!</span>")
+		else
+			boutput(usr, "<span class='alert'>You try to pry [src]  closed, but it won't budge! It seems completely broken!</span>")
+
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
