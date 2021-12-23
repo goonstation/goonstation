@@ -771,7 +771,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		if(isnull(check_result))
 			check_result = FALSE
 			for (var/obj/machinery/bot/medbot/M in machine_registry[MACHINES_BOTS])
-				if (M.z == 1)
+				if (M.z == Z_LEVEL_STATION)
 					medbots++
 			if (medbots > 4)
 				check_result = TRUE
