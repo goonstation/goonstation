@@ -452,9 +452,9 @@
 		if(!theft_target)
 			return
 		walk_towards(src, null)
-		src.a_intent = INTENT_DISARM
+		src.set_a_intent(INTENT_DISARM)
 		theft_target.Attackhand(src)
-		src.a_intent = src.ai_default_intent
+		src.set_a_intent(src.ai_default_intent)
 
 	hear_talk(mob/M as mob, messages, heardname, lang_id)
 		if (isalive(src) && messages)

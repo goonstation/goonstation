@@ -127,8 +127,9 @@
 
 	var/const/singing_prefix = "%"
 
-/mob/living/New()
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	..()
+	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
@@ -143,6 +144,8 @@
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
+		if(!ishuman(src))
+			init_preferences?.apply_post_new_stuff(src)
 
 
 /mob/living/flash(duration)
@@ -431,8 +434,6 @@
 		if ("togglepoint")
 			src.toggle_point_mode()
 		if ("say_radio")
-			src.say_radio()
-		if ("say_main_radio")
 			src.say_radio()
 		else
 			. = ..()
@@ -1203,7 +1204,7 @@
 	if (..())
 		return
 
-	src.misstep_chance = max(0,min(misstep_chance + amount,100))
+	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
 /mob/living/proc/get_static_image()
 	if (src.disposed)
@@ -1548,8 +1549,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	// Call movement traits
 	if(src.traitHolder)
-		for(var/T in src.traitHolder.moveTraits)
-			var/obj/trait/O = getTraitById(T)
+		for(var/id in src.traitHolder.moveTraits)
+			var/obj/trait/O = src.traitHolder.moveTraits[id]
 			O.onMove(src)
 
 	..()
@@ -1736,7 +1737,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(D)
 		for (var/datum/ailment_data/malady/M in src.ailments)
 			src.cure_disease(M)
-
+		for(var/datum/ailment_data/addiction/A in src.ailments)
+			src.ailments -= A
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	SHOULD_CALL_PARENT(TRUE)

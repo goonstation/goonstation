@@ -5346,7 +5346,7 @@
 "amd" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -8192,9 +8192,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
-"ash" = (
-/turf/space,
-/area/shuttle/escape/station/destiny)
 "asi" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -9458,6 +9455,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "auP" = (
@@ -9824,41 +9825,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"avw" = (
-/obj/stool/chair,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
-"avx" = (
-/obj/table/auto,
-/obj/random_item_spawner/desk_stuff,
-/obj/machinery/computer/airbr/emergency_shuttle{
-	density = 0;
-	id = "escape";
-	pixel_y = 32
-	},
-/obj/item/storage/toolbox/emergency,
-/obj/item/device/light/flashlight,
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
-"avy" = (
-/obj/airbridge_controller{
-	id = "escape";
-	primary_controller = 1;
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
-"avz" = (
-/obj/airbridge_controller{
-	id = "escape";
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
 "avA" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -10246,10 +10212,6 @@
 	dir = 4;
 	icon_state = "greyblack"
 	},
-/area/station/hallway/primary/east)
-"awo" = (
-/obj/machinery/light,
-/turf/simulated/floor,
 /area/station/hallway/primary/east)
 "awp" = (
 /turf/space,
@@ -26591,6 +26553,16 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
+"eXa" = (
+/turf/space,
+/area/shuttle/escape/station)
+"fbT" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "fbX" = (
 /obj/critter/sealpup,
 /turf/simulated/pool/no_animate,
@@ -27476,6 +27448,12 @@
 	},
 /turf/simulated/floor/caution/north,
 /area/research_outpost/indigo_rye)
+"qAS" = (
+/obj/airbridge_controller{
+	id = "escape2"
+	},
+/turf/space,
+/area/space)
 "qCP" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/item/light_parts,
@@ -27710,6 +27688,13 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
+"uQK" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "uVI" = (
 /obj/cable{
 	d1 = 1;
@@ -27835,6 +27820,12 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"vQU" = (
+/obj/airbridge_controller{
+	id = "escape"
+	},
+/turf/space,
+/area/space)
 "vSI" = (
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -27930,6 +27921,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/indigo_rye)
+"xhW" = (
+/obj/machinery/light,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "xjm" = (
 /obj/grille/steel,
 /turf/space,
@@ -75261,10 +75260,10 @@ auf
 auf
 auN
 auf
-avw
 auf
 auN
 auf
+auM
 axs
 axO
 axO
@@ -75562,11 +75561,11 @@ aaU
 aaU
 auf
 auO
+auM
+auM
+xhW
 auf
-avx
-auf
-awo
-auf
+auM
 axt
 axP
 ayu
@@ -75866,9 +75865,9 @@ auf
 auN
 auf
 auf
-auf
 auN
 auf
+atF
 atF
 atF
 ayv
@@ -76165,10 +76164,10 @@ aaa
 aaa
 aaa
 aaa
+fbT
 aaa
 aaa
-avy
-aaa
+uQK
 aaa
 aaa
 aem
@@ -77373,10 +77372,10 @@ aaa
 aaa
 aaa
 aaa
+qAS
 aaa
 aaa
-avz
-aaa
+vQU
 aaa
 aaa
 aaa
@@ -77672,21 +77671,21 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -77972,23 +77971,23 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
+aaa
+aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -78273,25 +78272,25 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
+aaa
+aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -78574,26 +78573,26 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -78875,27 +78874,27 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-aAF
 aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -79178,25 +79177,25 @@ aaa
 aaa
 aaa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -79480,25 +79479,25 @@ aaa
 aaa
 aaa
 aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
 aaa
 aaa
 aaa
@@ -79782,25 +79781,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+aAF
 aaa
 aaa
 aaa
@@ -80084,25 +80083,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-ash
-aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -80386,26 +80385,26 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -80689,25 +80688,25 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -80994,22 +80993,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -81296,21 +81295,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa
@@ -81599,20 +81598,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
+eXa
 aaa
 aaa
 aaa

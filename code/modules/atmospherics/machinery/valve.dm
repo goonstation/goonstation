@@ -162,7 +162,7 @@ obj/machinery/atmospherics/valve
 
 		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 		open = 1
-		update_icon()
+		UpdateIcon()
 
 		if(network_node1&&network_node2)
 			network_node1.merge(network_node2)
@@ -182,7 +182,7 @@ obj/machinery/atmospherics/valve
 
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		open = 0
-		update_icon()
+		UpdateIcon()
 
 		network_node1?.dispose()
 		network_node1 = null
@@ -198,7 +198,7 @@ obj/machinery/atmospherics/valve
 		return
 
 	attack_hand(mob/user as mob)
-		update_icon(1)
+		UpdateIcon(1)
 		sleep(1 SECOND)
 		logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 		if (src.open)
@@ -209,7 +209,7 @@ obj/machinery/atmospherics/valve
 
 	attackby(var/obj/item/G as obj, var/mob/user as mob)
 		if (iswrenchingtool(G))
-			update_icon(1)
+			UpdateIcon(1)
 			sleep(1 SECOND)
 			logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 			if (src.open)
@@ -429,7 +429,7 @@ obj/machinery/atmospherics/manifold_valve
 		if(divert) return 0
 
 		divert = 1
-		update_icon()
+		UpdateIcon()
 
 		if(network_node2)
 			network_node2.dispose()
@@ -454,7 +454,7 @@ obj/machinery/atmospherics/manifold_valve
 			return 0
 
 		divert = 0
-		update_icon()
+		UpdateIcon()
 
 		if(network_node3)
 			network_node3.dispose()

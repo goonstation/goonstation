@@ -288,6 +288,14 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
 		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/mess_off
 
+		New()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
 /obj/item/device/pda2/pickup(mob/user)
 	..()
 	if (src.module)

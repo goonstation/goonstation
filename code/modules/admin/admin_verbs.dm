@@ -309,6 +309,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_makecyborg,
 		/client/proc/cmd_admin_makeghostdrone,
 		/client/proc/cmd_debug_del_all,
+		/client/proc/cmd_debug_del_half,
 		/client/proc/cmd_admin_godmode,
 		/client/proc/cmd_admin_godmode_self,
 		/client/proc/iddqd,
@@ -438,6 +439,10 @@ var/list/admin_verbs = list(
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
+
+		/client/proc/delete_profiling_logs,
+		/client/proc/cause_lag,
+		/client/proc/persistent_lag,
 
 		/client/proc/player_panel_tgui,
 
@@ -918,13 +923,14 @@ var/list/fun_images = list()
 	set popup_menu = 0
 
 	admin_only
-	if(!O.fingerprintshidden || !length(O.fingerprintshidden))
+	if(!O.fingerprints_full || !length(O.fingerprints_full))
 		alert("There are no fingerprints on this object.", null, null, null, null, null)
 		return
 
 	boutput(src, "<b>Hidden Fingerprints on [O]:</b>")
-	for(var/i in O.fingerprintshidden)
-		boutput(src, i)
+	for(var/i in O.fingerprints_full)
+		var/list/L = O.fingerprints_full[i]
+		boutput(src, "Key: [L["key"]], real name: [L["real_name"]], time: [L["time"]]")
 
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
@@ -971,8 +977,7 @@ var/list/fun_images = list()
 		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
 
 	var/mob/mymob = src.mob
-	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH)
-	cli.preferences.copy_to(H,src.mob,1)
+	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH, cli.preferences, TRUE)
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
 		mymob.mind.ckey = ckey
@@ -1022,8 +1027,7 @@ var/list/fun_images = list()
 		H.set_loc(mymob.loc)
 		src.holder.respawn_as_self_mob = null
 	else
-		H = new(mymob.loc, src.preferences.AH)
-		src.preferences.copy_to(H,src.mob,1)
+		H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
 		new_mob = TRUE
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()
@@ -1178,7 +1182,7 @@ var/list/fun_images = list()
 			S.charge = S.capacity
 			S.output = 200000
 			S.online = 1
-			S.updateicon()
+			S.UpdateIcon()
 			S.power_change()
 
 	var/confirm4 = alert("Turn space bright pink? (For post processing/optimizations)", "Pink Background?", "No", "Yes")
@@ -1595,7 +1599,7 @@ var/list/fun_images = list()
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
+		var/obj/item/old_grenade/spawner/banana/nade = new /obj/item/old_grenade/spawner/banana(usr.loc)
 		nade.payload = obj_path
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."

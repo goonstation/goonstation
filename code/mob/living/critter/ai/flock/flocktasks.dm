@@ -198,7 +198,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HELP
+		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -264,7 +264,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HELP
+		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -628,7 +628,7 @@
 		else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
 			if(owncritter.active_hand != 2) // nanite spray
 				owncritter.set_hand(2)
-				owncritter.a_intent = INTENT_DISARM
+				owncritter.set_a_intent(INTENT_DISARM)
 				owncritter.hud.update_intent()
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target)
@@ -663,7 +663,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HARM
+		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 

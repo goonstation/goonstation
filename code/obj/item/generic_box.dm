@@ -356,7 +356,7 @@
 			src.open = 1
 		else
 			boutput(user, "<span class='alert'>[src] is already open!</span>")
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -374,7 +374,7 @@
 			if (I)
 				user.put_in_hand_or_drop(I)
 				boutput(user, "You take \an [I] out of [src].")
-				src.update_icon()
+				src.UpdateIcon()
 				return
 			else
 				boutput(user, "<span class='alert'>[src] is empty!</span>")
@@ -447,14 +447,14 @@
 			if (src.item_amount >= 1)
 				src.item_amount--
 				tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return myItem
 		else if (src.item_amount != 0) // should be either a positive number or -1
 			if (src.item_amount >= 1)
 				src.item_amount--
 				tooltip_rebuild = 1
 			var/obj/item/newItem = new src.contained_item(src)
-			src.update_icon()
+			src.UpdateIcon()
 			return newItem
 		else
 			return 0
@@ -480,7 +480,7 @@
 			if (src.item_amount != -1)
 				src.item_amount ++
 				tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			if (user && show_messages)
 				boutput(user, "You stuff [I] into [src].")
 				user.u_equip(I)
@@ -491,7 +491,8 @@
 				boutput(user, "<span class='alert'>You can't seem to make [I] fit into [src].</span>")
 			return 0
 
-	proc/update_icon()
+	update_icon()
+
 		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)
 			src.icon_state = src.icon_empty

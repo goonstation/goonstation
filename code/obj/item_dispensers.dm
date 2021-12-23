@@ -23,7 +23,7 @@
 	New()
 		..()
 		src.empty_icon_state = "[src.filled_icon_state]0"
-		src.update_icon()
+		src.UpdateIcon()
 
 	get_desc()
 		if(display_amount)
@@ -36,7 +36,7 @@
 		if (istype(W, src.deposit_type))
 			user.u_equip(W)
 			src.amount++
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			qdel(W)
 
@@ -53,8 +53,8 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return
 			src.amount--
-			last_dispense_time = TIME 	//gotta go before the update_icon
-			src.update_icon()
+			last_dispense_time = TIME 	//gotta go before the UpdateIcon
+			src.UpdateIcon()
 			var/obj/item/I = new src.withdraw_type
 			boutput(user, "<span class='notice'>You take \the [I] from \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			user.put_in_hand_or_drop(I)
@@ -62,15 +62,15 @@
 			//This is pretty lame, but it's simpler than putting these in a process loop when they are rarely used. - kyle
 			if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
 				SPAWN_DBG(dispense_rate)
-					update_icon()
+					UpdateIcon()
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
 
-	proc/update_icon()
+	update_icon()
 		if (src.amount <= 0)
 			src.icon_state = src.empty_icon_state
 		else
-			//if a dispenser has a dispense_rate then we display the sprite based on time left, because of the spawn: update_icon in attack_hand
+			//if a dispenser has a dispense_rate then we display the sprite based on time left, because of the spawn: UpdateIcon in attack_hand
 			if (dispense_rate > 0)
 				if (last_dispense_time + dispense_rate <= TIME)
 					src.icon_state = src.filled_icon_state

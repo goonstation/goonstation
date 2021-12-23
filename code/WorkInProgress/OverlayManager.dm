@@ -196,7 +196,7 @@
 	if(length(state) && blendm && ialpha && length(icolor))
 		F.icon_state = state
 		F.blend_mode = blendm
-		F.alpha = max(0, min(255, ialpha))
+		F.alpha = clamp(ialpha, 0, 255)
 		F.color = icolor
 		F.layer = ilayer
 
@@ -412,7 +412,7 @@
 		warp.d_icon_state = src.warp_dir
 		warp.d_blend_mode = 1
 		warp.d_layer = BACKGROUND_LAYER
-		warp.d_plane = PLANE_FLOOR - 1
+		warp.d_plane = PLANE_FLOOR
 		definitions.Add(warp)
 
 		return ..()

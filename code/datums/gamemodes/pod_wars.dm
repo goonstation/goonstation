@@ -829,6 +829,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	nanotrasen
 		name = "NT Combat Dingy"
 		icon_state = "putt_pre"
+		init_comms_type = /obj/item/shipcomponent/communications/security
 
 		mining
 			name = "NT Mining Dingy"
@@ -841,6 +842,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	syndicate
 		name = "Syndicate Combat Dingy"
 		icon_state = "syndiputt"
+		init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 		mining
 			name = "Syndicate Mining Dingy"
@@ -873,7 +875,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 

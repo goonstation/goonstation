@@ -1273,7 +1273,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 	process()
 		if (status & NOPOWER)
-			update_icon()
+			UpdateIcon()
 			return
 
 		return ..()
@@ -1565,7 +1565,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if(!(status & NOPOWER) && program)
 			program.process()
 
-		update_icon()
+		UpdateIcon()
 
 	updateUsrDialog(var/reason)
 		var/list/nearby = viewers(1, src)

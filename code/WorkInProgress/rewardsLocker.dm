@@ -580,7 +580,7 @@
 			skin_target.icon_style = "flask"
 			skin_target.item_state = "flask"
 			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
-			skin_target.update_icon()
+			skin_target.UpdateIcon()
 			activator.set_clothing_icon_dirty()
 			return 1
 		else
@@ -603,11 +603,11 @@
 			var/obj/item/reagent_containers/glass/bucket/red/new_bucket = new /obj/item/reagent_containers/glass/bucket/red(get_turf(activator))
 			new_bucket.reagents = skin_target.reagents
 			new_bucket.fingerprints = skin_target.fingerprints
-			new_bucket.fingerprintshidden = skin_target.fingerprintshidden
+			new_bucket.fingerprints_full = skin_target.fingerprints_full
 			new_bucket.fingerprintslast = skin_target.fingerprintslast
 			skin_target.reagents = null
 			skin_target.fingerprints = null
-			skin_target.fingerprintshidden = null
+			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
 			qdel(skin_target)
 			activator.put_in_hand(new_bucket)
@@ -1292,7 +1292,7 @@
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
 			gunmod.gilded = TRUE
-			gunmod.update_icon()
+			gunmod.UpdateIcon()
 			H.update_inhands()
 			return 1
 

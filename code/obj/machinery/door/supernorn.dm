@@ -34,7 +34,7 @@
 	icon = 'icons/Testing/newicons/obj/NEWdoors/door_maintenance.dmi'
 	req_access = list(access_maint_tunnels*/
 
-/obj/machinery/door/supernorn/update_icon()
+/obj/machinery/door/supernorn/update_icon(toggling, override_parent = TRUE)
 	if (vertical)
 		icon_state = p_open ? "vopened" : "vclosed"
 	else
@@ -50,7 +50,7 @@
 		src.RL_SetOpacity(0)
 	p_open = 1
 	play_animation("opening")
-	update_icon()
+	UpdateIcon()
 	playsound(src, "sound/machines/airlock_swoosh_temp.ogg", 100, 0)
 	SPAWN_DBG(2.5)
 		set_density(0) // let them through halfway through the anim
@@ -68,7 +68,7 @@
 	operating = 1
 	p_open = 0
 	play_animation("closing")
-	update_icon()
+	UpdateIcon()
 	playsound(src, "sound/machines/airlock_swoosh_temp.ogg", 100, 0)
 	SPAWN_DBG(2.5)
 		set_density(1)
@@ -98,7 +98,7 @@
 				else
 					flick("deny", src)
 				playsound(src, "sound/machines/airlock_deny_temp.ogg", 100, 0) // kinda hacky, oh well
-	update_icon()
+	UpdateIcon()
 
 /obj/machinery/door/supernorn/proc/check_safeties()
 	if (locate(/mob/living) in src.loc)

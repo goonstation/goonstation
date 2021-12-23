@@ -158,7 +158,7 @@
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
 
-	src.brainloss = max(0,min(src.brainloss + amount,120))
+	src.brainloss = clamp(src.brainloss + amount, 0, 120)
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
@@ -198,6 +198,11 @@
 	if (HAS_MOB_PROPERTY(src, PROP_BREATHLESS))
 		src.oxyloss = 0
 		return
+
+	if (ispug(src))
+		var/mob/living/carbon/human/H = src
+		amount *= 2
+		H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

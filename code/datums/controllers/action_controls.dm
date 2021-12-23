@@ -1450,58 +1450,23 @@ var/datum/action_controller/actions
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cpr" //placeholder
 	var/mob/living/target
-	var/mob/living/carbon/human/human_owner
 
 	New(target)
-		src.target = target
-		if (ishuman(owner))
-			human_owner = owner
 		..()
+		src.target = target
 
 	onUpdate()
 		..()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		if (human_owner) //no starting CPR and then putting a mask on
-			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
-				boutput(human_owner, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (human_owner.wear_mask)
-				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (isdead(target))
-			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
-		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (human_owner)
-			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
-				boutput(human_owner, "<span class='notice'>You need to take off your headgear before you can give CPR!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-			if (human_owner.wear_mask)
-				boutput(human_owner, "<span class='notice'>You need to take off your facemask before you can give CPR!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-
-		if (isdead(target))
-			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		owner.visible_message("<span class='alert'><B>[owner] is trying to perform CPR on [target]!</B></span>")
+		owner.visible_message("<span class='notice'><B>[owner] is trying to perform CPR on [target]!</B></span>")
 		..()
 
 	onEnd()
@@ -1518,8 +1483,35 @@ var/datum/action_controller/actions
 			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
 				target.cure_disease_by_path(/datum/ailment/malady/flatline)
 
-		owner.visible_message("<span class='alert'>[owner] performs CPR on [target]!</span>")
+		owner.visible_message("<span class='notice'>[owner] performs CPR on [target]!</span>")
 		src.onRestart()
+
+	proc/can_cpr()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/human_owner = owner
+			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
+				boutput(human_owner, "<span class='alert'>You need to take off your headgear before you can give CPR!</span>")
+				return FALSE
+
+			if (human_owner.wear_mask)
+				boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
+				return FALSE
+
+		if (ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			if (human_target.head && (human_target.head.c_flags & COVERSMOUTH))
+				boutput(owner, "<span class='alert'>You need to take off [human_target]'s headgear before you can give CPR!</span>")
+				return FALSE
+
+			if (human_target.wear_mask)
+				boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
+				return FALSE
+
+		if (isdead(target))
+			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			return FALSE
+
+		return TRUE
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30

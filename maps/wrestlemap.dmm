@@ -3502,7 +3502,7 @@
 "buO" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/grime,
@@ -9701,7 +9701,7 @@
 /turf/space{
 	icon_state = "aplaceholder"
 	},
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "dUX" = (
 /obj/machinery/light{
 	dir = 1;
@@ -19884,7 +19884,7 @@
 	name = "Scientist"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 32
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -31919,7 +31919,7 @@
 /area/station/engine/inner)
 "nEk" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "nEw" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/white,
@@ -32214,7 +32214,7 @@
 	icon_state = "2-5"
 	},
 /obj/table/wood/round/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -26
 	},
 /turf/simulated/floor/plating,
@@ -35603,7 +35603,7 @@
 /obj/item/reagent_containers/food/snacks/cereal_box{
 	pixel_x = -3
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -32
 	},
 /turf/simulated/floor,
@@ -36079,7 +36079,7 @@
 "pxx" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/arcade/half,
@@ -46587,9 +46587,7 @@
 /area/station/medical/robotics)
 "tTs" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,
 /obj/item/raw_material/cerenkite,

@@ -656,7 +656,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
 	attack_hand(mob/user as mob)
@@ -741,7 +741,7 @@
 		else
 			return ..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.cape)
 			src.icon_state = "bedcape[src.bcolor ? "-[bcolor]" : null]"
 			src.item_state = src.icon_state
@@ -763,7 +763,7 @@
 		src.Bed = null
 		src.eyeholes = 1
 		block_vision = 0
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "It's a bedsheet with eye holes cut in it."
 
 	proc/make_cape()
@@ -774,7 +774,7 @@
 		src.Bed = null
 		src.cape = 1
 		block_vision = 0
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
@@ -785,7 +785,7 @@
 		src.Bed = null
 		src.cape = 0
 		block_vision = !src.eyeholes
-		src.update_icon()
+		src.UpdateIcon()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 
 /obj/item/clothing/suit/bedsheet/red
@@ -847,7 +847,7 @@
 	New()
 		..()
 		src.bcolor = pick("", "red", "orange", "yellow", "green", "blue", "pink", "black")
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/item/clothing/suit/bedsheet/cape
 	icon_state = "bedcape"
@@ -1143,6 +1143,12 @@
 	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives."
 	contraband = 3
 	team_num = TEAM_SYNDICATE
+	item_function_flags = IMMUNE_TO_ACID
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
@@ -1154,11 +1160,14 @@
 			src.dropped(user)
 			qdel(src)
 	#endif
-	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	commissar_greatcoat
 		name = "commander's great coat"
@@ -1218,9 +1227,9 @@
 			body_parts_covered = TORSO|LEGS|ARMS
 			permeability_coefficient = 0.01
 
-		setupProperties()
-			..()
-			setProperty("viralprot", 50)
+			setupProperties()
+				..()
+				setProperty("viralprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1228,9 +1237,9 @@
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
 
-		setupProperties()
-			..()
-			setProperty("space_movespeed", -0.25)
+			setupProperties()
+				..()
+				setProperty("space_movespeed", -0.25)
 
 
 		firebrand
@@ -1380,10 +1389,20 @@
 		is_syndicate = 1
 		icon_state = "indusred"
 		item_state = "indusred"
+
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 		setupProperties()
 			..()
 			setProperty("meleeprot", 9)
 			setProperty("rangedprot", 2)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
 
 		specialist
 			name = "specialist heavy operative combat armor"

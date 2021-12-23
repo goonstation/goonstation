@@ -51,17 +51,17 @@
 	/// Middle process rate for bots currently trying to murder someone
 	var/PT_active = PROCESSING_QUARTER
 	var/hash_cooldown = (2 SECONDS)
-	var/next_hash_check = 0
+	var/tmp/next_hash_check = 0
 	/// If we're in the middle of something and don't want our tier to go wonky
 	var/doing_something = 0
 	/// Range that the bot checks for clients
 	var/hash_check_range = 6
 
-	var/frustration = 0
+	var/tmp/frustration = 0
 	/// How slowly the bot moves by default -- higher is slower!
 	var/bot_move_delay = 6
-	var/list/path = null	// list of path turfs
-	var/datum/robot_mover/bot_mover
+	var/tmp/list/path = null	// list of path turfs
+	var/tmp/datum/robot_mover/bot_mover
 	var/moving = 0 // Are we ON THE MOVE??
 	var/stunned = 0 //It can be stunned by tasers. Delicate circuits.
 	var/current_movepath = 0
@@ -285,7 +285,7 @@
 	var/scanrate = 10
 	var/max_dist = 600
 
-	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 600)
+	New(obj/machinery/bot/newmaster, _move_delay = 3, _target_turf, _current_movepath, _adjacent = 0, _scanrate = 10, _max_dist = 80)
 		..()
 		if(istype(newmaster))
 			src.master = newmaster
