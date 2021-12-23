@@ -1,4 +1,9 @@
 
+(t)thu dec 23 21
+(u)Sovexe
+(p)6910
+(e)🆕🎨|feature, sprites
+(+)Added ember particle effects to burning barrels, using the new particle system.
 (t)tue dec 21 21
 (u)Flappybat
 (p)6861
