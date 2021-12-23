@@ -11125,8 +11125,24 @@
 	},
 /area/evilreaver/bridge)
 "aDo" = (
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
+/mob/living/silicon/ai{
+	bruteloss = 75;
+	coreSkin = "kingsway";
+	dismantle_stage = 4;
+	faceColor = "#c29221";
+	faceEmotion = "ai_glitch";
+	fireloss = 75;
+	health = 100;
+	icon_state = "kingsway";
+	is_salvage = 1;
+	name = "Grody AI casing";
+	power_mode = -1;
+	skinsList = list("default" = "The casing appears to be a standard NanoTrasen AI core.", "dwaine" = {"The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?"
+	},
+ "kingsway" = "You've never seen this model of AI before,
+ especially not one with weird purple stains and smelling of meat. 'Kingsway Systems 29A' is etched into the faded plastic beneath the screen.",
+ "syndicate" = "The casing is covered in Syndicate markings! Probably just a fancy paintjob,
+ though.")
 "aDp" = (
 /obj/critter/martian/warrior,
 /turf/simulated/martian/floor,

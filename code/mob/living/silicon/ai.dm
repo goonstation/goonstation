@@ -9,6 +9,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
+	"Text (Inverted)" = "ai_text-inverted",\
 	"Blank" = "ai_blank",\
 	"Unimpressed" = "ai_unimpressed",\
 	"Baffled" = "ai_baffled",\
@@ -84,10 +85,31 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/moustache_mode = 0
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
+	/// If true, will spawn without brain, offline PDA, empty cell, with cover open. Will not show up on killswitch. Sets to FALSE when a brain is put in.
+	var/is_salvage = FALSE
 
 	var/faceEmotion = "ai_happy"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
+
+	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
+	var/coreSkin = "default"
+/* To add a new skin:
+- Create the skin itself but also the overlay you want to have for when in battery mode
+- The name of the core icon state will be used to fetch the battery mode overlay, so your batmode overlay
+- should be the name of your core icon state with "batmode-" before it
+- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "apcmode-"
+- Add the icon state name to skinsList below, and while it's technically optional, you should also associate a short description with it
+- There is currently no support for significantly differently shaped cores, you'll have to do that yourself, sorry
+*/
+
+	/// List of valid skins and their descriptions. Used for validation of setSkin()
+	var/skinsList = list(
+		"default" = "The casing appears to be a standard NanoTrasen AI core.",
+		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
+		"kingsway" = "'Kingsway Systems 29A' is etched into the aged plastic casing beneath the screen.",
+		"syndicate" = "The casing is covered in Syndicate markings! Probably just a fancy paintjob, though."
+	)
 
 	var/datum/ai_camera_tracker/tracker = null
 
@@ -190,8 +212,11 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	light.attach(src)
 	light.enable()
 
-	if (!empty) // /obj/ai_core_frame calls new here with empty = 1 so that this will spawn brainless and someone else's brain can be put in
-		src.brain = new /obj/item/organ/brain/ai(src)
+	if (!empty && !is_salvage) // /obj/ai_core_frame calls new here with empty = 1 so that this will spawn brainless and someone else's brain can be put in
+		src.brain = new /obj/item/organ/brain/ai(src) // we also don't want it to spawn with a brain if a mapper sets this core as is_salvage
+	else if(is_salvage)
+		setdead(src)
+		dismantle_stage = 4 // ready to plop a new brain in! :)
 
 	src.local_apc = get_local_apc(src)
 	if(src.local_apc)
@@ -239,8 +264,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
 
+
 	SPAWN_DBG(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
+		if(is_salvage)
+			internal_pda.host_program.message_on = FALSE // so the pda doesn't show up in peoples' messengers
+			cell.charge = 0
 
 		if(!src.link)
 			var/turf/T = get_turf(src)
@@ -375,6 +404,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (src.brain)
 			boutput(user, "<span class='alert'>There's already a brain in there!</span>")
 		else
+			is_salvage = FALSE // recovered from wherever we were and now we have a brain! :)
 			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [W] into [src.name].</span>")
 			user.drop_item()
 			W.set_loc(src)
@@ -541,6 +571,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
 			qdel(ghost)
+			update_appearance()
 		return 1
 	return 0
 
@@ -855,7 +886,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>")
+	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span> [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 	if (src.hat)
 		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span>"
 
@@ -1982,22 +2013,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	// imo this should be the inverse - show all the overlays even if dead,
 	// so that damage can be seen
 	if (!src.brain)
-		src.icon_state = "ai_off"
+		src.icon_state = coreSkin
 		ClearAllOverlays()
 	else if (isdead(src))
-		if (src.cell && src.cell.charge < 100)
-			src.icon_state = "ai_off"
-		else
-			src.icon_state = "ai-crash"
 		ClearAllOverlays()
+		if (src.cell && src.cell.charge < 100)
+			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
+		else // convoluted that I'm terrified of breaking something by doing that
+			UpdateOverlays(get_image("ai_bsod"), "temp_face")
+
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
-		src.icon_state = "ai-stun"
 		ClearAllOverlays(1)
+		UpdateOverlays(get_image("ai-stun-screen"), "temp_face")
+
 	else
-		src.icon_state = "ai_off" //Actually do this.
-
-
+		src.icon_state = coreSkin //Actually do this.
+		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
 		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai-white", src.layer)
 		I.color = faceColor
@@ -2010,10 +2042,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
-		if (src.power_mode == 1)
-			src.UpdateOverlays(get_image("batterymode"), "batterymode")
+		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
+			src.UpdateOverlays(get_image("batmode-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(null, "batterymode")
+			src.UpdateOverlays(get_image("apcmode-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
 			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
@@ -2045,6 +2077,12 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if(75 to INFINITY)
 			src.UpdateOverlays(get_image("brute75"), "brute")
 
+/// Call with a valid skin icon state as string to set the skin to said icon state
+/mob/living/silicon/ai/proc/setSkin(skin)
+	if(!(skin in skinsList))
+		return
+	coreSkin = skin
+	update_appearance()
 
 /mob/living/silicon/ai/proc/get_image(var/icon_state)
 	if(!cached_image)
