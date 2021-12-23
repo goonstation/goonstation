@@ -692,8 +692,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bunnykimber"
 
 	retrino
-		name = "\improper Neo Xzilon"
-		icon_state = "neoxzilon"
+		name = "\improper Mallow Rhosin"
+		icon_state = "mallowrhosin"
 		ckey = "retrino"
 
 		New()
