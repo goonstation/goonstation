@@ -3,7 +3,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/item_glasses.dmi'
-	wear_image_icon = 'icons/mob/eyes.dmi'
+	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
 	w_class = W_CLASS_SMALL

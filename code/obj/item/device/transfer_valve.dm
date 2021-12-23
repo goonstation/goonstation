@@ -4,7 +4,7 @@
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks."
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi' //TODO: as of 02/02/2020 only single general plasma+oxygen ttv sprites, no functionality or sprites to change the icon depending on tanks used
 	item_state = "newbomb"
 	var/obj/item/tank/tank_one
