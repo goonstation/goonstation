@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chaplain)
 		if(isnull(check_result))
 			check_result = TRUE
 			for(var/mob/living/carbon/human/H in mobs)
-				if(H.z == 1 && isdead(H))
+				if(H.z == Z_LEVEL_STATION && isdead(H))
 					check_result = FALSE
 					break
 		return check_result
