@@ -820,13 +820,14 @@
 /obj/item/ammo/ammobox/nukeop
 	name = "Syndicate Ammo Bag"
 	desc = "A bag that can fabricate magazines for standard syndicate weapons. Technology!"
+	icon_state = "ammobag"
+	item_state = "ammobag"
 	var/charge = 10
 	var/spec_ammo = FALSE
 	var/deployed = FALSE
 
 	New()
 		..()
-		sleep(5)
 		if(!deployed)
 			src.desc = "A folded up bag that, once deployed, can fabricate magazines for standard syndicate weapons. It has [src.charge] charge left."
 		else
@@ -847,10 +848,12 @@
 		src.force_drop(user)
 		src.anchored = TRUE
 		src.deployed = TRUE
+		src.icon_state = "[initial(icon_state)]-d[charge <= 0 ? "-empty" : ""]"
 
 	proc/fold_ammobag(var/mob/user)
 		src.anchored = FALSE
 		src.deployed = FALSE
+		src.icon_state = "[initial(icon_state)]"
 		sleep(1 DECI SECOND)
 		src.Attackhand(user)
 
@@ -995,12 +998,13 @@
 
 			src.desc = "A bag that can fabricate magazines for standard syndicate weapons. Technology! It has [src.charge] charge left."
 			if(src.charge <= 0)
-				qdel(src)
+				src.icon_state = "[initial(icon_state)]-d-empty"
 
 
 /obj/item/ammo/ammobox/nukeop/spec_ammo
 	name = "Syndicate Specialist Ammo Bag"
 	desc = "A bag that can fabricate specialist magazines for standard syndicate weapons. Technology!"
+	icon_state = "ammobag-sp"
 	spec_ammo = TRUE
 
 	New()
