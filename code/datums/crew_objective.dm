@@ -604,7 +604,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
-				if(S.z != 1) continue
+				if(S.z != Z_LEVEL_STATION) continue
 				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
 					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
 						telecount++
