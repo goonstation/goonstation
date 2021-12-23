@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 		if(isnull(check_result))
 			check_result = TRUE
 			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-				if(F.z == 1 && !F.active && istype(F.loc.loc, /area/station))
+				if(F.z == Z_LEVEL_STATION && !F.active && istype(F.loc.loc, /area/station))
 					check_result = FALSE
 					break
 			return check_result
