@@ -890,7 +890,7 @@ ABSTRACT_TYPE(/datum/objective/crew/roboticist)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
-				if(B.z == 1)
+				if(B.z == Z_LEVEL_STATION)
 					buttbots ++
 			if(buttbots > 4)
 				check_result = TRUE
