@@ -149,7 +149,7 @@ ABSTRACT_TYPE(/datum/objective/crew/headofpersonnel)
 	explanation_text = "End the round alive but not on the station or escape levels."
 	medal_name = "Unperson"
 	check_completion()
-		if(owner.current && !isdead(owner.current) && owner.current.z != 1 && !in_centcom(owner.current)) return 1
+		if(owner.current && !isdead(owner.current) && owner.current.z != Z_LEVEL_STATION && !in_centcom(owner.current)) return 1
 		else return 0
 
 ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
@@ -709,7 +709,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Activate at least one artifact on the station z level by the end of the round, excluding the test artifact."
 		check_completion()
 			for(var/obj/machinery/artifact/A in machines)
-				if(A.z == 1 && A.activated == 1 && A.name != "Test Artifact") return 1 //someone could label it I guess but I don't want to go adding an istestartifact var just for this..
+				if(A.z == Z_LEVEL_STATION && A.activated == 1 && A.name != "Test Artifact") return 1 //someone could label it I guess but I don't want to go adding an istestartifact var just for this..
 			return 0*/
 
 ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
