@@ -44473,7 +44473,7 @@
 /area/station/crew_quarters/radio/lab)
 "ciK" = (
 /turf/simulated/floor/plating/random,
-/area/station/storage/eeva)
+/area/station/maintenance/inner)
 "ciM" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -103011,7 +103011,7 @@ aLW
 cfS
 wFP
 ckK
-aDr
+ciK
 ciK
 aks
 aks
