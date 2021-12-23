@@ -511,7 +511,7 @@
 			if(!arg_replacer)
 				return
 
-			var/arg_default = copytext(ckeyEx( input("Enter Default Value", "Packet Sender", "") as text|null ), 1, 32)
+			var/arg_default = copytext(strip_html( input("Enter Default Value", "Packet Sender", "") as text|null ), 1, 32)
 			if(!arg_default)
 				return
 			prog_args[arg_name] = list(arg_replacer,arg_default)
@@ -530,8 +530,8 @@
 			if(!src.master.hd.root.add_file(F))
 				F.dispose()
 			else
-				F.buttons = prog_buttons
-				F.programvariables = prog_args
+				F.buttons = prog_buttons.Copy()
+				F.programvariables = prog_args.Copy()
 				F.send_freq = send_freq
 				F.name = programname
 				F.allow_custom_freq = allowfrequency
@@ -638,7 +638,6 @@
 					for(var/progvarkey in programvariables)
 						var/list/progvar = programvariables[progvarkey]
 						value = replacetext(value,progvar[1],progvar[2]) //What defines as a magic number???? i dont know - Jimmyl
-						value = copytext(value,2)
 					signal.data[buttonc[1][i]] = value
 
 				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
