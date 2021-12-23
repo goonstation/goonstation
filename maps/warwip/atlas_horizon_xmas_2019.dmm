@@ -65562,7 +65562,7 @@
 /obj/item/clipboard/with_pen,
 /obj/decal/cleanable/writing{
 	sample_reagent = "blood";
-	words = "racist greg was here"
+	words = "smelly greg was here"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)

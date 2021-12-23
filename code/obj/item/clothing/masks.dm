@@ -3,7 +3,7 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/item_masks.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
+	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
@@ -151,8 +151,8 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 1
-	
-/obj/item/clothing/mask/moustache/Italian 
+
+/obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
@@ -228,8 +228,6 @@
 	name = "vocal translator"
 	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human language. Or whoever wears this."
 	icon = 'icons/obj/items/items.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "voicechanger"
 	item_state = "muzzle"			// @TODO new sprite ok
 	mats = 12	// 2x voice changer cost. It's complicated ok
@@ -434,7 +432,7 @@
 	New()
 		..()
 		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
-		var/image/onhead = image('icons/mob/mask.dmi', "")
+		var/image/onhead = image('icons/mob/clothing/mask.dmi', "")
 
 		if (prob(1))
 			name = "surgical face bee-ld"

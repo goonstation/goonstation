@@ -569,7 +569,7 @@
 		name = "Class Crate - Combat Engineer"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/paper/nast_manual,
-		/obj/item/turret_deployer,
+		/obj/item/turret_deployer/syndicate,
 		/obj/item/wrench/battle,
 		/obj/item/gun/kinetic/spes/engineer,
 		/obj/item/storage/pouch/shotgun/weak,

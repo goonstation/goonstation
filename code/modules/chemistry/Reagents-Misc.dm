@@ -3655,17 +3655,15 @@ datum
 			value = 4
 
 			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(4,1.5)
-				holder.my_atom.temp_flags |= IS_BUBSIUM_SCALED
 
 
 			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(1/4,1/1.5)
-				holder.my_atom.temp_flags &= ~IS_BUBSIUM_SCALED
 
 
 			on_mob_life(var/mob/M, var/mult = 1)

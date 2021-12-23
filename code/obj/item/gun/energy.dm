@@ -1531,24 +1531,13 @@
 				w_class = W_CLASS_BULKY
 
 	attack_self(var/mob/M)
-		if (!src.two_handed)
+		if (!setTwoHanded(!src.two_handed))
+			boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+			return 0
 
-			if(M.l_hand == src)
-				if(M.r_hand != null)
-					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
-					src.two_handed = 0
-					return 0
-			else if(M.r_hand == src)
-				if(M.l_hand != null)
-					boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
-					src.two_handed = 0
-					return 0
 		..()
-
-		setTwoHanded(!src.two_handed)
 		src.can_dual_wield = !src.two_handed
 		UpdateIcon()
-
 		M.update_inhands()
 
 	alter_projectile(obj/projectile/P)

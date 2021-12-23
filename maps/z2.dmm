@@ -47475,6 +47475,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
 	},
+/obj/item/baton,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -55666,7 +55667,6 @@
 	layer = 2
 	},
 /obj/random_item_spawner/med_kit,
-/obj/item/baton,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
