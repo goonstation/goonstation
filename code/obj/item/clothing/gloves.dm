@@ -341,11 +341,20 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"

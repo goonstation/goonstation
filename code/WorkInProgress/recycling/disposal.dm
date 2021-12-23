@@ -917,11 +917,6 @@
 				else
 					newLoaf.loaf_factor++
 
-				H.contents -= newIngredient
-				newIngredient.set_loc(null)
-				newIngredient = null
-
-				//LAGCHECK(LAG_MED)
 				qdel(newIngredient)
 
 			newLoaf.update()

@@ -805,7 +805,7 @@
 		else
 			showMessage("[src.holder] doesn't have enough reagents to make a vial.")
 	if (target == 13)
-		if(RS.total_volume >= 1)
+		if(RS.total_volume > 0)
 			RS.trans_to(src.ejection_reservoir, amount, index = index)
 			RS = src.ejection_reservoir.reagents
 			RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))

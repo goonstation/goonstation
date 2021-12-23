@@ -1819,6 +1819,7 @@
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#333333"
@@ -1895,6 +1896,7 @@
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		..()

@@ -165,7 +165,7 @@ To remove:
 	if(!isliving(target)) return; \
 	var/mob/living/_living_mob = target; \
 	var/datum/lifeprocess/sight/_sightprocess = _living_mob.lifeprocesses?[/datum/lifeprocess/sight]; \
-	_sightprocess?.process(); \
+	_sightprocess?.Process(); \
 } while(0)
 
 // Property defines

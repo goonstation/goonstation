@@ -1325,11 +1325,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/rpg
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
 		set_current_projectile(new /datum/projectile/bullet/rpg)
 		..()
-		return
 
 	update_icon()
 		..()
@@ -1340,6 +1340,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			H.update_inhands()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	loaded
 		New()
@@ -1518,8 +1522,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -1588,6 +1597,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
@@ -1621,6 +1631,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			spread_angle = 0
 			shoot_delay = 3 DECI SECONDS
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 
 
@@ -1713,6 +1727,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = max_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
@@ -1733,6 +1748,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					return
 		else
 			..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	proc/convert_grenade(obj/item/nade, mob/user)
 		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell/rigil
@@ -1766,12 +1785,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/datum/movement_controller/snipermove = null
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_762_NATO)
 		snipermove = new/datum/movement_controller/sniper_look()
 		..()
 
 	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		snipermove = null
 		..()
 

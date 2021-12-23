@@ -54,6 +54,11 @@
 	icon_state = "santa"
 	item_state = "santahat"
 
+	noslow
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0.0)
+
 /obj/item/clothing/suit/space/santa
 	name = "santa suit"
 	desc = "Festive!"
@@ -62,6 +67,11 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+
+	noslow
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0.0)
 
 /obj/item/clothing/mask/owl_mask
 	name = "owl mask"

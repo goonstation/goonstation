@@ -20200,9 +20200,7 @@
 "aXi" = (
 /obj/item/basketball,
 /obj/item/kitchen/food_box/donut_box,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/crevice{
 	pixel_x = -30
 	},
@@ -32790,9 +32788,7 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "bDy" = (
@@ -33636,8 +33632,7 @@
 	name = "Net Cafe"
 	})
 "bFx" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/mining_tool/powerhammer,
@@ -33777,8 +33772,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
 "bFR" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/mine/stun,
@@ -33905,8 +33899,7 @@
 	name = "Net Cafe"
 	})
 "bGj" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/clothing/suit/space/captain/blue,

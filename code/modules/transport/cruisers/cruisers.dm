@@ -663,7 +663,7 @@
 				S.setValues(percent_health, percent_shields, percent_power)
 		return
 
-	proc/recieveMovement(var/direction)
+	proc/receiveMovement(var/direction)
 		if(!hasPower() || !(direction == NORTH || direction == EAST || direction == SOUTH || direction == WEST))
 			return
 
@@ -1371,7 +1371,7 @@
 	relaymove(mob/user, direction)
 		var/obj/machinery/cruiser/C = interior.ship
 		if (C)
-			C.recieveMovement(direction)
+			C.receiveMovement(direction)
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod/security

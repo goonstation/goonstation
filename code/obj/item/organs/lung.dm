@@ -42,11 +42,11 @@
 		return
 
 	on_removal()
-		..()
 		if (donor)
 			if (src.robotic)
 				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
+		..()
 		return
 
 	// on_broken()
