@@ -447,7 +447,7 @@
 					src.ArtifactActivated()
 
 /obj/proc/ArtifactTouched(mob/user as mob)
-	if (get_dist(src, user) > 1)
+	if (!in_interact_range(get_turf(src), user))
 		return
 	if (isAI(user))
 		return
