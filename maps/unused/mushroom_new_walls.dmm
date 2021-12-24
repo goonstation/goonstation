@@ -9910,7 +9910,7 @@
 /turf/space,
 /area/space)
 "aNF" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 6
 	},

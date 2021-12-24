@@ -610,7 +610,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "electropack0"
 	var/code = 2.0
 	var/on = 0.0
@@ -767,7 +767,7 @@ Code:
 	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
-	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."
+	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
 
 /*
 /obj/item/device/radio/signaler/examine()

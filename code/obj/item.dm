@@ -11,7 +11,7 @@
 	var/item_state = null
 	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
-	var/wear_image_icon = 'icons/mob/belt.dmi'
+	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -84,8 +84,8 @@
 	var/tmp/lastTooltipSpectro = null
 	var/tmp/tooltip_rebuild = 1
 
-	var/inventory_counter_enabled = 0 // Inventory count display. Call create_inventory_counter in New()
-	var/obj/overlay/inventory_counter/inventory_counter = null
+	var/tmp/inventory_counter_enabled = 0 // Inventory count display. Call create_inventory_counter in New()
+	var/tmp/obj/overlay/inventory_counter/inventory_counter = null
 
 	/*_____*/
 	/*Flags*/
@@ -119,8 +119,8 @@
 	pressure_resistance = 50
 	var/obj/item/master = null
 
-	var/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
-	var/last_processing_tick = -1
+	var/tmp/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
+	var/tmp/last_processing_tick = -1
 
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)

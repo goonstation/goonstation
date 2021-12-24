@@ -420,6 +420,7 @@ toxic - poisons
 	ks_ratio = 0.0
 	dissipation_delay = 6 //One more tick before falloff begins
 	damage_type = D_ENERGY // FUCK YOU.
+	ie_type = "T"
 	hit_type = null
 	icon_turf_hit = null // stun bullets shouldn't actually enter walls should they?
 

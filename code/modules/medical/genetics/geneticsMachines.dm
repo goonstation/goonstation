@@ -74,7 +74,7 @@
 		var/obj/item/card/id/ID = W
 		if (istype(ID))
 			registered_id = ID.registered
-			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
+			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
 			return
 
 		..()

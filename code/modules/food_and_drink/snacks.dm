@@ -902,7 +902,7 @@
 			M.reagents.add_reagent("synaptizine", 15)
 			M.reagents.add_reagent("saline", 15)
 			M.reagents.add_reagent("salbutamol", 15)
-			M.reagents.add_reagent("methamphetamine", 15)
+			M.reagents.add_reagent("synd_methamphetamine", 15)
 		..()
 
 /obj/item/reagent_containers/food/snacks/donkpocket/honk

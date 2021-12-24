@@ -17617,9 +17617,7 @@
 /obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/clipboard,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/toy/sword,
@@ -37216,8 +37214,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crunch)
 "cfh" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /turf/unsimulated/floor,
@@ -37565,8 +37562,7 @@
 /area/owlery/staffhall)
 "cge" = (
 /obj/item/relic,
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /turf/unsimulated/floor/caution/corner/nw{
@@ -37582,8 +37578,7 @@
 	},
 /area/crunch)
 "cgg" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/reagent_containers/food/snacks/ectoplasm,
@@ -41293,7 +41288,7 @@
 	pixel_z = 10
 	},
 /obj/decal/fakeobjects/plantpot,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/wood/two,
@@ -47480,6 +47475,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
 	},
+/obj/item/baton,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -55671,7 +55667,6 @@
 	layer = 2
 	},
 /obj/random_item_spawner/med_kit,
-/obj/item/baton,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -58170,7 +58165,7 @@
 "dcV" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/map/light/brighterwhite,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/unsimulated/floor/black,
@@ -63439,7 +63434,7 @@
 /obj/item/reagent_containers/food/snacks/plant/pineapple,
 /obj/item/reagent_containers/food/snacks/burger/luauburger,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 24
 	},
 /obj/decal/cleanable/rust/jen,

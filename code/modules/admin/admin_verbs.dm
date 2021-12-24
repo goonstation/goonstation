@@ -1599,7 +1599,7 @@ var/list/fun_images = list()
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."
 	else
-		var/obj/item/old_grenade/banana/nade = new /obj/item/old_grenade/banana(usr.loc)
+		var/obj/item/old_grenade/spawner/banana/nade = new /obj/item/old_grenade/spawner/banana(usr.loc)
 		nade.payload = obj_path
 		nade.name = "mysterious grenade"
 		nade.desc = "There could be anything inside this."

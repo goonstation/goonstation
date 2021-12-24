@@ -27,7 +27,7 @@
 	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
-	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
+	desc = "A computer that allows one to call and recall the emergency shuttle, as well as receive messages from Centcom."
 
 	light_r =0.6
 	light_g = 1
