@@ -29,10 +29,10 @@
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (!src || !istype(src))
 			return
 
@@ -61,7 +61,7 @@
 
 			target.reagents.trans_to(src, t)
 			boutput(user, "<span class='notice'>You fill the dropper with [t] units of the solution.</span>")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if ((src.customizable_settings_available && src.transfer_mode == TO_TARGET) || (!src.customizable_settings_available && src.reagents.total_volume))
 			if (src.reagents.total_volume)
@@ -98,7 +98,7 @@
 						src.reagents.trans_to(target, t)
 
 				user.show_text("You transfer [t] units of the solution.", "blue")
-				src.update_icon()
+				src.UpdateIcon()
 			else
 				user.show_text("The [src] is empty!", "red")
 
@@ -153,7 +153,7 @@
 
 	proc/modify_transfer_amt(var/diff)
 		src.transfer_amount += diff
-		src.transfer_amount = min(max(transfer_amount, 0.1), 10) // Sanity check.
+		src.transfer_amount = clamp(transfer_amount, 0.1, 10) // Sanity check.
 		src.amount_per_transfer_from_this = src.transfer_amount
 		return
 

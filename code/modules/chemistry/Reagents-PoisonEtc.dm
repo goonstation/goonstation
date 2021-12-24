@@ -209,6 +209,7 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 50
+			random_chem_blacklisted = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -497,7 +498,7 @@ datum
 						B.name = M.real_name
 						B.desc = "This bee looks very much like [M.real_name]. How peculiar."
 						B.beeKid = "#ffdddd"
-						B.update_icon()
+						B.UpdateIcon()
 						M.gib()
 				..()
 
@@ -572,7 +573,7 @@ datum
 								B.desc = "[H.real_name]'s heart is flying off. Better catch it quick!"
 								B.beeMom = H
 								B.beeKid = DEFAULT_BLOOD_COLOR
-								B.update_icon()
+								B.UpdateIcon()
 
 								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 								take_bleeding_damage(H, null, rand(10,30) * mult, DAMAGE_STAB)
@@ -653,7 +654,7 @@ datum
 								B.desc = "[H.real_name]'s heart is flying off. What kind of heart problems did they have!?"
 								B.beeMom = H
 								B.beeKid = DEFAULT_BLOOD_COLOR
-								B.update_icon()
+								B.UpdateIcon()
 
 								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway

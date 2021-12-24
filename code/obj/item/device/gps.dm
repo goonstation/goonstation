@@ -221,8 +221,8 @@
 	proc/obtain_target_from_coords(href_list)
 		if (href_list["dest_cords"])
 			tracking_target = null
-			var/x = text2num(href_list["x"])
-			var/y = text2num(href_list["y"])
+			var/x = text2num_safe(href_list["x"])
+			var/y = text2num_safe(href_list["y"])
 			if (!x || !y)
 				boutput(usr, "<span class='alert'>Bad Topc call, if you see this something has gone wrong. And it's probably YOUR FAULT!</span>")
 				return
@@ -292,7 +292,7 @@
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
-				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal received from GPS [senderName].\".")
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return

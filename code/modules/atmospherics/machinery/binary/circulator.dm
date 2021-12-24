@@ -41,7 +41,7 @@
 
 	process()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		if(status & (BROKEN|NOPOWER))

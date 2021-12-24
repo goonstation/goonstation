@@ -359,6 +359,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "NT Retention Center (office)"
 	icon_state = "orange"
 
+/area/retentioncenter/recycling
+	name = "NT Retention Center (Recycling)"
+	icon_state = "pink"
+
 ////////////////////////////
 
 /turf/unsimulated/outdoors
@@ -535,21 +539,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
 		src.cant_self_remove = true
 		src.cant_other_remove = true
-		sleep(1 SECOND)
-		if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
-			boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
-		else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
-			boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
-			sleep(1 SECOND)
-			boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
-			sleep(1 SECOND)
-			user.bioHolder.AddEffect("accent_scots")
-			boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
-		else
-			boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
-			src.rejected_mobs.Add(user)
-		src.cant_self_remove = true
-		src.cant_other_remove = false
+		SPAWN_DBG(1 SECOND)
+			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
+				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
+			else if (prob(50) && user.bioHolder && !src.rejected_mobs.Find(user))
+				boutput(user, "<span class='notice'>OCH, CAN YE 'EAR TH' HIELAN WINDS WHISPERIN' MY NAME??</span>")
+				sleep(1 SECOND)
+				boutput(user, "<span class='notice'>I AM ADA O'HARA! MA SPIRIT IS INDOMITABLE! I'LL MAKE YE INDOMITABLE TAE...</span>")
+				sleep(1 SECOND)
+				user.bioHolder.AddEffect("accent_scots")
+				boutput(user, "<span class='notice'>HEED FORTH, AYE? FECHT LANG AN' HAURD!!</span>")
+			else
+				boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
+				src.rejected_mobs.Add(user)
+			src.cant_self_remove = true
+			src.cant_other_remove = false
 
 
 /area/centcom/offices/enakai
@@ -583,15 +587,47 @@ proc/get_centcom_mob_cloner_spawn_loc()
 			if(isnull(locate(/mob/living) in T))
 				return T
 
-proc/put_mob_in_centcom_cloner(mob/living/L)
-	var/area/AR = get_area(L)
+/obj/centcom_clone_wrapper
+	density = 1
+	anchored = 0
+	mouse_opacity = 0
+	var/bumping = FALSE
+
+	New(atom/loc, mob/living/clone)
+		..()
+		src.vis_contents += clone
+
+	set_loc(newloc)
+		. = ..()
+		if(isnull(newloc))
+			src.vis_contents = null
+			qdel(src)
+
+	bump(atom/O)
+		. = ..()
+		if(bumping || !ismovable(O))
+			return
+		var/atom/movable/AM = O
+		bumping = TRUE
+		var/t = get_dir(src, AM)
+		AM.animate_movement = SYNC_STEPS
+		AM.glide_size = src.glide_size
+		step(AM, t)
+		step(src, t)
+		bumping = FALSE
+
+proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
+	var/atom/movable/clone = indirect ? new/obj/centcom_clone_wrapper(get_centcom_mob_cloner_spawn_loc(), L) : L
+	clone.name = L.name
+	var/area/AR = get_area(clone)
 	if(!istype(AR, /area/centcom/reconstitutioncenter))
-		L.set_loc(get_centcom_mob_cloner_spawn_loc())
-	L.density = TRUE
-	L.a_intent = INTENT_HARM
-	L.dir_locked = TRUE
-	playsound(L, "sound/machines/ding.ogg", 50, 1)
-	L.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
+		clone.set_loc(get_centcom_mob_cloner_spawn_loc())
+	if(!indirect)
+		L.density = TRUE
+		L.set_a_intent(INTENT_HARM)
+		L.dir_locked = TRUE
+	playsound(clone, "sound/machines/ding.ogg", 50, 1)
+	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0
 	if(isnull(conveyors))

@@ -54,58 +54,39 @@
 
 	// Uniform
 	if (src.w_uniform)
-		if (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/experimental))
-			var/obj/item/clothing/under/experimental/worn_suit = src.w_uniform
-			wear_sanity_check(worn_suit)
+		var/image/suit_image
+		wear_sanity_check(src.w_uniform)
+		suit_image = src.w_uniform.wear_image
 
-			var/counter = 0
-			while (counter < 6)
-				counter++
-				if (counter > worn_suit.images.len)
-					UpdateOverlays(null, "suit_image[counter]")
-				else
-					UpdateOverlays(worn_suit.images[counter], "suit_image[counter]")
+		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
+		if (islist(override_states) && ("js-[wear_state]" in override_states))
+			suit_image.icon = src.mutantrace.clothing_icon_override
+			suit_image.icon_state = "js-[wear_state]"
+		else
+			suit_image.icon = src.w_uniform.wear_image_icon
+			suit_image.icon_state = wear_state
 
-			if (worn_suit.blood_DNA)
-				blood_image.icon_state =  "uniformblood"
-				blood_image.layer = MOB_CLOTHING_LAYER+0.1
-				UpdateOverlays(blood_image, "suit_image_blood")
-			else
-				UpdateOverlays(null, "suit_image_blood")
-		else if(src.w_uniform)
-			var/image/suit_image
-			wear_sanity_check(src.w_uniform)
-			suit_image = src.w_uniform.wear_image
+		suit_image.layer = src.w_uniform.wear_layer
+		suit_image.alpha = src.w_uniform.alpha
+		suit_image.color = src.w_uniform.color
+		UpdateOverlays(suit_image, "suit_image1")
+		var/counter = 1
+		while (counter < 6)
+			counter++
+			UpdateOverlays(null, "suit_image[counter]")
 
-			var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
-			if (islist(override_states) && ("js-[wear_state]" in override_states))
-				suit_image.icon = src.mutantrace.clothing_icon_override
-				suit_image.icon_state = "js-[wear_state]"
-			else
-				suit_image.icon = src.w_uniform.wear_image_icon
-				suit_image.icon_state = wear_state
+		if (src.w_uniform.worn_material_texture_image != null)
+			src.w_uniform.worn_material_texture_image.layer = src.w_uniform.wear_image.layer + 0.1
+			UpdateOverlays(src.w_uniform.worn_material_texture_image, "material_suit")
+		else
+			UpdateOverlays(null, "material_suit")
 
-			suit_image.layer = src.w_uniform.wear_layer
-			suit_image.alpha = src.w_uniform.alpha
-			suit_image.color = src.w_uniform.color
-			UpdateOverlays(suit_image, "suit_image1")
-			var/counter = 1
-			while (counter < 6)
-				counter++
-				UpdateOverlays(null, "suit_image[counter]")
-
-			if (src.w_uniform.worn_material_texture_image != null)
-				src.w_uniform.worn_material_texture_image.layer = src.w_uniform.wear_image.layer + 0.1
-				UpdateOverlays(src.w_uniform.worn_material_texture_image, "material_suit")
-			else
-				UpdateOverlays(null, "material_suit")
-
-			if (src.w_uniform.blood_DNA)
-				blood_image.icon_state =  "uniformblood_c"
-				blood_image.layer = MOB_CLOTHING_LAYER+0.1
-				UpdateOverlays(blood_image, "suit_image_blood")
-			else
-				UpdateOverlays(null, "suit_image_blood")
+		if (src.w_uniform.blood_DNA)
+			blood_image.icon_state =  "uniformblood_c"
+			blood_image.layer = MOB_CLOTHING_LAYER+0.1
+			UpdateOverlays(blood_image, "suit_image_blood")
+		else
+			UpdateOverlays(null, "suit_image_blood")
 
 	else
 		var/counter = 0
@@ -807,14 +788,15 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 			human_image.layer = MOB_LIMB_LAYER // why was this never defined before
 			var/gender_t = null
 			if (AHOLD.mob_appearance_flags & NOT_DIMORPHIC) // Most mutants arent dimorphic
-				gender_t = "m" // and i doubt they ever will be
+				if (AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE)
+					gender_t = "s" // s for skintone I guess
+				else
+					gender_t = "m" // and i doubt they ever will be
 			else
 				gender_t = src.gender == FEMALE ? "f" : "m"
 
-			var/skin_tone = "#777777"
-			if(AHOLD.mob_appearance_flags & HAS_NO_SKINTONE || AHOLD.mob_appearance_flags & HAS_PARTIAL_SKINTONE)
-				skin_tone = "#FFFFFF"	// Preserve their true coloration
-			else
+			var/skin_tone = "#FFFFFF" // #FFFFFF preserves color of base sprites
+			if(AHOLD.mob_appearance_flags & HAS_HUMAN_SKINTONE)
 				skin_tone = AHOLD.s_tone
 			human_image.color = skin_tone
 			human_decomp_image.color = skin_tone
@@ -825,10 +807,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				if(AHOLD.mob_appearance_flags & TORSO_HAS_SKINTONE) // Torso is supposed to be skintoned, even if everything else isnt?
 					human_image.color = AHOLD.s_tone	// Apply their normal skin-tone to the chest if that's what its supposed to be
 				src.body_standing.overlays += human_image
-				human_image.color = chest_color_before
-
 				human_image.icon_state = "groin_[gender_t]"
 				src.body_standing.overlays += human_image
+				human_image.color = chest_color_before
 
 				// all this shit goes on the torso anyway
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)

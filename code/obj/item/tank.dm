@@ -13,7 +13,7 @@ Contains:
 	name = "tank"
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
@@ -86,7 +86,7 @@ Contains:
 		return 1
 
 	proc/set_release_pressure(var/pressure as num)
-		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -157,7 +157,7 @@ Contains:
 				for_by_tcl(B, /obj/item/storage/bible)//world)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing("bombing", src, null, "exploded at [showCoords(T.x, T.y, T.z)], range: [range], last touched by: [src.fingerprintslast]")
+						logTheThing("bombing", src, null, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 				bible_contents.Remove(src)
 				qdel(src)
@@ -167,7 +167,7 @@ Contains:
 			//boutput(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
 
 
-			logTheThing("bombing", src, null, "exploded at [showCoords(epicenter.x, epicenter.y, epicenter.z)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing("bombing", src, null, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			explosion(src, epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
 			qdel(src)
 
@@ -426,7 +426,7 @@ Contains:
 	stamina_damage = 30
 	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
-	wear_image_icon = 'icons/mob/belt.dmi'
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()

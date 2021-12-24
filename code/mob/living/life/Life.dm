@@ -32,8 +32,13 @@
 		robot_owner = null
 		critter_owner = null
 
-	proc/process(var/datum/gas_mixture/environment, mult)
+	proc/Process(datum/gas_mixture/environment)
+		SHOULD_NOT_OVERRIDE(TRUE)
+		process(environment)
 		last_process = TIME
+
+	proc/process(datum/gas_mixture/environment)
+		PROTECTED_PROC(TRUE)
 
 	proc/get_multiplier()
 		.= clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
@@ -205,7 +210,7 @@
 			if(!L)
 				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
 				continue
-			L.process(environment)
+			L.Process(environment)
 
 		for (var/obj/item/implant/I in src.implant)
 			I.on_life(life_mult)
@@ -230,8 +235,8 @@
 
 		//Regular Trait updates
 		if(src.traitHolder)
-			for(var/T in src.traitHolder.traits)
-				var/obj/trait/O = getTraitById(T)
+			for(var/id in src.traitHolder.traits)
+				var/obj/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
@@ -533,25 +538,25 @@
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/sight]
 		if (L)
-			L.process()
+			L.Process()
 
 	update_canmove()
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
-			L.process()
+			L.Process()
 
 	force_laydown_standup() //immediately force a laydown
 		if(!lifeprocesses)
 			return
 		var/datum/lifeprocess/L = lifeprocesses[/datum/lifeprocess/stuns_lying]
 		if (L)
-			L.process()
+			L.Process()
 		L = lifeprocesses[/datum/lifeprocess/canmove]
 		if (L)
-			L.process()
+			L.Process()
 		L = lifeprocesses[/datum/lifeprocess/blindness]
 		if (L)
-			L.process()
+			L.Process()
 
 		if (src.client)
 			updateOverlaysClient(src.client)

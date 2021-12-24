@@ -42,11 +42,11 @@
 		return
 
 	on_removal()
-		..()
 		if (donor)
 			if (src.robotic)
 				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
+		..()
 		return
 
 	// on_broken()
@@ -142,7 +142,7 @@
 					donor.changeStatus("radiation", (1 + RV_pp) * mult/LUNG_COUNT)
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
-			var/lung_burn = min(max(breath.temperature - temp_tolerance, 0) / 3, 10)
+			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
 			if(prob(20))
 				boutput(donor, "<span class='alert'>This air is searing hot!</span>")

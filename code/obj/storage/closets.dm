@@ -138,8 +138,8 @@
 #endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
-	/obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/suit/space/santa,
+	/obj/item/clothing/head/helmet/space/santahat/noslow,
+	/obj/item/clothing/suit/space/santa/noslow,
 #else
 	/obj/item/clothing/head/helmet/space/syndicate,
 	/obj/item/clothing/suit/space/syndicate,
@@ -348,7 +348,7 @@
 
 		src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
@@ -403,7 +403,7 @@
 			entangled.contents = src.contents
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
 		return 1
 
@@ -412,17 +412,25 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
+			if(secure && locked)
+				user.show_text("Access Denied", "red")
+				return
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
+				user.show_text("[src] cannot fit any more items!", "red")
+				return
 			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -457,7 +465,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -469,7 +477,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return

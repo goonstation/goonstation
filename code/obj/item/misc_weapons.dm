@@ -117,8 +117,8 @@
 			var/mob/living/carbon/human/H = user
 			age_modifier = 30 - H.bioHolder.age
 
-		if(user.gender == MALE) playsound(user, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.2, 1.0 + age_modifier/60)))
-		else playsound(user, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, max(0.7, min(1.4, 1.0 + age_modifier/50)))
+		if(user.gender == MALE) playsound(user, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 5, 0, clamp(1.0 + age_modifier/60, 0.7, 1.2))
+		else playsound(user, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 5, 0, clamp(1.0 + age_modifier/50, 0.7, 1.4))
 		..()
 	else
 		if (user.a_intent == INTENT_HELP)
@@ -175,8 +175,8 @@
 			S = H.find_type_in_hand(/obj/item/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
-			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - H.bioHolder.age)/60)))
-			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, max(0.7, min(1.4, 1.0 + (30 - H.bioHolder.age)/50)))
+			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
+			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -226,8 +226,8 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordstart.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(U,"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordstart.ogg", 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
+			else playsound(U,"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		if (src.bladecolor)
@@ -246,8 +246,8 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, max(0.7, min(1.2, 1.0 + (30 - U.bioHolder.age)/60)))
-			else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, max(0.7, min(1.4, 1.0 + (30 - U.bioHolder.age)/50)))
+			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
+			else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
@@ -1354,7 +1354,7 @@
 	desc = "A mysterious blade that hungers for blood & revels in strife. Grows stronger when used for malicious means."
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	wear_image_icon = 'icons/mob/back.dmi' //todo back sprites
+	wear_image_icon = 'icons/mob/clothing/back.dmi' //todo back sprites
 	icon_state = "claymore"
 	item_state = "longsword"
 	flags = ONBACK
@@ -1457,7 +1457,7 @@ obj/item/whetstone
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
 	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
 	flags = ONBACK
@@ -1475,14 +1475,19 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
-	var/mode = 2
+	var/mode = 1
 	var/maximum_force = 100
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		AddComponent(/datum/component/itemblock/saberblock)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/item/heavy_power_sword/attack(mob/M as mob, mob/user as mob, def_zone)
 
@@ -1493,6 +1498,7 @@ obj/item/whetstone
 	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
 		src.force += 5
 		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+		src.tooltip_rebuild = TRUE
 	if(src.mode == 1) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
@@ -1503,6 +1509,7 @@ obj/item/whetstone
 	if (isturf(src.loc))
 		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
 		force = initial(src.force)
+		src.tooltip_rebuild = TRUE
 		return
 
 /obj/item/heavy_power_sword/attack_self(mob/user as mob)

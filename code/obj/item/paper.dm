@@ -30,7 +30,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
-	wear_image_icon = 'icons/mob/head.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = ""
@@ -181,9 +181,9 @@
 			if(!src.stampable)
 				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
 				return
-			var/stamp_x = text2num(params["x"])
-			var/stamp_y = text2num(params["y"])
-			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/stamp_x = text2num_safe(params["x"])
+			var/stamp_y = text2num_safe(params["y"])
+			var/stamp_r = text2num_safe(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
 
 			if(length(stamps) < PAPER_MAX_STAMPS)
@@ -200,7 +200,7 @@
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
 
-			field_counter = params["fieldCounter"] ? text2num(params["fieldCounter"]) : field_counter
+			field_counter = params["fieldCounter"] ? text2num_safe(params["fieldCounter"]) : field_counter
 
 			if(paper_len > PAPER_MAX_LENGTH)
 				// Side note, the only way we should get here is if
@@ -1407,8 +1407,14 @@ as it may become compromised.
 	throw_spin = 0
 
 /obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
-	if(src.throwing)
+	if(src.throwing && src.sealed)
 		src.throw_unlimited = 1
+
+/obj/item/paper/folded/plane/attack_self(mob/user as mob)
+	if (src.sealed) //Set throwing vars when unfolding (mostly in the parent call) so that an unfolded paper "plane" behaves like regular paper
+		throw_speed = 3 //default for paper
+		throw_spin = 1
+	..()
 
 /obj/item/paper/folded/ball
 	name = "paper ball"
@@ -1416,7 +1422,7 @@ as it may become compromised.
 	icon_state = "paperball"
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
-	if (iscarbon(M) && M == user)
+	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
 		playsound(M,"sound/misc/gulp.ogg", 30, 1)
 		eat_twitch(M)

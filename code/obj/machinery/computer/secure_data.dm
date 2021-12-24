@@ -473,7 +473,7 @@
 					if ("age")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
-							t1 = max(1, min(t1, 99))
+							t1 = clamp(t1, 1, 99)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["age"] = t1
@@ -709,7 +709,7 @@
 				src.active_record_security["log"] += list( new_comment )
 
 			if ("del_comment")
-				var/comment_num = text2num(href_list["comment"])
+				var/comment_num = text2num_safe(href_list["comment"])
 				if (src.active_record_security && src.active_record_security["log"] && src.active_record_security["log"][comment_num])
 					src.active_record_security["log"][comment_num]["author"] = "Deleted"
 					src.active_record_security["log"][comment_num]["text"] = "<div style='text-align: center;'>Deleted at [time2text(world.realtime, "hh:mm:ss")]</div>"

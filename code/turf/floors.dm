@@ -30,6 +30,126 @@
 			setMaterial(plate_mat)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			switch(src.icon_state)
+				if("caution_north")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+				if("engine_caution_north")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+				if("caution_south")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("engine_caution_south")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("caution_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+				if("engine_caution_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+				if("caution_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("engine_caution_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("caution_we")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("engine_caution_we")
+					new /obj/decal/tile_edge/stripe/xmas{dir=WEST}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=EAST}(src)
+				if("caution_ns")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("engine_caution_ns")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTH}(src)
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTH}(src)
+				if("corner_neast")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("corner_nwest")
+					new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+				if("corner_east")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+				if("corner_west")
+					new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+				if("floor_hazard_misc")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("engine_caution_misc")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+				if("engine_caution_corners")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHWEST}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/xmas{dir=SOUTHEAST}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHEAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/xmas{dir=NORTHWEST}(src)
+				if("floor_hazard_corners")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=SOUTH}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=NORTH}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=EAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=WEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHEAST}(src)
+						if(SOUTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHWEST}(src)
+						if(NORTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHEAST}(src)
+						if(NORTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHWEST}(src)
+				if("engine_caution_corners2")
+					switch(src.dir)
+						if(SOUTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=SOUTH}(src)
+						if(NORTH)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=NORTH}(src)
+						if(EAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=EAST}(src)
+						if(WEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas{dir=WEST}(src)
+						if(SOUTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHEAST}(src)
+						if(SOUTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=SOUTHWEST}(src)
+						if(NORTHEAST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHEAST}(src)
+						if(NORTHWEST)
+							new /obj/decal/tile_edge/stripe/corner/xmas2{dir=NORTHWEST}(src)
+		#endif
 		var/obj/plan_marker/floor/P = locate() in src
 		if (P)
 			src.icon = P.icon
@@ -1064,6 +1184,7 @@ DEFINE_FLOORS(minitiles/black,
 
 /turf/simulated/floor/snow
 	name = "snow"
+	has_material = FALSE
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -1189,9 +1310,16 @@ DEFINE_FLOORS(techfloor/green,
 	step_priority = STEP_PRIORITY_MED
 
 	New()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			if(prob(10))
+				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
+			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+			return
+		#endif
+
 		..()
 		setMaterial(getMaterial("synthrubber"))
-
 /turf/proc/grassify()
 	.=0
 
@@ -1441,8 +1569,6 @@ DEFINE_FLOORS(grasslush/thin,
 
 /turf/simulated/floor/blob_act(var/power)
 	return
-
-/turf/simulated/floor/proc/update_icon()
 
 /turf/simulated/attack_hand(mob/user as mob)
 	if (src.density == 1)
@@ -1815,7 +1941,7 @@ DEFINE_FLOORS(grasslush/thin,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material.triggerOnHit(src, C, user, 1)
+		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
 

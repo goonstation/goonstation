@@ -198,25 +198,7 @@
 			mainframe.switchCamera(locate(href_list["switchcamera"]))
 		if (href_list["showalerts"])
 			mainframe.ai_alerts()
-		if (href_list["termmsg"]) //Oh yeah, message that terminal!
-			var/termid = href_list["termmsg"]
-			if(!termid || !(termid in mainframe.terminals))
-				boutput(src, "That terminal is not connected!")
-				return
-			var/t = input(usr, "Please enter message", termid, null) as text
-			if (!t)
-				return
 
-			if(isdead(mainframe))
-				boutput(src, "You cannot interface with a terminal because you are dead!")
-				return
-
-			t = copytext(adminscrub(t), 1, 65)
-			//Send the actual message signal
-			boutput(src, "<b>([termid]):</b> [t]")
-			mainframe.post_status(termid, "command","term_message","data",t)
-			//Might as well log what they said too!
-			logTheThing("diary", src, null, ": [t]", "say")
 		return
 
 	Stat()
@@ -257,8 +239,8 @@
 	say_radio()
 		src.mainframe.say_radio()
 
-	say_main_radio()
-		src.mainframe.say_main_radio()
+	say_main_radio(msg as text)
+		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
 		if (mainframe)
@@ -437,6 +419,13 @@
 		if(mainframe)
 			mainframe.ai_station_announcement()
 
+	verb/view_messageLog()
+		set name = "View Message Log"
+		set desc = "View all messages sent by terminal connections."
+		set category = "AI Commands"
+		if(mainframe)
+			mainframe.view_messageLog()
+
 //---TURF---//
 /turf/var/image/aiImage
 /turf/var/list/cameras = null
@@ -490,9 +479,9 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 //pod wars has no AI so this is just a waste of time...
 #ifndef MAP_OVERRIDE_POD_WARS
+		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 
 		var/lastpct = 0
 		var/thispct = 0

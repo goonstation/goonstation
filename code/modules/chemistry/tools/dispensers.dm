@@ -212,12 +212,12 @@
 
 		src.cup_amount = src.cup_max
 
-		src.update_icon()
+		src.UpdateIcon()
 
 	//on_reagent_change()
-	//	src.update_icon()
+	//	src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.has_tank)
 			if (src.reagents.total_volume)
 				var/datum/color/average = reagents.get_average_color()
@@ -246,7 +246,7 @@
 				src.reagents.trans_to(P, reagents.total_volume)
 				src.reagents.clear_reagents()
 				src.has_tank = 0
-				src.update_icon()
+				src.UpdateIcon()
 				return
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/coolerbottle))
 			user.show_text("You connect the bottle to [src].", "blue")
@@ -254,7 +254,7 @@
 			user.u_equip(W)
 			qdel(W)
 			src.has_tank = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (isscrewingtool(W))
@@ -291,7 +291,7 @@
 			user.put_in_hand_or_drop(P)
 			if (src.cup_amount <= 0)
 				user.show_text("That was the last cup!", "red")
-				src.update_icon()
+				src.UpdateIcon()
 
 	piss
 		New()
@@ -299,7 +299,7 @@
 			src.create_reagents(4000)
 			reagents.add_reagent("urine",400)
 			reagents.add_reagent("water",600)
-			src.update_icon()
+			src.UpdateIcon()
 		name = "discolored water fountain"
 		desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though seeing the color you feel you shouldn't"
 		color = "#ffffcc"
@@ -313,7 +313,7 @@
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
-			src.update_icon()
+			src.UpdateIcon()
 		name = "discolored water fountain"
 		desc = "It's called a fountain, but it's not very decorative or interesting. You can get a drink from it, though seeing the color you feel you shouldn't"
 		color = "#ccffcc"
@@ -585,9 +585,9 @@
 		fluid_image = image(src.icon, "fluid-[src.icon_state]")
 
 	on_reagent_change()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))

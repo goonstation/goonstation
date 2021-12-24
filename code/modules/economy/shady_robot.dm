@@ -274,8 +274,8 @@
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Back</A>"
 
 		if (href_list["access"] && href_list["allowed"])
-			var/access_type = text2num(href_list["access"])
-			var/access_allowed = text2num(href_list["allowed"])
+			var/access_type = text2num_safe(href_list["access"])
+			var/access_allowed = text2num_safe(href_list["allowed"])
 
 			if(access_type == 37)
 				src.card_access -= access_type
@@ -291,7 +291,7 @@
 			src.Topic(href, params2list(href))
 
 		if(href_list["timer"])
-			src.card_timer = text2num(href_list["timer"])
+			src.card_timer = text2num_safe(href_list["timer"])
 
 			updatecardprice()
 			href = "temp_card=1"
@@ -343,8 +343,8 @@
 
 		if (href_list["duration"])
 			var/input = input("Duration in seconds (1-600)?","Temporary ID") as num
-			if(isnum(input))
-				src.card_duration = min(max(input,1),600)
+			if(isnum_safe(input))
+				src.card_duration = clamp(input, 1, 600)
 
 			updatecardprice()
 			href = "temp_card=1"
@@ -406,6 +406,8 @@
 			if (account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 10", "Trader Purchase", null, null) as num
+				if(!isnum_safe(quantity))
+					return
 				if (quantity < 1)
 					quantity = 0
 					return
@@ -440,7 +442,7 @@
 		else if (href_list["haggleb"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggleb"])
 				if(N)
 					if(patience == N.haggleattempts)
@@ -466,7 +468,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I

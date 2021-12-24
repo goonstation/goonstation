@@ -4,7 +4,7 @@
 	shuttle_available = 2
 
 	var/const/blobs_minimum = 2
-	var/const/blobs_possible = 3
+	var/const/blobs_possible = 4
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/finish_counter = 0
@@ -26,7 +26,7 @@
 			num_players++
 
 	var/i = rand(-5, 0)
-	var/num_blobs = max(2, min(round((num_players + i) / 20), blobs_possible))
+	var/num_blobs = clamp(round((num_players + i) / 20), blobs_minimum, blobs_possible)
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 

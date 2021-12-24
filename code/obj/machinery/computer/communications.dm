@@ -27,7 +27,7 @@
 	var/status_display_freq = FREQ_STATUS_DISPLAY
 	var/stat_msg1
 	var/stat_msg2
-	desc = "A computer that allows one to call and recall the emergency shuttle, as well as recieve messages from Centcom."
+	desc = "A computer that allows one to call and recall the emergency shuttle, as well as receive messages from Centcom."
 
 	light_r =0.6
 	light_g = 1
@@ -100,7 +100,7 @@
 			src.state = STATE_VIEWMESSAGE
 			if (!src.currmsg)
 				if(href_list["message-num"])
-					src.currmsg = text2num(href_list["message-num"])
+					src.currmsg = text2num_safe(href_list["message-num"])
 				else
 					src.state = STATE_MESSAGELIST
 		if("delmessage")
@@ -156,7 +156,7 @@
 			src.aistate = STATE_VIEWMESSAGE
 			if (!src.aicurrmsg)
 				if(href_list["message-num"])
-					src.aicurrmsg = text2num(href_list["message-num"])
+					src.aicurrmsg = text2num_safe(href_list["message-num"])
 				else
 					src.aistate = STATE_MESSAGELIST
 		if("ai-delmessage")

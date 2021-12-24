@@ -7,7 +7,7 @@
 	stops_space_move = 1
 	dir = 5 //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
 	var/health = 30
@@ -57,7 +57,27 @@
 	initialize()
 		src.set_layer_from_settings()
 		update_nearby_tiles(need_rebuild=1)
+
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME && !is_cardinal(src.dir))
+			xmasify()
+		#endif
 		..()
+
+	proc/xmasify()
+		var/turf/T = get_step(src, SOUTH)
+		for(var/obj/O in T)
+			if(istype(O, /obj/machinery/light) || istype(O, /obj/machinery/recharger/wall))
+				if(O.pixel_y > 6)
+					return
+		if(locate(/obj/decal) in src.loc)
+			return
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.02)
+			new /obj/decal/wreath(src.loc)
+		else
+			if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				var/obj/decal/xmas_lights/lights = new(src.loc)
+				lights.light_pattern(y % 5)
 
 	proc/set_layer_from_settings()
 		if (!map_settings)
@@ -146,7 +166,7 @@
 
 		amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 
 		if (src.health == 0 && nosmash)
 			qdel(src)
@@ -164,7 +184,7 @@
 		if (amount <= 0)
 			return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -179,7 +199,7 @@
 		if (amount <= 0)
 			return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -190,7 +210,7 @@
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
 		if (amount <= 0)
 			return
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
 
@@ -205,7 +225,7 @@
 
 		if (amount <= 0)
 			return
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			if (nosmash)
 				qdel(src)
@@ -294,7 +314,7 @@
 				return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 			return 0 //full tile window, you can't move into it!
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -302,7 +322,7 @@
 
 	gas_cross(turf/target)
 		. = TRUE
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) == dir)
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) & dir)
 			. = ..()
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
@@ -312,7 +332,7 @@
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (get_dir(loc, target) == src.dir)
+		if (get_dir(loc, target) & src.dir)
 			return 0
 		return 1
 
@@ -628,7 +648,7 @@
 
 	New()
 		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.update_icon()
+			T.UpdateIcon()
 */
 /obj/window/north
 	dir = NORTH
@@ -716,7 +736,7 @@
 			src.update_neighbors()
 
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	disposing()
 		..()
@@ -724,7 +744,7 @@
 		if (map_setting)
 			src.update_neighbors()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			return
@@ -748,15 +768,15 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (..(W, user))
-			src.update_icon()
+			src.UpdateIcon()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
-			T.update_icon()
+			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"

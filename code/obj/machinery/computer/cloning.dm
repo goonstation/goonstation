@@ -246,9 +246,9 @@
 		var/datum/abilityHolder/A = subject.abilityHolder.deepCopy()
 		R["abilities"] = A
 
-	R["traits"] = list()
-	if(subject.traitHolder && length(subject.traitHolder.traits))
-		R["traits"] = subject.traitHolder.traits.Copy()
+	R["traits"] = null
+	if(!isnull(subject.traitHolder))
+		R["traits"] = subject.traitHolder.copy(null)
 
 	var/obj/item/implant/cloner/imp = new(subject)
 	imp.implanted = TRUE
@@ -370,6 +370,8 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
+		if(iswraith(M))
+			return
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
 	return null
@@ -389,7 +391,7 @@ proc/find_ghost_by_key(var/find_key)
 	var/mob/occupant = null
 	anchored = 1.0
 	soundproofing = 10
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
 
 	// In case someone wants a perfectly safe device. For some weird reason.
@@ -444,10 +446,10 @@ proc/find_ghost_by_key(var/find_key)
 			move_mob_inside(target)
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))

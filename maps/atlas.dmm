@@ -1215,9 +1215,6 @@
 /obj/item/scissors,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
-"cZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/exit)
 "da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -1329,6 +1326,17 @@
 "dn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
+"do" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "dp" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -1709,16 +1717,6 @@
 "en" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"eo" = (
-/obj/potted_plant{
-	dir = 1;
-	pixel_y = 28
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white/checker,
-/area/station/hallway/secondary/exit)
 "ep" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2031,27 +2029,6 @@
 	dir = 5
 	},
 /area/station/security/main)
-"fh" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
-/obj/machinery/light_switch/auto,
-/obj/item/fish/bass,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
-/obj/item/fish/carp,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/reagent_containers/food/snacks/ingredient/meat{
-	desc = "Ew.";
-	name = "meat of questionable origin"
-	},
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/turf/simulated/floor/specialroom/freezer,
-/area/station/crew_quarters/catering)
 "fi" = (
 /obj/lattice{
 	dir = 4;
@@ -3614,20 +3591,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
-"ju" = (
-/obj/machinery/espresso_machine,
-/obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
-	pixel_y = 32
-	},
-/obj/table/wood/round/auto,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "jw" = (
 /obj/cable{
 	d1 = 4;
@@ -4492,16 +4455,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"lz" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
 "lA" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/tracks{
@@ -4598,17 +4551,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"lL" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
-/obj/rack,
-/obj/item/gun/implanter,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "lM" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -8395,22 +8337,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/bridge)
-"uo" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue2"
-	},
-/area/station/bridge/customs)
 "up" = (
 /obj/machinery/computer/bank_data,
 /turf/simulated/floor/carpet{
@@ -8731,6 +8657,25 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
+"uY" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/item/bell/hop{
+	pixel_y = 15
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/station/bridge/customs)
 "va" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10345,9 +10290,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
-"yW" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "yX" = (
 /turf/space,
 /area/shuttle_sound_spawn)
@@ -12055,6 +11997,16 @@
 	},
 /turf/simulated/floor/red,
 /area/station/bridge/united_command)
+"Dw" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/rack,
+/obj/item/gun/implanter,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "Dx" = (
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/device/analyzer/healthanalyzer/borg,
@@ -12069,6 +12021,20 @@
 /obj/storage/closet/wardrobe/mixed,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
+"DD" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "DH" = (
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/engine{
@@ -12996,6 +12962,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
+"FQ" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/caution/west,
+/area/station/hallway/secondary/exit)
 "FR" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -13243,6 +13217,20 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"Gq" = (
+/obj/machinery/espresso_machine,
+/obj/item/reagent_containers/food/drinks/espressocup,
+/obj/drink_rack/cup{
+	pixel_y = 32
+	},
+/obj/table/wood/round/auto,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "Gr" = (
 /obj/shrub{
 	dir = 6
@@ -14849,27 +14837,6 @@
 /obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
-"Kx" = (
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/item/luggable_computer/personal,
-/obj/machinery/cell_charger,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/aiModule/hologram_expansion/clown{
-	pixel_y = 9
-	},
-/turf/simulated/floor/black,
-/area/station/storage/tech)
 "Ky" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/purplewhite{
@@ -16811,6 +16778,16 @@
 /obj/lattice,
 /turf/space,
 /area/space)
+"Pt" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "Pu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16874,21 +16851,6 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
-"PA" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "PB" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/cable{
@@ -17981,6 +17943,23 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/grey/side,
 /area/station/mining/refinery)
+"Sp" = (
+/obj/machinery/light_switch/auto,
+/obj/item/fish/bass,
+/obj/item/fish/bass,
+/obj/item/fish/carp,
+/obj/item/fish/carp,
+/obj/item/fish/salmon,
+/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/snacks/ingredient/meat{
+	desc = "Ew.";
+	name = "meat of questionable origin"
+	},
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "Sq" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
@@ -18452,6 +18431,12 @@
 "TE" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"TF" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
 "TG" = (
 /obj/machinery/guardbot_dock,
 /obj/cable{
@@ -18674,6 +18659,12 @@
 /obj/critter/mouse/remy,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
+"Uo" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/white,
+/area/station/science/artifact)
 "Up" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
@@ -18852,6 +18843,9 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"US" = (
+/turf/space,
+/area/shuttle/escape/station)
 "UT" = (
 /obj/cable{
 	d1 = 2;
@@ -19071,13 +19065,6 @@
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
-"VC" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/white,
-/area/station/science/artifact)
 "VD" = (
 /obj/cable{
 	d1 = 1;
@@ -19437,6 +19424,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
+"WE" = (
+/obj/xmastree/ephemeral,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
 "WF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20310,13 +20303,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"YT" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/white,
-/area/station/science/artifact)
 "YV" = (
 /obj/cable{
 	d1 = 1;
@@ -20327,6 +20313,27 @@
 	dir = 4
 	},
 /area/station/security/main)
+"YW" = (
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/item/luggable_computer/personal,
+/obj/machinery/cell_charger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/station/storage/tech)
 "YX" = (
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = "40"
@@ -57052,7 +57059,7 @@ Zb
 vD
 wx
 YR
-Kx
+YW
 Ak
 BH
 Ra
@@ -64612,7 +64619,7 @@ DS
 EH
 zw
 eS
-YT
+TF
 xB
 DU
 Cs
@@ -65216,7 +65223,7 @@ DT
 EI
 Fn
 Fn
-VC
+Uo
 Qv
 DU
 Iw
@@ -68506,7 +68513,7 @@ db
 dF
 ee
 Xj
-fh
+Sp
 gV
 dE
 fk
@@ -71229,7 +71236,7 @@ fQ
 gA
 hj
 jF
-ju
+Gq
 WZ
 Uz
 Qf
@@ -72410,16 +72417,16 @@ aa
 aa
 aa
 aa
+US
+US
+US
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-yX
-aa
-aa
+US
+US
+US
 aa
 aa
 aa
@@ -72710,20 +72717,20 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+yX
+US
+US
+US
+US
+US
+US
 aa
 aa
 aa
@@ -73012,20 +73019,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 aa
 aa
 aa
@@ -73314,21 +73321,21 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 PS
@@ -73369,7 +73376,7 @@ Do
 Ej
 Ej
 Py
-PA
+DD
 Hc
 Dn
 Ia
@@ -73616,21 +73623,21 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 PS
@@ -73918,21 +73925,21 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 PS
 PS
 PS
@@ -74220,20 +74227,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 PS
 PS
 aa
@@ -74251,7 +74258,7 @@ GQ
 BO
 YV
 jI
-lz
+do
 jI
 nY
 hJ
@@ -74522,20 +74529,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 PS
 aa
 nB
@@ -74553,7 +74560,7 @@ hO
 SQ
 jK
 kC
-lL
+Dw
 mW
 od
 hl
@@ -74824,20 +74831,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 ap
 cR
 cR
@@ -75126,22 +75133,22 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 aB
-aR
+FQ
 aR
 bs
 VF
@@ -75428,25 +75435,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aB
-bc
-bc
-bs
-cf
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+cR
+gs
+gs
+cR
+cI
 cf
 cf
 ek
@@ -75730,27 +75737,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-ap
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 cR
+gs
+gs
 cR
-br
 cg
-cI
-cI
+cf
+cf
 ek
 eZ
 ew
@@ -76032,28 +76039,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-PS
-aa
-cl
-cR
-cR
-cR
-cZ
-eo
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+aB
+Pt
+bc
+bs
+cf
+cf
+cf
+ek
 ew
 ew
 fJ
@@ -76334,26 +76341,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-PS
-PS
-aa
-aa
-aa
-cl
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+ap
+cR
+cR
+br
+cR
+cR
 ch
 cG
 ew
@@ -76636,25 +76643,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aa
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 PS
-PS
-PS
-PS
+aa
+aa
+aa
+aa
 aa
 ch
 dk
@@ -76939,23 +76946,23 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-yW
-aa
-aa
-aa
-aa
+PS
+PS
+PS
+PS
 PS
 aa
 cz
@@ -77243,16 +77250,16 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
 aa
 aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -77270,7 +77277,7 @@ gY
 iS
 iA
 iS
-kG
+WE
 ct
 oT
 ct
@@ -77545,16 +77552,16 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
 aa
 aa
-aa
-yW
-yW
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -77583,7 +77590,7 @@ mr
 rI
 sp
 tH
-uo
+uY
 vf
 FO
 Wz
@@ -77847,15 +77854,15 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-yW
-yW
-yW
-yW
-yW
 aa
 aa
 aa
@@ -78150,13 +78157,13 @@ aa
 aa
 aa
 aa
+US
+US
+US
+US
+US
+US
 aa
-aa
-aa
-aa
-yW
-yW
-yW
 aa
 aa
 aa
