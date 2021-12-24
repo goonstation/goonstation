@@ -31154,11 +31154,15 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "bAB" = (
-/obj/machinery/atmospherics/portables_connector{
-	name = "Mixing West"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Mixing";
+	target_pressure = 1000
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
@@ -53704,6 +53708,9 @@
 "dmN" = (
 /obj/cable/brown{
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	name = "Mixing West"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
