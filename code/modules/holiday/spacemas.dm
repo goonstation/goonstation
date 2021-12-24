@@ -694,7 +694,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		HS.addAbility(/datum/targetable/santa/gifts)
 		HS.addAbility(/datum/targetable/santa/food)
 		HS.addAbility(/datum/targetable/santa/warmth)
-		HS.addAbility(/datum/targetable/santa/teleport)
+		//HS.addAbility(/datum/targetable/santa/teleport)
 		HS.addAbility(/datum/targetable/santa/banish)
 
 	initializeBioholder()
