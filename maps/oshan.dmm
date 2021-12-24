@@ -44473,7 +44473,7 @@
 /area/station/crew_quarters/radio/lab)
 "ciK" = (
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/central)
 "ciM" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
