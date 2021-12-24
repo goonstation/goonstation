@@ -240,7 +240,6 @@
 	icon_state = "d_slow"
 	var/distort_size = 2
 
-
 	glitch
 		icon_state = "d_glitch1"
 
@@ -274,31 +273,9 @@
 		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
 
 		// Add displacement filter for scanline/glitch
-		SPAWN_DBG(1) //delayed to resolve issue where color didn't settle yet
+		SPAWN_DBG(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
 			E = new
 			if(length(msg) > 11)
 				E.icon_state = "d_fast"
 			src.vis_contents += E
 			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
-
-		/*
-		Alternative animations
-		SPAWN_DBG(rand(1 SECOND, 10 SECONDS))
-			// Lame Glitch Text
-			animate(src, pixel_x = 2, time = 0.5 SECONDS, easing = ELASTIC_EASING, loop=-1, flags=ANIMATION_PARALLEL)
-			animate(pixel_x = 0, time = 2 SECONDS, easing = SINE_EASING)
-			animate(time = rand(4 SECONDS,5 SECONDS))
-
-			if(prob(50))
-				// Hue Shift
-				var/new_color = hsv2rgb( hsv[1]+rand(30,70)%360, max(hsv[2],30), max(hsv[3],20) ) // Avoid black and white so it actually shifts hue
-
-				animate(src, color=new_color, alpha=140, time = 3 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
-				animate(color=original_color, alpha=180, time = 1 SECOND, easing = SINE_EASING)
-				animate(time=rand(3 SECONDS,5 SECONDS))
-			else
-				// Oscilate alpha
-				animate(src, alpha=120, time=5 SECONDS, easing = LINEAR_EASING, loop=-1, flags=ANIMATION_PARALLEL)
-				animate(alpha=180, time=1.5 SECONDS, easing = CUBIC_EASING)
-				animate(time=rand(1 SECONDS,3 SECONDS))
-				*/
