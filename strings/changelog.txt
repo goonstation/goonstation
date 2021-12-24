@@ -1,5 +1,9 @@
 
 (t)fri dec 24 21
+(u)DimWhat
+(p)6984
+(e)🎨⚖|sprites, balance
+(+)Added unique bedsheet sprites for lizards.
 (u)Wisemonster
 (p)6978
 (e)🗺⚖|mapping, balance
