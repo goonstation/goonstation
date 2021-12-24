@@ -4,6 +4,8 @@
 (p)6910
 (e)🆕🎨|feature, sprites
 (+)Added ember particle effects to burning barrels, using the new particle system.
+(u)aloe
+(+)You can now click telescience portals to go through them while you're standing on the same tile.
 (t)tue dec 21 21
 (u)Flappybat
 (p)6861

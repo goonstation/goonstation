@@ -3103,6 +3103,11 @@ Returns:
 			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
 
+	attack_hand(var/mob/M)
+		..()
+		if (get_turf(M) == get_turf(src) && !ON_COOLDOWN(M, "portal_click", 1 SECOND))
+			src.Bumped(M)
+
 	ex_act()
 		return
 
