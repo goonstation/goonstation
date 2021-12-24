@@ -2083,6 +2083,10 @@
 /obj/item/breaching_charge,
 /obj/item/breaching_charge,
 /obj/item/breaching_charge,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
 /turf/simulated/floor/caution/east,
 /area/station/security/armory)
 "fu" = (
