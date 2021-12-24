@@ -552,19 +552,6 @@
 		f += 1
 	return f
 
-/proc/assoc_list_to_list(var/list/l)
-	var/list/keys = list()
-	var/list/vals = list()
-	for(var/key in l)
-		keys += key
-		vals += l[key]
-	return list(keys,vals)
-
-/proc/list_to_assoc_list(var/list/first,var/list/second)
-	var/list/result = list()
-	for(var/i = 1,i <= length(first),i++)
-		result[first[i]] = second[i]
-	return result
 
 /datum/computer/file/pda_program/programbuilder_prog
 	name = "Unnamed"
