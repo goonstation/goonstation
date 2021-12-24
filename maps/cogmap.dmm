@@ -56464,12 +56464,6 @@
 /area/station/security/secwing)
 "iSG" = (
 /obj/machinery/power/pt_laser,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
 "iSL" = (
@@ -58920,18 +58914,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/power/terminal{
-	dir = 4
-	},
-/obj/cable/brown{
-	icon_state = "0-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "nXh" = (
@@ -61239,19 +61221,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
-"rRE" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "rRH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -61322,27 +61291,6 @@
 	},
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
-"rZL" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/decal/poster/wallsign/statistics2{
-	desc = "A poster with a line chart depicting the rapid growth of PTL related accidents.";
-	pixel_y = 32
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/engine/ptl)
 "sdt" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -62094,15 +62042,6 @@
 /obj/access_spawn/heads,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/market)
-"tAj" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/ptl)
 "tBY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cafeteria"
@@ -62112,12 +62051,6 @@
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
 "tEG" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
@@ -62761,12 +62694,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -64476,6 +64403,10 @@
 	name = "PTL Doors";
 	pixel_x = 24
 	},
+/obj/decal/poster/wallsign/statistics2{
+	desc = "A poster with a line chart depicting the rapid growth of PTL related accidents.";
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "xUZ" = (
@@ -64512,18 +64443,9 @@
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "yaA" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/cable/brown{
-	icon_state = "0-2"
-	},
-/obj{
-	name = "---Merge conflict marker---"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -64531,14 +64453,14 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/cable/brown{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
+/obj/machinery/power/terminal{
 	dir = 4
 	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
-/area/station/engine/ptl)
+/area/space)
 "yaD" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -64565,15 +64487,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"ydr" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/ptl)
 "yhD" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -116127,7 +116040,7 @@ jxZ
 dlY
 wxX
 aaG
-rRE
+brH
 nWK
 yaA
 tEG
@@ -116430,7 +116343,7 @@ dlY
 wxX
 aap
 brH
-bsr
+bsq
 bsq
 iSG
 kCD
@@ -116732,9 +116645,9 @@ dlY
 wxX
 aaG
 brH
-hBE
+bsr
 bsq
-ydr
+bsq
 wRO
 brH
 bxf
@@ -117034,9 +116947,9 @@ dlY
 wxX
 aaG
 brH
-bsr
+hBE
 bsq
-ydr
+bsq
 ktr
 brH
 bxg
@@ -117335,8 +117248,8 @@ wZY
 dlY
 wxX
 aap
-tAj
-rZL
+brH
+bss
 uCc
 bss
 gqq
