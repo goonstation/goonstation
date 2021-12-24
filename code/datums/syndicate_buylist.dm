@@ -339,7 +339,11 @@ proc/build_syndi_buylist_cache()
 /datum/syndicate_buylist/traitor/macrobomb
 	name = "Macrobomb Implant"
 	item = /obj/item/implanter/uplink_macrobomb
+	#ifdef RP_MODE
+	cost = 0
+	#else
 	cost = 12
+	#endif
 	vr_allowed = 0
 	desc = "Like the microbomb, but much more powerful. Macrobombs for macrofun!"
 	blockedmode = list(/datum/game_mode/revolution)
