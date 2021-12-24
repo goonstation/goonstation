@@ -17,9 +17,12 @@
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
 	var/doants = 1
 	var/made_ants = 0
-	var/sliceable = FALSE // for if a food is intended to be able to be sliced
-	var/slice_product = null // what product to spawn when sliced
-	var/slice_amount = 0 // how much product to spawn when sliced
+	/// for if a food is intended to be able to be sliced
+	var/sliceable = FALSE
+	/// what product to spawn when sliced
+	var/slice_product = null
+	/// how much product to spawn when sliced
+	var/slice_amount = 0
 	rc_flags = 0
 
 	proc/on_table()
