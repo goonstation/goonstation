@@ -287,30 +287,9 @@
 		var/turf/orig_turf = get_turf(thing)
 		if (orig_turf == dest_turf) return TRUE
 		var/no_go
-		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
-		//First, check for directional blockers on the entering object's tile
-		if (orig_turf.checkingexit > 0)
-			for(var/obj/obstacle in orig_turf)
-				if(obstacle == thing)
-					continue
-				if(obstacle.event_handler_flags & USE_CHECKEXIT)
-					var/obj/O = thing
-					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
-					  && obstacle.dir == O.dir))
-						if(!obstacle.CheckExit(thing, dest_turf))
-							no_go = obstacle
 
-		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
-		if (isnull(no_go))
-			no_go = !dest_turf.Enter(L) ? dest_turf : null
+		no_go = test_click(orig_turf, dest_turf, get_blocker = TRUE)
 
-		//finally, check if there's anything else on the turf that would prevent us from entering it (e.g. dense objects)
-		if(isnull(no_go))
-			for(var/atom/A in dest_turf)
-				if(A != src && !A.Cross(L))
-					no_go = A
-					break
 		if(no_go)
 			if (istype(L))
 				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")

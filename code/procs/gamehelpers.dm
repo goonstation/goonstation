@@ -141,19 +141,21 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				return TRUE
 
 
-var/obj/item/dummy/click_dummy = new
-/proc/test_click(turf/from, turf/target)
+/proc/test_click(turf/from, turf/target, get_blocker = FALSE)
+	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
 	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
-				return FALSE
+				click_dummy.set_loc(null)
+				return get_blocker ? A : FALSE
 	for (var/atom/A in target)
 		if ((A.flags & ON_BORDER))
 			if (!A.Cross(click_dummy))
-				return FALSE
+				click_dummy.set_loc(null)
+				return get_blocker ? A : FALSE
 	click_dummy.set_loc(null)
-	return TRUE
+	return get_blocker ? FALSE : TRUE
 
 /proc/can_reach(mob/user, atom/target)
 	if (target in bible_contents)
@@ -178,9 +180,6 @@ var/obj/item/dummy/click_dummy = new
 		if (T1 == T2)
 			return 1
 		else
-			if (!click_dummy)
-				click_dummy = new
-
 			var/dir = get_dir(T1, T2)
 			if (dir & (dir-1))
 				var/dir1, dir2
