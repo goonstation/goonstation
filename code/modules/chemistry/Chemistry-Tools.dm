@@ -441,7 +441,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		else if (istype(D, /obj/item/mop))
 			if (src.reagents.total_volume >= 2)
 				src.reagents.trans_to(D, 2)
-				user.show_text("You wet the mop", "blue")
+				user.show_text("You wet the mop.", "blue")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			else
 				user.show_text("Out of water!", "blue")

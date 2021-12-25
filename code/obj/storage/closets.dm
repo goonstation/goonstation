@@ -138,8 +138,8 @@
 #endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
-	/obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/suit/space/santa,
+	/obj/item/clothing/head/helmet/space/santahat/noslow,
+	/obj/item/clothing/suit/space/santa/noslow,
 #else
 	/obj/item/clothing/head/helmet/space/syndicate,
 	/obj/item/clothing/suit/space/syndicate,
@@ -412,11 +412,19 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
+			if(secure && locked)
+				user.show_text("Access Denied", "red")
+				return
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
+				user.show_text("[src] cannot fit any more items!", "red")
+				return
 			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else

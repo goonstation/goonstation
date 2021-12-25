@@ -424,55 +424,6 @@ This is basically useless for anyone but miners.
 	desc = "A crate containing a Nuke Ops Class Loadout, this one is generic and you shouldn't see it."
 	objective = /datum/objective/specialist/nuclear
 	not_in_crates = 1
-/*
-	demo
-		name = "Class Crate - Grenadier"
-		item = /obj/storage/crate/classcrate/demo
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one features a hand-held grenade launcher, bandolier and a pile of ordnance."
-
-	heavy
-		name = "Class Crate - Heavy Weapons Specialist"
-		item = /obj/storage/crate/classcrate/heavy
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one features a light machine gun, several belts of ammunition and a couple of grenades."
-
-	assault
-		name = "Class Crate - Assault Trooper"
-		item = /obj/storage/crate/classcrate/assault
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one includes a customized assault rifle, several additional magazines as well as an assortment of breach and clear grenades."
-
-	agent
-		name = "Class Crate - Infiltrator"
-		item = /obj/storage/crate/classcrate/agent_rework
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout."
-
-	medic
-		name = "Class Crate - Combat Medic"
-		item = /obj/storage/crate/classcrate/medic
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, along with a syringe gun delivery system."
-
-	pyro
-		name = "Class Crate - Firebrand"
-		item = /obj/storage/crate/classcrate/pyro
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one contains a flamethrower and a hefty fire-axe that can be two-handed."
-
-	engie
-		name = "Class Crate - Combat Engineer"
-		item = /obj/storage/crate/classcrate/engineer
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one contains a deployable automated gun turret, high-capacity welder and a combat wrench."
-
-	sniper
-		name = "Class Crate - Marksman"
-		item = /obj/storage/crate/classcrate/sniper
-		cost = 12
-		desc = "A crate containing a Specialist Operative loadout. This one includes a high-powered sniper rifle, some smoke grenades and a chameleon generator."
-*/
 
 //////////////////////////////////////////////// Job-specific items  ////////////////////////////////////////////////////
 

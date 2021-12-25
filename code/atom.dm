@@ -163,6 +163,7 @@
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
+		ClearAllParticles()
 		..()
 
 	proc/Turn(var/rot)
