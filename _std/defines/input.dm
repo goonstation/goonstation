@@ -1,5 +1,5 @@
 // haha hope you never need more than 16 of these
-// this used to use hexadecimal, now we can have 32, fun
+// this used to use hexadecimal, now we can have 24, fun
 #define KEY_FORWARD   (1<<0)
 #define KEY_BACKWARD  (1<<1)
 #define KEY_LEFT      (1<<2)
