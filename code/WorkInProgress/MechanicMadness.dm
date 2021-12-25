@@ -664,12 +664,11 @@
 
 	proc/flushp(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk)
+		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
 				M.set_loc(src)
 			flushit()
-		return
 
 	proc/flushit()
 		if(!trunk) return
@@ -688,7 +687,6 @@
 		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
 
 		H.start(src) // start the holder processing movement
-		return
 
 	proc/expel(var/obj/disposalholder/H)
 
