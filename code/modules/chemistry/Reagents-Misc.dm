@@ -677,6 +677,12 @@ datum
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
 
+			grenade_effects(var/obj/grenade, var/atom/A)
+				if (isliving(A))
+					var/mob/living/M = A
+					if (M.hasStatus("burning"))
+						M.changeStatus("burning", -M.getStatusDuration("burning"))
+
 		silicate
 			name = "silicate"
 			id = "silicate"
@@ -1088,6 +1094,7 @@ datum
 			overdose = 5
 			value = 4 // 2 1 1
 			hygiene_value = 3
+			blob_damage = 1
 
 			reaction_obj(var/obj/O, var/volume)
 				if (!isnull(O))
@@ -3648,17 +3655,15 @@ datum
 			value = 4
 
 			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(4,1.5)
-				holder.my_atom.temp_flags |= IS_BUBSIUM_SCALED
 
 
 			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(1/4,1/1.5)
-				holder.my_atom.temp_flags &= ~IS_BUBSIUM_SCALED
 
 
 			on_mob_life(var/mob/M, var/mult = 1)

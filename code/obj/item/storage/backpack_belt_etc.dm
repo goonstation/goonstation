@@ -10,7 +10,7 @@
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
@@ -239,6 +239,14 @@
 	item_state = "Syndiesatchel"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /obj/item/storage/backpack/satchel/NT
 	name = "\improper NT Satchel"
 	desc = "A stylish blue, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
@@ -420,6 +428,14 @@
 	icon_state = "syndie"
 	item_state = "syndie"
 	slots = 7
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /* -------------------- Belts -------------------- */
 

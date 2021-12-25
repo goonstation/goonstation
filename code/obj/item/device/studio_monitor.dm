@@ -4,7 +4,7 @@
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
 	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = 0
 	speaker_range = 7
@@ -21,6 +21,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
@@ -47,6 +48,10 @@
 		SPAWN_DBG(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	proc/play_song(notes=TRUE)
 		icon_state = "amp_stack_actv"
 		if(notes)
@@ -61,9 +66,6 @@
 		if(ismob(src.loc))
 			var/mob/M = src.loc
 			M.update_clothing()
-
-	attack_hand(mob/user)
-		. = ..()
 
 
 /obj/item/breaching_hammer/rock_sledge
@@ -94,6 +96,7 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		effect = new
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
 		speakers |= new /obj/item/device/radio/nukie_studio_monitor(src.loc)
@@ -117,6 +120,10 @@
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	proc/play_notes()
 		if(!actions.hasAction(usr,"rocking_out"))

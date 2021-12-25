@@ -336,7 +336,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					if (H.mind.assigned_role == "Clown")
 						var/type = pick("purple","pink","yellow")
 						H.w_uniform.icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-						H.w_uniform.wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+						H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 						H.w_uniform.icon_state = "[type]clown"
 						H.w_uniform.item_state = "[type]clown"
 						H.w_uniform.name = "[type] clown suit"
