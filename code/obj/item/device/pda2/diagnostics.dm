@@ -514,21 +514,26 @@
 			var/arg_default = copytext(strip_html( input("Enter Default Value", "Packet Sender", "") as text|null ), 1, 32)
 			if(!arg_default)
 				return
+
 			prog_args[arg_name] = list(arg_replacer,arg_default)
 
 		else if (href_list["createprog"])
 			var/programname = copytext(strip_html( input("Enter Program Name", "Packet Sender", "Unnamed") as text|null ), 1, 15)
 			if(!programname)
 				return
+
 			var/allowfrequency = FALSE
+
 			switch (alert("Allow users to set frequency?",,"Yes","No"))
 				if ("Yes")
 					allowfrequency = TRUE
 				else
 					allowfrequency = FALSE
+
 			var/datum/computer/file/pda_program/programbuilder_prog/F = new /datum/computer/file/pda_program/programbuilder_prog(src.master)
-			if(!src.master.hd.root.add_file(F))
-				F.dispose()
+
+			if(!src.master.hd.root.add_file(F)) //Add the built prog to the PDAs hard drive
+				F.dispose() //Oops! No space/ReadOnly/Whatever, dispose the program
 			else
 				F.buttons = prog_buttons.Copy()
 				F.programvariables = prog_args.Copy()
@@ -557,9 +562,10 @@
 	name = "Unnamed"
 	size = 2
 	var/send_freq = FREQ_PDA
-	var/allow_custom_freq = FALSE
-	var/list/buttons = list()
-	var/list/programvariables = list()
+	var/allow_custom_freq = FALSE //Allow users to set the frequency in the program
+	var/list/buttons = list() //List of (key list, value list) indexed by button name
+	var/list/programvariables = list() //List of arguments, indexed by argument name, format (text to replace, value)
+
 	on_activated(obj/item/device/pda2/pda)
 		pda.AddComponent(
 			/datum/component/packet_connected/radio, \
@@ -605,6 +611,7 @@
 		if (href_list["changevar"])
 			var/key = href_list["code"]
 			var/input = copytext(strip_html( input("Enter New Value", src.name, programvariables[key][2]) as text|null ), 1, 32)
+
 			if(!input)
 				return
 
@@ -613,18 +620,23 @@
 
 			if(!(src.holder in src.master))
 				return
-			programvariables[key][2] = input
+
+			programvariables[key][2] = input //Set the value of the "Variable/Argument" to the input
 
 		else if (href_list["button"])
 			SPAWN_DBG( 0 )
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
-				var/list/buttonc = buttons[href_list["code"]]
+
+				var/list/buttonc = buttons[href_list["code"]] // get a list of "key list, value list" using the buttons name as index
+
 				for(var/i = 1,i <= length(buttonc[1]),i++)
-					var/value = buttonc[2][i]
+					var/value = buttonc[2][i] //get value from value list
+
 					for(var/progvarkey in programvariables)
 						var/list/progvar = programvariables[progvarkey]
-						value = replacetext(value,progvar[1],progvar[2]) //What defines as a magic number???? i dont know - Jimmyl
+						value = replacetext(value,progvar[1],progvar[2]) //replace value text with the value of an argument (only the arguments text that its supposed to replace)
+
 					signal.data[buttonc[1][i]] = value
 
 				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
