@@ -8791,6 +8791,10 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "azq" = (
