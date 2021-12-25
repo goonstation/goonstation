@@ -1109,7 +1109,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#00CC00"
 	limit = 1
 	wages = PAY_IMPORTANT
-	cant_spawn_as_rev = 1
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/medical_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
