@@ -127,6 +127,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			screw_up_prob -= 10
 		else if (drunken_surgeon >= 5) // but too much and that might be bad
 			screw_up_prob += 10
+			if(surgeon.traitHolder.hasTrait("training_partysurgeon") && drunken_surgeon >= 100)
+				screw_up_prob = 0 //ayyyyy
 
 	if (patient.stat) // is the patient dead?
 		screw_up_prob -= 30
