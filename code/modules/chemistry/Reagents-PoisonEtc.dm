@@ -209,6 +209,7 @@ datum
 			fluid_g = 255
 			fluid_b = 0
 			transparency = 50
+			random_chem_blacklisted = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom

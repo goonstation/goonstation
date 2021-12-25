@@ -794,6 +794,9 @@ datum
 			if (divison_amount > 0)
 				src.total_temperature = temp_temperature / divison_amount
 
+			if(added_new)
+				current_reagent.on_add()
+
 			if (!donotupdate)
 				update_total()
 
@@ -805,7 +808,6 @@ datum
 
 			if(added_new && !current_reagent.disposed)
 				append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
-				current_reagent.on_add()
 				if (!donotreact)
 					src.handle_reactions()
 			return 1

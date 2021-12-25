@@ -58,8 +58,7 @@
 				donor.emote(pick("twitch", "groan"))
 
 	breakme()
-		. = ..()
-		if(emagged)
+		if(..() && emagged)
 			donor.emote("collapse")
 			donor.setStatus("weakened", 3 SECONDS)
 

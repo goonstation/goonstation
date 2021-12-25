@@ -175,7 +175,7 @@
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			return 1
-		if (get_dir(loc, mover) == dir)
+		if (get_dir(loc, mover) & dir)
 			return !density
 		else
 			return 1
@@ -185,7 +185,7 @@
 			return 1
 		if (istype(O, /obj/projectile))
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 
