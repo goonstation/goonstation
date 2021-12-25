@@ -146,6 +146,21 @@
 
 //This needs to happen in process_move(), not Move() so we can change the delay modifier before it is put to use
 /mob/living/process_move(keys)
+	if(keys & KEY_PIXEL_SHIFT)
+		if(keys & KEY_FORWARD)
+			pixel_shift(NORTH)
+			return
+		else if(keys & KEY_BACKWARD)
+			pixel_shift(SOUTH)
+			return
+		else if(keys & KEY_LEFT)
+			pixel_shift(WEST)
+			return
+		else if(keys & KEY_RIGHT)
+			pixel_shift(EAST)
+			return
+	else if(pixel_shifted && (keys & KEY_FORWARD || keys & KEY_BACKWARD || keys & KEY_LEFT || keys & KEY_RIGHT))
+		pixel_shift_reset()
 	if (apply_movement_delay_until != -1)
 		if (apply_movement_delay_until >= world.time)
 			//Don't pick a delay modifier that will exceed the bounds of our delay apply window
@@ -1918,7 +1933,7 @@
 		density = 1
 		del_self = 0
 		clash_time = -1
-	
+
 
 		//mouse_opacity = 1
 		var/bump_count = 0

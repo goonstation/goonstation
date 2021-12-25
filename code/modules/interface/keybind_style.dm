@@ -80,6 +80,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"WEST" = KEY_LEFT,
 	"EAST" = KEY_RIGHT,
 	"B" = KEY_POINT,
+	"U" = KEY_PIXEL_SHIFT,
 	"T" = "say",
 	";" = "say_main_radio",
 	"Y" = "say_radio",

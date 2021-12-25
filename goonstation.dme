@@ -1001,6 +1001,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\mining\mining_encounters.dm"
 #include "code\modules\mining\ore.dm"
 #include "code\modules\mining\tile_events.dm"
+#include "code\modules\mob\living\pixel_shifting.dm"
 #include "code\modules\networks\computer3\base_os.dm"
 #include "code\modules\networks\computer3\base_program.dm"
 #include "code\modules\networks\computer3\buildandrepair.dm"

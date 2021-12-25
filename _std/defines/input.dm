@@ -1,19 +1,21 @@
 // haha hope you never need more than 16 of these
-#define KEY_FORWARD   0x0001
-#define KEY_BACKWARD  0x0002
-#define KEY_LEFT      0x0004
-#define KEY_RIGHT     0x0008
-#define KEY_RUN       0x0010
-#define KEY_THROW     0x0020
-#define KEY_POINT     0x0040
-#define KEY_EXAMINE   0x0080
-#define KEY_PULL      0x0100
-#define KEY_OPEN      0x0200
-#define KEY_BOLT      0x0400
-#define KEY_SHOCK     0x0800
+// this used to use hexadecimal, now we can have 32, fun
+#define KEY_FORWARD   (1<<0)
+#define KEY_BACKWARD  (1<<1)
+#define KEY_LEFT      (1<<2)
+#define KEY_RIGHT     (1<<3)
+#define KEY_RUN       (1<<4)
+#define KEY_THROW     (1<<5)
+#define KEY_POINT     (1<<6)
+#define KEY_EXAMINE   (1<<7)
+#define KEY_PULL      (1<<8)
+#define KEY_OPEN      (1<<9)
+#define KEY_BOLT      (1<<10)
+#define KEY_SHOCK     (1<<11)
+#define KEY_PIXEL_SHIFT (1<<12)
 
 //input keystates
-#define MODIFIER_NONE   0x0000
-#define MODIFIER_SHIFT  0x0001
-#define MODIFIER_ALT    0x0002
-#define MODIFIER_CTRL   0x0004
+#define MODIFIER_NONE   (1<<0)
+#define MODIFIER_SHIFT  (1<<1)
+#define MODIFIER_ALT    (1<<2)
+#define MODIFIER_CTRL   (1<<3)

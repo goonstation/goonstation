@@ -127,6 +127,9 @@
 
 	var/const/singing_prefix = "%"
 
+	/// Is the `mob` currently pixel shifted?
+	var/pixel_shifted = FALSE
+
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
