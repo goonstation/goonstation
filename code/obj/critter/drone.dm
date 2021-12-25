@@ -903,7 +903,7 @@
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
-	mats = list("POW-3" = 20, "iridiumalloy" = 30, "CON-2" = 21, "DEN-3" =22)
+	mats = null //no
 	projectile_type = /datum/projectile/laser/precursor/sphere
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
@@ -1091,7 +1091,6 @@
 	bound_width = 96
 	attack_range = 7
 	score = 1500
-	mats = null //no
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/glitch3.ogg'
