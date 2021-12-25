@@ -10,7 +10,7 @@
 	flags = ONBACK | FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_BULKY
 	max_wclass = 3
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/storage/box/starter)
 
