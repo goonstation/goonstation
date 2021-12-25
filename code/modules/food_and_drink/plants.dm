@@ -260,8 +260,11 @@
 	plant_reagent = "juice_orange"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	var/sprimkl = new/list()
 
 	attackby(obj/item/W as obj, mob/user as mob)
+		if(SECRETS_ENABLED)
+			seasonal_check(W, user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
 			boutput(user, "<span class='notice'>You combine the [src] and [W] to create a Synthorange!</span>")
 			var/obj/item/reagent_containers/food/snacks/plant/orange/synth/P = new(W.loc)
