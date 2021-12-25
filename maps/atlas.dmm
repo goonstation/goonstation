@@ -2078,13 +2078,6 @@
 /obj/item/storage/box/ic_cones,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
-"ft" = (
-/obj/rack,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
 "fu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2714,6 +2707,17 @@
 /obj/item/cigpacket,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"hp" = (
+/obj/rack,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "hr" = (
 /obj/machinery/light{
 	dir = 8;
@@ -3597,6 +3601,20 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
+"ju" = (
+/obj/machinery/espresso_machine,
+/obj/item/reagent_containers/food/drinks/espressocup,
+/obj/drink_rack/cup{
+	pixel_y = 32
+	},
+/obj/table/wood/round/auto,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "jw" = (
 /obj/cable{
 	d1 = 4;
@@ -11135,28 +11153,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"Bc" = (
-/obj/table/wood/auto,
-/obj/item/storage/box/accessimp_kit,
-/obj/item/paper/CrashedHopShuttle,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/heads)
 "Bd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -18091,6 +18087,28 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"SH" = (
+/obj/table/wood/auto,
+/obj/item/storage/box/accessimp_kit,
+/obj/item/paper/CrashedHopShuttle,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/heads)
 "SI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19451,20 +19469,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"WH" = (
-/obj/machinery/espresso_machine,
-/obj/item/reagent_containers/food/drinks/espressocup,
-/obj/drink_rack/cup{
-	pixel_y = 32
-	},
-/obj/table/wood/round/auto,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "WI" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
@@ -71234,7 +71238,7 @@ fQ
 gA
 hj
 jF
-WH
+ju
 WZ
 Uz
 Qf
@@ -73041,7 +73045,7 @@ aa
 dK
 eu
 ez
-ft
+hp
 gq
 ez
 ho
@@ -78801,7 +78805,7 @@ sq
 yr
 Xv
 ZL
-Bc
+SH
 VU
 Re
 CU

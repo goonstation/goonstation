@@ -416,7 +416,7 @@ obj/decal/fakeobjects/teleport_pad
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -425,7 +425,7 @@ obj/decal/fakeobjects/teleport_pad
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 
@@ -463,7 +463,7 @@ obj/decal/fakeobjects/teleport_pad
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -472,7 +472,7 @@ obj/decal/fakeobjects/teleport_pad
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 

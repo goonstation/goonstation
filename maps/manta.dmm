@@ -7291,6 +7291,17 @@
 /obj/item/storage/box/cutlery,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
+"avK" = (
+/obj/drink_rack/mug{
+	pixel_x = -32
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/syndicateassaultvessel)
 "avL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
@@ -8036,6 +8047,18 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
+"axB" = (
+/obj/disposalpipe/segment,
+/obj/table/auto,
+/obj/machinery/coffeemaker,
+/obj/drink_rack/mug{
+	pixel_x = -32
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "yellowblack"
+	},
+/area/station/engine/engineering/breakroom)
 "axC" = (
 /obj/stool/chair/yellow,
 /obj/disposalpipe/segment/mail{
@@ -8744,32 +8767,6 @@
 /obj/machinery/dispenser,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"azp" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "azq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15869,6 +15866,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/cell_block_control)
+"aTE" = (
+/obj/table/wood/auto,
+/obj/machinery/coffeemaker/security,
+/obj/drink_rack/mug{
+	pixel_x = 32
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/cell_block_control)
 "aTF" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 1;
@@ -21971,6 +21976,14 @@
 	},
 /obj/landmark/start{
 	name = "Medical Doctor"
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/lobby)
+"bjr" = (
+/obj/table/glass/reinforced/auto,
+/obj/machinery/coffeemaker/medbay,
+/obj/drink_rack/mug{
+	pixel_y = 32
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
@@ -35160,14 +35173,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"gem" = (
-/obj/table/glass/reinforced/auto,
-/obj/machinery/coffeemaker/medbay,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay/lobby)
 "ghs" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crewquarters/cryotron)
@@ -35230,14 +35235,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"gpu" = (
-/obj/table/wood/auto,
-/obj/machinery/coffeemaker/security,
-/obj/drink_rack/mug{
-	pixel_x = 32
-	},
-/turf/simulated/floor/black,
-/area/station/security/brig/cell_block_control)
 "gpN" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -35356,19 +35353,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"gAa" = (
-/obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	nostick = 1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/wood/seven,
-/area/station/hydroponics/bay)
 "gAR" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -35630,18 +35614,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
-"gZN" = (
-/obj/disposalpipe/segment,
-/obj/table/auto,
-/obj/machinery/coffeemaker,
-/obj/drink_rack/mug{
-	pixel_x = -32
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "yellowblack"
-	},
-/area/station/engine/engineering/breakroom)
 "hap" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -36191,24 +36163,6 @@
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment1)
-"inE" = (
-/obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
-/obj/table/wood/auto/desk{
-	pixel_y = -2
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fred2"
-	},
-/area/station/science/restroom)
 "inR" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/light/incandescent/netural{
@@ -36701,17 +36655,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
-"jEy" = (
-/obj/drink_rack/mug{
-	pixel_x = -32
-	},
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/listeningpost/syndicateassaultvessel)
 "jFc" = (
 /obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor,
@@ -37048,6 +36991,36 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
+"kHJ" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "kIf" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -37316,6 +37289,19 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/quartersB)
+"lCn" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
+/obj/drink_rack/mug{
+	pixel_y = 32
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/hydroponics/bay)
 "lCM" = (
 /obj/shrub{
 	dir = 1
@@ -37856,24 +37842,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"mLp" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/stamp/hop,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/paper/mantahopnote,
-/obj/item/acesscomputerunfolder,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen1"
-	},
-/area/station/hos)
 "mPy" = (
 /obj/machinery/disposal/mail/small{
 	dir = 1;
@@ -39351,6 +39319,22 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
+"qfr" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine,
+/obj/drink_rack/cup{
+	pixel_x = -26
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "qgu" = (
 /obj/machinery/flasher/portable,
 /obj/decal/tile_edge/stripe{
@@ -39967,6 +39951,24 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
+"rKz" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/stamp/hop,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/paper/mantahopnote,
+/obj/item/acesscomputerunfolder,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen1"
+	},
+/area/station/hos)
 "rLV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -40274,22 +40276,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/monitoring)
-"sBo" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/table/reinforced/bar/auto,
-/obj/machinery/espresso_machine,
-/obj/drink_rack/cup{
-	pixel_x = -26
-	},
-/obj/machinery/light/incandescent/warm{
-	dir = 1;
-	pixel_y = 20
-	},
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "sCW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -41947,6 +41933,24 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"wRZ" = (
+/obj/machinery/coffeemaker/research,
+/obj/drink_rack/mug{
+	pixel_y = 32
+	},
+/obj/table/wood/auto/desk{
+	pixel_y = -2
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fred2"
+	},
+/area/station/science/restroom)
 "wVU" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -78032,7 +78036,7 @@ bdN
 mkL
 bgj
 aGV
-gAa
+lCn
 aKo
 bjG
 tak
@@ -82286,7 +82290,7 @@ bIX
 aug
 auO
 axm
-gZN
+axB
 axN
 ayg
 ayC
@@ -84654,7 +84658,7 @@ gdN
 aqO
 aCG
 xVU
-azp
+kHJ
 aSj
 aSM
 aTv
@@ -85080,7 +85084,7 @@ alT
 alT
 akH
 alD
-jEy
+avK
 avN
 alD
 alT
@@ -85580,7 +85584,7 @@ bca
 bcZ
 beg
 aNo
-sBo
+qfr
 aKZ
 aLI
 aLI
@@ -88583,7 +88587,7 @@ csq
 aRM
 aSq
 aSW
-gpu
+aTE
 aEh
 aWH
 aVp
@@ -93114,7 +93118,7 @@ apG
 aaf
 aTh
 dkw
-mLp
+rKz
 aUX
 aTh
 anG
@@ -96173,7 +96177,7 @@ bzg
 hSo
 bGb
 bHv
-inE
+wRZ
 bJj
 dUV
 inX
@@ -102193,7 +102197,7 @@ bbD
 bbD
 ppJ
 bgD
-gem
+bjr
 bko
 bik
 bmi

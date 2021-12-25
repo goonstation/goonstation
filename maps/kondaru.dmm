@@ -21999,6 +21999,19 @@
 	dir = 9
 	},
 /area/station/security/checkpoint/escape)
+"bow" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/table/reinforced/auto,
+/obj/drink_rack/cup{
+	pixel_y = 32
+	},
+/obj/machinery/espresso_machine,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "boy" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -28124,21 +28137,6 @@
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
-"bIP" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/drink_rack/mug{
-	pixel_x = -26
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/lobby)
 "bIQ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -31898,19 +31896,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"bTK" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk/west,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	name = "Loading Chute Cover"
-	},
-/turf/simulated/floor/orange/side{
-	dir = 8
-	},
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "bTM" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -39574,6 +39559,19 @@
 /obj/item/pen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/md)
+"cKT" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grey,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "cKV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40613,6 +40611,16 @@
 	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
+"dIN" = (
+/obj/machinery/manufacturer/general,
+/obj/machinery/light_switch/west,
+/obj/drink_rack/mug{
+	pixel_y = 32
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/engineering)
 "dJh" = (
 /obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/orangeblack/side,
@@ -42518,16 +42526,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"fwv" = (
-/obj/machinery/manufacturer/general,
-/obj/machinery/light_switch/west,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/engine/engineering)
 "fwR" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/engine,
@@ -45520,6 +45518,18 @@
 	dir = 10
 	},
 /area/mining/magnet)
+"iGa" = (
+/obj/table/auto,
+/obj/item/storage/box/syringes,
+/obj/item/device/reagentscanner,
+/obj/item/clothing/glasses/spectro,
+/obj/drink_rack/mug{
+	pixel_y = 32
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/hydroponics/bay)
 "iGQ" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -45837,6 +45847,21 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/north)
+"iRY" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/drink_rack/mug{
+	pixel_x = -26
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/lobby)
 "iSh" = (
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -48791,23 +48816,6 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/plating/damaged1,
 /area/station/security/beepsky)
-"mea" = (
-/obj/table/reinforced/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/coffeemaker,
-/obj/drink_rack/mug{
-	pixel_x = -26
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 8
-	},
-/area/station/mining/magnet)
 "mep" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -49184,19 +49192,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"mDQ" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/table/reinforced/auto,
-/obj/drink_rack/cup{
-	pixel_y = 32
-	},
-/obj/machinery/espresso_machine,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "mEh" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/black/grime,
@@ -51324,6 +51319,34 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"oIl" = (
+/obj/table/wood/auto,
+/obj/item/coin{
+	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
+	name = "strange coin";
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/coin{
+	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
+	name = "thick coin";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/machinery/light/lamp{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/coin{
+	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
+	name = "tarnished coin";
+	pixel_x = 5
+	},
+/obj/item/device/radio/intercom/bridge,
+/obj/blind_switch/area/west,
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
+/area/station/bridge/hos)
 "oIB" = (
 /obj/stool/chair,
 /turf/simulated/floor,
@@ -53453,6 +53476,19 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"qQD" = (
+/obj/disposalpipe/trunk/west,
+/obj/machinery/floorflusher{
+	desc = "It's totally not just a gigantic disposal chute! This one seems to not operate automatically.";
+	id = "kondaflush";
+	name = "manual loading chute"
+	},
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "qRd" = (
 /obj/cable{
 	d1 = 1;
@@ -53849,6 +53885,23 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"rjP" = (
+/obj/table/reinforced/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/coffeemaker,
+/obj/drink_rack/mug{
+	pixel_x = -26
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 8
+	},
+/area/station/mining/magnet)
 "rkt" = (
 /obj/cable{
 	d1 = 2;
@@ -53891,24 +53944,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
-"rmy" = (
-/obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
-/obj/item/storage/wall/medical_wear{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 0
-	},
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/station/medical/medbay)
 "rmU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56012,18 +56047,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/magnet)
-"tzY" = (
-/obj/table/auto,
-/obj/item/storage/box/syringes,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
-/area/station/hydroponics/bay)
 "tBq" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -56764,6 +56787,24 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
+"ukm" = (
+/obj/rack,
+/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/obj/item/storage/wall/medical_wear{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/obj/drink_rack/mug{
+	pixel_y = 32
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/medbay)
 "ule" = (
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
@@ -57582,23 +57623,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"uXn" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 8
-	},
-/obj/decal/tile_edge/floorguide/arrow_w,
-/turf/simulated/floor/grey,
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "uZE" = (
 /obj/table/auto,
 /obj/item/sheet/steel{
@@ -58414,27 +58438,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
-"vUS" = (
-/obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "CUSTOM CARGO NODE - UNLABELED CARGO WILL BE EJECTED";
-	name = "printed card";
-	pixel_x = 10;
-	pixel_y = -2
-	},
-/turf/simulated/floor/orange/side{
-	dir = 9
-	},
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "vVg" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/pipe/simple,
@@ -58468,34 +58471,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/south)
-"vXc" = (
-/obj/table/wood/auto,
-/obj/item/coin{
-	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
-	name = "strange coin";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/coin{
-	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
-	name = "thick coin";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/machinery/light/lamp{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/coin{
-	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
-	name = "tarnished coin";
-	pixel_x = 5
-	},
-/obj/item/device/radio/intercom/bridge,
-/obj/blind_switch/area/west,
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/bridge/hos)
 "vXe" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -60006,6 +59981,34 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"xrv" = (
+/obj/machinery/computer/barcode{
+	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "CUSTOM CARGO NODE - UNLABELED CARGO WILL BE EJECTED";
+	name = "printed card";
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/machinery/door_timer{
+	desc = "A remote control switch for a cargo/ejection chute.";
+	id = "kondaflush";
+	name = "Timed Chute Activator";
+	pixel_y = 24;
+	req_access = list(24,31)
+	},
+/turf/simulated/floor/orange/side{
+	dir = 9
+	},
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "xrD" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -94791,9 +94794,9 @@ bLC
 bMD
 qsO
 bPx
-bQV
-vUS
-bTK
+bQU
+xrv
+qQD
 bUO
 bWY
 bQU
@@ -95095,7 +95098,7 @@ bOh
 bPy
 bQV
 bSv
-uXn
+cKT
 bUP
 bWZ
 bQU
@@ -96294,7 +96297,7 @@ bDb
 bDb
 bFb
 bGi
-bIP
+iRY
 bIR
 bKq
 bLH
@@ -96567,7 +96570,7 @@ aRv
 aWl
 wFl
 aPq
-rmy
+ukm
 baF
 boU
 bUH
@@ -106544,7 +106547,7 @@ ree
 edL
 iha
 dPM
-mea
+rjP
 jOB
 ekv
 dXK
@@ -113800,7 +113803,7 @@ bWw
 bpu
 bzr
 boo
-tzY
+iGa
 uDm
 mHd
 bAB
@@ -116168,7 +116171,7 @@ uzL
 atd
 aBu
 aKE
-fwv
+dIN
 aOY
 aRU
 azv
@@ -119826,7 +119829,7 @@ cdF
 czr
 beD
 xrb
-mDQ
+bow
 qYM
 qYM
 aZR
@@ -122265,7 +122268,7 @@ bxm
 bvY
 bEO
 vTk
-vXc
+oIl
 bIE
 bLs
 sJb

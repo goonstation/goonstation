@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "gloves"
 	w_class = W_CLASS_SMALL
 	icon = 'icons/obj/clothing/item_gloves.dmi'
-	wear_image_icon = 'icons/mob/hands.dmi'
+	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	protective_temperature = 400
 	wear_layer = MOB_HAND_LAYER2
@@ -201,9 +201,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/long // adhara stuff
 	desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
 	name = "cleaning gloves"
-	icon = 'icons/obj/clothing/item_gloves.dmi'
-	wear_image_icon = 'icons/mob/hands.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
 	protective_temperature = 550
@@ -344,11 +341,20 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	item_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
 		setProperty("conductivity", 0.3)
 		setProperty("deflection", 20)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"

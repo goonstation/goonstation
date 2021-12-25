@@ -195,12 +195,22 @@
 	hudarrow_color = "#14ad00"
 	target_criteria = /obj/item/disk/data/floppy/read_only/authentication
 
+<<<<<<< HEAD
 /obj/item/pinpointer/identificationcomputer
 	name = "pinpointer (identification computer)"
 	desc = "Points in the direction of the portable identification computer."
 	icon_state = "id_pinoff"
 	icon_type = "id"
 	target_criteria = /obj/machinery/computer/card/portable
+=======
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+>>>>>>> 8f4ae34f18e66aa496f6309c6a29822a21bca472
 
 /obj/item/pinpointer/teg_semi
 	name = "pinpointer (prototype semiconductor)"
