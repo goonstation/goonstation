@@ -448,6 +448,7 @@
 			return
 		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 80, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
+		B.onKilled()
 		qdel(B)
 		src.deduct_bio_points()
 		src.do_cooldown()
