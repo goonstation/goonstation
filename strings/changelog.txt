@@ -1,6 +1,10 @@
 
 (t)sun dec 26 21
 (u)Flaborized
+(p)6995
+(e)🎨|sprites
+(+)Resprited the arc plater and ore processor machines.
+(u)Flaborized
 (p)7001
 (e)🎨|sprites
 (+)Resprited pills.
