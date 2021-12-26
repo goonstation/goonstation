@@ -1,5 +1,9 @@
 
 (t)sun dec 26 21
+(u)Flappybat
+(p)6985
+(e)⚖|balance
+(+)Santa and Krampus no longer spawn in modes that prevent antag spawns.
 (u)Magma Hunter
 (p)6989
 (e)|
