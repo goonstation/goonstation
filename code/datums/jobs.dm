@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
 	slot_card = /obj/item/card/id/command
