@@ -1,5 +1,9 @@
 
 (t)sun dec 26 21
+(u)DimWhat
+(p)6957
+(e)🎨|sprites
+(+)Made some small sprite changes to a few glasses sprites.
 (u)Flaborized
 (p)6995
 (e)🎨|sprites
