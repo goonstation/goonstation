@@ -45843,10 +45843,6 @@
 	},
 /obj/table/glass/reinforced/auto,
 /obj/item/paper/telecrystal_update,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_x = -2;
-	pixel_y = 10
-	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "euS" = (
@@ -47856,17 +47852,6 @@
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
-"qWA" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/item/storage/goodybag,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/aiModule/hologram_expansion/clown,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/simulated/floor/carpet/arcade/half,
-/area/station/crew_quarters/clown)
 "qWD" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -103607,7 +103592,7 @@ aqd
 aue
 axC
 awu
-qWA
+awu
 bQt
 arz
 cix
