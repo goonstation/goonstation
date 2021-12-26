@@ -7426,7 +7426,7 @@
 /area/space)
 "asA" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "asB" = (
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
@@ -7880,7 +7880,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
@@ -9922,7 +9921,6 @@
 	},
 /obj/storage/closet/wardrobe/white/genetics,
 /obj/item/storage/box/health_upgrade_kit,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/treatment2)
 "ayx" = (
@@ -9948,7 +9946,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -10578,8 +10575,6 @@
 /obj/disposalpipe/segment/bent/south,
 /obj/storage/closet/biohazard,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
 /obj/item/storage/box/body_bag,
 /obj/item/storage/box/body_bag,
 /obj/item/storage/box/biohazard_bags,
@@ -15082,7 +15077,6 @@
 	pixel_y = 21
 	},
 /obj/item/clothing/glasses/spectro,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -16169,6 +16163,7 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
+/obj/machinery/bot/medbot,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aMN" = (
@@ -17075,9 +17070,9 @@
 	dir = 4
 	},
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/black,
 /area/station/security/armory)
 "aOL" = (
@@ -19992,7 +19987,19 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "aUF" = (
-/obj/machinery/bot/medbot,
+/obj/rack,
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 2
+	},
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -20766,7 +20773,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "aWv" = (
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
@@ -22426,7 +22433,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
 "aZN" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/storage/eva)
 "aZO" = (
@@ -41980,7 +41987,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /obj/machinery/coffeemaker/botany,
@@ -46311,7 +46318,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bYs" = (
@@ -46344,7 +46351,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bYu" = (
@@ -48120,7 +48127,7 @@
 	},
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
@@ -48237,7 +48244,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/bent/north,
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "cbY" = (
@@ -48274,7 +48281,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
@@ -54617,7 +54624,7 @@
 /obj/item/clipboard/with_pen,
 /obj/decal/cleanable/writing{
 	sample_reagent = "blood";
-	words = "racist greg was here"
+	words = "smelly greg was here"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)

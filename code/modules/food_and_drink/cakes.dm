@@ -40,6 +40,7 @@
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")
+	var/list/cake_types = list()
 	var/sliced = FALSE
 	var/static/list/frostingstyles = list("classic","top swirls","bottom swirls","spirals","rose spirals")
 	var/clayer = 1
@@ -291,6 +292,14 @@
 		if(c.litfam)
 			src.ignite()
 		src.update_cake_context()
+
+		//Complete cake crew objectives if possible
+		src.cake_types += c.cake_types
+		if (user.mind && user.mind.objectives)
+			for (var/datum/objective/crew/chef/cake/objective in user.mind.objectives)
+				var/list/matching_types = src.cake_types & objective.choices
+				if(length(matching_types) >= CAKE_OBJ_COUNT)
+					objective.completed = TRUE
 		qdel(c)
 
 
@@ -632,6 +641,7 @@
 /obj/item/reagent_containers/food/snacks/fruit_cake
 	name = "fruitcake"
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_fruit"
 	amount = 12
 	heal_amt = 3

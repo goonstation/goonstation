@@ -221,6 +221,11 @@
 	item_function_flags = IMMUNE_TO_ACID
 	team_num = TEAM_SYNDICATE
 	blocked_from_petasusaphilic = TRUE
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
@@ -236,6 +241,10 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	old
 		icon_state = "syndicate-OLD"

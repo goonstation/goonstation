@@ -557,7 +557,7 @@
 		var/obj/item/grab/GD = user.equipped()
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
+			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
 		return
@@ -651,6 +651,7 @@
 		user.lastattacked = target
 
 /datum/limb/wendigo
+	var/log_name = "wendigo limbs"
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -685,7 +686,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (prob(25))
-			logTheThing("combat", user, target, "accidentally harms [constructTarget(target,"combat")] with wendigo limbs at [log_loc(user)].")
+			logTheThing("combat", user, target, "accidentally harms [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 			user.visible_message("<span class='alert'><b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally claw [target] while trying to [user.a_intent] them!</b></span>")
 			harm(target, user, 1)
 			return 1
@@ -714,7 +715,7 @@
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
-			logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with wendigo limbs at [log_loc(user)].")
+			logTheThing("combat", user, target, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9) * quality)
 		user.attack_effects(target, affecting)
@@ -726,6 +727,9 @@
 		if (prob(35 * quality))
 			target.changeStatus("weakened", (4 * quality) SECONDS)
 		user.lastattacked = target
+
+/datum/limb/wendigo/severed_werewolf
+	log_name = "severed werewolf limb"
 
 // Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
@@ -910,7 +914,7 @@
 		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
 			target.changeStatus("stunned", 2 SECONDS)
 			GD.state = GRAB_AGGRESSIVE
-			GD.update_icon()
+			GD.UpdateIcon()
 			user.visible_message("<span class='alert'>[user] grabs hold of [target] aggressively!</span>")
 
 		return

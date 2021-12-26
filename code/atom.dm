@@ -10,7 +10,6 @@
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
-	var/tmp/last_bumped = 0
 	var/shrunk = 0
 	var/list/cooldowns
 
@@ -157,13 +156,14 @@
 		if (temp_flags & (HAS_BAD_SMOKE))
 			ClearBadsmokeRefs(src)
 
-		fingerprintshidden = null
+		fingerprints_full = null
 		tag = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
+		ClearAllParticles()
 		..()
 
 	proc/Turn(var/rot)
@@ -302,6 +302,24 @@
 #endif
 	src.dir = new_dir
 
+
+/**
+ * DO NOT CALL THIS PROC - Call UpdateIcon(...) Instead!
+ *
+ * Only override this proc!
+ */
+/atom/proc/update_icon(...)
+	PROTECTED_PROC(TRUE)
+	return
+
+/// Call this proc inplace of update_icon(...)
+/atom/proc/UpdateIcon(...)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
+	update_icon(arglist(args))
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
+	return
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
@@ -341,11 +359,11 @@
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/turf/last_turf = 0
-	var/last_move = null
+	var/tmp/turf/last_turf = 0
+	var/tmp/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
-	var/l_move_time = 1
+	var/tmp/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -475,8 +493,6 @@
 				M.set_loc(src.loc)
 		if (islist(src.tracked_blood))
 			src.track_blood()
-		if (islist(src.tracked_mud))
-			src.track_mud()
 		actions.interrupt(src, INTERRUPT_MOVE)
 		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
@@ -792,10 +808,12 @@
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
-// use this instead of Bump
+/// override this instead of Bump
 /atom/movable/proc/bump(atom/A)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /atom/movable/Bump(var/atom/A as mob|obj|turf|area)
@@ -809,10 +827,8 @@
 			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
 				return
 	bump(A)
-	SPAWN_DBG( 0 )
-		if (A)
-			A.last_bumped = world.timeofday
-			A.Bumped(src)
+	if (!QDELETED(A))
+		A.Bumped(src)
 	..()
 
 // bullet_act called when anything is hit buy a projectile (bullet, tazer shot, laser, etc.)

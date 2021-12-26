@@ -99,6 +99,7 @@
 	icon_state = "bacon"
 	amount = 1
 	initial_reagents = list("porktonium"=10)
+	blood = 0
 
 	New()
 		..()
@@ -114,6 +115,7 @@
 		desc = "A strip of salty raw cured pork. It really should be cooked first."
 		icon_state = "bacon-raw"
 		amount = 1
+		blood = 2
 		real_name = "bacon"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
@@ -633,6 +635,7 @@
 	var/topping = 0
 	var/topping_color = null
 	var/list/toppings = list()
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/toppingstext = null
 
@@ -651,7 +654,7 @@
 			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
 			user.put_in_hand_or_drop(pizzap)
 			qdel (W)
-			qdel (src)			
+			qdel (src)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
@@ -659,6 +662,7 @@
 			boutput(user, "<span class='notice'>You add [W] to [src].</span>")
 			topping = 1
 			food_effects += F.food_effects
+			topping_types += W.type
 			if (F.real_name)
 				toppings += F.real_name
 			else
@@ -700,7 +704,7 @@
 	name = "uncooked mushroom pizza"
 	desc = "A cheese and mushroom pizza. You need to bake it..."
 	icon_state = "pizzabasem"
-	
+
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
@@ -714,7 +718,7 @@
 	name = "uncooked meatball pizza"
 	desc = "A cheese and meatball pizza. You need to bake it..."
 	icon_state = "pizzabaseb"
-	
+
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
@@ -728,7 +732,7 @@
 	name = "uncooked pepperoni pizza"
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
 	icon_state = "pizzabasep"
-	
+
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
@@ -748,7 +752,7 @@
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>... You must be really hungry.</span>")
 		..()
-	
+
 /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
 	name = "pasta sheet"
 	desc = "An uncooked sheet of pasta."

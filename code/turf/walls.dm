@@ -30,6 +30,11 @@
 		if (src.active_liquid && src.active_liquid.group)
 			src.active_liquid.group.displace(src.active_liquid)
 
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			xmasify()
+		#endif
+
 	ReplaceWithFloor()
 		. = ..()
 		if (map_currently_underwater)
@@ -78,6 +83,16 @@
 			src.proj_image.overlays += i
 		src.UpdateOverlays(src.proj_image, "projectiles")
 		//src.overlays += src.proj_image
+
+	proc/xmasify()
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.01)
+			new /obj/decal/wreath(src)
+		if(istype(get_area(src), /area/station/crew_quarters/cafeteria) && fixed_random(src.x / world.maxx + 0.001, src.y / world.maxy - 0.00001) <= 0.4)
+			SPAWN_DBG(1 SECOND)
+				var/turf/T = get_step(src, SOUTH)
+				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+					var/obj/stocking/stocking = new(T)
+					stocking.pixel_y = 26
 
 /turf/simulated/wall/New()
 	..()

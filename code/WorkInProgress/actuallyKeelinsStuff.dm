@@ -1968,7 +1968,8 @@ Returns:
 	var/datum/light/light
 
 	New()
-		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
@@ -1977,8 +1978,6 @@ Returns:
 		..()
 
 	disposing()
-		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-		smoke_part = null
 		light.disable()
 		light.detach()
 		light = null
@@ -2142,7 +2141,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	plane = PLANE_LIGHTING - 1
+	plane = PLANE_ABOVE_LIGHTING
 
 /obj/decal/nothingplug
 	name = "nothing"
@@ -2151,7 +2150,7 @@ Returns:
 	anchored = 1
 	density = 0
 	opacity = 0
-	plane = PLANE_LIGHTING - 1
+	plane = PLANE_ABOVE_LIGHTING
 
 /obj/decal/hfireplug
 	name = "fire"
@@ -2564,7 +2563,7 @@ Returns:
 
 	process()
 		if ((!( src.current ) || src.loc == src.current))
-			src.current = locate(min(max(src.x + src.xo, 1), world.maxx), min(max(src.y + src.yo, 1), world.maxy), src.z)
+			src.current = locate(clamp(src.x + src.xo, 1, world.maxx), clamp(src.y + src.yo, 1, world.maxy), src.z)
 		if ((src.x == 1 || src.x == world.maxx || src.y == 1 || src.y == world.maxy))
 			qdel(src)
 			return
@@ -3103,6 +3102,11 @@ Returns:
 			sparks.set_loc(get_turf(src))
 			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
+
+	attack_hand(var/mob/M)
+		..()
+		if (get_turf(M) == get_turf(src) && !ON_COOLDOWN(M, "portal_click", 1 SECOND))
+			src.Bumped(M)
 
 	ex_act()
 		return

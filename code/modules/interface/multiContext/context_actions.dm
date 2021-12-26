@@ -597,7 +597,7 @@
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.fire_main_weapon()
+			V.fire_main_weapon(user)
 
 	use_external_speaker
 		name = "Use External Speaker"

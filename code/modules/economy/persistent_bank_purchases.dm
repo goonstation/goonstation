@@ -51,6 +51,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/moustache,\
 	new /datum/bank_purchaseable/gold_that,\
 	new /datum/bank_purchaseable/dancin_shoes,\
+	new /datum/bank_purchaseable/frog,\
 
 	new /datum/bank_purchaseable/alohamaton,\
 	new /datum/bank_purchaseable/ai_hat)
@@ -335,7 +336,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					if (H.mind.assigned_role == "Clown")
 						var/type = pick("purple","pink","yellow")
 						H.w_uniform.icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-						H.w_uniform.wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+						H.w_uniform.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 						H.w_uniform.icon_state = "[type]clown"
 						H.w_uniform.item_state = "[type]clown"
 						H.w_uniform.name = "[type] clown suit"
@@ -439,6 +440,19 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
 			shippingmarket.receive_crate(S)
+			return 1
+
+	frog
+		name = "Adopt a Frog"
+		cost = 6000
+
+		Create(var/mob/living/M)
+			var/obj/critter/frog/froggo = new(M.loc)
+			SPAWN_DBG(1 SECOND)
+				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
+				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
+				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
+				froggo.name = froggo.real_name
 			return 1
 
 	missile_arrival

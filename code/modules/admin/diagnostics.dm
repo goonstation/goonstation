@@ -217,18 +217,20 @@ proc/debug_map_apc_count(delim,zlim)
 	proc/OnStartRendering(var/client/C)
 	proc/OnFinishRendering(var/client/C)
 
-	proc/makeText(text, additional_flags=0, align_left=FALSE)
+	proc/makeText(text, additional_flags=0, align_left=FALSE, moreattrib="", tall=FALSE)
 		var/mutable_appearance/mt = new
 		mt.plane = FLOAT_PLANE
 		mt.icon = 'icons/effects/effects.dmi'
 		mt.icon_state = "nothing"
-		mt.maptext = "<span class='pixel [align_left ? "l" : "r"] ol'>[text]</span>"
+		mt.maptext = "<span class='pixel [align_left ? "l" : "r"] ol' [moreattrib]>[text]</span>"
 
 		if(align_left)
 			mt.maptext_width = 32 * 3
 			mt.maptext_x = 2
 		else
 			mt.maptext_x = -3
+		if(tall)
+			mt.maptext_height *= 2
 		mt.appearance_flags = RESET_COLOR | additional_flags
 		return mt
 
@@ -540,6 +542,133 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.color = "#ffffff"
 			else
 				img.app.color = debug_color_of(netnums[1])
+
+	powernet_power
+		name = "power network power"
+		help = {"wite - multiple powernets<br>
+		red - contains 0 (no powernet), that's probably bad<br>
+		orange - mismatch between powernet var and netnum var, call a coder<br>
+		other - coloured based on the single powernet<br>
+		numbers: powernet id, Av: available watts, Ld: load in watts, N#: number of nodes, DN#: number of data nodes, C#: number of cables"}
+		var/list/processed_powernet_nums
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/netnums = list()
+			var/list/datum/powernet/direct_powernets = list()
+			for(var/obj/machinery/power/M in theTurf)
+				if(M.netnum >= 0)
+					netnums |= M.netnum
+				direct_powernets |= M.powernet
+			for(var/obj/cable/C in theTurf)
+				if(C.netnum >= 0)
+					netnums |= C.netnum
+			if(!length(netnums))
+				img.app.color = "#00000000"
+				img.app.alpha = 0
+				return
+			if(length(netnums) > 1)
+				img.app.color = "#ffffff"
+				img.app.overlays = list(src.makeText("multiple"))
+				return
+			if(0 in netnums)
+				img.app.color = "#ff0000"
+				img.app.overlays = list(src.makeText("null"))
+				return
+			var/datum/powernet/powernet = global.powernets[netnums[1]]
+			if(!(powernet in direct_powernets) && length(direct_powernets))
+				img.app.color = "#ffaa00"
+				img.app.overlays = list(src.makeText("mismatch"))
+				return
+
+			img.app.color = debug_color_of(netnums[1])
+
+			if(powernet.number in processed_powernet_nums)
+				return
+			processed_powernet_nums += powernet.number
+			var/text = "[powernet.number]<br>Av: [powernet.avail]<br>Ld: [powernet.load]<br>N#:[length(powernet.nodes)] DN#:[length(powernet.data_nodes)] C#:[length(powernet.cables)]"
+			img.app.overlays = list(src.makeText(text, align_left=TRUE, moreattrib="style='font-size:6pt;'", tall=TRUE))
+
+		OnStartRendering(client/C)
+			processed_powernet_nums = list()
+
+	var_display
+		name = "var display"
+		help = "Select any variable name of atoms on the turfs to display."
+		var/var_name = null
+
+		OnEnabled(client/C)
+			src.var_name = input(C, "var name to display: ", "var name") as text|null
+			boutput(C, "Displaying var [src.var_name]")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_name))
+				return
+			var/list/results = list()
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				if(hasvar(A, src.var_name))
+					var/val = A.vars[src.var_name]
+					if(islist(val))
+						val = json_encode(val)
+					results += "[val]"
+			if(length(results))
+				var/text = jointext(results, " ")
+				img.app.overlays = list(src.makeText(text))
+				img.app.color = debug_color_of(text)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
+
+	nested_var_display
+		name = "nested var display"
+		help = "Like var display except you can do stuff like: bioHolder.age<br>You can even index lists using the same syntax, for example: bioHolder.effectPool.1 or blood_pressure.diastolic"
+		var/list/var_names = null
+
+		OnEnabled(client/C)
+			var/inp = input(C, "var name path to display (like in DM, separate by .): ", "var name") as text|null
+			if(!isnull(inp))
+				src.var_names = splittext(inp, ".")
+				boutput(C, "Var path: [jointext(var_names, " ")]")
+			else
+				src.var_names = null
+				boutput(C, "No var path selected.")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_names))
+				return
+			var/list/results = list()
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				var/datum/D = A
+				for(var/var_name in src.var_names)
+					if(!istype(D) && !isclient(D) && !islist(D))
+						D = null
+						break
+					if(islist(D))
+						var/list/L = D
+						var/maybe_index = text2num(var_name)
+						if(maybe_index > 0 && maybe_index <= length(L))
+							D = L[maybe_index]
+						else if(var_name in L)
+							D = L[var_name]
+						else
+							D = null
+							break
+					else if(hasvar(D, var_name))
+						D = D.vars[var_name]
+					else
+						D = null
+						break
+				if(!isnull(D))
+					var/val = D
+					if(islist(val))
+						val = json_encode(val)
+					results += "[val]"
+			if(length(results))
+				var/text = jointext(results, " ")
+				img.app.overlays = list(src.makeText(text, align_left=TRUE))
+				img.app.color = debug_color_of(text)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
 
 	disposals
 		name = "disposal pipes"
@@ -1070,24 +1199,33 @@ proc/debug_map_apc_count(delim,zlim)
 				infoOverlayImages[ "[x]-[y]" ] = overlay
 				src.images += overlay
 
-/client/proc/SetInfoOverlayAlias( )
-	set name = "Info Overlay"
-	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	src.SetInfoOverlay()
-
-/client/proc/SetInfoOverlay( )
-	set name = "Debug Overlay"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+proc/info_overlay_choices()
+	var/static/list/cached = null
+	if(!isnull(cached))
+		return cached
 	var/list/available_overlays = list()
 	for (var/datum/infooverlay/dummy as anything in childrentypesof(/datum/infooverlay))
 		var/name = initial(dummy.name)
 		if(isnull(name))
 			name = replacetext("[dummy]", "/datum/infooverlay/", "")
 		available_overlays[name] = dummy
-	var/name = input("Choose an overlay") as null|anything in (available_overlays + "REMOVE")
+	available_overlays["REMOVE"] = null
+	cached = available_overlays
+	return cached
+
+/client/proc/SetInfoOverlayAlias(name in info_overlay_choices())
+	set name = "Info Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	src.SetInfoOverlay(name)
+
+/client/proc/SetInfoOverlay(name in info_overlay_choices())
+	set name = "Debug Overlay"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
+		boutput(src, "Info overlay turned off.")
 		if(infoOverlayImages)
 			for(var/img in infoOverlayImages)
 				img = infoOverlayImages[img]//shhh

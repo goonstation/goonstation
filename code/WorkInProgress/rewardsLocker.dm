@@ -34,8 +34,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "NTsatchel"
 			M.item_state = "NTsatchel"
 			M.name = "\improper NT Satchel"
@@ -49,8 +49,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_randoseru"
 			M.item_state = "sat_randoseru"
 			M.name = "randoseru satchel"
@@ -64,8 +64,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_fjallraven_yellow"
 			M.item_state = "sat_fjallraven_yellow"
 			M.name = "rucksack satchel"
@@ -79,8 +79,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_fjallraven_red"
 			M.item_state = "sat_fjallraven_red"
 			M.name = "rucksack satchel"
@@ -94,8 +94,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_anello"
 			M.item_state = "sat_anello"
 			M.name = "travel satchel"
@@ -109,8 +109,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_studded"
 			M.item_state = "sat_studded"
 			M.name = "studded satchel"
@@ -125,8 +125,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_itabag_blue"
 			M.item_state = "sat_itabag_blue"
 			M.name = "blue itabag satchel"
@@ -141,8 +141,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_itabag_purple"
 			M.item_state = "sat_itabag_purple"
 			M.name = "purple itabag satchel"
@@ -157,8 +157,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_itabag_mint"
 			M.item_state = "sat_itabag_mint"
 			M.name = "mint itabag satchel"
@@ -173,8 +173,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_itabag_black"
 			M.item_state = "sat_itabag_black"
 			M.name = "black itabag satchel"
@@ -189,8 +189,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_itabag_pink"
 			M.item_state = "sat_itabag_pink"
 			M.name = "pink itabag satchel"
@@ -204,8 +204,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchelbr"
 			M.item_state = "satchelbr"
 			M.name = "satchel"
@@ -220,8 +220,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "Syndiesatchel"
 			M.item_state = "Syndiesatchel"
 			M.name = "\improper Syndicate Satchel"
@@ -235,8 +235,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_studdedw"
 			M.item_state = "sat_studdedw"
 			M.name = "white studded satchel"
@@ -250,8 +250,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_bear"
 			M.item_state = "sat_bear"
 			M.name = "bear-satchel"
@@ -265,8 +265,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_breadpack"
 			M.item_state = "sat_breadpack"
 			M.name = "bag-uette satchel"
@@ -280,8 +280,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_turtle_green"
 			M.name = "green turtle shell satchel"
 			M.real_name = "green turtle shell backpack"
@@ -294,8 +294,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "sat_turtle_brown"
 			M.name = "brown turtle shell satchel"
 			M.real_name = "brown turtle shell backpack"
@@ -306,8 +306,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchelb"
 			M.item_state = "satchelb"
 			M.name = "satchel"
@@ -321,8 +321,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchelr"
 			M.item_state = "satchelr"
 			M.name = "satchel"
@@ -336,8 +336,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchelg"
 			M.item_state = "satchelg"
 			M.name = "satchel"
@@ -352,8 +352,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel_medic"
 			M.item_state = "satchel_medic"
 			M.name = "medic's satchel"
@@ -367,8 +367,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel_security"
 			M.item_state = "satchel_security"
 			M.name = "security satchel"
@@ -382,8 +382,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel_robotics"
 			M.item_state = "satchel_robotics"
 			M.name = "robotics satchel"
@@ -397,8 +397,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel_genetics"
 			M.item_state = "satchel_genetics"
 			M.name = "genetics satchel"
@@ -412,8 +412,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel_engineering"
 			M.item_state = "satchel_engineering"
 			M.name = "engineering satchel"
@@ -427,8 +427,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel_research"
 			M.item_state = "satchel_research"
 			M.name = "research satchel"
@@ -442,8 +442,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "capsatchel_blue"
 			M.item_state = "capsatchel_blue"
 			M.name = "Captain's Satchel"
@@ -457,8 +457,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "capsatchel_red"
 			M.item_state = "capsatchel_red"
 			M.name = "Captain's Satchel"
@@ -472,8 +472,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "capsatchel"
 			M.item_state = "capbackpack"
 			M.name = "Captain's Satchel"
@@ -488,8 +488,8 @@
 			M.icon = 'icons/obj/items/storage.dmi'
 			M.inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 			if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_storage.dmi'
-			M.wear_image_icon = 'icons/mob/back.dmi'
-			if (M.wear_image) M.wear_image.icon = 'icons/mob/back.dmi'
+			M.wear_image_icon = 'icons/mob/clothing/back.dmi'
+			if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/back.dmi'
 			M.icon_state = "satchel"
 			M.item_state = "satchel"
 			M.name = "satchel"
@@ -549,7 +549,7 @@
 			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
 				var/obj/item/clothing/head/M = H.head
 				M.icon_state = "beret_base"
-				M.wear_image_icon = 'icons/mob/head.dmi'
+				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
 				M.color = random_saturated_hex_color(1)
 				M.name = "beret"
 				M.real_name = "beret"
@@ -580,7 +580,7 @@
 			skin_target.icon_style = "flask"
 			skin_target.item_state = "flask"
 			skin_target.fluid_image = image(skin_target.icon, "fluid-flask")
-			skin_target.update_icon()
+			skin_target.UpdateIcon()
 			activator.set_clothing_icon_dirty()
 			return 1
 		else
@@ -603,11 +603,11 @@
 			var/obj/item/reagent_containers/glass/bucket/red/new_bucket = new /obj/item/reagent_containers/glass/bucket/red(get_turf(activator))
 			new_bucket.reagents = skin_target.reagents
 			new_bucket.fingerprints = skin_target.fingerprints
-			new_bucket.fingerprintshidden = skin_target.fingerprintshidden
+			new_bucket.fingerprints_full = skin_target.fingerprints_full
 			new_bucket.fingerprintslast = skin_target.fingerprintslast
 			skin_target.reagents = null
 			skin_target.fingerprints = null
-			skin_target.fingerprintshidden = null
+			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
 			qdel(skin_target)
 			activator.put_in_hand(new_bucket)
@@ -631,8 +631,8 @@
 				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				M.wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "mechanic-reward"
 				M.item_state = "mechanic-reward"
 				M.name = "pilot suit"
@@ -664,8 +664,8 @@
 				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
-				M.wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "scrub-f"
 				M.item_state = "lightblue"
 				M.name = "flower scrubs"
@@ -717,8 +717,8 @@
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
-					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 
 					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt medical jumpsuit)
 					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
@@ -759,8 +759,8 @@
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 					M.inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
-					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 
 					//change the icon if you've bought the alt jumpsuit thing (so the coat matches the alt science jumpsuit)
 					if (activator.mind && istype(activator.mind.purchased_bank_item, /datum/bank_purchaseable/altjumpsuit))
@@ -801,8 +801,8 @@
 					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 					if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-					M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
-					if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 					M.icon_state = findtext(M.icon_state, "_o") ? "alchrobe_o" : "alchrobe"
 					M.item_state = "alchrobe"
 					M.coat_style = "alchrobe"
@@ -837,8 +837,8 @@
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
+				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 				M.icon_state = "vclothes"
 				M.item_state = "vclothes"
 				if (istype(M, /obj/item/clothing/suit/labcoat))
@@ -893,8 +893,8 @@
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				M.wear_image_icon = 'icons/mob/overcoats/worn_suit.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/overcoats/worn_suit.dmi'
+				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 				if (istype(M, /obj/item/clothing/suit/labcoat))
 					var/obj/item/clothing/suit/labcoat/L = M
 					M.icon_state = findtext(M.icon_state, "_o") ? "inspectorc_o" : "inspectorc"
@@ -914,8 +914,8 @@
 				M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
-				M.wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+				M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 				M.icon_state = "inspectorj"
 				M.item_state = "viceG"
 				M.name = "inspector's uniform"
@@ -1292,7 +1292,7 @@
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
 			gunmod.gilded = TRUE
-			gunmod.update_icon()
+			gunmod.UpdateIcon()
 			H.update_inhands()
 			return 1
 

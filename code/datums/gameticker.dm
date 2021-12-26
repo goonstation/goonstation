@@ -10,7 +10,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//var/current_state = GAME_STATE_PREGAME
 	//replaced with global
 
-	var/hide_mode = 0
+	var/hide_mode = TRUE
 	var/datum/game_mode/mode = null
 	var/event_time = null
 	var/event = 0
@@ -50,8 +50,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		lobby_titlecard.set_pregame_html()
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	for(var/mob/new_player/C in world)
-		C.ready = 1
 	pregame_timeleft = 1
 	#endif
 
@@ -110,8 +108,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode in list("secret","action","intrigue","wizard","alien"))
-		src.hide_mode = 1
+	if(master_mode != "extended")
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
@@ -803,6 +803,10 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	catch(var/exception/e)
 		logTheThing("debug", null, null, "playtime was unable to be logged because of: [e.name]")
 		logTheThing("diary", null, null, "playtime was unable to be logged because of: [e.name]", "debug")
+
+	if(global.lag_detection_process.automatic_profiling_on)
+		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
+
 	return 1
 
 /////

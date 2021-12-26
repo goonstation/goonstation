@@ -31,7 +31,7 @@ obj/machinery/air_vendor
 		..()
 		gas_prototype = new /datum/gas_mixture
 
-	proc/update_icon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "O2vend_broken"
 			return
@@ -46,7 +46,7 @@ obj/machinery/air_vendor
 
 	power_change()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	proc/fill_cost()
 		if(!holding) return 0
@@ -76,7 +76,7 @@ obj/machinery/air_vendor
 				user.drop_item()
 				W.set_loc(src)
 				src.holding = W
-				src.update_icon()
+				src.UpdateIcon()
 				src.updateUsrDialog()
 			else
 				boutput(user, "You try to insert the [W.name] into the the [src.name], but there's already a tank there!</span>")
@@ -93,7 +93,7 @@ obj/machinery/air_vendor
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(card.registered)
 		if (account)
-			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin == card.pin)
 				boutput(user, "<span class='notice'>Card authorized.</span>")
 				src.scan = card
@@ -150,7 +150,7 @@ obj/machinery/air_vendor
 			if(href_list["changepressure"])
 				var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
 				if(isnum_safe(change))
-					target_pressure = min(max(10.1325, change),1013.25)
+					target_pressure = clamp(change, 10.1325, 1013.25)
 
 			if(href_list["fill"])
 				if (holding)
@@ -184,4 +184,4 @@ obj/machinery/air_vendor
 
 			src.updateUsrDialog()
 			src.add_fingerprint(usr)
-			update_icon()
+			UpdateIcon()

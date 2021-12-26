@@ -27,6 +27,8 @@
 
 	var/lasterr = 0
 
+	var/mutation_sfx = "sound/effects/plant_mutation.ogg"
+
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
@@ -179,7 +181,7 @@
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/thud_prob = max(0,min(100, DNA.endurance / 2))
+		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
 			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
@@ -253,6 +255,7 @@
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = 1
+	mutation_sfx = "sound/voice/farts/fart6.ogg"
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -260,7 +263,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		var/fart_prob = max(0,min(100,DNA.potency))
+		var/fart_prob = clamp(100, 0, DNA.potency)
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
@@ -304,6 +307,7 @@
 	dont_rename_crop = true
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
+	mutation_sfx = "sound/voice/virtual_gassy.ogg"
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
@@ -377,6 +381,7 @@
 	iconmod = "ContusineShivering"
 	assoc_reagents = list("histamine")
 	chance = 10
+	mutation_sfx = "sound/impact_sounds/Bush_Hit.ogg"
 
 // Nureous Mutations
 
@@ -592,6 +597,7 @@
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
 	assoc_reagents = list("infernite")
+	mutation_sfx = "sound/effects/fireworks1.ogg"
 
 // Slurrypod Mutations
 
@@ -652,6 +658,8 @@
 	iconmod = "TreeDogwood"
 	special_proc_override = 1
 	attacked_proc_override = 1
+	mutation_sfx = "sound/voice/animal/dogbark.ogg"
+
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()

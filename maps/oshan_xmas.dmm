@@ -21480,9 +21480,9 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXq" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -29885,7 +29885,7 @@
 	pixel_y = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -35777,7 +35777,7 @@
 /area/station/hallway/secondary/exit)
 "bFU" = (
 /turf/space/fluid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "bFV" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/camera{
@@ -46680,9 +46680,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
-"ciK" = (
-/turf/simulated/floor/plating/random,
-/area/station/storage/eeva)
 "ciL" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -46736,7 +46733,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -103292,7 +103289,7 @@ cfS
 cfS
 ckK
 aDr
-ciK
+aDr
 aks
 aks
 bgD

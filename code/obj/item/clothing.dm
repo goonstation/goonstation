@@ -51,6 +51,7 @@
 		//fucky way of doing this but whatever
 		..()
 
+
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 

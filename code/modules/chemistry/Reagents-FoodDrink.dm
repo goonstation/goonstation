@@ -466,7 +466,7 @@ datum
 					"I'm lonely. And I'm lonely in some horribly deep way and for a flash of an instant, I can see just how lonely, and how deep this feeling runs. And it scares the shit out of me to be this lonely because it seems catastrophic.",\
 					"Someday, we'll run into each other again, I know it. Maybe I'll be older and smarter and just plain better. If that happens, that's when I'll deserve you. But now, at this moment, you can't hook your boat to mine, because I'm liable to sink us both.",\
 					"There you go...let it all slide out. Unhappiness can't stick in a person's soul when it's slick with tears.",\
-					"I was in the biggest breakdown of my life when I stopped crying long enough to let the words of my epiphany really sink in. That whore, karma had finally made her way around and had just bitch-slapped me right across the face. The realization only made me cry harder.",\
+					"I was in the biggest breakdown of my life when I stopped crying long enough to let the words of my epiphany really sink in. Karma had finally made her way around and had just slapped me right across the face. The realization only made me cry harder.",\
 					"I waste at least an hour every day lying in bed. Then I waste time pacing. I waste time thinking. I waste time being quiet and not saying anything because I'm afraid I'll stutter."))
 				..()
 				return
@@ -2237,9 +2237,9 @@ datum
 			id = "energydrink"
 			description = "An energy drink is a liquid plastic with a high amount of caffeine."
 			reagent_state = LIQUID
-			fluid_r = 255
-			fluid_g = 255
-			fluid_b = 64
+			fluid_r = 120
+			fluid_g = 223
+			fluid_b = 45
 			transparency = 170
 			overdose = 25
 			addiction_prob = 4
@@ -2400,11 +2400,12 @@ datum
 			thirst_value = 0.5
 			hunger_value = 1
 			viscosity = 0.5
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 				M.reagents.add_reagent("sugar", 0.8 * mult)
+				if (ispug(M))
+					M.changeStatus("poisoned", 8 SECONDS * mult)
 				..()
 
 			reaction_turf(var/turf/T, var/volume)
@@ -2603,7 +2604,7 @@ datum
 						var/obj/decal/cleanable/saltpile/pile = locate(/obj/decal/cleanable/saltpile) in T
 						if (pile)
 							pile.health = min(pile.health+10, 30)
-							//pile.update_icon()
+							//pile.UpdateIcon()
 
 
 			reaction_obj(var/obj/O, var/volume)

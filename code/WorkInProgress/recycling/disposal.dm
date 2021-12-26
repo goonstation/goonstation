@@ -82,7 +82,7 @@
 				last = curr
 				curr = curr.transfer(src)
 				if(!curr)
-					last.expel(src, loc, dir)
+					last.expel(src, get_turf(loc), dir)
 
 				if(!(count--))
 					active = 0
@@ -252,13 +252,14 @@
 	// change visibility status and force update of icon
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		updateicon()
+		UpdateIcon()
 
 	// update actual icon_state depending on visibility
 	// if invisible, set alpha to half the norm
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
-	proc/updateicon()
+	update_icon()
+
 		icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255
 		return
@@ -337,7 +338,7 @@
 		if(H)
 			// holder was present
 			H.active = 0
-			var/turf/T = src.loc
+			var/turf/T = get_turf(src)
 			if(T.density)
 				// broken pipe is inside a dense turf (wall)
 				// this is unlikely, but just dump out everything into the turf in case
@@ -916,11 +917,6 @@
 				else
 					newLoaf.loaf_factor++
 
-				H.contents -= newIngredient
-				newIngredient.set_loc(null)
-				newIngredient = null
-
-				//LAGCHECK(LAG_MED)
 				qdel(newIngredient)
 
 			newLoaf.update()
@@ -1005,7 +1001,7 @@
 		STOP_TRACKING
 
 	proc/update()
-		var/orderOfLoafitude = max( 0, min( round( log(8, loaf_factor)), MAXIMUM_LOAF_STATE_VALUE ) )
+		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
 
 		src.w_class = min(orderOfLoafitude+1, 4)
@@ -1169,22 +1165,23 @@
 			else
 				return fromdir
 
-	updateicon()
+	update_icon()
+
 		icon_state = "pipe-mech[active]"//[invisibility ? "f" : null]"
 		alpha = invisibility ? 128 : 255
 		return
 
 	proc/toggleactivation()
 		src.active = !src.active
-		updateicon()
+		UpdateIcon()
 
 	proc/activate()
 		src.active = 1
-		updateicon()
+		UpdateIcon()
 
 	proc/deactivate()
 		src.active = 0
-		updateicon()
+		UpdateIcon()
 
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)

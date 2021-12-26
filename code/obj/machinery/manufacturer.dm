@@ -604,7 +604,7 @@
 					if (src.hacked)
 						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
-					newset = max(1,min(newset,upperbound))
+					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
 
 			if (href_list["clearQ"])
@@ -907,7 +907,7 @@
 					continue
 				src.load_item(M)
 				amtload++
-			W:satchel_updateicon()
+			W:UpdateIcon()
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [W]!</span>")
 			else boutput(user, "<span class='alert'>No materials loaded!</span>")
 
@@ -1071,7 +1071,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == ID.pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = ID
@@ -1485,7 +1485,7 @@
 			return
 		var/mcheck = check_enough_materials(M)
 		if(mcheck)
-			var/make = max(0,min(M.create,src.output_cap))
+			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop
 					while (make > 0)
@@ -1503,6 +1503,12 @@
 						make--
 
 			src.remove_materials(M)
+		else
+			src.mode = "halt"
+			src.error = "Insufficient usable materials to continue queue production."
+			src.visible_message("<span class='alert'>[src] emits an angry buzz!</span>")
+			playsound(src.loc, src.sound_grump, 50, 1)
+			src.build_icon()
 
 		return
 
@@ -1801,7 +1807,7 @@
 		if (!damage_amount)
 			return
 		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 		if (damage_amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)

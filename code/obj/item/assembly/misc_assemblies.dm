@@ -425,7 +425,7 @@ Contains:
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
 		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -602,7 +602,7 @@ Contains:
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
 		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+			src.part5?.do_explode()
 			qdel(src)
 	return
 

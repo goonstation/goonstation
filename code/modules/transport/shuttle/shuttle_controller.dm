@@ -13,7 +13,7 @@ datum/shuttle_controller
 	var/list/airbridges = list()
 	var/map_turf = /turf/space //Set in New() by map settings
 	var/transit_turf = /turf/space/no_replace //Not currently modified
-	var/centcom_turf = /turf/unsimulated/outdoors/grass //Not currently modified
+	var/centcom_turf = /turf/unsimulated/floor/shuttlebay //Not currently modified
 
 
 	// call the shuttle
@@ -156,7 +156,7 @@ datum/shuttle_controller
 						var/filler_turf = text2path(start_location.filler_turf)
 						if (!filler_turf)
 							filler_turf = centcom_turf
-						start_location.move_contents_to(end_location, filler_turf)
+						start_location.move_contents_to(end_location, filler_turf, turf_to_skip=/turf/unsimulated/floor/shuttlebay)
 						for (var/turf/P in end_location)
 							if (istype(P, filler_turf))
 								P.ReplaceWith(map_turf, keep_old_material = 0, force=1)
@@ -217,7 +217,7 @@ datum/shuttle_controller
 							if (istype(D, door_type))
 								D.set_density(1)
 								D.locked = 1
-								D.update_icon()
+								D.UpdateIcon()
 
 						for (var/atom/A in start_location)
 							if(istype( A, /obj/stool ))
@@ -262,13 +262,8 @@ datum/shuttle_controller
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
-						var/escape_def = map_settings ? map_settings.escape_def : SHUTTLE_NODEF
-						for (var/turf/T in landmarks[LANDMARK_ESCAPE_POD_SUCCESS])
-							if (landmarks[LANDMARK_ESCAPE_POD_SUCCESS][T] != escape_def)
-								landmarks[LANDMARK_ESCAPE_POD_SUCCESS] -= T //leave behind only landmarks for the map's escape shuttle
-
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf)
+						start_location.move_contents_to(end_location, map_turf, turf_to_skip=/turf/simulated/floor/plating)
 						for (var/turf/O in end_location)
 							if (istype(O, map_turf))
 								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
@@ -296,12 +291,12 @@ datum/shuttle_controller
 							if (istype(D, door_type))
 								D.set_density(0)
 								D.locked = 0
-								D.update_icon()
+								D.UpdateIcon()
 
 						var/filler_turf = text2path(end_location.filler_turf)
 						if (!filler_turf)
 							filler_turf = centcom_turf
-						start_location.move_contents_to(end_location, transit_turf)
+						start_location.move_contents_to(end_location, transit_turf, turf_to_skip=/turf/space)
 						for (var/turf/G in end_location)
 							if (istype(G, transit_turf))
 								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)

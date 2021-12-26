@@ -19,7 +19,7 @@
 
 		src.see_invisible = INVIS_GHOST
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
-		src.bioHolder.AddEffect("food_rad_resist", 0, 0, 0, 1)
+		src.bioHolder.AddEffect("rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)
 		src.add_stun_resist_mod("slasher_stun_resistance", 75)
 		START_TRACKING
@@ -548,6 +548,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return TRUE
 		if (holder.help_mode)
 			holder.help_mode = FALSE
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = TRUE
 			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")

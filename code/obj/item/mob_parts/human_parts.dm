@@ -77,6 +77,9 @@
 			if(!src.holder_ahol && ishuman(original_holder))
 				var/mob/living/carbon/human/H = original_holder
 				src.holder_ahol = H?.bioHolder?.mobAppearance
+			if (src.holder_ahol.special_style)
+				icon = src.holder_ahol.body_icon
+				partIcon = src.holder_ahol.body_icon
 			if(!src.bones)
 				src.bones = new /datum/bone(src)
 			src.bones.donor = new_holder
@@ -1010,6 +1013,24 @@
 			set_loc(holder)
 		..()
 
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
 	getMobIcon(var/lying, var/decomp_stage = 0)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -1036,6 +1057,24 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
+
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
 
 	getMobIcon(var/lying, var/decomp_stage = 0)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
@@ -1345,6 +1384,50 @@
 		if(prob(1))
 			src.desc += " Bears the brand of a legendary roleplayer."
 
+//// PUG LIMBS ////
+
+/obj/item/parts/human_parts/arm/mutant/pug
+	icon = 'icons/mob/pug/fawn.dmi'
+	partIcon = 'icons/mob/pug/fawn.dmi'
+
+/obj/item/parts/human_parts/arm/mutant/pug/left
+	name = "left pug arm"
+	desc = "A pug's left arm. Pawsitive."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/pug/right
+	name = "right pug arm"
+	desc = "A pug's right arm."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/pug
+	icon = 'icons/mob/pug/fawn.dmi'
+	partIcon = 'icons/mob/pug/fawn.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/pug/left
+	name = "left pug leg"
+	desc = "A pug's left leg."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/pug/right
+	name = "right pug leg"
+	desc = "A pug's right leg."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
 //// LIZARD LIMBS ////
 //////  PARENT  //////
 
@@ -1592,6 +1675,16 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.limb_data = new/datum/limb/wendigo/severed_werewolf(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.limb_data = new/datum/limb/wendigo/severed_werewolf(src)
 
 //// THE ACTUAL WOLFLIMBS ////
 /obj/item/parts/human_parts/leg/mutant/werewolf/left

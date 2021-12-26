@@ -36,12 +36,14 @@
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
-			return 0
+			return FALSE
 		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
-			return 0
+			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
+			return FALSE
 		user.visible_message("<span class='alert'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
+		src.valve_open = TRUE
 		user.gib()
-		return 1
+		return TRUE
 
 	powered()
 		return 1
@@ -87,7 +89,6 @@
 	bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 /obj/machinery/portable_atmospherics/canister/update_icon()
-
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
 		ClearAllOverlays()
@@ -151,7 +152,7 @@
 		src.destroyed = 1
 		playsound(src.loc, "sound/effects/spray.ogg", 10, 1, -3)
 		src.set_density(0)
-		update_icon()
+		UpdateIcon()
 
 		if (src.holding)
 			src.holding.set_loc(src.loc)
@@ -232,13 +233,13 @@
 						if (5)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 0
-								theAPC.updateicon()
+								theAPC.UpdateIcon()
 								theAPC.update()
 								src.visible_message("<span class='alert'>The lights mysteriously go out!</span>")
 						if (6)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 3
-								theAPC.updateicon()
+								theAPC.UpdateIcon()
 								theAPC.update()
 
 			else if (src.det.part_fs.time < 10 && src.det.part_fs.time > 7)  //EXPLOSION IMMINENT
@@ -253,7 +254,7 @@
 			src.remove_simple_light("canister")
 
 	if(dialog_update_enabled) src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/canister/return_air()
@@ -351,7 +352,7 @@
 				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				message_admins("[key_name(user)] builds a canister bomb at [log_loc(src)]. See bombing logs for atmos readout.")
 				tgui_process.update_uis(src)
-				src.update_icon()
+				src.UpdateIcon()
 	else if (src.det && istype(W, /obj/item/tank))
 		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
 		return
@@ -695,7 +696,7 @@
 
 	src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
@@ -704,7 +705,7 @@
 
 	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
@@ -714,7 +715,7 @@
 	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
 	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
@@ -724,7 +725,7 @@
 	src.air_contents.temperature = 80
 	src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
@@ -732,7 +733,7 @@
 	..()
 	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
 
 
@@ -742,5 +743,5 @@
 	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 
-	src.update_icon()
+	src.UpdateIcon()
 	return 1
