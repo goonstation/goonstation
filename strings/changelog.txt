@@ -1,5 +1,7 @@
 
 (t)sun dec 26 21
+(u)pali
+(*)Manta has been disabled
 (u)TTerc
 (p)7004
 (e)|
