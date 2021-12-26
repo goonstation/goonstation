@@ -7358,7 +7358,6 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/blue/checker{
 	dir = 8
 	},
@@ -9227,7 +9226,6 @@
 "ayw" = (
 /obj/storage/closet/wardrobe/white/genetics,
 /obj/item/storage/box/health_upgrade_kit,
-/obj/item/storage/belt/medical,
 /obj/disposalpipe/segment/morgue{
 	dir = 8
 	},
@@ -9255,7 +9253,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -9786,8 +9783,6 @@
 "azO" = (
 /obj/storage/closet/biohazard,
 /obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
 /obj/item/storage/box/body_bag,
 /obj/item/storage/box/body_bag,
 /obj/item/storage/box/biohazard_bags,
@@ -13839,7 +13834,6 @@
 	pixel_y = 21
 	},
 /obj/item/clothing/glasses/spectro,
-/obj/item/storage/belt/medical,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -14838,6 +14832,7 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
+/obj/machinery/bot/medbot,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aMN" = (
@@ -18344,7 +18339,19 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "aUF" = (
-/obj/machinery/bot/medbot,
+/obj/rack,
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 2
+	},
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -48060,7 +48067,7 @@
 /obj/item/clipboard/with_pen,
 /obj/decal/cleanable/writing{
 	sample_reagent = "blood";
-	words = "racist greg was here"
+	words = "smelly greg was here"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)

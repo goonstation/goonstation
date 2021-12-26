@@ -3,7 +3,7 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's pancreas is dangerously enlarged"
-	cure = "Surgery"
+	cure = "Removal of organ"
 	reagentcure = list("organ_drug3")
 	recureprob = 10
 	affected_species = list("Human")
@@ -16,16 +16,16 @@
 
 	if (!ishuman(affected_mob))
 		return
-	
+
 	var/mob/living/carbon/human/H = affected_mob
-		
+
 	if (!H.organHolder || !H.organHolder.pancreas || H.organHolder.pancreas.get_damage() <= 5)
 		H.cure_disease(D)
 		return
 
 	//handle robopancreas failuer. should do some stuff I guess
 	// else if (H.organHolder.pancreas && H.organHolder.pancreas.robotic && !H.organHolder.heart.health > 0)
-	
+
 	if (prob(D.stage * 30))
 		H.organHolder.pancreas.take_damage(0, 0, D.stage)
 

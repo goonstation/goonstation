@@ -2,7 +2,7 @@
 /obj/item/device/radio/headset
 	name = "Radio Headset"
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
+	wear_image_icon = 'icons/mob/clothing/ears.dmi'
 	icon_state = "headset"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "headset"

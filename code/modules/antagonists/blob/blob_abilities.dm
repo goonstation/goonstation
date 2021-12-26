@@ -173,9 +173,10 @@
 			return
 		if (owner.help_mode)
 			owner.help_mode = 0
+			boutput(owner, "<span class='notice'>Help Mode has been deactivated.</span>")
 		else
 			owner.help_mode = 1
-			boutput(owner, "<span class='notice'>Help Mode has been activated  To disable it, click on this button again.</span>")
+			boutput(owner, "<span class='notice'>Help Mode has been activated. To disable it, click on this button again.</span>")
 		src.button.icon_state = "blob-help[owner.help_mode]"
 		owner.update_buttons()
 
@@ -1261,7 +1262,7 @@
 /datum/blob_upgrade/reinforce_spread
 	name = "Passive: Reinforced Spread"
 	icon_state = "blob-global-reinforce"
-	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 60 material deposits to be on your current tile."
+	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 30 material deposits to be on your current tile."
 	evo_point_cost = 1
 	initially_disabled = 1
 	scaling_cost_add = 2

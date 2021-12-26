@@ -46680,9 +46680,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
-"ciK" = (
-/turf/simulated/floor/plating/random,
-/area/station/storage/eeva)
 "ciL" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -103292,7 +103289,7 @@ cfS
 cfS
 ckK
 aDr
-ciK
+aDr
 aks
 aks
 bgD
