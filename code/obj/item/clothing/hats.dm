@@ -1503,6 +1503,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		name = "gold barrettes"
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
+	holly
+		name = "holly barrette"
+		icon_state = "barrette-holly"
+		item_state = "barrette-holly"
 
 // HAIRBOWS (jan.antilles loves you)
 
@@ -1587,12 +1591,26 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
 		icon_state = "hbow-flashy"
 		item_state = "hbow-flashy"
-
 	yellowpolkadot
 		name = "yellow polka-dot hairbow"
 		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
 		icon_state = "hbow-yellowpolkadot"
 		item_state = "hbow-yellowpolkadot"
+	cranberry
+		name = "cranberry hairbow"
+		desc = "A huge bow that goes on your head. This one is cranberry red."
+		icon_state = "hbow-cranberry"
+		item_state = "hbow-cranberry"
+	darkgreen
+		name = "dark green hairbow"
+		desc = "A huge bow that goes on your head. This one is dark green."
+		icon_state = "hbow-darkgreen"
+		item_state = "hbow-darkgreen"
+	royalblue
+		name = "royal blue hairbow"
+		desc = "A huge bow that goes on your head. This one is royal blue."
+		icon_state = "hbow-royalblue"
+		item_state = "hbow-royalblue"
 
 /obj/item/clothing/head/rafflesia
     name = "rafflesia"

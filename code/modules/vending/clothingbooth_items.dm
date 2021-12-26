@@ -136,6 +136,19 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hbow)
 		name = "Yellow Polka-Dot Hair Bow"
 		path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
+	cranberry
+		name = "Cranberry Hair Bow"
+		path = /obj/item/clothing/head/hairbow/cranberry
+
+	royalblue
+		name = "Royal Blue Hair Bow"
+		path = /obj/item/clothing/head/hairbow/royalblue
+
+	darkgreen
+		name = "Dark Green Hair Bow"
+		path = /obj/item/clothing/head/hairbow/darkgreen
+
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
 /datum/clothingbooth_item/accessory/hairclips
 	name = "Hairclips"
@@ -363,6 +376,31 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/dress)
 /datum/clothingbooth_item/dress/sktdress_gold
 	name = "Gold and Black Skirt Dress"
 	path = /obj/item/clothing/under/misc/sktdress_gold
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dress/sleeveless_white
+	name = "White Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_white
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dress/sleeveless_blue
+	name = "Blue Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_blue
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dress/sleeveless_red
+	name = "Red Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_red
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dress/sleeveless_green
+	name = "Green Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_green
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/dress/sleeveless_black
+	name = "Black Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_black
 	cost = PAY_TRADESMAN/3
 
 //Formalwear
@@ -1230,3 +1268,51 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 		path = /obj/item/clothing/shoes/westboot/brown
 
 
+//Holiday Clothing
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/holiday)
+/datum/clothingbooth_item/holiday/
+	name = "holiday"
+	category = "Holiday"
+
+/datum/clothingbooth_item/holiday/sleeveless_snowy
+	name = "Snowy Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_snowy
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/holiday/sleeveless_santa
+	name = "Santa Sleeveless Dress"
+	path = /obj/item/clothing/under/gimmick/sleeveless_santa
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/3
+
+/datum/clothingbooth_item/holiday/green_wcoat
+	name = "Green Waistcoat"
+	path = /obj/item/clothing/under/gimmick/green_wcoat
+	slot = SLOT_W_UNIFORM
+	cost = PAY_DOCTORATE/3
+
+/datum/clothingbooth_item/holiday/barrette_holly
+	name = "Holly Barrette"
+	path = /obj/item/clothing/head/barrette/holly
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/5
+
+/datum/clothingbooth_item/holiday/sweater_blue
+	name = "Diamond Sweater"
+	path = /obj/item/clothing/suit/sweater
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/holiday/sweater_red
+	name = "Reindeer Sweater"
+	path = /obj/item/clothing/suit/sweater/red
+	slot = SLOT_WEAR_MASK
+	cost = PAY_TRADESMAN/3
+
+/datum/clothingbooth_item/holiday/sweater_green
+	name = "Snowflake Sweater"
+	path = /obj/item/clothing/suit/sweater/green
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_TRADESMAN/3

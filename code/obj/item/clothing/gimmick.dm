@@ -1081,6 +1081,55 @@
 	item_state = "weddress"
 	c_flags = SLEEVELESS
 
+/obj/item/clothing/under/gimmick/sleeveless_white
+	name = "white sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is white."
+	icon_state = "sleeveless_white"
+	item_state = "sleeveless_white"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/under/gimmick/sleeveless_red
+	name = "red sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is red."
+	icon_state = "sleeveless_red"
+	item_state = "sleeveless_red"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/under/gimmick/sleeveless_blue
+	name = "blue sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is blue."
+	icon_state = "sleeveless_blue"
+	item_state = "sleeveless_blue"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/under/gimmick/sleeveless_green
+	name = "green sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is green."
+	icon_state = "sleeveless_green"
+	item_state = "sleeveless_green"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/under/gimmick/sleeveless_black
+	name = "black sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is black."
+	icon_state = "sleeveless_black"
+	item_state = "sleeveless_black"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/under/gimmick/sleeveless_snowy
+	name = "snowy sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is blue and has little snowflakes all over it."
+	icon_state = "sleeveless_snowy"
+	item_state = "sleeveless_snowy"
+	c_flags = SLEEVELESS
+
+/obj/item/clothing/under/gimmick/sleeveless_santa
+	name = "santa sleeveless dress"
+	desc = "A sleeveless ankle-length dress. This one is red with fuzzy white trim and a black belt."
+	icon_state = "sleeveless_santa"
+	item_state = "sleeveless_santa"
+	c_flags = SLEEVELESS
+
 ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/gloves/ring
 	name = "ring"
@@ -1305,6 +1354,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	desc = "A formal blue waistcoat meant to be worn alongside an overcoat."
 	icon_state = "blue_wcoat"
 	item_state = "blue_wcoat"
+
+/obj/item/clothing/under/gimmick/green_wcoat
+	name = "dress shirt and green waistcoat"
+	desc = "A formal green waistcoat meant to be worn alongside an overcoat."
+	icon_state = "green_wcoat"
+	item_state = "green_wcoat"
 
 /obj/item/clothing/under/rank/bartender/tuxedo // look I really want to make the clothes vendor just produce clothing directly and not have to spawn this in a box with a custom name or something
 	name = "dress shirt and bowtie"
