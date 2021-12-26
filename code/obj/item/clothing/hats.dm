@@ -1490,7 +1490,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
 	holly
-		name = "holly barrette"
+		name = "holly barrettes"
 		icon_state = "barrette-holly"
 		item_state = "barrette-holly"
 
