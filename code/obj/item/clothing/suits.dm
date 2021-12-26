@@ -31,6 +31,7 @@
 /obj/item/clothing/suit/hooded
 	name = "You shouldn't see this!"
 	desc = "Call 180-IMCODER"
+	uses_multiple_icon_states = TRUE
 	var/hood_style = null
 	var/hooded = FALSE
 	abilities = list(/obj/ability_button/hood_toggle)
@@ -66,7 +67,6 @@
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
-	uses_multiple_icon_states = TRUE
 	item_state = "hoodie"
 	hood_style = "hoodie"
 	body_parts_covered = TORSO|ARMS
