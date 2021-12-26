@@ -25,28 +25,6 @@
 	path_prot = 0
 	permeability_coefficient = 0.2
 
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = round((100 - material.getProperty("thermal")) / 2)
-				setProperty("coldprot", 10+prot)
-				setProperty("heatprot", 1+round(prot/2))
-			else
-				setProperty("coldprot", 10)
-				setProperty("heatprot", 2)
-
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
-
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+prot)
-			else
-				setProperty("meleeprot_head", 2)
-
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
@@ -136,6 +114,29 @@
 	icon_state = "space-cute"
 	item_state = "space-cute"
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
+
+/obj/item/clothing/head/helmet/space/custom
+	onMaterialChanged()
+		if(src.material)
+			if(material.hasProperty("thermal"))
+				var/prot = round((100 - material.getProperty("thermal")) / 2)
+				setProperty("coldprot", 10+prot)
+				setProperty("heatprot", 1+round(prot/2))
+			else
+				setProperty("coldprot", 10)
+				setProperty("heatprot", 2)
+
+			if(material.hasProperty("permeable"))
+				var/prot = 100 - material.getProperty("permeable")
+				setProperty("viralprot", prot)
+			else
+				setProperty("viralprot", 40)
+
+			if(material.hasProperty("density"))
+				var/prot = round(material.getProperty("density") / 20)
+				setProperty("meleeprot_head", 2+prot)
+			else
+				setProperty("meleeprot_head", 2)
 
 // Sealab helmets
 
