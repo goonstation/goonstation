@@ -1,5 +1,9 @@
 
 (t)sun dec 26 21
+(u)TTerc
+(p)7004
+(e)|
+(+)Suicide command now always opens a suicide method selection window.
 (u)Flappybat
 (p)6985
 (e)⚖|balance
