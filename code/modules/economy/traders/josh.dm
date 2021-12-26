@@ -171,7 +171,7 @@
 
 /datum/commodity/trader/josh/hoodie
 	comname = "Gnarly Hoodie"
-	comtype = /obj/item/clothing/suit/hoodie
+	comtype = /obj/item/clothing/suit/hooded/hoodie
 	price_boundary = list(30,200)
 	possible_names = list("Want look stylish? Try this hoodie.",
 	"You seem a bit prone to scratches. Want some padding?")

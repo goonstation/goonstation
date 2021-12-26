@@ -33857,7 +33857,7 @@
 /area/station/science/lab)
 "cbr" = (
 /obj/storage/secure/closet/brig,
-/obj/item/clothing/suit/hoodie{
+/obj/item/clothing/suit/hodded/hoodie{
 	desc = "Smells vaguely of cabbage and diesel."
 	},
 /obj/item/clothing/head/helmet/space/blackstronaut{

@@ -155,6 +155,20 @@
 			W.button()
 		..()
 
+/obj/ability_button/hood_toggle
+	name = "Toggle Hood"
+	icon_state = "hood_up"
+
+	execute_ability()
+		var/obj/item/clothing/suit/hooded/W = the_item
+		if(W.hooded)
+			icon_state = "hood_down"
+			W.unhood()
+		else
+			icon_state = "hood_up"
+			W.hood()
+		..()
+
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
 	icon_state = "shieldceon"

@@ -623,7 +623,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	hoodie
 		name = "Hoodie"
 		cost = 1500
-		path = /obj/item/clothing/suit/hoodie/random
+		path = /obj/item/clothing/suit/hooded/hoodie/random
 
 	pride_o_matic
 		name = "Pride-O-Matic Jumpsuit"

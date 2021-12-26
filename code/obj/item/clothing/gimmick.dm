@@ -1701,29 +1701,18 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 
 //fake lizard stuff
 
-/obj/item/clothing/suit/gimmick/dinosaur
+/obj/item/clothing/suit/hooded/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
-	var/hood = 0
-
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	hood_style = "dinosaur"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
-
-	attack_self(mob/user as mob)
-		src.hood = !(src.hood)
-		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
-		if (src.hood)
-			src.over_hair = 1
-			src.icon_state = "dinosaur-up"
-			src.item_state = "dinosaur-up"
-		else
-			src.over_hair = 0
-			src.icon_state = "dinosaur"
-			src.item_state = "dinosaur"
 
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"

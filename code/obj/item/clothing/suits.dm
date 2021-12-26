@@ -28,96 +28,128 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 2)
 
-/obj/item/clothing/suit/hoodie
+/obj/item/clothing/suit/hooded
+	name = "You shouldn't see this!"
+	desc = "Call 180-IMCODER"
+	var/hood_style = null
+	var/hooded = FALSE
+	abilities = list(/obj/ability_button/hood_toggle)
+
+	attack_self(mob/user as mob)
+		..()
+		if (hooded)
+			src.unhood()
+		else
+			src.hood()
+
+	proc/hood()
+		if (src.hood_style)
+			src.icon_state = "[src.hood_style]-up"
+			usr.set_clothing_icon_dirty()
+			src.over_hair = TRUE
+			src.body_parts_covered = HEAD|TORSO|ARMS
+		usr.visible_message("[usr] flips [his_or_her(usr)] [src.name]'s hood up.",\
+		"You flip your [src.name]'s hood up.")
+		src.hooded = TRUE
+
+	proc/unhood()
+		if (src.hood_style)
+			src.icon_state = src.hood_style
+			usr.set_clothing_icon_dirty()
+			src.over_hair = FALSE
+			src.body_parts_covered = TORSO|ARMS
+		usr.visible_message("[usr] flips [his_or_her(usr)] [src.name]'s hood down.",\
+		"You flip your [src.name]'s hood down'.")
+		src.hooded = FALSE
+
+/obj/item/clothing/suit/hooded/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	item_state = "hoodie"
+	hood_style = "hoodie"
 	body_parts_covered = TORSO|ARMS
-	var/hood = 0
 	var/hcolor = null
 
 	New()
 		..()
 		src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 		src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
+		src.hood_style = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
 
-	attack_self(mob/user as mob)
-		src.hood = !(src.hood)
-		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
-		if (src.hood)
-			src.over_hair = 1
-			src.body_parts_covered = HEAD|TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-		else
-			src.over_hair = 0
-			src.body_parts_covered = TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
-
 	blue
 		desc = "Would fit well on a skeleton."
 		icon_state = "hoodie-blue"
 		item_state = "hoodie-blue"
+		hood_style = "hoodie-blue"
 		hcolor = "blue"
 
 	darkblue
 		icon_state = "hoodie-darkblue"
 		item_state = "hoodie-darkblue"
+		hood_style = "hoodie-darkblue"
 		hcolor = "darkblue"
 
 	white
 		icon_state = "hoodie-white"
 		item_state = "hoodie-white"
+		hood_style = "hoodie-white"
 		hcolor = "white"
 
 	pink
 		icon_state = "hoodie-pink"
 		item_state = "hoodie-pink"
+		hood_style = "hoodie-pink"
 		hcolor = "pink"
 
 	black
 		icon_state = "hoodie-black"
 		item_state = "hoodie-black"
+		hood_style = "hoodie-black"
 		hcolor = "black"
 
 	grey
 		icon_state = "hoodie-grey"
 		item_state = "hoodie-grey"
+		hood_style = "hoodie-grey"
 		hcolor = "grey"
 
 	dullgrey
 		icon_state = "hoodie-dullgrey"
 		item_state = "hoodie-dullgrey"
+		hood_style = "hoodie-dullgrey"
 		hcolor = "dullgrey"
 
 	magenta
 		icon_state = "hoodie-magenta"
 		item_state = "hoodie-magenta"
+		hood_style = "hoodie-magenta"
 		hcolor = "magenta"
 
 	green
 		icon_state = "hoodie-green"
 		item_state = "hoodie-green"
+		hood_style = "hoodie-green"
 		hcolor = "green"
 
 	yellow
 		icon_state = "hoodie-yellow"
 		item_state = "hoodie-yellow"
+		hood_style = "hoodie-yellow"
 		hcolor = "yellow"
 
 	red
 		icon_state = "hoodie-red"
 		item_state = "hoodie-red"
+		hood_style = "hoodie-red"
 		hcolor = "red"
 
-/obj/item/clothing/suit/hoodie/random
+/obj/item/clothing/suit/hooded/hoodie/random
 	New()
 		if (prob(50))
 			hcolor = null
