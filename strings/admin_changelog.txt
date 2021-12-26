@@ -1,3 +1,6 @@
+(t)sun dec 26 21
+(u)TTerc
+(*)Using Respawn As Self/Respawn As New Self while ghosting over crates/lockers now spawns you inside them.
 (t)fri dec 10 21
 (u)pali
 (*)The <code>spawn</code> input list menu (and other that use the same thing) now have several QoL features:<br><ul><li>Home and End jump to the beginning / end</li><li>Ctrl+F now opens the search bar</li><li>Tab switches between the search bar and the items</li><li>PageUp and PageDown work as you'd expect them to</li><li>Enter confirms, Escape cancels</li><li>Other misc fixes like search bar not autofocusing or arrow-key scrolling ignoring search filter etc.</li></ul>

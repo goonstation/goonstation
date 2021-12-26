@@ -634,7 +634,7 @@
 	H.changeStatus("weakened", 3 SECONDS)
 	H.force_laydown_standup()
 	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-	affecting.take_damage(force, 0)
+	affecting?.take_damage(force, 0)
 	H.UpdateDamageIcon()
 
 
