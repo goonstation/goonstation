@@ -116,6 +116,8 @@
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
+	name = "bespoke space helmet"
+	desc = "Helps protect against vacuum, and is custom-made just for you!"
 	onMaterialChanged()
 		if(src.material)
 			if(material.hasProperty("thermal"))
