@@ -173,9 +173,10 @@
 			return
 		if (owner.help_mode)
 			owner.help_mode = 0
+			boutput(owner, "<span class='notice'>Help Mode has been deactivated.</span>")
 		else
 			owner.help_mode = 1
-			boutput(owner, "<span class='notice'>Help Mode has been activated  To disable it, click on this button again.</span>")
+			boutput(owner, "<span class='notice'>Help Mode has been activated. To disable it, click on this button again.</span>")
 		src.button.icon_state = "blob-help[owner.help_mode]"
 		owner.update_buttons()
 
