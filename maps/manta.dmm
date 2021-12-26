@@ -36270,6 +36270,10 @@
 /area/mantaSpace)
 "ixV" = (
 /obj/table/reinforced/auto,
+/obj/item/hand_labeler{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 6
 	},
