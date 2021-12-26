@@ -1,5 +1,9 @@
 
 (t)sun dec 26 21
+(u)Magma Hunter
+(p)6989
+(e)|
+(+)Changes the AZERTY number row to use the French layout. Also fixes it for ghosts.
 (u)DimWhat
 (p)6957
 (e)🎨|sprites
