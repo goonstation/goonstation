@@ -1128,6 +1128,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_medical")
+		M.traitHolder.addTrait("training_partysurgeon")
 
 /datum/job/special/lawyer
 	name = "Lawyer"

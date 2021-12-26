@@ -433,6 +433,9 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			if (!T.z || isrestrictedz(T.z))
 				boutput(holder.owner, __red("You are forbidden from using that here!"))
 				return TRUE
+			if (T != holder.owner.loc) // See: no escaping port-a-brig
+				boutput(holder.owner, __red("You cannot use this ability while inside [holder.owner.loc]!"))
+				return TRUE
 			if (!(locate(/obj/cable) in T))
 				boutput(holder.owner, __red("You must use this ability on top of a cable!"))
 				return TRUE

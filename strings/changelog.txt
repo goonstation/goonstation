@@ -1,3 +1,72 @@
+
+(t)sun dec 26 21
+(u)pali
+(*)Manta has been disabled
+(u)TTerc
+(p)7004
+(e)|
+(+)Suicide command now always opens a suicide method selection window.
+(u)Flappybat
+(p)6985
+(e)⚖|balance
+(+)Santa and Krampus no longer spawn in modes that prevent antag spawns.
+(u)Magma Hunter
+(p)6989
+(e)|
+(+)Changes the AZERTY number row to use the French layout. Also fixes it for ghosts.
+(u)DimWhat
+(p)6957
+(e)🎨|sprites
+(+)Made some small sprite changes to a few glasses sprites.
+(u)Flaborized
+(p)6995
+(e)🎨|sprites
+(+)Resprited the arc plater and ore processor machines.
+(u)Flaborized
+(p)7001
+(e)🎨|sprites
+(+)Resprited pills.
+(u)Flappybat
+(p)6864
+(e)🗺|mapping
+(*)Changed phones on Donut 3, removed arrivals/office phones. Moved and added some phones.
+(t)sat dec 25 21
+(u)tarmunora
+(e)🎅
+(+)Super Hairgrownium has 3u minimum volume to trigger moustache effect
+(t)fri dec 24 21
+(u)DimWhat
+(p)6984
+(e)🎨⚖|sprites, balance
+(+)Added unique bedsheet sprites for lizards.
+(u)Wisemonster
+(p)6978
+(e)🗺⚖|mapping, balance
+(*)NanoTrasen has shipped breaching hammers to armories that were missing them.
+(t)thu dec 23 21
+(u)Sovexe
+(p)6910
+(e)🆕🎨|feature, sprites
+(+)Added ember particle effects to burning barrels, using the new particle system.
+(u)aloe
+(+)You can now click telescience portals to go through them while you're standing on the same tile.
+(t)tue dec 21 21
+(u)Flappybat
+(p)6861
+(e)⚖|balance
+(+)Added one second cooldown on bodybag open/close. Reduced stun on bodybag open.
+(u)Dimwhat
+(p)6943
+(e)⚖|balance
+(+)The obsidian crown is now blacklisted from petasusaphilic
+(u)Zonespace
+(p)6958
+(e)⚖|balance
+(+)Macrobomb explosion power average increased to 27 from 25.
+(u)Zonespace
+(p)6883
+(e)|
+(+)Syndicate Donk Pocket's smelling salts changed back to synaptizine, the methamphetamine in the Donks no longer purge brain healing chems.
 (t)thu dec 16 21
 (u)tarmunora
 (e)⚖|balance

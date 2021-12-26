@@ -4,7 +4,7 @@
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
 	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = 0
 	speaker_range = 7
