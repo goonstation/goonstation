@@ -548,6 +548,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return TRUE
 		if (holder.help_mode)
 			holder.help_mode = FALSE
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = TRUE
 			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")

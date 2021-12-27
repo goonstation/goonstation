@@ -2656,12 +2656,6 @@
 "ajy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
-"ajz" = (
-/obj/table/auto,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "ajA" = (
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -8767,32 +8761,6 @@
 /obj/machinery/dispenser,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"azp" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "azq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32490,12 +32458,6 @@
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
-"bMy" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
-/area/listeningpost/syndicateassaultvessel)
 "bMz" = (
 /turf/simulated/floor/redblack{
 	dir = 5
@@ -35871,6 +35833,16 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
+"hHL" = (
+/obj/table/auto,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "hMf" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
@@ -41946,6 +41918,46 @@
 	icon_state = "fred2"
 	},
 /area/station/science/restroom)
+"wTa" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/listeningpost/syndicateassaultvessel)
+"wTZ" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "wVU" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -83102,7 +83114,7 @@ aaa
 aaa
 aji
 aji
-ajz
+hHL
 ajK
 aiu
 agD
@@ -84653,7 +84665,7 @@ gdN
 aqO
 aCG
 xVU
-azp
+wTZ
 aSj
 aSM
 aTv
@@ -85669,7 +85681,7 @@ akV
 akL
 bMv
 ale
-bMy
+wTa
 akV
 alk
 lNJ

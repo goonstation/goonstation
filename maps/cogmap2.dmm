@@ -2376,17 +2376,6 @@
 "aeY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
-"aeZ" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clown's Quarters"
-	})
 "afa" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/generic,
@@ -40298,19 +40287,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"bKD" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/horizontal,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "bKE" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/horizontal,
@@ -77674,15 +77650,6 @@
 /obj/window/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ranch)
-"dpC" = (
-/obj/table/auto,
-/obj/item/disk/data/cartridge/captain,
-/obj/item/disk/data/cartridge/captain,
-/obj/machinery/light,
-/obj/item/spacecash/thousand,
-/obj/item/paper/telecrystal_update,
-/turf/simulated/floor/yellow/side,
-/area/listeningpost)
 "dsV" = (
 /obj/table/wood/auto,
 /obj/item/device/reagentscanner,
@@ -78285,6 +78252,23 @@
 	icon_state = "12"
 	},
 /area/station/crew_quarters/arcade)
+"hGX" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/horizontal,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "hJl" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -78518,6 +78502,19 @@
 	icon_state = "R12"
 	},
 /area/station/maintenance/central)
+"iEg" = (
+/obj/table/auto,
+/obj/item/disk/data/cartridge/captain,
+/obj/item/disk/data/cartridge/captain,
+/obj/machinery/light,
+/obj/item/spacecash/thousand,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/obj/item/paper/telecrystal_update,
+/turf/simulated/floor/yellow/side,
+/area/listeningpost)
 "iFq" = (
 /obj/cable{
 	d1 = 1;
@@ -79316,6 +79313,21 @@
 	icon_state = "wooden"
 	},
 /area/station/security/detectives_office)
+"nuC" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clown's Quarters"
+	})
 "nCq" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -115598,7 +115610,7 @@ aaa
 adf
 adD
 aeq
-aeZ
+nuC
 afW
 biF
 bYU
@@ -134387,7 +134399,7 @@ bDc
 bFa
 bGV
 bEK
-bKD
+hGX
 bMH
 bNW
 bBn
@@ -162590,7 +162602,7 @@ dmJ
 dnH
 dnP
 dnP
-dpC
+iEg
 dnA
 don
 dot
