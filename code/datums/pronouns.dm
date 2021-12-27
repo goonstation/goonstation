@@ -85,4 +85,4 @@ ABSTRACT_TYPE(/datum/pronouns)
 	possessive = "its"
 	posessivePronoun = "its"
 	reflexive = "itself"
-	choosable = FALSE
+	choosable = TRUE
