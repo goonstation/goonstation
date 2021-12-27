@@ -59,10 +59,9 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 7
 	product = /obj/item/raw_material/molitz
 	setup_guide = list(
-		"Type-AX Resonator, Position F4, 4 Intensity<br>",
-		"Type-AX Resonator, Position G4, 2 Intensity<br>",
-		"Type-AX Resonator, Position E3, 3 Intensity<br>",
-		"Type-AX Resonator, Position F6, 1 Intensity<br>"
+		"Type-AX Resonator, Position E3, 4 Intensity<br>",
+		"Type-AX Resonator, Position E2, 4 Intensity<br>",
+		"Type-AX Resonator, Position D7, 2 Intensity<br>"
 	)
 
 /datum/siphon_mineral/pharosium
@@ -73,9 +72,9 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 7
 	product = /obj/item/raw_material/pharosium
 	setup_guide = list(
-		"Type-AX Resonator, Position E3, 4 Intensity<br>",
-		"Type-AX Resonator, Position E2, 4 Intensity<br>",
-		"Type-AX Resonator, Position D7, 2 Intensity<br>"
+		"Type-AX Resonator, Position F6, 1 Intensity<br>",
+		"Type-AX Resonator, Position G5, 2 Intensity<br>",
+		"Type-AX Resonator, Position E3, 3 Intensity<br>"
 	)
 
 /datum/siphon_mineral/char
@@ -100,10 +99,10 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 3
 	product = /obj/item/raw_material/martian
 	setup_guide = list(
-		"Type-AX Resonator, Position F4, 4 Intensity<br>",
-		"Type-AX Resonator, Position G4, 2 Intensity<br>",
-		"Type-AX Resonator, Position E3, 3 Intensity<br>",
-		"Type-AX Resonator, Position F6, 1 Intensity<br>"
+		"Type-AX Resonator, Position E7, 3 Intensity<br>",
+		"Type-AX Resonator, Position E2, 1 Intensity<br>",
+		"Type-AX Resonator, Position G6, 3 Intensity<br>",
+		"Type-AX Resonator, Position F4, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/claretine
@@ -115,10 +114,10 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 4
 	product = /obj/item/raw_material/claretine
 	setup_guide = list(
-		"Type-AX Resonator, Position E7, 3 Intensity<br>",
+		"Type-AX Resonator, Position C2, 1 Intensity<br>",
 		"Type-AX Resonator, Position E2, 1 Intensity<br>",
-		"Type-AX Resonator, Position G6, 3 Intensity<br>",
-		"Type-AX Resonator, Position F4, 1 Intensity<br>"
+		"Type-AX Resonator, Position F4, 4 Intensity<br>",
+		"Type-AX Resonator, Position G6, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/bohrum
