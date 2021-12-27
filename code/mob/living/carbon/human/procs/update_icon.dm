@@ -69,6 +69,7 @@
 		suit_image.layer = src.w_uniform.wear_layer
 		suit_image.alpha = src.w_uniform.alpha
 		suit_image.color = src.w_uniform.color
+		src.w_uniform.update_wear_image(src, src.w_uniform.wear_image.icon != src.w_uniform.wear_image_icon)
 		UpdateOverlays(suit_image, "suit_image1")
 		var/counter = 1
 		while (counter < 6)
@@ -170,6 +171,7 @@
 				src.gloves.wear_image.icon_state = "left_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
+			src.gloves.update_wear_image(src, src.gloves.wear_image.icon != src.gloves.wear_image_icon)
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_l")
 		else
 			UpdateOverlays(null, "wear_gloves_l")
@@ -296,6 +298,7 @@
 			src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
 			src.wear_suit.wear_image.icon_state = wear_state
 
+		src.wear_suit.update_wear_image(src, src.wear_suit.wear_image.icon != src.wear_suit.wear_image_icon)
 		src.wear_suit.wear_image.color = src.wear_suit.color
 		src.wear_suit.wear_image.alpha = src.wear_suit.alpha
 		UpdateOverlays(src.wear_suit.wear_image, "wear_suit")
@@ -377,6 +380,7 @@
 		src.glasses.wear_image.pixel_y = 0
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
+		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
 		UpdateOverlays(src.glasses.wear_image, "wear_glasses")
 		if (src.glasses.worn_material_texture_image != null)
 			src.glasses.worn_material_texture_image.layer = src.glasses.wear_image.layer + 0.1
@@ -424,6 +428,7 @@
 		src.wear_mask.wear_image.layer = src.wear_mask.wear_layer
 		src.wear_mask.wear_image.color = src.wear_mask.color
 		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
+		src.wear_mask.update_wear_image(src, src.wear_mask.wear_image.icon != src.wear_mask.wear_image_icon)
 		UpdateOverlays(src.wear_mask.wear_image, "wear_mask")
 		if (src.wear_mask.worn_material_texture_image != null)
 			src.wear_mask.worn_material_texture_image.layer = src.wear_mask.wear_image.layer + 0.1
@@ -465,6 +470,7 @@
 			src.head.wear_image.pixel_y = head_offset
 		src.head.wear_image.color = src.head.color
 		src.head.wear_image.alpha = src.head.alpha
+		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
 		UpdateOverlays(src.head.wear_image, "wear_head")
 		if (src.head.worn_material_texture_image != null)
 			src.head.worn_material_texture_image.layer = src.head.wear_image.layer + 0.1
