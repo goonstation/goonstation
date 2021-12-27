@@ -1,6 +1,10 @@
 
 (t)mon dec 27 21
 (u)Azrun
+(p)6799
+(e)🆕🎨|feature, sprites
+(+)Plasmatoid results in respiratory "issues".  The infection will spread to the lungs and they will no longer function like they used to.
+(u)Azrun
 (p)5712
 (e)🆕🗺🎨|feature, mapping, sprites
 (*)AI's now have access to text Holograms by way of Phrase Templates!  Find some hologram expansion modules to add phrases/words.
