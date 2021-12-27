@@ -1,5 +1,9 @@
 
 (t)mon dec 27 21
+(u)Skeletonman0
+(p)6710
+(e)|
+(+)Grilles now try to electrocute mobs thrown or launched at them.
 (u)Azrun
 (p)6799
 (e)🆕🎨|feature, sprites
