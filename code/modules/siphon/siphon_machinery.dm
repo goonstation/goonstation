@@ -9,7 +9,7 @@
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
-	desc = "A small handheld device specially built for calibration of harmonic siphon systems."
+	desc = "A small handheld device specially built for calibration and readout of harmonic siphon systems."
 	m_amt = 50
 	g_amt = 20
 	mats = list("CRY-1", "CON-1")
