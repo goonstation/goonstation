@@ -1,4 +1,9 @@
 
+(t)mon dec 27 21
+(u)Azrun
+(p)5712
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)AI's now have access to text Holograms by way of Phrase Templates!  Find some hologram expansion modules to add phrases/words.
 (t)sun dec 26 21
 (u)pali
 (*)Manta has been disabled
