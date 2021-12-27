@@ -102,7 +102,7 @@
 		S["notes"] = sec_note
 
 	if(H.traitHolder.hasTrait("jailbird"))
-		S["criminal"] = "*Arrest*"
+		S["criminal"] = "Incarcerated"
 		S["mi_crim"] = pick(\
 								"Public urination.",\
 								"Reading highly confidential private information.",\
@@ -150,7 +150,7 @@
 		else
 			S["notes"] += " [randomNote]"
 
-		boutput(H, "<span class='notice'>You are currently on the run because you've committed the following crimes:</span>")
+		boutput(H, "<span class='notice'>You are currently in the brig because you've committed the following crimes:</span>")
 		boutput(H, "<span class='notice'>- [S["mi_crim"]]</span>")
 		boutput(H, "<span class='notice'>- [S["ma_crim"]]</span>")
 

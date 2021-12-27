@@ -493,6 +493,10 @@
 				qdel(snappedDrone)
 			V.finish_board_pod(src)
 
+		if (src.traitHolder && src.traitHolder.hasTrait("jailbird"))
+			var/turf/jailbirdSpawnLocation = pick(get_area_turfs(/area/station/security/brig))
+			src.set_loc(jailbirdSpawnLocation)
+
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
 			random_pod_codes -= V
@@ -528,7 +532,15 @@
 	return
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
+	message_admins("DOING JOB STUFF")
 	equip_job_items(JOB, src)
+	if (src.traitHolder && src.traitHolder.hasTrait("jailbird"))
+		var/obj/item/clothing/under/US = src.get_slot(SLOT_WEAR_SUIT)
+		US.set_loc(get_turf(src))
+		src.u_equip(US)
+		src.equip_if_possible(US, slot_in_backpack)
+		var/obj/item/clothing/under/color/orange/OJ = new /obj/item/clothing/under/color/orange
+		src.equip_if_possible(OJ, SLOT_WEAR_SUIT)
 	if (JOB.slot_back)
 		if (istype(src.back, /obj/item/storage))
 			if(JOB.receives_disk)

@@ -963,7 +963,7 @@ obj/trait/pilot
 /obj/trait/jailbird
 	name = "Jailbird (0)"
 	cleanName = "Jailbird"
-	desc = "You have a criminal record and are currently on the run!"
+	desc = "You have a criminal record and start in the brig!"
 	id = "jailbird"
 	icon_state = "jail"
 	points = 0
