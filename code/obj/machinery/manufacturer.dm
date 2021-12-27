@@ -1646,8 +1646,8 @@
 			var/datum/material/mat = getMaterial(mat_id)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a> [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]]</td>
+			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a>  [mat]</td>
+			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
 		</tr>
 			"}
 		if (dat.len == 1)
