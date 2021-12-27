@@ -382,7 +382,7 @@
 
 /obj/item/organ/lung/plasmatoid/left
 	name = "left lung"
-	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a left lung, since it has two lobes and a cardiac notch, where the heart would be. Whoever used to have this probably didn't want it anymore."
+	desc = "Inflating airsack presumably that passes breathed in gas into a person's blood and hopefully expels carbon dioxide back out. This is a left lung, since it has three lobes. Whoever used to have this probably didn't want it anymore."
 	organ_holder_name = "left_lung"
 	organ_name = "plasma_lung_L"
 	icon_state = "plasma_lung_L"
