@@ -485,7 +485,7 @@
 				else
 					mat_name = A.item_names[i]
 				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [mat_name]</span>
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]/10] [mat_name]</span>
 				"}
 
 			dat += {"
@@ -494,7 +494,7 @@
 			<div class='required'><div>[material_text.Join("<br>")]</div></div>
 			[icon_text]
 			[delete_link]
-			<span class='mats'>[material_count] mat.</span>
+			<span class='mats'>[material_count/10] mat.</span>
 			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
 		</div>"}
 
@@ -576,7 +576,7 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
+								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
 								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
