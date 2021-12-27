@@ -526,6 +526,11 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!(source.has_hand(1) || source.has_hand(0)))
+			source.show_text("You can't take something without hands.", "red")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
 		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)

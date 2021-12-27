@@ -316,7 +316,7 @@ Obsidian Crown
 	name = "obsidian crown"
 	desc = "A crown, apparently made of obsidian, and also apparently very bad news."
 	icon_state = "obcrown"
-
+	blocked_from_petasusaphilic = TRUE
 	magical = 1
 	var/processing = 0
 	var/armor_paired = 0

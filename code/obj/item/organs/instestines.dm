@@ -22,17 +22,16 @@
 			APPLY_MOB_PROPERTY(M, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
 
 	on_removal()
-		. = ..()
 		REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
+		. = ..()
 
 	unbreakme()
 		..()
-		if(donor)
+		if(..() && donor)
 			APPLY_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
 
 	breakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
 
 	disposing()

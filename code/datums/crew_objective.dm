@@ -69,6 +69,9 @@
  *	HOW-TO: Make Crew Objectives
  *	It's literally as simple as defining an objective of type "/datum/objective/crew/[ckey(job title) goes here]/objective name"
  *	Please take note that it goes live as soon as you define it, so if it isn't ready you should probably comment it out!!
+ *	Additionally, if your objective does not insignificant checks independent of its holder
+ *	e.g checking every human to see if it's dead and on-station - use static vars to ensure the necessary checks only occurs once per role
+ *	var/static/check_result = null when not checked yet, 0 when check failed, and 1 when check passed
  */
 
 ABSTRACT_TYPE(/datum/objective/crew)
@@ -105,72 +108,97 @@ ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 /datum/objective/crew/headofsecurity/brig
 	explanation_text = "Have at least one antagonist cuffed in the brig at the end of the round." //can be dead as people usually suicide
 	medal_name = "Suitable? How about the Oubliette?!"
+	var/static/check_result = null
 	check_completion()
-		for(var/datum/mind/M in ticker.minds)
-			if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/datum/mind/M in ticker.minds)
+				if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
+					check_result = TRUE
+					break
+		return check_result
 /datum/objective/crew/headofsecurity/centcom
 	explanation_text = "Bring at least one antagonist back to CentCom in handcuffs for interrogation. You must accompany them on the escape shuttle." //can also be dead I guess
 	medal_name = "Dead or alive, you're coming with me"
+	var/static/check_result = null
 	check_completion()
-		for(var/datum/mind/M in ticker.minds)
-			if(M.special_role && M.current && !isobserver(M.current) && in_centcom(M.current) && M.current.hasStatus("handcuffed"))
-				if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
-					return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/datum/mind/M in ticker.minds)
+				if(M.special_role && M.current && !isobserver(M.current) && in_centcom(M.current) && M.current.hasStatus("handcuffed"))
+					if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
+						check_result = TRUE
+						break
+		return check_result
 
 /datum/objective/crew/headofsecurity/brigstir
 	explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 	medal_name = "Monkey Duty"
+	var/static/check_result = null
 	check_completion()
-		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
-			if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+				if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
+					check_result = TRUE
+					break
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/headofpersonnel)
 /datum/objective/crew/headofpersonnel/vanish
 	explanation_text = "End the round alive but not on the station or escape levels."
 	medal_name = "Unperson"
 	check_completion()
-		if(owner.current && !isdead(owner.current) && owner.current.z != 1 && !in_centcom(owner.current)) return 1
+		if(owner.current && !isdead(owner.current) && owner.current.z != Z_LEVEL_STATION && !in_centcom(owner.current)) return 1
 		else return 0
 
 ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 /datum/objective/crew/chiefengineer/furnaces
 	explanation_text = "Make sure all furnaces on the station are active at the end of the round."
 	medal_name = "Slow Burn"
+	var/static/check_result = null
 	check_completion()
-		for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-			if(F.z == Z_LEVEL_STATION && !F.active && istype(get_area(F), /area/station))
-				return FALSE
-		return TRUE
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
+				if(F.z == Z_LEVEL_STATION && !F.active && istype(F.loc.loc, /area/station))
+					check_result = FALSE
+					break
+			return check_result
 /datum/objective/crew/chiefengineer/ptl
 	explanation_text = "Earn at least a million credits via the PTL."
 	medal_name = "1.21 Jiggawatts"
+	var/static/check_result = null
 	check_completion()
-		for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
-			if(P.lifetime_earnings >= 1 MEGA)
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
+				if(P.lifetime_earnings >= 1 MEGA)
+					check_result = TRUE
+		return check_result
 
 /datum/objective/crew/chiefengineer/reserves
 	explanation_text = "Make sure all SMES units on the station are at least 20% charged at the end of the round."
+	var/static/check_result = null
 	check_completion()
-		for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
-			if(istype(get_area(S),/area/station) && S.charge < S.capacity/5)
-				return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+				if(istype(get_area(S),/area/station) && S.charge < S.capacity/5)
+					check_result = FALSE
+		return check_result
 
 /datum/objective/crew/chiefengineer/apc
 	explanation_text = "Ensure all APC units on the station are operating at the end of the round."
+	var/static/check_result = null
 	check_completion()
-		for_by_tcl(A, /obj/machinery/power/apc)
-			if(istype(get_area(A),/area/station) && A.area.requires_power)
-				if(!A.operating)
-					return FALSE
-		return TRUE
+		if(isnull(check_result))
+			check_result = TRUE
+			for_by_tcl(A, /obj/machinery/power/apc)
+				if(istype(get_area(A),/area/station) && A.area.requires_power)
+					if(!A.operating)
+						check_result = FALSE
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 // grabbed the HoS's two antag-related objectives cause they work just fine for regular sec too, so...?
@@ -186,38 +214,55 @@ ABSTRACT_TYPE(/datum/objective/crew/securityofficer)
 /datum/objective/crew/securityofficer/centcom
 	explanation_text = "Bring at least one antagonist back to CentCom in handcuffs for interrogation. You must accompany them on the escape shuttle." //can also be dead I guess
 	medal_name = "Dead or alive, you're coming with me"
+	var/static/check_result = null
 	check_completion()
-		for(var/datum/mind/M in ticker.minds)
-			if(M.special_role && M.current && !isobserver(M.current) && in_centcom(M.current) && M.current.hasStatus("handcuffed"))
-				if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
-					return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/datum/mind/M in ticker.minds)
+				if(M.special_role && M.current && !isobserver(M.current) && in_centcom(M.current) && M.current.hasStatus("handcuffed"))
+					if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //split this up as it was long
+						check_result = TRUE
+						break
+		return check_result
+
 /datum/objective/crew/securityofficer/brigstir
 	explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 	medal_name = "Monkey Duty"
+	var/static/check_result = null
 	check_completion()
-		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
-			if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+				if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
+					check_result = TRUE
+					break
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/securityassistant)
 /datum/objective/crew/securityassistant/brigstir
 	explanation_text = "Keep Monsieur Stirstir brigged but also make sure that he comes to absolutely no harm."
 	medal_name = "Monkey Duty"
+	var/static/check_result = null
 	check_completion()
-		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
-			if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+				if(!isdead(M) && (M.get_brute_damage() + M.get_oxygen_deprivation() + M.get_burn_damage() + M.get_toxin_damage()) == 0 && istype(get_area(M),/area/station/security/brig))
+					check_result = TRUE
+					break
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 /datum/objective/crew/quartermaster/profit
 	explanation_text = "End the round with a budget of over 50,000 credits."
 	medal_name = "Tax Haven"
+	var/static/check_result = null
 	check_completion()
-		if(wagesystem.shipping_budget > 50000) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			if(wagesystem.shipping_budget > 50000)
+				check_result = TRUE
+		return check_result
 
 /datum/objective/crew/quartermaster/specialorder
 	explanation_text = "Fulfill an off-station order requisition or special order."
@@ -252,72 +297,100 @@ ABSTRACT_TYPE(/datum/objective/crew/botanist)
 /datum/objective/crew/botanist/mutantplants
 	explanation_text = "Have at least three mutant plants alive at the end of the round."
 	medal_name = "Bill Masen"
+	var/static/check_result = null
 	check_completion()
 		var/mutcount = 0
-		for(var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
-			if(PP.current)
-				var/datum/plantgenes/DNA = PP.plantgenes
-				var/datum/plantmutation/MUT = DNA.mutation
-				if (MUT)
-					mutcount++
-					if(mutcount >= 3) return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
+				if(PP.current)
+					var/datum/plantgenes/DNA = PP.plantgenes
+					var/datum/plantmutation/MUT = DNA.mutation
+					if (MUT)
+						mutcount++
+						if(mutcount >= 3)
+							check_result = TRUE
+							break
+		return check_result
 /datum/objective/crew/botanist/noweed
 	explanation_text = "Make sure there are no cannabis plants, seeds or products in Hydroponics at the end of the round."
 	medal_name = "Reefer Madness"
+	var/static/check_result = null
 	check_completion()
-		for(var/obj/item/X in by_cat[TR_CAT_CANNABIS_OBJ_ITEMS])
-			var/obj/item/clothing/mask/cigarette/W = X
-			if (istype(W) && W.reagents && W.reagents.has_reagent("THC"))
-				if (istype(get_area(W), /area/station/hydroponics))
-					return 0
-			var/obj/item/plant/herb/cannabis/C = X
-			if (istype(C) && istype(get_area(C), /area/station/hydroponics))
-				return 0
-			var/obj/item/seed/cannabis/S = X
-			if (istype(S) && istype(get_area(S), /area/station/hydroponics))
-				return 0
-		for (var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
-			if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
-				if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
-					return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/obj/item/X in by_cat[TR_CAT_CANNABIS_OBJ_ITEMS])
+				var/obj/item/clothing/mask/cigarette/W = X
+				if (istype(W) && W.reagents && W.reagents.has_reagent("THC"))
+					if (istype(get_area(W), /area/station/hydroponics))
+						check_result = FALSE
+						break
+				var/obj/item/plant/herb/cannabis/C = X
+				if (istype(C) && istype(get_area(C), /area/station/hydroponics))
+					check_result = FALSE
+					break
+				var/obj/item/seed/cannabis/S = X
+				if (istype(S) && istype(get_area(S), /area/station/hydroponics))
+					check_result = FALSE
+					break
+			for (var/obj/machinery/plantpot/PP as anything in machine_registry[MACHINES_PLANTPOTS])
+				if (PP.current && istype(PP.current, /datum/plant/herb/cannabis))
+					if (istype(get_area(PP), /area/station/hydroponics) || istype(get_area(PP), /area/station/hydroponics/lobby))
+						check_result = FALSE
+						break
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/chaplain)
 /datum/objective/crew/chaplain/funeral
 	explanation_text = "Have no corpses on the station level at the end of the round."
 	medal_name = "Bury the Dead"
+	var/static/check_result = null
 	check_completion()
-		for(var/mob/living/carbon/human/H in mobs)
-			if(H.z == 1 && isdead(H))
-				return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/mob/living/carbon/human/H in mobs)
+				if(H.z == Z_LEVEL_STATION && isdead(H))
+					check_result = FALSE
+					break
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/janitor)
 /datum/objective/crew/janitor/cleanbar
 	explanation_text = "Make sure the bar is spotless at the end of the round."
 	medal_name = "Spotless"
+	var/static/check_result = null
 	check_completion()
-		for(var/turf/T in get_area_turfs(/area/station/crew_quarters/bar, 0))
-			for(var/obj/decal/cleanable/D in T)
-				return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/turf/T in get_area_turfs(/area/station/crew_quarters/bar, 0))
+				for(var/obj/decal/cleanable/D in T)
+					check_result = FALSE
+					break
+		return check_result
 /datum/objective/crew/janitor/cleanmedbay
 	explanation_text = "Make sure medbay is spotless at the end of the round."
 	medal_name = "Spotless"
+	var/static/check_result = null
 	check_completion()
-		for(var/turf/T in get_area_turfs(/area/station/medical/medbay, 0))
-			for(var/obj/decal/cleanable/D in T)
-				return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/turf/T in get_area_turfs(/area/station/medical/medbay, 0))
+				for(var/obj/decal/cleanable/D in T)
+					check_result = FALSE
+					break
+		return check_result
 /datum/objective/crew/janitor/cleanbrig
 	explanation_text = "Make sure the brig is spotless at the end of the round."
 	medal_name = "Spotless"
+	var/static/check_result = null
 	check_completion()
-		for(var/turf/T in get_area_turfs(/area/station/security/brig, 0))
-			for(var/obj/decal/cleanable/D in T)
-				return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/turf/T in get_area_turfs(/area/station/security/brig, 0))
+				for(var/obj/decal/cleanable/D in T)
+					check_result = FALSE
+					break
+		return check_result
 
 #define DRINK_OBJ_COUNT 3
 ABSTRACT_TYPE(/datum/objective/crew/bartender)
@@ -445,74 +518,100 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 /datum/objective/crew/engineer/furnaces
 	explanation_text = "Make sure all furnaces on the station are active at the end of the round."
 	medal_name = "Slow Burn"
+	var/static/check_result = null
 	check_completion()
-		for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
-			if(F.z == Z_LEVEL_STATION && !F.active && istype(get_area(F), /area/station))
-				return FALSE
-		return TRUE
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/obj/machinery/power/furnace/F in machine_registry[MACHINES_POWER])
+				if(F.z == Z_LEVEL_STATION && !F.active && istype(F.loc.loc, /area/station))
+					check_result = FALSE
+					break
+			return check_result
 
 /datum/objective/crew/engineer/reserves
 	explanation_text = "Make sure all SMES units on the station are at least 20% charged at the end of the round."
+	var/static/check_result = null
 	check_completion()
-		for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
-			if(istype(get_area(S),/area/station) && S.charge < S.capacity/5)
-				return FALSE
-		return TRUE
+		if(isnull(check_result))
+			check_result = TRUE
+			for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
+				if(istype(get_area(S),/area/station) && S.charge < S.capacity/5)
+					check_result = FALSE
+		return check_result
 
 /datum/objective/crew/engineer/apc
 	explanation_text = "Ensure all APC units on the station are operating at the end of the round."
+	var/static/check_result = null
 	check_completion()
-		for_by_tcl(A, /obj/machinery/power/apc)
-			if(istype(get_area(A),/area/station) && A.area.requires_power)
-				if(!A.operating)
-					return FALSE
-		return TRUE
+		if(isnull(check_result))
+			check_result = TRUE
+			for_by_tcl(A, /obj/machinery/power/apc)
+				if(istype(get_area(A),/area/station) && A.area.requires_power)
+					if(!A.operating)
+						check_result = FALSE
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/miner)
 	// just fyi dont make a "gather ore" objective, it'd be a boring-ass grind (like mining is(dohohohoho))
 /datum/objective/crew/miner/isa
 	explanation_text = "Create at least three suits of Industrial Space Armor."
 	medal_name = "40K"
+	var/static/check_result = null
 	check_completion()
 		var/suitcount = 0
-		suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
-		if(suitcount > 2) return 1
-		else return 0
+		if(isnull(check_result))
+			suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
+			if(suitcount > 2)
+				check_result = TRUE
+			else
+				check_result = FALSE
+		return check_result
 /datum/objective/crew/miner/forsale
 	explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
+	var/static/check_result = null
 	check_completion()
 		var/list/materials = list()
-		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			if(S.broken)
-				continue
-			var/list/ores = S.ores
-			for(var/ore in ores)
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				if(OCD.for_sale && OCD.amount)
-					materials |= ore
-		return materials.len >= 10
+		if(isnull(check_result))
+			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+				if(S.broken)
+					continue
+				var/list/ores = S.ores
+				for(var/ore in ores)
+					var/datum/ore_cloud_data/OCD = ores[ore]
+					if(OCD.for_sale && OCD.amount)
+						materials |= ore
+			check_result = materials.len >= 10
+		return check_result
 
 
 ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 /datum/objective/crew/mechanic/scanned
 	explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
 	medal_name = "Man with a Scan"
+	var/static/check_result = null
 	check_completion()
-		if(mechanic_controls.scanned_items.len > 9) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			if(mechanic_controls.scanned_items.len > 9)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/mechanic/teleporter
 	explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
 	medal_name = "It's not 'Door to Heaven'"
+	var/static/check_result = null
 	check_completion()
 		var/telecount = 0
-		for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
-			if(S.z != 1) continue
-			for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
-				for(var/obj/machinery/computer/teleporter/C in orange(2,S))
-					telecount++
-					break
-		if(telecount > 1) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
+				if(S.z != Z_LEVEL_STATION) continue
+				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
+					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
+						telecount++
+						break
+			if(telecount > 1)
+				check_result = TRUE
+		return check_result
 /*
 	cloner
 		explanation_text = "Ensure that there are at least two cloners on the station level at the end of the round."
@@ -538,10 +637,14 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/noscorch
 	explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 	medal_name = "We didn't start the fire"
+	var/static/check_result = null
 	check_completion()
-		for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
-			if(T.burnt == 1) return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
+				if(T.burnt == 1)
+					check_result = FALSE
+		return check_result
 /datum/objective/crew/researchdirector/hyper
 	explanation_text = "Have methamphetamine in your bloodstream at the end of the round."
 	medal_name = "Meth is a hell of a drug"
@@ -570,10 +673,14 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 /datum/objective/crew/scientist/noscorch
 	explanation_text = "Ensure that the floors of the chemistry lab are not scorched at the end of the round."
 	medal_name = "We didn't start the fire"
+	var/static/check_result = null
 	check_completion()
-		for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
-			if(T.burnt == 1) return 0
-		return 1
+		if(isnull(check_result))
+			check_result = TRUE
+			for(var/turf/simulated/floor/T in get_area_turfs(/area/station/science/chemistry, 0))
+				if(T.burnt == 1)
+					check_result = FALSE
+		return check_result
 /datum/objective/crew/scientist/hyper
 	explanation_text = "Have methamphetamine in your bloodstream at the end of the round."
 	medal_name = "Meth is a hell of a drug"
@@ -602,7 +709,7 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 		explanation_text = "Activate at least one artifact on the station z level by the end of the round, excluding the test artifact."
 		check_completion()
 			for(var/obj/machinery/artifact/A in machines)
-				if(A.z == 1 && A.activated == 1 && A.name != "Test Artifact") return 1 //someone could label it I guess but I don't want to go adding an istestartifact var just for this..
+				if(A.z == Z_LEVEL_STATION && A.activated == 1 && A.name != "Test Artifact") return 1 //someone could label it I guess but I don't want to go adding an istestartifact var just for this..
 			return 0*/
 
 ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
@@ -634,50 +741,69 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 /datum/objective/crew/medicaldirector/scanned
 	explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 	medal_name = "Life, uh... finds a way"
+	var/static/check_result = null
 	check_completion()
-		for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-			if(C.records.len > 4)
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
+				if(C.records.len > 4)
+					check_result = TRUE
+		return check_result
 /datum/objective/crew/medicaldirector/cyborgs
 	explanation_text = "Ensure that there are at least three living cyborgs at the end of the round."
 	medal_name = "Progenitor"
+	var/static/check_result = null
 	check_completion()
 		var/borgcount = 0
-		for(var/mob/living/silicon/robot in mobs) //borgs gib when they die so no need to check stat I think
-			borgcount ++
-		if(borgcount > 2) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/mob/living/silicon/robot/robot in mobs) //borgs gib when they die so no need to check stat I think
+				borgcount ++
+			if(borgcount > 2)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/medicaldirector/medibots
 	explanation_text = "Have at least five medibots on the station level at the end of the round."
 	medal_name = "Silent Running"
+	var/static/check_result = null
 	check_completion()
 		var/medbots = 0
-		for (var/obj/machinery/bot/medbot/M in machine_registry[MACHINES_BOTS])
-			if (M.z == 1)
-				medbots++
-		if (medbots > 4) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for (var/obj/machinery/bot/medbot/M in machine_registry[MACHINES_BOTS])
+				if (M.z == Z_LEVEL_STATION)
+					medbots++
+			if (medbots > 4)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/medicaldirector/buttbots
 	explanation_text = "Have at least five buttbots on the station level at the end of the round."
 	medal_name = "Puerile humour"
+	var/static/check_result = null
 	check_completion()
 		var/buttbots = 0
-		for(var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
-			if(B.z == 1)
-				buttbots ++
-		if(buttbots > 4) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
+				if(B.z == Z_LEVEL_STATION)
+					buttbots ++
+			if(buttbots > 4)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/medicaldirector/cryo
 	explanation_text = "Ensure that both cryo cells are online and below 225K at the end of the round."
 	medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
+	var/static/check_result = null
 	check_completion()
-		var/cryocount = 0
-		for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
-			if(C.on && C.air_contents.temperature < 225)
-				cryocount ++
-		if(cryocount > 1) return 1
-		else return 0
+		if(isnull(check_result))
+			var/cryocount = 0
+			check_result = FALSE
+			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
+				if(C.on && C.air_contents.temperature < 225)
+					cryocount ++
+			if(cryocount > 1)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/medicaldirector/healself
 	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
 	medal_name = "Smooth Operator"
@@ -706,63 +832,85 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 /datum/objective/crew/geneticist/scanned
 	explanation_text = "Have at least 5 people's DNA scanned in the cloning console at the end of the round."
 	medal_name = "Life, uh... finds a way"
+	var/static/check_result = null
 	check_completion()
-		for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-			if(C.records.len > 4)
-				return 1
-		return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
+				if(C.records.len > 4)
+					check_result = TRUE
+		return check_result
 
 /datum/objective/crew/geneticist/booth
 	explanation_text = "Have at least 5 options available in the gene booth at the end of the round."
+	var/static/check_result = null
 	check_completion()
-		var/list/geneoptions = list()
-		for_by_tcl(GB, /obj/machinery/genetics_booth)
-			geneoptions |= GB.offered_genes
-		return length(geneoptions) >= 5
+		if(isnull(check_result))
+			var/list/geneoptions = list()
+			for_by_tcl(GB, /obj/machinery/genetics_booth)
+				geneoptions |= GB.offered_genes
+			check_result = length(geneoptions) >= 5
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/roboticist)
 /datum/objective/crew/roboticist/cyborgs
 	explanation_text = "Ensure that there are at least three living cyborgs at the end of the round."
 	medal_name = "Progenitor"
+	var/static/check_result = null
 	check_completion()
 		var/borgcount = 0
-		for(var/mob/living/silicon/robot in mobs) //borgs gib when they die so no need to check stat I think
-			borgcount ++
-		if(borgcount > 2) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/mob/living/silicon/robot/robot in mobs) //borgs gib when they die so no need to check stat I think
+				borgcount ++
+			if(borgcount > 2)
+				check_result = TRUE
+		return check_result
 
 /datum/objective/crew/roboticist/medibots
 	explanation_text = "Have at least five medibots on the station level at the end of the round."
 	medal_name = "Silent Running"
+	var/static/check_result = null
 	check_completion()
 		var/medbots = 0
-		for (var/obj/machinery/bot/medbot/M in machine_registry[MACHINES_BOTS])
-			if (M.z == 1)
-				medbots++
-		if (medbots > 4) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for (var/obj/machinery/bot/medbot/M in machine_registry[MACHINES_BOTS])
+				if (M.z == Z_LEVEL_STATION)
+					medbots++
+			if (medbots > 4)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/roboticist/buttbots
 	explanation_text = "Have at least five buttbots on the station level at the end of the round."
 	medal_name = "Puerile humour"
+	var/static/check_result = null
 	check_completion()
 		var/buttbots = 0
-		for(var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
-			if(B.z == 1)
-				buttbots ++
-		if(buttbots > 4) return 1
-		else return 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
+				if(B.z == Z_LEVEL_STATION)
+					buttbots ++
+			if(buttbots > 4)
+				check_result = TRUE
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 /datum/objective/crew/medicaldoctor/cryo
 	explanation_text = "Ensure that both cryo cells are online and below 225K at the end of the round."
 	medal_name = "It's frickin' freezing in here, Mr. Bigglesworth"
+	var/static/check_result = null
 	check_completion()
-		var/cryocount = 0
-		for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
-			if(C.on && C.air_contents.temperature < 225)
-				cryocount ++
-		if(cryocount > 1) return 1
-		else return 0
+		if(isnull(check_result))
+			var/cryocount = 0
+			check_result = FALSE
+			for(var/obj/machinery/atmospherics/unary/cryo_cell/C in by_cat[TR_CAT_ATMOS_MACHINES])
+				if(C.on && C.air_contents.temperature < 225)
+					cryocount ++
+			if(cryocount > 1)
+				check_result = TRUE
+		return check_result
 /datum/objective/crew/medicaldoctor/healself
 	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
 	medal_name = "Smooth Operator"
