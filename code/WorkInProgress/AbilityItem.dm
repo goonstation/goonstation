@@ -160,10 +160,8 @@
 	icon_state = "hood_up"
 
 	execute_ability()
-		var/obj/item/clothing/suit/hooded/W = the_item
-		src.icon_state = "hood_[W.hooded?"up":"down"]"
-		the_mob.visible_message("[the_mob] flips [his_or_her(the_mob)] [W.name]'s hood.")
-		W.toggle_hood()
+		var/obj/item/clothing/suit/W = the_item
+		W.attack_self(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle

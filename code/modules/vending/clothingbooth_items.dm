@@ -535,62 +535,62 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/outerwear)
 
 /datum/clothingbooth_item/outerwear/orangehoodie
 	name = "Orange Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie
+	path = /obj/item/clothing/suit/hoodie
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/bluehoodie
 	name = "Blue Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/blue
+	path = /obj/item/clothing/suit/hoodie/blue
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/darkbluehoodie
 	name = "Dark Blue Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/darkblue
+	path = /obj/item/clothing/suit/hoodie/darkblue
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/whitehoodie
 	name = "White Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/white
+	path = /obj/item/clothing/suit/hoodie/white
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/pinkhoodie
 	name = "Pink Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/pink
+	path = /obj/item/clothing/suit/hoodie/pink
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/blackhoodie
 	name = "Black Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/black
+	path = /obj/item/clothing/suit/hoodie/black
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/greyhoodie
 	name = "Grey Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/grey
+	path = /obj/item/clothing/suit/hoodie/grey
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/dullgreyhoodie
 	name = "Dull Grey Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/dullgrey
+	path = /obj/item/clothing/suit/hoodie/dullgrey
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/magentahoodie
 	name = "Magenta Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/magenta
+	path = /obj/item/clothing/suit/hoodie/magenta
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/greenhoodie
 	name = "Green Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/green
+	path = /obj/item/clothing/suit/hoodie/green
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/yellowhoodie
 	name = "Yellow Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/yellow
+	path = /obj/item/clothing/suit/hoodie/yellow
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/redhoodie
 	name = "Red Hoodie"
-	path = /obj/item/clothing/suit/hooded/hoodie/red
+	path = /obj/item/clothing/suit/hoodie/red
 	cost = PAY_UNTRAINED/3
 
 /datum/clothingbooth_item/outerwear/poncho
@@ -1139,7 +1139,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 
 /datum/clothingbooth_item/costume/dinosuar
 	name = "Dinosaur Pajamas"
-	path = /obj/item/clothing/suit/hooded/dinosaur
+	path = /obj/item/clothing/suit/dinosaur
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_TRADESMAN/2
 

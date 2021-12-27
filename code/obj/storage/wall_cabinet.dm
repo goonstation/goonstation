@@ -249,7 +249,7 @@
 
 /obj/item/storage/wall/clothingrack/clothes3
 	spawn_contents = list(/obj/item/clothing/suit/suspenders = 1,
-	/obj/item/clothing/suit/hooded/hoodie = 1,
+	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/misc/barber = 1,
 	/obj/item/clothing/under/misc/serpico = 1,
 	/obj/item/clothing/under/misc/tourist/max_payne = 1,
@@ -258,7 +258,7 @@
 
 /obj/item/storage/wall/clothingrack/clothes4
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
-	/obj/item/clothing/suit/hooded/hoodie = 1,
+	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
 	/obj/item/clothing/under/gimmick/hunter = 1,
@@ -267,7 +267,7 @@
 
 /obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
 	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
-	/obj/item/clothing/suit/hooded/hoodie = 1,
+	/obj/item/clothing/suit/hoodie = 1,
 	/obj/item/clothing/suit/wintercoat = 1,
 	/obj/item/clothing/suit/labcoat/hitman = 1,
 	/obj/item/clothing/suit/johnny_coat = 1,

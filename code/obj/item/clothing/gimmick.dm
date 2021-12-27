@@ -1701,14 +1701,17 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 
 //fake lizard stuff
 
-/obj/item/clothing/suit/hooded/dinosaur
+/obj/item/clothing/suit/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	hood_style = "dinosaur"
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
 
 	setupProperties()
 		..()

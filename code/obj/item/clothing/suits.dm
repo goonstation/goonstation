@@ -55,20 +55,19 @@
 		src.icon_state = "[src.hood_style][src.hooded?"-up":""]"
 
 
-/obj/item/clothing/suit/hooded/hoodie
+/obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
 	item_state = "hoodie"
-	hood_style = "hoodie"
 	body_parts_covered = TORSO|ARMS
 	var/hcolor = null
 
 	New()
 		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="hoodie[src.hcolor ? "-[hcolor]" : null]")
 		src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 		src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
-		src.hood_style = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	setupProperties()
 		..()
@@ -78,70 +77,59 @@
 		desc = "Would fit well on a skeleton."
 		icon_state = "hoodie-blue"
 		item_state = "hoodie-blue"
-		hood_style = "hoodie-blue"
 		hcolor = "blue"
 
 	darkblue
 		icon_state = "hoodie-darkblue"
 		item_state = "hoodie-darkblue"
-		hood_style = "hoodie-darkblue"
 		hcolor = "darkblue"
 
 	white
 		icon_state = "hoodie-white"
 		item_state = "hoodie-white"
-		hood_style = "hoodie-white"
 		hcolor = "white"
 
 	pink
 		icon_state = "hoodie-pink"
 		item_state = "hoodie-pink"
-		hood_style = "hoodie-pink"
 		hcolor = "pink"
 
 	black
 		icon_state = "hoodie-black"
 		item_state = "hoodie-black"
-		hood_style = "hoodie-black"
 		hcolor = "black"
 
 	grey
 		icon_state = "hoodie-grey"
 		item_state = "hoodie-grey"
-		hood_style = "hoodie-grey"
 		hcolor = "grey"
 
 	dullgrey
 		icon_state = "hoodie-dullgrey"
 		item_state = "hoodie-dullgrey"
-		hood_style = "hoodie-dullgrey"
 		hcolor = "dullgrey"
 
 	magenta
 		icon_state = "hoodie-magenta"
 		item_state = "hoodie-magenta"
-		hood_style = "hoodie-magenta"
 		hcolor = "magenta"
 
 	green
 		icon_state = "hoodie-green"
 		item_state = "hoodie-green"
-		hood_style = "hoodie-green"
 		hcolor = "green"
 
 	yellow
 		icon_state = "hoodie-yellow"
 		item_state = "hoodie-yellow"
-		hood_style = "hoodie-yellow"
 		hcolor = "yellow"
 
 	red
 		icon_state = "hoodie-red"
 		item_state = "hoodie-red"
-		hood_style = "hoodie-red"
 		hcolor = "red"
 
-/obj/item/clothing/suit/hooded/hoodie/random
+/obj/item/clothing/suit/hoodie/random
 	New()
 		if (prob(50))
 			hcolor = null
