@@ -1755,7 +1755,7 @@
 	if (!W)
 		return
 
-	hud.remove_item(W) // eh
+	hud?.remove_item(W) // eh
 
 	if (isitem(W))
 		if (W.two_handed) //This runtime is caused by grabbing a human.
