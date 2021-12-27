@@ -221,12 +221,13 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for_by_tcl(theAI, /mob/living/silicon/ai)
-		if (theAI.deployed_to_eyecam)
-			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && length(T.cameras))
-				. += AIeye
-				. += theAI
+	if(length(T?.cameras))
+		for_by_tcl(theAI, /mob/living/silicon/ai)
+			if (theAI.deployed_to_eyecam)
+				var/mob/dead/aieye/AIeye = theAI.eyecam
+				if(IN_RANGE(center, AIeye, distance))
+					. += AIeye
+					. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
