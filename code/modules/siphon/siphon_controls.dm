@@ -283,11 +283,8 @@
 		if ("calibrate")
 			var/manifest_identifier = locate(href_list["subaction"]) in src.known_devices
 			var/list/manifest = known_devices[manifest_identifier]
-			boutput(world,manifest)
 			if(manifest["Identifier"])
-				boutput(world,manifest["INT_TARGETID"])
 				var/intensicap = manifest["Maximum Intensity"]
-				boutput(world,intensicap)
 				var/scalex = input(usr,"Accepts values 0 through [intensicap]","Adjust Intensity","1") as num
 				scalex = clamp(scalex,0,intensicap)
 				var/list/commanderino = list("intensity" = scalex)
