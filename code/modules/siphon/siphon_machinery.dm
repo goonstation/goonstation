@@ -1,3 +1,19 @@
+//handheld device for manual calibration of siphon systems
+
+/obj/item/device/calibrator
+	name = "harmonic systems calibrator"
+	icon_state = "calibrator"
+	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	force = 5.0
+	w_class = W_CLASS_SMALL
+	throwforce = 5.0
+	throw_range = 15
+	throw_speed = 3
+	desc = "A small handheld device specially built for calibration of harmonic siphon systems."
+	m_amt = 50
+	g_amt = 20
+	mats = list("CRY-1", "CON-1")
+
 //values to differentiate types of condition in which net updates are built
 //setup indicates a batched build that shouldn't update ui individually
 //regular indicates an individual build, i.e. for a single resonator changing, that should prompt an update
@@ -190,7 +206,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.update_storage_bar()
 
 	attackby(obj/item/W, mob/user)
-		if(ispulsingtool(W) && src.mode != "high")
+		if(istype(W,/obj/item/device/calibrator) && src.mode != "high")
 			src.calibrate_resonance()
 			boutput(user,"LATERAL RESONANCE: [src.x_torque]")
 			boutput(user,"VERTICAL RESONANCE: [src.y_torque]")
@@ -484,7 +500,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			else
 				boutput(user,"The auxiliary reinforcing bolts appear to be locked in place.")
 				return
-		else if(ispulsingtool(W))
+		else if(istype(W,/obj/item/device/calibrator))
 			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex

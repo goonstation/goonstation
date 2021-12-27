@@ -1062,9 +1062,9 @@
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/device/multitool{
-	pixel_x = 7;
-	pixel_y = 2
+/obj/item/device/calibrator{
+	pixel_x = 5;
+	rand_pos = 0
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -16103,8 +16103,9 @@
 	pixel_x = -2;
 	pixel_y = 7
 	},
-/obj/item/device/multitool{
-	pixel_x = 4
+/obj/item/device/calibrator{
+	pixel_x = 5;
+	rand_pos = 0
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
