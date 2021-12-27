@@ -38,30 +38,22 @@
 
 	attack_self(mob/user as mob)
 		..()
-		if (hooded)
-			src.unhood()
-		else
-			src.hood()
+		user.visible_message("[user] flips [his_or_her(user)] [src.name]'s hood.")
+		src.toggle_hood()
 
-	proc/hood()
-		if (src.hood_style)
-			src.icon_state = "[src.hood_style]-up"
-			usr.set_clothing_icon_dirty()
-			src.over_hair = TRUE
-			src.body_parts_covered = HEAD|TORSO|ARMS
-		usr.visible_message("[usr] flips [his_or_her(usr)] [src.name]'s hood up.",\
-		"You flip your [src.name]'s hood up.")
-		src.hooded = TRUE
+	proc/toggle_hood()
+		src.hooded = !src.hooded
+		src.over_hair = !src.over_hair
+		src.body_parts_covered ^= HEAD
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.set_clothing_icon_dirty()
+		src.UpdateIcon()
 
-	proc/unhood()
-		if (src.hood_style)
-			src.icon_state = src.hood_style
-			usr.set_clothing_icon_dirty()
-			src.over_hair = FALSE
-			src.body_parts_covered = TORSO|ARMS
-		usr.visible_message("[usr] flips [his_or_her(usr)] [src.name]'s hood down.",\
-		"You flip your [src.name]'s hood down'.")
-		src.hooded = FALSE
+	update_icon()
+		..()
+		src.icon_state = "[src.hood_style][src.hooded?"-up":""]"
+
 
 /obj/item/clothing/suit/hooded/hoodie
 	name = "hoodie"
