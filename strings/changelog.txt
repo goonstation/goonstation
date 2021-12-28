@@ -1,4 +1,52 @@
 
+(t)mon dec 27 21
+(u)Skeletonman0
+(p)6710
+(e)|
+(+)Grilles now try to electrocute mobs thrown or launched at them.
+(u)Azrun
+(p)6799
+(e)🆕🎨|feature, sprites
+(+)Plasmatoid results in respiratory "issues".  The infection will spread to the lungs and they will no longer function like they used to.
+(u)Azrun
+(p)5712
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)AI's now have access to text Holograms by way of Phrase Templates!  Find some hologram expansion modules to add phrases/words.
+(t)sun dec 26 21
+(u)pali
+(*)Manta has been disabled
+(u)TTerc
+(p)7004
+(e)|
+(+)Suicide command now always opens a suicide method selection window.
+(u)Flappybat
+(p)6985
+(e)⚖|balance
+(+)Santa and Krampus no longer spawn in modes that prevent antag spawns.
+(u)Magma Hunter
+(p)6989
+(e)|
+(+)Changes the AZERTY number row to use the French layout. Also fixes it for ghosts.
+(u)DimWhat
+(p)6957
+(e)🎨|sprites
+(+)Made some small sprite changes to a few glasses sprites.
+(u)Flaborized
+(p)6995
+(e)🎨|sprites
+(+)Resprited the arc plater and ore processor machines.
+(u)Flaborized
+(p)7001
+(e)🎨|sprites
+(+)Resprited pills.
+(u)Flappybat
+(p)6864
+(e)🗺|mapping
+(*)Changed phones on Donut 3, removed arrivals/office phones. Moved and added some phones.
+(t)sat dec 25 21
+(u)tarmunora
+(e)🎅
+(+)Super Hairgrownium has 3u minimum volume to trigger moustache effect
 (t)fri dec 24 21
 (u)DimWhat
 (p)6984
