@@ -1,5 +1,10 @@
 
 (t)tue dec 28 21
+(u)DimWhat
+(p)6988
+(e)⚖|balance
+(*)The material costs for several drone types have been made much more difficult.
+(+)The material cost for miniature syndicates has been lowered.
 (u)Gonzako
 (p)6900
 (e)🆕|feature
