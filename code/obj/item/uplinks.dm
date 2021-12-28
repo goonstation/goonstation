@@ -1017,27 +1017,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			src.commander_buylist = sortList(sort1)
 
-	/*attack_self()
-		var/list/dat = list()
-		if(reading_about)
-			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
-			if(reading_about.desc) item_about = "[reading_about.desc]"
-			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
-		else
-			dat += "<B>Syndicate Uplink Console:</B><BR>"
-			dat += "Points left: [src.points]<BR>"
-			dat += "<HR>"
-			dat += "<B>Request item:</B><BR>"
-			dat += "<I>Each item costs a number of points as indicated by the number following their name.</I><BR><table cellspacing=5>"
-			if (src.commander_buylist && islist(src.commander_buylist) && length(src.commander_buylist))
-				dat += "</table><B>Uplink Items:</B><BR><table cellspacing=5>"
-				for (var/T in src.commander_buylist)
-					var/datum/syndicate_buylist/I = src.commander_buylist[T]
-					dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.commander_buylist[T]]'>[I.name]</A> ([I.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.commander_buylist[T]]'>About</A></td>"
-			dat += "</table>"
-		usr.Browse(jointext(dat, ""), "window=nukeuplink")
-		onclose(usr, "nukeuplink")*/
-
 	attack_self(mob/user)
 		return ui_interact(user)
 
