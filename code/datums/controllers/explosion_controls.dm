@@ -25,7 +25,7 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width, usr)
+		queued_explosions += new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe)
 
 	proc/queue_damage(var/list/new_turfs)
 		var/c = 0
