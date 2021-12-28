@@ -218,6 +218,14 @@
 	if(prob(25 * power / 20))
 		qdel(src)
 
+/obj/machinery/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.power_change()
+
+/obj/machinery/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.power_change()
+
 /obj/machinery/proc/get_power_wire()
 	var/obj/cable/C = null
 	for (var/obj/cable/candidate in get_turf(src))
@@ -235,6 +243,8 @@
 /obj/machinery/proc/powered(var/chan = EQUIP)
 	// returns true if the area has power on given channel (or doesn't require power).
 	// defaults to equipment channel
+	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
+		return 0
 	if (machines_may_use_wired_power && power_usage)
 		var/datum/powernet/net = get_direct_powernet()
 		if (net)

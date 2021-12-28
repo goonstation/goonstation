@@ -277,6 +277,7 @@
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
+			shock(AM, 100 - (60 - src.material.getProperty("electrical")))  // sure loved people being able to throw corpses into these without any consequences.
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM

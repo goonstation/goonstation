@@ -71,8 +71,8 @@
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
-			var/obj/item/clothing/suit/space/suit = new()
-			var/obj/item/clothing/head/helmet/space/helmet = new()
+			var/obj/item/clothing/suit/space/custom/suit = new()
+			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
 			suit.set_loc(getOutputLocation(owner))
 			helmet.set_loc(getOutputLocation(owner))
 			var/obj/item/fab = getObjectByPartName("Fabric")

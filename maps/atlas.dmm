@@ -2078,17 +2078,6 @@
 /obj/item/storage/box/ic_cones,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
-"ft" = (
-/obj/rack,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/turf/simulated/floor/caution/east,
-/area/station/security/armory)
 "fu" = (
 /obj/machinery/light{
 	dir = 1;
@@ -14855,24 +14844,6 @@
 /obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/purplewhite,
 /area/station/science/lab)
-"Kx" = (
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/item/luggable_computer/personal,
-/obj/machinery/cell_charger,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/storage/tech)
 "Ky" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/purplewhite{
@@ -18900,6 +18871,17 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
+"Va" = (
+/obj/rack,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/caution/east,
+/area/station/security/armory)
 "Vb" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -20325,6 +20307,27 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"YU" = (
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/item/luggable_computer/personal,
+/obj/machinery/cell_charger,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/station/storage/tech)
 "YV" = (
 /obj/cable{
 	d1 = 1;
@@ -57060,7 +57063,7 @@ Zb
 vD
 wx
 YR
-Kx
+YU
 Ak
 BH
 Ra
@@ -73044,7 +73047,7 @@ aa
 dK
 eu
 ez
-ft
+Va
 gq
 ez
 ho
