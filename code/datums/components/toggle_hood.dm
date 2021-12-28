@@ -3,6 +3,7 @@
 	var/hooded = FALSE
 	var/hood_style = null
 	var/obj/item/clothing/suit/suit = null
+	var/obj/ability_button/hood_toggle/toggle = new
 
 /datum/component/toggle_hood/Initialize(hooded = FALSE, hood_style = null)
 	if(!istype(parent, /obj/item/clothing/suit))
@@ -10,7 +11,6 @@
 	src.hooded = hooded
 	src.hood_style = hood_style
 	src.suit = parent
-	var/obj/ability_button/hood_toggle/toggle = new
 	if (!islist(suit.ability_buttons))
 		suit.ability_buttons = list()
 	suit.ability_buttons += toggle
@@ -31,7 +31,7 @@
 
 /datum/component/toggle_hood/proc/hood_icon()
 	suit.icon_state = "[src.hood_style][src.hooded ? "-up" : ""]"
-	toggle.icon_state = "hood_[src.hooded?"up":"down"]"
+	toggle.icon_state = "hood_[src.hooded?"down":"up"]"
 
 /datum/component/toggle_hood/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)

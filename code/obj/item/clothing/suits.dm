@@ -28,33 +28,6 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 2)
 
-/obj/item/clothing/suit/hooded
-	name = "You shouldn't see this!"
-	desc = "Call 180-IMCODER"
-	uses_multiple_icon_states = TRUE
-	var/hood_style = null
-	var/hooded = FALSE
-	abilities = list(/obj/ability_button/hood_toggle)
-
-	attack_self(mob/user as mob)
-		..()
-		user.visible_message("[user] flips [his_or_her(user)] [src.name]'s hood.")
-		src.toggle_hood()
-
-	proc/toggle_hood()
-		src.hooded = !src.hooded
-		src.over_hair = !src.over_hair
-		src.body_parts_covered ^= HEAD
-		if (ismob(src.loc))
-			var/mob/M = src.loc
-			M.set_clothing_icon_dirty()
-		src.UpdateIcon()
-
-	update_icon()
-		..()
-		src.icon_state = "[src.hood_style][src.hooded?"-up":""]"
-
-
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
