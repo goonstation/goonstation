@@ -137,8 +137,8 @@ var/global/obj/flashDummy
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
 	if (isobj(target))
-		var/obj/grille/G = target
-		if(wattage && istype(G, /obj/grille))
+		if(wattage && istype(target, /obj/grille))
+			var/obj/grille/G = target
 			G.lightningrod(wattage)
 	var/elecflashpower = 0
 	if (wattage > 12000)
