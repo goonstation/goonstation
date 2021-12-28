@@ -2012,24 +2012,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/armory)
-"agd" = (
-/obj/table/auto,
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/molten_item,
-/obj/item/peripheral/videocard{
-	pixel_x = -8;
-	pixel_y = 14
-	},
-/obj/item/storage/goodybag{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -7;
-	pixel_y = 3
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown)
 "age" = (
 /obj/decal/cleanable/dirt,
 /obj/item/bananapeel,
@@ -31153,27 +31135,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
-"bAB" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/atmospherics/portables_connector{
-	name = "Mixing West"
-	},
-/turf/simulated/floor,
-/area/station/engine/hotloop)
-"bAC" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/atmospherics/portables_connector{
-	name = "Mixing West"
-	},
-/turf/simulated/floor,
-/area/station/engine/hotloop)
 "bAD" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -31524,31 +31485,6 @@
 /obj/item/clothing/mask/gas/emergency{
 	pixel_x = -6;
 	pixel_y = 7
-	},
-/turf/simulated/floor,
-/area/station/engine/hotloop)
-"bBx" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	frequency = 1225;
-	icon_state = "intact_on";
-	id = "Hot Loop Mixing";
-	target_pressure = 1000
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/hotloop)
-"bBy" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/valve{
-	name = "Mixing Valve"
 	},
 /turf/simulated/floor,
 /area/station/engine/hotloop)
@@ -43503,19 +43439,6 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
-"cfi" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
-	},
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1;
-	name = "Mixing West"
-	},
-/turf/simulated/floor,
-/area/station/engine/hotloop)
 "cfj" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/printer{
@@ -52029,14 +51952,6 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"czR" = (
-/obj/table/wood/auto,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/item/peripheral/network/radio/locked,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "czS" = (
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -54248,6 +54163,28 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"dWs" = (
+/obj/table/auto,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/molten_item,
+/obj/item/peripheral/videocard{
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/storage/goodybag{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown)
 "dXg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -56432,6 +56369,18 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/exit)
+"hWq" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/peripheral/network/radio/locked,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "hXZ" = (
 /turf/simulated/floor/stairs{
 	dir = 8;
@@ -56924,6 +56873,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"iTt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/atmospherics/portables_connector{
+	name = "Mixing West"
+	},
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "iUq" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable/brown{
@@ -62154,6 +62115,19 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"tGs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_rathen"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1;
+	name = "Mixing West"
+	},
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "tHe" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -62790,6 +62764,19 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"uOs" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1225;
+	icon_state = "intact_on";
+	id = "Hot Loop Mixing";
+	target_pressure = 1000
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "uOD" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/aiupload{
@@ -63192,6 +63179,18 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"vIE" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/valve{
+	name = "Mixing Valve"
+	},
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "vJK" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Brig Visitation Area";
@@ -63744,6 +63743,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"wVH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/atmospherics/portables_connector{
+	name = "Mixing West"
+	},
+/turf/simulated/floor,
+/area/station/engine/hotloop)
 "wVL" = (
 /obj/cable/brown{
 	icon_state = "2-8"
@@ -106367,7 +106375,7 @@ adk
 adU
 aeE
 afk
-agd
+dWs
 agQ
 ahI
 aiG
@@ -108855,8 +108863,8 @@ bAH
 bCo
 bCo
 dmN
-bAB
-bBx
+wVH
+uOs
 bCm
 bDq
 bEh
@@ -109157,9 +109165,9 @@ ezL
 bFL
 bFL
 wDs
-bAC
-bBy
-cfi
+iTt
+vIE
+tGs
 bDr
 eLo
 bqk
@@ -145802,7 +145810,7 @@ czp
 czw
 czD
 czh
-czR
+hWq
 czZ
 cAg
 cDx
