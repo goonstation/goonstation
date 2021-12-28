@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/pronouns)
 	name = "it/its"
 	preferredGender = "neuter"
 	subjective = "it"
-	objective = "its"
+	objective = "it"
 	possessive = "its"
 	posessivePronoun = "its"
 	reflexive = "itself"
