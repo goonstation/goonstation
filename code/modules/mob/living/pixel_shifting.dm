@@ -9,6 +9,8 @@
 		return
 
 	if(!pixel_shifted)
+		pre_pixel_shift_offsets["X"] = pixel_x
+		pre_pixel_shift_offsets["Y"] = pixel_y
 		RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/pixel_shift_reset)
 
 	switch(dir)
@@ -33,8 +35,8 @@
 	if(!pixel_shifted)
 		return
 	pixel_shifted = FALSE
-	pixel_x = 0
-	pixel_y = 0
+	pixel_x = pre_pixel_shift_offsets["X"]
+	pixel_y = pre_pixel_shift_offsets["Y"]
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 #undef PIXEL_TOTAL_MAX
