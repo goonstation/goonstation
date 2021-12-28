@@ -2695,7 +2695,6 @@
 				succesfulAddition = 1
 				tooltip_rebuild = 1
 
-
 		return succesfulAddition
 
 
