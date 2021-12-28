@@ -1,5 +1,9 @@
 
 (t)tue dec 28 21
+(u)Keiya
+(p)7011
+(e)|
+(+)Made it/its pronouns selectable in the the identity computer and character setup screen.
 (u)Flaborized
 (p)6966
 (e)🎨|sprites
