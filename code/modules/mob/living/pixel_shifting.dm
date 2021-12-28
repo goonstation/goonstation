@@ -2,8 +2,14 @@
 #define PIXEL_ONEDIR_MAX 14
 
 /mob/living/proc/pixel_shift(dir)
+	if(getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened") || getStatusDuration("handcuffed") || buckled || anchored || length(grabbed_by))
+		return
+
 	if(ON_COOLDOWN(src, "pixel_shift_cooldown", 0.4 DECI SECONDS))
 		return
+
+	if(!pixel_shifted)
+		RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/pixel_shift_reset)
 
 	switch(dir)
 		if(NORTH)
@@ -29,6 +35,7 @@
 	pixel_shifted = FALSE
 	pixel_x = 0
 	pixel_y = 0
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 
 #undef PIXEL_TOTAL_MAX
 #undef PIXEL_ONEDIR_MAX
