@@ -1,4 +1,9 @@
 
+(t)tue dec 28 21
+(u)Flaborized
+(p)6966
+(e)🎨|sprites
+(+)Updated sprites for belt items.
 (t)mon dec 27 21
 (u)Skeletonman0
 (p)6710
