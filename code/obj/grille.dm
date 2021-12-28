@@ -524,15 +524,14 @@
 
 	proc/lightningrod(lpower)
 		if (!anchored)
-			return 0
+			return FALSE
 		var/net = get_connection()
 		if (!powernets[net])
-			return 0
+			return FALSE
 		if (src.material.hasProperty("electrical")) // fun fact: you get -1 if this isnt here
-			powernets[net].newavail += lpower/100*(100-src.material.getProperty("electrical"))
+			powernets[net].newavail += lpower/100 * (100 - src.material.getProperty("electrical"))
 		else
-			powernets[net].newavail += lpower/100*40 // default to 60
-		return
+			powernets[net].newavail += lpower / 100 * 40 // default to 60
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
