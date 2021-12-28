@@ -1,5 +1,9 @@
 
 (t)tue dec 28 21
+(u)Gonzako
+(p)6900
+(e)🆕|feature
+(+)Button pannels can now create new buttons from signals. Use ButtonLabel=ButtonSignal to define new buttons. These can be separated by ";" or "&"
 (u)Keiya
 (p)7011
 (e)|
