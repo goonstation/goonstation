@@ -79,6 +79,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 /////////////////////////////
 //       Turret Code       //
 /////////////////////////////
+#define TURRET_ON "on"
+#define TURRET_OFF "off"
+
 ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret
 
@@ -183,38 +186,15 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		if (isweldingtool(W) && !(src.active))
-			var/turf/T = user.loc
 			if(!W:try_weld(user, 1))
 				return
 
-			if(src.anchored)
-				user.show_message("You start to unweld the turret from the floor.")
-				sleep(3 SECONDS)
-
-				if ((user.loc == T && user.equipped() == W))
-					user.show_message("You unweld the turret from the floor.")
-					src.anchored = 0
-
-
-				else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-					user.show_message("You unweld the turret  the floor.")
-					src.anchored = 0
-
-			else
-				user.show_message("You start to weld the turret to the floor.")
-				sleep(3 SECONDS)
-
-				if ((user.loc == T && user.equipped() == W))
-					user.show_message("You weld the turret to the floor.")
-					src.anchored = 1
-
-
-				else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-					user.show_message("You weld the turret to the floor.")
-					src.anchored = 1
+			user.show_message(src.anchored ? "You start to unweld the turret from the floor." : "You start to weld the turret to the floor.")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/toggle_anchored, null, W.icon, W.icon_state, \
+			  src.anchored ? "You unweld the turret from the floor." : "You weld the turret to the floor.", \
+			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isweldingtool(W) && (src.active))
-			var/turf/T = user.loc
 			if (src.health >= max_health)
 				user.show_message("<span class='notice'>The turret is already fully repaired!.</span>")
 				return
@@ -223,12 +203,9 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 
 			user.show_message("You start to repair the turret.")
-			sleep(2 SECONDS)
-
-			if ((user.loc == T && user.equipped() == W))
-				user.show_message("You repair some of the damage on the turret.")
-				src.health = min(src.max_health, (src.health + 10))
-				src.check_health()
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/repair, null, W.icon, W.icon_state, \
+			  "You repair some of the turret's damage.", \
+			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if  (iswrenchingtool(W))
 
@@ -243,20 +220,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 
 			else
-				var/turf/T = user.loc
 				user.show_message("You begin to disassemble the turret.")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-
-				sleep(2 SECONDS)
-
-				if ((user.loc == T && user.equipped() == W))
-					user.show_message("You disassemble the turret.")
-					src.active = 0
-					src.shooting = 0
-					src.waiting = 0
-					src.target = null
-					src.spawn_deployer()
-					qdel(src)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
+				  "You disassemble the turret.", \
+				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isscrewingtool(W))
 
@@ -268,41 +236,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
 				return
 
-			var/turf/T = user.loc
-
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 
-			sleep(1 SECOND)
-
-			if ((user.loc == T && user.equipped() == W))
-				if(src.active)
-					user.show_message("<span class='notice'>You power off the turret.</span>")
-					src.icon_state = "[src.icon_tag]_off"
-					src.active = 0
-					src.shooting = 0
-					src.waiting = 0
-					src.target = null
-
-				else
-					user.show_message("<span class='notice'>You power on the turret.</span>")
-					set_projectile()
-					src.active = 1
-					src.icon_state = "[src.icon_tag]_idle"
-
-			else if((istype(user, /mob/living/silicon/robot) && (user.loc == T)))
-				if(src.active)
-					user.show_message("<span class='notice'>You power off the turret.</span>")
-					src.icon_state = "[src.icon_tag]_off"
-					src.active = 0
-					src.shooting = 0
-					src.waiting = 0
-					src.target = null
-
-				else
-					user.show_message("<span class='notice'>You power on the turret.</span>")
-					set_projectile()
-					src.active = 1
-					src.icon_state = "[src.icon_tag]_idle"
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
+			  "You power the turret [src.active ? "off" : "on"].", \
+			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else
 			src.health = src.health - W.force
@@ -310,6 +248,29 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			attack_particle(user,src)
 			src.check_health()
 			..()
+
+	//actionbar procs
+	///Anchor if unanchored, unanchor if anchored
+	proc/toggle_anchored()
+		src.anchored = !src.anchored
+
+	///Repair the turret by 10 health (only repaired by welding currently, so no custom values)
+	proc/repair()
+		src.health = min(src.max_health, (src.health + 10))
+		src.check_health()
+
+	///Toggle the turret on or off.
+	proc/toggle_activated()
+		if (src.active)
+			src.icon_state = "[src.icon_tag]_off"
+			src.active = 0
+			src.shooting = 0
+			src.waiting = 0
+			src.target = null
+		else
+			src.set_projectile()
+			src.active = 1
+			src.icon_state = "[src.icon_tag]_idle"
 
 	proc/quick_deploy()
 		if(!(src.quick_deploy_fuel > 0))
@@ -360,6 +321,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		deployer.tooltip_rebuild = 1
+		qdel(src)
 		return deployer
 
 	proc/seek_target()
@@ -517,6 +479,9 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/riot/active
 	anchored = 1
 	active = 1
+
+#undef TURRET_ON
+#undef TURRET_OFF
 
 /////////////////////////////
 //   Turret Ability Stuff  //
