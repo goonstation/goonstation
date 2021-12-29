@@ -1,4 +1,39 @@
 
+(t)tue dec 28 21
+(u)Stonepillar
+(p)6898
+(e)|
+(*)Flusher components now have a limit of 100 things to flush at once.
+(u)DimWhat
+(p)6988
+(e)⚖|balance
+(*)The material costs for several drone types have been made much more difficult.
+(+)The material cost for miniature syndicates has been lowered.
+(u)Gonzako
+(p)6900
+(e)🆕|feature
+(+)Button pannels can now create new buttons from signals. Use ButtonLabel=ButtonSignal to define new buttons. These can be separated by ";" or "&"
+(u)Keiya
+(p)7011
+(e)|
+(+)Made it/its pronouns selectable in the the identity computer and character setup screen.
+(u)Flaborized
+(p)6966
+(e)🎨|sprites
+(+)Updated sprites for belt items.
+(t)mon dec 27 21
+(u)Skeletonman0
+(p)6710
+(e)|
+(+)Grilles now try to electrocute mobs thrown or launched at them.
+(u)Azrun
+(p)6799
+(e)🆕🎨|feature, sprites
+(+)Plasmatoid results in respiratory "issues".  The infection will spread to the lungs and they will no longer function like they used to.
+(u)Azrun
+(p)5712
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)AI's now have access to text Holograms by way of Phrase Templates!  Find some hologram expansion modules to add phrases/words.
 (t)sun dec 26 21
 (u)pali
 (*)Manta has been disabled

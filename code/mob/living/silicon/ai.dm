@@ -30,7 +30,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Loading Bar" = "ai_loading",\
 	"Exclamation" = "ai_exclamation",\
 	"Question" = "ai_question")
-
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -119,8 +118,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/mob/dead/aieye/eyecam = null
 
 	var/deployed_to_eyecam = 0
-	var/list/holograms
-	var/const/max_holograms = 8
+	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
@@ -210,8 +208,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
-
-	holograms = list()
 
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
