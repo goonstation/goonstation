@@ -1518,7 +1518,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	for(var/raw_law in raw_law_list)
 		var/nice_law = trim(strip_html(raw_law))
 		// empty lines would probably be an accident and result in awkward pauses that might give the AI away
-		if (length(nice_law) == 0)
+		if (!length(nice_law))
 			continue
 		fake_laws += nice_law
 
