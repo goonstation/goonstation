@@ -1,5 +1,9 @@
 
 (t)tue dec 28 21
+(u)Stonepillar
+(p)6898
+(e)|
+(*)Flusher components now have a limit of 100 things to flush at once.
 (u)DimWhat
 (p)6988
 (e)⚖|balance
