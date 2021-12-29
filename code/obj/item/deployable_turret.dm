@@ -79,9 +79,6 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 /////////////////////////////
 //       Turret Code       //
 /////////////////////////////
-#define TURRET_ON "on"
-#define TURRET_OFF "off"
-
 ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret
 
@@ -479,9 +476,6 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/riot/active
 	anchored = 1
 	active = 1
-
-#undef TURRET_ON
-#undef TURRET_OFF
 
 /////////////////////////////
 //   Turret Ability Stuff  //
