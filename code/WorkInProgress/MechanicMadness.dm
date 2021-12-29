@@ -633,6 +633,7 @@
 
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
+	var/max_capacity = 100
 
 	New()
 		. = ..()
@@ -663,11 +664,15 @@
 		return 0
 
 	proc/flushp(var/datum/mechanicsMessage/input)
+		var/count = 0
 		if(level == 2) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
+				if(count == src.max_capacity)
+					break
 				M.set_loc(src)
+				count++
 			flushit()
 
 	proc/flushit()
