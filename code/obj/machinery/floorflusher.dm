@@ -18,6 +18,7 @@
 	var/flush = 0	// true if triggered
 	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk, if none reject user
 	var/flushing = 0	// true if flushing in progress
+	var/max_capacity = 100
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
@@ -286,8 +287,12 @@
 		open = 1
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
+		var/count = 0
 		for(var/atom/movable/AM in src.loc)
 			src.Crossed(AM) // try to flush them
+			if (count >= src.max_capacity)
+				break
+			count++
 
 	proc/closeup()
 		open = 0
