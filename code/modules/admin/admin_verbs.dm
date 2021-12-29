@@ -942,7 +942,7 @@ var/list/fun_images = list()
 	admin_only
 
 	var/list/respawn_types = list("Heavenly", "Demonically")
-	var/selection = input(usr, "Select Respawn type.", "What?", "") as null|anything in respawn_types
+	var/selection = tgui_input_list(usr, "Select Respawn type.", "Cinematic Respawn", respawn_types)
 	switch(selection)
 		if("Heavenly")
 			src.respawn_as_self()
