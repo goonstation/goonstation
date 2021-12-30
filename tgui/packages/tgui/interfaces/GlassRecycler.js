@@ -21,7 +21,7 @@ const GlassRecyclerProductEntry = (props, context) => {
       <Flex direction="row" align="center">
         <Flex.Item>
           <img
-            src={`data:image/jpeg;base64,${img}`}
+            src={`data:image/png;base64,${img}`}
             style={{
               'vertical-align': 'middle',
               'horizontal-align': 'middle',
