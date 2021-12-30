@@ -106,6 +106,7 @@ task-validate-build() {
   if [[ -n ${diff} ]]; then
     echo "Error: our build differs from the build committed into git."
     echo "Please rebuild tgui."
+    echo "Diff: ${diff}"
     exit 1
   fi
   echo "tgui: build is ok"
