@@ -23,9 +23,11 @@
 	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
-	var/hardened = 1	//This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
+	///This is for being able to run through signal jammers (just solar flares for now). acceptable values = 0 and 1.
+	var/hardened = 1
 
-	var/doesMapText = FALSE // Set to TRUE for your radio obj to have unconditional flying text. Override showMapText() to conditionalize it.
+	/// Set to TRUE for your radio obj to have unconditional flying text. Override showMapText() to conditionalize it.
+	var/doesMapText = FALSE
 	// probably not too resource intensive but I'd be careful using this just in case
 
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
@@ -266,8 +268,10 @@ var/list/headset_channel_lookup
 	else
 		eqjobname = "Unknown"
 
-	var/list/receive = new() // will be associative. key = mob, value = list()
-	// each person will be associated with the radios they're hearing through, e.g shitty bill = radio1, radio2, radio3; john bill = radio1, radio3, radio4
+	///will be associative. key = mob, value = list()
+	///each person will be associated with the radios they're hearing through, e.g shitty bill = radio1, radio2, radio3; john bill = radio1, radio3, radio4
+	var/list/receive = new()
+
 
 	var/display_freq = src.frequency //Frequency to display on radio broadcast messages
 
