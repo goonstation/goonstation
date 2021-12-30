@@ -1,5 +1,9 @@
 
 (t)thu dec 30 21
+(u)Mr. Moriarty
+(p)7028
+(e)🗺|mapping
+(+)The NSS Clarion has invested in sturdier windows for the HoS's Office, in order for them to survive the relentless onslaught of StirStir's forehead.
 (u)Blackrep
 (p)6831
 (e)📄|tgui
