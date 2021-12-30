@@ -339,12 +339,21 @@ var/datum/station_zlevel_repair/station_repair = new
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = ambient_light
 
+				var/snow = alert("Should it be snowing?",, "Yes", "No", "Light")
+				snow = (snow == "No") ? null : snow
+				if(snow == "Light")
+					station_repair.weather_effect = /obj/effects/snow/grey/tile/light
+				else if(snow == "Yes")
+					station_repair.weather_effect = /obj/effects/snow/grey/tile
+
 				var/list/space = list()
 				for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 					space += S
 				station_repair.station_generator.generate_terrain(space)
 				for (var/turf/S as anything in space)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
+					if(snow)
+						new station_repair.weather_effect(S)
 
 				shippingmarket.clear_path_to_market()
 
