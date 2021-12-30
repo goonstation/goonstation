@@ -1,4 +1,40 @@
 
+(t)thu dec 30 21
+(u)Mr. Moriarty
+(p)7028
+(e)🗺|mapping
+(+)The NSS Clarion has invested in sturdier windows for the HoS's Office, in order for them to survive the relentless onslaught of StirStir's forehead.
+(u)Blackrep
+(p)6831
+(e)📄|tgui
+(+)The glass recycler has been updated to a fancy new interface!
+(t)wed dec 29 21
+(u)DimWhat
+(p)6942
+(e)🎨|sprites
+(*)Added a bunch more monkey clothing including gloves, shoes and masks! Ook!
+(t)tue dec 28 21
+(u)Stonepillar
+(p)6898
+(e)|
+(*)Flusher components now have a limit of 100 things to flush at once.
+(u)DimWhat
+(p)6988
+(e)⚖|balance
+(*)The material costs for several drone types have been made much more difficult.
+(+)The material cost for miniature syndicates has been lowered.
+(u)Gonzako
+(p)6900
+(e)🆕|feature
+(+)Button pannels can now create new buttons from signals. Use ButtonLabel=ButtonSignal to define new buttons. These can be separated by ";" or "&"
+(u)Keiya
+(p)7011
+(e)|
+(+)Made it/its pronouns selectable in the the identity computer and character setup screen.
+(u)Flaborized
+(p)6966
+(e)🎨|sprites
+(+)Updated sprites for belt items.
 (t)mon dec 27 21
 (u)Skeletonman0
 (p)6710
