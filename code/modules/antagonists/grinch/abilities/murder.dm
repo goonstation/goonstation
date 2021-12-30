@@ -55,13 +55,12 @@
 			ownerMob.visible_message("<span class='alert'><b>[ownerMob] shrinks [target]'s heart down two sizes too small!</b></span>")
 			playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 75, 1, -1)
 			target.add_fingerprint(ownerMob) // Why not leave some forensic evidence?
-			target.contract_disease(/datum/ailment/malady/flatline, null, null, 1) // path, name, strain, bypass resist
-			//target.organHolder.drop_organ("heart") // a little trollin
+			target.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 		logTheThing("combat", ownerMob, target, "uses the murder ability to induce cardiac arrest on [constructTarget(target,"combat")] at [log_loc(ownerMob)].")
 
 	onInterrupt()
 		..()
-		boutput(owner, "<span class='alert'>Your killing of [target] has been interrupted!</span>")
+		boutput(owner, "<span class='alert'>You have been interrupted!</span>")
 
 /datum/targetable/grinch/instakill
 	name = "Murder"
