@@ -153,6 +153,17 @@ if [[ ${1} == "--install-git-hooks" ]]; then
   exit 0
 fi
 
+## Continuous integration scenario
+if [[ ${1} == "--ci" ]]; then
+  shift 1
+  task-clean
+  task-install
+  task-eslint
+  task-webpack --mode=production
+  task-validate-build
+  exit 0
+fi
+
 if [[ ${1} == "--clean" ]]; then
   task-clean
   exit 0
