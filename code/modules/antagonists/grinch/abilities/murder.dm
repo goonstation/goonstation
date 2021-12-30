@@ -69,7 +69,7 @@
 	target_anything = 0
 	target_nodamage_check = 1
 	max_range = 1
-	cooldown = 4800
+	cooldown = 2400
 	start_on_cooldown = 0
 	pointCost = 0
 	when_stunned = 0
