@@ -476,19 +476,31 @@
 		boutput(user, "<span class='alert'>It's broken.</span>")
 
 ////////////////////////////////////////////////////////
-//////////////Mass Driver Button	///////////////////
+//////////// Machine activation buttons	///////////////
 ///////////////////////////////////////////////////////
-/obj/machinery/driver_button/attack_ai(mob/user as mob)
+ABSTRACT_TYPE(/obj/machinery/activation_button)
+/obj/machinery/activation_button
+	name = "Activation Button"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "launcherbtt"
+	desc = "A remote control switch for ... something."
+	/// compatible machines with a matching id will be activated
+	var/id = null
+	var/active = FALSE
+	anchored = 1.0
+
+	proc/activate()
+		return
+
+/obj/machinery/activation_button/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/driver_button/attackby(obj/item/W, mob/user as mob)
-
+/obj/machinery/activation_button/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/driver_button/attack_hand(mob/user as mob)
-
+/obj/machinery/activation_button/attack_hand(mob/user as mob)
 	if(status & (NOPOWER|BROKEN))
 		return
 	if(active)
@@ -496,29 +508,50 @@
 
 	use_power(5)
 
-	active = 1
+	src.active = TRUE
 	icon_state = "launcheract"
 
-	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			M.open()
-
-	sleep(2 SECONDS)
-
-	for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
-		if(M.id == src.id)
-			M.drive()
-
-	sleep(5 SECONDS)
-
-	for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
-		if (M.id == src.id)
-			M.close()
+	// the activate procs usually do some spooky sleep() calls here to delay this
+	src.activate()
 
 	icon_state = "launcherbtt"
 	active = 0
-
 	return
+
+/obj/machinery/activation_button/driver_button
+	name = "Mass Driver Button"
+	desc = "A remote control switch for a Mass Driver."
+
+	activate()
+		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				M.open()
+
+		sleep(2 SECONDS)
+
+		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
+			if(M.id == src.id)
+				M.drive()
+
+		sleep(5 SECONDS)
+
+		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				M.close()
+
+/obj/machinery/activation_button/flusher_button
+	name = "Flusher Button"
+	desc = "A remote control switch for a Floor Flusher."
+
+	activate()
+		for(var/obj/machinery/floorflusher/M in by_type[/obj/machinery/floorflusher])
+			if(M.id == src.id)
+				if(M.open)
+					M.closeup()
+				else
+					M.openup()
+
+		sleep(2 SECONDS)
 
 
 ///////////Uses a radio signal to control the door
