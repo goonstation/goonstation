@@ -3,6 +3,7 @@
 	set name = "Terrainify"
 	set desc = "Turns space into a terrain type"
 	admin_only
+	var/static/client/terrainifier
 
 	var/options = list(
 		"Ice Moon Station"=/client/proc/cmd_ice_moon_station,
@@ -13,9 +14,20 @@
 		"Winter Station"=/client/proc/cmd_winterify_station,
 		)
 
+	if(terrainifier)
+		if(src == terrainifier)
+			boutput(src, "You are already attempting to Terrainify!")
+		else
+			boutput(src, "[terrainifier.key] is already attempting to Terrainify!")
+		return
+	else
+		terrainifier = src
+
 	var/param = tgui_input_list(src,"Transform space around the station...","Terraform Space",options)
 	if(param)
 		call(src, options[param])()
+
+	terrainifier = null
 
 var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
