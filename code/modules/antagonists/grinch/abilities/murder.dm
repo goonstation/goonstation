@@ -1,5 +1,5 @@
 /datum/action/bar/private/icon/grinchFlatline
-	duration = 120
+	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "grinch_flatline"
 	icon = 'icons/mob/critter_ui.dmi'
