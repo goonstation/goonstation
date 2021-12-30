@@ -158,7 +158,7 @@ if [[ ${1} == "--ci" ]]; then
   shift 1
   task-clean
   task-install
-  task-eslint
+  task-lint "${@}"
   task-webpack --mode=production
   task-validate-build
   exit 0
