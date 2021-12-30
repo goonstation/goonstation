@@ -26634,7 +26634,7 @@
 	tag = "icon-intact (EAST)"
 	},
 /obj/machinery/meter,
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 24;
 	pixel_y = 10
@@ -27224,7 +27224,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bFt" = (
-/obj/machinery/activation_button/driver_button{
+/obj/machinery/driver_button{
 	id = "sciencedriver";
 	pixel_y = -24
 	},

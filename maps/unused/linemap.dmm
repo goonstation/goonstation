@@ -30140,7 +30140,7 @@
 /area/station/science/lab)
 "bsi" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "toxins_ignition";
 	pixel_x = 24
 	},

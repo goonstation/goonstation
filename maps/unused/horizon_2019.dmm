@@ -6941,7 +6941,7 @@
 	name = "Combustion Chamber Vent";
 	pixel_y = 28
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -12;
 	pixel_y = 28
@@ -13357,7 +13357,7 @@
 	},
 /area/shuttle/arrival/station)
 "aGC" = (
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8
@@ -23366,7 +23366,7 @@
 	dir = 1
 	},
 /obj/machinery/disposal,
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8

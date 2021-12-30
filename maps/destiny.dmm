@@ -9423,7 +9423,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "tox_ignition1";
 	name = "Chamber One Ignition Switch";
 	pixel_y = -24
@@ -11339,7 +11339,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "tox_ignition2";
 	name = "Chamber Two Ignition Switch";
 	pixel_y = -24
@@ -39027,7 +39027,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "mYI" = (
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "combustion_ignition";
 	pixel_y = -24
 	},

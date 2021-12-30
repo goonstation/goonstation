@@ -9326,7 +9326,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "burn";
 	pixel_x = -25
 	},

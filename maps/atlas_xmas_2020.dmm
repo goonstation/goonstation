@@ -14786,7 +14786,7 @@
 /area/station/science/lab)
 "JH" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "burn";
 	pixel_x = -10;
 	pixel_y = -20
@@ -14816,7 +14816,7 @@
 /area/station/science/lab)
 "JM" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "burn_2";
 	pixel_x = -10;
 	pixel_y = -20
@@ -20330,7 +20330,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "combust";
 	pixel_x = -25
 	},

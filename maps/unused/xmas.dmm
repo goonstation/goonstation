@@ -2727,7 +2727,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 10;
 	pixel_y = 24
@@ -10173,7 +10173,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/machinery/activation_button/driver_button{
+/obj/machinery/driver_button{
 	id = "chapelgun";
 	name = "Chapel Mass Driver Button";
 	pixel_x = 24;
@@ -10219,7 +10219,7 @@
 /area/crew_quarters/quarters)
 "atq" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /turf/simulated/floor{
@@ -26951,7 +26951,7 @@
 	},
 /area/security/checkpoint2)
 "aYf" = (
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "securitychamber";
 	name = "Solitary Sparker Switch";
 	pixel_x = -24;
@@ -29273,7 +29273,7 @@
 /area/crew_quarters/juryroom)
 "bcy" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -29577,7 +29577,7 @@
 "bdb" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -33064,7 +33064,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -35933,7 +35933,7 @@
 /turf/unsimulated/bombvr,
 /area/vr_oldprison)
 "bpE" = (
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "testroom";
 	name = "Test Room Ignition Switch";
 	pixel_x = 10;

@@ -3361,7 +3361,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 10;
 	pixel_y = 24
@@ -13696,7 +13696,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/machinery/activation_button/driver_button{
+/obj/machinery/driver_button{
 	id = "chapelgun";
 	name = "Chapel Mass Driver Button";
 	pixel_x = 24;
@@ -35679,7 +35679,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bsZ" = (
-/obj/machinery/activation_button/ignition_switch{
+/obj/machinery/ignition_switch{
 	id = "securitychamber";
 	name = "Solitary Sparker Switch";
 	pixel_x = -24;

@@ -918,7 +918,7 @@
 /turf/simulated/wall,
 /area/station/chapel/sanctuary)
 "acf" = (
-/obj/machinery/activation_button/driver_button{
+/obj/machinery/driver_button{
 	id = "spck";
 	pixel_x = -31;
 	req_access_txt = "25"
@@ -1801,7 +1801,7 @@
 /area/station/medical/research)
 "aeb" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -11046,7 +11046,7 @@
 "avq" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-	},
+},
 /turf/simulated/floor,
 /area/station/bridge)
 "avr" = (
@@ -20359,7 +20359,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/storage)
 "aMo" = (
-/obj/machinery/activation_button/driver_button{
+/obj/machinery/driver_button{
 	id = "launchereng";
 	pixel_x = -31;
 	req_access_txt = "25"
@@ -28979,7 +28979,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
