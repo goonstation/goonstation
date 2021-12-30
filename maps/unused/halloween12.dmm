@@ -2256,7 +2256,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 10;
 	pixel_y = 24
@@ -9774,7 +9774,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "chapelgun";
 	name = "Chapel Mass Driver Button";
 	pixel_x = 24;
@@ -9816,7 +9816,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -25237,7 +25237,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint2)
 "aXA" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "securitychamber";
 	name = "Solitary Sparker Switch";
 	pixel_x = -24;
@@ -27413,7 +27413,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27749,7 +27749,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31210,7 +31210,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -34026,7 +34026,7 @@
 /turf/unsimulated/bombvr,
 /area/listeningpost)
 "bpG" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "testroom";
 	name = "Test Room Ignition Switch";
 	pixel_x = 10;

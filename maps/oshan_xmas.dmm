@@ -600,7 +600,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "abx" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "research";
 	name = "Research Emergency Mass Ejector Control";
 	pixel_y = 32
@@ -14399,7 +14399,7 @@
 	pixel_x = -12;
 	pixel_y = 32
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "toxins_1";
 	pixel_x = 8;
 	pixel_y = 24
@@ -23256,7 +23256,7 @@
 	pixel_x = 12;
 	pixel_y = 32
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "toxins_2";
 	pixel_x = -8;
 	pixel_y = 24

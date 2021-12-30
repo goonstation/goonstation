@@ -42495,7 +42495,7 @@
 	pixel_x = 7;
 	pixel_y = 36
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_y = 26
 	},
@@ -42816,7 +42816,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bDo" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "artlabgun";
 	name = "Emergency Ejection Button";
@@ -43746,7 +43746,7 @@
 	},
 /area/station/hydroponics/bay)
 "bEZ" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = 24;
 	pixel_y = -8
@@ -43770,7 +43770,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bFa" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = 24;
 	pixel_y = 8

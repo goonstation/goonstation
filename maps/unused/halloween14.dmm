@@ -3762,7 +3762,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 10;
 	pixel_y = 24
@@ -11560,7 +11560,7 @@
 	icon_state = "rwindow";
 	dir = 1
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "chapelgun";
 	name = "Chapel Mass Driver Button";
 	pixel_x = 24;
@@ -11614,7 +11614,7 @@
 /area/station/crew_quarters/quarters)
 "axr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -20051,7 +20051,7 @@
 	dir = 10
 	},
 /obj/machinery/meter,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_y = 28
 	},
@@ -26030,7 +26030,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -32232,7 +32232,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint2)
 "bmf" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "securitychamber";
 	name = "Solitary Sparker Switch";
 	pixel_x = -24;
@@ -34575,7 +34575,7 @@
 /area/station/crew_quarters/juryroom)
 "brd" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
@@ -35050,7 +35050,7 @@
 "brZ" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38855,7 +38855,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

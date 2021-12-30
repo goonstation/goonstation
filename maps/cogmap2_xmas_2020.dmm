@@ -27550,7 +27550,7 @@
 	drive_range = 20;
 	id = "evagun1"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "evagun1";
 	name = "Mass Driver (EVA #1)";
 	pixel_y = 24
@@ -28954,7 +28954,7 @@
 	drive_range = 20;
 	id = "evagun2"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "evagun2";
 	name = "Mass Driver (EVA #2)";
 	pixel_y = 24
@@ -29927,7 +29927,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
 "bpX" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -12;
 	pixel_y = 28
@@ -60998,7 +60998,7 @@
 	pixel_x = -23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8
@@ -64687,7 +64687,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cIO" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = -24;
 	pixel_y = -8
@@ -66138,7 +66138,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "chem";
 	pixel_x = -24;
 	pixel_y = -10

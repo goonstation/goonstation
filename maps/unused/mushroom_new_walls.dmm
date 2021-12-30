@@ -7386,7 +7386,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aDx" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "chapelgun";
 	name = "Chapel Mass Driver Button";
 	pixel_y = 24;
@@ -26029,7 +26029,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/turret_protected/Zeta)
 "jUG" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be a very loud siren or something.  Maybe you want it away from you so the crew don't bash down your door to remove it for you.";
 	id = "artlabgun";
 	name = "Emergency Ejection Button";
@@ -29723,7 +29723,7 @@
 	},
 /area/station/science/artifact)
 "oHa" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -24
 	},
@@ -32295,7 +32295,7 @@
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingroom";
 	pixel_x = 24;
 	pixel_y = 10

@@ -37327,7 +37327,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bnu" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	name = "Chamber Ignition Switch";
 	pixel_x = -24;
@@ -42046,7 +42046,7 @@
 	name = "Research Hangar Door Control";
 	pixel_x = 24
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "artlabgun";
 	name = "Emergency Ejection Button";
@@ -47609,7 +47609,7 @@
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
 /obj/item/clothing/ears/earmuffs,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = 0;
 	pixel_y = -24
