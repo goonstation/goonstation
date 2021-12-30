@@ -1,6 +1,9 @@
 /mob/living/carbon/human/slasher
 	real_name = "The Slasher"
+	var/trailing_blood = FALSE
 	var/slasher_key
+	var/last_bdna = null
+	var/last_btype = null
 
 	New(loc)
 		..()
@@ -27,7 +30,7 @@
 		..()
 		if(src.hasStatus("incorporeal") && inrestrictedz(src))
 			src.corporealize()
-			src.gib() //not taking any risks here with noclip
+			src.set_loc(pick_landmark(LANDMARK_PESTSTART))
 		else if(src.hasStatus("incorporeal") && !inonstationz(src)) //inonstationz() covers z2/z4 as well but that's covered in the first if
 			src.corporealize() //we can afford to be less stringent on these
 		if(prob(10))
@@ -163,7 +166,7 @@
 			return FALSE
 
 		///Actually sending the machete to the Slasher if one exists already
-		send_machete_to_target(var/obj/item/I)
+		send_machete_to_target(obj/item/I)
 			if(!istype(I))
 				return
 
@@ -186,7 +189,7 @@
 				src.show_text("Machete summoned successfully. You can find it in your hand.", "blue")
 			return
 
-		take_control(var/mob/living/carbon/human/M)
+		take_control(mob/living/carbon/human/M)
 			var/mob/living/carbon/human/slasher/W = src
 			slasher_key = src.ckey
 			if(!istype(M))
@@ -246,7 +249,7 @@
 				APPLY_MOB_PROPERTY(M, PROP_NO_SELF_HARM, src)
 				playsound(M, "sound/effects/ghost.ogg", 45, 0)
 				var/mob/dead/observer/O = M.ghostize()
-				if(isnull(O))
+				if(!O)
 					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
 					remove_equipment(M)
 					return
@@ -259,7 +262,7 @@
 					return
 				src.mind.transfer_to(M)
 				var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(M)
-				if(isnull(WG))
+				if(!WG)
 					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 103</span>")
 					remove_equipment(M)
 					M.mind.transfer_to(src)
@@ -297,7 +300,7 @@
 				remove_equipment(M)
 
 		///removes equipment from slasher/possessed/whoever
-		remove_equipment(var/mob/living/carbon/human/M)
+		remove_equipment(mob/living/carbon/human/M)
 			for(var/obj/item/clothing/suit/apron/slasher/A in M)
 				M.u_equip(A)
 				qdel(A)
@@ -346,19 +349,18 @@
 						qdel(O2)
 
 		///Actionbar handler for stealing a dead body's soul.
-		soulStealSetup(var/mob/living/carbon/human/M)
+		soulStealSetup(mob/living/carbon/human/M)
 			boutput(src, "<span class='alert'>You begin stealing [M]'s soul.</span>")
 			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, /mob/living/carbon/human/slasher/proc/soulSteal, M, src.icon, src.icon_state,\
 	 		"Something barely visible seems to come out of [M]'s mouth, which then is absorbed into [src]'s body!", null)
 
 		///Steal a dead body's soul, provided they have a full one, and get more machete damage
-		soulSteal(var/mob/living/carbon/human/M, var/soul_remove = TRUE)
+		soulSteal(mob/living/carbon/human/M, soul_remove = TRUE)
 			var/mob/living/W = src
 			boutput(src, "<span class='alert'>You steal [M]'s soul!</span>")
 			playsound(src, "sound/voice/wraith/wraithpossesobject.ogg", 60, 0)
 			if(soul_remove)
-				if(M.mind)
-					M.mind.soul = 0
+				M.mind?.soul = 0
 			M.setStatus("soulstolen", INFINITE_STATUS)
 			for_by_tcl(K, /obj/item/slasher_machete)
 				if (W.mind && W.mind.key == K.slasher_key)
@@ -380,11 +382,27 @@
 						boutput(M, "<span class='notice'>Your legs feel a bit stiff!</span>")
 						M.setStatus("slowed", 8 SECONDS) //stagger has a 5s cap, changed to slow
 
+		///Trail some dried blood I guess?
+		blood_trail()
+			if(!src.last_btype || !src.last_bdna)
+				src.last_btype = src.blood_type
+				src.last_bdna = src.blood_DNA
+			if(!src.trailing_blood)
+				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
+				src.track_blood()
+				trailing_blood = TRUE
+				APPLY_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS, src)
+			else
+				REMOVE_MOB_PROPERTY(src, PROP_BLOOD_TRACKING_ALWAYS, src)
+				src.tracked_blood = null
+				trailing_blood = FALSE
+
 		///Gives the Slasher their abilities
 		addAllAbilities()
 			src.addAbility(/datum/targetable/slasher/help)
 			src.addAbility(/datum/targetable/slasher/incorporeal)
 			src.addAbility(/datum/targetable/slasher/corporeal)
+			src.addAbility(/datum/targetable/slasher/blood_trail)
 			src.addAbility(/datum/targetable/slasher/soulsteal)
 			src.addAbility(/datum/targetable/slasher/summon_machete)
 			src.addAbility(/datum/targetable/slasher/take_control)
@@ -449,6 +467,20 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 			return TRUE
 		else
 			return W.corporealize()
+
+/datum/targetable/slasher/blood_trail
+	name = "Blood Trail"
+	desc = "Begin trailing blood behind you, to spook those who reside on station."
+	icon_state = "trail_blood"
+	targeted = FALSE
+	cooldown = 5 SECONDS
+
+	cast()
+		if(..())
+			return TRUE
+
+		var/mob/living/carbon/human/slasher/W = src.holder.owner
+		return W.blood_trail()
 
 /datum/targetable/slasher/summon_machete
 	name = "Summon Machete"
@@ -539,7 +571,7 @@ ABSTRACT_TYPE(/datum/targetable/slasher)
 	desc = "Stagger everyone in a four tile radius of you for a short duration."
 	icon_state = "stagger_group"
 	targeted = FALSE
-	cooldown = 40 SECONDS
+	cooldown = 35 SECONDS
 
 	cast()
 		if(..())
