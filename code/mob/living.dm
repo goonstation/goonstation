@@ -1470,9 +1470,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
-		for (var/atom/A in src)
-			if (A.material)
-				A.material.triggerOnAttacked(A, M, src, gloves)
+	for (var/atom/A in src)
+		if (A.material)
+			A.material.triggerOnAttacked(A, M, src, gloves)
 
 	M.viral_transmission(src,"Contact",1)
 
