@@ -1,5 +1,7 @@
 
 (t)thu dec 30 21
+(u)pali
+(+)Clicking on the pull hud button now shows a popup where you can select what to pull.
 (u)Mr. Moriarty
 (p)7028
 (e)🗺|mapping
