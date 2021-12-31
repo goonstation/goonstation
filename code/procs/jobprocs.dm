@@ -539,8 +539,8 @@
 		var/obj/item/clothing/under/US = src.get_slot(SLOT_W_UNIFORM)
 		src.u_equip(US)
 		src.equip_if_possible(US, slot_in_backpack)
-		var/obj/item/clothing/under/color/orange/OJ = new /obj/item/clothing/under/color/orange
-		src.equip_if_possible(OJ, SLOT_W_UNIFORM)
+		var/obj/item/clothing/under/misc/PJ = new /obj/item/clothing/under/misc
+		src.equip_if_possible(PJ, SLOT_W_UNIFORM)
 	if (JOB.slot_back)
 		if (istype(src.back, /obj/item/storage))
 			if(JOB.receives_disk)
