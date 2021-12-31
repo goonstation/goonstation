@@ -1968,7 +1968,8 @@ Returns:
 	var/datum/light/light
 
 	New()
-		smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(1)
@@ -1977,8 +1978,6 @@ Returns:
 		..()
 
 	disposing()
-		particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-		smoke_part = null
 		light.disable()
 		light.detach()
 		light = null
@@ -3103,6 +3102,11 @@ Returns:
 			sparks.set_loc(get_turf(src))
 			SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			qdel(src)
+
+	attack_hand(var/mob/M)
+		..()
+		if (get_turf(M) == get_turf(src) && !ON_COOLDOWN(M, "portal_click", 1 SECOND))
+			src.Bumped(M)
 
 	ex_act()
 		return

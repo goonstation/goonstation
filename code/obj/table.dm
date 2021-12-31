@@ -545,6 +545,16 @@
 
 	auto
 		auto = TRUE
+
+/obj/table/nanotrasen
+	name = "azure glass table"
+	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
+	auto_type = /obj/table/nanotrasen
+	parts_type = /obj/item/furniture_parts/table/nanotrasen
+
+	auto
+		auto = TRUE
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */

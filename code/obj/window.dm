@@ -314,7 +314,7 @@
 				return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST)
 			return 0 //full tile window, you can't move into it!
-		if(get_dir(loc, mover) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -322,7 +322,7 @@
 
 	gas_cross(turf/target)
 		. = TRUE
-		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) == dir)
+		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || get_dir(loc, target) & dir)
 			. = ..()
 
 	CheckExit(atom/movable/O as mob|obj, target as turf)
@@ -332,7 +332,7 @@
 			var/obj/projectile/P = O
 			if(P.proj_data.window_pass)
 				return 1
-		if (get_dir(loc, target) == src.dir)
+		if (get_dir(loc, target) & src.dir)
 			return 0
 		return 1
 

@@ -1282,10 +1282,28 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			thing = src.l_hand
 		else if (src.r_hand)
 			thing = src.r_hand
-
 		if (!thing)
 			return
 
+	// Prevent attempting to pass item arms
+	if (thing == src.l_hand)
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (!(H.has_hand(1)))
+				if (!(H.has_hand(0)))
+					return
+				else
+					thing = src.r_hand
+	if (thing == src.r_hand)
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (!(H.has_hand(0)))
+				if (!(H.has_hand(1)))
+					return
+				else
+					thing = src.l_hand
+	if (!thing)
+		return
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
 		return
@@ -1739,6 +1757,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(M)
 		for(var/datum/ailment_data/addiction/A in src.ailments)
 			src.ailments -= A
+		for (var/datum/ailment_data/parasite/P in src.ailments)
+			src.cure_disease(P)
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	SHOULD_CALL_PARENT(TRUE)
