@@ -5,6 +5,7 @@
 /datum/artifact/plant_helper
 	associated_object = /obj/machinery/artifact/plant_helper
 	type_name = "Plant waterer"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch)

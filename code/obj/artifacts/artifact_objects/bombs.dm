@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/artifact/bomb)
 /datum/artifact/bomb
+	type_size = ARTIFACT_SIZE_LARGE
 	associated_object = null
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")

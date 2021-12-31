@@ -162,6 +162,7 @@
 /datum/artifact/watercan
 	associated_object = /obj/item/reagent_containers/glass/wateringcan/artifact
 	type_name = "Beaker"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("martian","wizard","precursor")
 	min_triggers = 0

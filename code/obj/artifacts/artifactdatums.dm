@@ -9,6 +9,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/rarity_weight = 0
 	/// the name for this artifact type, used for displaying it visually (for instance in analysis forms)
 	var/type_name = "buggy artifact code"
+	/// the size category of the artifact
+	// this could probably be determined via the icon of the associated_object type right now, but that'd be weird and dumb
+	var/type_size = ARTIFACT_SIZE_LARGE
 	/// the artifact origin (martian, eldritch, etc...)
 	var/datum/artifact_origin/artitype = null
 	/// the list of options for the origin from which to pick from

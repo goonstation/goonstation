@@ -18,6 +18,7 @@
 /datum/artifact/melee
 	associated_object = /obj/item/artifact/melee_weapon
 	type_name = "Melee Weapon"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	react_xray = list(14,95,95,7,"DENSE")

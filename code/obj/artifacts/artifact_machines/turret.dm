@@ -11,6 +11,7 @@
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
 	type_name = "Turret"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,

@@ -5,6 +5,7 @@
 /datum/artifact/prison
 	associated_object = /obj/artifact/prison
 	type_name = "Prison"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	min_triggers = 2
 	max_triggers = 2
