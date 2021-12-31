@@ -141,6 +141,12 @@
 /// Triggers on destruction of a drone beacon
 #define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
 
+// ---- bomb assembly signals ----
+/// Triggers on the start of signalling the opening of an assembly bomb
+#define COMSIG_BOMB_SIGNAL_START "bomb_signal_start"
+/// Triggers when an assembly bomb's signalling is cancelled
+#define COMSIG_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
