@@ -209,8 +209,53 @@
 						return 0
 				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 				"<span class='notice'>You take a bite of [src]!</span>")
+				logTheThing("combat", user, M, "takes a bite of [src] [log_reagents(src)] at [log_loc(user)].")
 
-				src.take_a_bite(M, user)
+				src.amount--
+				M.nutrition += src.heal_amt * 10
+				src.heal(M)
+				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				on_bite(M)
+				if (src.festivity)
+					modify_christmas_cheer(src.festivity)
+				if (!src.amount)
+					if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
+						var/obj/item/reagent_containers/food/snacks/plant/P = src
+						var/doseed = 1
+						var/datum/plantgenes/SRCDNA = P.plantgenes
+						if (!SRCDNA || HYPCheckCommut(SRCDNA, /datum/plant_gene_strain/seedless)) doseed = 0
+						if (doseed)
+							var/datum/plant/stored = P.planttype
+							if (istype(stored) && !stored.isgrass)
+								var/obj/item/seed/S
+								if (stored.unique_seed)
+									S = new stored.unique_seed
+									S.set_loc(user.loc)
+								else
+									S = new /obj/item/seed
+									S.set_loc(user.loc)
+									S.removecolor()
+
+								var/datum/plantgenes/DNA = P.plantgenes
+								var/datum/plantgenes/PDNA = S.plantgenes
+								if (!stored.hybrid && !stored.unique_seed)
+									S.generic_seed_setup(stored)
+								HYPpassplantgenes(DNA,PDNA)
+								if (stored.hybrid)
+									var/plantType = stored.type
+									var/datum/plant/hybrid = new plantType(S)
+									for (var/V in stored.vars)
+										if (issaved(stored.vars[V]) && V != "holder")
+											hybrid.vars[V] = stored.vars[V]
+									S.planttype = hybrid
+									S.plant_seed_color(stored.seedcolor)
+								user.visible_message("<span class='notice'><b>[user]</b> spits out a seed.</span>",\
+								"<span class='notice'>You spit out a seed.</span>")
+					if(src.dropped_item)
+						drop_item(dropped_item)
+					user.u_equip(src)
+					on_finish(M, user)
+					qdel(src)
 				return 1
 			if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
@@ -225,6 +270,10 @@
 				M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 				logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
 
+				if (!do_mob(user, M))
+					if (user && ismob(user))
+						user.show_text("You were interrupted!", "red")
+					return
 				//no or broken stomach
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -235,72 +284,30 @@
 						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
 						return 0
 
-				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/food/snacks/proc/take_a_bite, list(M, user),\
-				  src.icon, src.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_MOVE)
+				user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+				user, "<span class='alert'>You feed [M] [src]!</span>",\
+				M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+				logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
+
+
+				on_bite(M)
+				src.amount--
+				M.nutrition += src.heal_amt * 10
+				src.heal(M)
+				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				if (!src.amount)
+					if(src.dropped_item)
+						drop_item(dropped_item)
+					user.u_equip(src)
+					on_finish(M, user)
+					qdel(src)
 				return 1
-
-	///Called when we successfully take a bite of something (or make someone else take a bite of something)
-	proc/take_a_bite(var/mob/consumer, var/mob/feeder)
-		feeder.tri_message("<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
-				feeder, "<span class='alert'>You feed [consumer] [src]!</span>",\
-				consumer, "<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
-
-		if (consumer == feeder)
-			logTheThing("combat", consumer, null, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
-		else
-			logTheThing("combat", feeder, consumer, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
-
-		src.amount--
-		consumer.nutrition += src.heal_amt * 10
-		src.heal(consumer)
-		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
-		on_bite(consumer)
-		if (src.festivity)
-			modify_christmas_cheer(src.festivity)
-		if (!src.amount)
-			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
-				var/obj/item/reagent_containers/food/snacks/plant/P = src
-				var/doseed = 1
-				var/datum/plantgenes/SRCDNA = P.plantgenes
-				if (!SRCDNA || HYPCheckCommut(SRCDNA, /datum/plant_gene_strain/seedless)) doseed = 0
-				if (doseed)
-					var/datum/plant/stored = P.planttype
-					if (istype(stored) && !stored.isgrass)
-						var/obj/item/seed/S
-						if (stored.unique_seed)
-							S = new stored.unique_seed
-							S.set_loc(consumer.loc)
-						else
-							S = new /obj/item/seed
-							S.set_loc(consumer.loc)
-							S.removecolor()
-
-						var/datum/plantgenes/DNA = P.plantgenes
-						var/datum/plantgenes/PDNA = S.plantgenes
-						if (!stored.hybrid && !stored.unique_seed)
-							S.generic_seed_setup(stored)
-						HYPpassplantgenes(DNA,PDNA)
-						if (stored.hybrid)
-							var/plantType = stored.type
-							var/datum/plant/hybrid = new plantType(S)
-							for (var/V in stored.vars)
-								if (issaved(stored.vars[V]) && V != "holder")
-									hybrid.vars[V] = stored.vars[V]
-							S.planttype = hybrid
-							S.plant_seed_color(stored.seedcolor)
-						consumer.visible_message("<span class='notice'><b>[consumer]</b> spits out a seed.</span>",\
-						"<span class='notice'>You spit out a seed.</span>")
-			if(src.dropped_item)
-				drop_item(dropped_item)
-			feeder.u_equip(src)
-			on_finish(consumer, feeder)
-			qdel(src)
 
 // I don't know if this was used for something but it was breaking my important "shake salt and pepper onto things" feature
 // so it's getting commented out until I get yelled at for breaking something
 //	attackby(obj/item/I as obj, mob/user as mob)
 //		return
-	afterattack(obj/target, mob/user, flag)
+	afterattack(obj/target, mob/user , flag)
 		return
 
 	get_desc(dist, mob/user)
