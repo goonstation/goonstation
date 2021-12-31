@@ -766,12 +766,22 @@
 	points = 1
 	isPositive = 0
 
-obj/trait/pilot
+/obj/trait/pilot
 	name = "Pilot (0) \[Background\]"
 	cleanName = "Pilot"
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
 	id = "pilot"
 	icon_state = "pilot"
+	category = list("background")
+	points = 0
+	isPositive = 0
+
+/obj/trait/jailbird
+	name = "Jailbird (0) \[Background\]"
+	cleanName = "Jailbird"
+	desc = "You have a criminal record and start in the brig!"
+	id = "jailbird"
+	icon_state = "jail"
 	category = list("background")
 	points = 0
 	isPositive = 0
@@ -959,15 +969,6 @@ obj/trait/pilot
 	icon_state = "handshake"
 	points = -1
 	isPositive = 1
-
-/obj/trait/jailbird
-	name = "Jailbird (0)"
-	cleanName = "Jailbird"
-	desc = "You have a criminal record and start in the brig!"
-	id = "jailbird"
-	icon_state = "jail"
-	points = 0
-	isPositive = 0
 
 /obj/trait/clericalerror
 	name = "Clerical Error (0)"
