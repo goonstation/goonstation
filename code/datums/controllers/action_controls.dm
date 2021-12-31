@@ -44,7 +44,7 @@ var/datum/action_controller/actions
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
-				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && OA.resumable)
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
 					OA.onResume()
 					qdel(A)
 					return OA
