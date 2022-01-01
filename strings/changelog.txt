@@ -1,4 +1,8 @@
 
+(t)fri dec 31 21
+(u)tarmunora
+(e)⚖🎉|balance, happy new years
+(*)Thrown drinking glasses now splash some of their contents to the floor as well
 (t)thu dec 30 21
 (u)pali
 (+)Clicking on the pull hud button now shows a popup where you can select what to pull.
