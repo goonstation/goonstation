@@ -207,8 +207,6 @@
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
-				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-				"<span class='notice'>You take a bite of [src]!</span>")
 
 				src.take_a_bite(M, user)
 				return 1
@@ -235,19 +233,19 @@
 						M, "<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
 						return 0
 
-				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/food/snacks/proc/take_a_bite, list(M, user),\
-				  src.icon, src.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_MOVE)
+				actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)
 				return 1
 
 	///Called when we successfully take a bite of something (or make someone else take a bite of something)
 	proc/take_a_bite(var/mob/consumer, var/mob/feeder)
-		feeder.tri_message("<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
-				feeder, "<span class='alert'>You feed [consumer] [src]!</span>",\
-				consumer, "<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
-
 		if (consumer == feeder)
+			consumer.visible_message("<span class='notice'>[consumer] takes a bite of [src]!</span>",\
+			  "<span class='notice'>You take a bite of [src]!</span>")
 			logTheThing("combat", consumer, null, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
 		else
+			feeder.tri_message("<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
+					feeder, "<span class='alert'>You feed [consumer] [src]!</span>",\
+					consumer, "<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
 			logTheThing("combat", feeder, consumer, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
 
 		src.amount--
