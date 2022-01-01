@@ -1271,7 +1271,10 @@
 			qdel(src)
 			return
 		if (src.reagents) // haine fix for cannot execute null.reaction()
-			src.reagents.reaction(A)
+			var/amt = max(10, src.gulp_size)
+			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
+			src.reagents.remove_any(amt)
+			src.reagents.reaction(T)
 
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
