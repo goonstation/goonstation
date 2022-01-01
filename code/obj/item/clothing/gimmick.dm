@@ -502,6 +502,148 @@
 	icon_state = "yellowclown"
 	//item_state = "yellowclown"
 
+//bald clown masks
+//need to add hand sprites
+
+/obj/item/clothing/mask/clownbald
+	name = "wigless clown mask"
+	desc = "For clowns who want to show off their hair!"
+	icon_state = "clownbald"
+	item_state = "clownbald"
+	see_face = 0.0
+
+	var/spam_flag = 0
+	var/spam_timer = 100
+	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	var/volume = 50
+	var/randomized_pitch = 1
+
+	proc/honk_nose(mob/user as mob)
+		if (!spam_flag)
+			spam_flag = 1
+			src.add_fingerprint(user)
+			user?.visible_message("<B>[user]</B> honks the nose on [his_or_her(user)] [src.name]!")
+			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+			SPAWN_DBG(src.spam_timer)
+				spam_flag = 0
+			return 1
+		return 0
+
+/obj/item/clothing/mask/clownbald/blue
+	name = "wigless clown mask"
+	desc = "For sad clowns who want to show off their hair!"
+	icon_state = "blessedclownbald"
+	//item_state = "blessedclownbald"
+
+/obj/item/clothing/mask/clownbald/purple
+	name = "wigless clown mask"
+	desc = "For fancy clowns who want to show off their hair!"
+	icon_state = "purpleclownbald"
+	//item_state = "purpleclownbald"
+
+/obj/item/clothing/mask/clownbald/pink
+	name = "wigless clown mask"
+	desc = "For sweet clowns who want to show off their hair!"
+	icon_state = "pinkclownbald"
+	//item_state = "pinkclownbald"
+
+/obj/item/clothing/mask/clownbald/yellow
+	name = "wigless clown mask"
+	desc = "For bright clowns who want to show off their hair!"
+	icon_state = "yellowclownbald"
+	//item_state = "yellowclownbald"
+
+/obj/item/clothing/mask/clown_hat/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the wig from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clownbald)
+	else . = ..()
+
+/obj/item/clothing/mask/clownbald/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] reattaches the hair to [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clown_hat)
+	else . = ..()
+
+/obj/item/clothing/mask/clown_hat/blue/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the wig from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clownbald/blue)
+	else . = ..()
+
+/obj/item/clothing/mask/clownbald/blue/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] reattaches the hair to [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clown_hat/blue)
+	else . = ..()
+
+/obj/item/clothing/mask/clown_hat/purple/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the wig from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clownbald/purple)
+	else . = ..()
+
+/obj/item/clothing/mask/clownbald/purple/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] reattaches the hair to [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clown_hat/purple)
+	else . = ..()
+
+/obj/item/clothing/mask/clown_hat/pink/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the wig from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clownbald/pink)
+	else . = ..()
+
+/obj/item/clothing/mask/clownbald/pink/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] reattaches the hair to [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clown_hat/pink)
+	else . = ..()
+
+/obj/item/clothing/mask/clown_hat/yellow/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] cuts off the wig from [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clownbald/yellow)
+	else . = ..()
+
+/obj/item/clothing/mask/clownbald/yellow/attackby(obj/item/W, mob/user)
+	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+		user.visible_message("<span class='notice'>[user] reattaches the hair to [src].</span>")
+		if(src.loc == user)
+			user.u_equip(src)
+		qdel(src)
+		user.put_in_hand_or_drop(new /obj/item/clothing/mask/clown_hat/yellow)
+	else . = ..()
+
+
 // SHAMONE
 
 /obj/item/clothing/under/gimmick/mj_clothes
