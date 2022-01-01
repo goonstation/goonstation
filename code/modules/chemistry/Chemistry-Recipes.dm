@@ -2684,7 +2684,6 @@ datum
 			inhibitors = list("stabiliser")
 			instant = 1
 			special_log_handling = 1
-			consume_all = 1
 			result_amount = 3
 			mix_phrase = "The mixture quickly turns into a pall of smoke!"
 #ifdef CHEM_REACTION_PRIORITY
