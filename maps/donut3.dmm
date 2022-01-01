@@ -905,11 +905,11 @@
 /area/station/turret_protected/AIsat)
 "abL" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/secure_data,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "abN" = (
@@ -14465,6 +14465,11 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
 "dXc" = (
@@ -20110,6 +20115,8 @@
 "fCu" = (
 /obj/machinery/computer3/generic/secure_data,
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -36325,9 +36332,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/ranch)
 "kwK" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
 /obj/decoration/vent{
 	pixel_x = 1;
 	pixel_y = 32
@@ -36340,6 +36344,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -37835,6 +37842,11 @@
 "kUt" = (
 /obj/stool/chair/office/red{
 	dir = 8
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -39890,6 +39902,17 @@
 	dir = 1
 	},
 /area/station/bridge/customs)
+"lBj" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/red/checker,
+/area/station/security/checkpoint/arrivals)
 "lBr" = (
 /turf/simulated/floor/purpleblack{
 	dir = 5
@@ -64560,10 +64583,10 @@
 	icon_state = "1-10"
 	},
 /obj/cable,
-/obj/machinery/computer/secure_data{
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -70947,13 +70970,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "uzE" = (
-/obj/machinery/computer/secure_data{
-	dir = 4
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = 9;
-	pixel_y = 2
-	},
 /obj/machinery/light/emergency{
 	dir = 8
 	},
@@ -70963,6 +70979,13 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = 9;
+	pixel_y = 2
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
@@ -74146,6 +74169,10 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/brig,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/podbay)
 "vum" = (
@@ -80765,6 +80792,11 @@
 /area/shuttle/arrival/station)
 "xlY" = (
 /obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
 "xmb" = (
@@ -114987,7 +115019,7 @@ mxj
 tGy
 mkV
 mkV
-mkV
+lBj
 dWY
 ioP
 pAu

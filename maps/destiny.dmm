@@ -20920,11 +20920,11 @@
 	dir = 8;
 	pixel_y = 6
 	},
-/obj/machinery/computer/secure_data{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
 	},
 /turf/simulated/floor/red/checker{
 	dir = 4
@@ -25274,7 +25274,6 @@
 /turf/simulated/floor/black,
 /area/station/ranch)
 "fAh" = (
-/obj/machinery/computer/secure_data,
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
@@ -25285,6 +25284,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "fAk" = (
@@ -38616,15 +38616,15 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
@@ -47700,7 +47700,6 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/computer/secure_data,
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 28
 	},
@@ -47708,6 +47707,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
 "rFS" = (

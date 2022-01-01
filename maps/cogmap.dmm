@@ -4990,7 +4990,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "aon" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -5003,6 +5007,9 @@
 	icon_state = "1-4"
 	},
 /obj/submachine/weapon_vendor/security,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/checkpoint/arrivals)
 "aop" = (
