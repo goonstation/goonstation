@@ -311,7 +311,7 @@
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)
-		boutput(usr, "<span class='notice'>Alert sent.</span>")
+		usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>", "<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>", "<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
 
 /obj/ability_button/pda_security_alert
 	name = "Send Security Alert"

@@ -113,11 +113,7 @@
 		icon_state = "pda-hos"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
-		#ifdef RP_MODE
-		setup_default_module = /obj/item/device/pda_module/flashlight
-		#else
 		setup_default_module = /obj/item/device/pda_module/alert
-		#endif
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
@@ -126,11 +122,7 @@
 		icon_state = "pda-nt"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
-		#ifdef RP_MODE
-		setup_default_module = /obj/item/device/pda_module/flashlight
-		#else
 		setup_default_module = /obj/item/device/pda_module/alert
-		#endif
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
@@ -199,11 +191,7 @@
 	security
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
-		#ifdef RP_MODE
-		setup_default_module = /obj/item/device/pda_module/flashlight
-		#else
 		setup_default_module = /obj/item/device/pda_module/alert
-		#endif
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
