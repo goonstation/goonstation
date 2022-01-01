@@ -782,14 +782,38 @@
 		/obj/item/reagent_containers/emergency_injector/salicylic_acid)
 
 	records
-		spawn_contents = list(/obj/random_item_spawner/records/one_to_four)
+		make_my_stuff()
+			if (..())
+				var/rand_amount = rand(1, 4)
+				var/list/possible_records = list(/obj/item/record/clown_collection/honk, //I'm sorry
+				/obj/item/record/clown_collection/uguu,
+				/obj/item/record/honkmas,
+				/obj/item/record/christmas,
+				/obj/item/record/honey,
+				/obj/item/record/atlas,
+				/obj/item/record/clown_collection/poo)
+				for(var/i in 1 to rand_amount)
+					var/picked_record = pick(possible_records)
+					new picked_record(src)
+				return TRUE
 
 	botany
 		spawn_contents = list(/obj/item/seed/alien = 4,
 		/obj/item/clothing/under/misc/hydroponics)
 
 	bees
-		spawn_contents = list(/obj/random_item_spawner/bee_junk/four_to_six)
+		make_my_stuff()
+			if (..())
+				var/rand_amount = rand(4, 6)
+				var/list/possible_bee = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy,
+				/obj/item/reagent_containers/food/snacks/beefood,
+				/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly,
+				/obj/item/reagent_containers/food/snacks/ingredient/honey)
+				for(var/i in 1 to rand_amount)
+					var/picked_bee = pick(possible_bee)
+					new picked_bee(src)
+				return TRUE
 
 /obj/storage/crate/debris_loot/med
 	meds
@@ -810,6 +834,14 @@
 	gold
 		spawn_contents = list(/obj/item/material_piece/gold)
 
+	chems
+		make_my_stuff()
+			if (..())
+				var/rand_amount = rand(1, 3)
+				for(var/i in 1 to rand_amount)
+					new/obj/item/reagent_containers/glass/flask/rand_reagent(src)
+				return TRUE
+
 /obj/storage/crate/debris_loot/high
 	meds
 		spawn_contents = list(/obj/item/storage/firstaid/crit,
@@ -822,4 +854,14 @@
 		/obj/item/ammo/power_cell/med_power)
 
 	gold_lots
-		spawn_contents = list(/obj/random_item_spawner/gold_bullion/two_to_four)
+		make_my_stuff()
+			if (..())
+				var/rand_amount = rand(2, 4)
+				for(var/i in 1 to rand_amount)
+					new/obj/item/material_piece/gold(src)
+				return TRUE
+
+	grenades
+		spawn_contents = list(/obj/item/old_grenade/emp = 2,
+		/obj/item/old_grenade/graviton,
+		/obj/item/old_grenade/sonic)

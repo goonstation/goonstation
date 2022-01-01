@@ -343,14 +343,16 @@ var/list/debris_map_colors = list(
 
 			full_ast_turfs = ast_turfs
 			for(var/turf/T in ast_turfs)
-				T.ReplaceWith(/turf/simulated/wall/asteroid)
+				var/turf/simulated/wall/asteroid/ast_wall = T.ReplaceWith(/turf/simulated/wall/asteroid)
+				ast_wall.hardness = ((ast_wall.x > 150 ? 300 - ast_wall.x : ast_wall.x) + (ast_wall.y > 150 ? 300 - ast_wall.y : ast_wall.y)) / 15
 				var/list/neighbors = getneighbours(T) //why does this have to be the bri'ish spelling
 				for(var/turf/T2 in neighbors)
 					if(ast_turfs.Find(T2) || !istype(T2, /turf/space) || ISDISTEDGE(T2, AST_MAPSEEDBORDER) || (T2.loc.type != /area/space && !istype(T2.loc, /area/allowGenerate)))
 						continue
 
 					full_ast_turfs += T2
-					T2.ReplaceWith(/turf/simulated/wall/asteroid)
+					var/turf/simulated/wall/asteroid/ast_wall2 = T2.ReplaceWith(/turf/simulated/wall/asteroid)
+			Turfspawn_Asteroid_SeedOre(full_ast_turfs, 1, debris_field = TRUE)
 
 		for(var/i in 1 to loot_thingies)
 			var/turf/possible_spot = pick(debrisZ)

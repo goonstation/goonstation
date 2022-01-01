@@ -892,7 +892,7 @@
 			turfs -= AST
 	return turfs
 
-/proc/Turfspawn_Asteroid_SeedOre(var/list/turfs,var/veins,var/rarity_mod = 0)
+/proc/Turfspawn_Asteroid_SeedOre(var/list/turfs,var/veins,var/rarity_mod = 0,var/debris_field = FALSE)
 	if (!turfs || turfs.len < 1)
 		return list()
 
@@ -905,7 +905,18 @@
 		veins--
 		if (turfs.len < 1)
 			break
-		var/rarity_roller = RarityClassRoll(100,rarity_mod,list(90,50))
+		var/rarity_roller
+		if(debris_field)
+			var/turf/ast_picked_turf = pick(turfs)
+			var/pos_value = (ast_picked_turf.x > 150 ? 300 - ast_picked_turf.x : ast_picked_turf.x) + (ast_picked_turf.y > 150 ? 300 - ast_picked_turf.y : ast_picked_turf.y)
+			if(pos_value >= 225)
+				rarity_roller = 3
+			else if(pos_value >= 125)
+				rarity_roller = 2
+			else
+				rarity_roller = 3
+		else
+			rarity_roller = RarityClassRoll(100,rarity_mod,list(90,50))
 		var/list/ores_to_pick = list()
 		switch(rarity_roller)
 			if(3) // rare tier

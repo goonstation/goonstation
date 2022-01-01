@@ -230,3 +230,8 @@
 
 /obj/item/reagent_containers/glass/flask/black_powder //prefab shit
 	initial_reagents = "blackpowder"
+
+/obj/item/reagent_containers/glass/flask/rand_reagent
+	create_initial_reagents(list/new_reagents)
+		var/fill_volume = rand(1, 15)
+		src.reagents.add_reagent(pick(all_functional_reagent_ids), fill_volume)
