@@ -340,6 +340,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 /obj/item/organ/lung/plasmatoid
+	unusual = TRUE
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
