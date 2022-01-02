@@ -32,6 +32,7 @@ ABSTRACT_TYPE(/obj/item/gun/modular)
 	var/obj/item/gun_parts/accessory/accessory = null
 	var/list/obj/item/gun_parts/parts = list()
 	var/built = 0
+	var/no_save = 0 // when 1, this should prevent the player from carrying it cross-round?
 	icon_state = "tranq_pistol"
 	contraband = 0
 
