@@ -217,7 +217,12 @@
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
 /area/shuttle/arrival/station)
 "aaN" = (
 /obj/machinery/mass_driver{
@@ -242,13 +247,19 @@
 /area/shuttle/arrival/station)
 "aaQ" = (
 /obj/machinery/sleeper/compact,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
 "aaR" = (
 /obj/storage/closet/emergency,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
@@ -262,7 +273,10 @@
 	pixel_x = 3
 	},
 /obj/item/device/radio/intercom,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
@@ -273,7 +287,11 @@
 	},
 /area/shuttle/arrival/station)
 "aaU" = (
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aaV" = (
 /turf/simulated/shuttle/wall/cockpit/window{
@@ -287,7 +305,11 @@
 	name = "JoinLate"
 	},
 /obj/stool/chair/comfy/shuttle,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aaZ" = (
 /obj/lattice,
@@ -295,7 +317,11 @@
 /area/station/solar/north)
 "abb" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abc" = (
 /obj/machinery/camera{
@@ -308,7 +334,11 @@
 	name = "JoinLate"
 	},
 /obj/stool/chair/comfy/shuttle,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abi" = (
 /obj/wingrille_spawn/auto,
@@ -340,7 +370,11 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abu" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -390,7 +424,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abB" = (
 /obj/table/reinforced/auto,
@@ -400,7 +438,11 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abC" = (
 /obj/item/device/radio/beacon,
@@ -423,12 +465,20 @@
 /area/station/crew_quarters/observatory)
 "abG" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abH" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "abJ" = (
 /obj/stool/chair,
@@ -54898,7 +54948,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "grn" = (
 /obj/cable{
@@ -55391,7 +55445,11 @@
 /area/station/hangar/main)
 "hoR" = (
 /obj/wingrille_spawn/auto,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "hoU" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -60127,7 +60185,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "qPX" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -61180,7 +61242,11 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "sKw" = (
 /obj/machinery/light/small/floor/warm,
