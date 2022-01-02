@@ -180,11 +180,19 @@ proc/hide_weapons_everywhere()
 			if (T.z != Z_LEVEL_STATION)
 				continue
 			if(istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet))
-				var/obj/storage/closet/syndicate/locker = new /obj/storage/closet/syndicate
-				locker.loc = S.loc
+				if (prob(20))
+					if (prob(50))
+						var/obj/storage/closet/emergency/locker = new /obj/storage/closet/emergency
+						locker.loc = S.loc
+					else
+						var/obj/storage/closet/fire/locker = new /obj/storage/closet/fire
+						locker.loc = S.loc
+				else
+					var/obj/storage/closet/syndicate/locker = new /obj/storage/closet/syndicate
+					locker.loc = S.loc
 				qdel(S)
 			else if(istype(S, /obj/storage/crate))
-				if (rand(10))
+				if (prob(20))
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest
 					chest.loc = S.loc
 				else
@@ -223,7 +231,6 @@ proc/hide_weapons_everywhere()
 	/datum/syndicate_buylist/generic/revflashbang,
 	/datum/syndicate_buylist/generic/revsign,
 	/datum/syndicate_buylist/generic/rev_normal_flash)
-	var/obj/weapon = null
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
 		if(D.item)
@@ -235,28 +242,69 @@ proc/hide_weapons_everywhere()
 			if (add_item)
 				murder_supplies.Add(D.item)
 
-
+	var/list/chest_supplies = list()
 	// Feel free to add more!
-	murder_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
-	murder_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
-	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
-	murder_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
-	murder_supplies.Add(/obj/item/gun/kinetic/colt_saa)
-	murder_supplies.Add(/obj/item/gun/kinetic/riotgun)
-	murder_supplies.Add(/obj/item/gun/kinetic/airzooka)
-	murder_supplies.Add(/obj/item/gun/kinetic/cannon)
-	murder_supplies.Add(/obj/item/gun/energy/laser_gun)
-	murder_supplies.Add(/obj/item/gun/energy/alastor)
-	murder_supplies.Add(/obj/item/gun/energy/pulse_rifle)
+	chest_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
+	chest_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
+	chest_supplies.Add(/obj/item/gun/kinetic/pistol)
+	chest_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
+	chest_supplies.Add(/obj/item/gun/kinetic/colt_saa)
+	chest_supplies.Add(/obj/item/gun/kinetic/riotgun)
+	chest_supplies.Add(/obj/item/gun/kinetic/airzooka)
+	chest_supplies.Add(/obj/item/gun/kinetic/cannon)
+	chest_supplies.Add(/obj/item/gun/energy/laser_gun)
+	chest_supplies.Add(/obj/item/gun/energy/alastor)
+	chest_supplies.Add(/obj/item/gun/energy/pulse_rifle)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/vest)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/)
+	chest_supplies.Add(/obj/item/clothing/shoes/swat)
+	chest_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
+	chest_supplies.Add(/obj/item/clothing/shoes/galoshes)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/NT)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/EOD)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/heavy)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/captain)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/makeshift)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/turd)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/batman)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/football)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security/improved)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/swat)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/specialist/knight)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/space/ntso)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/space/nanotrasen)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/viking)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/football)
+	chest_supplies.Add(/obj/item/clothing/head/helmet/batman)
 
 
 	for_by_tcl(S, /obj/storage) // imcoder
 		var/turf/T = get_turf(S)
 		if (T.z != Z_LEVEL_STATION)
 			continue
-		if(prob(40))
+		var/obj/weapon = null
+		if (istype(S, /obj/storage/crate/chest/))
+			if(prob(30))
+				weapon = pick(chest_supplies)
+				message_admins("Chest 2: [weapon]")
+				new weapon(S)
+				S.layer += 0.1
+			weapon = pick(chest_supplies)
+			message_admins("Chest 1: [weapon]")
+			weapon = pick(chest_supplies)
+			new weapon(S)
+			S.layer += 0.1
+		else if(prob(40))
 			weapon = pick(murder_supplies)
 			new weapon(S)
+			S.layer += 0.1
 
 
 proc/equip_battler(mob/living/carbon/human/battler)
