@@ -285,6 +285,7 @@
 	name = "syringe (synaptizine)"
 	desc = "Contains synaptizine, a mild stimulant to increase alertness."
 	initial_reagents = "synaptizine"
+	
 /obj/item/reagent_containers/syringe/formaldehyde
 	name = "syringe (embalming fluid)"
 	desc = "Contains formaldehyde, a chemical that prevents corpses from decaying."
