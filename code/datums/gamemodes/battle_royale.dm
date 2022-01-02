@@ -21,7 +21,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/last_shuttle_move = 0
 	var/next_storm = 0
 	var/next_drop = 0
-	var/current_battle_spawn_name = "nowhere!"
+	var/current_battle_spawn_name = null
 	var/z_damage_start_time = 0
 	var/damage_tick = 0	// Don't cause off Z1 damage every tick
 	var/datum/random_event/special/battlestorm/storm = null
@@ -172,39 +172,16 @@ var/global/list/datum/mind/battle_pass_holders = list()
 proc/hide_weapons_everywhere()
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
 	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
-	for_by_tcl(S, /obj/storage)
-		if(istype(S, /obj/storage/secure/closet/security/equipment))
-			qdel(S)
-		else
-			var/turf/T = get_turf(S)
-			if (T.z != Z_LEVEL_STATION)
-				continue
-			if(istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet))
-				if (prob(20))
-					if (prob(50))
-						var/obj/storage/closet/emergency/locker = new /obj/storage/closet/emergency
-						locker.loc = S.loc
-					else
-						var/obj/storage/closet/fire/locker = new /obj/storage/closet/fire
-						locker.loc = S.loc
-				else
-					var/obj/storage/closet/syndicate/locker = new /obj/storage/closet/syndicate
-					locker.loc = S.loc
-				qdel(S)
-			else if(istype(S, /obj/storage/crate))
-				if (prob(20))
-					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest
-					chest.loc = S.loc
-				else
-					var/obj/storage/crate/crate = new /obj/storage/crate
-					crate.loc = S.loc
-				qdel(S)
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()
 
 	var/list/obj/murder_supplies = list()
 	var/list/banned_items = list(/datum/syndicate_buylist/traitor/classcrate,
+	/datum/syndicate_buylist/traitor/floorcloset,
+	/datum/syndicate_buylist/traitor/wiretap,
+	/datum/syndicate_buylist/traitor/buddy_ammofab,
+	/datum/syndicate_buylist/traitor/chargehacker,
 	/datum/syndicate_buylist/generic/telecrystal,
 	/datum/syndicate_buylist/generic/trick_telecrystal,
 	/datum/syndicate_buylist/traitor/idtracker,
@@ -251,15 +228,13 @@ proc/hide_weapons_everywhere()
 	chest_supplies.Add(/obj/item/gun/kinetic/colt_saa)
 	chest_supplies.Add(/obj/item/gun/kinetic/riotgun)
 	chest_supplies.Add(/obj/item/gun/kinetic/airzooka)
-	chest_supplies.Add(/obj/item/gun/kinetic/cannon)
 	chest_supplies.Add(/obj/item/gun/energy/laser_gun)
 	chest_supplies.Add(/obj/item/gun/energy/alastor)
 	chest_supplies.Add(/obj/item/gun/energy/pulse_rifle)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/vest)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/)
 	chest_supplies.Add(/obj/item/clothing/shoes/swat)
 	chest_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
 	chest_supplies.Add(/obj/item/clothing/shoes/galoshes)
+	chest_supplies.Add(/obj/item/clothing/suit/armor/vest)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/NT)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/EOD)
@@ -269,7 +244,6 @@ proc/hide_weapons_everywhere()
 	chest_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/captain)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/makeshift)
-	chest_supplies.Add(/obj/item/clothing/suit/armor/turd)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	chest_supplies.Add(/obj/item/clothing/suit/armor/football)
 	chest_supplies.Add(/obj/item/clothing/head/helmet/hardhat/security)
@@ -284,22 +258,51 @@ proc/hide_weapons_everywhere()
 	chest_supplies.Add(/obj/item/clothing/head/helmet/football)
 	chest_supplies.Add(/obj/item/clothing/head/helmet/batman)
 
-
-	for_by_tcl(S, /obj/storage) // imcoder
-		var/turf/T = get_turf(S)
-		if (T.z != Z_LEVEL_STATION)
-			continue
-		var/obj/weapon = null
-		if (istype(S, /obj/storage/crate/chest/))
-			if(prob(30))
-				weapon = pick(chest_supplies)
-				new weapon(S)
-			weapon = pick(chest_supplies)
-			weapon = pick(chest_supplies)
-			new weapon(S)
-		else if(prob(40))
-			weapon = pick(murder_supplies)
-			new weapon(S)
+	for_by_tcl(S, /obj/storage)
+		// Delete all sec lockers due to making sec a hotspot of lockers
+		if (istype(S, /obj/storage/secure/closet/security/equipment))
+			qdel(S)
+		else
+			var/turf/T = get_turf(S)
+			if (T.z != Z_LEVEL_STATION)
+				continue
+			if (istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet))
+				var/obj/storage/closet/locker
+				// Chance of oxy/fire locker with no loot
+				if (prob(20))
+					if (prob(50))
+						locker = new /obj/storage/closet/emergency(T)
+					else
+						locker = new /obj/storage/closet/fire(T)
+				else
+					locker = new /obj/storage/closet/syndicate(T)
+					var/obj/weapon = null
+					if (prob(50))
+						// 10% chance of chest item
+						if(prob(10))
+							weapon = pick(chest_supplies)
+							new weapon(locker)
+						else
+							weapon = pick(murder_supplies)
+							new weapon(locker)
+				qdel(S)
+			else if (istype(S, /obj/storage/crate))
+				if (prob(10))
+					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
+					var/obj/weapon = null
+					// 1/3 chance of two items
+					if(prob(33))
+						weapon = pick(chest_supplies)
+						new weapon(chest)
+					weapon = pick(chest_supplies)
+					new weapon(chest)
+				else
+					var/obj/storage/crate/crate = new /obj/storage/crate(T)
+					var/obj/weapon = null
+					if(prob(40))
+						weapon = pick(murder_supplies)
+						new weapon(crate)
+				qdel(S)
 
 
 proc/equip_battler(mob/living/carbon/human/battler)
