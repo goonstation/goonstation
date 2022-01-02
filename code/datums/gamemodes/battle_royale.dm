@@ -254,7 +254,7 @@ proc/hide_weapons_everywhere()
 		var/turf/T = get_turf(S)
 		if (T.z != Z_LEVEL_STATION)
 			continue
-		if(prob(50))
+		if(prob(40))
 			weapon = pick(murder_supplies)
 			new weapon(S)
 
