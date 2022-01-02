@@ -162,7 +162,7 @@
 			using = 0
 			return 1
 
-		if (!(the_item in get_filtered_atoms_in_touch_range(owner, base_path))
+		if (!(the_item in get_filtered_atoms_in_touch_range(owner, base_path)))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
 			return 1
 
