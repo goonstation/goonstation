@@ -483,6 +483,13 @@
 			user.put_in_hand_or_drop(D)
 			qdel(W)
 			qdel(src)
+		else if (istype(W, /obj/item/kitchen/rollingpin))
+			boutput(user, "<span class='notice'>You flatten the [src] into a long sheet.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			var/obj/item/reagent_containers/food/snacks/ingredient/dough/D = new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet(W.loc)
+			user.put_in_hand_or_drop(D)
+			qdel(src)
 		else ..()
 
 	attack_self(var/mob/user as mob)
@@ -494,6 +501,7 @@
 			src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
+
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough_circle
 	name = "dough circle"
@@ -758,6 +766,37 @@
 	desc = "An uncooked sheet of pasta."
 	icon_state = "pasta-sheet"
 
+/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles
+	// generic parent
+	name = "wheat noodles"
+	heal_amt = 0
+	amount = 1
+
+	heal(var/mob/M)
+		boutput(M, "<span class='alert'>Ew, disgusting...</span>")
+		..()
+
+	sheet
+		name = "wheat noodle sheet"
+		desc = "An uncooked sheet of wheat dough, used in noodle-making."
+		icon_state = "noodle-sheet"
+
+		attackby(obj/item/W as obj, mob/user as mob)
+			if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+				var/turf/T = get_turf(src)
+				user.visible_message("[user] cuts [src] into thick noodles.", "You cut [src] into thick noodles.")
+				new /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon(T)
+				qdel (src)
+
+	ramen
+		name = "ramen noodles"
+		desc = "Fresh Japanese ramen noodles. Floppy."
+		icon_state = "ramen"
+
+	udon
+		name = "udon noodles"
+		desc = "Thick wheat noodles."
+		icon_state = "udon"
 
 /obj/item/reagent_containers/food/snacks/ingredient/chips
 	name = "uncooked chips"
@@ -851,6 +890,36 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
 			for (var/i in 1 to 4)
 				new /obj/item/reagent_containers/food/snacks/ingredient/pepperoni(T)
+			qdel (src)
+
+/obj/item/reagent_containers/food/snacks/ingredient/fishpaste
+	name = "fish paste"
+	desc = "An unappetizing clump of mashed fish bits."
+	icon_state = "fishpaste"
+	amount = 1
+/obj/item/reagent_containers/food/snacks/ingredient/kamaboko
+	name = "kamaboko"
+	desc = "A slice of fish cake with a cute little spiral in the center."
+	icon_state = "kamaboko"
+	amount = 1
+	custom_food = 1
+	food_color = "#ffffff"
+
+/obj/item/reagent_containers/food/snacks/ingredient/kamaboko_log
+	name = "kamaboko log"
+	desc = "What a strange-looking fish."
+	icon_state = "kamaboko-log"
+	amount = 3
+	custom_food = 1
+	food_color = "#ffffff"
+	doants = 0
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
+			for (var/i in 1 to 4)
+				new /obj/item/reagent_containers/food/snacks/ingredient/kamaboko(T)
 			qdel (src)
 
 /obj/item/reagent_containers/food/snacks/ingredient/seaweed

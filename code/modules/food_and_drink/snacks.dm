@@ -2829,3 +2829,21 @@
 	initial_volume = 25
 	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
+
+/obj/item/reagent_containers/food/snacks/ramenbowl
+	name = "bowl of ramen"
+	desc = "A hearty bowl of real Japanese ramen; not the packet stuff!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "ramen"
+	needfork = TRUE
+	amount = 5
+	food_effects = list("food_brute","food_energized","food_warm")
+
+/obj/item/reagent_containers/food/snacks/udonbowl
+	name = "bowl of udon"
+	desc = "A bowl of very chewy wheat noodles served in a warm broth."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "udon"
+	needfork = TRUE
+	amount = 5
+	food_effects = list("food_hp_up","food_warm")
