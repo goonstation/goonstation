@@ -22,6 +22,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/next_storm = 0
 	var/next_drop = 0
 	var/current_battle_spawn_name = "nowhere!"
+	var/z_damage_start_time = 0
+	var/damage_tick = 0	// Don't cause off Z1 damage every tick
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
@@ -67,6 +69,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
+	z_damage_start_time = world.time + MAX_TIME_ON_SHUTTLE
 	return 1
 
 
@@ -87,12 +90,12 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
 	SPAWN_DBG(MAX_TIME_ON_SHUTTLE)
-		if(istype(get_area(player.current),/area/shuttle/battle))
+		if(istype(get_area(player.current),/area/shuttle/battle) || istype(get_area(player.current),/area/shuttle_transit_space/west) )
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
-			player.current.nodamage = 0
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+		player.current.nodamage = 0 // Try to catch nodamage bugging by setting it on every player
 	SHOW_BATTLE_ROYALE_TIPS(player.current)
 
 
@@ -109,7 +112,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return 1
+		return 0
 	return 0
 
 
@@ -135,6 +138,20 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			if (C.mob)
 				if(istype(get_area(C.mob),/area/shuttle/battle))
 					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
+
+	// Check for players outside Z1
+	if (world.time > z_damage_start_time)
+		damage_tick++
+		if (damage_tick > 9)
+			damage_tick = 0
+			if (world.time > MAX_TIME_ON_SHUTTLE)
+				for(var/datum/mind/M in living_battlers)
+					if (ishuman(M.current))
+						var/mob/living/carbon/human/H = M.current
+						var/turf/T = get_turf(H)
+						if (T.z != Z_LEVEL_STATION)
+							boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
+							random_brute_damage(H, 8, 0)
 
 	// Is it time for a storm
 	if(src.next_storm < world.time)

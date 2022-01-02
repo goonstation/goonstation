@@ -589,6 +589,7 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/battle
 	icon_state = "shuttle_escape-battle-shuttle"
 	var/warp_dir = EAST
+	sanctuary = 1
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
