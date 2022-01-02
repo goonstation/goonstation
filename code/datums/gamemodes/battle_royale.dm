@@ -295,16 +295,13 @@ proc/hide_weapons_everywhere()
 				weapon = pick(chest_supplies)
 				message_admins("Chest 2: [weapon]")
 				new weapon(S)
-				S.layer += 0.1
 			weapon = pick(chest_supplies)
 			message_admins("Chest 1: [weapon]")
 			weapon = pick(chest_supplies)
 			new weapon(S)
-			S.layer += 0.1
 		else if(prob(40))
 			weapon = pick(murder_supplies)
 			new weapon(S)
-			S.layer += 0.1
 
 
 proc/equip_battler(mob/living/carbon/human/battler)
