@@ -162,6 +162,10 @@
 			using = 0
 			return 1
 
+		if (!(the_item in get_filtered_atoms_in_touch_range(owner, base_path))
+			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			return 1
+
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
