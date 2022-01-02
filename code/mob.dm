@@ -386,6 +386,9 @@
 		src.contextLayout.dispose()
 		src.contextLayout = null
 
+	if (src.buckled)
+		src.buckled.buckled_guy = null
+
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)

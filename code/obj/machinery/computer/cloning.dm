@@ -370,6 +370,8 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
+		if(iswraith(M))
+			return
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
 	return null
