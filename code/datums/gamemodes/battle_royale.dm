@@ -82,7 +82,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")
-	player.current.nodamage = 1 // No murder on the battle shuttle
 		// Stuff them on the shuttle
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
@@ -90,7 +89,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		if(istype(get_area(player.current),/area/shuttle/battle))
 			boutput(player.current,"<span class='alert'>You are thrown out of the shuttle for taking too long!</span>")
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
-			player.current.nodamage = 0
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 	SHOW_BATTLE_ROYALE_TIPS(player.current)
