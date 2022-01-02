@@ -182,6 +182,8 @@ var/global/logLength = 0
 					name = mobRef.name
 			else
 				name = mobRef.name
+			if(length(mobRef.name_suffixes))
+				name = mobRef.real_name
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
@@ -205,6 +207,8 @@ var/global/logLength = 0
 						name = clientRef.mob.name
 				else
 					name = clientRef.mob.name
+			if(length(clientRef.mob.name_suffixes))
+				name = clientRef.mob.real_name
 			if (!isdead(mobRef))
 				dead = 0
 		if (clientRef.key)
