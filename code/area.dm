@@ -586,6 +586,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	expandable = 0
 
 /area/shuttle/battle
+	name = "Battle Shuttle"
 	icon_state = "shuttle_escape-battle-shuttle"
 	var/warp_dir = EAST
 	sanctuary = 1
