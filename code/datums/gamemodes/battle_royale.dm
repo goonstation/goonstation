@@ -94,7 +94,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			player.current.set_loc(pick(get_area_turfs(current_battle_spawn,1)))
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			player.current.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
-		player.current.nodamage = 0 // Try to catch nodamage bugging by setting it on every player
 	SHOW_BATTLE_ROYALE_TIPS(player.current)
 
 
