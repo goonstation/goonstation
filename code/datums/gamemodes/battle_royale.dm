@@ -173,29 +173,90 @@ var/global/list/datum/mind/battle_pass_holders = list()
 // Does what it says on the tin
 proc/hide_weapons_everywhere()
 	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
-	// Kill sec lockers because it's free armor that makes them too much of a no brainer
+	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
 	for_by_tcl(S, /obj/storage)
 		if(istype(S, /obj/storage/secure/closet/security/equipment))
 			qdel(S)
+		else
+			var/turf/T = get_turf(S)
+			if (T.z != Z_LEVEL_STATION)
+				continue
+			if(istype(S, /obj/storage/secure/closet) || istype(S, /obj/storage/closet))
+				var/obj/storage/closet/syndicate/locker = new /obj/storage/closet/syndicate
+				locker.loc = S.loc
+				qdel(S)
+			else if(istype(S, /obj/storage/crate))
+				if (rand(10))
+					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest
+					chest.loc = S.loc
+				else
+					var/obj/storage/crate/crate = new /obj/storage/crate
+					crate.loc = S.loc
+				qdel(S)
 	// Im stealing the list of items from the surplus crate so this check needs to happen
 	if(!syndi_buylist_cache)
 		build_syndi_buylist_cache()
 
 	var/list/obj/murder_supplies = list()
+	var/list/banned_items = list(/datum/syndicate_buylist/traitor/classcrate,
+	/datum/syndicate_buylist/generic/telecrystal,
+	/datum/syndicate_buylist/generic/trick_telecrystal,
+	/datum/syndicate_buylist/traitor/idtracker,
+	/datum/syndicate_buylist/traitor/mindslave,
+	/datum/syndicate_buylist/traitor/deluxe_mindslave,
+	/datum/syndicate_buylist/generic/detomatix,
+	/datum/syndicate_buylist/generic/spy_sticker_kit,
+	/datum/syndicate_buylist/traitor/ringtone,
+	/datum/syndicate_buylist/traitor/sinjector,
+	/datum/syndicate_buylist/traitor/minibible,
+	/datum/syndicate_buylist/traitor/contract,
+	/datum/syndicate_buylist/traitor/maneater,
+	/datum/syndicate_buylist/traitor/hotbox_lighter,
+	/datum/syndicate_buylist/traitor/syndanalyser,
+	/datum/syndicate_buylist/traitor/powergloves,
+	/datum/syndicate_buylist/traitor/chemicompiler,
+	/datum/syndicate_buylist/traitor/robosuit,
+	/datum/syndicate_buylist/traitor/conversion_chamber,
+	/datum/syndicate_buylist/traitor/telegun,
+	/datum/syndicate_buylist/traitor/mindslave_module,
+	/datum/syndicate_buylist/traitor/deluxe_mindslave_module,
+	/datum/syndicate_buylist/surplus/cybereye_kit_sechud,
+	/datum/syndicate_buylist/generic/revflash,
+	/datum/syndicate_buylist/generic/revflashbang,
+	/datum/syndicate_buylist/generic/revsign,
+	/datum/syndicate_buylist/generic/rev_normal_flash)
 	var/obj/weapon = null
+
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
-		if(D.item && !istype(D,/datum/syndicate_buylist/traitor/classcrate))
-			murder_supplies.Add(D.item)
+		if(D.item)
+			var/add_item = TRUE
+			for (var/B in banned_items)
+				if (istype(D, B))
+					add_item = FALSE
+					break
+			if (add_item)
+				murder_supplies.Add(D.item)
 
 
 	// Feel free to add more!
 	murder_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
 	murder_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
 	murder_supplies.Add(/obj/item/gun/kinetic/pistol)
+	murder_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
+	murder_supplies.Add(/obj/item/gun/kinetic/colt_saa)
+	murder_supplies.Add(/obj/item/gun/kinetic/riotgun)
+	murder_supplies.Add(/obj/item/gun/kinetic/airzooka)
+	murder_supplies.Add(/obj/item/gun/kinetic/cannon)
+	murder_supplies.Add(/obj/item/gun/energy/laser_gun)
+	murder_supplies.Add(/obj/item/gun/energy/alastor)
+	murder_supplies.Add(/obj/item/gun/energy/pulse_rifle)
 
 
 	for_by_tcl(S, /obj/storage) // imcoder
-		if(prob(33))
+		var/turf/T = get_turf(S)
+		if (T.z != Z_LEVEL_STATION)
+			continue
+		if(prob(50))
 			weapon = pick(murder_supplies)
 			new weapon(S)
 
