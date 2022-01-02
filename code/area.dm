@@ -546,7 +546,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				dest= pick(get_area_turfs(/area/station/maintenance/,1))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
 			jerk.set_loc(dest)
-			jerk.nodamage = 0
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))

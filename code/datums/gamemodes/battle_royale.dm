@@ -85,7 +85,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")
-	player.current.nodamage = 1 // No murder on the battle shuttle
 		// Stuff them on the shuttle
 	player.current.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 	equip_battler(player.current)
