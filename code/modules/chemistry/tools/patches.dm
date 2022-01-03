@@ -480,12 +480,17 @@
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
+			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 
-	on_reagent_change()
-		src.UpdateIcon()
+	on_reagent_change(add)
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
+			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
+		if (!tampered && add)
+			check_whitelist(src, src.whitelist)
+		src.UpdateIcon()
+
 
 	is_open_container()
 		if (borg)
@@ -513,11 +518,6 @@
 		src.tampered = 1
 		src.UpdateIcon()
 		return 1
-
-	on_reagent_change(add)
-		if (!tampered && add)
-			check_whitelist(src, src.whitelist)
-		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		if (can_operate_on(user))

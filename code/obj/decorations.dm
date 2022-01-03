@@ -259,7 +259,7 @@
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
 			new /obj/decal/cleanable/leaves(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+			playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
 			qdel(src)
 			return
 

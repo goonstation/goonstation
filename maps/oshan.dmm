@@ -20,17 +20,6 @@
 "aad" = (
 /turf/space/fluid/warp_z5/realwarp,
 /area/space)
-"aae" = (
-/obj/machinery/cell_charger,
-/obj/item/device/radio/intercom{
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
-/obj/table/glass/reinforced/auto,
-/obj/item/paper/telecrystal_update,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aaf" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -9140,6 +9129,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/goodybag,
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avv" = (
@@ -44471,9 +44461,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
-"ciK" = (
-/turf/simulated/floor/plating/random,
-/area/station/storage/eeva)
 "ciM" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -45848,6 +45835,17 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"ehY" = (
+/obj/machinery/cell_charger,
+/obj/item/device/radio/intercom{
+	dir = 8;
+	frequency = 1485;
+	name = "Security Intercom"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/item/paper/telecrystal_update,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "euS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47152,6 +47150,39 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"mLJ" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "mQr" = (
 /obj/cable{
 	d1 = 4;
@@ -48453,31 +48484,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
-"vLB" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "vNf" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -57287,7 +57293,7 @@ aNb
 aOE
 aOY
 aPk
-aae
+ehY
 aPG
 aQs
 aNc
@@ -94008,7 +94014,7 @@ vex
 bWH
 gJy
 pij
-vLB
+mLJ
 bTR
 bRU
 bLr
@@ -103012,7 +103018,7 @@ cfS
 wFP
 ckK
 aDr
-ciK
+aDr
 aks
 aks
 bgD

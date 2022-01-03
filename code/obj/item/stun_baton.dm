@@ -55,7 +55,7 @@
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
 		src.UpdateIcon()
-		src.setItemSpecial(/datum/item_special/spark)
+		src.setItemSpecial(/datum/item_special/spark/baton)
 
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -285,6 +285,7 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
+			src.setItemSpecial(/datum/item_special/simple)
 			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the head! [src.is_active ? "It seems pretty unsafe to hold it like this while it's on!" : "At least its off!"]</B>", "red")
@@ -296,12 +297,14 @@
 			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
 			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
 			src.transform = null //clear it before updating icon
+			src.setItemSpecial(/datum/item_special/spark/baton)
 			src.UpdateIcon()
 			user.update_inhands()
 			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
 
 	dropped(mob/user)
 		if (src.flipped)
+			src.setItemSpecial(/datum/item_special/spark/baton)
 			src.flipped = false
 			src.UpdateIcon()
 			user.update_inhands()

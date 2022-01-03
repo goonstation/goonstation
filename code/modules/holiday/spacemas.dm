@@ -49,7 +49,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 // Might as well tweak Santa/Krampus respawn to make it use the universal player selection proc I wrote (Convair880).
 /proc/santa_krampus_spawn(var/which_one = 0, var/confirmation_delay = 1200)
-	if (xmas_respawn_lock != 0)
+	if ((xmas_respawn_lock != 0) || (!ticker?.mode?.do_antag_random_spawns))
 		return
 	if (!isnum(confirmation_delay) || confirmation_delay < 0)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (setup failed).")
