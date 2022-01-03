@@ -92,4 +92,4 @@
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
-	two_handed = 1
+	two_handed = TRUE
