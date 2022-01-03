@@ -6,7 +6,7 @@
 	var/a = 255
 	var/light_name
 	loctype = /mob
-	var/enabled = 1
+	var/enabled = FALSE
 	var/atom/light_target = null
 
 TYPEINFO(/datum/component/loctargeting/simple_light)
@@ -15,9 +15,9 @@ TYPEINFO(/datum/component/loctargeting/simple_light)
 		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
 		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
 		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE)
+		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", FALSE)
 	)
-/datum/component/loctargeting/simple_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1)
+/datum/component/loctargeting/simple_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = FALSE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -25,7 +25,7 @@ TYPEINFO(/datum/component/loctargeting/simple_light)
 	src.g = g
 	src.b = b
 	src.a = a
-	src.enabled = 1
+	src.enabled = enabled
 	src.light_name = "sl_comp_\ref[src]"
 
 /datum/component/loctargeting/simple_light/proc/update(var/new_enabled = -1)
@@ -79,7 +79,7 @@ TYPEINFO(/datum/component/loctargeting/simple_light)
 	var/b = 255
 	var/a = 255
 	var/light_name
-	var/enabled = 1
+	var/enabled = FALSE
 	var/atom/light_target = null
 
 TYPEINFO(/datum/component/loctargeting/sm_light)
@@ -88,9 +88,9 @@ TYPEINFO(/datum/component/loctargeting/sm_light)
 		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
 		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
 		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE)
+		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", FALSE)
 	)
-/datum/component/loctargeting/sm_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1)
+/datum/component/loctargeting/sm_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = FALSE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -98,7 +98,7 @@ TYPEINFO(/datum/component/loctargeting/sm_light)
 	src.g = g
 	src.b = b
 	src.a = a
-	src.enabled = 1
+	src.enabled = enabled
 	src.light_name = "ml_comp_\ref[src]"
 
 /datum/component/loctargeting/sm_light/proc/update(var/new_enabled = -1)
@@ -153,7 +153,7 @@ TYPEINFO(/datum/component/loctargeting/sm_light)
 	var/b = 255
 	var/a = 255
 	var/light_name
-	var/enabled = 1
+	var/enabled = FALSE
 	var/atom/light_target = null
 
 TYPEINFO(/datum/component/loctargeting/medium_directional_light)
@@ -162,10 +162,9 @@ TYPEINFO(/datum/component/loctargeting/medium_directional_light)
 		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
 		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
 		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", TRUE),
-		ARG_INFO("on_when_equipped", "num", "If the light should stay on if the item is equipped by a mob (bool)", TRUE)
+		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", FALSE)
 	)
-/datum/component/loctargeting/medium_directional_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = 1)
+/datum/component/loctargeting/medium_directional_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = FALSE)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
