@@ -22,8 +22,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/next_storm = 0
 	var/next_drop = 0
 	var/current_battle_spawn_name = null
-	var/z_damage_start_time = 0
 	var/damage_tick = 0	// Don't cause off Z1 damage every tick
+	var/list/area/excluded_areas = list(/area/shuttle/battle, /area/shuttle/escape/transit, /area/shuttle_transit_space)
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
@@ -82,7 +82,6 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
-	z_damage_start_time = world.time + MAX_TIME_ON_SHUTTLE
 	return 1
 
 
@@ -151,16 +150,22 @@ var/global/list/datum/mind/battle_pass_holders = list()
 					boutput(C.mob, "<span class='notice'>The battle shuttle is now flying over [current_battle_spawn_name]!</span>")
 
 	// Check for players outside Z1
-	if (world.time > z_damage_start_time)
-		damage_tick++
-		if (damage_tick > 9)
-			damage_tick = 0
-			if (world.time > MAX_TIME_ON_SHUTTLE)
-				for(var/datum/mind/M in living_battlers)
-					if (ishuman(M.current))
-						var/mob/living/carbon/human/H = M.current
-						var/turf/T = get_turf(H)
-						if (T.z != Z_LEVEL_STATION)
+	damage_tick++
+	if (damage_tick > 9)
+		damage_tick = 0
+		if (world.time > MAX_TIME_ON_SHUTTLE)
+			for(var/datum/mind/M in living_battlers)
+				if (ishuman(M.current))
+					var/mob/living/carbon/human/H = M.current
+					var/turf/T = get_turf(H)
+					if (T.z != Z_LEVEL_STATION)
+						var/area/GA = get_area(T)
+						var/no_tick_damage = FALSE
+						for (var/EA in excluded_areas)
+							if(istype(GA, EA))
+								no_tick_damage = TRUE
+								break
+						if (!no_tick_damage)
 							boutput(H, "<span class='alert'>You are outside the battle area! Return to the station!</span>")
 							random_brute_damage(H, 8, 0)
 
