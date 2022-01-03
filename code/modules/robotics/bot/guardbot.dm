@@ -45,6 +45,9 @@
 		else
 			target_turf = get_turf(the_target)
 
+		if(!target_turf) //target got deleted?
+			return
+
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)

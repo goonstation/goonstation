@@ -569,7 +569,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, mover) == dir) // Check for appropriate border.
+		if (get_dir(loc, mover) & dir) // Check for appropriate border.
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
@@ -582,7 +582,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			return 1
 
 	gas_cross(turf/target)
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, target) & dir)
 			return !density
 		else
 			return TRUE
@@ -593,7 +593,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir)
+		if (get_dir(loc, target) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
@@ -1533,6 +1533,10 @@ About the new airlock wires panel:
 					src.RL_SetOpacity(1)
 			src.operating = 0
 			src.UpdateIcon()
+
+	else if (src.operating == -1) //broken
+		boutput(usr, "<span class='alert'>You try to pry [src]  [src.density ? "open" : "closed"], but it won't budge! It seems completely broken!</span>")
+
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 

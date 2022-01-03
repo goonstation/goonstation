@@ -266,7 +266,7 @@
 			affected_mob.cure_disease(src)
 			return
 
-		if (!ismind(source))
+		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source))
 			affected_mob.cure_disease(src)
 			return
 
@@ -444,6 +444,21 @@
 		AD.master = A
 		AD.affected_mob = src
 		AD.on_infection()
+		return AD
+
+	else if (istype(A, /datum/ailment/parasite))
+		var/datum/ailment_data/parasite/AD = new /datum/ailment_data/parasite
+		AD.name = A.name
+		AD.stage_prob = A.stage_prob
+		AD.cure = A.cure
+		AD.reagentcure = A.reagentcure
+		AD.recureprob = A.recureprob
+		AD.master = A
+
+		AD.master = A
+		AD.affected_mob = src
+		src.ailments += AD
+
 		return AD
 
 	else
