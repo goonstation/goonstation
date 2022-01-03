@@ -126,6 +126,7 @@
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
+	O.verbs += /mob/living/silicon/ai/proc/reset_apcs
 	O.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
 	O.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
 	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
