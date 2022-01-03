@@ -504,6 +504,8 @@ var/global
 #endif
 	)
 
+	hardRebootFilePath = "data/hard-reboot"
+
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")

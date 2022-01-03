@@ -473,3 +473,23 @@
 		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
+
+/datum/spacebee_extension_command/hard_reboot
+	name = "hardreboot"
+	help_message = "Toggle a hard server reboot"
+	argument_types = list()
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user)
+		var/logMessage = ""
+		if (fexists(hardRebootFilePath))
+			fdel(hardRebootFilePath)
+			logMessage = "removed a server hard reboot"
+		else
+			file(hardRebootFilePath) << ""
+			logMessage = "queued a server hard reboot"
+
+		logTheThing("debug", "[user] (Discord)", null, logMessage)
+		logTheThing("diary", "[user] (Discord)", null, logMessage, "admin")
+		message_admins("[user] (Discord) [logMessage]")
+		system.reply(logMessage)
