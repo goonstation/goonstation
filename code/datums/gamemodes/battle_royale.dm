@@ -65,7 +65,14 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	current_battle_spawn_name = pick(drop_locations)
 	current_battle_spawn = drop_locations[current_battle_spawn_name]
 
-
+	for (var/mob/M in world)
+		var/turf/T = get_turf(M)
+		if (!T)
+			continue
+		if (T.z != Z_LEVEL_STATION)
+			continue
+		if (isnpcmonkey(M))
+			qdel(M)
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
