@@ -548,6 +548,27 @@ ASC: Aux. Solar Control<BR>
 	<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-
 	<BR>\n\t\t\tEvacuate to a nearby safe area!"}
 
+/obj/item/paper/martian_manifest
+	name = "Tattered paper"
+	icon_state = "paper_burned"
+	info = {"
+	<br>      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PPIN </b>░█=-<b>IFEST</b><br>
+	<br><br>  &nbsp;&nbsp;&nbsp;<b><u>ent:</u></b> Kingsw ░░█tems ░9A
+	<br><br>- rate of x4 dat† tap s \[FRAG░LE\]
+	<br><br>- EVA equipment f   = ▓  -- ▀█ ency aid
+	<br><br>- Prot▓ ▓e= AI- ██░█c▓re \[EXTR█▓░Y FRAGILE\]
+	<br><br>- \[CO▓░IDENTIAL\]&nbsp;&nbsp;█▓ ▓
+	<br><br>- mergency com░dy resu███ ▓█░
+	<br><br>- Pro█░ssio-al cl=wns (x▓)
+	<br><br>- Asso ted civil▓n grad▓█ goods
+	<br><i>Note: Shipment exp▓▓ted to a███ve no late than J█░▓░20█░</i>
+	<br><i>Client wil&nbsp;&nbsp;██rate a late or damaged shipment</i>
+	"}
+
+	New()
+		. = ..() // copy/pasted values, no clue if these work good :shelterfrog:
+		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
+
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
 	info = {"<B>Startup Procedure for Mark II Thermo-Electric Generators</B><BR>

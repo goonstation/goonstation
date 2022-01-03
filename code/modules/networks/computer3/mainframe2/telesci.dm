@@ -343,7 +343,6 @@ proc/is_teleportation_allowed(var/turf/T)
 								end_portal = null
 
 							message_host("command=ack")
-							tryAwardMedal(usr)
 							return
 
 						if (recharging)
@@ -368,7 +367,6 @@ proc/is_teleportation_allowed(var/turf/T)
 								message_host("command=ack")
 								sleep(1 SECOND)
 								src.doubleportal(turfcheck)
-								tryAwardMedal(usr)
 							sleep(0.5 SECONDS)
 
 							src.icon_state = "pad0"
@@ -799,13 +797,6 @@ proc/is_teleportation_allowed(var/turf/T)
 					/obj/critter/ancient_thing)
 				new summon(src.loc)
 				return
-
-	// I am aware that this currently relies on usr from the calls which isn't great,
-	// but 'user' is gonna be pretty damn hard to reliably define here
-	/// Will attempt to give usr a medal if they meet the necessary conditions
-	proc/tryAwardMedal(var/mob/user)
-		if(isAI(user) || isshell(user)) // Currently relies on the assumption that this is coming from a successful portal command
-			user.unlock_medal("Now you're thinking with portals!", 1)
 
 
 /obj/machinery/networked/teleconsole

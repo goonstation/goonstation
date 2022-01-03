@@ -1078,6 +1078,15 @@
 	upperfluc = 200
 	lowerfluc = -200
 
+/datum/commodity/contraband/ai_kit_syndie
+	comname = "Red AI Kit"
+	comtype = /obj/item/ai_plating_kit/syndicate
+	desc = "A dubiously colored AI core kit, which doesn't match standard designs. It's sold at a discount though, because it's just the casing pieces."
+	price = 1000
+	baseprice = 1000
+	upperfluc = 100
+	lowerfluc = -100
+
 //NT stuff
 
 /datum/commodity/contraband/ntso_uniform

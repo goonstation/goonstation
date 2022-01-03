@@ -40,8 +40,6 @@
 	src.add_dialog(user)
 	var/dat = "Located AI Units<BR><BR>"
 	for_by_tcl(A, /mob/living/silicon/ai)
-		if(A.is_salvage)
-			continue
 		dat += "[A.name] |"
 		if(A.stat)
 			dat += "ERROR: Not Responding!<BR>"

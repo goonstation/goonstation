@@ -1231,7 +1231,7 @@
 datum/achievementReward/ai_dwaine
 	title = "(AI Core Skin) DWAINE"
 	desc = "Replaces the casing of your core with an older model!"
-	required_medal = "Now you're thinking with portals!"
+	required_medal = "421"
 
 	rewardActivate(mob/activator)
 		if (isAI(activator))
