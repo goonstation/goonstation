@@ -6890,6 +6890,7 @@
 /area/station/storage/tools)
 "ast" = (
 /obj/item/plank,
+/obj/item/plank,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "asu" = (
@@ -12462,9 +12463,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aHc" = (
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aHd" = (
@@ -15330,6 +15329,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aNZ" = (
@@ -18622,8 +18622,8 @@
 /turf/simulated/floor/plating/airless/random,
 /area/supply/delivery_point)
 "aVl" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aVm" = (
@@ -19917,7 +19917,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "aYc" = (
-/obj/item/extinguisher,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -19928,6 +19927,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "aYe" = (
@@ -26034,7 +26034,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/plank,
+/obj/machinery/portable_atmospherics/scrubber,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -33150,9 +33150,9 @@
 /area/station/crew_quarters/bar)
 "bEO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
+/obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
 /obj/random_item_spawner,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "bER" = (
@@ -33730,7 +33730,7 @@
 "bGt" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
-/obj/storage/closet/emergency,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bGu" = (
@@ -37785,12 +37785,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "bRt" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 9
 	},
 /obj/machinery/meter,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -38044,6 +38044,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bRZ" = (
@@ -38156,6 +38157,7 @@
 "bSn" = (
 /obj/item/storage/box/starter,
 /obj/disposalpipe/segment,
+/obj/item/extinguisher,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bSo" = (
@@ -43638,6 +43640,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "cfQ" = (
@@ -44926,6 +44929,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
 "ciI" = (
@@ -48372,6 +48376,7 @@
 /obj/machinery/alarm{
 	pixel_y = 20
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -56166,6 +56171,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "lGg" = (
@@ -60077,6 +60083,15 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"vld" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Cyborg"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "vnW" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/cable{
@@ -60618,6 +60633,15 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/west)
+"wyD" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "wzQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -105108,7 +105132,7 @@ bJN
 bVo
 bEe
 bZO
-cbu
+wyD
 cbo
 aaa
 aJC
@@ -120783,7 +120807,7 @@ aaa
 aaa
 arn
 bpj
-wIm
+vld
 aHt
 aIO
 lBU
