@@ -1013,7 +1013,7 @@
 			src.build_icon()
 
 		else if (istype(W,/obj/item/reagent_containers/glass))
-			if (issilicon(user))
+			if (W.cant_drop)
 				boutput(user, "<span class='alert'>You cannot put the [W] into [src]!</span>")
 				return
 			if (src.beaker)
