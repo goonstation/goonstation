@@ -92,7 +92,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/gunbot),
+			critter_types = list(/mob/living/critter/gunbot,/mob/living/critter/antag_medibot),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
