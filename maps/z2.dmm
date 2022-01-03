@@ -7004,11 +7004,7 @@
 /area/moon/museum/west)
 "ayN" = (
 /obj/table,
-/obj/item/gun/russianrevolver{
-	desc = "The cold-war classic!  Well, um, a model.  Probably?";
-	icon_state = "ak47";
-	name = "\improper JK-47 rifle"
-	},
+/obj/item/gun/russianrevolver/jk47,
 /turf/unsimulated/floor/escape{
 	dir = 1
 	},
