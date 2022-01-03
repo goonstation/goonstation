@@ -19075,7 +19075,7 @@
 	},
 /area/station/janitor/office)
 "aWp" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -20566,7 +20566,7 @@
 	},
 /area/station/janitor/office)
 "aZH" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor,
 /area/station/security/checkpoint/arrivals)
@@ -54309,7 +54309,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "hai" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light{
 	dir = 4;
