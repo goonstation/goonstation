@@ -49,11 +49,11 @@
 	item_state = "s_helmet"
 	var/on = 0
 
-	var/datum/component/holdertargeting/medium_directional_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 
 	New()
 		..()
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
@@ -459,7 +459,7 @@
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/loctargeting/simple_light/light_dir
 
 	setupProperties()
 		..()
@@ -467,7 +467,7 @@
 
 	New()
 		..()
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
