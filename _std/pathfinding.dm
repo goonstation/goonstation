@@ -21,6 +21,8 @@
  * * required_goals: How many goals to find to succeed. Null for all.
  */
 /proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null)
+	if(isnull(ends))
+		return
 	var/single_end = !islist(ends)
 	if(single_end)
 		ends = list(ends)

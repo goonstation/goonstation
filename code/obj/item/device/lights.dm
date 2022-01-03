@@ -58,13 +58,13 @@
 	light_type = null
 	brightness = 4.6
 
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/loctargeting/simple_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
 		col_g = G
 		col_b = B
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
 		light_dir.update(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -135,11 +135,11 @@
 	height = 0.75
 	var/color_name = "green"
 	light_type = null
-	var/datum/component/holdertargeting/sm_light/light_c
+	var/datum/component/loctargeting/sm_light/light_c
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
 	proc/burst()

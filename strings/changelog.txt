@@ -1,4 +1,9 @@
 
+(t)mon jan 03 22
+(u)DimWhat
+(p)7044
+(e)🎨|sprites
+(*)Added glasses sprites for lizardssss.
 (t)sat jan 01 22
 (u)Flaborized
 (p)7036
