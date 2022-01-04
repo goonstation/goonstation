@@ -73813,6 +73813,25 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"kse" = (
+/obj/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -9;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "kvr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "beach-0"
@@ -76296,6 +76315,26 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"qgt" = (
+/obj/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 10;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "qgO" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "5";
@@ -86693,7 +86732,7 @@ lzQ
 maD
 lqj
 lqj
-lqj
+kse
 lqj
 owr
 wMO
@@ -86995,7 +87034,7 @@ lzQ
 swc
 lqj
 lqj
-lqj
+qgt
 lqj
 owr
 wMO
