@@ -12,7 +12,7 @@ Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
 ***********************************************************"}
 	icon_state = "buildmode5"
-	var/objpath = /obj/critter/domestic_bee
+	var/objpath = null
 	var/cinematic = "Blink"
 	var/delete_area = 0
 	var/turf/A = null
@@ -32,6 +32,8 @@ change the direction of created objects.<br>
 			boutput(usr, delete_area ? "<span class='alert'>Now also deleting areas!</span>" : "<span class='alert'>Now not deleting areas!</span>")
 			return
 
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
 		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		update_button_text(objpath)
 		A = null

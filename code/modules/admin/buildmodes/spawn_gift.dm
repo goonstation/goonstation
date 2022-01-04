@@ -13,7 +13,7 @@ Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
 ***********************************************************"}
 	icon_state = "buildmode12"
-	var/objpath = /obj/critter/domestic_bee
+	var/objpath = null
 	var/cinematic = "Blink"
 	var/giftwrap_style = "Regular"
 	var/turf/first_corner = null
@@ -23,6 +23,8 @@ change the direction of created objects.<br>
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "None")) || cinematic
 			giftwrap_style = (input("Gift wrapping style mode") as null|anything in list("Regular", "Spacemas")) || giftwrap_style
 			return
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
 		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		first_corner = null
 		if(ispath(objpath, /turf))

@@ -7,9 +7,11 @@ Right Mouse Button                     = Delete an object from contents<br>
 Right Mouse Button + Shift             = Set object type to selected mob/obj type<br>
 ***********************************************************"}
 	icon_state = "buildmode_putin"
-	var/objpath = /obj/critter/domestic_bee
+	var/objpath = null
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
 		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom/movable)
 		update_button_text(objpath)
 

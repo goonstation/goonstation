@@ -12,13 +12,15 @@ Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
 ***********************************************************"}
 	icon_state = "buildmode2"
-	var/objpath = /obj/critter/domestic_bee
+	var/objpath = null
 	var/cinematic = "Blink"
 	var/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "Missile", "None")) || cinematic
 			return
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
 		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		update_button_text(objpath)
 
