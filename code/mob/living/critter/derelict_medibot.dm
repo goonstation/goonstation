@@ -1,5 +1,5 @@
 /datum/action/bar/icon/antag_medbot_inject
-	duration = 5 SECONDS
+	duration = 2 SECONDS
 	interrupt_flags =  INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE
 	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
