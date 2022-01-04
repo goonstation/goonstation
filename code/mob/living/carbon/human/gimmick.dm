@@ -127,9 +127,13 @@
 			src.real_name = "??????"
 			src.add_ability_holder(/datum/abilityHolder/gimmick)
 			src.nodamage = 0
+
+			abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
+			abilityHolder.addAbility(/datum/targetable/critter/teleport)
 			abilityHolder.addAbility(/datum/targetable/critter/sting/disabling)
-			abilityHolder.addAbility(/datum/targetable/critter/bee_swallow)
 			abilityHolder.addAbility(/datum/targetable/critter/flamethrower)
+			abilityHolder.addAbility(/datum/targetable/critter/powerkick)
+
 
 		SPAWN_DBG(1 SECOND)
 			abilityHolder.updateButtons()
@@ -178,11 +182,11 @@
 
 
 			src.add_ability_holder(/datum/abilityHolder/gimmick)
+			abilityHolder.addAbility(/datum/targetable/wrestler/kick)
+			abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 			abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
 			abilityHolder.addAbility(/datum/targetable/critter/powerkick)
 			abilityHolder.addAbility(/datum/targetable/macho/macho_soulsteal)
-			abilityHolder.addAbility(/datum/targetable/wrestler/kick)
-			abilityHolder.addAbility(/datum/targetable/wrestler/strike)
 
 
 
