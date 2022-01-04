@@ -167,7 +167,7 @@ GAUNTLET CARDS
 
 /obj/item/card/id/catman
 	registered = "Donk Co Super Duper Happy Funtime Friendly Cat Mascot"
-	assignment="Mascot"
+	assignment = "Mascot"
 	icon_state = "gold"
 	item_state = "gold_id"
 	keep_icon = TRUE
