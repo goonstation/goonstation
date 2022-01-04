@@ -172,7 +172,7 @@ GAUNTLET CARDS
 	item_state = "gold_id"
 	keep_icon = TRUE
 	New()
-		access = get_access("access_maint_tunnels")
+		access = get_access("Staff Assistant")
 		..()
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
