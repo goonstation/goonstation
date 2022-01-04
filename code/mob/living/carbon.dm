@@ -172,7 +172,7 @@
 	if (!toxloss && amount < 0)
 		amount = 0
 	if (..())
-		return
+		return 1
 
 	if (src.traitHolder && src.traitHolder.hasTrait("reversal"))
 		amount *= -1
