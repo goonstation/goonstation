@@ -86,6 +86,7 @@
 	"methamphetamine" = 30,
 	"ethanol" = 20, /* rubbing alcohol */
 	"ether" = 10,
+	"cyanide" = 10,
 	"chlorine" = 10, /* disinfectant */
 	"lithium" = 5,
 	"fluorine" = 5,
