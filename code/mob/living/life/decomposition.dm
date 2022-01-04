@@ -19,7 +19,7 @@
 
 			var/suspend_rot = \
 					istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || \
-					istype(owner.loc, /obj/morgue) || \
+					(istype(owner.loc, /obj/machinery/traymachine/morgue) && !(owner.loc.status & NOPOWER))|| \
 					istype(owner.loc, /obj/item/reagent_containers/food/snacks/shell) || \
 					owner.reagents?.has_reagent("formaldehyde") || \
 					owner.reagents?.has_reagent("miasmosa")

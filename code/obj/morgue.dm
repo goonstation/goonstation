@@ -1,97 +1,86 @@
-/obj/morgue
-	name = "morgue"
+//Tray machines: machines have a big tray object associated that is used to load/unload things into the machine (previously morgue.dm)
+//(as of the refactor that made these subtypes of a common machine parent, that's the morgue, crematorium and tanning bed)
+//((Fun fact: the tanning bed used to be a type of crematorium!))
+
+//In any case: the parent object handles taking the tray in and out and all the special cases that come with that territory (deconstruction, explosions)
+//Note that they are subscribed to the process loop by default, but aside from drawing power (handled by the machinery parent) do nothing special.
+//At the moment there's not really the support for the tray and machine to be separated, also disposing either will have the other qdel'd
+
+//File contents:
+// Tray machine parent object
+// Locking tray machine parent (parent to crematorium & tanning bed)
+// Tray parent object (+ morgue, crematorium trays, relatively pathed)
+// Morgue
+// Crematorium
+// Crematorium switch
+// Tanning bed
+// Tanning bed tray (which has a little more going on than the other trays)
+// Tanning bed computer (largely untouched in refactor)
+
+//This header was last guaranteed to be accurate 2022-?-? <-> BatElite
+
+
+
+//-----------------------------------------------------
+/*~ Tray Machine Parent ~*/
+//-----------------------------------------------------
+
+ABSTRACT_TYPE(/obj/machinery/traymachine)
+/obj/machinery/traymachine
+	name = "tray machine"
+	desc = "This thing sure has a big tray that goes vwwwwwwsh when you slide it in and out."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = 1
-	var/obj/m_tray/connected = null
 	anchored = 1.0
-	dir = EAST
+	power_usage = 250 //IDK I just put a number
 
-	disposing()
-		src.connected?.connected = null
-		qdel(src.connected)
-		src.connected = null
-		if (length(src.contents))
-			var/turf/T = get_turf(src)
-			for (var/atom/movable/AM in contents)
+	//tray related variables
+	var/obj/machine_tray/my_tray = null
+	var/tray_type = obj/machine_tray //type of tray the machine should be spawning
+
+	//Currently no tray machine accepts anything into its contents except through tray loading but anything in this list won't get ejected on opening
+	var/list/non_tray_contents = list()
+
+	//icon_state names for the default update proc, unused if you override that and don't use them yourself.
+	var/icon_trayopen = "morgue0"
+	var/icon_unoccupied = "morgue1"
+	var/icon_occupied = "morgue2"
+
+	//TESTING SHIT PLEASE IGNORE
+	var/obj/testitem
+
+/obj/machinery/traymachine/New()
+	my_tray = new tray_type(src) //Heck this lazy init tray spawning,
+	my_tray.set_dir(src.dir)
+	my_tray.my_machine = src
+	my_tray.layer = OBJ_LAYER - 0.02
+	//TESTING SHIT PLEASE IGNORE
+	testitem = new obj/item/device/radio/headset/deaf(src)
+	non_tray_contents += testitem
+
+	..()
+
+/obj/machinery/traymachine/disposing()
+	my_tray?.connected = null
+	qdel(my_tray)
+	my_tray = null
+	if (length(src.contents)) //dump out any other stuff
+		var/turf/T = get_turf(src)
+		for (var/atom/movable/AM in contents)
+			if (!(A in non_tray_contents))
 				AM.set_loc(T)
-		. = ..()
+	. = ..()
 
-/obj/morgue/proc/update()
-	if (src.connected.loc != src)
-		src.icon_state = "morgue0"
-	else
-		if (src.contents.len > 1) //the tray lives in contents
-			src.icon_state = "morgue2"
-		else
-			src.icon_state = "morgue1"
-	return
-
-/obj/morgue/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.set_loc(src.loc)
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.loc)
-					A.ex_act(severity)
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.loc)
-					A.ex_act(severity)
-				qdel(src)
-				return
-	return
-
-/obj/morgue/alter_health()
-	return src.loc
-
-/obj/morgue/attack_hand(mob/user as mob)
-	if (src.connected && src.connected.loc != src)
-		for( var/atom/movable/A as mob|obj in src.connected.loc)
-			if (!( A.anchored ))
-				A.set_loc(src)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		src.connected.set_loc(src)
-	else
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		if (!connected)
-			src.connected = new /obj/m_tray(src)
-			src.connected.set_dir(src.dir)
-			src.connected.connected = src
-			src.connected.layer = OBJ_LAYER - 0.02
-
-		var/turf/T_src = get_turf(src)
-		var/turf/T = get_step(src, src.dir)
-
-		//handle animation and ejection of contents
-		for(var/atom/movable/AM as anything in src)
-			AM.set_loc(T)
-			AM.pixel_x = 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle
-			AM.pixel_y = 28 * (T_src.y - T.y)
-
-			var/orig_layer = AM.layer
-			if (AM != src.connected)
-				AM.layer = OBJ_LAYER - 0.01
-
-			animate(AM, 1 SECOND, easing = BOUNCE_EASING, pixel_x = 0, pixel_y = 0)
-			animate(layer = orig_layer, easing = JUMP_EASING)
-
-		src.connected.icon_state = "morguet"
-
+/obj/machinery/traymachine/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	src.update()
-	return
+	if (src.connected && src.connected.loc != src)
+		collect_tray()
+	else
+		eject_tray()
 
-/obj/morgue/attackby(P as obj, mob/user as mob)
+//Fun fact you can label these things
+/obj/machinery/traymachine/morgue/attackby(P as obj, mob/user as mob)
 	src.add_fingerprint(user)
 	if (istype(P, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
@@ -103,91 +92,221 @@
 			return
 		t = copytext(adminscrub(t),1,128)
 		if (t)
-			src.name = "Morgue- '[t]'"
+			src.name = "[initial(src.name)]- '[t]'"
 		else
-			src.name = "Morgue"
+			src.name = "[initial(src.name)]"
 	else
 		return ..()
 
-/obj/morgue/relaymove(mob/user as mob)
-	if (user.stat)
-		return
-	if (!connected)
-		src.connected = new /obj/m_tray(src.loc)
-	else
-		src.connected.set_loc(src.loc)
-	step(src.connected, src.dir)//EAST)
-	var/turf/T = get_step(src, src.dir)//EAST)
-	if (T.contents.Find(src.connected))
-		src.connected.connected = src
-		for(var/atom/movable/A as mob|obj in src)
-			A.set_loc(src.connected.loc)
-			//Foreach goto(106)
-		src.connected.icon_state = "morguet"
-	else
-		src.connected.set_loc(src)
-	src.update()
+/obj/machinery/traymachine/ex_act(severity)
+	var/chance //This switch was just the same loop with different probabilities 3 times and fuck that
+	switch(severity)
+		if(1.0)
+			chance = 100
+			return
+		if(2.0)
+			chance = 50
+			return
+		if(3.0)
+			chance = 5
+			return
+	if (prob(chance))
+		for(var/atom/movable/A as mob|obj in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded
+			if (!(A in non_tray_contents))
+				A.set_loc(src.loc)
+				A.ex_act(severity)
+		qdel(src)
 	return
 
-/obj/m_tray
-	name = "morgue tray"
+//Someone is trying to move from inside
+/obj/machinery/traymachine/morgue/relaymove(mob/user as mob)
+	if (user.stat)
+		return
+	eject_tray()
+	/*if (!my_tray)
+		src.my_tray = new tray_type(src.loc)
+	else
+		src.my_tray.set_loc(src.loc)
+	step(src.my_tray, src.dir)//EAST)
+	var/turf/T = get_step(src, src.dir)//EAST)
+	if (T.contents.Find(src.my_tray))
+		src.my_tray.my_tray = src
+		for(var/atom/movable/A as mob|obj in src)
+			A.set_loc(src.my_tray.loc)
+			//Foreach goto(106)
+		src.my_tray.icon_state = "morguet"
+	else
+		src.my_tray.set_loc(src)
+	src.update()
+	return*/
+
+
+
+//Object-specific procs ahoy
+
+//Probably override this if your
+/obj/machinery/traymachine/proc/eject_tray()
+	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	/*if (!my_tray)
+		my_tray = new /obj/m_tray(src)
+		my_tray.set_dir(src.dir)
+		my_tray.my_machine = src
+		my_tray.layer = OBJ_LAYER - 0.02*/
+
+	var/turf/T_src = get_turf(src)
+	var/turf/T = get_step(src, src.dir)
+
+	//handle animation and ejection of contents
+	for(var/atom/movable/AM as anything in src)
+		AM.set_loc(T)
+		AM.pixel_x = 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle on morgues
+		AM.pixel_y = 28 * (T_src.y - T.y)
+
+		var/orig_layer = AM.layer
+		if (AM != src.connected)
+			AM.layer = OBJ_LAYER - 0.01
+
+		animate(AM, 1 SECOND, easing = BOUNCE_EASING, pixel_x = 0, pixel_y = 0)
+		animate(layer = orig_layer, easing = JUMP_EASING)
+	update()
+
+/obj/machinery/traymachine/proc/collect_tray()
+	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	for( var/atom/movable/A as mob|obj in src.connected.loc)
+		if (!( A.anchored )) //note the tray is anchored
+			A.set_loc(src)
+	src.connected.set_loc(src)
+	update()
+
+///Update the tray machine's sprite
+/obj/machinery/traymachine/proc/update()
+if (src.connected.loc != src)
+		src.icon_state = icon_trayopen
+	else
+		if (src.contents.len > 1) //the tray lives in contents
+			src.icon_state = icon_occupied
+		else
+			src.icon_state = icon_unoccupied
+	return
+
+
+
+//Possible old code. To the best of my knowledge this proc is unused (except in sleepers) but it's one that several things mobs can go inside of have
+/obj/machinery/traymachine/alter_health()
+	return src.loc
+
+
+//-----------------------------------------------------
+/*~ Locking Tray Machine Parent ~*/
+//-----------------------------------------------------
+
+//These will not open/close while locked
+//Sure hope you coded em to unlock on their own at some point
+/obj/machinery/traymachine/locking
+	var/locked = FALSE
+	//crematoria/tanning beds also had a variable called cremating but from what I saw that and locked were always set together so
+
+/obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
+	if (locked)
+		boutput(usr, "<span class='alert'>It's locked.</span>")
+		src.add_fingerprint(user) //because we're not reaching the parent call
+		return
+	..()
+
+/obj/machinery/traymachine/locking/relaymove(mob/user as mob)
+	if (locked)
+		return //fuck you
+	..()
+
+//-----------------------------------------------------
+/*~ Tray ~*/
+//-----------------------------------------------------
+
+/obj/machine_tray
+	name = "machine tray"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morguet"
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	var/obj/morgue/connected = null
+	var/obj/machinery/traymachine/my_machine = null
 	anchored = 1.0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
-	disposing()
-		src.connected?.connected = null
-		qdel(src.connected)
-		src.connected = null
-		. = ..()
+	//simple subtypes
+	morgue
+		name = "morgue tray"
+		icon_state = "morguet"
 
-/obj/m_tray/Cross(atom/movable/mover)
+	crematorium
+		name = "crematorium tray"
+		icon_state = "cremat"
+
+/obj/machine_tray/disposing()
+	my_machine?.my_tray = null
+	qdel(my_machine)
+	my_machine = null
+	. = ..()
+
+//Fuck knows what the point of this override is but I didn't code it
+/obj/machine_tray/Cross(atom/movable/mover)
 	if (istype(mover, /obj/item/dummy))
 		return 1
 	else
 		return ..()
 
-/obj/m_tray/attack_hand(mob/user as mob)
-	if (src.connected && src.connected != src.loc)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
-				A.set_loc(src.connected)
-			//Foreach goto(26)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		src.connected.update()
-		add_fingerprint(user)
-		src.set_loc(src.connected)
-		return
-	return
+/obj/machine_tray/attack_hand(mob/user as mob)
+	if (my_machine && src.connected != src.loc)
+		my_machine?.collect_tray()
 
-/obj/m_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O)) //user.contents.Find(src) WHY WERE WE LOOKING FOR THE MORGUE TRAY IN THE USER
+/obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
 		return
 	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
 		return
 	O.set_loc(src.loc)
 	if (user != O)
 		src.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>")
-			//Foreach goto(99)
 	return
 
 
-/obj/crematorium
+
+//-----------------------------------------------------
+/*~ Morgue ~*/
+//-----------------------------------------------------
+
+//Morgues prevent decomposition, but that functionality is handled by /datum/lifeprocess/decomposition
+/obj/machinery/traymachine/morgue
+	name = "morgue"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "morgue1"
+
+	tray_type = obj/machine_tray/morgue
+
+	dir = EAST //IDK why morgues default east but
+
+	icon_trayopen = "morgue0"
+	icon_unoccupied = "morgue1"
+	icon_occupied = "morgue2"
+
+//-----------------------------------------------------
+/*~ Crematorium ~*/
+//-----------------------------------------------------
+
+/obj/machinery/traymachine/locking/crematorium
 	name = "crematorium"
 	desc = "A human incinerator."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "crema1"
 	density = 1
-	var/obj/c_tray/connected = null
+	//var/obj/c_tray/connected = null
 	anchored = 1.0
 	var/cremating = 0
 	var/id = 1
-	var/locked = 0
 	var/obj/machinery/crema_switch/igniter = null
+
+	icon_trayopen = "crema0"
+	icon_unoccupied = "crema1"
+	icon_occupied = "crema2"
 
 	New()
 		. = ..()
@@ -196,128 +315,14 @@
 	disposing()
 		src.igniter?.crematoriums -= src
 		src.igniter = null
-		src.connected?.connected = null
-		qdel(src.connected)
-		src.connected = null
-		if (length(src.contents))
-			var/turf/T = get_turf(src)
-			for (var/atom/movable/AM in contents)
-				AM.set_loc(T)
 		. = ..()
 		STOP_TRACKING
 
-/obj/crematorium/proc/update()
-	if (src.connected.loc != src)
-		src.icon_state = "crema0"
-	else
-		if (src.contents.len > 1)  //the tray lives in contents
-			src.icon_state = "crema2"
-		else
-			src.icon_state = "crema1"
-	return
 
-/obj/crematorium/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.set_loc(src.loc)
-				A.ex_act(severity)
-			qdel(src)
-			return
-		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.loc)
-					A.ex_act(severity)
-				qdel(src)
-				return
-		if(3.0)
-			if (prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.loc)
-					A.ex_act(severity)
-				qdel(src)
-				return
-	return
 
-/obj/crematorium/alter_health()
-	return src.loc
 
-/obj/crematorium/attack_hand(mob/user as mob)
-//	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
-//		user.show_message("<span class='alert'>Uh-oh, that was a bad idea.</span>", 1)
-//		//boutput(usr, "Uh-oh, that was a bad idea.")
-//		src:loc:poison += 20000000
-//		src:loc:firelevel = src:loc:poison
-//		return
-	if (cremating)
-		boutput(usr, "<span class='alert'>It's locked.</span>")
-		return
-	if ((src.connected && src.connected.loc != src) && (src.locked == 0))
-		for(var/atom/movable/A as mob|obj in src.connected.loc)
-			if (!( A.anchored ))
-				A.set_loc(src)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		src.connected.set_loc(src)
-	else if (src.locked == 0)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		if (!connected)
-			src.connected = new /obj/c_tray(src.loc)
-		else
-			src.connected.set_loc(src.loc)
-		step(src.connected, SOUTH)
-		src.connected.layer = OBJ_LAYER
-		var/turf/T = get_step(src, SOUTH)
-		if (T.contents.Find(src.connected))
-			src.connected.connected = src
-			src.update()
-			for(var/atom/movable/A as mob|obj in src)
-				A.set_loc(src.connected.loc)
-			src.connected.icon_state = "cremat"
-		else
-			src.connected.set_loc(src)
-	src.add_fingerprint(user)
-	update()
 
-/obj/crematorium/attackby(P as obj, mob/user as mob)
-	if (istype(P, /obj/item/pen))
-		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
-		if (!t)
-			return
-		if (user.equipped() != P)
-			return
-		if ((!in_interact_range(src, user) > 1 && src.loc != user))
-			return
-		t = copytext(adminscrub(t),1,128)
-		if (t)
-			src.name = "Crematorium- '[t]'"
-		else
-			src.name = "Crematorium"
-	src.add_fingerprint(user)
-	return
-
-/obj/crematorium/relaymove(mob/user as mob)
-	if (user.stat || locked)
-		return
-	if (!connected)
-		src.connected = new /obj/c_tray(src.loc)
-	else
-		src.connected.set_loc(src.loc)
-	step(src.connected, SOUTH)
-	src.connected.layer = OBJ_LAYER
-	var/turf/T = get_step(src, SOUTH)
-	if (T.contents.Find(src.connected))
-		src.connected.connected = src
-		src.icon_state = "crema0"
-		for(var/atom/movable/A as mob|obj in src)
-			A.set_loc(src.connected.loc)
-		src.connected.icon_state = "cremat"
-	else
-		src.connected.set_loc(src)
-	src.update()
-	return
-
-/obj/crematorium/proc/cremate(mob/user as mob)
+/obj/machinery/traymachine/locking/crematorium/proc/cremate(mob/user as mob)
 	if (!src || !istype(src))
 		return
 	if (src.cremating)
@@ -371,6 +376,8 @@
 
 	return
 
+
+
 /obj/c_tray
 	name = "crematorium tray"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -380,7 +387,7 @@
 	var/obj/crematorium/connected = null
 	anchored = 1.0
 	var/datum/light/light //Only used for tanning beds.
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	disposing()
 		src.connected?.connected = null
@@ -457,15 +464,12 @@
 	return
 
 
-/obj/crematorium/tanning
+/obj/machinery/traymachine/locking/tanning
 	name = "tanning bed"
 	desc = "Now bringing the rays of Space Hawaii to your local spa!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "tanbed"
-	connected = null
-	cremating = 0 //yes im going to keep this var name
 	id = 2
-	locked = 0
 	mats = 30
 	var/emagged = 0 //heh heh
 	var/primed = 0 //Prime the bed via the console
@@ -495,7 +499,7 @@
 		src.tanningmodifier = 0.2
 		return 1
 
-	attack_hand(mob/user as mob)
+	/*attack_hand(mob/user as mob)
 		if (cremating)
 			boutput(user, "<span class='alert'>It's locked.</span>")
 			return
@@ -526,23 +530,6 @@
 		src.add_fingerprint(user)
 		update()
 
-	attackby(P as obj, mob/user as mob)
-		if (istype(P, /obj/item/pen))
-			var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
-			if (!t)
-				return
-			if (user.equipped() != P)
-				return
-			if ((!in_interact_range(src, user) > 1 && src.loc != user))
-				return
-			t = copytext(adminscrub(t),1,128)
-			if (t)
-				src.name = "Tanning Bed- '[t]'"
-			else
-				src.name = "Tanning Bed"
-		src.add_fingerprint(user)
-		return
-
 	relaymove(mob/user as mob)
 		if (user.stat || locked)
 			return
@@ -561,7 +548,7 @@
 			src.connected.set_loc(src)
 			src.connected.light.disable()
 		src.update()
-		return
+		return*/
 
 	cremate(mob/user as mob)
 		if (!src || !istype(src))
@@ -619,12 +606,12 @@
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 		return
 
-/obj/c_tray/tanning
+/obj/machine_tray/tanning
 	name = "tanning bed"
 	desc = "The perfect place to lay down after a long day indoors."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "tantray_empty"
-	connected = null
+
 	var/obj/item/light/tube/tanningtube = null
 	var/image/trayoverlay
 
@@ -634,11 +621,11 @@
 		src.overlays = null
 		if (tanningtube)
 			src.trayoverlay.color = tubecolor
-			src.overlays += trayoverlay
+			UpdateOverlays(trayoverlay, "tube")
 
 	proc/send_new_tancolor(var/tubecolor)
-		if (src.connected && istype (src.connected, /obj/crematorium/tanning))
-			var/obj/crematorium/tanning/tanningbed = src.connected
+		if (src.connected && istype (src.connected, /obj/machinery/traymachine/locking/tanning))
+			/obj/machinery/traymachine/locking/tanning/tanningbed = src.connected
 			tanningbed.tanningcolor = tubecolor
 
 	New()
@@ -694,7 +681,7 @@
 /* -------------------- Computer -------------------- */
 
 /obj/machinery/computer/tanning
-	name = "Tanning Computer"
+	name = "tanning computer"
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
 	mats = 20

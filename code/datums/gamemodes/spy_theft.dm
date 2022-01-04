@@ -498,7 +498,7 @@
 	big_station_bounties[/obj/machinery/vending/monkey] = 1
 	big_station_bounties[/obj/machinery/vending/security] = 2
 
-	big_station_bounties[/obj/morgue] = 1
+	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
 	big_station_bounties[/obj/machinery/clonegrinder] = 1
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
