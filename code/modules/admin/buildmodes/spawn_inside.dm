@@ -10,7 +10,7 @@ Right Mouse Button + Shift             = Set object type to selected mob/obj typ
 	var/objpath = null
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom/movable)
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom/movable)
 		update_button_text(objpath)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
