@@ -1550,18 +1550,16 @@ var/zapLimiter = 0
 	return 1
 
 /obj/machinery/power/apc/proc/is_not_default()
-	return operating != 1 || chargemode != 1 || (!shorted && (equipment != 3 || lighting != 3 || environ != 3)) || coverlocked != 1
+	return !operating || !chargemode || (!shorted && (equipment != 3 || lighting != 3 || environ != 3)) || !coverlocked
 
 /obj/machinery/power/apc/proc/set_default()
-	operating = 1
-	chargemode = 1
+	operating = TRUE
+	chargemode = TRUE
 	if (!shorted)
 		equipment = 3
 		lighting = 3
 		environ = 3
-	coverlocked = 1
+	coverlocked = TRUE
 
 	update()
 	UpdateIcon()
-
-	return

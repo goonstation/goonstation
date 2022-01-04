@@ -317,8 +317,7 @@
 		set category = "AI Commands"
 		set name = "Reset All APCs"
 		set desc = "Resets all APCs on the station."
-		if (mainframe)
-			mainframe.reset_apcs()
+		mainframe?.reset_apcs()
 
 	verb/de_electrify_verb()
 		set category = "AI Commands"
