@@ -126,7 +126,7 @@
 		SPAWN_DBG(0)
 			src.real_name = "??????"
 			src.add_ability_holder(/datum/abilityHolder/gimmick)
-			src.nodamage = 0
+			src.nodamage = FALSE
 
 			abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
 			abilityHolder.addAbility(/datum/targetable/critter/teleport)
