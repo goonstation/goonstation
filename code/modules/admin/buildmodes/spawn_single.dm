@@ -12,7 +12,7 @@ Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
 ***********************************************************"}
 	icon_state = "buildmode2"
-	var/objpath = null
+	var/objpath = /obj/critter/domestic_bee
 	var/cinematic = "Blink"
 	var/matrix/mtx = matrix()
 	click_mode_right(var/ctrl, var/alt, var/shift)

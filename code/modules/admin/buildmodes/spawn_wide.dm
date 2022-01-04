@@ -12,7 +12,7 @@ Use the button in the upper left corner to<br>
 change the direction of created objects.<br>
 ***********************************************************"}
 	icon_state = "buildmode5"
-	var/objpath = null
+	var/objpath = /obj/critter/domestic_bee
 	var/cinematic = "Blink"
 	var/delete_area = 0
 	var/turf/A = null
