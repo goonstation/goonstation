@@ -6,7 +6,6 @@
 	icon_state = "0"
 	var/mob/living/critter/antag_medibot/master
 	var/victim
-	var/injection_amount = 10
 	var/list/reagent_id
 	var/ranged = FALSE
 
@@ -14,11 +13,12 @@
 		src.master = the_bot
 		src.reagent_id = reagentid
 		src.ranged = rangedattack
+
 		if(ranged)
 			REMOVE_FLAG(interrupt_flags, INTERRUPT_MOVE) //move while creating gas
 		else
-			src.injection_amount = injectamt
 			src.victim = the_victim
+
 		..()
 
 	onStart()
@@ -60,14 +60,17 @@
 			master.visible_message("<span class='alert'><B>[master] injects [victim] with a dose of [english_list(syr_words)]!</B></span>")
 
 		else
+
 			var/list/sput_words = list()
 			var/datum/reagents/sput = new/datum/reagents(1)
 			for(var/reagent in reagent_id)
 				sput.maximum_volume += round(reagent_id[reagent] / length(reagent_id))
 				sput.add_reagent(reagent, round(reagent_id[reagent] / length(reagent_id)))
 				sput_words += reagent_id_to_name(reagent)
+
 			smoke_reaction(sput, 1, get_turf(master))
 			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
+
 		playsound(master, 'sound/items/hypo.ogg', 80, 0)
 
 /datum/limb/medibot_syringe
@@ -90,6 +93,7 @@
 	var/cooldown = 35 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
+
 	is_on_cooldown()
 		if (ticker.round_elapsed_ticks < next_shot_at)
 			return next_shot_at - ticker.round_elapsed_ticks
@@ -99,20 +103,18 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
+
 		if(!ranged && target == null)
 			return
 		if(!ranged && !iscarbon(target))
 			return
+
 		var/list/poisons = list()
 		for(var/i in 1 to rand(2,4))
 			var/reagent = pick(src.reagent_id)
 			poisons[reagent] = src.reagent_id[reagent]
-		actions.start(new/datum/action/bar/icon/antag_medbot_inject(user, poisons, ranged, 10, target), user)
 
-	/*attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
-		user.visible_message("<span class='alert'>hand</span>")
-		attempt_inject(target,user,FALSE)
-		return*/ //doesnt work for whatever reason
+		actions.start(new/datum/action/bar/icon/antag_medbot_inject(user, poisons, ranged, target), user)
 
 	help(mob/target, var/mob/user)
 		attempt_inject(target,user,FALSE)
@@ -124,6 +126,7 @@
 
 	attack_range(atom/target, var/mob/user, params)
 		attempt_inject(target,user,TRUE)
+
 //datums about the medibots limbs probably fit here more
 /mob/living/critter/antag_medibot
 	name = "Medibot"
@@ -145,8 +148,6 @@
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
 	metabolizes = 0
-	var/obj/item/reagent_containers/glass/beaker/reagent_glass = null
-
 
 	New()
 		. = ..()
@@ -167,6 +168,7 @@
 		else
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
+
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -208,7 +210,7 @@
 
 	setup_healths()
 		add_hh_robot(60, 1)
-		add_hh_robot_burn(35, 2) //FRY THE THANG
+		add_hh_robot_burn(35, 1.5) //FRY THE THANG
 
 	get_melee_protection(zone, damage_type)
 		return 4
