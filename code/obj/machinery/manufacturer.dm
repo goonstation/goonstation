@@ -1013,6 +1013,9 @@
 			src.build_icon()
 
 		else if (istype(W,/obj/item/reagent_containers/glass))
+			if (W.cant_drop)
+				boutput(user, "<span class='alert'>You cannot put the [W] into [src]!</span>")
+				return
 			if (src.beaker)
 				boutput(user, "<span class='alert'>There's already a receptacle in the machine. You need to remove it first.</span>")
 			else
