@@ -165,6 +165,16 @@ GAUNTLET CARDS
 			touched = TRUE
 			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
 
+/obj/item/card/id/catman
+	registered="Donk Co Super Duper Happy Funtime Friendly Cat Mascot"
+	assignment="Mascot"
+	icon_state = "gold"
+	item_state = "gold_id"
+	keep_icon = TRUE
+	New()
+		access = get_access("access_maint_tunnels")
+		..()
+
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
