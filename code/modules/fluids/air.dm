@@ -331,6 +331,9 @@ var/list/ban_from_airborne_fluid = list()
 /obj/effects/EnteredAirborneFluid(obj/fluid/F as obj)
 	.=0
 
+/obj/blob/EnteredAirborneFluid(obj/fluid/F)
+	F.group.reagents.reaction(src, TOUCH, F.amt, 0)
+
 /mob/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0
 	var/entered_group = 1 //Did the entering atom cross from a non-fluid to a fluid tile?
