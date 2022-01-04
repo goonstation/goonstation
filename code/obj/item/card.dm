@@ -166,7 +166,7 @@ GAUNTLET CARDS
 			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
 
 /obj/item/card/id/catman
-	registered="Donk Co Super Duper Happy Funtime Friendly Cat Mascot"
+	registered = "Donk Co Super Duper Happy Funtime Friendly Cat Mascot"
 	assignment="Mascot"
 	icon_state = "gold"
 	item_state = "gold_id"
