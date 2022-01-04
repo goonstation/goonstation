@@ -235,7 +235,7 @@ mob/new_player
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)
-					if(jobban_isbanned(src.mind, "Cyborg"))
+					if(jobban_isbanned(src, "Cyborg"))
 						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
 						close_spawn_windows()
 						return
@@ -331,6 +331,8 @@ mob/new_player
 			else if (istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/space_diner) || istype(character.mind.purchased_bank_item, /datum/bank_purchaseable/mail_order))
 				// Location is set in bank_purchaseable Create()
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived through an alternative mode of travel! Good luck!</h3>")
+			else if (istype(ticker.mode, /datum/game_mode/assday))
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
 			else if (map_settings?.arrivals_type == MAP_SPAWN_CRYO)
 				var/obj/cryotron/starting_loc = null
 				if (ishuman(character) && by_type[/obj/cryotron])
