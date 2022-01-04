@@ -1,4 +1,9 @@
 
+(t)tue jan 04 22
+(u)Flappybat
+(p)7060
+(e)⚖|balance
+(*)A number of changes have been made to Battle Royale. 40% of lockers and crates are randomly removed each round with the remainder replaced with Syndicate gear lockers and treasure chests. More armor and weapons are available with less useless items. Going off Z1 will now deal constant damage, stay battling!
 (t)mon jan 03 22
 (u)DimWhat
 (p)7044
