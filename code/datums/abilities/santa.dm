@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -220,6 +220,9 @@
 		var/A
 		A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 		var/area/thearea = get_telearea(A)
+		if(thearea.teleport_blocked)
+			boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
+			return 1
 
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
 		playsound(usr.loc, "sound/effects/bamf.ogg", 25, 1, -1)

@@ -369,7 +369,7 @@ datum
 					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
 						somethingchanged = 1
-					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)))
+					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1
 						for (var/obj/item/clothing/O in H)
 							if (istype(O,/obj/item/clothing/mask))
@@ -382,6 +382,7 @@ datum
 						var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
 						H.equip_if_possible(moustache, H.slot_wear_mask)
 						H.set_clothing_icon_dirty()
+						holder?.remove_reagent(src.id, 3)
 					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
 					H.update_colorful_parts()
 				..()
@@ -676,6 +677,12 @@ datum
 						L.TakeDamage("chest", brutedmg, 0, 0, DAMAGE_BLUNT) //120u pitcher of fffoam instantly killed elementals, lol.
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
 				return
+
+			grenade_effects(var/obj/grenade, var/atom/A)
+				if (isliving(A))
+					var/mob/living/M = A
+					if (M.hasStatus("burning"))
+						M.changeStatus("burning", -M.getStatusDuration("burning"))
 
 		silicate
 			name = "silicate"
@@ -1063,15 +1070,16 @@ datum
 			fluid_b = 192
 			transparency = 255
 			viscosity = 0.15
+			depletion_rate = 1
 			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						var/amt = min(2 * mult, 20-check_amount)
-						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt)
-						holder.add_reagent("enzymatic_leftovers", amt/2)
+						var/amt = min(1 * mult, 20-check_amount)
+						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt, temp_new = holder.total_temperature + 20)
+						holder.add_reagent("enzymatic_leftovers", amt/2, temp_new = holder.total_temperature + 20)
 				..()
 				return
 
@@ -1087,6 +1095,7 @@ datum
 			overdose = 5
 			value = 4 // 2 1 1
 			hygiene_value = 3
+			blob_damage = 1
 
 			reaction_obj(var/obj/O, var/volume)
 				if (!isnull(O))
@@ -1151,7 +1160,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
 						for(var/turf/location in covered)
-							fireflash(location, min(max(0,volume/40),8))
+							fireflash(location, clamp(volume/40, 0, 8))
 							if (covered.len < 4 || prob(10))
 								location.visible_message("<b>The oil burns!</b>")
 								var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -1340,6 +1349,7 @@ datum
 			fluid_b = 19
 			transparency = 255
 			depletion_rate = 0.01
+			heat_capacity = 200
 
 		// used to make fake initropidril
 		eyeofnewt
@@ -1710,7 +1720,7 @@ datum
 					M = holder.my_atom
 
 				if (M.a_intent == INTENT_HARM)
-					M.a_intent = INTENT_HELP
+					M.set_a_intent(INTENT_HELP)
 
 				if (probmult(8))
 					. = ""
@@ -2306,6 +2316,8 @@ datum
 				animate_spin(M, dir_temp, speed_temp)
 
 			reaction_obj(var/obj/O)
+				if(!O.mouse_opacity)
+					return
 				var/dir_temp = pick("L", "R")
 				var/speed_temp = text2num("[rand(0,10)].[rand(0,9)]")
 				animate_spin(O, dir_temp, speed_temp)
@@ -3644,17 +3656,15 @@ datum
 			value = 4
 
 			on_add()
-				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf) || (holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(4,1.5)
-				holder.my_atom.temp_flags |= IS_BUBSIUM_SCALED
 
 
 			on_remove()
-				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf) || !(holder.my_atom.temp_flags & IS_BUBSIUM_SCALED))
+				if(!holder || !holder.my_atom  || istype(holder.my_atom, /turf))
 					return
 				holder.my_atom.SafeScale(1/4,1/1.5)
-				holder.my_atom.temp_flags &= ~IS_BUBSIUM_SCALED
 
 
 			on_mob_life(var/mob/M, var/mult = 1)

@@ -1013,6 +1013,24 @@
 			set_loc(holder)
 		..()
 
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/left/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
 	getMobIcon(var/lying, var/decomp_stage = 0)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -1039,6 +1057,24 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
+
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] rapidly keratinizes!</span>")
+		var/obj/item/parts/human_parts/arm/right/claw/newlimb = new(src.loc)
+		newlimb.original_DNA = src.original_DNA
+		newlimb.original_holder = src.original_holder
+		newlimb.original_fprints = src.original_fprints
+		qdel(src)
 
 	getMobIcon(var/lying, var/decomp_stage = 0)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
@@ -1639,6 +1675,16 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+
+	sever(mob/user)
+		. = ..()
+		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.limb_data = new/datum/limb/wendigo/severed_werewolf(src)
+
+	remove(show_message)
+		. = ..()
+		src.visible_message("<span class='notice'>[src] withers greatly as it falls off!</span>")
+		src.limb_data = new/datum/limb/wendigo/severed_werewolf(src)
 
 //// THE ACTUAL WOLFLIMBS ////
 /obj/item/parts/human_parts/leg/mutant/werewolf/left

@@ -176,6 +176,7 @@
 
 	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
@@ -403,6 +404,9 @@
 	else
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
 
+	if(name == "particles")
+		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
+
 	html += "</td></tr>"
 
 	return html
@@ -493,6 +497,18 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
+	if (href_list["DMDump"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_ADMIN)
+			var/target = locate(href_list["DMDump"])
+			var/dump = dm_dump(target)
+			if(isnull(dump))
+				alert(usr, "DM Dump failed. Possibly output too long.", "DM Dump failed")
+			else
+				usr.Browse("<title>DM dump of [target] \ref[target]</title><pre>[dump]</pre>", "window=dm_dump_\ref[target];size=500x700")
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
+		return
 	if (href_list["AddComponent"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -506,6 +522,15 @@
 			debugRemoveComponent(locate(href_list["RemoveComponent"]))
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to remove a component from something all rude-like.")
+		return
+	if (href_list["Particool"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Particool"])
+			src.holder.particool = new /datum/particle_editor(D)
+			src.holder.particool.ui_interact(mob)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
 		return
 	if (href_list["Delete"])
 		usr_admin_only

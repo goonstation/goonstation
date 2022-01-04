@@ -30,7 +30,7 @@ obj/item/rocko
 
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
-		update_icon()
+		UpdateIcon()
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
@@ -121,7 +121,7 @@ obj/item/rocko
 			if(src.can_mob_observe(O))
 				O.show_message("<span class='emote'>[message]</span>", assoc_maptext = chat_text)
 
-	proc/update_icon()
+	update_icon()
 		var/image/smiley = image('icons/misc/rocko.dmi', src.smile ? "smile" : "frown")
 		if(bright)
 			painted = pick(list("#EE2","#2EE", "#E2E","#EEE"))
@@ -176,6 +176,6 @@ obj/item/rocko
 	afterattack(atom/target, mob/user, reach, params)
 		if(src.smile && ismob(target) && prob(10))
 			src.smile = FALSE
-			update_icon()
+			UpdateIcon()
 
 

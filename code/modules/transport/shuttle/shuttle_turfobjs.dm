@@ -33,6 +33,11 @@
 		..()
 		if (icon_state == "tplaceholder") icon_state = "near_blank"
 
+/turf/space/shuttle_transit/safe
+	temperature = T20C
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+
 /turf/simulated/floor/shuttle
 	name = "shuttle floor"
 	icon_state = "floor"
@@ -80,11 +85,12 @@
 	connect_overlay = 1
 	connects_to = list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
 	connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
+	connect_across_areas = FALSE
 /*
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
-			O.update_icon()
+			O.UpdateIcon()
 */
 	/////////////////////////////////////////////////////////////////OBJECTS
 

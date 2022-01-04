@@ -17,7 +17,7 @@
 
 
 /mob/living/carbon/human/npc
-	name = "human"
+	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
 	New()
@@ -26,7 +26,7 @@
 			src.mind = new(src)
 			if (src.name == "human")
 				randomize_look(src, 1, 1, 1, 1, 1, 0) // change gender/bloodtype/age/name/underwear, keep bioeffects
-				src.organHolder.head.update_icon()
+				src.organHolder.head.UpdateIcon()
 		SPAWN_DBG(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN_DBG(2 SECONDS)
@@ -281,7 +281,7 @@
 	switch(ai_state)
 		if(AI_PASSIVE) //Life is good.
 
-			src.a_intent = src.ai_default_intent
+			src.set_a_intent(src.ai_default_intent)
 
 			ai_pickupstuff()
 			ai_obstacle(1)
@@ -305,7 +305,7 @@
 
 		if(AI_ATTACKING)	//Gonna kick your ass.
 
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 
 			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
 				src.ai_state = AI_FLEEING
@@ -417,7 +417,7 @@
 				if(istype(src.equipped(),/obj/item/gun))
 					src.swap_hand()
 
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 
 				var/prefer_hand = FALSE
 				if(istype(ai_target, /obj/fitness/speedbag))
@@ -435,7 +435,7 @@
 					//	target.attack_paw(src) // idiots bite
 					//else
 					if(prob(20) && !ON_COOLDOWN(src, "ai grab", 15 SECONDS))
-						src.a_intent = INTENT_GRAB
+						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
 					if(istype(src.equipped(), /obj/item/sword) && prob(80))
@@ -443,7 +443,7 @@
 						if(!csaber.open)
 							src.ai_attack_target(csaber, null)
 					src.ai_attack_target(ai_target, src.equipped())
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 
 
 

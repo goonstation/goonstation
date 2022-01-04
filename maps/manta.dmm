@@ -2330,7 +2330,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "ais" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -2655,12 +2655,6 @@
 /area/ghostdrone_factory)
 "ajy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/clown)
-"ajz" = (
-/obj/table/auto,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ajA" = (
 /turf/simulated/floor/specialroom/clown,
@@ -5406,16 +5400,15 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aqp" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -5442,13 +5435,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -7294,7 +7286,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "avK" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -32
 	},
 /obj/machinery/light/incandescent/warm{
@@ -8053,7 +8045,7 @@
 /obj/disposalpipe/segment,
 /obj/table/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -32
 	},
 /turf/simulated/floor{
@@ -8769,32 +8761,6 @@
 /obj/machinery/dispenser,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"azp" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "azq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9887,9 +9853,8 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
 "aCm" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
@@ -9949,16 +9914,15 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -10465,9 +10429,8 @@
 /turf/simulated/floor,
 /area/station/hallway/portupperhallway)
 "aEa" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -10906,12 +10869,11 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "aFk" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/light/incandescent/cool{
 	nostick = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
@@ -11007,12 +10969,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hor)
 "aFA" = (
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/light/incandescent/cool{
 	nostick = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
@@ -12176,11 +12137,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aIq" = (
@@ -12326,11 +12286,10 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aID" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "aIF" = (
@@ -12406,9 +12365,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
@@ -13421,8 +13379,7 @@
 "aLL" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge2"
+	dir = 9
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -13502,6 +13459,9 @@
 "aLW" = (
 /obj/machinery/chem_dispenser,
 /obj/item/reagent_containers/glass/beaker/large,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aLX" = (
@@ -13514,6 +13474,9 @@
 	dir = 5
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aLZ" = (
@@ -14553,21 +14516,17 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
 "aPt" = (
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/starboard)
 "aPu" = (
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 8
 	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
 "aPv" = (
@@ -14661,18 +14620,16 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/starboard)
 "aPH" = (
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aPL" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/item/device/radio/intercom/AI,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aPM" = (
@@ -14716,9 +14673,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -14729,18 +14685,14 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aPV" = (
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/cable{
 	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
@@ -14748,30 +14700,24 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
 "aPX" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/decal/tile_edge/stripe{
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
@@ -14779,9 +14725,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -15935,7 +15880,7 @@
 "aTE" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker/security,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 32
 	},
 /turf/simulated/floor/black,
@@ -18515,12 +18460,11 @@
 	},
 /area/station/medical/medbay/surgery)
 "baB" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -19195,12 +19139,11 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bcx" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -21079,12 +21022,11 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bgO" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -22051,7 +21993,7 @@
 "bjr" = (
 /obj/table/glass/reinforced/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/blue,
@@ -22196,9 +22138,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -22217,9 +22158,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
@@ -26313,6 +26253,9 @@
 	},
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/cleanable/dirt/jen,
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/refinery)
 "bud" = (
@@ -26616,12 +26559,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bvg" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -26633,12 +26575,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bvi" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
@@ -26704,12 +26645,11 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 6;
-	icon_state = "bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -26816,19 +26756,19 @@
 	dir = 9
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bvI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bvJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bvL" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -27352,16 +27292,16 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bxp" = (
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bxq" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bxr" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -29242,12 +29182,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -29364,7 +29303,9 @@
 	},
 /area/station/medical/cdc)
 "bCD" = (
-/obj/disposaloutlet,
+/obj/disposaloutlet{
+	range = 2
+	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -29565,19 +29506,17 @@
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
 "bDp" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bDq" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bDr" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -29742,16 +29681,15 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
 	icon_state = "bio";
 	layer = 2.5;
 	name = "BIOHAZARD";
 	pixel_x = 32
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30008,9 +29946,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30045,9 +29982,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30329,9 +30265,8 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30354,9 +30289,8 @@
 	},
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30391,9 +30325,8 @@
 	pixel_y = -32
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30409,9 +30342,8 @@
 	pixel_y = -32
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -30907,7 +30839,7 @@
 	name = "Escape"
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bIg" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -31182,10 +31114,6 @@
 /area/station/science/artifact)
 "bJd" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -31193,6 +31121,9 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
@@ -31583,27 +31514,25 @@
 	dir = 10
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKf" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKg" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bKj" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/tapebox,
@@ -31638,10 +31567,6 @@
 "bKl" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/machinery/disposal/small{
 	dir = 8
@@ -32065,7 +31990,7 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bLq" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/poster/wallsign/stencil/left/c{
@@ -32081,7 +32006,7 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bLr" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/poster/wallsign/stencil/left/e{
@@ -32089,7 +32014,7 @@
 	pixel_y = -16
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "bLs" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -32530,12 +32455,6 @@
 /obj/decoration/syndiepc/syndiepc11,
 /obj/map/light/dimred,
 /turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/listeningpost/syndicateassaultvessel)
-"bMy" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
@@ -35896,9 +35815,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -35915,6 +35833,16 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
+"hHL" = (
+/obj/table/auto,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "hMf" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
@@ -35997,13 +35925,13 @@
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "hPk" = (
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
@@ -36059,13 +35987,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	pixel_y = 20
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -36681,9 +36608,8 @@
 /turf/simulated/floor/special/submarinesdown,
 /area/station/hallway/starboardlowerhallway)
 "jvz" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 10;
-	icon_state = "bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
 	},
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
@@ -36775,18 +36701,27 @@
 /obj/machinery/photocopier,
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
+"jOt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "jOA" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/green,
 /area/station/crewquarters/cryotron)
 "jRl" = (
-/obj/decal/tile_edge/stripe{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/ai_upload)
@@ -37342,7 +37277,7 @@
 "lCn" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/machinery/light/incandescent/netural{
@@ -39233,13 +39168,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/decal/tile_edge/stripe{
-	dir = 8;
-	icon_state = "xtra_bigstripe-edge"
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
 	pixel_y = 20
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -39377,7 +39311,7 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -26
 	},
 /obj/machinery/light/incandescent/warm{
@@ -40314,6 +40248,9 @@
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "sDT" = (
@@ -40638,16 +40575,15 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -40721,7 +40657,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating/random,
-/area/shuttle/escape/station/manta)
+/area/shuttle/escape/station)
 "tWT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41397,9 +41333,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -41967,7 +41902,7 @@
 /area/station/engine/gas)
 "wRZ" = (
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/table/wood/auto/desk{
@@ -41983,6 +41918,46 @@
 	icon_state = "fred2"
 	},
 /area/station/science/restroom)
+"wTa" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/listeningpost/syndicateassaultvessel)
+"wTZ" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "wVU" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
@@ -83139,7 +83114,7 @@ aaa
 aaa
 aji
 aji
-ajz
+hHL
 ajK
 aiu
 agD
@@ -84690,7 +84665,7 @@ gdN
 aqO
 aCG
 xVU
-azp
+wTZ
 aSj
 aSM
 aTv
@@ -85645,7 +85620,7 @@ bxp
 bxp
 bxp
 bxp
-bxp
+bKf
 bKe
 avp
 dyv
@@ -85706,7 +85681,7 @@ akV
 akL
 bMv
 ale
-bMy
+wTa
 akV
 alk
 lNJ
@@ -86524,7 +86499,7 @@ bei
 aNo
 bgw
 aKZ
-aKZ
+jOt
 aLY
 bjN
 bkI

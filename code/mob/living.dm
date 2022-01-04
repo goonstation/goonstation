@@ -127,8 +127,9 @@
 
 	var/const/singing_prefix = "%"
 
-/mob/living/New()
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	..()
+	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
 	src.attach_hud(vision)
 	src.vis_contents += src.chat_text
@@ -143,6 +144,8 @@
 	SPAWN_DBG(0)
 		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM
+		if(!ishuman(src))
+			init_preferences?.apply_post_new_stuff(src)
 
 
 /mob/living/flash(duration)
@@ -1201,7 +1204,7 @@
 	if (..())
 		return
 
-	src.misstep_chance = max(0,min(misstep_chance + amount,100))
+	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
 /mob/living/proc/get_static_image()
 	if (src.disposed)
@@ -1279,10 +1282,28 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			thing = src.l_hand
 		else if (src.r_hand)
 			thing = src.r_hand
-
 		if (!thing)
 			return
 
+	// Prevent attempting to pass item arms
+	if (thing == src.l_hand)
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (!(H.has_hand(1)))
+				if (!(H.has_hand(0)))
+					return
+				else
+					thing = src.r_hand
+	if (thing == src.r_hand)
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (!(H.has_hand(0)))
+				if (!(H.has_hand(1)))
+					return
+				else
+					thing = src.l_hand
+	if (!thing)
+		return
 	//passing grab theoretically could be a mechanic but needs some annoying fixed - swapping around assailant and item grab handling an stuff probably
 	if(istype(thing,/obj/item/grab))
 		return
@@ -1738,6 +1759,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(M)
 		for(var/datum/ailment_data/addiction/A in src.ailments)
 			src.ailments -= A
+		for (var/datum/ailment_data/parasite/P in src.ailments)
+			src.cure_disease(P)
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	SHOULD_CALL_PARENT(TRUE)

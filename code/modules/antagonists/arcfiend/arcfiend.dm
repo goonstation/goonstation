@@ -102,12 +102,15 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/mob/living/user
 	var/atom/movable/target
 	var/datum/abilityHolder/holder
+	var/particles/P
 
 	New(user, target, holder)
 		. = ..()
 		src.user = user
 		src.target = target
 		src.holder = holder
+		src.user.UpdateParticles(new/particles/arcfiend, "arcfiend")
+		P = src.user.GetParticles("arcfiend")
 
 	onUpdate()
 		..()
@@ -116,11 +119,15 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onStart()
 		..()
+		P.spawning = initial(P.spawning)
 		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
 
+	onInterrupt(flag)
+		P.spawning = 0
+		. = ..()
 
 	onEnd()
 		if(!IN_RANGE(user, target, 1))
@@ -364,6 +371,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/mob/living/target
 	var/datum/abilityHolder/holder
 	var/wattage = 0
+	var/particles/P
 
 	New(user, target, holder, wattage)
 		. = ..()
@@ -371,6 +379,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		src.target = target
 		src.holder = holder
 		src.wattage = wattage
+		src.user.UpdateParticles(new/particles/arcfiend, "arcfiend")
+		P = src.user.GetParticles("arcfiend")
 
 	onUpdate(timePassed)
 		..()
@@ -387,13 +397,17 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 
 	onStart()
 		..()
+		P.spawning = initial(P.spawning)
 		if(!IN_RANGE(user, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.loopStart()
 
+	onInterrupt(flag)
+		P.spawning = 0
+		..()
 
 	onEnd()
+		P.spawning = 0
 		target.add_fingerprint(user)
 		if (!target.bioHolder?.HasEffect("resist_electric"))
 			target.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
@@ -432,6 +446,9 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			var/turf/T = get_turf(holder.owner)
 			if (!T.z || isrestrictedz(T.z))
 				boutput(holder.owner, __red("You are forbidden from using that here!"))
+				return TRUE
+			if (T != holder.owner.loc) // See: no escaping port-a-brig
+				boutput(holder.owner, __red("You cannot use this ability while inside [holder.owner.loc]!"))
 				return TRUE
 			if (!(locate(/obj/cable) in T))
 				boutput(holder.owner, __red("You must use this ability on top of a cable!"))

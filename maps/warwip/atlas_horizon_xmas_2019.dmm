@@ -7457,7 +7457,7 @@
 /obj/table/wood/round,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -14612,7 +14612,7 @@
 /area/station2/bridge/hos)
 "aHj" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "aHk" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -31228,7 +31228,7 @@
 /area/station/hangar/main)
 "bsb" = (
 /turf/simulated/wall/asteroid/lighted,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "bsc" = (
 /obj/item/clothing/suit/bedsheet,
 /obj/landmark/start{
@@ -48106,9 +48106,9 @@
 	},
 /obj/item/device/radio/intercom/security,
 /obj/storage/secure/crate/gear/armory/grenades,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -57562,7 +57562,7 @@
 	},
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = -24
 	},
 /turf/simulated/floor/black,
@@ -65562,7 +65562,7 @@
 /obj/item/clipboard/with_pen,
 /obj/decal/cleanable/writing{
 	sample_reagent = "blood";
-	words = "racist greg was here"
+	words = "smelly greg was here"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)

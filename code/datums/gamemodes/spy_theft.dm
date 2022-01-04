@@ -159,7 +159,7 @@
 	var/num_spies = 2 //minimum
 
 	if (traitor_scaling)
-		num_spies = max(2, min(round((num_players + randomizer) / pop_divisor), spies_possible))
+		num_spies = clamp(round((num_players + randomizer) / pop_divisor), 2, spies_possible)
 
 	var/list/possible_spies = get_possible_enemies(ROLE_SPY_THIEF, num_spies)
 
@@ -246,9 +246,9 @@
 
 	for(var/datum/mind/M in ticker.mode.traitors) //We loop through ticker.mode.traitors and do spy checks here because the mode might not actually be spy thief. And this instance of the datum may be held by the TRUE MODE
 		LAGCHECK(LAG_LOW)
-		if (M.special_role == ROLE_SPY_THIEF)
+		if (M.special_role == ROLE_SPY_THIEF && M.current)
 			boutput(M.current, "<span class='notice'><b>Spy Console</b> has been updated with new requests.</span>") //MAGIC SPY SENSE (I feel this is justified, spies NEED to know this)
-			M.current << sound('sound/machines/twobeep.ogg')
+			M.current.playsound_local(M.current, 'sound/machines/twobeep.ogg', 35)
 
 /datum/game_mode/spy_theft/proc/get_mob_list()
 	var/list/mobs = list()

@@ -25,9 +25,9 @@
 	rc_flags = RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
-		update_icon()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "minivial"
@@ -71,9 +71,9 @@
 	icon_state = "vendbag"
 
 	on_reagent_change()
-		update_icon()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (src.reagents.total_volume == 0)
 			icon_state = "vendbag"

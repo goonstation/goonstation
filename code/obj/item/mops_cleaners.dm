@@ -224,7 +224,7 @@ WET FLOOR SIGN
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
 	var/log_reagents = log_reagents(src)
-	var/travel_distance = max(min(get_dist(get_turf(src), A), 3), 1)
+	var/travel_distance = clamp(get_dist(get_turf(src), A), 1, 3)
 	SPAWN_DBG(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)
