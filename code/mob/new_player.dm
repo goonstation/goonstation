@@ -322,6 +322,20 @@ mob/new_player
 				mode.add_latejoin_to_team(character.mind, JOB)
 			else if (istype(JOB, /datum/job/special/syndicate_operative))
 				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
+				var/datum/game_mode/battle_royale/battlemode = ticker.mode
+				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
+					character.ghostize()
+					qdel(character)
+					return
+				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
+				equip_battler(character)
+				character.mind.assigned_role = "MODE"
+				character.mind.special_role = ROLE_BATTLER
+				battlemode.living_battlers.Add(character.mind)
+				DEBUG_MESSAGE("Adding a new battler")
+				battlemode.battle_shuttle_spawn(character.mind)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
@@ -345,20 +359,6 @@ mob/new_player
 					character.set_loc(starting_loc)
 			else if (map_settings?.arrivals_type == MAP_SPAWN_MISSILE)
 				latejoin_missile_spawn(character)
-			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
-				var/datum/game_mode/battle_royale/battlemode = ticker.mode
-				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
-					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
-					character.ghostize()
-					qdel(character)
-					return
-				character.set_loc(pick_landmark(LANDMARK_BATTLE_ROYALE_SPAWN))
-				equip_battler(character)
-				character.mind.assigned_role = "MODE"
-				character.mind.special_role = ROLE_BATTLER
-				battlemode.living_battlers.Add(character.mind)
-				DEBUG_MESSAGE("Adding a new battler")
-				battlemode.battle_shuttle_spawn(character.mind)
 			else
 				var/starting_loc = null
 				starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))

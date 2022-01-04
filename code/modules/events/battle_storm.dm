@@ -77,13 +77,14 @@
 			var/sound/blowoutsound = sound('sound/misc/blowout_short.ogg')
 			blowoutsound.repeat = 0
 			blowoutsound.channel = 5
+			blowoutsound.volume = 50
 			world << blowoutsound
 			boutput(world, "<span class='alert'><B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]!</span>")
 
 			for (var/mob/M in mobs)
 				SPAWN_DBG(0)
 					if (!inafterlife(M) && !isVRghost(M))
-						shake_camera(M, 200, 16) // wire note: lowered strength from 840 to 400, by popular request
+						shake_camera(M, 100, 16) // wire note: lowered strength from 840 to 400, by popular request
 
 			// Hit everyone every 2 seconds when they are not in the safe zone
 			// Everyone gets set more and more on fire the longer they arent in the safe area
