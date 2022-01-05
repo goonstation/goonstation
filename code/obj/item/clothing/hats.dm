@@ -1579,11 +1579,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		item_state = "hbow-yellowpolkadot"
 
 /obj/item/clothing/head/rafflesia
-    name = "rafflesia"
-    desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
-    wear_image_icon = 'icons/mob/clothing/fruithat.dmi'
-    icon_state = "rafflesiahat"
-    item_state = "rafflesiahat"
+	name = "rafflesia"
+	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+	icon_state = "rafflesiahat"
+	item_state = "rafflesiahat"
 
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"

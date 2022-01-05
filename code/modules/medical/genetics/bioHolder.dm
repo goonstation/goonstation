@@ -675,11 +675,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(owner)
 				newEffect.OnAdd()
 			if (do_stability)
+				src.genetic_stability -= newEffect.stability_loss
+				src.genetic_stability = max(0,src.genetic_stability)
 				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
-				src.genetic_stability -= newEffect.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
@@ -703,13 +703,27 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
 		if (!istype(BE) || !owner || HasEffect(BE.id))
 			return null
+
+		if(BE.effect_group)
+			for(var/datum/bioEffect/curr_id as anything in effects)
+				var/datum/bioEffect/curr = effects[curr_id]
+				if(curr.effect_group == BE.effect_group)
+					RemoveEffect(curr.id)
+					break
+
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
 		BE.OnAdd()
+
 		if (do_stability)
 			src.genetic_stability -= BE.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)
+
+			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+				BE.timeLeft = rand(20, 60)
+				BE.degrade_after = TRUE
+
 		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
 				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
