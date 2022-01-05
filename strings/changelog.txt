@@ -1,4 +1,9 @@
 
+(t)wed jan 05 22
+(u)eX.n0x
+(p)7083
+(e)🐛🎨|bug, sprites
+(+)A large chunk of clothing items fit better on/with lizard heads.
 (t)tue jan 04 22
 (u)Flappybat
 (p)7051
