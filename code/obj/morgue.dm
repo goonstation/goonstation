@@ -297,12 +297,11 @@ if (src.connected.loc != src)
 	desc = "A human incinerator."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "crema1"
-	density = 1
 	//var/obj/c_tray/connected = null
-	anchored = 1.0
-	var/cremating = 0
+	//var/cremating = 0
 	var/id = 1
 	var/obj/machinery/crema_switch/igniter = null
+	tray_type = obj/machine_tray/crematorium
 
 	icon_trayopen = "crema0"
 	icon_unoccupied = "crema1"
@@ -318,21 +317,17 @@ if (src.connected.loc != src)
 		. = ..()
 		STOP_TRACKING
 
-
-
-
-
 /obj/machinery/traymachine/locking/crematorium/proc/cremate(mob/user as mob)
 	if (!src || !istype(src))
 		return
-	if (src.cremating)
+	if (src.locked)
 		return //don't let you cremate something twice or w/e
 	if (!src.contents || !length(src.contents))
 		src.visible_message("<span class='alert'>You hear a hollow crackle, but nothing else happens.</span>")
 		return
 
 	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
-	src.cremating = 1
+	//src.cremating = 1
 	src.locked = 1
 	var/ashes = 0
 
@@ -366,7 +361,7 @@ if (src.connected.loc != src)
 	SPAWN_DBG(10 SECONDS)
 		if (src)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-			src.cremating = 0
+			//src.cremating = 0
 			src.locked = 0
 			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
@@ -377,7 +372,7 @@ if (src.connected.loc != src)
 	return
 
 
-
+/*
 /obj/c_tray
 	name = "crematorium tray"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -423,6 +418,11 @@ if (src.connected.loc != src)
 	if (user != O)
 		user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>", "<span class='alert'>You stuff [O] into [src]!</span>")
 	return
+*/
+
+//-----------------------------------------------------
+/*~ Crematorium Switch ~*/
+//-----------------------------------------------------
 
 /obj/machinery/crema_switch
 	name = "crematorium igniter"
@@ -436,10 +436,10 @@ if (src.connected.loc != src)
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
-	var/list/obj/crematorium/crematoriums = null
+	var/list/obj/machinery/traymachine/locking/crematorium/crematoriums = null
 
 	disposing()
-		for (var/obj/crematorium/O in src.crematoriums)
+		for (var/obj/machinery/traymachine/locking/crematorium/O in src.crematoriums)
 			O.igniter = null
 		src.crematoriums = null
 		. = ..()
@@ -463,14 +463,22 @@ if (src.connected.loc != src)
 		boutput(user, "<span class='alert'>Access denied.</span>")
 	return
 
+//-----------------------------------------------------
+/*~ Tanning Bed ~*/
+//-----------------------------------------------------
 
 /obj/machinery/traymachine/locking/tanning
 	name = "tanning bed"
 	desc = "Now bringing the rays of Space Hawaii to your local spa!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "tanbed"
-	id = 2
+	var/id = 2 //this gets used when the tanning computer links to the bed, pretty sure it's a weird thing because tanning beds used to be crematoria
 	mats = 30
+
+	var/icon_trayopen = "tanbed"
+	var/icon_unoccupied = "tanbed"
+	var/icon_occupied = "tanbed1"
+
 	var/emagged = 0 //heh heh
 	var/primed = 0 //Prime the bed via the console
 	var/settime = 10 //How long? (s)
@@ -606,8 +614,12 @@ if (src.connected.loc != src)
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 		return
 
+//-----------------------------------------------------
+/*~ Tanning Bed Tray ~*/
+//-----------------------------------------------------
+
 /obj/machine_tray/tanning
-	name = "tanning bed"
+	name = "tanning bed tray"
 	desc = "The perfect place to lay down after a long day indoors."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "tantray_empty"
@@ -678,7 +690,9 @@ if (src.connected.loc != src)
 				light.set_brightness(0)
 
 
-/* -------------------- Computer -------------------- */
+//-----------------------------------------------------
+/*~ Tanning Computer ~*/
+//-----------------------------------------------------
 
 /obj/machinery/computer/tanning
 	name = "tanning computer"
@@ -688,7 +702,7 @@ if (src.connected.loc != src)
 	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
-	var/obj/crematorium/tanning/linked = null //The linked tanning bed
+	var/obj/machinery/traymachine/locking/tanning/ = null //The linked tanning bed
 
 
 	New()
@@ -701,15 +715,15 @@ if (src.connected.loc != src)
 		. = ..()
 
 	proc/get_link()
-		for(var/obj/crematorium/tanning/C in by_type[/obj/crematorium])
+		for(var/obj/machinery/traymachine/locking/tanning/C in by_type[/obj/crematorium])
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				C.linked = src
 				break
 
 	proc/find_tray_tube()
-		if (linked.connected && istype(linked.connected, /obj/c_tray/tanning))
-			var/obj/c_tray/tanning/tray = linked.connected
+		if (linked.my_tray && istype(linked.my_tray, /obj/machine_tray/tanning))
+			var/obj/machine_tray/tanning/tray = linked.my_tray
 			if (tray.tanningtube)
 				return 1
 
@@ -718,8 +732,8 @@ if (src.connected.loc != src)
 		if(linked == null) return "ERROR: No tanning beds found."
 
 		if(find_tray_tube() != 1) return "No light tube found in the tanning tray."
-		if(linked.cremating) return "Tanning in progress. Please wait."
-		if(linked.cremating == 0) return "Tanning bed idle."
+		if(linked.locked) return "Tanning in progress. Please wait."
+		if(linked.locked == 0) return "Tanning bed idle."
 
 		return "Unknown Error Encountered."
 
@@ -753,14 +767,14 @@ if (src.connected.loc != src)
 			return
 
 		if (href_list["toggle"])
-			if (linked && !linked.cremating && find_tray_tube() == 1)
+			if (linked && !linked.locked && find_tray_tube() == 1)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["timer"])
 			sleep (100)
-			if (linked && !linked.cremating && find_tray_tube() == 1)
+			if (linked && !linked.locked && find_tray_tube() == 1)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
