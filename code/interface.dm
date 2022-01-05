@@ -42,7 +42,7 @@
 			set name = "github"
 			set desc = "Opens the github in your browser"
 			set hidden = 1
-			src << link("https://github.com/goonstation/goonstation")
+			src << link("https://github.com/fluidhelixtw/hybridstation")
 
 		wiki()
 			set category = "Commands"

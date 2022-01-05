@@ -25,7 +25,7 @@
 
 	hub = "Exadv1.SpaceStation13"
 	hub_password = "kMZy3U5jJHSiBQjr"
-	name = "Goonstation 13"
+	name = "Hybridstation 13"
 
 //Let's clarify something. I don't know if it needs clarifying, but here I go anyways.
 
