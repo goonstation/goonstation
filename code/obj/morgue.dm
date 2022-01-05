@@ -18,7 +18,7 @@
 // Tanning bed computer (largely untouched in refactor)
 
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
-
+#define TRAYMACHINE_DEFAULT_DRAW 250 //IDK I just put a number
 
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
@@ -32,31 +32,27 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	icon_state = "morgue1"
 	density = 1
 	anchored = 1.0
-	power_usage = 250 //IDK I just put a number
+	power_usage = TRAYMACHINE_DEFAULT_DRAW
 
 	//tray related variables
 	var/obj/machine_tray/my_tray = null
 	var/tray_type = /obj/machine_tray //type of tray the machine should be spawning
 
-	//Currently no tray machine accepts anything into its contents except through tray loading but anything in this list won't get ejected on opening
+	//Currently no tray machine accepts anything into its contents except through tray loading
+	//But anything in this list won't get ejected on opening, this is a bit of futureproofing
 	var/list/non_tray_contents = list()
 
 	//icon_state names for the default update proc, unused if you override that and don't use them yourself.
 	var/icon_trayopen = "morgue0"
 	var/icon_unoccupied = "morgue1"
-	var/icon_occupied = "morgue2"
+	var/icon_occupied = "morgue2" //When the machine has things in contents that aren't the tray or in non_tray_contents
 
-	//TESTING SHIT PLEASE IGNORE
-	var/obj/testitem
 
 /obj/machinery/traymachine/New()
 	my_tray = new tray_type(src) //Heck this lazy init tray spawning,
 	my_tray.set_dir(src.dir)
 	my_tray.my_machine = src
 	my_tray.layer = OBJ_LAYER - 0.02
-	//TESTING SHIT PLEASE IGNORE
-	testitem = new /obj/item/device/radio/headset/deaf(src)
-	non_tray_contents += testitem
 
 	..()
 
@@ -71,12 +67,20 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 				AM.set_loc(T)
 	. = ..()
 
+obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
+	..()
+	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
+		use_power(power_usage, EQUIP)
+
 /obj/machinery/traymachine/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	if (my_tray && my_tray.loc != src)
 		collect_tray()
 	else
 		eject_tray()
+
+/obj/machinery/traymachine/attack_ai(mob/user as mob)
+	attack_hand(user) //finally silicons can open and close the fucking morgues
 
 //Fun fact you can label these things
 /obj/machinery/traymachine/attackby(P as obj, mob/user as mob)
@@ -161,7 +165,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	if (src.my_tray.loc != src)
 		src.icon_state = icon_trayopen
 	else
-		if (src.contents.len > 1) //the tray lives in contents
+		if ((length(contents) - length(non_tray_contents)) > 1) //the tray lives in contents
 			src.icon_state = icon_occupied
 		else
 			src.icon_state = icon_unoccupied
@@ -178,8 +182,10 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 //These will not open/close while locked
 //Sure hope you coded em to unlock on their own at some point
+ABSTRACT_TYPE(/obj/machinery/traymachine/locking)
 /obj/machinery/traymachine/locking
 	var/locked = FALSE
+	var/powerdraw_use = TRAYMACHINE_DEFAULT_DRAW  //same as power_usage by default
 	//crematoria/tanning beds also had a variable called cremating but from what I saw that and locked were always set together so
 
 /obj/machinery/traymachine/locking/attack_hand(mob/user as mob)
@@ -199,6 +205,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /*~ Tray ~*/
 //-----------------------------------------------------
 
+ABSTRACT_TYPE(/obj/machine_tray)
 /obj/machine_tray
 	name = "machine tray"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -276,7 +283,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	icon_state = "crema1"
 	//var/obj/c_tray/connected = null
 	//var/cremating = 0
-	var/id = 1
+	powerdraw_use = 1500
+	var/id = 1 //crema switch uses this when finding crematoria
 	var/obj/machinery/crema_switch/igniter = null
 	tray_type = /obj/machine_tray/crematorium
 
@@ -297,6 +305,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/locking/crematorium/proc/cremate(mob/user as mob)
 	if (!src || !istype(src))
 		return
+	if (status & NOPOWER)
+		return
 	if (src.locked)
 		return //don't let you cremate something twice or w/e
 	if (!src.contents || !length(src.contents))
@@ -306,8 +316,11 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
 	src.locked = 1
 	var/ashes = 0
+	power_usage = powerdraw_use //gotta chug them watts
+	icon_state = "crema_active"
 
 	for (var/M in contents)
+		if (M in non_tray_contents) continue
 		if (M == my_tray) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
@@ -338,11 +351,13 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		if (src)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
 			src.locked = 0
+			power_usage = initial(power_usage)
 			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
 			while (ashes > 0)
 				make_cleanable( /obj/decal/cleanable/ash,src)
 				ashes -= 1
+			update() //get rid of the active sprite
 
 	return
 
@@ -384,7 +399,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 					src.crematoriums.Add(C)
 					C.igniter = src
 		for (var/obj/machinery/traymachine/locking/crematorium/C as anything in src.crematoriums)
-			if (!C.locked)
+			if (!C.locked && C.my_tray.loc == C) //don't activate if the tray's not in ffs
 				C.cremate(user)
 	else
 		boutput(user, "<span class='alert'>Access denied.</span>")
@@ -400,7 +415,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	desc = "Now bringing the rays of Space Hawaii to your local spa!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "tanbed"
-	var/id = 2 //this gets used when the tanning computer links to the bed, pretty sure it's a weird thing because tanning beds used to be crematoria
+	var/id = 2 //this gets used when the tanning computer links to the bed
+	powerdraw_use = 1000 //power cost while tanning
 	mats = 30
 
 	icon_trayopen = "tanbed"
@@ -415,10 +431,15 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	var/tanningmodifier = 0.03 //How fast do you want to go to your tanningcolor?
 	var/obj/machinery/computer/tanning/linked = null
 
+	New()
+		..()
+		START_TRACKING
+
 	disposing()
 		src.linked?.linked = null
 		src.linked = null
 		. = ..()
+		STOP_TRACKING
 
 	update()
 		if (src.contents.len)
@@ -439,6 +460,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	proc/cremate(mob/user as mob)
 		if (!src || !istype(src))
 			return
+		if (status & NOPOWER)
+			return
 		if (src.locked)
 			return //don't let you cremate something twice or w/e
 		if (!src.contents || !length(src.contents))
@@ -448,6 +471,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
 		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
 		src.locked = 1
+		power_usage = powerdraw_use
+		icon_state = "tanbed_active"
 
 		for (var/mob/M in contents)
 			if (isliving(M))
@@ -464,7 +489,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 							H.TakeDamage("All", 0, 2, 0, DAMAGE_BURN)
 							if (src.settime % 2) //limiter
 								boutput(H, "<span class='alert'>Your skin feels hot!</span>")
-						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses/tanning))) //Always wear protection
+						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
 							H.take_eye_damage(1, 2)
 							H.change_eye_blurry(2)
 							H.changeStatus("stunned", 1 SECOND)
@@ -483,11 +508,13 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 					qdel(M)
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
-		SPAWN_DBG(src.settime * 10)
+		SPAWN_DBG(src.settime SECONDS)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.locked = 0
+				power_usage = initial(power_usage)
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				update() //clear the active sprite
 		return
 
 
@@ -508,7 +535,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	proc/generate_overlay_icon(var/tubecolor)
 		if (!trayoverlay)
 			src.trayoverlay = image('icons/obj/stationobjs.dmi', "tantray_overlay")
-		src.overlays = null
+		UpdateOverlays(null, "tube")
 		if (tanningtube)
 			src.trayoverlay.color = tubecolor
 			UpdateOverlays(trayoverlay, "tube")
@@ -644,14 +671,14 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 			return
 
 		if (href_list["toggle"])
-			if (linked && !linked.locked && find_tray_tube() == 1)
+			if (linked && !linked.locked && find_tray_tube() == 1 && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["timer"])
-			sleep (100)
-			if (linked && !linked.locked && find_tray_tube() == 1)
+			sleep (10 SECONDS)
+			if (linked && !linked.locked && find_tray_tube() == 1 && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
@@ -666,3 +693,5 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 		src.updateDialog()
 		return
+
+#undef TRAYMACHINE_DEFAULT_DRAW
