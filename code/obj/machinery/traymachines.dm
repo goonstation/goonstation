@@ -242,6 +242,9 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	if (my_machine && my_machine != src.loc)
 		my_machine?.collect_tray()
 
+/obj/machine_tray/attack_ai(mob/user as mob)
+	attack_hand(user)
+
 /obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
 		return
