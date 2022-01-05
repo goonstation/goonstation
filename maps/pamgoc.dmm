@@ -34048,7 +34048,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
 	},
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bmS" = (
@@ -36280,7 +36282,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "brq" = (
@@ -51518,11 +51522,15 @@
 /turf/simulated/floor/purple/side,
 /area/station/janitor/supply)
 "bUu" = (
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "bUv" = (
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bUw" = (
