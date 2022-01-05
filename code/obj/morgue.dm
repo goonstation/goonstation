@@ -20,7 +20,6 @@
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
 
 
-
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
 //-----------------------------------------------------
@@ -80,7 +79,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		eject_tray()
 
 //Fun fact you can label these things
-/obj/machinery/traymachine/morgue/attackby(P as obj, mob/user as mob)
+/obj/machinery/traymachine/attackby(P as obj, mob/user as mob)
 	src.add_fingerprint(user)
 	if (istype(P, /obj/item/pen))
 		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
@@ -119,7 +118,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	return
 
 //Someone is trying to move from inside
-/obj/machinery/traymachine/morgue/relaymove(mob/user as mob)
+/obj/machinery/traymachine/relaymove(mob/user as mob)
 	if (user.stat)
 		return
 	eject_tray()
@@ -137,8 +136,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		if (AM in non_tray_contents)
 			continue
 		AM.set_loc(T)
-		AM.pixel_x += 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle on morgues
-		AM.pixel_y += 28 * (T_src.y - T.y)
+		AM.pixel_x = 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle on morgues
+		AM.pixel_y = 28 * (T_src.y - T.y)
 
 		var/orig_layer = AM.layer
 		if (AM != my_tray)
@@ -195,6 +194,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		return //fuck you
 	..()
 
+
 //-----------------------------------------------------
 /*~ Tray ~*/
 //-----------------------------------------------------
@@ -246,7 +246,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	return
 
 
-
 //-----------------------------------------------------
 /*~ Morgue ~*/
 //-----------------------------------------------------
@@ -264,6 +263,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	icon_trayopen = "morgue0"
 	icon_unoccupied = "morgue1"
 	icon_occupied = "morgue2"
+
 
 //-----------------------------------------------------
 /*~ Crematorium ~*/
@@ -390,6 +390,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		boutput(user, "<span class='alert'>Access denied.</span>")
 	return
 
+
 //-----------------------------------------------------
 /*~ Tanning Bed ~*/
 //-----------------------------------------------------
@@ -489,6 +490,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 		return
 
+
 //-----------------------------------------------------
 /*~ Tanning Bed Tray ~*/
 //-----------------------------------------------------
@@ -579,7 +581,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	icon_state = "tanconsole"
 	var/state_str = ""
 	var/obj/machinery/traymachine/locking/tanning/linked = null //The linked tanning bed
-
 
 	New()
 		..()
