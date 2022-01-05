@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 	//tray related variables
 	var/obj/machine_tray/my_tray = null
-	var/tray_type = obj/machine_tray //type of tray the machine should be spawning
+	var/tray_type = /obj/machine_tray //type of tray the machine should be spawning
 
 	//Currently no tray machine accepts anything into its contents except through tray loading but anything in this list won't get ejected on opening
 	var/list/non_tray_contents = list()
@@ -56,25 +56,25 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	my_tray.my_machine = src
 	my_tray.layer = OBJ_LAYER - 0.02
 	//TESTING SHIT PLEASE IGNORE
-	testitem = new obj/item/device/radio/headset/deaf(src)
+	testitem = new /obj/item/device/radio/headset/deaf(src)
 	non_tray_contents += testitem
 
 	..()
 
 /obj/machinery/traymachine/disposing()
-	my_tray?.connected = null
+	my_tray?.my_machine = null
 	qdel(my_tray)
 	my_tray = null
 	if (length(src.contents)) //dump out any other stuff
 		var/turf/T = get_turf(src)
 		for (var/atom/movable/AM in contents)
-			if (!(A in non_tray_contents))
+			if (!(AM in non_tray_contents))
 				AM.set_loc(T)
 	. = ..()
 
 /obj/machinery/traymachine/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
-	if (src.connected && src.connected.loc != src)
+	if (my_tray && my_tray.loc != src)
 		collect_tray()
 	else
 		eject_tray()
@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		AM.pixel_y = 28 * (T_src.y - T.y)
 
 		var/orig_layer = AM.layer
-		if (AM != src.connected)
+		if (AM != my_tray)
 			AM.layer = OBJ_LAYER - 0.01
 
 		animate(AM, 1 SECOND, easing = BOUNCE_EASING, pixel_x = 0, pixel_y = 0)
@@ -172,15 +172,15 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 /obj/machinery/traymachine/proc/collect_tray()
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-	for( var/atom/movable/A as mob|obj in src.connected.loc)
+	for( var/atom/movable/A as mob|obj in my_tray.loc)
 		if (!( A.anchored )) //note the tray is anchored
 			A.set_loc(src)
-	src.connected.set_loc(src)
+	my_tray.set_loc(src)
 	update()
 
 ///Update the tray machine's sprite
 /obj/machinery/traymachine/proc/update()
-if (src.connected.loc != src)
+	if (src.my_tray.loc != src)
 		src.icon_state = icon_trayopen
 	else
 		if (src.contents.len > 1) //the tray lives in contents
@@ -255,7 +255,7 @@ if (src.connected.loc != src)
 		return ..()
 
 /obj/machine_tray/attack_hand(mob/user as mob)
-	if (my_machine && src.connected != src.loc)
+	if (my_machine && my_machine != src.loc)
 		my_machine?.collect_tray()
 
 /obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -280,7 +280,7 @@ if (src.connected.loc != src)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 
-	tray_type = obj/machine_tray/morgue
+	tray_type = /obj/machine_tray/morgue
 
 	dir = EAST //IDK why morgues default east but
 
@@ -301,7 +301,7 @@ if (src.connected.loc != src)
 	//var/cremating = 0
 	var/id = 1
 	var/obj/machinery/crema_switch/igniter = null
-	tray_type = obj/machine_tray/crematorium
+	tray_type = /obj/machine_tray/crematorium
 
 	icon_trayopen = "crema0"
 	icon_unoccupied = "crema1"
@@ -332,7 +332,7 @@ if (src.connected.loc != src)
 	var/ashes = 0
 
 	for (var/M in contents)
-		if (M == src.connected) continue //no cremating the tray tyvm
+		if (M == my_tray) continue //no cremating the tray tyvm
 		if (isliving(M))
 			var/mob/living/L = M
 			SPAWN_DBG(0)
@@ -452,12 +452,12 @@ if (src.connected.loc != src)
 	if (src.allowed(user))
 		if (!islist(src.crematoriums))
 			src.crematoriums = list()
-			for_by_tcl(C, /obj/crematorium)
+			for_by_tcl(C, /obj/machinery/traymachine/locking/crematorium)
 				if (C.id == src.id)
 					src.crematoriums.Add(C)
 					C.igniter = src
-		for (var/obj/crematorium/C as anything in src.crematoriums)
-			if (!C.cremating)
+		for (var/obj/machinery/traymachine/locking/crematorium/C as anything in src.crematoriums)
+			if (!C.locked)
 				C.cremate(user)
 	else
 		boutput(user, "<span class='alert'>Access denied.</span>")
@@ -475,9 +475,9 @@ if (src.connected.loc != src)
 	var/id = 2 //this gets used when the tanning computer links to the bed, pretty sure it's a weird thing because tanning beds used to be crematoria
 	mats = 30
 
-	var/icon_trayopen = "tanbed"
-	var/icon_unoccupied = "tanbed"
-	var/icon_occupied = "tanbed1"
+	icon_trayopen = "tanbed"
+	icon_unoccupied = "tanbed"
+	icon_occupied = "tanbed1"
 
 	var/emagged = 0 //heh heh
 	var/primed = 0 //Prime the bed via the console
@@ -558,10 +558,10 @@ if (src.connected.loc != src)
 		src.update()
 		return*/
 
-	cremate(mob/user as mob)
+	proc/cremate(mob/user as mob)
 		if (!src || !istype(src))
 			return
-		if (src.cremating)
+		if (src.locked)
 			return //don't let you cremate something twice or w/e
 		if (!src.contents || !length(src.contents))
 			src.visible_message("<span class='alert'>You hear the lights turn on for a second, then turn off.</span>")
@@ -569,7 +569,7 @@ if (src.connected.loc != src)
 
 		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
 		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
-		src.cremating = 1
+		//src.cremating = 1
 		src.locked = 1
 
 		for (var/mob/M in contents)
@@ -609,7 +609,7 @@ if (src.connected.loc != src)
 		SPAWN_DBG(src.settime * 10)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.cremating = 0
+				//src.cremating = 0
 				src.locked = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 		return
@@ -626,6 +626,7 @@ if (src.connected.loc != src)
 
 	var/obj/item/light/tube/tanningtube = null
 	var/image/trayoverlay
+	var/datum/light/light
 
 	proc/generate_overlay_icon(var/tubecolor)
 		if (!trayoverlay)
@@ -636,8 +637,8 @@ if (src.connected.loc != src)
 			UpdateOverlays(trayoverlay, "tube")
 
 	proc/send_new_tancolor(var/tubecolor)
-		if (src.connected && istype (src.connected, /obj/machinery/traymachine/locking/tanning))
-			/obj/machinery/traymachine/locking/tanning/tanningbed = src.connected
+		if (my_machine && istype (my_machine, /obj/machinery/traymachine/locking/tanning))
+			var/obj/machinery/traymachine/locking/tanning/tanningbed = my_machine
 			tanningbed.tanningcolor = tubecolor
 
 	New()
@@ -702,7 +703,7 @@ if (src.connected.loc != src)
 	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""
-	var/obj/machinery/traymachine/locking/tanning/ = null //The linked tanning bed
+	var/obj/machinery/traymachine/locking/tanning/linked = null //The linked tanning bed
 
 
 	New()
@@ -715,7 +716,7 @@ if (src.connected.loc != src)
 		. = ..()
 
 	proc/get_link()
-		for(var/obj/machinery/traymachine/locking/tanning/C in by_type[/obj/crematorium])
+		for(var/obj/machinery/traymachine/locking/tanning/C in by_type[/obj/machinery/traymachine/locking/tanning])
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				C.linked = src
