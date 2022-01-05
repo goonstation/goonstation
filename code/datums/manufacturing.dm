@@ -1050,6 +1050,24 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
+/datum/manufacture/syringe
+	name = "Empty Syringe"
+	item_paths = list("CRY-1","MET-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/reagent_containers/syringe)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/IV_drip
+	name = "Empty IV Drip"
+	item_paths = list("MET-1","INS-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/reagent_containers/iv_drip)
+	time = 10 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Robotics **************************/
 
 /datum/manufacture/robo_frame

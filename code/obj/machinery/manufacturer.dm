@@ -2214,6 +2214,8 @@
 		/datum/manufacture/glasses,
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
+		/datum/manufacture/syringe,
+		/datum/manufacture/IV_drip,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
@@ -2252,6 +2254,7 @@
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
+
 	)
 
 	hidden = list(/datum/manufacture/cyberheart,
