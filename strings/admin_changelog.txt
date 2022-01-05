@@ -1,3 +1,6 @@
+(t)tue jan 4 21
+(u)aloe
+(*) Object spawning build modes now default to the currently selected path when changing the path, rather than always defaulting to '/obj/closet'. Yell at me if you don't like this.
 (t)sun dec 26 21
 (u)TTerc
 (*)Using Respawn As Self/Respawn As New Self while ghosting over crates/lockers now spawns you inside them.

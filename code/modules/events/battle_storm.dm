@@ -6,6 +6,7 @@
 	var/list/area/safe_areas = list()
 	var/list/safe_area_names = list()
 	var/list/area/safe_locations = list()
+	var/list/area/excluded_areas = list(/area/sim, /area/afterlife, /area/gauntlet/, /area/shuttle/battle, /area/shuttle/escape/transit, /area/shuttle_transit_space)
 	var/activations = 0
 
 	New()
@@ -29,8 +30,9 @@
 			safe_areas.Add(safe_locations[temp])
 			safe_locations[temp].icon_state = "blue"
 
-		for (var/mob/N in mobs) // why N?  why not M?
-			N.flash(3 SECONDS)
+		for (var/mob/M in mobs)
+			if (!inafterlife(M) && !isVRghost(M))
+				M.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 		siren.repeat = TRUE
 		siren.channel = 5
@@ -44,8 +46,9 @@
 			siren.channel = 5
 			siren.volume = 50
 
-			for (var/mob/N in mobs)
-				N.flash(3 SECONDS)
+			for (var/mob/M in mobs)
+				if (!inafterlife(M) && !isVRghost(M))
+					M.flash(3 SECONDS)
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
@@ -58,6 +61,9 @@
 				var/B = 1
 				for(var/area/S in safe_areas)
 					if(istype(A,S))
+						B = 0
+				for(var/E in excluded_areas)
+					if(istype(A,E))
 						B = 0
 				if(B)
 					A.icon_state = "red"
@@ -76,15 +82,14 @@
 
 			for (var/mob/M in mobs)
 				SPAWN_DBG(0)
-					shake_camera(M, 200, 16) // wire note: lowered strength from 840 to 400, by popular request
+					if (!inafterlife(M) && !isVRghost(M))
+						shake_camera(M, 200, 16) // wire note: lowered strength from 840 to 400, by popular request
 
 			// Hit everyone every 2 seconds when they are not in the safe zone
 			// Everyone gets set more and more on fire the longer they arent in the safe area
 			for(var/i = 0, i < 20, i++)
 				sleep(1 SECOND)
 				for(var/mob/living/M in mobs)
-					if(istype(get_area(M),/area/shuttle/battle) || inafterlife(M))
-						continue
 					var/area/mob_area = get_area(M)
 					if(mob_area?.storming)
 						M.changeStatus("burning", 8 SECONDS)
@@ -108,8 +113,9 @@
 			for(var/area/A in world)
 				A.icon_state = ""
 				A.storming = 0
-			for (var/mob/N in mobs)
-				N.flash(3 SECONDS)
+			for (var/mob/M in mobs)
+				if (!inafterlife(M) && !isVRghost(M))
+					M.flash(3 SECONDS)
 
 proc/get_battle_area_names(var/list/strings)
 	. = ""

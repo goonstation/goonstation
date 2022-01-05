@@ -794,7 +794,6 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "radhood"
 	item_state = "radhood"
 
-//obj/closet/iomoon
 /obj/storage/closet/iomoon
 	name = "\improper Thermal Hazard Equipment"
 	desc = "A locker intended to carry protective clothing."
