@@ -354,7 +354,6 @@
 	var/list/turf/roomList = new/list()
 
 	var/list/permittedObjectTypes = list(\
-	"/obj/closet", \
 	"/obj/stool", \
 	"/obj/grille", \
 	"/obj/window", \

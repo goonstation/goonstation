@@ -91,14 +91,14 @@
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
-		gib.icon_state = "gibup1"
+		gib.icon_state = "gibup"
 	gib.streak_cleanable(NORTH)
 	gibs.Add(gib)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
-		gib.icon_state = "gibdown1"
+		gib.icon_state = "gibdown"
 	gib.streak_cleanable(SOUTH)
 	gibs.Add(gib)
 
