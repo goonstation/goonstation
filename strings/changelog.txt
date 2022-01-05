@@ -1,5 +1,9 @@
 
 (t)wed jan 05 22
+(u)Nexusuxen
+(p)6670
+(e)🗺|mapping
+(+)Cog1 now has a mail sorting room in Northeast maintenance, check it out! Also, where did Chompsky go...?
 (u)eX.n0x
 (p)7083
 (e)🐛🎨|bug, sprites
