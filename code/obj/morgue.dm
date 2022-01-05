@@ -123,44 +123,22 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	if (user.stat)
 		return
 	eject_tray()
-	/*if (!my_tray)
-		src.my_tray = new tray_type(src.loc)
-	else
-		src.my_tray.set_loc(src.loc)
-	step(src.my_tray, src.dir)//EAST)
-	var/turf/T = get_step(src, src.dir)//EAST)
-	if (T.contents.Find(src.my_tray))
-		src.my_tray.my_tray = src
-		for(var/atom/movable/A as mob|obj in src)
-			A.set_loc(src.my_tray.loc)
-			//Foreach goto(106)
-		src.my_tray.icon_state = "morguet"
-	else
-		src.my_tray.set_loc(src)
-	src.update()
-	return*/
 
 
-
-//Object-specific procs ahoy
-
-//Probably override this if your
+///Tray comes out - probably override this if your tray should move weirdly
 /obj/machinery/traymachine/proc/eject_tray()
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-	/*if (!my_tray)
-		my_tray = new /obj/m_tray(src)
-		my_tray.set_dir(src.dir)
-		my_tray.my_machine = src
-		my_tray.layer = OBJ_LAYER - 0.02*/
 
 	var/turf/T_src = get_turf(src)
 	var/turf/T = get_step(src, src.dir)
 
 	//handle animation and ejection of contents
 	for(var/atom/movable/AM as anything in src)
+		if (AM in non_tray_contents)
+			continue
 		AM.set_loc(T)
-		AM.pixel_x = 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle on morgues
-		AM.pixel_y = 28 * (T_src.y - T.y)
+		AM.pixel_x += 28 * (T_src.x - T.x) // 28 instead of 32 to obscure the double handle on morgues
+		AM.pixel_y += 28 * (T_src.y - T.y)
 
 		var/orig_layer = AM.layer
 		if (AM != my_tray)
@@ -170,6 +148,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		animate(layer = orig_layer, easing = JUMP_EASING)
 	update()
 
+///Tray goes in
 /obj/machinery/traymachine/proc/collect_tray()
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
@@ -188,8 +167,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		else
 			src.icon_state = icon_unoccupied
 	return
-
-
 
 //Possible old code. To the best of my knowledge this proc is unused (except in sleepers) but it's one that several things mobs can go inside of have
 /obj/machinery/traymachine/alter_health()
@@ -327,7 +304,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		return
 
 	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
-	//src.cremating = 1
 	src.locked = 1
 	var/ashes = 0
 
@@ -361,7 +337,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	SPAWN_DBG(10 SECONDS)
 		if (src)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-			//src.cremating = 0
 			src.locked = 0
 			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
@@ -371,54 +346,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 	return
 
-
-/*
-/obj/c_tray
-	name = "crematorium tray"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "cremat"
-	density = 1
-	layer = FLOOR_EQUIP_LAYER1
-	var/obj/crematorium/connected = null
-	anchored = 1.0
-	var/datum/light/light //Only used for tanning beds.
-	event_handler_flags = USE_FLUID_ENTER
-
-	disposing()
-		src.connected?.connected = null
-		src.light = null
-		qdel(src.connected)
-		src.connected = null
-		. = ..()
-
-/obj/c_tray/Cross(atom/movable/mover)
-	if (istype(mover, /obj/item/dummy))
-		return 1
-	else
-		return ..()
-
-/obj/c_tray/attack_hand(mob/user as mob)
-	if (src.connected && src.connected != src.loc)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
-				A.set_loc(src.connected)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		src.connected.update()
-		add_fingerprint(user)
-		src.set_loc(src.connected)
-		return
-	return
-
-/obj/c_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!(isobj(O) || ismob(O)) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(O))
-		return
-	if (istype(O, /atom/movable/screen) || istype(O, /obj/effects) || istype(O, /obj/ability_button) || istype(O, /obj/item/grab))
-		return
-	O.set_loc(src.loc)
-	if (user != O)
-		user.visible_message("<span class='alert'>[user] stuffs [O] into [src]!</span>", "<span class='alert'>You stuff [O] into [src]!</span>")
-	return
-*/
 
 //-----------------------------------------------------
 /*~ Crematorium Switch ~*/
@@ -478,6 +405,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	icon_trayopen = "tanbed"
 	icon_unoccupied = "tanbed"
 	icon_occupied = "tanbed1"
+	tray_type = /obj/machine_tray/tanning
 
 	var/emagged = 0 //heh heh
 	var/primed = 0 //Prime the bed via the console
@@ -507,57 +435,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		src.tanningmodifier = 0.2
 		return 1
 
-	/*attack_hand(mob/user as mob)
-		if (cremating)
-			boutput(user, "<span class='alert'>It's locked.</span>")
-			return
-		if ((src.connected && src.connected.loc != src) && (src.locked == 0))
-			for(var/atom/movable/A as mob|obj in src.connected.loc)
-				if (!( A.anchored ))
-					A.set_loc(src)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			src.connected.set_loc(src)
-		else if (src.locked == 0)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			if (!connected)
-				src.connected = new /obj/c_tray/tanning(src.loc)
-			else
-				src.connected.set_loc(src.loc)
-			step(src.connected, SOUTH)
-			src.connected.layer = OBJ_LAYER
-			src.connected.light.enable()
-			var/turf/T = get_step(src, SOUTH)
-			if (T.contents.Find(src.connected))
-				src.connected.connected = src
-				src.update()
-				for(var/atom/movable/A as mob|obj in src)
-					A.set_loc(src.connected.loc)
-			else
-				src.connected.set_loc(src)
-				src.connected.light.disable()
-		src.add_fingerprint(user)
-		update()
-
-	relaymove(mob/user as mob)
-		if (user.stat || locked)
-			return
-		if (!connected)
-			src.connected = new /obj/c_tray/tanning(src.loc)
-		else
-			src.connected.set_loc(src.loc)
-		step(src.connected, SOUTH)
-		src.connected.layer = OBJ_LAYER
-		var/turf/T = get_step(src, SOUTH)
-		if (T.contents.Find(src.connected))
-			src.connected.connected = src
-			for(var/atom/movable/A as mob|obj in src)
-				A.set_loc(src.connected.loc)
-		else
-			src.connected.set_loc(src)
-			src.connected.light.disable()
-		src.update()
-		return*/
-
 	proc/cremate(mob/user as mob)
 		if (!src || !istype(src))
 			return
@@ -569,7 +446,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 
 		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
 		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
-		//src.cremating = 1
 		src.locked = 1
 
 		for (var/mob/M in contents)
@@ -609,7 +485,6 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		SPAWN_DBG(src.settime * 10)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				//src.cremating = 0
 				src.locked = 0
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 		return
@@ -747,7 +622,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 		var/dat = ""
 		dat += "<b>Tanning Bed Status:</b><BR>"
 		dat += "[state_str]<BR>"
-		dat += "Set Time: [linked.settime]<BR>"
+		dat += "Set Time: [linked ? linked.settime : "--"]<BR>"
 		dat += "<b>Tanning Bed Control:</b><BR>"
 		dat += "<A href='?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
 		dat += "<A href='?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
