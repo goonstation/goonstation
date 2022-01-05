@@ -4312,7 +4312,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "alK" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -5840,7 +5840,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "apZ" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "aqa" = (
@@ -8190,7 +8190,7 @@
 	name = "Book Nook"
 	})
 "axm" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -13280,7 +13280,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aLd" = (
@@ -22116,7 +22116,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "boR" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/item/device/radio/intercom/medical{
 	dir = 4;
 	pixel_x = -21
@@ -23240,7 +23240,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bsK" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -33984,7 +33984,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "cbT" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -34925,7 +34925,7 @@
 /turf/simulated/floor/white/grime,
 /area/station/hangar/medical)
 "ceA" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)

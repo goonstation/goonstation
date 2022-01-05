@@ -12619,7 +12619,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aIg" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aIh" = (
@@ -17342,7 +17342,7 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "aTE" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aTF" = (
@@ -17357,7 +17357,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aTG" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/black,
@@ -45334,7 +45334,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "clb" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "clc" = (
@@ -45407,7 +45407,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "clm" = (
@@ -45846,7 +45846,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cmw" = (

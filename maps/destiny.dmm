@@ -3897,7 +3897,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "apZ" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical,
@@ -11355,7 +11355,7 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "aWN" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/camera{
@@ -12144,7 +12144,7 @@
 	},
 /area/station/crew_quarters/pool)
 "bbv" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /obj/machinery/computer/tanning{
 	density = 0;
 	pixel_y = 32
@@ -23898,7 +23898,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "eUO" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -35392,7 +35392,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "laP" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/item/reagent_containers/food/snacks/pizza{
@@ -37970,7 +37970,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "muG" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/cool{
@@ -50014,7 +50014,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "sXK" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/black,
@@ -57349,7 +57349,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "wEA" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/camera{

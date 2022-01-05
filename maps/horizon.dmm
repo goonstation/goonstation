@@ -7795,7 +7795,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/morgue)
 "ava" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/disposalpipe/segment/morgue{
@@ -7809,7 +7809,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/disposalpipe/segment/morgue{
@@ -9541,7 +9541,7 @@
 /area/station/medical/morgue)
 "azi" = (
 /obj/machinery/light,
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/morgue)
 "azk" = (
@@ -12445,7 +12445,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aHa" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -12456,7 +12456,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aHb" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/specialroom/freezer/blue,
@@ -13119,7 +13119,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aID" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{

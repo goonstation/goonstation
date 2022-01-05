@@ -7889,7 +7889,7 @@
 /obj/machinery/computer/tanning{
 	pixel_y = 32
 	},
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bZv" = (
@@ -15483,7 +15483,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "emj" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/light/small/sticky/cool/very{
@@ -30852,7 +30852,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "iJT" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -34178,7 +34178,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "jMh" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
 "jMm" = (
@@ -36495,7 +36495,7 @@
 	},
 /area/shuttle/arrival/station)
 "kxL" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -55660,7 +55660,7 @@
 	},
 /area/station/chapel/sanctuary)
 "qcT" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
 "qcZ" = (
@@ -57670,7 +57670,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "qBC" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
@@ -65407,7 +65407,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "sNX" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/sanitary,
 /area/station/chapel/sanctuary)
@@ -72609,7 +72609,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "uUk" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/cool/very,
