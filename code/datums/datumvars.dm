@@ -66,7 +66,7 @@
 /client/proc/debug_ref_variables(ref as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Ref Variables"
-	set desc = "(reference) Enter a ref to view the variables of"
+	set desc = "(reference) Enter a ref to view its variables"
 
 	if (src.holder?.level < LEVEL_ADMIN)
 		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
