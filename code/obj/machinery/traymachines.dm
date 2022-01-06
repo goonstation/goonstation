@@ -30,8 +30,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	desc = "This thing sure has a big tray that goes vwwwwwwsh when you slide it in and out."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	power_usage = TRAYMACHINE_DEFAULT_DRAW
 
 	//tray related variables
@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 				AM.set_loc(T)
 	. = ..()
 
-obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
+/obj/machinery/traymachine/process() //Hey guess what power consumption is only automated when something uses wired power
 	..()
 	if (!(status & NOPOWER)) //oh my *fucking* god there's no checks all the way between use_power and the channel info on APCs
 		use_power(power_usage, EQUIP)
@@ -106,15 +106,12 @@ obj/machinery/traymachine/process() //Hey guess what power consumption is only a
 	switch(severity)
 		if(1.0)
 			chance = 100
-			return
 		if(2.0)
 			chance = 50
-			return
 		if(3.0)
 			chance = 5
-			return
 	if (prob(chance))
-		for(var/atom/movable/A as mob|obj in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded
+		for(var/atom/movable/A in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded
 			if (!(A in non_tray_contents))
 				A.set_loc(src.loc)
 				A.ex_act(severity)
@@ -210,10 +207,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	name = "machine tray"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morguet"
-	density = 1
+	density = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/machinery/traymachine/my_machine = null
-	anchored = 1.0
+	anchored = TRUE
 	event_handler_flags = USE_FLUID_ENTER
 
 	//simple subtypes
@@ -284,8 +281,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	desc = "A human incinerator."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "crema1"
-	//var/obj/c_tray/connected = null
-	//var/cremating = 0
 	powerdraw_use = 1500
 	var/id = 1 //crema switch uses this when finding crematoria
 	var/obj/machinery/crema_switch/igniter = null
@@ -317,7 +312,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		return
 
 	src.visible_message("<span class='alert'>You hear a roar as \the [src.name] activates.</span>")
-	src.locked = 1
+	src.locked = TRUE
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
@@ -353,7 +348,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	SPAWN_DBG(10 SECONDS)
 		if (src)
 			src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-			src.locked = 0
+			src.locked = FALSE
 			power_usage = initial(power_usage)
 			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
@@ -361,8 +356,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				make_cleanable( /obj/decal/cleanable/ash,src)
 				ashes -= 1
 			update() //get rid of the active sprite
-
-	return
 
 
 //-----------------------------------------------------
@@ -374,10 +367,9 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	desc = "Burn baby burn!"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
-	anchored = 1.0
+	anchored = TRUE
 	req_access = list(access_crematorium)
 	object_flags = CAN_REPROGRAM_ACCESS
-	var/on = 0
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1
@@ -406,7 +398,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				C.cremate(user)
 	else
 		boutput(user, "<span class='alert'>Access denied.</span>")
-	return
 
 
 //-----------------------------------------------------
@@ -427,8 +418,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_occupied = "tanbed1"
 	tray_type = /obj/machine_tray/tanning
 
-	var/emagged = 0 //heh heh
-	var/primed = 0 //Prime the bed via the console
+	var/emagged = FALSE //heh heh
 	var/settime = 10 //How long? (s)
 	var/tanningcolor = rgb(205,88,34) //Change to tan people into hillarious colors!
 	var/tanningmodifier = 0.03 //How fast do you want to go to your tanningcolor?
@@ -445,7 +435,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		STOP_TRACKING
 
 	update()
-		if (src.contents.len)
+		if (length(src.contents))
 			src.icon_state = "tanbed1"
 		else
 			src.icon_state = "tanbed"
@@ -453,12 +443,12 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.emagged)
-			return 0
+			return FALSE
 		if (user)
-			user.show_text("\The [src]'s saftey lock has been disabled.", "red")
-		src.emagged = 1
+			user.show_text("\The [src]'s safetey lock has been disabled.", "red")
+		src.emagged = TRUE
 		src.tanningmodifier = 0.2
-		return 1
+		return TRUE
 
 	proc/cremate(mob/user as mob)
 		if (!src || !istype(src))
@@ -473,7 +463,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 		src.visible_message("<span class='alert'>You hear a faint buzz as \the [src] activates.</span>")
 		playsound(src.loc, "sound/machines/shieldup.ogg", 30, 1)
-		src.locked = 1
+		src.locked = TRUE
 		power_usage = powerdraw_use
 		icon_state = "tanbed_active"
 
@@ -514,11 +504,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		SPAWN_DBG(src.settime SECONDS)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
-				src.locked = 0
+				src.locked = FALSE
 				power_usage = initial(power_usage)
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 				update() //clear the active sprite
-		return
 
 
 //-----------------------------------------------------
@@ -574,7 +563,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		. = ..()
 
 	attackby(var/obj/item/P as obj, mob/user as mob)
-		..()
+
 		if (istype(P, /obj/item/light/tube) && !length(src.contents))
 			var/obj/item/light/tube/G = P
 			boutput(user, "<span class='notice'>You put \the [G.name] into \the [src.name].</span>")
@@ -587,8 +576,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			if (src.light)
 				light.set_color(tanningtube.color_r, tanningtube.color_g, tanningtube.color_b)
 				light.set_brightness(0.5)
-
-		if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
+		else if (ispryingtool(P) && length(src.contents)) //pry out the tube with a crowbar
 			boutput(user, "<span class='notice'>You pry out \the [src.tanningtube.name] from \the [src.name].</span>")
 			src.tanningtube.set_loc(src.loc)
 			src.tanningtube = null
@@ -596,6 +584,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			if (src.light)
 				light.set_color(0, 0, 0)
 				light.set_brightness(0)
+		else ..()
 
 
 //-----------------------------------------------------
@@ -632,7 +621,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (linked.my_tray && istype(linked.my_tray, /obj/machine_tray/tanning))
 			var/obj/machine_tray/tanning/tray = linked.my_tray
 			if (tray.tanningtube)
-				return 1
+				return TRUE
 
 	proc/get_state_string()
 		if(linked == null) get_link()
@@ -653,7 +642,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		var/dat = ""
 		dat += "<b>Tanning Bed Status:</b><BR>"
 		dat += "[state_str]<BR>"
-		dat += "Set Time: [linked ? linked.settime : "--"]<BR>"
+		dat += "Set Time: [linked ? linked.settime : "--"] seconds<BR>"
 		dat += "<b>Tanning Bed Control:</b><BR>"
 		dat += "<A href='?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
 		dat += "<A href='?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
@@ -674,14 +663,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			return
 
 		if (href_list["toggle"])
-			if (linked && !linked.locked && find_tray_tube() == 1 && linked.my_tray.loc == linked)
+			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
-			if (linked && !linked.locked && find_tray_tube() == 1 && linked.my_tray.loc == linked)
+			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
@@ -695,6 +684,5 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				linked.settime--
 
 		src.updateDialog()
-		return
 
 #undef TRAYMACHINE_DEFAULT_DRAW
