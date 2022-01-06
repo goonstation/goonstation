@@ -1,6 +1,10 @@
 
 (t)wed jan 05 22
 (u)Flaborized
+(p)7077
+(e)🎨|sprites
+(+)Resprited the device analyzer, device frames, ruckingenur kit and blueprints.
+(u)Flaborized
 (p)7076
 (e)🎨|sprites
 (+)Resprited basic knives, forks, spoons and bowls, as well as food that goes inside bowls.
