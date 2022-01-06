@@ -67,7 +67,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Ref Variables"
 
-	if (usr.client.holder.level < LEVEL_ADMIN)
+	if (src.holder.level < LEVEL_ADMIN)
 		alert("You must be at least an Administrator to use this command.")
 		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
 		return
