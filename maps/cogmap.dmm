@@ -53697,7 +53697,6 @@
 /area/station/maintenance/solar/north)
 "eIy" = (
 /obj/storage/closet/emergency,
-/obj/random_item_spawner/chompskey,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "eJd" = (
@@ -57656,7 +57655,6 @@
 	dir = 8
 	},
 /obj/storage/cart,
-/obj/random_item_spawner/chompskey,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "mlR" = (
@@ -60711,11 +60709,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "rTj" = (
-/obj/random_item_spawner/chompskey,
 /obj/storage/crate/bin{
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
 	name = "\improper Lost and Found bin"
 	},
+/obj/item/gnomechompski,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/courtroom)
 "rTm" = (
@@ -61657,7 +61655,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "tse" = (
-/obj/random_item_spawner/chompskey,
 /obj/storage/crate/bin{
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
 	name = "\improper Lost and Found bin"
@@ -62063,7 +62060,6 @@
 /area/station/solar/north)
 "ubf" = (
 /obj/storage/closet/emergency,
-/obj/random_item_spawner/chompskey,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "ubA" = (
