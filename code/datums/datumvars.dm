@@ -63,24 +63,24 @@
 		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
 		return
 
-/client/proc/debug_ref_variables()
+/client/proc/debug_ref_variables(ref as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Ref Variables"
+	set desc = "(reference) Enter a ref to view the variables of"
 
-	if (src.holder.level < LEVEL_ADMIN)
-		alert("You must be at least an Administrator to use this command.")
+	if (src.holder?.level < LEVEL_ADMIN)
 		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
+		tgui_alert(src.mob, "You must be at least an Administrator to use this command.", "Access Denied")
 		return
 
-	var/ref = input(src, "Enter a ref to view the variables of", "Debug Ref Variables")
 	if(ref)
-		var/thing = locate(ref)
-		if(!thing)
-			thing = locate("\[[ref]\]")
-		if(!thing)
+		var/datum/D = locate(ref)
+		if(!D)
+			D = locate("\[[ref]\]")
+		if(!D)
 			boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
 			return
-		debug_variables(thing)
+		debug_variables(D)
 
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
