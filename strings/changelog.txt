@@ -1,5 +1,9 @@
 
 (t)wed jan 05 22
+(u)Flaborized
+(p)7076
+(e)🎨|sprites
+(+)Resprited basic knives, forks, spoons and bowls, as well as food that goes inside bowls.
 (u)Nexusuxen
 (p)6670
 (e)🗺|mapping
