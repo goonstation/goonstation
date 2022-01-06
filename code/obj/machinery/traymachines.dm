@@ -434,13 +434,6 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		. = ..()
 		STOP_TRACKING
 
-	update()
-		if (length(src.contents))
-			src.icon_state = "tanbed1"
-		else
-			src.icon_state = "tanbed"
-		return
-
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.emagged)
 			return FALSE
