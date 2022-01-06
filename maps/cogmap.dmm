@@ -55528,7 +55528,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "hSq" = (
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},

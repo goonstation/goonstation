@@ -409,6 +409,16 @@
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/glasses/healthgoggles)
 
+/obj/storage/secure/closet/medical/apparel
+	name = "medical apparel locker"
+	icon_closed = "medical_clothes"
+	icon_state = "medical_clothes"
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+	/obj/item/clothing/suit/nursedress = 3,
+	/obj/item/clothing/suit/wintercoat/medical = 3,
+	/obj/item/clothing/head/headmirror = 3,
+	/obj/item/clothing/suit/labcoat/medical = 3)
+
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
 	icon_closed = "medical_restricted"

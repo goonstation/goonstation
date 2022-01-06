@@ -46046,7 +46046,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "fIX" = (
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
 "fJg" = (

@@ -77848,7 +77848,7 @@
 /obj/disposalpipe/switch_junction/right/east{
 	mail_tag = "morgue"
 	},
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "wuh" = (

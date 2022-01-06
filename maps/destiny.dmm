@@ -47264,7 +47264,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},

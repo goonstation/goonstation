@@ -80669,7 +80669,7 @@
 /turf/simulated/floor/airless/caution/northsouth,
 /area/station/hangar/science)
 "vxs" = (
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "vyj" = (

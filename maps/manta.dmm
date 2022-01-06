@@ -5058,7 +5058,7 @@
 	icon_state = "line3"
 	},
 /obj/disposalpipe/segment,
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},

@@ -44881,7 +44881,7 @@
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
 "hRE" = (
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "hRN" = (

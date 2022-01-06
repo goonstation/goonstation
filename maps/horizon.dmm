@@ -59910,7 +59910,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/apparel,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
