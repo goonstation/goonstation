@@ -1,5 +1,9 @@
 
 (t)wed jan 05 22
+(u)FlameArrow57
+(p)7064
+(e)🗺|mapping
+(*)Additional air scrubbers have been added to Horizon.
 (u)Flaborized
 (p)7077
 (e)🎨|sprites
