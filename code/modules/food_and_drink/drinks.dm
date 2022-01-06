@@ -309,6 +309,19 @@
 		reagents.add_reagent("VHFCS, 10")
 		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
+/obj/item/reagent_containers/food/drinks/cola/custom
+	name = "beverage can"
+	desc = "An aluminium can with custom branding."
+	icon = 'icons/obj/foodNdrink/can.dmi'
+	heal_amt = 1
+	icon_state = "cola-13"
+	rc_flags = RC_FULLNESS
+	initial_reagents = null
+	initial_volume = 50
+
+	New()
+		....()  //hack to avoid having to re-path every cola can in the game 
+
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
 	desc = "A vibrantly colored can of 100% all natural peach juice."
