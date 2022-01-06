@@ -21,6 +21,7 @@
 	hide_attack = 2
 
 	on_reagent_change()
+		..()
 		if (src.reagents.is_full() && src.mode == S_DRAW)
 			src.mode = S_INJECT
 		else if (!src.reagents.total_volume && src.mode == S_INJECT)
