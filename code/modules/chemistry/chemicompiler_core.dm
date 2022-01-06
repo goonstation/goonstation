@@ -156,12 +156,12 @@
 	if (reservoirCheckCallback)
 		return call(src.holder, reservoirCheckCallback)(resId)
 
-/datum/chemicompiler_core/proc/transfer(source, target, amount, index, textBuffer)
+/datum/chemicompiler_core/proc/transfer(source, target, amount)
 	if(!istype(src.holder))
 		qdel(src)
 		return
 	if (transferCallback)
-		return call(src.holder, transferCallback)(source, target, amount, index, textBuffer)
+		return call(src.holder, transferCallback)(source, target, amount)
 
 /datum/chemicompiler_core/proc/isolate(source, target, amount, index)
 	if(!istype(src.holder))
@@ -343,7 +343,7 @@
 					heatReagents(sx, heatTo)
 				if("@") //transfer
 					loopUsed = 30
-					transferReagents(sx, tx, ax, data[dp+1], textBuffer)
+					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
 						if(0) // =
@@ -362,7 +362,7 @@
 							ax = 0*/
 				if("#") //move individual reagent from container
 					loopUsed = 30
-					isolateReagent(sx, tx, ax, data[dp+1], textBuffer)
+					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
 			if(data.len < dp + 1)
@@ -383,11 +383,11 @@
 		statusChange(CC_STATUS_IDLE)
 		throwError(CC_NOTIFICATION_COMPLETE)
 
-/datum/chemicompiler_core/proc/transferReagents(var/source, var/target, var/amount, var/index, var/textBuffer)
+/datum/chemicompiler_core/proc/transferReagents(var/source, var/target, var/amount)
 	if(source < minReservoir || source > maxReservoir)
 		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
 		return
-	if(target < minReservoir || target > maxReservoir + 4)
+	if(target < minReservoir || target > maxReservoir + 3)
 		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
 		return
 	if(!reservoirCheck(source))
@@ -397,13 +397,13 @@
 		throwError(CC_ERROR_INVALID_CONTAINER_TX) // No reservoir loaded in target
 		return
 
-	transfer(source, target, amount, index, textBuffer)
+	transfer(source, target, amount)
 
-/datum/chemicompiler_core/proc/isolateReagent(var/source, var/target, var/amount, var/index, var/textBuffer)
+/datum/chemicompiler_core/proc/isolateReagent(var/source, var/target, var/amount, index)
 	if(source < minReservoir || source > maxReservoir)
 		throwError(CC_ERROR_INVALID_SX) // Invalid source id.
 		return
-	if(target < minReservoir || target > maxReservoir + 4)
+	if(target < minReservoir || target > maxReservoir + 3)
 		throwError(CC_ERROR_INVALID_TX) // Invalid target id.
 		return
 	if(!reservoirCheck(source))
@@ -413,7 +413,7 @@
 		throwError(CC_ERROR_INVALID_CONTAINER_TX) // No reservoir loaded in target
 		return
 
-	isolate(source, target, amount, index, textBuffer)
+	isolate(source, target, amount, index)
 
 /datum/chemicompiler_core/proc/heatReagents(var/rid, var/temp)
 	if(rid < minReservoir || rid > maxReservoir)
@@ -727,7 +727,6 @@
  *  3: No container loaded at source or target
  *  4: Invalid temperature value
  *  5: Code is protected, cannot load
- *  6: Cannot isolate to cans
  * soft:
  *  1: done executing
  *  2: code saved
@@ -759,23 +758,20 @@
 /datum/chemicompiler_executor/proc/validate_source_target_index(var/source, var/target, var/index)
 	if(source < 1 || source > 10)
 		return CC_ERROR_INVALID_SX // Invalid source id.
-	else if(target < 1 || target > 14)
+	else if(target < 1 || target > 13)
 		return CC_ERROR_INVALID_TX // Invalid target id.
 	else if(!reservoirCheck(source))
 		return CC_ERROR_INVALID_CONTAINER_SX // No reservoir loaded in source
 	else if((target < 11) && (!reservoirCheck(target)))
 		return CC_ERROR_INVALID_CONTAINER_TX // No reservoir loaded in target
-	else if(!index_check(source, index) && target != 14) 
-		return CC_ERROR_INDEX_INVALID // Source reservoir doesn't have as many chems as index, ignored if making cans
+	else if(!index_check(source, index))
+		return CC_ERROR_INDEX_INVALID // Source reservoir doesn't have as many chems as index
 	return
 
-/datum/chemicompiler_executor/proc/isolateReagent(var/source, var/target, var/amount, var/index, var/textBuffer = "")
-	if (target == 14)
-		beepCode(6,1) //Cannot isolate to cans (too many arguments)
-		return
-	transferReagents(source, target, amount, index = index, textBuffer = textBuffer)
+/datum/chemicompiler_executor/proc/isolateReagent(var/source, var/target, var/amount, var/index)
+	transferReagents(source, target, amount, index = index)
 
-/datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount, var/index = 0, var/textBuffer = "")
+/datum/chemicompiler_executor/proc/transferReagents(var/source, var/target, var/amount, var/index = 0)
 	if(!istype(src.holder))
 		qdel(src)
 		return
@@ -796,8 +792,6 @@
 		if(RS.total_volume >= 1)
 			showMessage("[src.holder] makes an alarming grinding noise!")
 			var/obj/item/reagent_containers/pill/P = new(get_turf(src.holder))
-			if (length(textBuffer) > 0)
-				P.name = textBuffer
 			RS.trans_to(P, amount, index = index)
 			showMessage("[src.holder] ejects a pill.")
 		else
@@ -817,19 +811,6 @@
 			RS.reaction(get_turf(src.holder), TOUCH, min(amount, RS.total_volume))
 			RS.clear_reagents()
 			showMessage("Something drips out the side of [src.holder].")
-	if (target == 14)
-		// Generate can
-		if(RS.total_volume >= 20) //limit how many we can cram out of a beaker
-			showMessage("[src.holder] hisses loudly!")
-			var/obj/item/reagent_containers/food/drinks/cola/custom/C = new(get_turf(src.holder))
-			if (length(textBuffer) > 0)
-				C.name = textBuffer
-			if (index >= 1 && index <= 26)
-				C.icon_state = "cola-[index]"
-			RS.trans_to(C, amount, index = 0)
-			showMessage("A can rolls out the front of [src.holder].")
-		else
-			showMessage("[src.holder] doesn't have enough reagents to make a can.")
 
 /datum/chemicompiler_executor/proc/heatReagents(var/rid, var/temp)
 	if(!istype(src.holder))
