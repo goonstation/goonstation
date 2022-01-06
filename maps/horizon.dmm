@@ -32788,7 +32788,7 @@
 	},
 /area/station/hydroponics/lobby)
 "bDQ" = (
-/obj/fitness/stacklifter,
+/obj/fitness/speedbag,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bDT" = (
@@ -33277,8 +33277,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bFj" = (
-/obj/fitness/weightlifter,
 /obj/disposalpipe/segment/brig,
+/obj/fitness/stacklifter,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bFk" = (
@@ -33305,6 +33305,8 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bFm" = (
@@ -56180,6 +56182,15 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/substation/pylon)
+"lHj" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/fitness/weightlifter,
+/turf/simulated/floor/white,
+/area/station/security/brig/genpop)
 "lHp" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -57183,7 +57194,8 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "nRv" = (
-/obj/fitness/speedbag,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "nTp" = (
@@ -126565,7 +126577,7 @@ buo
 bsi
 cdp
 vVg
-bOj
+nRv
 bHR
 bKS
 vOL
@@ -127169,7 +127181,7 @@ buo
 jTy
 bzw
 pLK
-bFj
+bKY
 upy
 bYK
 tIo
@@ -127471,7 +127483,7 @@ hzz
 tTr
 bzx
 pLK
-bKY
+bFj
 sKB
 bKV
 bOh
@@ -127773,7 +127785,7 @@ bur
 bsi
 bzy
 vVg
-bFl
+lHj
 bHW
 bOj
 tIo
