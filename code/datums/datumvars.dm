@@ -63,6 +63,25 @@
 		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
 		return
 
+/client/proc/debug_ref_variables()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "View Ref Variables"
+
+	if (usr.client.holder.level < LEVEL_ADMIN)
+		alert("You must be at least an Administrator to use this command.")
+		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
+		return
+
+	var/ref = input(src, "Enter a ref to view the variables of", "Debug Ref Variables")
+	if(ref)
+		var/thing = locate(ref)
+		if(!thing)
+			thing = locate("\[[ref]\]")
+		if(!thing)
+			boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
+			return
+		debug_variables(thing)
+
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "View Variables"
