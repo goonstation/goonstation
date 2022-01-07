@@ -55,6 +55,7 @@
 		wizard_mob.equip_if_possible(new /obj/item/teleportation_scroll(wizard_mob), wizard_mob.slot_l_hand)
 		wizard_mob.equip_if_possible(SB, wizard_mob.slot_belt)
 
+	wizard_mob.traitHolder.addTrait("tech_inept")
 	wizard_mob.set_clothing_icon_dirty()
 
 	boutput(wizard_mob, "You're a wizard now. You have a few starting spells; use the [SB] to choose the rest!")

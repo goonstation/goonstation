@@ -697,6 +697,12 @@
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
 
+/obj/trait/job/wizard
+	name = "Technological Ineptitude"
+	cleanName = "Technological Ineptitude"
+	desc = "Subject has very little experience with technology"
+	id = "tech_inept"
+
 // bartender, detective, HoS
 /obj/trait/job/drinker
 	name = "Professional Drinker"

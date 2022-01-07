@@ -218,7 +218,7 @@
 
 		src.is_active = !src.is_active
 
-		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50) || (user.traitHolder.hasTrait("tech_inept") && prob (50)))
 			src.do_stun(user, user, "failed", 1)
 			JOB_XP(user, "Clown", 2)
 			return
@@ -242,7 +242,7 @@
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return
 
-		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50) || (user.traitHolder.hasTrait("tech_inept") && prob (50)))
 			src.do_stun(user, M, "failed", 1)
 			JOB_XP(user, "Clown", 1)
 			return
@@ -405,7 +405,7 @@
 		//never should happen but w/e
 
 		//make it harder for them clowns...
-		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
+		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50) || (user.traitHolder.hasTrait("tech_inept") && prob (50)))
 			src.do_stun(user, user, "failed", 1)
 			JOB_XP(user, "Clown", 2)
 			return
