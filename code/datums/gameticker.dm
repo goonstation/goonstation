@@ -49,6 +49,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		lobby_titlecard = new /datum/titlecard/battleroyale()
 		lobby_titlecard.set_pregame_html()
 
+	if(master_mode != "extended")
+		src.hide_mode = TRUE
+	else
+		src.hide_mode = FALSE
+
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 	pregame_timeleft = 1
 	#endif
@@ -108,10 +113,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 /datum/controller/gameticker/proc/setup()
 	set background = 1
 	//Create and announce mode
-	if(master_mode != "extended")
-		src.hide_mode = TRUE
-	else
-		src.hide_mode = FALSE
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
