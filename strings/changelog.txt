@@ -1,5 +1,9 @@
 
 (t)fri jan 07 22
+(u)Yellow/Myco
+(p)7029
+(e)|
+(*)Voices and Emotes now go over the blindness layers
 (u)antrobot
 (p)6992
 (e)🐛|bug
