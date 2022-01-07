@@ -23,8 +23,8 @@
 				sleep(rand(1,15))
 
 /proc/event_wormhole_buildturflist()
-	for(var/turf/T in world)
-		if(T.z == 1 && istype(T,/turf/simulated/floor))
+	for(var/turf/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		if(istype(T,/turf/simulated/floor) && !(locate(/obj/window) in T))
 			wormholeturfs += T
 
 		LAGCHECK(LAG_LOW)

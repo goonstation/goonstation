@@ -55,6 +55,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		signal_event("icon_updated")
 
 	on_reagent_change(add)
+		..()
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)
 		src.UpdateIcon()

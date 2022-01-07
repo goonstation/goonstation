@@ -692,8 +692,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bunnykimber"
 
 	retrino
-		name = "\improper Neo Xzilon"
-		icon_state = "neoxzilon"
+		name = "\improper Mallow Rhosin"
+		icon_state = "mallowrhosin"
 		ckey = "retrino"
 
 		New()
@@ -746,6 +746,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Dennis McCreary"
 		icon_state = "dennismccreary"
 		ckey = "lordvoxelrot"
+
+	Stinko
+		name = "\improper Stinko"
+		icon_state = "stinko"
+		ckey = "data_err0r"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

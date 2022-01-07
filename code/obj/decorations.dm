@@ -163,6 +163,11 @@
 		..()
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION)
+			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
+		#endif
+
 	ex_act(var/severity)
 		switch(severity)
 			if(1,2)
@@ -254,7 +259,7 @@
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
 			new /obj/decal/cleanable/leaves(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+			playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
 			qdel(src)
 			return
 
@@ -292,9 +297,7 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
-	// Added ex_act and meteorhit handling here (Convair880).
-	update_icon()
-		if (!src) return
+	proc/destroy()
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
@@ -309,7 +312,6 @@
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (!W) return
@@ -324,7 +326,7 @@
 			else
 				boutput(user, "<span class='alert'>Why would you ever destroy your precious bonsai tree?</span>")
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.UpdateIcon()
+			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
 			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
@@ -332,13 +334,13 @@
 
 	meteorhit(obj/O as obj)
 		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
-		src.UpdateIcon()
+		src.destroy()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message("<b><span class='alert'>[src] is ripped to pieces by the blast!</span></b>")
-		src.UpdateIcon()
+		src.destroy()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 

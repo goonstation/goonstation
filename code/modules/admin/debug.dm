@@ -1451,6 +1451,26 @@ var/datum/flock/testflock
 			x++
 	boutput(usr, "lag end [world.time] [TIME] (x=[x])")
 
+/client/proc/persistent_lag(cpu_usage as num)
+	set desc = "Makes it so lag is at least the set number."
+	set name = "persistent lag"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(alert("Are you sure you want to set persistent lag to [cpu_usage]?","Why would you do this?","Yes","No") != "Yes")
+		return
+
+	logTheThing("admin", usr, null, "decided to set persistent lag to [cpu_usage]%.")
+
+	var/static/target_lag = null
+	target_lag = cpu_usage
+	while(target_lag > 0)
+		var/last_tick = world.time
+		while(world.tick_usage < target_lag)
+			;
+		while(world.time == last_tick)
+			sleep(0.001)
+
 #undef ARG_INFO_NAME
 #undef ARG_INFO_TYPE
 #undef ARG_INFO_DESC

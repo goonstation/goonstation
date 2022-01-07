@@ -72,7 +72,7 @@
 /// how long the round needs to be in progress before we can start profiling
 #define CPU_PROFILING_ROUNDSTART_GRACE_PERIOD 10 SECONDS
 /// even if world.cpu is normal if tick took this amount of time profiling will start
-#define TICK_TIME_PROFILING_THRESHOLD 0.6 SECONDS
+#define TICK_TIME_PROFILING_THRESHOLD 1 SECOND
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120

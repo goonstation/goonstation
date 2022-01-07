@@ -206,16 +206,6 @@
 	initial_volume = 50
 	initial_reagents = list("coffee"=30)
 
-/obj/item/reagent_containers/food/drinks/eggnog
-	name = "Egg Nog"
-	desc = "A festive beverage made with eggs. Please eat the eggs. Eat the eggs up."
-	icon_state = "nog"
-	heal_amt = 1
-	festivity = 1
-	rc_flags = RC_FULLNESS
-	initial_volume = 50
-	initial_reagents = list("eggnog"=40)
-
 /obj/item/reagent_containers/food/drinks/chickensoup
 	name = "Chicken Soup"
 	desc = "Got something to do with souls. Maybe. Do chickens even have souls?"
@@ -344,6 +334,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()

@@ -121,14 +121,14 @@
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustM"])
-			target_temp = min(max(0, target_temp-change),1000)
+			target_temp = clamp(target_temp-change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustP"])
-			target_temp = min(max(0, target_temp+change),1000)
+			target_temp = clamp(target_temp+change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
@@ -136,7 +136,7 @@
 			if (!beaker.reagents.total_volume) return
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
 			if(!change || !isnum_safe(change)) return
-			target_temp = min(max(0, change),1000)
+			target_temp = clamp(change, 0, 1000)
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
@@ -473,10 +473,10 @@
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
 			if (R.total_volume <= 30)
-				B = new/obj/item/reagent_containers/glass/bottle(src.output_target)
+				B = new/obj/item/reagent_containers/glass/bottle/plastic(src.output_target)
 				R.trans_to(B,30)
 			else
-				B = new/obj/item/reagent_containers/glass/bottle/chemical(src.output_target)
+				B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
 				R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
@@ -975,7 +975,7 @@ datum/chemicompiler_core/stationaryCore
 							var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
 							pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
 					if("Create Bottle")
-						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle(user.loc)
+						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle/plastic(user.loc)
 						var/default = B.reagents.get_master_reagent_name()
 						var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
 						if(!name || name == " ") name = default

@@ -25,28 +25,6 @@
 	path_prot = 0
 	permeability_coefficient = 0.2
 
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = round((100 - material.getProperty("thermal")) / 2)
-				setProperty("coldprot", 10+prot)
-				setProperty("heatprot", 1+round(prot/2))
-			else
-				setProperty("coldprot", 10)
-				setProperty("heatprot", 2)
-
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
-
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+prot)
-			else
-				setProperty("meleeprot_head", 2)
-
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
@@ -71,11 +49,11 @@
 	item_state = "s_helmet"
 	var/on = 0
 
-	var/datum/component/holdertargeting/medium_directional_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 
 	New()
 		..()
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)
@@ -136,6 +114,31 @@
 	icon_state = "space-cute"
 	item_state = "space-cute"
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
+
+/obj/item/clothing/head/helmet/space/custom
+	name = "bespoke space helmet"
+	desc = "Helps protect against vacuum, and is custom-made just for you!"
+	onMaterialChanged()
+		if(src.material)
+			if(material.hasProperty("thermal"))
+				var/prot = round((100 - material.getProperty("thermal")) / 2)
+				setProperty("coldprot", 10+prot)
+				setProperty("heatprot", 1+round(prot/2))
+			else
+				setProperty("coldprot", 10)
+				setProperty("heatprot", 2)
+
+			if(material.hasProperty("permeable"))
+				var/prot = 100 - material.getProperty("permeable")
+				setProperty("viralprot", prot)
+			else
+				setProperty("viralprot", 40)
+
+			if(material.hasProperty("density"))
+				var/prot = round(material.getProperty("density") / 20)
+				setProperty("meleeprot_head", 2+prot)
+			else
+				setProperty("meleeprot_head", 2)
 
 // Sealab helmets
 
@@ -220,6 +223,11 @@
 	item_function_flags = IMMUNE_TO_ACID
 	team_num = TEAM_SYNDICATE
 	blocked_from_petasusaphilic = TRUE
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
@@ -235,6 +243,10 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	old
 		icon_state = "syndicate-OLD"
@@ -447,7 +459,7 @@
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/loctargeting/simple_light/light_dir
 
 	setupProperties()
 		..()
@@ -455,7 +467,7 @@
 
 	New()
 		..()
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, 0.9 * 255, 0.9 * 255, 1 * 255, 210)
 		if(ismob(src.loc))
 			light_dir.light_target = src.loc
 		light_dir.update(0)

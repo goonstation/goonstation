@@ -285,13 +285,6 @@
 		if(M.reagents)
 			src.do_reagentStuff(M)
 
-		if (isliving(M))
-			var/mob/living/L = M
-			var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague,/datum/ailment_data/disease/))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				L.cure_disease(plague)
-
 	on_sleep()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -685,12 +678,6 @@
 			M.reagents.add_reagent("neurotoxin", 20)
 			M.reagents.add_reagent("morphine", 10)
 
-		if (isliving(M))
-			var/mob/living/L = M
-			var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague,/datum/ailment_data/disease/))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				L.cure_disease(plague)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -1635,6 +1622,13 @@
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
 					fellow_bee.aggressive = 0
+
+/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
+	name = "greater domestic space-beean"
+	icon_state = "beean-wings"
+	icon_body = "beean"
+	sleeping_icon_state = "beean-sleep"
+
 
 /* -------------------- END -------------------- */
 

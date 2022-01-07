@@ -6,7 +6,7 @@
 /obj/item/clothing/mask/cigarette
 	name = "cigarette"
 	icon = 'icons/obj/items/cigarettes.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
+	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cig"
 	uses_multiple_icon_states = 1
 	item_state = "cig"

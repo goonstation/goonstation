@@ -2,7 +2,7 @@
 	name = "space-american football pads"
 	desc = "A protective suit designed for players of the ancient sport of space-american football. This armor bears colors of the Spacecow Wobbegongs, who won the 2048 series!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
@@ -34,7 +34,7 @@
 	name = "athletic pants"
 	desc = "These are athletic pants bearing the colors of the Spacecow Wobbegongs. The fabric feels like victory."
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -253,12 +253,13 @@
 	ex_act(severity)
 		return
 
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
-	..()
+	. = ..()
 
 /obj/item/football/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-	..(hit_atom)
+	. = ..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)
 		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)

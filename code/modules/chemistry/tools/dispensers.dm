@@ -585,6 +585,7 @@
 		fluid_image = image(src.icon, "fluid-[src.icon_state]")
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()

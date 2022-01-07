@@ -52,13 +52,6 @@
 		..()
 
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
-		return
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 
@@ -81,6 +74,10 @@
 		if (islist(src.stains) && length(src.stains))
 			src.stains = list()
 			src.UpdateName()
+
+	proc/update_wear_image(mob/living/carbon/human/H, override)
+		return
+
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)

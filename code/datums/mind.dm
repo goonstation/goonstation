@@ -71,6 +71,8 @@ datum/mind
 	//avoid some otherwise frequent istype checks
 	var/stealth_objective = 0
 
+	var/show_respawn_prompts = TRUE
+
 	New(mob/M)
 		..()
 		if (M)
