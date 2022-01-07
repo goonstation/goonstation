@@ -398,8 +398,7 @@
 			return
 
 	onInterrupt(flag)
-		master.cleanbottargets -= master.turf2coordinates(get_turf(master.target))
-		master.KillPathAndGiveUp(1)
+		master.KillPathAndGiveUp(0)
 		. = ..()
 
 	onEnd()
