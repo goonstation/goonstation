@@ -56569,7 +56569,7 @@
 /obj/plasticflaps,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "sortingRoom";
+	mail_tag = "sortingroom";
 	name = "sorting room router"
 	},
 /obj/machinery/door/firedoor/pyro{

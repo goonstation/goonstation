@@ -181,6 +181,14 @@
 			setProperty("movespeed", 0.2)
 			setProperty("exploprot", 40)
 
+		equipped(mob/user, slot)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+		unequipped(mob/user)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
 	postpossession
 		name = "worn gas mask"
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
