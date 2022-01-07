@@ -1,5 +1,9 @@
 
 (t)fri jan 07 22
+(u)Nexusuxen
+(p)6718
+(e)🐛|bug
+(+)Firedoors and a couple other things can now be deconstructed. Telepads and Teleconsoles will also connect to data terminals when you redeploy them instead of bricking.
 (u)TTerc
 (e)⚖|balance
 (+)Furnaces no longer accept alive mobs (similarly to gibbers).
