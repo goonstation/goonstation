@@ -241,8 +241,7 @@
 
 	New()
 		..()
-		if (prob(50))
-			src.icon_state = "cola-2"
+		setup_soda()
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
@@ -274,7 +273,11 @@
 			if (!drop_this_shit) //see?
 				user.put_in_hand_or_drop(C)
 			qdel(src)
-
+	
+	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue 
+		if (prob(50)) // without having to change the Space-Cola path
+			src.icon_state = "cola-2"
+			
 /obj/item/crushed_can
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
@@ -320,8 +323,11 @@
 	initial_volume = 50
 
 	New()
-		....()  //hack to avoid having to re-path every cola can in the game 
-
+		..()
+	
+	setup_soda()
+		return
+	
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
 	desc = "A vibrantly colored can of 100% all natural peach juice."
