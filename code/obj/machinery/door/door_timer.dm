@@ -310,6 +310,18 @@
 					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
+		if ("toggle-flusher")
+			for (var/obj/machinery/floorflusher/FF in range(30, src))
+				if (FF.id == src.id)
+					src.add_fingerprint(usr)
+					if (FF.open != 1)
+						FF.openup()
+						logTheThing("station", usr, null, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+					else
+						FF.closeup()
+						logTheThing("station", usr, null, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
+					return TRUE
+
 /obj/machinery/door_timer/attack_ai(mob/user)
 	return src.Attackhand(user)
 
