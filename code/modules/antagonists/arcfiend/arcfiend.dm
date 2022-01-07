@@ -55,9 +55,14 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/arcfiend
+	/// whether or not this ability can be cast from inside of things (locker, voltron, etc.)
+	var/container_safety_bypass = FALSE
 
 	castcheck()
 		var/mob/living/M = holder.owner
+		if (!container_safety_bypass && !isturf(M.loc))
+			boutput(holder.owner, __red("Interference from [M.loc] is preventing use of this ability!"))
+			return 0
 		if (!can_act(M))
 			boutput(holder.owner, __red("Not while incapacitated."))
 			return 0
@@ -252,6 +257,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	cooldown = 2 MINUTES
 	var/duration = 30 SECONDS
 	pointCost = 150
+	container_safety_bypass = TRUE
 
 	cast(atom/target)
 		. = ..()
@@ -290,6 +296,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	icon_state = "flash"
 	cooldown = 10 SECONDS
 	pointCost = 25
+	container_safety_bypass = TRUE
 
 	cast(atom/target)
 		. = ..()
@@ -424,6 +431,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	var/list/cable_images = null
 	var/obj/dummy/voltron/D = null
 	var/step_cost = 3
+	container_safety_bypass = TRUE
 
 	New(datum/abilityHolder/holder)
 		. = ..()
@@ -561,6 +569,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	pointCost = 50
 	var/range = 4
 	var/duration = 20 SECONDS
+	container_safety_bypass = TRUE
 
 	cast(atom/target)
 		. = ..()
