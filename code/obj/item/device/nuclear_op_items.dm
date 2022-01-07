@@ -518,7 +518,8 @@
 	proc/airstrike(atom/target, params, mob/user, reach)
 		uses -= 1
 		in_use = TRUE
-		linked_gun.bombard(target, user)
+		if(!linked_gun.bombard(target, user))
+			uses += 1
 		in_use = FALSE
 
 	proc/remove_self(var/mob/living/M)
@@ -662,7 +663,7 @@
 	bombard(atom/target, mob/user)
 		var/turf/target_turf = get_turf(target)
 		var/turf/firing_turf = get_turf(src)
-		if(!(target_turf in view(DESIGNATOR_MAX_RANGE, usr.loc))) //view() is bad and slow but I cannot find a better way to do this
+		if(getlineopaqueblocked(get_turf(user), target_turf) != target_turf)
 			return FALSE
 		if(!isnull(src.target_overlay))
 			target_turf.overlays += src.target_overlay
@@ -702,7 +703,7 @@
 /obj/item/ammo/ammobox
 	sname = "Generic Ammobox"
 	name = "Generic Ammobox"
-	desc = "You shouldn't see me!"
+	desc = "A generic ammobox for getting some ammunition."
 	icon_state = "lmg_ammo-0-old"
 	ammo_type = null
 	caliber = null
@@ -710,7 +711,7 @@
 
 	attackby(obj/item/gun/kinetic/W, mob/user)
 		if(istype(W, /obj/item/gun/kinetic))
-			if((islist(valid_calibers) && valid_calibers.Find(initial(W.caliber))) || (!islist(valid_calibers) && valid_calibers == initial(W.caliber)))
+			if((islist(valid_calibers) && valid_calibers[initial(W.caliber)]) || (!islist(valid_calibers) && valid_calibers == initial(W.caliber)) || valid_calibers == "All")
 				new W.default_magazine(get_turf(src))
 				var/obj/O = W.default_magazine
 				boutput(user, "<span class='alert'>You get a [O.name] out of [src].</span>")
@@ -745,25 +746,28 @@
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/ammo/ammobox/nukeop/proc/deploy_ammobag, user, src.icon, src.icon_state,"[user] finishes deploying a [src].", null)
 
 	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+		if(!(over_object == usr))
+			return
+
 		if(deployed)
 			usr.visible_message("[usr] begins folding up [src].", "You begin folding up \the [src].")
 			SETUP_GENERIC_ACTIONBAR(usr, src, 5 SECONDS, /obj/item/ammo/ammobox/nukeop/proc/fold_ammobag, usr, src.icon, src.icon_state,"[usr] finishes folding up [src].", null)
 
 
 	proc/deploy_ammobag(var/mob/user)
-		src.force_drop(user)
-		src.anchored = TRUE
-		src.deployed = TRUE
-		src.icon_state = "[initial(icon_state)]-d[charge <= 0 ? "-empty" : ""]"
+		force_drop(user)
+		anchored = TRUE
+		deployed = TRUE
+		icon_state = "[initial(icon_state)]-d[charge <= 0 ? "-empty" : ""]"
 
 	proc/fold_ammobag(var/mob/user)
-		src.anchored = FALSE
-		src.deployed = FALSE
-		src.icon_state = "[initial(icon_state)]"
+		anchored = FALSE
+		deployed = FALSE
+		icon_state = "[initial(icon_state)]"
 		sleep(1 DECI SECOND)
-		src.Attackhand(user)
+		Attackhand(user)
 
-	attackby(obj/item/gun/kinetic/W, mob/user) //I detest having to do guns individually but it's for the sake of balance & special ammo types
+	attackby(obj/item/gun/kinetic/W, mob/user)
 		if(!deployed)
 			boutput(user, "<span class='alert'>The [src] isn't unfolded!</span>")
 			return
@@ -771,140 +775,41 @@
 		if(!istype(W))
 			return
 
-		if(!ON_COOLDOWN(user, "nukeop_ammobag", 10 SECONDS))
-			// Guns with special ammo types below //
-			if(istype(W, /obj/item/gun/kinetic/assault_rifle))
-				if(src.charge >= 2)
-					var/obj/O = W.default_magazine
-					if(spec_ammo)
-						O = /obj/item/ammo/bullets/assault_rifle/armor_piercing
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get an [initial(O.name)] out of [src].</span>")
-					else
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					if(spec_ammo && istype(O, /obj/item/ammo/bullets/assault_rifle) && !istype(O, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) //pity mechanic if they get weaker ammo
-						src.charge -= 1
-					else
-						src.charge -= 2
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
+		if(!length(W.ammobag_magazines))
+			return
 
-			else if(istype(W, /obj/item/gun/kinetic/spes/engineer))
-				if(src.charge >= 2)
-					var/obj/O = W.default_magazine
-					if(spec_ammo)
-						O = /obj/item/ammo/bullets/a12
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					else
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					if(spec_ammo && istype(O, /obj/item/ammo/bullets/a12/weak))
-						src.charge -= 1
-					else
-						src.charge -= 2
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
+		if(W.ammobag_spec_required && !spec_ammo)
+			return
 
-			else if(istype(W, /obj/item/gun/kinetic/revolver))
-				if(src.charge >= 2)
-					var/obj/O = W.default_magazine
-					if(spec_ammo)
-						O = /obj/item/ammo/bullets/a357/AP
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					else
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					if(spec_ammo && istype(O, /obj/item/ammo/bullets/a357) && !istype(O, /obj/item/ammo/bullets/a357/AP))
-						src.charge -= 1
-					else
-						src.charge -= 2
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
+		if(ON_COOLDOWN(user, "nukeop_ammobag", 10 SECONDS))
+			return
 
-			else if(istype(W, /obj/item/gun/kinetic/silenced_22))
-				if(src.charge >= 1)
-					var/obj/O = W.default_magazine
-					if(spec_ammo)
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					else
-						O = /obj/item/ammo/bullets/bullet_22
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					src.charge -= 1
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
+		var/ammo
+		var/ammo_cost
+		if(spec_ammo)
+			if(length(W.ammobag_magazines) >= 2)
+				var/list/ammo_list = W.ammobag_magazines.Copy(2, 0)
+				ammo = pick(ammo_list)
+				ammo_cost = W.ammobag_restock_cost
+			else if(length(W.ammobag_magazines == 1))
+				if(!W.ammobag_spec_required)
+					ammo = W.ammobag_magazines[1]
+					ammo_cost = W.ammobag_restock_cost - 1
+		else
+			ammo = W.ammobag_magazines[1]
+			ammo_cost = W.ammobag_restock_cost
 
-			// Guns with special ammo types above //
-			else if(istype(W, /obj/item/gun/kinetic/pistol))
-				if(src.charge >= 1)
-					var/obj/O = W.default_magazine
-					new O(get_turf(src))
-					boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					src.charge -= 1
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
+		if(charge >= ammo_cost)
+			var/obj/item/created = new ammo(get_turf(src))
+			boutput(user, "<span class='alert'>You get an [initial(created.name)] out of [src].</span>")
+			charge -= ammo_cost
+		else
+			boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
+			return
 
-			else if(istype(W, /obj/item/gun/kinetic/smg) || istype(W, /obj/item/gun/kinetic/tranq_pistol) || istype(W, /obj/item/gun/kinetic/spes))
-				if(src.charge >= 2)
-					var/obj/O = W.default_magazine
-					new O(get_turf(src))
-					boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					if(spec_ammo)
-						src.charge -= 1
-					else
-						src.charge -= 2
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
-
-			else if(istype(W, /obj/item/gun/kinetic/light_machine_gun) || istype(W, /obj/item/gun/kinetic/sniper))
-				if(src.charge >= 3)
-					var/obj/O = W.default_magazine
-					new O(get_turf(src))
-					boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-					if(spec_ammo)
-						src.charge -= 2
-					else
-						src.charge -= 3
-				else
-					boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-					return
-
-			else if(spec_ammo) //guns that can ONLY be restocked from special ammo bags
-				if(istype(W, /obj/item/gun/kinetic/grenade_launcher))
-					if(src.charge >= 3)
-						var/obj/O = W.default_magazine
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-						src.charge -= 3
-					else
-						boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-						return
-
-				if(istype(W, /obj/item/gun/kinetic/rpg7))
-					if(src.charge >= 4)
-						var/obj/O = W.default_magazine
-						new O(get_turf(src))
-						boutput(user, "<span class='alert'>You get a [initial(O.name)] out of [src].</span>")
-						src.charge -= 4
-					else
-						boutput(user, "<span class='alert'>The [src] doesn't have enough charge left to fabricate the ammo for [W]!</span>")
-						return
-			else
-				..()
-
-			src.desc = "A bag that can fabricate magazines for standard syndicate weapons. Technology! It has [src.charge] charge left."
-			if(src.charge <= 0)
-				src.icon_state = "[initial(icon_state)]-d-empty"
+		desc = "A bag that can fabricate magazines for standard syndicate weapons. Technology! It has [charge] charge left."
+		if(charge <= 0)
+			icon_state = "[initial(icon_state)]-d-empty"
 
 
 /obj/item/ammo/ammobox/nukeop/spec_ammo
@@ -915,5 +820,5 @@
 
 	New()
 		..()
-		src.desc = "A bag that can fabricate specialist magazines for standard syndicate weapons. Technology! It has [src.charge] charge left."
+		desc = "A bag that can fabricate specialist magazines for standard syndicate weapons. Technology! It has [charge] charge left."
 

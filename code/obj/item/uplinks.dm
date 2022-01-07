@@ -1051,7 +1051,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		switch(action)
 			if ("redeem")
 				for(var/datum/syndicate_buylist/SB as anything in commander_buylist)
-					if(istype(commander_buylist[SB], locate(params["ref"])) || commander_buylist[SB] == params["ref"]) //completely untested shitcode, look at later
+					if(istype(commander_buylist[SB], locate(params["ref"])))
 						var/datum/syndicate_buylist/B = commander_buylist[SB]
 						if (src.points >= B.cost)
 							src.points -= B.cost
@@ -1064,56 +1064,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							. = TRUE
 							break
 
-#define CHECK1 (get_dist(src, usr) > 1 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (is_incapacitated(usr) || usr.restrained())
-	Topic(href, href_list)
-		..()
-		if (src.points < 0)
-			src.points = 0
-		if (CHECK1)
-			return
-		if (CHECK2)
-			return
-
-		src.add_dialog(usr)
-
-		if (href_list["spawn"])
-			var/datum/syndicate_buylist/I = locate(href_list["spawn"])
-			if (!I || !istype(I))
-				return
-			if(I.cost > src.points)
-				return
-
-			// Trying to spawn things you shouldn't, eh?
-			var/present = FALSE
-			for(var/S in commander_buylist)
-				if(I == commander_buylist[S])
-					present = TRUE
-					break
-
-			if(!present)
-				trigger_anti_cheat(usr, "tried to href exploit the commnader buylist")
-				return
-
-			if (I.item)
-				var/obj/item = new I.item(get_turf(src))
-				I.run_on_spawn(item, usr)
-				src.points -= I.cost
-			if (I.item2)
-				new I.item2(get_turf(src))
-			if (I.item3)
-				new I.item3(get_turf(src))
-
-		else if (href_list["about"])
-			reading_about = locate(href_list["about"])
-
-		else if (href_list["back"])
-			reading_about = null
-
-		src.attack_self(usr)
-		return
-#undef CHECK1
-#undef CHECK2
 #undef PLAYERS_PER_UPLINK_POINT
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////
 
