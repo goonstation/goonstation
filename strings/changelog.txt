@@ -1,5 +1,9 @@
 
 (t)fri jan 07 22
+(u)antrobot
+(p)6992
+(e)🐛|bug
+(+)fixed cleanbot's action script. It should no longer "forget" a mess if it is interrupted while cleaning.
 (u)TheStoneGol
 (p)6856
 (e)🎨|sprites
