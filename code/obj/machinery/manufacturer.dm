@@ -485,7 +485,7 @@
 				else
 					mat_name = A.item_names[i]
 				material_text += {"
-				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]] [mat_name]</span>
+				<span class='mat[mats_used[A.item_paths[i]] ? "" : "-missing"]'>[A.item_amounts[i]/10] [mat_name]</span>
 				"}
 
 			dat += {"
@@ -494,7 +494,7 @@
 			<div class='required'><div>[material_text.Join("<br>")]</div></div>
 			[icon_text]
 			[delete_link]
-			<span class='mats'>[material_count] mat.</span>
+			<span class='mats'>[material_count/10] mat.</span>
 			<span class='time'>[A.time && src.speed ? round(A.time / src.speed / 10, 0.1) : "??"] sec.</span>
 		</div>"}
 
@@ -576,7 +576,7 @@
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many material pieces (10 units per) do you want to eject?","Eject Materials") as num
+								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
 								if (ejectamt <= 0 || src.mode != "ready" || get_dist(src, usr) > 1 || !isnum_safe(ejectamt))
 									break
 							if (!ejectturf)
@@ -604,7 +604,7 @@
 					if (src.hacked)
 						upperbound = 5
 					var/newset = input(usr,"Enter from 1 to [upperbound]. Higher settings consume more power","Manufacturing Speed") as num
-					newset = max(1,min(newset,upperbound))
+					newset = clamp(newset, 1, upperbound)
 					src.speed = newset
 
 			if (href_list["clearQ"])
@@ -1013,6 +1013,9 @@
 			src.build_icon()
 
 		else if (istype(W,/obj/item/reagent_containers/glass))
+			if (W.cant_drop)
+				boutput(user, "<span class='alert'>You cannot put the [W] into [src]!</span>")
+				return
 			if (src.beaker)
 				boutput(user, "<span class='alert'>There's already a receptacle in the machine. You need to remove it first.</span>")
 			else
@@ -1485,7 +1488,7 @@
 			return
 		var/mcheck = check_enough_materials(M)
 		if(mcheck)
-			var/make = max(0,min(M.create,src.output_cap))
+			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop
 					while (make > 0)
@@ -1646,8 +1649,8 @@
 			var/datum/material/mat = getMaterial(mat_id)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a> [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]]</td>
+			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a>  [mat]</td>
+			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
 		</tr>
 			"}
 		if (dat.len == 1)
@@ -1807,7 +1810,7 @@
 		if (!damage_amount)
 			return
 		src.health -= damage_amount
-		src.health = max(0,min(src.health,100))
+		src.health = clamp(src.health, 0, 100)
 		if (damage_amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)

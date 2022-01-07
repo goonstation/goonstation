@@ -170,7 +170,7 @@
 		if (href_list["tp"])
 			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
-			src.time = min(max(round(src.time), src.min_time), src.max_time)
+			src.time = clamp(round(src.time), src.min_time, src.max_time)
 			if (can_use_detonator && src.time < src.min_detonator_time)
 				src.time = src.min_detonator_time
 

@@ -23,7 +23,6 @@ datum
 			*/
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				..()
 				if(!M)
 					M = holder.my_atom
 				if (!isliving(M) || !ispath(disease))
@@ -32,6 +31,7 @@ datum
 					return
 				var/mob/living/L = M
 				L.contract_disease(disease, null, null, 1)
+				..()
 
 		disease/rainbow_fluid // Clowning Around
 			name = "rainbow fluid"
@@ -349,6 +349,7 @@ datum
 			name = "prions"
 			id = "prions"
 			description = "A disease-causing agent that is neither bacterial nor fungal nor viral and contains no genetic material."
+			taste = "<br>　　∧,,,∧<br>　 （ ・ω・） like prion disease...<br>　　( つ旦O<br>　　と＿)_)<br>"
 			reagent_state = LIQUID
 			minimum_to_infect = 5.1
 			fluid_r = 255

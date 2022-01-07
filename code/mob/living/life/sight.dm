@@ -47,9 +47,9 @@
 				var/sight_meson = 0
 				var/sight_constr = 0
 				for (var/obj/item/roboupgrade/R in robot_owner.upgrades)
-					if (R && istype(R, /obj/item/roboupgrade/visualizer) && R.activated)
+					if (R && istype(R, /obj/item/roboupgrade/visualizer) && R.activated && (T && !isrestrictedz(T.z)))
 						sight_constr = 1
-					if (R && istype(R, /obj/item/roboupgrade/opticmeson) && R.activated)
+					if (R && istype(R, /obj/item/roboupgrade/opticmeson) && R.activated && (T && !isrestrictedz(T.z)))
 						sight_meson = 1
 					//if (R && istype(R, /obj/item/roboupgrade/opticthermal) && R.activated)
 					//	sight_therm = 1

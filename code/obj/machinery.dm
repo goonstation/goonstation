@@ -25,7 +25,7 @@
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
 	var/cap_base_tick_spacing = 60
-	var/last_process
+	var/tmp/last_process
 	var/requires_power = TRUE // machine requires power, used in tgui_broken_state
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
@@ -218,6 +218,14 @@
 	if(prob(25 * power / 20))
 		qdel(src)
 
+/obj/machinery/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.power_change()
+
+/obj/machinery/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.power_change()
+
 /obj/machinery/proc/get_power_wire()
 	var/obj/cable/C = null
 	for (var/obj/cable/candidate in get_turf(src))
@@ -235,6 +243,8 @@
 /obj/machinery/proc/powered(var/chan = EQUIP)
 	// returns true if the area has power on given channel (or doesn't require power).
 	// defaults to equipment channel
+	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
+		return 0
 	if (machines_may_use_wired_power && power_usage)
 		var/datum/powernet/net = get_direct_powernet()
 		if (net)

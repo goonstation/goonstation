@@ -19,8 +19,8 @@
 	var/high_priority_job = 0
 	var/low_priority_job = 0
 	var/cant_allocate_unwanted = 0
-	var/recieves_miranda = 0
-	var/recieves_implant = null //Will be a path.
+	var/receives_miranda = 0
+	var/receives_implant = null //Will be a path.
 	var/receives_disk = 0
 	var/receives_security_disk = 0
 	var/receives_badge = 0
@@ -67,16 +67,16 @@
 	proc/special_setup(var/mob/M, no_special_spawn)
 		if (!M)
 			return
-		if (recieves_miranda)
+		if (receives_miranda)
 			M.verbs += /mob/proc/recite_miranda
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 
 		SPAWN_DBG(0)
-			if (recieves_implant && ispath(recieves_implant))
+			if (receives_implant && ispath(receives_implant))
 				var/mob/living/carbon/human/H = M
-				var/obj/item/implant/I = new recieves_implant(M)
+				var/obj/item/implant/I = new receives_implant(M)
 				I.implanted = 1
 				if(ishuman(M)) H.implant.Add(I)
 				I.implanted(M)
@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_EXECUTIVE
 	high_priority_job = 1
-	recieves_miranda = 1
+	receives_miranda = 1
 #ifdef RP_MODE
 	allow_traitors = 0
 #endif
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 
 	allow_spy_theft = 0
-	recieves_miranda = 1
+	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_IMPORTANT
 	requires_whitelist = 1
-	recieves_miranda = 1
+	receives_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_con = 1
@@ -250,7 +250,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	recieves_implant = /obj/item/implant/health/security/anti_mindslave
+	receives_implant = /obj/item/implant/health/security/anti_mindslave
 	items_in_backpack = list(/obj/item/device/flash)
 
 
@@ -453,7 +453,7 @@ ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	linkcolor = "#FF0000"
 	slot_card = /obj/item/card/id/security
-	recieves_miranda = 1
+	receives_miranda = 1
 
 /datum/job/security/security_officer
 	name = "Security Officer"
@@ -467,7 +467,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	allow_spy_theft = 0
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
-	recieves_implant = /obj/item/implant/health/security
+	receives_implant = /obj/item/implant/health/security
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
@@ -1128,6 +1128,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 		M.traitHolder.addTrait("training_medical")
+		M.traitHolder.addTrait("training_partysurgeon")
 
 /datum/job/special/lawyer
 	name = "Lawyer"
@@ -1155,7 +1156,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
-	recieves_miranda = 1
+	receives_miranda = 1
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/misc/vice)
@@ -1453,7 +1454,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
-	recieves_miranda = 1
+	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	slot_back = list(/obj/item/storage/backpack/withO2)
@@ -1487,7 +1488,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/random/director
 	name = "Regional Director"
-	recieves_miranda = 1
+	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	wages = PAY_EXECUTIVE
 
@@ -2117,7 +2118,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
-	recieves_miranda = 1
+	receives_miranda = 1
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud/superhero)
 	slot_glov = list(/obj/item/clothing/gloves/latex/blue)
@@ -2304,7 +2305,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
-	recieves_implant = /obj/item/implant/microbomb
+	receives_implant = /obj/item/implant/microbomb
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/gun/kinetic/pistol)
 	slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -2364,7 +2365,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
-	recieves_implant = /obj/item/implant/health
+	receives_implant = /obj/item/implant/health
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2408,8 +2409,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
 	receives_badge = 1
-	recieves_miranda = 1
-	recieves_implant = /obj/item/implant/health
+	receives_miranda = 1
+	receives_implant = /obj/item/implant/health
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntso) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2672,7 +2673,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
-	recieves_miranda = 1
+	receives_miranda = 1
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/misc/vice)

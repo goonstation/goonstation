@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(0,min(33,round(current_projectile.power/2 - 9)))
+			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
@@ -962,7 +962,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot()
 		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = max(10,min(33,round(current_projectile.caliber * (current_projectile.power/2))))
+			failure_chance = clamp(round(current_projectile.caliber * (current_projectile.power/2)), 10, 33)
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
@@ -1270,8 +1270,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
-	force = MELEE_DMG_LARGE
-	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_SMG
 	contraband = 7
 	caliber = 1.57
 	max_ammo_capacity = 1
@@ -1310,7 +1309,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
@@ -1326,11 +1325,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/rpg
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
 		set_current_projectile(new /datum/projectile/bullet/rpg)
 		..()
-		return
 
 	update_icon()
 		..()
@@ -1341,6 +1340,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			H.update_inhands()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	loaded
 		New()
@@ -1519,8 +1522,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -1589,6 +1597,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
@@ -1623,6 +1632,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			spread_angle = 0
 			shoot_delay = 3 DECI SECONDS
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 
 
 // heavy
@@ -1632,7 +1645,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	caliber = 0.308
 	max_ammo_capacity = 100
@@ -1666,7 +1679,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 	caliber = 0.787
 	max_ammo_capacity = 1
@@ -1714,6 +1727,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = max_ammo_capacity
 		set_current_projectile(new/datum/projectile/bullet/grenade_round/explosive)
@@ -1735,6 +1749,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			..()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	proc/convert_grenade(obj/item/nade, mob/user)
 		var/obj/item/ammo/bullets/grenade_shell/TO_LOAD = new /obj/item/ammo/bullets/grenade_shell/rigil
 		TO_LOAD.Attackby(nade, user)
@@ -1747,7 +1765,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
 	item_state = "sniper"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	caliber = 0.308
 	max_ammo_capacity = 6
@@ -1767,12 +1785,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/datum/movement_controller/snipermove = null
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_762_NATO)
 		snipermove = new/datum/movement_controller/sniper_look()
 		..()
 
 	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		snipermove = null
 		..()
 
@@ -1844,7 +1864,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "antimateriel"
 	item_state = "cannon"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
 	caliber = 0.787
 	max_ammo_capacity = 5

@@ -9,13 +9,14 @@
 	var/light_mod = null
 	var/connect_overlay = 0 // do we have wall connection overlays, ex nornwalls?
 	var/list/connects_to = list(/turf/simulated/wall/auto,/turf/simulated/wall/false_wall)
-	var/list/connects_to_exceptions = list() // because connections now work by parent type searches, this is for when you don't want certain subtypes to connect
+	var/list/connects_to_exceptions = list(/turf/simulated/wall/auto/shuttle) // because connections now work by parent type searches, this is for when you don't want certain subtypes to connect
 	var/list/connects_with_overlay = null
 	var/list/connects_with_overlay_exceptions = list() // same as above comment
 	var/image/connect_image = null
 	var/tmp/connect_overlay_dir = 0
 	var/connect_diagonal = 0 // 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	var/d_state = 0
+	var/connect_across_areas = TRUE
 
 	New()
 		..()
@@ -46,6 +47,8 @@
 		src.connect_overlay_dir = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
+			if(!connect_across_areas && get_area(T) != get_area(src))
+				continue
 			if (T && (istype(T, src.type)))
 				builtdir |= dir
 			else if (connects_to)
@@ -82,6 +85,8 @@
 				if (connect_diagonal < 2 && ((builtdir & ordinal[j]) != ordinal[j]))
 					continue
 				var/turf/T = get_step(src, ordinal[j])
+				if(!connect_across_areas && get_area(T) != get_area(src))
+					continue
 				var/dir = 8 << j
 				if (T && (istype(T, src.type)))
 					builtdir |= dir

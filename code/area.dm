@@ -525,7 +525,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return
 			setdead(jerk)
 			jerk.remove()
-		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
+		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
 			qdel(O)
 		return
 
@@ -549,7 +549,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				dest= pick(get_area_turfs(/area/station/maintenance/,1))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
 			jerk.set_loc(dest)
-			jerk.nodamage = 0
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -589,6 +588,27 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_environment = 2
 	expandable = 0
 
+/area/shuttle/battle
+	name = "Battle Shuttle"
+	icon_state = "shuttle_escape-battle-shuttle"
+	var/warp_dir = EAST
+	sanctuary = 1
+
+	Entered(atom/movable/Obj,atom/OldLoc)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.addOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+	Exited(atom/movable/Obj)
+		..()
+		if (ismob(Obj))
+			var/mob/M = Obj
+			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	teleport_blocked = 2
@@ -604,12 +624,22 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Emergency Shuttle"
 
 /area/shuttle/escape/station
+	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	#ifdef UNDERWATER_MAP
+	ambient_light = OCEAN_LIGHT
+	#endif
 
 /area/shuttle/escape/centcom
+	name = "Emergency Shuttle Centcom"
 	icon_state = "shuttle"
 	sound_group = "centcom"
 	is_centcom = 1
+	filler_turf = /turf/unsimulated/floor/shuttlebay
+
+/area/shuttle/escape/transit
+	name = "Emergency Shuttle Transit"
+	icon_state = "shuttle_escape"
 
 /area/shuttle/prison/
 	name = "Prison Shuttle"
@@ -727,8 +757,18 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 			var/mob/M = Obj
 			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 
-/area/shuttle/escape/transit/ew
+/area/shuttle/escape/transit
+	warp_dir = NORTH
+
+/area/shuttle/escape/transit
 	warp_dir = EAST
+
+/area/shuttle/escape/transit
+	warp_dir = WEST
+
+/area/shuttle/escape/transit
+	warp_dir = SOUTH
+
 ABSTRACT_TYPE(/area/shuttle_transit_space)
 /area/shuttle_transit_space
 	name = "Wormhole"
@@ -1921,13 +1961,11 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Construction Area"
 	icon_state = "construction"
 	workplace = 1
-	do_not_irradiate = 1
 
 /area/station/hallway/secondary/construction2
 	name = "Secondary Construction Area"
 	icon_state = "construction"
 	workplace = 1
-	do_not_irradiate = 1
 
 /area/station/hallway/secondary/entry
 	name = "Main Hallway"
@@ -2188,7 +2226,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"
-	do_not_irradiate = 1
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -2196,7 +2233,6 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
 	icon_state = "storage"
-	do_not_irradiate = 1
 
 /area/station/crew_quarters/bathroom
 	name = "Bathroom"
@@ -2818,7 +2854,6 @@ ABSTRACT_TYPE(/area/station/quartermaster)
 	name = "Quartermaster's Storage"
 	icon_state = "quartstorage"
 	sound_environment = 2
-	do_not_irradiate = 1
 
 /area/station/quartermaster/magnet
 	name = "Magnet Control Room"
@@ -2868,7 +2903,6 @@ ABSTRACT_TYPE(/area/station/janitor)
 	icon_state = "yellow"
 	sound_environment = 5
 	workplace = 1
-	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science
@@ -3027,7 +3061,6 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Hangar"
 	icon_state = "hangar"
 	workplace = 1
-	do_not_irradiate = 1
 
 /area/station/hangar/main
 		name = "Pod Bay"
@@ -3081,33 +3114,28 @@ ABSTRACT_TYPE(/area/station/garden)
 	name = "Garden"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 
 /area/station/garden/owlery
 	name = "Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
-	do_not_irradiate = 1
 	requires_power = FALSE
 
 /area/station/garden/aviary
 	name = "Aviary"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 
 /area/station/garden/habitat
 	name = "Habitat Dome"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 	force_fullbright = 1
 
 /area/station/garden/zen
 	name = "Zen Garden"
 	icon_state = "aviary"
 	sound_environment = 15
-	do_not_irradiate = 1
 
 ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/catwalk
@@ -3154,6 +3182,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/station/routing/airbridge
 		name = "Airbridge Router"
+
+/area/station/routing/sortingRoom
+		name = "Mail Sorting Room"
 
 /// Off-station research outpost. Used for Cog2.
 /area/research_outpost
@@ -3361,7 +3392,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "AI Upload Chamber"
 	icon_state = "ai_upload"
 	sound_environment = 12
-	do_not_irradiate = 1
 
 /area/station/turret_protected/ai_module_storage
 	name = "AI Module Storage"
@@ -3377,7 +3407,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "AI Chamber"
 	icon_state = "ai_chamber"
 	sound_environment = 12
-	do_not_irradiate = 1
 
 /area/station/turret_protected/AIbasecore1
 	name = "AI Core 1"
@@ -3388,7 +3417,6 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "AI Satellite"
 	icon_state = "ai_satellite"
 	sound_environment = 12
-	do_not_irradiate = 1
 
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"

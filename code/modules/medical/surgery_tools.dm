@@ -1061,7 +1061,7 @@ CONTAINS:
 			return ..()
 
 	update_icon()
-		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
+		var/iv_state = clamp(round(src.volume, 10) / 10, 0, 100)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)
 			if (90 to INFINITY)
@@ -1152,7 +1152,7 @@ CONTAINS:
 		add_fingerprint(user)
 		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
-		else
+		else if(!ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
 			if (src.open)
 				src.close()
 			else
@@ -1194,7 +1194,7 @@ CONTAINS:
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("weakened", 0.5 SECONDS)
 			SPAWN_DBG(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1

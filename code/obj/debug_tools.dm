@@ -52,8 +52,8 @@
 
 		var/alpha_initial = P.initial_alpha + rand((0 - P.initial_alpha_variance),P.initial_alpha_variance)
 		var/alpha_destination = P.destination_alpha + rand((0 - P.destination_alpha_variance),P.destination_alpha_variance)
-		par.alpha = max(0,min(alpha_initial,255))
-		var/end_alpha = max(0,min(alpha_destination,255))
+		par.alpha = clamp(alpha_initial, 0, 255)
+		var/end_alpha = clamp(alpha_destination, 0, 255)
 
 		var/matrix/M = turn(matrix(), rand(P.destination_turn_min, P.destination_turn_max))
 		M.Scale(rand(P.destination_scale_min,P.destination_scale_max))

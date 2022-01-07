@@ -45,6 +45,9 @@
 		else
 			target_turf = get_turf(the_target)
 
+		if(!target_turf) //target got deleted?
+			return
+
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
@@ -1923,7 +1926,7 @@
 		src.mover = new /datum/guardbot_mover(src)
 		src.mover.max_dist = max_dist
 
-		src.mover.delay = max(min(move_delay,5),2)
+		src.mover.delay = clamp(move_delay, 2, 5)
 		src.mover.master_move(the_target,adjacent)
 
 		return 0

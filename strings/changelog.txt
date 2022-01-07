@@ -1,5 +1,218 @@
 
+(t)wed jan 05 22
+(u)FlameArrow57
+(p)7064
+(e)🗺|mapping
+(*)Additional air scrubbers have been added to Horizon.
+(u)Flaborized
+(p)7077
+(e)🎨|sprites
+(+)Resprited the device analyzer, device frames, ruckingenur kit and blueprints.
+(u)Flaborized
+(p)7076
+(e)🎨|sprites
+(+)Resprited basic knives, forks, spoons and bowls, as well as food that goes inside bowls.
+(u)Nexusuxen
+(p)6670
+(e)🗺|mapping
+(+)Cog1 now has a mail sorting room in Northeast maintenance, check it out! Also, where did Chompsky go...?
+(u)eX.n0x
+(p)7083
+(e)🐛🎨|bug, sprites
+(+)A large chunk of clothing items fit better on/with lizard heads.
+(t)tue jan 04 22
+(u)Flappybat
+(p)7051
+(e)|
+(+)Football pitch gets cleaned between rounds, slightly longer delaybefore rounds.
+(u)Flappybat
+(p)7060
+(e)⚖|balance
+(*)A number of changes have been made to Battle Royale. 40% of lockers and crates are randomly removed each round with the remainder replaced with Syndicate gear lockers and treasure chests. More armor and weapons are available with less useless items. Going off Z1 will now deal constant damage, stay battling!
+(t)mon jan 03 22
+(u)DimWhat
+(p)7044
+(e)🎨|sprites
+(*)Added glasses sprites for lizardssss.
+(t)sat jan 01 22
+(u)Flaborized
+(p)7036
+(e)🎨|sprites
+(+)Resprited ampoules.
+(t)fri dec 31 21
+(u)tarmunora
+(e)⚖🎉|balance, happy new years
+(*)Thrown drinking glasses now splash some of their contents to the floor as well
+(t)thu dec 30 21
+(u)pali
+(+)Clicking on the pull hud button now shows a popup where you can select what to pull.
+(u)Mr. Moriarty
+(p)7028
+(e)🗺|mapping
+(+)The NSS Clarion has invested in sturdier windows for the HoS's Office, in order for them to survive the relentless onslaught of StirStir's forehead.
+(u)Blackrep
+(p)6831
+(e)📄|tgui
+(+)The glass recycler has been updated to a fancy new interface!
+(t)wed dec 29 21
+(u)DimWhat
+(p)6942
+(e)🎨|sprites
+(*)Added a bunch more monkey clothing including gloves, shoes and masks! Ook!
+(t)tue dec 28 21
+(u)Stonepillar
+(p)6898
+(e)|
+(*)Flusher components now have a limit of 100 things to flush at once.
+(u)DimWhat
+(p)6988
+(e)⚖|balance
+(*)The material costs for several drone types have been made much more difficult.
+(+)The material cost for miniature syndicates has been lowered.
+(u)Gonzako
+(p)6900
+(e)🆕|feature
+(+)Button pannels can now create new buttons from signals. Use ButtonLabel=ButtonSignal to define new buttons. These can be separated by ";" or "&"
+(u)Keiya
+(p)7011
+(e)|
+(+)Made it/its pronouns selectable in the the identity computer and character setup screen.
+(u)Flaborized
+(p)6966
+(e)🎨|sprites
+(+)Updated sprites for belt items.
+(t)mon dec 27 21
+(u)Skeletonman0
+(p)6710
+(e)|
+(+)Grilles now try to electrocute mobs thrown or launched at them.
+(u)Azrun
+(p)6799
+(e)🆕🎨|feature, sprites
+(+)Plasmatoid results in respiratory "issues".  The infection will spread to the lungs and they will no longer function like they used to.
+(u)Azrun
+(p)5712
+(e)🆕🗺🎨|feature, mapping, sprites
+(*)AI's now have access to text Holograms by way of Phrase Templates!  Find some hologram expansion modules to add phrases/words.
+(t)sun dec 26 21
+(u)pali
+(*)Manta has been disabled
+(u)TTerc
+(p)7004
+(e)|
+(+)Suicide command now always opens a suicide method selection window.
+(u)Flappybat
+(p)6985
+(e)⚖|balance
+(+)Santa and Krampus no longer spawn in modes that prevent antag spawns.
+(u)Magma Hunter
+(p)6989
+(e)|
+(+)Changes the AZERTY number row to use the French layout. Also fixes it for ghosts.
+(u)DimWhat
+(p)6957
+(e)🎨|sprites
+(+)Made some small sprite changes to a few glasses sprites.
+(u)Flaborized
+(p)6995
+(e)🎨|sprites
+(+)Resprited the arc plater and ore processor machines.
+(u)Flaborized
+(p)7001
+(e)🎨|sprites
+(+)Resprited pills.
+(u)Flappybat
+(p)6864
+(e)🗺|mapping
+(*)Changed phones on Donut 3, removed arrivals/office phones. Moved and added some phones.
+(t)sat dec 25 21
+(u)tarmunora
+(e)🎅
+(+)Super Hairgrownium has 3u minimum volume to trigger moustache effect
+(t)fri dec 24 21
+(u)DimWhat
+(p)6984
+(e)🎨⚖|sprites, balance
+(+)Added unique bedsheet sprites for lizards.
+(u)Wisemonster
+(p)6978
+(e)🗺⚖|mapping, balance
+(*)NanoTrasen has shipped breaching hammers to armories that were missing them.
+(t)thu dec 23 21
+(u)Sovexe
+(p)6910
+(e)🆕🎨|feature, sprites
+(+)Added ember particle effects to burning barrels, using the new particle system.
+(u)aloe
+(+)You can now click telescience portals to go through them while you're standing on the same tile.
+(t)tue dec 21 21
+(u)Flappybat
+(p)6861
+(e)⚖|balance
+(+)Added one second cooldown on bodybag open/close. Reduced stun on bodybag open.
+(u)Dimwhat
+(p)6943
+(e)⚖|balance
+(+)The obsidian crown is now blacklisted from petasusaphilic
+(u)Zonespace
+(p)6958
+(e)⚖|balance
+(+)Macrobomb explosion power average increased to 27 from 25.
+(u)Zonespace
+(p)6883
+(e)|
+(+)Syndicate Donk Pocket's smelling salts changed back to synaptizine, the methamphetamine in the Donks no longer purge brain healing chems.
+(t)thu dec 16 21
+(u)tarmunora
+(e)⚖|balance
+(+)space cleaner is mild blob poison.
+(u)TTerc
+(e)🆕|feature
+(*)Firefighting grenades are now also able to extinguish mobs.
+(t)thu dec 16 21
+(u)TTerc
+(e)⚖|balance
+(+)ValuChimp restock cartridges are now only available via certain cargo traders, similarly to monkey crates.
+(t)thu dec 16 21
+(u)tarmunora
+(e)⚖|balance
+(+)Werewolf and tentacle arms become weaker when severed.
+(u)RSG250
+(p)6915
+(e)|
+(+)Gemstones make good windows again.
+(u)Flaborized
+(p)6932
+(e)🎨|sprites
+(*)Updated many jumpsuit item sprites to be more consistent with their worn states.
+(t)sun dec 12 21
+(u)Terra_GS
+(p)6888
+(e)🎨|sprites
+(+)Updated the launcher/ignition switch sprites.
+(u)Jan.antilles
+(*)Shrubs now have Spacemas lights.
+(t)thu dec 09 21
+(u)tarmunora
+(e)⚖|balance
+(*)Lethal hypotension starts after missing 200u of blood instead of 125u.
+(u)pali
+(+)For the low price of 6000 spacebux you can now adopt a frog.
+(t)wed dec 08 21
+(u)112358sam
+(p)6244
+(e)🆕|feature
+(*)Added seven new crew objectives.
+(+)Added the furnace objective that the CE has to the possible engineer objectives.
+(u)Sord and Pali
+(p)6782
+(e)🗺|mapping
+(*)Nanotrasen has bought all new, larger, escape shuttles!
+(+)All new large sized shuttles for all space maps, new Centcomm dock
 (t)tue dec 07 21
+(u)Tarmunora
+(e)⚖|balance
+(+)Riot launchers no longer a bulky item.
 (u)Jawns
 (p)6865
 (e)🐛|bug

@@ -1,6 +1,7 @@
 /*
  * Copyright 2021 Gomble (https://github.com/AndrewL97)
  * Changes: Azrun (https://github.com/Azrun)
+ * Changes: Sovexe (https://github.com/Sovexe)
  * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
  */
 
@@ -109,6 +110,8 @@ var/list/master_particle_info = list()
 		if("string") return L["value"]
 		if("float") return L["value"]
 		if("int") return L["value"]
+		if("vector") return L["value"]
+		if("vector2") return L["value"]
 		if("color") return stringToNum(L["value"], TRUE)
 		if("text") return L["value"]
 		if("list") return stringToList(L["value"], TRUE, TRUE)
@@ -134,20 +137,29 @@ var/list/master_particle_info = list()
 	var/a = length(stringToList(L["a"],TRUE)) > 1 ? stringToList(L["a"],TRUE) : text2num(L["a"])
 	var/b = length(stringToList(L["b"],TRUE)) > 1 ? stringToList(L["b"],TRUE) : text2num(L["b"])
 
+	var/rand_type = parse_rand_type(L["rand"])
+
 	switch(L["genType"])
-		if("num")    return generator(L["genType"], a, b)
-		if("vector") return generator(L["genType"], a, b)
-		if("box")    return generator(L["genType"], a, b)
+		if("num")    return generator(L["genType"], a, b, rand_type)
+		if("vector") return generator(L["genType"], a, b, rand_type)
+		if("box")    return generator(L["genType"], a, b, rand_type)
 		if("color") //Color can be string or matrix
-			a = length(a) > 1 ? ListToMatrix(a) : a
-			b = length(a) > 1 ? ListToMatrix(b) : b
-			return generator(L["genType"], a, b)
-		if("circle") return generator(L["genType"], a, b)
-		if("sphere") return generator(L["genType"], a, b)
-		if("square") return generator(L["genType"], a, b)
-		if("cube")   return generator(L["genType"], a, b)
+			a = length(a) > 1 ? a : L["a"]
+			b = length(b) > 1 ? b : L["b"]
+			return generator(L["genType"], a, b, rand_type)
+		if("circle") return generator(L["genType"], a, b, rand_type)
+		if("sphere") return generator(L["genType"], a, b, rand_type)
+		if("square") return generator(L["genType"], a, b, rand_type)
+		if("cube")   return generator(L["genType"], a, b, rand_type)
 	return null
 
+/datum/particle_editor/proc/parse_rand_type(rand_type)
+	switch(rand_type)
+		TEXT_TO_MACRO(UNIFORM_RAND)
+		TEXT_TO_MACRO(LINEAR_RAND)
+		TEXT_TO_MACRO(NORMAL_RAND)
+		TEXT_TO_MACRO(SQUARE_RAND)
+	CRASH("Unknown rand type [rand_type]")
 
 /datum/particle_editor/proc/debugOutput(L, nodeName)
 	if(istype(L,/list))
@@ -202,18 +214,18 @@ var/list/master_particle_info = list()
 									height = 100,
 									count = 100,
 									spawning = 1,
-									bound1 = -1000,
-									bound2 = 1000,
-									icon_state="",
-									grow = 0,
-									position = 0,
-									velocity = 0,
-									scale = generator("num",1,1),
-									velocity = 0,
+									bound1 = list(-1000, -1000, -1000),
+									bound2 = list(1000, 1000, 1000),
+									icon_state = "",
+									grow = list(0, 0),
+									position = list(0, 0, 0),
+									scale = list(1, 1),
+									velocity = list(0, 0, 0),
 									rotation = 0,
 									spin = 0,
-									friction = 0,
-									drift = 0
+									friction = list(0, 0, 0),
+									drift = list(0, 0, 0),
+									gravity = list(0, 0, 0),
 									// The following variables either handle null or will evaluate to 0 via Particool
 									// gravity
 									// gradient

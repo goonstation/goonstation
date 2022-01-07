@@ -777,7 +777,7 @@
 
 	while (current_range < size - 1)
 		current_range++
-		current_chance = max(2,min(current_chance - 25,100))
+		current_chance = clamp(current_chance - 25, 2, 100)
 		for (var/turf/space/S in range(current_range,A))
 			if (get_dist(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)

@@ -19,7 +19,7 @@ var/list/magnet_locations = list()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "mechcompsend")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recieve", "mechcomprecieve")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", "mechcompreceive")
 		START_TRACKING
 
 	disposing()
@@ -38,10 +38,10 @@ var/list/magnet_locations = list()
 			return
 		lrtsend(input.signal)
 
-	proc/mechcomprecieve(var/datum/mechanicsMessage/input)
+	proc/mechcompreceive(var/datum/mechanicsMessage/input)
 		if(!input)
 			return
-		lrtrecieve(input.signal)
+		lrtreceive(input.signal)
 
 	proc/is_good_location(var/place)
 		if(special_places.len)
@@ -78,7 +78,7 @@ var/list/magnet_locations = list()
 			return 1
 		return 0
 
-	proc/lrtrecieve(var/place)
+	proc/lrtreceive(var/place)
 		if (place && src.is_good_location(place))
 			var/turf/target = null
 			for(var/turf/T in landmarks[LANDMARK_LRT])
@@ -141,7 +141,7 @@ var/list/magnet_locations = list()
 
 		if("receive")
 			var/place = params["name"]
-			src.lrtrecieve(place)
+			src.lrtreceive(place)
 
 //////////////////////////////////////////////////
 /datum/telescope_manager
