@@ -1,4 +1,8 @@
 
+(t)fri jan 07 22
+(u)TTerc
+(e)⚖|balance
+(+)Furnaces no longer accept alive mobs (similarly to gibbers).
 (t)wed jan 05 22
 (u)FlameArrow57
 (p)7064
