@@ -156,11 +156,9 @@
 	if (src.gloves)
 		wear_sanity_check(src.gloves)
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
-
+		var/no_offset = 0
 		src.gloves.wear_image.layer = src.gloves.wear_layer
 
-		src.gloves.wear_image.pixel_x = 0
-		src.gloves.wear_image.pixel_y = 0
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
 			if (islist(override_states) && ("glove-left_[icon_name]" in override_states)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
@@ -180,6 +178,7 @@
 			if (islist(override_states) && ("glove-right_[icon_name]" in override_states)) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.gloves.wear_image.icon_state = "glove-right_[icon_name]"
+				no_offset = 1
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 				src.gloves.wear_image.icon_state = "right_[icon_name]"
@@ -188,6 +187,10 @@
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")
 		else
 			UpdateOverlays(null, "wear_gloves_r")
+
+		if (!no_offset)
+			src.gloves.wear_image.pixel_x = 0
+			src.gloves.wear_image.pixel_y = hand_offset
 
 		if (src.gloves.blood_DNA)
 			if (src.lying)
@@ -344,9 +347,18 @@
 	//tank transfer valve backpack's icon is handled in transfer_valve.dm
 	if (src.back)
 		wear_sanity_check(src.back)
-		src.back.wear_image.icon_state = src.back.wear_state || src.back.icon_state
-		src.back.wear_image.pixel_x = 0
-		src.back.wear_image.pixel_y = body_offset
+		var/wear_state = src.back.wear_state || src.back.icon_state
+		var/no_offset = 0
+		if (islist(override_states) && ("back-[wear_state]" in override_states))
+			src.back.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.back.wear_image.icon_state = "back-[wear_state]"
+			no_offset = 1
+		else
+			src.back.wear_image.icon = src.back.wear_image_icon
+			src.back.wear_image.icon_state = wear_state
+		if (!no_offset)
+			src.back.wear_image.pixel_x = 0
+			src.back.wear_image.pixel_y = body_offset
 
 		src.back.wear_image.layer = src.back.wear_layer
 		if(src.back.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
@@ -369,15 +381,18 @@
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
 		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
+		var/no_offset
 		if (islist(override_states) && ("eyes-[wear_state]" in override_states)) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
 			src.glasses.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.glasses.wear_image.icon_state = "eyes-[wear_state]"
+			no_offset = 1
 		else
 			src.glasses.wear_image.icon = src.glasses.wear_image_icon
 			src.glasses.wear_image.icon_state = wear_state
 		src.glasses.wear_image.layer = src.glasses.wear_layer
-		src.glasses.wear_image.pixel_x = 0
-		src.glasses.wear_image.pixel_y = 0
+		if (!no_offset)
+			src.glasses.wear_image.pixel_x = 0
+			src.glasses.wear_image.pixel_y = head_offset
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
 		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
@@ -393,10 +408,19 @@
 	// Ears
 	if (src.ears)
 		wear_sanity_check(src.ears)
-		src.ears.wear_image.icon_state = src.ears.wear_state || src.ears.icon_state
+		var/no_offset = 0
+		var/wear_state = src.ears.wear_state || src.ears.icon_state
+		if (islist(override_states) && ("ears-[wear_state]" in override_states))
+			src.ears.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.ears.wear_image.icon_state = "ears-[wear_state]"
+			no_offset = 1
+		else
+			src.ears.wear_image.icon = src.ears.wear_image_icon
+			src.ears.wear_image.icon_state = wear_state
 		src.ears.wear_image.layer = src.ears.wear_layer
-		src.ears.wear_image.pixel_x = 0
-		src.ears.wear_image.pixel_y = head_offset
+		if (!no_offset)
+			src.ears.wear_image.pixel_x = 0
+			src.ears.wear_image.pixel_y = head_offset
 		src.ears.wear_image.color = src.ears.color
 		src.ears.wear_image.alpha = src.ears.alpha
 		UpdateOverlays(src.ears.wear_image, "wear_ears")
@@ -494,9 +518,18 @@
 	// Belt
 	if (src.belt)
 		wear_sanity_check(src.belt)
-		src.belt.wear_image.icon_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
-		src.belt.wear_image.pixel_x = 0
-		src.belt.wear_image.pixel_y = body_offset
+		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
+		var/no_offset
+		if (islist(override_states) && ("belt-[wear_state]" in override_states))
+			src.belt.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.belt.wear_image.icon_state = "belt-[wear_state]"
+			no_offset = 1
+		else
+			src.belt.wear_image.icon = src.belt.wear_image_icon
+			src.belt.wear_image.icon_state = wear_state
+		if (!no_offset)
+			src.belt.wear_image.pixel_x = 0
+			src.belt.wear_image.pixel_y = body_offset
 		src.belt.wear_image.layer = src.belt.wear_layer
 		if(src.belt.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
 			src.belt.wear_image.layer = MOB_BELT_LAYER
