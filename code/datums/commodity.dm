@@ -2882,3 +2882,46 @@
 	price = 21000
 	upperfluc = 20000
 	lowerfluc = -28500
+
+///////////////////Black Market Diner Merchants
+////////ARMY SURPLUS
+///SELL
+
+/datum/commodity/blackmarket/surplus/baton
+	comname = "Imported Stun Baton"
+	comtype = /obj/item/gun/energy/flock
+	desc_sell = "Excess stun batons. Quality may vary, batteries not included."
+	price = 30000
+	upperfluc = 10000
+	lowerfluc = -10000
+	
+/datum/commodity/blackmarket/surplus/helmet
+	comname = "Armor Helmet"
+	comtype = /obj/item/gun/energy/flock
+	desc_sell = "Got a lot of these in good condition. One size fits all."
+	price = 7000
+	upperfluc = 1000
+	lowerfluc = -1000
+	
+///BUY
+
+
+
+
+////////WRESTLER STORE
+///SELL
+/datum/commodity/blackmarket/wrestler/videocard
+	comname = "Advanced Videocard"
+	comtype = /obj/item/peripheral/videocard
+	desc_sell = "JUICE UP your computer's MUSCLES with one of these bad boys. Guaranteed to get you MORE FRAMES of HYPER ROBUST ACTION!"
+	price = 4000
+	upperfluc = 3000
+	lowerfluc = -3000
+
+
+
+
+
+
+
+
