@@ -86,6 +86,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			qdel(MAC)
 		else if (istype(MAC, /obj/machinery/computer/supplycomp))
 			qdel(MAC)
+		else if (istype(MAC, /obj/machinery/vending/security))
+			qdel(MAC)
 
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
