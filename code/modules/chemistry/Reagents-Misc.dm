@@ -1216,7 +1216,6 @@ datum
 			viscosity = 0.13
 			var/counter = 1
 			var/fakedeathed = 0
-			var/oxygendamage = 0
 
 
 			on_mob_life(var/mob/M, var/mult = 1)
