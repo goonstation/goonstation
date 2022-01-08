@@ -164,6 +164,7 @@
 			if (islist(override_states) && ("glove-left_[icon_name]" in override_states)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.gloves.wear_image.icon_state = "glove-left_[icon_name]"
+				no_offset = 1
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 				src.gloves.wear_image.icon_state = "left_[icon_name]"
