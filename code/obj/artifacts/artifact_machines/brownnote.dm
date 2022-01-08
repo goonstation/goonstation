@@ -46,7 +46,6 @@
 
 		var/turf/T = get_turf(O)
 		T.visible_message("<b>[O]</b> emits a weird noise!")
-		boutput(user, "A nearby object forces you to [picked_emote].")
 
 		var/count = 0
 		for (var/mob/living/L in range(range,O))
@@ -57,3 +56,4 @@
 						L.emote(picked_emote)
 				else
 					L.emote(picked_emote)
+				boutput(L, "A nearby object forces you to [picked_emote].")
