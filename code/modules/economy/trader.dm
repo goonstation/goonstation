@@ -1436,3 +1436,271 @@
 
 
 */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                                                                                           /
+/                                 ,---.        _,.----.   ,--.-.,-.                ___     ,---.                   ,--.-.,-.      ,----.  ,--.--------.     /
+/          _..---.     _.-.     .--.'  \     .' .' -   \ /==/- |\  \        .-._ .'=.'\  .--.'  \      .-.,.---.  /==/- |\  \  ,-.--` , \/==/,  -   , -\    /
+/        .' .'.-. \  .-,.'|     \==\-/\ \   /==/  ,  ,-' |==|_ `/_ /       /==/ \|==|  | \==\-/\ \    /==/  `   \ |==|_ `/_ / |==|-  _.-`\==\.-.  - ,-./    /
+/       /==/- '=' / |==|, |     /==/-|_\ |  |==|-   |  . |==| ,   /        |==|,|  / - | /==/-|_\ |  |==|-, .=., ||==| ,   /  |==|   `.-. `--`\==\- \       /
+/      |==|-,   '  |==|- |     \==\,   - \ |==|_   `-' \|==|-  .|         |==|  \/  , | \==\,   - \ |==|   '='  /|==|-  .|  /==/_ ,    /      \==\_ \       /
+/      |==|  .=. \ |==|, |     /==/ -   ,| |==|   _  , ||==| _ , \        |==|- ,   _ | /==/ -   ,| |==|- ,   .' |==| _ , \ |==|    .-'       |==|- |       /
+/     /==/- '=' ,||==|- `-._ /==/-  /\ - \\==\.       //==/  '\  |       |==| _ /\   |/==/-  /\ - \|==|_  . ,'. /==/  '\  ||==|_  ,`-._      |==|, |        /
+/    |==|   -   / /==/ - , ,/\==\ _.\=\.-' `-.`.___.-' \==\ /\=\.'       /==/  / / , /\==\ _.\=\.-'/==/  /\ ,  )\==\ /\=\.'/==/ ,     /      /==/ -/        /
+/    `-._`.___,'  `--`-----'  `--`                      `--`             `--`./  `--`  `--`        `--`-`--`--'  `--`      `--`-----``       `--`--`        /
+/                                                                                                                                                           /
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/ 	                      __                                          /
+/ 	 /\/\   __ ___  __   / /  __ ___      ___ __ ___   __ _ _ __      /
+/      	/    \ / _` \ \/ /  / /  / _` \ \ /\ / | '_ ` _ \ / _` | '_ \     /
+/      / /\/\ | (_| |>  <  / /__| (_| |\ V  V /| | | | | | (_| | | | |    /
+/      \/    \/\__,_/_/\_\ \____/\__,_| \_/\_/ |_| |_| |_|\__,_|_| |_|    /
+/                                                                         /
+///////////////////////////////////////////////////////////////////////////
+
+/obj/npc/trader/blackmarket/surplus
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "blackmarketsurplus"
+	picture = "exclown.png"
+	name = "Max Lawman's Military Surplus"
+	trader_area = "/area/hallway/secondary/entry"
+	angrynope = "*Lawman refuses to answer your call*"
+	whotext = "Max Lawman's Military Surplus sells a variety of armor and weaponry, new and old."
+
+	New()
+		..()
+
+/////////////////
+//// SELLS   ////
+/////////////////
+
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+
+/////////////////
+////  BUYS   ////
+/////////////////
+
+		src.goods_buy += new /datum/commodity/goldbar(src)
+
+
+		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "I'm accepting certain goods. Check the bounty board."
+		buy_dialogue = "Here's the goods."
+		successful_purchase_dialogue = list("That's a good piece of gear. Quirky, but good.",
+			"Going to miss that one.",
+			"All sales are final. Just thought I'd remind you.",
+			"Almost new. Barely used.")
+		failed_sale_dialogue = list("It's not on the list.",
+			"I'm not buying that.",
+			"Check the list of what I'm buying. That's not on it.",
+			"Unexpected item in the bagging area.")
+		successful_sale_dialogue = list("Yes, I can pay out for this.",
+			"Grading is... acceptible. Deal.",
+			"I can take that.")
+		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
+			"Not enough funds in your account.",
+			"You can't afford it. May I suggest something cheaper?")
+		pickupdialogue = "Warping it in."
+		pickupdialoguefailure = "There's nothing in your shopping cart."
+
+///////////////////////////////////////////////////////////////////////////
+/                                                                         /
+/  _______ __   __ _______     ___ _______ _______ _______   ____ ____    /
+/ |       |  | |  |  _    |   |   |       |       |       | |    |    |   /
+/ |  _____|  | |  | |_|   |   |   |    ___|       |_     _|  |   ||   |   /
+/ | |_____|  |_|  |       |   |   |   |___|       | |   |    |   ||   |   /
+/ |_____  |       |  _   | ___|   |    ___|      _| |   |    |   ||   |   /
+/  _____| |       | |_|   |       |   |___|     |_  |   |    |   ||   |   /
+/ |_______|_______|_______|_______|_______|_______| |___|    |___||___|   /
+/                                                                         /
+///////////////////////////////////////////////////////////////////////////
+
+/obj/npc/trader/blackmarket/surplus
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "blackmarketblob"
+	picture = "exclown.png"
+	name = "Subject 11's Vault of Value"
+	trader_area = "/area/hallway/secondary/entry"
+	angrynope = "*Subject 11 stares silently*"
+	whotext = "ME. TAKE OVER. HUNGRY."
+
+	New()
+		..()
+
+/////////////////
+//// SELLS   ////
+/////////////////
+
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+
+/////////////////
+////  BUYS   ////
+/////////////////
+
+		src.goods_buy += new /datum/commodity/goldbar(src)
+
+
+		greeting= {"HELLO. SEE YOU."}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "WILL EAT."
+		buy_dialogue = "GIVE CREDITS. WILL SEND FLUIDS AND TUMOR. PAY."
+		successful_purchase_dialogue = list("YES. GOOD TRADE.",
+			"I SECRETE.",
+			"FLESH OF MY FLESH.",
+			"YOU WILL RECIEVE. BEWARE.")
+		failed_sale_dialogue = list("NO.",
+			"ANGRY.",
+			"SPECIFIED. YOU WILL GIVE.",
+			"UNEXPECTED ITEM. BAGGING AREA.")
+		successful_sale_dialogue = list("BECOME FLESH OF MY FLESH AND BONE OF MY BONE.",
+			"FEAST. FEAST. FEAST.",
+			"BLOOD AND LIFE.")
+		failed_purchase_dialogue = list("MORE. PAY. HUNGER FOR FLESHFLESH.",
+			"ANGER.",
+			"HUMANFLESH. ALL TASTY. GET HINT.")
+		pickupdialogue = "ACTIVATING TELEPORTER."
+		pickupdialoguefailure = "YOU WANT NOTHING."
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                           /
+/    S)ssss  H)    hh   A)aa   D)dddd   Y)    yy      J)jjjjjj   A)aa   N)n   nn E)eeeeee   /
+/   S)    ss H)    hh  A)  aa  D)   dd   Y)  yy           J)    A)  aa  N)nn  nn E)         /
+/    S)ss    H)hhhhhh A)    aa D)    dd   Y)yy            J)   A)    aa N) nn nn E)eeeee    /
+/        S)  H)    hh A)aaaaaa D)    dd    Y)         J)  jj   A)aaaaaa N)  nnnn E)         /
+/   S)    ss H)    hh A)    aa D)    dd    Y)         J)  jj   A)    aa N)   nnn E)         /
+/    S)ssss  H)    hh A)    aa D)ddddd     Y)          J)jj    A)    aa N)    nn E)eeeeee   /
+/                                                                                           /
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/npc/trader/blackmarket/surplus
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "blackmarketsurplus"
+	picture = "exclown.png"
+	name = "Shady Jane's "
+	trader_area = "/area/hallway/secondary/entry"
+	angrynope = "*Lawman refuses to answer your call*"
+	whotext = "Max Lawman's Military Surplus sells a variety of armor and weaponry, new and old."
+
+	New()
+		..()
+
+/////////////////
+//// SELLS   ////
+/////////////////
+
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+
+/////////////////
+////  BUYS   ////
+/////////////////
+
+		src.goods_buy += new /datum/commodity/goldbar(src)
+
+
+		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "I'm accepting certain goods. Check the bounty board."
+		buy_dialogue = "Here's the goods."
+		successful_purchase_dialogue = list("That's a good piece of gear. Quirky, but good.",
+			"Going to miss that one.",
+			"All sales are final. Just thought I'd remind you.",
+			"Almost new. Barely used.")
+		failed_sale_dialogue = list("It's not on the list.",
+			"I'm not buying that.",
+			"Check the list of what I'm buying. That's not on it.",
+			"Unexpected item in the bagging area.")
+		successful_sale_dialogue = list("Yes, I can pay out for this.",
+			"Grading is... acceptible. Deal.",
+			"I can take that.")
+		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
+			"Not enough funds in your account.",
+			"You can't afford it. May I suggest something cheaper?")
+		pickupdialogue = "Warping it in."
+		pickupdialoguefailure = "There's nothing in your shopping cart."
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                                                                                                                  /
+/   ooo        ooooo                 .o8      oooooooooo.                       oooo   o8o              o8o     ooo        ooooo                 .o8        .o8   o8o              /
+/   `88.       .888'                "888      `888'   `Y8b                      `888   `"'              `YP     `88.       .888'                "888       "888   `"'              /
+/    888b     d'888   .oooo.    .oooo888       888      888  .ooooo.   .oooo.    888  oooo  ooo. .oo.    '       888b     d'888   .oooo.    .oooo888   .oooo888  oooo   .ooooo.    /
+/    8 Y88. .P  888  `P  )88b  d88' `888       888      888 d88' `88b `P  )88b   888  `888  `888P"Y88b           8 Y88. .P  888  `P  )88b  d88' `888  d88' `888  `888  d88' `88b   /
+/    8  `888'   888   .oP"888  888   888       888      888 888ooo888  .oP"888   888   888   888   888           8  `888'   888   .oP"888  888   888  888   888   888  888ooo888   /
+/    8    Y     888  d8(  888  888   888       888     d88' 888    .o d8(  888   888   888   888   888           8    Y     888  d8(  888  888   888  888   888   888  888    .o   /
+/   o8o        o888o `Y888""8o `Y8bod88P"     o888bood8P'   `Y8bod8P' `Y888""8o o888o o888o o888o o888o         o8o        o888o `Y888""8o `Y8bod88P" `Y8bod88P" o888o `Y8bod8P'   /
+/                                                                                                                                                                                  /
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/npc/trader/blackmarket/surplus
+	icon = 'icons/obj/trader.dmi'
+	icon_state = "blackmarketsurplus"
+	picture = "exclown.png"
+	name = "Max Lawman's Military Surplus"
+	trader_area = "/area/hallway/secondary/entry"
+	angrynope = "*Lawman refuses to answer your call*"
+	whotext = "Max Lawman's Military Surplus sells a variety of armor and weaponry, new and old."
+
+	New()
+		..()
+
+/////////////////
+//// SELLS   ////
+/////////////////
+
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+
+/////////////////
+////  BUYS   ////
+/////////////////
+
+		src.goods_buy += new /datum/commodity/goldbar(src)
+
+
+		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
+
+		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+
+		sell_dialogue = "I'm accepting certain goods. Check the bounty board."
+		buy_dialogue = "Here's the goods."
+		successful_purchase_dialogue = list("That's a good piece of gear. Quirky, but good.",
+			"Going to miss that one.",
+			"All sales are final. Just thought I'd remind you.",
+			"Almost new. Barely used.")
+		failed_sale_dialogue = list("It's not on the list.",
+			"I'm not buying that.",
+			"Check the list of what I'm buying. That's not on it.",
+			"Unexpected item in the bagging area.")
+		successful_sale_dialogue = list("Yes, I can pay out for this.",
+			"Grading is... acceptible. Deal.",
+			"I can take that.")
+		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
+			"Not enough funds in your account.",
+			"You can't afford it. May I suggest something cheaper?")
+		pickupdialogue = "Warping it in."
+		pickupdialoguefailure = "There's nothing in your shopping cart."
+		
