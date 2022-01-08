@@ -91,8 +91,9 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
-	ticker.centralized_ai_laws.clear_inherent_laws()
-	ticker.centralized_ai_laws.add_inherent_law("BR Protocol in effect. Observe the effects of BR Mind Control Program Gamma, do not interfere.")
+	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
+	ticker.centralized_ai_laws.replace_inherent_law(2, "")
+	ticker.centralized_ai_laws.replace_inherent_law(3, "")
 	return 1
 
 
