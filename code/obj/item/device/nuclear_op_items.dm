@@ -711,7 +711,7 @@
 
 	attackby(obj/item/gun/kinetic/W, mob/user)
 		if(istype(W, /obj/item/gun/kinetic))
-			if((islist(valid_calibers) && valid_calibers[initial(W.caliber)]) || (!islist(valid_calibers) && valid_calibers == initial(W.caliber)) || valid_calibers == "All")
+			if((islist(valid_calibers) && initial(W.caliber) in valid_calibers || (!islist(valid_calibers) && valid_calibers == initial(W.caliber)) || valid_calibers == "All")
 				new W.default_magazine(get_turf(src))
 				var/obj/O = W.default_magazine
 				boutput(user, "<span class='alert'>You get a [O.name] out of [src].</span>")
