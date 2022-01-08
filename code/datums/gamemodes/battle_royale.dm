@@ -75,13 +75,24 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		if (isnpcmonkey(M))
 			qdel(M)
 
-	for_by_tcl(V, /obj/submachine)
-		if (istype(V, /obj/submachine/weapon_vendor/security))
-			qdel(V)
+	for_by_tcl(SV, /obj/submachine)
+		if (istype(SV, /obj/submachine/weapon_vendor/security))
+			qdel(SV)
+
+	for_by_tcl(MAC, /obj/machinery)
+		if (istype(MAC, /obj/machinery/clone_scanner))
+			qdel(MAC)
+		else if (istype(MAC, /obj/machinery/vending/monkey))
+			qdel(MAC)
+		else if (istype(MAC, /obj/machinery/computer/supplycomp))
+			qdel(MAC)
 
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
+
+	ticker.centralized_ai_laws.clear_inherent_laws()
+	ticker.centralized_ai_laws.add_inherent_law("BR Protocol in effect. Observe the effects of BR Mind Control Program Gamma, do not interfere.")
 	return 1
 
 
@@ -229,7 +240,9 @@ proc/hide_weapons_everywhere()
 	/datum/syndicate_buylist/generic/revflash,
 	/datum/syndicate_buylist/generic/revflashbang,
 	/datum/syndicate_buylist/generic/revsign,
-	/datum/syndicate_buylist/generic/rev_normal_flash)
+	/datum/syndicate_buylist/generic/rev_normal_flash,
+	/datum/syndicate_buylist/traitor/kudzuseed,
+	/datum/syndicate_buylist/traitor/moonshine)
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
 		if(D.item)
