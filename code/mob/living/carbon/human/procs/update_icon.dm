@@ -350,7 +350,7 @@
 		wear_sanity_check(src.back)
 		var/wear_state = src.back.wear_state || src.back.icon_state
 		var/no_offset = 0
-		if (islist(override_states) && ("back-[wear_state]" in override_states))
+		if (islist(override_states) && ("back-[wear_state]" in override_states)) //checks if they are a mutantrace with special back sprites and then replaces them if they do
 			src.back.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.back.wear_image.icon_state = "back-[wear_state]"
 			no_offset = 1
@@ -360,12 +360,12 @@
 		if (!no_offset)
 			src.back.wear_image.pixel_x = 0
 			src.back.wear_image.pixel_y = body_offset
-
 		src.back.wear_image.layer = src.back.wear_layer
 		if(src.back.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
 			src.back.wear_image.layer = MOB_BACK_LAYER
 		src.back.wear_image.color = src.back.color
 		src.back.wear_image.alpha = src.back.alpha
+		src.back.update_wear_image(src, src.back.wear_image.icon != src.back.wear_image_icon)
 		UpdateOverlays(src.back.wear_image, "wear_back")
 
 		if (src.back.worn_material_texture_image != null)
@@ -411,7 +411,7 @@
 		wear_sanity_check(src.ears)
 		var/no_offset = 0
 		var/wear_state = src.ears.wear_state || src.ears.icon_state
-		if (islist(override_states) && ("ears-[wear_state]" in override_states))
+		if (islist(override_states) && ("ears-[wear_state]" in override_states)) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
 			src.ears.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.ears.wear_image.icon_state = "ears-[wear_state]"
 			no_offset = 1
@@ -521,7 +521,7 @@
 		wear_sanity_check(src.belt)
 		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
 		var/no_offset
-		if (islist(override_states) && ("belt-[wear_state]" in override_states))
+		if (islist(override_states) && ("belt-[wear_state]" in override_states)) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
 			src.belt.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.belt.wear_image.icon_state = "belt-[wear_state]"
 			no_offset = 1

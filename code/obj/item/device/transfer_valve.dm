@@ -236,6 +236,18 @@
 			var/image/straps = new(src.icon, icon_state = "wire_straps")
 			src.underlays += straps
 
+	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
+		var/image/tanks
+		var/image/tanks_under
+		var/tank_one_icon = ""
+		var/tank_two_icon = ""
+		tanks = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
+		tanks_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under")
+		tanks = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
+		tanks_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
+		src.wear_image.overlays = list(tanks)
+		src.wear_image.underlays += list(tanks_under)
+
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
 		it explodes properly when it gets a signal (and it does).
