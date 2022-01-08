@@ -2883,13 +2883,30 @@
 	upperfluc = 20000
 	lowerfluc = -28500
 
-///////////////////Black Market Diner Merchants
-////////ARMY SURPLUS
-///SELL
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                                                                                           /
+/                                 ,---.        _,.----.   ,--.-.,-.                ___     ,---.                   ,--.-.,-.      ,----.  ,--.--------.     /
+/          _..---.     _.-.     .--.'  \     .' .' -   \ /==/- |\  \        .-._ .'=.'\  .--.'  \      .-.,.---.  /==/- |\  \  ,-.--` , \/==/,  -   , -\    /
+/        .' .'.-. \  .-,.'|     \==\-/\ \   /==/  ,  ,-' |==|_ `/_ /       /==/ \|==|  | \==\-/\ \    /==/  `   \ |==|_ `/_ / |==|-  _.-`\==\.-.  - ,-./    /
+/       /==/- '=' / |==|, |     /==/-|_\ |  |==|-   |  . |==| ,   /        |==|,|  / - | /==/-|_\ |  |==|-, .=., ||==| ,   /  |==|   `.-. `--`\==\- \       /
+/      |==|-,   '  |==|- |     \==\,   - \ |==|_   `-' \|==|-  .|         |==|  \/  , | \==\,   - \ |==|   '='  /|==|-  .|  /==/_ ,    /      \==\_ \       /
+/      |==|  .=. \ |==|, |     /==/ -   ,| |==|   _  , ||==| _ , \        |==|- ,   _ | /==/ -   ,| |==|- ,   .' |==| _ , \ |==|    .-'       |==|- |       /
+/     /==/- '=' ,||==|- `-._ /==/-  /\ - \\==\.       //==/  '\  |       |==| _ /\   |/==/-  /\ - \|==|_  . ,'. /==/  '\  ||==|_  ,`-._      |==|, |        /
+/    |==|   -   / /==/ - , ,/\==\ _.\=\.-' `-.`.___.-' \==\ /\=\.'       /==/  / / , /\==\ _.\=\.-'/==/  /\ ,  )\==\ /\=\.'/==/ ,     /      /==/ -/        /
+/    `-._`.___,'  `--`-----'  `--`                      `--`             `--`./  `--`  `--`        `--`-`--`--'  `--`      `--`-----``       `--`--`        /
+/                                                                                                                                                           /
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/ 	                      __                                          /
+/ 	 /\/\   __ ___  __   / /  __ ___      ___ __ ___   __ _ _ __      /
+/      	/    \ / _` \ \/ /  / /  / _` \ \ /\ / | '_ ` _ \ / _` | '_ \     /
+/      / /\/\ | (_| |>  <  / /__| (_| |\ V  V /| | | | | | (_| | | | |    /
+/      \/    \/\__,_/_/\_\ \____/\__,_| \_/\_/ |_| |_| |_|\__,_|_| |_|    /
+/                                                                         /
+///////////////////////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/surplus/baton
 	comname = "Imported Stun Baton"
-	comtype = /obj/item/gun/energy/flock
+	comtype = /obj/item/baton
 	desc_sell = "Excess stun batons. Quality may vary, batteries not included."
 	price = 30000
 	upperfluc = 10000
@@ -2897,19 +2914,86 @@
 	
 /datum/commodity/blackmarket/surplus/helmet
 	comname = "Armor Helmet"
-	comtype = /obj/item/gun/energy/flock
+	comtype = /obj/item/clothing/head/helmet/hardhat/security
 	desc_sell = "Got a lot of these in good condition. One size fits all."
 	price = 7000
 	upperfluc = 1000
 	lowerfluc = -1000
 	
+/datum/commodity/blackmarket/surplus/vest
+	comname = "Armor Vest"
+	comtype = /obj/item/clothing/suit/armor/vest
+	desc_sell = "Standard issue for security teams."
+	price = 8000
+	upperfluc = 2000
+	lowerfluc = -2000
+	
+/datum/commodity/blackmarket/surplus/backpack
+	comname = "Security Satchel"
+	comtype = /obj/item/storage/backpack/satchel/syndie
+	name = "Deluxe Security Satchel"
+	desc = "A stylish red, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a security officer's shoulder. It is monogrammed N.K. and has a certificate of authenticity stitched into the lining."
+	desc_sell = "Got a few designer bags in. They're fully functional, and damn tough."
+	price = 3800
+	upperfluc = 190
+	lowerfluc = -200
+	
+/datum/commodity/blackmarket/surplus/sechud
+	comname = "Sechud Glasses"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	color_r = 1
+	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
 ///BUY
 
+/datum/commodity/blackmarket/surplus/revolver
+	comname = "Syndicate Revolver"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	color_r = 1
+	desc_sell = "We have an open bounty on these. Only the real deal counts."
+	price = 18000
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/surplus/lasergun
+	comname = "Laser Gun"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	color_r = 1
+	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/surplus/phaser
+	comname = "Sechud Glasses"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	color_r = 1
+	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
+/datum/commodity/blackmarket/surplus/cells
+	comname = "Sechud Glasses"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	color_r = 1
+	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
 
-
-
-////////WRESTLER STORE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                                                                                                                  /
+/   ooo        ooooo                 .o8      oooooooooo.                       oooo   o8o              o8o     ooo        ooooo                 .o8        .o8   o8o              /
+/   `88.       .888'                "888      `888'   `Y8b                      `888   `"'              `YP     `88.       .888'                "888       "888   `"'              /
+/    888b     d'888   .oooo.    .oooo888       888      888  .ooooo.   .oooo.    888  oooo  ooo. .oo.    '       888b     d'888   .oooo.    .oooo888   .oooo888  oooo   .ooooo.    /
+/    8 Y88. .P  888  `P  )88b  d88' `888       888      888 d88' `88b `P  )88b   888  `888  `888P"Y88b           8 Y88. .P  888  `P  )88b  d88' `888  d88' `888  `888  d88' `88b   /
+/    8  `888'   888   .oP"888  888   888       888      888 888ooo888  .oP"888   888   888   888   888           8  `888'   888   .oP"888  888   888  888   888   888  888ooo888   /
+/    8    Y     888  d8(  888  888   888       888     d88' 888    .o d8(  888   888   888   888   888           8    Y     888  d8(  888  888   888  888   888   888  888    .o   /
+/   o8o        o888o `Y888""8o `Y8bod88P"     o888bood8P'   `Y8bod8P' `Y888""8o o888o o888o o888o o888o         o8o        o888o `Y888""8o `Y8bod88P" `Y8bod88P" o888o `Y8bod8P'   /
+/                                                                                                                                                                                  /
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///SELL
+
 /datum/commodity/blackmarket/wrestler/videocard
 	comname = "Advanced Videocard"
 	comtype = /obj/item/peripheral/videocard
@@ -2917,11 +3001,5 @@
 	price = 4000
 	upperfluc = 3000
 	lowerfluc = -3000
-
-
-
-
-
-
-
-
+	
+///BUY
