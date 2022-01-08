@@ -59675,10 +59675,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"udC" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/space,
-/area/station/hallway/secondary/exit)
 "ufA" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/decal/cleanable/dirt,
@@ -134084,7 +134080,7 @@ jje
 jje
 jje
 jje
-udC
+aJE
 ifg
 aLp
 mEz
