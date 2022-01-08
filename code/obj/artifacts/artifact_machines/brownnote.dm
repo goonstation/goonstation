@@ -28,7 +28,7 @@
 				//"terror"
 				picked_emote = pick("scream","dance","tantrum","smug","flex","facepalm","panic","cry","rude","rage","flipout","wail","whine","sob","weep","gasp")
 			else
-				picked_emote = pick("scream","dance","tantrum","smug","flex","facepalm","panic","cry","rude","rage","flipout","wail","whine","sob","weep","gasp","trip","fart","burp","twitch_v","retch","pale","gurgle","gasp","yawn","choke","wheeze","sneeze","groan","hiccup","cough","shiver","shake","tremble","shrug","drool")
+				picked_emote = pick("scream","dance","tantrum","smug","flex","facepalm","panic","cry","rude","rage","flipout","wail","whine","sob","weep","gasp","trip","fart","burp","retch","pale","gurgle","gasp","yawn","choke","wheeze","sneeze","groan","hiccup","cough","shiver","shake","tremble","shrug","drool")
 
 		switch(artitype.name)
 			if ("precursor")
@@ -46,6 +46,7 @@
 
 		var/turf/T = get_turf(O)
 		T.visible_message("<b>[O]</b> emits a weird noise!")
+		boutput(user, "A nearby object forces you to [picked_emote].")
 
 		var/count = 0
 		for (var/mob/living/L in range(range,O))
