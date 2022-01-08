@@ -207,7 +207,7 @@
 	PTrange = list(20,null)
 	assoc_reagents = list("chocolate")
 
-/datum/plantmutation/coffee/latte // not sure if this would cause balance issues, feel free to comment out if so
+/datum/plantmutation/coffee/latte
 	name = "Latte Coffee"
 	name_prefix = "Latte"
 	iconmod = "CoffeeLatte"
