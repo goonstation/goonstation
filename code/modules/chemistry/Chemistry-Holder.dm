@@ -1086,7 +1086,7 @@ datum
 
 		//there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
 		proc/smoke_start(var/volume, var/classic = 0)
-			purge_smoke_blacklist(reagent_list)
+			purge_smoke_blacklist(src)
 
 			var/list/covered = covered_turf()
 

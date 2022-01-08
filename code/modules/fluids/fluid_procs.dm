@@ -60,7 +60,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (airborne)
 			for(var/reagent_id in R.reagent_list)
 				if (reagent_id in ban_from_airborne_fluid) return
-			purge_smoke_blacklist(R.reagent_list)
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if (reagent_id in ban_from_fluid) return
@@ -70,7 +70,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
 					if (reagent_id in ban_from_airborne_fluid) return
-			purge_smoke_blacklist(R.reagent_list)
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
