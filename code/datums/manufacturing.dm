@@ -827,7 +827,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/latex_gloves
 	name = "Latex Gloves"
-	item_paths = list("FAB-1")
+	item_paths = list("INS-1")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/gloves/latex)
 	time = 5 SECONDS
