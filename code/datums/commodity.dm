@@ -2904,6 +2904,9 @@
 /                                                                         /
 ///////////////////////////////////////////////////////////////////////////
 
+/////////////////
+//// SELLS   ////
+/////////////////
 /datum/commodity/blackmarket/surplus/baton
 	comname = "Imported Stun Baton"
 	comtype = /obj/item/baton
@@ -2946,40 +2949,83 @@
 	price = 12000
 	upperfluc = 3000
 	lowerfluc = -3000
-///BUY
+	
+/////////////////
+////  BUYS   ////
+/////////////////
 
+/datum/commodity/blackmarket/surplus/ak47
+	comname = "AK-744 Rifle"
+	comtype = /obj/item/gun/kinetic/ak47
+	color_r = 1
+	desc_sell = "As many as you can bring in. As long as they're functional."
+	price = 2000000
+	upperfluc = 100000
+	lowerfluc = -100000
 /datum/commodity/blackmarket/surplus/revolver
 	comname = "Syndicate Revolver"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	color_r = 1
 	desc_sell = "We have an open bounty on these. Only the real deal counts."
-	price = 18000
-	upperfluc = 3000
-	lowerfluc = -3000
+	price = 260000
+	upperfluc = 40000
+	lowerfluc = -40000
 /datum/commodity/blackmarket/surplus/lasergun
 	comname = "Laser Gun"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	color_r = 1
-	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
+	desc_sell = "Need some of those older NT laser guns. The obsolete ones with the round bodies. The parts are invaluable."
 	price = 12000
 	upperfluc = 3000
 	lowerfluc = -3000
 /datum/commodity/blackmarket/surplus/phaser
-	comname = "Sechud Glasses"
+	comname = "Phaser"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	color_r = 1
-	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
-	price = 12000
-	upperfluc = 3000
-	lowerfluc = -3000
-/datum/commodity/blackmarket/surplus/cells
-	comname = "Sechud Glasses"
+	desc_sell = "Arcology in a neighbouring sector needs as many of these as I can get."
+	price = 9000
+	upperfluc = 2000
+	lowerfluc = -1800
+/datum/commodity/blackmarket/surplus/powercell
+	comname = "Small Power Cell"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
-	color_r = 1
-	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
-	price = 12000
-	upperfluc = 3000
-	lowerfluc = -3000
+	desc_sell = "We can always use more power cells."
+	price = 1200
+	upperfluc = 800
+	lowerfluc = -600
+	
+///////////////////////////////////////////////////////////////////////////
+/                                                                         /
+/  _______ __   __ _______     ___ _______ _______ _______   ____ ____    /
+/ |       |  | |  |  _    |   |   |       |       |       | |    |    |   /
+/ |  _____|  | |  | |_|   |   |   |    ___|       |_     _|  |   ||   |   /
+/ | |_____|  |_|  |       |   |   |   |___|       | |   |    |   ||   |   /
+/ |_____  |       |  _   | ___|   |    ___|      _| |   |    |   ||   |   /
+/  _____| |       | |_|   |       |   |___|     |_  |   |    |   ||   |   /
+/ |_______|_______|_______|_______|_______|_______| |___|    |___||___|   /
+/                                                                         /
+///////////////////////////////////////////////////////////////////////////
+
+/////////////////
+//// SELLS   ////
+/////////////////
+
+/////////////////
+////  BUYS   ////
+/////////////////
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                           /
+/    S)ssss  H)    hh   A)aa   D)dddd   Y)    yy      J)jjjjjj   A)aa   N)n   nn E)eeeeee   /
+/   S)    ss H)    hh  A)  aa  D)   dd   Y)  yy           J)    A)  aa  N)nn  nn E)         /
+/    S)ss    H)hhhhhh A)    aa D)    dd   Y)yy            J)   A)    aa N) nn nn E)eeeee    /
+/        S)  H)    hh A)aaaaaa D)    dd    Y)         J)  jj   A)aaaaaa N)  nnnn E)         /
+/   S)    ss H)    hh A)    aa D)    dd    Y)         J)  jj   A)    aa N)   nnn E)         /
+/    S)ssss  H)    hh A)    aa D)ddddd     Y)          J)jj    A)    aa N)    nn E)eeeeee   /
+/                                                                                           /
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                  /
