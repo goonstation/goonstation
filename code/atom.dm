@@ -875,6 +875,7 @@
 	src.last_move = 0
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+	actions.interrupt(src, INTERRUPT_MOVE)
 
 	oldloc?.Exited(src, newloc)
 
