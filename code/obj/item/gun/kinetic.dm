@@ -5,23 +5,34 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
-	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
-	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //Does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //Can this gun be affected by the [Helios] medal reward?
-	var/gilded = FALSE //Is this gun currently gilded by the [Helios] medal reward?
-	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
-	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
-	var/default_magazine //What's the default magazine used in this gun? Set this in place of putting the type in New()
-	var/list/ammobag_magazines = list() //Assoc list of magazine types, standard ammo first, special ammo second
-	var/ammobag_spec_required = FALSE //Can only special-ammo ammobags restock these?
-	var/ammobag_restock_cost = 0 //How many charges it costs an ammobag to fabricate ammo for this gun
+	/// How much ammo can this gun hold? Don't make this null (Convair880).
+	var/max_ammo_capacity = 1
+	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
+	var/caliber = null
+	///Does this gun have a special icon state for having no ammo lefT?
+	var/has_empty_state = FALSE
+	///Can this gun be affected by the [Helios] medal reward?
+	var/gildable = FALSE
+	///Is this gun currently gilded by the [Helios] medal reward?
+	var/gilded = FALSE
+	/// Do we eject casings on firing, or on reload?
+	var/auto_eject = FALSE
+	/// If we don't automatically ejected them, we need to keep track (Convair880).
+	var/casings_to_eject = 0
+	///What's the default magazine used in this gun? Set this in place of putting the type in New()
+	var/default_magazine = null
+	///Assoc list of magazine types, standard ammo first, special ammo second
+	var/list/ammobag_magazines = list()
+	///Can only special-ammo ammobags restock these?
+	var/ammobag_spec_required = FALSE
+	///How many charges it costs an ammobag to fabricate ammo for this gun
+	var/ammobag_restock_cost = 0
 
 
-	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	add_residue = TRUE // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 
-	var/allowReverseReload = 1 //Use gun on ammo to reload
-	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
+	var/allowReverseReload = TRUE //Use gun on ammo to reload
+	var/allowDropReload = TRUE    //Drag&Drop ammo onto gun to reload
 
 	muzzle_flash = "muzzle_flash"
 
@@ -1858,7 +1869,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			M.client.pixel_y = 0
 
 		M.use_movement_controller = null
-		M.keys_changed(0,0xFFFF)
+		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
 	attack_hand(mob/user as mob)
