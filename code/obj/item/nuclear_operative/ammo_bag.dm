@@ -46,6 +46,8 @@
 	MouseDrop(atom/over_object, src_location, over_location, over_control, params)
 		if(!(over_object == usr))
 			return
+		if(usr.equipped()) //empty hand required
+			return
 
 		if(deployed)
 			usr.visible_message("[usr] begins folding up [src].", "You begin folding up \the [src].")
