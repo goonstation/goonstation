@@ -73,7 +73,7 @@
 
 /datum/targetable/grinch
 	icon = 'icons/mob/grinch_ui.dmi'
-	icon_state = "grinchtemplate"  // No custom sprites yet.
+	icon_state = "grinchtemplate"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
