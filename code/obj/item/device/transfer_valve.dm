@@ -190,6 +190,12 @@
 		if(signalled)
 			UpdateIcon()
 
+	proc/signal_start()
+		signalled = TRUE
+
+	proc/signal_cancel()
+		signalled = FALSE
+
 	update_icon()
 		//blank slate
 		src.overlays = new/list()
@@ -352,12 +358,6 @@
 		// eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 		c_state()
 			return
-
-		signal_start()
-			signalled = TRUE
-
-		signal_cancel()
-			signalled = FALSE
 
 //Prox sensor handling.
 
