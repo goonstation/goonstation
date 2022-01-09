@@ -2941,6 +2941,15 @@
 	upperfluc = 190
 	lowerfluc = -200
 	
+/datum/commodity/blackmarket/surplus/backpack
+	comname = "Security Satchel"
+	comtype = /obj/item/clothing/mask/gas/swat
+	name = "SWAT Mask"
+	desc_sell = "Tested and guaranteed 100% gas-proof, every one."
+	price = 2100
+	upperfluc = 500
+	lowerfluc = -500
+
 /datum/commodity/blackmarket/surplus/sechud
 	comname = "Sechud Glasses"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
@@ -2985,9 +2994,16 @@
 	desc_sell = "Arcology in a neighbouring sector needs as many of these as I can get."
 	price = 9000
 	upperfluc = 2000
-	lowerfluc = -1800
+	lowerfluc = -1800	
 /datum/commodity/blackmarket/surplus/powercell
 	comname = "Small Power Cell"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	desc_sell = "We can always use more power cells."
+	price = 1200
+	upperfluc = 800
+	lowerfluc = -600
+/datum/commodity/blackmarket/surplus/powercell
+	comname = "Erebite Power Cell"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	desc_sell = "We can always use more power cells."
 	price = 1200
@@ -3011,9 +3027,9 @@
 /////////////////
 
 /datum/commodity/blackmarket/blob/chitin
-	comname = "Armor Helmet"
+	comname = "CHITIN"
 	comtype = /obj/item/raw_material/chitin
-	desc_sell = "Got a lot of these in good condition. One size fits all."
+	desc_sell = "SOMETHING SPOOKY."
 	price = 5000
 	upperfluc = 800
 	lowerfluc = -800
@@ -3035,6 +3051,25 @@
 /    S)ssss  H)    hh A)    aa D)ddddd     Y)          J)jj    A)    aa N)    nn E)eeeeee   /
 /                                                                                           /
 /////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/clothing/mask/balaclava
+/obj/item/device/multitool
+
+
+
+
+/datum/commodity/blackmarket/traitor/multitool
+	comname = "Multitool"
+	comtype = /obj/item/device/multitool
+	price = 500
+	upperfluc = 200
+	lowerfluc = -200
+/datum/commodity/blackmarket/traitor/balaclava
+	comname = "Balaclava"
+	comtype = /obj/item/clothing/mask/balaclava
+	price = 120
+	upperfluc = 100
+	lowerfluc = -100
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                  /
@@ -3063,6 +3098,22 @@
 	price = 4000
 	upperfluc = 3000
 	lowerfluc = -3000
+/datum/commodity/tech/laptop
+	comname = "Personal Laptop"
+	comtype = /obj/item/luggable_computer/personal
+	desc = "Top of the line!"
+	price = 5000
+	baseprice = 5000
+	upperfluc = 1000
+	lowerfluc = -2000
+/datum/commodity/tech/laptop
+	comname = "Personal Laptop"
+	comtype = /obj/item/toy/cellphone
+	desc = "Top of the line!"
+	price = 5000
+	baseprice = 5000
+	upperfluc = 1000
+	lowerfluc = -2000
 	
 ///BUY
 /datum/commodity/blackmarket/wrestler/teapot
@@ -3072,13 +3123,19 @@
 	price = 4000
 	upperfluc = 3000
 	lowerfluc = -3000
+/datum/commodity/blackmarket/wrestler/nassa
+	comname = "NASSA space suit"
+	comtype = /obj/item/clothing/under/gimmick/blackstronaut
+	desc_sell = "I'm a collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
+	price = 400000
+	upperfluc = 80000
+	lowerfluc = -80000
 
 /datum/commodity/blackmarket/wrestler/uplink_telecrystal
-	comname = "Handmade Tetsubin"
+	comname = "Pure Telecrystal"
 	comtype = /obj/item/uplink_telecrystal
-	desc_sell = "I'm a great collector of teapots, and "
-	price = 4000
-	upperfluc = 3000
-	lowerfluc = -3000
+	price = 30000
+	upperfluc = 1
+	lowerfluc = -1
 
 
