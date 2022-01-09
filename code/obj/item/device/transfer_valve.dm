@@ -14,7 +14,12 @@
 	var/valve_open = 0
 	var/toggle = 1
 	var/force_dud = 0
-
+	var/tank_one_icon = null
+	var/tank_two_icon = null
+	var/image/tank1 = null
+	var/image/tank2 = null
+	var/image/tank1_under = null
+	var/image/tank2_under = null
 	w_class = W_CLASS_GIGANTIC /// HEH
 	p_class = 3 /// H E H
 	mats = 5
@@ -189,8 +194,6 @@
 			return
 
 		icon_state = "valve"
-		var/tank_one_icon = ""
-		var/tank_two_icon = ""
 
 		if(tank_one)
 			tank_one_icon = tank_one.icon_state
@@ -201,8 +204,8 @@
 			//tank_one_overlay.icon_state = tank_one_icon
 			src.underlays += I
 
-			var/image/tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
-			var/image/tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
+			src.tank1 = new(src.wear_image_icon, icon_state = "[tank_one_icon]1")
+			src.tank1_under = new(src.wear_image_icon, icon_state = "[tank_one_icon]_under")
 			src.wear_image.overlays += tank1
 			src.wear_image.underlays += tank1_under
 
@@ -220,8 +223,8 @@
 			//tank_two_overlay.icon = I
 			src.underlays += J
 
-			var/image/tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
-			var/image/tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
+			src.tank2 = new(src.wear_image_icon, icon_state = "[tank_two_icon]2")
+			src.tank2_under = new(src.wear_image_icon, icon_state = "[tank_two_icon]_under")
 			src.wear_image.overlays += tank2
 			src.wear_image.underlays += tank2_under
 
@@ -237,16 +240,12 @@
 			src.underlays += straps
 
 	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
-		var/image/tanks
-		var/image/tanks_under
-		var/tank_one_icon = ""
-		var/tank_two_icon = ""
-		tanks = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
-		tanks_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under")
-		tanks = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
-		tanks_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
-		src.wear_image.overlays = list(tanks)
-		src.wear_image.underlays += list(tanks_under)
+		src.tank1 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
+		src.tank1_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
+		src.tank2 = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
+		src.tank2_under += image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
+		src.wear_image.overlays = list(tank1, tank2)
+		src.wear_image.underlays = list(tank1_under, tank2_under)
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
