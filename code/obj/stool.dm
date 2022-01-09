@@ -619,7 +619,7 @@
 
 			if (ishuman(M))
 				chair_chump = M
-			if (!chair_chump || !chair_chump.on_chair)// == 1)
+			if (!chair_chump || !chair_chump.on_chair)
 				chair_chump = null
 			if (chair_chump)// == 1)
 				if (chair_chump == L)
@@ -768,7 +768,6 @@
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
 			SPAWN_DBG(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
@@ -776,9 +775,10 @@
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
 			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
+
+		src.buckled_guy = null
 
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 

@@ -1266,7 +1266,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm
-	desc = "A 40mm riot control launcher."
+	desc = "A 40mm riot control gun. It can accept standard 40mm rounds and hand-thrown grenades."
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
@@ -1309,7 +1309,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
@@ -1645,7 +1645,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	caliber = 0.308
 	max_ammo_capacity = 100
@@ -1679,7 +1679,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 	caliber = 0.787
 	max_ammo_capacity = 1
@@ -1765,7 +1765,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi' // big guns get big icons
 	icon_state = "sniper"
 	item_state = "sniper"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	caliber = 0.308
 	max_ammo_capacity = 6
@@ -1864,7 +1864,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "antimateriel"
 	item_state = "cannon"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = 10
 	caliber = 0.787
 	max_ammo_capacity = 5

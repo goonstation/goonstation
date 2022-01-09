@@ -369,7 +369,7 @@ datum
 					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
 						somethingchanged = 1
-					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)))
+					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1
 						for (var/obj/item/clothing/O in H)
 							if (istype(O,/obj/item/clothing/mask))
@@ -382,6 +382,7 @@ datum
 						var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
 						H.equip_if_possible(moustache, H.slot_wear_mask)
 						H.set_clothing_icon_dirty()
+						holder?.remove_reagent(src.id, 3)
 					if (somethingchanged) boutput(H, "<span class='alert'>Hair bursts forth from every follicle on your head!</span>")
 					H.update_colorful_parts()
 				..()
@@ -681,7 +682,7 @@ datum
 				if (isliving(A))
 					var/mob/living/M = A
 					if (M.hasStatus("burning"))
-						M.changeStatus("burning", -M.getStatusDuration("burning"))
+						M.delStatus("burning")
 
 		silicate
 			name = "silicate"

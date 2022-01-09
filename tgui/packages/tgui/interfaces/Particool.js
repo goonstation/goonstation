@@ -3,6 +3,7 @@
  * @copyright 2021 Gomble (https://github.com/AndrewL97)
  * @author Original Gomble (https://github.com/AndrewL97)
  * @author Changes Azrun
+ * @author Changes Sovexe (https://github.com/Sovexe)
  * @license MIT
  */
 
@@ -254,15 +255,16 @@ const ParticleGeneratorEntry = (props, context) => {
     // Split into params
     params = params[1].split(', ');
     if (params.length === 4) {
-      tempGenType = params[0];
-      tempRand= params[1];
+      tempGenType = params[0].replace(/['"]+/g, '');
 
       // Try to get contents of list(), just pass value if null
-      let aTemp = params[2].match(/\((.*)\)/);
-      tempA = aTemp ? aTemp[1] : params[2]; // fermented soy beans
+      let aTemp = params[1].match(/\((.*)\)/);
+      tempA = aTemp ? aTemp[1] : params[1].replace(/['"]+/g, ''); // fermented soy beans
 
-      let bTemp = params[3].match(/\((.*)\)/);
-      tempB = bTemp ? bTemp[1] : params[3];
+      let bTemp = params[2].match(/\((.*)\)/);
+      tempB = bTemp ? bTemp[1] : params[2].replace(/['"]+/g, '');
+
+      tempRand = params[3];
     }
   }
 

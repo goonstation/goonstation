@@ -1125,7 +1125,7 @@
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
-	desc = "Medical drug dispenser."
+	desc = "An ID-selective dispenser for drugs and medical equipment"
 	icon_state = "med"
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
@@ -1231,7 +1231,7 @@
 
 /obj/machinery/vending/security
 	name = "SecTech"
-	desc = "A security equipment vendor."
+	desc = "An ID-selective dispenser for security equipment."
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
@@ -1262,7 +1262,7 @@
 
 /obj/machinery/vending/security_ammo //ass jam time yes
 	name = "AmmoTech"
-	desc = "A restricted ammunition vendor."
+	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
@@ -2231,7 +2231,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
 
 /obj/machinery/vending/standard
-	desc = "A standard vending machine."
+	desc = "A vending machine full of various useful tools and devices that definitely cannot be used to make bombs"
 	icon_state = "standard"
 	icon_panel = "standard-panel"
 	acceptcard = 0

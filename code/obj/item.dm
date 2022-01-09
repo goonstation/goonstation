@@ -11,7 +11,7 @@
 	var/item_state = null
 	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
 	var/image/wear_image = null
-	var/wear_image_icon = 'icons/mob/belt.dmi'
+	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER
 	var/image/inhand_image = null
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -1421,6 +1421,7 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
+		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
