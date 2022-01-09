@@ -832,7 +832,8 @@
 			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
 			user.force_laydown_standup()
 
-			var/turf/target_turf = get_step(user,get_dir(user,target))
+			var/target_dir = get_dir(user,target)
+			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)
 				target_turf = T
 
@@ -863,7 +864,38 @@
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
-			step_to(user,target_turf)
+				// Slidekick to throw items on the turf
+				var/item_num_to_throw = 0
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					item_num_to_throw += !!H.limbs.r_leg
+					item_num_to_throw += !!H.limbs.l_leg
+				else if (ismobcritter(user))
+					//TODO: When mobcritters keep track of how many legs they have, replace the below.
+					item_num_to_throw += 2
+
+				if (item_num_to_throw)
+					for (var/obj/item/itm in target_turf) // We want to kick items only
+						if (itm.w_class >= W_CLASS_HUGE)
+							continue
+
+						var/cardinal_throw_dir = target_dir
+						if (!is_cardinal(cardinal_throw_dir))
+							if(prob(50))
+								cardinal_throw_dir &= NORTH | SOUTH
+							else
+								cardinal_throw_dir &= EAST | WEST
+
+						var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
+						if (throw_target)
+							item_num_to_throw--
+							playsound(itm, "swing_hit", 50, 1)
+							itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+
+						if (!item_num_to_throw)
+							break
+
+			step_to(user, target_turf)
 
 	user.u_equip(src)
 

@@ -1,5 +1,8 @@
 
 (t)sat jan 08 22
+(u)ZeWaka
+(e)🆕|feature
+(*)When block-sliding, you now 'kick' items on the tile you enter in the direction of your movement.
 (u)ZWRh3
 (p)6774
 (e)🆕⚖|feature, balance
@@ -25,14 +28,6 @@
 (p)7029
 (e)|
 (*)Voices and Emotes now go over the blindness layers
-(u)antrobot
-(p)6992
-(e)🐛|bug
-(+)fixed cleanbot's action script. It should no longer "forget" a mess if it is interrupted while cleaning.
-(u)TheStoneGol
-(p)6856
-(e)🎨|sprites
-(*)Phones have been resprited
 (u)Zonespace
 (p)6735
 (e)⚖|balance
