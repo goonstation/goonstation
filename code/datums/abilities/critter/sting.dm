@@ -67,10 +67,3 @@
 		venom_ids = list("ants", "histamine")
 		inject_amount = 8
 
-	disabling
-		cooldown = 40 SECONDS //only reason this is so op is because its for admin bullshittery
-		name = "Disabling Sting"
-		desc = "Sting a target with a longlasting concoction of paralysing venoms"
-		icon_state = "disabling_sting"
-		venom_ids = list("ketamine", "haloperidol", "atropine", "pancuronium") //fuck your conciousness, fuck your stamina, fuck your movement, and espeically fuck your breathing
-		inject_amount = 15
