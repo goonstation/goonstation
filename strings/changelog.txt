@@ -1,5 +1,9 @@
 
 (t)sat jan 08 22
+(u)ZWRh3
+(p)6774
+(e)🆕⚖|feature, balance
+(+)Extinguishers with the safety on will no longer count as an open container.
 (u)Waffleloffle
 (p)7112
 (e)🆕🎨|feature, sprites
