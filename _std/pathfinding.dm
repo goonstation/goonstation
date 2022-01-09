@@ -2,7 +2,7 @@
  * This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
  * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
  * cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.
- * Ported from TGStation with permission from @Ryll-Ryll
+ * Ported from TGStation with permission from @Ryll-Ryll, also ryll is cool
  */
 
 /**
