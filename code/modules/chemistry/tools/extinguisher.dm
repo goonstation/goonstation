@@ -9,7 +9,7 @@
 	var/const/max_distance = 5
 	var/const/reagents_per_dist = 5
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
