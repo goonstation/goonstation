@@ -78,7 +78,7 @@
 /datum/spacebee_extension_command/ban
 	name = "ban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"week\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
+	help_message = "Bans a given ckey. Arguments in the order of ckey, length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason. Make sure you specify the server that the person is on. Also keep in mind that this bans them from all servers. e.g. ban1 shelterfrog perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, length, reason)
@@ -109,8 +109,12 @@
 			length = 60
 		else if (length == "day")
 			length = 1440
+		else if (length == "halfweek")
+			length = 5040
 		else if (length == "week")
 			length = 10080
+		else if (length == "twoweeks")
+			length = 20160
 		else if (length == "month")
 			length = 43200
 		else if (length == "perma")
