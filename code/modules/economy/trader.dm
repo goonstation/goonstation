@@ -1590,10 +1590,10 @@
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "blackmarketsurplus"
 	picture = "exclown.png"
-	name = "Shady Jane's "
+	name = "Shady Jane's Back-Alley Deals"
 	trader_area = "/area/hallway/secondary/entry"
-	angrynope = "*Lawman refuses to answer your call*"
-	whotext = "Max Lawman's Military Surplus sells a variety of armor and weaponry, new and old."
+	angrynope = "*You can't establish a connection with Shady Jane*"
+	whotext = "I'm just a trader with a huge stock of great items, and I take cash. What more do you need to know?"
 
 	New()
 		..()
