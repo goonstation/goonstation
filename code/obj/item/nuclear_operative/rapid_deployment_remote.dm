@@ -47,10 +47,11 @@
 						return
 					var/list/chosen_mobs = list()
 					var/is_the_nuke_there = FALSE
-					for(var/mob/living/carbon/M in range(4, user.loc))
-						chosen_mobs += M
-					for(var/obj/machinery/nuclearbomb/NB in range(4, user.loc))
+					for(var/mob/living/carbon/found_mob in range(4, user.loc))
+						chosen_mobs += found_mob
+					for(var/obj/machinery/nuclearbomb/the_nuke in range(4, user.loc))
 						is_the_nuke_there = TRUE
+						break
 					for(var/turf/T in range(4, user.loc))
 						if(length(overlayed_turfs))
 							break
@@ -142,20 +143,20 @@
 					qdel(S)
 					qdel(R)
 			sent_mobs += M
-		for(var/obj/machinery/nuclearbomb/NB in range(4, user.loc))
+		for(var/obj/machinery/nuclearbomb/the_nuke in range(4, user.loc))
 			SPAWN_DBG(0)
-				var/L = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
-				if(!L)
+				var/landmark_teleport = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
+				if(!landmark_teleport)
 					return
-				playsound(NB, "sound/effects/teleport.ogg", 30, 1)
-				var/obj/decal/teleport_swirl/tele_swirl = new/obj/decal/teleport_swirl(NB)
-				NB.set_loc(L)
-				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(L)
-				playsound(L, "sound/effects/teleport.ogg", 30, 1)
+				playsound(the_nuke, "sound/effects/teleport.ogg", 30, 1)
+				var/obj/decal/teleport_swirl/tele_swirl = new/obj/decal/teleport_swirl(the_nuke)
+				the_nuke.set_loc(landmark_teleport)
+				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(landmark_teleport)
+				playsound(landmark_teleport, "sound/effects/teleport.ogg", 30, 1)
 				SPAWN_DBG(1 SECOND)
 					qdel(tele_swirl)
 					qdel(tele_energy)
-			nuclear_bombs += NB
+			nuclear_bombs += the_nuke
 		src.used = TRUE
 		for(var/obj/machinery/computer/security/pod_timer/S in range(1, pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_COMP))) //This is the only way I could make this work
 			var/rand_time = rand(45 SECONDS, 60 SECONDS)
@@ -178,10 +179,10 @@
 		var/list/turf/possible_turfs = list()
 		for(var/turf/T in get_area_turfs(src.landing_area, TRUE))
 			possible_turfs += T
-		for(var/obj/machinery/nuclearbomb/NB in nuclear_bombs)
+		for(var/obj/machinery/nuclearbomb/the_nuke in nuclear_bombs)
 			var/turf/picked_turf = pick(possible_turfs)
 			SPAWN_DBG(0)
-				launch_with_missile(NB, picked_turf, null, "arrival_missile_synd")
+				launch_with_missile(the_nuke, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 		for(var/mob/living/carbon/C in sent_mobs)
 			var/turf/picked_turf = pick(possible_turfs)
@@ -198,7 +199,7 @@
 	maptext_x = 0
 	maptext_y = 20
 	maptext_width = 64
-	var/total_pod_time
+	var/total_pod_time = 0
 	processing_tier = PROCESSING_QUARTER
 
 	proc/get_pod_timer()
