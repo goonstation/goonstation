@@ -137,8 +137,8 @@
 		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
 		ircbot.export("admin", ircmsg)
 
-/datum/spacebee_extension_command/banfrom
-	name = "banfrom"
+/datum/spacebee_extension_command/serverban
+	name = "serverban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. banfrom1 shelterfrog main1 perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
