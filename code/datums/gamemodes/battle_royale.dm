@@ -96,6 +96,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
 	ticker.centralized_ai_laws.replace_inherent_law(2, "")
 	ticker.centralized_ai_laws.replace_inherent_law(3, "")
+
+	emergency_shuttle.disabled = 1
 	return 1
 
 
