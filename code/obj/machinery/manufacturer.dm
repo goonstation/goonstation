@@ -2525,7 +2525,7 @@
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric
+		/obj/item/material_piece/cloth/cottonfabric,
 		/obj/item/material_piece/bohrum,
 		/obj/item/material_piece/uqill
 		/obj/item/material_piece/claretine,)
