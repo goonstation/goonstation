@@ -106,7 +106,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
 		"kingsway" = "'Kingsway Systems 29A' is etched into the aged plastic casing beneath the screen.",
 		"syndicate" = "The casing is covered in Syndicate markings! On second glance, it seems like the panels are pieces of toy plastic clipped together. Wow.",
-		"clown" = "The casing smells weird and has a gross sheen to it. What the fuck even is this thing?"
+		"clown" = "Crayon and questionable stains constitute the majority of the casing's exterior. What the fuck even is this thing?"
 	)
 
 	var/datum/ai_camera_tracker/tracker = null
@@ -223,7 +223,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.tracker = new /datum/ai_camera_tracker(src)
 	coreSkin = skinToApply
-	src.UpdateOverlays(get_image("ai_blank"), "backscreen") // lets hope to god no dweeb clears all our overlays
+	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
 	src.eyecam = new /mob/dead/aieye(src.loc)
@@ -257,7 +257,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (src.brain && src.key)
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
-
 
 	SPAWN_DBG(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
@@ -2009,7 +2008,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		clearFaceOverlays()
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
-		else // convoluted that I'm terrified of breaking something by doing that
+		else // convoluted that I'm terrified of breaking some super specific thing by doing that
 			UpdateOverlays(get_image("ai_bsod"), "temp_face")
 
 
@@ -2018,7 +2017,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		UpdateOverlays(get_image("ai-stun-screen"), "temp_face")
 
 	else
-		src.icon_state = coreSkin //Actually do this.
+		src.icon_state = coreSkin
 		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
 		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai-white", src.layer)
@@ -2067,7 +2066,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if(75 to INFINITY)
 			src.UpdateOverlays(get_image("brute75"), "brute")
 
-/// Clears all overlays related to the face
+/// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
 	src.ClearSpecificOverlays(retain_cache,
 		"actual_face",
@@ -2501,7 +2500,7 @@ proc/get_mobs_trackable_by_AI()
 		if (src.build_step >= 8)
 			src.build_step++
 			boutput(user, "You activate the AI core!  Beep bop!")
-			var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(get_turf(src), 1, skinToApply) // second parameter causes the core to spawn without a brain
+			var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(get_turf(src), TRUE, skinToApply) // second parameter causes the core to spawn without a brain
 			if (A.cell && src.cell)
 				qdel(A.cell)
 				A.cell = src.cell
@@ -2552,7 +2551,7 @@ proc/get_mobs_trackable_by_AI()
 ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit
 	name = "AI Frame Plating Kit (YOU SHOULD NOT SEE THIS, FILE A BUG REPORT IF YOU ARE READING THIS)"
-	desc = "Instead of drab steel plates, use this to spice up your AI's look! WARNING: Choking hazard, not intended for children under 3 years."
+	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai-green" // placeholder icon
 	/// The skin to apply to an AI core frame when we install this as plating. Needs to be a valid string from /ai/var/skinsList
@@ -2560,13 +2559,13 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 
 /obj/item/ai_plating_kit/syndicate
 	name = "AI Frame Plating Kit"
-	desc = "Instead of drab steel plates, use this to spice up your AI's look! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
+	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
 	icon_state = "syndie_kit" // get it???
 	skin = "syndicate"
 	contraband = 1 // crime
 
 /obj/item/ai_plating_kit/clown
 	name = "AI Frame Plating Kit"
-	desc = "Instead of drab steel plates, use this to spice up your AI's look! Well, spice might be the wrong word, given how greasy and funny this looks and feels."
+	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
 	icon_state = "clown_kit"
 	skin = "clown"

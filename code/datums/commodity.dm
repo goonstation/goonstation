@@ -1306,6 +1306,15 @@
 	upperfluc = 3
 	lowerfluc = -3
 
+/datum/commodity/junk/ai_kit_clown
+	comname = "Circus AI Parts"
+	comtype = /obj/item/ai_plating_kit/clown
+	desc = "The parts required to plate an AI frame to make it fit for running a circus."
+	price = 800
+	baseprice = 800
+	upperfluc = 50
+	lowerfluc = -50
+
 /////////////////////////////////
 ///////food trader //////////////
 /////////////////////////////////

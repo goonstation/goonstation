@@ -566,7 +566,7 @@ ASC: Aux. Solar Control<BR>
 	"}
 
 	New()
-		. = ..() // copy/pasted values, no clue if these work good :shelterfrog:
+		. = ..()
 		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
 
 /obj/item/paper/engine

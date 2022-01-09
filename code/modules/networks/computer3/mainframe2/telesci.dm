@@ -319,7 +319,6 @@ proc/is_teleportation_allowed(var/turf/T)
 									recharging = 0
 									sleep(4 SECONDS)
 									src.send(endturf)
-
 								message_host("command=ack")
 
 							else
