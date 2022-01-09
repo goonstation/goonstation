@@ -3010,7 +3010,14 @@
 //// SELLS   ////
 /////////////////
 
-
+/datum/commodity/blackmarket/blob/chitin
+	comname = "Armor Helmet"
+	comtype = /obj/item/raw_material/chitin
+	desc_sell = "Got a lot of these in good condition. One size fits all."
+	price = 5000
+	upperfluc = 800
+	lowerfluc = -800
+/obj/item/raw_material/chitin
 
 /////////////////
 ////  BUYS   ////
@@ -3045,7 +3052,7 @@
 /datum/commodity/blackmarket/wrestler/beerbox
 	comname = "Box of Beer"
 	comtype = /obj/item/storage/box/beer
-	desc_sell = "JUICE UP your computer's MUSCLES with one of these bad boys. Guaranteed to get you MORE FRAMES of HYPER ROBUST ACTION!"
+	desc_sell = "BEER!"
 	price = 4000
 	upperfluc = 3000
 	lowerfluc = -3000
@@ -3061,12 +3068,17 @@
 /datum/commodity/blackmarket/wrestler/teapot
 	comname = "Handmade Tetsubin"
 	comtype = /obj/item/reagent_containers/food/drinks/teapot
-	desc_sell = "I'm a great collector of teapots, and "
+	desc_sell = "I'm a collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
 	price = 4000
 	upperfluc = 3000
 	lowerfluc = -3000
 
-
-
+/datum/commodity/blackmarket/wrestler/uplink_telecrystal
+	comname = "Handmade Tetsubin"
+	comtype = /obj/item/uplink_telecrystal
+	desc_sell = "I'm a great collector of teapots, and "
+	price = 4000
+	upperfluc = 3000
+	lowerfluc = -3000
 
 
