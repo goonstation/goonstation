@@ -2028,7 +2028,7 @@
 
 /obj/machinery/manufacturer/general
 	name = "General Manufacturer"
-	desc = "A manufacturing unit calibrated to produce tools and general purpose items."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing tools and general purpose items.."
 	free_resource_amt = 5
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
@@ -2089,7 +2089,7 @@
 
 /obj/machinery/manufacturer/robotics
 	name = "Robotics Fabricator"
-	desc = "A manufacturing unit calibrated to produce robot-related equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing robot-related equipment."
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
 	free_resource_amt = 5
@@ -2190,7 +2190,7 @@
 
 /obj/machinery/manufacturer/medical
 	name = "Medical Fabricator"
-	desc = "A manufacturing unit calibrated to produce medical equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing medical equipment."
 	icon_state = "fab-med"
 	icon_base = "med"
 	free_resource_amt = 2
@@ -2256,7 +2256,7 @@
 
 /obj/machinery/manufacturer/mining
 	name = "Mining Fabricator"
-	desc = "A manufacturing unit calibrated to produce mining related equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing mining related equipment."
 	icon_state = "fab-mining"
 	icon_base = "mining"
 	free_resource_amt = 2
@@ -2306,7 +2306,7 @@
 
 /obj/machinery/manufacturer/hangar
 	name = "Ship Component Fabricator"
-	desc = "A manufacturing unit calibrated to produce parts for ships."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
 	free_resource_amt = 2
@@ -2347,7 +2347,7 @@
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
 	name = "Uniform Manufacturer"
-	desc = "A manufacturing unit calibrated to produce workplace uniforms."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
 	free_resource_amt = 5
@@ -2446,7 +2446,7 @@
 //and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "Personnel Manufacturer"
-	desc = "A manufacturing unit calibrated to produce workplace uniforms and identification equipment."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing workplace uniforms and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resource_amt = 5
@@ -2501,7 +2501,7 @@
 
 /obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
 	name = "Crate Manufacturer"
-	desc = "A manufacturing unit calibrated to produce different crates and boxes."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing different crates and boxes."
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 5
@@ -2518,14 +2518,17 @@
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "Uber-Extreme Survival Manufacturer"
-	desc = "A manufacturing unit calibrated to produce items useful in surviving extreme scenarios."
+	desc = "A 3D printer-like machine that can construct a variety of items. This one is for producing items useful in surviving extreme scenarios."
 	icon_state = "fab-crates"
 	icon_base = "crates"
 	free_resource_amt = 50
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
+		/obj/item/material_piece/cloth/cottonfabric
+		/obj/item/material_piece/bohrum,
+		/obj/item/material_piece/uqill
+		/obj/item/material_piece/claretine,)
 	accept_blueprints = 0
 	available = list(
 	/datum/manufacture/engspacesuit,

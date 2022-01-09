@@ -11,7 +11,7 @@
 
 /obj/machinery/disposal
 	name = "disposal unit"
-	desc = "A pneumatic waste disposal unit."
+	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "disposal"
 	anchored = 1

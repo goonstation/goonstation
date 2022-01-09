@@ -6,7 +6,7 @@
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
 	name = "syringe"
-	desc = "A syringe."
+	desc = "A hollow device with a metal tip. Can be used to put chemicals into containers, and with co-operation, people."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
