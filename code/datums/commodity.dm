@@ -3010,6 +3010,8 @@
 //// SELLS   ////
 /////////////////
 
+
+
 /////////////////
 ////  BUYS   ////
 /////////////////
@@ -3040,6 +3042,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///SELL
 
+/datum/commodity/blackmarket/wrestler/beerbox
+	comname = "Box of Beer"
+	comtype = /obj/item/storage/box/beer
+	desc_sell = "JUICE UP your computer's MUSCLES with one of these bad boys. Guaranteed to get you MORE FRAMES of HYPER ROBUST ACTION!"
+	price = 4000
+	upperfluc = 3000
+	lowerfluc = -3000
 /datum/commodity/blackmarket/wrestler/videocard
 	comname = "Advanced Videocard"
 	comtype = /obj/item/peripheral/videocard
@@ -3049,3 +3058,15 @@
 	lowerfluc = -3000
 	
 ///BUY
+/datum/commodity/blackmarket/wrestler/teapot
+	comname = "Handmade Tetsubin"
+	comtype = /obj/item/reagent_containers/food/drinks/teapot
+	desc_sell = "I'm a great collector of teapots, and "
+	price = 4000
+	upperfluc = 3000
+	lowerfluc = -3000
+
+
+
+
+
