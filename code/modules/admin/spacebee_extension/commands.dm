@@ -140,26 +140,14 @@
 /datum/spacebee_extension_command/banfrom
 	name = "banfrom"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. banfrom1 main1 shelterfrog perma Lol rip."
-	argument_types = list(/datum/command_argument/string="server", /datum/command_argument/string/ckey="ckey", /datum/command_argument/string="length",
+	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. banfrom1 shelterfrog main1 perma Lol rip."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
-	execute(user, server, ckey, length, reason)
-		if (!(server && ckey && length && reason))
+	execute(user, ckey, server, length, reason)
+		if (!(ckey && server && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
 		var/data[] = new()
-		if(server == "main1" || server == "1" || server == "goon1")
-			server = "main1"
-		else if(server == "main2" || server == "2" || server == "goon2")
-			server = "main2"
-		else if(server == "main3" || server == "3" || server == "goon3")
-			server = "main3"
-		else if(server == "main4" || server == "4" || server == "goon4")
-			server = "main4"
-		else
-			system.reply("Invalid server.", user)
-			return
-		data["server"] = server
 		data["ckey"] = ckey
 		var/mob/M = ckey_to_mob(ckey)
 		if (M)
@@ -177,6 +165,18 @@
 				return
 			data["ip"] = response["last_ip"]
 			data["compID"] = response["last_compID"]
+		if(server == "main1" || server == "1" || server == "goon1")
+			server = "main1"
+		else if(server == "main2" || server == "2" || server == "goon2")
+			server = "main2"
+		else if(server == "main3" || server == "3" || server == "goon3")
+			server = "main3"
+		else if(server == "main4" || server == "4" || server == "goon4")
+			server = "main4"
+		else
+			system.reply("Invalid server.", user)
+			return
+		data["server"] = server
 		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
