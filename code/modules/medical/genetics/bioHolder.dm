@@ -703,10 +703,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
 		if (!istype(BE) || !owner || HasEffect(BE.id))
 			return null
-		effects[BE.id] = BE
-		BE.owner = owner
-		BE.holder = src
-		BE.OnAdd()
 
 		if(BE.effect_group)
 			for(var/datum/bioEffect/curr_id as anything in effects)
@@ -714,6 +710,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 				if(curr.effect_group == BE.effect_group)
 					RemoveEffect(curr.id)
 					break
+
+		effects[BE.id] = BE
+		BE.owner = owner
+		BE.holder = src
+		BE.OnAdd()
 
 		if (do_stability)
 			src.genetic_stability -= BE.stability_loss

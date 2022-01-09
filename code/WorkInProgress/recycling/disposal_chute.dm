@@ -686,7 +686,6 @@
 			else
 				..()
 				return
-			actions.interrupt(target, INTERRUPT_MOVE)
 			target.set_loc(chute)
 
 			if (msg)

@@ -1,5 +1,4 @@
 var/datum/explosion_controller/explosions
-
 /datum/explosion_controller
 	var/list/queued_explosions = list()
 	var/list/turf/queued_turfs = list()

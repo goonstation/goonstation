@@ -21,6 +21,7 @@
 	hide_attack = 2
 
 	on_reagent_change()
+		..()
 		if (src.reagents.is_full() && src.mode == S_DRAW)
 			src.mode = S_INJECT
 		else if (!src.reagents.total_volume && src.mode == S_INJECT)
@@ -285,6 +286,10 @@
 	name = "syringe (synaptizine)"
 	desc = "Contains synaptizine, a mild stimulant to increase alertness."
 	initial_reagents = "synaptizine"
-
+	
+/obj/item/reagent_containers/syringe/formaldehyde
+	name = "syringe (embalming fluid)"
+	desc = "Contains formaldehyde, a chemical that prevents corpses from decaying."
+	initial_reagents = "formaldehyde"
 #undef S_DRAW
 #undef S_INJECT
