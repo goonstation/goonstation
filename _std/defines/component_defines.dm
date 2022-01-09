@@ -82,7 +82,8 @@
 #define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 /// When something calls UpdateIcon
 #define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
-
+/// When reagents change
+#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)

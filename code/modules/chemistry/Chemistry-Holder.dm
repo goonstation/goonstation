@@ -1086,13 +1086,7 @@ datum
 
 		//there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
 		proc/smoke_start(var/volume, var/classic = 0)
-			del_reagent("thalmerite")
-			del_reagent("big_bang") //remove later if we can get a better fix
-			del_reagent("big_bang_precursor")
-			del_reagent("poor_concrete")
-			del_reagent("okay_concrete")
-			del_reagent("good_concrete")
-			del_reagent("perfect_concrete")
+			purge_smoke_blacklist(reagent_list)
 
 			var/list/covered = covered_turf()
 

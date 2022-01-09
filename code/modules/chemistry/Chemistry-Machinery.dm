@@ -473,10 +473,10 @@
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
 			if (R.total_volume <= 30)
-				B = new/obj/item/reagent_containers/glass/bottle(src.output_target)
+				B = new/obj/item/reagent_containers/glass/bottle/plastic(src.output_target)
 				R.trans_to(B,30)
 			else
-				B = new/obj/item/reagent_containers/glass/bottle/chemical(src.output_target)
+				B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
 				R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
@@ -975,7 +975,7 @@ datum/chemicompiler_core/stationaryCore
 							var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
 							pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
 					if("Create Bottle")
-						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle(user.loc)
+						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle/plastic(user.loc)
 						var/default = B.reagents.get_master_reagent_name()
 						var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
 						if(!name || name == " ") name = default

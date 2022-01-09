@@ -15,7 +15,7 @@
 	var/haggleattempts = 0
 	var/amount = -1 // Used for QM traders - how much of a thing they have for sale, unlim if -1
 	///if true, subtypes of this item will be accepted by NPC traders
-	var/subtype_valid = FALSE
+	var/subtype_valid = TRUE
 	// if its in the shopping cart, this is how many you're buying instead
 
 /*
