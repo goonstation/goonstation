@@ -1067,6 +1067,7 @@
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+			src.last_heard_name = src.get_heard_name()
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
