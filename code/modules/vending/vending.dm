@@ -2247,7 +2247,6 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 8)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 8)
 		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
-		product_list += new/datum/data/vending_product(/obj/item/screwdriver, 1)
 		product_list += new/datum/data/vending_product(/obj/item/device/timer, 8)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)
 		product_list += new/datum/data/vending_product(/obj/item/pressure_crystal, 5)
