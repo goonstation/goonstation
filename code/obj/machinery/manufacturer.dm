@@ -2526,7 +2526,7 @@
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
 		/obj/item/material_piece/cloth/cottonfabric
-		/obj/item/material_piece/bohrum,
+		/obj/item/material_piece/bohrum,// adding these just so it can print everything from the get-go
 		/obj/item/material_piece/uqill
 		/obj/item/material_piece/claretine,)
 	accept_blueprints = 0
