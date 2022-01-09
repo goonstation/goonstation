@@ -426,15 +426,23 @@
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								if (src.active_secure["criminal"] != "*Arrest*")
-									src.report_arrest(src.active_general["name"])
+									src.report_arrest_status(src.active_general["name"], "arrest")
 								src.active_secure["criminal"] = "*Arrest*"
 							if (2)
+								if (src.active_secure["criminal"] != "None")
+									src.report_arrest_status(src.active_general["name"], "none")
 								src.active_secure["criminal"] = "None"
 							if (3)
+								if (src.active_secure["criminal"] != "Incarcerated")
+									src.report_arrest_status(src.active_general["name"], "incarcerated")
 								src.active_secure["criminal"] = "Incarcerated"
 							if (4)
+								if (src.active_secure["criminal"] != "Parolled")
+									src.report_arrest_status(src.active_general["name"], "parolled")
 								src.active_secure["criminal"] = "Parolled"
 							if (5)
+								if (src.active_secure["criminal"] != "Released")
+									src.report_arrest_status(src.active_general["name"], "released")
 								src.active_secure["criminal"] = "Released"
 							if (0)
 								src.menu = MENU_IN_RECORD
@@ -744,12 +752,12 @@
 			src.print_text(dat)
 			return 1
 
-		report_arrest(var/perp_name)
+		report_arrest_status(var/perp_name, var/status)
 			if(!perp_name || !src.radiocard)
 				return
 
 			if (usr)
-				logTheThing("station", usr, null, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
+				logTheThing("station", usr, null, "[perp_name]'s arrest status is set to '[status]' by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
 
 			//Unlikely that this would be a problem but OH WELL
 			if(last_arrest_report && world.time < (last_arrest_report + 10))
@@ -769,7 +777,12 @@
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = "SEC-MAILBOT"
 			signal.data["group"] = list(src.setup_mailgroup, MGA_ARREST) //Only security PDAs should be informed.
-			signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
+			if (status == "none")
+				signal.data["message"] = "Alert! Crewman [perp_name]'s arrest status has been removed by [src.authenticated]!"
+			else if (status == "arrest")
+				signal.data["message"] = "Alert! Crewman [perp_name] has been flagged for arrest by [src.authenticated]!"
+			else
+				signal.data["message"] = "Alert! Crewman [perp_name]'s arrest status has been set to \"[capitalize(status)]\" by [src.authenticated]!"
 
 			src.log_string += "<br>Arrest notification sent."
 			last_arrest_report = world.time
