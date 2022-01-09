@@ -1678,7 +1678,8 @@
 ////  BUYS   ////
 /////////////////
 
-		src.goods_buy += new /datum/commodity/goldbar(src)
+		
+		(src)
 
 
 		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
