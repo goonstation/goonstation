@@ -1358,6 +1358,27 @@
 		..()
 		reagents.add_reagent("coffee",10)
 
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	name = "mocha coffee berries"
+	crop_prefix = "mocha "
+	desc = "Smells faintly of rich, bitter cacao. Huh."
+	icon_state = "mochaberries"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("chocolate", 10)
+
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	name = "latte coffee berries"
+	crop_prefix = "latte "
+	desc = "The texture of these berries' skin is vaguely... creamy??"
+	icon_state = "latteberries"
+
+	make_reagents()
+		..()
+		reagents.add_reagent("milk", 5)
+
+
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
 	name = "coffee beans"
 	crop_suffix = " beans"
