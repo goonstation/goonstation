@@ -98,3 +98,13 @@
 				return
 			charges -= 1
 			..()
+
+	pred
+		name = "Hunter cloaking device"
+		desc = "A cloaking device but it doesn't seem to be designed for humans."
+
+		attack_self(mob/user as mob)
+			if (!ishunter(user))
+				boutput(user, "<span class='notice'>You can't understand how [src] even works!</span>")
+				return
+			..()

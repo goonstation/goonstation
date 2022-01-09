@@ -985,8 +985,8 @@
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
-/obj/item/gun/energy/laser_gun/pred // Made use of a spare sprite here (Convair880).
-	name = "laser rifle"
+/obj/item/gun/energy/laser_gun/advanced // Made use of a spare sprite here (Convair880).
+	name = "Advanced laser rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -1011,7 +1011,7 @@
 			src.icon_state = "bullpup[ratio]"
 			return
 
-/obj/item/gun/energy/laser_gun/pred/vr
+/obj/item/gun/energy/laser_gun/advanced/vr
 	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
@@ -1019,6 +1019,16 @@
 	update_icon() // Necessary. Parent's got a different sprite now (Convair880).
 
 		return
+
+/obj/item/gun/energy/laser_gun/advanced/pred
+	name = "Hunter's laser rifle"
+	desc = "This advanced bullpup rifle contains a self-recharging power cell."
+
+	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+		if (!ishunter(user))
+			boutput(user, "<span class='notice'>You can't understand how [src] even works!</span>")
+			return
+		..()
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket

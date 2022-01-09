@@ -771,6 +771,12 @@
 	throw_range = 10
 	makemeat = 0
 
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			if (ismob(usr))
+				if(ishunter(usr))
+					..()
+
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
 /obj/item/axe
