@@ -99,7 +99,7 @@
 			charges -= 1
 			..()
 
-	pred
+	hunter
 		name = "Hunter cloaking device"
 		desc = "A cloaking device but it doesn't seem to be designed for humans."
 

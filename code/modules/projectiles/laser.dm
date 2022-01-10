@@ -268,7 +268,7 @@ toxic - poisons
 	color_blue = 1
 	ks_ratio = 0.8
 
-/datum/projectile/laser/pred //mostly just a reskin
+/datum/projectile/laser/plasma //mostly just a reskin
 	icon_state = "phaser_med"
 	name = "plasma bolt"
 	sname = "plasma bolt"

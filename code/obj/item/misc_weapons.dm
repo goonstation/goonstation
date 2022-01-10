@@ -712,7 +712,7 @@
 		..()
 
 /obj/item/knife/butcher/attack(target as mob, mob/user as mob)
-	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
+	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user))
 		if (scalpel_surgery(target,user))
 			return
 
@@ -758,7 +758,7 @@
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
 
-/obj/item/knife/butcher/predspear
+/obj/item/knife/butcher/hunterspear
 	name = "Hunting Spear"
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/items/weapons.dmi'

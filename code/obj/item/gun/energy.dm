@@ -998,8 +998,8 @@
 
 	New()
 		..()
-		set_current_projectile(new/datum/projectile/laser/pred)
-		projectiles = list(new/datum/projectile/laser/pred)
+		set_current_projectile(new/datum/projectile/laser/plasma)
+		projectiles = list(new/datum/projectile/laser/plasma)
 
 	update_icon()
 		..()
@@ -1020,7 +1020,7 @@
 
 		return
 
-/obj/item/gun/energy/laser_gun/advanced/pred
+/obj/item/gun/energy/laser_gun/advanced/hunter
 	name = "Hunter's laser rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 
