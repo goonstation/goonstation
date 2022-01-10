@@ -32,6 +32,7 @@
 
 /obj/machinery/New()
 	..()
+	START_TRACKING
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.
 		machine_registry[initial(machine_registry_idx)] += src
@@ -53,6 +54,7 @@
 	A?.machines += src
 
 /obj/machinery/disposing()
+	STOP_TRACKING
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()

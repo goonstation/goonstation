@@ -6,7 +6,7 @@
 #define S_INJECT 1
 /obj/item/reagent_containers/syringe
 	name = "syringe"
-	desc = "A syringe."
+	desc = "A hollow device with a metal tip. Used to draw or deposit reagents into containers, and with co-operation, people."
 	icon = 'icons/obj/syringe.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "syringe_0"
@@ -21,6 +21,7 @@
 	hide_attack = 2
 
 	on_reagent_change()
+		..()
 		if (src.reagents.is_full() && src.mode == S_DRAW)
 			src.mode = S_INJECT
 		else if (!src.reagents.total_volume && src.mode == S_INJECT)
@@ -285,6 +286,10 @@
 	name = "syringe (synaptizine)"
 	desc = "Contains synaptizine, a mild stimulant to increase alertness."
 	initial_reagents = "synaptizine"
-
+	
+/obj/item/reagent_containers/syringe/formaldehyde
+	name = "syringe (embalming fluid)"
+	desc = "Contains formaldehyde, a chemical that prevents corpses from decaying."
+	initial_reagents = "formaldehyde"
 #undef S_DRAW
 #undef S_INJECT

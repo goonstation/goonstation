@@ -65,6 +65,7 @@
 /datum/targetable/grinch/instakill
 	name = "Murder"
 	desc = "Induces cardiac arrest in a target. You and your target must hold still for this."
+	icon_state = "grinchmurder"
 	targeted = 1
 	target_anything = 0
 	target_nodamage_check = 1

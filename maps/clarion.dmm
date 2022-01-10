@@ -45058,7 +45058,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -45142,7 +45142,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -49006,7 +49006,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -51738,7 +51738,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},

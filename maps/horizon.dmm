@@ -6890,6 +6890,7 @@
 /area/station/storage/tools)
 "ast" = (
 /obj/item/plank,
+/obj/item/plank,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "asu" = (
@@ -10144,7 +10145,11 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBl" = (
 /obj/machinery/light{
@@ -10152,11 +10157,19 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBm" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBn" = (
 /obj/window/auto/reinforced,
@@ -10164,7 +10177,11 @@
 /area/shuttle/arrival/station)
 "aBo" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBp" = (
 /turf/simulated/shuttle/wall/escape,
@@ -10174,7 +10191,11 @@
 	icon_state = "airlock_locked";
 	locked = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor2"
+	},
 /area/shuttle/arrival/station)
 "aBt" = (
 /obj/grille/steel,
@@ -10315,29 +10336,49 @@
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBS" = (
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBT" = (
 /obj/cryotron,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBU" = (
 /obj/landmark{
 	name = "JoinLate"
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBW" = (
 /obj/machinery/light{
@@ -10347,7 +10388,11 @@
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/mask/breath,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBX" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -10374,7 +10419,11 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aBZ" = (
 /obj/stool/chair/comfy/shuttle{
@@ -10383,13 +10432,21 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCa" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCb" = (
 /obj/window/auto/reinforced,
@@ -10408,7 +10465,9 @@
 /area/space)
 "aCd" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -10498,7 +10557,11 @@
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/mask/breath,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCq" = (
 /obj/cable{
@@ -10571,13 +10634,21 @@
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCA" = (
 /obj/decal/tile_edge/stripe{
@@ -10585,19 +10656,29 @@
 	icon_state = "bot2";
 	tag = ""
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aCD" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -10694,7 +10775,9 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -10780,7 +10863,11 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aDf" = (
 /obj/machinery/door/airlock/pyro/command{
@@ -10788,7 +10875,9 @@
 	name = "Bridge";
 	opacity = 0
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -10994,7 +11083,11 @@
 /obj/machinery/sleeper/compact{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aDI" = (
 /obj/stool/chair/comfy/shuttle/brown{
@@ -11005,7 +11098,9 @@
 	tag = ""
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -11295,7 +11390,11 @@
 /area/station/mining/magnet)
 "aEk" = (
 /obj/machinery/light,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aEl" = (
 /obj/stool/chair/comfy/shuttle{
@@ -11305,7 +11404,11 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aEm" = (
 /obj/table/reinforced/auto,
@@ -11317,7 +11420,9 @@
 	tag = ""
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -11325,7 +11430,9 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
@@ -11412,7 +11519,11 @@
 "aEy" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aEz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
@@ -11514,7 +11625,11 @@
 /obj/machinery/sleeper/compact{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aEJ" = (
 /obj/machinery/door_control/podbay/research/new_walls/west,
@@ -11796,7 +11911,11 @@
 	},
 /obj/decal/poster/wallsign/stencil/left/p,
 /obj/decal/poster/wallsign/stencil/right/o,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aFG" = (
 /obj/grille/steel,
@@ -12344,9 +12463,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aHc" = (
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aHd" = (
@@ -13802,7 +13919,11 @@
 	},
 /obj/decal/poster/wallsign/stencil/left/d,
 /obj/decal/poster/wallsign/stencil/right/s,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aKx" = (
 /obj/machinery/processor,
@@ -14750,7 +14871,11 @@
 /obj/decal/poster/wallsign/stencil/right/x{
 	pixel_x = 14
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aMK" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -15204,6 +15329,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aNZ" = (
@@ -18496,8 +18622,8 @@
 /turf/simulated/floor/plating/airless/random,
 /area/supply/delivery_point)
 "aVl" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aVm" = (
@@ -19353,7 +19479,11 @@
 	},
 /obj/decal/poster/wallsign/stencil/left/i,
 /obj/decal/poster/wallsign/stencil/right/t,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "aXg" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
@@ -19787,7 +19917,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "aYc" = (
-/obj/item/extinguisher,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -19798,6 +19927,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "aYe" = (
@@ -25904,7 +26034,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/plank,
+/obj/machinery/portable_atmospherics/scrubber,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -33020,9 +33150,9 @@
 /area/station/crew_quarters/bar)
 "bEO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
+/obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
 /obj/random_item_spawner,
-/obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "bER" = (
@@ -33600,7 +33730,7 @@
 "bGt" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
-/obj/storage/closet/emergency,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bGu" = (
@@ -37655,12 +37785,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "bRt" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 9
 	},
 /obj/machinery/meter,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -37914,6 +38044,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bRZ" = (
@@ -38026,6 +38157,7 @@
 "bSn" = (
 /obj/item/storage/box/starter,
 /obj/disposalpipe/segment,
+/obj/item/extinguisher,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bSo" = (
@@ -43508,6 +43640,7 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "cfQ" = (
@@ -44796,6 +44929,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
 "ciI" = (
@@ -48242,6 +48376,7 @@
 /obj/machinery/alarm{
 	pixel_y = 20
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -56036,6 +56171,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "lGg" = (
@@ -59539,10 +59675,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"udC" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/space,
-/area/station/hallway/secondary/exit)
 "ufA" = (
 /obj/item/reagent_containers/glass/bucket,
 /obj/decal/cleanable/dirt,
@@ -59947,6 +60079,15 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"vld" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Cyborg"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "vnW" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /obj/cable{
@@ -60488,6 +60629,15 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/west)
+"wyD" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "wzQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -104978,7 +105128,7 @@ bJN
 bVo
 bEe
 bZO
-cbu
+wyD
 cbo
 aaa
 aJC
@@ -120653,7 +120803,7 @@ aaa
 aaa
 arn
 bpj
-wIm
+vld
 aHt
 aIO
 lBU
@@ -133930,7 +134080,7 @@ jje
 jje
 jje
 jje
-udC
+aJE
 ifg
 aLp
 mEz

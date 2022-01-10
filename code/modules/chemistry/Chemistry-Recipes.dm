@@ -3163,7 +3163,7 @@ datum
 			name = "Heparin"
 			id = "heparin"
 			result = "heparin"
-			required_reagents = list("sugar" = 1, "meat_slurry" = 1, "phenol" = 1, "acid" = 1)
+			required_reagents = list("sugar" = 1, "blood" = 1, "phenol" = 1, "acid" = 1)
 			result_amount = 2
 
 		proconvertin // coagulant

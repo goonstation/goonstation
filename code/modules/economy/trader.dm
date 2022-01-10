@@ -823,6 +823,7 @@
 				src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 #ifdef MAP_OVERRIDE_MANTA
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -1093,6 +1094,7 @@
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
 
 
 		/////////////////////////////////////////////////////////

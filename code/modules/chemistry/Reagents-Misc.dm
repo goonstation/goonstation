@@ -682,7 +682,7 @@ datum
 				if (isliving(A))
 					var/mob/living/M = A
 					if (M.hasStatus("burning"))
-						M.changeStatus("burning", -M.getStatusDuration("burning"))
+						M.delStatus("burning")
 
 		silicate
 			name = "silicate"

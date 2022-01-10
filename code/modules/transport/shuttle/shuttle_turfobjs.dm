@@ -33,6 +33,11 @@
 		..()
 		if (icon_state == "tplaceholder") icon_state = "near_blank"
 
+/turf/space/shuttle_transit/safe
+	temperature = T20C
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+
 /turf/simulated/floor/shuttle
 	name = "shuttle floor"
 	icon_state = "floor"
