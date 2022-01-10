@@ -1,5 +1,9 @@
 
 (t)mon jan 10 22
+(u)Flappybat
+(p)7125
+(e)🐛🗺|bug, mapping
+(+)Battleroyale storms now start out less dangerous and scale up over the round. Removed some consoles and machinery that could be used for disruptive purposes, added a special AI law and blocked shuttle calls.
 (u)DimWhat
 (p)7134
 (e)|
