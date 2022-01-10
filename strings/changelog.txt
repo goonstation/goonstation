@@ -1,5 +1,9 @@
 
 (t)mon jan 10 22
+(u)Nexusuxen
+(p)7113
+(e)🐛🗺|bug, mapping
+(+)Cargo router doors on Cog1 should now stay open for the correct amount of time; belt hell should be operational now.
 (u)Waffleloffle
 (p)7133
 (e)|
