@@ -1,5 +1,9 @@
 
 (t)mon jan 10 22
+(u)Nexusuxen
+(p)7129
+(e)🗺🎨|mapping, sprites
+(*)Added skins for the AI core! 4 new appearances for AIs are now obtainable in-game. See the PR for more details!
 (u)Flappybat
 (p)7125
 (e)🐛🗺|bug, mapping
