@@ -938,6 +938,21 @@
 		src.update()
 		return
 
+/obj/item/clipboard/with_pen/inspector
+	name = "inspector's clipboard"
+	desc = "An official Nanotrasen Inspector's clipboard."
+	var/inspector_name = null
+	New()
+		..()
+		START_TRACKING
+	proc/set_owner(var/mob/living/carbon/human/M)
+		inspector_name = M.real_name
+		src.name = "Inspector [inspector_name]'s clipboard"
+	disposing()
+		STOP_TRACKING
+		..()
+
+
 /* =============== FOLDERS (wip) =============== */
 
 /obj/item/folder //if any of these are bad numbers just change them im a bad idiot
