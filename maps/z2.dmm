@@ -61377,14 +61377,6 @@
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
-"dla" = (
-/obj/item/storage/wall/medical{
-	pixel_z = -1
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
-/area/shuttle/battle)
 "dld" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -61526,13 +61518,6 @@
 	dir = 6;
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
-	},
-/area/shuttle/battle)
-"dlB" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
 	},
 /area/shuttle/battle)
 "dlC" = (
@@ -61757,7 +61742,6 @@
 /area/shuttle/battle)
 "dmj" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -163151,7 +163135,7 @@ xWi
 xWi
 xWi
 xWi
-dla
+dle
 dln
 dlu
 dlm
@@ -166173,7 +166157,7 @@ xWi
 xWi
 xWi
 dlr
-dlB
+dmj
 dlL
 dmb
 dlL
