@@ -667,6 +667,12 @@
 	desc = "Subject is a proficient surgeon."
 	id = "training_medical"
 
+/obj/trait/job/headsurgeon
+	name = "Party Surgeon"
+	cleanName = "Party Surgeon"
+	desc = "Subject was a blast at med-school parties."
+	id = "training_partysurgeon"
+
 /obj/trait/job/engineer
 	name = "Engineering Training"
 	cleanName = "Engineering Training"
@@ -861,7 +867,8 @@ obj/trait/pilot
 	points = 2
 	isPositive = 0
 	var/selected_reagent = "ethanol"
-	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine")
+	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
+	var/do_addiction = FALSE
 
 	New()
 		..()
@@ -869,10 +876,12 @@ obj/trait/pilot
 
 	onAdd(var/mob/owner)
 		if(isliving(owner))
-			addAddiction(owner)
+			SPAWN_DBG(rand(4 MINUTES, 8 MINUTES))
+				addAddiction(owner)
+				do_addiction = TRUE
 
 	onLife(var/mob/owner, var/mult) //Just to be safe.
-		if(isliving(owner) && probmult(1))
+		if(isliving(owner) && do_addiction && probmult(1))
 			var/mob/living/M = owner
 			for(var/datum/ailment_data/addiction/A in M.ailments)
 				if(istype(A, /datum/ailment_data/addiction))

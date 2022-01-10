@@ -4,13 +4,20 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 	var/tmp/highCpuCount = 0 // how many times in a row has the cpu been high
 	var/tmp/automatic_profiling_on = FALSE
 	var/tmp/manual_profiling_on = FALSE
+	var/tmp/manual_profiling_disable_time = 0
 	var/tmp/time_since_last = 0
 	var/tmp/last_tick_time = null
 	var/tmp/tick_count = 0
 
+	var/tmp/cpu_start_profiling_immediately_threshold = CPU_START_PROFILING_IMMEDIATELY_THRESHOLD
+	var/tmp/tick_time_profiling_threshold = TICK_TIME_PROFILING_THRESHOLD
+
 	proc/setup()
 		#ifdef PRE_PROFILING_ENABLED
 		world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
+		#endif
+		#if !defined(LIVE_SERVER)
+		manual_profiling_on = TRUE
 		#endif
 		SPAWN_DBG(0)
 			while(TRUE)
@@ -24,11 +31,16 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 			time_since_last = current_time - last_tick_time
 		last_tick_time = current_time
 		if(manual_profiling_on)
+			if(manual_profiling_disable_time && (current_time > manual_profiling_disable_time))
+				message_admins("Manual profiling disabled, profile will periodically reset!")
+				manual_profiling_on = FALSE
 			return
 		automatic_profiling()
 		#ifdef PRE_PROFILING_ENABLED
 		if(!automatic_profiling_on && tick_count % 100 == 0)
 			world.Profile(PROFILE_START | PROFILE_CLEAR, null, "json")
+			last_tick_time = null
+			time_since_last = 0
 		#endif
 
 	proc/automatic_profiling(force_stop=FALSE, force_start=FALSE)
@@ -47,10 +59,12 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				ircbot.export("admin_debug", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
+				last_tick_time = null
+				time_since_last = 0
 		else if(ticker.round_elapsed_ticks > CPU_PROFILING_ROUNDSTART_GRACE_PERIOD) // give server some time to settle
 			if(world.cpu >= CPU_START_PROFILING_THRESHOLD)
 				highCpuCount++
-			if(world.cpu >= CPU_START_PROFILING_IMMEDIATELY_THRESHOLD || time_since_last > TICK_TIME_PROFILING_THRESHOLD)
+			if(world.cpu >= cpu_start_profiling_immediately_threshold || time_since_last > tick_time_profiling_threshold)
 				#ifdef PRE_PROFILING_ENABLED
 				var/output = world.Profile(PROFILE_REFRESH, null, "json")
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++]_spike.json"
@@ -70,3 +84,9 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				ircbot.export("admin_debug", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last]."))
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 				automatic_profiling_on = TRUE
+
+	proc/delay_disable_manual_profiling(delay)
+		message_admins("Manual profiling enabled for [delay/10/60] minutes!")
+		manual_profiling_on = TRUE
+		manual_profiling_disable_time = TIME + delay
+

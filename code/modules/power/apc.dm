@@ -19,6 +19,7 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc
 	name = "area power controller"
+	desc = "The smaller, more numerous sibling of the SMES. Protects electrical equipment from extreme power fluctuations, and if the generator goes offline, can supply electricity to its room from an internal cell."
 	icon_state = "apc0"
 	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
@@ -1031,7 +1032,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num_safe(href_list["eqp"])), 3)
+			var/val = clamp(text2num_safe(href_list["eqp"]), 1, 3)
 
 			// Fix for exploit that allowed synthetics to perma-stun intruders by cycling the APC
 			// ad infinitum (activating power/turrets for one tick) despite missing power cell (Convair880).
@@ -1053,7 +1054,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num_safe(href_list["lgt"])), 3)
+			var/val = clamp(text2num_safe(href_list["lgt"]), 1, 3)
 
 			// Same deal.
 			if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -1073,7 +1074,7 @@ var/zapLimiter = 0
 				src.updateUsrDialog()
 				return
 
-			var/val = min(max(1, text2num_safe(href_list["env"])), 3)
+			var/val = clamp(text2num_safe(href_list["env"]), 1, 3)
 
 			// Yep.
 			if ((!src.cell || src.shorted == 1) && (val == 2 || val == 3))
@@ -1486,13 +1487,13 @@ var/zapLimiter = 0
 					var/newCover = text2num_safe(data["cover"])
 
 					if (!isnull(newEquip))
-						equipment = round(max(0, min(newEquip, 3)))
+						equipment = round(clamp(newEquip, 0, 3))
 
 					if (!isnull(newLight))
-						lighting = round(max(0, min(newLight, 3)))
+						lighting = round(clamp(newLight, 0, 3))
 
 					if (!isnull(newEnviron))
-						environ = round(max(0, min(newEnviron, 3)))
+						environ = round(clamp(newEnviron, 0, 3))
 
 					if (newCover)
 						coverlocked = 1

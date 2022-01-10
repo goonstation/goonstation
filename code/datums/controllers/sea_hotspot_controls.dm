@@ -549,7 +549,7 @@
 
 						val += round(diff, 1)
 
-				val = min(max(val,0),20)
+				val = clamp(val, 0, 20)
 
 				if (placed)
 					placed = 0

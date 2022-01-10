@@ -52,7 +52,6 @@
 					var/turf/B = T
 					var/datum/puzzlewizard/save/this = src
 					A = null
-					src = null
 					boutput(user, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
 					AS.overlays -= selection
 					var/datum/sandbox/sandbox = new /datum/sandbox()

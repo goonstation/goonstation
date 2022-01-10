@@ -11,7 +11,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 /obj/item/reagent_containers/hypospray
 	name = "hypospray"
-	desc = "An automated injector that will dump out any harmful chemicals it finds in itself."
+	desc = "An advanced device capable of injecting various medicines into a patient instantaneously. Dumps any harmful chemicals."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	initial_volume = 30
@@ -55,6 +55,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		signal_event("icon_updated")
 
 	on_reagent_change(add)
+		..()
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)
 		src.UpdateIcon()

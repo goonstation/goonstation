@@ -648,14 +648,22 @@
 
 		msgs.played_sound = "punch"
 
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (H.gloves)
+				damage += H.gloves.punch_damage_modifier
 		if (src != target && iswrestler(src) && prob(66))
 			msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [target], sending them flying!</span>"
 			damage += 4
 			msgs.after_effects += /proc/wrestler_backfist
+		if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
+			damage += rand(3,5)
+			msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
 
 		def_zone = target.check_target_zone(def_zone)
 
 		var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
+
 
 		var/armor_mod = 0
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
@@ -938,11 +946,11 @@
 							if (owner.zone_sel)
 								target.zone_sel.selecting = owner.zone_sel.selecting
 						var/prev_intent = target.a_intent
-						target.a_intent = INTENT_HARM
+						target.set_a_intent(INTENT_HARM)
 
 						target.Attackby(I, target)
 
-						target.a_intent = prev_intent
+						target.set_a_intent(prev_intent)
 						if (old_zone_sel)
 							target.zone_sel.selecting = old_zone_sel
 
@@ -1131,13 +1139,6 @@
 
 /mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
 	. = ..()
-	if (src.gloves)
-		. += src.gloves.punch_damage_modifier
-
-	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
-		. += rand(3,5)
-		if (msgs)
-			msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
 
 	if (src.is_hulk())
 		. += max((abs(health+max_health)/max_health)*5, 5)

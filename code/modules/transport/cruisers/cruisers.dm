@@ -186,7 +186,7 @@
 
 		if(length(src.interior_area.contents) && shields <= 0 && prob(75))
 			var/atom/source = pick(src.interior_area.contents)
-			explosion_new(source, source, max(min(1,4-severity), 5))
+			explosion_new(source, source, clamp(4 - severity, 1, 3))
 		return
 
 	New()
@@ -485,9 +485,9 @@
 	proc/adjustShields(var/amount, var/type = D_SPECIAL)
 		shields_last = shields
 		shields += amount
-		shields = max(min(shields, shields_max), 0)
+		shields = clamp(shields, 0, shields_max)
 
-		var/percent_shields = max(min((shields / shields_max), 1), 0)
+		var/percent_shields = clamp((shields / shields_max), 0, 1)
 		if(shields_last > 0 && shields <= 0) //Collapse
 			if(shield_obj.icon_state != "shield_collapse")
 				internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
@@ -646,15 +646,15 @@
 		return
 
 	proc/updateIndicators()
-		var/percent_health = max(min((health / max(1,health_max)), 1), 0)
+		var/percent_health = clamp((health / max(1,health_max)), 0, 1)
 		bar_top.transform = matrix(percent_health, 1, MATRIX_SCALE)
 		bar_top.pixel_x = -nround( ((81 - (81 * percent_health)) / 2) )
 
-		var/percent_shields = max(min((shields / shields_max), 1), 0)
+		var/percent_shields = clamp((shields / shields_max), 0, 1)
 		bar_middle.transform = matrix(percent_shields, 1, MATRIX_SCALE)
 		bar_middle.pixel_x = -nround( ((81 - (81 * percent_shields)) / 2) )
 
-		var/percent_power = max(min((power_used_last / max(1,power_produced_last)), 1), 0)
+		var/percent_power = clamp((power_used_last / max(1,power_produced_last)), 0, 1)
 		bar_bottom.transform = matrix(percent_power, 1, MATRIX_SCALE)
 		bar_bottom.pixel_x = -nround( ((81 - (81 * percent_power)) / 2) )
 
@@ -663,7 +663,7 @@
 				S.setValues(percent_health, percent_shields, percent_power)
 		return
 
-	proc/recieveMovement(var/direction)
+	proc/receiveMovement(var/direction)
 		if(!hasPower() || !(direction == NORTH || direction == EAST || direction == SOUTH || direction == WEST))
 			return
 
@@ -1371,7 +1371,7 @@
 	relaymove(mob/user, direction)
 		var/obj/machinery/cruiser/C = interior.ship
 		if (C)
-			C.recieveMovement(direction)
+			C.receiveMovement(direction)
 		return
 
 /obj/machinery/cruiser_destroyable/cruiser_pod/security

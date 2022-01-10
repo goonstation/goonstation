@@ -36,7 +36,7 @@
 			num_players++
 
 	var/i = rand(5)
-	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
+	var/num_teams = clamp(round((num_players + i) / 7), setup_min_teams, setup_max_teams)
 	if (num_teams > leaders_possible.len)
 		num_teams = length(leaders_possible)
 

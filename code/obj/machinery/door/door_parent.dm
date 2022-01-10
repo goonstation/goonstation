@@ -169,11 +169,20 @@
 		START_TRACKING
 		for (var/turf/simulated/wall/auto/T in orange(1))
 			T.UpdateIcon()
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			src.xmasify()
+		#endif
 
 	disposing()
 		update_nearby_tiles()
 		STOP_TRACKING
 		..()
+
+	proc/xmasify()
+		var/obj/decal/garland/garland = new(src.loc)
+		if(src.dir != NORTH)
+			garland.dir = src.dir
 
 	proc/toggleinput()
 		if(cant_emag || (src.req_access && !(src.operating == -1)))
@@ -430,7 +439,7 @@
 
 	amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
 
-	src.health = max(0,min(src.health - amount,src.health_max))
+	src.health = clamp(src.health - amount, 0, src.health_max)
 
 	if (src.health <= 0)
 		break_me_complitely()

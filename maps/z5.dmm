@@ -3548,11 +3548,7 @@ turf/simulated/shuttle/wall{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,

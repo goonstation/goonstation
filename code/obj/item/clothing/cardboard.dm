@@ -2,7 +2,7 @@
 	name = "cardboard box"
 	desc = "A pretty large box, made of cardboard. Looks a bit worn out."
 	icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_cardboard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_cardboard.dmi'
 	icon_state = "c_box"
 	item_state = "c_box"
 	density = 1

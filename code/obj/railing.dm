@@ -8,7 +8,7 @@
 	layer = OBJ_LAYER
 	color = "#ffffff"
 	flags = FPRINT | USEDELAY | ON_BORDER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT 
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
@@ -211,6 +211,7 @@
 	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
+	resumable = FALSE
 	var/mob/ownerMob
 	var/obj/railing/the_railing
 	var/turf/jump_target //where the mob will move to when they complete the jump!
