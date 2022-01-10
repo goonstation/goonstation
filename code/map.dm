@@ -923,11 +923,8 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_centcom = /area/shuttle/escape/centcom/sealab
-	escape_transit = /area/shuttle/escape/transit/sealab
-	escape_station = /area/shuttle/escape/station/sealab
-	escape_def = SHUTTLE_OSHAN
 	escape_dir = EAST
+	default_shuttle = "oshan"
 	shuttle_map_turf = /turf/space/fluid/acid
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap

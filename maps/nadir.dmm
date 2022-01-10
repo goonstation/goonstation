@@ -63,9 +63,6 @@
 /area/station/security/checkpoint/escape)
 "ai" = (
 /obj/table/auto,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -954,9 +951,6 @@
 /obj/item/weldingtool,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -1636,9 +1630,6 @@
 /obj/table/auto,
 /obj/machinery/defib_mount{
 	pixel_y = -4
-	},
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -4784,7 +4775,7 @@
 "mF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -5216,7 +5207,7 @@
 /obj/machinery/espresso_machine{
 	pixel_y = 7
 	},
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/engine,
@@ -5924,9 +5915,6 @@
 /obj/table/auto,
 /obj/item/device/light/lava_lamp{
 	pixel_y = 8
-	},
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -7467,7 +7455,7 @@
 "tl" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/decal/tile_edge/line/yellow{
@@ -8555,7 +8543,7 @@
 /area/station/crew_quarters/catering)
 "wn" = (
 /turf/space/fluid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "wo" = (
 /obj/machinery/disposal,
 /obj/decal/tile_edge/line/white{
@@ -8944,9 +8932,6 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -11945,7 +11930,7 @@
 "EC" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -12152,9 +12137,6 @@
 	name = "Genetic Research"
 	})
 "Fd" = (
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /obj/decal/cleanable/dirt,
 /obj/item/plant/herb/cannabis/spawnable,
 /turf/simulated/floor/carpet/grime,
@@ -16167,9 +16149,6 @@
 	})
 "Pq" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/xmas_lights/ephemeral{
-	pixel_y = 32
-	},
 /obj/storage/closet/wardrobe/mixed,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -19988,7 +19967,7 @@
 /area/station/medical/robotics)
 "ZY" = (
 /turf/space/fluid/acid,
-/area/shuttle/escape/station/sealab)
+/area/shuttle/escape/station)
 "ZZ" = (
 /obj/decal/tile_edge/check/blue{
 	dir = 8;
