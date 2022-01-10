@@ -1,5 +1,9 @@
 
 (t)mon jan 10 22
+(u)Waffleloffle
+(p)7133
+(e)|
+(+)Various foods and drinks are now more flavorful.
 (u)Nexusuxen
 (p)7129
 (e)🗺🎨|mapping, sprites
