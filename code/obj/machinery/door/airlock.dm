@@ -590,13 +590,19 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 				return 1
 
 		if (get_dir(loc, mover) & dir) // Check for appropriate border.
-			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+			if(density && mover && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
 					// just let the door open instead.
 					return 0
-				animate_door_squeeze(mover)
-				return 1 // they can pass through a closed door
+				else if (mover.flags & DOORPASS)
+					animate_door_squeeze(mover)
+					return 1 // they can pass through a closed door
+				else if (ishuman(mover) && (src.bumpopen(mover) || operating > 0)) //let folks with ninja gear pass through doors while they open or close
+					var/mob/living/carbon/human/C = mover
+					if (C.find_flag_in_equipment(DOOR_PASS_EARLY))
+						animate_door_squeeze(mover)
+						return 1
 			return !density
 		else
 			return 1

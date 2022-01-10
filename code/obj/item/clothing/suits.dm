@@ -1258,6 +1258,21 @@
 				..()
 				setProperty("space_movespeed", -0.25)
 
+		ninja
+			name = "specialist operative ninja suit"
+			desc = "A syndicate issue combat dress system, pressurized for space travel."
+			icon_state = "syndie_specialist-infiltrator"
+			item_state = "syndie_specialist-infiltrator"
+			c_flags = SPACEWEAR	| DOOR_PASS_EARLY
+
+			setupProperties()
+				..()
+				setProperty("exploprot", 15)
+				setProperty("meleeprot", 3)
+				setProperty("rangedprot", 1.5)
+				setProperty("space_movespeed", -0.25)
+				setProperty("movespeed", -0.1)
+
 
 		firebrand
 			name = "specialist operative firesuit"

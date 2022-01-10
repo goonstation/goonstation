@@ -126,14 +126,20 @@
 		var/obj/projectile/P = mover
 		if(P.proj_data.window_pass)
 			return !opacity
-	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+	if(density && mover && !src.cant_emag)
 		if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 			// If they're pulling something and the door would open anyway,
 			// just let the door open instead.
 			return 0
-		animate_door_squeeze(mover)
-		return 1 // they can pass through a closed door
-
+		else if (mover.flags & DOORPASS)
+			animate_door_squeeze(mover)
+			return 1 // they can pass through a closed door
+		else if (ishuman(mover) && (src.bumpopen(mover) || operating > 0)) //let folks with ninja gear pass through doors while they open or close
+			var/mob/living/carbon/human/C = mover
+			if (C.find_flag_in_equipment(DOOR_PASS_EARLY))
+				animate_door_squeeze(mover)
+				return 1
+				
 	if (density && next_timeofday_opened)
 		return (world.timeofday >= next_timeofday_opened) //Hey this is a really janky fix. Makes it so the door 'opens' on realtime even if the animations and sounds are laggin
 

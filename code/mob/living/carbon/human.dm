@@ -1264,6 +1264,38 @@
 		return r_store
 	return null
 
+
+/mob/living/carbon/human/proc/find_flag_in_equipment(var/flag)
+	if (w_uniform && w_uniform.c_flags & flag > 0)
+		return true
+	if(wear_id && wear_id.c_flags & flag > 0)
+		return true
+	if(gloves && gloves.c_flags & flag > 0)
+		return true
+	if(shoes && shoes.c_flags & flag > 0)
+		return true
+	if(wear_suit && wear_suit.c_flags & flag > 0)
+		logTheThing("debug", src, null, "[src] said 2 [flag & wear_suit.c_flags & flag]")
+		return true
+	if(back && back.c_flags & flag > 0)
+		return true
+	if(glasses && glasses.c_flags & flag > 0)
+		return true
+	if(ears && ears.c_flags & flag > 0)
+		return true
+	if(wear_mask && wear_mask.c_flags & flag > 0)
+		return true
+	if(head && head.c_flags & flag > 0)
+		return true
+	if(belt && belt.c_flags & flag > 0)
+		return true
+	if(l_store && l_store.c_flags & flag > 0)
+		return true
+	if(r_store && r_store.c_flags & flag > 0)
+		return true
+	return false
+	
+	
 /mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
 	if (!(I in src.contents))
 		return null

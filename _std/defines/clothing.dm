@@ -60,6 +60,8 @@
 #define BLOCK_BURN					32768
 /// block an extra point of blunt damage when used to block
 #define BLOCK_BLUNT					65536
+/// don't bump doors while they're opening
+#define DOOR_PASS_EARLY				131072
 
 
 //Suit blood flags
