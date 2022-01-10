@@ -1,4 +1,9 @@
 
+(t)mon jan 10 22
+(u)DimWhat
+(p)7134
+(e)|
+(+)Increased the disarm resistance of nuke ops knight gloves.
 (t)sun jan 09 22
 (u)Flaborized
 (p)7122
