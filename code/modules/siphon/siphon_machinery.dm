@@ -1,5 +1,4 @@
 //handheld device for manual calibration of siphon systems
-
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
@@ -13,6 +12,10 @@
 	m_amt = 50
 	g_amt = 20
 	mats = list("CRY-1", "CON-1")
+
+
+
+//now the main event
 
 //values to differentiate types of condition in which net updates are built
 //setup indicates a batched build that shouldn't update ui individually
