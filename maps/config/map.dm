@@ -81,7 +81,7 @@
 #include "standard.dm"
 #endif
 
-#if defined(ENABLE_ARTEMIS) && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#if ENABLE_ARTEMIS && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 #include "..\artemis\planets.dmm"
 #endif
 

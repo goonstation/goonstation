@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 
 #define HAS_ARTEMIS_SCAN (1 << 19) //the object has an artemis scan
 

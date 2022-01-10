@@ -2565,7 +2565,7 @@
 	/datum/manufacture/fireaxe,
 	/datum/manufacture/shovel)
 
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 /obj/machinery/manufacturer/artemis
 	name = "Scout Vessel Manufacturer"
 	desc = "A manufacturing unit that can produce equipment for scouting vessels."

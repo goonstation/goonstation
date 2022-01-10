@@ -83,7 +83,7 @@
 // other toggles
 
 #define FOOTBALL_MODE 1
-#define ENABLE_ARTEMIS 1
+#define ENABLE_ARTEMIS 0
 //#define RP_MODE
 //#define ASS_JAM_ENABLED 1 //you need to set BUILD_TIME_DAY to 13 manually in __build.dm
 

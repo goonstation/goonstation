@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 /datum/game_mode/artemis_freeroam
 	name = "free roam"
 	config_tag = "freeroam"

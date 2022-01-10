@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 
 var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
@@ -8,6 +8,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	var/parallax_multi = 1
 	icon = 'icons/misc/background_stars.dmi'
 	icon_state = "1"
+	mouse_opacity = 0
 
 	var/image/galaxy_icon
 	var/image/duplicate_galaxy_icon
@@ -35,6 +36,9 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 	New()
 		..()
+#if defined(DEBUG_ARTEMIS)
+		mouse_opacity = 1
+#endif
 		appearance_flags |= PIXEL_SCALE
 		if(istype(src,/obj/background_star/galactic_object))
 			return
@@ -43,12 +47,19 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	proc/set_vars()
 
 		src.set_state()
+		var/theta
+		var/r
 
-		var/theta = rand(360)
-		var/r = rand(max_r)
+		do
+			theta = rand(360)
+			r = rand(max_r)
 
-		src.actual_x = r*sin(theta)
-		src.actual_y = r*cos(theta)
+			src.actual_x = r*sin(theta)
+			src.actual_y = r*cos(theta)
+		while((actual_y**2 + actual_x**2) > max_r_squared)
+
+		if(r > ARTEMIS_MAX_R_VIS)
+			src.alpha = 0
 
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
 		M = M.Translate(actual_x,actual_y)
@@ -63,9 +74,9 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 			duplicate_galaxy_icon.icon_state = icon_state
 
 		if(state<7)
-			parallax_multi = 2 + (0.5*((rand()*2)-1))
+			parallax_multi = 5 + (2*((rand()*2)-1))
 		else
-			parallax_multi = 3  + (1*((rand()*2)-1))
+			parallax_multi = 8  + (1*((rand()*2)-1))
 
 	proc/process()
 		SHOULD_NOT_SLEEP(TRUE) // Check that this isn't being slept
@@ -134,7 +145,8 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 		if(!src)
 			return
 
-		if((actual_y**2 + actual_x**2) > max_r_squared)
+		var/r_sqrd = (actual_y**2 + actual_x**2)
+		if(r_sqrd > max_r_squared)
 			SPAWN_DBG(animation_speed-1)
 				var/apparent_angle = vel_angle - ship_angle
 				var/theta = apparent_angle + (90*((rand()*2)-1))
@@ -148,6 +160,10 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 				src.transform = N
 				src.set_state()
 		else
+			if(r_sqrd > ARTEMIS_MAX_R_SQUARED_VIS && src.alpha )
+				src.alpha = 0
+			else if(!src.alpha)
+				animate(src, time = animation_speed, alpha = 255)
 			var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
 			M = M.Translate(actual_x, actual_y)
 			animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
@@ -158,6 +174,7 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	icon_state = "canvas"
 	plane = PLANE_SPACE
 	fullbright = 1
+	mouse_opacity = 0
 
 	New()
 		..()

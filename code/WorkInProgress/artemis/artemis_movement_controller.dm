@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 
 /datum/movement_controller/artemis
 

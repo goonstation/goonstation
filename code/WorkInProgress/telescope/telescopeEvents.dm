@@ -94,7 +94,7 @@
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 /datum/telescope_event/artemis
 	name = "Artemis"
 	name_undiscovered = "Encrypted NT signal"

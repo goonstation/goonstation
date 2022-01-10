@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 
 /obj/machinery/lrteleporter/planetary_teleporter
 	name = "Planetary Teleporter"

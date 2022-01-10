@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 
 /datum/hud/flight_computer
 	var/atom/movable/screen/hud

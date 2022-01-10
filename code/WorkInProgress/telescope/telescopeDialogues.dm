@@ -191,7 +191,7 @@
 			else
 				return 0
 
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 /* Artemis Dialogue */
 
 /datum/dialogueMaster/telescopeArtemis

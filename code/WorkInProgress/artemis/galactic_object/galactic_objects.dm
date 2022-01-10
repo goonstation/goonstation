@@ -1,4 +1,4 @@
-#ifdef ENABLE_ARTEMIS
+#if ENABLE_ARTEMIS
 
 /datum/galactic_object/centeroid
 	navigable = TRUE
