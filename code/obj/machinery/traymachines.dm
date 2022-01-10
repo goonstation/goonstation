@@ -19,6 +19,7 @@
 
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
 #define TRAYMACHINE_DEFAULT_DRAW 250 //IDK I just put a number
+#define TANNING_BED_MAX_TIME 20 //For adjusting on the tanning computer. The bed adds the SECONDS so don't worry about that.
 
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
@@ -669,7 +670,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 
 		else if (href_list["settime"])
-			if (linked && linked.settime < 20)
+			if (linked && linked.settime < TANNING_BED_MAX_TIME)
 				linked.settime++
 
 		else if (href_list["unsettime"])
@@ -679,3 +680,4 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		src.updateDialog()
 
 #undef TRAYMACHINE_DEFAULT_DRAW
+#undef TANNING_BED_MAX_TIME
