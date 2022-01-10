@@ -356,20 +356,17 @@ var/datum/score_tracker/score_tracker
 		return jointext(., "")
 
 	proc/get_inspector_report()
-		var/report = ""
-		//this might be a really stupid way of finding all players of a specific job, please tell me if it is
-		for (var/mob/living/carbon/human/player in mobs)
-			if (player.job != "Inspector")
-				continue
-			report += "<B>Inspector [player.real_name]'s report</B><BR><HR>"
-			//find all clipboards they have on them (probably just one, but may as well check)
-			var/list/items = player.get_all_items_on_mob()
-			for (var/obj/item/clipboard/clipboard in items)
-				for(var/obj/item/paper/paper in clipboard.contents)
-					if (paper.name != "paper")
-						report += "<B>[paper.name]</B>"
-					report += paper.info
-		return report
+		. = list()
+		for (var/obj/item/clipboard/with_pen/inspector/clipboard in by_type[/obj/item/clipboard/with_pen/inspector])
+			. += "<B>Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report</B><BR><HR>"
+			for(var/obj/item/paper/paper in clipboard.contents)
+				//ignore blank untitled pages
+				if (paper.name == "paper" && !paper.info)
+					continue
+				if (paper.name != "paper")
+					. += "<B>[paper.name]</B>"
+				. += paper.info ? paper.info : "<BR><BR>"
+		return jointext(., "")
 
 
 /mob/proc/scorestats()
@@ -424,7 +421,9 @@ var/datum/score_tracker/score_tracker
 	if (!score_tracker.tickets_text)
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
 
-		score_tracker.tickets_text = {"<B>Tickets</B><BR><HR>"}
+		score_tracker.tickets_text = score_tracker.inspector_report
+
+		score_tracker.tickets_text += {"<B>Tickets</B><BR><HR>"}
 
 		if(data_core.tickets.len)
 			var/list/people_with_tickets = list()
@@ -455,7 +454,6 @@ var/datum/score_tracker/score_tracker
 		else
 			score_tracker.tickets_text += "No fines were issued!<br><br>"
 		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
-		score_tracker.tickets_text += score_tracker.inspector_report
 
 	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
 	return
