@@ -20,6 +20,7 @@
 	var/icon_empty = "item_box-empty"
 	var/icon_closed_empty = null
 	var/reusable = 1
+	var/must_be_in_hands = true
 
 	gold_star
 		name = "box of gold star stickers"
@@ -146,6 +147,21 @@
 				return newCrayon
 			return 0
 
+	shuriken
+		name = "shuriken pouch"
+		desc = "A box of festive little Spacemas ornaments you can decorate with!"
+		must_be_in_hands = false
+		reusable = false
+		icon_state = "ammopouch"
+		icon_closed = "ammopouch"
+		icon_open = "ammopouch"
+		icon_empty = "ammopouch"
+		open = 1
+		contained_item = /obj/item/weapons/space_shuriken
+		take_from()
+			var/obj/item/shuriken = ..()
+			shuriken.amount = 3
+			return shuriken
 
 	assorted
 		name = "box of assorted things"
@@ -220,7 +236,6 @@
 
 				set_contained_items()
 					contained_items = typesof(/obj/item/sticker/xmas_ornament)
-
 
 		take_from()
 			if( !contained_items.len )
@@ -370,7 +385,7 @@
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)
-		if (user.is_in_hands(src))
+		if (user.is_in_hands(src) || (!must_be_in_hands && user.get_slot_from_item(src) != null))
 			if (!src.open)
 				attack_self(user)
 				if (!src.open)

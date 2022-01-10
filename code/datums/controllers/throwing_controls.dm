@@ -111,7 +111,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			var/hit_thing = thing.hit_check(thr)
 			thr.error += thr.error > 0 ? -min(thr.dist_x, thr.dist_y) : max(thr.dist_x, thr.dist_y)
 			thr.dist_travelled++
-			if(!thing.throwing || hit_thing)
+			if(thing && (!thing.throwing || hit_thing))
 				end_throwing = TRUE
 				break
 
@@ -145,11 +145,11 @@ var/global/datum/controller/throwing/throwing_controller = new
 			thing.throw_unlimited = 0
 
 			thing.throw_impact(get_turf(thing), thr)
+			if (thing && !thing.disposed)
+				thing.throwforce -= thr.bonus_throwforce
 
-			thing.throwforce -= thr.bonus_throwforce
-
-			if(thr.target != thr.return_target && thing.throw_return)
-				thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
+				if(thr.target != thr.return_target && thing.throw_return)
+					thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
 	return TRUE
 
 /datum/controller/throwing/proc/throws_of_atom(atom/movable/AM)
