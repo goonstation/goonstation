@@ -124,7 +124,7 @@
 	icon_state = "glowstick-green0"
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
-	desc = "For emergency use only. Not for use in illegal lightswitch raves."
+	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
 	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0

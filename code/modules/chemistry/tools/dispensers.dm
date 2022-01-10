@@ -322,7 +322,7 @@
 
 /obj/reagent_dispensers/fueltank
 	name = "fueltank"
-	desc = "A fueltank"
+	desc = "A high-pressure tank full of welding fuel. Keep away from open flames and sparks."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25

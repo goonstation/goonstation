@@ -11,6 +11,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
+	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -297,6 +298,7 @@
 
 /obj/machinery/chem_master
 	name = "CheMaster 3000"
+	desc = "A computer-like device used in the production of various pharmaceutical items. It has a slot for a beaker on the top."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
