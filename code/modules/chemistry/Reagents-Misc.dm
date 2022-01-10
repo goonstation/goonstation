@@ -2861,6 +2861,13 @@ datum
 				if (growing.growthmode == "weed")
 					P.HYPdamageplant("poison",2)
 					P.growth -= 3
+
+			reaction_obj(var/obj/O, var/volume)
+				if (istype(O, /obj/spacevine))
+					var/obj/spacevine/kudzu = O
+					if (kudzu.current_stage < 2)
+						qdel(O)
+
 		safrole
 			name = "safrole"
 			id = "safrole"
