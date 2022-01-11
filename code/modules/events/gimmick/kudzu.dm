@@ -3,7 +3,7 @@
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "seeds"
+	icon_state = "seeds-kudzu"
 	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
 	attack(mob/M, mob/user)
@@ -410,7 +410,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN_DBG(1 SECOND)
 						qdel(src)
-					
+
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
