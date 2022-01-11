@@ -19,7 +19,7 @@
 
 //This header was last guaranteed to be accurate 2022-?-? <-> BatElite
 #define TRAYMACHINE_DEFAULT_DRAW 250 //IDK I just put a number
-#define TANNING_BED_MAX_TIME 20 //For adjusting on the tanning computer. The bed adds the SECONDS so don't worry about that.
+#define TANNING_BED_MAX_TIME 20 SECONDS //For adjusting on the tanning computer. The bed adds the SECONDS so don't worry about that.
 
 //-----------------------------------------------------
 /*~ Tray Machine Parent ~*/
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	tray_type = /obj/machine_tray/tanning
 
 	var/emagged = FALSE //heh heh
-	var/settime = 10 //How long? (s)
+	var/settime = 10 SECONDS
 	var/tanningcolor = rgb(205,88,34) //Change to tan people into hillarious colors!
 	var/tanningmodifier = 0.03 //How fast do you want to go to your tanningcolor?
 	var/obj/machinery/computer/tanning/linked = null
@@ -464,17 +464,17 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		for (var/mob/M in contents)
 			if (isliving(M))
 				var/mob/living/L = M
-				for (var/i in 1 to src.settime)
+				for (var/i = 1 SECOND, i <= src.settime; i += 1 SECOND)
 					sleep(1 SECOND)
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
 						if (src.emagged)
 							H.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
-							if (src.settime % 2) //message limiter
+							if (i % (2 SECONDS)) //message limiter
 								boutput(H, "<span class='alert'>Your skin feels like it's on fire!</span>")
 						else if (!H.wear_suit)
 							H.TakeDamage("All", 0, 2, 0, DAMAGE_BURN)
-							if (src.settime % 2) //limiter
+							if (i % (2 SECONDS)) //limiter
 								boutput(H, "<span class='alert'>Your skin feels hot!</span>")
 						if (!(H.glasses && istype(H.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
 							H.take_eye_damage(1, 2)
@@ -492,10 +492,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 								H.limbs.reset_stone()
 							H.update_colorful_parts()
 				if (emagged && isdead(M))
-					qdel(M)
+					M.remove()
 					make_cleanable( /obj/decal/cleanable/ash,src)
 
-		SPAWN_DBG(src.settime SECONDS)
+		SPAWN_DBG(src.settime)
 			if (src)
 				src.visible_message("<span class='alert'>The [src.name] finishes and shuts down.</span>")
 				src.locked = FALSE
@@ -636,7 +636,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		var/dat = ""
 		dat += "<b>Tanning Bed Status:</b><BR>"
 		dat += "[state_str]<BR>"
-		dat += "Set Time: [linked ? linked.settime : "--"] seconds<BR>"
+		dat += "Set Time: [linked ? (linked.settime / (1 SECOND)) : "--"] seconds<BR>"
 		dat += "<b>Tanning Bed Control:</b><BR>"
 		dat += "<A href='?src=\ref[src];toggle=1'>Activate Tanning Bed</A><BR>"
 		dat += "<A href='?src=\ref[src];timer=1'>Delayed Activation</A><BR>"
@@ -659,23 +659,23 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				linked.cremate()
 				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+				linked.cremate()
 
 		else if (href_list["settime"])
 			if (linked && linked.settime < TANNING_BED_MAX_TIME)
-				linked.settime++
+				linked.settime += 1 SECOND
 
 		else if (href_list["unsettime"])
 			if (linked && linked.settime > 0)
-				linked.settime--
+				linked.settime -= 1 SECOND
 
 		src.updateDialog()
 
