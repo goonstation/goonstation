@@ -1,5 +1,5 @@
 var/datum/explosion_controller/explosions
-#define RSS_SCALE 1.5
+#define RSS_SCALE 2
 /datum/explosion_controller
 	var/list/queued_explosions = list()
 	var/list/turf/queued_turfs = list()
