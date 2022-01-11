@@ -860,7 +860,7 @@
 
 			dat += "<br>"
 
-			dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_1]'><b>Storage Tank 1:</b></A> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_1]'>(Flush All)</A><br>"
+			dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_1]'><b>Storage Tank 1:</b></A> ([src.storage_tank_1.reagents.total_volume]/[src.storage_tank_1.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_1]'>(Flush All)</A> <A href='?src=\ref[src];fillbeaker=\ref[src.storage_tank_1]'>(Fill Beaker)</A><br>"
 			if(src.storage_tank_1.reagents.reagent_list.len)
 				for(var/current_id in storage_tank_1.reagents.reagent_list)
 					var/datum/reagent/current_reagent = storage_tank_1.reagents.reagent_list[current_id]
@@ -868,7 +868,7 @@
 			else dat += "Empty<BR>"
 
 			dat += "<br>"
-			dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_2]'><b>Storage Tank 2:</b></A> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_2]'>(Flush All)</A><br>"
+			dat += "<A href='?src=\ref[src];chemtransfer=\ref[src.storage_tank_2]'><b>Storage Tank 2:</b></A> ([src.storage_tank_2.reagents.total_volume]/[src.storage_tank_2.reagents.maximum_volume]) <A href='?src=\ref[src];flush=\ref[src.storage_tank_2]'>(Flush All)</A> <A href='?src=\ref[src];fillbeaker=\ref[src.storage_tank_2]'>(Fill Beaker)</A><br>"
 			if(src.storage_tank_2.reagents.reagent_list.len)
 				for(var/current_id in storage_tank_2.reagents.reagent_list)
 					var/datum/reagent/current_reagent = storage_tank_2.reagents.reagent_list[current_id]
@@ -989,6 +989,24 @@
 				if(get_dist(usr, src) > 1) return
 				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
 				else G.reagents.trans_to(T,amt)
+
+			src.updateUsrDialog()
+
+		else if(href_list["fillbeaker"])
+			var/obj/item/reagent_containers/glass/G = locate(href_list["fillbeaker"]) in src
+			if (!G)
+				boutput(usr, "<span class='alert'>Could not find container to fill beaker from.</span>")
+				src.updateUsrDialog()
+				return
+			else if (!G.reagents.total_volume)
+				boutput(usr, "<span class='alert'>Nothing in container to fill beaker with.</span>")
+				src.updateUsrDialog()
+				return
+
+			var/obj/item/reagent_containers/glass/T = src.inserted
+			if (!T) boutput(usr, "<span class='alert'>No beaker found to fill.</span>")
+			else if(G == T) boutput(usr, "<span class='alert'>Cannot fill beaker with itself.</span>")
+			else G.reagents.trans_to(T,500)
 
 			src.updateUsrDialog()
 
