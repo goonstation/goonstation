@@ -799,7 +799,7 @@
 	icon_state = "clipboard"
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	// item_state = "clipboard"
+	item_state = "clipboard0"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
 	throw_speed = 3
@@ -939,6 +939,7 @@
 			src.UpdateOverlays(src.overlay_images["pen"], "pen")
 		else
 			src.ClearSpecificOverlays("pen")
+		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
 
 /obj/item/clipboard/with_pen
 	New()
