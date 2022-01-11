@@ -196,12 +196,23 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/human/tg/azerty
 	name = "human_tg_azerty"
 	changed_keys = list(
-	"W" = "attackself"
+		"W" = "attackself"
 	)
 
 /datum/keybind_style/human/azerty
 	name = "human_azerty"
 	changed_keys = list(
+		"&" = "help",
+		"é" = "disarm",
+		"\"" = "grab",
+		"'" = "harm",
+		"(" = "head",
+		"-" = "chest",
+		"è" = "l_arm",
+		"_" = "r_arm",
+		"ç" = "l_leg",
+		"à" = "r_leg",
+		")" = "walk",
 		"A" = "drop",
 		"Q" = KEY_LEFT
 	)
@@ -255,6 +266,10 @@ var/global/list/datum/keybind_style/keybind_styles = null
 /datum/keybind_style/robot/azerty
 	name = "robot_azerty"
 	changed_keys = list(
+		"&" = "module1",
+		"é" = "module2",
+		"\"" = "module3",
+		"'" = "module4",
 		"A" = "unequip",
 		"Q" = KEY_LEFT
 	)

@@ -334,6 +334,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()

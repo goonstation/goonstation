@@ -178,12 +178,15 @@
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
+		var/random_design
 
 		New()
 			..()
-			var/random_design = rand(1,10)
+			random_design = rand(1,10)
 			src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
 
+		update_wear_image(mob/living/carbon/human/H, override)
+			src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "suit-" : ""]design_[random_design]"))
 		tan
 			name = "tan jacket"
 			icon_state = "jacket_tan"
@@ -1056,30 +1059,6 @@
 			if(nt_wear_state in icon_states(src.wear_image_icon))
 				src.wear_state = nt_wear_state
 
-	onMaterialChanged()
-		if(src.material)
-			if(material.hasProperty("thermal"))
-				var/prot = 100 - material.getProperty("thermal")
-				setProperty("coldprot", prot)
-				setProperty("heatprot", round(prot/2))
-			else
-				setProperty("coldprot", 30)
-				setProperty("heatprot", 15)
-
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
-
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 13)
-				setProperty("meleeprot", prot)
-				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
-			else
-				setProperty("meleeprot", 2)
-				setProperty("rangedprot", 0.4)
-
 	setupProperties()
 		..()
 		setProperty("coldprot", 50)
@@ -1092,7 +1071,7 @@
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
-	desc = "A suit that protects against low pressure environments for a short time."
+	desc = "A suit that protects against low pressure environments for a short time. Amazingly, it's even more bulky and uncomfortable than the engineering suits."
 	icon_state = "emerg"
 	item_state = "emerg"
 	c_flags = SPACEWEAR
@@ -1311,6 +1290,33 @@
 	desc = "It comes in fun colours, but is as bulky and slow to move in as any standard space suit..."
 	icon_state = "space-neon"
 	item_state = "space-neon"
+
+/obj/item/clothing/suit/space/custom // Used for nanofabs
+	name = "bespoke space suit"
+	desc = "A suit that protects against low pressure environments, custom-made just for you!"
+	onMaterialChanged()
+		if(src.material)
+			if(material.hasProperty("thermal"))
+				var/prot = 100 - material.getProperty("thermal")
+				setProperty("coldprot", prot)
+				setProperty("heatprot", round(prot/2))
+			else
+				setProperty("coldprot", 30)
+				setProperty("heatprot", 15)
+
+			if(material.hasProperty("permeable"))
+				var/prot = 100 - material.getProperty("permeable")
+				setProperty("viralprot", prot)
+			else
+				setProperty("viralprot", 40)
+
+			if(material.hasProperty("density"))
+				var/prot = round(material.getProperty("density") / 13)
+				setProperty("meleeprot", prot)
+				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
+			else
+				setProperty("meleeprot", 2)
+				setProperty("rangedprot", 0.4)
 
 // Sealab suits
 
