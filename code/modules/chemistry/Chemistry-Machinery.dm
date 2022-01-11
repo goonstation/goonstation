@@ -492,7 +492,7 @@
 
 			var/input_design = input(usr, "Choose the design (1~26):", "Design", default) as null|num
 
-			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1 || isnull(input_design) || input_design > 26 || input_design < 1)
+			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1 || isnull(input_design) || input_design > 26 || input_design < 1)
 				return
 				
 			var/obj/item/reagent_containers/food/drinks/cola/custom/C = new(src.output_target)
