@@ -2251,24 +2251,6 @@
 	},
 /turf/space,
 /area/space)
-"ago" = (
-/obj/table/auto,
-/obj/deskclutter,
-/obj/item/instrument/bikehorn,
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/juggleplaque{
-	pixel_y = 32
-	},
-/obj/item/stamp/clown,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Clowntainment"
-	})
 "agp" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
@@ -31896,6 +31878,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"bTK" = (
+/obj/disposalpipe/trunk/west,
+/obj/machinery/floorflusher{
+	desc = "It's totally not just a gigantic disposal chute! This one seems to not operate automatically.";
+	id = "kondaflush";
+	name = "manual loading chute"
+	},
+/turf/simulated/floor/orange/side{
+	dir = 8
+	},
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "bTM" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -37547,14 +37542,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"clX" = (
-/obj/table/wood/auto,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/item/peripheral/network/radio/locked,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "clY" = (
 /obj/machinery/vending/standard,
 /turf/simulated/floor/black,
@@ -39559,19 +39546,6 @@
 /obj/item/pen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/md)
-"cKT" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/grey,
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "cKV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49633,6 +49607,18 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon2,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"mWL" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/peripheral/network/radio/locked,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/black,
+/area/listeningpost)
 "mXc" = (
 /obj/machinery/recharge_station,
 /obj/landmark/start{
@@ -51319,34 +51305,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"oIl" = (
-/obj/table/wood/auto,
-/obj/item/coin{
-	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
-	name = "strange coin";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/coin{
-	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
-	name = "thick coin";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/machinery/light/lamp{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/coin{
-	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
-	name = "tarnished coin";
-	pixel_x = 5
-	},
-/obj/item/device/radio/intercom/bridge,
-/obj/blind_switch/area/west,
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet/green/fancy/edge/nw,
-/area/station/bridge/hos)
 "oIB" = (
 /obj/stool/chair,
 /turf/simulated/floor,
@@ -53476,19 +53434,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"qQD" = (
-/obj/disposalpipe/trunk/west,
-/obj/machinery/floorflusher{
-	desc = "It's totally not just a gigantic disposal chute! This one seems to not operate automatically.";
-	id = "kondaflush";
-	name = "manual loading chute"
-	},
-/turf/simulated/floor/orange/side{
-	dir = 8
-	},
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "qRd" = (
 /obj/cable{
 	d1 = 1;
@@ -54242,6 +54187,27 @@
 /obj/machinery/bot/firebot,
 /turf/simulated/floor,
 /area/station/storage/warehouse)
+"rIa" = (
+/obj/table/auto,
+/obj/deskclutter,
+/obj/item/instrument/bikehorn,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/juggleplaque{
+	pixel_y = 32
+	},
+/obj/item/stamp/clown,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "rJA" = (
 /obj/plasticflaps,
 /obj/cable{
@@ -57623,6 +57589,19 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"uXn" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grey,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "uZE" = (
 /obj/table/auto,
 /obj/item/sheet/steel{
@@ -58438,6 +58417,34 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"vUS" = (
+/obj/machinery/computer/barcode{
+	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "CUSTOM CARGO NODE - UNLABELED CARGO WILL BE EJECTED";
+	name = "printed card";
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/machinery/door_timer{
+	desc = "A remote control switch for a cargo/ejection chute.";
+	id = "kondaflush";
+	name = "Timed Chute Activator";
+	pixel_y = 24;
+	req_access = list(24,31)
+	},
+/turf/simulated/floor/orange/side{
+	dir = 9
+	},
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "vVg" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/pipe/simple,
@@ -58546,6 +58553,34 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"vZJ" = (
+/obj/table/wood/auto,
+/obj/item/coin{
+	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
+	name = "strange coin";
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/coin{
+	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
+	name = "thick coin";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/machinery/light/lamp{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/coin{
+	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
+	name = "tarnished coin";
+	pixel_x = 5
+	},
+/obj/item/device/radio/intercom/bridge,
+/obj/blind_switch/area/west,
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
+/area/station/bridge/hos)
 "vZL" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -59981,34 +60016,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
-"xrv" = (
-/obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "CUSTOM CARGO NODE - UNLABELED CARGO WILL BE EJECTED";
-	name = "printed card";
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/machinery/door_timer{
-	desc = "A remote control switch for a cargo/ejection chute.";
-	id = "kondaflush";
-	name = "Timed Chute Activator";
-	pixel_y = 24;
-	req_access = list(24,31)
-	},
-/turf/simulated/floor/orange/side{
-	dir = 9
-	},
-/area/station/routing/medsci{
-	name = "Research Router"
-	})
 "xrD" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -94795,8 +94802,8 @@ bMD
 qsO
 bPx
 bQU
-xrv
-qQD
+vUS
+bTK
 bUO
 bWY
 bQU
@@ -95098,7 +95105,7 @@ bOh
 bPy
 bQV
 bSv
-cKT
+uXn
 bUP
 bWZ
 bQU
@@ -96224,7 +96231,7 @@ aci
 aaa
 aaa
 rSs
-ago
+rIa
 ahg
 aiq
 ajh
@@ -122268,7 +122275,7 @@ bxm
 bvY
 bEO
 vTk
-oIl
+vZJ
 bIE
 bLs
 sJb
@@ -144693,7 +144700,7 @@ ckU
 ckU
 ckU
 ckU
-clX
+mWL
 cmj
 cmq
 cmC

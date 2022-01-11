@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				return
 			boutput(user, "<span class='notice'>You attach the wires to the [src.name].</span>")
 			src.stunready = 1
-			src.setSpecialOverride(/datum/item_special/spark, src, 0)
+			src.setSpecialOverride(/datum/item_special/spark/gloves, src, 0)
 			src.material_prints += ", electrically charged"
 			return
 
@@ -362,7 +362,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	setupProperties()
 		..()
-		setProperty("deflection", 25)
+		setProperty("deflection", 40)
 
 /obj/item/clothing/gloves/swat/NT
 	desc = "A pair of Nanotrasen tactical gloves that are quite fire and electrically-resistant. They also help you block attacks. They do not specifically help you block against blocking though. Just regular attacks."
@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		setProperty("conductivity", 0)
 	New()
 		..()
-		setSpecialOverride(/datum/item_special/spark, src)
+		setSpecialOverride(/datum/item_special/spark/gloves, src)
 
 
 /obj/item/clothing/gloves/yellow

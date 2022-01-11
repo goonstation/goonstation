@@ -2656,12 +2656,6 @@
 "ajy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
-"ajz" = (
-/obj/table/auto,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "ajA" = (
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
@@ -8767,6 +8761,36 @@
 /obj/machinery/dispenser,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"azp" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/thermal,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/riot,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "azq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32447,12 +32471,6 @@
 	dir = 8
 	},
 /area/listeningpost/syndicateassaultvessel)
-"bMy" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/redblack/corner{
-	dir = 8
-	},
-/area/listeningpost/syndicateassaultvessel)
 "bMz" = (
 /turf/simulated/floor/redblack{
 	dir = 5
@@ -33535,6 +33553,24 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"cKb" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/stamp/hop,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/paper/mantahopnote,
+/obj/item/acesscomputerunfolder,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen1"
+	},
+/area/station/hos)
 "cMa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34260,6 +34296,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
+"ezn" = (
+/obj/table/auto,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown{
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "eBV" = (
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_x = -10;
@@ -36221,21 +36267,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space/fluid/manta,
 /area/mantaSpace)
-"ixV" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 6
-	},
-/obj/item/storage/box/trackimp_kit{
-	pixel_x = -4
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	nostick = 1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/black,
-/area/station/security/checkpoint/sec_foyer)
 "iyE" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -36991,36 +37022,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
-"kHJ" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/mask/gas/emergency,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/light/incandescent/warm,
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "kIf" = (
 /obj/cable,
 /obj/wingrille_spawn/auto,
@@ -39951,24 +39952,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
-"rKz" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/item/stamp/hop,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/paper/mantahopnote,
-/obj/item/acesscomputerunfolder,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen1"
-	},
-/area/station/hos)
 "rLV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41739,6 +41722,25 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"wpX" = (
+/obj/table/reinforced/auto,
+/obj/item/hand_labeler{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 6
+	},
+/obj/item/storage/box/trackimp_kit{
+	pixel_x = -4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/sec_foyer)
 "wqN" = (
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
@@ -41982,6 +41984,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"xeL" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/listeningpost/syndicateassaultvessel)
 "xeX" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -83107,7 +83119,7 @@ aaa
 aaa
 aji
 aji
-ajz
+ezn
 ajK
 aiu
 agD
@@ -84658,7 +84670,7 @@ gdN
 aqO
 aCG
 xVU
-kHJ
+azp
 aSj
 aSM
 aTv
@@ -85674,7 +85686,7 @@ akV
 akL
 bMv
 ale
-bMy
+xeL
 akV
 alk
 lNJ
@@ -85877,7 +85889,7 @@ aVN
 aWn
 aZb
 uSx
-ixV
+wpX
 fZj
 aZh
 aZW
@@ -93118,7 +93130,7 @@ apG
 aaf
 aTh
 dkw
-rKz
+cKb
 aUX
 aTh
 anG

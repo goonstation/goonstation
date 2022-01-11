@@ -237,7 +237,7 @@
 
 /obj/item/chem_grenade/metalfoam
 	name = "metal foam grenade"
-	desc = "Used for emergency sealing of air breaches."
+	desc = "After activating, creates a mess of foamed metal. Useful for plugging the hull up."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "metalfoam"
 	icon_state_armed = "metalfoam1"
@@ -258,7 +258,7 @@
 
 /obj/item/chem_grenade/firefighting
 	name = "fire fighting grenade"
-	desc = "Can help to put out dangerous fires from a distance."
+	desc = "Propells firefighting foam in a wide area around it after activation, putting out fires."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "firefighting"
 	icon_state_armed = "firefighting1"

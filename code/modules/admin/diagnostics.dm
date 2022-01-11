@@ -206,6 +206,9 @@ proc/debug_map_apc_count(delim,zlim)
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
 		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
 		winset( usr, null, "command=.command" )
+		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
+				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
+			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
 
 /datum/infooverlay
 	var/name = null

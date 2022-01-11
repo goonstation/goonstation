@@ -7004,11 +7004,7 @@
 /area/moon/museum/west)
 "ayN" = (
 /obj/table,
-/obj/item/gun/russianrevolver{
-	desc = "The cold-war classic!  Well, um, a model.  Probably?";
-	icon_state = "ak47";
-	name = "\improper JK-47 rifle"
-	},
+/obj/item/gun/russianrevolver/jk47,
 /turf/unsimulated/floor/escape{
 	dir = 1
 	},
@@ -61372,23 +61368,12 @@
 	},
 /area/centcom)
 "dkY" = (
-/turf/space/shuttle_transit,
+/turf/space/shuttle_transit/safe,
 /area/battle_royale_spawn)
 "dkZ" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 8;
 	icon_state = "alt_propulsion"
-	},
-/turf/space/shuttle_transit,
-/area/shuttle_transit_space/west)
-"dla" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "4"
-	},
-/area/shuttle_transit_space/west)
-"dlc" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
@@ -61402,14 +61387,6 @@
 	},
 /area/shuttle/battle)
 "dle" = (
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
-/area/shuttle/battle)
-"dlf" = (
-/obj/item/storage/wall/medical{
-	pixel_z = -1
-	},
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
@@ -61432,12 +61409,6 @@
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "14"
 	},
-/area/shuttle/battle)
-"dlk" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/space/shuttle_transit,
 /area/shuttle/battle)
 "dll" = (
 /obj/grille/steel,
@@ -61549,13 +61520,6 @@
 	icon_state = "track_2"
 	},
 /area/shuttle/battle)
-"dlB" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/battle)
 "dlC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -61621,7 +61585,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/unsimulated/outdoors/grass,
+/turf/space/shuttle_transit/safe,
 /area/shuttle/battle)
 "dlP" = (
 /turf/simulated/wall/auto/shuttle{
@@ -61676,7 +61640,7 @@
 	},
 /area/shuttle/battle)
 "dlW" = (
-/turf/space/shuttle_transit,
+/turf/space/shuttle_transit/safe,
 /area/shuttle_particle_spawn/west)
 "dlX" = (
 /obj/critter/boogiebot,
@@ -61734,12 +61698,6 @@
 "dmd" = (
 /turf/simulated/shuttle/wall/cockpit,
 /area/shuttle/battle)
-"dme" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/battle)
 "dmf" = (
 /obj/map/light/white,
 /obj/landmark{
@@ -61784,7 +61742,6 @@
 /area/shuttle/battle)
 "dmj" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -61799,7 +61756,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/space/shuttle_transit,
+/turf/space/shuttle_transit/safe,
 /area/shuttle/battle)
 "dmm" = (
 /obj/machinery/light,
@@ -61817,12 +61774,6 @@
 	icon_state = "4"
 	},
 /area/shuttle/battle)
-"dmp" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/space/shuttle_transit,
-/area/shuttle_transit_space/west)
 "dmr" = (
 /obj/machinery/light{
 	dir = 4
@@ -61868,6 +61819,12 @@
 	opacity = 0
 	},
 /area/centcom)
+"dmM" = (
+/obj/storage/crate/bin{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "dns" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -72737,6 +72694,28 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
+"fPF" = (
+/obj/table/wood/auto/desk{
+	color = "#333333";
+	icon_state = "8"
+	},
+/obj/item/paper_bin{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/pen/pencil{
+	icon_state = "pencil-b";
+	pixel_y = -3
+	},
+/obj/item/storage/box/evidence{
+	anchored = 1;
+	desc = "It's just a big box of computer parts.";
+	name = "Box of Computer Parts";
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -73579,6 +73558,22 @@
 /obj/submachine/chef_oven,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"iMX" = (
+/obj/table/wood/auto/desk{
+	color = "#333333";
+	icon_state = "4"
+	},
+/obj/machinery/computer3/generic/personal{
+	desc = "You can see yourself, staring at a computer, standing in a tiny office, staring at yourself, staring at a computer, standing in a tiny office, staring at yourself, staring at a computer, standing in a tiny office...";
+	name = "Grifflez's Computer"
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	on = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "iOu" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -73814,6 +73809,17 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"jAR" = (
+/obj/admin_plaque{
+	name = "Grifflez's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "jBr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-32"
@@ -75043,6 +75049,20 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"mWy" = (
+/obj/table/wood/round,
+/obj/item/paper/book/custom{
+	book_cover = "book0";
+	desc = "The loan on this is expired!";
+	dir = 1;
+	name = "\"Coding 4 Beginners\"";
+	pixel_y = 7
+	},
+/obj/machinery/light/incandescent/warm/very{
+	on = 1
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "mWQ" = (
 /obj/landmark{
 	name = "pit_meatland"
@@ -75123,6 +75143,15 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
+"ncz" = (
+/obj/item/storage/photo_album{
+	desc = "Wow! A lot of these are permanent! Like, a lot!";
+	name = "Big Book of Bans";
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "ney" = (
 /turf/unsimulated/floor/arrival/corner,
 /area/centcom)
@@ -75843,6 +75872,11 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"oMF" = (
+/obj/storage/crate/freezer,
+/obj/random_item_spawner/cola,
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "oPP" = (
 /turf/simulated/floor/stairs,
 /area/diner/cow)
@@ -76415,6 +76449,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"qdU" = (
+/obj/decoration/bookcase{
+	desc = "It's all paperback copies of science fiction and fantasy novels!";
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "qfx" = (
 /obj/grille/steel,
 /obj/window/north,
@@ -77693,6 +77734,12 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
+"udt" = (
+/obj/cabinet/ammo{
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "uex" = (
 /obj/machinery/light{
 	dir = 8
@@ -78250,6 +78297,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"wgI" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -78258,6 +78313,14 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"whE" = (
+/obj/stool/chair{
+	desc = "There are screws stuck at odd angles to keep this thing from falling apart. You feel like you'll have back spasms if you keep looking at it.";
+	dir = 1;
+	name = "Horribly Uncomfortable Chair"
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "wky" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -78775,6 +78838,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"xWi" = (
+/turf/space/shuttle_transit/safe,
+/area/shuttle_transit_space/west)
 "xWx" = (
 /obj/table/auto,
 /obj/decal/fakeobjects{
@@ -78924,6 +78990,9 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"ygw" = (
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "yiP" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-20"
@@ -154248,9 +154317,9 @@ dRC
 dvy
 dvy
 wel
-dvW
-dvW
-dCj
+iMX
+whE
+dmM
 wel
 dzM
 dAt
@@ -154550,9 +154619,9 @@ dRC
 dvy
 dvy
 wel
-dvW
-dvW
-dvW
+fPF
+ygw
+ncz
 wel
 dzN
 dAv
@@ -154852,9 +154921,9 @@ dRC
 dvy
 dvy
 wel
-dvX
-dvW
-dvW
+qdU
+ygw
+oMF
 wel
 dzN
 dAu
@@ -155154,9 +155223,9 @@ wel
 dvy
 dvy
 wel
-dvW
-dvW
-dvW
+udt
+ygw
+mWy
 wel
 jYh
 dAt
@@ -155457,7 +155526,7 @@ dvy
 dvy
 wel
 wel
-kKw
+wgI
 wel
 wel
 wel
@@ -155758,7 +155827,7 @@ wel
 dvC
 dvy
 dvy
-rUQ
+jAR
 dvy
 dvy
 dvy
@@ -160039,29 +160108,29 @@ aaa
 aaa
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -160341,29 +160410,29 @@ dkG
 xYc
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -160643,29 +160712,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -160945,29 +161014,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -161247,29 +161316,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -161549,13 +161618,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dld
 dkZ
 dkZ
@@ -161565,13 +161634,13 @@ dkZ
 dkZ
 dkZ
 dmo
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -161851,13 +161920,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dle
 dll
 dls
@@ -161867,13 +161936,13 @@ dll
 dls
 dlD
 dle
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -162153,13 +162222,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dkZ
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dle
 dlm
 dlt
@@ -162169,13 +162238,13 @@ dlm
 dlt
 dlm
 dle
-dkZ
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -162455,14 +162524,14 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dla
-dlf
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dlh
 dlm
 dlu
 dlm
@@ -162470,14 +162539,14 @@ dlu
 dlm
 dlu
 dlm
-dle
-dla
-dly
-dly
-dly
-dly
-dly
-dly
+dlh
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -162757,14 +162826,14 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dlc
-dlg
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dlh
 dlm
 dlv
 dlm
@@ -162772,14 +162841,14 @@ dlv
 dlm
 dlv
 dlm
-dlj
-dmp
-dly
-dly
-dly
-dly
-dly
-dly
+dlh
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -163059,13 +163128,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dle
 dln
 dlu
@@ -163075,13 +163144,13 @@ dlm
 dlu
 dmm
 dle
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -163361,14 +163430,14 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dlh
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dle
 dlm
 dlw
 dlE
@@ -163376,14 +163445,14 @@ dlS
 dlE
 dmf
 dlm
-dlh
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+dle
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -163663,14 +163732,14 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dle
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dli
 dlm
 dlx
 dlF
@@ -163678,14 +163747,14 @@ dlT
 dlF
 dmg
 dlm
-dle
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+dli
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -163965,13 +164034,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dli
 dlm
 dlz
@@ -163981,13 +164050,13 @@ dlF
 dmh
 dlm
 dli
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -164267,14 +164336,14 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dli
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dle
 dlm
 dlx
 dlF
@@ -164282,14 +164351,14 @@ dlX
 dlF
 dmg
 dlm
-dli
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+dle
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -164569,13 +164638,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dle
 dln
 dlz
@@ -164585,13 +164654,13 @@ dlF
 dmh
 dmm
 dle
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -164871,13 +164940,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dlh
 dlo
 dlA
@@ -164887,13 +164956,13 @@ dlH
 dmi
 dlm
 dlh
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -165173,13 +165242,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dlh
 dlm
 dlv
@@ -165189,13 +165258,13 @@ dlm
 dlv
 dlm
 dlh
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -165475,13 +165544,13 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dlj
 dlp
 dlm
@@ -165491,13 +165560,13 @@ dlI
 dlm
 dmn
 dlg
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -165777,14 +165846,14 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dlk
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+dlO
 dlq
 dlr
 dlK
@@ -165793,13 +165862,13 @@ dlK
 dlr
 dlq
 dml
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -166079,29 +166148,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dlr
-dlB
+dmj
 dlL
 dmb
 dlL
 dmj
 dlr
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -166381,29 +166450,29 @@ dkQ
 dkG
 aaa
 dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dlk
+xWi
+dlO
 dlC
 dlL
 dmc
 dlL
 dmk
 dml
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -166683,29 +166752,29 @@ dkQ
 dkG
 aaa
 dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dlk
+xWi
+xWi
+dlO
 dlM
 dlK
 dlM
 dml
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -166985,29 +167054,29 @@ dkQ
 dkG
 aaa
 dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
 dly
 dlO
 dmd
-dme
+dml
+xWi
 dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -167287,29 +167356,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dlW
+xWi
+xWi
 dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -167589,29 +167658,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dlW
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -167891,29 +167960,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -168193,29 +168262,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -168495,29 +168564,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw
@@ -168797,29 +168866,29 @@ dkQ
 dkG
 aaa
 dkY
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
-dly
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 cnw

@@ -10813,6 +10813,25 @@
 /area/station/crew_quarters/heads{
 	name = "Officers' Lounge"
 	})
+"dej" = (
+/obj/rack,
+/obj/item/breaching_hammer,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/item/breaching_charge,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/security/armory)
 "der" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12137,6 +12156,23 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"dwY" = (
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/artifact)
 "dxg" = (
 /obj/critter/opossum/morty,
 /obj/machinery/firealarm{
@@ -26717,38 +26753,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"hvU" = (
-/obj/table/wood/auto,
-/obj/item/coin{
-	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
-	name = "strange coin";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/coin{
-	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
-	name = "thick coin";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/item/coin{
-	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
-	name = "tarnished coin";
-	pixel_x = 5
-	},
-/obj/item/stamp/hop{
-	pixel_y = 13
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/item/pen/crayon/golden{
-	pixel_y = -11
-	},
-/obj/item/paper/CrashedHopShuttle,
-/turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/crew_quarters/hop)
 "hwb" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -30677,25 +30681,6 @@
 "iFt" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/private)
-"iFu" = (
-/obj/rack,
-/obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/security/armory)
 "iFA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34081,6 +34066,38 @@
 "jCd" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor/horprivate)
+"jCg" = (
+/obj/table/wood/auto,
+/obj/item/coin{
+	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
+	name = "strange coin";
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/coin{
+	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
+	name = "thick coin";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/coin{
+	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
+	name = "tarnished coin";
+	pixel_x = 5
+	},
+/obj/item/stamp/hop{
+	pixel_y = 13
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/item/pen/crayon/golden{
+	pixel_y = -11
+	},
+/obj/item/paper/CrashedHopShuttle,
+/turf/simulated/floor/carpet/green/fancy/edge/west,
+/area/station/crew_quarters/hop)
 "jCo" = (
 /obj/storage/secure/closet/engineering/welding,
 /obj/machinery/camera{
@@ -39923,6 +39940,16 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/secoffquarters)
+"liv" = (
+/obj/table/auto,
+/obj/item/clipboard{
+	pixel_x = -4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 13
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/artifact)
 "liA" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
 /turf/simulated/floor/engine,
@@ -78444,16 +78471,6 @@
 	dir = 8
 	},
 /area/station/engine/elect)
-"vrW" = (
-/obj/table/auto,
-/obj/item/storage/box/tapebox,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/science/artifact)
 "vsc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
 /obj/lattice,
@@ -81863,12 +81880,6 @@
 /area/station/crew_quarters/heads{
 	name = "Officers' Lounge"
 	})
-"wmg" = (
-/obj/table/auto,
-/obj/item/clipboard,
-/obj/item/pen,
-/turf/simulated/floor/engine/caution/west,
-/area/station/science/artifact)
 "wmn" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/neutral/side,
@@ -126046,7 +126057,7 @@ uBj
 xKU
 aFH
 wnc
-vrW
+dwY
 yaW
 lop
 rRA
@@ -127244,7 +127255,7 @@ eSx
 qBR
 qBR
 vuq
-wmg
+liv
 yaW
 mpK
 xMA
@@ -136984,7 +136995,7 @@ qUc
 hIb
 nub
 fln
-iFu
+dej
 wzX
 qzL
 rsq
@@ -142969,7 +142980,7 @@ ylM
 tBw
 kPC
 jOb
-hvU
+jCg
 cGk
 dhA
 yiR

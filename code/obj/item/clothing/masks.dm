@@ -181,6 +181,14 @@
 			setProperty("movespeed", 0.2)
 			setProperty("exploprot", 40)
 
+		equipped(mob/user, slot)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+		unequipped(mob/user)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
 	postpossession
 		name = "worn gas mask"
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
@@ -423,6 +431,8 @@
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
 	permeability_coefficient = 0.50
+	var/bee = FALSE
+	var/randcol
 
 	setupProperties()
 		..()
@@ -435,6 +445,7 @@
 		var/image/onhead = image('icons/mob/clothing/mask.dmi', "")
 
 		if (prob(1))
+			bee = TRUE
 			name = "surgical face bee-ld"
 			inventory.icon_state = "surgicalshield-bee"
 			onhead.icon_state = "surgicalshield-bee"
@@ -442,12 +453,22 @@
 		else
 			inventory.icon_state = "surgicalshield-overlay"
 			onhead.icon_state = "surgicalshield-overlay"
-			var/randcol = random_hex(6)
+			randcol = random_hex(6)
 			inventory.color = "#[randcol]"
 			onhead.color = "#[randcol]"
 
 		src.UpdateOverlays(inventory, "surgmaskcolour")
 		src.wear_image.overlays += onhead
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		var/image/onhead
+		if(bee)
+			onhead = image(src.wear_image.icon,"[override ? "mask-" : ""]surgicalshield-bee")
+		else
+			onhead = image(src.wear_image.icon,"[override ? "mask-" : ""]surgicalshield-overlay")
+			onhead.color = "#[randcol]"
+		src.wear_image.overlays = list(onhead)
+
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"
