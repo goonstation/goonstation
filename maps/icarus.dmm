@@ -26971,7 +26971,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "kSV" = (

@@ -12158,18 +12158,11 @@
 /area/station/crew_quarters/cafeteria)
 "dwY" = (
 /obj/table/auto,
+/obj/item/storage/box/tapebox,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13"
-	},
-/obj/artifact_paper_dispenser{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/item/device/matanalyzer{
-	pixel_x = -4;
-	pixel_y = 5
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/artifact)
@@ -34095,7 +34088,6 @@
 /obj/item/pen/crayon/golden{
 	pixel_y = -11
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/hop)
 "jCo" = (
@@ -39942,12 +39934,8 @@
 /area/station/security/secoffquarters)
 "liv" = (
 /obj/table/auto,
-/obj/item/clipboard{
-	pixel_x = -4
-	},
-/obj/artifact_paper_dispenser{
-	pixel_x = 13
-	},
+/obj/item/clipboard,
+/obj/item/pen,
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/artifact)
 "liA" = (

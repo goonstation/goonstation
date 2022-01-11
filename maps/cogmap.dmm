@@ -15185,9 +15185,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "aOt" = (
@@ -23527,9 +23525,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24665,9 +24661,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bkI" = (
-/obj/machinery/launcher_loader/east{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/east,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25104,9 +25098,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blP" = (
@@ -25243,9 +25235,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bmb" = (
-/obj/machinery/launcher_loader/west{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/west,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -25512,9 +25502,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmI" = (
-/obj/machinery/launcher_loader/south{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bmJ" = (
@@ -26633,9 +26621,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boU" = (
-/obj/machinery/launcher_loader/south{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "boV" = (
@@ -31461,9 +31447,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bBW" = (
-/obj/machinery/launcher_loader/north{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/north,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -36591,9 +36575,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north{
-	door_delay = 5
-	},
+/obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bOM" = (
@@ -37197,9 +37179,7 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/east,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -37911,9 +37891,7 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west{
-	door_delay = 4
-	},
+/obj/machinery/launcher_loader/west,
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -54830,12 +54808,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
-"fud" = (
-/obj/machinery/launcher_loader/north{
-	door_delay = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "fuX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -56005,12 +55977,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/sortingRoom)
-"hwq" = (
-/obj/machinery/launcher_loader/west{
-	door_delay = 4
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "hxk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -58500,12 +58466,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"mDA" = (
-/obj/machinery/launcher_loader/south{
-	door_delay = 5
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "mDB" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics";
@@ -60179,7 +60139,6 @@
 /obj/machinery/light/lamp{
 	switchon = 1
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen2"
@@ -97648,7 +97607,7 @@ adC
 aag
 aan
 aan
-mDA
+aaA
 aaF
 aaF
 adC
@@ -98399,7 +98358,7 @@ adC
 adC
 cyI
 cyI
-fud
+blw
 aax
 aaC
 aaG
@@ -120601,7 +120560,7 @@ aag
 aav
 aan
 aaE
-mDA
+aaA
 aaN
 aaN
 aap
@@ -130941,7 +130900,7 @@ aaw
 aap
 aaB
 aai
-hwq
+aau
 aap
 aaw
 aaw

@@ -69081,7 +69081,6 @@
 /obj/machinery/light/lamp{
 	switchon = 1
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"

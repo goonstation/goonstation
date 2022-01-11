@@ -45449,18 +45449,6 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "cnw" = (
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/stool/bed,
 /obj/item/sticker/ribbon/first_place{
 	pixel_x = -1
@@ -46598,7 +46586,6 @@
 "jgL" = (
 /obj/table/wood/round/auto,
 /obj/item/item_box/gold_star,
-/obj/item/acesscomputerunfolder,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},
@@ -48326,7 +48313,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/item/clothing/suit/armor/hopcoat,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -48486,12 +48472,6 @@
 	},
 /area/station/ai_monitored/armory)
 "vNe" = (
-/obj/table/wood/round/auto,
-/obj/item/storage/box/accessimp_kit{
-	pixel_y = 9
-	},
-/obj/item/paper/CrashedHopShuttle,
-/obj/item/pen/crayon/golden,
 /obj/rack,
 /obj/item/tank/jetpack,
 /obj/item/clothing/mask/gas/emergency,
@@ -48608,6 +48588,7 @@
 /area/station/hangar/sec)
 "wAa" = (
 /obj/stool/chair/comfy/blue,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
 	},

@@ -7144,7 +7144,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/paper/CrashedHopShuttle,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},

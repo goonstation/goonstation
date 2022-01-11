@@ -19062,7 +19062,6 @@
 "Vy" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/accessimp_kit,
-/obj/item/paper/CrashedHopShuttle,
 /obj/machinery/light/lamp/green{
 	pixel_x = -6;
 	pixel_y = 4;
