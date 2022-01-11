@@ -15,6 +15,7 @@
 
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
+	var/active_c_flags
 
 	var/dump_contents_chance = 20
 
@@ -1265,35 +1266,22 @@
 	return null
 
 
-/mob/living/carbon/human/proc/find_flag_in_equipment(var/flag)
-	if (w_uniform && w_uniform.c_flags & flag > 0)
-		return true
-	if(wear_id && wear_id.c_flags & flag > 0)
-		return true
-	if(gloves && gloves.c_flags & flag > 0)
-		return true
-	if(shoes && shoes.c_flags & flag > 0)
-		return true
-	if(wear_suit && wear_suit.c_flags & flag > 0)
-		logTheThing("debug", src, null, "[src] said 2 [flag & wear_suit.c_flags & flag]")
-		return true
-	if(back && back.c_flags & flag > 0)
-		return true
-	if(glasses && glasses.c_flags & flag > 0)
-		return true
-	if(ears && ears.c_flags & flag > 0)
-		return true
-	if(wear_mask && wear_mask.c_flags & flag > 0)
-		return true
-	if(head && head.c_flags & flag > 0)
-		return true
-	if(belt && belt.c_flags & flag > 0)
-		return true
-	if(l_store && l_store.c_flags & flag > 0)
-		return true
-	if(r_store && r_store.c_flags & flag > 0)
-		return true
-	return false
+/mob/living/carbon/human/proc/update_clothing_flags()
+	var/flags = 0
+	if (w_uniform) 	flags = flags | w_uniform.c_flags
+	if (wear_id) 	flags = flags | wear_id.c_flags
+	if (gloves) 	flags = flags | gloves.c_flags
+	if (shoes) 		flags = flags | shoes.c_flags
+	if (wear_suit) 	flags = flags | wear_suit.c_flags
+	if (back) 		flags = flags | back.c_flags
+	if (glasses) 	flags = flags | glasses.c_flags
+	if (ears) 		flags = flags | ears.c_flags
+	if (wear_mask) 	flags = flags | wear_mask.c_flags
+	if (head) 		flags = flags | head.c_flags
+	if (belt) 		flags = flags | belt.c_flags
+	if (l_store) 	flags = flags | l_store.c_flags
+	if (r_store) 	flags = flags | r_store.c_flags
+	src.active_c_flags = flags
 	
 	
 /mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
@@ -1848,6 +1836,8 @@
 		W.dropped(src)
 		src.l_hand = null
 		src.update_inhands()
+	src.update_clothing_flags();
+
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -2137,6 +2127,7 @@
 			if (slot != slot_in_backpack && slot != slot_in_belt)
 				I.show_buttons()
 		src.update_clothing()
+		src.update_clothing_flags();
 	return equipped
 
 
