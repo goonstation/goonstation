@@ -163,6 +163,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	grayshift
 		ckey = "grayshift"
 		name = "Office of Grayshift"
+	grifflez
+		ckey = "grifflez"
+		name = "Office of Grifflez"
 	hazoflabs
 		// ckey = ""
 		name = "Shared Office Space of Gerhazo and Flaborized"

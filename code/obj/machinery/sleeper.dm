@@ -669,7 +669,7 @@
 
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
-	desc = "An emergency transportation device for critically injured patients."
+	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
 	anchored = 0
 	mats = 30
@@ -765,7 +765,7 @@
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
-	desc = "Your usual sleeper, but compact this time. Wow!"
+	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
 	anchored = 1

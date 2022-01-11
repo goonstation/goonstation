@@ -16,6 +16,7 @@
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -202,6 +203,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside

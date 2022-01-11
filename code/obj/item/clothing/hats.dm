@@ -921,7 +921,7 @@ proc/filter_trait_hats(var/type)
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
 	item_function_flags = IMMUNE_TO_ACID //shouldn't be able to just melt the Syndicate Hat.
-	var/datum/component/holdertargeting/sm_light/light_c
+	var/datum/component/loctargeting/sm_light/light_c
 	var/processing = 0
 
 	process()
@@ -950,7 +950,7 @@ proc/filter_trait_hats(var/type)
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
 		light_c.update(1)
 
 		if (prob(10))
@@ -1579,11 +1579,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		item_state = "hbow-yellowpolkadot"
 
 /obj/item/clothing/head/rafflesia
-    name = "rafflesia"
-    desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
-    wear_image_icon = 'icons/mob/clothing/fruithat.dmi'
-    icon_state = "rafflesiahat"
-    item_state = "rafflesiahat"
+	name = "rafflesia"
+	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+	icon_state = "rafflesiahat"
+	item_state = "rafflesiahat"
 
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"

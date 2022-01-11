@@ -1421,6 +1421,7 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
+		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 

@@ -369,6 +369,7 @@ var/list/admin_verbs = list(
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
 		/client/proc/debug_global_variable,
+		/client/proc/debug_ref_variables,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
@@ -1025,10 +1026,18 @@ var/list/fun_images = list()
 	var/new_mob = FALSE
 	if(src.holder.respawn_as_self_mob && !src.holder.respawn_as_self_mob.disposed && !new_self)
 		H = src.holder.respawn_as_self_mob
-		H.set_loc(mymob.loc)
+		if(locate(/obj/storage) in mymob.loc)
+			var/obj/storage/S = locate(/obj/storage) in mymob.loc
+			H.set_loc(S)
+		else
+			H.set_loc(mymob.loc)
 		src.holder.respawn_as_self_mob = null
 	else
-		H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
+		if(locate(/obj/storage) in mymob.loc)
+			var/obj/storage/S = locate(/obj/storage) in mymob.loc
+			H = new(S, src.preferences.AH, src.preferences, TRUE)
+		else
+			H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
 		new_mob = TRUE
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()

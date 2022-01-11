@@ -34,7 +34,7 @@ var/global/list/mapNames = list(
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
 	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),
-	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 80),
+	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = 0,				"MaxPlayersAllowed" = 80),
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = ASS_JAM),
 	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = 0),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = 0),

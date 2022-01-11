@@ -82,7 +82,8 @@
 #define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 /// When something calls UpdateIcon
 #define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
-
+/// When reagents change
+#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
@@ -140,6 +141,12 @@
 // ---- drone beacon signal ----
 /// Triggers on destruction of a drone beacon
 #define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
+
+// ---- bomb assembly signals ----
+/// Triggers on the start of signalling the opening of an assembly bomb
+#define COMSIG_BOMB_SIGNAL_START "bomb_signal_start"
+/// Triggers when an assembly bomb's signalling is cancelled
+#define COMSIG_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
 
 // ---- implant signals ----
 /// When implanted

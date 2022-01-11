@@ -1067,6 +1067,7 @@
 		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
 			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+			src.last_heard_name = src.get_heard_name()
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1470,9 +1471,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (gloves?.material)
 		gloves.material.triggerOnAttack(gloves, M, src)
-		for (var/atom/A in src)
-			if (A.material)
-				A.material.triggerOnAttacked(A, M, src, gloves)
+	for (var/atom/A in src)
+		if (A.material)
+			A.material.triggerOnAttacked(A, M, src, gloves)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1757,6 +1758,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			src.cure_disease(M)
 		for(var/datum/ailment_data/addiction/A in src.ailments)
 			src.ailments -= A
+		for (var/datum/ailment_data/parasite/P in src.ailments)
+			src.cure_disease(P)
 
 /mob/living/proc/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 	SHOULD_CALL_PARENT(TRUE)

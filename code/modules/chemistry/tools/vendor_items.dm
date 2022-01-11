@@ -25,6 +25,7 @@
 	rc_flags = RC_VISIBLE | RC_SPECTRO
 
 	on_reagent_change()
+		..()
 		UpdateIcon()
 
 	update_icon()
@@ -71,6 +72,7 @@
 	icon_state = "vendbag"
 
 	on_reagent_change()
+		..()
 		UpdateIcon()
 
 	update_icon()
