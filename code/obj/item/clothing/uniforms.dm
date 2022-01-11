@@ -284,6 +284,7 @@
 	fancy
 		icon_state = "hop-fancy"
 		item_state = "hop-fancy"
+
 	dress
 		icon_state = "hop-dress"
 
@@ -1090,20 +1091,8 @@
 		icon_state = "suitR"
 		item_state = "suitR"
 
-	dress_navy
-		icon_state = "suitT-dress-alt"
-		item_state = "suitT-dress-alt"
-
-	navy
-		desc = "A navy suit and green necktie. An authoritative yet tacky ensemble."
-		icon_state = "suitT-alt"
-		item_state = "suitT-alt"
-
 	dress
 		icon_state = "suitT-dress"
-		item_state = "suitT-dress"
-
-
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
