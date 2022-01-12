@@ -246,8 +246,8 @@
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
 							system.reply("[ckey] acknowledged the alert.", user)
-			else
-				system.reply("Could not locate [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
 
 /datum/spacebee_extension_command/prison
 	name = "prison"
