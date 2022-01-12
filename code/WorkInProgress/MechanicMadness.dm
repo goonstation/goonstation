@@ -633,6 +633,7 @@
 
 	var/obj/disposalpipe/trunk/trunk = null
 	var/datum/gas_mixture/air_contents
+	var/max_capacity = 100
 
 	New()
 		. = ..()
@@ -663,11 +664,15 @@
 		return 0
 
 	proc/flushp(var/datum/mechanicsMessage/input)
+		var/count = 0
 		if(level == 2) return
 		if(input?.signal && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time) && trunk && !trunk.disposed)
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.anchored || isAI(M)) continue
+				if(count == src.max_capacity)
+					break
 				M.set_loc(src)
+				count++
 			flushit()
 
 	proc/flushit()
@@ -2634,6 +2639,7 @@
 		active_buttons = list()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button","addButton")
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button","removeButton")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", "signalAddButton")
 
 	proc/addButton(obj/item/W as obj, mob/user as mob)
 		if(length(src.active_buttons) >= 10)
@@ -2671,6 +2677,30 @@
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/signalAddButton(var/datum/mechanicsMessage/input)
+		if(length(src.active_buttons) >= 10)
+			return 0
+
+		var/targetValues = params2list(input.signal)
+		var/succesfulAddition = 0
+		var/new_label = ""
+		var/new_signal = ""
+
+		for(var/indx in targetValues)
+			if(length(indx) && length(targetValues[indx]))
+				new_label = adminscrub(indx)
+				new_signal = adminscrub(targetValues[indx])
+				if(new_label in src.active_buttons)
+					continue
+				src.active_buttons.Add(new_label)
+				src.active_buttons[new_label] = new_signal
+				succesfulAddition = 1
+				tooltip_rebuild = 1
+
+		return succesfulAddition
+
+
 
 	attack_hand(mob/user as mob)
 		if (level == 1)

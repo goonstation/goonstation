@@ -624,7 +624,7 @@
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	icon_state = "injectorbelt"
-	item_state = "injector"
+	item_state = "medical"
 	can_hold = list(
 		/obj/item/robodefibrillator
 	)
@@ -634,7 +634,7 @@
 	name = "miner's belt"
 	desc = "Can hold various mining tools."
 	icon_state = "minerbelt"
-	item_state = "utility"
+	item_state = "mining"
 	can_hold = list(
 		/obj/item/mining_tool,
 		/obj/item/mining_tools
@@ -653,8 +653,8 @@
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
-	icon_state = "minerbelt"
-	item_state = "utility"
+	icon_state = "hunterbelt"
+	item_state = "hunter"
 	max_wclass = 3
 	item_function_flags = IMMUNE_TO_ACID
 

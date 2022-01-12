@@ -368,6 +368,7 @@ var/list/admin_verbs = list(
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
 		/client/proc/debug_global_variable,
+		/client/proc/debug_ref_variables,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,

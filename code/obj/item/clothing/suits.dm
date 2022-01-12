@@ -163,12 +163,15 @@
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
+		var/random_design
 
 		New()
 			..()
-			var/random_design = rand(1,10)
+			random_design = rand(1,10)
 			src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
 
+		update_wear_image(mob/living/carbon/human/H, override)
+			src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "suit-" : ""]design_[random_design]"))
 		tan
 			name = "tan jacket"
 			icon_state = "jacket_tan"
@@ -1053,7 +1056,7 @@
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
-	desc = "A suit that protects against low pressure environments for a short time."
+	desc = "A suit that protects against low pressure environments for a short time. Amazingly, it's even more bulky and uncomfortable than the engineering suits."
 	icon_state = "emerg"
 	item_state = "emerg"
 	c_flags = SPACEWEAR

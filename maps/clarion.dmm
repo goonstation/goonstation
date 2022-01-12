@@ -45058,7 +45058,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -45142,7 +45142,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -45720,7 +45720,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gCc" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -49006,7 +49006,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -50208,7 +50208,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50219,7 +50219,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -51738,7 +51738,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
