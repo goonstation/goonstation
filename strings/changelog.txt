@@ -1,6 +1,10 @@
 
 (t)tue jan 11 22
 (u)Flaborized
+(p)7144
+(e)🎨|sprites
+(+)Resprited botanical seeds.
+(u)Flaborized
 (p)7145
 (e)🎨|sprites
 (+)Resprited vomit.
