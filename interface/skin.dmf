@@ -223,12 +223,6 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 		is-checked = true
-	elem "hide_menu"
-		name = "&Hide menu"
-		command = ".winset \"hide_menu.is-checked=true?mainwindow.menu='';menub.is-visible = true\""
-		category = "&Window"
-		can-check = true
-		saved-params = "is-checked"
 	elem
 		name = "&Effects"
 		command = ""
@@ -1443,16 +1437,6 @@ window "rpane"
 		command = ".winset \"rpanewindow.left=infowindow\""
 		group = "rpanemode"
 		button-type = pushbox
-	elem "menub"
-		type = BUTTON
-		pos = 135,5
-		size = 60x20
-		anchor1 = none
-		anchor2 = none
-		is-visible = false
-		saved-params = "is-checked"
-		text = "Menu"
-		command = ".winset \"mainwindow.menu='menu'; hide_menu.is-checked=false; menub.is-visible = false\""
 	elem "mapb"
 		type = BUTTON
 		pos = 315,5
