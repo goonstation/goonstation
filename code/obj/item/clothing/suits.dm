@@ -1263,8 +1263,22 @@
 			desc = "A syndicate issue combat dress system, pressurized for space travel."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
-			c_flags = SPACEWEAR	| DOOR_PASS_EARLY
+			c_flags = SPACEWEAR	| DOOR_PASS_EARLY | NOSLIP
+			equipped(var/mob/user)
+				var/obj/item/wakizashi/sword = new(src.loc)
+				if (ishuman(user))
+					var/mob/living/carbon/human/U = user
+					U.drop_from_slot(U.r_hand)
+					U.force_equip(sword, U.slot_r_hand)
+				..()
 
+			unequipped(var/mob/user)
+				if (ishuman(user))
+					if (istype(user.r_hand,/obj/item/wakizashi))
+						var/mob/living/carbon/human/U = user
+						del(U.r_hand)
+				..()
+				
 			setupProperties()
 				..()
 				setProperty("exploprot", 15)

@@ -1690,3 +1690,50 @@ obj/item/whetstone
 		cant_drop = 1
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
+
+
+//Ninja Wakizashi
+/obj/item/wakizashi
+	name = "syndicate wakizashi"
+	desc = "A sharp sword, hooked into an operative suit and coated with anticoagulants."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "wakizashi"
+	item_state = "wakizashi"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+	force = 15.0
+	stamina_cost = 5
+	stamina_damage = 20
+	cant_drop = 1
+	cant_self_remove = 1
+	cant_other_remove = 1
+	flags = FPRINT | CONDUCT | TABLEPASS
+	item_function_flags = IMMUNE_TO_ACID
+	hit_type = DAMAGE_CUT
+	tool_flags = TOOL_CUTTING
+	w_class = W_CLASS_NORMAL
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe/wakizashi)
+
+	attack(target as mob, mob/user as mob)
+		..()
+		if(isliving(target))
+			var/mob/living/C = target
+
+			//scale blood loss down as they lose more, to save medbay having The Worst Day
+			if (C.blood_volume > 310)
+				playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
+				if (C.blood_volume >= 475)
+					blood_slash(C,8,null, turn(usr.dir,90), 4)
+					C.reagents.add_reagent("heparin", 10, null) //wahahaha (you bleed a LOT of this out)
+				else
+					blood_slash(C,6,null, turn(usr.dir,90), 3)
+			else
+				blood_slash(C,1,null, turn(usr.dir,90), 2)
+				playsound(target, "sound/impact_sounds/Blade_Small.ogg", 60, 1)
+			C.reagents.add_reagent("heparin", 5, null)
+
+		else
+			playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
