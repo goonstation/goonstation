@@ -1,4 +1,9 @@
 
+(t)tue jan 11 22
+(u)DimWhat
+(p)7136
+(e)🎨|sprites
+(*)Added several unique sprites for worn IDs
 (t)mon jan 10 22
 (u)Nexusuxen
 (p)7113
