@@ -160,7 +160,7 @@
 		contained_item = /obj/item/weapons/space_shuriken
 		take_from()
 			var/obj/item/shuriken = ..()
-			shuriken.amount = 3
+			shuriken.change_stack_amount(2)
 			return shuriken
 
 	assorted

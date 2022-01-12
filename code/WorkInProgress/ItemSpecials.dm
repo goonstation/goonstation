@@ -406,6 +406,10 @@
 		onMouseUp(atom/target,location,control,params)
 			if(!usable()) return
 			if(!isturf(target.loc) && !isturf(target)) return
+			if(istype(usr, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = usr
+				if(H.in_throw_mode || usr.client.check_key(KEY_THROW)) 
+					return
 			var/list/parameters = params2list(params)
 			if(parameters["left"] && master && get_dist_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 				var/obj/item/copy = master.split_stack(1)
@@ -658,7 +662,12 @@
 				if(master)
 					overrideStaminaDamage = master.stamina_damage * 0.8
 				return
-
+		
+		wakizashi
+			damageMult = 0.8
+			moveDelay = 0
+			moveDelayDuration = 0
+			
 	launch_projectile
 		cooldown = 3 SECONDS
 		staminaCost = 30
