@@ -11431,7 +11431,7 @@
 	},
 /area/station/hydroponics/bay)
 "ddJ" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/tile_edge/line/purple{
 	dir = 10;

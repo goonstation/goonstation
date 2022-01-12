@@ -23146,7 +23146,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bhi" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},

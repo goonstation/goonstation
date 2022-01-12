@@ -70,8 +70,8 @@
 	desc = "It's a closet! This one can be opened AND closed. Comes with janitor's clothes and biohazard gear."
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
 							/obj/item/storage/box/trash_bags = 2,
-							/obj/item/clothing/suit/bio_suit,
-							/obj/item/clothing/head/bio_hood,
+							/obj/item/clothing/suit/bio_suit/janitor,
+							/obj/item/clothing/head/bio_hood/janitor,
 							/obj/item/clothing/under/rank/janitor = 2,
 							/obj/item/clothing/shoes/black = 2,
 							/obj/item/device/light/flashlight,
@@ -120,11 +120,11 @@
 	/obj/item/clothing/head/bio_hood = 2)
 
 /obj/storage/closet/biohazard/janitor
-	name = "\improper Level 3 Biohazard Suit closet"
+	name = "\improper Level 3 Janitorial Suit closet"
 	desc = "It's a closet! This one can be opened AND closed. Comes prestocked with level 3 biohazard gear for emergency janitorial work."
-	icon_state = "bio"
-	icon_closed = "bio"
-	icon_opened = "bio-open"
+	icon_state = "bio_jani"
+	icon_closed = "bio_jani"
+	icon_opened = "bio_jani-open"
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
 	/obj/item/clothing/suit/bio_suit/janitor = 2,
 	/obj/item/clothing/under/color/white = 2,

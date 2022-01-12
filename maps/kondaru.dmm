@@ -25245,7 +25245,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "bzZ" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "bAa" = (

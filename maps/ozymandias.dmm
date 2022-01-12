@@ -83401,7 +83401,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "wDQ" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "wEc" = (

@@ -21959,7 +21959,7 @@
 	},
 /area/station/janitor/office)
 "bcA" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/purple/checker{
 	dir = 4
 	},

@@ -20456,7 +20456,6 @@
 /area/station/maintenance/north)
 "aVl" = (
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
-/obj/storage/closet/biohazard,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -20469,6 +20468,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "aVm" = (
@@ -55110,8 +55110,6 @@
 /turf/simulated/floor/bot,
 /area/station/janitor/office)
 "cre" = (
-/obj/storage/closet/biohazard,
-/obj/item/reagent_containers/emergency_injector/spaceacillin,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -55119,6 +55117,8 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light_switch/north,
+/obj/storage/closet/biohazard/janitor,
+/obj/item/reagent_containers/emergency_injector/spaceacillin,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "crf" = (

@@ -14390,7 +14390,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aId" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "aIe" = (

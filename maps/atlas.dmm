@@ -12591,7 +12591,7 @@
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
 "EY" = (
-/obj/storage/closet/biohazard,
+/obj/storage/closet/biohazard/janitor,
 /obj/machinery/light_switch/auto,
 /obj/machinery/light{
 	dir = 1;

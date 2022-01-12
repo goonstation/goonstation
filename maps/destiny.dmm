@@ -25452,10 +25452,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "fFm" = (
-/obj/storage/closet/biohazard,
 /obj/machinery/light_switch/north{
 	pixel_y = 28
 	},
+/obj/storage/closet/biohazard/janitor,
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
 "fFH" = (
@@ -48392,11 +48392,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "rYt" = (
-/obj/storage/closet/biohazard,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/storage/closet/biohazard/janitor,
 /obj/machinery/disposal/small{
 	dir = 4
 	},
