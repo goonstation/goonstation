@@ -795,6 +795,7 @@
 		hasPrize = (prize_inside == 1)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			src.name = "cereal"
 			src.dry = 0
@@ -1595,6 +1596,7 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1618,6 +1620,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	heal(var/mob/M)
@@ -2151,6 +2154,7 @@
 		src.pixel_y = rand(-6, 6)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()

@@ -771,101 +771,133 @@
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 
-	attack(atom/target, mob/user)
-		qdel(src)
+/obj/item/grab/block/attack(atom/target, mob/user)
+	qdel(src)
 
-	attack_self(mob/user)
-		qdel(src)
+/obj/item/grab/block/attack_self(mob/user)
+	qdel(src)
 
-	update_icon()
+/obj/item/grab/block/update_icon()
+	return
+
+/obj/item/grab/block/do_resist()
+	.= 0
+	if (assailant)
+		playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
+	qdel(src)
+
+/obj/item/grab/block/setProperty(propId, propVal)
+	var/datum/objectProperty/equipment/P = ..()
+	if(istype(P))
+		P.updateMob(src, src.assailant, propVal)
+
+/obj/item/grab/block/delProperty(propId)
+	var/propVal = getProperty(propId)
+	var/datum/objectProperty/equipment/P = ..()
+	if(istype(P))
+		P.removeFromMob(src, src.assailant, propVal)
+
+/obj/item/grab/block/proc/can_block(var/hit_type = null, real_hit = 1)
+	.= UNARMED_BLOCK_PROTECTION_BONUS
+	if (isitem(src.loc) && hit_type)
+		var/obj/item/I = src.loc
+
+		var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
+		if(real_hit && prop == "burn" && I?.reagents)
+			I.reagents.temperature_reagents(4000,10)
+		.= src.getProperty("I_block_[prop]")
+	if(real_hit)
+		var/ret = list(.)
+		SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED, hit_type, ret)
+		. = ret[1]
+		block_spark(src.assailant)
+		fuckup_attack_particle()
 
 
-	do_resist()
-		.= 0
-		if (assailant)
-			playsound(assailant.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0, 1.5)
-		qdel(src)
+/obj/item/grab/block/proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
+	switch(hit_type)
+		if (DAMAGE_BLUNT)
+			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+		if (DAMAGE_CUT)
+			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+		if (DAMAGE_STAB)
+			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+		if (DAMAGE_BURN)
+			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
 
-	setProperty(propId, propVal)
-		var/datum/objectProperty/equipment/P = ..()
-		if(istype(P))
-			P.updateMob(src, src.assailant, propVal)
+/obj/item/grab/block/handle_throw(mob/living/user, atom/target)
+	if (isturf(user.loc) && target)
+		var/turf/T = user.loc
+		if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
+			user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
+			user.force_laydown_standup()
 
-	delProperty(propId)
-		var/propVal = getProperty(propId)
-		var/datum/objectProperty/equipment/P = ..()
-		if(istype(P))
-			P.removeFromMob(src, src.assailant, propVal)
+			var/target_dir = get_dir(user,target)
+			var/turf/target_turf = get_step(user, target_dir)
+			if (!target_turf)
+				target_turf = T
 
-	proc/can_block(var/hit_type = null, real_hit = 1)
-		.= UNARMED_BLOCK_PROTECTION_BONUS
-		if (isitem(src.loc) && hit_type)
-			var/obj/item/I = src.loc
+			var/mob/living/dive_attack_hit = null
 
-			var/prop = DAMAGE_TYPE_TO_STRING(hit_type)
-			if(real_hit && prop == "burn" && I?.reagents)
-				I.reagents.temperature_reagents(4000,10)
-			.= src.getProperty("I_block_[prop]")
-		if(real_hit)
-			var/ret = list(.)
-			SEND_SIGNAL(src, COMSIG_BLOCK_BLOCKED, hit_type, ret)
-			. = ret[1]
-			block_spark(src.assailant)
-			fuckup_attack_particle()
+			for (var/mob/living/L in target_turf)
+				if (user == L) continue
+				dive_attack_hit = L
+				break
 
+			if (dive_attack_hit)
+				var/damage = rand(1,6)
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.shoes)
+						damage += H.shoes.kick_bonus
+					else if (H.limbs.r_leg)
+						damage += H.limbs.r_leg.limb_hit_bonus
+					else if (H.limbs.l_leg)
+						damage += H.limbs.l_leg.limb_hit_bonus
 
-	proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
-		switch(hit_type)
-			if (DAMAGE_BLUNT)
-				playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
-			if (DAMAGE_CUT)
-				playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
-			if (DAMAGE_STAB)
-				playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
-			if (DAMAGE_BURN)
-				playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+				dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+				playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+				for (var/mob/O in AIviewers(user))
+					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
+			else
+				for (var/mob/O in AIviewers(user))
+					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
 
-	handle_throw(var/mob/living/user,var/atom/target)
-		if (isturf(user.loc) && target)
-			var/turf/T = user.loc
-			if (!(T.turf_flags & CAN_BE_SPACE_SAMPLE) && !(user.lying) && can_act(user))
-				user.changeStatus("weakened", max(user.movement_delay()*2, 0.5 SECONDS))
-				user.force_laydown_standup()
+				// Slidekick to throw items on the turf
+				var/item_num_to_throw = 0
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					item_num_to_throw += !!H.limbs.r_leg
+					item_num_to_throw += !!H.limbs.l_leg
+				else if (ismobcritter(user))
+					//TODO: When mobcritters keep track of how many legs they have, replace the below.
+					item_num_to_throw += 2
 
-				var/turf/target_turf = get_step(user,get_dir(user,target))
-				if (!target_turf)
-					target_turf = T
+				if (item_num_to_throw)
+					for (var/obj/item/itm in target_turf) // We want to kick items only
+						if (itm.w_class >= W_CLASS_HUGE)
+							continue
 
-				var/mob/living/dive_attack_hit = null
+						var/cardinal_throw_dir = target_dir
+						if (!is_cardinal(cardinal_throw_dir))
+							if(prob(50))
+								cardinal_throw_dir &= NORTH | SOUTH
+							else
+								cardinal_throw_dir &= EAST | WEST
 
-				for (var/mob/living/L in target_turf)
-					if (user == L) continue
-					dive_attack_hit = L
-					break
+						var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
+						if (throw_target)
+							item_num_to_throw--
+							playsound(itm, "swing_hit", 50, 1)
+							itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
 
-				if (dive_attack_hit)
-					var/damage = rand(1,6)
-					if (ishuman(user))
-						var/mob/living/carbon/human/H = user
-						if (H.shoes)
-							damage += H.shoes.kick_bonus
-						else if (H.limbs.r_leg)
-							damage += H.limbs.r_leg.limb_hit_bonus
-						else if (H.limbs.l_leg)
-							damage += H.limbs.l_leg.limb_hit_bonus
+						if (!item_num_to_throw)
+							break
 
-					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
-					logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-				else
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
+			step_to(user, target_turf)
 
-				step_to(user,target_turf)
-
-		user.u_equip(src)
+	user.u_equip(src)
 
 ////////////////////////////
 //SPECIAL GRAB ITEMS STUFF//

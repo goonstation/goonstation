@@ -15,6 +15,7 @@
 #include "defines\actions.dm"
 #include "defines\admin.dm"
 #include "defines\ai.dm"
+#include "defines\antagonists.dm"
 #include "defines\atom.dm"
 #include "defines\bioeffect.dm"
 #include "defines\blocking.dm"

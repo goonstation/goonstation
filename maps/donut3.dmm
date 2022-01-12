@@ -5776,7 +5776,11 @@
 	dir = 4
 	},
 /obj/landmark/start/latejoin,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "bwk" = (
 /obj/decal/stage_edge{
@@ -16559,7 +16563,11 @@
 "eCP" = (
 /obj/storage/closet/wardrobe/black,
 /obj/random_item_spawner/dressup/one_or_zero,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "eCQ" = (
 /obj/machinery/atmospherics/valve,
@@ -21791,7 +21799,11 @@
 /area/station/medical/medbay/cloner)
 "gcU" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "gdc" = (
 /obj/machinery/rkit,
@@ -22278,7 +22290,11 @@
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
 "gjo" = (
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "gjB" = (
 /obj/lattice{
@@ -22309,7 +22325,11 @@
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "gkm" = (
 /obj/decal/tile_edge/line/blue{
@@ -23260,7 +23280,11 @@
 /obj/landmark{
 	name = "Observer-Start"
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "gyy" = (
 /obj/machinery/computer/security{
@@ -25133,6 +25157,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"hbR" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "hch" = (
 /obj/disposalpipe/trunk{
 	dir = 8;
@@ -25799,7 +25833,11 @@
 /obj/storage/closet/wardrobe/mixed,
 /obj/random_item_spawner/dressup/one_or_zero,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "hlV" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -29881,7 +29919,11 @@
 	icon_state = "alt_heater-L"
 	},
 /obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "iwJ" = (
 /obj/machinery/light,
@@ -36446,7 +36488,11 @@
 	pixel_x = 1;
 	pixel_y = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "kxL" = (
 /obj/morgue,
@@ -49148,7 +49194,11 @@
 /area/station/crew_quarters/hor)
 "olM" = (
 /obj/machinery/computer/arcade,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "olP" = (
 /obj/landmark/gps_waypoint,
@@ -50203,7 +50253,11 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "ozA" = (
 /obj/grille/catwalk{
@@ -52516,7 +52570,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "plk" = (
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
@@ -53429,7 +53486,11 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "pxu" = (
 /obj/machinery/camera,
@@ -54278,7 +54339,11 @@
 /area/station/medical/morgue)
 "pJw" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "pJG" = (
 /obj/cable{
@@ -54755,7 +54820,11 @@
 "pQX" = (
 /obj/storage/closet/emergency,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "pRd" = (
 /obj/machinery/disposal/mail/small/autoname/public/crewB/south,
@@ -55179,7 +55248,11 @@
 	icon_state = "alt_heater-M"
 	},
 /obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "pXt" = (
 /obj/table/auto,
@@ -60543,7 +60616,10 @@
 /area/station/hallway/primary/south)
 "rsK" = (
 /obj/machinery/sleeper/compact,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
@@ -62432,7 +62508,11 @@
 /area/station/chapel/sanctuary)
 "rVd" = (
 /obj/storage/closet/emergency,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "rVh" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -64055,7 +64135,10 @@
 /area/station/maintenance/outer/east)
 "stQ" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
@@ -65607,6 +65690,14 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/ptl)
+"sTo" = (
+/obj/indestructible/shuttle_corner,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "sTt" = (
 /obj/machinery/conveyor/east{
 	id = "qm_in"
@@ -65860,7 +65951,11 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "sWY" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -66870,7 +66965,11 @@
 	icon_state = "alt_heater-R"
 	},
 /obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "tnq" = (
 /obj/lattice{
@@ -75355,7 +75454,11 @@
 "vJd" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "vJI" = (
 /obj/machinery/shower{
@@ -77194,7 +77297,11 @@
 "wmS" = (
 /obj/storage/closet/wardrobe/mixed,
 /obj/random_item_spawner/dressup/one_or_zero,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "wnd" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -78553,7 +78660,11 @@
 /area/station/chapel/office)
 "wGe" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "wGy" = (
 /obj/decal/cleanable/dirt/jen,
@@ -80761,7 +80872,11 @@
 /area/ghostdrone_factory)
 "xlS" = (
 /obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "xlY" = (
 /obj/machinery/computer3/generic/secure_data,
@@ -83863,7 +83978,11 @@
 /area/station/science/gen_storage)
 "yff" = (
 /obj/storage/closet/wardrobe/pride,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
 /area/shuttle/arrival/station)
 "yfu" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner{
@@ -111646,11 +111765,11 @@ rdj
 rdj
 rdj
 ozb
-idq
+hbR
 wGe
 bvY
 wGe
-ljE
+sTo
 sLK
 rdj
 rdj

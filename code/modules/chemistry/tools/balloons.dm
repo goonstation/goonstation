@@ -27,6 +27,7 @@
 			UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
