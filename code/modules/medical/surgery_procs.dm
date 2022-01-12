@@ -1578,12 +1578,20 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				surgeon, "<span class='notice'>You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
 				patient, "<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src].</span>")
 
+				if(patient == surgeon)// getting your injuries cauterized with a lit torch shouldn't be pleasant.
+					boutput(patient, "<b><span class='alert'>IT BURNS!</span></b>")
+					patient.emote("scream")
+					patient.changeStatus("stunned", 5 SECONDS)
+					patient.changeStatus("weakened", 6 SECONDS)
+
+
 				repair_bleeding_damage(patient, 100, 10)
 				return 1
 
 			else
 				surgeon.show_text("<b>You were interrupted!</b>", "red")
 				return 1
+
 
 	else
 		return 0
