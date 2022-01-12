@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "space GPS"
-	desc = "Tells you your coordinates based on the nearest coordinate beacon."
+	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
 	item_state = "electronic"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)

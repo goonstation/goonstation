@@ -52520,7 +52520,9 @@
 	},
 /area/space)
 "cUP" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "cVL" = (
@@ -52647,6 +52649,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"dgj" = (
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "dgo" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -53214,7 +53222,9 @@
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
 "dVI" = (
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -53803,7 +53813,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
 "eSu" = (
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -54207,7 +54219,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "fDN" = (
@@ -54711,7 +54725,9 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -55258,7 +55274,9 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/obj/machinery/launcher_loader/west,
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
 /obj/window/reinforced{
 	dir = 1
 	},
@@ -55685,7 +55703,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "igs" = (
@@ -56703,7 +56723,9 @@
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "jXF" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	door_delay = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -57013,7 +57035,9 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
 "kRC" = (
@@ -58722,6 +58746,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"ojv" = (
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "okK" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -59801,7 +59831,9 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/market)
 "qng" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "qnA" = (
@@ -64039,7 +64071,9 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/launcher_loader/north{
+	door_delay = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -64398,6 +64432,12 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"xVK" = (
+/obj/machinery/launcher_loader/west{
+	door_delay = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "xWf" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -97607,7 +97647,7 @@ adC
 aag
 aan
 aan
-aaA
+dgj
 aaF
 aaF
 adC
@@ -98358,7 +98398,7 @@ adC
 adC
 cyI
 cyI
-blw
+ojv
 aax
 aaC
 aaG
@@ -120560,7 +120600,7 @@ aag
 aav
 aan
 aaE
-aaA
+dgj
 aaN
 aaN
 aap
@@ -130900,7 +130940,7 @@ aaw
 aap
 aaB
 aai
-aau
+xVK
 aap
 aaw
 aaw

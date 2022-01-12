@@ -1,6 +1,7 @@
 /datum/targetable/grinch/grinch_cloak
 	name = "Activate cloak (temp.)"
 	desc = "Activates a cloaking ability for a limited amount of time."
+	icon_state = "grinchcloak"
 	targeted = 0
 	target_anything = 0
 	target_nodamage_check = 0

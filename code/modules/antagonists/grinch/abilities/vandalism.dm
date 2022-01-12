@@ -1,6 +1,7 @@
 /datum/targetable/grinch/vandalism
 	name = "Vandalize"
 	desc = "Drop Spacemas cheer via graffiti and acts of destruction."
+	icon_state = "grinchvandalize"
 	targeted = 0
 	target_anything = 0
 	target_nodamage_check = 0
