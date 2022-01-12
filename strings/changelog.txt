@@ -1,5 +1,9 @@
 
 (t)tue jan 11 22
+(u)Flaborized
+(p)7145
+(e)🎨|sprites
+(+)Resprited vomit.
 (u)DimWhat
 (p)7136
 (e)🎨|sprites
