@@ -158,6 +158,10 @@
 			our_baton = null
 		target = null
 		..()
+	New()
+		..()
+		SPAWN_DBG(1 SECONDS)
+			src.botcard.access -= access_maxsec
 
 /obj/machinery/bot/secbot/autopatrol
 	auto_patrol = 1
