@@ -30,6 +30,7 @@
 #define MGA_MAIL "Snail Mail Alert"
 #define MGA_CHECKPOINT "Checkpoint Alert"
 #define MGA_ARREST "Arrest Alert"
+#define MGA_ARREST_EXTRA "Adv. Arrest Alert"
 #define MGA_DEATH "Death Alert"
 #define MGA_MEDCRIT "Near-Death Alert"
 #define MGA_CLONER "Cloner Alert"
