@@ -1445,9 +1445,9 @@ window "rpane"
 		button-type = pushbox
 	elem "menub"
 		type = BUTTON
-		pos = 135,5
+		pos = 250,5
 		size = 60x20
-		anchor1 = none
+		anchor1 = 100,0
 		anchor2 = none
 		is-visible = false
 		saved-params = "is-checked"
