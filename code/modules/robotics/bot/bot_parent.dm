@@ -97,7 +97,7 @@
 	disposing()
 		botcard = null
 		qdel(chat_text)
-		bot_mover.master = null
+		bot_mover?.master = null
 		bot_mover = null
 		chat_text = null
 		if(cam)
