@@ -1581,8 +1581,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				if(patient == surgeon)// getting your injuries cauterized with a lit torch shouldn't be pleasant.
 					boutput(patient, "<b><span class='alert'>IT BURNS!</span></b>")
 					patient.emote("scream")
-					patient.changeStatus("stunned", 5 SECONDS)
-					patient.changeStatus("weakened", 6 SECONDS)
+					patient.changeStatus("stunned", 4 SECONDS)
+					patient.changeStatus("weakened", 5 SECONDS)
 
 
 				repair_bleeding_damage(patient, 100, 10)
