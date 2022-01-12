@@ -3,7 +3,7 @@
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "seeds"
+	icon_state = "seeds-kudzu"
 	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
 	attack(mob/M, mob/user)

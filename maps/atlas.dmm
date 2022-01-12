@@ -13291,7 +13291,7 @@
 	},
 /area/station/janitor/office)
 "GE" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Janitor"
@@ -19720,7 +19720,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "Xt" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20539,7 +20539,7 @@
 	},
 /area/station/bridge/customs)
 "ZD" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20639,7 +20639,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "ZR" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
