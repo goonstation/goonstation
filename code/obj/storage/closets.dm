@@ -119,6 +119,18 @@
 	/obj/item/clothing/shoes/white = 2,
 	/obj/item/clothing/head/bio_hood = 2)
 
+/obj/storage/closet/biohazard/janitor
+	name = "\improper Level 3 Biohazard Suit closet"
+	desc = "It's a closet! This one can be opened AND closed. Comes prestocked with level 3 biohazard gear for emergency janitorial work."
+	icon_state = "bio"
+	icon_closed = "bio"
+	icon_opened = "bio-open"
+	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
+	/obj/item/clothing/suit/bio_suit/janitor = 2,
+	/obj/item/clothing/under/color/white = 2,
+	/obj/item/clothing/shoes/white = 2,
+	/obj/item/clothing/head/bio_hood/janitor = 2)
+
 /obj/storage/closet/syndicate
 	name = "gear closet"
 	desc = "Why is this here?"
