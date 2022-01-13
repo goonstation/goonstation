@@ -141,6 +141,9 @@
 /obj/item/clothing/mask/wrestling/green{
 	pixel_x = 3
 	},
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
@@ -326,6 +329,9 @@
 /obj/item/storage/belt/wrestling{
 	pixel_y = 10
 	},
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
@@ -422,9 +428,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "qI" = (
-/obj/decal/stage_edge{
-	dir = 2
-	},
+/obj/decal/boxingropeenter,
 /turf/unsimulated/floor/stairs{
 	dir = 1;
 	icon_state = "stairs_middle"
@@ -738,10 +742,8 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "AG" = (
-/obj/decal/stage_edge{
-	dir = 2
-	},
 /obj/machinery/light/small/floor,
+/obj/decal/boxingropeenter,
 /turf/unsimulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs_wide"
@@ -831,6 +833,9 @@
 	pixel_y = 10
 	},
 /obj/stool/chair/boxingrope_corner,
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "DB" = (
@@ -1252,10 +1257,8 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ra" = (
-/obj/decal/stage_edge{
-	dir = 2
-	},
 /obj/machinery/light/small/floor,
+/obj/decal/boxingropeenter,
 /turf/unsimulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs2_wide"
@@ -1382,6 +1385,9 @@
 	pixel_y = -4
 	},
 /obj/stool/chair/boxingrope_corner,
+/obj/decal/stage_edge{
+	dir = 2
+	},
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "VJ" = (

@@ -27,6 +27,7 @@
 	var/slashed = 0
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 		if (src.stand)
 			src.stand.UpdateIcon()

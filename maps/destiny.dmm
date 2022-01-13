@@ -22789,7 +22789,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -37669,7 +37669,7 @@
 /turf/space,
 /area/station/hangar/qm)
 "mlY" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -51734,7 +51734,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -55567,7 +55567,7 @@
 	},
 /area/station/solar/east)
 "vLx" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},

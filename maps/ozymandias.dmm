@@ -78445,11 +78445,18 @@
 /area/station/engine/elect)
 "vrW" = (
 /obj/table/auto,
-/obj/item/storage/box/tapebox,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13"
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/artifact)
@@ -81864,8 +81871,12 @@
 	})
 "wmg" = (
 /obj/table/auto,
-/obj/item/clipboard,
-/obj/item/pen,
+/obj/item/clipboard{
+	pixel_x = -4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 13
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/artifact)
 "wmn" = (

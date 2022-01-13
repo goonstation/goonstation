@@ -181,6 +181,14 @@
 			setProperty("movespeed", 0.2)
 			setProperty("exploprot", 40)
 
+		equipped(mob/user, slot)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+		unequipped(mob/user)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
 	postpossession
 		name = "worn gas mask"
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
@@ -321,16 +329,20 @@
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
 			src.icon_state = bald_icon_state
+<<<<<<< HEAD
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src]")
+=======
+			src.item_state = "clownbald"
+			user.show_text("You tuck back the wig on the [src].")
+>>>>>>> 5102fe133c32ef0fcb366f90a3311d533b8c67b1
 		else
 			src.mask_bald = FALSE
-			src.name = "clown wig and mask"
+			src.name = initial(src.name)
 			src.desc = initial(src.desc)
 			src.icon_state = initial(src.icon_state)
 			src.item_state = "clown_hat"
-			user.show_text("You untuck the wig from the [src]")
-		return
+			user.show_text("You untuck the wig from the [src.]")
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"

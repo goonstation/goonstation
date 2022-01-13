@@ -40,6 +40,7 @@
 			src.reagents.temperature_min = 270	//you can remove/adjust these afterr you fix burns from reagnets being super strong
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 		if (src.reagents)
 			src.reagents.temperature_cap = 440
@@ -483,6 +484,7 @@
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 
 	on_reagent_change(add)
+		..()
 		if (src.reagents)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270

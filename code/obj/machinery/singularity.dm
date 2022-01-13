@@ -994,7 +994,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.fire_delay = rand(20,100)
 			src.shot_number = 0
 
-		if ((src.dir - 1) & src.dir) // Not cardinal (not power of 2)
+		if (!is_cardinal(src.dir)) // Not cardinal (not power of 2)
 			src.dir &= 12 // Cardinalize
 		src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 		shoot_projectile_DIR(src, current_projectile, dir)

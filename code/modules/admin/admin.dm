@@ -5211,6 +5211,9 @@ var/global/noir = 0
 
 /client/Move(NewLoc, direct)
 	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+		if(isnull(NewLoc))
+			return
+
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 

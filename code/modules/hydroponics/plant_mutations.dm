@@ -197,6 +197,24 @@
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
 
+// Coffee Mutations
+
+/datum/plantmutation/coffee/mocha
+	name = "Mocha Coffee"
+	name_prefix = "Mocha"
+	iconmod = "CoffeeMocha"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
+	PTrange = list(20,null)
+	assoc_reagents = list("chocolate")
+
+/datum/plantmutation/coffee/latte
+	name = "Latte Coffee"
+	name_prefix = "Latte"
+	iconmod = "CoffeeLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
+	ENrange = list(10,null)
+	assoc_reagents = list("milk")
+
 // Chili Mutations
 
 /datum/plantmutation/chili/chilly
