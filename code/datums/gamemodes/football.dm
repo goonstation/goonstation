@@ -317,9 +317,12 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 				qdel(C)
 				LAGCHECK(LAG_REALTIME)
 			for(var/mob/living/M in field)
+				if(M.last_ckey)
+					continue
 				qdel(M)
 				LAGCHECK(LAG_REALTIME)
 		for(var/area/football/football in world)
 			for(var/obj/decal/cleanable/D in football)
 				qdel(D)
 				LAGCHECK(LAG_REALTIME)
+		message_admins("Field cleaning complete.")
