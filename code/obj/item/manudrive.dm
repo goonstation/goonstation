@@ -1,7 +1,7 @@
 /obj/item/disk/data/floppy/read_only/manudrive
 	name = "Standard ManuDrive: Empty"
 	desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer."
-	mats = 0
+	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
 	random_color = 0
 	icon_state = "datadiskwhi"
 	/// Put the recipe string here and itll make em into instances.
@@ -28,3 +28,11 @@
 	disposing()
 		drivestored = null
 		. = ..()
+
+/obj/item/disk/data/floppy/read_only/manudrive/test
+	name = "test one aaaaa"
+	fablimit = 10
+	temp_recipe_string = list(/datum/manufacture/RCD,
+	/datum/manufacture/RCDammo)
+
+
