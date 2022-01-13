@@ -1191,7 +1191,7 @@
 			return FALSE
 
 /datum/achievementReward/ai_malf
-	title = "(AI Skin) Malfunction"
+	title = "(AI Face) Malfunction"
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
 	required_medal = "HUMANOID MUST NOT ESCAPE"
 
@@ -1210,7 +1210,7 @@
 			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
 
 /datum/achievementReward/ai_tetris
-	title = "(AI Skin) Tetris"
+	title = "(AI Face) Tetris"
 	desc = "Turns you into a tetris-playing machine!"
 	required_medal = "Block Stacker"
 
@@ -1223,6 +1223,23 @@
 			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
 			A.faceEmotion = "ai-tetris"
 			A.set_color("#111111")
+			A.update_appearance()
+			return 1
+		else
+			boutput(activator, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+datum/achievementReward/ai_dwaine
+	title = "(AI Core Skin) DWAINE"
+	desc = "Replaces the casing of your core with an older model!"
+	required_medal = "421"
+
+	rewardActivate(mob/activator)
+		if (isAI(activator))
+			var/mob/living/silicon/ai/A = activator
+			if (isAIeye(activator))
+				var/mob/dead/aieye/AE = activator
+				A = AE.mainframe
+			A.coreSkin = "dwaine"
 			A.update_appearance()
 			return 1
 		else

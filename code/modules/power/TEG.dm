@@ -49,7 +49,7 @@
 
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
-	desc = "It's the gas circulator of a thermoeletric generator."
+	desc = "The gas circulator of a thermoeletric generator. This one is designed to handle hot air."
 	icon = 'icons/obj/atmospherics/pipes.dmi'
 	icon_state = "circ1-off"
 	var/obj/machinery/power/generatorTemp/generator = null
@@ -412,6 +412,7 @@
 /obj/machinery/atmospherics/binary/circulatorTemp/right
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
+	desc = "The gas circulator of a thermoeletric generator. This one is designed to handle cold air."
 
 
 /datum/action/bar/icon/teg_circulator_repair
