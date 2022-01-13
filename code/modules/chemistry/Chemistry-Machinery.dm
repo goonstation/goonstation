@@ -494,11 +494,18 @@
 
 			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1 || isnull(input_design) || input_design > 26 || input_design < 1)
 				return
-				
-			var/obj/item/reagent_containers/food/drinks/cola/custom/C = new(src.output_target)
-			R.trans_to(C,50)
+
+			var/obj/item/reagent_containers/food/drinks/cola/custom/C
+			if (R.total_volume <= 30)
+				C = new/obj/item/reagent_containers/food/drinks/cola/custom/small(src.output_target)
+				R.trans_to(C,30)
+				C.icon_state = "cola-[input_design]-small"
+			else
+				C = new/obj/item/reagent_containers/food/drinks/cola/custom(src.output_target)
+				R.trans_to(C,50)
+				C.icon_state = "cola-[input_design]"
+
 			C.name = "[bottlename]"
-			C.icon_state = "cola-[input_design]"
 			src.updateUsrDialog()
 			logTheThing("combat",usr,null,"used the [src.name] to create a can named [bottlename] containing [log_reagents(C)] at log_loc[src].")
 			return
