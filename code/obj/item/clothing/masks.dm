@@ -333,7 +333,7 @@
 			user.show_text("You tuck back the wig on the [src]")
 		else
 			src.mask_bald = FALSE
-			src.name = "clown wig and mask"
+			src.name = initial(src.name)
 			src.desc = initial(src.desc)
 			src.icon_state = initial(src.icon_state)
 			src.item_state = "clown_hat"
