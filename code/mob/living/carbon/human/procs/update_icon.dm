@@ -156,7 +156,7 @@
 	if (src.gloves)
 		wear_sanity_check(src.gloves)
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
-		var/no_offset = 0
+		var/no_offset = FALSE
 		src.gloves.wear_image.layer = src.gloves.wear_layer
 
 
@@ -164,7 +164,7 @@
 			if (islist(override_states) && ("glove-left_[icon_name]" in override_states)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.gloves.wear_image.icon_state = "glove-left_[icon_name]"
-				no_offset = 1
+				no_offset = TRUE
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 				src.gloves.wear_image.icon_state = "left_[icon_name]"
@@ -179,7 +179,7 @@
 			if (islist(override_states) && ("glove-right_[icon_name]" in override_states)) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
 				src.gloves.wear_image.icon_state = "glove-right_[icon_name]"
-				no_offset = 1
+				no_offset = TRUE
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 				src.gloves.wear_image.icon_state = "right_[icon_name]"
@@ -349,11 +349,11 @@
 	if (src.back)
 		wear_sanity_check(src.back)
 		var/wear_state = src.back.wear_state || src.back.icon_state
-		var/no_offset = 0
+		var/no_offset = FALSE
 		if (islist(override_states) && ("back-[wear_state]" in override_states)) //checks if they are a mutantrace with special back sprites and then replaces them if they do
 			src.back.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.back.wear_image.icon_state = "back-[wear_state]"
-			no_offset = 1
+			no_offset = TRUE
 		else
 			src.back.wear_image.icon = src.back.wear_image_icon
 			src.back.wear_image.icon_state = wear_state
@@ -382,11 +382,11 @@
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
 		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
-		var/no_offset
+		var/no_offset = FALSE
 		if (islist(override_states) && ("eyes-[wear_state]" in override_states)) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
 			src.glasses.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.glasses.wear_image.icon_state = "eyes-[wear_state]"
-			no_offset = 1
+			no_offset = TRUE
 		else
 			src.glasses.wear_image.icon = src.glasses.wear_image_icon
 			src.glasses.wear_image.icon_state = wear_state
@@ -409,12 +409,12 @@
 	// Ears
 	if (src.ears)
 		wear_sanity_check(src.ears)
-		var/no_offset = 0
+		var/no_offset = FALSE
 		var/wear_state = src.ears.wear_state || src.ears.icon_state
 		if (islist(override_states) && ("ears-[wear_state]" in override_states)) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
 			src.ears.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.ears.wear_image.icon_state = "ears-[wear_state]"
-			no_offset = 1
+			no_offset = TRUE
 		else
 			src.ears.wear_image.icon = src.ears.wear_image_icon
 			src.ears.wear_image.icon_state = wear_state
@@ -436,13 +436,13 @@
 
 	if (src.wear_mask)
 		wear_sanity_check(src.wear_mask)
-		var/no_offset = 0
+		var/no_offset = FALSE
 
 		var/wear_state = src.wear_mask.wear_state || src.wear_mask.icon_state
 		if (islist(override_states) && ("mask-[wear_state]" in override_states))
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.wear_mask.wear_image.icon_state = "mask-[wear_state]"
-			no_offset = 1
+			no_offset = TRUE
 		else
 			src.wear_mask.wear_image.icon = src.wear_mask.wear_image_icon
 			src.wear_mask.wear_image.icon_state = wear_state
@@ -479,12 +479,12 @@
 	if (src.head)
 		wear_sanity_check(src.head)
 
-		var/no_offset = 0
+		var/no_offset = FALSE
 		var/wear_state = src.head.wear_state || src.head.icon_state
 		if (islist(override_states) && ("head-[wear_state]" in override_states))
 			src.head.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.head.wear_image.icon_state = "head-[wear_state]"
-			no_offset = 1
+			no_offset = TRUE
 		else
 			src.head.wear_image.icon = src.head.wear_image_icon
 			src.head.wear_image.icon_state = wear_state
@@ -520,11 +520,11 @@
 	if (src.belt)
 		wear_sanity_check(src.belt)
 		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
-		var/no_offset
+		var/no_offset = FALSE
 		if (islist(override_states) && ("belt-[wear_state]" in override_states)) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
 			src.belt.wear_image.icon = src.mutantrace.clothing_icon_override
 			src.belt.wear_image.icon_state = "belt-[wear_state]"
-			no_offset = 1
+			no_offset = TRUE
 		else
 			src.belt.wear_image.icon = src.belt.wear_image_icon
 			src.belt.wear_image.icon_state = wear_state
