@@ -1701,13 +1701,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 
 //fake lizard stuff
 
-/obj/item/clothing/suit/dinosaur
+/obj/item/clothing/suit/gimmick/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 
 	New()
 		..()
