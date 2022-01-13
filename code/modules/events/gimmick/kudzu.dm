@@ -105,7 +105,7 @@
 	var/current_stage = 0
 	var/aggressive = 0
 	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
-
+	var/herbicide = FALSE
 
 	get_desc()
 		var/flavor
@@ -257,7 +257,7 @@
 	if (dogrowth == 1)
 		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
-	if (src.growth < 20)
+	if (src.growth < 20 && !herbicide)
 		src.growth++
 		src.update_self()
 	if (!src.aggressive && src.growth >= 20)
