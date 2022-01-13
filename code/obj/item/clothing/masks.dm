@@ -329,13 +329,8 @@
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
 			src.icon_state = bald_icon_state
-<<<<<<< HEAD
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src]")
-=======
-			src.item_state = "clownbald"
-			user.show_text("You tuck back the wig on the [src].")
->>>>>>> 5102fe133c32ef0fcb366f90a3311d533b8c67b1
 		else
 			src.mask_bald = FALSE
 			src.name = initial(src.name)
