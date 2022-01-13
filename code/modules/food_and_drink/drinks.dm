@@ -229,7 +229,7 @@
 	name = "space cola"
 	desc = "Cola. in space."
 	icon = 'icons/obj/foodNdrink/can.dmi'
-	icon_state = "cola-1"
+	icon_state = "cola-1-small"
 	item_state = "cola-1"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -276,7 +276,7 @@
 
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
 		if (prob(50)) // without having to change the Space-Cola path
-			src.icon_state = "cola-2"
+			src.icon_state = "cola-2-small"
 
 /obj/item/crushed_can
 	name = "crushed can"
