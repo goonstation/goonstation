@@ -330,7 +330,7 @@
 			src.desc = bald_desc_state
 			src.icon_state = bald_icon_state
 			src.item_state = "clownbald"
-			user.show_text("You tuck back the wig on the [src]")
+			user.show_text("You tuck back the wig on the [src].")
 		else
 			src.mask_bald = FALSE
 			src.name = initial(src.name)
