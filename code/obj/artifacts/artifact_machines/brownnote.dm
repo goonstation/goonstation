@@ -13,9 +13,9 @@
 	activ_text = "opens up, revealing a strange horn!"
 	deact_text = "closes itself up."
 	react_xray = list(8,60,80,6,"TUBULAR")
-	var/range = 10
-	var/picked_emote = ""
-	var/recharge_time = 0
+	var/range
+	var/picked_emote
+	var/recharge_time
 
 	post_setup()
 		. = ..()
@@ -32,11 +32,11 @@
 
 		switch(artitype.name)
 			if ("precursor")
-				range = rand(2,30) // What could possibly go wrong?
+				range = rand(2,10)
 				recharge_time = rand(1,20) SECONDS
 			else
 				recharge_time = rand(2,10) SECONDS
-				range = rand(5,10)
+				range = rand(2,5)
 
 	effect_process(var/obj/O)
 		if (..())

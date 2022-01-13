@@ -12,19 +12,19 @@
 	activ_text = "suddenly starts warping space around it!"
 	deact_text = "deactivates, and lays silent."
 	react_xray = list(15,75,90,3,"ANOMALOUS")
-	var/max_teleports = 4
+	var/max_teleports
 	var/teleports = 0 //how many times has the artifact moved
-	var/grab_range = 2 //at what range can we "grab" living people
-	var/teleport_range = 8
+	var/grab_range //at what range can we "grab" living people
+	var/teleport_range
 	var/wormholer = FALSE // wormholes instead of random offsets
 	post_setup()
 		..()
-		if (prob(30))
+		if (prob(25))
 			wormholer = TRUE
 		max_teleports = rand(1,6)
 		grab_range = rand(2,5)
 		if (!wormholer)
-			teleport_range = rand(8,12)
+			teleport_range = rand(2,8) //latest: funny is kil
 
 	effect_process(var/obj/O)
 		if (..())

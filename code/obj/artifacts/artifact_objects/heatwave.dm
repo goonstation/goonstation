@@ -16,17 +16,17 @@
 	examine_hint = "It is covered in very conspicuous markings."
 	var/recharge_time = 20 SECONDS
 	var/fire_range = 4
-	var/temperature = 7000
+	var/temperature = 7000 KELVIN
 
 	post_setup()
 		..()
 		switch(artitype.name)
 			if ("precursor")
 				fire_range = rand(2,18) // What could possibly go wrong? (Note; chemistry might explode)
-				temperature = rand(1000, 10000)
+				temperature = rand(1000, 10000) KELVIN
 			else
 				fire_range = rand(2,6)
-				temperature = rand(4000, 8900)
+				temperature = rand(4000, 8900) KELVIN
 
 	effect_activate(var/obj/O)
 		if (..())
