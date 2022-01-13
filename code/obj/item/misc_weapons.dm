@@ -1707,7 +1707,7 @@ obj/item/whetstone
 	cant_drop = 1
 	cant_self_remove = 1
 	cant_other_remove = 1
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = FPRINT | CONDUCT | TABLEPASS | ALWAYS_INTERACTIVE
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
@@ -1717,6 +1717,24 @@ obj/item/whetstone
 		..()
 		src.setItemSpecial(/datum/item_special/swipe/wakizashi)
 
+	attack_self(mob/user as mob)
+		var/list/attacked = list()
+
+		for(var/turf/T in orange(1,get_turf(master)))
+			for(var/atom/A in T)
+				if(A in attacked) continue
+				if((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != user)
+					A.Attackby(src, usr)
+					attacked += A
+
+		var/obj/itemspecialeffect/E = new /obj/itemspecialeffect
+		E.setup(get_turf(user))
+		E.Scale(0.66,0.66)
+		E.set_dir(NORTH)
+		E.icon_state = "whirlwind"
+		playsound(src, 'sound/effects/swoosh_double.ogg', 100, 1)
+		..()
+
 	attack(target as mob, mob/user as mob)
 		..()
 		if(isliving(target))
@@ -1724,16 +1742,17 @@ obj/item/whetstone
 
 			//scale blood loss down as they lose more, to save medbay having The Worst Day
 			if (C.blood_volume > 310)
+				var/jugg_value = user.reagents.get_reagent_amount("juggernaut")
 				playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 				if (C.blood_volume >= 475)
 					blood_slash(C,8,null, turn(usr.dir,90), 4)
-					C.reagents.add_reagent("heparin", 10, null) //wahahaha (you bleed a LOT of this out)
+					C.reagents.add_reagent("heparin", 5, null) //wahahaha
 				else
 					blood_slash(C,6,null, turn(usr.dir,90), 3)
 			else
 				blood_slash(C,1,null, turn(usr.dir,90), 2)
 				playsound(target, "sound/impact_sounds/Blade_Small.ogg", 60, 1)
-			C.reagents.add_reagent("heparin", 5, null)
+			C.reagents.add_reagent("heparin", 3, null)
 
 		else
 			playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)

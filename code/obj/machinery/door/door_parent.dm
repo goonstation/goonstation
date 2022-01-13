@@ -136,7 +136,7 @@
 			return 1 // they can pass through a closed door
 		else if (ishuman(mover) && (src.bumpopen(mover) || operating > 0)) //let folks with ninja gear pass through doors while they open or close
 			var/mob/living/carbon/human/C = mover
-			if (C.find_flag_in_equipment(DOOR_PASS_EARLY))
+			if (C.active_c_flags & DOOR_PASS_EARLY )
 				animate_door_squeeze(mover)
 				return 1
 				

@@ -46,8 +46,9 @@
 
 	dropped(mob/user)
 		..()
-		if (!throwing)
-			del(src)
+		SPAWN_DBG(0)
+			if (!src.throwing)
+				del(src)
 	
 	throw_impact(atom/M)
 		..()

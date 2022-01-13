@@ -484,9 +484,12 @@
 			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
 		return
 
+	boutput(src,"go on")
 	actions.interrupt(src, INTERRUPT_ACT)
 
-	if (!src.stat && !is_incapacitated(src))
+	boutput(src,"try it, [target]")
+	if ((!src.stat && !is_incapacitated(src)) || (target.flags & ALWAYS_INTERACTIVE))
+		boutput(src,"see")
 		var/obj/item/equipped = src.equipped()
 		var/use_delay = (target.flags & CLICK_DELAY_IN_CONTENTS || !(target in src.contents)) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0

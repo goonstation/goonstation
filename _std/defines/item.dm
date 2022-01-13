@@ -50,6 +50,8 @@
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE              (1<<23)
+/// If an item can attack-self while user is stunned
+#define ALWAYS_INTERACTIVE              (1<<24)
 
 //Item function flags
 
