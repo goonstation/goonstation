@@ -342,7 +342,7 @@
 			src.desc = initial(src.desc)
 			src.icon_state = initial(src.icon_state)
 			src.item_state = "clown_hat"
-			user.show_text("You untuck the wig from the [src.]")
+			user.show_text("You untuck the wig from the [src].")
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
