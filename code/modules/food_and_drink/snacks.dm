@@ -1441,7 +1441,7 @@
 
 		robusted
 			name = "robusted donut"
-			desc = "A donut for those critical moments."
+			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
 			amount = 6
 			initial_volume = 48
