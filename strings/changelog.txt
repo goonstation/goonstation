@@ -1,4 +1,9 @@
 
+(t)thu jan 13 22
+(u)Colossusqw
+(p)7120
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Makes you aware of your surroundings instead of asleep during the capulettium effect, but still unable to speak or move.
 (t)tue jan 11 22
 (u)Emily
 (e)🆕|feature
