@@ -1,5 +1,9 @@
 
 (t)thu jan 13 22
+(u)Flaborized
+(p)7163
+(e)🎨|sprites
+(*)Resprited stunbatons.
 (u)Colossusqw
 (p)7120
 (e)🆕🎨⚖|feature, sprites, balance
