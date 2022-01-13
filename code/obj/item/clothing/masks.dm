@@ -312,6 +312,26 @@
 			return 1
 		return 0
 
+	var/mask_bald = FALSE
+	var/bald_icon_state = "clownbald"
+	var/bald_desc_state = "For clowns who want to show off their hair!"
+	attack_self(mob/user as mob)
+		if(!src.mask_bald)
+			src.mask_bald = TRUE
+			src.name = "wigless clown mask"
+			src.desc = bald_desc_state
+			src.icon_state = bald_icon_state
+			src.item_state = "clownbald"
+			user.show_text("You tuck back the wig on the [src]")
+		else
+			src.mask_bald = FALSE
+			src.name = "clown wig and mask"
+			src.desc = initial(src.desc)
+			src.icon_state = initial(src.icon_state)
+			src.item_state = "clown_hat"
+			user.show_text("You untuck the wig from the [src]")
+		return
+
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
 	desc = "I AM THE ONE WHO HONKS."

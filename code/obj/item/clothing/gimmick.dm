@@ -419,6 +419,8 @@
 // it was called the blessed clown for the like half week it existed before
 
 /obj/item/clothing/mask/clown_hat/blue
+	bald_icon_state = "blueclownbald"
+	bald_desc_state = "For sad clowns who want to show off their hair!"
 	name = "blue clown mask"
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
@@ -443,6 +445,8 @@
 // TODO: inhand sprites (item_state)
 
 /obj/item/clothing/mask/clown_hat/purple
+	bald_icon_state = "purpleclownbald"
+	bald_desc_state = "For fancy clowns who want to show off their hair!"
 	name = "purple clown mask"
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
@@ -463,6 +467,8 @@
 	//item_state = "purpleclown"
 
 /obj/item/clothing/mask/clown_hat/pink
+	bald_icon_state = "pinkclownbald"
+	bald_desc_state = "For sweet clowns who want to show off their hair!"
 	name = "pink clown mask"
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
@@ -483,6 +489,8 @@
 	//item_state = "pinkclown"
 
 /obj/item/clothing/mask/clown_hat/yellow
+	bald_icon_state = "yellowclownbald"
+	bald_desc_state = "For bright clowns who want to show off their hair!"
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
