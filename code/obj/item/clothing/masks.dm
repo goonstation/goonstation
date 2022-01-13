@@ -338,7 +338,6 @@
 			src.icon_state = initial(src.icon_state)
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src]")
-		return
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
