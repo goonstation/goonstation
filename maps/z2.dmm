@@ -47501,7 +47501,7 @@
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/turf/simulated/floor/airless/stairs/quilty,
+/turf/unsimulated/floor/stairs/quilty,
 /area/owlery/Owlopen)
 "cFm" = (
 /turf/unsimulated/floor/arrival/corner{
@@ -47715,7 +47715,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/turf/simulated/floor/airless/stairs/quilty,
+/turf/unsimulated/floor/stairs/quilty,
 /area/owlery/Owlopen)
 "cFR" = (
 /turf/unsimulated/floor/arrival{
@@ -53242,7 +53242,7 @@
 	dir = 8;
 	name = "exhibit window"
 	},
-/turf/simulated/floor/airless/stairs/quilty,
+/turf/unsimulated/floor/stairs/quilty,
 /area/owlery/owllock)
 "cSE" = (
 /obj/window{
@@ -53250,7 +53250,7 @@
 	dir = 4;
 	name = "exhibit window"
 	},
-/turf/simulated/floor/airless/stairs/quilty,
+/turf/unsimulated/floor/stairs/quilty,
 /area/owlery/owllock)
 "cSF" = (
 /obj/stone{
