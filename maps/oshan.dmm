@@ -1052,7 +1052,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "acj" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/item/reagent_containers/food/snacks/pizza/meatball,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -1090,7 +1090,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acm" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acn" = (
@@ -3036,7 +3036,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "agN" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -3452,7 +3452,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "ahT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -12945,7 +12945,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "aEH" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /obj/machinery/computer/tanning{
 	pixel_y = 32
 	},

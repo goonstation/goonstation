@@ -10571,7 +10571,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "atz" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -11461,7 +11461,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "avI" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -11773,7 +11773,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "awu" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -34976,7 +34976,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/window/reinforced/north,
 /obj/decal/tile_edge/line/black{
@@ -35023,7 +35023,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/window/reinforced/north,
@@ -35655,7 +35655,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -35691,7 +35691,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -36270,7 +36270,7 @@
 /area/station/medical/morgue)
 "bxC" = (
 /obj/machinery/light,
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/window/reinforced/west,
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -36298,7 +36298,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bxF" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/black{
@@ -45724,7 +45724,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen)
 "gCc" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50228,7 +50228,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50239,7 +50239,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -50269,7 +50269,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sOY" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sQp" = (

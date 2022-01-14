@@ -5207,7 +5207,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -6162,7 +6162,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "anz" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "anA" = (
@@ -19077,7 +19077,7 @@
 	},
 /area/station/crew_quarters/locker)
 "aRR" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -63091,13 +63091,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "cJw" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cJx" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/camera{
@@ -64368,7 +64368,7 @@
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cMF" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/light{
