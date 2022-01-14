@@ -281,6 +281,17 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 11
 		prefabSizeY = 11
 #endif
+
+#if defined(MAP_OVERRIDE_NADIR)
+	elevator
+		required = 1
+		underwater = 1
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm"
+		prefabSizeX = 14
+		prefabSizeY = 14
+#endif
 	robotfactory
 		underwater = 1
 		maxNum = 1

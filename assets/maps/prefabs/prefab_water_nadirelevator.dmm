@@ -1,0 +1,529 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"av" = (
+/obj/rack,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"bb" = (
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
+"bg" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"bl" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/shuttle/sea_elevator)
+"bO" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"dx" = (
+/obj/machinery/computer/sea_elevator,
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator)
+"eb" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"el" = (
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator)
+"eA" = (
+/obj/landmark{
+	name = "seafall"
+	},
+/turf/simulated/floor/bot,
+/area/shuttle/sea_elevator)
+"iR" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/shuttle/sea_elevator)
+"jn" = (
+/turf/simulated/floor/scorched2,
+/area/shuttle/sea_elevator)
+"jB" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/shuttle/sea_elevator)
+"jH" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"jI" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall/cap,
+/area/shuttle/sea_elevator)
+"lv" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/shuttle/sea_elevator)
+"ma" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"pz" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"qu" = (
+/turf/simulated/floor/bot,
+/area/shuttle/sea_elevator)
+"qK" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/caution/east,
+/area/shuttle/sea_elevator)
+"se" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/shuttle/sea_elevator)
+"tR" = (
+/obj/rack,
+/obj/item/sea_ladder{
+	pixel_x = -4
+	},
+/obj/item/mining_tool/power_pick{
+	pixel_x = 7
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"xA" = (
+/obj/overlay{
+	density = 1;
+	desc = "It probably has something to do with the elevator.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "strange machine"
+	},
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator)
+"xI" = (
+/obj/table/reinforced/auto,
+/obj/item/tank/oxygen,
+/obj/item/tank/oxygen,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"yy" = (
+/obj/storage/crate/packing,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/turf/simulated/floor/scorched2,
+/area/shuttle/sea_elevator)
+"yJ" = (
+/obj/rack,
+/obj/item/sea_ladder{
+	pixel_x = 4
+	},
+/obj/item/mining_tool/power_pick{
+	pixel_x = -7
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"Aa" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/east,
+/area/shuttle/sea_elevator)
+"CZ" = (
+/obj/rack,
+/obj/item/device/gps{
+	identifier = "NT-E";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/device/gps{
+	identifier = "NT-E";
+	pixel_y = 3
+	},
+/obj/item/device/gps{
+	identifier = "NT-E";
+	pixel_x = -5
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"EK" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/corner,
+/area/shuttle/sea_elevator)
+"Gp" = (
+/turf/simulated/floor/engine/caution/east,
+/area/shuttle/sea_elevator)
+"Ha" = (
+/obj/landmark{
+	name = "seafall"
+	},
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator)
+"Hl" = (
+/turf/unsimulated/wall/setpieces/leadwindow,
+/area/shuttle/sea_elevator)
+"Hv" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
+"HT" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/emergency_injector/epinephrine{
+	pixel_y = -4
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"HZ" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jq" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction_four,
+/area/shuttle/sea_elevator)
+"Jv" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/shuttle/sea_elevator)
+"Ly" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"MP" = (
+/turf/unsimulated/wall/setpieces/leadwindow{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"Nz" = (
+/obj/machinery/vending/medical_public,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"NO" = (
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"NS" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"NT" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
+"Oo" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"OO" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/engine/caution/east,
+/area/shuttle/sea_elevator)
+"QH" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"SN" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"Te" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"VA" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/shuttle/sea_elevator)
+"Xb" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
+"XP" = (
+/obj/decal/poster/wallsign/hazard_danger,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"YC" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"Zp" = (
+/turf/variableTurf/wall,
+/area/space)
+"ZB" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/shuttle/sea_elevator)
+
+(1,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+"}
+(2,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+bl
+se
+Hl
+Hl
+se
+VA
+Zp
+Zp
+Zp
+"}
+(3,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+NS
+HT
+NO
+NO
+eb
+ZB
+VA
+Zp
+Zp
+"}
+(4,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+NS
+Nz
+Ly
+NO
+Ly
+yJ
+MP
+Zp
+Zp
+"}
+(5,1,1) = {"
+Zp
+bl
+se
+se
+se
+Te
+VA
+NO
+NO
+NO
+CZ
+XP
+Zp
+Zp
+"}
+(6,1,1) = {"
+Zp
+NS
+el
+xA
+qu
+jn
+MP
+pz
+SN
+iR
+Hl
+Jq
+jI
+HZ
+"}
+(7,1,1) = {"
+Zp
+NS
+Ha
+Ha
+eA
+jn
+QH
+bb
+bb
+Hv
+NT
+Xb
+EK
+HZ
+"}
+(8,1,1) = {"
+Zp
+NS
+Ha
+Ha
+eA
+jn
+bg
+Gp
+Gp
+Aa
+qK
+OO
+jB
+HZ
+"}
+(9,1,1) = {"
+Zp
+NS
+el
+dx
+qu
+yy
+MP
+YC
+Oo
+lv
+Hl
+Jq
+jI
+HZ
+"}
+(10,1,1) = {"
+Zp
+ZB
+se
+se
+se
+ma
+Jv
+NO
+NO
+NO
+av
+XP
+Zp
+Zp
+"}
+(11,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+NS
+bO
+Ly
+NO
+Ly
+tR
+MP
+Zp
+Zp
+"}
+(12,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+NS
+xI
+NO
+NO
+jH
+bl
+Jv
+Zp
+Zp
+"}
+(13,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+ZB
+se
+Hl
+Hl
+se
+Jv
+Zp
+Zp
+Zp
+"}
+(14,1,1) = {"
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+"}
