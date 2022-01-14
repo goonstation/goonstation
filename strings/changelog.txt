@@ -1,5 +1,10 @@
 
 (t)thu jan 13 22
+(u)BatElite
+(p)7086
+(e)🆕🗺|feature, mapping
+(*)Morgues, crematoria and tanning beds have been reworked internally with several accompanying QOL changes and minor bugfixes. Most important additions are that they require power to operate properly and silicons can operate the trays now.
+(+)Specifically, tanning beds and crematoria will not activate and morgues will not prevent decomposition without power
 (u)Mr. Moriarty & End
 (p)7111
 (e)🎨|sprites
