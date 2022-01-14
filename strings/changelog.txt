@@ -1,4 +1,10 @@
 
+(t)fri jan 14 22
+(u)Nexusuxen
+(p)6428
+(e)🎨|sprites
+(+)Adds sliced cheese & tomatoes, and a couple recipe fixes. 1 cheese wedge = 4 slices, 1 tomato = 3 slices. Cheese slice sprites by Erinexx.
+(+)Multiple recipes now use cheese slices instead of whole wedges. BLTs and Weird Cheeseburgers added. Minor recipe tweaks.
 (t)thu jan 13 22
 (u)Zonespace
 (p)6981
