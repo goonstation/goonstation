@@ -150,7 +150,9 @@
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/prefab/crashed_hop_shuttle)
 "iR" = (
-/obj/machinery/door/airlock/gannets/command/alt,
+/obj/machinery/door/airlock/gannets/command/alt{
+	opacity = 0
+	},
 /obj/access_spawn/head_of_personnel,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
@@ -301,7 +303,9 @@
 /area/prefab/crashed_hop_shuttle)
 "tU" = (
 /obj/access_spawn/head_of_personnel,
-/obj/machinery/door/airlock/gannets/command/alt,
+/obj/machinery/door/airlock/gannets/command/alt{
+	opacity = 0
+	},
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "uI" = (
@@ -326,6 +330,12 @@
 	dir = 1
 	},
 /turf/space,
+/area/prefab/crashed_hop_shuttle)
+"vq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "vT" = (
 /turf/simulated/floor/damaged1,
@@ -990,7 +1000,7 @@ xl
 GO
 Ij
 Ij
-OE
+yy
 Xn
 Jb
 Xn
@@ -1084,11 +1094,11 @@ gr
 CJ
 Zs
 vT
-OE
+vq
 Xn
 tU
 Xn
-OE
+SY
 xl
 Ij
 GO
