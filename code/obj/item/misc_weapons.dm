@@ -52,7 +52,7 @@
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
 	var/off_w_class = W_CLASS_SMALL
-	var/datum/component/holdertargeting/simple_light/light_c
+	var/datum/component/loctargeting/simple_light/light_c
 	var/do_stun = 0
 
 	stunner
@@ -99,7 +99,7 @@
 				src.loaded_glowstick = new /obj/item/device/light/glowstick/white(src)
 		src.loaded_glowstick.turnon()
 
-		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, r, g, b, 150)
+		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
 		AddComponent(/datum/component/itemblock/saberblock)
@@ -219,7 +219,7 @@
 	tooltip_rebuild = 1
 	if (src.active)
 		SET_BLOCKS(BLOCK_ALL)
-		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
 		light_c.update(1)
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
@@ -238,7 +238,7 @@
 		src.w_class = W_CLASS_BULKY
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
-		var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+		var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
 		SET_BLOCKS(BLOCK_SWORD)
 		light_c.update(0)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
@@ -313,7 +313,7 @@
 			loaded_glowstick = W
 			W.set_loc(src)
 			user.u_equip(W)
-			var/datum/component/holdertargeting/simple_light/light_c = src.GetComponent(/datum/component/holdertargeting/simple_light)
+			var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
 			switch(src.loaded_glowstick.color_name)
 				if("red")
 					light_c.set_color(255, 0, 0)

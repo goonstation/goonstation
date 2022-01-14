@@ -8,6 +8,7 @@
 
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
+	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
@@ -188,6 +189,7 @@
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
+	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif

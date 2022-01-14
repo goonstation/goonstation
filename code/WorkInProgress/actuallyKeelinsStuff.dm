@@ -1359,6 +1359,7 @@ Returns:
 		if (shaft)
 			prefix += "[shaft.name]"
 		src.name_prefix(prefix)
+		src.UpdateName()
 
 	proc/buildOverlays()
 		overlays.Cut()

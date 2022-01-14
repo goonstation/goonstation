@@ -20,17 +20,6 @@
 "aad" = (
 /turf/space/fluid/warp_z5/realwarp,
 /area/space)
-"aae" = (
-/obj/machinery/cell_charger,
-/obj/item/device/radio/intercom{
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
-/obj/table/glass/reinforced/auto,
-/obj/item/paper/telecrystal_update,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aaf" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -1076,7 +1065,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "acj" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/item/reagent_containers/food/snacks/pizza/meatball,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -1114,7 +1103,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acm" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acn" = (
@@ -3060,7 +3049,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "agN" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -3476,7 +3465,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "ahT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -9140,6 +9129,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/goodybag,
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avv" = (
@@ -12439,6 +12429,9 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/medical/medbay/lobby)
+"aDr" = (
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/inner/central)
 "aDs" = (
 /obj/machinery/lrteleporter,
 /obj/disposalpipe/segment/mail,
@@ -12976,7 +12969,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "aEH" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /obj/machinery/computer/tanning{
 	pixel_y = 32
 	},
@@ -29804,6 +29797,10 @@
 /obj/item/device/detective_scanner{
 	pixel_x = -6
 	},
+/obj/item/hand_labeler{
+	pixel_x = 8;
+	pixel_y = 10
+	},
 /obj/item/device/detective_scanner{
 	pixel_x = -3
 	},
@@ -44468,9 +44465,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
-"ciK" = (
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/inner/central)
 "ciM" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -45845,6 +45839,17 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"ehY" = (
+/obj/machinery/cell_charger,
+/obj/item/device/radio/intercom{
+	dir = 8;
+	frequency = 1485;
+	name = "Security Intercom"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/item/paper/telecrystal_update,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "euS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47149,6 +47154,39 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"mLJ" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "mQr" = (
 /obj/cable{
 	d1 = 4;
@@ -48450,39 +48488,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
-"vLB" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "vNf" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -57292,7 +57297,7 @@ aNb
 aOE
 aOY
 aPk
-aae
+ehY
 aPG
 aQs
 aNc
@@ -84281,11 +84286,11 @@ aCn
 aHf
 aBz
 aLS
-ciK
-ciK
+aDr
+aDr
 bXl
-ciK
-ciK
+aDr
+aDr
 chc
 ciZ
 ciZ
@@ -84584,10 +84589,10 @@ aHg
 aBz
 abs
 ckX
-ciK
+aDr
 chd
 aSd
-ciK
+aDr
 chc
 ciZ
 ciB
@@ -84884,12 +84889,12 @@ aFZ
 aGD
 aHh
 aBz
-ciK
+aDr
 chd
 aMB
 chd
 bpc
-ciK
+aDr
 chc
 ciP
 ciO
@@ -85186,12 +85191,12 @@ aGa
 aGE
 aHi
 aBz
-ciK
+aDr
 ckX
-ciK
+aDr
 chd
 bsa
-ciK
+aDr
 chc
 ciZ
 ciT
@@ -85488,12 +85493,12 @@ aGb
 aGF
 aHj
 aBz
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 chd
 bxJ
-ciK
+aDr
 chc
 ciZ
 ciZ
@@ -85790,12 +85795,12 @@ aGc
 aCn
 bvZ
 aBz
-ciK
+aDr
 aHC
 aPw
 aHC
 aHC
-ciK
+aDr
 chc
 cgn
 ciP
@@ -86092,14 +86097,14 @@ aBz
 ckQ
 aBz
 aBz
-ciK
+aDr
 atc
 atQ
 ibd
 aHC
 cjF
 ckY
-ciK
+aDr
 ciP
 cjG
 ciN
@@ -86128,7 +86133,7 @@ fJg
 fJg
 edf
 kjH
-ciK
+aDr
 cjP
 giE
 bvw
@@ -86392,8 +86397,8 @@ aES
 aFx
 aBG
 aIi
-ciK
-ciK
+aDr
+aDr
 aLT
 aHC
 atR
@@ -86401,7 +86406,7 @@ cjU
 aHC
 vKP
 gMW
-ciK
+aDr
 ciZ
 cjH
 ciN
@@ -86694,16 +86699,16 @@ aET
 aFy
 aBG
 aLo
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 aHC
 auq
 aHC
 aHC
 osc
 ckZ
-ciK
+aDr
 ciZ
 ciZ
 cjI
@@ -86995,15 +87000,15 @@ aEe
 aCs
 auK
 aBG
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
 cjM
 cgT
 cgT
@@ -87297,7 +87302,7 @@ aCs
 aRs
 aFA
 aBG
-ciK
+aDr
 ckw
 cga
 aKf
@@ -87599,7 +87604,7 @@ aDk
 aBG
 aBG
 aBG
-ciK
+aDr
 aig
 aCD
 chd
@@ -87900,8 +87905,8 @@ cgR
 aBG
 aBG
 aLn
-ciK
-ciK
+aDr
+aDr
 aig
 aEV
 aqn
@@ -88201,9 +88206,9 @@ clt
 aCs
 clw
 clB
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 aig
 aEV
 aqn
@@ -90314,7 +90319,7 @@ axY
 acN
 aIH
 clb
-ciK
+aDr
 aig
 aCD
 aqn
@@ -90614,9 +90619,9 @@ cmc
 aoI
 aBn
 aBM
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 aig
 aCD
 aqn
@@ -90915,10 +90920,10 @@ aoG
 aoH
 atr
 aBn
-ciK
-ciK
+aDr
+aDr
 ctr
-ciK
+aDr
 clc
 aCD
 aqn
@@ -91218,9 +91223,9 @@ azx
 aAK
 atw
 aFz
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 aig
 aCD
 aqn
@@ -91520,9 +91525,9 @@ azy
 aAL
 atw
 aGG
-ciK
+aDr
 cls
-ciK
+aDr
 aig
 aCD
 aqn
@@ -91822,9 +91827,9 @@ apx
 aAM
 atw
 aGH
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 aig
 aCD
 aqn
@@ -92123,10 +92128,10 @@ ayA
 azA
 aAM
 atw
-ciK
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
+aDr
 aig
 aCD
 aqn
@@ -92428,7 +92433,7 @@ atw
 atw
 atw
 atw
-ciK
+aDr
 aig
 aCD
 aqn
@@ -92730,7 +92735,7 @@ atw
 aCx
 aai
 atw
-ciK
+aDr
 aig
 aCD
 aqn
@@ -93032,7 +93037,7 @@ atw
 aCy
 aas
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -93334,7 +93339,7 @@ aBN
 aAV
 aAT
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -93636,7 +93641,7 @@ aBO
 aAV
 aAT
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -93938,7 +93943,7 @@ atw
 acF
 aAT
 aCw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -94013,7 +94018,7 @@ vex
 bWH
 gJy
 pij
-vLB
+mLJ
 bTR
 bRU
 bLr
@@ -94240,7 +94245,7 @@ atw
 aCz
 aAT
 aCw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -94542,7 +94547,7 @@ atw
 aCz
 aAT
 aCw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -94844,7 +94849,7 @@ aBN
 cfC
 aat
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -95146,7 +95151,7 @@ aBO
 cfC
 aau
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -95448,7 +95453,7 @@ atw
 aCz
 aAS
 aCw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -95750,7 +95755,7 @@ atw
 aCz
 aAS
 aCw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -96052,7 +96057,7 @@ atw
 acG
 aAS
 aCw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -96354,7 +96359,7 @@ aBN
 aAV
 aAS
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -96656,7 +96661,7 @@ aDq
 beo
 aav
 atw
-ciK
+aDr
 aig
 aEV
 aqn
@@ -97260,7 +97265,7 @@ atw
 aCC
 bes
 atw
-ciK
+aDr
 aig
 aCD
 aqn
@@ -97562,7 +97567,7 @@ atw
 atw
 atw
 atw
-ciK
+aDr
 aig
 aCD
 aqn
@@ -97863,8 +97868,8 @@ aAS
 atw
 aGI
 abs
-ciK
-ciK
+aDr
+aDr
 aig
 aCD
 aqn
@@ -98164,8 +98169,8 @@ azC
 aAS
 atw
 aIi
-ciK
-ciK
+aDr
+aDr
 ckw
 ckS
 aCD
@@ -98465,9 +98470,9 @@ awn
 azI
 aAU
 atw
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
 bqP
 chd
 aCD
@@ -98768,7 +98773,7 @@ azJ
 aAV
 atw
 aIj
-ciK
+aDr
 chd
 cfQ
 chd
@@ -99074,7 +99079,7 @@ aJz
 chd
 aig
 ckO
-ciK
+aDr
 ckP
 aCD
 aqn
@@ -99674,8 +99679,8 @@ azM
 ayd
 ayd
 aBn
-ciK
-ciK
+aDr
+aDr
 aig
 chd
 aqn
@@ -99976,8 +99981,8 @@ azL
 ayd
 ayd
 axY
-ciK
-ciK
+aDr
+aDr
 aig
 aEV
 aqn
@@ -100278,8 +100283,8 @@ azL
 ayd
 ayd
 axY
-ciK
-ciK
+aDr
+aDr
 aig
 aEV
 aqn
@@ -100580,7 +100585,7 @@ azL
 ayd
 ayd
 axY
-ciK
+aDr
 aKk
 aig
 aEV
@@ -100882,8 +100887,8 @@ azL
 ayd
 ayd
 aBn
-ciK
-ciK
+aDr
+aDr
 aig
 aEV
 aEV
@@ -101184,8 +101189,8 @@ azP
 ayd
 ayp
 chd
-ciK
-ciK
+aDr
+aDr
 ckx
 bjl
 bjl
@@ -101486,11 +101491,11 @@ azP
 ayd
 aBQ
 aCE
-ciK
-ciK
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
+aDr
+aDr
 ckx
 bjl
 bjl
@@ -101794,13 +101799,13 @@ aCF
 aCF
 bTa
 aGJ
-ciK
+aDr
 bTL
-ciK
-ciK
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
+aDr
+aDr
 ckx
 ckR
 aCD
@@ -102102,8 +102107,8 @@ chB
 chB
 chB
 chB
-ciK
-ciK
+aDr
+aDr
 ckx
 bjl
 bjl
@@ -102113,22 +102118,22 @@ bjl
 bjl
 bjl
 aPM
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
 cfS
-ciK
-ciK
+aDr
+aDr
 cfS
 ckE
 ckq
 ckJ
 cfS
 cfS
-ciK
+aDr
 aCD
 ckB
 cjZ
@@ -102407,15 +102412,15 @@ chB
 chB
 rqc
 pZs
-ciK
+aDr
 ckL
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
-ciK
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
+aDr
 aks
 aks
 aks
@@ -102710,12 +102715,12 @@ chB
 chB
 brX
 qEN
-ciK
-ciK
+aDr
+aDr
 ckX
 cfS
-ciK
-ciK
+aDr
+aDr
 ckr
 aks
 aks
@@ -103016,8 +103021,8 @@ aLW
 cfS
 wFP
 ckK
-ciK
-ciK
+aDr
+aDr
 aks
 aks
 bgD
@@ -103318,7 +103323,7 @@ aLW
 ckK
 ckK
 uWe
-ciK
+aDr
 aks
 aks
 arD
@@ -103619,7 +103624,7 @@ aLs
 aLW
 ckX
 cfS
-ciK
+aDr
 ckM
 aks
 aqo
@@ -103918,10 +103923,10 @@ aJX
 aKp
 chB
 aLt
-ciK
+aDr
 chd
 abs
-ciK
+aDr
 bwy
 aks
 aqA

@@ -45,6 +45,9 @@
 		else
 			target_turf = get_turf(the_target)
 
+		if(!target_turf) //target got deleted?
+			return
+
 		//var/compare_movepath = current_movepath
 		SPAWN_DBG(0)
 			if (!master)
@@ -4289,6 +4292,7 @@
 	var/host_id = null //Who is linked to us?
 	var/timeout = 45
 	var/timeout_alert = 0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	var/obj/machinery/bot/guardbot/current = null
 	var/obj/machinery/power/data_terminal/link = null
 

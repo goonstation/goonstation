@@ -278,8 +278,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
-		/client/proc/respawn_heavenly,
-		/client/proc/respawn_demonically,
+		/client/proc/respawn_cinematic,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -369,6 +368,7 @@ var/list/admin_verbs = list(
 		/client/proc/call_proc,
 		/client/proc/call_proc_all,
 		/client/proc/debug_global_variable,
+		/client/proc/debug_ref_variables,
 
 		// /client/proc/admin_airborne_fluid,
 		// /client/proc/replace_space,
@@ -936,31 +936,26 @@ var/list/fun_images = list()
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
 
-/client/proc/respawn_heavenly()
-	set name = "Respawn Heavenly"
+/client/proc/respawn_cinematic()
+	set name = "Respawn Cinematic"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Respawn yourself from the heavens"
+	set desc = "Respawn yourself with a special effect"
 	set popup_menu = 0
 	admin_only
 
-	src.respawn_as_self()
-
-	var/mob/M = src.mob
-	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
-	heavenly_spawn(M)
-
-/client/proc/respawn_demonically()
-	set name = "Respawn Demonically"
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Respawn yourself from the depths of the underfloor."
-	set popup_menu = 0
-	admin_only
-
-	src.respawn_as_self()
-
-	var/mob/living/carbon/human/M = src.mob
-	M.bioHolder.AddEffect("hell_fire", magical = 1)
-	demonic_spawn(M)
+	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/selection = tgui_input_list(usr, "Select Respawn type.", "Cinematic Respawn", respawn_types)
+	switch(selection)
+		if("Heavenly")
+			src.respawn_as_self()
+			var/mob/M = src.mob
+			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			heavenly_spawn(M)
+		if("Demonically")
+			src.respawn_as_self()
+			var/mob/living/carbon/human/M = src.mob
+			M.bioHolder.AddEffect("hell_fire", magical = 1)
+			demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -1025,10 +1020,18 @@ var/list/fun_images = list()
 	var/new_mob = FALSE
 	if(src.holder.respawn_as_self_mob && !src.holder.respawn_as_self_mob.disposed && !new_self)
 		H = src.holder.respawn_as_self_mob
-		H.set_loc(mymob.loc)
+		if(locate(/obj/storage) in mymob.loc)
+			var/obj/storage/S = locate(/obj/storage) in mymob.loc
+			H.set_loc(S)
+		else
+			H.set_loc(mymob.loc)
 		src.holder.respawn_as_self_mob = null
 	else
-		H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
+		if(locate(/obj/storage) in mymob.loc)
+			var/obj/storage/S = locate(/obj/storage) in mymob.loc
+			H = new(S, src.preferences.AH, src.preferences, TRUE)
+		else
+			H = new(mymob.loc, src.preferences.AH, src.preferences, TRUE)
 		new_mob = TRUE
 	if (!mymob.mind)
 		mymob.mind = new /datum/mind()

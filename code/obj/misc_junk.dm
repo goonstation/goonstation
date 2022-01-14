@@ -346,6 +346,7 @@
 
 
 	on_reagent_change(add)
+		..()
 		if (!src.emagged && add)
 			src.check_whitelist()
 

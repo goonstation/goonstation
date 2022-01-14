@@ -110,13 +110,11 @@ proc/filtered_concrete_typesof(type, filter)
 	*/
 proc/get_singleton(type)
 	RETURN_TYPE(type)
-	if(!singletons)
-		singletons = list()
 	if(!(type in singletons))
 		singletons[type] = new type
 	return singletons[type]
 
-var/global/list/singletons
+var/global/list/singletons = list()
 
 
 /// Find predecessor of a type
