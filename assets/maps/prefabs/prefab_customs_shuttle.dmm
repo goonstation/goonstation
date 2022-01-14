@@ -6,11 +6,15 @@
 	},
 /obj/lattice,
 /turf/space,
+/area/noGenerate)
+"aH" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
 /area/prefab/crashed_hop_shuttle)
 "aJ" = (
 /obj/table/regal/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/few,
-/obj/item/acesscomputerunfolder,
 /obj/table/regal/auto,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
 	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
@@ -21,11 +25,9 @@
 /obj/machinery/light{
 	layer = 3
 	},
+/obj/item/paper/cruiser_bought,
 /turf/simulated/floor/carpet/purple/standard/edge/sw,
 /area/prefab/crashed_hop_shuttle)
-"aK" = (
-/turf/space,
-/area/noGenerate)
 "aX" = (
 /obj/rack,
 /obj/item/clothing/head/that/gold,
@@ -38,6 +40,11 @@
 "bj" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
+"bY" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
 "cA" = (
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff,
@@ -48,9 +55,15 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/west,
 /area/prefab/crashed_hop_shuttle)
 "eo" = (
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/sand,
 /area/prefab/crashed_hop_shuttle)
 "ev" = (
 /obj/decoration/regallamp,
@@ -63,6 +76,10 @@
 /obj/item/clothing/head/headband/nyan/leopard,
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/prefab/crashed_hop_shuttle)
+"eB" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/prefab/crashed_hop_shuttle)
 "eJ" = (
 /obj/lattice{
 	dir = 8;
@@ -70,7 +87,7 @@
 	},
 /obj/structure/girder/displaced,
 /turf/space,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "fd" = (
 /obj/decal/skeleton{
 	desc = "Eugh, the stench is horrible!";
@@ -88,7 +105,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "gv" = (
 /obj/rack,
 /obj/item/spacecash/bag,
@@ -118,17 +135,22 @@
 /turf/simulated/floor/airless/scorched,
 /area/prefab/crashed_hop_shuttle)
 "hB" = (
-/turf/simulated/shuttle/wall,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/sea_plant/tubesponge/small,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/sand,
 /area/prefab/crashed_hop_shuttle)
 "hG" = (
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/prefab/crashed_hop_shuttle)
 "iR" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Head of Personnel's Office";
-	req_access = null
-	},
+/obj/machinery/door/airlock/gannets/command/alt,
 /obj/access_spawn/head_of_personnel,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
@@ -136,18 +158,24 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
-"jS" = (
-/turf/simulated/shuttle/wall/corner,
+"jm" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
-"ky" = (
-/obj/machinery/vending/alcohol,
-/turf/simulated/floor/airless,
+"jS" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "lh" = (
 /obj/stool/chair/comfy{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"lw" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/prefab/crashed_hop_shuttle)
 "mk" = (
 /obj/lattice,
@@ -167,24 +195,29 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
-"oj" = (
-/obj/stool/bar,
+"pa" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"ph" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
-"ph" = (
-/obj/item/instrument/large/jukebox,
-/turf/simulated/floor/airless,
-/area/prefab/crashed_hop_shuttle)
-"pv" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 4
+"pQ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
 	},
-/turf/space,
 /area/prefab/crashed_hop_shuttle)
 "qA" = (
 /obj/stool/chair/comfy{
@@ -193,15 +226,19 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "rm" = (
-/turf/simulated/floor/airless,
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	name = "Toilet"
+	},
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "ro" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "rL" = (
 /obj/computerframe{
 	desc = "It is highly unlikely that this still works.";
@@ -223,6 +260,10 @@
 "sA" = (
 /turf/simulated/floor/damaged4,
 /area/prefab/crashed_hop_shuttle)
+"sG" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
 "sH" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -233,6 +274,9 @@
 	},
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
+"tr" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/prefab/crashed_hop_shuttle)
 "tD" = (
 /obj/machinery/light{
 	dir = 1
@@ -241,18 +285,24 @@
 	desc = "A soft little bed the general size and shape of a corgi.";
 	name = "dog bed"
 	},
-/obj/stool/bee_bed{
-	desc = "A soft little bed the general size and shape of a corgi.";
-	name = "dog bed"
-	},
-/obj/stool/bee_bed{
-	desc = "A soft little bed the general size and shape of a corgi.";
-	name = "dog bed"
-	},
 /mob/living/critter/small_animal/dog/corgi{
-	dir = 4
+	desc = "An adorable corgi who many people would literally die for.";
+	dir = 4;
+	name = "Liam"
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/ne,
+/area/prefab/crashed_hop_shuttle)
+"tO" = (
+/obj/stool/bar,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/prefab/crashed_hop_shuttle)
+"tU" = (
+/obj/access_spawn/head_of_personnel,
+/obj/machinery/door/airlock/gannets/command/alt,
+/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "uI" = (
 /obj/stool/chair/comfy{
@@ -261,15 +311,30 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"uX" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/prefab/crashed_hop_shuttle)
 "uZ" = (
 /obj/grille/steel,
 /obj/lattice,
 /turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"vk" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/space,
 /area/prefab/crashed_hop_shuttle)
 "vT" = (
 /turf/simulated/floor/damaged1,
+/area/prefab/crashed_hop_shuttle)
+"wb" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/space,
 /area/prefab/crashed_hop_shuttle)
 "wu" = (
 /obj/rack,
@@ -279,9 +344,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/goldbar,
-/obj/rack,
-/obj/rack,
+/obj/item/cigarbox/gold,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
@@ -307,17 +370,24 @@
 /area/prefab/crashed_hop_shuttle)
 "xl" = (
 /turf/space,
-/area/allowGenerate)
-"yI" = (
-/turf/simulated/floor/damaged5,
-/area/prefab/crashed_hop_shuttle)
-"zi" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
+/area/noGenerate)
+"yf" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
 	},
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
+"yy" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/prefab/crashed_hop_shuttle)
+"yI" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/damaged5,
+/area/prefab/crashed_hop_shuttle)
 "zB" = (
+/obj/item/acesscomputerunfolder,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -329,7 +399,11 @@
 	pixel_y = 12
 	},
 /obj/item/matchbook,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"zM" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "Al" = (
 /turf/simulated/floor/carpet{
@@ -341,9 +415,12 @@
 /obj/sea_plant_manta/coralfingers,
 /mob/living/critter/aquatic/fish/tang{
 	desc = "This one holds a beauty that goes beyond words...";
-	name = "Livvy"
+	name = "Milly"
 	},
-/obj/fluid_spawner/shortdelaybig,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
 /turf/simulated/floor/sand,
 /area/prefab/crashed_hop_shuttle)
 "Bt" = (
@@ -355,7 +432,7 @@
 /area/prefab/crashed_hop_shuttle)
 "BR" = (
 /obj/decoration/bookcase,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "BW" = (
 /turf/simulated/floor/plating/airless{
@@ -369,7 +446,7 @@
 	icon_state = "floattiles2"
 	},
 /turf/space,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "CS" = (
 /obj/decal/floatingtiles{
 	dir = 1
@@ -387,6 +464,14 @@
 /obj/item/furniture_parts/comfy_chair,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
+"Du" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/simulated/shuttle/wall/corner{
+	dir = 8
+	},
+/area/prefab/crashed_hop_shuttle)
 "EQ" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -394,13 +479,24 @@
 	icon_state = "floattiles4"
 	},
 /turf/space,
+/area/noGenerate)
+"Ge" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
-"Hl" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 8
+"GG" = (
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"GO" = (
+/turf/space,
+/area/allowGenerate)
+"Hg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
 	},
-/turf/simulated/floor/airless,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "Hz" = (
 /obj/rack,
 /obj/item/spacecash/bag,
@@ -415,47 +511,64 @@
 	icon_state = "green2"
 	},
 /area/prefab/crashed_hop_shuttle)
-"HD" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler,
-/turf/simulated/floor/airless,
-/area/prefab/crashed_hop_shuttle)
 "HO" = (
 /obj/lattice,
 /obj/structure/girder/displaced,
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
-"Ic" = (
-/obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/noGenerate)
 "Ij" = (
 /turf/simulated/wall/asteroid,
 /area/noGenerate)
-"Jb" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 4;
-	name = "Toilet"
+"IT" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
-/turf/simulated/floor/airless,
+/obj/sea_plant/bulbous,
+/mob/living/critter/aquatic/fish/tang{
+	desc = "This one holds a beauty that goes beyond words...";
+	name = "Philly"
+	},
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"Jb" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "Kd" = (
 /obj/table/reinforced/bar/auto,
-/turf/simulated/floor/airless,
+/obj/item/playing_card/expensive,
+/turf/simulated/floor/carpet/blue/fancy,
 /area/prefab/crashed_hop_shuttle)
 "Ke" = (
 /obj/lattice,
 /turf/space,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "Kk" = (
-/turf/simulated/shuttle/wall{
-	dir = 4
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
 	},
+/obj/sea_plant/seaweed,
+/turf/simulated/floor/sand,
 /area/prefab/crashed_hop_shuttle)
 "Kl" = (
 /turf/simulated/floor/airless{
 	icon_state = "damaged4"
 	},
+/area/noGenerate)
+"Lh" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"MD" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
 /area/prefab/crashed_hop_shuttle)
 "MK" = (
 /obj/lattice,
@@ -477,24 +590,23 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/goldbar,
 /obj/item/spacecash/bag,
+/obj/item/material_piece/gold,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"
 	},
 /area/prefab/crashed_hop_shuttle)
 "Nx" = (
-/obj/machinery/door/airlock/pyro/command{
-	name = "Head of Personnel's Office";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/command,
 /obj/access_spawn/head_of_personnel,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Oo" = (
 /obj/decoration/clock,
-/turf/simulated/shuttle/wall,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
 /area/prefab/crashed_hop_shuttle)
 "Op" = (
 /obj/stool/chair/wooden/regal{
@@ -503,12 +615,18 @@
 /turf/simulated/floor/carpet/purple/standard/edge,
 /area/prefab/crashed_hop_shuttle)
 "OE" = (
-/turf/simulated/shuttle/wall,
-/area/noGenerate)
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/crashed_hop_shuttle)
 "OQ" = (
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
+/area/prefab/crashed_hop_shuttle)
+"Pa" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/prefab/crashed_hop_shuttle)
 "Pc" = (
 /obj/decal/floatingtiles{
@@ -519,9 +637,17 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "Pu" = (
-/obj/sea_plant/seaweed,
-/obj/fluid_spawner/shortdelaybig,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/sea_plant/anemone,
 /turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"PP" = (
+/obj/machinery/vending/alcohol,
+/obj/machinery/light,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "PZ" = (
 /obj/table/wood/auto/desk,
@@ -532,7 +658,12 @@
 	dir = 1;
 	tag = "icon-right (NORTH)"
 	},
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"QN" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/storage/box/donkpocket_kit,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "Rg" = (
 /obj/rack,
@@ -548,16 +679,13 @@
 	icon_state = "fgreen2"
 	},
 /area/prefab/crashed_hop_shuttle)
-"Ta" = (
-/obj/machinery/chem_dispenser/soda,
-/obj/machinery/light{
-	layer = 3
+"SY" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
 	},
-/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Ty" = (
-/obj/machinery/chem_dispenser/alcohol,
-/turf/simulated/floor/airless,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "TE" = (
 /turf/simulated/floor/carpet{
@@ -567,10 +695,10 @@
 "Uh" = (
 /obj/lattice,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/crashed_hop_shuttle)
+/area/noGenerate)
 "Vb" = (
 /obj/stool/bar,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/prefab/crashed_hop_shuttle)
 "Vp" = (
 /obj/item/storage/secure/ssafe/loot{
@@ -583,7 +711,7 @@
 "Vz" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/carpet/blue/fancy,
 /area/prefab/crashed_hop_shuttle)
 "WZ" = (
 /obj/decal/floatingtiles{
@@ -593,8 +721,9 @@
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Xn" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
 /area/prefab/crashed_hop_shuttle)
 "Yh" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -609,426 +738,441 @@
 	icon_state = "fgreen2"
 	},
 /area/prefab/crashed_hop_shuttle)
+"Yu" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"Yz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
 "YP" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/playing_card/expensive,
-/turf/simulated/floor/airless,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/prefab/crashed_hop_shuttle)
 "YX" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/prefab/crashed_hop_shuttle)
-"Zs" = (
+"Zn" = (
 /turf/simulated/floor/airless,
 /area/noGenerate)
+"Zs" = (
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
 "Zx" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 
 (1,1,1) = {"
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
+xl
+xl
+xl
+xl
+pa
+pa
+xl
+xl
+xl
+pa
+pa
+xl
+xl
+xl
+xl
+xl
 "}
 (2,1,1) = {"
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-aK
+xl
+xl
+xl
+Du
+Lh
+Yu
+yf
+xl
+wb
+Lh
+Yu
+yf
+xl
+xl
+xl
 xl
 "}
 (3,1,1) = {"
 xl
-aK
-aK
-aK
-pv
-pv
-aK
-aK
-aK
-pv
-zi
-aK
-aK
-aK
-aK
+xl
+wb
+pQ
+Xn
+Xn
+pQ
+Xn
+pQ
+Xn
+Xn
+pQ
+yf
+xl
+xl
 xl
 "}
 (4,1,1) = {"
 xl
-aK
-aK
+xl
+OE
 eo
 Kk
-Kk
-Kk
-Kk
-Kk
-Kk
-Kk
+jm
+GG
+tO
+Pa
+tr
+Ty
 jS
-aK
-aK
-aK
+OE
+xl
+xl
 xl
 "}
 (5,1,1) = {"
 xl
-aK
-aK
+xl
+OE
 hB
 Am
-Xn
-rm
-oj
-Kd
-rm
+MD
 Ty
-hB
-aK
-aK
+Vb
+Kd
+uX
+Ty
+zM
+OE
+xl
 xl
 xl
 "}
 (6,1,1) = {"
 xl
 xl
-aK
-hB
+OE
+IT
 Pu
-Xn
-rm
+MD
+Ty
 Vb
 Vz
-rm
-Ta
-hB
-aK
-aK
+uX
+Ty
+PP
+OE
+xl
 xl
 xl
 "}
 (7,1,1) = {"
+GO
 xl
-xl
-aK
-hB
+yy
 Xn
 Xn
-rm
-Vb
+SY
+Zs
+eB
 YP
-rm
-HD
-hB
-aK
-aK
+lw
+Ty
+Ge
+OE
+xl
 xl
 xl
 "}
 (8,1,1) = {"
+GO
 xl
-xl
-aK
-hB
+OE
+sG
 ph
 rm
-rm
+Ty
 nE
 QJ
-rm
-ky
-hB
-aK
-aK
+Ty
+Ty
+QN
+OE
+xl
 xl
 xl
 "}
 (9,1,1) = {"
+GO
 xl
-xl
-xl
-hB
-Kk
-Kk
+vk
+aH
+Xn
+Xn
 Jb
-Kk
+aH
 Yh
 Yh
 Yh
-hB
-aK
+aH
+Yz
 xl
 xl
 xl
 "}
 (10,1,1) = {"
+GO
+GO
 xl
-xl
-xl
-hB
+OE
 zD
 uI
-rm
+Ty
 Zx
 aX
 gv
 Rg
 YX
-aK
+xl
 xl
 xl
 xl
 "}
 (11,1,1) = {"
+GO
+GO
 xl
-xl
-xl
-hB
+OE
 BR
-rm
-rm
+Ty
+Ty
 Nx
 Yo
 TE
 Hz
 YX
-aK
-aK
+xl
+xl
 xl
 xl
 "}
 (12,1,1) = {"
-xl
+GO
 Ij
 Ij
-hB
+OE
 BR
-rm
+Ty
 qA
 Zx
 wu
 Al
 MU
 YX
-aK
-aK
+xl
+xl
 xl
 xl
 "}
 (13,1,1) = {"
-xl
+GO
 Ij
 Ij
-hB
-Kk
-Hl
-Kk
-Kk
-Kk
+OE
+Xn
+Jb
+Xn
+aH
+Xn
 iR
-Kk
-hB
-aK
-aK
+Xn
+SY
+xl
+xl
 xl
 xl
 "}
 (14,1,1) = {"
-xl
+GO
 Ij
 Ij
-hB
+OE
 Dg
 wQ
 lh
-hB
+OE
 ev
 wP
 aJ
-hB
-aK
-aK
+OE
+xl
+xl
 xl
 xl
 "}
 (15,1,1) = {"
-xl
+GO
 Ij
 Ij
-hB
+OE
 sH
 BW
 Bt
-Nx
+iR
 hG
 dg
 Op
-hB
-aK
-aK
+OE
 xl
 xl
+xl
+GO
 "}
 (16,1,1) = {"
-xl
-aK
+GO
+GO
 Ij
 eJ
 vT
-rm
+Zs
 wQ
 Oo
 ex
 xg
 MQ
-hB
-aK
-aK
+OE
 xl
 xl
+GO
+GO
 "}
 (17,1,1) = {"
 xl
-aK
+xl
 Ij
-hB
+OE
 yI
 sA
 Dc
-hB
+OE
 tD
 fd
 zB
-hB
-aK
-aK
-aK
-aK
+OE
+xl
+xl
+GO
+GO
 "}
 (18,1,1) = {"
-aK
-aK
+xl
+xl
 bj
 gr
 CJ
-rm
+Zs
 vT
-hB
-Kk
-iR
-Kk
-hB
-aK
+OE
+Xn
+tU
+Xn
+OE
+xl
 Ij
-aK
-aK
+GO
+GO
 "}
 (19,1,1) = {"
-aK
-aK
+xl
+xl
 bj
-hB
+Hg
 EQ
 OQ
 CS
 xh
 PZ
-rm
+Zs
 WZ
 HO
 bj
 bj
 Ij
-xl
+GO
 "}
 (20,1,1) = {"
-aK
-aK
+xl
+xl
 bj
 gE
 Ke
 Ke
-rm
+Zs
 vT
 cA
-rm
+Zs
 Vp
-hB
+OE
 bj
 Ij
 Ij
-xl
+GO
 "}
 (21,1,1) = {"
-aK
-aK
-aK
-OE
+xl
+xl
+xl
+Hg
 MK
-Zs
+Zn
 Ke
 ak
 PZ
 rL
 Uh
-hB
+OE
 bj
 Ij
-xl
-xl
+GO
+GO
 "}
 (22,1,1) = {"
-xl
-aK
+GO
+GO
 Ij
 Ij
 Pc
-Ic
+Uh
 mk
-BW
+bY
 gR
 jd
 uZ
 ro
 Ij
 Ij
-xl
-xl
+GO
+GO
 "}
 (23,1,1) = {"
-xl
-xl
+GO
+GO
 Ij
 Ij
 Ij
-Ic
+Uh
 Ij
 Kl
 mY
@@ -1037,14 +1181,14 @@ Uh
 Ij
 Ij
 Ij
-xl
-xl
+GO
+GO
 "}
 (24,1,1) = {"
-xl
-xl
-xl
-xl
+GO
+GO
+GO
+GO
 Ij
 Ij
 Ij
@@ -1053,44 +1197,62 @@ Ij
 rM
 Ij
 Ij
-xl
-xl
-xl
-xl
+GO
+GO
+GO
+GO
 "}
 (25,1,1) = {"
-xl
-xl
-xl
-xl
-xl
-xl
+GO
+GO
+GO
+GO
+GO
+GO
 Ij
 Ij
 Ij
 bj
 Ij
-xl
-xl
-xl
-xl
-xl
+GO
+GO
+GO
+GO
+GO
 "}
 (26,1,1) = {"
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-xl
-aK
-aK
-xl
-xl
-xl
-xl
-xl
-xl
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+"}
+(27,1,1) = {"
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
 "}
