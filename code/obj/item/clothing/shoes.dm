@@ -727,3 +727,7 @@
 	name = "Brown Cowboy Boots"
 	icon_state = "westboot_brown"
 
+/obj/item/clothing/shoes/drip
+    name = "overly expensive shoes"
+    desc = "the pair of expensive, yet also uncomfortable, sneakers."
+    icon_state = "dripshoe"

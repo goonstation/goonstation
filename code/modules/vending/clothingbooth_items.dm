@@ -1143,6 +1143,24 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_TRADESMAN/2
 
+/datum/clothingbooth_item/costume/dripjs
+	name = "Overly Expensive Shirt and Blue Jeans"
+	path = /obj/item/clothing/under/misc/drip
+	slot = SLOT_W_UNIFORM
+	cost = PAY_EXECUTIVE
+
+/datum/clothingbooth_item/costume/dripjacket
+	name = "Overly Expensive Jacket"
+	path = /obj/item/clothing/suit/jacket/drip
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_EXECUTIVE
+
+/datum/clothingbooth_item/costume/dripshoes
+	name = "Overly Expensive Shoes"
+	path = /obj/item/clothing/shoes/drip
+	slot = SLOT_SHOES
+	cost = PAY_EXECUTIVE/2
+
 //Western
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/western)

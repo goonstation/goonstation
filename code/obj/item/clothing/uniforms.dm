@@ -1716,3 +1716,9 @@
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
+
+/obj/item/clothing/under/misc/drip
+    name = "Overly Expensive Shirt and Blue Jeans"
+    desc = "A very expensive yet very poorly made pair of shirt and jeans"
+    icon_state = "casual_jeans_drip"
+    item_state = "casual_jeans_drip"

@@ -175,6 +175,12 @@
 		icon_state = "jacket_sparkly"
 		item_state = "jacket_sparkly"
 
+	drip
+		name = "overly expensive jacket"
+		desc = "a cheaply made yet very expensive jacket, it's covered in gibberish text."
+		icon_state = "jacket_drip"
+		item_state = "jacket_drip"
+
 	design
 		name = "jacket"
 		desc = "A colorful jacket with a neat design on the back."
@@ -226,6 +232,7 @@
 			name = "grey jacket"
 			icon_state = "jacket_grey"
 			item_state = "jacket_grey"
+
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
