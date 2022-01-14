@@ -232,6 +232,8 @@
 		var/filter
 		var/leave_cleanable = 0
 		var/mob_owner = null
+		var/do_color = TRUE
+		var/message = " melts."
 
 		onAdd(optional=null)
 			. = ..()
@@ -239,12 +241,19 @@
 			owner.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
 			src.filter = owner.get_filter("acid_displace")
 			if(length(statusargs))
-				src.leave_cleanable = statusargs["leave_cleanable"]
-				src.mob_owner = statusargs["mob_owner"]
-			owner.color = list(0.8, 0, 0,\
-								0, 0.8, 0,\
-								0, 0, 0.8,\
-								0.1, 0.4, 0.1)
+				if("leave_cleanable" in statusargs)
+					src.leave_cleanable = statusargs["leave_cleanable"]
+				if("mob_owner" in statusargs)
+					src.mob_owner = statusargs["mob_owner"]
+				if("do_color" in statusargs)
+					src.do_color = statusargs["do_color"]
+				if("message" in statusargs)
+					src.message = statusargs["message"]
+			if(do_color)
+				owner.color = list(0.8, 0, 0,\
+									0, 0.8, 0,\
+									0, 0, 0.8,\
+									0.1, 0.4, 0.1)
 
 			animate(filter, size=8, time=duration, easing=SINE_EASING)
 
@@ -261,8 +270,7 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			for(var/mob/M in AIviewers(5, owner))
-				boutput(M, "<span class='alert'>\the [owner] melts.</span>")
+			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
 			qdel(owner)
 
 	simplehot/stimulants
@@ -1958,6 +1966,13 @@
 			H.delStatus(id)
 			return
 		return ..(timePassed)
+
+/datum/statusEffect/muted
+	id = "muted"
+	name = "Muted"
+	icon_state = "muted"
+	desc = "You don't have the strength to say anything louder than a whisper!"
+	maxDuration = 30 SECONDS
 
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES

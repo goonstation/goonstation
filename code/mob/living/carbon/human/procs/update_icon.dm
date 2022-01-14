@@ -99,8 +99,21 @@
 
 	if (src.wear_id)
 		wear_sanity_check(src.wear_id)
-		src.wear_id.wear_image.icon_state = "id"
-		src.wear_id.wear_image.pixel_y = body_offset
+		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
+		var/no_offset = 0
+		if (islist(override_states) && ("card-[wear_state]" in override_states))
+			src.wear_id.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.wear_id.wear_image.icon_state = "card-[wear_state]"
+			no_offset = 1
+
+		else
+			src.wear_id.wear_image.icon = src.wear_id.wear_image_icon
+			src.wear_id.wear_image.icon_state = wear_state
+
+		if (!no_offset)
+			src.wear_id.wear_image.pixel_x = 0
+			src.wear_id.wear_image.pixel_y = head_offset
+
 		src.wear_id.wear_image.layer = src.wear_id.wear_layer
 		src.wear_id.wear_image.color = src.wear_id.color
 		src.wear_id.wear_image.alpha = src.wear_id.alpha

@@ -1071,7 +1071,7 @@
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
-	desc = "A suit that protects against low pressure environments for a short time."
+	desc = "A suit that protects against low pressure environments for a short time. Amazingly, it's even more bulky and uncomfortable than the engineering suits."
 	icon_state = "emerg"
 	item_state = "emerg"
 	c_flags = SPACEWEAR

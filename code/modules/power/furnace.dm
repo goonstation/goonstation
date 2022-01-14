@@ -78,6 +78,9 @@
 			else
 				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
+				if (!isdead(grab.affecting))
+					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
+					return
 				if(target?.buckled || target?.anchored)
 					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
 					return

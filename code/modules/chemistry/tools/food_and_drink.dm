@@ -467,6 +467,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		update_gulp_size()
 		doants = src.reagents && src.reagents.total_volume > 0
 
@@ -723,6 +724,7 @@
 	var/image/fluid_image = null
 
 	on_reagent_change()
+		..()
 		if (reagents.total_volume)
 			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
 			//if (!src.fluid_image)
@@ -822,6 +824,7 @@
 		src.UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	custom_suicide = 1
@@ -1023,6 +1026,7 @@
 	var/image/image_doodad
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1478,6 +1482,7 @@
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
+		..()
 		src.underlays = null
 		if (reagents.total_volume >= 0)
 			if(reagents.total_volume == 0)
@@ -1607,6 +1612,7 @@
 		UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1694,6 +1700,7 @@
 
 	var/image/fluid_image
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
@@ -1717,6 +1724,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside

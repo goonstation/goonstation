@@ -559,7 +559,7 @@ datum
 						var/list/covered = holder.covered_turf()
 						var/density = clamp(src.volume / length(covered), 0, 10)
 						for (var/turf/T in covered)//may need to further limit this
-							explosion_new(holder.my_atom, T, 62 * (density/10)^2, 1)
+							explosion_new(holder.my_atom, T, 62 * (density/10)**2, 1)
 
 						holder.del_reagent(id)
 
