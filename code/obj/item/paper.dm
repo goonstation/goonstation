@@ -548,27 +548,6 @@ ASC: Aux. Solar Control<BR>
 	<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-
 	<BR>\n\t\t\tEvacuate to a nearby safe area!"}
 
-/obj/item/paper/martian_manifest
-	name = "Tattered paper"
-	icon_state = "paper_burned"
-	info = {"
-	<br>      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PPIN </b>░█=-<b>IFEST</b><br>
-	<br><br>  &nbsp;&nbsp;&nbsp;<b><u>ent:</u></b> Kingsw ░░█tems ░9A
-	<br><br>- rate of x4 dat† tap s \[FRAG░LE\]
-	<br><br>- EVA equipment f   = ▓  -- ▀█ ency aid
-	<br><br>- Prot▓ ▓e= AI- ██░█c▓re \[EXTR█▓░Y FRAGILE\]
-	<br><br>- \[CO▓░IDENTIAL\]&nbsp;&nbsp;█▓ ▓
-	<br><br>- mergency com░dy resu███ ▓█░
-	<br><br>- Pro█░ssio-al cl=wns (x▓)
-	<br><br>- Asso ted civil▓n grad▓█ goods
-	<br><i>Note: Shipment exp▓▓ted to a███ve no late than J█░▓░20█░</i>
-	<br><i>Client wil&nbsp;&nbsp;██rate a late or damaged shipment</i>
-	"}
-
-	New()
-		. = ..()
-		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
-
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
 	info = {"<B>Startup Procedure for Mark II Thermo-Electric Generators</B><BR>
@@ -712,12 +691,6 @@ as it may become compromised.
     Now quit bothering us with your nonsensical questions and get back to work!
     <br>
     <font size=1>- Head of Security </font>"}
-
-/obj/item/paper/CrashedHopShuttle
-	name = "paper - Shipping Accident"
-	icon_state = "paper"
-	info ={"Hey HoP buddy, so uh, funny story, looks like the pilot we had driving your luxury office shuttle crashed it into some asteroids somewhere.<br>
-	Now I'm sure your insurance will cover it... eventually. BUT, there is some good news! Before we lost contact, we detected it picking up musical tunes from the north, again, real sorry, but I hope you can find it. "}
 
 /obj/item/paper/mantasecscanners
 	name = "paper - Security Officers are so dumb!"
@@ -1669,3 +1642,4 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	desc = "An old recipe clipped from a lifestyle magazine for space station chefs. Aw, the color's faded from the layout..."
 	icon_state = "paper_caution"
 	info = {"<i>Facing threats from the crew for putting pineapple on your pizzas and letting your chicken corpses spill out into the hall? Turn those trials into smiles when you serve up this scrumptious dish!</i><br><h3>Chicken Pineapple Curry</h3><br><h4>Ingredients:</h4><br> -a bag of curry powder <br> -some fresh chicken meat <br> -a tasty ring of pineapple <br> -a nice spicy chili pepper <br><br><i>With your oven, you don't even have to mix! Just add everything, set the heat to low, and let it all cook for 7 seconds!</i>"}
+

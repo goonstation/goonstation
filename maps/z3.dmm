@@ -24976,23 +24976,6 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
-"bCo" = (
-/obj/stool/bench/blue,
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
-"crL" = (
-/obj/item/clothing/suit/bedsheet/hop,
-/obj/stool/bed,
-/turf/simulated/floor/carpet/purple/standard/edge/se,
-/area/crashed_hop_shuttle)
-"cwu" = (
-/obj/decoration/decorativeplant,
-/turf/simulated/floor/carpet/purple/standard/edge/sw,
-/area/crashed_hop_shuttle)
-"cBH" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/turf/space,
-/area/crashed_hop_shuttle)
 "cSD" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25003,32 +24986,6 @@
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
-"dPO" = (
-/obj/lattice,
-/obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/crashed_hop_shuttle)
-"dUC" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/suit/hop/april_fools,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/clothing/suit/armor/hopcoat,
-/turf/simulated/floor/carpet/purple/standard/edge/nw,
-/area/crashed_hop_shuttle)
-"ehU" = (
-/obj/lattice,
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles3"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/crashed_hop_shuttle)
-"eiI" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "door1";
-	name = "broken door"
-	},
-/area/crashed_hop_shuttle)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -25040,47 +24997,20 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"eTv" = (
-/turf/simulated/shuttle/wall{
-	dir = 4
-	},
-/area/crashed_hop_shuttle)
 "fkT" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"fyP" = (
-/obj/machinery/light{
-	dir = 8;
-	tag = ""
-	},
-/obj/item/acesscomputerunfolder,
-/obj/table/regal/auto,
-/turf/simulated/floor/carpet/purple/standard/edge/west,
-/area/crashed_hop_shuttle)
-"fBy" = (
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
 "fWR" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
-"gox" = (
-/obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/crashed_hop_shuttle)
-"gRx" = (
-/turf/unsimulated/floor/airless/plating/damaged3,
-/area/crashed_hop_shuttle)
 "hmp" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
 	},
 /area/space)
-"hqS" = (
-/turf/simulated/floor/damaged1,
-/area/crashed_hop_shuttle)
 "hUW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25106,9 +25036,6 @@
 /obj/critter/gunbot/drone/heavydrone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"jvR" = (
-/turf/simulated/floor/carpet/purple/standard/edge/east,
-/area/crashed_hop_shuttle)
 "kag" = (
 /obj/decal/tile_edge/stripe{
 	dir = 10;
@@ -25137,60 +25064,12 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
-"lAj" = (
-/turf/simulated/floor/damaged3,
-/area/crashed_hop_shuttle)
-"lIA" = (
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles4"
-	},
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
-"meO" = (
-/obj/table/wood/auto/desk,
-/obj/random_item_spawner/desk_stuff,
-/turf/unsimulated/floor/airless/grime,
-/area/crashed_hop_shuttle)
-"mGb" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Head of Personnel's Office";
-	req_access = null
-	},
-/obj/access_spawn/head_of_personnel,
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
 "mHM" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"mMd" = (
-/turf/simulated/floor/carpet/purple/standard/edge/north,
-/area/crashed_hop_shuttle)
-"mXz" = (
-/obj/lattice,
-/obj/structure/girder/displaced,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/crashed_hop_shuttle)
-"nbv" = (
-/obj/table/regal/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
-	initial_volume = 0;
-	name = "Ancient Blue Label Scotch";
-	pixel_x = 9
-	},
-/turf/simulated/floor/carpet/purple/standard/edge/west,
-/area/crashed_hop_shuttle)
-"nlE" = (
-/obj/stool/chair/wooden/regal{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/purple/fancy/narrow/south,
-/area/crashed_hop_shuttle)
 "npm" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
@@ -25215,17 +25094,6 @@
 /obj/decal/cleanable/robot_debris/limb,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"orO" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
-	},
-/obj/decal/floatingtiles{
-	dir = 8;
-	icon_state = "floattiles3"
-	},
-/turf/space,
-/area/crashed_hop_shuttle)
 "oNd" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -25238,50 +25106,14 @@
 /obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
-"pqj" = (
-/obj/machinery/door/airlock/pyro/command{
-	name = "Head of Personnel's Office";
-	req_access_txt = "55"
-	},
-/obj/access_spawn/head_of_personnel,
-/turf/simulated/floor,
-/area/crashed_hop_shuttle)
 "pIj" = (
-/obj/ai_core_frame{
-	build_step = 2;
-	desc = "A model of AI core you don't recognize, gutted and covered in weird purple stains. The lettering isn't clear, but you can faintly make out \"-way -ystems 29-\" etched into the casing.";
-	name = "grody AI casing";
-	skinToApply = "kingsway"
-	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
-"pUI" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
-	},
-/area/crashed_hop_shuttle)
-"qat" = (
-/obj/lattice,
-/turf/space,
-/area/crashed_hop_shuttle)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
-"qyF" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
-/turf/simulated/floor/carpet/purple/fancy/narrow/north,
-/area/crashed_hop_shuttle)
-"qBq" = (
-/mob/living/critter/small_animal/dog/corgi,
-/obj/stool/bee_bed{
-	desc = "A soft little bed the general size and shape of a corgi.";
-	name = "dog bed"
-	},
-/turf/simulated/floor/carpet/purple/standard/edge/ne,
-/area/crashed_hop_shuttle)
 "qBE" = (
 /obj/lattice{
 	dir = 1;
@@ -25292,17 +25124,6 @@
 	},
 /turf/space,
 /area/space)
-"qDt" = (
-/obj/item/paper_bin{
-	pixel_y = 8
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/airless/grime,
-/area/crashed_hop_shuttle)
-"qXx" = (
-/obj/machinery/light,
-/turf/simulated/floor/carpet/purple/standard/edge/south,
-/area/crashed_hop_shuttle)
 "rdq" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -25329,39 +25150,9 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"rZt" = (
-/obj/decal/skeleton{
-	desc = "Eugh, the stench is horrible!";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body1";
-	name = "decomposed corpse"
-	},
-/obj/decal/cleanable/vomit,
-/turf/simulated/floor/carpet/purple/standard/edge/east,
-/area/crashed_hop_shuttle)
-"swd" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window";
-	opacity = 0
-	},
-/area/crashed_hop_shuttle)
-"sys" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
-	},
-/area/crashed_hop_shuttle)
 "sFV" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
-"sQf" = (
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = 6;
-	pixel_y = -28
-	},
-/turf/unsimulated/floor/airless/plating/damaged3,
-/area/crashed_hop_shuttle)
 "sQW" = (
 /obj/storage/crate/internals,
 /obj/item/clothing/mask/breath,
@@ -25378,22 +25169,12 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
 /area/space)
-"taQ" = (
-/obj/stool/bench/blue,
-/turf/simulated/floor/airless/vr,
-/area/crashed_hop_shuttle)
 "txH" = (
 /obj/critter/gunbot/drone/cutterdrone,
 /turf/simulated/floor/plating/airless/asteroid{
 	stone_color = "#D1E6FF"
 	},
 /area/space)
-"uhd" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space"
-	},
-/area/crashed_hop_shuttle)
 "utd" = (
 /obj/decal/cleanable/robot_debris/gib,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -25404,16 +25185,6 @@
 /obj/item/paper/bores_part_two,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"uDZ" = (
-/obj/table/wood/auto/desk,
-/obj/table/wood/auto/desk,
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/decoration/ashtray,
-/turf/simulated/floor/damaged1,
-/area/crashed_hop_shuttle)
 "uIh" = (
 /turf/simulated/wall/asteroid{
 	name = "weak compacted stone";
@@ -25439,29 +25210,12 @@
 	random_code = 1;
 	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
 	},
-/obj/item/paper/martian_manifest{
-	rand_pos = 1
-	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
-"vLu" = (
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
-	dir = 8;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
-	},
-/obj/map/light/screen,
-/turf/simulated/floor/damaged3,
-/area/crashed_hop_shuttle)
 "wav" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
-"weT" = (
-/turf/simulated/shuttle/wall,
-/area/crashed_hop_shuttle)
 "wfJ" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/under/gimmick/sweater,
@@ -25471,14 +25225,6 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
-"won" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space";
-	name = "window";
-	opacity = 0
-	},
-/area/crashed_hop_shuttle)
 "wNJ" = (
 /obj/reagent_dispensers/beerkeg,
 /obj/machinery/light/small/cool{
@@ -101080,7 +100826,7 @@ aaa
 aaa
 aaa
 aaa
-aMd
+aaa
 aaa
 aaa
 aaa
@@ -101383,8 +101129,8 @@ aaa
 aaa
 aaa
 aaa
-aGT
-aMd
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -101683,16 +101429,16 @@ aaa
 aab
 aab
 aaa
-pUI
-eTv
-qat
-eTv
-eTv
-eTv
-eTv
-eTv
-eTv
-sys
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -101986,16 +101732,16 @@ aab
 aab
 aab
 aab
-dPO
-gox
-lAj
-weT
-dUC
-fyP
-nbv
-cwu
-weT
-cBH
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -102288,16 +102034,16 @@ aaa
 aab
 aab
 aab
-bCo
-hqS
-fBy
-pqj
-mMd
-qyF
-nlE
-qXx
-weT
-cBH
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -102589,16 +102335,16 @@ aaa
 aaa
 aab
 aab
-lAj
-ehU
-fBy
-taQ
-aGX
-qBq
-rZt
-jvR
-crL
-weT
+aab
+aab
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -102890,17 +102636,17 @@ aaa
 aaa
 aaa
 aab
-gox
-ehU
-hqS
-lIA
-lAj
-eTv
-eTv
-eTv
-mGb
-eTv
-weT
+aab
+aab
+aab
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -103192,18 +102938,18 @@ aaa
 aaa
 aaa
 aab
-eTv
-gox
-lAj
-qat
-qat
-meO
-qat
-lAj
-qat
-sQf
-weT
-cBH
+aab
+aab
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -103494,18 +103240,18 @@ aaa
 aaa
 aaa
 aaa
-uhd
-eTv
-orO
-qat
-lIA
-qDt
-vLu
-gox
-gRx
-uDZ
-weT
-cBH
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -103797,16 +103543,16 @@ aaa
 aaa
 aaa
 aaa
-won
-eTv
-eiI
-eTv
-qat
-eTv
-mXz
-eTv
-eTv
-swd
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104104,9 +103850,9 @@ aaa
 aaa
 aaa
 aaa
-aac
-aac
-aac
+aaa
+aaa
+aaa
 aab
 aaa
 aaa
@@ -104405,11 +104151,11 @@ aaa
 aaa
 aaa
 aaa
-aab
-aac
-aac
-aab
-aab
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104707,11 +104453,11 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
-aab
-aab
-aab
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -105010,9 +104756,9 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
-aab
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
