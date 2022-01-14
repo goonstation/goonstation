@@ -1,0 +1,690 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aJ" = (
+/obj/grille/steel,
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"aK" = (
+/turf/space,
+/area/noGenerate)
+"bj" = (
+/turf/simulated/floor/damaged3,
+/area/noGenerate)
+"ci" = (
+/turf/simulated/floor/damaged5,
+/area/noGenerate)
+"eo" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"ev" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"eJ" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+/turf/simulated/floor/carpet/purple/fancy/narrow/east,
+/area/noGenerate)
+"fd" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"gr" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/noGenerate)
+"gv" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Head of Personnel's Office";
+	req_access = null
+	},
+/obj/access_spawn/head_of_personnel,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"gE" = (
+/obj/decoration/ceilingfan,
+/turf/simulated/floor/carpet/purple/fancy/narrow/west,
+/area/noGenerate)
+"hB" = (
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"hG" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"iR" = (
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"jK" = (
+/obj/decal/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body1";
+	name = "decomposed corpse"
+	},
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/purple/standard/edge/east,
+/area/noGenerate)
+"kw" = (
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ky" = (
+/obj/decoration/decorativeplant/plant4,
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/noGenerate)
+"kF" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"lh" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"mw" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4
+	},
+/turf/space,
+/area/noGenerate)
+"nE" = (
+/obj/decoration/clock,
+/turf/simulated/shuttle/wall,
+/area/noGenerate)
+"ph" = (
+/turf/simulated/floor/damaged1,
+/area/noGenerate)
+"pv" = (
+/turf/simulated/shuttle/wall/corner{
+	dir = 8
+	},
+/area/noGenerate)
+"rm" = (
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"rq" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/noGenerate)
+"sH" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"vT" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"wu" = (
+/obj/table/wood/auto/desk,
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"wP" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"xg" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"xl" = (
+/turf/space,
+/area/allowGenerate)
+"yI" = (
+/obj/structure/girder,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"yZ" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"zD" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/turf/space,
+/area/noGenerate)
+"Am" = (
+/turf/simulated/shuttle/wall{
+	dir = 4
+	},
+/area/noGenerate)
+"Be" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles1"
+	},
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"BR" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/noGenerate)
+"CJ" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"Dg" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles3"
+	},
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"EQ" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"Hz" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"HD" = (
+/obj/stool/chair/wooden/regal{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/noGenerate)
+"Ij" = (
+/turf/simulated/wall/asteroid,
+/area/noGenerate)
+"Iz" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/stool/bee_bed{
+	desc = "A soft little bed the general size and shape of a corgi.";
+	name = "dog bed"
+	},
+/obj/stool/bee_bed{
+	desc = "A soft little bed the general size and shape of a corgi.";
+	name = "dog bed"
+	},
+/obj/stool/bee_bed{
+	desc = "A soft little bed the general size and shape of a corgi.";
+	name = "dog bed"
+	},
+/mob/living/critter/small_animal/dog/corgi{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/ne,
+/area/noGenerate)
+"Jb" = (
+/obj/decoration/decorativeplant/plant4{
+	desc = "Is it flora or is it fauna? Hm. Oh, it's plastic."
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"Ke" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"Kk" = (
+/turf/simulated/floor/damaged4,
+/area/noGenerate)
+"MK" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
+	initial_volume = 0;
+	name = "Ancient Blue Label Scotch";
+	pixel_x = 9
+	},
+/obj/item/acesscomputerunfolder,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/west,
+/area/noGenerate)
+"MU" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
+	},
+/obj/item/furniture_parts/comfy_chair/blue,
+/turf/simulated/floor/damaged1,
+/area/noGenerate)
+"Nx" = (
+/obj/item/furniture_parts/comfy_chair,
+/turf/simulated/floor/damaged3,
+/area/noGenerate)
+"Ow" = (
+/obj/decoration/decorativeplant/plant7{
+	desc = "Is it flora or is it fauna? Hm. Oh, it's plastic."
+	},
+/turf/simulated/floor/damaged3,
+/area/noGenerate)
+"Pc" = (
+/turf/simulated/shuttle/wall/corner,
+/area/noGenerate)
+"Pu" = (
+/obj/item/furniture_parts/comfy_chair,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"QJ" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/armor/hopcoat,
+/obj/item/clothing/glasses/regular,
+/obj/item/clothing/head/headband/nyan/leopard,
+/turf/simulated/floor/carpet/purple/standard/edge/north,
+/area/noGenerate)
+"Ta" = (
+/obj/table/regal/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/few,
+/obj/item/device/light/candle/small,
+/turf/simulated/floor/carpet/purple/standard/edge/sw,
+/area/noGenerate)
+"Vb" = (
+/obj/machinery/door/airlock/pyro/command{
+	name = "Head of Personnel's Office";
+	req_access = null
+	},
+/obj/access_spawn/head_of_personnel,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"Vz" = (
+/obj/decoration/regallamp,
+/turf/simulated/floor/carpet/purple/standard/edge/nw,
+/area/noGenerate)
+"Xn" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"Yh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/hop,
+/turf/simulated/floor/carpet/purple/standard/edge/se,
+/area/noGenerate)
+"Yo" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"YP" = (
+/turf/simulated/floor/carpet/purple/standard/edge/north,
+/area/noGenerate)
+"YX" = (
+/obj/lattice,
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+
+(1,1,1) = {"
+xl
+xl
+xl
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+xl
+xl
+xl
+"}
+(2,1,1) = {"
+xl
+xl
+xl
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+xl
+xl
+xl
+"}
+(3,1,1) = {"
+xl
+xl
+xl
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+aK
+xl
+xl
+"}
+(4,1,1) = {"
+xl
+Ij
+Ij
+aK
+mw
+mw
+aK
+aK
+aK
+mw
+mw
+aK
+aK
+aK
+xl
+xl
+"}
+(5,1,1) = {"
+xl
+Ij
+Ij
+pv
+Am
+Am
+Am
+Am
+Am
+Am
+Am
+Pc
+aK
+aK
+xl
+xl
+"}
+(6,1,1) = {"
+xl
+Ij
+Ij
+hB
+Pu
+Ow
+Ke
+hB
+Vz
+MK
+Ta
+hB
+aK
+aK
+xl
+xl
+"}
+(7,1,1) = {"
+xl
+Ij
+Ij
+hB
+Xn
+kF
+vT
+Vb
+YP
+gE
+HD
+hB
+aK
+aK
+xl
+xl
+"}
+(8,1,1) = {"
+xl
+aK
+Ij
+eo
+ph
+rm
+bj
+nE
+QJ
+eJ
+ky
+hB
+aK
+aK
+xl
+xl
+"}
+(9,1,1) = {"
+xl
+aK
+Ij
+hB
+ci
+Kk
+Jb
+hB
+Iz
+jK
+Yh
+hB
+aK
+aK
+aK
+aK
+"}
+(10,1,1) = {"
+aK
+aK
+fd
+yI
+zD
+rm
+ph
+hB
+Am
+gv
+Am
+hB
+aK
+Ij
+aK
+aK
+"}
+(11,1,1) = {"
+aK
+aK
+fd
+hB
+BR
+gr
+CJ
+Nx
+Yo
+rm
+Hz
+YX
+fd
+fd
+Ij
+xl
+"}
+(12,1,1) = {"
+aK
+aK
+fd
+sH
+yZ
+yZ
+rm
+ph
+wu
+rm
+MU
+hB
+fd
+Ij
+Ij
+xl
+"}
+(13,1,1) = {"
+aK
+aK
+aK
+hB
+kw
+rm
+yZ
+Be
+Yo
+iR
+kw
+hB
+fd
+Ij
+xl
+xl
+"}
+(14,1,1) = {"
+xl
+aK
+Ij
+Ij
+Dg
+kw
+lh
+kF
+ev
+wP
+aJ
+EQ
+Ij
+Ij
+xl
+xl
+"}
+(15,1,1) = {"
+xl
+xl
+Ij
+Ij
+Ij
+kw
+Ij
+rq
+hG
+kw
+kw
+Ij
+Ij
+Ij
+xl
+xl
+"}
+(16,1,1) = {"
+xl
+xl
+xl
+xl
+Ij
+Ij
+Ij
+Ij
+Ij
+xg
+Ij
+Ij
+xl
+xl
+xl
+xl
+"}
+(17,1,1) = {"
+xl
+xl
+xl
+xl
+xl
+xl
+Ij
+Ij
+Ij
+fd
+Ij
+xl
+xl
+xl
+xl
+xl
+"}
+(18,1,1) = {"
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+aK
+aK
+xl
+xl
+xl
+xl
+xl
+xl
+"}
