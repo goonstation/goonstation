@@ -480,8 +480,18 @@
 		if (ismob(usr))
 			A:lastattacker = usr
 			A:lastattackertime = world.time
-		A.changeStatus("weakened", 6 SECONDS)
-		A:force_laydown_standup()
+
+		var/R = thr.get_throw_travelled()
+
+		if(R > 3)
+			A.changeStatus("weakened", (R * 1.5) SECONDS)
+			A:force_laydown_standup()
+
+		else
+			var/mob/living/carbon/C = A
+			C.do_disorient(stamina_damage = (R * 10), weakened = 0, stunned = 0, disorient = (R * 5), remove_stamina_below_zero = 1)
+			C.emote("twitch_v")
+
 		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
 		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
 
