@@ -6,7 +6,7 @@
 	var/id = null
 	var/on = 1.0
 	anchored = 1.0
-	desc = "A device that ignites in order to start fires remotely."
+	desc = "A device can be paired with other electronics, or used to heat chemicals directly."
 
 /obj/machinery/igniter/attack_ai(mob/user as mob)
 	return src.Attackhand(user)

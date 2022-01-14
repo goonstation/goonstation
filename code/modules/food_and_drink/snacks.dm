@@ -72,6 +72,7 @@
 	var/sliced = FALSE
 	var/topping = FALSE
 	var/num = 0
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
 	var/sliced_icon = "pslice"
@@ -794,6 +795,7 @@
 		hasPrize = (prize_inside == 1)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			src.name = "cereal"
 			src.dry = 0
@@ -901,7 +903,7 @@
 			M.reagents.add_reagent("synaptizine", 15)
 			M.reagents.add_reagent("saline", 15)
 			M.reagents.add_reagent("salbutamol", 15)
-			M.reagents.add_reagent("methamphetamine", 15)
+			M.reagents.add_reagent("synd_methamphetamine", 15)
 		..()
 
 /obj/item/reagent_containers/food/snacks/donkpocket/honk
@@ -1594,6 +1596,7 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1617,6 +1620,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	heal(var/mob/M)
@@ -2150,6 +2154,7 @@
 		src.pixel_y = rand(-6, 6)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()

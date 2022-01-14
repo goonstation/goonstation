@@ -298,7 +298,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien.</B>")
 	dispose()
 	return
@@ -331,7 +331,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien queen.</B>")
 	dispose()
 	return
@@ -421,6 +421,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
+		ticker.mode.Agimmicks += W.mind
 		qdel(src)
 
 /mob/proc/machoize(var/shitty = 0)

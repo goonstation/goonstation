@@ -277,7 +277,7 @@
 		if ("set-time")
 			src.add_fingerprint(usr)
 			var/previous_time = src.time
-			src.time = min(max(round(params["time"]), 0), src.max_time)
+			src.time = clamp(0, round(params["time"]), src.max_time)
 			if (params["finish"])
 				logTheThing("station", usr, null, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
 

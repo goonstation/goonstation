@@ -92,7 +92,7 @@ Contains:
 					playsound(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
-					if(M?.invisibility != INVIS_CLOAK && IN_RANGE(src, M, 1))
+					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
 						continue
 				else if(isobj(A))
 					var/obj/O = A

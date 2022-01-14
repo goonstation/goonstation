@@ -94,10 +94,10 @@
 	var/beacon_freq = FREQ_NAVBEACON		// navigation beacon frequency
 	var/control_freq = FREQ_BOT_CONTROL		// bot control frequency
 
-	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
-	var/new_destination		// pending new destination (waiting for beacon response)
-	var/destination			// destination description tag
-	var/next_destination	// the next destination in the patrol route
+	var/tmp/turf/patrol_target	// this is turf to navigate to (location of beacon)
+	var/tmp/new_destination		// pending new destination (waiting for beacon response)
+	var/tmp/destination			// destination description tag
+	var/tmp/next_destination	// the next destination in the patrol route
 
 	var/move_patrol_step_delay = PATROL_SPEED	// multiplies how slowly the bot moves on patrol
 	var/move_summon_step_delay = SUMMON_SPEED	// same, but for summons. Lower is faster.
@@ -108,8 +108,8 @@
 	var/blockcount = 0		//number of times retried a blocked path
 	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
 
-	var/nearest_beacon			// the nearest beacon's tag
-	var/turf/nearest_beacon_loc	// the nearest beacon's location
+	var/tmp/nearest_beacon			// the nearest beacon's tag
+	var/tmp/turf/nearest_beacon_loc	// the nearest beacon's location
 
 	var/attack_per_step = 0 // Tries to attack every step. 1 = 75% chance to attack, 2 = 25% chance to attack
 	/// One WEEOOWEEOO at a time, please
@@ -629,7 +629,7 @@
 				src.doing_something = 1
 				if(!src.path)
 					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
-					src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)	// switch back to what we should be
+					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
 			/// On guard duty, returning from distraction
 			if(SECBOT_GUARD_IDLE)

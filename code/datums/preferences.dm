@@ -449,7 +449,7 @@ datum/preferences
 				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
 
 				if (new_age)
-					src.age = max(min(round(text2num(new_age)), 80), 20)
+					src.age = clamp(round(text2num(new_age)), 20, 80)
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -473,7 +473,7 @@ datum/preferences
 				else
 					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
 					if (new_pin)
-						src.pin = max(min(round(text2num(new_pin)), 9999), 1000)
+						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
 						src.profile_modified = TRUE
 						return TRUE
 
@@ -1309,23 +1309,30 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
+			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
+			src.be_syndicate = FALSE
+			src.be_syndicate_commander = FALSE
+			src.be_gangleader = FALSE
+			src.be_revhead = FALSE
+			src.be_conspirator = FALSE
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_traitor = 0
-			src.be_syndicate = 0
-			src.be_syndicate_commander = 0
-			src.be_spy = 0
-			src.be_gangleader = 0
-			src.be_revhead = 0
-			src.be_changeling = 0
-			src.be_wizard = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
-			src.be_arcfiend = 0
-			src.be_wraith = 0
-			src.be_blob = 0
-			src.be_conspirator = 0
-			src.be_flock = 0
+			src.be_traitor = FALSE
+			src.be_syndicate = FALSE
+			src.be_syndicate_commander = FALSE
+			src.be_spy = FALSE
+			src.be_gangleader = FALSE
+			src.be_revhead = FALSE
+			src.be_changeling = FALSE
+			src.be_wizard = FALSE
+			src.be_werewolf = FALSE
+			src.be_vampire = FALSE
+			src.be_arcfiend = FALSE
+			src.be_wraith = FALSE
+			src.be_blob = FALSE
+			src.be_conspirator = FALSE
+			src.be_flock = FALSE
 		else
 
 			HTML += {"

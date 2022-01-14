@@ -220,7 +220,6 @@ var/global/deathConfettiActive = 0
 
 	admin_only
 
-	var/hardRebootFilePath = "data/hard-reboot"
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
 

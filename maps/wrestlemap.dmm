@@ -4689,6 +4689,13 @@
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
 	})
+"bWq" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "bWr" = (
 /obj/table/glass/auto,
 /obj/item/scalpel{
@@ -9697,11 +9704,6 @@
 	dir = 10
 	},
 /area/station/science/lobby)
-"dUU" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
-/area/shuttle/escape/station/destiny)
 "dUX" = (
 /obj/machinery/light{
 	dir = 1;
@@ -10433,7 +10435,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "ejs" = (
-/obj/reagent_dispensers/fueltank,
 /obj/decal/cleanable/fungus,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -11399,6 +11400,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"eGf" = (
+/obj/decal/cleanable/dirt,
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "eGj" = (
 /obj/table/auto,
 /obj/deskclutter,
@@ -21800,6 +21806,13 @@
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
+"jeA" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
 "jfp" = (
 /obj/machinery/disposal/mail/autoname/public/crewA{
 	autoname = "Crew Quarters";
@@ -26375,7 +26388,8 @@
 "lgk" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
-	id = "escape";
+	dir = 8;
+	id = "escape2";
 	pixel_x = 32
 	},
 /turf/simulated/floor/neutral/side{
@@ -26748,6 +26762,12 @@
 /obj/decal/cleanable/cobwebFloor,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
+"lok" = (
+/obj/airbridge_controller{
+	id = "escape2"
+	},
+/turf/space,
+/area/space)
 "loq" = (
 /obj/decal/boxingropeenter{
 	dir = 9
@@ -30087,13 +30107,6 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"mMk" = (
-/obj/airbridge_controller{
-	id = "escape";
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
 "mMs" = (
 /obj/machinery/light/runway_light/delay2,
 /obj/lattice{
@@ -31919,7 +31932,7 @@
 /area/station/engine/inner)
 "nEk" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "nEw" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/white,
@@ -33133,9 +33146,12 @@
 /area/station/hydroponics/bay)
 "ocL" = (
 /obj/machinery/light{
-	dir = 4;
+	dir = 1;
 	layer = 9.1;
-	pixel_x = 10
+	pixel_y = 21
+	},
+/obj/machinery/light/emergency{
+	dir = 4
 	},
 /turf/simulated/floor/neutral,
 /area/station/hallway/secondary/exit)
@@ -35887,6 +35903,12 @@
 "ptp" = (
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
+"ptz" = (
+/obj/airbridge_controller{
+	id = "escape"
+	},
+/turf/space,
+/area/space)
 "ptZ" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -38423,6 +38445,12 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
+"qvR" = (
+/obj/machinery/light/small,
+/obj/decal/cleanable/dirt,
+/obj/storage/closet/emergency,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "qwo" = (
 /obj/table/auto,
 /obj/machinery/power/data_terminal,
@@ -47123,7 +47151,6 @@
 	name = "Security Lobby"
 	})
 "uiC" = (
-/obj/storage/closet/emergency,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -50883,8 +50910,11 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/solar/west)
 "vPh" = (
-/obj/machinery/light/emergency{
-	dir = 4
+/obj/machinery/computer/airbr/emergency_shuttle{
+	density = 0;
+	dir = 8;
+	id = "escape";
+	pixel_x = 32
 	},
 /turf/simulated/floor/neutral,
 /area/station/hallway/secondary/exit)
@@ -119426,8 +119456,8 @@ ocL
 yiM
 vPh
 lgk
-pJI
 hOy
+pJI
 qcl
 hOy
 hOy
@@ -119724,12 +119754,12 @@ cRV
 uhQ
 eil
 crk
-mLr
-kom
 crk
+kom
 bcs
-crk
+bcs
 kom
+crk
 mLr
 crk
 crk
@@ -120027,10 +120057,10 @@ vnX
 hGG
 mma
 vnX
+jeA
 vnX
 vnX
-mMk
-vnX
+bWq
 vnX
 vnX
 opa
@@ -120933,10 +120963,10 @@ vnX
 vnX
 vIA
 vnX
+ptz
 vnX
 vnX
-mMk
-vnX
+lok
 vnX
 vnX
 vIA
@@ -121246,7 +121276,7 @@ nEk
 nEk
 nEk
 nEk
-vnX
+nEk
 vnX
 lLd
 kqY
@@ -121533,7 +121563,7 @@ vnX
 vnX
 vnX
 vnX
-nEk
+vnX
 nEk
 nEk
 nEk
@@ -121834,24 +121864,24 @@ vnX
 vnX
 vnX
 vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-dUU
 vnX
+vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 lLd
 uiC
 sUb
@@ -122153,9 +122183,9 @@ nEk
 nEk
 nEk
 nEk
-vnX
+nEk
 xOi
-dCZ
+sUb
 sUb
 huk
 tqk
@@ -122436,7 +122466,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
 nEk
 nEk
 nEk
@@ -122454,8 +122483,9 @@ nEk
 nEk
 nEk
 nEk
-lXt
-vnX
+nEk
+nEk
+nEk
 lLd
 ejs
 bZq
@@ -122738,27 +122768,27 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-vnX
-xOi
+sRr
 sUb
 sHe
 huk
@@ -123040,27 +123070,27 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+lXt
 vnX
-vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-vnX
-lLd
+sRr
 sUb
 sUb
 fte
@@ -123342,29 +123372,29 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 vnX
 vnX
-vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-vnX
-lLd
+sRr
 bZq
-vJD
+sUb
 lLd
 vnX
 vnX
@@ -123644,30 +123674,30 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 vnX
-vnX
-vnX
-vnX
-vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-vnX
-bIW
-eTI
-vgn
-eTI
-eTI
+sRr
+sUb
+sUb
+lLd
 vnX
 vnX
 vnX
@@ -123946,30 +123976,30 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-gcW
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-gcW
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-sEl
-eXv
-wrD
-eTI
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+lLd
+sUb
+qvR
+lLd
 vnX
 vnX
 vnX
@@ -124246,32 +124276,32 @@ vnX
 vnX
 vnX
 vnX
-awJ
-cVp
-pyz
-pyz
-bve
-pyz
-pyz
-kSW
-pyz
-pyz
-gdt
-pyz
-pyz
-fKS
-pyz
-agj
-cVp
-pyz
-pyz
-bve
-pyz
-pyz
-eTI
-aCn
-eXv
-eTI
+vnX
+vnX
+vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+lLd
+sUb
+dCZ
+lLd
 pyz
 pyz
 pyz
@@ -124554,26 +124584,26 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-sEl
-eXv
-wrD
-eTI
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+lLd
+sUb
+eGf
+lLd
 vnX
 vnX
 vnX
@@ -124856,26 +124886,26 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-atC
-pyz
-pyz
-pyz
-jlL
-eTI
-eTI
-eTI
-eTI
+lLd
+sUb
+vJD
+lLd
 vnX
 vnX
 vnX
@@ -125159,25 +125189,25 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vIA
-vnX
-vnX
-vIA
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+bIW
+eTI
+vgn
+eTI
+eTI
 vnX
 vnX
 vnX
@@ -125461,6 +125491,7 @@ vnX
 vnX
 vnX
 vnX
+gcW
 vnX
 vnX
 vnX
@@ -125468,18 +125499,17 @@ vnX
 vnX
 vnX
 vnX
+gcW
 vnX
 vnX
 vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
+sEl
+eXv
+wrD
+eTI
 vnX
 vnX
 vnX
@@ -125756,32 +125786,32 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
+awJ
+cVp
+pyz
+pyz
+bve
+pyz
+pyz
+kSW
+pyz
+pyz
+gdt
+pyz
+pyz
+fKS
+pyz
+agj
+cVp
+pyz
+pyz
+bve
+pyz
+pyz
+eTI
+aCn
+eXv
+eTI
 vnX
 vnX
 vnX
@@ -126080,10 +126110,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+sEl
+eXv
+wrD
+eTI
 vnX
 vnX
 vnX
@@ -126377,15 +126407,15 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
-vnX
+atC
+pyz
+pyz
+pyz
+jlL
+eTI
+eTI
+eTI
+eTI
 vnX
 vnX
 vnX
@@ -126684,10 +126714,10 @@ vnX
 vnX
 vnX
 vnX
+vIA
 vnX
 vnX
-vnX
-vnX
+vIA
 vnX
 vnX
 vnX

@@ -109,12 +109,12 @@ proc/filtered_concrete_typesof(type, filter)
 	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 	*/
 proc/get_singleton(type)
-	if(!singletons)
-		singletons = list()
+	RETURN_TYPE(type)
 	if(!(type in singletons))
 		singletons[type] = new type
 	return singletons[type]
-var/global/list/singletons
+
+var/global/list/singletons = list()
 
 
 /// Find predecessor of a type
@@ -200,6 +200,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
 #define TR_CAT_SPY_STICKERS_DET "spysticker_det"
 #define TR_CAT_ARTIFACTS "artifacts"
+#define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -286,3 +287,22 @@ proc/get_type_typeinfo(type)
 	RETURN_TYPE(/typeinfo/datum) // change to /typeinfo if we ever implement /typeinfo for non-datums for some reason
 	var/datum/type_dummy = type
 	return get_singleton(initial(type_dummy.typeinfo_type))
+
+/**
+ * Returns the parent type of a given type.
+ * Assumes that parent_type was not overriden.
+ */
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj, /mob)
+				return /atom/movable
+			if(/area, /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))

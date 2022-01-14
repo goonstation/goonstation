@@ -91,7 +91,7 @@ CONTAINS:
 
 /obj/item/circular_saw
 	name = "circular saw"
-	desc = "A saw used to cut bone with precision."
+	desc = "A saw used to slice through bone in surgeries, and attackers in self defense."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -347,7 +347,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator
 	name = "defibrillator"
-	desc = "Used to resuscitate critical patients."
+	desc = "Uses electrical currents to restart the hearts of critical patients."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -385,7 +385,7 @@ CONTAINS:
 		if (user)
 			user.show_text("You reapair the on board medical scanner.", "blue")
 			src.desc = null
-			src.desc = "Used to resuscitate critical patients."
+			src.desc = "Uses electrical currents to restart the hearts of critical patients."
 		src.emagged = 0
 		return 1
 
@@ -589,7 +589,7 @@ CONTAINS:
 
 /obj/item/robodefibrillator/emagged
 	emagged = 1
-	desc = "Used to resuscitate critical patients.  The screen only shows the word KILL flashing over and over."
+	desc = "Uses electrical currents to restart the hearts of critical patients. The screen only shows the word KILL flashing over and over."
 
 /obj/item/robodefibrillator/vr
 	icon = 'icons/effects/VR.dmi'
@@ -630,7 +630,7 @@ CONTAINS:
 /obj/machinery/defib_mount
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
-	desc = "Used to resuscitate critical patients."
+	desc = "Uses electrical currents to restart the hearts of critical patients."
 	icon_state = "defib1"
 	anchored = 1
 	density = 0
@@ -1061,7 +1061,7 @@ CONTAINS:
 			return ..()
 
 	update_icon()
-		var/iv_state = max(min(round(src.volume, 10) / 10, 100), 0)
+		var/iv_state = clamp(round(src.volume, 10) / 10, 0, 100)
 		icon_state = "bloodbag-[iv_state]"
 /*		switch (src.volume)
 			if (90 to INFINITY)
@@ -1152,7 +1152,7 @@ CONTAINS:
 		add_fingerprint(user)
 		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
 			return ..()
-		else
+		else if(!ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
 			if (src.open)
 				src.close()
 			else
@@ -1194,7 +1194,7 @@ CONTAINS:
 		for (var/obj/O in src)
 			O.set_loc(get_turf(src))
 		for (var/mob/M in src)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("weakened", 0.5 SECONDS)
 			SPAWN_DBG(0.3 SECONDS)
 				M.set_loc(get_turf(src))
 		src.open = 1

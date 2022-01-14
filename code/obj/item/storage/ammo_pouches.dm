@@ -220,4 +220,4 @@
 	w_class = W_CLASS_SMALL
 	slots = 7 //bonus two slots for the banana grenade kit
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)

@@ -168,7 +168,7 @@
 	blood_id = "blood"
 	blood_volume = 500
 
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
@@ -242,6 +242,8 @@
 
 	src.text = "<font color=#[random_hex(3)]>@"
 	src.update_colorful_parts()
+
+	init_preferences?.apply_post_new_stuff(src)
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
@@ -921,19 +923,19 @@
 /mob/living/carbon/human/hotkey(name)
 	switch (name)
 		if ("help")
-			src.a_intent = INTENT_HELP
+			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("disarm")
-			src.a_intent = INTENT_DISARM
+			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("grab")
-			src.a_intent = INTENT_GRAB
+			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("harm")
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			hud.update_intent()
 			check_for_intent_trigger()
 		if ("drop")
@@ -1098,34 +1100,34 @@
 						src.throw_item(target, params)
 					else
 						params["left"] = 1 //hacky :)
-						src.a_intent = INTENT_DISARM
+						src.set_a_intent(INTENT_DISARM)
 						.=..()
-						src.a_intent = INTENT_DISARM
+						src.set_a_intent(INTENT_DISARM)
 				/*else if (params["middle"])
 					params["middle"] = 0
 					params["left"] = 1 //hacky again :)
 					var/prev = src.a_intent
-					src.a_intent = INTENT_GRAB
+					src.set_a_intent(INTENT_GRAB)
 					.=..()
-					src.a_intent = prev
+					src.set_a_intent(prev)
 					return*/
 				else
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 					.=..()
-					src.a_intent = INTENT_DISARM
+					src.set_a_intent(INTENT_DISARM)
 				return
 			if (src.client.check_key(KEY_PULL))
 				if (params["left"] && ismob(target))
 					params["ctrl"] = 0 //hacky wows :)
 					var/prev = src.a_intent
-					src.a_intent = INTENT_GRAB
+					src.set_a_intent(INTENT_GRAB)
 					.=..()
-					src.a_intent = prev
+					src.set_a_intent(prev)
 					return
 				else
-					src.a_intent = INTENT_HARM
+					src.set_a_intent(INTENT_HARM)
 					.=..()
-					src.a_intent = INTENT_DISARM
+					src.set_a_intent(INTENT_DISARM)
 				return
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
@@ -1144,18 +1146,18 @@
 				else
 					src.set_cursor('icons/cursors/combat_barehand.dmi')
 				src.client.show_popup_menus = 0
-				src.a_intent = INTENT_DISARM
+				src.set_a_intent(INTENT_DISARM)
 				src.hud.update_intent()
 				return
 			else if (src.client.check_key(KEY_PULL))
 				src.set_cursor('icons/cursors/combat_grab.dmi')
 				src.client.show_popup_menus = 0
-				src.a_intent = INTENT_GRAB
+				src.set_a_intent(INTENT_GRAB)
 				src.hud.update_intent()
 				return
 			else if (src.client.show_popup_menus == 0)
 				src.client.show_popup_menus = 1
-				src.a_intent = INTENT_HELP
+				src.set_a_intent(INTENT_HELP)
 				src.hud.update_intent()
 		else
 			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
@@ -1753,7 +1755,7 @@
 	if (!W)
 		return
 
-	hud.remove_item(W) // eh
+	hud?.remove_item(W) // eh
 
 	if (isitem(W))
 		if (W.two_handed) //This runtime is caused by grabbing a human.
@@ -1971,11 +1973,12 @@
 		I.add_fingerprint(src)
 		I.set_loc(src)
 		src.update_inhands()
-		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
-		hud.set_visible(hud.lhand, 0)
-		hud.set_visible(hud.rhand, 0)
-		hud.set_visible(hud.twohandl, 1)
-		hud.set_visible(hud.twohandr, 1)
+		if (hud)
+			hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
+			hud.set_visible(hud.lhand, 0)
+			hud.set_visible(hud.rhand, 0)
+			hud.set_visible(hud.twohandl, 1)
+			hud.set_visible(hud.twohandr, 1)
 
 		var/icon/IC = new/icon(I.icon)
 		var/width = IC.Width()
@@ -2003,7 +2006,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
 					return 1
 				else
 					return 0
@@ -2018,7 +2021,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
 					return 1
 				else
 					return 0
@@ -3028,6 +3031,7 @@
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
+	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
 		i.on_spin_emote(src)

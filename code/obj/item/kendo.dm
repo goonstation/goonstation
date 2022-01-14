@@ -179,7 +179,7 @@
 /obj/item/shinai_bag
 	name = "shinai bag"
 	desc = "\improper 竹刀袋 : A tube-like back for holding two shinai."
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
 	flags = ONBACK | FPRINT | TABLEPASS

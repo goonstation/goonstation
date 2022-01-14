@@ -179,12 +179,12 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 
 		if (href_list["volume_adj"])
 			var/diff = text2num_safe(href_list["volume_adj"])
-			inlet_flow = min(100, max(0, inlet_flow+diff))
+			inlet_flow = clamp(inlet_flow+diff, 0, 100)
 
 		else if (href_list["volume_set"])
 			var/change = input(usr,"Target inlet flow (0-[100]):","Enter target inlet flow",inlet_flow) as num
 			if(!isnum(change)) return
-			inlet_flow = min(100, max(0, change))
+			inlet_flow = clamp(change, 0, 100)
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)

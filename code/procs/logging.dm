@@ -173,8 +173,17 @@ var/global/logLength = 0
 	if (ismob(ref))
 		mobRef = ref
 		traitor = checktraitor(mobRef)
-		if (mobRef.real_name)
-			name = mobRef.real_name
+		if (mobRef.name)
+			if (ishuman(mobRef))
+				var/mob/living/carbon/human/humanRef = mobRef
+				if (mobRef.name != mobRef.real_name && (mobRef.name == "Unknown" || mobRef.name == humanRef.wear_id?:registered))
+					name = "[mobRef.real_name] (disguised as [mobRef.name])"
+				else
+					name = mobRef.name
+			else
+				name = mobRef.name
+			if (length(mobRef.name_suffixes))
+				name = mobRef.real_name
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
@@ -189,8 +198,17 @@ var/global/logLength = 0
 		if (clientRef.mob)
 			mobRef = clientRef.mob
 			traitor = checktraitor(mobRef)
-			if (mobRef.real_name)
-				name = clientRef.mob.real_name
+			if (mobRef.name)
+				if (ishuman(clientRef.mob))
+					var/mob/living/carbon/human/humanRef = clientRef.mob
+					if (clientRef.mob.name != clientRef.mob.real_name && (clientRef.mob.name == "Unknown" || clientRef.mob.name == humanRef.wear_id?:registered))
+						name = "[clientRef.mob.real_name] (disguised as [clientRef.mob.name])"
+					else
+						name = clientRef.mob.name
+				else
+					name = clientRef.mob.name
+				if (length(clientRef.mob.name_suffixes))
+					name = clientRef.mob.real_name
 			if (!isdead(mobRef))
 				dead = 0
 		if (clientRef.key)
