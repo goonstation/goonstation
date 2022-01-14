@@ -1826,6 +1826,22 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
+"aew" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/pen/fancy,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "aex" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -5323,6 +5339,14 @@
 /obj/machinery/chem_dispenser/soda,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
+"amd" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine,
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -12916,28 +12940,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
-"aCi" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "aCj" = (
 /obj/machinery/crema_switch{
 	id = "crematorium";
 	pixel_y = 28
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
-"aCk" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -13125,18 +13131,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
-"aCL" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "aCM" = (
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -15238,38 +15232,12 @@
 	},
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay/cloner)
-"aHr" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "aHs" = (
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
-"aHt" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2;
-	icon_state = "morgue1"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
-"aHu" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2;
-	icon_state = "morgue1"
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "aHv" = (
@@ -15829,11 +15797,6 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
-"aIE" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light_switch/west,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "aIF" = (
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -16470,10 +16433,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay/surgery)
-"aJX" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "aJY" = (
 /obj/machinery/optable{
 	name = "Autopsy Table"
@@ -26433,14 +26392,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/pool)
-"dTt" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/espresso_machine,
-/obj/drink_rack/cup{
-	pixel_y = 32
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "dVJ" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -26590,6 +26541,16 @@
 /obj/item/device/igniter,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
+"gcP" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "gkf" = (
 /obj/decal/poster/wallsign/medbay_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -26730,6 +26691,17 @@
 	},
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
+"ifF" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2;
+	icon_state = "morgue1"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "iii" = (
 /obj/machinery/light{
 	dir = 8;
@@ -26762,6 +26734,13 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
+"iER" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2;
+	icon_state = "morgue1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "iGb" = (
 /obj/cable{
 	d1 = 1;
@@ -26933,6 +26912,14 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
+"koM" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "ktj" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -26957,22 +26944,18 @@
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/north,
 /area/research_outpost/indigo_rye)
-"kJY" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/item_box/gold_star{
-	item_amount = 20
+"kSp" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "kSV" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/plating/airless,
@@ -27403,6 +27386,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
+"qgX" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "qna" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -27603,6 +27590,11 @@
 "tAS" = (
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
+"tKc" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "tKs" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -27759,6 +27751,14 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/research_outpost/indigo_rye)
+"vwB" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "vAB" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -70372,7 +70372,7 @@ adM
 adn
 sKy
 aej
-kJY
+aew
 aeH
 aeT
 afb
@@ -71308,7 +71308,7 @@ akG
 akT
 als
 aks
-dTt
+amd
 ama
 amO
 amX
@@ -74075,11 +74075,11 @@ aBE
 aBE
 ykn
 aGD
-aHr
+koM
 aId
-aIE
-aHr
-aJX
+tKc
+koM
+qgX
 aKG
 aLm
 aGD
@@ -74679,7 +74679,7 @@ aBV
 aBE
 aFT
 aGD
-aHt
+iER
 aId
 aIF
 aIF
@@ -74972,8 +74972,8 @@ azo
 aBb
 ayT
 aBV
-aCi
-aCL
+vwB
+kSp
 aDk
 aDI
 aEj
@@ -74981,7 +74981,7 @@ aBV
 aBE
 aFU
 aGD
-aHu
+ifF
 aId
 aIG
 aJp
@@ -75576,7 +75576,7 @@ axO
 aBd
 axO
 aBV
-aCk
+gcP
 aCM
 aDm
 aDK

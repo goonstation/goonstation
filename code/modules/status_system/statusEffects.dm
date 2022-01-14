@@ -1967,6 +1967,13 @@
 			return
 		return ..(timePassed)
 
+/datum/statusEffect/muted
+	id = "muted"
+	name = "Muted"
+	icon_state = "muted"
+	desc = "You don't have the strength to say anything louder than a whisper!"
+	maxDuration = 30 SECONDS
+
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES
 	id = "drowsy"

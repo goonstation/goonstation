@@ -683,19 +683,6 @@
 /obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"bA" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2;
-	icon_state = "morgue1"
-	},
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/security/main)
 "bB" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -3459,6 +3446,21 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
+"hK" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/security/checkpoint/customs)
 "hL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -4427,12 +4429,6 @@
 /obj/machinery/door/unpowered/wood,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/bathroom)
-"jA" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/grass,
-/area/station/chapel/sanctuary)
 "jB" = (
 /obj/table/wood/auto,
 /obj/machinery/crema_switch{
@@ -4455,13 +4451,6 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/chapel/sanctuary)
-"jD" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2;
-	icon_state = "morgue1"
-	},
-/turf/simulated/floor/grass,
 /area/station/chapel/sanctuary)
 "jE" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -4961,6 +4950,9 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chapel/sanctuary)
+"kz" = (
+/turf/space,
+/area/shuttle/escape/station)
 "kA" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment{
@@ -7084,6 +7076,13 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
+"qx" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2;
+	icon_state = "morgue1"
+	},
+/turf/simulated/floor/grass,
+/area/station/chapel/sanctuary)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7121,9 +7120,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"Bd" = (
-/turf/space,
-/area/shuttle/escape/station)
 "Ct" = (
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
@@ -7133,21 +7129,12 @@
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"Lv" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+"PB" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
 	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/security/checkpoint/customs)
+/turf/simulated/floor/grass,
+/area/station/chapel/sanctuary)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -7159,6 +7146,19 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
+"Yp" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2;
+	icon_state = "morgue1"
+	},
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/security/main)
 
 (1,1,1) = {"
 aa
@@ -44162,15 +44162,15 @@ jX
 kw
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -44464,15 +44464,15 @@ jz
 kw
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -44765,17 +44765,17 @@ jh
 jh
 kx
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -45067,17 +45067,17 @@ jh
 jh
 kx
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -45365,21 +45365,21 @@ hI
 cE
 iE
 ji
-jA
+PB
 ji
 ky
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -45672,15 +45672,15 @@ jY
 ky
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -45974,15 +45974,15 @@ jZ
 ky
 aa
 dM
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -46271,20 +46271,20 @@ cE
 cE
 iE
 ji
-jD
+qx
 ji
 ky
 dM
 dM
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -46578,15 +46578,15 @@ cE
 kA
 kN
 kO
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -46880,15 +46880,15 @@ cE
 kA
 kN
 kO
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -47182,15 +47182,15 @@ ka
 bX
 dM
 dM
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -47484,15 +47484,15 @@ kb
 bX
 aa
 dM
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -47777,7 +47777,7 @@ eJ
 gC
 hc
 hv
-Lv
+hK
 ii
 iJ
 hu
@@ -47786,15 +47786,15 @@ oB
 bX
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -48088,15 +48088,15 @@ bT
 ad
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -48390,15 +48390,15 @@ mu
 ad
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -48693,13 +48693,13 @@ ad
 aa
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -48995,13 +48995,13 @@ ad
 aa
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -49298,11 +49298,11 @@ aa
 aa
 aa
 aa
-Bd
-Bd
-Bd
-Bd
-Bd
+kz
+kz
+kz
+kz
+kz
 aa
 aa
 aa
@@ -49601,9 +49601,9 @@ aa
 aa
 aa
 aa
-Bd
-Bd
-Bd
+kz
+kz
+kz
 aa
 aa
 aa
@@ -56217,7 +56217,7 @@ bb
 as
 br
 as
-bA
+Yp
 bJ
 bQ
 cK

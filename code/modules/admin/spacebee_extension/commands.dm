@@ -227,6 +227,28 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/alert
+	name = "alert"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Send an admin alert to a given ckey."
+	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="message")
+
+	execute(user, ckey, message)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				message_admins("[user] (Discord) displayed an alert to [ckey] with the message \"[message]\"")
+				system.reply("Displayed an alert to [ckey].", user)
+				logTheThing("admin", "[user] (Discord)", null, "displayed an alert to [constructTarget(C,"admin")] with the message \"[message]\"")
+				logTheThing("diary", "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
+				if (C?.mob)
+					SPAWN_DBG(0)
+						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
+							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
+							system.reply("[ckey] acknowledged the alert.", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
 /datum/spacebee_extension_command/prison
 	name = "prison"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER

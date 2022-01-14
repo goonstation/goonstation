@@ -1,4 +1,42 @@
 
+(t)thu jan 13 22
+(u)Zonespace
+(p)6981
+(e)⚖|balance
+(+)The Part-Time Vice Officers that appeared on saturdays have been fired and replaced with some musicians instead.
+(u)BatElite
+(p)7086
+(e)🆕🗺|feature, mapping
+(*)Morgues, crematoria and tanning beds have been reworked internally with several accompanying QOL changes and minor bugfixes. Most important additions are that they require power to operate properly and silicons can operate the trays now.
+(+)Specifically, tanning beds and crematoria will not activate and morgues will not prevent decomposition without power
+(u)Mr. Moriarty & End
+(p)7111
+(e)🎨|sprites
+(+)Resprited the Cargo Transporter.
+(u)Flaborized
+(p)7163
+(e)🎨|sprites
+(*)Resprited stunbatons.
+(u)Colossusqw
+(p)7120
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Makes you aware of your surroundings instead of asleep during the capulettium effect, but still unable to speak or move.
+(t)tue jan 11 22
+(u)Emily
+(e)🆕|feature
+(*)🌭🛀
+(u)Flaborized
+(p)7144
+(e)🎨|sprites
+(+)Resprited botanical seeds.
+(u)Flaborized
+(p)7145
+(e)🎨|sprites
+(+)Resprited vomit.
+(u)DimWhat
+(p)7136
+(e)🎨|sprites
+(*)Added several unique sprites for worn IDs
 (t)mon jan 10 22
 (u)Nexusuxen
 (p)7113

@@ -1075,6 +1075,10 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
+"aoR" = (
+/obj/machinery/traymachine/locking/tanning,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "aoX" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/airless/plating,
@@ -12156,23 +12160,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"dwY" = (
-/obj/table/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/artifact_paper_dispenser{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/item/device/matanalyzer{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/science/artifact)
 "dxg" = (
 /obj/critter/opossum/morty,
 /obj/machinery/firealarm{
@@ -15320,16 +15307,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey,
 /area/station/bridge)
-"eqc" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "eqn" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -25631,16 +25608,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/chapel/sanctuary)
-"hhw" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/maintenance{
-	name = "Medical Booth Morgue"
-	})
 "hhE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34066,37 +34033,6 @@
 "jCd" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor/horprivate)
-"jCg" = (
-/obj/table/wood/auto,
-/obj/item/coin{
-	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
-	name = "strange coin";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/coin{
-	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
-	name = "thick coin";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/item/coin{
-	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
-	name = "tarnished coin";
-	pixel_x = 5
-	},
-/obj/item/stamp/hop{
-	pixel_y = 13
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/item/pen/crayon/golden{
-	pixel_y = -11
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/west,
-/area/station/crew_quarters/hop)
 "jCo" = (
 /obj/storage/secure/closet/engineering/welding,
 /obj/machinery/camera{
@@ -36815,10 +36751,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
-"kog" = (
-/obj/machinery/traymachine/locking/tanning,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "kok" = (
 /obj/decal/stage_edge/alt,
 /obj/machinery/disposal/mail/autoname/medbay/robotics,
@@ -38793,12 +38725,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"kSm" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/crematorium)
 "kSA" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -39939,16 +39865,37 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/secoffquarters)
-"liv" = (
-/obj/table/auto,
-/obj/item/clipboard{
-	pixel_x = -4
+"lit" = (
+/obj/table/wood/auto,
+/obj/item/coin{
+	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
+	name = "strange coin";
+	pixel_x = 9;
+	pixel_y = 3
 	},
-/obj/artifact_paper_dispenser{
-	pixel_x = 13
+/obj/item/coin{
+	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
+	name = "thick coin";
+	pixel_x = -4;
+	pixel_y = 1
 	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/science/artifact)
+/obj/item/coin{
+	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
+	name = "tarnished coin";
+	pixel_x = 5
+	},
+/obj/item/stamp/hop{
+	pixel_y = 13
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/item/pen/crayon/golden{
+	pixel_y = -11
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/west,
+/area/station/crew_quarters/hop)
 "liA" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor/east,
 /turf/simulated/floor/engine,
@@ -41667,6 +41614,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
+"lFv" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "lFy" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -43231,14 +43188,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/brig)
-"lYT" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "lZh" = (
 /obj/lattice,
 /obj/warp_beacon/engineering,
@@ -44545,6 +44494,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/data)
+"mqM" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "mqO" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47351,6 +47308,14 @@
 /obj/machinery/light,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"ngB" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "ngJ" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -53991,12 +53956,6 @@
 	},
 /turf/simulated/floor/stairs,
 /area/station/engine/engineering/ce)
-"oWM" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "oWN" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -57660,6 +57619,12 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/science)
+"pZN" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/maintenance{
+	name = "Medical Booth Morgue"
+	})
 "pZP" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -61677,6 +61642,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/chapel/sanctuary)
+"reN" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/crematorium)
 "reS" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
@@ -68062,12 +68033,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"sMM" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/maintenance{
-	name = "Medical Booth Morgue"
-	})
 "sMQ" = (
 /obj/machinery/disposal,
 /obj/machinery/light{
@@ -69480,6 +69445,12 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
+"teH" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "teI" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -76069,6 +76040,10 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/ai_upload)
+"uNy" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "uNz" = (
 /obj/cable{
 	d1 = 1;
@@ -76967,6 +76942,10 @@
 "uYC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
+"uYQ" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "uYS" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/engine,
@@ -77019,10 +76998,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
-"uZI" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "uZO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -78444,6 +78419,16 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
+"vrM" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/maintenance{
+	name = "Medical Booth Morgue"
+	})
 "vrS" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
@@ -78470,6 +78455,23 @@
 	dir = 8
 	},
 /area/station/engine/elect)
+"vrW" = (
+/obj/table/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/artifact)
 "vsc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
 /obj/lattice,
@@ -79497,10 +79499,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
-"vFc" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "vFe" = (
 /obj/item/clothing/suit/cardboard_box,
 /obj/landmark{
@@ -81879,6 +81877,16 @@
 /area/station/crew_quarters/heads{
 	name = "Officers' Lounge"
 	})
+"wmg" = (
+/obj/table/auto,
+/obj/item/clipboard{
+	pixel_x = -4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 13
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/artifact)
 "wmn" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/neutral/side,
@@ -88554,14 +88562,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
-"xQl" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "xQo" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -124010,7 +124010,7 @@ uyR
 sLO
 rKR
 xqJ
-kog
+aoR
 quZ
 qbB
 wUE
@@ -126056,7 +126056,7 @@ uBj
 xKU
 aFH
 wnc
-dwY
+vrW
 yaW
 lop
 rRA
@@ -127254,7 +127254,7 @@ eSx
 qBR
 qBR
 vuq
-liv
+wmg
 yaW
 mpK
 xMA
@@ -127665,8 +127665,8 @@ tAd
 jbo
 dDM
 wBW
-uZI
-xQl
+uNy
+mqM
 bys
 uFc
 eCc
@@ -128571,7 +128571,7 @@ qjc
 qUa
 rbI
 hcf
-kSm
+reN
 afu
 fgY
 hLU
@@ -138533,9 +138533,9 @@ kOn
 clo
 xhL
 xEX
-hhw
+vrM
 pbn
-sMM
+pZN
 wdE
 jWs
 dsS
@@ -139137,9 +139137,9 @@ ldy
 xYR
 brA
 xEX
-sMM
+pZN
 pbn
-sMM
+pZN
 wdE
 ekx
 vGw
@@ -141429,9 +141429,9 @@ vha
 tYu
 jng
 iUT
-vFc
-lYT
-vFc
+uYQ
+ngB
+uYQ
 vha
 tXM
 xCM
@@ -142335,9 +142335,9 @@ vha
 khp
 teM
 iUT
-oWM
-oWM
-oWM
+teH
+teH
+teH
 vha
 nwA
 cvU
@@ -142637,9 +142637,9 @@ vha
 tsD
 fOY
 ozC
-vFc
-vFc
-vFc
+uYQ
+uYQ
+uYQ
 vha
 ozA
 xCM
@@ -142979,7 +142979,7 @@ ylM
 tBw
 kPC
 jOb
-jCg
+lit
 cGk
 dhA
 yiR
@@ -143540,12 +143540,12 @@ vlk
 ykP
 tXM
 vha
-oWM
-eqc
+teH
+lFv
 tpw
-oWM
-eqc
-oWM
+teH
+lFv
+teH
 vha
 tXM
 xCM

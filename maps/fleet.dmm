@@ -3810,32 +3810,6 @@
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
-"ii" = (
-/obj/table/wood/auto,
-/obj/item/clipboard,
-/obj/item/pen/fancy,
-/obj/item/item_box/gold_star{
-	item_amount = 20
-	},
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/storage/wall{
-	desc = "It's a big box that comes in useful when the inevitable depressurization occurs.";
-	dir = 8;
-	name = "breach response cabinet";
-	pixel_x = 32;
-	spawn_contents = list(/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen)
-	},
-/obj/machinery/phone/wall{
-	pixel_y = 32
-	},
-/obj/machinery/light_switch/north{
-	pixel_x = -12
-	},
-/turf/simulated/floor/wood/two,
-/area/station/bridge/hos)
 "ij" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/locker{
@@ -8985,12 +8959,6 @@
 /area/station/medical/head{
 	name = "Asclepius Command"
 	})
-"sr" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "ss" = (
 /obj/machinery/optable{
 	name = "Autopsy Table"
@@ -9576,15 +9544,6 @@
 /area/station/medical/head{
 	name = "Asclepius Command"
 	})
-"tu" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "tv" = (
 /obj/machinery/vending/monkey,
 /turf/simulated/floor/sanitary/white,
@@ -10337,6 +10296,32 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/turf/simulated/floor/wood/two,
+/area/station/bridge/hos)
+"uQ" = (
+/obj/table/wood/auto,
+/obj/item/clipboard,
+/obj/item/pen/fancy,
+/obj/item/item_box/gold_star{
+	item_amount = 20
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/storage/wall{
+	desc = "It's a big box that comes in useful when the inevitable depressurization occurs.";
+	dir = 8;
+	name = "breach response cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/chem_grenade/metalfoam,/obj/item/tank/emergency_oxygen,/obj/item/tank/emergency_oxygen)
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -12
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
@@ -13625,16 +13610,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"AT" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/obj/machinery/crema_switch{
-	id = "crematorium";
-	pixel_y = 28
-	},
-/turf/simulated/floor/black,
-/area/station/chapel/sanctuary)
 "AU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -16124,6 +16099,14 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
+"FF" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1;
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
 "FG" = (
 /obj/shrub{
 	dir = 1
@@ -16986,6 +16969,13 @@
 /area/station/maintenance/south{
 	name = "Demeter Operations Room"
 	})
+"Ht" = (
+/obj/airbridge_controller{
+	id = "escape";
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
 "Hu" = (
 /obj/shrub{
 	dir = 8
@@ -22606,6 +22596,9 @@
 /area/station/science/construction{
 	name = "Tenebrae Maintenance"
 	})
+"Rn" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Ro" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/darkpurple,
@@ -22625,9 +22618,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
-"Rr" = (
-/turf/space,
-/area/shuttle/escape/station)
 "Rs" = (
 /obj/stool/bed,
 /obj/landmark/start{
@@ -23307,6 +23297,15 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Tw" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "Tx" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -23494,14 +23493,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"Ue" = (
-/obj/airbridge_controller{
-	id = "escape";
-	primary_controller = 1;
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
 "Uf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -23537,13 +23528,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"Up" = (
-/obj/airbridge_controller{
-	id = "escape";
-	tunnel_width = 3
-	},
-/turf/space,
-/area/space)
 "Uq" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -25299,6 +25283,12 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Zw" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "Zx" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Hardware Chamber"
@@ -25354,6 +25344,16 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"ZB" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/obj/machinery/crema_switch{
+	id = "crematorium";
+	pixel_y = 28
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
 "ZC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56185,7 +56185,7 @@ aa
 aa
 aa
 Ut
-ii
+uQ
 vK
 wy
 xb
@@ -64657,7 +64657,7 @@ Ac
 Ae
 Az
 AJ
-AT
+ZB
 Wo
 BA
 BT
@@ -66188,16 +66188,16 @@ Aw
 aa
 aa
 aa
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
 aa
 aa
 aa
 aa
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66488,20 +66488,20 @@ GA
 Hb
 Aw
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66790,20 +66790,20 @@ Gi
 Hb
 Aw
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67092,20 +67092,20 @@ Gi
 Hb
 Aw
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67394,20 +67394,20 @@ GA
 PV
 Aw
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67696,20 +67696,20 @@ GA
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67960,7 +67960,7 @@ aa
 rX
 rX
 OP
-tu
+Tw
 tT
 uC
 vn
@@ -67998,20 +67998,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68260,7 +68260,7 @@ aa
 aa
 aa
 rX
-sr
+Zw
 sT
 sT
 tT
@@ -68300,20 +68300,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68602,20 +68602,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68904,20 +68904,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69198,28 +69198,28 @@ Cd
 Cd
 Cd
 Qe
-Ue
+FF
 aa
 aa
 aa
 aa
 Xa
 aa
-Up
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Ht
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69508,20 +69508,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69810,20 +69810,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70112,20 +70112,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70414,20 +70414,20 @@ aa
 Xa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70717,18 +70717,18 @@ Xa
 aa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71021,14 +71021,14 @@ aa
 aa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71323,14 +71323,14 @@ aa
 aa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71625,14 +71625,14 @@ aa
 aa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71928,12 +71928,12 @@ aa
 aa
 aa
 aa
-Rr
-Rr
-Rr
-Rr
-Rr
-Rr
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
