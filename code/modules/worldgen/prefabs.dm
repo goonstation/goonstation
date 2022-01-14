@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		maxNum = 1
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_customs_shuttle.dmm"
-		prefabSizeX = 18
+		prefabSizeX = 26
 		prefabSizeY = 16
 
 	bee_sanctuary_space // Sov's Bee Sanctuary (Space Variant)
