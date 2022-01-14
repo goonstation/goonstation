@@ -242,13 +242,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	SPAWN_DBG(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
 
-		/*if(!src.link)
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src*/
-
 		update_terminal()
 
 		for (var/mob/living/silicon/hivebot/eyebot/E in mobs)
