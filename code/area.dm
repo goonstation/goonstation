@@ -1112,11 +1112,6 @@ ABSTRACT_TYPE(/area/adventure)
 	icon_state = "purple"
 	requires_power = FALSE
 
-/area/crashed_hop_shuttle
-	name = "HoP Shuttle"
-	icon_state = "purple"
-	requires_power = FALSE
-
 /area/iss
 	name = "Derelict Space Station"
 	icon_state = "derelict"
@@ -1293,6 +1288,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Lesbian Bee Farm"
 	icon_state = "park"
 	force_fullbright = 1
+
+/area/prefab/crashed_hop_shuttle
+	name = "HoP Shuttle"
+	icon_state = "purple"
 
 /area/prefab/silverglass
 	name = "Silverglass Platform"
