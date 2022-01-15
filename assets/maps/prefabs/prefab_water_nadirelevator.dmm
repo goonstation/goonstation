@@ -73,11 +73,10 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	name = "Pod Bay"
-	},
 /obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
@@ -122,11 +121,10 @@
 /turf/simulated/floor/engine/caution/east,
 /area/shuttle/sea_elevator)
 "fb" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	name = "Pod Bay"
-	},
 /obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
@@ -264,6 +262,9 @@
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"ms" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/diner/kitchen)
 "mH" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -404,6 +405,10 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
+"rd" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/engine,
+/area/space)
 "rl" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/light/small/floor/netural,
@@ -436,6 +441,12 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"sH" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/space)
 "tk" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler,
@@ -798,6 +809,11 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/bee_trader)
+"Hw" = (
+/obj/decal/cleanable/dirt,
+/obj/item/device/light/glowstick,
+/turf/simulated/floor/engine,
+/area/space)
 "HT" = (
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/shuttle/sea_elevator)
@@ -900,6 +916,9 @@
 	dir = 9
 	},
 /area/shuttle/sea_elevator)
+"Lv" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "LU" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/skeleton,
@@ -971,9 +990,6 @@
 "Oo" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/wood/round/auto,
-/obj/item/device/light/glowstick{
-	pixel_x = 2
-	},
 /obj/item/reagent_containers/food/snacks/chips{
 	pixel_x = -4;
 	pixel_y = 7
@@ -1260,6 +1276,13 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"YI" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "YR" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -2313,7 +2336,7 @@ Zp
 Zp
 oH
 oH
-oH
+ms
 oH
 Nr
 EO
@@ -2354,9 +2377,9 @@ Zp
 Zp
 Zp
 Zp
-Zp
-Zp
-Zp
+Lv
+rd
+Hw
 Nr
 ug
 Uz
@@ -2397,9 +2420,9 @@ Zp
 Zp
 Zp
 Zp
-Zp
-Zp
-Zp
+Lv
+sH
+YI
 Nr
 RX
 Ri
@@ -2441,7 +2464,7 @@ Zp
 Zp
 Zp
 Zp
-Zp
+XP
 Zp
 Nr
 Vu
@@ -2484,7 +2507,7 @@ XP
 XP
 Zp
 Zp
-Zp
+XP
 Zp
 Nr
 Nr
