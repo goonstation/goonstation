@@ -2991,7 +2991,7 @@
 	comname = "Phaser"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	color_r = 1
-	desc_sell = "Arcology in a neighbouring sector needs as many of these as I can get."
+	desc_sell = "Moon prison in a neighbouring sector needs as many of these as I can get."
 	price = 9000
 	upperfluc = 2000
 	lowerfluc = -1800	
@@ -3071,34 +3071,31 @@
 	upperfluc = 100
 	lowerfluc = -100
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/                                                                                                                                                                                  /
-/   ooo        ooooo                 .o8      oooooooooo.                       oooo   o8o              o8o     ooo        ooooo                 .o8        .o8   o8o              /
-/   `88.       .888'                "888      `888'   `Y8b                      `888   `"'              `YP     `88.       .888'                "888       "888   `"'              /
-/    888b     d'888   .oooo.    .oooo888       888      888  .ooooo.   .oooo.    888  oooo  ooo. .oo.    '       888b     d'888   .oooo.    .oooo888   .oooo888  oooo   .ooooo.    /
-/    8 Y88. .P  888  `P  )88b  d88' `888       888      888 d88' `88b `P  )88b   888  `888  `888P"Y88b           8 Y88. .P  888  `P  )88b  d88' `888  d88' `888  `888  d88' `88b   /
-/    8  `888'   888   .oP"888  888   888       888      888 888ooo888  .oP"888   888   888   888   888           8  `888'   888   .oP"888  888   888  888   888   888  888ooo888   /
-/    8    Y     888  d8(  888  888   888       888     d88' 888    .o d8(  888   888   888   888   888           8    Y     888  d8(  888  888   888  888   888   888  888    .o   /
-/   o8o        o888o `Y888""8o `Y8bod88P"     o888bood8P'   `Y8bod8P' `Y888""8o o888o o888o o888o o888o         o8o        o888o `Y888""8o `Y8bod88P" `Y8bod88P" o888o `Y8bod8P'   /
-/                                                                                                                                                                                  /
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+//	███╗   ███╗ █████╗ ██████╗     ██╗      █████╗ ██████╗ ██████╗ ██╗   ██╗	/
+//	████╗ ████║██╔══██╗██╔══██╗    ██║     ██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝	/
+//	██╔████╔██║███████║██║  ██║    ██║     ███████║██████╔╝██████╔╝ ╚████╔╝ 	/
+//	██║╚██╔╝██║██╔══██║██║  ██║    ██║     ██╔══██║██╔══██╗██╔══██╗  ╚██╔╝  	/
+//	██║ ╚═╝ ██║██║  ██║██████╔╝    ███████╗██║  ██║██║  ██║██║  ██║   ██║   	/
+//	╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝           /
+/////////////////////////////////////////////////////////////////////////////////////////
 ///SELL
 
 /datum/commodity/blackmarket/wrestler/beerbox
 	comname = "Box of Beer"
 	comtype = /obj/item/storage/box/beer
-	desc_sell = "BEER!"
-	price = 4000
-	upperfluc = 3000
-	lowerfluc = -3000
+	desc_sell = "Get some BEER!"
+	price = 980
+	upperfluc = 600
+	lowerfluc = -600
 /datum/commodity/blackmarket/wrestler/videocard
 	comname = "Advanced Videocard"
 	comtype = /obj/item/peripheral/videocard
 	desc_sell = "JUICE UP your computer's MUSCLES with one of these bad boys. Guaranteed to get you MORE FRAMES of HYPER ROBUST ACTION!"
-	price = 4000
+	price = 8000
 	upperfluc = 3000
 	lowerfluc = -3000
-/datum/commodity/tech/laptop
+/datum/commodity/blackmarket/wrestler/
 	comname = "Personal Laptop"
 	comtype = /obj/item/luggable_computer/personal
 	desc = "Top of the line!"
@@ -3106,7 +3103,7 @@
 	baseprice = 5000
 	upperfluc = 1000
 	lowerfluc = -2000
-/datum/commodity/tech/laptop
+/datum/commodity/blackmarket/wrestler/
 	comname = "Personal Laptop"
 	comtype = /obj/item/toy/cellphone
 	desc = "Top of the line!"
@@ -3114,28 +3111,67 @@
 	baseprice = 5000
 	upperfluc = 1000
 	lowerfluc = -2000
-	
-///BUY
+/datum/commodity/blackmarket/wrestler/cowboyboots
+	comname = "Genuine Space-Texan Cowboy Boots"
+	comtype = /obj/item/clothing/shoes/westboot
+	desc = "These bad boys will command RESPECT among peers!"
+	price = 150
+	baseprice = 150
+	upperfluc = 120
+	lowerfluc = -120
+/datum/commodity/blackmarket/wrestler/goldfishcracker
+	comname = "Goldfish Cracker"
+	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
+	desc_sell = "These things are LIFESAVERS when it comes to building muscle! I NEED AS MANY AS YOU CAN GROW!"
+	price = 1200
+	baseprice = 1200
+	upperfluc = 500
+	lowerfluc = -500
+
+/////////////////
+////  BUYS   ////
+/////////////////
+
 /datum/commodity/blackmarket/wrestler/teapot
 	comname = "Handmade Tetsubin"
 	comtype = /obj/item/reagent_containers/food/drinks/teapot
-	desc_sell = "I'm a collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
+	desc_sell = "I'm an avid collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
 	price = 4000
 	upperfluc = 3000
 	lowerfluc = -3000
 /datum/commodity/blackmarket/wrestler/nassa
 	comname = "NASSA space suit"
 	comtype = /obj/item/clothing/under/gimmick/blackstronaut
-	desc_sell = "I'm a collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
-	price = 400000
+	desc_sell = "I'd LOVE to get my hands on a couple sets of that prototype jumpsuit. WRESTLING IN THE COLD VACCUM OF SPACE! I'll pay a BUNCH for any you find in good condition!"
+	price = 16000
 	upperfluc = 80000
 	lowerfluc = -80000
-
 /datum/commodity/blackmarket/wrestler/uplink_telecrystal
 	comname = "Pure Telecrystal"
 	comtype = /obj/item/uplink_telecrystal
+	desc_sell = "These things are practically CURRENCY in some circles! I can get you a GREAT DEAL on them!"
 	price = 30000
 	upperfluc = 1
 	lowerfluc = -1
-
+/datum/commodity/blackmarket/wrestler/sacred_sandal
+	comname = "Sacred Sandals"
+	comtype = /obj/item/clothing/shoes/hermes
+	desc_sell = "These things have GOT TO BE ORIGINALS! Not the knock off "Magic Sandals" the space wizards manufacture in sweatshops!"
+	price = 500000
+	upperfluc = 100000
+	lowerfluc = -100000
+/datum/commodity/blackmarket/wrestler/magic_sandal
+	comname = "Magic Sandals"
+	comtype = /obj/item/clothing/shoes/sandal
+	desc_sell = "That said, those knock offs are DAMN WELL MADE! I'll buy those for a fair price!"
+	price = 7000
+	upperfluc = 1200
+	lowerfluc = -1200
+/datum/commodity/blackmarket/wrestler/shoecrafts
+	comname = "Custom Shoes"
+	comtype = /obj/item/clothing/shoes/crafted
+	desc_sell = "And any shoes YOU HAND CRAFT, I WILL BUY!"
+	price = 800
+	upperfluc = 600
+	lowerfluc = -600
 
