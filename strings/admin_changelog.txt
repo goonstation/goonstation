@@ -1,3 +1,6 @@
+(t)tue jan 15 21
+(u)BatElite
+(*)Added the light switches debug overlay, which shows how many switches are physically present in an area and where to find them.
 (t)tue jan 4 21
 (u)aloe
 (*) Object spawning build modes now default to the currently selected path when changing the path, rather than always defaulting to '/obj/closet'. Yell at me if you don't like this.
