@@ -292,6 +292,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 14
 		prefabSizeY = 14
 #endif
+
 	robotfactory
 		underwater = 1
 		maxNum = 1

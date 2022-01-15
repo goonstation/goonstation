@@ -195,7 +195,7 @@
 	name = "seafall"
 	},
 /turf/simulated/floor/plating,
-/area/shuttle/sea_elevator)
+/area/shuttle/sea_elevator/lower)
 "Hl" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
 /area/shuttle/sea_elevator)
