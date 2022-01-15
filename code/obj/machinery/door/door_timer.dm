@@ -322,7 +322,7 @@
 			for (var/obj/machinery/floorflusher/FF in range(30, src))
 				if (FF.id == src.id)
 					src.add_fingerprint(usr)
-					if (FF.flush == TRUE)
+					if (FF.flush == TRUE || FF.opening == TRUE)
 						return
 					if (FF.open != 1)
 						FF.openup()
