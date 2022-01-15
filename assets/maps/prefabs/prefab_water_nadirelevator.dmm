@@ -83,6 +83,14 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"dt" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"dC" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine,
+/area/space)
 "dU" = (
 /obj/decal/poster/wallsign/hazard_danger,
 /turf/unsimulated/wall/setpieces/leadwall{
@@ -220,6 +228,11 @@
 /obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"kq" = (
+/obj/decal/cleanable/dirt,
+/obj/item/device/light/glowstick,
+/turf/simulated/floor/engine,
+/area/space)
 "kv" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 4
@@ -262,9 +275,6 @@
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
-"ms" = (
-/turf/simulated/wall/false_wall/reinforced,
-/area/diner/kitchen)
 "mH" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -405,10 +415,6 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
-"rd" = (
-/obj/decal/cleanable/dirt/dirt3,
-/turf/simulated/floor/engine,
-/area/space)
 "rl" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/light/small/floor/netural,
@@ -441,12 +447,6 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
-"sH" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/space)
 "tk" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler,
@@ -471,6 +471,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
+"ub" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/space)
 "ug" = (
 /obj/computerframe,
 /obj/decal/cleanable/dirt/dirt5,
@@ -547,6 +553,9 @@
 "wk" = (
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
+"wH" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/diner/kitchen)
 "wW" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	dir = 8
@@ -809,11 +818,6 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/bee_trader)
-"Hw" = (
-/obj/decal/cleanable/dirt,
-/obj/item/device/light/glowstick,
-/turf/simulated/floor/engine,
-/area/space)
 "HT" = (
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/shuttle/sea_elevator)
@@ -916,9 +920,6 @@
 	dir = 9
 	},
 /area/shuttle/sea_elevator)
-"Lv" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "LU" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/skeleton,
@@ -1195,6 +1196,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"VU" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "Wq" = (
 /obj/table/wood/round/auto,
 /obj/item/decoration/flower_vase{
@@ -1276,13 +1284,6 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
-"YI" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "YR" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -2336,7 +2337,7 @@ Zp
 Zp
 oH
 oH
-ms
+wH
 oH
 Nr
 EO
@@ -2377,9 +2378,9 @@ Zp
 Zp
 Zp
 Zp
-Lv
-rd
-Hw
+dt
+dC
+kq
 Nr
 ug
 Uz
@@ -2420,9 +2421,9 @@ Zp
 Zp
 Zp
 Zp
-Lv
-sH
-YI
+dt
+ub
+VU
 Nr
 RX
 Ri
