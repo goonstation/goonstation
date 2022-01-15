@@ -1829,6 +1829,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\storage\crates.dm"
 #include "code\obj\storage\filing_cabinet.dm"
 #include "code\obj\storage\floor_closets.dm"
+#include "code\obj\storage\gang_crate.dm"
 #include "code\obj\storage\large_storage_parent.dm"
 #include "code\obj\storage\loot_crates.dm"
 #include "code\obj\storage\secure_closets.dm"
