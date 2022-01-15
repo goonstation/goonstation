@@ -470,6 +470,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = "sound/items/blade_pull.ogg"
+	var/range_to_stun = 3
 
 	New()
 		..()
@@ -481,15 +482,15 @@
 			A:lastattacker = usr
 			A:lastattackertime = world.time
 
-		var/R = thr.get_throw_travelled()
+		var/range_travelled = thr.get_throw_travelled()
 
-		if(R > 3)
-			A.changeStatus("weakened", (R * 1.5) SECONDS)
-			A:force_laydown_standup()
+		if(range_travelled > range_to_stun)
+			A.changeStatus("weakened", (range_travelled * 1.5) SECONDS)
+			A.force_laydown_standup()
 
 		else
 			var/mob/living/carbon/C = A
-			C.do_disorient(stamina_damage = (R * 10), weakened = 0, stunned = 0, disorient = (R * 5), remove_stamina_below_zero = 1)
+			C.do_disorient(stamina_damage = (range_travelled * 15), weakened = 0, stunned = 0, disorient = (range_travelled * 5), remove_stamina_below_zero = 1)
 			C.emote("twitch_v")
 
 		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
