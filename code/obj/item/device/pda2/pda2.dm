@@ -2,7 +2,7 @@
 
 /obj/item/device/pda2
 	name = "PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. It has a slot for an ID card, and a hole to put a pen into."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"

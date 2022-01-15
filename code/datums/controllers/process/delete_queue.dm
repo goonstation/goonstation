@@ -67,7 +67,7 @@ var/global/harddel_count = 0
 				continue
 
 #ifdef HARD_DELETIONS_DISABLED
-			var/harddel_msg = "Didn't GC:"
+			var/harddel_msg = "Didn't GC: \ref[D]"
 #else
 			var/harddel_msg = "HardDel of"
 #endif

@@ -69,6 +69,7 @@
 		suit_image.layer = src.w_uniform.wear_layer
 		suit_image.alpha = src.w_uniform.alpha
 		suit_image.color = src.w_uniform.color
+		src.w_uniform.update_wear_image(src, src.w_uniform.wear_image.icon != src.w_uniform.wear_image_icon)
 		UpdateOverlays(suit_image, "suit_image1")
 		var/counter = 1
 		while (counter < 6)
@@ -98,8 +99,21 @@
 
 	if (src.wear_id)
 		wear_sanity_check(src.wear_id)
-		src.wear_id.wear_image.icon_state = "id"
-		src.wear_id.wear_image.pixel_y = body_offset
+		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
+		var/no_offset = 0
+		if (islist(override_states) && ("card-[wear_state]" in override_states))
+			src.wear_id.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.wear_id.wear_image.icon_state = "card-[wear_state]"
+			no_offset = 1
+
+		else
+			src.wear_id.wear_image.icon = src.wear_id.wear_image_icon
+			src.wear_id.wear_image.icon_state = wear_state
+
+		if (!no_offset)
+			src.wear_id.wear_image.pixel_x = 0
+			src.wear_id.wear_image.pixel_y = head_offset
+
 		src.wear_id.wear_image.layer = src.wear_id.wear_layer
 		src.wear_id.wear_image.color = src.wear_id.color
 		src.wear_id.wear_image.alpha = src.wear_id.alpha
@@ -159,18 +173,29 @@
 		src.gloves.wear_image.layer = src.gloves.wear_layer
 
 		src.gloves.wear_image.pixel_x = 0
-		src.gloves.wear_image.pixel_y = hand_offset
+		src.gloves.wear_image.pixel_y = 0
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			src.gloves.wear_image.icon_state = "left_[icon_name]"
+			if (islist(override_states) && ("glove-left_[icon_name]" in override_states)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
+				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
+				src.gloves.wear_image.icon_state = "glove-left_[icon_name]"
+			else
+				src.gloves.wear_image.icon = src.gloves.wear_image_icon
+				src.gloves.wear_image.icon_state = "left_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
+			src.gloves.update_wear_image(src, src.gloves.wear_image.icon != src.gloves.wear_image_icon)
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_l")
 		else
 			UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			src.gloves.wear_image.icon_state = "right_[icon_name]"
+			if (islist(override_states) && ("glove-right_[icon_name]" in override_states)) //above but right glove
+				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_override
+				src.gloves.wear_image.icon_state = "glove-right_[icon_name]"
+			else
+				src.gloves.wear_image.icon = src.gloves.wear_image_icon
+				src.gloves.wear_image.icon_state = "right_[icon_name]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")
@@ -216,6 +241,7 @@
 	// Shoes
 	if (src.shoes)
 		wear_sanity_check(src.shoes)
+		var/wear_state = src.shoes.wear_state || src.shoes.icon_state
 		src.shoes.wear_image.layer = src.shoes.wear_layer
 		src.shoes.wear_image.color = src.shoes.color
 		src.shoes.wear_image.alpha = src.shoes.alpha
@@ -223,14 +249,29 @@
 		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
-			src.shoes.wear_image.icon_state = "left_[src.shoes.wear_state || src.shoes.icon_state]"
+			if (islist(override_states) && ("shoe-left_[wear_state]" in override_states)) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
+				src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
+				src.shoes.wear_image.icon_state = "shoe-left_[wear_state]"
+			else
+				src.shoes.wear_image.icon = src.shoes.wear_image_icon
+				src.shoes.wear_image.icon_state = "left_[wear_state]"
 
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if(shoes_count == 1)
-				src.shoes.wear_image.icon_state = "right_[src.shoes.wear_state || src.shoes.icon_state]"
+				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states)) //like above, but for right shoes
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
+					src.shoes.wear_image.icon_state = "shoe-right_[wear_state]"
+				else
+					src.shoes.wear_image.icon = src.shoes.wear_image_icon
+					src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
-				src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[src.shoes.wear_state || src.shoes.icon_state]")
+				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
+					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "shoe-right_[wear_state]")
+				else
+					src.shoes.wear_image.icon = src.shoes.wear_image_icon
+					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[wear_state]")
 
 		if(shoes_count)
 			UpdateOverlays(src.shoes.wear_image, "wear_shoes")
@@ -270,6 +311,7 @@
 			src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
 			src.wear_suit.wear_image.icon_state = wear_state
 
+		src.wear_suit.update_wear_image(src, src.wear_suit.wear_image.icon != src.wear_suit.wear_image_icon)
 		src.wear_suit.wear_image.color = src.wear_suit.color
 		src.wear_suit.wear_image.alpha = src.wear_suit.alpha
 		UpdateOverlays(src.wear_suit.wear_image, "wear_suit")
@@ -339,12 +381,19 @@
 	// Glasses
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
-		src.glasses.wear_image.icon_state = src.glasses.wear_state || src.glasses.icon_state
+		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
+		if (islist(override_states) && ("eyes-[wear_state]" in override_states)) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
+			src.glasses.wear_image.icon = src.mutantrace.clothing_icon_override
+			src.glasses.wear_image.icon_state = "eyes-[wear_state]"
+		else
+			src.glasses.wear_image.icon = src.glasses.wear_image_icon
+			src.glasses.wear_image.icon_state = wear_state
 		src.glasses.wear_image.layer = src.glasses.wear_layer
 		src.glasses.wear_image.pixel_x = 0
-		src.glasses.wear_image.pixel_y = head_offset
+		src.glasses.wear_image.pixel_y = 0
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
+		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
 		UpdateOverlays(src.glasses.wear_image, "wear_glasses")
 		if (src.glasses.worn_material_texture_image != null)
 			src.glasses.worn_material_texture_image.layer = src.glasses.wear_image.layer + 0.1
@@ -392,6 +441,7 @@
 		src.wear_mask.wear_image.layer = src.wear_mask.wear_layer
 		src.wear_mask.wear_image.color = src.wear_mask.color
 		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
+		src.wear_mask.update_wear_image(src, src.wear_mask.wear_image.icon != src.wear_mask.wear_image_icon)
 		UpdateOverlays(src.wear_mask.wear_image, "wear_mask")
 		if (src.wear_mask.worn_material_texture_image != null)
 			src.wear_mask.worn_material_texture_image.layer = src.wear_mask.wear_image.layer + 0.1
@@ -433,6 +483,7 @@
 			src.head.wear_image.pixel_y = head_offset
 		src.head.wear_image.color = src.head.color
 		src.head.wear_image.alpha = src.head.alpha
+		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
 		UpdateOverlays(src.head.wear_image, "wear_head")
 		if (src.head.worn_material_texture_image != null)
 			src.head.worn_material_texture_image.layer = src.head.wear_image.layer + 0.1
