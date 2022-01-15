@@ -1097,4 +1097,3 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=0)
 				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_x=8,off_y=2)
 				spawn_item(C,I,/obj/item/spacecash/fivehundred, off_xs=8,off_y=4)
-
