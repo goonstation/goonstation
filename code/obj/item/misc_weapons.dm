@@ -486,7 +486,7 @@
 
 		if(range_travelled > range_to_stun)
 			A.changeStatus("weakened", (range_travelled * 1.5) SECONDS)
-			A.force_laydown_standup()
+			A:force_laydown_standup()
 
 		else
 			var/mob/living/carbon/C = A
