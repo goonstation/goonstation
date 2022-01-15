@@ -197,7 +197,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, "<span class='alert'>This brain doesn't look any good to use.</span>")
 				return
-			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.dnr) ) //If the borg-to-be is jobbanned or has DNR set
+			else if ( B.owner  &&  (B.owner.dnr || (jobban_isbanned(B.owner.current,"Cyborg") && B.owner.dnr)) ) //If the borg-to-be has DNR set or is Jobbanned and DNR
+				boutput(user, "<span class='alert'>The brain disintigrates in your hands!</span>")
+				user.drop_item()
+				qdel(B)
+				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+				smoke.set_up(1, 0, user.loc)
+				smoke.start()
+				return
+			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") && !B.owner.dnr) ) //If the borg-to-be is jobbanned and doesnt have DNR set
 				boutput(user, "<span class='alert'>The brain doesn't fit!</span>")
 				return
 			user.drop_item()
