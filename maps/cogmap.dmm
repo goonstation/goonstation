@@ -55273,8 +55273,9 @@
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "hvo" = (
-/obj/machinery/genetics_scanner,
 /obj/machinery/light,
+/obj/machinery/computer/genetics,
+/obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "hxh" = (
@@ -56074,10 +56075,6 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "iWR" = (
-/obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -57199,11 +57196,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"lgn" = (
-/obj/machinery/computer/genetics,
-/obj/item/cloneModule/genepowermodule,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "lgG" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/data_terminal,
@@ -57923,6 +57915,11 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"mHI" = (
+/obj/machinery/light,
+/obj/machinery/computer/genetics,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "mIC" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -63012,7 +63009,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "vql" = (
-/obj/machinery/computer/genetics,
+/obj/machinery/genetics_scanner,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "vrm" = (
@@ -104498,8 +104495,8 @@ crP
 csE
 bAP
 csE
-csE
 cvG
+csE
 bBK
 cwQ
 dUE
@@ -105106,8 +105103,8 @@ ctD
 cuo
 cwj
 cuo
-cGa
-lgn
+cuo
+vql
 ctD
 cxq
 cxq
@@ -105408,7 +105405,7 @@ ctD
 rNh
 cwj
 cuo
-cuo
+cGa
 hvo
 ctD
 cxq
@@ -106314,8 +106311,8 @@ jEs
 rwf
 cwn
 cuo
-cuo
-hvo
+cGa
+mHI
 wtE
 aah
 adC
