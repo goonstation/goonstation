@@ -293,6 +293,7 @@ Contents:
 		if(!target.can_forge())
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(user,"[target] has cooled to a point where it can no longer be forged by [H].")
+			src.resumable = FALSE
 			return
 
 		if(target.strikes > target.strikes_to_complete)
@@ -304,6 +305,7 @@ Contents:
 		if(!target.can_forge())
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(user,"[target] is too cold to be forged.")
+			src.resumable = FALSE
 			return
 		target.set_real_color()
 		if(!outline && length(icon_image.filters))
