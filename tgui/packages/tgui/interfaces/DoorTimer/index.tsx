@@ -48,7 +48,11 @@ export const DoorTimer = (_props, context) => {
           {!!data.flusher && (
             <Stack.Item>
               <Section title="Floor Flusher" fill>
-                <Button onClick={() => act('toggle-flusher')}>{data.flusheropen ? 'Close Flusher' : 'Open Flusher'}</Button>
+                <Button
+                  onClick={() => act('toggle-flusher')}
+                  backgroundColor={data.opening ? 'orange' : undefined}>
+                  {data.opening ? (data.flusheropen ? 'Opening...' : 'Closing...') : (data.flusheropen ? 'Close Flusher' : 'Open Flusher')}
+                </Button>
               </Section>
             </Stack.Item>
           )}

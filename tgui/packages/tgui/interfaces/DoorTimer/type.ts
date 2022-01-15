@@ -16,4 +16,5 @@ export interface DoorTimerData {
   recharging?: BooleanLike;
   flusher?: BooleanLike;
   flusheropen?: BooleanLike;
+  opening?: BooleanLike;
 }

@@ -266,7 +266,8 @@
 		if (FF.id == src.id)
 			. += list(
 				"flusher" = TRUE,
-				"flusheropen" = FF.open
+				"flusheropen" = FF.open,
+				"opening" = FF.opening
 			)
 			break
 
