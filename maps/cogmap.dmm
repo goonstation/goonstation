@@ -26193,13 +26193,6 @@
 	},
 /turf/space,
 /area/space)
-"boo" = (
-/obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "bop" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -52346,6 +52339,13 @@
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"cGa" = (
+/obj/stool/chair/office/red,
+/obj/landmark/start{
+	name = "Geneticist"
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "cGn" = (
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 1;
@@ -53817,16 +53817,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
-"eUx" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "eWf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54342,13 +54332,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"fIT" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "fJl" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Supply Dock Airlock"
@@ -55156,11 +55139,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"hhI" = (
-/obj/machinery/computer/genetics,
-/obj/item/cloneModule/genepowermodule,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "hjt" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -55294,6 +55272,11 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
+"hvo" = (
+/obj/machinery/genetics_scanner,
+/obj/machinery/light,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "hxh" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
@@ -56002,13 +55985,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"iPW" = (
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "iPX" = (
 /obj/machinery/door/airlock/pyro/external{
 	req_access_txt = null
@@ -56097,25 +56073,13 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
-"iWW" = (
-/obj/table/auto,
-/obj/item/clipboard{
-	pixel_x = -7
+"iWR" = (
+/obj/stool/chair/office/red,
+/obj/landmark/start{
+	name = "Geneticist"
 	},
-/obj/item/storage/firstaid/brain{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/item/storage/firstaid/brain{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/light_switch{
-	name = "E light switch";
+/obj/machinery/firealarm{
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/simulated/floor/blue/checker,
@@ -56895,6 +56859,14 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"kpT" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "kpY" = (
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
@@ -57033,10 +57005,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
-"kGP" = (
-/obj/machinery/computer/genetics,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "kHY" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -57231,6 +57199,11 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"lgn" = (
+/obj/machinery/computer/genetics,
+/obj/item/cloneModule/genepowermodule,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "lgG" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/data_terminal,
@@ -57500,17 +57473,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"lKd" = (
-/obj/stool/chair/office/red,
-/obj/landmark/start{
-	name = "Geneticist"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "lKR" = (
 /obj/wingrille_spawn/auto,
 /obj/securearea{
@@ -58004,6 +57966,10 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"mMJ" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "mMP" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -58141,12 +58107,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
-"ndq" = (
-/obj/machinery/light,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "neb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -58894,10 +58854,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"osT" = (
-/obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "ovz" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -59339,6 +59295,12 @@
 	icon_state = "swampgrass_edge"
 	},
 /area/station/hydroponics/bay)
+"pkK" = (
+/obj/machinery/light,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "pkL" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -59355,6 +59317,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"poS" = (
+/obj/machinery/disposal/mail{
+	mail_tag = "genetics";
+	mailgroup = "medresearch";
+	name = "mail chute-'Genetics'"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 1
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "pqK" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -60045,6 +60018,12 @@
 /area/station/storage/auxillary{
 	name = "Tool Storage"
 	})
+"qBE" = (
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/research)
 "qBG" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
@@ -60220,6 +60199,16 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"qLY" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "qMw" = (
 /obj/table/reinforced/auto,
 /obj/item/device/multitool{
@@ -60552,6 +60541,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"rwf" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "rwH" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -61415,6 +61408,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/bridge)
+"sNr" = (
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "sNs" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttlebay{
@@ -61815,12 +61815,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
-"tCt" = (
-/obj/machinery/vending/monkey,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/research)
 "tDc" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -62101,10 +62095,6 @@
 "tWV" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
-"tYR" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "tZB" = (
 /obj/lattice{
 	dir = 6;
@@ -62576,17 +62566,6 @@
 /obj/critter/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"uDn" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "genetics";
-	mailgroup = "medresearch";
-	name = "mail chute-'Genetics'"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 1
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "uDR" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -62982,6 +62961,29 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
+"vmP" = (
+/obj/table/auto,
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/obj/item/storage/firstaid/brain{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/storage/firstaid/brain{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "vpM" = (
 /obj/grille/catwalk/cross{
 	dir = 1
@@ -63009,6 +63011,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"vql" = (
+/obj/machinery/computer/genetics,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "vrm" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -63167,6 +63173,13 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"vGs" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "vGu" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -63924,11 +63937,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
-"wZg" = (
-/obj/machinery/genetics_scanner,
-/obj/machinery/light,
-/turf/simulated/floor/blue/checker,
-/area/station/medical/research)
 "wZt" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -64421,14 +64429,6 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"xRB" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/medical/research)
 "xTe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -104809,8 +104809,8 @@ ctD
 ctD
 cxq
 cxq
-ndq
-eUx
+pkK
+qLY
 cxs
 cyn
 aaG
@@ -105106,8 +105106,8 @@ ctD
 cuo
 cwj
 cuo
-boo
-hhI
+cGa
+lgn
 ctD
 cxq
 cxq
@@ -105409,11 +105409,11 @@ rNh
 cwj
 cuo
 cuo
-wZg
+hvo
 ctD
 cxq
 cxq
-tCt
+qBE
 wtE
 aah
 adC
@@ -105711,8 +105711,8 @@ ugY
 cwl
 oNU
 oNU
-uDn
-eUx
+poS
+qLY
 cxs
 cxs
 cxs
@@ -106012,8 +106012,8 @@ cCf
 cvj
 cwm
 cwU
-tYR
-iPW
+mMJ
+sNr
 wtE
 aap
 aar
@@ -106311,11 +106311,11 @@ csK
 cwk
 cxS
 jEs
-osT
+rwf
 cwn
 cuo
 cuo
-wZg
+hvo
 wtE
 aah
 adC
@@ -106613,11 +106613,11 @@ csL
 mbr
 cut
 ctD
-iWW
+vmP
 cus
 cwR
-lKd
-kGP
+iWR
+vql
 wtE
 aah
 adC
@@ -106919,9 +106919,9 @@ cng
 sBr
 cuY
 cuY
-fIT
-xRB
-aah
+vGs
+kpT
+aaG
 adC
 adC
 adC
@@ -107222,7 +107222,7 @@ cwV
 ahh
 aap
 aar
-aar
+aaq
 acW
 adC
 adC
