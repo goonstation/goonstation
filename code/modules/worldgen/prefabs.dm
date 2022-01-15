@@ -288,9 +288,9 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		underwater = 1
 		maxNum = 1
 		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm"
-		prefabSizeX = 14
-		prefabSizeY = 14
+		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm" //it's also the diner, secretly.
+		prefabSizeX = 29
+		prefabSizeY = 41
 #endif
 
 	robotfactory

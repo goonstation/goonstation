@@ -935,6 +935,10 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 
+	job_limits_override = list(
+		/datum/job/engineering/miner = 0 //eventually, assay technicians
+	)
+
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
 	walls = /turf/simulated/wall/auto/supernorn

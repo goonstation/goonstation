@@ -1,120 +1,101 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"av" = (
-/obj/rack,
-/obj/item/pinpointer/trench{
-	pixel_x = -3;
-	pixel_y = 3
+"aa" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
 	},
-/obj/item/pinpointer/trench,
-/obj/item/pinpointer/trench{
-	pixel_x = 3;
-	pixel_y = -3
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/simulated/floor/grime,
+/area/diner/bathroom)
+"al" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
 	},
+/area/shuttle/sea_elevator)
+"aL" = (
+/obj/table/reinforced/auto,
+/obj/item/tank/oxygen,
+/obj/item/tank/oxygen,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"bb" = (
-/turf/simulated/floor/engine/caution/west,
-/area/shuttle/sea_elevator)
-"bg" = (
-/obj/machinery/door/airlock/pyro,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 4
-	},
-/area/shuttle/sea_elevator)
+"aU" = (
+/turf/simulated/floor/carpet/red/standard/edge/sw,
+/area/diner/dining)
+"bd" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/secure/closet/civilian/kitchen,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
 "bl" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
-	},
-/area/shuttle/sea_elevator)
-"bO" = (
-/obj/machinery/vending/air_vendor,
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
-"dx" = (
-/obj/machinery/computer/sea_elevator,
-/turf/simulated/floor/plating,
-/area/shuttle/sea_elevator)
-"eb" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
-"el" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/turf/simulated/floor/plating,
-/area/shuttle/sea_elevator)
-"eA" = (
-/obj/landmark{
-	name = "seafall"
-	},
-/turf/simulated/floor/bot,
-/area/shuttle/sea_elevator)
-"iR" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
-	},
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
-	},
-/area/shuttle/sea_elevator)
-"jn" = (
-/turf/simulated/floor/scorched2,
-/area/shuttle/sea_elevator)
-"jB" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 1
-	},
-/area/shuttle/sea_elevator)
-"jH" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
-"jI" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
-	},
-/turf/unsimulated/wall/setpieces/leadwall/cap,
-/area/shuttle/sea_elevator)
-"lv" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
-	},
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
-	},
-/area/shuttle/sea_elevator)
-"ma" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 4
-	},
-/area/shuttle/sea_elevator)
-"pz" = (
-/turf/simulated/floor/stairs/wide/other{
-	dir = 8
-	},
-/area/shuttle/sea_elevator)
-"qu" = (
-/turf/simulated/floor/bot,
-/area/shuttle/sea_elevator)
-"qK" = (
 /obj/machinery/drainage/big,
 /turf/simulated/floor/engine/caution/east,
+/area/diner/dining)
+"bn" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"bq" = (
+/obj/stool/chair/wooden,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"bt" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"bR" = (
+/turf/simulated/floor/grime,
+/area/diner/dining)
+"cj" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"cF" = (
+/turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"se" = (
-/turf/unsimulated/wall/setpieces/leadwall,
+"cL" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"dd" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"dn" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Pod Bay"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"dU" = (
+/obj/decal/poster/wallsign/hazard_danger,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
 /area/shuttle/sea_elevator)
-"tR" = (
+"eb" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/shuttle/sea_elevator)
+"ee" = (
 /obj/rack,
 /obj/item/sea_ladder{
 	pixel_x = -4
@@ -124,35 +105,173 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"xA" = (
-/obj/overlay{
-	density = 1;
-	desc = "It probably has something to do with the elevator.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "neutinj";
-	name = "strange machine"
+"ep" = (
+/obj/machinery/chem_dispenser/alcohol,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"es" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib2"
 	},
+/obj/machinery/light/incandescent/small,
 /turf/simulated/floor/plating,
+/area/diner/kitchen)
+"eY" = (
+/turf/simulated/floor/engine/caution/east,
 /area/shuttle/sea_elevator)
-"xI" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/oxygen,
-/obj/item/tank/oxygen,
+"fb" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Pod Bay"
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"fu" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction_four,
+/area/shuttle/sea_elevator)
+"fv" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/corndog/banana,
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
+"fE" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/vending/fortune,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"fG" = (
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"yy" = (
-/obj/storage/crate/packing,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/turf/simulated/floor/scorched2,
+"gv" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"gB" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"gL" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
 /area/shuttle/sea_elevator)
-"yJ" = (
+"gR" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/skeleton_trader)
+"hk" = (
+/obj/machinery/vending/standard,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"hq" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"hJ" = (
+/obj/machinery/vending/cola/red,
+/obj/decal/tile_edge/check/purple,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"ij" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"iz" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/diner/dining)
+"ji" = (
+/obj/decal/cleanable/dirt,
+/obj/submachine/ice_cream_dispenser,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"jy" = (
+/obj/table/wood/round/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"kv" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"kB" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"kD" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/black/grime,
+/area/bee_trader)
+"lD" = (
+/turf/simulated/floor/scorched2,
+/area/diner/bathroom)
+"lJ" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"lK" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"ma" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"mH" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/breadslice/corn,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
+"nH" = (
 /obj/rack,
 /obj/item/sea_ladder{
 	pixel_x = 4
@@ -162,11 +281,577 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"Aa" = (
+"nJ" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"ob" = (
+/obj/submachine/ATM{
+	pixel_y = 32
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"ou" = (
+/turf/simulated/floor/engine/caution/west,
+/area/diner/dining)
+"ow" = (
+/obj/table/auto,
+/obj/item/circuitboard/teleporter{
+	pixel_y = 15
+	},
+/obj/item/circuitboard/teleporter{
+	pixel_y = 4
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"oz" = (
+/obj/critter/roach,
+/turf/simulated/floor/grime,
+/area/diner/bathroom)
+"oB" = (
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"oG" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/caution/west,
+/area/diner/dining)
+"oH" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/kitchen)
+"oQ" = (
+/obj/ladder{
+	desc = "Is this supposed to be here?";
+	icon_state = "ladder_wall";
+	id = "understructure";
+	layer = 2.5;
+	pixel_y = 32
+	},
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"pi" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
+"px" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/submachine/slot_machine,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"pz" = (
+/obj/npc/trader/bee{
+	name = "Bambini"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"pA" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
+"pG" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/obj/table/wood/round/auto,
+/obj/shrub/dead{
+	pixel_y = 21
+	},
+/obj/item/instrument/harmonica,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"qe" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"qu" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 5
+	},
+/area/diner/dining)
+"qx" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/east,
+/area/shuttle/sea_elevator)
+"qX" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/shaker/ketchup{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/shaker/mustard{
+	pixel_x = 3
+	},
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
+"rl" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/light/small/floor/netural,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/engine/caution/east,
+/area/diner/dining)
+"ru" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/corner,
+/area/shuttle/sea_elevator)
+"rV" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/shuttle/sea_elevator)
+"se" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/east,
+/area/diner/dining)
+"sF" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"tk" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
+"tm" = (
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/scorched,
+/area/diner/bathroom)
+"tA" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/engine/caution/east,
 /area/shuttle/sea_elevator)
+"tC" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/diner/bathroom)
+"ug" = (
+/obj/computerframe,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"uo" = (
+/obj/machinery/drainage/big,
+/obj/decal/cleanable/dirt/dirt4,
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"uq" = (
+/obj/stool/chair/comfy{
+	dir = 4;
+	name = "ratty brown chair"
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"ut" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"uP" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/backroom)
+"uT" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"uV" = (
+/obj/kitchenspike,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"va" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/engine/caution/corner,
+/area/diner/dining)
+"vs" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/diner/kitchen)
+"vt" = (
+/obj/table/reinforced/auto,
+/obj/submachine/mixer,
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"vX" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"wk" = (
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"wW" = (
+/turf/unsimulated/wall/setpieces/leadwindow{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"wX" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/dining)
+"xh" = (
+/obj/machinery/vending/coffee,
+/obj/decal/tile_edge/check/purple,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"xi" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"xq" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/west,
+/area/diner/dining)
+"xu" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"xA" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 4
+	},
+/area/diner/dining)
+"xH" = (
+/obj/machinery/vending/cola/blue,
+/obj/decal/tile_edge/check/purple,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"xI" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/obj/landmark/spawner{
+	name = "father_jack"
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"xK" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"xX" = (
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/kitchen/food_box/egg_box,
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"yd" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 20
+	},
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/npc/trader/skeleton,
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"yJ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"yM" = (
+/obj/overlay{
+	density = 1;
+	desc = "It probably has something to do with the elevator.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "strange machine"
+	},
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator)
+"zV" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/shaker/pepper{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/shaker/salt{
+	pixel_x = 6
+	},
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
+"zW" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Af" = (
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"An" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"Ap" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"AG" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"Cn" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"CB" = (
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
 "CZ" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/shuttle/sea_elevator)
+"Dv" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/bathroom)
+"DT" = (
+/obj/landmark{
+	name = "seafall"
+	},
+/turf/simulated/floor/bot,
+/area/shuttle/sea_elevator)
+"Ei" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/decal/cleanable/cobweb,
+/obj/item/cigbutt{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/dirt,
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Ey" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/diner/dining)
+"Ez" = (
+/turf/simulated/floor/bot,
+/area/shuttle/sea_elevator)
+"EO" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = -3
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Fk" = (
+/obj/decal/skeleton,
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/plating,
+/area/diner/backroom)
+"Fv" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag22";
+	layer = 4;
+	pixel_y = 32
+	},
+/turf/simulated/floor/grime,
+/area/diner/bathroom)
+"Fw" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine/caution/east,
+/area/shuttle/sea_elevator)
+"FW" = (
+/obj/npc/trader/hand,
+/turf/simulated/floor/grime,
+/area/diner/bathroom)
+"GY" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"Hh" = (
+/obj/grille/catwalk{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Hj" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/light/small/floor/netural,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/engine/caution/west,
+/area/diner/dining)
+"Hl" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/dining)
+"Hs" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall/cap,
+/area/shuttle/sea_elevator)
+"Hv" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/bee_trader)
+"HT" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/shuttle/sea_elevator)
+"Jh" = (
+/obj/decal/cleanable/dirt,
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Jj" = (
+/obj/machinery/computer/sea_elevator,
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator)
+"Jn" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/west,
+/area/shuttle/sea_elevator)
+"Jv" = (
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"JO" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 8
+	},
+/area/shuttle/sea_elevator)
+"JT" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Kj" = (
+/obj/decal/cleanable/dirt,
+/obj/item/kitchen/rollingpin{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = 15
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"Ku" = (
 /obj/rack,
 /obj/item/device/gps{
 	identifier = "NT-E";
@@ -183,27 +868,125 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"EK" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/engine/caution/corner,
+"Kw" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"KU" = (
+/obj/storage/crate/packing,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/turf/simulated/floor/scorched2,
 /area/shuttle/sea_elevator)
-"Gp" = (
-/turf/simulated/floor/engine/caution/east,
+"KY" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"Ha" = (
-/obj/landmark{
-	name = "seafall"
+"Lo" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/shuttle/sea_elevator)
+"LU" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/skeleton,
+/obj/item/raw_material/shard/glass{
+	pixel_x = -5;
+	pixel_y = 9
 	},
 /turf/simulated/floor/plating,
-/area/shuttle/sea_elevator/lower)
-"Hl" = (
-/turf/unsimulated/wall/setpieces/leadwindow,
+/area/diner/backroom)
+"ME" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
+	},
 /area/shuttle/sea_elevator)
-"Hv" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/engine/caution/west,
+"MP" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"Nb" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
 /area/shuttle/sea_elevator)
-"HT" = (
+"Nl" = (
+/obj/machinery/gibber/output_south,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"Nr" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"NC" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"NO" = (
+/obj/marker/supplymarker,
+/obj/decal/fakeobjects/teleport_pad,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"NW" = (
+/obj/rack,
+/obj/item/pinpointer/trench{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/pinpointer/trench,
+/obj/item/pinpointer/trench{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
+"Ol" = (
+/obj/reagent_dispensers/still,
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"Oo" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/wood/round/auto,
+/obj/item/device/light/glowstick{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/snacks/chips{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"Ow" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Ql" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
 	pixel_y = 7
@@ -213,97 +996,329 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"HZ" = (
-/turf/variableTurf/clear,
-/area/noGenerate)
-"Jq" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction_four,
+"QH" = (
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"Rd" = (
+/turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
-"Jv" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6
+"Rf" = (
+/turf/simulated/floor/engine/caution/east,
+/area/diner/dining)
+"Ri" = (
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Rm" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"Rq" = (
+/obj/machinery/deep_fryer,
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"Rv" = (
+/obj/decal/cleanable/dirt,
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"RX" = (
+/obj/machinery/teleport/portal_generator,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Sm" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 4
 	},
 /area/shuttle/sea_elevator)
-"Ly" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
-"MP" = (
-/turf/unsimulated/wall/setpieces/leadwindow{
+"So" = (
+/obj/stool/chair{
 	dir = 8
 	},
+/turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"Nz" = (
+"Sp" = (
+/obj/machinery/vending/alcohol,
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"Sr" = (
+/obj/submachine/chef_oven,
+/obj/landmark{
+	name = "shitty_bill_respawn"
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/kitchen)
+"Sw" = (
+/obj/machinery/door/airlock/pyro/external{
+	icon_state = "airlock_locked";
+	locked = 1
+	},
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Sy" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"SN" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/royal_jelly{
+	pixel_y = 5
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"Te" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/bee_trader)
+"Tg" = (
+/turf/unsimulated/wall/setpieces/leadwindow,
+/area/shuttle/sea_elevator)
+"Th" = (
+/turf/simulated/floor/scorched2,
+/area/shuttle/sea_elevator)
+"Tw" = (
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"NO" = (
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
-"NS" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
+"Ty" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/landmark/spawner{
+	name = "don_glab"
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"TR" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
 	},
 /area/shuttle/sea_elevator)
-"NT" = (
-/obj/machinery/drainage/big,
-/turf/simulated/floor/engine/caution/west,
-/area/shuttle/sea_elevator)
-"Oo" = (
-/turf/simulated/floor/stairs/wide/other{
-	dir = 4
-	},
-/area/shuttle/sea_elevator)
-"OO" = (
-/obj/forcefield/energyshield/perma,
-/turf/simulated/floor/engine/caution/east,
-/area/shuttle/sea_elevator)
-"QH" = (
+"TZ" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/shuttle/sea_elevator)
+"Ug" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/diner/backroom)
+"Ux" = (
+/obj/stool/chair/comfy{
 	dir = 8
 	},
-/area/shuttle/sea_elevator)
-"SN" = (
-/turf/simulated/floor/stairs/wide{
-	dir = 8
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"Uz" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Vf" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/small{
+	dir = 4
 	},
-/area/shuttle/sea_elevator)
-"Te" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 8
-	},
-/area/shuttle/sea_elevator)
-"VA" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10
-	},
-/area/shuttle/sea_elevator)
-"Xb" = (
-/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Vh" = (
+/obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
+"Vq" = (
+/obj/decal/cleanable/generic,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "they told us they were going to feed us once we had dug enough. i overheard him tell the others he'd melt us once he was done with us. we've been hiding here for weeks. he hasnt filled the fridge for two. i dont know how much longer we can stay i dont want to melt";
+	name = "dusty paper"
+	},
+/turf/simulated/floor/plating,
+/area/diner/backroom)
+"Vu" = (
+/obj/machinery/teleport/portal_ring,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"VA" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -10
+	},
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/bee_trader)
+"VC" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/breakfast{
+	pixel_y = 5
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"Wq" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/flower_vase{
+	pixel_y = 22
+	},
+/obj/item/sticker/skull{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/obj/item/sticker/skull{
+	pixel_x = 6
+	},
+/turf/simulated/floor/black/grime,
+/area/skeleton_trader)
+"Wr" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/storage/box/glassbox{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = -3
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 9
+	},
+/turf/simulated/floor/plating,
+/area/diner/kitchen)
+"Wy" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/engine,
+/area/diner/dining)
+"WN" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"WQ" = (
+/obj/machinery/vending/coffee,
+/obj/decal/tile_edge/check/purple,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"Xw" = (
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/diner/dining)
+"XJ" = (
+/obj/landmark{
+	name = "seafall"
+	},
+/turf/simulated/floor/plating,
+/area/shuttle/sea_elevator/lower)
+"XK" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/standard/edge/west,
+/area/diner/dining)
 "XP" = (
-/obj/decal/poster/wallsign/hazard_danger,
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
+/turf/variableTurf/clear,
+/area/space)
+"XZ" = (
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
 	},
+/turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
+"Yn" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/cashreg,
+/turf/simulated/floor/specialroom/bar/edge,
+/area/diner/kitchen)
 "YC" = (
-/turf/simulated/floor/stairs/wide{
+/obj/npc/trader/chad,
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"YR" = (
+/obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/area/shuttle/sea_elevator)
+/turf/simulated/floor/specialroom/bar,
+/area/diner/kitchen)
+"YV" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"Zf" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 "Zp" = (
 /turf/variableTurf/wall,
 /area/space)
-"ZB" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
+"Zs" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/engine,
+/area/diner/hallway{
+	name = "Space Diner Backhall"
+	})
+"Zw" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 8
 	},
 /area/shuttle/sea_elevator)
+"ZB" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/skeleton_trader)
 
 (1,1,1) = {"
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 Zp
 Zp
 Zp
@@ -315,41 +1330,100 @@ Zp
 Zp
 Zp
 Zp
-Zp
-Zp
-Zp
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 "}
 (2,1,1) = {"
+XP
+XP
+Zp
+Zp
+Zp
+eb
+HT
+Tg
+Tg
+HT
+al
+Zp
+Zp
+XP
+XP
+Zf
+Zf
+XP
+Zf
+XP
+XP
 Zp
 Zp
 Zp
 Zp
 Zp
-bl
-se
-Hl
-Hl
-se
-VA
 Zp
 Zp
 Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+XP
+XP
+XP
+XP
+XP
 "}
 (3,1,1) = {"
+XP
+Zp
+Zp
+Zp
+Zp
+yJ
+Ql
+cF
+cF
+KY
+CZ
+al
+Zp
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+Zf
 Zp
 Zp
 Zp
 Zp
 Zp
-NS
-HT
-NO
-NO
-eb
-ZB
-VA
+Zf
+wX
+Hl
+Hl
+Hl
+Wy
+Wy
+Hl
 Zp
 Zp
+Zp
+Zp
+XP
+XP
+XP
+XP
 "}
 (4,1,1) = {"
 Zp
@@ -357,111 +1431,300 @@ Zp
 Zp
 Zp
 Zp
-NS
-Nz
-Ly
-NO
-Ly
 yJ
-MP
+Tw
+xi
+cF
+xi
+nH
+wW
 Zp
 Zp
+Zf
+Zf
+Zf
+Zp
+Zp
+Zf
+Zp
+Zf
+Zf
+Zf
+Zf
+Zf
+Ey
+Hj
+oG
+xq
+ou
+va
+Te
+Te
+Te
+Te
+Zp
+Zp
+XP
+XP
+XP
 "}
 (5,1,1) = {"
 Zp
+eb
+HT
+HT
+HT
+ME
+al
+cF
+cF
+cF
+Ku
+dU
+Zp
+Zp
+Zf
+Zf
+Zf
+Zp
+Zp
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+iz
+rl
 bl
 se
-se
-se
+Rf
+Xw
 Te
 VA
 NO
-NO
-NO
-CZ
+Te
+Te
+Zp
 XP
-Zp
-Zp
+XP
+XP
 "}
 (6,1,1) = {"
 Zp
-NS
-el
+yJ
+XZ
+yM
+Ez
+Th
+wW
+JO
+Zw
+Lo
+Tg
+fu
+Hs
+Zf
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zf
+Zp
+Zf
+Zf
+ZB
+ZB
+ZB
+ZB
+ZB
 xA
 qu
-jn
+Te
 MP
 pz
 SN
-iR
-Hl
-Jq
-jI
-HZ
+Te
+XP
+XP
+XP
+XP
 "}
 (7,1,1) = {"
 Zp
-NS
-Ha
-Ha
-eA
-jn
+yJ
+XJ
+XJ
+DT
+Th
+gL
+Rd
+Rd
+Vh
+pA
+Jn
+ru
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zf
+gR
+uT
+wk
+wk
+ZB
+Cn
+Jv
+kD
 QH
-bb
-bb
+QH
+lJ
 Hv
-NT
-Xb
-EK
-HZ
+XP
+XP
+XP
+XP
 "}
 (8,1,1) = {"
 Zp
-NS
-Ha
-Ha
-eA
-jn
-bg
-Gp
-Gp
-Aa
-qK
-OO
-jB
-HZ
+yJ
+XJ
+XJ
+DT
+Th
+TZ
+eY
+eY
+tA
+Fw
+qx
+TR
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Dv
+Dv
+Dv
+ZB
+yd
+wk
+wk
+Sy
+Jv
+Jv
+Te
+Te
+Te
+Te
+Te
+XP
+XP
+XP
+XP
 "}
 (9,1,1) = {"
 Zp
-NS
-el
-dx
-qu
-yy
-MP
+yJ
+XZ
+Jj
+Ez
+KU
+wW
+Sm
+GY
+rV
+Tg
+fu
+Hs
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Dv
+FW
+tm
+ZB
+Wq
+An
+Ux
+ZB
+Jv
+Kw
+Hl
+uq
 YC
 Oo
-lv
 Hl
-Jq
-jI
-HZ
+XP
+XP
+XP
+XP
 "}
 (10,1,1) = {"
 Zp
+CZ
+HT
+HT
+HT
+kv
+Nb
+cF
+cF
+cF
+NW
+dU
+Zf
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Dv
+Fv
+oz
 ZB
-se
-se
-se
+ZB
+ZB
+ZB
+ZB
+Jv
+Jv
 ma
 Jv
-NO
-NO
-NO
-av
+Jv
+cL
+Wy
 XP
-Zp
-Zp
+XP
+XP
+XP
 "}
 (11,1,1) = {"
 Zp
@@ -469,49 +1732,621 @@ Zp
 Zp
 Zp
 Zp
-NS
-bO
-Ly
-NO
-Ly
-tR
-MP
+yJ
+fG
+xi
+cF
+xi
+ee
+wW
+Zf
+Zf
+Zf
 Zp
 Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Dv
+lD
+aa
+Dv
+WQ
+hJ
+xH
+xh
+Jv
+Jv
+Hl
+Hl
+Hl
+Hl
+Hl
+XP
+XP
+XP
+XP
 "}
 (12,1,1) = {"
+XP
+Zp
+Zp
+Zp
+Zp
+yJ
+aL
+cF
+cF
+So
+eb
+Nb
+Zf
+Zf
+Zf
 Zp
 Zp
 Zp
 Zp
 Zp
-NS
-xI
-NO
-NO
-jH
-bl
+Zp
+Hl
+Dv
+tC
+Dv
+Dv
+ob
 Jv
-Zp
-Zp
+Jv
+Jv
+Jv
+Jv
+Rm
+xI
+Hl
+XP
+XP
+XP
+XP
+XP
+XP
 "}
 (13,1,1) = {"
+XP
+Zp
+Zp
+Zp
+Zp
+CZ
+HT
+Tg
+Tg
+HT
+Nb
+Zf
+Zf
+Zf
 Zp
 Zp
 Zp
 Zp
 Zp
-ZB
-se
+Zp
 Hl
 Hl
-se
+cj
 Jv
+AG
+Jv
+Jv
+bR
+Jv
+bR
+Jv
+bR
+Jv
+VC
+Hl
+XP
+XP
+XP
+Zp
+XP
+XP
+"}
+(14,1,1) = {"
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Wy
+px
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+Jv
+YV
+Hl
+XP
+XP
+Zp
+Zp
+Zp
+XP
+"}
+(15,1,1) = {"
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zf
+Zf
+Zf
+Zf
+Zf
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Hl
+XK
+XK
+XK
+XK
+XK
+XK
+XK
+aU
+Jv
+Jv
+bn
+Jv
+Kw
+Wy
+XP
+Nr
+Nr
+Nr
+Zp
+Zp
+"}
+(16,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+Zp
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+vs
+tk
+Yn
+zV
+qX
+fv
+pi
+mH
+oH
+Jv
+bq
+jy
+WN
+Rm
+Hl
+XP
+Nr
+Ei
+Nr
+Zp
+Zp
+"}
+(17,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+oH
+gv
+CB
+CB
+qe
+CB
+CB
+qe
+NC
+Cn
+Jv
+Ty
+Nr
+zW
+Nr
+gB
+Nr
+JT
+Nr
+Nr
+Zp
+"}
+(18,1,1) = {"
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+vs
+ep
+vX
+CB
+CB
+qe
+Af
+ji
+oH
+pG
+fE
+Hl
+Nr
+nJ
+Hh
+xK
+Ap
+bt
+Rv
+Nr
+Zp
+"}
+(19,1,1) = {"
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+oH
+Sr
+vX
+qe
+vt
+Rq
+CB
+oH
+oH
+uP
+uP
+uP
+Ow
+Zs
+Nr
+gB
+Nr
+Nr
+JT
+Nr
+Zp
+"}
+(20,1,1) = {"
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+vs
+hq
+CB
+CB
+oH
+oH
+YR
+oH
+Wr
+uP
+Fk
+uP
+Ow
+JT
+Nr
+Zf
+Zf
+Nr
+oQ
+Nr
+Zp
+"}
+(21,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+oH
+oH
+xX
+dd
+oH
+Nl
+lK
+ut
+es
+uP
+Vq
+uP
+Nr
+fb
+kB
+Zf
+Zf
+Nr
+Nr
+Nr
+Zp
+"}
+(22,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+oH
+oH
+oH
+oH
+uV
+Kj
+oB
+oB
+Ug
+LU
+Ug
+Jh
+uo
+Sw
+Zf
+Zf
+XP
 Zp
 Zp
 Zp
 "}
-(14,1,1) = {"
+(23,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+oH
+oH
+Ol
+bd
+Sp
+uP
+uP
+uP
+dn
+Nr
+Nr
+Zf
+Zf
+XP
+Zp
+Zp
+XP
+"}
+(24,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+oH
+oH
+oH
+oH
+Nr
+EO
+ow
+ij
+Nr
+Zp
+Zf
+XP
+XP
+XP
+XP
+XP
+"}
+(25,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 Zp
 Zp
 Zp
@@ -522,8 +2357,189 @@ Zp
 Zp
 Zp
 Zp
+Nr
+ug
+Uz
+Ri
+xu
+Nr
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+"}
+(26,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zf
+Zf
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 Zp
 Zp
 Zp
 Zp
+Zp
+Zp
+Zp
+Zp
+Nr
+RX
+Ri
+xu
+sF
+gB
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+"}
+(27,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Zp
+Nr
+Vu
+Vf
+hk
+Nr
+Nr
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+"}
+(28,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+Zp
+Zp
+Zp
+Zp
+Nr
+Nr
+Nr
+Nr
+Nr
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+"}
+(29,1,1) = {"
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
+XP
 "}
