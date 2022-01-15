@@ -1,4 +1,9 @@
 
+(t)sat jan 15 22
+(u)Flappybat
+(p)7040
+(e)🗺|mapping
+(+)Donut3 security corridor to the armory is now part of the main security area.
 (t)fri jan 14 22
 (u)Nexusuxen
 (p)6428
