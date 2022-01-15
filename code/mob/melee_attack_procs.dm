@@ -161,11 +161,14 @@
 /mob/living/grab_self()
 	if(!..())
 		return
+	var/block_it_up = TRUE
+	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
+		for(var/obj/stool/stool_candidate in src.loc)
+			if (stool_candidate.buckle_in(src, src, 1))
+				block_it_up = FALSE
+				break //found one, no need to continue
 
-	var/obj/stool/S = (locate(/obj/stool) in src.loc)
-	if (S && !src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		S.buckle_in(src,src,1)
-	else
+	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
 		src.put_in_hand(G, src.hand)
 
@@ -175,11 +178,6 @@
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
-		/*
-		RIP
-		else
-			src.visible_message("<span class='alert'><B>[src] tweaks [his_or_her(src)] own nipples! That's [pick_string("tweak_yo_self.txt", "tweakadj")] [pick_string("tweak_yo_self.txt", "tweak")]!</B></span>")
-		*/
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && src.grabbed_by.len > 0)
