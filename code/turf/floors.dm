@@ -1672,42 +1672,33 @@ DEFINE_FLOORS(grasslush/thin,
 
 /turf/simulated/floor/var/global/girder_egg = 0
 
-//basically the same as walls.dm sans the
 /turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
-
-	// the wall is the target turf, the source is the turf where the user is standing
-	var/obj/item/light_parts/parts = W
-	var/turf/target = src
-
 	if(!instantly)
 		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
+			list(W, user), W.icon, W.icon_state, null, null)
+		return
 
+	finish_attaching(W, user)
+	return
 
-		if (!do_after(user, 4 SECONDS))
-			user.show_text("You were interrupted!", "red")
-			return
-
-		if (!parts) //ZeWaka: Fix for null.fixture_type
-			return
-
-		// if they didn't move, put it up
-		boutput(user, "You attach the light fixture to [src].")
-
+/turf/simulated/floor/proc/finish_attaching(obj/item/W, mob/user)
+	// the floor is the target turf
+	var/turf/target = src
+	var/obj/item/light_parts/parts = W
 	var/obj/machinery/light/newlight = new parts.fixture_type(target)
+	boutput(user, "You attach the light fixture to [src].")
 	newlight.icon_state = parts.installed_icon_state
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
-
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
-
 	user.u_equip(parts)
 	qdel(parts)
-	return
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
