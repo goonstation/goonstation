@@ -89,3 +89,15 @@ particles/spark
 	spin = generator("num", -5, 5, UNIFORM_RAND)
 	grow = list(0.05, 0.05)
 	fadein = 0.2 SECONDS
+
+/particles/arcfiend
+	color = generator("color", "#ff9900", "#ffff00", NORMAL_RAND)
+	width = 200
+	height = 200
+	spawning = 5
+	count = 200
+	lifespan = 10
+	fade = 10
+	position = generator("circle", 0, 64, NORMAL_RAND)
+	friction = generator("num", 0, 0, NORMAL_RAND)
+	drift = generator("box", list(-0.1,-0.1,0), list(0.1,0.1,0), UNIFORM_RAND)

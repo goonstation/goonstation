@@ -299,8 +299,6 @@
 	if (!src || !ismob(src) || !target || !ismob(target))
 		return
 
-	var/sound_playing = 0
-
 	switch (type)
 		if ("disarm")
 			playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
@@ -317,19 +315,18 @@
 				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 		if ("feast")
-			if (sound_playing == 0) // It's a long audio clip.
-				playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
-				sound_playing = 1
-				SPAWN_DBG(6 SECONDS)
-					sound_playing = 0
+			if (prob(60))
+				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
+				playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 
-			playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-			playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 			if (prob(40))
 				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
+			if (prob(30))
+				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
+
 			SPAWN_DBG(1 SECOND)
-				if (src && ishuman(src) && prob(50))
+				if (src && ishuman(src) && prob(10))
 					src.emote("burp")
 
 	return

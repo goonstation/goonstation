@@ -22,13 +22,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return 0
 	return 1
 
-proc/chemhood_check(mob/living/carbon/human/H)
-	if(H.wear_mask == /obj/item/clothing/head/chemhood && H.wear_suit == /obj/item/clothing/suit/chemsuit )
-		boutput(H, "<span class='alert'>FUCK YOU ACID</span>")
-		return 0
-	else
-		return 1
-
 datum
 	reagents
 		var/list/datum/reagent/reagent_list = new/list()
@@ -1086,13 +1079,7 @@ datum
 
 		//there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
 		proc/smoke_start(var/volume, var/classic = 0)
-			del_reagent("thalmerite")
-			del_reagent("big_bang") //remove later if we can get a better fix
-			del_reagent("big_bang_precursor")
-			del_reagent("poor_concrete")
-			del_reagent("okay_concrete")
-			del_reagent("good_concrete")
-			del_reagent("perfect_concrete")
+			purge_smoke_blacklist(src)
 
 			var/list/covered = covered_turf()
 

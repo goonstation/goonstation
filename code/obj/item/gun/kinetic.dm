@@ -1266,7 +1266,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm
-	desc = "A 40mm riot control launcher."
+	desc = "A 40mm riot control gun. It can accept standard 40mm rounds and hand-thrown grenades."
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"

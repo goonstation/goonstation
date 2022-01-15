@@ -336,7 +336,7 @@
 			resume_group_processing()
 			return
 	else
-		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(air?.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			for(var/turf/simulated/member as anything in members)
 				ATMOS_TILE_OPERATION_DEBUG(member)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
