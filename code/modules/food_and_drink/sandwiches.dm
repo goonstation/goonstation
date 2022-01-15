@@ -394,7 +394,7 @@
 /obj/item/reagent_containers/food/snacks/burger/mysteryburger
 	name = "dubious burger"
 	desc = "A burger of indeterminate meat type."
-	icon_state = "brainburger"
+	icon_state = "mysteryburger"
 	amount = 5
 	heal_amt = 1
 	food_effects = list("food_bad_breath", "food_hp_up_big")
@@ -443,7 +443,7 @@
 /obj/item/reagent_containers/food/snacks/burger/cheeseburger_m
 	name = "monkey cheese burger"
 	desc = "How very dadaist."
-	icon_state = "cburger"
+	icon_state = "cburger-monkey"
 	amount = 6
 	heal_amt = 2
 	initial_volume = 50
