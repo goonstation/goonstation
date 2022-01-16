@@ -2949,7 +2949,7 @@
 			if ("friday")
 				comtype = /obj/item/clothing/head/helmet/hardhat/security/improved
 			if ("saturday")
-				comtype = /obj/item/clothing/head/helmet/hardhat/security
+				comtype = /obj/item/clothing/head/helmet/turd
 			if ("sunday")
 				comtype = /obj/item/clothing/head/helmet/hardhat/security
 
@@ -2964,7 +2964,7 @@
 		..()
 		switch (lowertext( time2text(world.realtime, "Day") ))
 			if ("monday")
-				comtype = /obj/item/clothing/under/rank/head_of_security
+				comtype = /obj/item/clothing/under/rank/detective
 			if ("tuesday")
 				comtype = /obj/item/clothing/under/chameleon
 			if ("wednesday")
@@ -3002,6 +3002,14 @@
 				comtype = /obj/item/clothing/suit/armor/tdome/red
 			if ("sunday")
 				comtype = /obj/item/clothing/suit/armor/NT_alt
+				/datum/commodity/blackmarket/surplus/baton
+				
+/datum/commodity/blackmarket/surplus/boots
+	comname = "Imported Stun Baton"
+	comtype = /obj/item/clothing/gloves/swat
+	price = 8400
+	upperfluc = 10000
+	lowerfluc = -10000
 				
 /datum/commodity/blackmarket/surplus/boots
 	comname = "Tactical Boots"
@@ -3076,14 +3084,14 @@
 	
 /datum/commodity/blackmarket/surplus/breachinghammer
 	comname = "Airlock Breaching Hammer"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comtype = /obj/item/breaching_hammer
 	desc_sell = "Got some premium breaching hammers in stock. Solid frame, hand-crafted, guaranteed to knock an airlock down in a matter of minutes if not seconds. This is prime stuff, spacer."
 	price = 340000
 	upperfluc = 50000
 	lowerfluc = -50000
 	
 /datum/commodity/blackmarket/surplus/riot_grenade
-	comname = "Sechud Glasses"
+	comname = "Capsaicin Grenade"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	desc_sell = ""
 	price = 12000
@@ -3141,17 +3149,22 @@
 	upperfluc = 800
 	lowerfluc = -600
 	
-///////////////////////////////////////////////////////////////////////////
-/                                                                         /
-/  _______ __   __ _______     ___ _______ _______ _______   ____ ____    /
-/ |       |  | |  |  _    |   |   |       |       |       | |    |    |   /
-/ |  _____|  | |  | |_|   |   |   |    ___|       |_     _|  |   ||   |   /
-/ | |_____|  |_|  |       |   |   |   |___|       | |   |    |   ||   |   /
-/ |_____  |       |  _   | ___|   |    ___|      _| |   |    |   ||   |   /
-/  _____| |       | |_|   |       |   |___|     |_  |   |    |   ||   |   /
-/ |_______|_______|_______|_______|_______|_______| |___|    |___||___|   /
-/                                                                         /
-///////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                          //
+// ▄▄▄▄▄▄▄▄▄▄▄  ▄         ▄  ▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄          ▄▄▄▄         ▄▄▄▄     //
+//▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░▌ ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌       ▄█░░░░▌      ▄█░░░░▌    //
+//▐░█▀▀▀▀▀▀▀▀▀ ▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌ ▀▀▀▀▀█░█▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀ ▐░█▀▀▀▀▀▀▀▀▀  ▀▀▀▀█░█▀▀▀▀       ▐░░▌▐░░▌     ▐░░▌▐░░▌    //
+//▐░▌          ▐░▌       ▐░▌▐░▌       ▐░▌      ▐░▌    ▐░▌          ▐░▌               ▐░▌            ▀▀ ▐░░▌      ▀▀ ▐░░▌    //
+//▐░█▄▄▄▄▄▄▄▄▄ ▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄█░▌      ▐░▌    ▐░█▄▄▄▄▄▄▄▄▄ ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+//▐░░░░░░░░░░░▌▐░▌       ▐░▌▐░░░░░░░░░░▌       ▐░▌    ▐░░░░░░░░░░░▌▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+// ▀▀▀▀▀▀▀▀▀█░▌▐░▌       ▐░▌▐░█▀▀▀▀▀▀▀█░▌      ▐░▌    ▐░█▀▀▀▀▀▀▀▀▀ ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+//          ▐░▌▐░▌       ▐░▌▐░▌       ▐░▌      ▐░▌    ▐░▌          ▐░▌               ▐░▌               ▐░░▌         ▐░░▌    //
+// ▄▄▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄█░▌    ▐░█▄▄▄▄▄▄▄▄▄ ▐░█▄▄▄▄▄▄▄▄▄      ▐░▌           ▄▄▄▄█░░█▄▄▄  ▄▄▄▄█░░█▄▄▄ //
+//▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░▌ ▐░░░░░░░▌    ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░▌          ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌//
+// ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀            ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ //
+//                                                                                                                          //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////
 ///███████ ███████ ██      ██      ██ ███    ██  ██████     //
 ///██      ██      ██      ██      ██ ████   ██ ██       ██ //
@@ -3167,6 +3180,7 @@
 	price = 5000
 	upperfluc = 800
 	lowerfluc = -800
+	
 /obj/item/raw_material/chitin
 
 
@@ -3187,16 +3201,19 @@
 	upperfluc = 120000
 	lowerfluc = -120000
 
-/////////////////////////////////////////////////////////////////////////////////////////////
-/                                                                                           /
-/    S)ssss  H)    hh   A)aa   D)dddd   Y)    yy      J)jjjjjj   A)aa   N)n   nn E)eeeeee   /
-/   S)    ss H)    hh  A)  aa  D)   dd   Y)  yy           J)    A)  aa  N)nn  nn E)         /
-/    S)ss    H)hhhhhh A)    aa D)    dd   Y)yy            J)   A)    aa N) nn nn E)eeeee    /
-/        S)  H)    hh A)aaaaaa D)    dd    Y)         J)  jj   A)aaaaaa N)  nnnn E)         /
-/   S)    ss H)    hh A)    aa D)    dd    Y)         J)  jj   A)    aa N)   nnn E)         /
-/    S)ssss  H)    hh A)    aa D)ddddd     Y)          J)jj    A)    aa N)    nn E)eeeeee   /
-/                                                                                           /
-/////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                              //
+//        ██████  ██░ ██  ▄▄▄      ▓█████▄ ▓██   ██▓    ▄▄▄██▀▀▀ ▄▄▄       ███▄    █ ▓█████     //
+//      ▒██    ▒ ▓██░ ██▒▒████▄    ▒██▀ ██▌ ▒██  ██▒      ▒██   ▒████▄     ██ ▀█   █ ▓█   ▀     //
+//      ░ ▓██▄   ▒██▀▀██░▒██  ▀█▄  ░██   █▌  ▒██ ██░      ░██   ▒██  ▀█▄  ▓██  ▀█ ██▒▒███       //
+//       ▒   ██▒░▓█ ░██ ░██▄▄▄▄██ ░▓█▄   ▌  ░ ▐██▓░   ▓██▄██▓  ░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄      //
+//     ▒██████▒▒░▓█▒░██▓ ▓█   ▓██▒░▒████▓   ░ ██▒▓░    ▓███▒    ▓█   ▓██▒▒██░   ▓██░░▒████▒     //
+//      ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒▒▓  ▒    ██▒▒▒     ▒▓▒▒░    ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░    //
+//      ░ ░▒  ░ ░ ▒ ░▒░ ░  ▒   ▒▒ ░ ░ ▒  ▒  ▓██ ░▒░     ▒ ░▒░     ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░    //
+//      ░  ░  ░   ░  ░░ ░  ░   ▒    ░ ░  ░  ▒ ▒ ░░      ░ ░ ░     ░   ▒      ░   ░ ░    ░       //
+//            ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░    //
+//                                  ░       ░ ░                                                 //
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////
 ///███████ ███████ ██      ██      ██ ███    ██  ██████     //
@@ -3206,20 +3223,32 @@
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-/datum/commodity/blackmarket/traitor/multitool
+/datum/commodity/blackmarket/shady/multitool
+	comname = "Clown Mask"
+	desc_sell = "This one's been modified a little. Have fun!"
+	comtype = /obj/item/clothing/mask/gas/syndie_clown
+	price = 45000
+	upperfluc = 15000
+	lowerfluc = -15000
+	
+/datum/commodity/blackmarket/shady/multitool
 	comname = "Multitool"
+	desc_sell = "Useful!"
 	comtype = /obj/item/device/multitool
 	price = 500
 	upperfluc = 200
 	lowerfluc = -200
-/datum/commodity/blackmarket/traitor/balaclava
+	
+/datum/commodity/blackmarket/shady/balaclava
 	comname = "Balaclava"
 	comtype = /obj/item/clothing/mask/balaclava
 	price = 120
 	upperfluc = 100
 	lowerfluc = -100
-/datum/commodity/blackmarket/traitor/balaclava
-	comname = "Balaclava"
+	
+/datum/commodity/blackmarket/shady/welder
+	comname = "High Capacity Welder"
+	desc_sell = "Don't leave your pod without one."
 	comtype = /obj/item/weldingtool/high_cap
 	price = 120
 	upperfluc = 100
@@ -3232,6 +3261,23 @@
 ///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
+
+/datum/commodity/blackmarket/shady/barrier
+	comname = "Riot Barrier"
+	comtype = /obj/item/barrier
+	price = 2800
+	baseprice = 2800
+	upperfluc = 00
+	lowerfluc = -1000
+/datum/commodity/blackmarket/shady/security_badge
+	comname = "Security Badge"
+	comtype = /obj/item/clothing/suit/security_badge
+	desc_sell = "These things fetch a high price on the black market"
+	price = 9800
+	baseprice = 9800
+	upperfluc = 1200
+	lowerfluc = -1200
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //	███╗   ███╗ █████╗ ██████╗     ██╗      █████╗ ██████╗ ██████╗ ██╗   ██╗	//
@@ -3258,6 +3304,7 @@
 	price = 980
 	upperfluc = 600
 	lowerfluc = -600
+	
 /datum/commodity/blackmarket/wrestler/videocard
 	comname = "Advanced Videocard"
 	comtype = /obj/item/peripheral/videocard
@@ -3265,6 +3312,7 @@
 	price = 8000
 	upperfluc = 3000
 	lowerfluc = -3000
+	
 /datum/commodity/blackmarket/wrestler/
 	comname = "Personal Laptop"
 	comtype = /obj/item/luggable_computer/personal
@@ -3273,6 +3321,7 @@
 	baseprice = 5000
 	upperfluc = 1000
 	lowerfluc = -2000
+	
 /datum/commodity/blackmarket/wrestler/monkeywrench
 	comname = "Monkey Wrench"
 	comtype = /obj/item/wrench/monkey
@@ -3281,6 +3330,51 @@
 	baseprice = 1200
 	upperfluc = 200
 	lowerfluc = -200
+	
+/datum/commodity/blackmarket/wrestler/cowboyboots
+	comname = "Commemorative T-Shirt"
+	comtype = null
+	desc = "Different one every day!"
+	price = 90
+	baseprice = 90
+	upperfluc = 80
+	lowerfluc = -80
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/suit/lunar_tshirt
+			if ("tuesday")
+				comtype = /obj/item/clothing/under/jersey
+				name = "Commemerative Basketball Jersey"
+				desc = "A jersey worn by Red Hot Benson the during the '56 Space Olympics. It seems to be advertising something."
+				icon_state = "dan_jersey"
+				item_state = "dan_jersey"
+			if ("wednesday")
+				comtype = /obj/item/clothing/under/misc/bandshirt
+				name = "Acer Riggs T-Shirt"
+				desc = "Merch swag from an Acer Riggs concert on Europa."
+			if ("thursday")
+				comtype = /obj/item/clothing/suit/apron/tricolor
+				name = "Promotional Apron"
+				desc = "A gaudy apron. It seems to be advertising a restaurant called 'Dang Ol Belle's Crusty Cuts'."
+			if ("friday")
+				comtype = /obj/item/clothing/suit/lshirt
+				name = "long sleeved logo shirt"
+				icon_state = "dan_red"
+				item_state = "dan_red"
+				desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+			if ("saturday")
+				comtype = /obj/item/clothing/under/misc/bandshirt
+				name = "Promotional Apron"
+				desc = "A gaudy apron. It seems to be advertising a restaurant called 'Dang Ol Belle's Crusty Cuts'."
+			if ("sunday")
+				comtype = /obj/item/clothing/suit/lshirt
+				name = "long sleeved logo shirt"
+				icon_state = "dan_blue"
+				item_state = "dan_blue"
+				desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+
 /datum/commodity/blackmarket/wrestler/cowboyboots
 	comname = "Genuine Space-Texan Cowboy Boots"
 	comtype = /obj/item/clothing/shoes/westboot
@@ -3289,14 +3383,15 @@
 	baseprice = 150
 	upperfluc = 120
 	lowerfluc = -120
-/datum/commodity/blackmarket/wrestler/cowboyboots
-	comname = "Genuine Space-Texan Cowboy Boots"
-	comtype = /obj/item/clothing/suit/power
-	desc = "These bad boys will command RESPECT among peers!"
-	price = 150
-	baseprice = 150
-	upperfluc = 120
-	lowerfluc = -120
+	
+/datum/commodity/blackmarket/wrestler/capsule
+	comname = "Figurine Capsule"
+	comtype = /obj/item/item_box/figure_capsule/gaming_capsule
+	desc = "Got a bunch of these little plastic capsules with some kind of action figure inside. Apparently some kinda collectible."
+	price = 90
+	baseprice = 90
+	upperfluc = 40
+	lowerfluc = -40
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -3386,7 +3481,6 @@
 	upperfluc = 600
 	lowerfluc = -600
 /datum/commodity/blackmarket/wrestler/katana_nukeop
-
 	comname = "Syndicate Commander's Sabre"
 	comtype = /obj/item/katana/nukeop
 	desc_sell = "These swords are the HOLY GRAIL for salvage crews!"
