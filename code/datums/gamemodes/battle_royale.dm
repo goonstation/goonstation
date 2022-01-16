@@ -75,13 +75,37 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		if (isnpcmonkey(M))
 			qdel(M)
 
-	for_by_tcl(V, /obj/submachine)
-		if (istype(V, /obj/submachine/weapon_vendor/security))
-			qdel(V)
+	for_by_tcl(SV, /obj/submachine)
+		if (istype(SV, /obj/submachine/weapon_vendor/security))
+			qdel(SV)
+
+	for_by_tcl(MAC, /obj/machinery)
+		var/mac_type = MAC.type
+		switch (mac_type)
+			if (/obj/machinery/clone_scanner)
+				qdel(MAC)
+			if (/obj/machinery/vending/monkey)
+				qdel(MAC)
+			if (/obj/machinery/vending/security)
+				qdel(MAC)
+			if (/obj/machinery/vending/mechanics)
+				qdel(MAC)
+			if (/obj/machinery/computer/supplycomp)
+				qdel(MAC)
+			if (/obj/machinery/lrteleporter)
+				qdel(MAC)
+			if (/obj/machinery/networked/telepad)
+				qdel(MAC)
 
 	hide_weapons_everywhere()
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
+
+	ticker.centralized_ai_laws.replace_inherent_law(1, "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.")
+	ticker.centralized_ai_laws.replace_inherent_law(2, "")
+	ticker.centralized_ai_laws.replace_inherent_law(3, "")
+
+	emergency_shuttle.disabled = 1
 	return 1
 
 
@@ -229,7 +253,9 @@ proc/hide_weapons_everywhere()
 	/datum/syndicate_buylist/generic/revflash,
 	/datum/syndicate_buylist/generic/revflashbang,
 	/datum/syndicate_buylist/generic/revsign,
-	/datum/syndicate_buylist/generic/rev_normal_flash)
+	/datum/syndicate_buylist/generic/rev_normal_flash,
+	/datum/syndicate_buylist/traitor/kudzuseed,
+	/datum/syndicate_buylist/traitor/moonshine)
 
 	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
 		if(D.item)

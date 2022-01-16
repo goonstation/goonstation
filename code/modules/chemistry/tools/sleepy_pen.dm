@@ -67,7 +67,8 @@
 				if(src.reagents.total_volume)
 					boutput(user, "<span class='alert'>You poke [M == user ? "yourself" : "[M]"] but the greasy pen leaks quite badly!</span>")
 					logTheThing("combat", user, M, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
-					src.reagents.reaction(get_turf(src))
+					src.reagents.reaction(get_turf(src), TOUCH, min(30, src.reagents.total_volume))
+					src.reagents.remove_any(30)
 					if(user != M)
 						M.show_text("<b>[user] poked you with their leaking pen! Urgh!</b>", "red")
 				else
