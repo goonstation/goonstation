@@ -2883,30 +2883,39 @@
 	upperfluc = 20000
 	lowerfluc = -28500
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/                                                                                                                                                           /
-/                                 ,---.        _,.----.   ,--.-.,-.                ___     ,---.                   ,--.-.,-.      ,----.  ,--.--------.     /
-/          _..---.     _.-.     .--.'  \     .' .' -   \ /==/- |\  \        .-._ .'=.'\  .--.'  \      .-.,.---.  /==/- |\  \  ,-.--` , \/==/,  -   , -\    /
-/        .' .'.-. \  .-,.'|     \==\-/\ \   /==/  ,  ,-' |==|_ `/_ /       /==/ \|==|  | \==\-/\ \    /==/  `   \ |==|_ `/_ / |==|-  _.-`\==\.-.  - ,-./    /
-/       /==/- '=' / |==|, |     /==/-|_\ |  |==|-   |  . |==| ,   /        |==|,|  / - | /==/-|_\ |  |==|-, .=., ||==| ,   /  |==|   `.-. `--`\==\- \       /
-/      |==|-,   '  |==|- |     \==\,   - \ |==|_   `-' \|==|-  .|         |==|  \/  , | \==\,   - \ |==|   '='  /|==|-  .|  /==/_ ,    /      \==\_ \       /
-/      |==|  .=. \ |==|, |     /==/ -   ,| |==|   _  , ||==| _ , \        |==|- ,   _ | /==/ -   ,| |==|- ,   .' |==| _ , \ |==|    .-'       |==|- |       /
-/     /==/- '=' ,||==|- `-._ /==/-  /\ - \\==\.       //==/  '\  |       |==| _ /\   |/==/-  /\ - \|==|_  . ,'. /==/  '\  ||==|_  ,`-._      |==|, |        /
-/    |==|   -   / /==/ - , ,/\==\ _.\=\.-' `-.`.___.-' \==\ /\=\.'       /==/  / / , /\==\ _.\=\.-'/==/  /\ ,  )\==\ /\=\.'/==/ ,     /      /==/ -/        /
-/    `-._`.___,'  `--`-----'  `--`                      `--`             `--`./  `--`  `--`        `--`-`--`--'  `--`      `--`-----``       `--`--`        /
-/                                                                                                                                                           /
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/ 	                      __                                          /
-/ 	 /\/\   __ ___  __   / /  __ ___      ___ __ ___   __ _ _ __      /
-/      	/    \ / _` \ \/ /  / /  / _` \ \ /\ / | '_ ` _ \ / _` | '_ \     /
-/      / /\/\ | (_| |>  <  / /__| (_| |\ V  V /| | | | | | (_| | | | |    /
-/      \/    \/\__,_/_/\_\ \____/\__,_| \_/\_/ |_| |_| |_|\__,_|_| |_|    /
-/                                                                         /
-///////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//         ______   _        _______  _______  _                _______  _______  _______  _        _______ _________         //
+//        (  ___ \ ( \      (  ___  )(  ____ \| \    /\        (       )(  ___  )(  ____ )| \    /\(  ____ \\__   __/         //
+//        | (   ) )| (      | (   ) || (    \/|  \  / /        | () () || (   ) || (    )||  \  / /| (    \/   ) (            //
+//        | (__/ / | |      | (___) || |      |  (_/ /         | || || || (___) || (____)||  (_/ / | (__       | |            //
+//        |  __ (  | |      |  ___  || |      |   _ (          | |(_)| ||  ___  ||     __)|   _ (  |  __)      | |            //
+//        | (  \ \ | |      | (   ) || |      |  ( \ \         | |   | || (   ) || (\ (   |  ( \ \ | (         | |            //
+//        | )___) )| (____/\| )   ( || (____/\|  /  \ \        | )   ( || )   ( || ) \ \__|  /  \ \| (____/\   | |            //
+//        |/ \___/ (_______/|/     \|(_______/|_/    \/        |/     \||/     \||/   \__/|_/    \/(_______/   )_(            //
+//                                                                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//time2text(time,format="MM/DD/YYYY HH:MM:SS",fine)
 
-/////////////////
-//// SELLS   ////
-/////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                //
+//    ▄▄▄▄███▄▄▄▄      ▄████████ ▀████    ▐████▀       ▄█          ▄████████  ▄█     █▄     ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄    //
+//  ▄██▀▀▀███▀▀▀██▄   ███    ███   ███▌   ████▀       ███         ███    ███ ███     ███  ▄██▀▀▀███▀▀▀██▄   ███    ███ ███▀▀▀██▄  //
+//  ███   ███   ███   ███    ███    ███  ▐███         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███   ███    ███    ▀███▄███▀         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███ ▀███████████    ████▀██▄          ███       ▀███████████ ███     ███  ███   ███   ███ ▀███████████ ███   ███  //
+//  ███   ███   ███   ███    ███   ▐███  ▀███         ███         ███    ███ ███     ███  ███   ███   ███   ███    ███ ███   ███  //
+//  ███   ███   ███   ███    ███  ▄███     ███▄       ███▌    ▄   ███    ███ ███ ▄█▄ ███  ███   ███   ███   ███    ███ ███   ███  //
+//   ▀█   ███   █▀    ███    █▀  ████       ███▄      █████▄▄██   ███    █▀   ▀███▀███▀    ▀█   ███   █▀    ███    █▀   ▀█   █▀   //
+//                                                   ▀                                                                            //
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/surplus/baton
 	comname = "Imported Stun Baton"
@@ -3065,53 +3074,69 @@
 	upperfluc = 3000
 	lowerfluc = -3000
 	
-/////////////////
-////  BUYS   ////
-/////////////////
+/datum/commodity/blackmarket/surplus/breachinghammer
+	comname = "Airlock Breaching Hammer"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	desc_sell = "Got some premium breaching hammers in stock. Solid frame, hand-crafted, guaranteed to knock an airlock down in a matter of minutes if not seconds. This is prime stuff, spacer."
+	price = 340000
+	upperfluc = 50000
+	lowerfluc = -50000
+	
+/datum/commodity/blackmarket/surplus/riot_grenade
+	comname = "Sechud Glasses"
+	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	desc_sell = ""
+	price = 12000
+	upperfluc = 3000
+	lowerfluc = -3000
+	
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/surplus/ak47
 	comname = "AK-744 Rifle"
 	comtype = /obj/item/gun/kinetic/ak47
-	color_r = 1
-	desc_sell = "I need any functional models you have."
+	desc =  = "I need any functional models you have."
 	price = 2000000
 	upperfluc = 100000
 	lowerfluc = -100000
 /datum/commodity/blackmarket/surplus/revolver
 	comname = "Predator Revolver"
 	comtype = /obj/item/gun/kinetic/revolver
-	color_r = 1
-	desc_sell = "We have an open bounty on these. Only the real deal counts."
+	desc =  = "We have an open bounty on these. Only the real deal counts."
 	price = 260000
 	upperfluc = 40000
 	lowerfluc = -40000
 /datum/commodity/blackmarket/surplus/lasergun
 	comname = "Laser Gun"
 	comtype = /obj/item/gun/energy/laser_gun
-	color_r = 1
-	desc_sell = "Need some of those older NT laser guns. The obsolete ones with the round bodies. The parts are invaluable."
+	desc =  = "Need some of those older NT laser guns. The obsolete ones with the round bodies. The parts are invaluable."
 	price = 12000
 	upperfluc = 3000
 	lowerfluc = -3000
 /datum/commodity/blackmarket/surplus/phaser
 	comname = "Phaser"
 	comtype = /obj/item/gun/energy/phaser_gun
-	color_r = 1
-	desc_sell = "Moon prison in a neighbouring sector needs as many of these as I can get."
+	desc = "Moon prison in a neighbouring sector needs as many of these as I can get."
 	price = 9000
 	upperfluc = 2000
 	lowerfluc = -1800	
 /datum/commodity/blackmarket/surplus/powercell
 	comname = "Small Power Cell"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
-	desc_sell = "We can always use more power cells."
+	desc = "We can always use more power cells."
 	price = 1200
 	upperfluc = 800
 	lowerfluc = -600
 /datum/commodity/blackmarket/surplus/powercell
 	comname = "Erebite Power Cell"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
-	desc_sell = "We can always use more power cells."
+	desc = "We can always use more power cells."
 	price = 1200
 	upperfluc = 800
 	lowerfluc = -600
@@ -3146,15 +3171,21 @@
 
 
 
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
 
-
-
-
-/////////////////
-////  BUYS   ////
-/////////////////
-
-
+/datum/commodity/blackmarket/surplus/lasergun
+	comname = "Heisenbee"
+	comtype = /obj/critter/domestic_bee/heisenbee
+	desc_sell = "WANT. THE BEE. DEAD. OR ALIVE."
+	price = 680600
+	upperfluc = 120000
+	lowerfluc = -120000
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                           /
@@ -3167,11 +3198,13 @@
 /                                                                                           /
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-/obj/item/clothing/mask/balaclava
-/obj/item/device/multitool
-
-
-
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/traitor/multitool
 	comname = "Multitool"
@@ -3185,6 +3218,20 @@
 	price = 120
 	upperfluc = 100
 	lowerfluc = -100
+/datum/commodity/blackmarket/traitor/balaclava
+	comname = "Balaclava"
+	comtype = /obj/item/weldingtool/high_cap
+	price = 120
+	upperfluc = 100
+	lowerfluc = -100
+	
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //	███╗   ███╗ █████╗ ██████╗     ██╗      █████╗ ██████╗ ██████╗ ██╗   ██╗	//
@@ -3194,12 +3241,16 @@
 //	██║ ╚═╝ ██║██║  ██║██████╔╝    ███████╗██║  ██║██║  ██║██║  ██║   ██║   	//
 //	╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝           //
 //////////////////////////////////////////////////////////////////////////////////////////
-///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
-///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
-///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
-///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
-///██████   ██████     ██    ██ ██   ████  ██████     ///
-/////////////////////////////////////////////////////////
+// space garbage and telesci oddities
+
+//////////////////////////////////////////////////////////////
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
+
 /datum/commodity/blackmarket/wrestler/beerbox
 	comname = "Box of Beer"
 	comtype = /obj/item/storage/box/beer
@@ -3217,19 +3268,19 @@
 /datum/commodity/blackmarket/wrestler/
 	comname = "Personal Laptop"
 	comtype = /obj/item/luggable_computer/personal
-	desc = "Top of the line!"
+	desc = "Hey how about a FOLDABLE PERSONAL PLANNER!"
 	price = 5000
 	baseprice = 5000
 	upperfluc = 1000
 	lowerfluc = -2000
-/datum/commodity/blackmarket/wrestler/
-	comname = "Personal Laptop"
-	comtype = /obj/item/toy/cellphone
-	desc = "Top of the line!"
-	price = 5000
-	baseprice = 5000
-	upperfluc = 1000
-	lowerfluc = -2000
+/datum/commodity/blackmarket/wrestler/monkeywrench
+	comname = "Monkey Wrench"
+	comtype = /obj/item/wrench/monkey
+	desc = "An awful and tragic abomination created by space-wizards. Allegedly the result of experimenting on injecting innocent animals with liquid puns. However, they are PRETTY USEFUL!"
+	price = 1200
+	baseprice = 1200
+	upperfluc = 200
+	lowerfluc = -200
 /datum/commodity/blackmarket/wrestler/cowboyboots
 	comname = "Genuine Space-Texan Cowboy Boots"
 	comtype = /obj/item/clothing/shoes/westboot
@@ -3247,9 +3298,13 @@
 	upperfluc = 120
 	lowerfluc = -120
 
-/////////////////
-////  BUYS   ////
-/////////////////
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
+///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
+///██████   ██████     ██    ██ ██   ████  ██████     ///
+/////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/wrestler/goldfishcracker
 	comname = "Ectoplasmic Destabilizer"
@@ -3316,6 +3371,13 @@
 	price = 600000
 	upperfluc = 50000
 	lowerfluc = -50000
+/datum/commodity/blackmarket/wrestler/capsuit
+	comname = "Sacrificial Dagger"
+	comtype = /obj/item/dagger
+	desc_sell = "Old knives are great investments! The more occult the better!"
+	price = 310400
+	upperfluc = 30000
+	lowerfluc = -30000
 /datum/commodity/blackmarket/wrestler/shoecrafts
 	comname = "Custom Shoes"
 	comtype = /obj/item/clothing/shoes/crafted
