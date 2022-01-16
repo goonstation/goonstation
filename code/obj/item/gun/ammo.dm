@@ -1111,6 +1111,16 @@
 	g_amt = 40000
 	charge = 400.0
 	max_charge = 400.0
+	
+/obj/item/ammo/power_cell/dummy
+	name = "Dummy Power Cell"
+	desc = "A power cell that holds a max of 0PU. It has 'NONFUNCTIONAL DISPLAY MODEL' stamped on ."
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 0
+	g_amt = 0
+	charge = 0
+	max_charge = 0
 
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
