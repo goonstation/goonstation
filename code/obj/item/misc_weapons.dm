@@ -773,18 +773,9 @@
 
 	New()
 		..()
-		if(istype(loc, /mob/living))
-			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/self_destruct)
-
-	proc/self_destruct()
-		SPAWN_DBG(2 SECONDS)
-			src.visible_message("<span class='alert'>The [name] <b>self destructs!</b></span>", "<span class='alert'>You hear a small explosion!</b></span>")
-			new /obj/effect/supplyexplosion(src.loc)
-			if(ismob(src.loc))
-				var/mob/holding_mob = src.loc
-				holding_mob.u_equip(src)
-				src.dropped(holding_mob)
-			qdel(src)
+		if(istype(src.loc, /mob/living))
+			var/mob/M = src.loc
+			src.AddComponent(/datum/component/self_destruct, M)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
