@@ -444,8 +444,6 @@ var/list/admin_verbs = list(
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
 
-		/client/proc/player_panel_tgui,
-
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
 		/client/proc/cmd_display_detailed_power_stats,
