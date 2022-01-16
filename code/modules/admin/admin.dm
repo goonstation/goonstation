@@ -5097,39 +5097,5 @@ var/global/noir = 0
 	else
 		..()
 
-/*
-/mob/living/carbon/proc/cloak()
-	//Buggy as heck because of the way updating clothing works (it clears all invisibility variables and sets them based on if you have a cloaking device on or not)
-	//It also clears overlays so the overlay will dissapear and bluh, I don't want to add another variable sooo this is what you get I guess.
-	//If the overlay dissapears you lose the cloaking too, so just retype cloak-self and it should work again
-	//If you don't lay down or force yourself to update clothing via fire or whatever it should be good enough to use for the purpose of spying on shitlords I guess.
-	set name = "Cloak self"
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set desc = "Make yourself invisible!"
-
-	if (!iscarbon(usr))
-		boutput(usr, "Sorry, you have to be alive!")
-		return
-
-	if(!(usr.invisibility == INVIS_ALWAYS_ISH))
-		boutput(usr, "You are now cloaked")
-		usr.set_clothing_icon_dirty()
-
-		usr.overlays += image("icon" = 'icons/mob/mob.dmi', "icon_state" = "shield")
-
-		usr.invisibility = INVIS_ALWAYS_ISH
-	else
-		boutput(usr, "You are no longer cloaked")
-
-		usr.set_clothing_icon_dirty()
-		usr.invisibility = INVIS_NONE
-*/
-//
-//
-//ALL DONE
-//*********************************************************************************************************
-//
-//
-
 #undef INCLUDE_ANTAGS
 #undef STRIP_ANTAG
