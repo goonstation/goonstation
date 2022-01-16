@@ -1448,6 +1448,8 @@
 //        |/ \___/ (_______/|/     \|(_______/|_/    \/        |/     \||/     \||/   \__/|_/    \/(_______/   )_(            //
 //                                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//todo:rotating trader script
+//     15 minute timer
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                //
@@ -1461,6 +1463,7 @@
 //   ▀█   ███   █▀    ███    █▀  ████       ███▄      █████▄▄██   ███    █▀   ▀███▀███▀    ▀█   ███   █▀    ███    █▀   ▀█   █▀   //
 //                                                   ▀                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// This guy is a security officer on board an allied vessel, run by the space capitalism corporation.
 
 /obj/npc/trader/blackmarket/surplus
 	icon = 'icons/obj/trader.dmi'
@@ -1481,12 +1484,15 @@
 ///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
+//todo:sort by value highest to lowest (good salesmanship)
 
+	//todo: make a dummy 0 charge battery for the baton
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+	//armor shit, maybe sprite to look different to sec gear. or dont. it's not hard to get.
+	//todo: add more
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
 
 /////////////////////////////////////////////////////////
@@ -1500,23 +1506,32 @@
 		src.goods_buy += new /datum/commodity/goldbar(src)
 
 
-		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
+	greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
 
-		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
+	portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "I'm accepting certain goods. Check the bounty board."
-		buy_dialogue = "Here's the goods."
-		successful_purchase_dialogue = list("That's a good piece of gear. Quirky, but good.",
-			"Going to miss that one.",
-			"All sales are final. Just thought I'd remind you.",
-			"Almost new. Barely used.")
-		failed_sale_dialogue = list("It's not on the list.",
+	sell_dialogue = "I'm accepting certain goods. Check the bounty board."
+	buy_dialogue = "Here's the goods."
+		
+	successful_purchase_dialogue = list(
+					"That's a good piece of gear. Quirky, but good.",
+					"Going to miss that one.",
+					"All sales are final. Just thought I'd remind you.",
+					"Almost new. Barely used."
+					)
+					
+		failed_sale_dialogue = list(
+			"It's not on the list.",
 			"I'm not buying that.",
 			"Check the list of what I'm buying. That's not on it.",
-			"Unexpected item in the bagging area.")
-		successful_sale_dialogue = list("Yes, I can pay out for this.",
+			"Unexpected item in the bagging area."
+			)
+		successful_sale_dialogue = list(
+			"Yes, I can pay out for this.",
 			"Grading is... acceptible. Deal.",
-			"I can take that.")
+			"I can take that."
+			)
+			
 		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
 			"Not enough funds in your account.",
 			"You can't afford it. May I suggest something cheaper?")
@@ -1538,6 +1553,8 @@
 // ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀            ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ //
 //                                                                                                                          //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Gene splicing a changling and a blob led to the creation of this thing. It's taken over a nearby trading vessel and worked out how to barter for food by selling its piss and sweat.
+
 
 /obj/npc/trader/blackmarket/surplus
 	icon = 'icons/obj/trader.dmi'
@@ -1620,7 +1637,8 @@
 //	      ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░	//
 //	                            ░       ░ ░                                             	//
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
+//todo:all
+//     
 /obj/npc/trader/blackmarket/surplus
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "blackmarketsurplus"
