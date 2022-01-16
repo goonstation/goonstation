@@ -8,6 +8,7 @@
 #define SPAWN_PLANTSMANTA 16
 #define SPAWN_TRILOBITE 32
 #define SPAWN_HALLU 64
+#define SPAWN_HOSTILE 128
 
 
 /turf/proc/make_light() //dummyproc so we can inherit
@@ -206,6 +207,14 @@
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
+		if(spawningFlags & SPAWN_HOSTILE) //nothing good comes from acid-washed depths...
+			if (src.z == 5 && prob(1) && prob(4))
+				new /obj/critter/gunbot/drone/buzzdrone(src)
+			else if (src.z == 5 && prob(1) && prob(2))
+				new /obj/critter/gunbot/drone/cutterdrone(src)
+			else if (src.z == 5 && prob(1) && prob(1) && prob(25))
+				new /obj/critter/ancient_thing(src)
+
 		if (spawningFlags & SPAWN_LOOT)
 			if (prob(1) && prob(9))
 				var/obj/storage/crate/trench_loot/C = pick(childrentypesof(/obj/storage/crate/trench_loot))
@@ -369,8 +378,11 @@
 	luminosity = 1
 	generateLight = 0
 	allow_hole = 0
+#ifdef MAP_OVERRIDE_NADIR
+	spawningFlags = SPAWN_LOOT | SPAWN_HOSTILE
+#else
 	spawningFlags = SPAWN_DECOR | SPAWN_PLANTS | SPAWN_FISH | SPAWN_LOOT | SPAWN_HALLU
-
+#endif
 	blow_hole()
 		if(src.z == 5)
 			for(var/turf/space/fluid/T in range(1, locate(src.x, src.y, 1)))

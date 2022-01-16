@@ -86,7 +86,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 5
 	product = /obj/item/raw_material/char
 	setup_guide = list(
-		"Type-AX Resonator, Position C6, 1 Intensity<br>",
+		"Type-AX Resonator, Position B7, 2 Intensity<br>",
 		"Type-AX Resonator, Position G2, 1 Intensity<br>",
 		"Type-AX Resonator, Position D4, 2 Intensity<br>"
 	)
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/gemstone
 	name = "Gemstone"
-	tick_req = 60
+	tick_req = 80
 	x_torque = 0
 	y_torque = 0
 	shear = 64
