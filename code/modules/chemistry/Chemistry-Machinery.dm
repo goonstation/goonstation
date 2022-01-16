@@ -11,6 +11,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
+	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -67,11 +68,11 @@
 		if(src.beaker || roboworking)
 			boutput(user, "You add the beaker to the machine!")
 		src.updateUsrDialog()
-		src.update_icon()
+		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 	ex_act(severity)
@@ -115,29 +116,29 @@
 				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 
 			beaker = null
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustM"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustM"])
-			target_temp = min(max(0, target_temp-change),1000)
-			src.update_icon()
+			target_temp = clamp(target_temp-change, 0, 1000)
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["adjustP"])
 			if (!beaker.reagents.total_volume) return
 			var/change = text2num_safe(href_list["adjustP"])
-			target_temp = min(max(0, target_temp+change),1000)
-			src.update_icon()
+			target_temp = clamp(target_temp+change, 0, 1000)
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["settemp"])
 			if (!beaker.reagents.total_volume) return
 			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
 			if(!change || !isnum_safe(change)) return
-			target_temp = min(max(0, change),1000)
-			src.update_icon()
+			target_temp = clamp(change, 0, 1000)
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else if (href_list["stop"])
@@ -147,12 +148,12 @@
 			if (!beaker.reagents.total_volume) return
 			active = 1
 			active()
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 		else
 			usr.Browse(null, "window=chem_heater;title=Chemistry Heater")
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
@@ -252,10 +253,10 @@
 	proc/set_inactive()
 		power_usage = 50
 		active = 0
-		update_icon()
+		UpdateIcon()
 		updateUsrDialog()
 
-	proc/update_icon()
+	update_icon()
 		src.overlays -= src.icon_beaker
 		if (src.beaker)
 			src.overlays += src.icon_beaker
@@ -297,6 +298,7 @@
 
 /obj/machinery/chem_master
 	name = "CheMaster 3000"
+	desc = "A computer-like device used in the production of various pharmaceutical items. It has a slot for a beaker on the top."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
@@ -473,10 +475,10 @@
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
 			if (R.total_volume <= 30)
-				B = new/obj/item/reagent_containers/glass/bottle(src.output_target)
+				B = new/obj/item/reagent_containers/glass/bottle/plastic(src.output_target)
 				R.trans_to(B,30)
 			else
-				B = new/obj/item/reagent_containers/glass/bottle/chemical(src.output_target)
+				B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
 				R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
@@ -975,7 +977,7 @@ datum/chemicompiler_core/stationaryCore
 							var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
 							pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
 					if("Create Bottle")
-						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle(user.loc)
+						var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle/plastic(user.loc)
 						var/default = B.reagents.get_master_reagent_name()
 						var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
 						if(!name || name == " ") name = default
@@ -1045,7 +1047,7 @@ datum/chemicompiler_core/stationaryCore
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			src.updateUsrDialog()
 
 		else

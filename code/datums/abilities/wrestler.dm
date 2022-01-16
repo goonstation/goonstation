@@ -40,6 +40,7 @@
 					APPLY_MOB_PROPERTY(src, PROP_STAMINA_REGEN_BONUS, "wrestler", 5)
 					src.max_health += 50
 					health_update_queue |= src
+				APPLY_MOB_PROPERTY(src, PROP_PASSIVE_WRESTLE, "wrestledoodle")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/kick[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/strike[fake_wrestler ? "/fake" : ""]")
 				C.abilityHolder.addAbility("/datum/targetable/wrestler/drop[fake_wrestler ? "/fake" : ""]")

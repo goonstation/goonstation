@@ -159,22 +159,30 @@ var/global/list/bible_contents = list()
 		src.set_loc(user.loc)
 		return farty_heresy(user)
 
+	///Called when someone farts on a bible. Return TRUE if we killed them, FALSE otherwise.
 	proc/farty_heresy(mob/user)
 		if(!user || user.loc != src.loc)
-			return 0
+			return FALSE
 
 		if (farty_party)
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>The gods seem to approve.</b></span>")
-			return 0
+			return FALSE
 
 		if (user.traitHolder?.hasTrait("atheist"))
 			user.visible_message("<span class='alert'>[user] farts on the bible with particular vindication.<br><b>Against all odds, [user] remains unharmed!</b></span>")
-			return 0
+			return FALSE
+		else if (ishuman(user) && user:unkillable)
+			user.visible_message("<span class='alert'>[user] farts on the bible.</span>")
+			user:unkillable = 0
+			user.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			heavenly_spawn(user)
+			user?.gib()
+			return TRUE
 		else
 			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 			user.gib()
-			return 0
+			return TRUE
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
@@ -196,11 +204,15 @@ var/global/list/bible_contents = list()
 
 	farty_heresy(mob/user) //fuk u always die
 		if(!user || user.loc != src.loc)
-			return 0
+			return FALSE
+
+		if(..())
+			return TRUE
+
 		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		user.gib()
-		return 0
+		return TRUE
 
 /obj/item/storage/bible/hungry
 	name = "hungry bible"

@@ -24,11 +24,11 @@ Buildable meters
 /obj/item/weapon/pipe/proc/update()
 	var/list/nlist = list("pipe", "bent pipe", "h/e pipe", "bent h/e pipe", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
 	name = nlist[pipe_type+1] + " fitting"
-	updateicon()
+	UpdateIcon()
 
 //update the icon of the item
 
-/obj/item/weapon/pipe/proc/updateicon()
+/obj/item/weapon/pipe/UpdateIcon()
 
 	var/list/islist = list("straight", "bend", "he-straight", "he-bend", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
 
@@ -45,7 +45,7 @@ Buildable meters
 /obj/item/weapon/pipe/hide(var/i)
 
 	invisibility = i ? INVIS_ALWAYS : INVIS_NONE		// make hidden pipe items invisible
-	updateicon()
+	UpdateIcon()
 
 
 //called when a turf is attacked with a pipe item
@@ -475,5 +475,5 @@ Buildable meters
 
 		FC.control = src.control
 		FC.add_fingerprint(user)
-		FC.updateicon()
+		FC.UpdateIcon()
 		qdel(src)

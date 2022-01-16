@@ -3,7 +3,7 @@
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/item_masks.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
+	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
@@ -151,8 +151,8 @@
 	icon_state = "moustache"
 	item_state = "moustache"
 	see_face = 1
-	
-/obj/item/clothing/mask/moustache/Italian 
+
+/obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
@@ -180,6 +180,14 @@
 			setProperty("disorient_resist_eye", 100)
 			setProperty("movespeed", 0.2)
 			setProperty("exploprot", 40)
+
+		equipped(mob/user, slot)
+			. = ..()
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+
+		unequipped(mob/user)
+			. = ..()
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
 
 	postpossession
 		name = "worn gas mask"
@@ -228,8 +236,6 @@
 	name = "vocal translator"
 	desc = "Nanotechnology and questionable science combine to make a face-hugging translator, capable of making monkeys speak human language. Or whoever wears this."
 	icon = 'icons/obj/items/items.dmi'
-	wear_image_icon = 'icons/mob/mask.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon_state = "voicechanger"
 	item_state = "muzzle"			// @TODO new sprite ok
 	mats = 12	// 2x voice changer cost. It's complicated ok
@@ -425,6 +431,8 @@
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
 	permeability_coefficient = 0.50
+	var/bee = FALSE
+	var/randcol
 
 	setupProperties()
 		..()
@@ -434,9 +442,10 @@
 	New()
 		..()
 		var/image/inventory = image('icons/obj/clothing/item_masks.dmi', "")
-		var/image/onhead = image('icons/mob/mask.dmi', "")
+		var/image/onhead = image('icons/mob/clothing/mask.dmi', "")
 
 		if (prob(1))
+			bee = TRUE
 			name = "surgical face bee-ld"
 			inventory.icon_state = "surgicalshield-bee"
 			onhead.icon_state = "surgicalshield-bee"
@@ -444,12 +453,22 @@
 		else
 			inventory.icon_state = "surgicalshield-overlay"
 			onhead.icon_state = "surgicalshield-overlay"
-			var/randcol = random_hex(6)
+			randcol = random_hex(6)
 			inventory.color = "#[randcol]"
 			onhead.color = "#[randcol]"
 
 		src.UpdateOverlays(inventory, "surgmaskcolour")
 		src.wear_image.overlays += onhead
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		var/image/onhead
+		if(bee)
+			onhead = image(src.wear_image.icon,"[override ? "mask-" : ""]surgicalshield-bee")
+		else
+			onhead = image(src.wear_image.icon,"[override ? "mask-" : ""]surgicalshield-overlay")
+			onhead.color = "#[randcol]"
+		src.wear_image.overlays = list(onhead)
+
 
 /obj/item/paper_mask
 	name = "unfinished paper mask"

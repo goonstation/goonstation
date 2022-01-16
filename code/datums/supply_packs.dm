@@ -411,6 +411,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Lab Monkey Crate"
 	hidden = 1
 
+/datum/supply_packs/monkey_restock
+	name = "ValuChimp Restock cartridge"
+	desc = "Every chef's dream! Or a nightmare. Depends."
+	category = "Civilian Department"
+	contains = list(/obj/item/vending/restock_cartridge/monkey)
+	cost = 7500
+	containertype = /obj/storage/crate
+	containername = "ValuChimp restock crate"
+	hidden = 1
+
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
 	desc = "For use with existing hydroponics bay."
@@ -1179,7 +1189,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/vending/restock_cartridge/alcohol,
 					/obj/item/vending/restock_cartridge/cola,
 					/obj/item/vending/restock_cartridge/kitchen,
-					/obj/item/vending/restock_cartridge/monkey,
 					/obj/item/vending/restock_cartridge/standard,
 					/obj/item/vending/restock_cartridge/capsule)
 	cost = 3000

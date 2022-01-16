@@ -192,7 +192,7 @@
 						foundAPC.equipment = 0
 						foundAPC.lighting = 0
 				foundAPC.update()
-				foundAPC.updateicon()
+				foundAPC.UpdateIcon()
 
 			sleep(message_delay * 0.25)
 
@@ -225,7 +225,7 @@
 						foundDoor.secondsElectrified = -1
 					if(2)
 						foundDoor.locked = 1
-						foundDoor.update_icon()
+						foundDoor.UpdateIcon()
 					if(3)
 						if (foundDoor.density)
 							foundDoor.open()

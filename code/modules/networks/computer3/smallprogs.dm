@@ -1322,7 +1322,7 @@ file_save - Save file to local disk."}
 
 			src.text_buffer += text
 
-			src.selected_line = max(min(src.selected_line, 8), 1)
+			src.selected_line = clamp(src.selected_line, 1, 8)
 
 			if (!istype(working_signal, /list))
 				working_signal = list()

@@ -8,81 +8,57 @@
 	set name = "whisper"
 	return src.whisper(message)
 
-// actually a semi-replacement for say that does an input() rather than using the verb
-// this allows it to be, synchronious and let us remove the overlay later
-// if they close/cancel without saying anything
-//
-// hopefully it doesn't break anything but as usual i did some testing and it seemed ok
-// normal "say" is still there in the command bar if you want stealthy
-/mob/verb/start_say()
-	set name = "start say"
-	set hidden = 1
+/mob/verb/start_typing()
+	set name = ".starttyping"
+	set hidden = TRUE
 
-	var/mob/living/M = null
-	if (istype(src, /mob/living))
-		M = src
-
-	var/current_time = TIME
-	if (M && isalive(M))
-		M.speech_bubble.icon_state = "typing"
-		UpdateOverlays(M.speech_bubble, "speech_bubble")
-		M.last_typing = current_time
-
-		SPAWN_DBG(15 SECONDS)
-			if (M?.last_typing != current_time)
-				return
-			M.UpdateOverlays(null, "speech_bubble")
-
-	var/msg = input("", "Say") as null|text
-
-	if (msg)
-		// assume it will handle its own way of doing this
-		src.say_verb(msg)
+	var/mob/living/M = src
+	if(!istype(M) || !isalive(M))
 		return
 
-	if (M?.last_typing == current_time)
-		M.last_typing = null
-		M.UpdateOverlays(null, "speech_bubble")
+	M.speech_bubble.icon_state = "typing"
+	UpdateOverlays(M.speech_bubble, "speech_bubble")
+	var/start_time = TIME
+	M.last_typing = start_time
 
+	SPAWN_DBG(15 SECONDS)
+		if(M.last_typing == start_time && src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+			src.UpdateOverlays(null, "speech_bubble")
 
 /mob/verb/say_verb(message as text)
 	set name = "say"
-	//&& !src.client.holder
-
 	if (!message)
+		if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+			src.UpdateOverlays(null, "speech_bubble")
 		return
 	if (src.client && url_regex?.Find(message) && !client.holder)
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 	src.say(message)
+	if(src.GetOverlayImage("speech_bubble")?.icon_state == "typing")
+		src.UpdateOverlays(null, "speech_bubble")
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
-
-/mob/living/say_verb(message as text)
-	set name = "say"
-	. = ..()
-	if (src.speech_bubble?.icon_state == "typing")
-		src.UpdateOverlays(null, "speech_bubble")
 
 /mob/verb/say_radio()
 	set name = "say_radio"
 	set hidden = 1
 
-/mob/verb/say_main_radio()
+/mob/verb/say_main_radio(msg as text)
 	set name = "say_main_radio"
 	set hidden = 1
 
-/mob/living/say_main_radio()
+/mob/living/say_main_radio(msg as text)
 	set name = "say_main_radio"
+	set desc = "Speaking on the main radio frequency"
 	set hidden = 1
-	var/text = input("", "Speaking on the main radio frequency") as null|text
 	if (src.capitalize_speech())
 		var/i = 1
-		while (copytext(text, i, i+1) == " ")
+		while (copytext(msg, i, i+1) == " ")
 			i++
-		text = capitalize(copytext(text, i))
-	src.say_verb(";" +text)
+		msg = capitalize(copytext(msg, i))
+	src.say_verb(";" + msg)
 
 /mob/living/say_radio()
 	set name = "say_radio"

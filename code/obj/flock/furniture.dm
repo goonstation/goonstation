@@ -139,7 +139,7 @@
 /obj/storage/closet/flock/proc/take_damage(var/force, var/mob/user as mob)
 	if (!isnum(force) || force <= 0)
 		return
-	src.health_attack = max(0,min(src.health_attack - force,src.health_max))
+	src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
 	if (src.health_attack <= 0)
 		var/turf/T = get_turf(src)
 		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
@@ -257,7 +257,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
 			return
 
@@ -279,7 +279,7 @@
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
-	src.update_icon()
+	src.UpdateIcon()
 
 
 // flockdrones can always move through

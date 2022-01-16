@@ -12,14 +12,14 @@
 	icon_state = "left"
 	var/base_state = "left"
 	visible = 0
-	flags = ON_BORDER
+	flags = FPRINT | ON_BORDER
 	health = 500
 	health_max = 500
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
-	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK
+	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK | HAS_DIRECTIONAL_BLOCKING
 
 	New()
 		..()
@@ -27,6 +27,9 @@
 		if (src.req_access && length(src.req_access))
 			src.icon_state = "[src.icon_state]"
 			src.base_state = src.icon_state
+		return
+
+	xmasify()
 		return
 
 	attack_hand(mob/user as mob)
@@ -103,7 +106,7 @@
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, mover) == dir) // Check for appropriate border.
+		if (get_dir(loc, mover) & dir) // Check for appropriate border.
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
@@ -116,7 +119,7 @@
 			return 1
 
 	gas_cross(turf/target)
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, target) & dir)
 			return !density
 		else
 			return TRUE
@@ -127,7 +130,7 @@
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir)
+		if (get_dir(loc, target) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,

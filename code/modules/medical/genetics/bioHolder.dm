@@ -19,7 +19,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	*
 	* These flags help define what features get drawn when the mob's sprite is assembled
 	*
-	* For instance, WEARS_UNDERPANTS tells update_icon.dm to draw the mob's underpants
+	* For instance, WEARS_UNDERPANTS tells UpdateIcon.dm to draw the mob's underpants
 	*
 	* SEE: appearance.dm for more flags and details!
 	*/
@@ -60,6 +60,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/customization_style/customization_third = new /datum/customization_style/none
 	var/customization_third_original = "None"
 	var/customization_third_offset_y = 0
+
+	/// Currently changes which sprite sheet is used
+	var/special_style
 
 	/// Intended for extra head features that may or may not be hair
 	var/special_hair_1_icon = 'icons/mob/human_hair.dmi'
@@ -233,6 +236,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		s_tone = toCopy.s_tone
 		s_tone_original = toCopy.s_tone_original
 
+		special_style = toCopy.special_style
+
 		underwear = toCopy.underwear
 		u_color = toCopy.u_color
 
@@ -284,6 +289,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (progress > 7 || prob(progress * 10))
 			gender = toCopy.gender
 			pronouns = toCopy.pronouns
+			special_style = toCopy.special_style
 			mutant_race = toCopy.mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
@@ -623,6 +629,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/StaggeredCopyOther(var/datum/bioHolder/toCopy, progress = 1)
 		if (progress > 10)
 			src.CopyOther(toCopy)
+			return
 
 		if (mobAppearance)
 			mobAppearance.StaggeredCopyOther(toCopy.mobAppearance, progress)
@@ -668,11 +675,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(owner)
 				newEffect.OnAdd()
 			if (do_stability)
+				src.genetic_stability -= newEffect.stability_loss
+				src.genetic_stability = max(0,src.genetic_stability)
 				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
-				src.genetic_stability -= newEffect.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
@@ -696,13 +703,27 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/AddEffectInstanceNoDelay(var/datum/bioEffect/BE,var/do_stability = 1)
 		if (!istype(BE) || !owner || HasEffect(BE.id))
 			return null
+
+		if(BE.effect_group)
+			for(var/datum/bioEffect/curr_id as anything in effects)
+				var/datum/bioEffect/curr = effects[curr_id]
+				if(curr.effect_group == BE.effect_group)
+					RemoveEffect(curr.id)
+					break
+
 		effects[BE.id] = BE
 		BE.owner = owner
 		BE.holder = src
 		BE.OnAdd()
+
 		if (do_stability)
 			src.genetic_stability -= BE.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)
+
+			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+				BE.timeLeft = rand(20, 60)
+				BE.degrade_after = TRUE
+
 		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
 				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")

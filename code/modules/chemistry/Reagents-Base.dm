@@ -293,8 +293,7 @@ datum
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
-						playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
+						M.vomit()
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
 						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
@@ -350,8 +349,12 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(70))
 					M.take_brain_damage(1*mult)
+				if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
+					var/mob/living/L = M
+					var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
+					if (istype(plague))
+						L.cure_disease(plague)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
@@ -420,7 +423,7 @@ datum
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
+							SPAWN_DBG(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 

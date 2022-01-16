@@ -2973,7 +2973,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "lq" = (
-/obj/table/reinforced/auto,
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "lr" = (
@@ -3977,7 +3977,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "pe" = (
-/obj/table/reinforced/auto,
+/obj/table/nanotrasen/auto,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "pf" = (
@@ -4871,8 +4871,8 @@
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/miningoutpost)
 "sg" = (
-/obj/table/reinforced/auto,
 /obj/machinery/recharger,
+/obj/table/nanotrasen/auto,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "sj" = (
@@ -9920,8 +9920,10 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Le" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/table/syndicate/auto,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "Lf" = (
@@ -12860,7 +12862,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "WJ" = (
 /obj/stool/chair,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/red/side{

@@ -198,6 +198,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_adminwho_alerts()
 				src.show_pref_window(usr)
+		if ("toggle_ghost_respawns")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_ghost_respawns()
+				src.show_pref_window(usr)
 		if ("toggle_rp_word_filtering")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
@@ -827,7 +831,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=gang'>Gang War (Beta)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=pod_wars'>Pod Wars (Beta)(only works if current map is pod_wars.dmm)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=everyone-is-a-traitor'>Everyone is a traitor</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
 							"})
 #if FOOTBALL_MODE
@@ -2327,6 +2331,9 @@ var/global/noir = 0
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				M.unlock_medal( "Contributor", 1 )
@@ -2337,6 +2344,9 @@ var/global/noir = 0
 				alert("You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				var/suc = M.revoke_medal( "Contributor" )
@@ -4446,6 +4456,7 @@ var/global/noir = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.full_heal()
+		H.stamina = H.stamina_max
 		H.remove_ailments() // don't spawn with heart failure
 	return
 
@@ -5200,6 +5211,9 @@ var/global/noir = 0
 
 /client/Move(NewLoc, direct)
 	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+		if(isnull(NewLoc))
+			return
+
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 

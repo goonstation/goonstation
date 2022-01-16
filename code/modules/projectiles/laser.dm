@@ -231,7 +231,7 @@ toxic - poisons
 						cangle += angle_step
 				P.die()
 
-		proc/update_icon()
+		proc/UpdateIcon()
 			if (power >= 75)
 				icon_state = "phaser_ultra"
 			else if (power >= 50)

@@ -317,8 +317,8 @@ var/global
 
 	///////////////
 	//cyberorgan damage thresholds for emagging without emag
-	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
-	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
 	///////////////
 	list/logs = list ( //Loooooooooogs
@@ -498,11 +498,13 @@ var/global
 	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
 		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
 		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
-		"battle_royale", "vampire","assday", "football", "flock", "arcfiend"
+		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
 #if defined(MAP_OVERRIDE_POD_WARS)
 		,"pod_wars"
 #endif
 	)
+
+	hardRebootFilePath = "data/hard-reboot"
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
