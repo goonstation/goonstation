@@ -20,9 +20,10 @@
 	hide_attack = 2
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			icon_state = "emerg_inj-[label]"

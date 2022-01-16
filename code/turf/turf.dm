@@ -58,7 +58,7 @@
 
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
-		..()
+		SHOULD_CALL_PARENT(FALSE)
 
 	onMaterialChanged()
 		..()
@@ -192,6 +192,11 @@
 		icon_state = "cavern"
 		name = "cavern"
 		fullbright = 0
+
+	safe
+		temperature = T20C
+		oxygen = MOLES_O2STANDARD
+		nitrogen = MOLES_N2STANDARD
 
 /turf/space/no_replace
 
@@ -654,10 +659,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return floor
 
 /turf/proc/ReplaceWithMetalFoam(var/mtype)
@@ -671,7 +676,7 @@ proc/generate_space_color()
 		qdel(L)
 
 	floor.metal = mtype
-	floor.update_icon()
+	floor.UpdateIcon()
 
 	return floor
 
@@ -737,10 +742,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return wall
 
 /turf/proc/ReplaceWithRWall()
@@ -748,10 +753,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return wall
 
 /turf/proc/is_sanctuary()
@@ -888,7 +893,7 @@ proc/generate_space_color()
 	desc = "A solid... nothing? Is that even a thing?"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "white"
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	mouse_opacity = 0
 	fullbright = 1
 

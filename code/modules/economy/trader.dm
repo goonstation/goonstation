@@ -102,7 +102,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == I:pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
@@ -347,7 +347,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I
@@ -705,7 +705,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "You recieve visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "You receive visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
 		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
 
@@ -823,6 +823,7 @@
 				src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 #ifdef MAP_OVERRIDE_MANTA
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -1093,6 +1094,7 @@
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
 
 
 		/////////////////////////////////////////////////////////

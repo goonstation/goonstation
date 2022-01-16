@@ -386,6 +386,9 @@
 		src.contextLayout.dispose()
 		src.contextLayout = null
 
+	if (src.buckled)
+		src.buckled.buckled_guy = null
+
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
@@ -712,6 +715,17 @@
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
+				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
+					src.now_pushing = 0
+					return
+				for(var/atom/movable/obstacle in oldloc)
+					if(!ismob(obstacle) && !obstacle.Cross(tmob))
+						src.now_pushing = 0
+						return
+				for(var/atom/movable/obstacle in newloc)
+					if(!ismob(obstacle) && !obstacle.Cross(src))
+						src.now_pushing = 0
+						return
 
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
@@ -867,6 +881,12 @@
 			return
 	src.set_cursor(null)
 
+/// used to set the a_intent var of a mob
+/mob/proc/set_a_intent(intent)
+	if (!intent) return
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent)
+	src.a_intent = intent
+
 // medals
 /mob/proc/revoke_medal(title, debug)
 	if (!debug && (!src.client || !src.key))
@@ -889,15 +909,14 @@
 	var/key = src.key
 	var/displayed_key = src.mind.displayed_key
 	SPAWN_DBG(0)
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == title)
-				unlocks.Add(D)
-
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
+			var/list/unlocks = list()
+			for(var/A in rewardDB)
+				var/datum/achievementReward/D = rewardDB[A]
+				if (D.required_medal == title)
+					unlocks.Add(D)
 			if (announce)
 				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
@@ -2568,7 +2587,7 @@
 		else
 			upper_cap = cap
 
-	src.eye_blurry = max(0, min(src.eye_blurry + amount, upper_cap))
+	src.eye_blurry = clamp(src.eye_blurry + amount, 0, upper_cap)
 	//DEBUG_MESSAGE("Amount is [amount], new eye blurry is [src.eye_blurry], cap is [upper_cap]")
 	return 1
 
@@ -2871,6 +2890,7 @@
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
 /mob/proc/vomit(var/nutrition=0, var/specialType=null)
+	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
@@ -3029,7 +3049,7 @@
 	if(isnpc(src))
 		return 0
 	if(allow_overflow)
-		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
+		amount = clamp(src.mind.soul, 1, amount) // can't sell less than 1
 	if (isdiabolical(src))
 		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
 		return 0

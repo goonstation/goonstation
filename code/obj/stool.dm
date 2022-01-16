@@ -85,7 +85,8 @@
 		.= 0
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
-		if (!can_buckle(to_buckle,user)) return
+		if (!can_buckle(to_buckle,user))
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
@@ -93,7 +94,7 @@
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		return
+		return TRUE
 
 	proc/unbuckle() //Ditto but for unbuckling
 		if (src.buckled_guy)
@@ -367,9 +368,9 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user)
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			return
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
@@ -386,6 +387,7 @@
 		to_buckle.set_clothing_icon_dirty()
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
+		return TRUE
 
 	unbuckle()
 		..()
@@ -619,7 +621,7 @@
 
 			if (ishuman(M))
 				chair_chump = M
-			if (!chair_chump || !chair_chump.on_chair)// == 1)
+			if (!chair_chump || !chair_chump.on_chair)
 				chair_chump = null
 			if (chair_chump)// == 1)
 				if (chair_chump == L)
@@ -711,13 +713,13 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle))
-			return
+			return FALSE
 		if(user.hasStatus("weakened"))
-			return
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
-
+			return FALSE
+		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
@@ -752,6 +754,7 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		return TRUE
 
 
 	unbuckle()
@@ -768,7 +771,6 @@
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
 			SPAWN_DBG(0.5 SECONDS)
 				H.on_chair = 0
 				src.buckledIn = 0
@@ -776,9 +778,10 @@
 			reset_anchored(M)
 			M.buckled = null
 			buckled_guy.force_laydown_standup()
-			src.buckled_guy = null
 			SPAWN_DBG(0.5 SECONDS)
 				src.buckledIn = 0
+
+		src.buckled_guy = null
 
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 
@@ -949,7 +952,7 @@
 
 	New()
 		..()
-		update_icon()
+		UpdateIcon()
 /* what in the unholy mother of god was this about
 		src.overl = new /atom/movable/overlay( src.loc )
 		src.overl.icon = 'icons/obj/objects.dmi'
@@ -965,14 +968,15 @@
 
 		src.set_dir(turn(src.dir, 90))
 //		src.overl.set_dir(src.dir)
-		src.update_icon()
+		src.UpdateIcon()
 		if (buckled_guy)
 			var/mob/living/carbon/C = src.buckled_guy
 			C.set_dir(dir)
 		return
 
 
-	proc/update_icon()
+	update_icon()
+
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1075,6 +1079,7 @@
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
 
 	update_icon()
+
 		ENSURE_IMAGE(src.arm_image, src.icon, src.arm_icon_state)
 		src.arm_image.layer = FLY_LAYER+1
 		src.UpdateOverlays(src.arm_image, "arm")
@@ -1115,10 +1120,11 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if (src.lying)
-			return
-		..()
-		if (src.buckled_guy == to_buckle)
+			return FALSE
+		. = ..()
+		if (.)
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+			return TRUE
 
 	unbuckle()
 		if(src.buckled_guy)
@@ -1177,9 +1183,9 @@
 	New()
 		..()
 		if (arm_icon_state)
-			src.update_icon()
+			src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.dir == NORTH)
 			src.layer = FLY_LAYER+1
 		else
@@ -1388,7 +1394,7 @@
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
 					src.part1.master = src
-				src.update_icon()
+				src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -1451,15 +1457,15 @@
 
 	proc/toggle_active()
 		src.on = !(src.on)
-		src.update_icon()
+		src.UpdateIcon()
 		return src.on
 
 	proc/toggle_lethal()
 		src.lethal = !(src.lethal)
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "e_chair[src.on]"
 		if (!src.image_belt)
 			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)
@@ -1505,7 +1511,7 @@
 		if (!A.powered(EQUIP))
 			return
 		A.use_power(EQUIP, 5000)
-		A.updateicon()
+		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
@@ -1533,5 +1539,5 @@
 				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
 					ticker.mode:remove_revolutionary(L.mind)
 
-		A.updateicon()
+		A.UpdateIcon()
 		return

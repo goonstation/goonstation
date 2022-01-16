@@ -41,6 +41,9 @@
 		else
 			src.set_loc(D)
 
+		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
@@ -48,7 +51,7 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-
+			LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process
@@ -252,13 +255,14 @@
 	// change visibility status and force update of icon
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		updateicon()
+		UpdateIcon()
 
 	// update actual icon_state depending on visibility
 	// if invisible, set alpha to half the norm
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
-	proc/updateicon()
+	update_icon()
+
 		icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255
 		return
@@ -711,6 +715,8 @@
 		var/same_group = 0
 		if(src.mail_tag && (H.mail_tag in src.mail_tag))
 			same_group = 1
+		else if(isnull(src.mail_tag) && isnull(H.mail_tag)) // our tag is null, meaning we route anything without a tag!
+			same_group = 1 // (mail_tag is a list so we can't combine these two checks, at least not easily/cleanly)
 
 		var/nextdir = nextdir(H.dir, same_group)
 		H.set_dir(nextdir)
@@ -916,11 +922,6 @@
 				else
 					newLoaf.loaf_factor++
 
-				H.contents -= newIngredient
-				newIngredient.set_loc(null)
-				newIngredient = null
-
-				//LAGCHECK(LAG_MED)
 				qdel(newIngredient)
 
 			newLoaf.update()
@@ -1005,7 +1006,7 @@
 		STOP_TRACKING
 
 	proc/update()
-		var/orderOfLoafitude = max( 0, min( round( log(8, loaf_factor)), MAXIMUM_LOAF_STATE_VALUE ) )
+		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
 
 		src.w_class = min(orderOfLoafitude+1, 4)
@@ -1169,22 +1170,23 @@
 			else
 				return fromdir
 
-	updateicon()
+	update_icon()
+
 		icon_state = "pipe-mech[active]"//[invisibility ? "f" : null]"
 		alpha = invisibility ? 128 : 255
 		return
 
 	proc/toggleactivation()
 		src.active = !src.active
-		updateicon()
+		UpdateIcon()
 
 	proc/activate()
 		src.active = 1
-		updateicon()
+		UpdateIcon()
 
 	proc/deactivate()
 		src.active = 0
-		updateicon()
+		UpdateIcon()
 
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)

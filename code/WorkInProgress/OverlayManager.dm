@@ -196,7 +196,7 @@
 	if(length(state) && blendm && ialpha && length(icolor))
 		F.icon_state = state
 		F.blend_mode = blendm
-		F.alpha = max(0, min(255, ialpha))
+		F.alpha = clamp(ialpha, 0, 255)
 		F.color = icolor
 		F.layer = ilayer
 
@@ -349,7 +349,7 @@
 		var/datum/overlayDefinition/dither = new()
 		dither.d_icon = 'icons/effects/overlays/knockout2t.dmi'
 		dither.d_icon_state = "knockout2t"
-		dither.d_blend_mode = 1
+		dither.d_blend_mode = 2
 		dither.d_mouse_opacity = 0 // fuck not being able to click on things, if we want blindness to have disadvantages then find something else
 		dither.d_screen_loc = "CENTER-7,CENTER-7"
 		definitions.Add(dither)
@@ -368,7 +368,7 @@
 		var/datum/overlayDefinition/dither = new()
 		dither.d_icon = 'icons/effects/overlays/Rtrans.dmi'
 		dither.d_icon_state = "Rtrans"
-		dither.d_blend_mode = 1
+		dither.d_blend_mode = 2
 		//dither.d_mouse_opacity = 1
 		//dither.do_wide_fill = 0
 		definitions.Add(dither)
@@ -388,7 +388,7 @@
 		var/datum/overlayDefinition/dither = new()
 		dither.d_icon = 'icons/effects/overlays/Ltrans.dmi'
 		dither.d_icon_state = "Ltrans"
-		dither.d_blend_mode = 1
+		dither.d_blend_mode = 2
 		//dither.d_mouse_opacity = 1
 		//dither.do_wide_fill = 0
 		definitions.Add(dither)
@@ -412,7 +412,7 @@
 		warp.d_icon_state = src.warp_dir
 		warp.d_blend_mode = 1
 		warp.d_layer = BACKGROUND_LAYER
-		warp.d_plane = PLANE_FLOOR - 1
+		warp.d_plane = PLANE_FLOOR
 		definitions.Add(warp)
 
 		return ..()

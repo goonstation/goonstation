@@ -76,7 +76,7 @@
 		src.pixel_y = rand(-max_offset,max_offset)
 
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 			if (src.alive && !src.sleeping)
 				animate_bumble(src)
 /*
@@ -285,35 +285,28 @@
 		if(M.reagents)
 			src.do_reagentStuff(M)
 
-		if (isliving(M))
-			var/mob/living/L = M
-			var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague,/datum/ailment_data/disease/))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				L.cure_disease(plague)
-
 	on_sleep()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 			animate(src)
 
 	on_wake()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 			if (src.alive)
 				animate_bumble(src)
 
 	on_revive()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 			animate_bumble(src)
 
 	CritterDeath()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		animate(src)
 		modify_christmas_cheer(-5)
 		var/mob/M = src.lastattacker
@@ -417,9 +410,9 @@
 		else
 			src.lastattacker = user
 			..()
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.overlays)
 			src.overlays = null
 		if (src.generic && src.color)
@@ -611,7 +604,7 @@
 			W.set_loc(src)
 
 			hat_that_bee(src.hat)
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<span class='notice'><b>[user]</b> puts a hat on [src]!</span>",\
 			"<span class='notice'>You put a hat on [src]!</span>")
 			return
@@ -668,7 +661,7 @@
 		if (prob(10))
 			src.royal = 1
 			src.cant_take_hat = 1
-			src.update_icon()
+			src.UpdateIcon()
 
 	ChaseAttack(mob/M)
 		if (!istype(M)) return
@@ -685,12 +678,6 @@
 			M.reagents.add_reagent("neurotoxin", 20)
 			M.reagents.add_reagent("morphine", 10)
 
-		if (isliving(M))
-			var/mob/living/L = M
-			var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague,/datum/ailment_data/disease/))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				L.cure_disease(plague)
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -837,8 +824,7 @@
 		/obj/item/clothing/head/wizard/red,
 		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/clothing/head/helmet/viking,
-		/obj/item/clothing/head/void_crown,
-		/obj/item/clothing/head/bighat/syndicate/biggest
+		/obj/item/clothing/head/void_crown
 	)
 
 	New()
@@ -883,7 +869,7 @@
 		hat.name = "[src]'s [hat.name]"
 		src.original_hat = hat
 		src.hat_that_bee(hat)
-		src.update_icon()
+		src.UpdateIcon()
 
 	CritterDeath()
 		if(!src.alive)
@@ -892,7 +878,7 @@
 		if(src.hat)
 			src.hat.set_loc(src.loc)
 			src.hat = null
-			src.update_icon()
+			src.UpdateIcon()
 		src.tier = 0 // No free hat with SR...
 		. = ..()
 
@@ -1012,7 +998,7 @@
 				desc = "Oh no, a terrifying demon!!  Oh, wait, no, nevermind, it's just the fat and sassy space-bee.  Wow, really had me fooled for a moment...guess that's a Halloween trick...."
 				src.hat = new /obj/item/clothing/head/devil (src)
 				src.hat_that_bee(src.hat)
-				src.update_icon()
+				src.UpdateIcon()
 
 			else
 				perhaps_go_to_work()
@@ -1075,7 +1061,7 @@
 			if (istype(T))
 				src.hat = new /obj/item/clothing/head/flatcap (src)
 				src.hat_that_bee(src.hat)
-				src.update_icon()
+				src.UpdateIcon()
 				src.set_loc(T)
 
 		return 1
@@ -1530,7 +1516,7 @@
 
 					grownbee.beeMom = src.beeMom
 					grownbee.beeMomCkey = src.beeMomCkey
-					grownbee.update_icon()
+					grownbee.UpdateIcon()
 					src.reagents = null
 					qdel(src)
 				return
@@ -1554,7 +1540,7 @@
 
 					grownbee.beeMom = src.beeMom
 					grownbee.beeMomCkey = src.beeMomCkey
-					grownbee.update_icon()
+					grownbee.UpdateIcon()
 					grownbee.blog = src.blog + "all grown up!|"
 					src.reagents = null
 					qdel(src)
@@ -1636,6 +1622,13 @@
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
 					fellow_bee.aggressive = 0
+
+/obj/critter/domestic_bee/beean // a bee bean?? sprite by PeasantUnit
+	name = "greater domestic space-beean"
+	icon_state = "beean-wings"
+	icon_body = "beean"
+	sleeping_icon_state = "beean-sleep"
+
 
 /* -------------------- END -------------------- */
 
@@ -1854,7 +1847,7 @@
 
 	attack_self(mob/user as mob)
 		src.open = !src.open
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -1871,7 +1864,7 @@
 			W.layer = initial(W.layer)
 			src.ourEgg = W
 			W.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 			boutput(user, "You place [W] into [src].")
 
 		else
@@ -1884,14 +1877,14 @@
 			src.ourEgg.blog += "egg taken out by [key_name(user)]|"
 			src.ourEgg = null
 			src.add_fingerprint(user)
-			src.update_icon()
+			src.UpdateIcon()
 
 			return
 
 		return ..()
 
 
-	proc/update_icon()
+	update_icon()
 		if (open)
 			src.icon_state = "petbee_carton[ourEgg != null]"
 		else

@@ -868,6 +868,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/saline, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/formaldehyde, 2)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
 		product_list += new/datum/data/vending_product(/obj/item/bandage, 6)
@@ -877,6 +878,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		//Hidden
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/random, rand(1, 3), hidden=1)
+
 
 	disposing()
 		if (islist(portable_machinery))

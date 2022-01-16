@@ -173,7 +173,7 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..()
+		. = ..(loc, null, null, FALSE)
 
 		hud = new(src)
 		src.attach_hud(hud)
@@ -706,10 +706,7 @@
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
 				src.real_name = borgify_name("Cyborg")
-				src.UpdateName()
-				src.internal_pda.name = "[src]'s Internal PDA Unit"
-				src.internal_pda.owner = "[src]"
-				return
+				break
 			else
 				newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 				if (!length(newname))
@@ -721,17 +718,15 @@
 				else
 					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 						src.real_name = newname
-						src.internal_pda.name = "[src]'s Internal PDA Unit"
-						src.internal_pda.owner = "[src]"
-						src.UpdateName()
-						return 1
+						break
 					else
 						continue
 		if (!newname)
 			src.real_name = borgify_name("Cyborg")
-			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
+
+		src.UpdateName()
+		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+		src.internal_pda.owner = "[src.name]"
 
 	Login()
 		..()
@@ -1119,7 +1114,7 @@
 				W.set_loc(src)
 				src.upgrades.Add(W)
 				boutput(user, "You insert [W].")
-				boutput(src, "<span class='notice'>You recieved [W]! It can be activated from your panel.</span>")
+				boutput(src, "<span class='notice'>You received [W]! It can be activated from your panel.</span>")
 				hud.update_upgrades()
 				src.update_appearance()
 
@@ -1500,7 +1495,7 @@
 					src.show_text("Your power cell was removed!", "red")
 					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
-					cell.updateicon()
+					cell.UpdateIcon()
 					src.cell = null
 
 			update_appearance()
@@ -1694,10 +1689,10 @@
 	hotkey(name)
 		switch (name)
 			if ("help")
-				src.a_intent = INTENT_HELP
+				src.set_a_intent(INTENT_HELP)
 				hud.update_intent()
 			if ("harm")
-				src.a_intent = INTENT_HARM
+				src.set_a_intent(INTENT_HARM)
 				hud.update_intent()
 			if ("unequip")
 				src.uneq_active()
@@ -2326,7 +2321,7 @@
 
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 5), 0)
+		sleeping = clamp(sleeping, 0, 5)
 		if (src.get_eye_blurry()) src.change_eye_blurry(-INFINITY)
 		if (src.get_eye_damage()) src.take_eye_damage(-INFINITY)
 		if (src.get_eye_damage(1)) src.take_eye_damage(-INFINITY, 1)

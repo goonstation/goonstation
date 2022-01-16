@@ -41,7 +41,7 @@
 	New()
 		health = rand(5, 10)
 		..()
-		update_icon()
+		UpdateIcon()
 
 	Crossed(atom/movable/A)
 		..()

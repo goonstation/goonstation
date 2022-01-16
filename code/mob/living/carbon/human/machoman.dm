@@ -187,7 +187,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.put_in_hand(G, src.hand)
 			M.changeStatus("stunned", 10 SECONDS)
 			G.state = 2
-			G.update_icon()
+			G.UpdateIcon()
 			src.set_dir(get_dir(src, M))
 			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
 
@@ -1190,7 +1190,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				for (var/area/R in A.related)
 					SPAWN_DBG(0)
 						R.eject = 1
-						R.updateicon()
+						R.UpdateIcon()
 			siren.repeat = 1
 			siren.channel = 5
 			boutput(world, siren)
@@ -1226,7 +1226,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 					for (var/area/R in A.related)
 						SPAWN_DBG(0)
 							R.eject = 0
-							R.updateicon()
+							R.UpdateIcon()
 				src.verbs += /mob/living/carbon/human/machoman/verb/macho_meteor
 */
 	emote(var/act, var/emoteTarget = null)
@@ -1331,7 +1331,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	name = "tiger stripe vest"
 	desc = "A flamboyant showman's vest."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "machovest"
 	item_state = "machovest"
 
@@ -1659,7 +1659,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			holder.owner.put_in_hand(G, holder.owner.hand)
 			M.changeStatus("stunned", 10 SECONDS)
 			G.state = 2
-			G.update_icon()
+			G.UpdateIcon()
 			holder.owner.set_dir(get_dir(holder.owner, M))
 			playsound(holder.owner.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 65, 1)
 
