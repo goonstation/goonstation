@@ -714,6 +714,13 @@
 	dir = 5
 	},
 /area/shuttle/sea_elevator)
+"Do" = (
+/obj/stool/bar,
+/obj/landmark/spawner{
+	name = "shitty_bill"
+	},
+/turf/simulated/floor/carpet/red/standard/edge/west,
+/area/diner/dining)
 "Dv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/bathroom)
@@ -1946,7 +1953,7 @@ Zp
 Hl
 XK
 XK
-XK
+Do
 XK
 XK
 XK
