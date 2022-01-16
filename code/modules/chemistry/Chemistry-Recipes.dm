@@ -2604,7 +2604,6 @@ datum
 						reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The alchemy circle briefly glows before fading back to normal. It seems like it couldn't gather enough energy.</span>")
 				else
 					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The mixture turns into pure energy which quickly disperses. It needs to be channeled somehow.</span>")
-				return
 
 		phlogiston
 			name = "Phlogiston"
@@ -3572,11 +3571,31 @@ datum
 			result = "werewolf_serum"
 			required_reagents = list("werewolf_part4" = 1, "badgrease" = 1, "stabiliser" = 1)
 			result_amount = 3
-			mix_phrase = "The substance bubbles and gives off an almost lupine howl."
-			var/static/list/full_moon_days_2053 = list("Jan 04", "Feb 03", "Mar 04", "Apr 03", "May 02", "Jun 01", "Jul 01", "Jul 30", "Aug 29", "Sep 27", "Oct 27", "Nov 25", "Dec 25")
+			mix_phrase = null
+			var/static/list/moon_list_2053 = list("Jan 01" = 80, "Jan 02" = 87, "Jan 03" = 93, "Jan 04" = 100, "Jan 05" = 93, "Jan 06" = 87, "Jan 07" = 80, "Jan 08" = 73, "Jan 09" = 67, "Jan 10" = 60, "Jan 11" = 53, "Jan 12" = 47, "Jan 13" = 40, "Jan 14" = 33, "Jan 15" = 27, "Jan 16" = 20, "Jan 17" = 13, "Jan 18" = 7, "Jan 19" = 0, "Jan 20" = 7, "Jan 21" = 14, "Jan 22" = 21, "Jan 23" = 29, "Jan 24" = 36, "Jan 25" = 43, "Jan 26" = 50, "Jan 27" = 57, "Jan 28" = 64, "Jan 29" = 71, "Jan 30" = 79, "Jan 31" = 86,
+												"Feb 01" = 93, "Feb 02" = 100, "Feb 03" = 94, "Feb 04" = 88, "Feb 05" = 81, "Feb 06" = 75, "Feb 07" = 69, "Feb 08" = 62, "Feb 09" = 56, "Feb 10" = 50, "Feb 11" = 44, "Feb 12" = 38, "Feb 13" = 31, "Feb 14" = 25, "Feb 15" = 19, "Feb 16" = 12, "Feb 17" = 6, "Feb 18" = 0, "Feb 19" = 7, "Feb 20" = 14, "Feb 21" = 21, "Feb 22" = 29, "Feb 23" = 36, "Feb 24" = 43, "Feb 25" = 50, "Feb 26" = 57, "Feb 27" = 64, "Feb 28" = 71,
+												"Mar 01" = 79, "Mar 02" = 86, "Mar 03" = 93, "Mar 04" = 100, "Mar 05" = 94, "Mar 06" = 88, "Mar 07" = 81, "Mar 08" = 75, "Mar 09" = 69, "Mar 10" = 62, "Mar 11" = 56, "Mar 12" = 50, "Mar 13" = 44, "Mar 14" = 38, "Mar 15" = 31, "Mar 16" = 25, "Mar 17" = 19, "Mar 18" = 12, "Mar 19" = 6, "Mar 20" = 0, "Mar 21" = 7, "Mar 22" = 14, "Mar 23" = 21, "Mar 24" = 29, "Mar 25" = 36, "Mar 26" = 43, "Mar 27" = 50, "Mar 28" = 57, "Mar 29" = 64, "Mar 30" = 71, "Mar 31" = 79,
+												"Apr 01" = 86, "Apr 02" = 93, "Apr 03" = 100, "Apr 04" = 93, "Apr 05" = 87, "Apr 06" = 80, "Apr 07" = 73, "Apr 08" = 67, "Apr 09" = 60, "Apr 10" = 53, "Apr 11" = 47, "Apr 12" = 40, "Apr 13" = 33, "Apr 14" = 27, "Apr 15" = 20, "Apr 16" = 13, "Apr 17" = 7, "Apr 18" = 0, "Apr 19" = 7, "Apr 20" = 14, "Apr 21" = 21, "Apr 22" = 29, "Apr 23" = 36, "Apr 24" = 43, "Apr 25" = 50, "Apr 26" = 57, "Apr 27" = 64, "Apr 28" = 71, "Apr 29" = 79, "Apr 30" = 86,
+												"May 01" = 93, "May 02" = 100, "May 03" = 93, "May 04" = 87, "May 05" = 80, "May 06" = 73, "May 07" = 67, "May 08" = 60, "May 09" = 53, "May 10" = 47, "May 11" = 40, "May 12" = 33, "May 13" = 27, "May 14" = 20, "May 15" = 13, "May 16" = 7, "May 17" = 0, "May 18" = 7, "May 19" = 13, "May 20" = 20, "May 21" = 27, "May 22" = 33, "May 23" = 40, "May 24" = 47, "May 25" = 53, "May 26" = 60, "May 27" = 67, "May 28" = 73, "May 29" = 80, "May 30" = 87, "May 31" = 93,
+												"Jun 01" = 100, "Jun 02" = 93, "Jun 03" = 87, "Jun 04" = 80, "Jun 05" = 73, "Jun 06" = 67, "Jun 07" = 60, "Jun 08" = 53, "Jun 09" = 47, "Jun 10" = 40, "Jun 11" = 33, "Jun 12" = 27, "Jun 13" = 20, "Jun 14" = 13, "Jun 15" = 7, "Jun 16" = 0, "Jun 17" = 7, "Jun 18" = 14, "Jun 19" = 21, "Jun 20" = 29, "Jun 21" = 36, "Jun 22" = 43, "Jun 23" = 50, "Jun 24" = 57, "Jun 25" = 64, "Jun 26" = 71, "Jun 27" = 79, "Jun 28" = 86, "Jun 29" = 93, "Jun 30" = 100,
+												"Jul 01" = 93, "Jul 02" = 87, "Jul 03" = 80, "Jul 04" = 73, "Jul 05" = 67, "Jul 06" = 60, "Jul 07" = 53, "Jul 08" = 47, "Jul 09" = 40, "Jul 10" = 33, "Jul 11" = 27, "Jul 12" = 20, "Jul 13" = 13, "Jul 14" = 7, "Jul 15" = 0, "Jul 16" = 7, "Jul 17" = 13, "Jul 18" = 20, "Jul 19" = 27, "Jul 20" = 33, "Jul 21" = 40, "Jul 22" = 47, "Jul 23" = 53, "Jul 24" = 60, "Jul 25" = 67, "Jul 26" = 73, "Jul 27" = 80, "Jul 28" = 87, "Jul 29" = 93, "Jul 30" = 100, "Jul 31" = 93,
+												"Aug 01" = 86, "Aug 02" = 79, "Aug 03" = 71, "Aug 04" = 64, "Aug 05" = 57, "Aug 06" = 50, "Aug 07" = 43, "Aug 08" = 36, "Aug 09" = 29, "Aug 10" = 21, "Aug 11" = 14, "Aug 12" = 7, "Aug 13" = 0, "Aug 14" = 6, "Aug 15" = 12, "Aug 16" = 19, "Aug 17" = 25, "Aug 18" = 31, "Aug 19" = 38, "Aug 20" = 44, "Aug 21" = 50, "Aug 22" = 56, "Aug 23" = 62, "Aug 24" = 69, "Aug 25" = 75, "Aug 26" = 81, "Aug 27" = 88, "Aug 28" = 94, "Aug 29" = 100, "Aug 30" = 93, "Aug 31" = 86,
+												"Sep 01" = 79, "Sep 02" = 71, "Sep 03" = 64, "Sep 04" = 57, "Sep 05" = 50, "Sep 06" = 43, "Sep 07" = 36, "Sep 08" = 29, "Sep 09" = 21, "Sep 10" = 14, "Sep 11" = 7, "Sep 12" = 0, "Sep 13" = 7, "Sep 14" = 13, "Sep 15" = 20, "Sep 16" = 27, "Sep 17" = 33, "Sep 18" = 40, "Sep 19" = 47, "Sep 20" = 53, "Sep 21" = 60, "Sep 22" = 67, "Sep 23" = 73, "Sep 24" = 80, "Sep 25" = 87, "Sep 26" = 93, "Sep 27" = 100, "Sep 28" = 93, "Sep 29" = 86, "Sep 30" = 79,
+												"Oct 01" = 71, "Oct 02" = 64, "Oct 03" = 57, "Oct 04" = 50, "Oct 05" = 43, "Oct 06" = 36, "Oct 07" = 29, "Oct 08" = 21, "Oct 09" = 14, "Oct 10" = 7, "Oct 11" = 0, "Oct 12" = 6, "Oct 13" = 12, "Oct 14" = 19, "Oct 15" = 25, "Oct 16" = 31, "Oct 17" = 38, "Oct 18" = 44, "Oct 19" = 50, "Oct 20" = 56, "Oct 21" = 62, "Oct 22" = 69, "Oct 23" = 75, "Oct 24" = 81, "Oct 25" = 88, "Oct 26" = 94, "Oct 27" = 100, "Oct 28" = 93, "Oct 29" = 86, "Oct 30" = 79, "Oct 31" = 71,
+												"Nov 01" = 64, "Nov 02" = 57, "Nov 03" = 50, "Nov 04" = 43, "Nov 05" = 36, "Nov 06" = 29, "Nov 07" = 21, "Nov 08" = 14, "Nov 09" = 7, "Nov 10" = 0, "Nov 11" = 7, "Nov 12" = 13, "Nov 13" = 20, "Nov 14" = 27, "Nov 15" = 33, "Nov 16" = 40, "Nov 17" = 47, "Nov 18" = 53, "Nov 19" = 60, "Nov 20" = 67, "Nov 21" = 73, "Nov 22" = 80, "Nov 23" = 87, "Nov 24" = 93, "Nov 25" = 100, "Nov 26" = 93, "Nov 27" = 86, "Nov 28" = 79, "Nov 29" = 71, "Nov 30" = 64,
+												"Dec 01" = 57, "Dec 02" = 50, "Dec 03" = 43, "Dec 04" = 36, "Dec 05" = 29, "Dec 06" = 21, "Dec 07" = 14, "Dec 08" = 7, "Dec 09" = 0, "Dec 10" = 6, "Dec 11" = 12, "Dec 12" = 19, "Dec 13" = 25, "Dec 14" = 31, "Dec 15" = 38, "Dec 16" = 44, "Dec 17" = 50, "Dec 18" = 56, "Dec 19" = 62, "Dec 20" = 69, "Dec 21" = 75, "Dec 22" = 81, "Dec 23" = 88, "Dec 24" = 94, "Dec 25" = 100, "Dec 26" = 93, "Dec 27" = 86, "Dec 28" = 79, "Dec 29" = 71, "Dec 30" = 64, "Dec 31" = 57)
 
-			does_react(var/datum/reagents/holder)
-				return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				var/my_atom = holder.my_atom
+				if(!my_atom) return
+				var/turf/reaction_loc = get_turf(my_atom)
+				if(!reaction_loc) return
+				var/date = time2text(world.realtime, "MMM DD")
+				if(prob(moon_list_2053[date]))
+					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The substance bubbles and gives off an almost lupine howl.</span>")
+				else
+					holder.del_reagent("werewolf_serum")
+					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The mixture evaporates with a whimper.</span>")
 
 		 vampire_serum
 		 	name = "Vampire Serum Omega"
