@@ -1016,6 +1016,7 @@
 	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
+	base_item_state = "wavegun"
 
 	update_icon() // Necessary. Parent's got a different sprite now (Convair880).
 
