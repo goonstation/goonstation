@@ -3306,7 +3306,7 @@
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
-/datum/commodity/blackmarket/wrestler/goldfishcracker
+/datum/commodity/blackmarket/wrestler/ghostgun
 	comname = "Ectoplasmic Destabilizer"
 	comtype = /obj/item/gun/energy/ghost
 	desc_sell = "Ghosts are real and THEY'RE COMING FOR MY ASS! I need some ASS KICKING GHOST MULCHING LASER GUNS!"
@@ -3371,7 +3371,7 @@
 	price = 600000
 	upperfluc = 50000
 	lowerfluc = -50000
-/datum/commodity/blackmarket/wrestler/capsuit
+/datum/commodity/blackmarket/wrestler/dagger
 	comname = "Sacrificial Dagger"
 	comtype = /obj/item/dagger
 	desc_sell = "Old knives are great investments! The more occult the better!"
@@ -3385,4 +3385,11 @@
 	price = 800
 	upperfluc = 600
 	lowerfluc = -600
+/datum/commodity/blackmarket/wrestler/katana_nukeop
 
+	comname = "Syndicate Commander's Sabre"
+	comtype = /obj/item/katana/nukeop
+	desc_sell = "These swords are the HOLY GRAIL for salvage crews!"
+	price = 50000000
+	upperfluc = 0
+	lowerfluc = -1
