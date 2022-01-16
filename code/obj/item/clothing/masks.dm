@@ -241,6 +241,7 @@
 	mats = 12	// 2x voice changer cost. It's complicated ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
+	compatible_species = list("human", "cow", "werewolf", "martian")
 	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
 
 /obj/item/clothing/mask/breath
