@@ -240,6 +240,7 @@
 	max_ammo_capacity = 6
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/gyrojet
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine

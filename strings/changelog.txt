@@ -1,4 +1,13 @@
 
+(t)sun jan 16 22
+(u)Nexusuxen
+(p)6871
+(e)🐛🆕|bug, feature
+(+)AI Cores will now properly disconnect and reconnect from data terminals when you screwdriver them or gib them.
+(u)Flaborized
+(p)7182
+(e)🎨|sprites
+(+)Many more kinetic weapons will animated while firing.
 (t)sat jan 15 22
 (u)Flappybat
 (p)7040
