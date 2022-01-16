@@ -7,9 +7,6 @@
 		return COMPONENT_INCOMPATIBLE
 	if(ismob(tracked_mob))
 		RegisterSignal(tracked_mob, COMSIG_MOB_DEATH, .proc/destruct)
-		message_admins("Register signal for mob [tracked_mob]")
-	else
-		message_admins("Non parent loc")
 
 /datum/component/self_destruct/proc/destruct(datum/source)
 	var/obj/item/I = src.parent
