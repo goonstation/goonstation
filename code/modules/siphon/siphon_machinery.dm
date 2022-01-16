@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	anchored = 1
 	layer = 4
 	power_usage = 200
+	bound_height = 64
 	netname = "SIPHON"
 	var/sound/sound_unload = sound('sound/items/Deconstruct.ogg')
 
@@ -328,9 +329,15 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(src.mode == "low" && length(src.contents) < src.max_held_items)
 			src.changemode("active")
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(1)
+			src.toggling = TRUE //retoggle delay
+			SPAWN_DBG(0.5 SECONDS)
+				if(src.mode != "high") src.toggling = FALSE
 		else
 			src.changemode("low")
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setpanel(0)
+			src.toggling = TRUE //retoggle delay
+			SPAWN_DBG(0.5 SECONDS)
+				if(src.mode != "high") src.toggling = FALSE
 
 	proc/engage_drill()
 		if(src.toggling || src.mode != "high" || !src.powered()) return

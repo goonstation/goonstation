@@ -243,7 +243,28 @@
 	var/rollingtext = "" //list of entries for not siphon
 
 	if(!length(src.known_devices))
-		mainlist = "<h2>NO CONNECTION TO DEVICES</h2><br>Lower siphon to initialize"
+		mainlist = "<h2>NO CONNECTION TO DEVICES</h2><br>"
+		mainlist += "Displaying Default Message<br><br>"
+		mainlist += "Welcome to HARMONIC SIPHON CONTROL<br><br>"
+		mainlist += "To begin using the siphon, please place<br>"
+		mainlist += "one or more resonators within a radius<br>"
+		mainlist += "of four tiles. Use the floor coordinate<br>"
+		mainlist += "indicators for positional reference; they<br>"
+		mainlist += "will be reflected in this console once<br>"
+		mainlist += "the siphon is online and resonators<br>"
+		mainlist += "have completed pairing.<br><br>"
+		mainlist += "Please note that siphon operation<br>"
+		mainlist += "<strong>does not begin when siphon is lowered;</strong><br>"
+		mainlist += "lowering the siphon locks and pairs<br>"
+		mainlist += "resonators, readying them for calibration<br>"
+		mainlist += "and subsequent operation. Additionally,<br>"
+		mainlist += "note that resource extraction may not<br>"
+		mainlist += "show in the siphon reservoir indicator<br>"
+		mainlist += "immediately, as extraction typically<br>"
+		mainlist += "occurs over several cycles.<br><br>"
+		mainlist += "Using a wrench to manually anchor<br>"
+		mainlist += "resonators is optional, as an<br>"
+		mainlist += "automatic magnetic lock is utilized."
 		src.formatted_list = mainlist
 		return
 
