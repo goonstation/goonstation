@@ -990,6 +990,7 @@
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
+	var/base_item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
@@ -1008,7 +1009,7 @@
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "bullpup[ratio]"
+			src.icon_state = "[base_item_state][ratio]"
 			return
 
 /obj/item/gun/energy/laser_gun/advanced/vr
@@ -1023,6 +1024,9 @@
 /obj/item/gun/energy/laser_gun/advanced/hunter
 	name = "Hunter's laser rifle"
 	desc = "This unusual looking rifle contains a self-recharging power cell."
+	icon_state = "hunter"
+	item_state = "hunter"
+	base_item_state = "hunter"
 
 	New()
 		..()
