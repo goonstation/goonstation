@@ -678,13 +678,6 @@ var/list/special_pa_observing_verbs = list(
 /client/proc/player_panel()
 	set name = "Player Panel"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if (src.holder && !src.holder.tempmin)
-		src.holder.player()
-	return
-
-/client/proc/player_panel_tgui()
-	set name = "Player Panel TGUI"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	admin_only
 	if (src.holder.tempmin)
 		return
