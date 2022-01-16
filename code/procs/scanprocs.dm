@@ -265,10 +265,12 @@
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-	else if (O.robotic)
+	else if (O.robotic || O.unusual)
 		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 	if (O.robotic)
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	else if (O.unusual)
+		ret += "<span style='color:purple'> - Unknown organ detected</span>"
 	return ret.Join()
 
 /datum/genetic_prescan

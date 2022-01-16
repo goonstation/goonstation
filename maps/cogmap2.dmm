@@ -5207,7 +5207,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -6162,7 +6162,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "anz" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "anA" = (
@@ -13970,7 +13970,10 @@
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor{
-	name = "airless plating"
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
 "aFu" = (
@@ -14701,7 +14704,10 @@
 	icon_state = "alt_heater-M"
 	},
 /turf/unsimulated/floor{
-	name = "airless plating"
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
 "aHi" = (
@@ -15322,7 +15328,10 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor{
-	name = "airless plating"
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
 	},
 /area/shuttle/arrival/station)
 "aIN" = (
@@ -19110,7 +19119,7 @@
 	},
 /area/station/crew_quarters/locker)
 "aRR" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -63115,13 +63124,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "cJw" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cJx" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/camera{
@@ -64392,7 +64401,7 @@
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cMF" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/light{
@@ -78097,6 +78106,20 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary,
 /area/station/hallway/secondary/entry)
+"goG" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor4"
+	},
+/area/shuttle/arrival/station)
 "gtQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -79168,6 +79191,20 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
+"mwC" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor4"
+	},
+/area/shuttle/arrival/station)
 "mzz" = (
 /obj/securearea{
 	desc = "This hazard stripe marks a high-intensity beamline.";
@@ -80799,6 +80836,20 @@
 /obj/window/auto/reinforced,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"wHl" = (
+/obj/grille/steel,
+/obj/window/auto/reinforced,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 8;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor4"
+	},
+/area/shuttle/arrival/station)
 "wKv" = (
 /obj/machinery/flasher/portable,
 /obj/disposalpipe/segment/transport,
@@ -144024,9 +144075,9 @@ aFt
 aHh
 aIM
 aKm
-aFt
-aHh
-aIM
+mwC
+goG
+wHl
 aKm
 aaa
 aaa

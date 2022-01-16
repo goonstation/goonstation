@@ -380,7 +380,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"

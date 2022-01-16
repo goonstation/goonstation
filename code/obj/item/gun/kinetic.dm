@@ -426,6 +426,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = null
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -502,6 +503,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/ak47
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -524,6 +526,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/rifle_3006
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -545,6 +548,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/tranq_darts
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -729,6 +733,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = list(0.38, 0.357) // Just like in RL (Convair880).
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/a357
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -747,6 +752,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 7
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/a38/stun
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -866,6 +872,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_SMALL
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
+	fire_animation = TRUE
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -1266,7 +1273,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm
-	desc = "A 40mm riot control launcher."
+	desc = "A 40mm riot control gun. It can accept standard 40mm rounds and hand-thrown grenades."
 	name = "Riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
@@ -1276,6 +1283,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 1
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/smoke/single
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -1552,6 +1560,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	hide_attack = 1
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
+	fire_animation = TRUE
 
 	New()
 		ammo = new default_magazine

@@ -193,6 +193,11 @@
 		name = "cavern"
 		fullbright = 0
 
+	safe
+		temperature = T20C
+		oxygen = MOLES_O2STANDARD
+		nitrogen = MOLES_N2STANDARD
+
 /turf/space/no_replace
 
 /turf/space/New()

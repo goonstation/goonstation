@@ -599,7 +599,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
-	var/datum/component/holdertargeting/simple_light/light_c
+	var/datum/component/loctargeting/simple_light/light_c
 	var/col_r = 0
 	var/col_g = 0
 	var/col_b = 0
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	New()
 		. = ..()
 		color = rgb(col_r*255, col_g*255, col_b*255)
-		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
+		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
 		light_c.update(0)
 
 	attack_hand(mob/user as mob)

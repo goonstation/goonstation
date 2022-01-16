@@ -1,5 +1,171 @@
 
+(t)sun jan 16 22
+(u)Flaborized
+(p)7182
+(e)🎨|sprites
+(+)Many more kinetic weapons will animated while firing.
+(t)sat jan 15 22
+(u)Flappybat
+(p)7040
+(e)🗺|mapping
+(+)Donut3 security corridor to the armory is now part of the main security area.
+(t)fri jan 14 22
+(u)Nexusuxen
+(p)6428
+(e)🎨|sprites
+(+)Adds sliced cheese & tomatoes, and a couple recipe fixes. 1 cheese wedge = 4 slices, 1 tomato = 3 slices. Cheese slice sprites by Erinexx.
+(+)Multiple recipes now use cheese slices instead of whole wedges. BLTs and Weird Cheeseburgers added. Minor recipe tweaks.
+(t)thu jan 13 22
+(u)Zonespace
+(p)6981
+(e)⚖|balance
+(+)The Part-Time Vice Officers that appeared on saturdays have been fired and replaced with some musicians instead.
+(u)BatElite
+(p)7086
+(e)🆕🗺|feature, mapping
+(*)Morgues, crematoria and tanning beds have been reworked internally with several accompanying QOL changes and minor bugfixes. Most important additions are that they require power to operate properly and silicons can operate the trays now.
+(+)Specifically, tanning beds and crematoria will not activate and morgues will not prevent decomposition without power
+(u)Mr. Moriarty & End
+(p)7111
+(e)🎨|sprites
+(+)Resprited the Cargo Transporter.
+(u)Flaborized
+(p)7163
+(e)🎨|sprites
+(*)Resprited stunbatons.
+(u)Colossusqw
+(p)7120
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Makes you aware of your surroundings instead of asleep during the capulettium effect, but still unable to speak or move.
+(t)tue jan 11 22
+(u)Emily
+(e)🆕|feature
+(*)🌭🛀
+(u)Flaborized
+(p)7144
+(e)🎨|sprites
+(+)Resprited botanical seeds.
+(u)Flaborized
+(p)7145
+(e)🎨|sprites
+(+)Resprited vomit.
+(u)DimWhat
+(p)7136
+(e)🎨|sprites
+(*)Added several unique sprites for worn IDs
+(t)mon jan 10 22
+(u)Nexusuxen
+(p)7113
+(e)🐛🗺|bug, mapping
+(+)Cargo router doors on Cog1 should now stay open for the correct amount of time; belt hell should be operational now.
+(u)Waffleloffle
+(p)7133
+(e)|
+(+)Various foods and drinks are now more flavorful.
+(u)Nexusuxen
+(p)7129
+(e)🗺🎨|mapping, sprites
+(*)Added skins for the AI core! 4 new appearances for AIs are now obtainable in-game. See the PR for more details!
+(u)Flappybat
+(p)7125
+(e)🐛🗺|bug, mapping
+(+)Battleroyale storms now start out less dangerous and scale up over the round. Removed some consoles and machinery that could be used for disruptive purposes, added a special AI law and blocked shuttle calls.
+(u)DimWhat
+(p)7134
+(e)|
+(+)Increased the disarm resistance of nuke ops knight gloves.
+(t)sun jan 09 22
+(u)Flaborized
+(p)7122
+(e)🎨|sprites
+(+)Resprited eyes and eyespiders.
+(t)sat jan 08 22
+(u)ZeWaka
+(e)🆕|feature
+(*)When block-sliding, you now 'kick' items on the tile you enter in the direction of your movement.
+(u)ZWRh3
+(p)6774
+(e)🆕⚖|feature, balance
+(+)Extinguishers with the safety on will no longer count as an open container.
+(u)Waffleloffle
+(p)7112
+(e)🆕🎨|feature, sprites
+(*)Added a couple new coffee mutations.
+(u)Zonespace
+(p)6933
+(e)🆕|feature
+(*)Players need at least 5 rounds to play team-based antagonist roles.
+(u)CrystalClover
+(p)7097
+(e)|
+(*)Added mugs to the glass recycler
+(t)fri jan 07 22
+(u)Colossusqw
+(p)7102
+(e)⚖|balance
+(+)Changed the heparin recipe from needing meat slurry to needing blood.
+(u)Yellow/Myco
+(p)7029
+(e)|
+(*)Voices and Emotes now go over the blindness layers
+(u)Zonespace
+(p)6735
+(e)⚖|balance
+(+)With security training, you can remove handcuffs from other people twice as fast.
+(u)Nexusuxen
+(p)6718
+(e)🐛|bug
+(+)Firedoors and a couple other things can now be deconstructed. Telepads and Teleconsoles will also connect to data terminals when you redeploy them instead of bricking.
+(u)TTerc
+(e)⚖|balance
+(+)Furnaces no longer accept alive mobs (similarly to gibbers).
+(t)wed jan 05 22
+(u)FlameArrow57
+(p)7064
+(e)🗺|mapping
+(*)Additional air scrubbers have been added to Horizon.
+(u)Flaborized
+(p)7077
+(e)🎨|sprites
+(+)Resprited the device analyzer, device frames, ruckingenur kit and blueprints.
+(u)Flaborized
+(p)7076
+(e)🎨|sprites
+(+)Resprited basic knives, forks, spoons and bowls, as well as food that goes inside bowls.
+(u)Nexusuxen
+(p)6670
+(e)🗺|mapping
+(+)Cog1 now has a mail sorting room in Northeast maintenance, check it out! Also, where did Chompsky go...?
+(u)eX.n0x
+(p)7083
+(e)🐛🎨|bug, sprites
+(+)A large chunk of clothing items fit better on/with lizard heads.
+(t)tue jan 04 22
+(u)Flappybat
+(p)7051
+(e)|
+(+)Football pitch gets cleaned between rounds, slightly longer delaybefore rounds.
+(u)Flappybat
+(p)7060
+(e)⚖|balance
+(*)A number of changes have been made to Battle Royale. 40% of lockers and crates are randomly removed each round with the remainder replaced with Syndicate gear lockers and treasure chests. More armor and weapons are available with less useless items. Going off Z1 will now deal constant damage, stay battling!
+(t)mon jan 03 22
+(u)DimWhat
+(p)7044
+(e)🎨|sprites
+(*)Added glasses sprites for lizardssss.
+(t)sat jan 01 22
+(u)Flaborized
+(p)7036
+(e)🎨|sprites
+(+)Resprited ampoules.
+(t)fri dec 31 21
+(u)tarmunora
+(e)⚖🎉|balance, happy new years
+(*)Thrown drinking glasses now splash some of their contents to the floor as well
 (t)thu dec 30 21
+(u)pali
+(+)Clicking on the pull hud button now shows a popup where you can select what to pull.
 (u)Mr. Moriarty
 (p)7028
 (e)🗺|mapping

@@ -12941,7 +12941,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aCi" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -12956,7 +12956,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aCk" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/light/small{
@@ -13150,7 +13150,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aCL" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -15263,7 +15263,7 @@
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay/cloner)
 "aHr" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -15279,14 +15279,14 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "aHt" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "aHu" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
@@ -15854,7 +15854,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
 "aIE" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -16495,7 +16495,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "aJX" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "aJY" = (

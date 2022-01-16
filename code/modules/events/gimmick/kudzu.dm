@@ -3,7 +3,7 @@
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "seeds"
+	icon_state = "seeds-kudzu"
 	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
 	attack(mob/M, mob/user)
@@ -34,15 +34,6 @@
 
 		else
 			return ..()
-
-/datum/syndicate_buylist/traitor/kudzuseed
-	name = "Kudzu Seed"
-	item = /obj/item/kudzuseed
-	cost = 4
-	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
-	vr_allowed = 0
-	job = list("Botanist", "Staff Assistant")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/random_event/major/kudzu
 	name = "Kudzu Outbreak"
@@ -410,7 +401,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN_DBG(1 SECOND)
 						qdel(src)
-					
+
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)

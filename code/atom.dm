@@ -447,7 +447,7 @@
 	//	var/atom/movable/A = atom
 	//	A.glide_size = src.glide_size
 
-	if (direct & (direct - 1))
+	if (!is_cardinal(direct))
 		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
 		if (direct & NORTH)
@@ -805,6 +805,8 @@
 	.= 0
 
 /atom/proc/on_reagent_change(var/add = 0) // if the reagent container just had something added, add will be 1.
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
@@ -873,6 +875,7 @@
 	src.last_move = 0
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+	actions.interrupt(src, INTERRUPT_MOVE)
 
 	oldloc?.Exited(src, newloc)
 

@@ -715,6 +715,8 @@
 		var/same_group = 0
 		if(src.mail_tag && (H.mail_tag in src.mail_tag))
 			same_group = 1
+		else if(isnull(src.mail_tag) && isnull(H.mail_tag)) // our tag is null, meaning we route anything without a tag!
+			same_group = 1 // (mail_tag is a list so we can't combine these two checks, at least not easily/cleanly)
 
 		var/nextdir = nextdir(H.dir, same_group)
 		H.set_dir(nextdir)
