@@ -101,10 +101,19 @@
 
 	hunter
 		name = "Hunter cloaking device"
-		desc = "A cloaking device but it doesn't seem to be designed for humans."
+		desc = "A cloaking device. It doesn't seem to be designed by humans."
 
-		attack_self(mob/user as mob)
-			if (!ishunter(user))
-				boutput(user, "<span class='notice'>You can't understand how [src] even works!</span>")
-				return
+		New()
 			..()
+			if(istype(loc, /mob/living))
+				RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/self_destruct)
+
+		proc/self_destruct()
+			SPAWN_DBG(2 SECONDS)
+			src.visible_message("<span class='alert'>The [name] <b>self destructs!</b></span>", "<span class='alert'>You hear a small explosion!</b></span>")
+			make_fake_explosion(src)
+			if(ismob(src.loc))
+				var/mob/holding_mob = src.loc
+				holding_mob.u_equip(src)
+				src.dropped(holding_mob)
+			qdel(src)

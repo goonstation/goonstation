@@ -1022,13 +1022,22 @@
 
 /obj/item/gun/energy/laser_gun/advanced/hunter
 	name = "Hunter's laser rifle"
-	desc = "This advanced bullpup rifle contains a self-recharging power cell."
+	desc = "This unusual looking rifle contains a self-recharging power cell."
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
-		if (!ishunter(user))
-			boutput(user, "<span class='notice'>You can't understand how [src] even works!</span>")
-			return
+	New()
 		..()
+		if(istype(loc, /mob/living))
+			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/self_destruct)
+
+	proc/self_destruct()
+		SPAWN_DBG(2 SECONDS)
+			src.visible_message("<span class='alert'>The [name] <b>self destructs!</b></span>", "<span class='alert'>You hear a small explosion!</b></span>")
+			make_fake_explosion(src)
+			if(ismob(src.loc))
+				var/mob/holding_mob = src.loc
+				holding_mob.u_equip(src)
+				src.dropped(holding_mob)
+			qdel(src)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket
