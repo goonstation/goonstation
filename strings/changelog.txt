@@ -1,4 +1,9 @@
 
+(t)sun jan 16 22
+(u)Flaborized
+(p)7182
+(e)🎨|sprites
+(+)Many more kinetic weapons will animated while firing.
 (t)sat jan 15 22
 (u)Flappybat
 (p)7040
