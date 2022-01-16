@@ -1637,9 +1637,10 @@
 //	      ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░	//
 //	                            ░       ░ ░                                             	//
 //////////////////////////////////////////////////////////////////////////////////////////////////
+//Syndicate Agent in maints somewhere. Are they on another station? Your station? A movie set? Who knows?
 //todo:all
 //     
-/obj/npc/trader/blackmarket/surplus
+/obj/npc/trader/blackmarket/shady
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "blackmarketsurplus"
 	picture = "exclown.png"
@@ -1727,6 +1728,7 @@
 
 	New()
 		..()
+		
 //////////////////////////////////////////////////////////////
 ///███████ ███████ ██      ██      ██ ███    ██  ██████     //
 ///██      ██      ██      ██      ██ ████   ██ ██       ██ //
@@ -1784,7 +1786,7 @@
 			"Going to miss that one.",
 			"All sales are final. Just thought I'd remind you.",
 			"Almost new. Barely used.")
-		failed_sale_dialogue = list("Gonna be honest with you, can't give you anything for that.",
+		failed_sale_dialogue = list("Can't give you anything for that.",
 			"Not accepting ANYTHING that ain't on the list! Sorry pawn fans, space technology has its DAMN FRUSTRATING limits!",
 			"It's nice, but I can't sell it on. NO DEAL!",
 		successful_sale_dialogue = list("DEAL! BOOM!",
