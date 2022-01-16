@@ -1483,16 +1483,17 @@
 ///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
-//todo:sort by value highest to lowest (good salesmanship)
+// Sells a full set of security gear, with random parts mixed in depending on what day it is.
+// Note: No headset, no taser
 
-	//todo: make a dummy 0 charge battery for the baton
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
-	//armor shit, maybe sprite to look different to sec gear. or dont. it's not hard to get.
-	//todo: add more
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/gasmask(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/suit(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/boots(src)
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -1513,23 +1514,24 @@
 	buy_dialogue = "Here's the goods."
 		
 	successful_purchase_dialogue = list(
-					"That's a good piece of gear. Quirky, but good.",
+					"That's a good piece of gear. Shame about that one case, but I still trust the craftsmanship.",
 					"Going to miss that one.",
 					"All sales are final. Just thought I'd remind you.",
 					"Almost new. Barely used."
 					)
 					
 		failed_sale_dialogue = list(
-			"It's not on the list.",
-			"I'm not buying that.",
-			"Check the list of what I'm buying. That's not on it.",
-			"Unexpected item in the bagging area."
-			)
+					"It's not on the list.",
+					"I'm not buying that.",
+					"Check the list of what I'm buying. That's not on it.",
+					"Unexpected item in the bagging area."
+					)
+					
 		successful_sale_dialogue = list(
-			"Yes, I can pay out for this.",
-			"Grading is... acceptible. Deal.",
-			"I can take that."
-			)
+					"Yes, I can pay out for this.",
+					"Grading is... acceptible. Deal.",
+					"I can take that."
+					)
 			
 		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
 			"Not enough funds in your account.",
@@ -1624,17 +1626,17 @@
 		pickupdialoguefailure = "YOU WANT NOTHING."
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//												//
-//	  ██████  ██░ ██  ▄▄▄      ▓█████▄ ▓██   ██▓    ▄▄▄██▀▀▀ ▄▄▄       ███▄    █ ▓█████ 	//
-//	▒██    ▒ ▓██░ ██▒▒████▄    ▒██▀ ██▌ ▒██  ██▒      ▒██   ▒████▄     ██ ▀█   █ ▓█   ▀ 	//
-//	░ ▓██▄   ▒██▀▀██░▒██  ▀█▄  ░██   █▌  ▒██ ██░      ░██   ▒██  ▀█▄  ▓██  ▀█ ██▒▒███   	//
-//	  ▒   ██▒░▓█ ░██ ░██▄▄▄▄██ ░▓█▄   ▌  ░ ▐██▓░   ▓██▄██▓  ░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄ 	//
-//	▒██████▒▒░▓█▒░██▓ ▓█   ▓██▒░▒████▓   ░ ██▒▓░    ▓███▒    ▓█   ▓██▒▒██░   ▓██░░▒████▒	//
-//	▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒▒▓  ▒    ██▒▒▒     ▒▓▒▒░    ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░	//
-//	░ ░▒  ░ ░ ▒ ░▒░ ░  ▒   ▒▒ ░ ░ ▒  ▒  ▓██ ░▒░     ▒ ░▒░     ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░	//
-//	░  ░  ░   ░  ░░ ░  ░   ▒    ░ ░  ░  ▒ ▒ ░░      ░ ░ ░     ░   ▒      ░   ░ ░    ░   	//
-//	      ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░	//
-//	                            ░       ░ ░                                             	//
+//                                                                                              //
+//        ██████  ██░ ██  ▄▄▄      ▓█████▄ ▓██   ██▓    ▄▄▄██▀▀▀ ▄▄▄       ███▄    █ ▓█████     //
+//      ▒██    ▒ ▓██░ ██▒▒████▄    ▒██▀ ██▌ ▒██  ██▒      ▒██   ▒████▄     ██ ▀█   █ ▓█   ▀     //
+//      ░ ▓██▄   ▒██▀▀██░▒██  ▀█▄  ░██   █▌  ▒██ ██░      ░██   ▒██  ▀█▄  ▓██  ▀█ ██▒▒███       //
+//       ▒   ██▒░▓█ ░██ ░██▄▄▄▄██ ░▓█▄   ▌  ░ ▐██▓░   ▓██▄██▓  ░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄      //
+//     ▒██████▒▒░▓█▒░██▓ ▓█   ▓██▒░▒████▓   ░ ██▒▓░    ▓███▒    ▓█   ▓██▒▒██░   ▓██░░▒████▒     //
+//      ▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒ ▒▒   ▓▒█░ ▒▒▓  ▒    ██▒▒▒     ▒▓▒▒░    ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░    //
+//      ░ ░▒  ░ ░ ▒ ░▒░ ░  ▒   ▒▒ ░ ░ ▒  ▒  ▓██ ░▒░     ▒ ░▒░     ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░    //
+//      ░  ░  ░   ░  ░░ ░  ░   ▒    ░ ░  ░  ▒ ▒ ░░      ░ ░ ░     ░   ▒      ░   ░ ░    ░       //
+//            ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░    //
+//                                  ░       ░ ░                                                 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //Syndicate Agent in maints somewhere. Are they on another station? Your station? A movie set? Who knows?
 //todo:all
@@ -1659,9 +1661,9 @@
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/syndibox(src) //  /obj/item/storage/box/syndibox
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src) // /obj/item/storage/box/ammo38AP
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src) //
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
