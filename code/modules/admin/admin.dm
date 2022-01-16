@@ -5060,17 +5060,7 @@ var/global/noir = 0
 	M.key = usr.client.key
 	M.Login()
 
-/client/proc/smnoclip()
-	set name = "Planar Shift"
-	set category = "Smiling Man Powers"
-	set desc = "Shift planes to toggle moving through walls and objects."
-
-	if(!isliving(usr))
-		return
-
-	usr.client.flying = !usr.client.flying
-	boutput(usr, "You are [usr.client.flying ? "now" : "no longer"] flying through matter.")
-
+// Handling noclip logic
 /client/Move(NewLoc, direct)
 	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
 		if(isnull(NewLoc))
