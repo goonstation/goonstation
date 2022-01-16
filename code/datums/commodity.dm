@@ -2907,22 +2907,68 @@
 /////////////////
 //// SELLS   ////
 /////////////////
+
 /datum/commodity/blackmarket/surplus/baton
 	comname = "Imported Stun Baton"
 	comtype = /obj/item/baton
+	cell_type = /obj/item/ammo/power_cell/dummy
 	desc_sell = "Excess stun batons. Quality may vary, batteries not included."
 	price = 30000
 	upperfluc = 10000
 	lowerfluc = -10000
-	
+
+// NOTE: A full set of armour ordered at the same time shouldn't match, but they should look cool together. Keep in mind when adding or removing gear here.
+
 /datum/commodity/blackmarket/surplus/helmet
 	comname = "Armor Helmet"
-	comtype = /obj/item/clothing/head/helmet/hardhat/security
+	comtype = null
 	desc_sell = "Got a lot of these in good condition. One size fits all."
 	price = 7000
 	upperfluc = 1000
 	lowerfluc = -1000
-	
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/head/helmet/camera/security
+			if ("tuesday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security/improved
+			if ("wednesday")
+				comtype = /obj/item/clothing/head/helmet/riot
+			if ("thursday")
+				comtype = /obj/item/clothing/head/helmet/space/ntso
+			if ("friday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security/improved
+			if ("saturday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security
+			if ("sunday")
+				comtype = /obj/item/clothing/head/helmet/hardhat/security
+
+/datum/commodity/blackmarket/surplus/suit
+	comname = "Security-Grade Jumpsuit"
+	comtype = null
+	desc_sell = "Yeah, I can get you some genuine security jumpsuits. Original holo-monograms included, of course."
+	price = 4000
+	upperfluc = 2000
+	lowerfluc = -2000
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/under/rank/head_of_security
+			if ("tuesday")
+				comtype = /obj/item/clothing/under/chameleon
+			if ("wednesday")
+				comtype = /obj/item/clothing/under/rank/security
+			if ("thursday")
+				comtype = /obj/item/clothing/under/misc/NT
+			if ("friday")
+				comtype = /obj/item/clothing/under/rank/security
+			if ("saturday")
+				comtype = /obj/item/clothing/under/rank/security
+			if ("sunday")
+				comtype = /obj/item/clothing/under/shirt_pants_b/redtie
+
 /datum/commodity/blackmarket/surplus/vest
 	comname = "Armor Vest"
 	comtype = /obj/item/clothing/suit/armor/vest
@@ -2930,6 +2976,75 @@
 	price = 8000
 	upperfluc = 2000
 	lowerfluc = -2000
+		New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/suit/armor/vest
+			if ("tuesday")
+				comtype = /obj/item/clothing/suit/armor/turd
+			if ("wednesday")
+				comtype = /obj/item/clothing/suit/fire/armored
+			if ("thursday")
+				comtype = /obj/item/clothing/suit/armor/EOD
+			if ("friday")
+				comtype = /obj/item/clothing/suit/armor/vest
+			if ("saturday")
+				comtype = /obj/item/clothing/suit/armor/tdome/red
+			if ("sunday")
+				comtype = /obj/item/clothing/suit/armor/NT_alt
+				
+/datum/commodity/blackmarket/surplus/boots
+	comname = "Tactical Boots"
+	comtype = /obj/item/clothing/suit/armor/vest
+	desc_sell = "I re-sole all the boots. Guaranteed 100% blood free at the molecular level."
+	price = 8000
+	upperfluc = 2000
+	lowerfluc = -2000
+		New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/shoes/bootsblk
+			if ("tuesday")
+				comtype = /obj/item/clothing/shoes/detective
+			if ("wednesday")
+				comtype = /obj/item/clothing/shoes/swat
+			if ("thursday")
+				comtype = /obj/item/clothing/shoes/bootsblk
+			if ("friday")
+				comtype = /obj/item/clothing/shoes/swat/noslip
+			if ("saturday")
+				comtype = /obj/item/clothing/shoes/swat
+			if ("sunday")
+				comtype = /obj/item/clothing/shoes/cowboy
+				
+	
+/datum/commodity/blackmarket/surplus/gasmask
+	comname = "Tactical Gas Mask"
+	comtype = null
+	name = "Tactical Gas Mask"
+	desc_sell = "Tested and guaranteed 100% smokebomb-proof, every one of em."
+	price = 2100
+	upperfluc = 500
+	lowerfluc = -500
+	New()
+		..()
+		switch (lowertext( time2text(world.realtime, "Day") ))
+			if ("monday")
+				comtype = /obj/item/clothing/mask/gas/swat
+			if ("tuesday")
+				comtype = /obj/item/clothing/mask/gas
+			if ("wednesday")
+				comtype = /obj/item/clothing/mask/gas/swat
+			if ("thursday")
+				comtype = /obj/item/clothing/head/helmet/space/ntso
+			if ("friday")
+				comtype = /obj/item/clothing/mask/gas
+			if ("saturday")
+				comtype = /obj/item/clothing/mask/gas/swat
+			if ("sunday")
+				comtype = /obj/item/clothing/mask/gas/NTSO
 	
 /datum/commodity/blackmarket/surplus/backpack
 	comname = "Security Satchel"
@@ -2940,21 +3055,12 @@
 	price = 3800
 	upperfluc = 190
 	lowerfluc = -200
-	
-/datum/commodity/blackmarket/surplus/backpack
-	comname = "Security Satchel"
-	comtype = /obj/item/clothing/mask/gas/swat
-	name = "SWAT Mask"
-	desc_sell = "Tested and guaranteed 100% gas-proof, every one."
-	price = 2100
-	upperfluc = 500
-	lowerfluc = -500
 
 /datum/commodity/blackmarket/surplus/sechud
 	comname = "Sechud Glasses"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
 	color_r = 1
-	desc_sell = "SecureTech  Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically."
+	desc_sell = "SecureTech Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically. A must have in any modern space station."
 	price = 12000
 	upperfluc = 3000
 	lowerfluc = -3000
@@ -2967,13 +3073,13 @@
 	comname = "AK-744 Rifle"
 	comtype = /obj/item/gun/kinetic/ak47
 	color_r = 1
-	desc_sell = "As many as you can bring in. As long as they're functional."
+	desc_sell = "I need any functional models you have."
 	price = 2000000
 	upperfluc = 100000
 	lowerfluc = -100000
 /datum/commodity/blackmarket/surplus/revolver
-	comname = "Syndicate Revolver"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comname = "Predator Revolver"
+	comtype = /obj/item/gun/kinetic/revolver
 	color_r = 1
 	desc_sell = "We have an open bounty on these. Only the real deal counts."
 	price = 260000
@@ -2981,7 +3087,7 @@
 	lowerfluc = -40000
 /datum/commodity/blackmarket/surplus/lasergun
 	comname = "Laser Gun"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comtype = /obj/item/gun/energy/laser_gun
 	color_r = 1
 	desc_sell = "Need some of those older NT laser guns. The obsolete ones with the round bodies. The parts are invaluable."
 	price = 12000
@@ -2989,7 +3095,7 @@
 	lowerfluc = -3000
 /datum/commodity/blackmarket/surplus/phaser
 	comname = "Phaser"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comtype = /obj/item/gun/energy/phaser_gun
 	color_r = 1
 	desc_sell = "Moon prison in a neighbouring sector needs as many of these as I can get."
 	price = 9000
@@ -3127,7 +3233,7 @@
 /datum/commodity/blackmarket/wrestler/cowboyboots
 	comname = "Genuine Space-Texan Cowboy Boots"
 	comtype = /obj/item/clothing/shoes/westboot
-	desc = "These bad boys will command RESPECT among peers!"
+	desc = "These bad boys will command RESPECT among any peers you may or may not have!"
 	price = 150
 	baseprice = 150
 	upperfluc = 120
@@ -3140,16 +3246,23 @@
 	baseprice = 150
 	upperfluc = 120
 	lowerfluc = -120
-/obj/item/clothing/suit/power
 
 /////////////////
 ////  BUYS   ////
 /////////////////
 
 /datum/commodity/blackmarket/wrestler/goldfishcracker
+	comname = "Ectoplasmic Destabilizer"
+	comtype = /obj/item/gun/energy/ghost
+	desc_sell = "Ghosts are real and THEY'RE COMING FOR MY ASS! I need some ASS KICKING GHOST MULCHING LASER GUNS!"
+	price = 10200
+	baseprice = 10200
+	upperfluc = 10000
+	lowerfluc = -10000
+/datum/commodity/blackmarket/wrestler/goldfishcracker
 	comname = "Goldfish Cracker"
 	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
-	desc_sell = "These things are LIFESAVERS when it comes to building muscle! I NEED AS MANY AS YOU CAN GROW!"
+	desc_sell = "These things are LIFESAVERS when it comes to building muscle! I NEED AS MANY AS YOU CAN GET!"
 	price = 1200
 	baseprice = 1200
 	upperfluc = 500
@@ -3165,13 +3278,13 @@
 	comname = "NASSA space suit"
 	comtype = /obj/item/clothing/under/gimmick/blackstronaut
 	desc_sell = "I'd LOVE to get my hands on a couple sets of that prototype jumpsuit. WRESTLING IN THE COLD VACCUM OF SPACE! I'll pay a BUNCH for any you find in good condition!"
-	price = 16000
-	upperfluc = 80000
-	lowerfluc = -80000
+	price = 10200
+	upperfluc = 2000
+	lowerfluc = -2000
 /datum/commodity/blackmarket/wrestler/uplink_telecrystal
 	comname = "Pure Telecrystal"
 	comtype = /obj/item/uplink_telecrystal
-	desc_sell = "These things are practically CURRENCY in some circles! I can get you a GREAT DEAL on them!"
+	desc_sell = "These things are practically CURRENCY on some planets! I can get you a GREAT DEAL on them!"
 	price = 30000
 	upperfluc = 1
 	lowerfluc = -1
@@ -3186,9 +3299,23 @@
 	comname = "Magic Sandals"
 	comtype = /obj/item/clothing/shoes/sandal
 	desc_sell = "That said, those knock offs are DAMN WELL MADE! I'll buy those for a fair price!"
-	price = 7000
+	price = 6800
 	upperfluc = 1200
 	lowerfluc = -1200
+/datum/commodity/blackmarket/wrestler/glitch_gun
+	comname = "Glitch Gun"
+	comtype = /obj/item/gun/energy/glitch_gun
+	desc_sell = "You hear about the fabled Glitch Gun? It's said to be able to shoot bullets though code itself. If you find it, SELL IT TO ME!"
+	price = 1620000
+	upperfluc = 1200
+	lowerfluc = -1200
+/datum/commodity/blackmarket/wrestler/capsuit
+	comname = "Captain's Space Suit"
+	comtype = /obj/item/clothing/suit/space/captain
+	desc_sell = "The old style green space suits NT used to issue to their captains are hella valuable, but unfortunately also hella rare. Hey, you're a Traser, aren't ya? Could you get your captain's space suit to me?"
+	price = 600000
+	upperfluc = 50000
+	lowerfluc = -50000
 /datum/commodity/blackmarket/wrestler/shoecrafts
 	comname = "Custom Shoes"
 	comtype = /obj/item/clothing/shoes/crafted
