@@ -615,6 +615,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\oocban.dm"
 #include "code\modules\admin\part_modifier.dm"
 #include "code\modules\admin\player_options.dm"
+#include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\player_stats.dm"
 #include "code\modules\admin\playernotes.dm"
 #include "code\modules\admin\processSchedulerView.dm"
