@@ -1,4 +1,9 @@
 
+(t)mon jan 17 22
+(u)zjdtmkhzt
+(p)7026
+(e)|
+(+)Removed buggy "State Laws (Advanced)" verb from AIs and instead added the new "Set Fake Laws" and "State Fake Laws" verbs as replacements.
 (t)sun jan 16 22
 (u)TDHooligan
 (p)7101
