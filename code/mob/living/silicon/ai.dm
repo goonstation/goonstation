@@ -1483,14 +1483,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.announcearrival = 1
 		boutput(src, "Now announcing new arrivals to the station.")
 */
+#define AI_LAW_STATE_DELAY 1 SECOND
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
@@ -1531,7 +1532,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "State Fake Laws"
 
 	for(var/a_law in src.fake_laws)
-		sleep(1 SECOND)
+		sleep(AI_LAW_STATE_DELAY)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
 		src.say(html_decode(a_law))
 
@@ -1548,13 +1549,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(1 SECOND)
+			sleep(AI_LAW_STATE_DELAY)
 	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
 		var/law = ticker.centralized_ai_laws.supplied[index]
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(1 SECOND)
+			sleep(AI_LAW_STATE_DELAY)
+
+#undef AI_LAW_STATE_DELAY
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
