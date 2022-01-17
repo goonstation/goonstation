@@ -985,8 +985,8 @@
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
-/obj/item/gun/energy/laser_gun/advanced // Made use of a spare sprite here (Convair880).
-	name = "Advanced laser rifle"
+/obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
+	name = "Plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
@@ -998,22 +998,21 @@
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
 	New()
-		..()
 		set_current_projectile(new/datum/projectile/laser/plasma)
 		projectiles = list(new/datum/projectile/laser/plasma)
-
-	update_icon()
 		..()
 
+	update_icon()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "[base_item_state][ratio]"
 			return
+		..()
 
-/obj/item/gun/energy/laser_gun/advanced/vr
-	name = "advanced laser gun"
+/obj/item/gun/energy/plasma_gun/vr
+	name = "Advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
 	base_item_state = "wavegun"
@@ -1022,8 +1021,8 @@
 
 		return
 
-/obj/item/gun/energy/laser_gun/advanced/hunter
-	name = "Hunter's laser rifle"
+/obj/item/gun/energy/plasma_gun/hunter
+	name = "Hunter's plasma rifle"
 	desc = "This unusual looking rifle contains a self-recharging power cell."
 	icon_state = "hunter"
 	item_state = "hunter"

@@ -272,7 +272,7 @@ toxic - poisons
 	icon_state = "phaser_med"
 	name = "plasma bolt"
 	sname = "plasma bolt"
-	shot_sound = 'sound/weapons/snipershot.ogg'
+	shot_sound = 'sound/weapons/plasma_gun.ogg'
 	dissipation_delay = 8
 	dissipation_rate = 5
 	cost = 25
