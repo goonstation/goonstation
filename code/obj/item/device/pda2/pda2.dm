@@ -519,7 +519,7 @@
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
 	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
-		if (usr.stat || usr.restrained())
+		if(!can_act(usr))
 			return
 
 		src.add_fingerprint(usr)
