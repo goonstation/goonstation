@@ -1113,8 +1113,9 @@
 	max_charge = 400.0
 	
 /obj/item/ammo/power_cell/dummy
+//double check that a cell with 0 power doesn't cause issues with cell rechargers
 	name = "Dummy Power Cell"
-	desc = "A power cell that holds a max of 0PU. It has 'NONFUNCTIONAL DISPLAY MODEL' stamped on ."
+	desc = "A plastic power cell that holds a max of 0PU. It has 'DISPLAY MODEL - NONFUNCTIONAL' printed on the top."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	m_amt = 0
