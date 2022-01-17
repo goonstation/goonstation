@@ -45,6 +45,12 @@
 	icon_state = "platingdmg1"
 	},
 /area/noGenerate)
+"cu" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/damaged3,
+/area/prefab/crashed_hop_shuttle)
 "cA" = (
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff,
@@ -97,6 +103,17 @@
 	},
 /obj/decal/cleanable/vomit,
 /turf/simulated/floor/carpet/purple/standard/edge/east,
+/area/prefab/crashed_hop_shuttle)
+"go" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 8
+	},
 /area/prefab/crashed_hop_shuttle)
 "gr" = (
 /obj/structure/girder,
@@ -169,10 +186,18 @@
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "lh" = (
-/obj/stool/chair/comfy{
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/airless,
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/prefab/crashed_hop_shuttle)
+"lk" = (
+/turf/simulated/floor/carpet/regalcarpet,
 /area/prefab/crashed_hop_shuttle)
 "lw" = (
 /obj/table/reinforced/bar/auto,
@@ -222,13 +247,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "qA" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor,
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border,
 /area/prefab/crashed_hop_shuttle)
 "rm" = (
 /obj/machinery/door/unpowered/wood/pyro{
@@ -276,6 +295,10 @@
 	},
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
+"sL" = (
+/obj/table/wood/round,
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border,
+/area/prefab/crashed_hop_shuttle)
 "tr" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/prefab/crashed_hop_shuttle)
@@ -300,22 +323,6 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/prefab/crashed_hop_shuttle)
-"tU" = (
-/obj/access_spawn/head_of_personnel,
-/obj/machinery/door/airlock/gannets/command/alt{
-	opacity = 0
-	},
-/turf/simulated/floor/airless,
-/area/prefab/crashed_hop_shuttle)
-"uI" = (
-/obj/stool/chair/comfy{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "uX" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
@@ -364,7 +371,9 @@
 /turf/simulated/floor/carpet/purple/standard/edge/west,
 /area/prefab/crashed_hop_shuttle)
 "wQ" = (
-/turf/simulated/floor/damaged3,
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 4
+	},
 /area/prefab/crashed_hop_shuttle)
 "xg" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot,
@@ -402,15 +411,6 @@
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
 /area/prefab/crashed_hop_shuttle)
-"zD" = (
-/obj/table/wood/round,
-/obj/item/device/light/candle{
-	pixel_x = 1;
-	pixel_y = 12
-	},
-/obj/item/matchbook,
-/turf/simulated/floor,
-/area/prefab/crashed_hop_shuttle)
 "zM" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor,
@@ -441,13 +441,21 @@
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "BR" = (
-/obj/decoration/bookcase,
-/turf/simulated/floor,
+/obj/table/wood/round,
+/obj/item/device/light/candle{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/matchbook,
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 9
+	},
 /area/prefab/crashed_hop_shuttle)
 "BW" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
+/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "CJ" = (
 /obj/lattice,
@@ -471,8 +479,10 @@
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Dg" = (
-/obj/item/furniture_parts/comfy_chair,
-/turf/simulated/floor/airless,
+/obj/decoration/bookcase,
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 5
+	},
 /area/prefab/crashed_hop_shuttle)
 "Du" = (
 /obj/indestructible/shuttle_corner{
@@ -663,6 +673,11 @@
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
+"Qs" = (
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/prefab/crashed_hop_shuttle)
 "QJ" = (
 /obj/machinery/door/window/westright{
 	dir = 1;
@@ -702,6 +717,10 @@
 	icon_state = "fgreen1"
 	},
 /area/prefab/crashed_hop_shuttle)
+"TN" = (
+/obj/item/furniture_parts/comfy_chair,
+/turf/simulated/floor/damaged1,
+/area/prefab/crashed_hop_shuttle)
 "Uh" = (
 /obj/lattice,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -717,6 +736,12 @@
 	},
 /obj/item/furniture_parts/comfy_chair/blue,
 /turf/simulated/floor/damaged1,
+/area/prefab/crashed_hop_shuttle)
+"Vx" = (
+/obj/decoration/bookcase,
+/turf/unsimulated/floor/airless/carpet/regalcarpet/border{
+	dir = 1
+	},
 /area/prefab/crashed_hop_shuttle)
 "Vz" = (
 /obj/table/reinforced/bar/auto,
@@ -785,6 +810,24 @@ xl
 xl
 xl
 xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+"}
+(2,1,1) = {"
+xl
+xl
+xl
+xl
 pa
 pa
 xl
@@ -798,7 +841,7 @@ xl
 xl
 xl
 "}
-(2,1,1) = {"
+(3,1,1) = {"
 xl
 xl
 xl
@@ -816,7 +859,7 @@ xl
 xl
 xl
 "}
-(3,1,1) = {"
+(4,1,1) = {"
 xl
 xl
 wb
@@ -834,7 +877,7 @@ xl
 xl
 xl
 "}
-(4,1,1) = {"
+(5,1,1) = {"
 xl
 xl
 OE
@@ -852,7 +895,7 @@ xl
 xl
 xl
 "}
-(5,1,1) = {"
+(6,1,1) = {"
 xl
 xl
 OE
@@ -870,7 +913,7 @@ xl
 xl
 xl
 "}
-(6,1,1) = {"
+(7,1,1) = {"
 xl
 xl
 OE
@@ -888,7 +931,7 @@ xl
 xl
 xl
 "}
-(7,1,1) = {"
+(8,1,1) = {"
 GO
 xl
 yy
@@ -906,7 +949,7 @@ xl
 xl
 xl
 "}
-(8,1,1) = {"
+(9,1,1) = {"
 GO
 xl
 OE
@@ -924,7 +967,7 @@ xl
 xl
 xl
 "}
-(9,1,1) = {"
+(10,1,1) = {"
 GO
 xl
 vk
@@ -942,14 +985,14 @@ xl
 xl
 xl
 "}
-(10,1,1) = {"
+(11,1,1) = {"
 GO
 GO
 xl
 OE
-zD
-uI
-Ty
+BR
+go
+Qs
 Zx
 aX
 gv
@@ -960,14 +1003,14 @@ xl
 xl
 xl
 "}
-(11,1,1) = {"
+(12,1,1) = {"
 GO
 GO
 xl
 OE
-BR
-Ty
-Ty
+Vx
+lk
+qA
 Nx
 Yo
 TE
@@ -978,37 +1021,19 @@ xl
 xl
 xl
 "}
-(12,1,1) = {"
+(13,1,1) = {"
 GO
 Ij
 Ij
 OE
-BR
-Ty
-qA
+Vx
+lk
+sL
 Zx
 wu
 Al
 MU
 YX
-xl
-xl
-xl
-xl
-"}
-(13,1,1) = {"
-GO
-Ij
-Ij
-yy
-Xn
-Jb
-Xn
-aH
-Xn
-iR
-Xn
-SY
 xl
 xl
 xl
@@ -1022,11 +1047,11 @@ OE
 Dg
 wQ
 lh
-OE
-ev
-wP
-aJ
-OE
+yy
+Xn
+iR
+Xn
+SY
 xl
 xl
 xl
@@ -1036,9 +1061,27 @@ xl
 GO
 Ij
 Ij
+yy
+Xn
+BW
+Xn
+SY
+ev
+wP
+aJ
+OE
+xl
+xl
+xl
+xl
+"}
+(16,1,1) = {"
+GO
+Ij
+Ij
 OE
 sH
-BW
+Zs
 Bt
 iR
 hG
@@ -1050,14 +1093,14 @@ xl
 xl
 GO
 "}
-(16,1,1) = {"
+(17,1,1) = {"
 GO
 GO
 Ij
 eJ
-vT
+TN
 Zs
-wQ
+cu
 Oo
 ex
 xg
@@ -1068,7 +1111,7 @@ xl
 GO
 GO
 "}
-(17,1,1) = {"
+(18,1,1) = {"
 xl
 xl
 Ij
@@ -1086,7 +1129,7 @@ xl
 GO
 GO
 "}
-(18,1,1) = {"
+(19,1,1) = {"
 xl
 xl
 bj
@@ -1096,7 +1139,7 @@ Zs
 vT
 vq
 Xn
-tU
+iR
 Xn
 SY
 xl
@@ -1104,7 +1147,7 @@ Ij
 GO
 GO
 "}
-(19,1,1) = {"
+(20,1,1) = {"
 xl
 xl
 bj
@@ -1122,7 +1165,7 @@ bj
 Ij
 GO
 "}
-(20,1,1) = {"
+(21,1,1) = {"
 xl
 xl
 bj
@@ -1140,7 +1183,7 @@ Ij
 Ij
 GO
 "}
-(21,1,1) = {"
+(22,1,1) = {"
 xl
 xl
 xl
@@ -1158,7 +1201,7 @@ Ij
 GO
 GO
 "}
-(22,1,1) = {"
+(23,1,1) = {"
 GO
 GO
 Ij
@@ -1176,7 +1219,7 @@ Ij
 GO
 GO
 "}
-(23,1,1) = {"
+(24,1,1) = {"
 GO
 GO
 Ij
@@ -1194,7 +1237,7 @@ Ij
 GO
 GO
 "}
-(24,1,1) = {"
+(25,1,1) = {"
 GO
 GO
 GO
@@ -1212,7 +1255,7 @@ GO
 GO
 GO
 "}
-(25,1,1) = {"
+(26,1,1) = {"
 GO
 GO
 GO
@@ -1224,24 +1267,6 @@ Ij
 Ij
 bj
 Ij
-GO
-GO
-GO
-GO
-GO
-"}
-(26,1,1) = {"
-GO
-GO
-GO
-GO
-GO
-GO
-GO
-GO
-GO
-GO
-GO
 GO
 GO
 GO
