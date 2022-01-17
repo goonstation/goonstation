@@ -2964,7 +2964,7 @@
 		..()
 		switch (lowertext( time2text(world.realtime, "Day") ))
 			if ("monday")
-				comtype = /obj/item/clothing/under/rank/detective
+				comtype = /obj/item/clothing/under/rank/security
 			if ("tuesday")
 				comtype = /obj/item/clothing/under/chameleon
 			if ("wednesday")
@@ -2981,7 +2981,7 @@
 /datum/commodity/blackmarket/surplus/vest
 	comname = "Armor Vest"
 	comtype = /obj/item/clothing/suit/armor/vest
-	desc_sell = "Standard issue for security teams."
+	desc_sell = "Life savers. Want my advice? Buy a couple extra."
 	price = 8000
 	upperfluc = 2000
 	lowerfluc = -2000
@@ -3014,7 +3014,7 @@
 /datum/commodity/blackmarket/surplus/boots
 	comname = "Tactical Boots"
 	comtype = /obj/item/clothing/suit/armor/vest
-	desc_sell = "I re-sole all the boots. Guaranteed 100% blood free at the molecular level."
+	desc_sell = "I re-sole all the boots. Guaranteed 100% blood free."
 	price = 8000
 	upperfluc = 2000
 	lowerfluc = -2000
@@ -3092,7 +3092,7 @@
 	
 /datum/commodity/blackmarket/surplus/riot_grenade
 	comname = "Capsaicin Grenade"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comtype = 
 	desc_sell = ""
 	price = 12000
 	upperfluc = 3000
@@ -3133,21 +3133,36 @@
 	desc = "Moon prison in a neighbouring sector needs as many of these as I can get."
 	price = 9000
 	upperfluc = 2000
-	lowerfluc = -1800	
+	lowerfluc = -1800
+/datum/commodity/blackmarket/surplus/lawbringercell
+	//I think it's funnier to encourage people to steal & sell the battery rather than the gun itself
+	comname = "Power Cell - Lawbringer Charger"
+	comtype = /obj/item/ammo/power_cell/self_charging/lawbringer
+	desc = "The new generation lawbringers are prone to bricking their power cells in storage. I'll pay a lot for replacements."
+	price = 250000
+	upperfluc = 10000
+	lowerfluc = -10000
 /datum/commodity/blackmarket/surplus/powercell
 	comname = "Small Power Cell"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comtype = 
 	desc = "We can always use more power cells."
 	price = 1200
 	upperfluc = 800
+	lowerfluc = -600
+/datum/commodity/blackmarket/surplus/customcell
+	comname = "Power Cell - Custom"
+	comtype = /obj/item/ammo/power_cell/self_charging/custom
+	desc = "Any working power cells you make, I'll buy. Strictly at bulk rates."
+	price = 1600
+	upperfluc = 600
 	lowerfluc = -600
 /datum/commodity/blackmarket/surplus/powercell
 	comname = "Erebite Power Cell"
-	comtype = /obj/item/clothing/glasses/sunglasses/sechud
+	comtype = 
 	desc = "We can always use more power cells."
-	price = 1200
-	upperfluc = 800
-	lowerfluc = -600
+	price = 1400
+	upperfluc = 500
+	lowerfluc = -500
 	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                          //
@@ -3176,14 +3191,9 @@
 /datum/commodity/blackmarket/blob/chitin
 	comname = "CHITIN"
 	comtype = /obj/item/raw_material/chitin
-	desc_sell = "SOMETHING SPOOKY."
-	price = 5000
+	price = 2000
 	upperfluc = 800
 	lowerfluc = -800
-	
-/obj/item/raw_material/chitin
-
-
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -3230,7 +3240,13 @@
 	price = 45000
 	upperfluc = 15000
 	lowerfluc = -15000
-	
+/datum/commodity/blackmarket/shady/turboflash
+	comname = "TurboFlash"
+	desc_sell = "Standard flash with an aftermarket improvement."
+	comtype = /obj/item/device/flash/turbo
+	price = 1500
+	upperfluc = 350
+	lowerfluc = -350
 /datum/commodity/blackmarket/shady/multitool
 	comname = "Multitool"
 	desc_sell = "Useful!"
@@ -3238,7 +3254,12 @@
 	price = 500
 	upperfluc = 200
 	lowerfluc = -200
-	
+/datum/commodity/blackmarket/shady/brick
+	comname = "Ceramic Bricks"
+	comtype = /obj/item/brick
+	price = 60
+	upperfluc = 20
+	lowerfluc = -20
 /datum/commodity/blackmarket/shady/balaclava
 	comname = "Balaclava"
 	comtype = /obj/item/clothing/mask/balaclava
@@ -3334,7 +3355,7 @@
 /datum/commodity/blackmarket/wrestler/cowboyboots
 	comname = "Commemorative T-Shirt"
 	comtype = null
-	desc = "Different one every day!"
+	desc = "Got a bunch of these in from an old storage locker, I don't even know what's inside the boxes! I open a fresh crate one every!"
 	price = 90
 	baseprice = 90
 	upperfluc = 80
@@ -3365,10 +3386,9 @@
 				item_state = "dan_red"
 				desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
 			if ("saturday")
-				comtype = /obj/item/clothing/under/misc/bandshirt
-				name = "Promotional Apron"
-				desc = "A gaudy apron. It seems to be advertising a restaurant called 'Dang Ol Belle's Crusty Cuts'."
+				comtype = /obj/item/clothing/suit/labcoat/dan
 			if ("sunday")
+				//todo: something to do with the sun
 				comtype = /obj/item/clothing/suit/lshirt
 				name = "long sleeved logo shirt"
 				icon_state = "dan_blue"
@@ -3401,6 +3421,15 @@
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
+/datum/commodity/blackmarket/wrestler/brick
+	//stockpiling bricks from jane and selling them to larry makes a profit. it's brick economics
+	comname = "Ceramic Bricks"
+	comtype = /obj/item/brick
+	desc_sell = "I go through A LOT of these in my shows!"
+	price = 100
+	baseprice = 40
+	upperfluc = 40
+	lowerfluc = -40
 /datum/commodity/blackmarket/wrestler/ghostgun
 	comname = "Ectoplasmic Destabilizer"
 	comtype = /obj/item/gun/energy/ghost
@@ -3410,6 +3439,7 @@
 	upperfluc = 10000
 	lowerfluc = -10000
 /datum/commodity/blackmarket/wrestler/goldfishcracker
+	//farmable from a strange seeds plant - work out how profitible this is compared to other plants (especially rock plant)
 	comname = "Goldfish Cracker"
 	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	desc_sell = "These things are LIFESAVERS when it comes to building muscle! I NEED AS MANY AS YOU CAN GET!"
@@ -3425,13 +3455,15 @@
 	upperfluc = 3000
 	lowerfluc = -3000
 /datum/commodity/blackmarket/wrestler/nassa
+	//would like to have the price higher but alas it's avaliable in a QM crate and valued at about 7.5k there
 	comname = "NASSA space suit"
 	comtype = /obj/item/clothing/under/gimmick/blackstronaut
 	desc_sell = "I'd LOVE to get my hands on a couple sets of that prototype jumpsuit. WRESTLING IN THE COLD VACCUM OF SPACE! I'll pay a BUNCH for any you find in good condition!"
-	price = 10200
-	upperfluc = 2000
-	lowerfluc = -2000
+	price = 6200
+	upperfluc = 800
+	lowerfluc = -800
 /datum/commodity/blackmarket/wrestler/uplink_telecrystal
+	//this is the bad guy tokens, and it's a lowball offer. this is for using telescrystals to bribe crew memebers
 	comname = "Pure Telecrystal"
 	comtype = /obj/item/uplink_telecrystal
 	desc_sell = "These things are practically CURRENCY on some planets! I can get you a GREAT DEAL on them!"
@@ -3446,6 +3478,7 @@
 	upperfluc = 100000
 	lowerfluc = -100000
 /datum/commodity/blackmarket/wrestler/magic_sandal
+	//these things are everywhere
 	comname = "Magic Sandals"
 	comtype = /obj/item/clothing/shoes/sandal
 	desc_sell = "That said, those knock offs are DAMN WELL MADE! I'll buy those for a fair price!"
@@ -3453,6 +3486,7 @@
 	upperfluc = 1200
 	lowerfluc = -1200
 /datum/commodity/blackmarket/wrestler/glitch_gun
+	//not sure if this is legitimately obtainable?
 	comname = "Glitch Gun"
 	comtype = /obj/item/gun/energy/glitch_gun
 	desc_sell = "You hear about the fabled Glitch Gun? It's said to be able to shoot bullets though code itself. If you find it, SELL IT TO ME!"
@@ -3467,13 +3501,15 @@
 	upperfluc = 50000
 	lowerfluc = -50000
 /datum/commodity/blackmarket/wrestler/dagger
+	//this is both the traitor's dagger and the biodome dagger
 	comname = "Sacrificial Dagger"
 	comtype = /obj/item/dagger
 	desc_sell = "Old knives are great investments! The more occult the better!"
-	price = 310400
+	price = 210400
 	upperfluc = 30000
 	lowerfluc = -30000
 /datum/commodity/blackmarket/wrestler/shoecrafts
+	//space sweatshop 13
 	comname = "Custom Shoes"
 	comtype = /obj/item/clothing/shoes/crafted
 	desc_sell = "And any shoes YOU HAND CRAFT, I WILL BUY!"
@@ -3481,6 +3517,7 @@
 	upperfluc = 600
 	lowerfluc = -600
 /datum/commodity/blackmarket/wrestler/katana_nukeop
+	//this assumes only 1 exists, only on nuke mode, and only on the nuke op commander. remove if that ever changes
 	comname = "Syndicate Commander's Sabre"
 	comtype = /obj/item/katana/nukeop
 	desc_sell = "These swords are the HOLY GRAIL for salvage crews!"
