@@ -164,6 +164,8 @@
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
 
+	if (src.hasStatus("muted")) return
+
 	src.emote(message, 1)
 
 /mob/verb/me_verb_hotkey(message as text)
@@ -174,6 +176,8 @@
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
 		return
+
+	if (src.hasStatus("muted")) return
 
 	src.emote(message,2)
 

@@ -51,7 +51,7 @@
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if(src.bioHolder?.HasEffect("mute"))
+					if(src.bioHolder?.HasEffect("mute") || src.hasStatus("muted"))
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
 						"opens [his_or_her(src)] mouth to produce a resounding lack of noise","flails desperately","")]..."
@@ -290,7 +290,7 @@
 
 			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug","fingerguns")
 				// visible targeted emotes
-				if (!src.restrained())
+				if (can_act(src))
 					var/M = null
 					var/range = 5
 					if (act == "hug" || act == "sidehug")
@@ -425,7 +425,7 @@
 			// other emotes
 
 			if ("custom")
-				if (src.client)
+				if (src.client && !src.hasStatus("muted"))
 					if (IS_TWITCH_CONTROLLED(src)) return
 					var/input = sanitize(html_encode(input("Choose an emote to display.")))
 					var/input2 = input("Is this a visible or audible emote?") in list("Visible","Audible")
@@ -441,6 +441,7 @@
 
 			if ("customv")
 				if (IS_TWITCH_CONTROLLED(src)) return
+				if (src.hasStatus("muted")) return
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
@@ -454,6 +455,7 @@
 
 			if ("customh")
 				if (IS_TWITCH_CONTROLLED(src)) return
+				if (src.hasStatus("muted")) return
 				if (!param)
 					param = input("Choose an emote to display.")
 					if(!param) return
@@ -466,6 +468,7 @@
 
 			if ("me")
 				if (IS_TWITCH_CONTROLLED(src)) return
+				if (src.hasStatus("muted")) return
 				if (!param)
 					return
 				param = sanitize(html_encode(param))
@@ -476,7 +479,7 @@
 				custom = copytext(param, 1, 10)
 
 			if ("give")
-				if (!src.restrained())
+				if (can_act(src))
 					if (!src.emote_check(voluntary, 50))
 						return
 					var/obj/item/thing = src.equipped()
@@ -621,7 +624,7 @@
 					return
 
 			if ("juggle")
-				if (!src.restrained())
+				if (can_act(src))
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
 						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
@@ -643,7 +646,7 @@
 								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
 								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin"/*, "juggle"*/)
-				if (!src.restrained())
+				if (can_act(src))
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
 
@@ -668,7 +671,7 @@
 					maptext_out = "<I>struggles to move</I>"
 
 			if ("tip")
-				if (!src.restrained() && !src.stat)
+				if (can_act(src))
 					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
 						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
 						//maptext_out = "<I>tips their fedora</I>"
@@ -680,7 +683,7 @@
 							src.gib()
 
 			if ("hatstomp", "stomphat")
-				if (!src.restrained())
+				if (can_act(src))
 					var/obj/item/clothing/head/hos_hat/hat = src.find_type_in_hand(/obj/item/clothing/head/hos_hat)
 					var/hat_or_beret = null
 					var/already_stomped = null // store the picked phrase in here
@@ -805,7 +808,7 @@
 
 			if ("clap")
 				// basic visible single-word emotes - unusable while restrained
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> [lowertext(act)]s."
 					maptext_out = "<I>claps</I>"
 				else
@@ -915,7 +918,7 @@
 			// basic emotes with alternates for restraints
 
 			if ("flap")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms!"
 					maptext_out = "<I>flaps [his_or_her(src)] arms!</I>"
 					if (src.sound_list_flap && length(src.sound_list_flap))
@@ -926,7 +929,7 @@
 				m_type = 1
 
 			if ("aflap")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> flaps [his_or_her(src)] arms ANGRILY!"
 					maptext_out = "<I>flaps [his_or_her(src)] arms ANGRILY!</I>"
 					if (src.sound_list_flap && length(src.sound_list_flap))
@@ -937,7 +940,7 @@
 				m_type = 1
 
 			if ("raisehand")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> raises a hand."
 					maptext_out = "<I>raises a hand</I>"
 				else
@@ -946,7 +949,7 @@
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
 					maptext_out = "<I>cracks their knuckles</I>"
 				else
@@ -955,7 +958,7 @@
 				m_type = 1
 
 			if ("stretch")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> stretches."
 					maptext_out = "<I>stretches</I>"
 				else
@@ -964,7 +967,7 @@
 				m_type = 1
 
 			if ("rude")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> makes a rude gesture."
 					maptext_out = "<I>makes a rude gesture</I>"
 				else
@@ -1000,7 +1003,7 @@
 				m_type = 2
 
 			if ("tantrum")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> throws a tantrum!"
 					maptext_out = "<I>throws a tantrum!</I>"
 				else
@@ -1009,7 +1012,7 @@
 				m_type = 1
 
 			if ("gesticulate")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> gesticulates."
 					maptext_out = "<I>gesticulates</I>"
 				else
@@ -1018,7 +1021,7 @@
 				m_type = 1
 
 			if ("wgesticulate")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> gesticulates wildly."
 					maptext_out = "<I>gesticulates wildly</I>"
 				else
@@ -1027,7 +1030,7 @@
 				m_type = 1
 
 			if ("smug")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
 					maptext_out = "<I>folds their arms and smirks broadly</I>"
 				else
@@ -1038,7 +1041,7 @@
 					src.add_karma(-2)
 
 			if ("nosepick","picknose")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> picks [his_or_her(src)] nose."
 					maptext_out = "<I>picks their nose</I>"
 				else
@@ -1049,7 +1052,7 @@
 					src.add_karma(-1)
 
 			if ("flex","flexmuscles")
-				if (!src.restrained())
+				if (can_act(src))
 					var/roboarms = src.limbs && istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && istype(src.limbs.l_arm, /obj/item/parts/robot_parts)
 					if (roboarms)
 						message = "<B>[src]</B> flexes [his_or_her(src)] powerful robotic muscles."
@@ -1074,7 +1077,7 @@
 						break
 
 			if ("facepalm")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation."
 					maptext_out = "<I>places [his_or_her(src)] hand on [his_or_her(src)] face in exasperation</I>"
 				else
@@ -1083,7 +1086,7 @@
 				m_type = 1
 
 			if ("panic","freakout")
-				if (!src.restrained())
+				if (can_act(src))
 					message = "<B>[src]</B> enters a state of hysterical panic!"
 					maptext_out = "<I>enters a state of hysterical panic!</I>"
 				else
@@ -1095,7 +1098,7 @@
 
 			if ("flipoff","flipbird","middlefinger")
 				m_type = 1
-				if (!src.restrained())
+				if (can_act(src))
 					var/M = null
 					if (param)
 						for (var/mob/A in view(null, null))
@@ -1128,7 +1131,7 @@
 
 			if ("doubleflip","doubledeuce","doublebird","flip2")
 				m_type = 1
-				if (!src.restrained())
+				if (can_act(src))
 					var/M = null
 					if (param)
 						for (var/mob/A in view(null, null))
@@ -1183,7 +1186,7 @@
 
 			if ("shakefist")
 				m_type = 1
-				if (!src.restrained())
+				if (can_act(src))
 					var/M = null
 					if (param)
 						for (var/mob/A in view(null, null))
@@ -1207,7 +1210,7 @@
 
 			if ("handshake","shakehand","shakehands")
 				m_type = 1
-				if (!src.restrained() && !src.r_hand)
+				if (can_act(src) && !src.r_hand)
 					var/mob/M = null
 					if (param)
 						for (var/mob/A in view(1, null))
@@ -1225,7 +1228,7 @@
 								return
 
 					if (M)
-						if (M.canmove && !M.r_hand && !M.restrained())
+						if (M.canmove && !M.r_hand && can_act(M))
 							message = "<B>[src]</B> shakes hands with [M]."
 							maptext_out = "<I>shakes hands with [M]</I>"
 						else
@@ -1234,7 +1237,7 @@
 
 			if ("daps","dap")
 				m_type = 1
-				if (!src.restrained())
+				if (can_act(src))
 					var/M = null
 					if (param)
 						for (var/mob/A in view(1, null))
@@ -1261,7 +1264,7 @@
 
 			if ("slap","bitchslap","smack")
 				m_type = 1
-				if (!src.restrained())
+				if (can_act(src))
 					if (src.emote_check(voluntary))
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
@@ -1293,7 +1296,7 @@
 
 			if ("highfive")
 				m_type = 1
-				if (!src.restrained() && src.stat != 1 && !isunconscious(src) && !isdead(src))
+				if (can_act(src) && !isdead(src))
 					if (src.emote_check(voluntary))
 						var/mob/M = null
 						if (param)
@@ -1314,7 +1317,7 @@
 									return
 
 						if (M)
-							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
+							if (can_act(M) && !isdead(M))
 								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
@@ -1335,7 +1338,7 @@
 			// emotes that do STUFF! or are complex in some way i guess
 
 			if ("snap","snapfingers","fingersnap","click","clickfingers")
-				if (!src.restrained())
+				if (can_act(src))
 					if (src.emote_check(voluntary))
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
@@ -1360,14 +1363,15 @@
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("airquote","airquotes")
-				if (param)
-					param = strip_html(param, 200)
-					message = "<B>[src]</B> sneers, \"Ah yes, \"[param]\". We have dismissed that claim.\""
-					m_type = 2
-				else
-					message = "<B>[src]</B> makes air quotes with [his_or_her(src)] fingers."
-					maptext_out = "<I>makes air quotes with [his_or_her(src)] fingers</I>"
-					m_type = 1
+				if(can_act(src) && !src.hasStatus("muted"))
+					if (param)
+						param = strip_html(param, 200)
+						message = "<B>[src]</B> sneers, \"Ah yes, \"[param]\". We have dismissed that claim.\""
+						m_type = 2
+					else
+						message = "<B>[src]</B> makes air quotes with [his_or_her(src)] fingers."
+						maptext_out = "<I>makes air quotes with [his_or_her(src)] fingers</I>"
+						m_type = 1
 
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
@@ -1433,7 +1437,7 @@
 						m_type = 2
 
 			if ("point")
-				if (!src.restrained())
+				if (can_act(src))
 					var/mob/M = null
 					if (param)
 						for (var/atom/A as mob|obj|turf|area in view(null, null))
@@ -1454,7 +1458,7 @@
 				m_type = 1
 
 			if ("signal")
-				if (!src.restrained())
+				if (can_act(src))
 					var/t1 = min( max( round(text2num(param)), 1), 10)
 					if (isnum(t1))
 						if (t1 <= 5 && (!src.r_hand || !src.l_hand))
@@ -1492,7 +1496,7 @@
 				if (istype(src.shoes, /obj/item/clothing/shoes/heels/dancin))
 					cooldown = 15
 				if (src.emote_check(voluntary, cooldown))
-					if (src.restrained()) // check this first for convenience
+					if (!can_act(src)) // check this first for convenience
 						message = "<B>[src]</B> twitches feebly in time to music only [he_or_she(src)] can hear."
 					else
 						if (iswizard(src) && prob(10))
@@ -1962,6 +1966,7 @@
 					maptext_out = "<I>grunts</I>"
 
 			if ("monologue")
+				if(src.hasStatus("muted")) return
 				m_type = 2
 				if (src.mind && src.mind.assigned_role == "Detective")
 					var/obj/item/grab/G
@@ -2090,6 +2095,7 @@
 					message = "<B>[src]</B> tries to say something clever, but just can't pull it off looking like that."
 
 			if ("miranda")
+				if(src.hasStatus("muted")) return
 				if (src.emote_check(voluntary, 50))
 					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
 						src.recite_miranda()
