@@ -1487,13 +1487,16 @@
 // Note: No headset, no taser
 
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/breachinghammer(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/gasmask(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/suit(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/gloves(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/boots(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/riot_grenade(src)
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -1503,9 +1506,22 @@
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
-		src.goods_buy += new /datum/commodity/goldbar(src)
-
-
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/ak47(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/revolver(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/lasergun(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/phaser(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/lawbringercell(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/powercell(src)
+		src.goods_buy += new /datum/commodity/blackmarket/surplus/customcell(src)
+		
+//////////////////////////////////////////////////////////////////////
+///██████  ██  █████  ██       ██████   ██████  ██    ██ ███████    //
+///██   ██ ██ ██   ██ ██      ██    ██ ██       ██    ██ ██      ██ //
+///██   ██ ██ ███████ ██      ██    ██ ██   ███ ██    ██ █████      //
+///██   ██ ██ ██   ██ ██      ██    ██ ██    ██ ██    ██ ██      ██ //
+///██████  ██ ██   ██ ███████  ██████   ██████   ██████  ███████    //
+//////////////////////////////////////////////////////////////////////
+		
 	greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
 
 	portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
@@ -1554,7 +1570,7 @@
 // ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀   ▀▀▀▀▀▀▀      ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀            ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀ //
 //                                                                                                                          //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//Gene splicing a changling and a blob led to the creation of this thing. It's taken over a nearby trading vessel and worked out how to barter for food by selling its piss and sweat.
+//The result of 15 years of horriffic gene splicing to create the ultimate economist. A free-market bioweapon containing blob, changeling and bitcoin DNA.
 
 
 /obj/npc/trader/blackmarket/surplus
@@ -1577,12 +1593,7 @@
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/baton(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/blob/chitin(src)
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -1592,7 +1603,7 @@
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
-		src.goods_buy += new /datum/commodity/goldbar(src)
+		src.goods_buy += new /datum/commodity/blackmarket/blob/heisenbee(src)
 
 //////////////////////////////////////////////////////////////////////
 ///██████  ██  █████  ██       ██████   ██████  ██    ██ ███████    //
@@ -1643,12 +1654,12 @@
 //     
 /obj/npc/trader/blackmarket/shady
 	icon = 'icons/obj/trader.dmi'
-	icon_state = "blackmarketsurplus"
+	icon_state = "blackmarketshady"
 	picture = "exclown.png"
-	name = "Shady Jane's Back-Alley Deals"
+	name = "Shady Jane's Back-Alley"
 	trader_area = "/area/hallway/secondary/entry"
 	angrynope = "*You can't establish a connection with Shady Jane*"
-	whotext = "I'm just a trader with a huge stock of great items, and I take cash. What more do you need to know?"
+	whotext = "Just an honest space trader willing to buy and sell quality goods."
 
 	New()
 		..()
@@ -1686,28 +1697,28 @@
 ///██████  ██ ██   ██ ███████  ██████   ██████   ██████  ███████    //
 //////////////////////////////////////////////////////////////////////
 
-		greeting= {"You've hailed Max Lawman's Military Surplus. I'm Max Lawman. What can I get you?"}
+		greeting= {"What kinda deal are we talking about here?"}
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "I'm accepting certain goods. Check the bounty board."
-		buy_dialogue = "Here's the goods."
-		successful_purchase_dialogue = list("That's a good piece of gear. Quirky, but good.",
-			"Going to miss that one.",
-			"All sales are final. Just thought I'd remind you.",
-			"Almost new. Barely used.")
-		failed_sale_dialogue = list("It's not on the list.",
-			"I'm not buying that.",
-			"Check the list of what I'm buying. That's not on it.",
-			"Unexpected item in the bagging area.")
-		successful_sale_dialogue = list("Yes, I can pay out for this.",
-			"Grading is... acceptible. Deal.",
-			"I can take that.")
-		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
-			"Not enough funds in your account.",
-			"You can't afford it. May I suggest something cheaper?")
-		pickupdialogue = "Warping it in."
-		pickupdialoguefailure = "There's nothing in your shopping cart."
+		sell_dialogue = "Here's what I want."
+		buy_dialogue = "Feast your eyes:"
+		successful_purchase_dialogue = list("Yep, let's trade it.",
+			"Adding it to your cart.",
+			"You got it.",
+			"Lots of things you can do with those!")
+		failed_sale_dialogue = list("I don't really want that.",
+			"Nah.",
+			"Not quite what I'm looking for.",
+			"Don't want it.")
+		successful_sale_dialogue = list("Hahaha, oh man I've been needing these.",
+			"Deal!",
+			"Alright, I'll take it.")
+		failed_purchase_dialogue = list("Can't afford it.",
+			"Not enough cash, pal.",
+			"Funds ain't coming through. You sure you can afford that?")
+		pickupdialogue = "Enjoy!"
+		pickupdialoguefailure = "Some kind of error here? Says you don't have anything in your cart?"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //	███╗   ███╗ █████╗ ██████╗     ██╗      █████╗ ██████╗ ██████╗ ██╗   ██╗	//
@@ -1720,7 +1731,7 @@
 
 /obj/npc/trader/blackmarket/wrestler/
 	icon = 'icons/obj/trader.dmi'
-	icon_state = "blackmarketsurplus"
+	icon_state = "blackmarketwrestler"
 	picture = "exclown.png"
 	name = "Mad Larry's Ring of Deals"
 	trader_area = "/area/hallway/secondary/entry"
@@ -1792,12 +1803,12 @@
 			"It's nice, but I can't sell it on. NO DEAL!",
 		successful_sale_dialogue = list("DEAL! BOOM!",
 			"CHA CHING! We have another GREAT DEAL!",
-			"I can take that.")
-		failed_purchase_dialogue = list("You can't afford what's in your cart. Correct that.",
-			"Not enough funds in your account.",
-			"You can't afford it. May I suggest something cheaper?")
-		pickupdialogue = "Warping it in."
-		pickupdialoguefailure = "There's nothing in your shopping cart."
+			"YES! YES! YES!")
+		failed_purchase_dialogue = list("JUICE UP your account! Your wallet just AIN'T CUTTIN' THE MUSTARD!",
+			"HEY SPACER! Not enough in your DANG account!",
+			"No can do friend, I don't give credit!")
+		pickupdialogue = "BOOM! TELL YOUR PALS ABOUT THE GREAT DEAL YOU JUST HAD!"
+		pickupdialoguefailure = "I DON'T SERVE AIR, PUNK!"
 
 		
 		(src)
