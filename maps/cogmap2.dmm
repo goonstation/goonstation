@@ -55426,6 +55426,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "crV" = (
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "crW" = (
@@ -56650,6 +56651,14 @@
 /area/station/science/testchamber)
 "cuM" = (
 /obj/table/reinforced/auto,
+/obj/item/device/light/glowstick{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 4;
+	pixel_y = 11
+	},
 /obj/machinery/recharger,
 /obj/item/clothing/head/helmet/camera,
 /obj/item/clothing/glasses/sunglasses,
@@ -77709,30 +77718,11 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "dHM" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/device/radio/beacon,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/paper/book/from_file/critter_compendium,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/crate,
 /obj/machinery/light,
+/obj/storage/crate/adventure,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "dJs" = (
