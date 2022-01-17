@@ -3004,8 +3004,8 @@
 				comtype = /obj/item/clothing/suit/armor/NT_alt
 				/datum/commodity/blackmarket/surplus/baton
 				
-/datum/commodity/blackmarket/surplus/boots
-	comname = "Imported Stun Baton"
+/datum/commodity/blackmarket/surplus/gloves
+	comname = "Tactical Gloves"
 	comtype = /obj/item/clothing/gloves/swat
 	price = 8400
 	upperfluc = 10000
@@ -3076,7 +3076,7 @@
 /datum/commodity/blackmarket/surplus/sechud
 	comname = "Sechud Glasses"
 	comtype = /obj/item/clothing/glasses/sunglasses/sechud
-	color_r = 1
+	color_r = 0.95
 	desc_sell = "SecureTech Computerised Heads Up Display Sunglasses. Reveal wanted criminals with just a glance. They connect to your station's security network automatically. A must have in any modern space station."
 	price = 12000
 	upperfluc = 3000
@@ -3203,7 +3203,7 @@
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
-/datum/commodity/blackmarket/surplus/lasergun
+/datum/commodity/blackmarket/blob/heisenbee
 	comname = "Heisenbee"
 	comtype = /obj/critter/domestic_bee/heisenbee
 	desc_sell = "WANT. THE BEE. DEAD. OR ALIVE."
@@ -3233,8 +3233,8 @@
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-/datum/commodity/blackmarket/shady/multitool
-	comname = "Clown Mask"
+/datum/commodity/blackmarket/shady/cursedmask
+	comname = "Boobytrapped Clown Mask"
 	desc_sell = "This one's been modified a little. Have fun!"
 	comtype = /obj/item/clothing/mask/gas/syndie_clown
 	price = 45000
@@ -3334,7 +3334,7 @@
 	upperfluc = 3000
 	lowerfluc = -3000
 	
-/datum/commodity/blackmarket/wrestler/
+/datum/commodity/blackmarket/wrestler/laptop
 	comname = "Personal Laptop"
 	comtype = /obj/item/luggable_computer/personal
 	desc = "Hey how about a FOLDABLE PERSONAL PLANNER!"
@@ -3352,7 +3352,7 @@
 	upperfluc = 200
 	lowerfluc = -200
 	
-/datum/commodity/blackmarket/wrestler/cowboyboots
+/datum/commodity/blackmarket/wrestler/shirts
 	comname = "Commemorative T-Shirt"
 	comtype = null
 	desc = "Got a bunch of these in from an old storage locker, I don't even know what's inside the boxes! I open a fresh crate one every!"
