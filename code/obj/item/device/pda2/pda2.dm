@@ -709,7 +709,7 @@
 	if (!target || !message)
 		return
 
-	if (is_incapacitated(usr))
+	if (!can_act(usr))
 		return
 
 	if (istype(src.host_program))
