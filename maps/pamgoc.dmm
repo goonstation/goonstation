@@ -15091,6 +15091,16 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"aya" = (
+/obj/machinery/traymachine/locking/tanning,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"ayb" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/crematorium)
 "ayc" = (
 /obj/critter/boogiebot,
 /turf/simulated/floor/carpet{
@@ -34034,6 +34044,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"bmR" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 8
+	},
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "bmS" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -36256,6 +36275,18 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"brp" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "brq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51490,6 +51521,18 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/janitor/supply)
+"bUu" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/crematorium)
+"bUv" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "bUw" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8
@@ -68586,15 +68629,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
-"kvS" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 8
-	},
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "kAf" = (
 /obj/lattice{
 	dir = 4;
@@ -68798,12 +68832,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/arrivals)
-"mIk" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "mKO" = (
 /obj/item/cell/supercell/charged{
 	pixel_x = 7;
@@ -69371,10 +69399,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"sfz" = (
-/obj/machinery/traymachine/locking/tanning,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "slC" = (
 /obj/cable{
 	d1 = 1;
@@ -69558,12 +69582,6 @@
 	dir = 5
 	},
 /area/station/hydroponics/lobby)
-"tOj" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
 "tOA" = (
 /obj/cable/brown{
 	d1 = 1;
@@ -69665,12 +69683,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"uwS" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
 "uyk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -69994,18 +70006,6 @@
 /obj/item/device/light/zippo,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
-"xIQ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "xOa" = (
 /obj/cable,
 /obj/cable{
@@ -107409,7 +107409,7 @@ aZa
 aaa
 cwR
 cCj
-uwS
+ayb
 aKA
 aCr
 aKp
@@ -108013,8 +108013,8 @@ aZa
 bHA
 bWQ
 cCj
-tOj
-tOj
+bUu
+bUu
 beJ
 aRD
 civ
@@ -118353,11 +118353,11 @@ aKz
 aMa
 bwz
 bff
-mIk
-xIQ
+bUv
+brp
 asc
-kvS
-mIk
+bmR
+bUv
 cwU
 cCa
 ack
@@ -118875,7 +118875,7 @@ bJW
 arH
 aPu
 aXU
-sfz
+aya
 cxY
 bUW
 bUV

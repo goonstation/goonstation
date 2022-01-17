@@ -11124,6 +11124,15 @@
 	icon_state = "old_rwall"
 	},
 /area/evilreaver/bridge)
+"aDo" = (
+/obj/ai_core_frame{
+	build_step = 2;
+	desc = "A model of AI core you don't recognize, gutted and covered in weird purple stains. The lettering isn't clear, but you can faintly make out \"-way -ystems 29-\" etched into the casing.";
+	name = "grody AI casing";
+	skinToApply = "kingsway"
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "aDp" = (
 /obj/critter/martian/warrior,
 /turf/simulated/martian/floor,
@@ -25011,6 +25020,21 @@
 	dir = 8
 	},
 /area/space)
+"hOL" = (
+/obj/item/storage/secure/ssafe{
+	configure_mode = 0;
+	desc = "A tough, airtight safe.";
+	name = "hermetically-sealed safe";
+	pixel_x = -4;
+	pixel_y = 30;
+	random_code = 1;
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	},
+/obj/item/paper/martian_manifest{
+	rand_pos = 1
+	},
+/turf/simulated/martian/floor,
+/area/evilreaver/bridge)
 "hUW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25106,15 +25130,6 @@
 /obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
-"pIj" = (
-/obj/ai_core_frame{
-	build_step = 2;
-	desc = "A model of AI core you don't recognize, gutted and covered in weird purple stains. The lettering isn't clear, but you can faintly make out \"-way -ystems 29-\" etched into the casing.";
-	name = "grody AI casing";
-	skinToApply = "kingsway"
-	},
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
 "qmR" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left,
@@ -25206,21 +25221,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"vsW" = (
-/obj/item/storage/secure/ssafe{
-	configure_mode = 0;
-	desc = "A tough, airtight safe.";
-	name = "hermetically-sealed safe";
-	pixel_x = -4;
-	pixel_y = 30;
-	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
-	},
-/obj/item/paper/martian_manifest{
-	rand_pos = 1
-	},
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
 "wav" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
@@ -44718,7 +44718,7 @@ aAN
 aCh
 aCG
 aCV
-pIj
+aDo
 aDI
 aDO
 aCG
@@ -46228,7 +46228,7 @@ aCh
 aCh
 aCF
 aCF
-vsW
+hOL
 aDM
 aDp
 aCF
