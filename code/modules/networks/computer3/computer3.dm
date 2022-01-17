@@ -684,51 +684,53 @@ function lineEnter (ev)
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if(!ispath(setup_frame_type, /obj/computer3frame))
-				src.setup_frame_type = /obj/computer3frame
-			var/obj/computer3frame/A = new setup_frame_type( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			A.created_icon_state = src.base_icon_state
-			A.set_dir(src.dir)
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-				G.set_loc( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				A.state = 4
-				A.icon_state = "4"
-
-			for (var/obj/item/peripheral/C in src.peripherals)
-				C.set_loc(A)
-				A.peripherals.Add(C)
-				C.uninstalled()
-
-			if(src.diskette)
-				src.diskette.set_loc(src.loc)
-				src.diskette = null
-
-			if(src.hd)
-				src.hd.set_loc(A)
-				A.hd = src.hd
-				src.hd = null
-
-			A.mainboard = new /obj/item/motherboard(A)
-			A.mainboard.created_name = src.name
-			A.mainboard.integrated_floppy = src.setup_has_internal_disk
-
-
-			A.anchored = 1
-			//dispose()
-			src.dispose()
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
+		list(W, user), W.icon, W.icon_state, null, null)
 
 	else
 		src.Attackhand(user)
-
 	return
+
+/obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
+	if(!ispath(setup_frame_type, /obj/computer3frame))
+		src.setup_frame_type = /obj/computer3frame
+	var/obj/computer3frame/A = new setup_frame_type( src.loc )
+	if(src.material) A.setMaterial(src.material)
+	A.created_icon_state = src.base_icon_state
+	A.set_dir(src.dir)
+	if (src.status & BROKEN)
+		boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+		G.set_loc( src.loc )
+		A.state = 3
+		A.icon_state = "3"
+	else
+		boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+		A.state = 4
+		A.icon_state = "4"
+
+	for (var/obj/item/peripheral/C in src.peripherals)
+		C.set_loc(A)
+		A.peripherals.Add(C)
+		C.uninstalled()
+
+	if(src.diskette)
+		src.diskette.set_loc(src.loc)
+		src.diskette = null
+
+	if(src.hd)
+		src.hd.set_loc(A)
+		A.hd = src.hd
+		src.hd = null
+
+	A.mainboard = new /obj/item/motherboard(A)
+	A.mainboard.created_name = src.name
+	A.mainboard.integrated_floppy = src.setup_has_internal_disk
+
+
+	A.anchored = 1
+	//dispose()
+	src.dispose()
 
 /obj/machinery/computer3/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)
