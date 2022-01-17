@@ -37,5 +37,6 @@
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	UnregisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON)
 	suit.ability_buttons -= toggle
+	suit = null
 	qdel(toggle)
 	. = ..()
