@@ -1,5 +1,9 @@
 
 (t)sun jan 16 22
+(u)TDHooligan
+(p)7101
+(e)🎨|sprites
+(+)Soda cans can now be printed in the CheMaster 3000, start a brand!
 (u)aloe
 (+)Sutures and bandages are now quite a bit faster, and are capped at 5 seconds. I'm reasonably sure the old behavior was a bug.
 (u)Nexusuxen
