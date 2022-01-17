@@ -658,8 +658,6 @@
 
 	examine()
 		. = list()
-		if(src.hiddenFrom?.Find(usr.client)) //invislist
-			return
 
 		if (isghostdrone(usr))
 			return

@@ -1755,7 +1755,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\Hydrothings.dm"
 #include "code\WorkInProgress\IconProcs.dm"
 #include "code\WorkInProgress\infernal_contracts.dm"
-#include "code\WorkInProgress\InvisibilityList.dm"
 #include "code\WorkInProgress\ISNStuff2.dm"
 #include "code\WorkInProgress\JobXP.dm"
 #include "code\WorkInProgress\JobXPRewards.dm"
