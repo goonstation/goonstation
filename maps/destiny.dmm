@@ -49358,6 +49358,10 @@
 /area/station/medical/medbay/pharmacy)
 "sFY" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 6;
+	pixel_y = -1
+	},
 /obj/item/device/audio_log{
 	pixel_x = -5;
 	pixel_y = 10

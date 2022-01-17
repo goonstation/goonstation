@@ -30865,6 +30865,10 @@
 /area/station/science/artifact)
 "bnT" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 6
+	},
 /obj/item/hand_labeler,
 /obj/item/device/audio_log,
 /obj/item/audio_tape{
