@@ -9343,7 +9343,7 @@
 	persistent_id = "detectives office"
 	},
 /obj/landmark/start{
-	name = "Clown"
+	name = "Detective"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)

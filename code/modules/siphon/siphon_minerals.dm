@@ -156,7 +156,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/syreline
 	name = "Syreline"
-	tick_req = 40
+	tick_req = 50
 	x_torque = 88
 	shear = 6
 	sens_window = 1
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/erebite
 	name = "Erebite"
-	tick_req = 70
+	tick_req = 90
 	x_torque = 6
 	y_torque = -22
 	shear = 33
@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/cerenkite
 	name = "Cerenkite"
-	tick_req = 50
+	tick_req = 60
 	x_torque = -24
 	y_torque = 8
 	shear = 16
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/gemstone
 	name = "Gemstone"
-	tick_req = 80
+	tick_req = 150
 	x_torque = 0
 	y_torque = 0
 	shear = 64
@@ -208,28 +208,30 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/uqill
 	name = "Uqill"
-	tick_req = 90
+	tick_req = 190
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
 
 /datum/siphon_mineral/telecrystal
 	name = "Telecrystal"
-	tick_req = 100
+	tick_req = 200
 	shear = 63
 	product = /obj/item/raw_material/telecrystal
 
 	New()
+		src.tick_req = rand(200,230)
 		src.shear = rand(61,63)
 		..()
 
 //shear of 65 or higher should do Bad Things unless precisely set to this number
 /datum/siphon_mineral/starstone
 	name = "Starstone"
-	tick_req = 250
+	tick_req = 1616
 	shear = 110
 	product = /obj/item/raw_material/starstone
 
 	New()
+		src.tick_req = rand(100,120) * 10
 		src.shear = rand(106,115)
 		..()

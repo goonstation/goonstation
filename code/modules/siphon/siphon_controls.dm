@@ -336,7 +336,6 @@
 
 	New()
 		..()
-		src.build_mineral_list()
 
 /obj/machinery/computer/siphon_db/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -455,10 +454,15 @@
 	return
 
 /obj/machinery/computer/siphon_db/proc/build_mineral_list()
+	if(src.mineral_list) return
 	var/rollingtext = ""
 
-	for (var/DAT in concrete_typesof(/datum/siphon_mineral))
-		var/datum/siphon_mineral/mat = new DAT
+	var/obj/machinery/siphon/core/reference_core //talk to the core to see what it can extract
+	for (var/obj/machinery/siphon/core/proxcore in orange(6, src))
+		reference_core = proxcore
+		break
+
+	for (var/datum/siphon_mineral/mat in reference_core.can_extract)
 		rollingtext += "<h2>[mat.name]</h2>"
 		rollingtext += "<strong>EEU per Extraction:</strong> [mat.tick_req]<br>"
 		if(mat.x_torque)
