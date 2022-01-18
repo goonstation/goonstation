@@ -3605,7 +3605,7 @@ var/list/lag_list = new/list()
 	name = "Place Button"
 	desc = "Places a Button that can control mass-drivers & pod-doors."
 	used(atom/user, atom/target)
-		var/obj/machinery/activation_button/driver_button/L = new/obj/machinery/activation_button/driver_button(get_turf(target))
+		var/obj/machinery/activation_button/driver_button/L = new(get_turf(target))
 		L.set_dir(user:dir)
 		return
 
