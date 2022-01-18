@@ -9,31 +9,35 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/max_ammo_capacity = 1
 	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
 	var/caliber = null
-	///Does this gun have a special icon state for having no ammo lefT?
+	/// Does this gun have a special icon state for having no ammo lefT?
 	var/has_empty_state = FALSE
-	///Can this gun be affected by the [Helios] medal reward?
+	/// Can this gun be affected by the [Helios] medal reward?
 	var/gildable = FALSE
-	///Is this gun currently gilded by the [Helios] medal reward?
+	/// Is this gun currently gilded by the [Helios] medal reward?
 	var/gilded = FALSE
 	/// Do we eject casings on firing, or on reload?
 	var/auto_eject = FALSE
 	/// If we don't automatically ejected them, we need to keep track (Convair880).
 	var/casings_to_eject = 0
-	///What's the default magazine used in this gun? Set this in place of putting the type in New()
+	/// What's the default magazine used in this gun? Set this in place of putting the type in New()
 	var/default_magazine = null
-	///Assoc list of magazine types, standard ammo first, special ammo second
+	/// Assoc list of magazine types, standard ammo first, special ammo second
 	var/list/ammobag_magazines = list()
-	///Can only special-ammo ammobags restock these?
+	/// Can only special-ammo ammobags restock these?
 	var/ammobag_spec_required = FALSE
-	///How many charges it costs an ammobag to fabricate ammo for this gun
+	/// How many charges it costs an ammobag to fabricate ammo for this gun
 	var/ammobag_restock_cost = 0
 
+	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	add_residue = TRUE
 
-	add_residue = TRUE // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	/// Can you use the gun on ammo to reload?
+	var/allowReverseReload = TRUE
 
-	var/allowReverseReload = TRUE //Use gun on ammo to reload
-	var/allowDropReload = TRUE    //Drag&Drop ammo onto gun to reload
+	/// Can you Drag & Drop ammo onto the gun to reload?
+	var/allowDropReload = TRUE
 
+	/// `icon_state` of the muzzle flash of the gun (if any)
 	muzzle_flash = "muzzle_flash"
 
 	// caliber list: update as needed

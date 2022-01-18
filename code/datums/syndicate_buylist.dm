@@ -1,3 +1,6 @@
+/**
+ * Builds the entire syndicate buylist cache, retrieved by uplinks. Ideally only executed once during the pre-round
+ */
 proc/build_syndi_buylist_cache()
 	var/list/stuff = typesof(/datum/syndicate_buylist)
 	syndi_buylist_cache.Cut()
@@ -13,22 +16,44 @@ proc/build_syndi_buylist_cache()
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
 
 /datum/syndicate_buylist
+	/// Name of the buylist entry
 	var/name = null
+	/// A typepath for the item that will be spawned when the datum is purchased
 	var/atom/item = null
+	/// A typepath for the second, optional, item that will be spawned when the datum is purchased
 	var/atom/item2 = null
+	/// A typepath for the third, optional, item that will be spawned when the datum is purchased
 	var/atom/item3 = null
-	var/cost = null // Cost of the item. Leave 0 to make it unavailable.
+	/// The TC cost of the datum in a buylist. Set to 0 to make it unavailable
+	var/cost = null
+	/// The extended description that will go in the "about" section of the item
 	var/desc = null
-	var/list/job = null // For job-specific items.
-	var/datum/objective/objective = null // For objective-specific items. Needs to be a type e.g. /datum/objective/assassinate.
-	var/telecrystal = null //for the telecrystal-only category
-	var/list/blockedmode = null // For items that can't show up in certain modes (affects uplink and surplus crates). Defined by the game mode datum (checks for children too).
+	/// A list of job names that you want the item to be restricted to, e.g. `list("Clown", "Captain")`
+	var/list/job = null
+	/// For items that only can be purchased when you have a specfic objective. Needs to be a type, e.g. `/datum/objective/assassinate`
+	var/datum/objective/objective = null
+	/// Is this buylist entry for ejecting TC from an uplink?
+	var/telecrystal = FALSE
+	/// A list of gamemode datum types that prevent it from showing up (surplus and uplinks both affected), e.g. `list(/datum/game_mode/spy, /datum/game_mode/revolution)`
+	var/list/blockedmode = null
+	/// A list of gamemode datum types that require the gamemode to be set to for this buylist entry to show up, e.g. `list(/datum/game_mode/spy, /datum/game_mode/revolution)`
 	var/list/exclusivemode = null
-	var/vr_allowed = 1
-	var/not_in_crates = 0 // This should not go in surplus crates.
-	var/category //WIP
+	/// If the item should be allowed to be purchased in the VR murderbox
+	var/vr_allowed = TRUE
+	/// If the item should show up in surplus crates or not
+	var/not_in_crates = FALSE
+	/// The category of the item, currently unused (somewhat used in the Nukeop Commander uplink)
+	var/category
 
-	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate=FALSE) // Use this to run code when the item is spawned.
+	/**
+	 * Runs on the purchase of the buylist datum
+	 *
+	 * Arguments:
+	 * `item`, the item you're expecting
+	 * `owner`, the person who bought the item
+	 * `in_surplus_crate`, is TRUE if the item is in a surplus crate, FALSE otherwise.
+	 */
+	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate = FALSE)
 		return
 
 ////////////////////////////////////////// Standard items (generic & nukeops uplink) ///////////////////////////////
@@ -76,8 +101,6 @@ proc/build_syndi_buylist_cache()
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
 	blockedmode = list(/datum/game_mode/revolution)
-
-
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
