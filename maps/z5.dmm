@@ -4046,7 +4046,7 @@ turf/simulated/shuttle/wall{
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "kx" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,

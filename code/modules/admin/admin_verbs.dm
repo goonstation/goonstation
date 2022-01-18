@@ -278,8 +278,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
-		/client/proc/respawn_heavenly,
-		/client/proc/respawn_demonically,
+		/client/proc/respawn_cinematic,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -444,8 +443,6 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
-
-		/client/proc/player_panel_tgui,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -678,13 +675,6 @@ var/list/special_pa_observing_verbs = list(
 
 /client/proc/player_panel()
 	set name = "Player Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	if (src.holder && !src.holder.tempmin)
-		src.holder.player()
-	return
-
-/client/proc/player_panel_tgui()
-	set name = "Player Panel TGUI"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	admin_only
 	if (src.holder.tempmin)
@@ -936,31 +926,26 @@ var/list/fun_images = list()
 	boutput(src, "<b>Last touched by:</b> [key_name(O.fingerprintslast)].")
 	return
 
-/client/proc/respawn_heavenly()
-	set name = "Respawn Heavenly"
+/client/proc/respawn_cinematic()
+	set name = "Respawn Cinematic"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Respawn yourself from the heavens"
+	set desc = "Respawn yourself with a special effect"
 	set popup_menu = 0
 	admin_only
 
-	src.respawn_as_self()
-
-	var/mob/M = src.mob
-	M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
-	heavenly_spawn(M)
-
-/client/proc/respawn_demonically()
-	set name = "Respawn Demonically"
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set desc = "Respawn yourself from the depths of the underfloor."
-	set popup_menu = 0
-	admin_only
-
-	src.respawn_as_self()
-
-	var/mob/living/carbon/human/M = src.mob
-	M.bioHolder.AddEffect("hell_fire", magical = 1)
-	demonic_spawn(M)
+	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/selection = tgui_input_list(usr, "Select Respawn type.", "Cinematic Respawn", respawn_types)
+	switch(selection)
+		if("Heavenly")
+			src.respawn_as_self()
+			var/mob/M = src.mob
+			M.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
+			heavenly_spawn(M)
+		if("Demonically")
+			src.respawn_as_self()
+			var/mob/living/carbon/human/M = src.mob
+			M.bioHolder.AddEffect("hell_fire", magical = 1)
+			demonic_spawn(M)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"

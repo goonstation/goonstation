@@ -15,15 +15,13 @@
 
 	examine()
 		. = ..()
-		if(src.hiddenFrom?.Find(usr.client)) //invislist
-			return
+
 		if(!alive)
 			. += "<span class='alert'><B>the disgusting creature is not moving</B></span>"
 		else if (src.health > 40)
 			. += "<span class='alert'><B>the spindly-legged head looks healthy and strong</B></span>"
 		else
 			. += "<span class='alert'><B>the ugly thing is missing several limbs</B></span>"
-		return
 
 	filter_target(var/mob/living/C)
 		//Don't want a dead mob, don't want a mob with the same mind as the owner

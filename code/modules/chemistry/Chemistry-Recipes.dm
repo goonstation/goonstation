@@ -688,7 +688,7 @@ datum
 			id = "hard_punch"
 			result = "hard_punch"
 			required_reagents = list("simplesyrup" = 1, "sangria" = 1, "juice_apple" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
-			result_amount = 2
+			result_amount = 5
 			mix_phrase = "This drink is so disgustingly sweet you start to get a headache from smelling it."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
