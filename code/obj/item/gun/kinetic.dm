@@ -5,21 +5,39 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
-	var/max_ammo_capacity = 1 // How much ammo can this gun hold? Don't make this null (Convair880).
-	var/caliber = null // Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
-	var/has_empty_state = 0 //Does this gun have a special icon state for having no ammo lefT?
-	var/gildable = 0 //Can this gun be affected by the [Helios] medal reward?
-	var/gilded = FALSE //Is this gun currently gilded by the [Helios] medal reward?
-	var/auto_eject = 0 // Do we eject casings on firing, or on reload?
-	var/casings_to_eject = 0 // If we don't automatically ejected them, we need to keep track (Convair880).
-	var/default_magazine //What's the default magazine used in this gun? Set this in place of putting the type in New()
+	/// How much ammo can this gun hold? Don't make this null (Convair880).
+	var/max_ammo_capacity = 1
+	/// Can be a list too. The .357 Mag revolver can also chamber .38 Spc rounds, for instance (Convair880).
+	var/caliber = null
+	/// Does this gun have a special icon state for having no ammo lefT?
+	var/has_empty_state = FALSE
+	/// Can this gun be affected by the [Helios] medal reward?
+	var/gildable = FALSE
+	/// Is this gun currently gilded by the [Helios] medal reward?
+	var/gilded = FALSE
+	/// Do we eject casings on firing, or on reload?
+	var/auto_eject = FALSE
+	/// If we don't automatically ejected them, we need to keep track (Convair880).
+	var/casings_to_eject = 0
+	/// What's the default magazine used in this gun? Set this in place of putting the type in New()
+	var/default_magazine = null
+	/// Assoc list of magazine types, standard ammo first, special ammo second
+	var/list/ammobag_magazines = list()
+	/// Can only special-ammo ammobags restock these?
+	var/ammobag_spec_required = FALSE
+	/// How many charges it costs an ammobag to fabricate ammo for this gun
+	var/ammobag_restock_cost = 0
 
+	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	add_residue = TRUE
 
-	add_residue = 1 // Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
+	/// Can you use the gun on ammo to reload?
+	var/allowReverseReload = TRUE
 
-	var/allowReverseReload = 1 //Use gun on ammo to reload
-	var/allowDropReload = 1    //Drag&Drop ammo onto gun to reload
+	/// Can you Drag & Drop ammo onto the gun to reload?
+	var/allowDropReload = TRUE
 
+	/// `icon_state` of the muzzle flash of the gun (if any)
 	muzzle_flash = "muzzle_flash"
 
 	// caliber list: update as needed
@@ -449,6 +467,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_22HP
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_22, /obj/item/ammo/bullets/bullet_22HP)
+	ammobag_restock_cost = 1
 
 	New()
 		ammo = new default_magazine
@@ -734,6 +754,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/a357
 	fire_animation = TRUE
+	ammobag_magazines = list(/obj/item/ammo/bullets/a357, /obj/item/ammo/bullets/a357/AP)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
@@ -993,6 +1015,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/a12
+	ammobag_magazines = list(/obj/item/ammo/bullets/a12, /obj/item/ammo/bullets/aex)
+	ammobag_restock_cost = 2
 
 	New()
 		if(prob(10))
@@ -1020,6 +1044,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		return 1
 
 	engineer
+		ammobag_magazines = list(/obj/item/ammo/bullets/a12/weak, /obj/item/ammo/bullets/a12)
 		New()
 			..()
 			src.name = replacetext("[src.name]", "12", "6") //only half as good
@@ -1331,6 +1356,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = "muzzle_flash_launch"
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/rpg
+	ammobag_magazines = list(/obj/item/ammo/bullets/rpg)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 4
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1483,6 +1511,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	has_empty_state = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm)
+	ammobag_restock_cost = 1
 
 	New()
 		ammo = new default_magazine
@@ -1528,6 +1558,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 12.5
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
+	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
+	ammobag_restock_cost = 2
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1561,6 +1593,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
 	fire_animation = TRUE
+	ammobag_magazines = list(/obj/item/ammo/bullets/tranq_darts/syndicate/pistol)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
@@ -1599,6 +1633,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	caliber = 0.223
 	max_ammo_capacity = 20
 	auto_eject = 1
+	ammobag_magazines = list(/obj/item/ammo/bullets/assault_rifle, /obj/item/ammo/bullets/assault_rifle/armor_piercing)
+	ammobag_restock_cost = 2
 
 	two_handed = 1
 	can_dual_wield = 0
@@ -1669,6 +1705,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/lmg
+	ammobag_magazines = list(/obj/item/ammo/bullets/lmg)
+	ammobag_restock_cost = 3
 
 	New()
 		ammo = new default_magazine
@@ -1706,6 +1744,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/cannon/single
+	ammobag_magazines = list(/obj/item/ammo/bullets/cannon)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 3
 
 
 	New()
@@ -1734,6 +1775,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	auto_eject = 1
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
+	ammobag_magazines = list(/obj/item/ammo/bullets/grenade_round/explosive)
+	ammobag_spec_required = TRUE
+	ammobag_restock_cost = 3
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1790,6 +1834,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot_delay = 1 SECOND
 	default_magazine = /obj/item/ammo/bullets/rifle_762_NATO
+	ammobag_magazines = list(/obj/item/ammo/bullets/rifle_762_NATO)
+	ammobag_restock_cost = 3
 
 	var/datum/movement_controller/snipermove = null
 
@@ -1836,7 +1882,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			M.client.pixel_y = 0
 
 		M.use_movement_controller = null
-		M.keys_changed(0,0xFFFF)
+		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
 	attack_hand(mob/user as mob)
