@@ -37866,7 +37866,7 @@
 	name = "Combustion Chamber Vent";
 	pixel_y = 28
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -12;
 	pixel_y = 28
