@@ -1,5 +1,9 @@
 
 (t)mon jan 17 22
+(u)DimWhat
+(p)7117
+(e)🎨|sprites
+(*)Added backpacks, belts, radio, and a couple special helmet sprites for monkeys!
 (u)CrystalClover
 (p)7162
 (e)🎨|sprites
