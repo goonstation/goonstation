@@ -11218,6 +11218,17 @@
 /obj/machinery/power/furnace/thermo,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
+"gru" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/landmark{
+	name = "JoinLate"
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/arrival/station)
 "grH" = (
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -67910,9 +67921,9 @@ teB
 teB
 saJ
 teB
+gru
 teB
-teB
-teB
+gru
 teB
 saJ
 teB
@@ -70024,9 +70035,9 @@ umD
 saJ
 saJ
 teB
+gru
 teB
-teB
-teB
+gru
 teB
 saJ
 saJ
