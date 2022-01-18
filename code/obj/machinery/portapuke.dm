@@ -3,6 +3,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "puke_0"
 	desc = "A weapon of pure terror."
+	is_syndicate = 1
 	density = 1
 	anchored = 0
 	p_class = 1.5
