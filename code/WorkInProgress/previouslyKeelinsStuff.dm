@@ -562,6 +562,11 @@ var/reverse_mode = 0
 	var/weapon_name = null
 	event_handler_flags = USE_FLUID_ENTER
 
+
+	disposing()
+		my_target = null
+		. = ..()
+
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))

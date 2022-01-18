@@ -598,31 +598,54 @@
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
 	c_flags = COVERSEYES | BLOCKCHOKE
-	see_face = 0.0
+	see_face = FALSE
 	item_state = "welding"
 	protective_temperature = 1300
 	m_amt = 3000
 	g_amt = 1000
-	var/up = 0
-	color_r = 0.5 // darken
-	color_g = 0.5
-	color_b = 0.5
-	var/nodarken = 0
+	var/up = FALSE // The helmet's current position
+	color_r = 0.3 // darken
+	color_g = 0.3
+	color_b = 0.3
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_down()
+	proc/flip_down(mob/user)
+		up = FALSE
+		see_face = FALSE
+		icon_state = "welding"
+		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
+		color_r = initial(color_r) // darken
+		color_g = initial(color_g)
+		color_b = initial(color_b)
+		user.set_clothing_icon_dirty()
+
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_up()
+	proc/flip_up(mob/user)
+		up = TRUE
+		see_face = TRUE
+		icon_state = "welding-up"
+		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
+		color_r = 1 // no effect
+		color_g = 1
+		color_b = 1
+		user.set_clothing_icon_dirty()
+
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+
+	attack_self(mob/user) //let people toggle these inhand too
+		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
+			toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
+		..()
+
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 

@@ -276,6 +276,9 @@
 				C.RemoveComponent(/datum/component/loctargeting/mat_triggersonlife)
 		..()
 
+	proc/update_wear_image(mob/living/carbon/human/H, override)
+		return
+
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
 	wear_image = image(wear_image_icon)
@@ -1421,6 +1424,7 @@
 	disposing_abilities()
 	setItemSpecial(null)
 	if (src.inventory_counter)
+		src.inventory_counter.vis_locs = null
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 

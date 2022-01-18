@@ -301,6 +301,18 @@
 		if (mainframe)
 			mainframe.ai_state_laws_all()
 
+	verb/ai_set_laws_all()
+		set category = "AI Commands"
+		set name = "Set Fake Laws"
+		if (mainframe)
+			mainframe.ai_set_fake_laws()
+
+	verb/ai_state_laws_fake()
+		set category = "AI Commands"
+		set name = "State Fake Laws"
+		if (mainframe)
+			mainframe.ai_state_fake_laws()
+
 	verb/ai_statuschange()
 		set category = "AI Commands"
 		set name = "AI status"

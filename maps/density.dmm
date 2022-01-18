@@ -684,7 +684,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bA" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
@@ -4443,7 +4443,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/bathroom)
 "jA" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/grass,
@@ -4472,7 +4472,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jD" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},

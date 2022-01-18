@@ -548,6 +548,15 @@ This is basically useless for anyone but miners.
 	job = list("Miner")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
+/datum/syndicate_buylist/traitor/kudzuseed
+	name = "Kudzu Seed"
+	item = /obj/item/kudzuseed
+	cost = 4
+	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
+	vr_allowed = 0
+	job = list("Botanist", "Staff Assistant")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
 /datum/syndicate_buylist/traitor/maneater
 	name = "Maneater Seed"
 	item = /obj/item/seed/maneater

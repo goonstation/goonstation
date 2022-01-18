@@ -3230,7 +3230,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bqq" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
@@ -3502,7 +3502,7 @@
 "buO" = (
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/grime,
@@ -12718,7 +12718,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
 "fkf" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small/blueish{
 	dir = 8
 	},
@@ -16475,7 +16475,7 @@
 	name = "Crashed Limo"
 	})
 "gSX" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small/blueish{
 	dir = 8
 	},
@@ -19890,7 +19890,7 @@
 	name = "Scientist"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 32
 	},
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -25216,7 +25216,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -32227,7 +32227,7 @@
 	icon_state = "2-5"
 	},
 /obj/table/wood/round/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -26
 	},
 /turf/simulated/floor/plating,
@@ -35619,7 +35619,7 @@
 /obj/item/reagent_containers/food/snacks/cereal_box{
 	pixel_x = -3
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -32
 	},
 /turf/simulated/floor,
@@ -36101,7 +36101,7 @@
 "pxx" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/arcade/half,

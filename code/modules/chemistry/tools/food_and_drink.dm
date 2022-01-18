@@ -17,6 +17,12 @@
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
 	var/doants = 1
 	var/made_ants = 0
+	/// for if a food is intended to be able to be sliced
+	var/sliceable = FALSE
+	/// what product to spawn when sliced
+	var/slice_product = null
+	/// how much product to spawn when sliced
+	var/slice_amount = 0
 	rc_flags = 0
 
 	proc/on_table()
@@ -63,6 +69,23 @@
 			boutput(M, "<span class='alert'>Your injuries are too severe to heal by nourishment alone!</span>")
 		else
 			M.HealDamage("All", healing, healing)
+
+	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
+	//there will probably be a good deal of food that can be sliced but use their own slicing mechanisms instead of this, just gonna make a few things sliceable for now (aka just tomatoes, pepperoni, and cheese)
+	//might be a good idea to call a proc in the src obj and carry over the new src.slice_product so the src can fuck with the new obj as necessary?
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
+			var/turf/T = get_turf(src)
+			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
+			var/amount_to_transfer = src.reagents.total_volume / src.slice_amount
+			for (var/i in 1 to src.slice_amount)
+				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
+				src.reagents.trans_to(slice, amount_to_transfer)
+			qdel (src)
+		else
+			..()
+
 
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
@@ -444,6 +467,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		update_gulp_size()
 		doants = src.reagents && src.reagents.total_volume > 0
 
@@ -700,6 +724,7 @@
 	var/image/fluid_image = null
 
 	on_reagent_change()
+		..()
 		if (reagents.total_volume)
 			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
 			//if (!src.fluid_image)
@@ -799,6 +824,7 @@
 		src.UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	custom_suicide = 1
@@ -1000,6 +1026,7 @@
 	var/image/image_doodad
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1455,6 +1482,7 @@
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
+		..()
 		src.underlays = null
 		if (reagents.total_volume >= 0)
 			if(reagents.total_volume == 0)
@@ -1584,6 +1612,7 @@
 		UpdateIcon()
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()
@@ -1671,6 +1700,7 @@
 
 	var/image/fluid_image
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside
@@ -1694,6 +1724,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon() //updates icon based on fluids inside

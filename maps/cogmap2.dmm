@@ -5207,7 +5207,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -6162,7 +6162,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "anz" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "anA" = (
@@ -19119,7 +19119,7 @@
 	},
 /area/station/crew_quarters/locker)
 "aRR" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -55426,6 +55426,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "crV" = (
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "crW" = (
@@ -56650,6 +56651,14 @@
 /area/station/science/testchamber)
 "cuM" = (
 /obj/table/reinforced/auto,
+/obj/item/device/light/glowstick{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 4;
+	pixel_y = 11
+	},
 /obj/machinery/recharger,
 /obj/item/clothing/head/helmet/camera,
 /obj/item/clothing/glasses/sunglasses,
@@ -63124,13 +63133,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "cJw" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cJx" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/camera{
@@ -64401,7 +64410,7 @@
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay)
 "cMF" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/light{
@@ -77709,30 +77718,11 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "dHM" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/device/radio/beacon,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/paper/book/from_file/critter_compendium,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/crate,
 /obj/machinery/light,
+/obj/storage/crate/adventure,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "dJs" = (

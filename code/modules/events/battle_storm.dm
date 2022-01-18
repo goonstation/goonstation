@@ -77,31 +77,32 @@
 			var/sound/blowoutsound = sound('sound/misc/blowout_short.ogg')
 			blowoutsound.repeat = 0
 			blowoutsound.channel = 5
+			blowoutsound.volume = 50
 			world << blowoutsound
 			boutput(world, "<span class='alert'><B>WARNING</B>: A BATTLE STORM has struck [station_name(1)]. You will take damage unless you are in [get_battle_area_names(safe_area_names)]!</span>")
 
 			for (var/mob/M in mobs)
 				SPAWN_DBG(0)
 					if (!inafterlife(M) && !isVRghost(M))
-						shake_camera(M, 200, 16) // wire note: lowered strength from 840 to 400, by popular request
+						shake_camera(M, 100, 16) // wire note: lowered strength from 840 to 400, by popular request
 
 			// Hit everyone every 2 seconds when they are not in the safe zone
 			// Everyone gets set more and more on fire the longer they arent in the safe area
-			for(var/i = 0, i < 20, i++)
-				sleep(1 SECOND)
+			for(var/i = 0, i < 10, i++)
+				sleep(2 SECONDS)
 				for(var/mob/living/M in mobs)
 					var/area/mob_area = get_area(M)
 					if(mob_area?.storming)
-						M.changeStatus("burning", 8 SECONDS)
-						M.changeStatus("radiation", 8 SECONDS)
-						random_brute_damage(M, rand(3,9))
+						M.changeStatus("burning", clamp(2 * activations, 2, 8) SECONDS)
+						if  (activations > 1)
+							M.changeStatus("radiation", clamp(1 * activations, 2, 6) SECONDS)
+						random_brute_damage(M, clamp(2 * activations, 2, 10))
 
 			command_alert("The storm has almost passed. ETA 5 seconds until all areas are safe.", "BATTLE STORM ABOUT TO END")
 
 			sleep(5 SECONDS)
 
 			blowout = 0
-			DEBUG_MESSAGE("Clearing icons I hope")
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
 				if (S.z == 1)
@@ -121,6 +122,6 @@ proc/get_battle_area_names(var/list/strings)
 	. = ""
 	if(strings.len == 1)
 		return "[strings[1]]"
-	for(var/i = 1, i < strings.len - 1; i++)
+	for(var/i = 1, i < strings.len; i++)
 		. += strings[i] + ", "
 	. += "or [strings[strings.len]]"

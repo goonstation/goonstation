@@ -2,7 +2,7 @@
 
 /obj/item/device/pda2
 	name = "PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. It has a slot for an ID card, and a hole to put a pen into."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
@@ -519,7 +519,7 @@
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
 	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
-		if (usr.stat || usr.restrained())
+		if(!can_act(usr))
 			return
 
 		src.add_fingerprint(usr)
@@ -709,7 +709,7 @@
 	if (!target || !message)
 		return
 
-	if (is_incapacitated(usr))
+	if (!can_act(usr))
 		return
 
 	if (istype(src.host_program))

@@ -1,6 +1,6 @@
 /obj/item/device/flash
 	name = "flash"
-	desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
 	force = 1

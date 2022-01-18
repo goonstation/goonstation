@@ -320,6 +320,7 @@
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
 	cell_type = /obj/item/ammo/power_cell
+	mats = 0 //no
 	New()
 		. = ..()
 		AddComponent(/datum/component/cell_holder, FALSE)
