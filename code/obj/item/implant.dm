@@ -1142,7 +1142,9 @@ THROWING DARTS
 	sneaky = 1
 	New()
 		var/obj/item/implant/microbomb/macrobomb/newbomb = new/obj/item/implant/microbomb/macrobomb( src )
-		newbomb.explosionPower = rand(22,32)
+		var/datum/syndicate_buylist/traitor/macrobomb/bomb_datum
+		for(var/i in 1 to bomb_datum.cost)
+			newbomb.explosionPower += (prob(90) ? 1 : 2)
 		src.imp = newbomb
 		..()
 		return
@@ -1153,7 +1155,7 @@ THROWING DARTS
 	sneaky = 1
 	New()
 		var/obj/item/implant/microbomb/newbomb = new/obj/item/implant/microbomb( src )
-		newbomb.explosionPower = prob(75) ? 2 : 3
+		newbomb.explosionPower = prob(90) ? 1 : 2
 		src.imp = newbomb
 		..()
 		return
