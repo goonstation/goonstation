@@ -2920,14 +2920,14 @@
 /datum/commodity/blackmarket/surplus/baton
 	comname = "Imported Stun Baton"
 	comtype = /obj/item/baton
+	//custom power cell with 0 power - baton is only usable for harmbatoning. get a cell from security or make one with matsci if you want to use it normally
 	cell_type = /obj/item/ammo/power_cell/dummy
 	desc_sell = "Excess stun batons. Quality may vary, batteries not included."
 	price = 30000
 	upperfluc = 10000
 	lowerfluc = -10000
 
-// NOTE: A full set of armour ordered at the same time shouldn't match, but they should look cool together. Keep in mind when adding or removing gear here.
-
+// NOTE: A full set of armour ordered at the same time shouldn't match, but they should look cool together.
 /datum/commodity/blackmarket/surplus/helmet
 	comname = "Armor Helmet"
 	comtype = null
@@ -2954,6 +2954,7 @@
 				comtype = /obj/item/clothing/head/helmet/hardhat/security
 
 /datum/commodity/blackmarket/surplus/suit
+	//overpriced to avoid dumb money exploits
 	comname = "Security-Grade Jumpsuit"
 	comtype = null
 	desc_sell = "Yeah, I can get you some genuine security jumpsuits. Original holo-monograms included, of course."
@@ -2967,6 +2968,9 @@
 				comtype = /obj/item/clothing/under/rank/security
 			if ("tuesday")
 				comtype = /obj/item/clothing/under/chameleon
+				price = 14000
+				upperfluc = 4000
+				lowerfluc = -4000
 			if ("wednesday")
 				comtype = /obj/item/clothing/under/rank/security
 			if ("thursday")
@@ -3008,8 +3012,8 @@
 	comname = "Tactical Gloves"
 	comtype = /obj/item/clothing/gloves/swat
 	price = 8400
-	upperfluc = 10000
-	lowerfluc = -10000
+	upperfluc = 1400
+	lowerfluc = -1400
 				
 /datum/commodity/blackmarket/surplus/boots
 	comname = "Tactical Boots"
@@ -3083,6 +3087,7 @@
 	lowerfluc = -3000
 	
 /datum/commodity/blackmarket/surplus/breachinghammer
+	//some people want this to be cheaper, those people are fools. this is an amazing item and if anything it's too cheap here
 	comname = "Airlock Breaching Hammer"
 	comtype = /obj/item/breaching_hammer
 	desc_sell = "Got some premium breaching hammers in stock. Solid frame, hand-crafted, guaranteed to knock an airlock down in a matter of minutes if not seconds. This is prime stuff, spacer."
@@ -3091,6 +3096,7 @@
 	lowerfluc = -50000
 	
 /datum/commodity/blackmarket/surplus/riot_grenade
+	//if you want good grenades you'll have to get those at qm
 	comname = "Capsaicin Grenade"
 	comtype = 
 	desc_sell = ""
@@ -3368,7 +3374,7 @@
 			if ("tuesday")
 				comtype = /obj/item/clothing/under/jersey
 				name = "Commemerative Basketball Jersey"
-				desc = "A jersey worn by Red Hot Benson the during the '56 Space Olympics. It seems to be advertising something."
+				desc = "A replica of a jersey worn by Red Hot Benson the during the '56 Space Olympics."
 				icon_state = "dan_jersey"
 				item_state = "dan_jersey"
 			if ("wednesday")
@@ -3384,7 +3390,7 @@
 				name = "long sleeved logo shirt"
 				icon_state = "dan_red"
 				item_state = "dan_red"
-				desc = "A comfy looking long sleeved shirt with the Discount Dan's logo stitched on the front. Delicious-looking tortilla chips are stitched on the back."
+				desc = "A comfy looking long sleeved shirt with 'I may be mad but I'm not off my rocker!!!' written on the front. Is this some kind of joke?"
 			if ("saturday")
 				comtype = /obj/item/clothing/suit/labcoat/dan
 			if ("sunday")
@@ -3439,7 +3445,7 @@
 	upperfluc = 10000
 	lowerfluc = -10000
 /datum/commodity/blackmarket/wrestler/goldfishcracker
-	//farmable from a strange seeds plant - work out how profitible this is compared to other plants (especially rock plant)
+	//farmable from a strange seeds plant - work out how profitible this is compared to other plants (especially rock plant).
 	comname = "Goldfish Cracker"
 	comtype = /obj/item/reagent_containers/food/snacks/goldfish_cracker
 	desc_sell = "These things are LIFESAVERS when it comes to building muscle! I NEED AS MANY AS YOU CAN GET!"
@@ -3448,6 +3454,7 @@
 	upperfluc = 500
 	lowerfluc = -500
 /datum/commodity/blackmarket/wrestler/teapot
+	//not really worth it but it's an excuse to take these out of the hidden workshop
 	comname = "Handmade Tetsubin"
 	comtype = /obj/item/reagent_containers/food/drinks/teapot
 	desc_sell = "I'm an avid collector of fancy teapots, and I'd like to get my hand on any interesting ones you find."
@@ -3463,8 +3470,8 @@
 	upperfluc = 800
 	lowerfluc = -800
 /datum/commodity/blackmarket/wrestler/uplink_telecrystal
-	//this is the bad guy tokens, and it's a lowball offer. this is for using telescrystals to bribe crew memebers
-	comname = "Pure Telecrystal"
+	//this is the bad guy tokens, and it's a lowball offer. this is primarily for using telescrystals to bribe crew members (who have no legitimate use for TCs)
+	comname = "Pure Telecrystal Token"
 	comtype = /obj/item/uplink_telecrystal
 	desc_sell = "These things are practically CURRENCY on some planets! I can get you a GREAT DEAL on them!"
 	price = 30000
@@ -3497,7 +3504,7 @@
 	comname = "Captain's Space Suit"
 	comtype = /obj/item/clothing/suit/space/captain
 	desc_sell = "The old style green space suits NT used to issue to their captains are hella valuable, but unfortunately also hella rare. Hey, you're a Traser, aren't ya? Could you get your captain's space suit to me?"
-	price = 600000
+	price = 605000
 	upperfluc = 50000
 	lowerfluc = -50000
 /datum/commodity/blackmarket/wrestler/dagger
