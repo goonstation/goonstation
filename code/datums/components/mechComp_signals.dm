@@ -266,6 +266,9 @@
 	if(trigger in src.connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 		return
+	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
+		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
+		return
 	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
