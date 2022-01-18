@@ -1,4 +1,16 @@
 
+(t)tue jan 18 22
+(u)Zonespace
+(p)6276
+(e)🆕🗺🎨⚖📄|feature, mapping, sprites, balance, tgui
+(*)Nuclear Operative Commanders now have a specialized uplink! More info in Minor Changes. Nuclear bomb remote has been moved to the uplink.
+(+)The commander's uplink uses "points" versus the traditional TC, and gains 1 point for every 20 people online (minimum of 2 points)
+(+)The uplink has 6 items, being the Nuclear bomb teleporter, reinforcement beacon, ammo bag, specialist ammo bag, laser designator, and rapid deployment remote, the new ones described in further changelog entries.
+(+)First is a reinforcement beacon for 2 points to summon a syndicate gunbot to assist the nuclear team.
+(+)Second is the Ammo Bag and its specialist version (2/3 points, respectively), which both allow the nuclear operatives to fabricate more ammunition for their guns.
+(+)Third is the laser designator for 3 points, which allows the commander to call in two high-explosive airstrikes from the Cairngorm to hit anywhere they designate!
+(+)Finally is the Rapid Deployment Remote, costing a whole 4 points, which allows the commander to send the nuclear team in through drop pods onto anywhere on station!
+(+)Thank you to Cogwerks for the 152mm gun sprites, Waffleoffle for the laser designator/ammobag sprites, and Dimwhat for the gunbot/drop pod sprites!
 (t)mon jan 17 22
 (u)DimWhat
 (p)7117
