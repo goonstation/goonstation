@@ -1125,7 +1125,7 @@ proc/debug_map_apc_count(delim,zlim)
 			var/color_factor = 4
 
 			if(!(area in processed_areas))
-				for (var/obj/machinery/light_switch/someswitch in area.contents)
+				for (var/obj/machinery/light_switch/someswitch in area.machines)
 					switchcount += 1
 					switch_turfs += someswitch.loc
 				img.app.overlays = list(src.makeText(switchcount, align_left=TRUE))
