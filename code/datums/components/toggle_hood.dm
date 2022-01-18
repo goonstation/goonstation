@@ -39,4 +39,5 @@
 	suit.ability_buttons -= toggle
 	suit = null
 	qdel(toggle)
+	toggle = null
 	. = ..()
