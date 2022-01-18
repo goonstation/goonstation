@@ -308,6 +308,8 @@
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	var/volume = 50
 	var/randomized_pitch = 1
+	var/mask_bald = FALSE
+	var/bald_desc_state = "For clowns who want to show off their hair!"
 
 	proc/honk_nose(mob/user as mob)
 		if (!spam_flag)
@@ -319,6 +321,22 @@
 				spam_flag = 0
 			return 1
 		return 0
+
+	attack_self(mob/user as mob)
+		if(!src.mask_bald)
+			src.mask_bald = TRUE
+			src.name = "wigless clown mask"
+			src.desc = bald_desc_state
+			src.icon_state = "[src.icon_state]_bald"
+			src.item_state = "clown_bald"
+			user.show_text("You tuck back the wig on the [src].")
+		else
+			src.mask_bald = FALSE
+			src.name = initial(src.name)
+			src.desc = initial(src.desc)
+			src.icon_state = initial(src.icon_state)
+			src.item_state = "clown_hat"
+			user.show_text("You untuck the wig from the [src].")
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
