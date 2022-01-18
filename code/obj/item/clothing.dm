@@ -75,9 +75,6 @@
 			src.stains = list()
 			src.UpdateName()
 
-	proc/update_wear_image(mob/living/carbon/human/H, override)
-		return
-
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
