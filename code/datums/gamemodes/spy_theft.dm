@@ -79,17 +79,17 @@
 	proc/pick_reward_tier(var/val)
 		switch(val)
 			if (1)
-				value_high = 4
+				value_high = 8
 				value_low = 0
 			if (2)
-				value_high = 6
-				value_low = 3
+				value_high = 12
+				value_low = 6
 			if (3)
-				value_high = 8
-				value_low = 5
+				value_high = 16
+				value_low = 10
 			if (4)
 				value_high = 99
-				value_low = 7
+				value_low = 14
 		pick_a_reward()
 
 	proc/pick_a_reward()

@@ -29,9 +29,7 @@
 			..(user)
 
 	update_stack_appearance()
-		if(material)
-			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
-		return
+		name = "[amount ? "[amount] " : ""][syndicate_currency][amount > 1 ? "s":""]"
 
 /obj/item/explosive_uplink_telecrystal
 	name = "pure telecrystal"

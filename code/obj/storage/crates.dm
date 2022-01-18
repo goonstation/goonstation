@@ -269,6 +269,9 @@
 			gibs(src.loc)
 			return
 
+#define SURPLUS_CRATE_TC_MIN 36
+#define SURPLUS_CRATE_TC_MAX 48
+
 /obj/storage/crate/syndicate_surplus
 	var/nest_amt = 0
 	var/static/list/possible_items = list()
@@ -298,9 +301,9 @@
 					possible_items += S
 
 		if (islist(possible_items) && length(possible_items))
-			while(telecrystals < 18)
+			while(telecrystals < 36)
 				var/datum/syndicate_buylist/item_datum = pick(possible_items)
-				if(telecrystals + item_datum.cost > 24) continue
+				if(telecrystals + item_datum.cost > 48) continue
 				var/obj/item/I = new item_datum.item(src)
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
@@ -309,6 +312,8 @@
 						owner.mind.traitor_crate_items += item_datum
 				telecrystals += item_datum.cost
 		#undef NESTED_SCALING_FACTOR
+#undef SURPLUS_CRATE_TC_MIN
+#undef SURPLUS_CRATE_TC_MAX
 
 /obj/storage/crate/pizza
 	name = "pizza box"

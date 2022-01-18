@@ -17,7 +17,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
-	var/uses = 12 // Amount of telecrystals.
+	var/uses = 25 // Amount of telecrystals.
 	var/list/datum/syndicate_buylist/items_general = list() // See setup().
 	var/list/datum/syndicate_buylist/items_job = list()
 	var/list/datum/syndicate_buylist/items_objective = list()
