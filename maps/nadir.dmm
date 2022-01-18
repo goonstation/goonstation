@@ -845,6 +845,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/storage/closet/fire,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -2342,21 +2343,13 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering/ce)
 "boT" = (
-/obj/rack,
-/obj/item/storage/belt/utility{
-	pixel_x = -3;
-	pixel_y = -3
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
 	},
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 1
-	},
-/obj/item/crowbar,
-/obj/item/device/light/flashlight{
-	pixel_x = 7
-	},
-/obj/random_item_spawner/tools/one_or_zero,
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/west)
+/turf/simulated/floor/engine,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "bph" = (
 /obj/machinery/light{
 	dir = 8;
@@ -3882,9 +3875,9 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "cbe" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/disposalpipe/loafer/horizontal,
 /turf/simulated/floor/black/grime,
-/area/station/maintenance/southwest)
+/area/station/maintenance/west)
 "cbE" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
@@ -3934,10 +3927,13 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge)
 "cdv" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	dir = 4
+/obj/machinery/shieldgenerator/energy_shield,
+/obj/disposalpipe/segment/food{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
-/area/abandonedmedicalship/robot_trader)
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/west)
 "cdL" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -4118,12 +4114,12 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "ciR" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	dir = 5
+/obj/storage/closet/fire,
+/obj/disposalpipe/segment/food{
+	dir = 4
 	},
-/area/iss{
-	name = "Drop Capsule"
-	})
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/west)
 "cjf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4904,6 +4900,13 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/treatment2)
+"cGB" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	dir = 4
+	},
+/area/iss{
+	name = "Drop Capsule"
+	})
 "cGI" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/engine,
@@ -4948,15 +4951,11 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "cIp" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/disposalpipe/segment/food{
+	dir = 4
 	},
-/obj/item/suture,
-/obj/item/scalpel,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/catering)
 "cJf" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/camera{
@@ -5364,15 +5363,21 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "cUx" = (
-/obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader"
+/obj/rack,
+/obj/item/storage/belt/utility{
+	pixel_x = -3;
+	pixel_y = -3
 	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 1
+	},
+/obj/item/crowbar,
+/obj/item/device/light/flashlight{
+	pixel_x = 7
+	},
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/west)
 "cVe" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6;
@@ -5387,10 +5392,9 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/pharmacy)
 "cVr" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/old,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
+/obj/machinery/shieldgenerator/energy_shield,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/southwest)
 "cVH" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -5688,7 +5692,9 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/cloner)
 "dfV" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	dir = 4
+	},
 /area/abandonedmedicalship/robot_trader)
 "dhp" = (
 /obj/stool/chair/office{
@@ -5852,6 +5858,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
+"dpk" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "dqc" = (
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line3"
@@ -6094,8 +6106,9 @@
 	name = "Genetic Research"
 	})
 "dxM" = (
-/obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/industrial,
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	dir = 5
+	},
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -6409,12 +6422,15 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "dEO" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	dir = 10
+/obj/surgery_tray,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
 	},
-/area/iss{
-	name = "Drop Capsule"
-	})
+/obj/item/suture,
+/obj/item/scalpel,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "dFb" = (
 /obj/stool/chair{
 	dir = 4
@@ -6494,6 +6510,9 @@
 /area/station/science/research_director)
 "dHA" = (
 /obj/storage/closet/emergency,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "dHI" = (
@@ -6695,7 +6714,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/dome)
 "dNQ" = (
-/turf/unsimulated/wall/setpieces/leadwindow/white,
+/obj/stool/chair,
+/obj/npc/trader/robot{
+	icon_state = "medibot0";
+	name = "D.O.C.";
+	productset = 4;
+	trader_area = "/area/abandonedmedicalship/robot_trader"
+	},
+/turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "dOr" = (
 /obj/decal/tile_edge/line/yellow{
@@ -7503,8 +7529,7 @@
 /area/station/janitor/supply)
 "eoI" = (
 /obj/table/reinforced/auto,
-/obj/item/implantcase/health,
-/obj/item/implanter,
+/obj/item/storage/firstaid/old,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "eoL" = (
@@ -7588,10 +7613,6 @@
 /turf/simulated/floor/engine,
 /area/station/security/checkpoint/escape)
 "erz" = (
-/obj/item/storage/wall/fire{
-	dir = 4;
-	pixel_x = -32
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -9409,13 +9430,6 @@
 	do_not_irradiate = 1;
 	name = "South Catalytic Substation"
 	})
-"fue" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/guardbot_kit,
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "fuf" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small{
@@ -9611,9 +9625,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
 "fyb" = (
-/obj/table/reinforced/auto,
-/obj/item/wirecutters,
-/turf/simulated/floor/white/grime,
+/turf/unsimulated/wall/setpieces/leadwall/white_2,
 /area/abandonedmedicalship/robot_trader)
 "fyo" = (
 /obj/cable{
@@ -11863,6 +11875,7 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/west)
 "gIB" = (
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -12674,6 +12687,10 @@
 "heV" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/food{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -14004,9 +14021,9 @@
 	name = "Extraction Nexus"
 	})
 "hLN" = (
-/obj/storage/closet/fire,
-/obj/item/clothing/suit/fire,
-/turf/simulated/floor/industrial,
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	dir = 10
+	},
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -14029,9 +14046,7 @@
 	})
 "hOc" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white,
-/area/iss{
-	name = "Drop Capsule"
-	})
+/area/abandonedmedicalship/robot_trader)
 "hOx" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/black/grime,
@@ -14145,7 +14160,9 @@
 /turf/simulated/floor/engine,
 /area/station/security/brig/genpop)
 "hQS" = (
-/obj/machinery/optable,
+/obj/table/reinforced/auto,
+/obj/item/implantcase/health,
+/obj/item/implanter,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "hRy" = (
@@ -14612,8 +14629,8 @@
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
 "icZ" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/marker/supplymarker,
+/obj/table/reinforced/auto,
+/obj/item/wirecutters,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "ida" = (
@@ -15941,7 +15958,6 @@
 	name = "Net Cafe"
 	})
 "iOx" = (
-/obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -16244,9 +16260,9 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/crew_quarters/quarters_east)
 "iYa" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	dir = 9
-	},
+/obj/storage/closet/fire,
+/obj/item/clothing/suit/fire,
+/turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -17325,9 +17341,7 @@
 	name = "Northeast Breach Hull"
 	})
 "jAp" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	dir = 1
-	},
+/turf/unsimulated/wall/setpieces/leadwindow/white,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -17468,10 +17482,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northeast)
 "jFB" = (
-/obj/machinery/recharge_station{
-	desc = "It looks like some of the safety interlocks are damaged.";
-	name = "Malfunctioning Docking Station"
-	},
+/obj/machinery/optable,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "jGl" = (
@@ -17936,10 +17947,9 @@
 	name = "The Warrens"
 	})
 "jRV" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
-	},
-/turf/simulated/floor/industrial,
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "jRY" = (
 /obj/decal/tile_edge/line/green{
@@ -18650,6 +18660,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"klm" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	dir = 8
+	},
+/area/iss{
+	name = "Drop Capsule"
+	})
 "klt" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
@@ -20368,6 +20385,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/head)
+"lgN" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "lgO" = (
 /obj/decal/poster/wallsign/biohazard{
 	desc = "A warning sign which reads 'ACID HAZARD'.";
@@ -20728,7 +20754,8 @@
 	name = "Warrens Hall"
 	})
 "ltz" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2,
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -22367,7 +22394,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/segment/bent/north,
+/obj/disposalpipe/switch_junction/biofilter/left/west,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "mgm" = (
@@ -23949,6 +23976,9 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /obj/machinery/light_switch/west,
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "ndd" = (
@@ -24029,8 +24059,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "nfC" = (
-/obj/decal/cleanable/dirt/dirt3,
-/turf/simulated/floor/industrial,
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	dir = 9
+	},
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -24157,9 +24188,12 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "nkk" = (
-/obj/machinery/door/airlock/pyro/classic,
-/turf/simulated/floor/industrial,
-/area/abandonedmedicalship/robot_trader)
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	dir = 1
+	},
+/area/iss{
+	name = "Drop Capsule"
+	})
 "nky" = (
 /obj/decal/tile_edge/line/grey{
 	dir = 1;
@@ -24901,13 +24935,10 @@
 	name = "Southeast Breach Hull"
 	})
 "nGo" = (
-/obj/disposalpipe/segment/food{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "nGy" = (
@@ -25779,6 +25810,13 @@
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
+"onE" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/guardbot_kit,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "onI" = (
 /obj/storage/secure/closet/command/research_director,
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
@@ -25870,7 +25908,11 @@
 /turf/simulated/floor/engine,
 /area/station/hydroponics/bay)
 "oqv" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction,
+/obj/machinery/recharge_station{
+	desc = "It looks like some of the safety interlocks are damaged.";
+	name = "Malfunctioning Docking Station"
+	},
+/turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "oqF" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -25922,15 +25964,13 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "ost" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	dir = 8
-	},
-/area/abandonedmedicalship/robot_trader)
-"osw" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
+/area/abandonedmedicalship/robot_trader)
+"osw" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -26350,7 +26390,7 @@
 	name = "Transception Antenna Control"
 	})
 "oGf" = (
-/obj/machinery/drainage/big,
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -26770,16 +26810,9 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_west)
 "oSr" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
+/area/abandonedmedicalship/robot_trader)
 "oSF" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
 /obj/access_spawn/cargo,
@@ -26890,6 +26923,15 @@
 /area/station/maintenance/storage{
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
+	})
+"oUG" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/cerenkite,
+/obj/item/cell/cerenkite,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
 	})
 "oUW" = (
 /obj/cable{
@@ -27063,14 +27105,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "pct" = (
-/obj/computer3frame{
-	anchored = 1;
-	dir = 4
-	},
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction,
+/area/abandonedmedicalship/robot_trader)
 "pcD" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -27565,19 +27601,10 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/sanctuary)
 "psH" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
-	dir = 1;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "tapedrive0";
-	name = "broken tape drive"
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
+	dir = 8
 	},
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
+/area/abandonedmedicalship/robot_trader)
 "psN" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine,
@@ -27604,9 +27631,9 @@
 /turf/simulated/floor/engine,
 /area/station/science)
 "pte" = (
-/obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/vending/electronics,
-/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -28505,19 +28532,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
-"pUK" = (
-/obj/table/reinforced/auto,
-/obj/item/guardbot_core{
-	pixel_y = 6
-	},
-/obj/item/guardbot_frame,
-/obj/item/device/guardbot_tool/flash{
-	pixel_x = -12
-	},
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "pUQ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -29163,6 +29177,15 @@
 	do_not_irradiate = 1;
 	name = "Hydroponics Storage"
 	})
+"qqu" = (
+/obj/item/device/radio/beacon{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "qqE" = (
 /obj/decal/tile_edge/check/blue{
 	dir = 10;
@@ -29631,6 +29654,13 @@
 /obj/machinery/vending/capsule,
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
+"qDc" = (
+/obj/storage/crate/loot,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "qDf" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
@@ -29882,6 +29912,19 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"qMl" = (
+/obj/table/reinforced/auto,
+/obj/item/guardbot_core{
+	pixel_y = 6
+	},
+/obj/item/guardbot_frame,
+/obj/item/device/guardbot_tool/flash{
+	pixel_x = -12
+	},
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "qMG" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler{
@@ -29917,7 +29960,7 @@
 /turf/simulated/floor/engine,
 /area/station/security/main)
 "qNu" = (
-/obj/storage/crate/loot,
+/obj/machinery/drainage/big,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -30045,12 +30088,6 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/engine,
 /area/station/science/bot_storage)
-"qSC" = (
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "qSK" = (
 /obj/table/reinforced/auto,
 /obj/item/wrestlingbell,
@@ -30596,7 +30633,12 @@
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/listeningpost)
 "rjA" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen/south,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -30726,20 +30768,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
-"rnM" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	dir = 4
-	},
-/area/iss{
-	name = "Drop Capsule"
-	})
-"rnQ" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	dir = 8
-	},
-/area/iss{
-	name = "Drop Capsule"
-	})
 "rnZ" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/engine,
@@ -31010,12 +31038,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/teleporter)
-"rxS" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "rzn" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -31537,6 +31559,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"rSx" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "rSz" = (
 /obj/table/reinforced/auto,
 /obj/item/scalpel,
@@ -31597,8 +31625,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "rTL" = (
-/obj/decal/cleanable/machine_debris{
-	icon_state = "gib7"
+/obj/computer3frame{
+	anchored = 1;
+	dir = 4
 	},
 /turf/simulated/floor/industrial,
 /area/iss{
@@ -31944,7 +31973,15 @@
 /turf/simulated/floor/engine,
 /area/station/bridge/captain)
 "sdl" = (
-/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -33143,9 +33180,9 @@
 	name = "Northeast Breach Hull"
 	})
 "sKl" = (
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = -26
-	},
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/vending/electronics,
+/obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -33316,13 +33353,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"sOl" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction{
-	dir = 4
-	},
-/area/iss{
-	name = "Drop Capsule"
-	})
 "sOx" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -33619,10 +33649,7 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "sWD" = (
-/obj/item/sheet/steel/fullstack{
-	pixel_x = -6
-	},
-/obj/decal/cleanable/dirt,
+/obj/storage/crate/loot,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -33848,14 +33875,14 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/showers)
 "tee" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/pipe/tank/oxygen/south,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
 	})
 "teq" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
 	},
 /turf/simulated/floor/industrial,
 /area/iss{
@@ -34148,7 +34175,8 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "tmo" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2/junction,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -34157,9 +34185,10 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northeast)
 "tmD" = (
-/turf/unsimulated/wall/setpieces/leadwall/white_2{
-	dir = 6
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = -26
 	},
+/turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -35774,7 +35803,10 @@
 /turf/simulated/floor/engine,
 /area/station/storage/tools)
 "ujv" = (
-/obj/landmark/artifact,
+/obj/item/sheet/steel/fullstack{
+	pixel_x = -6
+	},
+/obj/decal/cleanable/dirt,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -36169,6 +36201,17 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
+"utW" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool{
+	pixel_x = -15;
+	pixel_y = 1
+	},
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "uus" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
@@ -37401,9 +37444,7 @@
 	name = "Transception Antenna Control"
 	})
 "vlf" = (
-/obj/item/rods/steel/fullstack{
-	pixel_x = -9
-	},
+/obj/machinery/atmospherics/valve,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -37499,6 +37540,10 @@
 /area/station/maintenance/northeast)
 "voE" = (
 /obj/machinery/shieldgenerator/energy_shield,
+/obj/disposalpipe/segment/food{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "vpf" = (
@@ -37888,9 +37933,8 @@
 	name = "Extraction Nexus"
 	})
 "vyD" = (
-/obj/item/device/radio/beacon{
-	pixel_x = -5;
-	pixel_y = 6
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
 	},
 /turf/simulated/floor/industrial,
 /area/iss{
@@ -38537,11 +38581,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "vVn" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor/industrial,
+/turf/unsimulated/wall/setpieces/leadwall/white_2/junction,
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -40316,17 +40356,6 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
-"xkv" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool{
-	pixel_x = -15;
-	pixel_y = 1
-	},
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "xkE" = (
 /obj/item/clothing/suit/cardboard_box,
 /turf/simulated/floor/black/grime,
@@ -40622,8 +40651,9 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/north)
 "xtR" = (
-/obj/machinery/vending/standard,
-/turf/simulated/floor/industrial,
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	dir = 6
+	},
 /area/iss{
 	name = "Drop Capsule"
 	})
@@ -40967,10 +40997,7 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/sanctuary)
 "xEe" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/cerenkite,
-/obj/item/cell/cerenkite,
+/obj/landmark/artifact,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -41011,8 +41038,9 @@
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "xHM" = (
-/obj/storage/crate/loot,
-/obj/decal/cleanable/dirt/dirt2,
+/obj/item/rods/steel/fullstack{
+	pixel_x = -9
+	},
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -41169,6 +41197,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science)
+"xME" = (
+/turf/unsimulated/wall/setpieces/leadwall/white_2{
+	dir = 4
+	},
+/area/iss{
+	name = "Drop Capsule"
+	})
 "xMJ" = (
 /obj/stool/chair{
 	dir = 4
@@ -41951,6 +41986,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/security/brig/genpop)
+"yiL" = (
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
+	})
 "yiS" = (
 /obj/stool/chair{
 	dir = 1
@@ -66425,10 +66466,10 @@ bzS
 bzS
 bzS
 lZl
-dNQ
-cdv
 hOc
-dEO
+dfV
+jAp
+hLN
 oeA
 oeA
 oeA
@@ -66725,14 +66766,14 @@ bzS
 bzS
 bzS
 lZl
-dNQ
-cXb
-jFB
-lmL
-pct
-ciR
 hOc
-dEO
+cXb
+oqv
+lmL
+rTL
+dxM
+jAp
+hLN
 oeA
 oeA
 oeA
@@ -67027,15 +67068,15 @@ bzS
 bzS
 lZl
 cXb
-eoI
+hQS
 tjr
 tjr
-nkk
-gIB
-sKl
-ujv
-ciR
-dEO
+oSr
+iOx
+tmD
+xEe
+dxM
+hLN
 oeA
 oeA
 oeA
@@ -67333,10 +67374,10 @@ tjr
 hvz
 tjr
 lmL
-psH
+sdl
+ltz
 iOx
-gIB
-xEe
+oUG
 fQR
 oeA
 oeA
@@ -67630,17 +67671,17 @@ bzS
 bzS
 lZl
 cXb
-cIp
-tjr
-hQS
-tjr
-oqv
-ltz
-ltz
-ltz
-ltz
-rnQ
 dEO
+tjr
+jFB
+tjr
+pct
+osw
+osw
+osw
+osw
+klm
+hLN
 oeA
 oeA
 oeA
@@ -67937,11 +67978,11 @@ tjr
 tjr
 tjr
 lmL
-pte
-sWD
-vlf
+sKl
+ujv
 xHM
-fue
+qDc
+onE
 fQR
 oeA
 oeA
@@ -68234,17 +68275,17 @@ bzS
 bzS
 lmL
 tjr
-cUx
-fyb
+dNQ
+icZ
 hvz
 tjr
 lmL
-qNu
-gIB
-vyD
+sWD
 iOx
-pUK
-rnM
+qqu
+ltz
+qMl
+xME
 oeA
 oeA
 oeA
@@ -68536,16 +68577,16 @@ bzS
 bzS
 syI
 bbu
-cVr
-cVr
-icZ
+eoI
+eoI
+jRV
 tjr
 lmL
-rjA
 tee
-vVn
-qSC
-xkv
+vlf
+lgN
+yiL
+utW
 fQR
 oeA
 oeA
@@ -68837,18 +68878,18 @@ bzS
 bzS
 bzS
 fvh
-cdv
 dfV
-dfV
-dfV
-jRV
+fyb
+fyb
+fyb
 ost
-ltz
-teq
-ltz
-ltz
-sOl
-tmD
+psH
+osw
+vyD
+osw
+osw
+cGB
+xtR
 oeA
 oeA
 oeA
@@ -69140,15 +69181,15 @@ bzS
 bzS
 bzS
 fQR
-dxM
 gIB
 iOx
-gIB
-gIB
-rTL
+ltz
 iOx
-gIB
-rxS
+iOx
+teq
+ltz
+iOx
+rSx
 fQR
 oeA
 oeA
@@ -69441,17 +69482,17 @@ bzS
 bzS
 bzS
 bzS
-ciR
-dEO
+dxM
 hLN
 iYa
-ltz
+nfC
 osw
-ltz
-dEO
+pte
+osw
+hLN
+dpk
+nfC
 xtR
-iYa
-tmD
 oeA
 oeA
 oeA
@@ -69744,15 +69785,15 @@ bzS
 bzS
 bzS
 bzS
-ciR
-hOc
+dxM
 jAp
-nfC
+nkk
 oGf
-sdl
+qNu
 tmo
-hOc
-tmD
+vVn
+jAp
+xtR
 oeA
 oeA
 oeA
@@ -70048,11 +70089,11 @@ bzS
 bzS
 bzS
 bzS
-ciR
-ltz
-oSr
-ltz
-tmD
+dxM
+osw
+rjA
+osw
+xtR
 bzS
 bzS
 oeA
@@ -73287,7 +73328,7 @@ ldy
 xQv
 xQv
 xQv
-xQv
+boT
 xQv
 xQv
 kIs
@@ -73940,7 +73981,7 @@ sJd
 vKn
 vKn
 vKn
-cbe
+cVr
 leq
 fWZ
 fWZ
@@ -74211,7 +74252,7 @@ sur
 gbZ
 ctg
 voE
-voE
+cdv
 vUa
 gvL
 xsX
@@ -74512,7 +74553,7 @@ ajs
 oEZ
 gbZ
 vnt
-oEZ
+cbe
 dHA
 vUa
 dYJ
@@ -74815,7 +74856,7 @@ utU
 ydp
 uOE
 mfN
-oVv
+ciR
 vUa
 oaQ
 obA
@@ -75117,7 +75158,7 @@ gbZ
 vUa
 vUa
 afy
-vUa
+cIp
 vUa
 vUa
 vUa
@@ -80861,7 +80902,7 @@ ewv
 vyr
 fWc
 ahQ
-boT
+cUx
 oVv
 iWT
 jwP
