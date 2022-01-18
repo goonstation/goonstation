@@ -30257,21 +30257,6 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
-"bzV" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "bzW" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
@@ -46453,10 +46438,6 @@
 	},
 /area/station/medical/medbay)
 "coJ" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -46474,6 +46455,10 @@
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -104214,7 +104199,7 @@ cca
 cca
 cca
 cca
-bzV
+coH
 cpG
 cqL
 crO
