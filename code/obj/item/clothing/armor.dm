@@ -434,3 +434,38 @@
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/cardboard
+	name = "Cardboard armor"
+	desc = "Soem cut down cardboard,  tied into a wearable form with wire. You could probably put something long and durable through the loops of the wiring to make it more protective."
+	icon_state = "cardboardsuit"
+	item_state = "cardboardsuit"
+	body_parts_covered = TORSO
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 5)
+		setProperty("meleeprot", 1)
+		setProperty("rangedprot", 0.1)
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (isscrewingtool(W))
+				boutput(user, "<span class='notice'>You feel like you'll need something a bit longer and plentiful than just a screwdriver. </span>")
+		if(istype(W,/obj/item/rods))
+			boutput(user, "<span class='notice'>You add some rods to make it protective</span>")
+			new /obj/item/clothing/suit/armor/cardboardreinforced(get_turf(src))
+			qdel(src)
+
+/obj/item/clothing/suit/armor/cardboardreinforced
+	name = "Reinforced cardboard armor"
+	desc = "Dubiously protective breastplate and shoulderpads made of cardboard and wire, reinforced with metal rods."
+	icon_state = "cardboardsuit2"
+	item_state = "cardboardsuit2"
+	body_parts_covered = TORSO|ARMS
+
+	setupProperties()// slightly less protective than the cyborg armor, but lighter and covers the arms
+		..()
+		setProperty("coldprot", 10)
+		setProperty("rangedprot", 0.2)
+		setProperty("meleeprot", 3.5)
+		setProperty("movespeed", 0.3)

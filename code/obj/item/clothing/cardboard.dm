@@ -134,3 +134,44 @@
 	name = "cardboard box - 'AI'"
 	desc = "It can probably still open doors!"
 	face = "ai"
+
+/obj/item/cardboardbits
+	name = "Unfinished cardboard armor"
+	icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
+	icon_state = "cardboardsuitbits"
+	item_state= "cardboardsuitbits"
+
+	desc = "A work in progress piece of cardboard armor. "
+	var/status = FALSE
+
+	attackby(obj/item/W as obj, mob/user as mob)
+		if (isscrewingtool(W))
+			if(status)
+				boutput(user, "<span class='notice'>You have already stabbed holes in the cardboard</span>")
+			else
+				status = TRUE
+				boutput(user, "<span class='notice'>You poke strategic holes in the cardboard </span>")
+				icon_state = "cardboardsuitholes"
+				item_state = "cardboardsuitholes"
+		if(status)
+			if(istype(W, /obj/item/cable_coil )) // if tarm is allowed to do this with pipe bombs and not cost wire, why not armor?
+
+
+				var/obj/item/cable_coil/coil = W
+				if(coil.use(30))
+					boutput(user, "<span class='notice'>You thread the wire through the holes </span>")
+					new /obj/item/clothing/suit/armor/cardboard(get_turf(src))
+					qdel(src)
+				else
+					boutput(user, "<span class='notice'>You feel like you'll need more wire than what you have if you want this thing to be sturdy. A full coil's worth should do. </span>")
+
+
+
+
+	get_desc()
+		if(status)// weird way of doing this but I think it'll work
+			. +=  "Now all it needs is something to thread through the holes"
+		else
+			. +="If you plan on wearing this, you'll need some way to hold it together. Maybe poke holes for wire?"
+
+

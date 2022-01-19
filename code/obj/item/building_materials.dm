@@ -278,6 +278,7 @@ MATERIAL
 				L["remetal"] = "Remove Reinforcement"
 		if (src?.material.mat_id == "cardboard")
 			L["c_box"] = "Cardboard Box (2 Sheets)"
+			L["cardboardbits"] = "Cardboard Armor (5 Sheets)"
 
 		for(var/t in L)
 			counter++
@@ -450,6 +451,16 @@ MATERIAL
 					a_icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
 					a_icon_state = "c_box"
 					a_name = "a cardboard box"
+
+				if("cardboardbits")
+					if (!amount_check(5,usr)) return
+					a_type = /obj/item/cardboardbits
+					a_amount = 1
+					a_cost = 5
+					a_icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
+					a_icon_state = "cardboardsuitbits"
+					//new /obj/item/cardboardbits(get_turf(src)) // this is possibly the stupidest workaround I've ever done.
+					//qdel(src)
 
 				if("pipef")
 					if (!amount_check(3,usr)) return
