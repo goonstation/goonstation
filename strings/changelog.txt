@@ -1,4 +1,9 @@
 
+(t)wed jan 19 22
+(u)LeahTheTech
+(p)6805
+(e)🆕🎨|feature, sprites
+(+)The Inspector's report will now be displayed at the end of the round. The contents of that ominous clipboard are now much more important.
 (t)tue jan 18 22
 (u)Zonespace
 (p)6276
