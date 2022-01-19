@@ -107,6 +107,7 @@
 	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
 	var/herbicide = FALSE
 
+
 	get_desc()
 		var/flavor
 		switch (to_spread)
@@ -326,6 +327,22 @@
 
 		src.take_damage(power*10, 1, "burn")
 
+/obj/spacevine/proc/herbicide(datum/reagent/R)
+	if(!src.herbicide)
+		if((src.current_stage < 2) || prob(33))
+			src.herbicide = TRUE
+			var/new_color = list(0.2126,0.2126,0.2126,0.00,\
+								0.5,   0.5,   0.5,   0.00,\
+								0.0722,0.0722,0.0722,0.00,\
+								0.00,  0.00,  0.00,  1.00,\
+								0.00,  0.00,  0.00,  0.00)
+			animate(src,time=2 SECONDS,color=new_color)
+			src.growth -= 10
+			src.to_spread = round(log(max(src.to_spread,1))*2)
+			src.update_self()
+		// Delay update to allow fluid controllers to manage
+		R.holder?.remove_reagent(R.id, src.current_stage, update_total=FALSE, reagents_change=FALSE)
+
 /obj/spacevine/living // these ones grow
 	run_life = 1
 
@@ -343,6 +360,9 @@
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
 				F.set_loc(src.loc)
+
+	herbicide()
+		return
 
 /obj/spacevine/alien/living
 	run_life = 1

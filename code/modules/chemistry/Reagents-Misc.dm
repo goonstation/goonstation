@@ -2868,20 +2868,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O, /obj/spacevine))
 					var/obj/spacevine/kudzu = O
-					if(!kudzu.herbicide)
-						if((kudzu.current_stage < 2) || prob(33))
-							kudzu.herbicide = TRUE
-							var/new_color = list(0.2126,0.2126,0.2126,0.00,\
-												0.5,   0.5,   0.5,   0.00,\
-												0.0722,0.0722,0.0722,0.00,\
-												0.00,  0.00,  0.00,  1.00,\
-												0.00,  0.00,  0.00,  0.00)
-							animate(kudzu,time=2 SECONDS,color=new_color)
-							kudzu.growth -= 10
-							kudzu.to_spread = round(log(max(kudzu.to_spread,1))*2)
-							kudzu.update_self()
-						// Delay update to allow fluid controllers to manage
-						holder?.remove_reagent(src.id, kudzu.current_stage, update_total=FALSE, reagents_change=FALSE)
+					kudzu.herbicide(src)
 
 		safrole
 			name = "safrole"
