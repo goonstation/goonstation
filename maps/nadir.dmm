@@ -876,11 +876,8 @@
 /area/station/quartermaster/refinery)
 "auM" = (
 /obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	icon_state = "1-2"
+	dir = 5;
+	icon_state = "lattice-dir-b"
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
@@ -1802,6 +1799,12 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
+	})
+"aWU" = (
+/obj/lattice,
+/turf/space/fluid/acid,
+/area/station/engine/inner{
+	name = "Transception Antenna Control"
 	})
 "aXj" = (
 /obj/stool/chair/comfy{
@@ -4654,6 +4657,11 @@
 "czo" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 1
+	},
+/obj/railing/purple/reinforced{
+	dir = 8;
+	layer = 2.9;
+	pixel_x = -5
 	},
 /turf/simulated/floor/circuit/purple,
 /area/supply/sell_point)
@@ -8547,7 +8555,7 @@
 /area/station/hallway/primary/southwest)
 "eSp" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-8"
 	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
@@ -12799,6 +12807,11 @@
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 4
 	},
+/obj/railing/purple/reinforced{
+	dir = 8;
+	layer = 2.9;
+	pixel_x = -5
+	},
 /turf/simulated/floor/circuit/purple,
 /area/supply/sell_point)
 "hhc" = (
@@ -14769,7 +14782,7 @@
 /area/station/medical/robotics)
 "igO" = (
 /obj/machinery/light/incandescent/warm,
-/obj/item/reagent_containers/food/snacks/deviledegg,
+/obj/item/plate,
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
@@ -17438,6 +17451,15 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"jCp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/plate,
+/turf/simulated/floor/engine,
+/area/station/engine/inner{
+	name = "Transception Antenna Control"
+	})
 "jCt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18756,12 +18778,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/junction,
 /area/ghostdrone_factory)
 "knN" = (
-/obj/decal/fakeobjects{
-	desc = "Transception antenna goes here.";
-	icon = 'icons/effects/160x160.dmi';
-	icon_state = "powercore_base";
-	name = "weird thing"
-	},
+/obj/machinery/light/small/cool/very,
 /turf/space/fluid/acid,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
@@ -23139,7 +23156,9 @@
 /area/listeningpost)
 "mzq" = (
 /obj/lattice,
-/obj/map/light/cyan,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/space/fluid/acid,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
@@ -24270,11 +24289,11 @@
 	name = "North Catalytic Substation"
 	})
 "nlC" = (
-/obj/item/reagent_containers/food/snacks/deviledegg,
-/obj/cable{
-	icon_state = "4-8"
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/floor/engine,
+/turf/space/fluid/acid,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
 	})
@@ -25091,12 +25110,14 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "nKt" = (
-/obj/machinery/communications_dish,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/communications_dish/transception,
 /turf/space/fluid/acid,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
@@ -26238,7 +26259,7 @@
 	name = "Hydroponics Storage"
 	})
 "ozD" = (
-/obj/item/reagent_containers/food/snacks/deviledegg,
+/obj/item/plate,
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
@@ -30141,7 +30162,6 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northwest)
 "qTl" = (
-/obj/item/reagent_containers/food/snacks/deviledegg,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -30759,6 +30779,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
+"rld" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/space/fluid/acid,
+/area/station/engine/inner{
+	name = "Transception Antenna Control"
+	})
 "rlt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -36036,6 +36067,14 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/storage/emergencyinternals)
+"uob" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space/fluid/acid,
+/area/station/engine/inner{
+	name = "Transception Antenna Control"
+	})
 "uoc" = (
 /obj/decal/tile_edge/line/white{
 	dir = 9;
@@ -37490,7 +37529,6 @@
 /turf/simulated/floor/engine,
 /area/station/storage/emergencyinternals)
 "vkT" = (
-/obj/item/reagent_containers/food/snacks/deviledegg,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -39870,7 +39908,6 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/snacks/deviledegg,
 /turf/simulated/floor/engine,
 /area/station/engine/inner{
 	name = "Transception Antenna Control"
@@ -87343,8 +87380,8 @@ mxa
 mvA
 kST
 mvA
-aPz
-yge
+ijH
+auM
 aPz
 yge
 knN
@@ -87352,8 +87389,8 @@ mvA
 xxN
 mzS
 mvA
-ozD
-mzS
+wSi
+jCp
 wSi
 qTl
 baj
@@ -87645,17 +87682,17 @@ eKF
 mvA
 kST
 mvA
-ijH
+aPz
+aPz
+nKt
 mzq
-ijH
-mzq
-ijH
+rld
 mvA
 mvA
 gfC
 mvA
-wSi
-nlC
+ozD
+mzS
 ozD
 wSi
 baj
@@ -87948,16 +87985,16 @@ mvA
 kST
 mvA
 aPz
+aPz
+aPz
 yge
-nKt
-auM
 eSp
 oFV
 mUh
 bhB
 mvA
 wSt
-mzS
+jCp
 npp
 igO
 baj
@@ -88249,17 +88286,17 @@ eKF
 mvA
 kST
 mvA
-ijH
-mzq
-ijH
-mzq
+aPz
+aPz
+uob
+aWU
 ijH
 mvA
 mvA
 gfC
 mvA
-wSi
-nlC
+ozD
+mzS
 ozD
 wSi
 baj
@@ -88551,17 +88588,17 @@ mxa
 mvA
 kST
 mvA
+ijH
+nlC
 aPz
 yge
-aPz
-yge
-aPz
+knN
 mvA
 rYl
 mzS
 mvA
-ozD
-mzS
+wSi
+jCp
 wSi
 vkT
 baj

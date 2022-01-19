@@ -7,14 +7,17 @@
 	bound_width = 96
 
 	New()
-		..()
+		. = ..()
+		src.UpdateIcon()
+
+	power_change()
+		. = ..()
 		src.UpdateIcon()
 
 /obj/machinery/communications_dish/transception/update_icon()
-	var/image/glowy = SafeGetOverlayImage("glows", 'icons/obj/machines/transception.dmi', "glowPLACEHOLDER")
+	var/state = "glowPLACEHOLDER"
+	if(!powered())
+		state = "allquiet"
+	var/image/glowy = SafeGetOverlayImage("glows", 'icons/obj/machines/transception.dmi', state)
 	glowy.plane = PLANE_SELFILLUM
 	UpdateOverlays(glowy, "glows", 0, 1)
-
-	var/image/lat = SafeGetOverlayImage("lattices", 'icons/obj/machines/transception.dmi', "latticesPLACEHOLDER")
-	lat.plane = PLANE_SELFILLUM + 1
-	UpdateOverlays(lat, "lattices", 0, 1)
