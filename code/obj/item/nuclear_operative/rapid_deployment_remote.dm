@@ -4,8 +4,6 @@
 	desc = "A remote used to signal a place for a set of rapid-troop-deployment personnel missile pods to land."
 	icon_state = "satcom"
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
 	w_class = W_CLASS_SMALL
 	var/area/landing_area = null
 	var/list/mob/sent_mobs = list()

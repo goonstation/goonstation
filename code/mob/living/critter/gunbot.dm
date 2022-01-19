@@ -136,8 +136,8 @@
 						return ..()
 
 /mob/living/critter/gunbot/syndicate
-	name = "robot"
-	real_name = "robot"
+	name = "Syndicate robot"
+	real_name = "Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_nuke_bot"
@@ -161,3 +161,9 @@
 	setup_healths()
 		add_hh_robot(100, 1)
 		add_hh_robot_burn(100, 1)
+
+	get_melee_protection(zone, damage_type)
+		return 7
+
+	get_ranged_protection()
+		return 2.5

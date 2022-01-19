@@ -30,6 +30,7 @@
 // nuke
 #define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_NUKEOP_COMMANDER_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopcommanderTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_GUNBOT_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopgunbotTips.html"), ANTAG_TIPS_WINDOW)
 
 // revolution
 #define SHOW_REVHEAD_TIPS(M) M.Browse(grabResource("html/traitorTips/revTips.html"), ANTAG_TIPS_WINDOW)
@@ -123,6 +124,8 @@
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Nuke/Rev</b>
 	<a href='?src=\ref[src];action=nukeop'>Nuke Op</a> |
+	<a href='?src=\ref[src];action=nukeop-commander'>Nuke Op Commander</a> |
+	<a href='?src=\ref[src];action=nukeop-gunbot'>Nuke Op Gunbot</a> |
 	<a href='?src=\ref[src];action=revhead'>Rev Head</a> |
 	<a href='?src=\ref[src];action=revved'>Revved</a> |
 	<a href='?src=\ref[src];action=derevved'>De-Revved</a>
@@ -217,6 +220,10 @@
 			// nuke/rev
 			if ("nukeop")
 				SHOW_NUKEOP_TIPS(M)
+			if ("nukeop-commander")
+				SHOW_NUKEOP_COMMANDER_TIPS(M)
+			if ("nukeop-gunbot")
+				SHOW_NUKEOP_GUNBOT_TIPS(M)
 			if ("revhead")
 				SHOW_REVHEAD_TIPS(M)
 			if ("revved")
