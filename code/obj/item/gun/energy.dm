@@ -1154,13 +1154,13 @@
 
 ///////////////////////////////////////////////////
 /obj/item/gun/energy/lawbringer/old
-	name = "antique lawbringer"
+	name = "antique Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "old-lawbringer0"
 	old = 1
 
 /obj/item/gun/energy/lawbringer
-	name = "lawbringer"
+	name = "\improper Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
 	icon_state = "lawbringer0"
