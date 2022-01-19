@@ -30841,7 +30841,7 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
 "rnZ" = (
-/obj/machinery/computer/arcade,
+/obj/submachine/claw_machine,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/arcade)
 "roO" = (
@@ -39835,7 +39835,7 @@
 	})
 "wOT" = (
 /obj/machinery/light,
-/obj/submachine/claw_machine,
+/obj/machinery/vending/fortune,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "wPd" = (
