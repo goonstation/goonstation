@@ -956,6 +956,7 @@
 	var/inspector_name = null
 	New()
 		..()
+		src.inhand_color = "#3F3F3F"
 		START_TRACKING
 	proc/set_owner(var/mob/living/carbon/human/M)
 		inspector_name = M.real_name
