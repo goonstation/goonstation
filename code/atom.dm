@@ -595,8 +595,6 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
-		return list()
 
 	var/dist = get_dist(src, user)
 	if (istype(user, /mob/dead/target_observer))
@@ -608,7 +606,6 @@
 
 	if(special_description)
 		return list(special_description)
-	//////////////////////////////
 
 	. = list("This is \an [src.name].")
 

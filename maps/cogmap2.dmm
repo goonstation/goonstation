@@ -27100,7 +27100,7 @@
 	drive_range = 20;
 	id = "evagun1"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "evagun1";
 	name = "Mass Driver (EVA #1)";
 	pixel_y = 24
@@ -28433,7 +28433,7 @@
 	drive_range = 20;
 	id = "evagun2"
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "evagun2";
 	name = "Mass Driver (EVA #2)";
 	pixel_y = 24
@@ -29383,7 +29383,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
 "bpX" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -12;
 	pixel_y = 28
@@ -55426,6 +55426,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "crV" = (
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "crW" = (
@@ -56650,6 +56651,14 @@
 /area/station/science/testchamber)
 "cuM" = (
 /obj/table/reinforced/auto,
+/obj/item/device/light/glowstick{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/device/light/glowstick{
+	pixel_x = 4;
+	pixel_y = 11
+	},
 /obj/machinery/recharger,
 /obj/item/clothing/head/helmet/camera,
 /obj/item/clothing/glasses/sunglasses,
@@ -59107,7 +59116,7 @@
 	pixel_x = -23;
 	pixel_y = 8
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8
@@ -62780,7 +62789,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cIO" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = -24;
 	pixel_y = -8
@@ -64219,7 +64228,7 @@
 	pixel_y = -1
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "chem";
 	pixel_x = -24;
 	pixel_y = -10
@@ -77709,30 +77718,11 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "dHM" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/audio_log,
-/obj/item/camera,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/device/radio/beacon,
-/obj/item/device/light/glowstick,
-/obj/item/device/light/glowstick,
-/obj/item/paper/book/from_file/critter_compendium,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/crate,
 /obj/machinery/light,
+/obj/storage/crate/adventure,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/teleporter)
 "dJs" = (

@@ -1664,3 +1664,17 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	icon_state = "paper_caution"
 	info = {"<i>Facing threats from the crew for putting pineapple on your pizzas and letting your chicken corpses spill out into the hall? Turn those trials into smiles when you serve up this scrumptious dish!</i><br><h3>Chicken Pineapple Curry</h3><br><h4>Ingredients:</h4><br> -a bag of curry powder <br> -some fresh chicken meat <br> -a tasty ring of pineapple <br> -a nice spicy chili pepper <br><br><i>With your oven, you don't even have to mix! Just add everything, set the heat to low, and let it all cook for 7 seconds!</i>"}
 
+/obj/item/paper/reinforcement_info
+	name = "Reinforcement Disclaimer"
+	icon_state = "paper"
+	info = {"<b>Thank you for buying a Syndicate brand reinforcement!</b><br>To deploy the reinforcement, simply activate it somewhere on station, set it down, and wait. If a reinforcement is found, they'll be deployed within the minute. The nearby Listening Post should do you well, but it cannot be activated on the Cairngorm!<br><br><i>Disclaimer: Capability of reinforcement not guaranteed. The beacon may pose a choking hazard to those under 3 years old.<br>If no reinforcement is available, you may simply hit your uplink with the beacon to return it for a full refund.</i>"}
+
+/obj/item/paper/designator_info
+	name = "Laser Designator Pamphlet"
+	icon_state = "paper"
+	info = {"<b>So, you've purchased a Laser Designator!</b><br><br>The operation of one is simple, the first step is to ensure the Cairngorm has an in-tact, working gun. Once you've done this, you can just pull out the designator, hold shift and move if you want to do longer-range designation, and point at anywhere to designate a target, at which point the Cairngorm will fire the artillery weapon, and the designated area will shortly explode."}
+
+/obj/item/paper/deployment_info
+	name = "Deployment Remote Note"
+	icon_state = "paper"
+	info = {"<b>Congratulations for purchasing the Syndicate Rapid-Deployment Remote (SRDR)!</b><br><br>To use it, first of all, you need to either be onboard the Cairngorm or at the Listening Post. <br>Once you're there, activate the SRDR in-hand to choose a location, then once more to teleport everyone (along with any nuclear devices you possess) within 4 tiles of you to the forward assault pod, at which point it will begin head to the station, taking about one minute. During this time, Space Station 13's sensors will indicate the quickly-arriving pod, and will likely warn the crew.<br> Once the minute ends, everyone will be deployed to the specified area through personnel missiles."}

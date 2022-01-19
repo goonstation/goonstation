@@ -1060,7 +1060,7 @@
 /turf/space,
 /area/space)
 "acP" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "kd_podout";
 	name = "Routing Driver";
 	pixel_x = -24;
@@ -1710,7 +1710,7 @@
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
 "aew" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "kondaru_funeral";
 	name = "Funerary Driver Button";
 	pixel_x = -24
@@ -11642,7 +11642,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aGp" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "eng_ignition";
 	name = "Burn Chamber Ignition";
 	pixel_y = -22
@@ -32592,11 +32592,7 @@
 	},
 /area/station/science/teleporter)
 "bWe" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/sandwich/pbh{
-	desc = "A good luck charm from one of Heisenbee's relatives.";
-	name = "nice peanut butter and honey sandwich"
-	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "bWg" = (
@@ -34124,7 +34120,7 @@
 	dir = 4;
 	name = "Chamber Outlet"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition";
 	name = "Chamber Ignition Switch";
 	pixel_x = -26;
@@ -47570,7 +47566,7 @@
 /area/station/medical/medbay)
 "kSO" = (
 /obj/vehicle/tug,
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "kondaru_qmfetch";
 	name = "Crate Retrieval Driver";
 	pixel_y = -19
@@ -50534,12 +50530,10 @@
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/machinery/door_timer{
-	desc = "A remote control switch for a cargo/ejection chute.";
+/obj/machinery/activation_button/flusher_button{
 	id = "kondaflush";
-	name = "Timed Chute Activator";
-	pixel_y = 24;
-	req_access = list(24,31)
+	name = "Chute Activator";
+	pixel_y = 24
 	},
 /turf/simulated/floor/orange/side{
 	dir = 9
@@ -58047,7 +58041,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "manualshipping";
 	name = "Export Driver Override";
 	pixel_x = 24;
