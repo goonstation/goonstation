@@ -26,7 +26,9 @@
 	else colored_health = "<span class='alert'>[health_percent]</span>"
 
 	var/optimal_temp = M.base_body_temp
-	var/body_temp = "[M.bodytemperature - T0C]&deg;C ([M.bodytemperature * 1.8-459.67]&deg;F)"
+	var/body_temp_C = round(M.bodytemperature - T0C, M.bodytemperature - T0C < 1000 ? 0.01 : 1)
+	var/body_temp_F = round(M.bodytemperature * 1.8 - T0F, M.bodytemperature * 1.8 - T0F < 1000 ? 0.01 : 1)
+	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))
 		colored_temp = "<span class='alert'>[body_temp]</span>"
@@ -39,10 +41,10 @@
 	else
 		colored_temp = "[body_temp]"
 
-	var/oxy = M.get_oxygen_deprivation()
-	var/tox = M.get_toxin_damage()
-	var/burn = M.get_burn_damage()
-	var/brute = M.get_brute_damage()
+	var/oxy = round(M.get_oxygen_deprivation(), 0.01)
+	var/tox = round(M.get_toxin_damage(), 0.01)
+	var/burn = round(M.get_burn_damage(), 0.01)
+	var/brute = round(M.get_brute_damage(), 0.01)
 
 	// contained here in order to change them easier
 	var/oxy_font = "<span style='color:#1F75D1'>"
@@ -263,10 +265,12 @@
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
-	else if (O.robotic)
+	else if (O.robotic || O.unusual)
 		ret += "<br><span style='color:purple'><b>[O.name]</b></span>"
 	if (O.robotic)
 		ret += "<span style='color:purple'> - Robotic organ detected</span>"
+	else if (O.unusual)
+		ret += "<span style='color:purple'> - Unknown organ detected</span>"
 	return ret.Join()
 
 /datum/genetic_prescan
@@ -468,7 +472,7 @@
 				data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8-459.67]&deg;F)</span>"
+				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8 - T0F]&deg;F)</span>"
 		else
 			data = "<span class='notice'>No active chemical agents found in [A].</span>"
 	else

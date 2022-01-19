@@ -458,8 +458,26 @@
 			if ("pull")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.remove_pulling()
-				src.update_pulling()
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && GET_DIST(master, to_pull) <= 1)
+						usr = master // gross
+						to_pull.pull()
 
 			if ("rest")
 				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return

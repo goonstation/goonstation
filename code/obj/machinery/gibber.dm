@@ -72,7 +72,7 @@
 		boutput(user, "<span class='alert'>This item is not suitable for the gibber!</span>")
 		return
 	if (!isdead(G.affecting))
-		boutput(user, "<span class='alert'>[G.affecting] needs to be dead first!</span>")
+		boutput(user, "<span class='alert'>[G.affecting.name] needs to be dead first!</span>")
 		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] onto the gibber!</span>")
 	src.add_fingerprint(user)
@@ -80,8 +80,6 @@
 	if(G?.affecting && IN_RANGE(user, src, 1)) // would be great to have an action here
 		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
 		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
-		if(G.affecting.last_ckey)
-			message_admins("[key_name(user)] forced [key_name(G.affecting, 1)] ([isdead(G.affecting) ? "dead" : "alive"]) into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
 		enter_gibber(M)
 		qdel(G)

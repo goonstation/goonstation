@@ -171,6 +171,12 @@ RACK PARTS
 	icon = 'icons/obj/furniture/table_syndicate.dmi'
 	furniture_type = /obj/table/syndicate/auto
 
+/obj/item/furniture_parts/table/nanotrasen
+	name = "azure glass table parts"
+	desc = "A collection of parts that can be used to make a table with a sturdy blue glass top."
+	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
+	furniture_type = /obj/table/nanotrasen/auto
+
 /* ---------- Glass Table Parts ---------- */
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"

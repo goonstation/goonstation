@@ -308,6 +308,7 @@
 		return current_water_level
 
 	on_reagent_change()
+		..()
 		src.do_update_water_icon = 1
 		src.update_water_level()
 

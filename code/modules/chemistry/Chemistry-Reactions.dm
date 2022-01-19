@@ -101,6 +101,8 @@
 		if (!source)
 			continue
 
+		purge_smoke_blacklist(holder)
+
 		if (do_sfx)
 			if (narrator_mode || vox_smoke)
 				playsound(location, 'sound/vox/smoke.ogg', 50, 1, -3)
@@ -116,6 +118,7 @@
 		if (source.active_airborne_liquid && source.active_airborne_liquid.group)
 			prev_group_exists = 1
 			var/datum/fluid_group/FG = source.active_airborne_liquid.group
+			purge_smoke_blacklist(FG.reagents)
 
 			if (FG.contained_amt > diminishing_returns_thingymabob)
 				react_amount = react_amount / (1 + ((FG.contained_amt - diminishing_returns_thingymabob) * 0.1))//MBC MAGIC NUMBERS :)
@@ -211,3 +214,13 @@
 		var/stam_damage = 26 * min(amount, 5)
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
+
+/// Deletes any reagents that are banned in smoke clouds.
+/proc/purge_smoke_blacklist(datum/reagents/FG)
+	FG.del_reagent("thalmerite")
+	FG.del_reagent("big_bang")
+	FG.del_reagent("big_bang_precursor")
+	FG.del_reagent("poor_concrete")
+	FG.del_reagent("okay_concrete")
+	FG.del_reagent("good_concrete")
+	FG.del_reagent("perfect_concrete")

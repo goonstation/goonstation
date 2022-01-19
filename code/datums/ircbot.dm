@@ -175,11 +175,14 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 /client/verb/linkDiscord(discordCode as text)
 	set name = "Link Discord"
 	set category = "Commands"
-	set desc = "Links your Byond key with your Discord account. Enter the code Spacebee gave you when you ran !link."
+	set desc = "Links your Byond key with your Discord account. Enter the code Medical Assistant gave you when you ran ]link."
 	set popup_menu = 0
 
 	if (!discordCode)
-		discordCode = input(src, "Please enter your Discord access code. You can get this by running !link in Discord.", "Link Discord") as null|text
+		discordCode = input(src, "Please enter your Discord access code. You can get this by running ]link in Discord. Or leave the field empty if you want to receive the Discord invite.", "Link Discord") as null|text
+
+	if (!discordCode)
+		usr << link("https://discord.gg/zd8t6pY")
 
 	if (ircbot.debugging)
 		ircbot.logDebug("linkDiscord verb called. <b>src.ckey:</b> [src.ckey]. <b>discordCode:</b> [discordCode]")
@@ -189,11 +192,11 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["ckey"] = src.ckey
-	ircmsg["nick"] = discordCode
+	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)
 
 	if (res)
-		alert(src, "Please return to Discord and look for any spacebee PMs.")
+		alert(src, "Please return to Discord and look for any Medical Assistant PMs.")
 		return 1
 	else
 		alert(src, "An unknown internal error occurred. Please report this.")

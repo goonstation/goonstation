@@ -119,6 +119,17 @@
 						if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 							stuff_to_output += "<B>No. of victims:</b> [O.mobs_fed_on.len]"
 
+				if (traitor.special_role == ROLE_SLASHER)
+					var/foundmachete = FALSE
+					for_by_tcl(M, /obj/item/slasher_machete)
+						if(M.slasher_key == traitor.current.ckey)
+							foundmachete = TRUE
+							var/outputval = round((M.force - 15) / 2.5)
+							stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
+							break
+					if(!foundmachete)
+						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
+
 				if (traitor.special_role == ROLE_HUNTER)
 					// Same reasoning here, really.
 					for (var/datum/objective/specialist/hunter/trophy/T in traitor.objectives)

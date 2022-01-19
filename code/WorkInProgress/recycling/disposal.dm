@@ -41,6 +41,9 @@
 		else
 			src.set_loc(D)
 
+		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
@@ -48,7 +51,7 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-
+			LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process
@@ -712,6 +715,8 @@
 		var/same_group = 0
 		if(src.mail_tag && (H.mail_tag in src.mail_tag))
 			same_group = 1
+		else if(isnull(src.mail_tag) && isnull(H.mail_tag)) // our tag is null, meaning we route anything without a tag!
+			same_group = 1 // (mail_tag is a list so we can't combine these two checks, at least not easily/cleanly)
 
 		var/nextdir = nextdir(H.dir, same_group)
 		H.set_dir(nextdir)
@@ -917,11 +922,6 @@
 				else
 					newLoaf.loaf_factor++
 
-				H.contents -= newIngredient
-				newIngredient.set_loc(null)
-				newIngredient = null
-
-				//LAGCHECK(LAG_MED)
 				qdel(newIngredient)
 
 			newLoaf.update()

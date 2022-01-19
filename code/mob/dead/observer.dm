@@ -331,6 +331,17 @@
 	..()
 	C.apply_keybind("human")
 
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
+
 /mob/dead/observer/is_spacefaring()
 	return 1
 

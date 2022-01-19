@@ -84,6 +84,8 @@
 		if (move_dir & (move_dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 		if (src.client && src.client.flying || (ismob(src) && HAS_MOB_PROPERTY(src, PROP_NOCLIP)))
+			if(isnull(get_step(src, move_dir)))
+				return
 			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks

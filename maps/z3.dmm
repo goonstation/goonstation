@@ -4293,11 +4293,7 @@
 	dir = 1;
 	icon_state = "tile1"
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /obj/item/cigpacket/cigarillo/juicer,
 /obj/item/cigpacket/cigarillo/juicer,
@@ -4726,11 +4722,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "anj" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
 /area/space)
@@ -4761,11 +4753,7 @@
 	},
 /area/space)
 "ann" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /obj/item/reagent_containers/food/snacks/slimjim,
 /obj/item/device/audio_log/ht_1,
@@ -4844,11 +4832,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paper/tug/warehouse,
 /turf/simulated/floor/industrial,
 /area/space)
@@ -7761,8 +7745,8 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "auA" = (
-/obj/item/satchel/mining/large,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/effects/background_objects/star_red,
+/turf/space,
 /area/space)
 "auB" = (
 /obj/grille/catwalk,
@@ -8067,9 +8051,7 @@
 /obj/item/electronics/capacitor,
 /obj/item/light/tube/blacklight,
 /obj/item/card_group/stg,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/space,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
@@ -8597,18 +8579,9 @@
 	},
 /area/tech_outpost)
 "awS" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/tech_outpost)
+/obj/item/satchel/mining/large,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "awT" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -9701,9 +9674,7 @@
 "azz" = (
 /obj/item/basketball,
 /obj/item/kitchen/food_box/donut_box,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/crevice{
 	pixel_x = -30
 	},
@@ -9872,9 +9843,9 @@
 /turf/simulated/martian/wall,
 /area/evilreaver/storage/tools)
 "azW" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -11145,6 +11116,12 @@
 	},
 /area/evilreaver/bridge)
 "aDo" = (
+/obj/ai_core_frame{
+	build_step = 2;
+	desc = "A model of AI core you don't recognize, gutted and covered in weird purple stains. The lettering isn't clear, but you can faintly make out \"-way -ystems 29-\" etched into the casing.";
+	name = "grody AI casing";
+	skinToApply = "kingsway"
+	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "aDp" = (
@@ -12769,9 +12746,7 @@
 	dir = 8
 	},
 /obj/item/cell/cerenkite,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/peripheral/card_scanner/register,
 /obj/item/clothing/under/gimmick/jetson,
 /turf/simulated/floor/airless/plating/scorched,
@@ -13311,9 +13286,7 @@
 /obj/item/raw_material/plasmastone,
 /obj/item/raw_material/plasmastone,
 /obj/item/raw_material/plasmastone,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "aJl" = (
@@ -14358,9 +14331,7 @@
 /obj/item/skull,
 /obj/item/raw_material/miracle,
 /obj/item/raw_material/miracle,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/shipcomponent/sensor/ecto,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
@@ -14655,9 +14626,7 @@
 /area/derelict_ai_sat/solar)
 "aMB" = (
 /obj/item/paint_can/rainbow,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/paint_can/rainbow/plaid,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
@@ -20700,9 +20669,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/shieldwallgen,
 /obj/item/shieldwallgen,
 /turf/simulated/floor/airless/scorched,
@@ -20725,9 +20692,7 @@
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/uqill,
 /obj/item/raw_material/uqill,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "bbx" = (
@@ -21363,9 +21328,7 @@
 /obj/item/clothing/under/gimmick/mj_clothes,
 /obj/item/clothing/suit/mj_suit,
 /obj/item/clothing/head/mj_hat,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bds" = (
@@ -21514,9 +21477,7 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/horseshoe,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
@@ -21861,9 +21822,7 @@
 	desc = "It looks pretty fancy.";
 	name = "NT-S.O. Helmet"
 	},
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "beM" = (
@@ -24026,9 +23985,7 @@
 	},
 /area/salyut)
 "bks" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -24047,9 +24004,7 @@
 	},
 /area/salyut)
 "bkv" = (
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/space,
 /area/space)
 "bkw" = (
@@ -24337,9 +24292,7 @@
 "blq" = (
 /obj/item/clothing/under/gimmick/snazza,
 /obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "blr" = (
@@ -24561,7 +24514,13 @@
 /turf/simulated/floor/airless/circuit,
 /area/abandonedmedicalship)
 "blW" = (
-/obj/effects/background_objects/x3,
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/rail{
+	dir = 8;
+	layer = 3
+	},
 /turf/space,
 /area/space)
 "blX" = (
@@ -24648,9 +24607,18 @@
 /turf/space,
 /area/space)
 "bmA" = (
-/obj/effects/background_objects/x4,
-/turf/space,
-/area/space)
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/turf/simulated/floor/plating,
+/area/tech_outpost)
 "bmB" = (
 /obj/stool/chair{
 	dir = 8
@@ -24721,10 +24689,7 @@
 /turf/space,
 /area/space)
 "bmX" = (
-/obj/effects/background_objects/x5{
-	pixel_x = -160;
-	pixel_y = -160
-	},
+/obj/effects/background_objects/x3,
 /turf/space,
 /area/space)
 "bmY" = (
@@ -25023,6 +24988,10 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"bPL" = (
+/obj/effects/background_objects/x4,
+/turf/space,
+/area/space)
 "cSD" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25030,6 +24999,10 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"drB" = (
+/obj/effects/background_objects/star_blue,
+/turf/space,
+/area/space)
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
@@ -25068,6 +25041,9 @@
 	random_code = 1;
 	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
 	},
+/obj/item/paper/martian_manifest{
+	rand_pos = 1
+	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "hUW" = (
@@ -25084,6 +25060,10 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"ieU" = (
+/obj/effects/background_objects/x5,
+/turf/space,
+/area/space)
 "ivG" = (
 /obj/noticeboard{
 	pixel_x = 10;
@@ -36334,7 +36314,7 @@ aaa
 aaa
 aaa
 aaa
-blW
+aaa
 aad
 aaa
 aaa
@@ -38518,7 +38498,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+auA
 anF
 aWr
 aWF
@@ -63440,7 +63420,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bPL
 aaa
 aaa
 aaa
@@ -64640,7 +64620,7 @@ aaa
 aaa
 aaa
 aaa
-aqo
+atN
 aaa
 aaa
 aaa
@@ -64940,21 +64920,21 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
-avs
-aab
 aaa
-aaj
 aaa
+atN
 aaa
 aaa
 aaj
 aaa
-aqi
-aup
-aup
-aqo
+aaa
+aaa
+aaa
+aaj
+atN
+atN
+atN
+atN
 aaa
 aaa
 aaa
@@ -65242,21 +65222,21 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
-avs
-aab
+aaa
+aaj
+atN
+aaa
 aaa
 aak
 boO
 boO
 boO
+boO
 aaF
+atN
 aaa
-atG
-aab
-aab
-avs
+aaa
+atN
 aaa
 aaa
 aaa
@@ -65543,22 +65523,22 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 auy
-auy
-auy
+awD
+bmA
 auy
 auy
 awD
 awN
-awS
-auy
+awN
+bmA
 auy
 auy
 aab
-aab
-avs
+aaa
+atN
 aaa
 aaa
 aaa
@@ -65845,7 +65825,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aab
 auy
 avt
@@ -65860,7 +65840,7 @@ axb
 auy
 aab
 aab
-avs
+atN
 aaa
 aaa
 aaa
@@ -66162,7 +66142,7 @@ axc
 avh
 aac
 aac
-aac
+aaa
 aaa
 aaa
 aaa
@@ -68829,7 +68809,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+auA
 aaa
 aaa
 aaa
@@ -70675,7 +70655,7 @@ abg
 atH
 atH
 aab
-aac
+awS
 aac
 aac
 aac
@@ -72486,16 +72466,16 @@ aaa
 aaa
 aaa
 aaa
-aar
-aar
+aaa
+aaa
+aak
+blW
 aab
-auL
-aab
-aac
 aaa
 aaa
 aaa
 aaa
+bmX
 aaa
 aaa
 aaa
@@ -72788,12 +72768,12 @@ aad
 aaa
 aaa
 aaa
-abf
-aab
-aab
-auL
-aac
-aac
+aaa
+aaa
+aak
+blW
+aaF
+aaa
 aaa
 aaa
 aaa
@@ -73090,12 +73070,12 @@ aaa
 aaa
 aaa
 aaa
-abf
-aab
-auA
-auL
-aac
-aac
+aaa
+aaa
+aak
+blW
+aaF
+aaa
 aaa
 aaa
 aaa
@@ -73392,11 +73372,11 @@ aaa
 aaa
 aaa
 aaa
-abf
-aab
-aac
-auL
-aac
+aaa
+aaa
+aak
+blW
+aaF
 aaa
 aaa
 aaa
@@ -73650,7 +73630,7 @@ aff
 aff
 aff
 age
-afO
+atN
 aaa
 aaa
 aaa
@@ -73694,11 +73674,11 @@ aaa
 aaa
 aaa
 aaa
-abg
-aaz
-abg
-auL
-aac
+aaa
+aaa
+aak
+blW
+aaF
 aaa
 aaa
 aaa
@@ -73952,7 +73932,7 @@ aex
 aex
 afz
 aff
-agA
+atN
 aaa
 aaa
 aaa
@@ -73998,8 +73978,8 @@ aaa
 aaa
 aaa
 aaa
-abg
-auM
+aak
+blW
 aaF
 aaa
 aaa
@@ -74255,7 +74235,7 @@ aff
 afA
 aff
 afO
-afO
+atN
 aaa
 aaa
 aaa
@@ -74557,7 +74537,7 @@ aff
 afA
 aff
 aff
-agA
+atN
 aaa
 aaa
 aaa
@@ -76110,7 +76090,7 @@ aaa
 aaa
 aaa
 aaa
-bmA
+aaa
 aaa
 aak
 anB
@@ -76957,8 +76937,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -77259,8 +77239,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -89854,7 +89834,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+drB
 aaa
 aaa
 aaa
@@ -91090,7 +91070,7 @@ aaa
 aaa
 aaa
 aaa
-aMd
+aaa
 aaa
 aaa
 aaa
@@ -92552,7 +92532,7 @@ aaa
 aaa
 aaa
 aaa
-bmX
+aaa
 aaa
 aaa
 aTP
@@ -93515,7 +93495,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ieU
 aaa
 aaa
 aaa

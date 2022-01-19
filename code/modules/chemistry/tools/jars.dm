@@ -41,6 +41,7 @@
 				src.UpdateIcon()
 
 	on_reagent_change()
+		..()
 		if (!color_underlay)
 			color_underlay = image(src.icon, "mason_jar_brine")
 

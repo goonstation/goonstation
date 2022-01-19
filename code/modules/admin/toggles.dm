@@ -261,7 +261,7 @@ client/proc/toggle_ghost_respawns()
 			src.toggle_popup_verbs()
 		boutput(usr, "<span class='notice'>Player mode now OFF.</span>")
 	else
-		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to recieve") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
+		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to receive") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
 		switch (choice)
 			if ("ASAY, AHELP & MHELP")
 				player_mode = 1
@@ -353,6 +353,14 @@ client/proc/toggle_ghost_respawns()
 	logTheThing("diary", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 
+/client/proc/iddqd()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "iddqd"
+	set popup_menu = 0
+	admin_only
+	usr.client.cmd_admin_godmode_self()
+	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
+
 /client/var/flying = 0
 /client/proc/noclip()
 	set name = "Toggle Your Noclip"
@@ -361,14 +369,6 @@ client/proc/toggle_ghost_respawns()
 
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
-
-/client/proc/iddqd()
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "iddqd"
-	set popup_menu = 0
-	admin_only
-	usr.client.cmd_admin_godmode_self()
-	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
 
 /client/proc/idclip()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

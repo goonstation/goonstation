@@ -182,6 +182,11 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
+/datum/projectile/bullet/ak47/semiauto
+	power = 40
+	cost = 1
+	shot_number = 1
+
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
 	power = 85
@@ -420,6 +425,7 @@ toxic - poisons
 	ks_ratio = 0.0
 	dissipation_delay = 6 //One more tick before falloff begins
 	damage_type = D_ENERGY // FUCK YOU.
+	ie_type = "T"
 	hit_type = null
 	icon_turf_hit = null // stun bullets shouldn't actually enter walls should they?
 

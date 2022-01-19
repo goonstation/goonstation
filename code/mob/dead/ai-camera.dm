@@ -301,6 +301,18 @@
 		if (mainframe)
 			mainframe.ai_state_laws_all()
 
+	verb/ai_set_laws_all()
+		set category = "AI Commands"
+		set name = "Set Fake Laws"
+		if (mainframe)
+			mainframe.ai_set_fake_laws()
+
+	verb/ai_state_laws_fake()
+		set category = "AI Commands"
+		set name = "State Fake Laws"
+		if (mainframe)
+			mainframe.ai_state_fake_laws()
+
 	verb/ai_statuschange()
 		set category = "AI Commands"
 		set name = "AI status"
@@ -479,9 +491,9 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 //pod wars has no AI so this is just a waste of time...
 #ifndef MAP_OVERRIDE_POD_WARS
+		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 
 		var/lastpct = 0
 		var/thispct = 0

@@ -24754,6 +24754,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen1"
@@ -29490,7 +29491,7 @@
 /obj/table/wood/round/auto,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -27
 	},
 /turf/simulated/floor/carpet{
@@ -39492,7 +39493,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "fiX" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /obj/table/auto,

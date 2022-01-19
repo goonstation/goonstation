@@ -196,15 +196,16 @@
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		safety = 0
+		ADD_FLAG(src.flags, OPENCONTAINER)
+		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
 		set_icon_state("fire_extinguisher0")
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		safety = 1
-	return
+		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
 	if (..() && reagents)

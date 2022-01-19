@@ -8,6 +8,7 @@
 
 /mob/living/carbon/human/monkey //Please ignore how silly this path is.
 	name = "monkey"
+	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
@@ -188,6 +189,7 @@
 
 /mob/living/carbon/human/npc/monkey // :getin:
 	name = "monkey"
+	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
@@ -523,6 +525,11 @@
 
 		if(!I.handle_other_remove(source, target))
 			source.show_text("[I] can not be removed.", "red")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (!(source.has_hand(1) || source.has_hand(0)))
+			source.show_text("You can't take something without hands.", "red")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -6,7 +6,7 @@
 "af" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood,/area/prefab/blind_pig)
 "ag" = (/obj/shrub{icon_state = "shrub"; dir = 10},/turf/simulated/floor/wood,/area/prefab/blind_pig)
 "ah" = (/obj/stool/chair/comfy,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"ai" = (/obj/table/reinforced/bar/auto,/obj/cup_rack{pixel_y = 32},/obj/machinery/espresso_machine,/turf/simulated/floor/wood,/area/prefab/blind_pig)
+"ai" = (/obj/table/reinforced/bar/auto,/obj/drink_rack/cup{pixel_y = 32},/obj/machinery/espresso_machine,/turf/simulated/floor/wood,/area/prefab/blind_pig)
 "aj" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/purple/fancy/edge/sw,/area/prefab/blind_pig)
 "ak" = (/obj/table/reinforced/bar/auto,/obj/item/card_group/plain,/turf/simulated/floor/carpet/purple/fancy/edge/south,/area/prefab/blind_pig)
 "al" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/purple/fancy/edge/se,/area/prefab/blind_pig)

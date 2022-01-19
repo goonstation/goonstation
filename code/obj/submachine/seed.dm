@@ -753,7 +753,7 @@
 
 /obj/submachine/chem_extractor/
 	name = "Reagent Extractor"
-	desc = "A machine which can extract reagents from organic matter."
+	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
 	anchored = 1
 	mats = 6
