@@ -9939,8 +9939,8 @@
 /obj/cable,
 /obj/machinery/power/smes{
 	charge = 6e+007;
-	chargelevel = 40000;
-	output = 38500
+	chargelevel = 50000;
+	output = 40000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -22557,6 +22557,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
+"mjt" = (
+/obj/machinery/light/small/cool/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/space/fluid/acid,
+/area/station/engine/inner{
+	name = "Transception Antenna Control"
+	})
 "mjy" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small{
@@ -41819,8 +41828,8 @@
 	},
 /obj/machinery/power/smes{
 	charge = 6e+007;
-	chargelevel = 40000;
-	output = 38500
+	chargelevel = 50000;
+	output = 40000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -87984,7 +87993,7 @@ tpy
 mvA
 kST
 mvA
-aPz
+mjt
 aPz
 aPz
 yge
