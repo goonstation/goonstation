@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			return
 		total_draw = 200
 		if(src.mode == "active")
-			total_draw += 150 * src.resofactor
+			total_draw += 800 * src.resofactor
 			src.extract_ticks += src.resofactor
 
 			for(var/datum/siphon_mineral/M in src.can_extract)
@@ -199,6 +199,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.visible_message("<B>[src]</B> shuts down. Its internal storage is full.")
 
 		power_usage = total_draw
+		use_power(power_usage)
 		..()
 
 	power_change()
@@ -206,6 +207,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			status &= ~NOPOWER
 		else
 			status |= NOPOWER
+			if(src.mode == "active")
+				src.toggling = TRUE
+				src.changemode("low")
+				if(src.paired_lever != null) paired_lever.vis_setpanel(0)
+				SPAWN_DBG(0.5 SECONDS) //retoggle delay
+					if(src.mode != "high") src.toggling = FALSE
 		src.update_fx()
 		src.update_storage_bar()
 
@@ -313,7 +320,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	proc/toggle_drill(var/remote_activation)
 		. = TRUE
-		if(src.toggling) return FALSE
+		if(src.toggling || !powered()) return FALSE
 		if(src.mode == "high")
 			src.engage_drill()
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setlever(1)
@@ -400,7 +407,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.shear = max(0,(xt_absolute - abs(src.x_torque)) + (yt_absolute - abs(src.y_torque)) + shear_adjust)
 
 	proc/update_fx()
-		if(!(status & NOPOWER) && src.mode != "high")
+		if(powered() && src.mode != "high")
 			var/image/beamline = SafeGetOverlayImage("beamline", 'icons/obj/machines/neodrill_32x64.dmi', "drill-active")
 			beamline.plane = PLANE_OVERLAY_EFFECTS
 			UpdateOverlays(beamline, "beamline", 0, 1)
@@ -412,7 +419,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			ClearSpecificOverlays(null,"beamline")
 
 	proc/update_storage_bar()
-		if(!(status & NOPOWER))
+		if(powered())
 			var/storatio = round((length(src.contents) / src.max_held_items) * 5)
 			if(storatio == 0 && length(src.contents)) storatio = 1 //show immediate storage progress for tactile feedback
 			var/image/storebar = SafeGetOverlayImage("storage", 'icons/obj/machines/neodrill_32x64.dmi', "drill-storage-[storatio]")
@@ -527,6 +534,16 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			var/xto = src.x_torque * src.intensity
 			var/yto = src.y_torque * src.intensity
 			. += "<br>A small indicator shows it's providing [xto] lateral and [yto] vertical resonant torque."
+
+	power_change()
+		if(powered())
+			status &= ~NOPOWER
+		else
+			status |= NOPOWER
+			if(src.maglocked)
+				if(paired_core)
+					paired_core.resonators -= src
+				src.disengage_lock(rand(1,5))
 
 	//called by siphon to set up the resonator's coordinate reporting and strength values for its initialized position
 	proc/reso_init(var/xadj,var/yadj)

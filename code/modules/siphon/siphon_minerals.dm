@@ -37,6 +37,20 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		"Type-AX Resonator, Position F4, 2 Intensity<br>"
 	)
 
+/datum/siphon_mineral/char
+	name = "Char"
+	tick_req = 15
+	x_torque = -16
+	y_torque = -4
+	shear = 16
+	sens_window = 5
+	product = /obj/item/raw_material/char
+	setup_guide = list(
+		"Type-AX Resonator, Position B7, 2 Intensity<br>",
+		"Type-AX Resonator, Position G2, 1 Intensity<br>",
+		"Type-AX Resonator, Position D4, 2 Intensity<br>"
+	)
+
 /datum/siphon_mineral/mauxite
 	name = "Mauxite"
 	x_torque = 48
@@ -75,20 +89,6 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		"Type-AX Resonator, Position F6, 1 Intensity<br>",
 		"Type-AX Resonator, Position G5, 2 Intensity<br>",
 		"Type-AX Resonator, Position E3, 3 Intensity<br>"
-	)
-
-/datum/siphon_mineral/char
-	name = "Char"
-	tick_req = 15
-	x_torque = -16
-	y_torque = -4
-	shear = 16
-	sens_window = 5
-	product = /obj/item/raw_material/char
-	setup_guide = list(
-		"Type-AX Resonator, Position B7, 2 Intensity<br>",
-		"Type-AX Resonator, Position G2, 1 Intensity<br>",
-		"Type-AX Resonator, Position D4, 2 Intensity<br>"
 	)
 
 /datum/siphon_mineral/martian

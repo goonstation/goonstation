@@ -9940,7 +9940,7 @@
 /obj/machinery/power/smes{
 	charge = 6e+007;
 	chargelevel = 50000;
-	output = 40000
+	output = 47500
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -25951,10 +25951,10 @@
 	name = "Honkington's Abode"
 	})
 "opv" = (
-/obj/machinery/door/airlock/pyro/weapons,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/access_spawn/hos,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -39567,10 +39567,10 @@
 	name = "The Warrens"
 	})
 "wFi" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -41829,7 +41829,7 @@
 /obj/machinery/power/smes{
 	charge = 6e+007;
 	chargelevel = 50000;
-	output = 40000
+	output = 47500
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
