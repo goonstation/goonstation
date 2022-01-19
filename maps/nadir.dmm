@@ -20441,14 +20441,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/door_timer{
-	desc = "A remote control switch for an ejection chute.";
+/obj/machinery/activation_button/flusher_button{
 	id = "nadirflush";
-	name = "Timed Chute Activator";
-	pixel_x = -23;
-	pixel_y = -2;
-	req_access = 24;
-	time = 0
+	name = "Chute Activator";
+	pixel_x = -24
 	},
 /turf/simulated/floor/engine,
 /area/station/science)

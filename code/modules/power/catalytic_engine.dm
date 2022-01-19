@@ -1,3 +1,6 @@
+#define GEN_ANODE 1
+#define GEN_CATHODE 2
+
 /obj/decal/fakeobjects/catalytic_doodad
 	name = "catalytic generator pipe"
 	desc = "Pipe section allowing a catalytic rod to contact outside fluid for catalysis."
@@ -48,21 +51,60 @@
 	desc = "Rod of material extruded in a suitable form for catalytic electrical generation. Hopefully it's good for that."
 	icon = 'icons/obj/machines/catalysis.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon_state = "roditem"
+	icon_state = "roditem-100"
 	item_state = "rods"
+	///Rod condition: decays over time, combines with generation efficacy to yield a production rate
+	var/condition = 100
+	///Generation efficacy for anode use. Influenced by material properties
+	var/anode_efficacy = 0
+	///Generation efficacy for cathode use. Influenced by material properties
+	var/cathode_efficacy = 0
+	///Decay ratio: how fast rod will fall apart. Influenced by material corrosion resistance
+	var/decay_ratio = 0.999
 
 	anode_default
 		name = "catalytic anode rod"
-		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped deeply with an indicative symbol."
+		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped on one end with an indicative symbol."
 		New()
-			..()
-			var/datum/material/M = getMaterial("mauxite")
+			var/datum/material/M = getMaterial("copper")
 			src.setMaterial(M)
+			..()
 
 	cathode_default
 		name = "catalytic cathode rod"
-		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped deeply with an indicative symbol."
+		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped on one end with an indicative symbol."
 		New()
-			..()
-			var/datum/material/M = getMaterial("copper")
+			var/datum/material/M = getMaterial("mauxite")
 			src.setMaterial(M)
+			..()
+
+	New() //you should only be able to make these from things with a metal material flag
+		///This is usually 35, meaning 0.99935 net decay ratio (60% after ~13m, 40% after ~24m). Total corrosion immunity = no decay.
+		..()
+		var/decay_ratio_adjustment = src.material.getProperty("corrosion") * 0.00001
+		src.decay_ratio = src.decay_ratio + decay_ratio_adjustment
+		src.anode_efficacy = 150 - (abs(75-src.material.getProperty("electrical")) * 2)
+		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_efficacy)
+			src.anode_efficacy = src.anode_efficacy * 1.2
+		src.cathode_efficacy = 150 - (abs(75-src.material.getProperty("density")) * 2) + min(src.material.getProperty("stability")-50,0)
+
+	///Consumes rod condition in furtherance of electrical generation; pass anode or cathode use for appropriate effectiveness factor
+	proc/expend_rod(var/expend_type)
+		. = FALSE //If rod is so ineffective in role as to yield no generation whatsoever, generator should abort operation
+		switch(expend_type)
+			if(GEN_ANODE)
+				. = round(src.condition * src.anode_efficacy * 100000)
+				src.condition = src.condition * ROD_DECAY_RATIO
+			if(GEN_CATHODE)
+				. = round(src.condition * src.cathode_efficacy * 100000)
+				src.condition = src.condition * ROD_DECAY_RATIO
+		return
+
+	update_icon()
+		..()
+		var/ratio = min(round(condition, 20)+20,100)
+		src.icon_state = "roditem-[ratio]"
+
+
+#undef GEN_ANODE
+#undef GEN_CATHODE
