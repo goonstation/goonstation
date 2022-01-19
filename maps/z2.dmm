@@ -73358,14 +73358,15 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "hVQ" = (
-/obj/machinery/door/poddoor/blast/single{
-	desc = "An old blast door. It has plenty of scratches and dents on its surface.";
-	id = "virvadoor"
+/obj/machinery/door/unpowered/wood{
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
 	},
-/turf/unsimulated/floor/plating/scorched,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/obj/adventurepuzzle/triggerer/trigger{
+	id = "virva_trigger"
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/edge/west,
+/area/centcom/offices/virvatuli)
 "iag" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -73863,19 +73864,21 @@
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
 "jJr" = (
-/obj/machinery/door_control{
-	desc = "A button set into the wall. You probably shouldn't press this.";
-	id = "virvadoor";
-	name = "curious button";
-	pixel_x = 24;
-	pixel_y = 9
+/obj/loudspeaker{
+	pixel_x = 3;
+	pixel_y = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/obj/item/clothing/ears/earmuffs{
+	anchored = 1;
+	desc = "Overpriced, but damn do they sound good.";
+	icon_state = "radio";
+	name = "EarbleedDynamic 5p355 Studio Headphones";
+	pixel_x = -11;
+	pixel_y = 4
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/obj/table/syndicate/auto,
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
+/area/centcom/offices/virvatuli)
 "jJx" = (
 /turf/unsimulated/wall{
 	dir = 8;
@@ -74075,14 +74078,20 @@
 	},
 /area/centcom/offices/varshie)
 "khH" = (
-/obj/item/organ/eye/left{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
 	},
-/obj/decal/cleanable/blood{
-	icon_state = "floor5"
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = -15
 	},
-/turf/unsimulated/floor/snowrough,
+/obj/table/syndicate/auto,
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "kiU" = (
 /obj/indestructible/shuttle_corner{
@@ -74466,14 +74475,6 @@
 /turf/space,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
-"lpM" = (
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "<b>Listen, I know it looks weird and smells bad, but you'll like it even less when it's hungry and annoyed. Make sure you bring the kibble!</b>";
-	name = "reminder"
-	},
-/turf/unsimulated/floor/snowrough,
-/area/centcom/offices/virvatuli)
 "lqh" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -74858,13 +74859,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "mpC" = (
-/obj/decal/cleanable/blood{
-	icon_state = "drip2b"
-	},
-/obj/decal/cleanable/blood/splatter{
-	icon_state = "gibbl2"
-	},
-/turf/unsimulated/floor/snowrough,
+/turf/unsimulated/floor/carpet/purple/fancy/edge/east,
 /area/centcom/offices/virvatuli)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
@@ -75030,7 +75025,16 @@
 /turf/unsimulated/floor/engine/caution/north,
 /area/hospital/samostrel)
 "mPW" = (
-/turf/unsimulated/floor/snowrough,
+/obj/loudspeaker{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/flask/taskumatti{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "mSp" = (
 /obj/stool/chair,
@@ -75617,10 +75621,13 @@
 /area/syndicate_station/firing_range)
 "nYa" = (
 /obj/admin_plaque{
-	desc = "DON'T LET IT OUT!";
-	name = "Virvatuli's Office"
+	desc = "<< sound not welcome";
+	name = "Virvatuli's Studio";
+	pixel_x = 32
 	},
-/turf/unsimulated/wall/auto/lead/blue,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -76102,6 +76109,13 @@
 /turf/space,
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
+"pgd" = (
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = 7;
+	pixel_y = -7
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "pkE" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdomea{
@@ -76511,6 +76525,15 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"pYp" = (
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
+	},
+/obj/table/clothred/auto,
+/turf/unsimulated/floor/carpet/purple/fancy/edge/east,
+/area/centcom/offices/virvatuli)
 "qan" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -77046,13 +77069,6 @@
 "rHr" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
-"rIL" = (
-/obj/decal/cleanable/blood,
-/obj/item/organ/spleen{
-	pixel_y = -4
-	},
-/turf/unsimulated/floor/snowrough,
-/area/centcom/offices/virvatuli)
 "rJe" = (
 /obj/storage/crate/bin/lostandfound{
 	desc = "Just what it sounds like.";
@@ -77187,13 +77203,51 @@
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
 "rQQ" = (
-/obj/decal/cleanable/blood{
-	icon_state = "floor6"
+/obj/item/device/light/glowstick/green_on{
+	pixel_y = -6
 	},
-/obj/item/parts/human_parts/arm/left{
-	dir = 4
+/obj/storage/secure/closet/fridge{
+	name = "incredible closetfridge"
 	},
-/turf/unsimulated/floor/snowrough,
+/obj/item/storage/ntso_pouch{
+	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
+	name = "stained tacticool pouch";
+	pixel_x = 5;
+	pixel_y = -5;
+	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/old_grenade/energy_concussion = 1, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	desc = "Incredibly stinky.";
+	name = "foul-smelling mystery meat";
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
+	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
+	initial_reagents = list("psilocybin" = 20, "lsd_bee" = 20, "space_drugs" = 20);
+	name = "mystical fun guy";
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/mime{
+	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
+	name = "chewed-up mime mask";
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/clothing/under/scrub/purple{
+	name = "old medical scrubs";
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/security_badge{
+	badge_owner_job = "Head of Security";
+	badge_owner_name = "Elika Zamani";
+	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
+	name = "scratched security badge";
+	pixel_x = 9;
+	pixel_y = -12
+	},
+/turf/unsimulated/floor/carpet/purple/fancy/innercorner/se,
 /area/centcom/offices/virvatuli)
 "rUQ" = (
 /obj/admin_plaque{
@@ -77512,10 +77566,6 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
-"sNO" = (
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/snowrough,
-/area/centcom/offices/virvatuli)
 "sON" = (
 /obj/cable{
 	d1 = 1;
@@ -78087,53 +78137,13 @@
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
 "uUa" = (
-/obj/map/light/void,
-/obj/decal/lightshaft{
-	mouse_opacity = 0
-	},
-/obj/storage/secure/closet/fridge{
-	desc = "An old, gross refrigerator. It's splattered with dried blood and what looks like claw marks.";
-	locked = 0;
-	name = "bloody refrigerator"
-	},
 /obj/critter/domestic_bee/creepy{
 	name = "Virvatulbee"
 	},
-/obj/item/clothing/mask/mime{
-	desc = "A mangled mime mask. SUBROSA is written in purple crayon on the reverse side.";
-	name = "chewed-up mime mask";
-	pixel_x = -2;
-	pixel_y = 4
+/obj/stool/chair/office/purple{
+	dir = 1
 	},
-/obj/item/clothing/suit/security_badge{
-	badge_owner_job = "Head of Security";
-	badge_owner_name = "Elika Zamani";
-	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
-	name = "scratched security badge";
-	pixel_x = 9;
-	pixel_y = -12
-	},
-/obj/item/storage/ntso_pouch{
-	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
-	name = "stained tacticool pouch";
-	pixel_x = 5;
-	pixel_y = -5;
-	spawn_contents = list(/obj/item/handcuffs = 1, /obj/item/device/flash, /obj/item/ammo/power_cell/self_charging/potato = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/candy/candyheart)
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	desc = "Incredibly stinky.";
-	name = "foul-smelling mystery meat";
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/snacks/mushroom/psilocybin{
-	desc = "If you were a mycologist, weird fridge mushrooms might seem like a bad idea. But you're not, so chow down!";
-	initial_reagents = list("psilocybin" = 20, "lsd_bee" = 20, "space_drugs" = 20);
-	name = "mystical fun guy";
-	pixel_x = -4;
-	pixel_y = -3
-	},
-/turf/unsimulated/floor/snowrough,
+/turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "uVv" = (
 /turf/simulated/wall/r_wall,
@@ -79188,11 +79198,7 @@
 	},
 /area/titlescreen)
 "ykp" = (
-/obj/dialogueobj/securitycorpse7{
-	mouse_opacity = 0
-	},
-/obj/decal/cleanable/blood/splatter/extra,
-/turf/unsimulated/floor/snowrough,
+/turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "yld" = (
 /turf/space,
@@ -156342,9 +156348,9 @@ dvy
 dvy
 dvy
 dvy
+nYa
 dvy
 dvy
-jJr
 dvy
 dvy
 dvy
@@ -156644,7 +156650,7 @@ vGl
 gPB
 wel
 wel
-nYa
+wel
 hVQ
 wel
 uAx
@@ -156948,7 +156954,7 @@ ius
 wel
 rQQ
 mpC
-lpM
+pYp
 ePs
 nsm
 sNn
@@ -157250,7 +157256,7 @@ jEZ
 wel
 mPW
 ykp
-rIL
+ykp
 ePs
 fCL
 sNn
@@ -157552,7 +157558,7 @@ njW
 wel
 khH
 uUa
-sNO
+ykp
 ePs
 fGD
 oRd
@@ -157852,9 +157858,9 @@ qGH
 fov
 oPY
 wel
-mPW
-mPW
-mPW
+jJr
+ykp
+pgd
 ePs
 pfF
 oSl

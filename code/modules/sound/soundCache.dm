@@ -34,6 +34,7 @@ var/global/list/soundCache = list(
  	"sound/ambience/loop/Fire_Medium.ogg" = 'sound/ambience/loop/Fire_Medium.ogg',\
  	"sound/ambience/loop/manta_vault.ogg" = 'sound/ambience/loop/manta_vault.ogg',\
  	"sound/ambience/loop/Mars_Interior.ogg" = 'sound/ambience/loop/Mars_Interior.ogg',\
+ 	"sound/ambience/loop/officebeats.ogg" = 'sound/ambience/loop/officebeats.ogg',\
  	"sound/ambience/loop/Polarisloop.ogg" = 'sound/ambience/loop/Polarisloop.ogg',\
  	"sound/ambience/loop/Shore.ogg" = 'sound/ambience/loop/Shore.ogg',\
  	"sound/ambience/loop/Static_Horror_Loop_End.ogg" = 'sound/ambience/loop/Static_Horror_Loop_End.ogg',\

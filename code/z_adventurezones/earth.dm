@@ -271,9 +271,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	virvatuli
 		ckey = "virvatuli"
 		name = "Office of Virvatuli"
-		New()
-			..()
-			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
+		sound_loop = 'sound/ambience/loop/officebeats.ogg'
+		sound_loop_vol = 90
+		sound_group = "virva_office"
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
