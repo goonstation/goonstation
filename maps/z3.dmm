@@ -7745,8 +7745,8 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "auA" = (
-/obj/item/satchel/mining/large,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/effects/background_objects/star_blue,
+/turf/space,
 /area/space)
 "auB" = (
 /obj/grille/catwalk,
@@ -8579,18 +8579,9 @@
 	},
 /area/tech_outpost)
 "awS" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/plating,
-/area/tech_outpost)
+/obj/item/satchel/mining/large,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "awT" = (
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -24523,7 +24514,13 @@
 /turf/simulated/floor/airless/circuit,
 /area/abandonedmedicalship)
 "blW" = (
-/obj/effects/background_objects/x3,
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/rail{
+	dir = 8;
+	layer = 3
+	},
 /turf/space,
 /area/space)
 "blX" = (
@@ -24610,9 +24607,18 @@
 /turf/space,
 /area/space)
 "bmA" = (
-/obj/effects/background_objects/x4,
-/turf/space,
-/area/space)
+/obj/grille/steel,
+/obj/window/reinforced{
+	dir = 8
+	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/window/reinforced{
+	dir = 2
+	},
+/turf/simulated/floor/plating,
+/area/tech_outpost)
 "bmB" = (
 /obj/stool/chair{
 	dir = 8
@@ -24683,10 +24689,11 @@
 /turf/space,
 /area/space)
 "bmX" = (
-/obj/effects/background_objects/x5{
-	pixel_x = -160;
-	pixel_y = -160
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
 	},
+/obj/effects/background_objects/x3,
 /turf/space,
 /area/space)
 "bmY" = (
@@ -24985,6 +24992,10 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"bPL" = (
+/obj/effects/background_objects/x4,
+/turf/space,
+/area/space)
 "cSD" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
@@ -25014,6 +25025,10 @@
 "fWR" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
+/area/space)
+"gFZ" = (
+/obj/effects/background_objects/x5,
+/turf/space,
 /area/space)
 "hmp" = (
 /turf/unsimulated/floor/stairs/dark{
@@ -25093,6 +25108,10 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid,
+/area/space)
+"nkf" = (
+/obj/effects/background_objects/star_red,
+/turf/space,
 /area/space)
 "npm" = (
 /obj/wingrille_spawn/auto,
@@ -36299,7 +36318,7 @@ aaa
 aaa
 aaa
 aaa
-blW
+aaa
 aad
 aaa
 aaa
@@ -38483,7 +38502,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+nkf
 anF
 aWr
 aWF
@@ -63405,7 +63424,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bPL
 aaa
 aaa
 aaa
@@ -64605,7 +64624,7 @@ aaa
 aaa
 aaa
 aaa
-aqo
+atN
 aaa
 aaa
 aaa
@@ -64905,21 +64924,21 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
-avs
-aab
 aaa
-aaj
 aaa
+atN
 aaa
 aaa
 aaj
 aaa
-aqi
-aup
-aup
-aqo
+aaa
+aaa
+aaa
+aaj
+atN
+atN
+atN
+atN
 aaa
 aaa
 aaa
@@ -65207,21 +65226,21 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
-avs
-aab
+aaa
+aaj
+atN
+aaa
 aaa
 aak
 boO
 boO
 boO
+boO
 aaF
+atN
 aaa
-atG
-aab
-aab
-avs
+aaa
+atN
 aaa
 aaa
 aaa
@@ -65508,22 +65527,22 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 auy
-auy
-auy
+awD
+bmA
 auy
 auy
 awD
 awN
-awS
-auy
+awN
+bmA
 auy
 auy
 aab
-aab
-avs
+aaa
+atN
 aaa
 aaa
 aaa
@@ -65810,7 +65829,7 @@ aaa
 aaa
 aaa
 aaa
-aab
+aaa
 aab
 auy
 avt
@@ -65825,7 +65844,7 @@ axb
 auy
 aab
 aab
-avs
+atN
 aaa
 aaa
 aaa
@@ -66127,7 +66146,7 @@ axc
 avh
 aac
 aac
-aac
+aaa
 aaa
 aaa
 aaa
@@ -70640,7 +70659,7 @@ abg
 atH
 atH
 aab
-aac
+awS
 aac
 aac
 aac
@@ -72451,12 +72470,12 @@ aaa
 aaa
 aaa
 aaa
-aar
-aar
+aaa
+aaa
+aak
+blW
 aab
-auL
-aab
-aac
+aaa
 aaa
 aaa
 aaa
@@ -72753,12 +72772,12 @@ aad
 aaa
 aaa
 aaa
-abf
-aab
-aab
-auL
-aac
-aac
+aaa
+aaa
+aak
+blW
+aaF
+aaa
 aaa
 aaa
 aaa
@@ -73055,12 +73074,12 @@ aaa
 aaa
 aaa
 aaa
-abf
-aab
-auA
-auL
-aac
-aac
+aaa
+aaa
+aak
+blW
+aaF
+aaa
 aaa
 aaa
 aaa
@@ -73318,7 +73337,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+auA
 agt
 agS
 ahj
@@ -73357,11 +73376,11 @@ aaa
 aaa
 aaa
 aaa
-abf
-aab
-aac
-auL
-aac
+aaa
+aaa
+aak
+blW
+aaF
 aaa
 aaa
 aaa
@@ -73615,7 +73634,7 @@ aff
 aff
 aff
 age
-afO
+atN
 aaa
 aaa
 aaa
@@ -73659,11 +73678,11 @@ aaa
 aaa
 aaa
 aaa
-abg
-aaz
-abg
-auL
-aac
+aaa
+aaa
+aak
+blW
+aaF
 aaa
 aaa
 aaa
@@ -73917,7 +73936,7 @@ aex
 aex
 afz
 aff
-agA
+atN
 aaa
 aaa
 aaa
@@ -73963,8 +73982,8 @@ aaa
 aaa
 aaa
 aaa
-abg
-auM
+aak
+blW
 aaF
 aaa
 aaa
@@ -74220,7 +74239,7 @@ aff
 afA
 aff
 afO
-afO
+atN
 aaa
 aaa
 aaa
@@ -74522,7 +74541,7 @@ aff
 afA
 aff
 aff
-agA
+atN
 aaa
 aaa
 aaa
@@ -76075,7 +76094,7 @@ aaa
 aaa
 aaa
 aaa
-bmA
+aaa
 aaa
 aak
 anB
@@ -76922,8 +76941,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -77224,8 +77243,8 @@ aaa
 aaa
 aaa
 aaa
-aab
-aab
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -79092,7 +79111,7 @@ boP
 boP
 boP
 boP
-boP
+bmX
 boP
 boP
 boP
@@ -91055,7 +91074,7 @@ aaa
 aaa
 aaa
 aaa
-aMd
+aaa
 aaa
 aaa
 aaa
@@ -92517,7 +92536,7 @@ aaa
 aaa
 aaa
 aaa
-bmX
+aaa
 aaa
 aaa
 aTP
@@ -93480,7 +93499,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+gFZ
 aaa
 aaa
 aaa

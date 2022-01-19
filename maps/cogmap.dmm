@@ -59181,6 +59181,14 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"pgp" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/effects/background_objects/star_blue,
+/turf/space,
+/area/space)
 "pgN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -61306,6 +61314,10 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/main)
+"sGL" = (
+/obj/effects/background_objects/star_red,
+/turf/space,
+/area/space)
 "sHJ" = (
 /obj/machinery/computer/solar_control/east{
 	dir = 4
@@ -62539,6 +62551,10 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"uwv" = (
+/obj/effects/background_objects/x0,
+/turf/space,
+/area/space)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -81501,7 +81517,7 @@ adC
 adC
 adC
 adC
-adC
+uwv
 adC
 adC
 adC
@@ -101062,7 +101078,7 @@ adC
 adC
 adC
 adC
-adC
+sGL
 adC
 aal
 adC
@@ -123759,7 +123775,7 @@ aaq
 aaq
 aaq
 aaq
-aaq
+pgp
 aaq
 acW
 adC

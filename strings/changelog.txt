@@ -1,5 +1,8 @@
 
 (t)wed jan 19 22
+(u)Cogwerks
+(e)🗺🎨|mapping, sprites
+(+)Replaced my older drawn background assets with some fancier new 3D-rendered plasma giant, a couple moons, and stars 
 (u)DimWhat
 (p)6997
 (e)🗺🎨|mapping, sprites
