@@ -1767,6 +1767,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\MechanicMC14500.dm"
 #include "code\WorkInProgress\MechanicsNetworkCon.dm"
 #include "code\WorkInProgress\missile_latejoin.dm"
+#include "code\WorkInProgress\nadir_antenna.dm"
 #include "code\WorkInProgress\NewVote.dm"
 #include "code\WorkInProgress\ObjectProperties.dm"
 #include "code\WorkInProgress\OverlayManager.dm"

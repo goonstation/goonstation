@@ -666,6 +666,7 @@
 	})
 "aoK" = (
 /obj/item/device/radio/beacon,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "aoO" = (
@@ -2578,6 +2579,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/head)
+"bts" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/southwest)
 "btu" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility{
@@ -6260,6 +6268,7 @@
 /area/station/janitor/supply)
 "dBr" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "dBs" = (
@@ -10250,12 +10259,7 @@
 	name = "Drop Capsule"
 	})
 "fRc" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/stool/bar,
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "fRv" = (
@@ -11575,7 +11579,14 @@
 "gAM" = (
 /obj/machinery/light,
 /obj/table/reinforced/auto,
-/obj/item/hand_labeler,
+/obj/item/storage/belt/utility{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = 2;
+	pixel_y = 5
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "gAO" = (
@@ -14803,9 +14814,13 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "ihI" = (
-/obj/disposalpipe/junction/right/west,
-/turf/simulated/floor/engine,
-/area/station/crew_quarters/kitchen)
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/ejection,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/inner)
 "ihU" = (
 /obj/table/reinforced/auto,
 /obj/item/old_grenade/oxygen{
@@ -17584,21 +17599,12 @@
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "jIg" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/kitchen,
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "kitchen";
-	layer = 4;
-	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+/obj/stool/chair{
+	dir = 4
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
-/area/station/crew_quarters/kitchen)
+/area/station/crew_quarters/cafeteria)
 "jIm" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -20424,7 +20430,8 @@
 	name = "Timed Chute Activator";
 	pixel_x = -23;
 	pixel_y = -2;
-	req_access = 24
+	req_access = 24;
+	time = 0
 	},
 /turf/simulated/floor/engine,
 /area/station/science)
@@ -20608,6 +20615,17 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"lmF" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/access_spawn/cargo,
+/obj/machinery/cashreg{
+	pixel_y = -2
+	},
+/turf/simulated/floor/engine,
+/area/station/quartermaster/cargooffice)
 "lmL" = (
 /turf/unsimulated/wall/setpieces/leadwall/white_2{
 	dir = 4
@@ -22268,13 +22286,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/communications/centre)
 "mcp" = (
-/obj/decal/tile_edge/line/white{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
-/area/station/crew_quarters/kitchen)
+/area/station/crew_quarters/cafeteria)
 "mcC" = (
 /obj/shrub{
 	dir = 4;
@@ -23523,6 +23537,14 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/engine,
 /area/station/medical/medbay)
+"mMQ" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/southwest)
 "mMV" = (
 /obj/stool/bar,
 /turf/simulated/floor/engine,
@@ -23584,6 +23606,9 @@
 /obj/item/pen/marker/blue,
 /obj/item/pen/marker/red,
 /obj/item/pen/marker,
+/obj/item/hand_labeler{
+	pixel_y = -13
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "mOC" = (
@@ -29135,7 +29160,7 @@
 	icon_state = "line1"
 	},
 /obj/stool/bar,
-/obj/disposalpipe/segment/bent/west,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "qnF" = (
@@ -31151,6 +31176,11 @@
 	name = "Waste Ejection Doors";
 	pixel_y = 24
 	},
+/obj/machinery/conveyor_switch{
+	icon_state = "switch-fwd";
+	id = "garbage";
+	position = 1
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "rCY" = (
@@ -31775,6 +31805,11 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/north)
+"rVI" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/cafeteria)
 "rWN" = (
 /obj/decal/tile_edge/line/green{
 	dir = 1;
@@ -33245,14 +33280,26 @@
 /area/station/science)
 "sLC" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/paper_bin{
+	pixel_x = -4
+	},
+/obj/item/pen{
+	pixel_x = -4
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 13;
+	pixel_y = 4
+	},
+/obj/item/device/multitool{
+	pixel_x = 11;
+	pixel_y = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
@@ -35781,6 +35828,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "uik" = (
@@ -39404,6 +39452,10 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"wEf" = (
+/obj/disposalpipe/junction/left/east,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/southwest)
 "wEt" = (
 /obj/stool/chair{
 	dir = 8
@@ -40766,6 +40818,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner)
+"xxE" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/engine,
+/area/station/hallway/primary/southwest)
 "xxN" = (
 /obj/storage/secure/closet/engineering{
 	name = "\improper Acid Response Locker";
@@ -77886,14 +77942,14 @@ ewv
 gbZ
 iHN
 vAs
-ihI
-abu
-mcp
-jIg
-fRc
-fRc
-fRc
-fRc
+rCD
+maE
+ssc
+fPh
+pGy
+pGy
+pGy
+pGy
 qnB
 pGy
 wCC
@@ -78498,14 +78554,14 @@ kfZ
 wzZ
 wzZ
 wNk
-ptO
+fRc
 uii
-wzZ
+jIg
 dBr
-ptO
-eDe
-nqR
-lMZ
+mcp
+rVI
+mMQ
+xxE
 wUj
 rhJ
 vjR
@@ -78807,7 +78863,7 @@ jwF
 ptO
 rsP
 wio
-lMZ
+hcm
 wUj
 rhJ
 vvO
@@ -79109,7 +79165,7 @@ jwF
 slG
 nKx
 idy
-kyu
+bts
 wUj
 xSx
 idy
@@ -79411,7 +79467,7 @@ ptO
 ptO
 rsP
 hlm
-lMZ
+hcm
 wUj
 rhJ
 oKt
@@ -79713,7 +79769,7 @@ aqW
 wOT
 nKx
 stv
-awU
+wEf
 nzw
 woa
 rnL
@@ -83935,7 +83991,7 @@ kEQ
 cNY
 tnm
 fOH
-eLY
+ihI
 ppA
 qGL
 sKN
@@ -88785,7 +88841,7 @@ rZb
 whK
 fyJ
 whK
-hVg
+lmF
 hVg
 jAY
 aXV

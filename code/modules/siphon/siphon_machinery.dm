@@ -343,7 +343,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(src.toggling || src.mode != "high" || !src.powered()) return
 		src.toggling = TRUE
 		playsound(src, "sound/machines/click.ogg", 40, 1)
-		src.icon_state = "drilldrop"
+		src.icon_state = "drill-low"
+		flick("drilldrop",src)
 		SPAWN_DBG(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				var/xadj = res.x - src.x
@@ -372,7 +373,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.resonators.Cut()
 		src.clear_siphon_console()
 		SPAWN_DBG(1 SECOND)
-			src.icon_state = "drillraise"
+			src.icon_state = "drill-high"
+			flick("drillraise",src)
 			SPAWN_DBG(3 SECONDS)
 				src.toggling = FALSE
 
