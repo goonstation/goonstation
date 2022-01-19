@@ -4,7 +4,7 @@ cd ../ # Get back to main dir
 
 $Excludes = @("sound\vox", "browserassets\sounds", "unversioned\*", "sound\radio_station", "sound\radio_station\adverts", "sound\radio_station\music", "+secret\*")
 
-$oggFiles = Get-ChildItem -Recurse -Filter "*.ogg" -Name | %{
+$oggFiles = Get-ChildItem -Recurse -Filter "*.ogg" -Name | Sort-Object | %{
     $allowed = $true
     foreach ($exclude in $Excludes) {
         if ($_ -ilike $exclude -OR (Split-Path $_) -ilike $exclude) {
