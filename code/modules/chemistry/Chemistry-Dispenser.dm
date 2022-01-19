@@ -23,13 +23,24 @@
 	var/dispenser_name = "Chemical"
 	var/obj/item/card/id/user_id = null
 	var/datum/reagent_group_account/current_account = null
+	var/list/starting_groups
 	var/list/accounts = list()
 	var/output_target = null
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
 
+	var/list/recording_queue
+	var/list/recording_state = FALSE
+
 	New()
 		..()
 		update_account()
+		recording_queue = list()
+		if(starting_groups)
+			for(var/P in starting_groups)
+				var/datum/reagent_group/default/G = new P
+				G.update_desc()
+				if (current_account)
+					current_account.groups += G
 
 	disposing()
 		beaker = null
@@ -55,6 +66,7 @@
 				PDA.eject_id_card()
 			ID.set_loc(src)
 			src.user_id = ID
+			src.update_account()
 			update_static_data(user)
 			tgui_process.update_uis(src)
 			return
@@ -256,6 +268,8 @@
 		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
 		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
 		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
+		.["isRecording"] = src.recording_state
+		.["activeRecording"] = src.get_recording_text()
 		if(beaker)
 			var/datum/reagents/R = beaker.reagents
 			var/datum/color/average = R.get_average_color()
@@ -275,6 +289,11 @@
 					)))
 		.["beakerContents"] = beakerContentsTemp
 
+	proc/get_recording_text()
+		. = ""
+		for (var/reagent in src.recording_queue)
+			. += "[reagent]; "
+
 	ui_act(action, params, datum/tgui/ui)
 		if(..())
 			return
@@ -289,6 +308,8 @@
 				src.UpdateIcon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				use_power(10)
+				if(src.recording_state)
+					src.recording_queue += "[params["reagentId"]]=[isnum(amount) ? amount : 10]"
 				. = TRUE
 			if ("eject")
 				if (beaker)
@@ -329,13 +350,15 @@
 				src.UpdateIcon()
 				. = TRUE
 			if ("newGroup")
-				var/reagents = params["reagents"]
+				var/reagents = get_recording_text()//params["reagents"]
 				if (isnull(reagents) || !length(reagents))
 					return
 				var/name = params["groupName"]
 				name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
 				if (isnull(name) || !length(name) || name == " ")
 					return
+
+#if FALSE
 				var/list/reagentlist = params2list(reagents)
 				var/datum/reagent_group/G = new /datum/reagent_group()
 				for (var/reagent in reagentlist)
@@ -352,8 +375,12 @@
 							for (var/num in reagentAmmount)
 								reagentValue += text2num_safe(num)
 							G.reagents[lowertext(reagent)] = clamp(round(reagentValue), 1, 100)
+#else
+				var/datum/reagent_group/G = new /datum/reagent_group()
+				G.reagents = src.recording_queue.Copy()
+#endif
 
-				if(G.reagents == 0)
+				if(!length(G.reagents))
 					return
 				G.name = name
 				G.update_desc()
@@ -374,11 +401,22 @@
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(istype(group) && current_account && (group in current_account.groups))
 					for (var/reagent in group.reagents)
+#if FALSE
 						if ((reagent in dispensable_reagents))
 							var/amt = 10
 							if (isnum(group.reagents[reagent]))
 								amt = group.reagents[reagent]
 							beaker.reagents.add_reagent(reagent,amt)
+#else
+						var/tuple = params2list(reagent)
+						var/key = tuple[1]
+						var/value = text2num_safe(tuple[tuple[1]])
+						if ((key in dispensable_reagents))
+							var/amt = 10
+							if (isnum(value))
+								amt = value
+							beaker.reagents.add_reagent(key,amt)
+#endif
 							beaker.reagents.handle_reactions()
 					src.UpdateIcon()
 					use_power(length(group.reagents) * 10)
@@ -398,7 +436,15 @@
 						src.update_account()
 						update_static_data(usr,ui)
 				return
+			if ("record")
+				src.recording_state = !src.recording_state
+			if ("clear_recording")
+				src.recording_queue = list()
 
+/obj/machinery/chem_dispenser/med_test
+	starting_groups = list(/datum/reagent_group/default/potassium_iodide,
+								/datum/reagent_group/default/styptic,
+								/datum/reagent_group/default/silver_sulfadiazine)
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents artificially produced using industrial ethanol. Not recommended for human consumption."
@@ -497,12 +543,46 @@
 	var/name = null
 	var/list/reagents = list()
 	var/group_desc
+	var/custom_desc
 
 	proc/update_desc()
-		group_desc = ""
-		for (var/reagent in src.reagents)
-			var/amt = reagents[reagent]
-			if (!isnum(amt))
-				amt = 10
-			src.group_desc += "[reagent][!isnull(amt) ? " ([amt]u)" : null], "
-		group_desc = copytext(group_desc, 1, length(group_desc)-1)
+		if(custom_desc)
+			group_desc = custom_desc
+
+		else
+			group_desc = ""
+			for (var/reagent_data in src.reagents)
+				var/tuple = params2list(reagent_data)
+				var/key = tuple[1]
+				var/amt = text2num_safe(tuple[key])
+				if (!isnum(amt))
+					amt = 10
+				src.group_desc += "[key]([amt]u), "
+			group_desc = copytext(group_desc, 1, length(group_desc)-1)
+
+	proc/build_reagent_group_by_reaction(reaction_id, scale=1)
+		var/datum/chemical_reaction/C = chem_reactions_by_id[reaction_id]
+		var/datum/reagent/R  = reagents_cache[C.result]
+
+		if(R && C)
+			if(!name)
+				src.name = R.name
+			for(var/reagent in C.required_reagents)
+				reagents += "[reagent]=[C.required_reagents[reagent] * scale]"
+	default
+		var/reaction_id
+
+		New()
+			..()
+			build_reagent_group_by_reaction(reaction_id)
+
+		potassium_iodide
+			reaction_id = "anti_rad"
+			custom_desc = "Anti-Radiation Medication"
+
+		styptic
+			reaction_id = "styptic_powder"
+			custom_desc = "Control bleeding and heal physical wounds"
+		silver_sulfadiazine
+			reaction_id = "silver_sulfadiazine"
+			custom_desc = "This antibacterial compound is used to treat burn victims"
