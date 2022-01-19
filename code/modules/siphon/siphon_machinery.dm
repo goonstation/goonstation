@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			src.can_extract += new mineral
 
 	ex_act(severity)
-		if(severity != 1.0)
+		if(severity > 1.0)
 			return
 		..()
 
