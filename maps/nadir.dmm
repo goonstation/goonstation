@@ -471,7 +471,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/light_switch/east,
@@ -9562,7 +9562,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northwest)
 "fwm" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/camera{
@@ -14722,7 +14722,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/southwest)
 "idz" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -23316,7 +23316,7 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/office)
 "mGe" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "mGk" = (
@@ -23332,7 +23332,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/engine,
@@ -27792,7 +27792,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -28317,7 +28317,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/engine,
 /area/station/medical/morgue)
 "pMS" = (
@@ -28570,7 +28570,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -29889,7 +29889,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/engine,
 /area/station/medical/morgue)
 "qJE" = (
@@ -34450,7 +34450,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/engine,
@@ -35836,7 +35836,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/quartermaster/refinery)
 "uhK" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/quarters_west)
 "uib" = (
@@ -38788,7 +38788,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
