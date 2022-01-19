@@ -2912,7 +2912,7 @@
 //////////////////////////////////////////////////////////////
 ///███████ ███████ ██      ██      ██ ███    ██  ██████     //
 ///██      ██      ██      ██      ██ ████   ██ ██       ██ //
-///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    ///obj/item/handcuffs
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
 ///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
@@ -3038,7 +3038,7 @@
 			if ("saturday")
 				comtype = /obj/item/clothing/shoes/swat
 			if ("sunday")
-				comtype = /obj/item/clothing/shoes/cowboy
+				comtype = /obj/item/clothing/shoes/swat
 				
 	
 /datum/commodity/blackmarket/surplus/gasmask
@@ -3095,11 +3095,19 @@
 	upperfluc = 50000
 	lowerfluc = -50000
 	
+/datum/commodity/blackmarket/surplus/handcuffs
+	//some people want this to be cheaper, those people are fools. this is an amazing item and if anything it's too cheap here
+	comname = "Handcuffs"
+	comtype = /obj/item/handcuffs
+	price = 1800
+	upperfluc = 300
+	lowerfluc = -300
+	/obj/item/handcuffs
+	
 /datum/commodity/blackmarket/surplus/riot_grenade
 	//if you want good grenades you'll have to get those at qm
 	comname = "Capsaicin Grenade"
 	comtype = 
-	desc_sell = ""
 	price = 12000
 	upperfluc = 3000
 	lowerfluc = -3000
@@ -3192,7 +3200,7 @@
 ///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
 ///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
-///////////////////////////////////////////////////////////////obj/item/organ/head
+///////////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/blob/chitin
 	comname = "CHITIN"
@@ -3200,6 +3208,14 @@
 	price = 2000
 	upperfluc = 800
 	lowerfluc = -800
+
+/datum/commodity/blackmarket/blob/head
+	comname = "CRANIUM"
+	comtype = /obj/item/organ/head
+	price = 6000
+	made_from = "blob"
+	upperfluc = 3000
+	lowerfluc = -3000
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -3236,8 +3252,8 @@
 ///██      ██      ██      ██      ██ ████   ██ ██       ██ //
 ///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
 ///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
-///███████ ███████ ███████ ███████ ██ ██   ████  ██████     ///obj/item/tool/omnitool/syndicate
-///////////////////////////////////////////////////////////////obj/item/device/light/zippo/syndicate
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     ///
+///////////////////////////////////////////////////////////////
 
 /datum/commodity/blackmarket/shady/cursedmask
 	comname = "Boobytrapped Clown Mask"
@@ -3246,6 +3262,20 @@
 	price = 45000
 	upperfluc = 15000
 	lowerfluc = -15000
+/datum/commodity/blackmarket/shady/omnitool
+	comname = "Omnitool"
+	desc_sell = "A lifesaver, really."
+	comtype = obj/item/tool/omnitool/syndicate
+	price = 35000
+	upperfluc = 6000
+	lowerfluc = -6000
+/datum/commodity/blackmarket/shady/zippo
+	comname = "High-power Zippo Lighter"
+	desc_sell = "A lifesaver, really."
+	comtype = obj/item/device/light/zippo/syndicate
+	price = 32000
+	upperfluc = 6000
+	lowerfluc = -6000
 /datum/commodity/blackmarket/shady/turboflash
 	comname = "TurboFlash"
 	desc_sell = "Standard flash with an aftermarket improvement."
@@ -3281,25 +3311,55 @@
 	upperfluc = 100
 	lowerfluc = -100
 	
-//////////////////////////////////////////////////////////obj/item/pipebomb/bomb
-///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ////obj/item/gun/flamethrower/assembled
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
 ///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ////obj/item/wirecutters/yellow
 ///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ////obj/item/crowbar/red
 ///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
+/datum/commodity/blackmarket/shady/pipebomb
+	comname = "Pipe Bomb"
+	comtype = obj/item/pipebomb/bomb
+	price = 4500
+	baseprice = 4500
+	upperfluc = 700
+	lowerfluc = -700
+/datum/commodity/blackmarket/shady/flamethrower
+	comname = "Flamethrower"
+	comtype = /obj/item/gun/flamethrower/assembled
+	price = 7500
+	baseprice = 7500
+	upperfluc = 1000
+	lowerfluc = -1000
+/datum/commodity/blackmarket/shady/wirecutters
+	comname = "Yellow Wirecutters"
+	comtype = /obj/item/wirecutters/yellow
+	desc_sell = "Only the ones with the yellow handles!"
+	price = 700
+	baseprice = 700
+	upperfluc = 500
+	lowerfluc = -500
+/datum/commodity/blackmarket/shady/crowbar
+	comname = "Red Crowbar"
+	comtype = /obj/item/crowbar/red
+	desc_sell = "They've gotta be red."
+	price = 1000
+	baseprice = 1000
+	upperfluc = 100
+	lowerfluc = -100
 /datum/commodity/blackmarket/shady/barrier
 	comname = "Riot Barrier"
 	comtype = /obj/item/barrier
-	price = 2800
+	price = 12800
 	baseprice = 2800
 	upperfluc = 00
 	lowerfluc = -1000
 /datum/commodity/blackmarket/shady/security_badge
 	comname = "Security Badge"
 	comtype = /obj/item/clothing/suit/security_badge
-	desc_sell = "These things fetch a high price on the black market"
+	desc_sell = "These things fetch a high price on the black market."
 	price = 9800
 	baseprice = 9800
 	upperfluc = 1200
@@ -3419,14 +3479,47 @@
 	upperfluc = 40
 	lowerfluc = -40
 
-//////////////////////////////////////////////////////////obj/item/spraybottle/cleaner/tsunami
-///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ////obj/item/pen/fancy
-///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ////obj/item/device/key/chompskey
-///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ////obj/item/device/key/hairball
+/////////////////////////////////////////////////////////
+///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
 ///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
+/datum/commodity/blackmarket/wrestler/tsunami
+	comname = "Tsunami Spray Bottle"
+	comtype = /obj/item/spraybottle/cleaner/tsunami
+	desc_sell = "The ring can get SWEATY! Sometimes there's BLOOD!"
+	price = 7200
+	baseprice = 7200
+	upperfluc = 400
+	lowerfluc = -400
+/datum/commodity/blackmarket/wrestler/pen
+	comname = "Fancy Pens"
+	comtype = /obj/item/pen/fancy
+	desc_sell = "I go through A LOT of these in my shows!"
+	price = 350
+	baseprice = 350
+	upperfluc = 50
+	lowerfluc = -50
+/datum/commodity/blackmarket/wrestler/chompskey
+	comname = "Chomp Key"
+	comtype = /obj/item/device/key/chompskey
+	desc_sell = "I need one of these URGENTLY!"
+	price = 20000
+	baseprice = 20000
+	upperfluc = 2000
+	lowerfluc = -2000
+/datum/commodity/blackmarket/wrestler/hairballkey
+	//katmandu
+	comname = "Hairball Key"
+	comtype = /obj/item/device/key/hairball
+	desc_sell = "DON'T even ASK!"
+	price = 60100
+	baseprice = 60100
+	upperfluc = 25000
+	lowerfluc = -25000
 /datum/commodity/blackmarket/wrestler/brick
 	//stockpiling bricks from jane and selling them to larry makes a profit. it's brick economics
 	comname = "Ceramic Bricks"
