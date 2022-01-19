@@ -1,5 +1,9 @@
 
 (t)wed jan 19 22
+(u)DimWhat
+(p)6997
+(e)🗺🎨|mapping, sprites
+(+)Added an ability button for some hooded clothing.
 (u)LeahTheTech
 (p)6805
 (e)🆕🎨|feature, sprites
