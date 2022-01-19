@@ -256,3 +256,11 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 69
 	sens_window = 0
 	product = /obj/item/reagent_containers/food/snacks/pizza
+
+/datum/siphon_mineral/forbidden
+	indexed = FALSE
+	name = "DATA EXPUNGED"
+	tick_req = 56
+	shear = 666
+	sens_window = 0
+	product = /obj/vortex

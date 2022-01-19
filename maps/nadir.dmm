@@ -10429,6 +10429,17 @@
 /obj/storage/closet,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner)
+"fVo" = (
+/obj/decal/cleanable/dirt,
+/obj/item/paper{
+	info = "bro. DUDE. what number am I thinking of. the big magic shit thinks about it too.";
+	name = "odd note";
+	pixel_y = -5
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "fWc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26566,13 +26577,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
-"oJv" = (
-/obj/decal/tile_edge/line/yellow{
-	icon_state = "line1"
-	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/engine,
-/area/station/engine/engineering)
 "oJM" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
@@ -27474,6 +27478,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/storage)
+"pmV" = (
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/engine,
+/area/station/engine/engineering)
 "pnp" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -97655,7 +97666,7 @@ bwb
 wIo
 xSn
 xjz
-oJv
+pmV
 uyX
 mye
 aKN
@@ -99777,7 +99788,7 @@ kdG
 kdG
 lPb
 bBV
-ntb
+fVo
 cBV
 mut
 ljw
