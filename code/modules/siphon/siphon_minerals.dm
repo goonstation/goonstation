@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 /datum/siphon_mineral/pizza
 	indexed = FALSE
 	name = "Pizza"
-	tick_req = 420
+	tick_req = 42
 	shear = 69
 	sens_window = 0
 	product = /obj/item/reagent_containers/food/snacks/pizza
