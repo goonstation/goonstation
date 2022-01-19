@@ -7745,7 +7745,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "auA" = (
-/obj/effects/background_objects/star_blue,
+/obj/effects/background_objects/star_red,
 /turf/space,
 /area/space)
 "auB" = (
@@ -24689,10 +24689,6 @@
 /turf/space,
 /area/space)
 "bmX" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
 /obj/effects/background_objects/x3,
 /turf/space,
 /area/space)
@@ -25003,12 +24999,12 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"drB" = (
+/obj/effects/background_objects/star_blue,
+/turf/space,
+/area/space)
 "duy" = (
 /turf/simulated/floor/longtile/black,
-/area/space)
-"efg" = (
-/obj/effects/background_objects/star_red,
-/turf/space,
 /area/space)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
@@ -25064,6 +25060,10 @@
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
+"ieU" = (
+/obj/effects/background_objects/x5,
+/turf/space,
+/area/space)
 "ivG" = (
 /obj/noticeboard{
 	pixel_x = 10;
@@ -25074,10 +25074,6 @@
 "iIc" = (
 /obj/critter/gunbot/drone/heavydrone,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"jYu" = (
-/obj/effects/background_objects/x5,
-/turf/space,
 /area/space)
 "kag" = (
 /obj/decal/tile_edge/stripe{
@@ -38502,7 +38498,7 @@ aaa
 aaa
 aaa
 aaa
-efg
+auA
 anF
 aWr
 aWF
@@ -68813,7 +68809,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+auA
 aaa
 aaa
 aaa
@@ -72479,7 +72475,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bmX
 aaa
 aaa
 aaa
@@ -73337,7 +73333,7 @@ aaa
 aaa
 aaa
 aaa
-auA
+aaa
 agt
 agS
 ahj
@@ -79111,7 +79107,7 @@ boP
 boP
 boP
 boP
-bmX
+boP
 boP
 boP
 boP
@@ -89838,7 +89834,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+drB
 aaa
 aaa
 aaa
@@ -93499,7 +93495,7 @@ aaa
 aaa
 aaa
 aaa
-jYu
+ieU
 aaa
 aaa
 aaa
