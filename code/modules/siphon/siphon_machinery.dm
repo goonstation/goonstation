@@ -167,6 +167,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			total_draw += 800 * src.resofactor
 			src.extract_ticks += src.resofactor
 
+			///If no extraction occurs, high shear values can result in hazardous effects
+			var/extract_progressed = FALSE
+
 			for(var/datum/siphon_mineral/M in src.can_extract)
 				LAGCHECK(LAG_LOW)
 				if(src.extract_ticks >= M.tick_req) //enough mining progress to check
@@ -179,6 +182,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					if(M.shear != null)
 						var/shearcheck = abs(src.shear - M.shear)
 						if(shearcheck > M.sens_window) continue
+					extract_progressed = TRUE
 					src.extract_ticks -= M.tick_req
 					//todo: make a buildup of extraction ticks contribute to instability
 					var/atom/movable/yielder = new M.product()
@@ -189,9 +193,25 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 						yielder.set_loc(get_turf(src))
 					break
 
-			//todo, probably here: instability based on both excess shear and overdriven extraction ticks
+			if(!extract_progressed)
+				switch(src.shear)
+					if(64 to 127)
+						if(prob(20))
+							var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
+							RSO.shear_overload()
+					if(128 to INFINITY)
+						if(prob(30))
+							var/obj/uh_oh = new /obj/vortex(src.loc)
+							uh_oh.x += rand(-3,3)
+							uh_oh.y += rand(-3,3)
+						if(prob(40))
+							var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
+							if(prob(20))
+								RSO.shear_overload(TRUE)
+							else
+								RSO.shear_overload()
 
-			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, 0)
+			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, !extract_progressed)
 
 			if(length(src.contents) >= src.max_held_items)
 				src.changemode("low")
@@ -201,6 +221,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		power_usage = total_draw
 		use_power(power_usage)
 		..()
+
+	proc/eats_spicy_goodness_dies_instantly(var/catastrophic = FALSE) //DEBUG DEBUG DEBUG
+		for (var/obj/machinery/siphon/resonator/res in src.resonators)
+			res.shear_overload(catastrophic)
 
 	power_change()
 		if(powered())
@@ -354,6 +378,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		flick("drilldrop",src)
 		SPAWN_DBG(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
+				if (res.status & BROKEN) continue
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
@@ -461,7 +486,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	name = "\improper Type-AX siphon resonator"
 	desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
-	icon_state = "resonator"
+	icon_state = "res-closed"
 	density = 1
 	netname = "RES_AX"
 
@@ -472,6 +497,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/maglocked = FALSE
 	///true when manually secured with wrench (affects anchoring)
 	var/wrenched = FALSE
+	///true when front panel is open (done for repairs; operating resonator while its front panel is open can end poorly)
+	var/panelopen = FALSE
+
 	///intensity scalar from 0 to max (4 for base model), increasing power draw and resonance strength
 	var/intensity = 1
 	///maximum intensity that can be provided by the resonator
@@ -519,6 +547,40 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			else
 				boutput(user,"The auxiliary reinforcing bolts appear to be locked in place.")
 				return
+		else if(isscrewingtool(W))
+			if(src.panelopen)
+				src.panelopen = FALSE
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				boutput(user, "You close the resonator's maintenance panel.")
+				src.UpdateIcon()
+				return
+			else
+				src.panelopen = TRUE
+				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				boutput(user, "You open the resonator's maintenance panel.")
+				src.UpdateIcon()
+				return
+		else if(istype(W,/obj/item/cable_coil) && src.panelopen)
+			if(HASFLAG(src,BROKEN))
+				if(W.amount >= 3)
+					playsound(src.loc, "sound/items/Deconstruct.ogg", 40, 1)
+					boutput(user, "You replace the resonator's damaged wiring.")
+					status &= ~BROKEN
+					src.UpdateIcon()
+					W.amount -= 3
+					if (W.amount < 1)
+						var/mob/source = user
+						source.u_equip(W)
+						qdel(W)
+					else if(W.inventory_counter)
+						W.inventory_counter.update_number(W.amount)
+					return
+				else
+					boutput(user, "You need at least three lengths of wire to repair the damage.")
+					return
+			else
+				boutput(user, "The internal wiring doesn't seem to need repair.")
+				return
 		else if(istype(W,/obj/item/device/calibrator))
 			var/scalex = input(usr,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
 			scalex = clamp(scalex,0,src.max_intensity)
@@ -544,6 +606,28 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				if(paired_core)
 					paired_core.resonators -= src
 				src.disengage_lock(rand(1,5))
+
+	proc/shear_overload(var/catastrophic = FALSE)
+		if(src.maglocked)
+			if(paired_core)
+				paired_core.resonators -= src
+			src.disengage_lock()
+		if(catastrophic)
+			src.blowthefuckup()
+		else
+			var/faildesc = pick("short-circuits","malfunctions","suddenly deactivates","shorts out","shoots out sparks")
+			src.visible_message("<span class='alert'>[src] [faildesc]!</span>")
+			status |= BROKEN
+			var/obj/sparks = new /obj/effects/sparks
+			sparks.set_loc(get_turf(src))
+			src.UpdateIcon()
+
+	proc/update_icon()
+		if(src.panelopen)
+			var/busted = HAS_FLAG(src.status,BROKEN)
+			src.icon_state = "res-open-[busted]"
+		else
+			src.icon_state = "res-shut"
 
 	//called by siphon to set up the resonator's coordinate reporting and strength values for its initialized position
 	proc/reso_init(var/xadj,var/yadj)
@@ -633,7 +717,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 /obj/machinery/siphon/resonator/stabilizer
 	name = "\improper Type-SM siphon resonator"
 	desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
-	icon_state = "stabilizer"
+	icon_state = "stab-closed"
 	density = 1
 	regular_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
 	wrenched_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon. It's been manually secured to the floor."

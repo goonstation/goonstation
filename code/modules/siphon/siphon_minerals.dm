@@ -3,8 +3,8 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 /datum/siphon_mineral
 	///Name of mineral, can be used for the player-viewable settings compendium
 	var/name = "Youshouldn'tseemium"
-	///Shows whether this outcome should be indexed in the player-viewable settings compendium
-	var/indexed = 1
+	///Whether this outcome should be indexed in the player-viewable settings compendium
+	var/indexed = TRUE
 	///How many extraction ticks (process iterations times resonator intensity) are required to produce this resource
 	var/tick_req = 30
 	///Target resonance horizontal strength, positive or negative based on relative X position of resonator multiplied by its power.
@@ -188,6 +188,19 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		src.shear = rand(8,24)
 		..()
 
+/datum/siphon_mineral/plasmastone
+	name = "Plasmastone"
+	tick_req = 70
+	x_torque = -16
+	y_torque = 13
+	shear = 4
+	sens_window = 1
+	product = /obj/item/raw_material/plasmastone
+
+	New()
+		src.shear = rand(4,10)
+		..()
+
 /datum/siphon_mineral/koshmarite
 	name = "Koshmarite"
 	tick_req = 40
@@ -224,7 +237,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		src.shear = rand(61,63)
 		..()
 
-//shear of 65 or higher should do Bad Things unless precisely set to this number
+//shear of 65 or higher should probably do Bad Things unless precisely set.
 /datum/siphon_mineral/starstone
 	name = "Starstone"
 	tick_req = 1616
@@ -235,3 +248,11 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		src.tick_req = rand(100,120) * 10
 		src.shear = rand(106,115)
 		..()
+
+/datum/siphon_mineral/pizza
+	indexed = FALSE
+	name = "Pizza"
+	tick_req = 420
+	shear = 69
+	sens_window = 0
+	product = /obj/item/reagent_containers/food/snacks/pizza

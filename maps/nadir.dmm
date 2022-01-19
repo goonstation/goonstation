@@ -17827,6 +17827,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/security/checkpoint/escape)
+"jOv" = (
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/engine,
+/area/station/engine/engineering)
 "jOy" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -97638,7 +97645,7 @@ bwb
 wIo
 xSn
 xjz
-fgs
+jOv
 uyX
 mye
 aKN
