@@ -450,7 +450,7 @@
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (isscrewingtool(W))
-				boutput(user, "<span class='notice'>You feel like you'll need something a bit longer and plentiful than just a screwdriver. </span>")
+			boutput(user, "<span class='notice'>You feel like you'll need something a bit longer and plentiful than just a screwdriver. </span>")
 		if(istype(W,/obj/item/rods))
 			boutput(user, "<span class='notice'>You add some rods to make it protective</span>")
 			new /obj/item/clothing/suit/armor/cardboardreinforced(get_turf(src))
@@ -458,7 +458,7 @@
 
 /obj/item/clothing/suit/armor/cardboardreinforced
 	name = "Reinforced cardboard armor"
-	desc = "Dubiously protective breastplate and shoulderpads made of cardboard and wire, reinforced with metal rods."
+	desc = "A dubiously protective breastplate with shoulderpads made of cardboard and wire, reinforced with metal rods."
 	icon_state = "cardboardsuit2"
 	item_state = "cardboardsuit2"
 	body_parts_covered = TORSO|ARMS

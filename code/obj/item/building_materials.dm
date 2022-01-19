@@ -278,7 +278,7 @@ MATERIAL
 				L["remetal"] = "Remove Reinforcement"
 		if (src?.material.mat_id == "cardboard")
 			L["c_box"] = "Cardboard Box (2 Sheets)"
-			L["cardboardbits"] = "Cardboard Armor (5 Sheets)"
+			L["cardboardbits"] = "Cardboard Armor (4 Sheets)"
 
 		for(var/t in L)
 			counter++
@@ -453,7 +453,7 @@ MATERIAL
 					a_name = "a cardboard box"
 
 				if("cardboardbits")
-					if (!amount_check(5,usr)) return
+					if (!amount_check(4,usr)) return
 					a_type = /obj/item/cardboardbits
 					a_amount = 1
 					a_cost = 5
