@@ -1435,7 +1435,7 @@
 		pickupdialoguefailure = "I don't believe you've bought anything yet."
 
 
-*/sadfsdsadfdfs\ggh\ghtT
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //         ______   _        _______  _______  _                _______  _______  _______  _        _______ _________         //
@@ -1448,8 +1448,8 @@
 //        |/ \___/ (_______/|/     \|(_______/|_/    \/        |/     \||/     \||/   \__/|_/    \/(_______/   )_(            //
 //                                                                                                                            //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-timeofday=,format="MM")
-//time2text(time,format="MM/DD/YYYY HH:MM:SS",fine)
+schedule=(timeofday=,format="MM")
+if
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                //
 //    ▄▄▄▄███▄▄▄▄      ▄████████ ▀████    ▐████▀       ▄█          ▄████████  ▄█     █▄     ▄▄▄▄███▄▄▄▄      ▄████████ ███▄▄▄▄    //
@@ -1496,6 +1496,7 @@ timeofday=,format="MM")
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/suit(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/gloves(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/boots(src)
+		src.goods_sell += new /datum/commodity/blackmarket/surplus/handcuffs(src)
 		src.goods_sell += new /datum/commodity/blackmarket/surplus/riot_grenade(src)
 
 /////////////////////////////////////////////////////////
@@ -1593,8 +1594,9 @@ timeofday=,format="MM")
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-		src.goods_sell += new /datum/commodity/blackmarket/blob/chitin(src)
-
+		src.goods_sell += new /datum/commodity/blackmarket/blob/chitin(src)/datum/commodity/blackmarket/blob/head
+		src.goods_sell += new /datum/commodity/blackmarket/blob/head(src)
+		
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
 ///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
@@ -1649,9 +1651,8 @@ timeofday=,format="MM")
 //            ░   ░  ░  ░      ░  ░   ░     ░ ░         ░   ░         ░  ░         ░    ░  ░    //
 //                                  ░       ░ ░                                                 //
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//Syndicate Agent in maints somewhere. Are they on another station? Your station? A movie set? Who knows?
-//todo:all
-//     
+//Staff assistant who set up a store in a maintenance tunnel somewhere, trading stolen shit.
+
 /obj/npc/trader/blackmarket/shady
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "blackmarketshady"
@@ -1672,12 +1673,14 @@ timeofday=,format="MM")
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/syndibox(src) //  /obj/item/storage/box/syndibox
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/sechud(src) // /obj/item/storage/box/ammo38AP
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/vest(src) //
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/helmet(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
-		src.goods_sell += new /datum/commodity/blackmarket/surplus/backpack(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/cursedmask(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/omnitool(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/zippo(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/turboflash(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/multitool(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/welder(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/balaclava(src)
+		src.goods_sell += new /datum/commodity/blackmarket/shady/brick(src)
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -1687,7 +1690,12 @@ timeofday=,format="MM")
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
-		src.goods_buy += new /datum/commodity/goldbar(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/barrier(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/security_badge(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/flamethrower(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/pipebomb(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/crowbar(src)
+		src.goods_buy += new /datum/commodity/blackmarket/shady/wirecutters(src)
 
 //////////////////////////////////////////////////////////////////////
 ///██████  ██  █████  ██       ██████   ██████  ██    ██ ███████    //
