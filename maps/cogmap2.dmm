@@ -79091,6 +79091,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"ozI" = (
+/obj/effects/background_objects/star_red,
+/turf/space,
+/area/space)
 "oGS" = (
 /obj/window/auto/reinforced,
 /obj/window_blinds/cog2{
@@ -94891,7 +94895,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jOW
 aaa
 aaa
 aaa
@@ -141959,7 +141963,7 @@ aPx
 aaa
 aaa
 aaa
-aam
+tQm
 aFi
 aXm
 aZe
