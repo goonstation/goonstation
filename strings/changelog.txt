@@ -1,5 +1,11 @@
 
 (t)wed jan 19 22
+(u)Flappybat and Flaborized and Virvatuli.
+(p)7130
+(e)🎨⚖|sprites, balance
+(*)Hunter laser rifle, spear and cloaking device self destruct on the hunter's death. These items have been renamed to make them stand out more.
+(*)Hunter's laser rifle and cloaking device have new sprites by Flaborized!
+(*)Laser rifles are renamed to plasma rifle to reflect their projectile and have a new sound by Virvatuli.
 (u)Flaborized
 (p)7209
 (e)🎨|sprites
