@@ -1349,6 +1349,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!isalive(src)) //can't resist when dead or unconscious
 		return
 
+	if (src.hasStatus("weakened"))
+		return
+
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
