@@ -28,7 +28,8 @@
 #define SHOW_POLYMORPH_TIPS(M) M.Browse(grabResource("html/polymorph.html"), POLYMORPH_TIPS_WINDOW)
 
 // nuke
-#define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/syndiTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_COMMANDER_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopcommanderTips.html"), ANTAG_TIPS_WINDOW)
 
 // revolution
 #define SHOW_REVHEAD_TIPS(M) M.Browse(grabResource("html/traitorTips/revTips.html"), ANTAG_TIPS_WINDOW)

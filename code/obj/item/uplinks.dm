@@ -957,7 +957,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 /obj/item/device/nukeop_commander_uplink
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "radio"
+	icon_state = "uplink"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "radio"
