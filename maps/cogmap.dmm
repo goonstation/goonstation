@@ -35239,7 +35239,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
+/area/station/crew_quarters/hor)
 "bMT" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_albert"
@@ -35926,7 +35926,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
+/area/station/crew_quarters/hor)
 "bOs" = (
 /obj/reagent_dispensers/foamtank,
 /obj/item/extinguisher,
@@ -95720,11 +95720,11 @@ aaw
 aaw
 aap
 bIP
-bIP
-bIP
+bJY
+bJY
 bMS
 bOr
-bIP
+bJY
 bJY
 jiw
 bJY
