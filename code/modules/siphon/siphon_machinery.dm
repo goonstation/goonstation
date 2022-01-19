@@ -149,7 +149,18 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		for(var/mineral in concrete_typesof(/datum/siphon_mineral))
 			src.can_extract += new mineral
 
+	ex_act(severity)
+		if(severity != 1.0)
+			return
+		..()
+
 	disposing()
+		for (var/obj/machinery/siphon/resonator/res in src.resonators)
+			LAGCHECK(LAG_LOW)
+			res.paired_core = null
+			res.disengage_lock()
+		src.resonators.Cut()
+		src.clear_siphon_console()
 		qdel(src.beamlight)
 		..()
 
@@ -172,39 +183,46 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 			for(var/datum/siphon_mineral/M in src.can_extract)
 				LAGCHECK(LAG_LOW)
-				if(src.extract_ticks >= M.tick_req) //enough mining progress to check
-					if(M.x_torque != null) //check if difference between spec and actual is within tolerance
+				if(M.shear != null) //check shear against spec; happens early to avoid blowouts in high-shear targets
+					var/shearcheck = abs(src.shear - M.shear)
+					if(shearcheck > M.sens_window) continue
+				extract_progressed = TRUE
+				if(src.extract_ticks >= M.tick_req) //enough mining progress to check in more depth
+					if(M.x_torque != null)
 						var/xtcheck = abs(src.x_torque - M.x_torque)
 						if(xtcheck > M.sens_window) continue
 					if(M.y_torque != null)
 						var/ytcheck = abs(src.y_torque - M.y_torque)
 						if(ytcheck > M.sens_window) continue
-					if(M.shear != null)
-						var/shearcheck = abs(src.shear - M.shear)
-						if(shearcheck > M.sens_window) continue
-					extract_progressed = TRUE
 					src.extract_ticks -= M.tick_req
-					//todo: make a buildup of extraction ticks contribute to instability
+					//todo, maybe: make a buildup of extraction ticks contribute to instability
 					var/atom/movable/yielder = new M.product()
 					if(istype(yielder,/obj/item)) //items go into internal reservoir
 						src.contents += yielder
 						src.update_storage_bar()
 					else //pulled out something that isn't an item... what could it be?
 						yielder.set_loc(get_turf(src))
+
+					//running resonators with the panel open is a bad idea
+					for (var/obj/machinery/siphon/resonator/res in src.resonators)
+						if(res.panelopen && prob(40))
+							res.shear_overload()
 					break
 
 			if(!extract_progressed)
 				switch(src.shear)
 					if(64 to 127)
-						if(prob(20))
+						var/chancefactor = round(shear/6)
+						if(prob(chancefactor))
 							var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
 							RSO.shear_overload()
 					if(128 to INFINITY)
-						if(prob(30))
+						var/chancefactor = min(round(shear/12),50)
+						if(prob(chancefactor))
 							var/obj/uh_oh = new /obj/vortex(src.loc)
 							uh_oh.x += rand(-3,3)
 							uh_oh.y += rand(-3,3)
-						if(prob(40))
+						if(prob(chancefactor*2))
 							var/obj/machinery/siphon/resonator/RSO = pick(src.resonators)
 							if(prob(20))
 								RSO.shear_overload(TRUE)
@@ -560,13 +578,16 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user, "You open the resonator's maintenance panel.")
 				src.UpdateIcon()
 				return
-		else if(istype(W,/obj/item/cable_coil) && src.panelopen)
-			if(HAS_FLAG(src,BROKEN))
+		else if(istype(W,/obj/item/cable_coil))
+			if(!src.panelopen)
+				boutput(user,"The service panel isn't open.")
+			if(HAS_FLAG(src.status,BROKEN))
 				if(W.amount >= 3)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 40, 1)
 					boutput(user, "You replace the resonator's damaged wiring.")
 					status &= ~BROKEN
 					src.UpdateIcon()
+					src.update_fx()
 					W.amount -= 3
 					if (W.amount < 1)
 						var/mob/source = user
@@ -605,29 +626,43 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if(src.maglocked)
 				if(paired_core)
 					paired_core.resonators -= src
+					paired_core.calibrate_resonance()
+					src.paired_core = null
 				src.disengage_lock(rand(1,5))
 
 	proc/shear_overload(var/catastrophic = FALSE)
+		status |= BROKEN
 		if(src.maglocked)
 			if(paired_core)
 				paired_core.resonators -= src
+				paired_core.calibrate_resonance()
+				src.paired_core = null
 			src.disengage_lock()
+		else //disengage lock includes fx update of its own
+			src.update_fx()
 		if(catastrophic)
-			src.blowthefuckup()
+			src.visible_message("<span class='alert'>[src] explodes!</span>")
+			new /obj/effects/explosion(src.loc)
+			playsound(src, "sound/effects/Explosion1.ogg", 50, 1)
+			SPAWN_DBG(0)
+				explosion_new(src, get_turf(src), 3)
+				qdel(src)
 		else
 			var/faildesc = pick("short-circuits","malfunctions","suddenly deactivates","shorts out","shoots out sparks")
 			src.visible_message("<span class='alert'>[src] [faildesc]!</span>")
-			status |= BROKEN
-			var/obj/sparks = new /obj/effects/sparks
-			sparks.set_loc(get_turf(src))
+			playsound(src, "sound/effects/shielddown2.ogg", 30, 1)
+			if(limiter.canISpawn(/obj/effects/sparks))
+				var/obj/sparks = new /obj/effects/sparks
+				sparks.set_loc(get_turf(src))
+				SPAWN_DBG(2 SECONDS) if (sparks) qdel(sparks)
 			src.UpdateIcon()
 
 	update_icon()
 		if(src.panelopen)
 			var/busted = HAS_FLAG(src.status,BROKEN)
-			src.icon_state = "res-open-[busted]"
+			src.icon_state = "[src.resclass]-open-[busted]"
 		else
-			src.icon_state = "res-shut"
+			src.icon_state = "[src.resclass]-closed"
 
 	//called by siphon to set up the resonator's coordinate reporting and strength values for its initialized position
 	proc/reso_init(var/xadj,var/yadj)
@@ -690,6 +725,10 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		else
 			src.light.disable()
 			ClearAllOverlays()
+			if(HAS_FLAG(src.status,BROKEN))
+				var/image/resbusted = SafeGetOverlayImage("locked", 'icons/obj/machines/neodrill_32x32.dmi', "[src.resclass]-error")
+				resbusted.plane = PLANE_OVERLAY_EFFECTS
+				UpdateOverlays(resbusted, "locked", 0, 1)
 
 	build_net_update(datum/signal/signal,var/sigvalue)
 		if(signal && signal.data["command"] == "calibrate")

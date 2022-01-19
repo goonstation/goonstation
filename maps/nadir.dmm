@@ -14415,11 +14415,21 @@
 /area/station/security/main)
 "hXR" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/item/cable_coil{
+	rand_pos = 0
+	},
+/obj/item/paper{
+	info = "for the last time DO NOT RUN THESE THINGS WITH THE PANEL OPEN. theres only so many times I can replace the wires, the screws DO NOT STRIP OUT no matter what lenny says";
+	name = "crinkled paper";
+	pixel_x = 1
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 6
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -17827,13 +17837,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/security/checkpoint/escape)
-"jOv" = (
-/obj/decal/tile_edge/line/yellow{
-	icon_state = "line1"
-	},
-/obj/machinery/manufacturer/gas,
-/turf/simulated/floor/engine,
-/area/station/engine/engineering)
 "jOy" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -26563,6 +26566,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
+"oJv" = (
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/engine,
+/area/station/engine/engineering)
 "oJM" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 4;
@@ -97645,7 +97655,7 @@ bwb
 wIo
 xSn
 xjz
-jOv
+oJv
 uyX
 mye
 aKN

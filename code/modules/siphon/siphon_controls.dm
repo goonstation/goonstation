@@ -463,6 +463,8 @@
 		break
 
 	for (var/datum/siphon_mineral/mat in reference_core.can_extract)
+		if(!mat.indexed)
+			continue
 		rollingtext += "<h2>[mat.name]</h2>"
 		rollingtext += "<strong>EEU per Extraction:</strong> [mat.tick_req]<br>"
 		if(mat.x_torque)
