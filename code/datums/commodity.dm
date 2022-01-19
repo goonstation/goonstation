@@ -3214,6 +3214,9 @@
 	comtype = /obj/item/organ/head
 	price = 6000
 	made_from = "blob"
+	name = "Weird Head"
+	icon_state = "blob"
+	desc = "A severed head. It looks weird and disgusting. More disgusting than other severed heads."
 	upperfluc = 3000
 	lowerfluc = -3000
 
@@ -3262,6 +3265,7 @@
 	price = 45000
 	upperfluc = 15000
 	lowerfluc = -15000
+	
 /datum/commodity/blackmarket/shady/omnitool
 	comname = "Omnitool"
 	desc_sell = "A lifesaver, really."
@@ -3269,6 +3273,7 @@
 	price = 35000
 	upperfluc = 6000
 	lowerfluc = -6000
+	
 /datum/commodity/blackmarket/shady/zippo
 	comname = "High-power Zippo Lighter"
 	desc_sell = "A lifesaver, really."
@@ -3276,6 +3281,7 @@
 	price = 32000
 	upperfluc = 6000
 	lowerfluc = -6000
+	
 /datum/commodity/blackmarket/shady/turboflash
 	comname = "TurboFlash"
 	desc_sell = "Standard flash with an aftermarket improvement."
@@ -3283,6 +3289,7 @@
 	price = 1500
 	upperfluc = 350
 	lowerfluc = -350
+	
 /datum/commodity/blackmarket/shady/multitool
 	comname = "Multitool"
 	desc_sell = "Useful!"
@@ -3290,12 +3297,14 @@
 	price = 500
 	upperfluc = 200
 	lowerfluc = -200
+	
 /datum/commodity/blackmarket/shady/brick
 	comname = "Ceramic Bricks"
 	comtype = /obj/item/brick
 	price = 60
 	upperfluc = 20
 	lowerfluc = -20
+	
 /datum/commodity/blackmarket/shady/balaclava
 	comname = "Balaclava"
 	comtype = /obj/item/clothing/mask/balaclava
@@ -3313,8 +3322,8 @@
 	
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
-///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ////obj/item/wirecutters/yellow
-///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ////obj/item/crowbar/red
+///██   ██ ██    ██  ██  ██  ██ ████   ██ ██       ██ ///
+///██████  ██    ██   ████   ██ ██ ██  ██ ██   ███    ///
 ///██   ██ ██    ██    ██    ██ ██  ██ ██ ██    ██ ██ ///
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
@@ -3377,13 +3386,60 @@
 // space garbage and telesci oddities
 
 //////////////////////////////////////////////////////////////
-///███████ ███████ ██      ██      ██ ███    ██  ██████     ///obj/item/mop/old
-///██      ██      ██      ██      ██ ████   ██ ██       ██ ///obj/item/rubberduck
-///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    ///obj/item/cigarbox/gold
-///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ ///obj/item/cigpacket/cigarillo/juicer
-///███████ ███████ ███████ ███████ ██ ██   ████  ██████     ///obj/item/device/light/zippo/dan
-///////////////////////////////////////////////////////////////obj/item/pinpointer/category/artifacts/safe
+///███████ ███████ ██      ██      ██ ███    ██  ██████     //
+///██      ██      ██      ██      ██ ████   ██ ██       ██ //
+///███████ █████   ██      ██      ██ ██ ██  ██ ██   ███    //
+///     ██ ██      ██      ██      ██ ██  ██ ██ ██    ██ ██ //
+///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
+//////////////////////////////////////////////////////////////
 
+/datum/commodity/blackmarket/wrestler/zippo
+	comname = "Promotional Discunt Dan Zippo Lighter"
+	comtype = /obj/item/device/light/zippo/dan
+	desc_sell = "These things are hella rare! The value skyrocketted when they were banned from trade because of the explosion problem!"
+	price = 1980
+	upperfluc = 600
+	lowerfluc = -600
+
+/datum/commodity/blackmarket/wrestler/pinpointer
+	comname = "Artifact Pinpointer"
+	comtype = /obj/item/pinpointer/category/artifacts/safe
+	desc_sell = "This machine POINTS OUT ancient alien artifacts near you! EXCELLENT for space explorers!"
+	price = 1520
+	upperfluc = 520
+	lowerfluc = -520
+
+/datum/commodity/blackmarket/wrestler/mop
+	comname = "Box of Beer"
+	comtype = /obj/item/mop/old
+	desc_sell = "Old style mops! Some SWEAR BY EM!"
+	price = 780
+	upperfluc = 300
+	lowerfluc = -300
+
+/datum/commodity/blackmarket/wrestler/cigarbox
+	comname = "Golden Cigar Box"
+	comtype = /obj/item/cigarbox/gold
+	desc_sell = "These are the good kind, pal! THE TOP OF THE LINE!"
+	price = 5000000
+	upperfluc = 1000000
+	lowerfluc = -1000000
+
+/datum/commodity/blackmarket/wrestler/juicer
+	comname = "Box of Juicer Schweet's Rowdy Rillos"
+	comtype = /obj/item/cigpacket/cigarillo/juicer
+	desc_sell = "Get some JUICY SWEETS! Or WHATEVER it says on these!"
+	price = 140
+	upperfluc = 60
+	lowerfluc = -60
+
+/datum/commodity/blackmarket/wrestler/rubberduck
+	comname = "Cursed Rubber Duck"
+	comtype = /obj/item/rubberduck
+	desc_sell = "DAMN do these ducks have bad vibes!"
+	price = 530
+	upperfluc = 80
+	lowerfluc = -80
 /datum/commodity/blackmarket/wrestler/beerbox
 	comname = "Box of Beer"
 	comtype = /obj/item/storage/box/beer
@@ -3421,7 +3477,7 @@
 /datum/commodity/blackmarket/wrestler/shirts
 	comname = "Commemorative T-Shirt"
 	comtype = null
-	desc = "Got a bunch of these in from an old storage locker, I don't even know what's inside the boxes! I open a fresh crate one every!"
+	desc = "Got a bunch of these in from an old storage locker, I don't even know what's inside the boxes! I open a fresh crate one every day!"
 	price = 90
 	baseprice = 90
 	upperfluc = 80
