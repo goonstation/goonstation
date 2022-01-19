@@ -561,7 +561,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.UpdateIcon()
 				return
 		else if(istype(W,/obj/item/cable_coil) && src.panelopen)
-			if(HASFLAG(src,BROKEN))
+			if(HAS_FLAG(src,BROKEN))
 				if(W.amount >= 3)
 					playsound(src.loc, "sound/items/Deconstruct.ogg", 40, 1)
 					boutput(user, "You replace the resonator's damaged wiring.")
@@ -622,7 +622,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			sparks.set_loc(get_turf(src))
 			src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if(src.panelopen)
 			var/busted = HAS_FLAG(src.status,BROKEN)
 			src.icon_state = "res-open-[busted]"

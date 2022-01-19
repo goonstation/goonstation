@@ -94,10 +94,10 @@
 		switch(expend_type)
 			if(GEN_ANODE)
 				. = round(src.condition * src.anode_efficacy * 100000)
-				src.condition = src.condition * ROD_DECAY_RATIO
+				src.condition = src.condition * src.decay_ratio
 			if(GEN_CATHODE)
 				. = round(src.condition * src.cathode_efficacy * 100000)
-				src.condition = src.condition * ROD_DECAY_RATIO
+				src.condition = src.condition * src.decay_ratio
 		return
 
 	update_icon()
