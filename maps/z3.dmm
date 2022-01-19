@@ -25006,6 +25006,10 @@
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
+"efg" = (
+/obj/effects/background_objects/star_red,
+/turf/space,
+/area/space)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -25025,10 +25029,6 @@
 "fWR" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
-/area/space)
-"gFZ" = (
-/obj/effects/background_objects/x5,
-/turf/space,
 /area/space)
 "hmp" = (
 /turf/unsimulated/floor/stairs/dark{
@@ -25075,6 +25075,10 @@
 /obj/critter/gunbot/drone/heavydrone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"jYu" = (
+/obj/effects/background_objects/x5,
+/turf/space,
+/area/space)
 "kag" = (
 /obj/decal/tile_edge/stripe{
 	dir = 10;
@@ -25108,10 +25112,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"nkf" = (
-/obj/effects/background_objects/star_red,
-/turf/space,
 /area/space)
 "npm" = (
 /obj/wingrille_spawn/auto,
@@ -38502,7 +38502,7 @@ aaa
 aaa
 aaa
 aaa
-nkf
+efg
 anF
 aWr
 aWF
@@ -93499,7 +93499,7 @@ aaa
 aaa
 aaa
 aaa
-gFZ
+jYu
 aaa
 aaa
 aaa

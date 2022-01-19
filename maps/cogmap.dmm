@@ -54337,6 +54337,14 @@
 /obj/lattice,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"fNQ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/effects/background_objects/star_red,
+/turf/space,
+/area/space)
 "fOw" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -59181,14 +59189,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"pgp" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/obj/effects/background_objects/star_blue,
-/turf/space,
-/area/space)
 "pgN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59478,6 +59478,10 @@
 	dir = 4
 	},
 /area/station/security/main)
+"pHh" = (
+/obj/effects/background_objects/x0,
+/turf/space,
+/area/space)
 "pIe" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -61315,7 +61319,11 @@
 /turf/simulated/floor/delivery,
 /area/station/security/main)
 "sGL" = (
-/obj/effects/background_objects/star_red,
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/effects/background_objects/star_blue,
 /turf/space,
 /area/space)
 "sHJ" = (
@@ -62551,10 +62559,6 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"uwv" = (
-/obj/effects/background_objects/x0,
-/turf/space,
-/area/space)
 "uxY" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -81517,7 +81521,7 @@ adC
 adC
 adC
 adC
-uwv
+pHh
 adC
 adC
 adC
@@ -101078,7 +101082,7 @@ adC
 adC
 adC
 adC
-sGL
+adC
 adC
 aal
 adC
@@ -114069,7 +114073,7 @@ aaq
 aaq
 aaq
 aaq
-aaq
+sGL
 uIM
 adw
 aei
@@ -116303,7 +116307,7 @@ aap
 aaq
 aaq
 aaq
-aaq
+fNQ
 aaq
 acW
 adC
@@ -123775,7 +123779,7 @@ aaq
 aaq
 aaq
 aaq
-pgp
+aaq
 aaq
 acW
 adC
