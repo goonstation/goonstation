@@ -214,6 +214,7 @@
 				R.dropped()
 			qdel(R)
 		update_ore_amount(R.material_name,amount_loaded,R)
+		tgui_process.update_uis(src)
 
 
 	proc/accept_loading(var/mob/user,var/allow_silicon = 0)
@@ -349,11 +350,7 @@
 			return
 		switch(action)
 			if("dispense-ore")
-				var/ore = params["ore"]
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				if (OCD && OCD.amount < params["take"])
-					return
-				eject_ores(ore, null, params["take"])
+				eject_ores(params["ore"], null, params["take"])
 				. = TRUE
 			if("toggle-ore-sell-status")
 				var/ore = params["ore"]
