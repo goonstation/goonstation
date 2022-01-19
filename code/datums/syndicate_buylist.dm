@@ -934,7 +934,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
-	item = /obj/item/gun/energy/laser_gun/pred
+	item = /obj/item/gun/energy/plasma_gun
 	cost = 6
 	desc = "An experimental laser design with a self-charging cerenkite battery."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)

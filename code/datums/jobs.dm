@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/laser_gun/pred)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/plasma_gun)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
