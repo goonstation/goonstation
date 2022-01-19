@@ -257,10 +257,10 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	sens_window = 0
 	product = /obj/item/reagent_containers/food/snacks/pizza
 
-/datum/siphon_mineral/forbidden
+/datum/siphon_mineral/forbidden //the end comes
 	indexed = FALSE
 	name = "DATA EXPUNGED"
-	tick_req = 56
-	shear = 666
+	tick_req = 666
+	shear = 666 //this is a very hard value to reach
 	sens_window = 0
-	product = /obj/vortex
+	product = /obj/item/plutonium_core
