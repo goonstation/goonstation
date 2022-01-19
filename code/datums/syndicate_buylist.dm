@@ -215,7 +215,7 @@ proc/build_syndi_buylist_cache()
 /datum/syndicate_buylist/generic/spy_sticker_kit
 	name = "Spy Sticker Kit"
 	item = /obj/item/storage/box/spy_sticker_kit
-	cost = 14
+	cost = 2
 	desc = "This kit contains innocuous stickers that you can use to broadcast audio and observe a video feed wirelessly."
 	blockedmode = list(/datum/game_mode/revolution)
 
