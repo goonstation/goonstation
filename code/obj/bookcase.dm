@@ -74,7 +74,7 @@
 //this is polished up A LOT from the last version
 //~adhara <3
 
-	proc/update_icon()
+	update_icon()
 		ClearSpecificOverlays("top_shelf", "middle_shelf", "bottom_shelf") //lets avoid any weird ghosts
 		var/image/top_image = null //initialise these 3 so we can set them inside of the conditionals
 		var/image/middle_image = null
@@ -195,7 +195,7 @@
 				boutput(user, "You shelf the book.")
 				user.drop_item()
 				add_to_bookshelf(W)
-				update_icon()
+				UpdateIcon()
 			else
 				boutput(user, "\The [src] is too full!")
 		else if (istype(W, /obj/item/wrench))
@@ -220,7 +220,7 @@
 			boutput(user, "You take the book off the shelf.")
 			take_off_bookshelf(book_sel)
 			user.put_in_hand_or_drop(book_sel)
-			update_icon()
+			UpdateIcon()
 		else
 			boutput(user, "There's nothing to take off the shelf!")
 
@@ -400,7 +400,7 @@
 				B.flair_colorable = book_vars["flair_colorable"]
 				B.build_custom_book()
 				src.add_to_bookshelf(B)
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/build_curr_contents() //this takes our books and makes it into a giant weird list
 		var/list/curr_contents = list()

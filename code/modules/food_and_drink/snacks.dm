@@ -72,6 +72,7 @@
 	var/sliced = FALSE
 	var/topping = FALSE
 	var/num = 0
+	var/list/topping_types = list()
 	var/list/topping_colors = list()
 	var/list/topping_holder = list()
 	var/sliced_icon = "pslice"
@@ -794,6 +795,7 @@
 		hasPrize = (prize_inside == 1)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			src.name = "cereal"
 			src.dry = 0
@@ -901,7 +903,7 @@
 			M.reagents.add_reagent("synaptizine", 15)
 			M.reagents.add_reagent("saline", 15)
 			M.reagents.add_reagent("salbutamol", 15)
-			M.reagents.add_reagent("methamphetamine", 15)
+			M.reagents.add_reagent("synd_methamphetamine", 15)
 		..()
 
 /obj/item/reagent_containers/food/snacks/donkpocket/honk
@@ -1439,7 +1441,7 @@
 
 		robusted
 			name = "robusted donut"
-			desc = "A donut for those critical moments."
+			desc = "A donut for those harsh moments. Contains a mix of chemicals for cardiac emergency recovery and any minor trauma that accompanies it."
 			icon_state = "donut5"
 			amount = 6
 			initial_volume = 48
@@ -1594,9 +1596,10 @@
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.overlays.len = 0
 		if (src.reagents.has_reagent("juice_tomato"))
 			src.overlays += image(src.icon, "corndog-k")
@@ -1617,7 +1620,8 @@
 	meal_time_flags = MEAL_TIME_LUNCH
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
 	heal(var/mob/M)
 		if (src.bun == 4) M.bioHolder.AddEffect("accent_elvis", timeleft = 180)
@@ -1690,7 +1694,7 @@
 
 			qdel(W)
 			user.visible_message("[user] adds a bun to [src].","You add a bun to [src].")
-			src.update_icon()
+			src.UpdateIcon()
 
 		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
 			if(!src.bun)
@@ -1770,7 +1774,7 @@
 			..()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(!(src.GetOverlayImage("bun")))
 			switch(src.bun)
 				if(1)
@@ -1939,7 +1943,7 @@
 
 			return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice))
 			switch(src.stage)
 				if(0)
 					boutput(user, "<span class='alert'>You really should add the meat first.</span>")
@@ -2150,6 +2154,7 @@
 		src.pixel_y = rand(-6, 6)
 
 	on_reagent_change()
+		..()
 		if (src.reagents && src.reagents.total_volume)
 			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()

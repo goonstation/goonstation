@@ -894,7 +894,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	New()
 		..()
 		src.icon_state = "robo_suit"; //The frame is the only exception for the composite item name thing.
-		src.updateicon()
+		src.UpdateIcon()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(!emagged)
@@ -988,7 +988,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
 			user.drop_item()
 			P.set_loc(src)
-			src.updateicon()
+			src.UpdateIcon()
 
 		if (istype(W, /obj/item/organ/brain))
 			boutput(user, "<span class='alert'>The brain needs to go in the head piece, not the frame.</span>")
@@ -1058,10 +1058,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					src.chest.set_loc( get_turf(src) )
 					src.chest = null
 			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
-			src.updateicon()
+			src.UpdateIcon()
 			return
 
-	proc/updateicon()
+	update_icon()
 		src.overlays = null
 		if(src.chest) src.overlays += image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, OBJ_LAYER, 2)
 		if(src.head) src.overlays += image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, OBJ_LAYER, 2)

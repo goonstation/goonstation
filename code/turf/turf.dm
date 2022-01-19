@@ -193,6 +193,11 @@
 		name = "cavern"
 		fullbright = 0
 
+	safe
+		temperature = T20C
+		oxygen = MOLES_O2STANDARD
+		nitrogen = MOLES_N2STANDARD
+
 /turf/space/no_replace
 
 /turf/space/New()
@@ -394,16 +399,20 @@ proc/generate_space_color()
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
 		if(OldLoc)
-			switch (warptarget_modifier)
-				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
-					if (ismob(M))
-						var/mob/mob = M
-						if (!mob.client?.holder && mob.last_client)
-							M.set_loc(warptarget)
-						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
-							M.set_loc(warptarget)
-				else
+			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+				if (ismob(M))
+					var/mob/mob = M
+					if (!mob.client?.holder && mob.last_client)
+						M.set_loc(warptarget)
+					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+						M.set_loc(warptarget)
+			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
+				// double set_loc is a fix for the warptarget gliding bug
+				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
+				SPAWN_DBG(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
 					M.set_loc(warptarget)
+			else
+				M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
@@ -654,10 +663,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return floor
 
 /turf/proc/ReplaceWithMetalFoam(var/mtype)
@@ -671,7 +680,7 @@ proc/generate_space_color()
 		qdel(L)
 
 	floor.metal = mtype
-	floor.update_icon()
+	floor.UpdateIcon()
 
 	return floor
 
@@ -737,10 +746,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return wall
 
 /turf/proc/ReplaceWithRWall()
@@ -748,10 +757,10 @@ proc/generate_space_color()
 	if (map_settings)
 		if (map_settings.auto_walls)
 			for (var/turf/simulated/wall/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 		if (map_settings.auto_windows)
 			for (var/obj/window/auto/W in orange(1))
-				W.update_icon()
+				W.UpdateIcon()
 	return wall
 
 /turf/proc/is_sanctuary()
@@ -888,7 +897,7 @@ proc/generate_space_color()
 	desc = "A solid... nothing? Is that even a thing?"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "white"
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	mouse_opacity = 0
 	fullbright = 1
 

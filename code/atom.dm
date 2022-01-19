@@ -163,6 +163,7 @@
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
+		ClearAllParticles()
 		..()
 
 	proc/Turn(var/rot)
@@ -301,6 +302,24 @@
 #endif
 	src.dir = new_dir
 
+
+/**
+ * DO NOT CALL THIS PROC - Call UpdateIcon(...) Instead!
+ *
+ * Only override this proc!
+ */
+/atom/proc/update_icon(...)
+	PROTECTED_PROC(TRUE)
+	return
+
+/// Call this proc inplace of update_icon(...)
+/atom/proc/UpdateIcon(...)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
+	update_icon(arglist(args))
+	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
+	return
+
 /*
 /atom/MouseEntered()
 	usr << output("[src.name]", "atom_label")
@@ -340,11 +359,11 @@
 
 /atom/movable
 	layer = OBJ_LAYER
-	var/turf/last_turf = 0
-	var/last_move = null
+	var/tmp/turf/last_turf = 0
+	var/tmp/last_move = null
 	var/anchored = 0
 	var/move_speed = 10
-	var/l_move_time = 1
+	var/tmp/l_move_time = 1
 	var/throwing = 0
 	var/throw_speed = 2
 	var/throw_range = 7
@@ -428,7 +447,7 @@
 	//	var/atom/movable/A = atom
 	//	A.glide_size = src.glide_size
 
-	if (direct & (direct - 1))
+	if (!is_cardinal(direct))
 		ignore_simple_light_updates = 1 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
 		if (direct & NORTH)
@@ -576,8 +595,6 @@
 
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
-	if(src.hiddenFrom && (user.client in src.hiddenFrom)) //invislist
-		return list()
 
 	var/dist = get_dist(src, user)
 	if (istype(user, /mob/dead/target_observer))
@@ -589,7 +606,6 @@
 
 	if(special_description)
 		return list(special_description)
-	//////////////////////////////
 
 	. = list("This is \an [src.name].")
 
@@ -786,6 +802,8 @@
 	.= 0
 
 /atom/proc/on_reagent_change(var/add = 0) // if the reagent container just had something added, add will be 1.
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
 /atom/proc/Bumped(AM as mob|obj)
@@ -854,6 +872,7 @@
 	src.last_move = 0
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, oldloc)
+	actions.interrupt(src, INTERRUPT_MOVE)
 
 	oldloc?.Exited(src, newloc)
 

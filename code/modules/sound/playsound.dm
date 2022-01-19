@@ -6,7 +6,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		return
 
 	var/admin_key = admin_key(src)
-	vol = max(min(vol, 100), 0)
+	vol = clamp(vol, 0, 100)
 
 	var/sound/uploaded_sound = new()
 	uploaded_sound.file = S
@@ -164,7 +164,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		alert(usr, "Invalid channel.")
 	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
-	vol = max(0,min(vol,100))
+	vol = clamp(vol, 0, 100)
 	src.setVolume(channel_id, vol/100 )
 	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
 

@@ -704,7 +704,7 @@
 				else if (mode < 2)
 					. = text2num_safe(command)
 					if (isnum(.))
-						. = round( max(1000, min(., 1500)) )
+						. = round( clamp(., 1000, 1500) )
 						get_radio_connection_by_id(src, "wireless").update_frequency(.)
 						src.frequency = .
 						return 0

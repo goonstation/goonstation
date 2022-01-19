@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "space GPS"
-	desc = "Tells you your coordinates based on the nearest coordinate beacon."
+	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
 	item_state = "electronic"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)
@@ -292,7 +292,7 @@
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
-				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal received from GPS [senderName].\".")
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return

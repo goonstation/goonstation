@@ -29,7 +29,7 @@
 	death(gibbed)
 	//	if (controller)
 	//		controller.leave_shell()
-		update_icon()
+		UpdateIcon()
 		set_density(0)
 		..()
 
@@ -39,7 +39,7 @@
 			return
 		..()
 
-	proc/update_icon()
+	UpdateIcon()
 		if (src.stat)
 			src.icon_state = "eyebot-dead"
 		else if (src.controller)

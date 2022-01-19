@@ -7020,7 +7020,7 @@
 /area/station/science/lobby)
 "anL" = (
 /turf/space,
-/area/shuttle/escape/station/donut2)
+/area/shuttle/escape/station)
 "anM" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -13885,7 +13885,7 @@
 /area/station/crew_quarters/quarters)
 "aCr" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/storage/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -38426,7 +38426,7 @@
 /area/station/crew_quarters/juryroom)
 "byI" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
@@ -38981,7 +38981,7 @@
 /area/station/janitor/office)
 "bzI" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/storage/secure/closet/civilian/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -43494,7 +43494,7 @@
 /obj/table/auto,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

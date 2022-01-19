@@ -89,7 +89,7 @@ export class AlertModal extends Component {
                   </Flex.Item>
                 </Flex>
               </Flex.Item>
-              <Flex.Item my={2}>
+              <Flex.Item my={8}>
                 <Flex className="AlertModal__Buttons">
                   {buttons.map((button, buttonIndex) => (
                     <Flex.Item key={buttonIndex} mx={1}>

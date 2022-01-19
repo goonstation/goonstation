@@ -1213,7 +1213,7 @@
 				return
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
 			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
-			src.update_icon()
+			src.UpdateIcon()
 			src.stored_paper.Attackby(src.pen, user)
 		else
 			src.stored_paper.Attackby(src.pen, user)
@@ -1226,7 +1226,7 @@
 		else
 			. = ..()
 
-	proc/update_icon()
+	update_icon()
 		if(src.stored_paper)
 			src.icon_state = "portable_typewriter-full"
 		else
@@ -1241,7 +1241,7 @@
 			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null
-		src.update_icon()
+		src.UpdateIcon()
 		return TRUE
 
 	attackby(obj/item/W, mob/user, params)
@@ -1249,7 +1249,7 @@
 			user.drop_item(W)
 			W.set_loc(src)
 			src.stored_paper = W
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			. = ..()
 
@@ -1261,7 +1261,7 @@
 				paper.set_loc(src)
 				src.stored_paper = paper
 				user.visible_message("<span class='notice'>[user] sucks up \the [paper] into \the [src].</span>", "<span class='notice'>You suck up \the [paper] into \the [src].</span>")
-				src.update_icon()
+				src.UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>\The [src] already has a paper in it.</span>")
 		else if(isfloor(target) || istype(target, /obj/table))

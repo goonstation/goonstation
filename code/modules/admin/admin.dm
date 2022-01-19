@@ -198,6 +198,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_adminwho_alerts()
 				src.show_pref_window(usr)
+		if ("toggle_ghost_respawns")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_ghost_respawns()
+				src.show_pref_window(usr)
 		if ("toggle_rp_word_filtering")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
@@ -827,7 +831,7 @@ var/global/noir = 0
 							<A href='?src=\ref[src];action=[cmd];type=gang'>Gang War (Beta)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=pod_wars'>Pod Wars (Beta)(only works if current map is pod_wars.dmm)</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=battle_royale'>Battle Royale</A><br>
-							<A href='?src=\ref[src];action=[cmd];type=assday'>Ass Day Classic (For testing only.)</A><br>
+							<A href='?src=\ref[src];action=[cmd];type=everyone-is-a-traitor'>Everyone is a traitor</A><br>
 							<A href='?src=\ref[src];action=[cmd];type=construction'>Construction (For testing only. Don't select this!)</A><br>
 							"})
 #if FOOTBALL_MODE
@@ -2327,6 +2331,9 @@ var/global/noir = 0
 
 		if ("grantcontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				M.unlock_medal( "Contributor", 1 )
@@ -2337,6 +2344,9 @@ var/global/noir = 0
 				alert("You need to be at least a Coder to grant the medal.")
 		if ("revokecontributor")
 			if (src.level >= LEVEL_CODER)
+				var/confirmation = alert(usr, "Are you sure?", "Confirmation", "Yes", "No")
+				if (confirmation != "Yes")
+					return
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				var/suc = M.revoke_medal( "Contributor" )
@@ -3914,145 +3924,7 @@ var/global/noir = 0
 				usr = adminClient.mob
 				usr.client.holder.playeropt(target)
 
-///////////////////////////////////////////////////////////////////////////////////////////////Panels
-
-/datum/player_panel
-
-/datum/player_panel/ui_state(mob/user)
-	return tgui_admin_state.can_use_topic(src, user)
-
-/datum/player_panel/ui_status(mob/user)
-  return tgui_admin_state.can_use_topic(src, user)
-
-/datum/player_panel/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "PlayerPanel")
-		ui.open()
-
-/datum/player_panel/ui_data(mob/user)
-	var/list/players = list()
-	for (var/mob/M in mobs)
-		if (M.ckey)
-			var/area/A = get_area(M)
-			players[M.ckey] = list(
-				"mobRef" = "\ref[M]",
-				"ckey" = M.ckey,
-				"name" = M.name ? M.name : "N/A",
-				"realName" = M.real_name ? M.real_name : "N/A",
-				"assignedRole" = M.mind?.assigned_role ? M.mind.assigned_role : "N/A",
-				"specialRole" = M.mind?.special_role ? M.mind.special_role : "N/A",
-				"playerType" = M.type,
-				"computerId" = M.computer_id ? M.computer_id : "N/A",
-				"ip" = M.lastKnownIP ? M.lastKnownIP : "N/A",
-				"joined" = M.client?.joined_date ? M.client.joined_date : "N/A",
-				"playerLocation" = A?.name ? A.name : "N/A",
-			)
-	. = list(
-		"players" = players
-	)
-
-/datum/player_panel/ui_act(action, params)
-	. = ..()
-	if (.)
-		return
-
-	switch(action)
-		if("open-player-options")
-			if(!usr.client) return
-			var/mobRef = params["mobRef"]
-			var/mob/M = locate(mobRef)
-			if(ismob(M) && M.ckey == params["ckey"])
-				usr.client.holder.playeropt(M)
-			else //mob ref was no good
-				for(M in mobs)
-					if(M.ckey == params["ckey"])
-						usr.client.holder.playeropt(M)
-						break
-
-		if("private-message-player")
-			if(!usr.client) return
-			var/mobRef = params["mobRef"]
-			var/mob/M = locate(mobRef)
-			if(ismob(M) && M.ckey == params["ckey"])
-				do_admin_pm(M.ckey, usr)
-			else
-				for(M in mobs)
-					if(M.ckey == params["ckey"])
-						do_admin_pm(M.ckey, usr)
-						break
-
-		if("jump-to-player-loc")
-			if(!usr.client) return
-			var/mobRef = params["mobRef"]
-			var/mob/M = locate(mobRef)
-			if(ismob(M) && M.ckey == params["ckey"])
-				usr.client.jumptomob(M)
-			else
-				for(M in mobs)
-					if(M.ckey == params["ckey"])
-						usr.client.jumptomob(M)
-						break
-
-/datum/admins/proc/player()
-	var/dat = {"<html>
-<head>
-	<title>Player Menu</title>
-	<style>
-		table, td, th {
-			border-collapse: collapse;
-			border: 1px solid rgba(80, 80, 80, .6);
-			font-size: 100%;
-		}
-		th { background: rgba(80, 80, 80, .6); }
-		td, th {
-			margin:	0;
-			padding: 0.25em 0.5em;
-		}
-	</style>
-</head>
-<body>
-	<table>
-		<tr>
-			<th colspan='2'>Key</th>
-			<th>Name</th>
-			<th>Real Name</th>
-			<th>Assigned Role</th>
-			<th>Special Role</th>
-			<th>Type</th>
-			<th>Computer ID</th>
-			<th>IP</th>
-			<th>Joined</th>
-		</tr>
-		"}
-
-	var/list/mobs = sortmobs()
-
-	for(var/mob/M in mobs)
-		if (M.ckey)
-			dat += {"
-			<tr>
-				<td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[(M.client ? "[M.client]" : "<em style='opacity: 0.75;'>[M.ckey]</em>")]</a></td>
-				<td align="center"><a href='?action=priv_msg&target=[M.ckey]'>PM</a></td>
-				<td>[M.name]</td>
-				<td>[M.real_name ? "[M.real_name]" : "<em>no real_name</em>"]</td>
-				<td>[M.mind ? M.mind.assigned_role : "<em>(no mind/role?)</em>"]</td>
-				<td><a href='?src=\ref[src];action=traitor;target=\ref[M]'>[M.mind ? (M.mind.special_role ? "<strong class='alert'>" + M.mind.special_role + "</strong>" : "<em>(none)</em>") : "<em>(no mind?)</em>"]</td>
-				<td>[M.type]</td>
-				<td align="center">[M.computer_id ? M.computer_id : "None"]</td>
-				<td align="center">[M.lastKnownIP]</td>
-				<td align="center">[M.client ? M.client.joined_date : "<em>(no client)</em>"]</td>
-			</tr>
-			"}
-			LAGCHECK(LAG_LOW)
-
-	dat += {"
-		</table>
-	</body>
-</html>
-"}
-
-	usr.Browse(dat, "window=players;size=1035x480")
+//-------------------------------------------- Panels
 
 
 /datum/admins/proc/s_respawn()
@@ -4446,6 +4318,7 @@ var/global/noir = 0
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.full_heal()
+		H.stamina = H.stamina_max
 		H.remove_ailments() // don't spawn with heart failure
 	return
 
@@ -5187,19 +5060,12 @@ var/global/noir = 0
 	M.key = usr.client.key
 	M.Login()
 
-/client/proc/smnoclip()
-	set name = "Planar Shift"
-	set category = "Smiling Man Powers"
-	set desc = "Shift planes to toggle moving through walls and objects."
-
-	if(!isliving(usr))
-		return
-
-	usr.client.flying = !usr.client.flying
-	boutput(usr, "You are [usr.client.flying ? "now" : "no longer"] flying through matter.")
-
+// Handling noclip logic
 /client/Move(NewLoc, direct)
 	if(usr.client.flying || (ismob(usr) && HAS_MOB_PROPERTY(usr, PROP_NOCLIP)))
+		if(isnull(NewLoc))
+			return
+
 		if(!isturf(usr.loc))
 			usr.set_loc(get_turf(usr))
 
@@ -5220,40 +5086,6 @@ var/global/noir = 0
 		src.mob.set_dir(direct)
 	else
 		..()
-
-/*
-/mob/living/carbon/proc/cloak()
-	//Buggy as heck because of the way updating clothing works (it clears all invisibility variables and sets them based on if you have a cloaking device on or not)
-	//It also clears overlays so the overlay will dissapear and bluh, I don't want to add another variable sooo this is what you get I guess.
-	//If the overlay dissapears you lose the cloaking too, so just retype cloak-self and it should work again
-	//If you don't lay down or force yourself to update clothing via fire or whatever it should be good enough to use for the purpose of spying on shitlords I guess.
-	set name = "Cloak self"
-	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	set desc = "Make yourself invisible!"
-
-	if (!iscarbon(usr))
-		boutput(usr, "Sorry, you have to be alive!")
-		return
-
-	if(!(usr.invisibility == INVIS_ALWAYS_ISH))
-		boutput(usr, "You are now cloaked")
-		usr.set_clothing_icon_dirty()
-
-		usr.overlays += image("icon" = 'icons/mob/mob.dmi', "icon_state" = "shield")
-
-		usr.invisibility = INVIS_ALWAYS_ISH
-	else
-		boutput(usr, "You are no longer cloaked")
-
-		usr.set_clothing_icon_dirty()
-		usr.invisibility = INVIS_NONE
-*/
-//
-//
-//ALL DONE
-//*********************************************************************************************************
-//
-//
 
 #undef INCLUDE_ANTAGS
 #undef STRIP_ANTAG

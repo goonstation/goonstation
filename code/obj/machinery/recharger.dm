@@ -100,7 +100,7 @@ obj/machinery/recharger
 		if (G.loc == src)
 			src.charging = G
 			charge_status = STATUS_ACTIVE
-			update_icon()
+			UpdateIcon()
 	else
 		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
 
@@ -113,7 +113,7 @@ obj/machinery/recharger
 	if (src.charging)
 		try
 			//Some items will want to update their icons after a charge. Try doing so here
-			src.charging:update_icon()
+			src.charging:UpdateIcon()
 		catch
 			//Pass
 
@@ -122,9 +122,9 @@ obj/machinery/recharger
 
 		power_usage = 50
 		charge_status = STATUS_INACTIVE
-		src.update_icon()
+		src.UpdateIcon()
 
-/obj/machinery/recharger/proc/update_icon()
+/obj/machinery/recharger/update_icon()
 	if (status & NOPOWER || charge_status == STATUS_INACTIVE)
 		// No power - show blank machine
 		src.icon_state = sprite_empty
@@ -155,7 +155,7 @@ obj/machinery/recharger
 /obj/machinery/recharger/process(var/mult)
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
-		update_icon()
+		UpdateIcon()
 		return
 
 
@@ -171,13 +171,13 @@ obj/machinery/recharger
 			// Charge complete
 			charge_status = STATUS_COMPLETE
 			playsound(src, 'sound/machines/ping.ogg', 50)
-			update_icon()
+			UpdateIcon()
 		else if(ret & CELL_UNCHARGEABLE)
 			// Charge failed - the item does not want to be recharged
 			charge_status = STATUS_ERRORED
 			src.visible_message("<span class='alert'>[src.charging] is not compatible with \the [src].</span>")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
-			update_icon()
+			UpdateIcon()
 
 	if(src.charging)
 		use_power(power_usage)

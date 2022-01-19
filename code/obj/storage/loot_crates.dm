@@ -349,7 +349,7 @@
 			list_counter++
 
 		SPAWN_DBG(0)
-			update_icon()
+			UpdateIcon()
 
 		return
 
@@ -372,7 +372,7 @@
 				src.locked = 0
 				src.lock = null
 				src.trap = null
-				src.update_icon()
+				src.UpdateIcon()
 			else if (success_state == 0) // Failed
 				lock.fail_attempt(user)
 			// Call -1 or something for cancelled attempts
@@ -396,6 +396,7 @@
 		return
 
 	update_icon()
+
 		if(open) icon_state = icon_opened
 		else icon_state = icon_closed
 
@@ -631,7 +632,7 @@
 		holder.locked = 0
 		holder.lock = null
 		holder.trap = null
-		holder.update_icon()
+		holder.UpdateIcon()
 		return
 
 // Items specific to loot crates

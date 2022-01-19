@@ -39,7 +39,7 @@
 	var/num_enemies = 1
 
 	if(traitor_scaling)
-		num_enemies = max(1, min(round((num_players + i) / num_enemies_divisor), traitors_possible)) // adjust divisor as needed
+		num_enemies = clamp(round((num_players + i) / num_enemies_divisor), 1, traitors_possible) // adjust divisor as needed
 
 	var/num_wizards = 0
 	var/num_traitors = 0
@@ -51,7 +51,7 @@
 	var/num_spy_thiefs = 0
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
-#ifdef XMAS
+#if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types += ROLE_GRINCH
 	src.latejoin_antag_roles += ROLE_GRINCH
 #endif
@@ -183,7 +183,7 @@
 			possible_blobs.Remove(blob)
 
 	if(num_grinches)
-		var/list/possible_grinches = get_possible_enemies(ROLE_GRINCH,num_grinches)
+		var/list/possible_grinches = get_possible_enemies(ROLE_MISC,num_grinches)
 		var/list/chosen_grinches = antagWeighter.choose(pool = possible_grinches, role = ROLE_GRINCH, amount = num_grinches, recordChosen = 1)
 		for (var/datum/mind/grinch in chosen_grinches)
 			traitors += grinch

@@ -670,7 +670,7 @@ obj/item/gnomechompski/elf
 		projectiles = list(current_projectile)
 		..()
 
-		update_icon()
+		UpdateIcon()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])

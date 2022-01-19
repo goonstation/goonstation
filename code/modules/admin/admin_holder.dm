@@ -11,6 +11,7 @@
 	var/servertoggles_toggle = 0
 	var/animtoggle = 1
 	var/attacktoggle = 1
+	var/ghost_respawns = 1
 	var/adminwho_alerts = 1
 	var/rp_word_filtering = 0
 	var/auto_stealth = 0
@@ -135,6 +136,7 @@
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
@@ -191,6 +193,13 @@
 		if (saved_attacktoggle == 0 && attacktoggle != 0)
 			src.owner:toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
+
+		var/saved_toggle_ghost_respawns = AP["ghost_respawns"]
+		if (isnull(saved_toggle_ghost_respawns))
+			saved_toggle_ghost_respawns = 1
+		if (saved_toggle_ghost_respawns == 0 && ghost_respawns != 0)
+			src.owner:toggle_ghost_respawns()
+		ghost_respawns = saved_toggle_ghost_respawns
 
 		var/saved_adminwho_alerts = AP["adminwho_alerts"]
 		if (isnull(saved_adminwho_alerts))
@@ -313,6 +322,7 @@
 		AP["animtoggle"] = animtoggle
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
+		AP["ghost_respawns"] = ghost_respawns
 		AP["adminwho_alerts"] = adminwho_alerts
 		AP["hear_prayers"] = hear_prayers
 		AP["audible_prayers"] = audible_prayers

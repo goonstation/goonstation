@@ -51,7 +51,7 @@
 			else
 				var/obj/machinery/drainage/drain = pick(by_type[/obj/machinery/drainage])
 				drain.clogged = 60 // about 3 minutes
-				drain.update_icon()
+				drain.UpdateIcon()
 				src.target = get_turf(drain)
 				target.visible_message("<span class='alert'><b>\The [drain] overflows with [reagent.name]!</b></span>")
 

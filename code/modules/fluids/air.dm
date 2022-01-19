@@ -132,6 +132,7 @@ var/list/ban_from_airborne_fluid = list()
 		src.touched_channel = 0
 		blocked_dirs = 0
 		spawned_any = 0
+		purge_smoke_blacklist(src.group.reagents)
 
 		var/turf/t
 		if(!waterflow_enabled) return
@@ -330,6 +331,9 @@ var/list/ban_from_airborne_fluid = list()
 	.=0
 /obj/effects/EnteredAirborneFluid(obj/fluid/F as obj)
 	.=0
+
+/obj/blob/EnteredAirborneFluid(obj/fluid/F)
+	F.group.reagents.reaction(src, TOUCH, F.amt, 0)
 
 /mob/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0

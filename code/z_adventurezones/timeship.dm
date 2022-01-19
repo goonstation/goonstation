@@ -302,7 +302,7 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 			SPAWN_DBG(1 SECOND)
 				src.occupant = new /mob/living/carbon/human/future (src)
 				src.icon_state = "sleeper"
-				src.update_icon()
+				src.UpdateIcon()
 
 ////////////////////
 

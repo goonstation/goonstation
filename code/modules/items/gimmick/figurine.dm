@@ -692,8 +692,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bunnykimber"
 
 	retrino
-		name = "\improper Neo Xzilon"
-		icon_state = "neoxzilon"
+		name = "\improper Mallow Rhosin"
+		icon_state = "mallowrhosin"
 		ckey = "retrino"
 
 		New()
@@ -747,6 +747,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "dennismccreary"
 		ckey = "lordvoxelrot"
 
+	Stinko
+		name = "\improper Stinko"
+		icon_state = "stinko"
+		ckey = "data_err0r"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
@@ -765,9 +770,10 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	New()
 		..()
 		src.ccolor = pick("y", "r", "g", "b")
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
+
 		if (src.icon_state != "cap-[src.ccolor]")
 			src.icon_state = "cap-[src.ccolor]"
 		if (!src.cap_image)

@@ -22,6 +22,7 @@
 		return istype(A, /mob/living/carbon/human/npc/monkey)
 
 	update_icon()
+
 		return
 
 

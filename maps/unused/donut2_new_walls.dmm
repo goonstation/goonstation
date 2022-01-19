@@ -5770,7 +5770,7 @@
 /area/station/science/lobby)
 "ani" = (
 /turf/space,
-/area/shuttle/escape/station/donut2)
+/area/shuttle/escape/station)
 "anj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -6619,12 +6619,12 @@
 	icon_state = "tube1";
 	tag = ""
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/shuttle)
-"apA" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
@@ -24754,6 +24754,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen1"
@@ -29490,7 +29491,7 @@
 /obj/table/wood/round/auto,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -27
 	},
 /turf/simulated/floor/carpet{
@@ -39350,6 +39351,16 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"eOF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
 "eOI" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -39482,7 +39493,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "fiX" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /obj/table/auto,
@@ -41581,6 +41592,20 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/storage/emergency2)
+"lxj" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
 "lxB" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -66071,13 +66096,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
+ani
+ani
+ani
+aaa
 aaa
 aaa
 aaa
@@ -66372,15 +66397,15 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -66674,16 +66699,16 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -66976,16 +67001,16 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -67276,19 +67301,19 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -67577,11 +67602,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -67879,11 +67904,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -68181,11 +68206,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -68197,7 +68222,7 @@ ani
 ani
 apo
 apz
-aom
+eOF
 anp
 kMA
 hSd
@@ -68483,11 +68508,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -68498,8 +68523,8 @@ ani
 ani
 ani
 aqH
-app
-app
+aom
+aom
 jqk
 aqL
 arb
@@ -68785,11 +68810,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
@@ -68799,10 +68819,15 @@ ani
 ani
 ani
 ani
-aaa
-adQ
-aaa
-app
+ani
+ani
+ani
+ani
+ani
+aqH
+aom
+aom
+jqk
 aqL
 fKn
 app
@@ -69087,11 +69112,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
@@ -69101,11 +69121,16 @@ ani
 ani
 ani
 ani
-aaa
-adQ
-aaa
-app
-aqL
+ani
+ani
+ani
+ani
+ani
+apo
+lxj
+eOF
+anp
+hUF
 fKn
 app
 arN
@@ -69389,11 +69414,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -69691,25 +69716,25 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-apo
-apA
-aom
-anp
-hUF
+abZ
+app
+aqL
 uiX
 aqh
 arN
@@ -69993,24 +70018,24 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
 aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-aqH
 app
-app
-jqk
 aqL
 aqZ
 iPP
@@ -70295,23 +70320,23 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
 aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-aaa
-abZ
 app
 aqL
 aom
@@ -70597,21 +70622,21 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 app
@@ -70899,21 +70924,21 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 app
@@ -71201,11 +71226,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -71503,14 +71528,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
+ani
+ani
+ani
+aaa
+aoJ
 ani
 ani
 ani
@@ -71807,16 +71832,16 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aoJ
-aaa
-aaa
+ani
+ani
+ani
 aaa
 aaa
 aaa

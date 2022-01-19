@@ -26,7 +26,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		SPAWN_DBG(0.6 SECONDS)
 			if (!src.link)
 				var/turf/T = get_turf(src)
@@ -36,7 +36,8 @@
 					src.link.master = src
 			src.net_id = generate_net_id(src)
 
-	proc/update_icon()
+	update_icon()
+
 		if (status & (NOPOWER|BROKEN))
 			src.icon_state = "shieldgen0"
 			src.UpdateOverlays(null, "top_lights")
@@ -191,7 +192,7 @@
 			return
 		src.active = 1
 		src.create_shield()
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.sound_startup, 75)
 
 	proc/deactivate()
@@ -199,7 +200,7 @@
 			return
 		src.active = 0
 		src.remove_shield()
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.sound_shutoff, 75)
 
 
@@ -208,6 +209,7 @@
 	icon_state = "engine1"
 
 	update_icon()
+
 		return
 
 /obj/machinery/shield_generator/console_lower
@@ -215,6 +217,7 @@
 	icon_state = "engine2"
 
 	update_icon()
+
 		return
 
 /* ==================== Computer ==================== */

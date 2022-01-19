@@ -48,7 +48,7 @@
 			var/datum/gas_mixture/air = T.return_air()
 			if (air)
 				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
-				attenuate = min(1, max(0, attenuate))
+				attenuate = clamp(attenuate, 0, 1)
 
 	return attenuate
 
@@ -301,7 +301,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
-			S.pan = max(-100, min(100, dx/8.0 * 100))
+			S.pan = clamp(dx/8.0 * 100, -100, 100)
 
 		src << S
 

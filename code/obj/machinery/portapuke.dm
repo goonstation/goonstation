@@ -80,7 +80,7 @@
 	proc/process_occupant(mob/living/occupant)
 		SEND_SIGNAL(occupant, COMSIG_MOB_VOMIT, 5) //THEY'RE PROBABLY VOMITING AT SOME POINT IN HERE OK
 		if(occupant.loc != src)
-			src.update_icon()
+			src.UpdateIcon()
 			return
 
 		if (isdead(occupant))
@@ -153,7 +153,7 @@
 			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
 			logTheThing("combat", user, target, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
-			src.update_icon()
+			src.UpdateIcon()
 			qdel(G)
 			return
 
@@ -174,7 +174,7 @@
 		src.n_occupants--
 		if(src.n_occupants <= 0)
 			src.UnsubscribeProcess()
-		update_icon()
+		UpdateIcon()
 
 	proc/on_accept_occupant(mob/living/occupant)
 		var/list/target_bucket = src.occupant_buckets[1]
@@ -187,7 +187,7 @@
 			src.SubscribeToProcess()
 		src.n_occupants++
 
-		src.update_icon()
+		src.UpdateIcon()
 
 		occupant.bioHolder?.AddEffect("stinky")
 
@@ -195,7 +195,7 @@
 			O.set_loc(get_turf(src))
 
 
-	proc/update_icon()
+	update_icon()
 		icon_state = src.n_occupants > 0 ? "puke_1" : "puke_0"
 
 

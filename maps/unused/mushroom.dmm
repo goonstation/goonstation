@@ -25809,7 +25809,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/machinery/light/small,
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -26053,7 +26053,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "beK" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/machinery/camera{
 	c_tag = "Brig - Solitary 1";
 	dir = 4
@@ -26501,7 +26501,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bfC" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;

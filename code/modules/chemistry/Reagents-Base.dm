@@ -349,8 +349,12 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(70))
 					M.take_brain_damage(1*mult)
+				if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
+					var/mob/living/L = M
+					var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
+					if (istype(plague))
+						L.cure_disease(plague)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
@@ -419,7 +423,7 @@ datum
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
+							SPAWN_DBG(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 

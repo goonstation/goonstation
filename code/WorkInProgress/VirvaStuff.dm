@@ -5,7 +5,7 @@
 	icon_state = "repo"
 	item_state = "repo"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_function_flags = IMMUNE_TO_ACID
 	contraband = 3
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -24,8 +24,6 @@
 	desc = "How is the visor glowing like that?"
 	icon_state = "repo"
 	item_state = "repo"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	item_function_flags = IMMUNE_TO_ACID
 	blocked_from_petasusaphilic = TRUE
 	color_r = 0.7

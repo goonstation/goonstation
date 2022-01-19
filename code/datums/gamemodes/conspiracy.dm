@@ -23,7 +23,7 @@
 		if(player.ready)
 			numPlayers++
 
-	var/numConspirators = max(2, min(round(numPlayers / 5), maxConspirators)) // Selects number of conspirators
+	var/numConspirators = clamp(round(numPlayers / 5), 2, maxConspirators) // Selects number of conspirators
 
 	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators)
 	if (!potentialAntags.len)

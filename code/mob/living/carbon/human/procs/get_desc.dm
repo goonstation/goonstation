@@ -275,9 +275,9 @@
 		switch (src.blood_pressure["total"])
 			if (-INFINITY to 0) // welp
 				. += "<br><span class='alert'><B>[src.name] is pale as a ghost!</B></span>"
-			if (1 to 374) // very low (90/60)
+			if (1 to 299) // very low (70/50)
 				. += "<br><span class='alert'><B>[src.name] is very pale!</B></span>"
-			if (374 to 414) // low (100/65)
+			if (300 to 414) // low (100/65)
 				. += "<br><span class='alert'><B>[src.name] is pale.</B></span>"
 			if (585 to 666) // high (140/90)
 				. += "<br><span class='alert'>[src.name] is a little sweaty and red in the face.</span>"

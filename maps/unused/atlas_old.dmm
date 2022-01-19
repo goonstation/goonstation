@@ -2064,7 +2064,7 @@
 /obj/table/wood/round,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/wood,
@@ -6162,7 +6162,7 @@
 /area/station/crew_quarters/bathroom)
 "pq" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "pr" = (
 /obj/cable{
 	d1 = 1;

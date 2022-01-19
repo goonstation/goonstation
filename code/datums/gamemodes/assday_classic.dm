@@ -15,7 +15,7 @@
 	var/const/traitors_possible = 169
 
 /datum/game_mode/assday/announce()
-	boutput(world, "<B>The current game mode is - ASS DAY!</B>")
+	boutput(world, "<B>The current game mode is - Everyone is a traitor!</B>")
 	boutput(world, "<B>The entire crew of [station_or_ship()] has defected. Beware of dog.</B>")
 
 
@@ -80,23 +80,9 @@
 	return 1
 
 /datum/game_mode/assday/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/traitor in traitors)
-		objective_set_path = null // Gotta reset this.
 		switch(traitor.special_role)
 			if(ROLE_TRAITOR)
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-				new objective_set_path(traitor)
-
-				var/obj_count = 1
-				for(var/datum/objective/objective in traitor.objectives)
-					boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-					obj_count++
 				SHOW_TRAITOR_HARDMODE_TIPS(traitor.current)
 
 			if (ROLE_WRAITH)
