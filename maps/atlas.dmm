@@ -1796,7 +1796,7 @@
 /turf/simulated/floor/bot,
 /area/station/mining/staff_room)
 "eC" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -13291,7 +13291,7 @@
 	},
 /area/station/janitor/office)
 "GE" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Janitor"
@@ -13703,7 +13703,7 @@
 	},
 /area/station/medical/medbay)
 "HA" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "HB" = (
@@ -14521,7 +14521,7 @@
 /area/station/science/lab)
 "JH" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "burn";
 	pixel_x = -10;
 	pixel_y = -20
@@ -14551,7 +14551,7 @@
 /area/station/science/lab)
 "JM" = (
 /obj/machinery/atmospherics/valve,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "burn_2";
 	pixel_x = -10;
 	pixel_y = -20
@@ -19720,7 +19720,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "Xt" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20365,7 +20365,7 @@
 	on = 1;
 	target_pressure = 1000
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combust";
 	pixel_x = -25
 	},
@@ -20539,7 +20539,7 @@
 	},
 /area/station/bridge/customs)
 "ZD" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -20639,7 +20639,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "ZR" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},

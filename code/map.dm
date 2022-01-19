@@ -31,7 +31,7 @@ var/global/list/mapNames = list(
 	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = 1,		"MaxPlayersAllowed" = 80),
 	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = 0, 	"MinPlayersAllowed" = 40),
 	"Nadir" = 		list("id" = "NADIR", 		"settings" = "nadir", 		"playerPickable" = 0),
-	//"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
+	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = ASS_JAM),
 	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = ASS_JAM),
 	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = ASS_JAM,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = 1,				"MaxPlayersAllowed" = 30),

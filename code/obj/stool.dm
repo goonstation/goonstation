@@ -85,7 +85,8 @@
 		.= 0
 
 	proc/buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0) //Handles the actual buckling in
-		if (!can_buckle(to_buckle,user)) return
+		if (!can_buckle(to_buckle,user))
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
@@ -93,7 +94,7 @@
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
-		return
+		return TRUE
 
 	proc/unbuckle() //Ditto but for unbuckling
 		if (src.buckled_guy)
@@ -367,9 +368,9 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user)
 		if(src.buckled_guy && src.buckled_guy.buckled == src)
-			return
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
@@ -386,6 +387,7 @@
 		to_buckle.set_clothing_icon_dirty()
 		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
+		return TRUE
 
 	unbuckle()
 		..()
@@ -711,13 +713,13 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if(!istype(to_buckle))
-			return
+			return FALSE
 		if(user.hasStatus("weakened"))
-			return
-		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy) return
-
+			return FALSE
+		if(src.buckled_guy && src.buckled_guy.buckled == src && to_buckle != src.buckled_guy)
+			return FALSE
 		if (!can_buckle(to_buckle,user))
-			return
+			return FALSE
 
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
@@ -752,6 +754,7 @@
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
 			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		return TRUE
 
 
 	unbuckle()
@@ -1117,10 +1120,11 @@
 
 	buckle_in(mob/living/to_buckle, mob/living/user, var/stand = 0)
 		if (src.lying)
-			return
-		..()
-		if (src.buckled_guy == to_buckle)
+			return FALSE
+		. = ..()
+		if (.)
 			APPLY_MOVEMENT_MODIFIER(to_buckle, /datum/movement_modifier/wheelchair, src.type)
+			return TRUE
 
 	unbuckle()
 		if(src.buckled_guy)

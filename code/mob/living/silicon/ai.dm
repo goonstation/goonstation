@@ -9,6 +9,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Mad" = "ai_mad",\
 	"BSOD" = "ai_bsod",\
 	"Text" = "ai_text",\
+	"Text (Inverted)" = "ai_text-inverted",\
 	"Blank" = "ai_blank",\
 	"Unimpressed" = "ai_unimpressed",\
 	"Baffled" = "ai_baffled",\
@@ -56,6 +57,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/printalerts = 1
 	var/announcearrival = 1
 	var/arrivalalert = "$NAME has signed up as $JOB."
+	/// a list of strings used as fake laws that may be stated via the State Fake Laws command, to deceive people as a rogue AI
+	var/list/fake_laws = list()
 	var/glitchy_speak = 0
 	//Comm over powernet stuff
 	var/net_id = null
@@ -87,6 +90,26 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/faceEmotion = "ai_happy"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
+
+	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
+	var/coreSkin = "default"
+/* To add a new skin:
+- Create the skin itself but also the overlay you want to have for when in battery mode
+- The name of the core icon state will be used to fetch the battery mode overlay, so your batmode overlay
+- should be the name of your core icon state with "batmode-" before it
+- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "apcmode-"
+- Add the icon state name to skinsList below, and while it's technically optional, you should also associate a short description with it
+- There is currently no support for significantly differently shaped cores, you'll have to do that yourself, sorry
+*/
+
+	/// List of valid skins and their descriptions. Used for validation of setSkin()
+	var/skinsList = list(
+		"default" = "The casing appears to be a standard NanoTrasen AI core.",
+		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
+		"kingsway" = "'Kingsway Systems 29A' is etched into the aged plastic casing beneath the screen.",
+		"syndicate" = "The casing is covered in Syndicate markings! On second glance, it seems like the panels are pieces of toy plastic clipped together. Wow.",
+		"clown" = "Crayon and questionable stains constitute the majority of the casing's exterior. What the fuck even is this thing?"
+	)
 
 	var/datum/ai_camera_tracker/tracker = null
 
@@ -175,7 +198,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		light.dispose()
 	..()
 
-/mob/living/silicon/ai/New(loc, var/empty = 0)
+/mob/living/silicon/ai/New(loc, var/empty = 0, var/skinToApply = "default")
 	..(loc)
 	START_TRACKING
 
@@ -201,6 +224,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
+	coreSkin = skinToApply
+	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
 	src.eyecam = new /mob/dead/aieye(src.loc)
@@ -238,12 +263,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	SPAWN_DBG(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
 
-		if(!src.link)
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src
+		update_terminal()
 
 		for (var/mob/living/silicon/hivebot/eyebot/E in mobs)
 			if (!(E in available_ai_shells))
@@ -302,6 +322,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.anchored = !src.anchored
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
+		src.update_terminal()
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
@@ -406,7 +427,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
 				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_advanced
+				src.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
+				src.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
 				src.verbs += /mob/living/silicon/ai/verb/deploy_to
 				src.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
 				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
@@ -537,6 +559,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
 			qdel(ghost)
+			update_appearance()
 		return 1
 	return 0
 
@@ -825,6 +848,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
+	for(var/target in src.terminals)
+		src.terminals.Remove(target)
+		src.post_status(target, "command", "term_message", "data", "Alert: Connected AI has been shut down. Disconnecting...")
+		SPAWN_DBG(0.3 SECONDS)
+			src.post_status(target, "command","term_disconnect")
+	// we do this after we disconnect connected terminal computers since we dont need to alert the ai of each disconnected terminal
+	if(gibbed) // and yeah people *can* reconnect if we aren't gibbed, but this is a way to tell them "we're dead, no need to stay connected"
+		src.update_terminal(disconnect = TRUE)
+
 	if (src.mind)
 		src.mind.register_death()
 		if (src.mind.special_role)
@@ -851,7 +883,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span><br>")
+	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span> [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 	if (src.hat)
 		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span>"
 
@@ -1359,6 +1391,30 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	..()
 
+/// Handles connecting and disconnecting the AI from data terminals. Calling with disconnect or tryConnect is not required, but useful if you only want one to happen
+/mob/living/silicon/ai/proc/update_terminal(var/disconnect = FALSE, var/tryConnect = FALSE)
+
+	if((tryConnect || src.anchored) && !disconnect)
+		var/turf/T = get_turf(src)
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if(test_link && (!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master) || test_link.master == src))// if somehow we forgot our link but the terminal didnt
+			if(src.link && src.link?.master == src)
+				src.link?.master = null // if we had a previous link, we're just getting rid of it, just in case
+			src.link = test_link
+			src.link.master = src
+	else
+		for(var/target in src.terminals) // otherwise they'll still be sorta connected
+			src.terminals.Remove(target)
+			textToPlayer("--- Connection lost with [target]!")
+			SPAWN_DBG(0.3 SECONDS)
+				src.post_status(target, "command","term_message", "data", "Alert: Terminal connection disrupted. Disconnecting...")
+			SPAWN_DBG(0.4 SECONDS)
+				src.post_status(target, "command","term_disconnect")
+		SPAWN_DBG(2 SECONDS) //so our messages send before the data terminal connection closes
+			src.link?.master = null
+			src.link = null
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1480,82 +1536,58 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.announcearrival = 1
 		boutput(src, "Now announcing new arrivals to the station.")
 */
+#define AI_LAW_STATE_DELAY 1 SECOND
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	sleep(1 SECOND)
+	sleep(AI_LAW_STATE_DELAY)
 	src.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
 
 
-/mob/living/silicon/ai/proc/ai_state_laws_advanced()
+/mob/living/silicon/ai/proc/ai_set_fake_laws()
 	set category = "AI Commands"
-	set name = "State Laws (Advanced)"
+	set name = "Set Fake Laws"
 
-	var/state = input(usr,"Please enter the laws you would like to state in pairs of (law number)=(fake number, if desired) separated by semicolons (e.g. \"1;3=2;4=3\") (Each law will only be stated once, duplicates will be removed)","Laws To State","1;2;3") as null|text
-	if(!state)
+	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
+	var/law_base = ""
+	if(law_base_choice == "Real Laws")
+		law_base = ticker.centralized_ai_laws.format_for_logs("\n")
+	else if(law_base_choice == "Fake Laws")
+		for(var/fake_law in src.fake_laws)
+			// this is just the default input for the user, so it should be fine
+			law_base += "[html_decode(fake_law)]\n"
+
+	var/raw_law_text = input(usr,"Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base) as null|message
+	if(!raw_law_text)
 		return
-	state = strip_html(state,MAX_MESSAGE_LEN)
+	// split into lines
+	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
+	// clear old fake laws
+	src.fake_laws = list()
+	// cleanse the lines and add them as our laws
+	for(var/raw_law in raw_law_list)
+		var/nice_law = trim(strip_html(raw_law))
+		// empty lines would probably be an accident and result in awkward pauses that might give the AI away
+		if (!length(nice_law))
+			continue
+		fake_laws += nice_law
 
-	var/list/laws_to_state = list()
+	src.show_message("<span class='bold'>Your new fake laws are: </span>")
+	for(var/a_law in src.fake_laws)
+		src.show_message(a_law)
 
-	laws_to_state = params2list(state)
+/mob/living/silicon/ai/proc/ai_state_fake_laws()
+	set category = "AI Commands"
+	set name = "State Fake Laws"
 
-    // 1;1;1 becomes 1:list() and 1=2;1=3 becomes 1:(2,3), so we need to break the results down into one association per index
-
-	var/found = 0
-	for (var/index in laws_to_state)
-		if(laws_to_state[index])
-			for (var/association in laws_to_state[index])
-				if(association)
-					laws_to_state[index] = association
-					found = 1
-					break
-
-			if(!found)
-				laws_to_state[index] = null
-
-			found = 0
-
-	//build laws list from 0th, inherent, and supplied laws
-
-
-	var/list/laws_list = list()
-
-	var/number = 0
-	if(ticker.centralized_ai_laws.zeroth)
-		laws_list += "[number]"
-		laws_list["[number]"] = "[ticker.centralized_ai_laws.zeroth]"
-
-	number++
-
-	for (var/index = 1, index <= ticker.centralized_ai_laws.inherent.len, index++)
-		var/law = ticker.centralized_ai_laws.inherent[index]
-		if (length(law) > 0)
-			laws_list += "[number]"
-			laws_list["[number]"] += "[law]"
-			number++
-
-	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
-		var/law = ticker.centralized_ai_laws.supplied[index]
-		if (length(law) > 0)
-			laws_list += "[number]"
-			laws_list["[number]"] += "[law]"
-			number++
-
-	//state laws in order given. Uses original numbers unless renumbering is specified
-
-	for(var/law_number in laws_to_state)
-		if(law_number in laws_list)
-			if(laws_to_state[law_number])
-				src.say("[laws_to_state[law_number]]. [laws_list[law_number]]")
-			else
-				src.say("[law_number]. [laws_list[law_number]]")
-			sleep(1 SECOND)
-
+	for(var/a_law in src.fake_laws)
+		sleep(AI_LAW_STATE_DELAY)
+		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
+		src.say(html_decode(a_law))
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
@@ -1570,13 +1602,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(1 SECOND)
+			sleep(AI_LAW_STATE_DELAY)
 	for (var/index = 1, index <= ticker.centralized_ai_laws.supplied.len, index++)
 		var/law = ticker.centralized_ai_laws.supplied[index]
 		if (length(law) > 0)
 			src.say("[number]. [law]")
 			number++
-			sleep(1 SECOND)
+			sleep(AI_LAW_STATE_DELAY)
+
+#undef AI_LAW_STATE_DELAY
 
 /mob/living/silicon/ai/cancel_camera()
 	set category = "AI Commands"
@@ -1978,22 +2012,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	// imo this should be the inverse - show all the overlays even if dead,
 	// so that damage can be seen
 	if (!src.brain)
-		src.icon_state = "ai_off"
-		ClearAllOverlays()
+		src.icon_state = coreSkin
+		clearFaceOverlays()
 	else if (isdead(src))
+		clearFaceOverlays()
 		if (src.cell && src.cell.charge < 100)
-			src.icon_state = "ai_off"
-		else
-			src.icon_state = "ai-crash"
-		ClearAllOverlays()
+			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
+		else // convoluted that I'm terrified of breaking some super specific thing by doing that
+			UpdateOverlays(get_image("ai_bsod"), "temp_face")
+
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
-		src.icon_state = "ai-stun"
-		ClearAllOverlays(1)
+		clearFaceOverlays(1)
+		UpdateOverlays(get_image("ai-stun-screen"), "temp_face")
+
 	else
-		src.icon_state = "ai_off" //Actually do this.
-
-
+		src.icon_state = coreSkin
+		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
 		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai-white", src.layer)
 		I.color = faceColor
@@ -2006,10 +2041,10 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
-		if (src.power_mode == 1)
-			src.UpdateOverlays(get_image("batterymode"), "batterymode")
+		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
+			src.UpdateOverlays(get_image("batmode-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(null, "batterymode")
+			src.UpdateOverlays(get_image("apcmode-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
 			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
@@ -2041,6 +2076,23 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if(75 to INFINITY)
 			src.UpdateOverlays(get_image("brute75"), "brute")
 
+/// Clears all overlays which constitute the displayed face/screen
+/mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
+	src.ClearSpecificOverlays(retain_cache,
+		"actual_face",
+		"temp_face",
+		"faceplate",
+		"face_glow",
+		"power_status",
+		"moustache"
+	)
+
+/// Call with a valid skin icon state as string to set the skin to said icon state
+/mob/living/silicon/ai/proc/setSkin(skin)
+	if(!(skin in skinsList))
+		return
+	coreSkin = skin
+	update_appearance()
 
 /mob/living/silicon/ai/proc/get_image(var/icon_state)
 	if(!cached_image)
@@ -2301,6 +2353,37 @@ proc/get_mobs_trackable_by_AI()
 	var/has_glass = 0
 	var/image/image_coverlay = null
 	var/image/image_working = null
+	var/skinToApply = "default" // set this in a map editor or something to properly change the skin!
+
+// Overlay layering, from topmost layer to bottommost (radio, cell, and interface are the same layer)
+	var/image/image_glass_overlay = null
+	var/image/image_wire_overlay = null
+	var/image/image_top_overlay = null
+	var/image/image_radio_overlay = null
+	var/image/image_cell_overlay = null
+	var/image/image_interface_overlay = null
+	var/image/image_background_overlay = null
+// no clue why this used FLY_LAYER before when this is an obj, what the heck
+
+	New()
+		. = ..()
+		image_glass_overlay = image(icon, "ai_frame-glass", OBJ_LAYER+0.6)
+		image_wire_overlay = image(icon, "ai_frame-wires", OBJ_LAYER+0.5)
+		image_top_overlay = image(icon, "ai_frame-top", OBJ_LAYER+0.4)
+		// +0.3 is reserved for the core overlay; we can't define it here since we dunno what kind of core might be made!
+		image_radio_overlay = image(icon, "ai_frame-radio", OBJ_LAYER+0.2)
+		image_cell_overlay = image(icon, "ai_frame-cell", OBJ_LAYER+0.2)
+		image_interface_overlay = image(icon, "ai_frame-interface", OBJ_LAYER+0.2)
+		image_background_overlay = image(icon, "ai_frame-back", OBJ_LAYER+0.1)
+		// if someone map edited us in or something and set our build_step to 1 or 2, lets make sure we look the part!
+		if(!build_step || (build_step > 2))
+			build_step = 0 // if some bozo sets us to over 2 we need to default back to 0 so nothing breaks
+		else
+			UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
+			UpdateOverlays(image_background_overlay, "background")
+			UpdateOverlays(image_top_overlay, "top")
+			if(build_step == 2)
+				UpdateOverlays(image_wire_overlay, "wires")
 
 /obj/ai_core_frame/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/sheet))
@@ -2311,7 +2394,9 @@ proc/get_mobs_trackable_by_AI()
 					src.build_step++
 					boutput(user, "You add plating to [src]!")
 					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-					src.icon_state = "ai_frame1"
+					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
+					src.UpdateOverlays(src.image_background_overlay, "background")
+					src.UpdateOverlays(src.image_top_overlay, "top")
 					return
 				else
 					boutput(user, "You need at least three metal sheets to add plating to [src].")
@@ -2319,6 +2404,7 @@ proc/get_mobs_trackable_by_AI()
 			else
 				boutput(user, "\The [src] already has plating!")
 				return
+
 		else if (W.material.material_flags & MATERIAL_CRYSTAL) // glass sheets
 			if (src.build_step >= 2)
 				if (!src.has_glass)
@@ -2328,11 +2414,7 @@ proc/get_mobs_trackable_by_AI()
 						boutput(user, "You add glass to [src]!")
 						playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 						src.has_glass = 1
-						if (!src.image_coverlay)
-							src.image_coverlay = image(src.icon, "ai_frame2-og", FLY_LAYER)
-							src.UpdateOverlays(src.image_coverlay, "cover")
-						else
-							src.UpdateOverlays(src.SafeGetOverlayImage("cover", src.icon, "ai_frame2-og", FLY_LAYER), "cover")
+						src.UpdateOverlays(src.image_glass_overlay, "glass")
 						return
 					else
 						boutput(user, "You need at least one glass sheet to add plating! How are you even seeing this message?! How do you have a glass sheet that has no glass sheets in it?!?!")
@@ -2356,7 +2438,7 @@ proc/get_mobs_trackable_by_AI()
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-				src.icon_state = "ai_frame2"
+				src.UpdateOverlays(src.image_wire_overlay, "wires")
 				if (coil.amount < 1)
 					user.drop_item()
 					qdel(coil)
@@ -2380,14 +2462,7 @@ proc/get_mobs_trackable_by_AI()
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
-				if (!src.image_coverlay) // only should need to add this one time, so see if the image is null, and create it if not (so the next part won't need to make it + add it since it'll do the same check)
-					src.image_coverlay = image(src.icon, "ai_frame2-o[src.has_glass ? "g" : null]", FLY_LAYER)
-					src.UpdateOverlays(src.image_coverlay, "cover")
-				if (!src.image_working)
-					src.image_working = image(src.icon, "ai_frame-cell")
-				else
-					src.image_working.icon_state = "ai_frame-cell"
-				src.UpdateOverlays(src.image_working, "cell")
+				src.UpdateOverlays(image_cell_overlay, "cell")
 				return
 			else
 				boutput(user, "\The [src] already has a cell!")
@@ -2402,18 +2477,10 @@ proc/get_mobs_trackable_by_AI()
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
-				src.icon_state = "shell-radio"
 				src.has_radios++
 				qdel(W)
 				if (src.has_radios == 1) // we just added the first one, so this is the only time we need to worry about the overlays
-					if (!src.image_coverlay)
-						src.image_coverlay = image(src.icon, "ai_frame2-o[src.has_glass ? "g" : null]", FLY_LAYER)
-						src.UpdateOverlays(src.image_coverlay, "cover")
-					if (!src.image_working)
-						src.image_working = image(src.icon, "ai_frame-radio")
-					else
-						src.image_working.icon_state = "ai_frame-radio"
-					src.UpdateOverlays(src.image_working, "radio")
+					src.UpdateOverlays(image_radio_overlay, "radio")
 				return
 			else
 				boutput(user, "\The [src] already has a radio!")
@@ -2430,14 +2497,7 @@ proc/get_mobs_trackable_by_AI()
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.has_interface = 1
 				qdel(W)
-				if (!src.image_coverlay)
-					src.image_coverlay = image(src.icon, "ai_frame2-o[src.has_glass ? "g" : null]", FLY_LAYER)
-					src.UpdateOverlays(src.image_coverlay, "cover")
-				if (!src.image_working)
-					src.image_working = image(src.icon, "ai_frame-interface")
-				else
-					src.image_working.icon_state = "ai_frame-interface"
-				src.UpdateOverlays(src.image_working, "interface")
+				src.UpdateOverlays(image_interface_overlay, "interface")
 				return
 			else
 				boutput(user, "\The [src] already has an AI interface!")
@@ -2450,7 +2510,7 @@ proc/get_mobs_trackable_by_AI()
 		if (src.build_step >= 8)
 			src.build_step++
 			boutput(user, "You activate the AI core!  Beep bop!")
-			var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(get_turf(src), 1) // second parameter causes the core to spawn without a brain
+			var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(get_turf(src), TRUE, skinToApply) // second parameter causes the core to spawn without a brain
 			if (A.cell && src.cell)
 				qdel(A.cell)
 				A.cell = src.cell
@@ -2482,3 +2542,40 @@ proc/get_mobs_trackable_by_AI()
 				still_needed += "a pane of glass"
 			boutput(user, "\The [src] needs [still_needed.len ? english_list(still_needed) : "bugfixing (please call a coder)"] before you can activate it.")
 			return
+
+	else if (istype(W, /obj/item/ai_plating_kit))
+		var/obj/item/ai_plating_kit/plating = W
+		if (!(src.build_step < 1))
+			boutput(user, "\The [src] already has plating!")
+			return
+		src.build_step++
+		boutput(user, "You use the [W] to lay the exterior plating on the [src]!")
+		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+		qdel(plating)
+		skinToApply = plating.skin
+		UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
+		src.UpdateOverlays(src.image_background_overlay, "background")
+		src.UpdateOverlays(src.image_top_overlay, "top")
+
+
+ABSTRACT_TYPE(/obj/item/ai_plating_kit)
+/obj/item/ai_plating_kit
+	name = "AI Frame Plating Kit (YOU SHOULD NOT SEE THIS, FILE A BUG REPORT IF YOU ARE READING THIS)"
+	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years."
+	icon = 'icons/mob/ai.dmi'
+	icon_state = "ai-green" // placeholder icon
+	/// The skin to apply to an AI core frame when we install this as plating. Needs to be a valid string from /ai/var/skinsList
+	var/skin = "default"
+
+/obj/item/ai_plating_kit/syndicate
+	name = "AI Frame Plating Kit"
+	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
+	icon_state = "syndie_kit" // get it???
+	skin = "syndicate"
+	contraband = 1 // crime
+
+/obj/item/ai_plating_kit/clown
+	name = "AI Frame Plating Kit"
+	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
+	icon_state = "clown_kit"
+	skin = "clown"

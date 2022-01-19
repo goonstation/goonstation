@@ -423,6 +423,7 @@
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
+	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
 	name = "blue clown suit"
@@ -447,6 +448,7 @@
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
+	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/purple
 	name = "purple clown suit"
@@ -467,6 +469,7 @@
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
 	//item_state = "pinkclown"
+	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/pink
 	name = "pink clown suit"
@@ -487,6 +490,7 @@
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
 	//item_state = "yellowclown"
+	bald_desc_state = "For bright clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/yellow
 	name = "yellow clown suit"

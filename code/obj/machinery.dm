@@ -32,6 +32,7 @@
 
 /obj/machinery/New()
 	..()
+	START_TRACKING
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.
 		machine_registry[initial(machine_registry_idx)] += src
@@ -53,6 +54,7 @@
 	A?.machines += src
 
 /obj/machinery/disposing()
+	STOP_TRACKING
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
@@ -337,24 +339,6 @@
 	var/obj/machinery/door/d2 = null
 	anchored = 1.0
 	req_access = list(access_armory)
-
-/obj/machinery/driver_button
-	name = "Mass Driver Button"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a Mass Driver."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
-
-/obj/machinery/ignition_switch
-	name = "Ignition Switch"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a mounted igniter."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
 
 /obj/machinery/noise_switch
 	name = "Speaker Toggle"

@@ -182,6 +182,11 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 
+/datum/projectile/bullet/ak47/semiauto
+	power = 40
+	cost = 1
+	shot_number = 1
+
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
 	power = 85

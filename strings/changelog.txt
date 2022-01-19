@@ -1,4 +1,122 @@
 
+(t)tue jan 18 22
+(u)Zonespace
+(p)6276
+(e)🆕🗺🎨⚖📄|feature, mapping, sprites, balance, tgui
+(*)Nuclear Operative Commanders now have a specialized uplink! More info in Minor Changes. Nuclear bomb remote has been moved to the uplink.
+(+)The commander's uplink uses "points" versus the traditional TC, and gains 1 point for every 20 people online (minimum of 2 points)
+(+)The uplink has 6 items, being the Nuclear bomb teleporter, reinforcement beacon, ammo bag, specialist ammo bag, laser designator, and rapid deployment remote, the new ones described in further changelog entries.
+(+)First is a reinforcement beacon for 2 points to summon a syndicate gunbot to assist the nuclear team.
+(+)Second is the Ammo Bag and its specialist version (2/3 points, respectively), which both allow the nuclear operatives to fabricate more ammunition for their guns.
+(+)Third is the laser designator for 3 points, which allows the commander to call in two high-explosive airstrikes from the Cairngorm to hit anywhere they designate!
+(+)Finally is the Rapid Deployment Remote, costing a whole 4 points, which allows the commander to send the nuclear team in through drop pods onto anywhere on station!
+(+)Thank you to Cogwerks for the 152mm gun sprites, Waffleoffle for the laser designator/ammobag sprites, and Dimwhat for the gunbot/drop pod sprites!
+(t)mon jan 17 22
+(u)DimWhat
+(p)7117
+(e)🎨|sprites
+(*)Added backpacks, belts, radio, and a couple special helmet sprites for monkeys!
+(u)CrystalClover
+(p)7162
+(e)🎨|sprites
+(*)Added Bald clown mask variants and the ability to swap to and from them
+(u)Flaborized
+(p)7153
+(e)|
+(+)Resprited stools.
+(u)Flaborized
+(p)7190
+(e)🎨|sprites
+(+)Resprited the Amusing Duck and the easter eggs it lays.
+(u)zjdtmkhzt
+(p)7026
+(e)|
+(+)Removed buggy "State Laws (Advanced)" verb from AIs and instead added the new "Set Fake Laws" and "State Fake Laws" verbs as replacements.
+(t)sun jan 16 22
+(u)TDHooligan
+(p)7101
+(e)🎨|sprites
+(+)Soda cans can now be printed in the CheMaster 3000, start a brand!
+(u)aloe
+(+)Sutures and bandages are now quite a bit faster, and are capped at 5 seconds. I'm reasonably sure the old behavior was a bug.
+(u)Nexusuxen
+(p)6871
+(e)🐛🆕|bug, feature
+(+)AI Cores will now properly disconnect and reconnect from data terminals when you screwdriver them or gib them.
+(u)Flaborized
+(p)7182
+(e)🎨|sprites
+(+)Many more kinetic weapons will animated while firing.
+(t)sat jan 15 22
+(u)Flappybat
+(p)7040
+(e)🗺|mapping
+(+)Donut3 security corridor to the armory is now part of the main security area.
+(t)fri jan 14 22
+(u)Nexusuxen
+(p)6428
+(e)🎨|sprites
+(+)Adds sliced cheese & tomatoes, and a couple recipe fixes. 1 cheese wedge = 4 slices, 1 tomato = 3 slices. Cheese slice sprites by Erinexx.
+(+)Multiple recipes now use cheese slices instead of whole wedges. BLTs and Weird Cheeseburgers added. Minor recipe tweaks.
+(t)thu jan 13 22
+(u)Zonespace
+(p)6981
+(e)⚖|balance
+(+)The Part-Time Vice Officers that appeared on saturdays have been fired and replaced with some musicians instead.
+(u)BatElite
+(p)7086
+(e)🆕🗺|feature, mapping
+(*)Morgues, crematoria and tanning beds have been reworked internally with several accompanying QOL changes and minor bugfixes. Most important additions are that they require power to operate properly and silicons can operate the trays now.
+(+)Specifically, tanning beds and crematoria will not activate and morgues will not prevent decomposition without power
+(u)Mr. Moriarty & End
+(p)7111
+(e)🎨|sprites
+(+)Resprited the Cargo Transporter.
+(u)Flaborized
+(p)7163
+(e)🎨|sprites
+(*)Resprited stunbatons.
+(u)Colossusqw
+(p)7120
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Makes you aware of your surroundings instead of asleep during the capulettium effect, but still unable to speak or move.
+(t)tue jan 11 22
+(u)Emily
+(e)🆕|feature
+(*)🌭🛀
+(u)Flaborized
+(p)7144
+(e)🎨|sprites
+(+)Resprited botanical seeds.
+(u)Flaborized
+(p)7145
+(e)🎨|sprites
+(+)Resprited vomit.
+(u)DimWhat
+(p)7136
+(e)🎨|sprites
+(*)Added several unique sprites for worn IDs
+(t)mon jan 10 22
+(u)Nexusuxen
+(p)7113
+(e)🐛🗺|bug, mapping
+(+)Cargo router doors on Cog1 should now stay open for the correct amount of time; belt hell should be operational now.
+(u)Waffleloffle
+(p)7133
+(e)|
+(+)Various foods and drinks are now more flavorful.
+(u)Nexusuxen
+(p)7129
+(e)🗺🎨|mapping, sprites
+(*)Added skins for the AI core! 4 new appearances for AIs are now obtainable in-game. See the PR for more details!
+(u)Flappybat
+(p)7125
+(e)🐛🗺|bug, mapping
+(+)Battleroyale storms now start out less dangerous and scale up over the round. Removed some consoles and machinery that could be used for disruptive purposes, added a special AI law and blocked shuttle calls.
+(u)DimWhat
+(p)7134
+(e)|
+(+)Increased the disarm resistance of nuke ops knight gloves.
 (t)sun jan 09 22
 (u)Flaborized
 (p)7122

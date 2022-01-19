@@ -3897,7 +3897,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "apZ" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/item/device/radio/intercom/medical,
@@ -9423,7 +9423,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	name = "Chamber One Ignition Switch";
 	pixel_y = -24
@@ -11102,9 +11102,12 @@
 /obj/decal/stage_edge{
 	layer = 2.8
 	},
-/obj/fireworksbox,
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
+	},
+/obj/stool/chair/red{
+	anchored = 0;
+	dir = 4
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -11112,26 +11115,26 @@
 /obj/decal/stage_edge{
 	layer = 2.8
 	},
-/obj/table/wood/auto,
-/obj/item/wrestlingbell,
-/obj/item/device/microphone,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor,
+/obj/stool/chair/blue{
+	anchored = 0;
+	dir = 8
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "aVM" = (
 /obj/decal/stage_edge{
 	layer = 2.8
 	},
-/obj/stool/chair/red{
-	anchored = 0;
-	dir = 4
-	},
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
+/obj/table/wood/auto,
+/obj/item/wrestlingbell,
+/obj/item/device/microphone,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "aVN" = (
@@ -11339,7 +11342,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	name = "Chamber Two Ignition Switch";
 	pixel_y = -24
@@ -11355,7 +11358,7 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "aWN" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/camera{
@@ -12144,7 +12147,7 @@
 	},
 /area/station/crew_quarters/pool)
 "bbv" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /obj/machinery/computer/tanning{
 	density = 0;
 	pixel_y = 32
@@ -22789,7 +22792,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -23898,7 +23901,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "eUO" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -35392,7 +35395,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "laP" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/item/reagent_containers/food/snacks/pizza{
@@ -36912,6 +36915,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"lSq" = (
+/obj/decal/boxingropeenter,
+/turf/simulated/floor/specialroom/gym,
+/area/station/crew_quarters/fitness)
 "lSP" = (
 /obj/machinery/chem_master{
 	dir = 8
@@ -37669,7 +37676,7 @@
 /turf/space,
 /area/station/hangar/qm)
 "mlY" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -37970,7 +37977,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "muG" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/cool{
@@ -39027,7 +39034,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "mYI" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_y = -24
 	},
@@ -39373,19 +39380,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
-"nhj" = (
-/obj/decal/stage_edge{
-	layer = 2.8
-	},
-/obj/stool/chair/blue{
-	anchored = 0;
-	dir = 8
-	},
-/obj/decal/tile_edge/line/red{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "nhz" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 10
@@ -50014,7 +50008,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "sXK" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/black,
@@ -51734,7 +51728,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -55567,7 +55561,7 @@
 	},
 /area/station/solar/east)
 "vLx" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -57059,6 +57053,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
+"wyt" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/decal/stage_edge{
+	layer = 2.8
+	},
+/obj/fireworksbox,
+/turf/simulated/floor/wood/three,
+/area/station/crew_quarters/fitness)
 "wyB" = (
 /obj/stool/chair/moveable{
 	dir = 8
@@ -57349,7 +57353,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "wEA" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -106561,8 +106565,8 @@ wjM
 aPl
 aPl
 aPl
-xLx
-nhj
+lSq
+aIH
 xSc
 wzM
 jFR
@@ -106864,7 +106868,7 @@ aCb
 aFE
 aFE
 mBC
-aIH
+wyt
 xSc
 wzM
 qJb

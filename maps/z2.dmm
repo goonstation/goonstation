@@ -7002,13 +7002,6 @@
 	dir = 1
 	},
 /area/moon/museum/west)
-"ayN" = (
-/obj/table,
-/obj/item/gun/russianrevolver/jk47,
-/turf/unsimulated/floor/escape{
-	dir = 1
-	},
-/area/moon/museum/west)
 "ayO" = (
 /obj/decal/fakeobjects{
 	desc = "Hi, Greg.";
@@ -47497,12 +47490,6 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
-"cFl" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
-/turf/simulated/floor/airless/stairs/quilty,
-/area/owlery/Owlopen)
 "cFm" = (
 /turf/unsimulated/floor/arrival/corner{
 	dir = 8
@@ -47710,12 +47697,6 @@
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
-/area/owlery/Owlopen)
-"cFQ" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/turf/simulated/floor/airless/stairs/quilty,
 /area/owlery/Owlopen)
 "cFR" = (
 /turf/unsimulated/floor/arrival{
@@ -53235,22 +53216,6 @@
 	dir = 8
 	},
 /turf/unsimulated/grass,
-/area/owlery/owllock)
-"cSD" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 8;
-	name = "exhibit window"
-	},
-/turf/simulated/floor/airless/stairs/quilty,
-/area/owlery/owllock)
-"cSE" = (
-/obj/window{
-	desc = "A window.  For a museum exhibit.";
-	dir = 4;
-	name = "exhibit window"
-	},
-/turf/simulated/floor/airless/stairs/quilty,
 /area/owlery/owllock)
 "cSF" = (
 /obj/stone{
@@ -59689,18 +59654,6 @@
 	temperature = 372.15
 	},
 /area/iomoon)
-"dgk" = (
-/obj/rack,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
-/area/syndicate_station/battlecruiser)
 "dgl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -61362,6 +61315,9 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
+"dkW" = (
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "dkX" = (
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 1
@@ -61377,14 +61333,6 @@
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
-"dla" = (
-/obj/item/storage/wall/medical{
-	pixel_z = -1
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "12"
-	},
-/area/shuttle/battle)
 "dld" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -61526,13 +61474,6 @@
 	dir = 6;
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
-	},
-/area/shuttle/battle)
-"dlB" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/emergency,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
 	},
 /area/shuttle/battle)
 "dlC" = (
@@ -61755,13 +61696,6 @@
 	icon_state = "track_2"
 	},
 /area/shuttle/battle)
-"dmj" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/battle)
 "dmk" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/shuttle{
@@ -61835,12 +61769,6 @@
 	opacity = 0
 	},
 /area/centcom)
-"dmM" = (
-/obj/storage/crate/bin{
-	dir = 8
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "dns" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -62096,6 +62024,14 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"dqa" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "dqe" = (
 /obj/decal/stage_edge,
 /turf/unsimulated/floor/wood/two,
@@ -63070,14 +63006,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/lab)
-"dvk" = (
-/obj/morgue{
-	dir = 2
-	},
-/turf/unsimulated/floor/specialroom/freezer{
-	dir = 1
-	},
-/area/crypt/sigma/morgue)
 "dvl" = (
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -71997,14 +71925,6 @@
 	},
 /turf/unsimulated/dirt,
 /area/crypt/graveyard/swamp)
-"dTX" = (
-/obj/morgue{
-	dir = 1
-	},
-/turf/unsimulated/floor/specialroom/freezer{
-	dir = 1
-	},
-/area/crypt/sigma/morgue)
 "dTY" = (
 /turf/unsimulated/wall{
 	desc = "It won't budge.";
@@ -72202,6 +72122,18 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"epQ" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "eso" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-33"
@@ -72379,6 +72311,10 @@
 "eFa" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/south)
+"eFn" = (
+/obj/machinery/broadside_gun/artillery_cannon/syndicate,
+/turf/space,
+/area/space)
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -72387,6 +72323,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/john/owlery)
+"eOA" = (
+/obj/cabinet/ammo{
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "ePc" = (
 /obj/decal/poster/wallsign/bar,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -72409,6 +72351,13 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"eQW" = (
+/obj/table/auto,
+/obj/item/shipcomponent/mainweapon/gun,
+/obj/item/shipcomponent/mainweapon/gun,
+/obj/item/storage/toolbox/mechanical,
+/turf/unsimulated/floor/bot/darkpurple,
+/area/syndicate_station/battlecruiser)
 "eTm" = (
 /obj/item/clothing/under/pride/ace,
 /obj/storage/closet{
@@ -72441,6 +72390,13 @@
 	dir = 8
 	},
 /area/hospital/samostrel)
+"eUd" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "eVB" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -72683,6 +72639,14 @@
 /turf/space,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/samostrel)
+"fKi" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2
+	},
+/turf/unsimulated/floor/specialroom/freezer{
+	dir = 1
+	},
+/area/crypt/sigma/morgue)
 "fKl" = (
 /obj/machinery/light{
 	dir = 1
@@ -72710,28 +72674,6 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
-"fPF" = (
-/obj/table/wood/auto/desk{
-	color = "#333333";
-	icon_state = "8"
-	},
-/obj/item/paper_bin{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/pen/pencil{
-	icon_state = "pencil-b";
-	pixel_y = -3
-	},
-/obj/item/storage/box/evidence{
-	anchored = 1;
-	desc = "It's just a big box of computer parts.";
-	name = "Box of Computer Parts";
-	pixel_x = -9;
-	pixel_y = 5
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "fQJ" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -72854,6 +72796,14 @@
 /obj/decal/snowbits,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
+"gjI" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 4;
+	name = "exhibit window"
+	},
+/turf/unsimulated/floor/stairs/quilty,
+/area/owlery/owllock)
 "gkJ" = (
 /obj/storage/closet{
 	desc = "A fridge that is experiencing severe difficulty cooling things.";
@@ -72869,6 +72819,22 @@
 /obj/lattice,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"goR" = (
+/obj/table/wood/auto/desk{
+	color = "#333333";
+	icon_state = "4"
+	},
+/obj/machinery/computer3/generic/personal{
+	desc = "You can see yourself, staring at a computer, standing in a tiny office, staring at yourself, staring at a computer, standing in a tiny office, staring at yourself, staring at a computer, standing in a tiny office...";
+	name = "Grifflez's Computer"
+	},
+/obj/machinery/light/incandescent/warm/very{
+	dir = 1;
+	on = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "gpj" = (
 /obj/table,
 /obj/item/paper/book/from_file/pharmacopia,
@@ -72928,6 +72894,13 @@
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
+"gIx" = (
+/obj/table,
+/obj/item/gun/russianrevolver/jk47,
+/turf/unsimulated/floor/escape{
+	dir = 1
+	},
+/area/moon/museum/west)
 "gIA" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -73255,6 +73228,21 @@
 	dir = 8
 	},
 /area/centcom)
+"hJD" = (
+/obj/table/reinforced,
+/obj/item/breaching_charge{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/breaching_charge{
+	pixel_y = 4
+	},
+/obj/item/breaching_charge{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "hKB" = (
 /obj/table/auto,
 /obj/machinery/light/small/iomoon{
@@ -73574,22 +73562,6 @@
 /obj/submachine/chef_oven,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
-"iMX" = (
-/obj/table/wood/auto/desk{
-	color = "#333333";
-	icon_state = "4"
-	},
-/obj/machinery/computer3/generic/personal{
-	desc = "You can see yourself, staring at a computer, standing in a tiny office, staring at yourself, staring at a computer, standing in a tiny office, staring at yourself, staring at a computer, standing in a tiny office...";
-	name = "Grifflez's Computer"
-	},
-/obj/machinery/light/incandescent/warm/very{
-	dir = 1;
-	on = 1;
-	pixel_y = 21
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "iOu" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -73616,6 +73588,20 @@
 /turf/space,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
+"iQw" = (
+/obj/table/wood/round,
+/obj/item/paper/book/custom{
+	book_cover = "book0";
+	desc = "The loan on this is expired!";
+	dir = 1;
+	name = "\"Coding 4 Beginners\"";
+	pixel_y = 7
+	},
+/obj/machinery/light/incandescent/warm/very{
+	on = 1
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "iSs" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -73691,6 +73677,12 @@
 	dir = 8
 	},
 /area/diner/cow)
+"jgd" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "jgk" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -73723,6 +73715,10 @@
 /turf/space,
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
+"jjv" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/assault_pod)
 "jks" = (
 /obj/stool/chair{
 	dir = 8
@@ -73825,17 +73821,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"jAR" = (
-/obj/admin_plaque{
-	name = "Grifflez's Office";
-	pixel_x = -32
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "jBr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-32"
@@ -74061,6 +74046,12 @@
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/pod1)
+"kht" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "khy" = (
 /obj/machinery/door/unpowered/martian/meat,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -74231,6 +74222,15 @@
 "kxa" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/storage)
+"kxS" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "kyf" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir"
@@ -75065,20 +75065,12 @@
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"mWy" = (
-/obj/table/wood/round,
-/obj/item/paper/book/custom{
-	book_cover = "book0";
-	desc = "The loan on this is expired!";
-	dir = 1;
-	name = "\"Coding 4 Beginners\"";
-	pixel_y = 7
+"mWP" = (
+/obj/machinery/light/emergency{
+	dir = 8
 	},
-/obj/machinery/light/incandescent/warm/very{
-	on = 1
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
+/turf/unsimulated/floor/stairs/quilty,
+/area/owlery/Owlopen)
 "mWQ" = (
 /obj/landmark{
 	name = "pit_meatland"
@@ -75159,15 +75151,6 @@
 /turf/space,
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
-"ncz" = (
-/obj/item/storage/photo_album{
-	desc = "Wow! A lot of these are permanent! Like, a lot!";
-	name = "Big Book of Bans";
-	pixel_x = -9;
-	pixel_y = 8
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "ney" = (
 /turf/unsimulated/floor/arrival/corner,
 /area/centcom)
@@ -75442,6 +75425,18 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"nIA" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "nJE" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -75606,6 +75601,15 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"nWE" = (
+/obj/item/storage/photo_album{
+	desc = "Wow! A lot of these are permanent! Like, a lot!";
+	name = "Big Book of Bans";
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "nWL" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/syndies_guide,
@@ -75728,6 +75732,9 @@
 "ojw" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/pod1)
+"okJ" = (
+/turf/unsimulated/floor/plating/random,
+/area/syndicate_station/battlecruiser)
 "onw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -75783,6 +75790,14 @@
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
+"owu" = (
+/obj/window{
+	desc = "A window.  For a museum exhibit.";
+	dir = 8;
+	name = "exhibit window"
+	},
+/turf/unsimulated/floor/stairs/quilty,
+/area/owlery/owllock)
 "oxe" = (
 /obj/lattice,
 /obj/storage/crate{
@@ -75825,6 +75840,14 @@
 /turf/space,
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
+"ozT" = (
+/obj/machinery/computer3/terminal{
+	desc = "A computer for controlling the laser-designated artillery cannon aboard the Cairngorm.";
+	dir = 4;
+	name = "Fire Control Terminal"
+	},
+/turf/unsimulated/floor/darkpurple,
+/area/syndicate_station/battlecruiser)
 "oAZ" = (
 /obj/machinery/door/airlock/external,
 /turf/unsimulated/outdoors/grass,
@@ -75888,11 +75911,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"oMF" = (
-/obj/storage/crate/freezer,
-/obj/random_item_spawner/cola,
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "oPP" = (
 /turf/simulated/floor/stairs,
 /area/diner/cow)
@@ -76089,6 +76107,28 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"plh" = (
+/obj/table/wood/auto/desk{
+	color = "#333333";
+	icon_state = "8"
+	},
+/obj/item/paper_bin{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/pen/pencil{
+	icon_state = "pencil-b";
+	pixel_y = -3
+	},
+/obj/item/storage/box/evidence{
+	anchored = 1;
+	desc = "It's just a big box of computer parts.";
+	name = "Box of Computer Parts";
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "plR" = (
 /turf/space,
 /turf/unsimulated/wall{
@@ -76187,6 +76227,16 @@
 	icon_state = "wall3"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"psc" = (
+/obj/stool/chair/comfy/shuttle/red,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
 "ptv" = (
 /obj/admin_plaque{
 	name = "Mark's Code Dungeon";
@@ -76326,6 +76376,32 @@
 /obj/item/reagent_containers/emergency_injector/atropine,
 /turf/unsimulated/floor/redwhite,
 /area/syndicate_station/medbay)
+"pNy" = (
+/obj/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 10;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
+"pPI" = (
+/obj/table/reinforced/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/battle)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
@@ -76465,13 +76541,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"qdU" = (
-/obj/decoration/bookcase{
-	desc = "It's all paperback copies of science fiction and fantasy novels!";
-	pixel_y = 30
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "qfx" = (
 /obj/grille/steel,
 /obj/window/north,
@@ -76482,6 +76551,11 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"qfQ" = (
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/syndicate_station/assault_pod)
 "qgj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -76510,6 +76584,14 @@
 "qkQ" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/marsoutpost/vault)
+"qkV" = (
+/obj/machinery/traymachine/morgue{
+	dir = 1
+	},
+/turf/unsimulated/floor/specialroom/freezer{
+	dir = 1
+	},
+/area/crypt/sigma/morgue)
 "qnn" = (
 /obj/item/extinguisher,
 /turf/space,
@@ -76751,11 +76833,19 @@
 /obj/item/plant/herb/grass,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"qZu" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/shipcomponent/mainweapon/gun,
-/obj/item/shipcomponent/mainweapon/gun,
+"rcr" = (
+/obj/machinery/light,
+/obj/rack,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "rcQ" = (
@@ -77434,6 +77524,14 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"sPY" = (
+/obj/stool/chair{
+	desc = "There are screws stuck at odd angles to keep this thing from falling apart. You feel like you'll have back spasms if you keep looking at it.";
+	dir = 1;
+	name = "Horribly Uncomfortable Chair"
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "sQe" = (
 /obj/decal/fakeobjects/dreambeach/biggest/big_palm,
 /turf/unsimulated/floor/dream/beach,
@@ -77515,6 +77613,12 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"tje" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "tkE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -77538,6 +77642,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tma" = (
+/obj/storage/crate/bin{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "tmc" = (
 /turf/unsimulated/wall{
 	dir = 6;
@@ -77750,12 +77860,6 @@
 	},
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
-"udt" = (
-/obj/cabinet/ammo{
-	pixel_y = 20
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "uex" = (
 /obj/machinery/light{
 	dir = 8
@@ -77838,6 +77942,9 @@
 /turf/space,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/samostrel)
+"uvs" = (
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -77928,6 +78035,12 @@
 	},
 /turf/unsimulated/floor/void,
 /area/centcom/offices/tterc)
+"uId" = (
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/unsimulated/floor/stairs/quilty,
+/area/owlery/Owlopen)
 "uJX" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/hall)
@@ -78154,6 +78267,17 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
+"vnh" = (
+/obj/storage/crate/freezer,
+/obj/random_item_spawner/cola,
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
+"vnW" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "voQ" = (
 /turf/unsimulated/floor/orangeblack/corner,
 /area/centcom)
@@ -78169,6 +78293,17 @@
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
+"vsg" = (
+/obj/admin_plaque{
+	name = "Grifflez's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "vss" = (
 /obj/critter/monster_door,
 /turf/unsimulated/floor{
@@ -78283,6 +78418,13 @@
 	dir = 9
 	},
 /area/centcom)
+"vTT" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "vWb" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -78308,19 +78450,18 @@
 	name = "plating"
 	},
 /area/hospital/samostrel)
+"wbM" = (
+/obj/machinery/computer/security/pod_timer,
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Comp"
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"wgI" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 1;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "wgY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -78329,14 +78470,6 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
-"whE" = (
-/obj/stool/chair{
-	desc = "There are screws stuck at odd angles to keep this thing from falling apart. You feel like you'll have back spasms if you keep looking at it.";
-	dir = 1;
-	name = "Horribly Uncomfortable Chair"
-	},
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "wky" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -78427,6 +78560,13 @@
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
+"wwz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/syndicate_station/assault_pod)
 "wxG" = (
 /obj/tombstone{
 	dir = 9
@@ -78557,6 +78697,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"wPn" = (
+/obj/decoration/bookcase{
+	desc = "It's all paperback copies of science fiction and fantasy novels!";
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/grifflez)
 "wRR" = (
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
@@ -78648,6 +78795,35 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"xls" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/landmark{
+	name = "Syndicate-Assault-Pod-Tele"
+	},
+/turf/unsimulated/floor/circuit/red,
+/area/syndicate_station/assault_pod)
+"xnI" = (
+/obj/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -9;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/red,
+/area/syndicate_station/assault_pod)
 "xoF" = (
 /obj/machinery/light{
 	dir = 1
@@ -79006,9 +79182,6 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"ygw" = (
-/turf/unsimulated/floor/carpet/red/decal,
-/area/centcom/offices/grifflez)
 "yiP" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-20"
@@ -81170,7 +81343,7 @@ cnw
 cBB
 cFT
 cEE
-cFl
+mWP
 cGI
 aEx
 dck
@@ -81774,7 +81947,7 @@ cnw
 cBB
 cEE
 cEE
-cFQ
+uId
 cGI
 aEx
 dck
@@ -85136,22 +85309,22 @@ cnw
 cnw
 axy
 aaa
-aab
-aab
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+aaa
 cnw
 cnw
 cnw
@@ -85438,8 +85611,9 @@ cnw
 cnw
 axy
 aaa
-aab
-aab
+aaa
+aaa
+abj
 cnw
 cnw
 cnw
@@ -85451,9 +85625,8 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -85740,22 +85913,22 @@ cnw
 cnw
 axy
 aaa
-aab
-aab
+aaa
+aaa
+abj
+cnw
+cnw
+eUd
+qfQ
+jjv
+jjv
+qfQ
+kht
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -86042,22 +86215,22 @@ cnw
 cnw
 axy
 aaa
-aab
-aab
+aaa
+aaa
+abj
 cnw
+eUd
+qfQ
+epQ
+dkW
+dkW
+epQ
+qfQ
+vnW
+jgd
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -86344,22 +86517,22 @@ cnw
 cnw
 axy
 aaa
-aab
-aab
+aaa
+aaa
+abj
+cnw
+qfQ
+psc
+dkW
+dkW
+dkW
+dkW
+xls
+qfQ
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -86631,7 +86804,7 @@ cQS
 cWR
 cXC
 cSc
-cSD
+owu
 cSM
 cTw
 cSM
@@ -86648,20 +86821,20 @@ axy
 aaa
 aaa
 aaa
+abj
+cnw
+jjv
+wbM
+dkW
+dkW
+xnI
+dkW
+kxS
+qfQ
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -86933,7 +87106,7 @@ cFq
 cXz
 cOV
 cSc
-cSE
+gjI
 cRf
 cTx
 cRf
@@ -86950,20 +87123,20 @@ axy
 axy
 axy
 aaa
+abj
+cnw
+jjv
+hJD
+dkW
+dkW
+pNy
+dkW
+kxS
+qfQ
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -87252,20 +87425,20 @@ cnw
 axy
 axy
 aaa
+abj
+cnw
+qfQ
+psc
+dkW
+dkW
+dkW
+dkW
+xls
+qfQ
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -87554,20 +87727,20 @@ cnw
 cnw
 axy
 aaa
+abj
 cnw
+vTT
+qfQ
+nIA
+dkW
+dkW
+nIA
+qfQ
+tje
+jgd
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -87856,20 +88029,20 @@ cnw
 cnw
 axy
 aaa
+abj
+cnw
+cnw
+vTT
+qfQ
+jjv
+jjv
+qfQ
+wwz
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88158,6 +88331,7 @@ cnw
 cnw
 axy
 aaa
+abj
 cnw
 cnw
 cnw
@@ -88169,9 +88343,8 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88460,20 +88633,20 @@ cnw
 cnw
 axy
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+aaa
 cnw
 cnw
 cnw
@@ -88762,20 +88935,20 @@ cnw
 cnw
 axy
 aaa
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -101381,54 +101554,54 @@ aaa
 axy
 axy
 axy
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
+axy
 cnw
 cnw
 cnw
@@ -101680,56 +101853,56 @@ aaa
 "}
 (76,1,1) = {"
 aaa
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
-axy
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 axy
 axy
 axy
@@ -101982,55 +102155,55 @@ aaa
 "}
 (77,1,1) = {"
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
+abj
 aaa
 aaa
 aaa
@@ -102285,53 +102458,53 @@ aaa
 (78,1,1) = {"
 aaa
 abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
+cnw
 abj
 aaa
 aaa
@@ -102612,7 +102785,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+eFn
 cnw
 cnw
 cnw
@@ -103216,7 +103389,7 @@ cnw
 aJC
 aKf
 aKz
-aKz
+okJ
 aKz
 aKf
 aKf
@@ -103518,8 +103691,8 @@ cnw
 aKf
 dey
 dfn
-qZu
-dgk
+ozT
+eQW
 dgu
 aKf
 dgO
@@ -103822,7 +103995,7 @@ bqV
 bqV
 bqV
 bqV
-dgv
+rcr
 aKf
 dgP
 aQz
@@ -105380,7 +105553,7 @@ arC
 apG
 auF
 enf
-ayN
+gIx
 azB
 akr
 alb
@@ -125762,10 +125935,10 @@ dUf
 bHH
 bHH
 eyM
-dvk
+fKi
 dvn
 dvn
-dTX
+qkV
 eyM
 aaa
 bVE
@@ -126064,10 +126237,10 @@ bIx
 bIx
 bHH
 eyM
-dvk
+fKi
 dvn
 dvn
-dTX
+qkV
 eyM
 aaa
 bUU
@@ -126366,10 +126539,10 @@ bIx
 bIx
 bHH
 eyM
-dvk
+fKi
 dvn
 dvn
-dTX
+qkV
 eyM
 aaa
 bUU
@@ -126671,7 +126844,7 @@ dtA
 dvn
 dvn
 dvn
-dTX
+qkV
 eyM
 aaa
 bUU
@@ -154333,9 +154506,9 @@ dRC
 dvy
 dvy
 wel
-iMX
-whE
-dmM
+goR
+sPY
+tma
 wel
 dzM
 dAt
@@ -154635,9 +154808,9 @@ dRC
 dvy
 dvy
 wel
-fPF
-ygw
-ncz
+plh
+uvs
+nWE
 wel
 dzN
 dAv
@@ -154937,9 +155110,9 @@ dRC
 dvy
 dvy
 wel
-qdU
-ygw
-oMF
+wPn
+uvs
+vnh
 wel
 dzN
 dAu
@@ -155239,9 +155412,9 @@ wel
 dvy
 dvy
 wel
-udt
-ygw
-mWy
+eOA
+uvs
+iQw
 wel
 jYh
 dAt
@@ -155542,7 +155715,7 @@ dvy
 dvy
 wel
 wel
-wgI
+dqa
 wel
 wel
 wel
@@ -155843,7 +156016,7 @@ wel
 dvC
 dvy
 dvy
-jAR
+vsg
 dvy
 dvy
 dvy
@@ -163151,7 +163324,7 @@ xWi
 xWi
 xWi
 xWi
-dla
+dle
 dln
 dlu
 dlm
@@ -166173,11 +166346,11 @@ xWi
 xWi
 xWi
 dlr
-dlB
+pPI
 dlL
 dmb
 dlL
-dmj
+pPI
 dlr
 xWi
 xWi

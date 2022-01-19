@@ -3841,7 +3841,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /turf/simulated/floor,
 /area/listeningpost/syndicateassaultvessel)
 "amJ" = (
@@ -4770,7 +4770,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "aoV" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
@@ -4785,7 +4785,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aoX" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium,
 /obj/machinery/crema_switch{
 	pixel_y = 32
 	},
@@ -4827,7 +4827,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "apd" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ape" = (
@@ -15065,7 +15065,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aRj" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -15289,7 +15289,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aRQ" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -15648,7 +15648,7 @@
 /turf/simulated/floor,
 /area/station/security/brig/genpop)
 "aTa" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
@@ -16054,7 +16054,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/cell1)
 "aUh" = (
-/obj/stool/bed/brig,
+/obj/stool/bed,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -18679,7 +18679,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "bbp" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/item/reagent_containers/food/snacks/pizza/meatball,
@@ -20479,13 +20479,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfC" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfD" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/cool/very,
@@ -29001,6 +29001,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 6
 	},
@@ -35543,7 +35544,7 @@
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
 "gTH" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/light/incandescent/cool/very{
