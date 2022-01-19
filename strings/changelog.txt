@@ -1,5 +1,9 @@
 
 (t)wed jan 19 22
+(u)Flaborized
+(p)7209
+(e)🎨|sprites
+(+)Resprited and animated bullet casings.
 (u)Cogwerks
 (e)🗺🎨|mapping, sprites
 (+)Replaced my older drawn background assets with some fancier new 3D-rendered plasma giant, a couple moons, and stars 
