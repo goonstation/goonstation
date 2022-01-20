@@ -30028,6 +30028,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "brm" = (
@@ -37412,6 +37413,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bFY" = (
@@ -43298,6 +43300,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bQj" = (
@@ -43973,6 +43976,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bRL" = (
@@ -44832,6 +44836,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bTs" = (
@@ -68718,6 +68723,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/window/auto/reinforced,
 /obj/cable,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "cVS" = (
