@@ -2013,7 +2013,7 @@ var/list/fun_images = list()
 	if(!(confirm == "Yes"))
 		return
 	for(var/datum/syndicate_buylist/commander/commander_datum in syndi_buylist_cache)
-		world.save_intra_round_value("NuclearCommander-[commander_item]-Purchased", 0)
+		world.save_intra_round_value("NuclearCommander-[commander_datum]-Purchased", 0)
 
 	logTheThing("admin", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.")
 	logTheThing("diary", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.", "admin")
