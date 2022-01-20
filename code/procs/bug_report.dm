@@ -2,6 +2,8 @@
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)
+	if (form.closed)
+		return
 	var/title = form.data["title"]
 	var/labels = list()
 	for (var/label in form.data["tags"])
@@ -32,13 +34,17 @@ On server: [global.config.server_name]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 "}
-	ircbot.export("issue", list(
+	var/success = ircbot.export("issue", list(
 		"title" = title,
 		"body" = desc,
 		"secret" = form.data["secret"],
 	))
 	if (!form.disposed)
 		qdel(form)
+	if(success)
+		tgui_alert(user, "Issue reported!", "Issue reported!")
+	else
+		tgui_alert(user, "There has been an issue with reporting your bug, please try again later!", "Issue not reported!")
 
 /datum/tgui_bug_report_form
 	/// Boolean field describing if the bug report form was closed by the user.
