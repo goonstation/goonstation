@@ -1694,6 +1694,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\antagonist_procs.dm"
 #include "code\procs\authorize.dm"
 #include "code\procs\basketball.dm"
+#include "code\procs\bug_report.dm"
 #include "code\procs\church_name.dm"
 #include "code\procs\command_alert.dm"
 #include "code\procs\command_name.dm"
