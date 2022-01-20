@@ -439,6 +439,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_nukie_score,
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
+		/client/proc/clear_nukeop_uplink_purchases,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -2001,6 +2002,22 @@ var/list/fun_images = list()
 	logTheThing("diary", usr ? usr : src, null, "set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.", "admin")
 	message_admins("[key_name(usr ? usr : src)] set pod war death values to [nt_death_value] Nanotrasen deaths and [sy_death_value] Syndicate deaths.")
 
+/client/proc/clear_nukeop_uplink_purchases()
+	set popup_menu = 0
+	set name = "Clear NukeOp Commander Uplink Purchase Stats"
+	set desc = "Wipe the intra-round stats of the nukeop commander's uplink purchases"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	admin_only
+
+	var/confirm = input(usr, "Are you SURE you want to clear the stats?") in list("Yes", "No")
+	if(!(confirm == "Yes"))
+		return
+	for(var/datum/syndicate_buylist/commander/commander_datum in syndi_buylist_cache)
+		world.save_intra_round_value("NuclearCommander-[commander_item]-Purchased", 0)
+
+	logTheThing("admin", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.")
+	logTheThing("diary", usr ? usr : src, null, "wiped the Nuclear Operative Commander uplink purchase stats.", "admin")
+	message_admins("[key_name(usr ? usr : src)] wiped the Nuclear Operative Commander uplink purchase stats.")
 
 /mob/verb/admin_interact_verb()
 	set name = "admin_interact"

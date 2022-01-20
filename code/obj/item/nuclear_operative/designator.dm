@@ -120,8 +120,8 @@
 			return FALSE
 		if (in_use)
 			return FALSE
-		//if(target.z != 1 || user.z != 1)
-		//	return
+		if(target.z != 1 || user.z != 1)
+			return
 
 		for_by_tcl(A, /obj/machinery/broadside_gun)
 			var/obj/machinery/broadside_gun/C = A
