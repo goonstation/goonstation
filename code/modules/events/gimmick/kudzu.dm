@@ -331,11 +331,15 @@
 	if(!src.herbicide)
 		if((src.current_stage < 2) || prob(33))
 			src.herbicide = TRUE
-			var/new_color = list(0.2126,0.2126,0.2126,0.00,\
-								0.5,   0.5,   0.5,   0.00,\
-								0.0722,0.0722,0.0722,0.00,\
-								0.00,  0.00,  0.00,  1.00,\
-								0.00,  0.00,  0.00,  0.00)
+
+			//Swap green to red to turn brown, desaturate and soften slightly
+			var/new_color = list(0.20,	0.70,  0.10,  0.00,\
+								 0.70,  0.10,  0.10,  0.50,\
+								 0.07,  0.10,  0.50,  0.00,\
+								 0.00,  0.00,  0.00,  0.70,\
+								 0.00,  0.00,  0.00,  0.00)
+			//Add damage texture to create dark banding
+			setTexture()
 			animate(src,time=2 SECONDS,color=new_color)
 			src.growth -= 10
 			src.to_spread = round(log(max(src.to_spread,1))*2)
