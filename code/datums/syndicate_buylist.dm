@@ -1039,6 +1039,7 @@ This is basically useless for anyone but miners.
 	cost = 0
 	desc = "You shouldn't see me!"
 	exclusivemode = list(/datum/game_mode/nuclear) // Fun story here, I made the shit mistake of assuming that surplus crates and spy bounties couldn't roll this, leading to this shit https://imgur.com/a/uMaM0oV
+	not_in_crates = TRUE
 
 /datum/syndicate_buylist/commander/reinforcement
 	name = "Reinforcements"

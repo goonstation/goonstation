@@ -1678,3 +1678,29 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	name = "Deployment Remote Note"
 	icon_state = "paper"
 	info = {"<b>Congratulations for purchasing the Syndicate Rapid-Deployment Remote (SRDR)!</b><br><br>To use it, first of all, you need to either be onboard the Cairngorm or at the Listening Post. <br>Once you're there, activate the SRDR in-hand to choose a location, then once more to teleport everyone (along with any nuclear devices you possess) within 4 tiles of you to the forward assault pod, at which point it will begin head to the station, taking about one minute. During this time, Space Station 13's sensors will indicate the quickly-arriving pod, and will likely warn the crew.<br> Once the minute ends, everyone will be deployed to the specified area through personnel missiles."}
+
+/obj/item/paper/nukeop_uplink_purchases
+	name = "Shipping Manifest"
+	icon_state = "paper"
+
+	New()
+		. = ..()
+		if(!length(syndi_buylist_cache))
+			SPAWN_DBG(30 SECONDS) //This spawns empty otherwise, 30s is a safe bet
+				var/placeholder_info
+				placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
+				for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
+					var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
+					if(isnull(item_info))
+						item_info = 0
+					placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
+				info = placeholder_info
+		else
+			var/placeholder_info
+			placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
+			for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
+				var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
+				if(isnull(item_info))
+					item_info = 0
+				placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
+			info = placeholder_info
