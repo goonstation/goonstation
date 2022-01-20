@@ -29266,7 +29266,6 @@
 	name = "Cargo Transception"
 	})
 "qsp" = (
-/obj/reagent_dispensers/watertank/fountain,
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
 	icon_state = "line2"
@@ -29275,6 +29274,10 @@
 	name = "Engineering persistent notice board";
 	persistent_id = "engineering"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "qsI" = (
@@ -29538,14 +29541,11 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_west)
 "qyZ" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "qzi" = (
@@ -30726,15 +30726,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "rld" = (
