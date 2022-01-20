@@ -9,8 +9,6 @@
 	desc = "A modified uplink which allows you to buy a loadout on the go. Nifty!"
 	icon_state = "uplink" //replace later
 	item_state = "electronic"
-	density = FALSE
-	anchored = FALSE
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | FPRINT
 

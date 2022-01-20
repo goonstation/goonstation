@@ -955,15 +955,15 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 #define PLAYERS_PER_UPLINK_POINT 20
 
 /obj/item/device/nukeop_commander_uplink
-	name = "station bounced radio"
+	name = "nuclear commander uplink"
+	desc = "A nifty device used by the commander to order powerful equipment for their team."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "radio"
+	icon_state = "uplink_commander"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	w_class = W_CLASS_SMALL
-	item_state = "radio"
+	item_state = "uplink_commander"
 	throw_speed = 4
 	throw_range = 20
-	m_amt = 100
 	var/points = 2
 	var/list/commander_buylist = list()
 	var/datum/syndicate_buylist/reading_about = null
@@ -1060,6 +1060,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							if(B.item3)
 								new B.item3(get_turf(src))
 							B.run_on_spawn(A, usr)
+							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [showCoords(usr.x, usr.y, usr.z)].")
+							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
+							if(isnull(loadnum))
+								loadnum = 0
+							world.save_intra_round_value("NuclearCommander-[initial(B)]-Purchased", loadnum + 1)
 							. = TRUE
 							break
 
