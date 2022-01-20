@@ -1686,21 +1686,17 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	New()
 		. = ..()
 		if(!length(syndi_buylist_cache))
-			SPAWN_DBG(30 SECONDS) //This spawns empty otherwise, 30s is a safe bet
-				var/placeholder_info
-				placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
-				for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
-					var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
-					if(isnull(item_info))
-						item_info = 0
-					placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
-				info = placeholder_info
+			SPAWN_DBG(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
+				build_paper()
 		else
-			var/placeholder_info
-			placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
-			for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
-				var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
-				if(isnull(item_info))
-					item_info = 0
-				placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
-			info = placeholder_info
+			build_paper()
+
+	proc/build_paper()
+		var/placeholder_info
+		placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
+		for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
+			var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
+			if(isnull(item_info))
+				item_info = 0
+			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
+		info = placeholder_info
