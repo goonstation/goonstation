@@ -1894,9 +1894,6 @@
 	pixel_x = -8;
 	pixel_y = 8
 	},
-/obj/landmark/start{
-	name = "Pathologist"
-	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "baj" = (
@@ -6835,6 +6832,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
 "dTB" = (
@@ -9120,7 +9120,7 @@
 	area_access = 37;
 	detector_id = "Escape Breach Window";
 	dir = 4;
-	setup_beam_length = 7
+	setup_beam_length = 6
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -9822,9 +9822,6 @@
 	dir = 4;
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
-	},
-/obj/landmark/start{
-	name = "Scientist"
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -11393,6 +11390,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light_switch/east,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "gxo" = (
@@ -11826,9 +11826,6 @@
 "gIh" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
-	},
-/obj/landmark/start{
-	name = "Scientist"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18574,7 +18571,7 @@
 	dir = 8
 	},
 /obj/landmark/start{
-	name = "Engineer"
+	name = "Mechanic"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
@@ -18809,8 +18806,14 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "kqt" = (
-/turf/space/fluid/acid,
-/area/shuttle/john/diner)
+/obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/mob/living/silicon/hivebot/eyebot,
+/turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
 "kqL" = (
 /obj/decal/tile_edge/check/blue{
 	dir = 1;
@@ -25251,9 +25254,6 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
 "nRT" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
 /obj/stool/chair/yellow{
 	dir = 1
 	},
@@ -27068,6 +27068,9 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
 "oYN" = (
@@ -27876,9 +27879,6 @@
 	icon_state = "line1"
 	},
 /obj/stool/chair/office,
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/pharmacy)
 "pzQ" = (
@@ -32035,6 +32035,9 @@
 	name = "Medbay persistent notice board";
 	persistent_id = "medbay"
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/engine,
 /area/station/medical/medbay)
 "scm" = (
@@ -33444,11 +33447,14 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "sOh" = (
-/obj/machinery/computer/shuttle_bus{
-	dir = 8
+/obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
 	},
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/engine,
-/area/station/hallway/secondary/exit)
+/area/station/turret_protected/ai)
 "sOx" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -33956,9 +33962,6 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
-	},
-/obj/landmark/start{
-	name = "Scientist"
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -37735,7 +37738,7 @@
 	area_access = 37;
 	detector_id = "Escape Breach Window";
 	dir = 4;
-	setup_beam_length = 7
+	setup_beam_length = 6
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/exit)
@@ -38979,6 +38982,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/engine,
 /area/station/medical/staff)
 "wgM" = (
@@ -39661,9 +39667,6 @@
 /obj/machinery/drainage,
 /obj/stool/chair/office{
 	dir = 8
-	},
-/obj/landmark/start{
-	name = "Medical Doctor"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -93740,7 +93743,7 @@ xcO
 aon
 aon
 mIG
-fuf
+kqt
 tmd
 pSO
 cGX
@@ -94344,7 +94347,7 @@ aon
 xcO
 aon
 mIG
-coi
+sOh
 tmd
 pSO
 cHW
@@ -105275,12 +105278,12 @@ udE
 nxE
 wXk
 nxE
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -105577,17 +105580,17 @@ udE
 nxE
 wXk
 nxE
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -105879,18 +105882,18 @@ udE
 nxE
 wXk
 nxE
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -106181,19 +106184,19 @@ mbi
 uSe
 nxE
 uSe
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -106483,20 +106486,20 @@ udE
 aSj
 fbB
 fUM
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -106785,20 +106788,20 @@ udE
 nxE
 sEQ
 evX
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -107087,20 +107090,20 @@ utz
 aSj
 fbB
 fUM
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -107387,21 +107390,21 @@ uSe
 uSe
 uSe
 uSe
-sOh
 uSe
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+uSe
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -107691,18 +107694,18 @@ uSe
 uSe
 uSe
 uSe
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -107993,17 +107996,17 @@ uSe
 uSe
 uSe
 bzS
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -108295,12 +108298,12 @@ bzS
 bzS
 bzS
 bzS
-kqt
-kqt
-kqt
-kqt
-kqt
-kqt
+bzS
+bzS
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS

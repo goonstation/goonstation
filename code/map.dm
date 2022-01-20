@@ -933,10 +933,18 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
 	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/office),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the main security room" = list(/area/station/security/main),
+		"the central research hall" = list(/area/station/science),
+		"the engineering staff room" = list(/area/station/engine/engineering),
+		"the medical bay's central room" = list(/area/station/medical/medbay),
+		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 
+	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
-		/datum/job/engineering/miner = 0 //eventually, assay technicians
+		/datum/job/engineering/miner = 0 //eventually, assay technicians?
 	)
 
 /datum/map_settings/wrestlemap

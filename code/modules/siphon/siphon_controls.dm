@@ -420,7 +420,9 @@
 	HTML += "to the siphon's internal resource buffer.<br><br>"
 	HTML += "Increased total resonance results in more EEU per cycle;<br>"
 	HTML += "maximum production is reached by matching the EEU<br>"
-	HTML += "per cycle to the resource's EEU per extraction.<br>"
+	HTML += "per cycle to the resource's EEU per extraction.<br><br>"
+	HTML += "<strong>Warning: EEU per cycle greatly exceeding requirement</strong><br>"
+	HTML += "<strong>on a sustained basis can cause resonator damage.</strong><br>"
 	HTML += "<h3>LATERAL RESONANCE</h3>"
 	HTML += "First of three resonant parameters, charted on<br>"
 	HTML += "the letter axis. Type-AX resonators will raise or lower<br>"
@@ -441,7 +443,10 @@
 	HTML += "the amount of resonance cancelled.<br>"
 	HTML += "Shear cannot be produced directly, but can be mitigated<br>"
 	HTML += "by use of the Type-SM resonator, mitigating one to eight<br>"
-	HTML += "units of shear per intensity, depending on distance.<br>"
+	HTML += "units of shear per intensity, depending on distance.<br><br>"
+	HTML += "<strong>Warning: A shear value of 64 or greater can cause</strong><br>"
+	HTML += "<strong>significant malfunctions, intensifying with magnitude,</strong><br>"
+	HTML += "<strong>if it does not match an extraction target.</strong><br>"
 	HTML += "<h3>SENSITIVITY MARGIN</h3>"
 	HTML += "Some extraction targets are more forgiving of <br>"
 	HTML += "inexact parameters than others. If this value is listed,<br>"
@@ -467,11 +472,11 @@
 			continue
 		rollingtext += "<h2>[mat.name]</h2>"
 		rollingtext += "<strong>EEU per Extraction:</strong> [mat.tick_req]<br>"
-		if(mat.x_torque)
+		if(mat.x_torque != null)
 			rollingtext += "<strong>Target Lateral Resonance:</strong> [mat.x_torque]<br>"
-		if(mat.y_torque)
+		if(mat.y_torque != null)
 			rollingtext += "<strong>Target Vertical Resonance:</strong> [mat.y_torque]<br>"
-		if(mat.shear)
+		if(mat.shear != null)
 			rollingtext += "<strong>Target Resonant Shear:</strong> [mat.shear]<br>"
 		rollingtext += "<strong>Sensitivity Margin:</strong> [mat.sens_window]<br>"
 		if(mat.setup_guide)

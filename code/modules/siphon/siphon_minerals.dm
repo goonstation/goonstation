@@ -25,6 +25,19 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 //A note: Parameter requirements will be totally ignored if not explicitly set.
 
+/datum/siphon_mineral/miraclium
+	name = "Direct Extraction"
+	tick_req = 60
+	x_torque = 0
+	y_torque = 0
+	shear = 0
+	product = /obj/item/raw_material/miracle
+	setup_guide = list(
+		"Type-AX Resonator, Position C4, 3 Intensity<br>",
+		"Type-AX Resonator, Position G4, 3 Intensity<br>",
+		"Type-SM Resonator, Position E3, 3 Intensity<br>"
+	)
+
 /datum/siphon_mineral/rock
 	name = "Rock"
 	tick_req = 8
