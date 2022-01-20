@@ -21545,7 +21545,10 @@
 /area/crater/cave/lower)
 "bop" = (
 /obj/map/light/dimreddish,
-/turf/unsimulated/wall/setpieces/stranger,
+/turf/unsimulated/wall/setpieces/stranger{
+	icon = 'icons/turf/walls_ancient.dmi';
+	icon_state = "ancient-2"
+	},
 /area/crater/cave/lower)
 "boq" = (
 /obj/item/casing/shotgun/orange{
