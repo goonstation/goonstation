@@ -131,6 +131,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	var/list/can_extract = list()
 	///progress in extraction, incremented each process by total intensity of resonators; consumption varies by material. also known as EEU
 	var/extract_ticks = 0
+	///extract tick overload state, set during process; if tick consumption is missing or insufficient, tick buildup causes blowouts
+	var/extract_overloaded = FALSE
 	///where extracted minerals are sent
 	var/output_target = null
 
@@ -195,7 +197,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 						var/ytcheck = abs(src.y_torque - M.y_torque)
 						if(ytcheck > M.sens_window) continue
 					src.extract_ticks -= M.tick_req
-					//todo, maybe: make a buildup of extraction ticks contribute to instability
 					var/atom/movable/yielder = new M.product()
 					if(istype(yielder,/obj/item)) //items go into internal reservoir
 						src.contents += yielder
@@ -203,9 +204,20 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					else //pulled out something that isn't an item... what could it be?
 						yielder.set_loc(get_turf(src))
 
-					//running resonators with the panel open is a bad idea
+					//non-shear failures
+					//option 1 - too many extraction ticks buffered at once due to mismatch between intensity and requirement
+					//option 2 - running resonators with the panel open is a bad idea
+					if(src.extract_ticks > 50)
+						if(src.extract_overloaded == FALSE) //warn if newly overloaded
+							src.visible_message("<span class='alert'><B>[src]</B>'s extraction over-charge alarm triggers.<span>")
+							playsound(src, "sound/machines/pod_alarm.ogg", 30, 1)
+						src.extract_overloaded = TRUE
+					else
+						src.extract_overloaded = FALSE
+
 					for (var/obj/machinery/siphon/resonator/res in src.resonators)
-						if(res.panelopen && prob(40))
+						if((src.extract_overloaded || res.panelopen) && prob(30))
+							src.extract_ticks = 0
 							res.shear_overload()
 					break
 
