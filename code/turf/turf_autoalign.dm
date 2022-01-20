@@ -727,7 +727,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	connect_overlay = 1
 	connect_diagonal = 1
 	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
-	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger)
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave)
 	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 /turf/unsimulated/wall/auto/adventure/overgrown1
