@@ -191,7 +191,7 @@
 
 	vinc
 		name = "vincian pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the MLM, or vincian pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the MLM pride flag."
 		icon_state ="vincian"
 		item_state = "vincian"
 
