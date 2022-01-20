@@ -970,7 +970,7 @@
 			if (isliving(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
-				M.emote("scream")
+				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
 				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
