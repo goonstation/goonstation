@@ -1072,10 +1072,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "azY" = (
-/obj/cable{
-	icon_state = "0-4"
+/obj/machinery/catalytic_rod_unit/left/populated{
+	dir = 1
 	},
-/obj/machinery/power/furnace,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -1428,18 +1427,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/medical/morgue)
-"aKX" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/furnace,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/north{
-	name = "North Catalytic Substation"
-	})
 "aLj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2148,13 +2135,7 @@
 	name = "Extraction Nexus"
 	})
 "bio" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/furnace,
+/obj/machinery/catalytic_rod_unit/right/populated,
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -3341,18 +3322,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/north)
-"bPg" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/caution/south,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
-	name = "South Catalytic Substation"
-	})
 "bPw" = (
 /obj/machinery/light,
 /obj/machinery/portable_reclaimer,
@@ -3360,16 +3329,8 @@
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargooffice)
 "bQn" = (
-/obj/cable{
-	icon_state = "1-10"
-	},
-/obj/cable{
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
+/obj/decal/fakeobjects/catalytic_doodad,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
@@ -3377,7 +3338,9 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/storage/crate/furnacefuel,
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -3844,19 +3807,7 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "caB" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/landmark/gps_waypoint,
-/obj/cable{
-	icon_state = "0-9"
-	},
-/obj/cable{
-	icon_state = "0-5"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -4175,19 +4126,19 @@
 	},
 /area/ghostdrone_factory)
 "ckb" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
 /turf/simulated/floor/caution/north,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -4448,18 +4399,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
-"ctf" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/furnace,
-/turf/simulated/floor/circuit,
-/area/station/engine/substation/north{
-	name = "North Catalytic Substation"
-	})
 "ctg" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -4789,14 +4728,11 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/east)
 "cCu" = (
+/obj/machinery/power/catalytic_generator,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "0-2"
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/furnace,
-/turf/simulated/floor/circuit/red,
+/turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
@@ -5461,7 +5397,10 @@
 /area/station/security/checkpoint/escape)
 "cXB" = (
 /obj/cable{
-	icon_state = "4-9"
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -6397,13 +6336,20 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/black/grime,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
 "dDo" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/substation{
@@ -7049,6 +6995,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -7175,18 +7122,11 @@
 /area/station/crew_quarters/sauna)
 "edJ" = (
 /obj/cable{
-	icon_state = "2-9"
-	},
-/obj/cable{
 	icon_state = "2-5"
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
-	name = "South Catalytic Substation"
+/area/station/engine/substation/north{
+	name = "North Catalytic Substation"
 	})
 "edU" = (
 /turf/simulated/floor/engine/caution/corner{
@@ -7484,7 +7424,9 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/storage/crate/furnacefuel,
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -8784,10 +8726,7 @@
 /area/station/medical/medbay/surgery)
 "eYY" = (
 /obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/north,
 /area/station/engine/substation/north{
@@ -9937,11 +9876,6 @@
 /area/station/engine/elect)
 "fHL" = (
 /obj/cable,
-/obj/machinery/power/smes{
-	charge = 6e+007;
-	chargelevel = 50000;
-	output = 47500
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -10199,7 +10133,10 @@
 /area/station/chapel/office)
 "fPG" = (
 /obj/cable{
-	icon_state = "6-8"
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -11591,6 +11528,7 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/research,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -11943,16 +11881,13 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/cable{
-	icon_state = "0-4"
+/obj/table/reinforced/auto,
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "ANODE PARAMETERS<br>75 Conductivity ideal; energetic properties confer 1.2x bonus<br><br>CATHODE PARAMETERS<br>75 Density ideal; Stability above 50 is bonus<br><br>Corrosion resistance slows rate of decay";
+	name = "printed card";
+	pixel_y = 6
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -11980,7 +11915,7 @@
 	})
 "gKQ" = (
 /obj/cable{
-	icon_state = "5-9"
+	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -12987,9 +12922,6 @@
 "hkW" = (
 /obj/cable{
 	icon_state = "5-10"
-	},
-/obj/stool/chair/yellow{
-	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/north{
@@ -14062,6 +13994,7 @@
 "hLa" = (
 /obj/machinery/door/airlock/pyro/glass/toxins,
 /obj/access_spawn/research,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -14995,6 +14928,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/black/grime,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -15093,7 +15027,10 @@
 /area/station/maintenance/north)
 "ipp" = (
 /obj/cable{
-	icon_state = "4-10"
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -15778,7 +15715,9 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/storage/crate/furnacefuel,
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -16232,7 +16171,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/morgue)
 "iWu" = (
-/obj/storage/crate/furnacefuel,
+/obj/stool/chair/yellow{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -16306,16 +16247,6 @@
 "iXT" = (
 /turf/simulated/floor/stairs/wood2,
 /area/station/security/detectives_office)
-"iXU" = (
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
-	name = "South Catalytic Substation"
-	})
 "iXV" = (
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/crew_quarters/quarters_east)
@@ -16675,15 +16606,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
-"jgH" = (
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/substation/north{
-	name = "North Catalytic Substation"
-	})
 "jgJ" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -16693,9 +16615,6 @@
 "jgK" = (
 /obj/cable{
 	icon_state = "5-10"
-	},
-/obj/stool/chair/yellow{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/engine/substation{
@@ -17388,6 +17307,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/refinery)
 "jzA" = (
@@ -19365,13 +19285,10 @@
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
 "kBj" = (
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-5"
+/obj/machinery/power/terminal{
+	dir = 8
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -19751,10 +19668,7 @@
 /area/listeningpost)
 "kLJ" = (
 /obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/substation{
@@ -19828,9 +19742,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "6-9"
-	},
-/obj/stool/chair/yellow{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/north{
@@ -20871,8 +20782,10 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "lvF" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/circuit,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
@@ -21451,15 +21364,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "lKm" = (
-/obj/cable,
-/obj/machinery/power/terminal,
 /obj/landmark/gps_waypoint,
-/obj/cable{
-	icon_state = "0-6"
-	},
-/obj/cable{
-	icon_state = "0-10"
-	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -21749,14 +21654,13 @@
 	})
 "lPg" = (
 /obj/machinery/light/incandescent/cool,
-/obj/cable,
-/obj/cable{
-	icon_state = "0-4"
+/obj/table/reinforced/auto,
+/obj/item/paper{
+	icon_state = "index_card";
+	info = "ANODE PARAMETERS<br>75 Conductivity ideal; energetic properties confer 1.2x bonus<br><br>CATHODE PARAMETERS<br>75 Density ideal; Stability above 50 is bonus<br><br>Corrosion resistance slows rate of decay";
+	name = "printed card";
+	pixel_y = 6
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -22592,9 +22496,12 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/quarters)
 "mjW" = (
-/obj/machinery/power/furnace,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "0-2"
+	},
+/obj/machinery/power/smes{
+	chargelevel = 40000;
+	output = 25000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -23448,6 +23355,15 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/science/research_director)
+"mIC" = (
+/obj/decal/fakeobjects/catalytic_doodad{
+	dir = 1
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation{
+	do_not_irradiate = 1;
+	name = "South Catalytic Substation"
+	})
 "mIG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
@@ -24309,10 +24225,19 @@
 /turf/simulated/floor/engine,
 /area/station/science)
 "nlc" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/circuit/red,
-/area/station/engine/substation/north{
-	name = "North Catalytic Substation"
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/caution/south,
+/area/station/engine/substation{
+	do_not_irradiate = 1;
+	name = "South Catalytic Substation"
 	})
 "nlC" = (
 /obj/lattice{
@@ -26161,8 +26086,12 @@
 	})
 "ovr" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
 /turf/simulated/floor/caution/north,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -26682,12 +26611,11 @@
 /turf/space/fluid/acid,
 /area/space)
 "oNs" = (
-/obj/machinery/power/furnace,
 /obj/cable{
-	icon_state = "0-10"
+	icon_state = "0-2"
 	},
-/obj/cable{
-	icon_state = "0-4"
+/obj/machinery/power/terminal{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -26949,13 +26877,10 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "oTK" = (
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-9"
+/obj/machinery/power/terminal{
+	dir = 4
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -27700,9 +27625,10 @@
 /turf/simulated/floor/engine,
 /area/station/quartermaster/refinery)
 "psV" = (
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-8"
+/obj/cable,
+/obj/machinery/power/smes{
+	chargelevel = 40000;
+	output = 25000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -28129,7 +28055,7 @@
 /area/station/crew_quarters/cafeteria)
 "pHa" = (
 /obj/cable{
-	icon_state = "6-10"
+	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -29623,12 +29549,11 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "qzi" = (
-/obj/machinery/power/furnace,
 /obj/cable{
-	icon_state = "0-6"
+	icon_state = "0-2"
 	},
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/power/terminal{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -31353,6 +31278,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
+/obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -32011,9 +31937,6 @@
 	d2 = 4;
 	icon_state = "6-9"
 	},
-/obj/stool/chair/yellow{
-	dir = 8
-	},
 /turf/simulated/floor,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -32477,19 +32400,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"spa" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/circuit,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
-	name = "South Catalytic Substation"
-	})
 "spn" = (
 /turf/simulated/floor/black/grime,
 /area/station/science/construction{
@@ -33100,14 +33010,9 @@
 	name = "The Warrens"
 	})
 "sDU" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/furnace,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/circuit/red,
+/obj/machinery/power/catalytic_generator,
+/obj/cable,
+/turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
 	name = "South Catalytic Substation"
@@ -33725,7 +33630,10 @@
 /area/station/maintenance/north)
 "sVC" = (
 /obj/cable{
-	icon_state = "5-8"
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -34372,8 +34280,10 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "tnO" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/circuit,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/turf/simulated/floor,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
 	name = "South Catalytic Substation"
@@ -37410,6 +37320,13 @@
 /obj/item/hand_labeler,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
+"vdY" = (
+/obj/machinery/catalytic_rod_unit/left/populated,
+/turf/simulated/floor/plating,
+/area/station/engine/substation{
+	do_not_irradiate = 1;
+	name = "South Catalytic Substation"
+	})
 "vey" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
@@ -37455,8 +37372,10 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northeast)
 "vgn" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/circuit/red,
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
 	name = "South Catalytic Substation"
@@ -37821,7 +37740,9 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "vsX" = (
-/obj/machinery/computer/siphon_control,
+/obj/machinery/computer/siphon_control{
+	req_access = list(24,44)
+	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -37879,7 +37800,9 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northwest)
 "vvo" = (
-/obj/storage/crate/furnacefuel,
+/obj/stool/chair/yellow{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -39112,10 +39035,9 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay)
 "wnH" = (
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/catalytic_rod_unit/right/populated{
+	dir = 1
 	},
-/obj/machinery/power/furnace,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -39314,7 +39236,9 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/obj/storage/crate/furnacefuel,
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -41849,11 +41773,6 @@
 "xYr" = (
 /obj/cable{
 	icon_state = "0-2"
-	},
-/obj/machinery/power/smes{
-	charge = 6e+007;
-	chargelevel = 50000;
-	output = 47500
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -87016,7 +86935,7 @@ bzS
 bzS
 bzS
 bzS
-oPd
+bQn
 azY
 nUl
 mPl
@@ -87131,8 +87050,8 @@ tMs
 kXt
 eKx
 jgX
-iXU
-dQM
+vdY
+mIC
 bzS
 bzS
 bzS
@@ -87318,8 +87237,8 @@ bzS
 bzS
 bzS
 bzS
-lvF
-ctf
+gLY
+cCu
 fPG
 epj
 mjW
@@ -87430,11 +87349,11 @@ baj
 nsy
 dQM
 dDo
-iXU
+psV
 vtr
 sVC
-spa
-tnO
+sDU
+laQ
 bzS
 bzS
 bzS
@@ -87620,8 +87539,8 @@ bzS
 bzS
 bzS
 bzS
-oPd
-aKX
+bQn
+wnH
 epj
 gKQ
 kBj
@@ -87736,7 +87655,7 @@ qzi
 pHa
 vtr
 bio
-dQM
+mIC
 bzS
 bzS
 bzS
@@ -87924,7 +87843,7 @@ bzS
 aWz
 oPd
 gJY
-bQn
+epj
 lKm
 xYr
 ckb
@@ -88036,7 +87955,7 @@ dQM
 fua
 fHL
 caB
-edJ
+vtr
 lPg
 dQM
 fWG
@@ -88224,10 +88143,10 @@ bzS
 bzS
 bzS
 bzS
-oPd
-aKX
+bQn
+azY
 epj
-gKQ
+edJ
 oTK
 eYY
 oPd
@@ -88335,12 +88254,12 @@ wSi
 baj
 nsy
 dQM
-bPg
+kLJ
 oNs
-pHa
+vgn
 vtr
-bio
-dQM
+vdY
+mIC
 bzS
 bzS
 bzS
@@ -88526,11 +88445,11 @@ bzS
 bzS
 bzS
 bzS
-nlc
+gLY
 cCu
 ipp
 epj
-jgH
+mjW
 ovr
 oPd
 cEP
@@ -88637,12 +88556,12 @@ vkT
 baj
 nsy
 dQM
-dDo
+nlc
 psV
 vtr
 cXB
 sDU
-vgn
+laQ
 bzS
 bzS
 bzS
@@ -88828,7 +88747,7 @@ bzS
 bzS
 bzS
 bzS
-oPd
+bQn
 wnH
 sMu
 sMY
@@ -88943,8 +88862,8 @@ uaA
 gKY
 yel
 nXJ
-psV
-dQM
+bio
+mIC
 bzS
 bzS
 bzS
@@ -89135,7 +89054,7 @@ www
 csp
 bBO
 hkW
-iWu
+lvF
 oPd
 xes
 xes
@@ -89241,7 +89160,7 @@ xsc
 ntP
 nCD
 dQM
-vvo
+tnO
 saX
 uya
 gKY

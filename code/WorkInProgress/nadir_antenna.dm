@@ -19,5 +19,5 @@
 	if(!powered())
 		state = "allquiet"
 	var/image/glowy = SafeGetOverlayImage("glows", 'icons/obj/machines/transception.dmi', state)
-	glowy.plane = PLANE_SELFILLUM
+	glowy.plane = PLANE_OVERLAY_EFFECTS
 	UpdateOverlays(glowy, "glows", 0, 1)
