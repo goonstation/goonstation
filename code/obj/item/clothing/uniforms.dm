@@ -189,6 +189,12 @@
 		icon_state ="lesb"
 		item_state = "lesb"
 
+	vinc
+		name = "vincian pride jumpsuit"
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the MLM, or vincian pride flag."
+		icon_state ="vincian"
+		item_state = "vincian"
+
 	nb
 		name = "nb pride jumpsuit"
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the non-binary pride flag."
