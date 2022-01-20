@@ -985,11 +985,12 @@
 		return ..(target, start, user)
 
 ///////////////////////////////////////Hunter
-/obj/item/gun/energy/laser_gun/pred // Made use of a spare sprite here (Convair880).
-	name = "laser rifle"
+/obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
+	name = "Plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
 	item_state = "bullpup"
+	var/base_item_state = "bullpup"
 	uses_multiple_icon_states = 1
 	force = 5.0
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
@@ -997,28 +998,41 @@
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
 
 	New()
+		set_current_projectile(new/datum/projectile/laser/plasma)
+		projectiles = list(new/datum/projectile/laser/plasma)
 		..()
-		set_current_projectile(new/datum/projectile/laser/pred)
-		projectiles = list(new/datum/projectile/laser/pred)
 
 	update_icon()
-		..()
-
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "bullpup[ratio]"
+			src.icon_state = "[base_item_state][ratio]"
 			return
+		..()
 
-/obj/item/gun/energy/laser_gun/pred/vr
-	name = "advanced laser gun"
+/obj/item/gun/energy/plasma_gun/vr
+	name = "Advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
+	base_item_state = "wavegun"
 
 	update_icon() // Necessary. Parent's got a different sprite now (Convair880).
 
 		return
+
+/obj/item/gun/energy/plasma_gun/hunter
+	name = "Hunter's plasma rifle"
+	desc = "This unusual looking rifle contains a self-recharging power cell."
+	icon_state = "hunter"
+	item_state = "hunter"
+	base_item_state = "hunter"
+
+	New()
+		..()
+		if(istype(src.loc, /mob/living))
+			var/mob/M = src.loc
+			src.AddComponent(/datum/component/self_destruct, M)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket

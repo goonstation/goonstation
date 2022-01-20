@@ -168,3 +168,12 @@ obj/item/ammo/bullets/flechette_mag
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()
+
+// Office
+/obj/item/reagent_containers/food/drinks/flask/taskumatti
+	name = "taskumatti"
+	desc = "Korpikuusen kyynel...? "
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "taskumatti"
+	item_state = "taskumatti"
+	initial_reagents = list("omnizine"=10,"wine"=10,"cider"=10,"vodka"=10)
