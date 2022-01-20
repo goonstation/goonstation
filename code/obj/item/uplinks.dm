@@ -971,12 +971,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		var/num_players
-		for(var/client/C)
-			var/mob/new_player/player = C.mob
-			if (!istype(player))
+		for(var/client/C in clients)
+			var/mob/client_mob = C.mob
+			if (!istype(client_mob))
 				continue
-			if (player.ready)
-				num_players++
+			num_players++
 		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
 		SPAWN_DBG(1 SECOND)
 			if (src && istype(src) && (!length(src.commander_buylist)))
