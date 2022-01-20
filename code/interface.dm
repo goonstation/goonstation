@@ -19,7 +19,7 @@
 			set name = "bugreport"
 			set desc = "Report a bug."
 			set hidden = 1
-			bug_report_form(src.mob)
+			bug_report_form(src.mob, easteregg_chance=1)
 
 		disable_menu()
 			set category = "Commands"

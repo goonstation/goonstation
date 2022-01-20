@@ -1,4 +1,4 @@
-/proc/bug_report_form(mob/user)
+/proc/bug_report_form(mob/user, easteregg_chance=0)
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)
@@ -43,6 +43,9 @@ Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 		qdel(form)
 	if(success)
 		tgui_alert(user, "Issue reported!", "Issue reported!")
+		if(easteregg_chance)
+			var/obj/critter/roach/actual_bug = new(user.loc)
+			actual.bug.name = title
 	else
 		tgui_alert(user, "There has been an issue with reporting your bug, please try again later!", "Issue not reported!")
 
