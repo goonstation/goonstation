@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/miraclium
 	name = "Direct Extraction"
-	tick_req = 60
+	tick_req = 120
 	x_torque = 0
 	y_torque = 0
 	shear = 0
