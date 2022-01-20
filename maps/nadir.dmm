@@ -22625,7 +22625,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science)
 "mma" = (
-/obj/machinery/light/incandescent/warm,
 /obj/table/wood/auto/desk,
 /obj/machinery/phone,
 /turf/simulated/floor/darkblue/checker/other,
@@ -31173,6 +31172,7 @@
 /area/station/hallway/secondary/exit)
 "rBg" = (
 /obj/machinery/photocopier,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "rBC" = (
@@ -33443,6 +33443,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
+"sOh" = (
+/obj/machinery/computer/shuttle_bus{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/exit)
 "sOx" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -37766,9 +37772,6 @@
 	name = "Honkington's Abode"
 	})
 "vqY" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 8
-	},
 /obj/machinery/computer/announcement{
 	dir = 4;
 	name = "Radio Station Announcement Computer";
@@ -107384,7 +107387,7 @@ uSe
 uSe
 uSe
 uSe
-uSe
+sOh
 uSe
 kqt
 kqt
