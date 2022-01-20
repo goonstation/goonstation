@@ -15,8 +15,11 @@ obj/effects/tatara
 				sparks.particles.spawning = 0
 
 obj/effects/welding
-	mouse_opacity = 1 // TODO AZRUN REMOVE THIS YOU FOOL!
+	appearance_flags = RESET_COLOR | RESET_ALPHA
+	vis_flags = VIS_INHERIT_DIR
 	var/emitters = list(new/obj/spark_generator, new/obj/spark_generator/flame)
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "fire1"
 	New(var/atom/newloc, var/dirn)
 		..()
 		for(var/obj/E in emitters)
