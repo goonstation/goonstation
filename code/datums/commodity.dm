@@ -3393,6 +3393,26 @@
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
+/datum/commodity/blackmarket/wrestler/monkeyphoto
+	comname = "Official Ugly Monkey Photograph"
+	comtype = /obj/item/photo
+	name = "Ugly Monkey Photograph"
+	desc = "A poorly drawn picture of a monkey. Apparently its name is "
+	var/list/monkeynamesa = list("Zu", "Old Za", "Ava", "Li", "Captain K", "Bana", "Krink", "Mu",
+	"Hel", "King A", "Mann", "Piz", "El L", "Fi", "Dana", "Avi",)
+	var/list/monkeynamesb = list("nal", "mbu", "lici", "kkil", "ro", "na", "risp", "ag",
+	"ink", "oya", "onk", "abi", "angho", "sen", "kota", "illi",)
+	var/list/monkeynamesc = list("n", " Kong", "li", "lu", "bury the Third", "g", "kle", "stein",
+	"ger", "bob", "kee", " Smith", "oik", "mn", "a", "na",)
+		New()
+			..()
+			desc = desc + pick(monkeynamesa) + pick(monkeynamesb) + pick(monkeynamesc) + ", and it is Ugly Monkey number " + rand(1, 5000) + ". Great."
+	icon_state = "photo-monkey"
+	desc_sell = "Highly collectible picture of a monkey! Each one comes with a number and a name!"
+	price = 5000000
+	upperfluc = 1000000
+	lowerfluc = -1000000
+	
 /datum/commodity/blackmarket/wrestler/zippo
 	comname = "Promotional Discunt Dan Zippo Lighter"
 	comtype = /obj/item/device/light/zippo/dan
