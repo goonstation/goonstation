@@ -18,6 +18,7 @@
 
 /mob/living/carbon/human/npc
 	name = "human"
+	real_name = "human"
 	is_npc = 1
 	ai_attacknpc = 0
 	New()

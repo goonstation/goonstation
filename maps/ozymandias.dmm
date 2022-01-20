@@ -10826,6 +10826,10 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/security/armory)
 "der" = (
@@ -15300,7 +15304,7 @@
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "eqc" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -25611,7 +25615,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/chapel/sanctuary)
 "hhw" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -36764,7 +36768,7 @@
 /turf/simulated/floor,
 /area/station/mining/refinery)
 "kog" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "kok" = (
@@ -38742,7 +38746,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "kSm" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -43201,7 +43205,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "lYT" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -53961,7 +53965,7 @@
 /turf/simulated/floor/stairs,
 /area/station/engine/engineering/ce)
 "oWM" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/white,
@@ -68032,7 +68036,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "sMM" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/maintenance{
 	name = "Medical Booth Morgue"
@@ -76989,7 +76993,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
 "uZI" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "uZO" = (
@@ -78441,11 +78445,18 @@
 /area/station/engine/elect)
 "vrW" = (
 /obj/table/auto,
-/obj/item/storage/box/tapebox,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
 	name = "autoname - SS13"
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/artifact)
@@ -79477,7 +79488,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "vFc" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "vFe" = (
@@ -81860,8 +81871,12 @@
 	})
 "wmg" = (
 /obj/table/auto,
-/obj/item/clipboard,
-/obj/item/pen,
+/obj/item/clipboard{
+	pixel_x = -4
+	},
+/obj/artifact_paper_dispenser{
+	pixel_x = 13
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/artifact)
 "wmn" = (
@@ -88540,7 +88555,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "xQl" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

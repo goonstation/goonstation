@@ -342,7 +342,7 @@
 					var/heatTo = (273 - tx) + ax
 					heatReagents(sx, heatTo)
 				if("@") //transfer
-					loopUsed = 30
+					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					transferReagents(sx, tx, ax)
 				/*if("?") //compare *ptr to sx, using operation tx, store result in ax
 					switch(tx)
@@ -361,7 +361,7 @@
 						else
 							ax = 0*/
 				if("#") //move individual reagent from container
-					loopUsed = 30
+					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					isolateReagent(sx, tx, ax, data[dp+1])
 				else
 
@@ -799,7 +799,7 @@
 	if (target == 12)
 		// Generate vial
 		if(RS.total_volume >= 1)
-			var/obj/item/reagent_containers/glass/vial/V = new(get_turf(src.holder))
+			var/obj/item/reagent_containers/glass/vial/plastic/V = new(get_turf(src.holder))
 			RS.trans_to(V, amount, index = index)
 			showMessage("[src.holder] ejects a vial of some unknown substance.")
 		else

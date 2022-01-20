@@ -8,10 +8,7 @@
 
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
-	var/obj/decal/cleanable/C = new type
-	C.name = initial(C.name) // ugh
-	C.setup(loc,viral_list)
-	.= C
+	return new type(loc, viral_list)
 
 /obj/decal/cleanable
 	density = 0
@@ -30,8 +27,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/last_color = null
 
 	var/can_fluid_absorb = 1
-	//var/turf/last_turf //unset 'messy' on my last turf after a move
-	//moved up to atom/movable
 
 	var/last_dry_start = 0
 	var/dry_time = 100
@@ -66,19 +61,23 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if(isturf(src.loc))
 				var/turf/T = src.loc
 				T.messy++
-				last_turf = T
 
 			if (istype(src.loc, /turf/simulated/floor))
 				var/turf/simulated/T = src.loc
 				T.cleanable_fluid_react()
 
+	set_loc(newloc)
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy = max(T.messy - 1, 0)
+		. = ..()
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy++
+
 	disposing()
 		if (can_dry)
 			processing_items.Remove(src)
-
-		if (istype(src.loc, /turf/simulated/floor))
-			var/turf/simulated/T = src.loc
-			T.messy = max(T.messy-1, 0)
 
 		var/area/Ar = get_area(src)
 		if (Ar)
@@ -96,14 +95,17 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			qdel(src)
 
 	Move(NewLoc, direct)
-		. = ..()
-		if (last_turf && istype(last_turf))
-			last_turf.messy = max(last_turf.messy-1, 0)
-		last_turf = src.loc
+		if(!is_cardinal(direct))
+			// will get translated to two cardinal step() calls in the parent
+			return ..()
 
-		if (isturf(src.loc))
-			var/turf/F = src.loc
-			F.messy++
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy = max(T.messy - 1, 0)
+		. = ..()
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy++
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()

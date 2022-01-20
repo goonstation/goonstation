@@ -57,9 +57,9 @@ obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	if (slot == SLOT_BACK)
-		wear_image = image('icons/mob/back.dmi')
+		wear_image = image('icons/mob/clothing/back.dmi')
 	if (slot == SLOT_BELT)
-		wear_image = image('icons/mob/belt.dmi')
+		wear_image = image('icons/mob/clothing/belt.dmi')
 	UpdateIcon(user)
 
 

@@ -137,7 +137,8 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
 	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_advanced
+	O.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
+	O.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
 	//O.verbs += /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts
 	//O.verbs += /mob/living/silicon/ai/proc/ai_custom_arrival_alert
 //	O.verbs += /mob/living/silicon/ai/proc/hologramize
@@ -421,6 +422,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
+		ticker.mode.Agimmicks += W.mind
 		qdel(src)
 
 /mob/proc/machoize(var/shitty = 0)

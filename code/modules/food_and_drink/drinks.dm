@@ -229,7 +229,7 @@
 	name = "space cola"
 	desc = "Cola. in space."
 	icon = 'icons/obj/foodNdrink/can.dmi'
-	icon_state = "cola-1"
+	icon_state = "cola-1-small"
 	item_state = "cola-1"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -241,8 +241,7 @@
 
 	New()
 		..()
-		if (prob(50))
-			src.icon_state = "cola-2"
+		setup_soda()
 
 	attack(mob/M as mob, mob/user as mob)
 		if (is_sealed)
@@ -274,6 +273,10 @@
 			if (!drop_this_shit) //see?
 				user.put_in_hand_or_drop(C)
 			qdel(src)
+
+	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
+		if (prob(50)) // without having to change the Space-Cola path
+			src.icon_state = "cola-2-small"
 
 /obj/item/crushed_can
 	name = "crushed can"
@@ -309,6 +312,28 @@
 		reagents.add_reagent("VHFCS, 10")
 		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
+/obj/item/reagent_containers/food/drinks/cola/custom
+	name = "beverage can"
+	desc = "An aluminium can with custom branding."
+	icon = 'icons/obj/foodNdrink/can.dmi'
+	heal_amt = 1
+	icon_state = "cola-13"
+	rc_flags = RC_FULLNESS
+	initial_reagents = null
+	initial_volume = 50
+
+	New()
+		..()
+
+	setup_soda()
+		return
+
+	small
+		icon_state = "cola-13-small"
+		initial_volume = 30
+
+
+
 /obj/item/reagent_containers/food/drinks/peach
 	name = "Delightful Dan's Peachy Punch"
 	desc = "A vibrantly colored can of 100% all natural peach juice."
@@ -334,6 +359,7 @@
 	var/image/fluid_image
 
 	on_reagent_change()
+		..()
 		src.UpdateIcon()
 
 	update_icon()

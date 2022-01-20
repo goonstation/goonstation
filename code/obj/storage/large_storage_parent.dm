@@ -287,6 +287,7 @@
 		var/turf/orig_turf = get_turf(thing)
 		if (orig_turf == dest_turf) return TRUE
 		var/no_go
+
 		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
 		//First, check for directional blockers on the entering object's tile
 		if (orig_turf.checkingexit > 0)
@@ -311,6 +312,7 @@
 				if(A != src && !A.Cross(L))
 					no_go = A
 					break
+
 		if(no_go)
 			if (istype(L))
 				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")

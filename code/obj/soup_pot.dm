@@ -350,6 +350,7 @@
 		. += "."
 
 	on_reagent_change()
+		..()
 		if(my_soup)
 			return
 		if(reagents.total_volume)

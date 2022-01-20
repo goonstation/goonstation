@@ -13,7 +13,7 @@
 /obj/item/bell/attack_hand(mob/user as mob)
 	if ((!isturf(src.loc) && !user.is_in_hands(src)))
 		return ..()
-	if (ON_COOLDOWN(src, "service_bell", 1 SECONDS))
+	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))
 		return
 	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
 	playsound(src, "sound/effects/bell_ring.ogg", 30, 0)

@@ -8,6 +8,7 @@
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 50
+	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
 	var/obj/machinery/phone/linked = null
@@ -25,9 +26,7 @@
 	var/ringingicon = "phone_ringing"
 	var/answeredicon = "phone_answered"
 	var/dialicon = "phone_dial"
-
-
-
+	var/stripe_color = null
 
 	New()
 		..() // Set up power usage, subscribe to loop, yada yada yada
@@ -35,19 +34,24 @@
 		var/area/location = get_area(src)
 
 		// Give the phone an appropriate departmental color. Jesus christ thats fancy.
-		if(istype(location,/area/station/security))
-			src.color = "#ff0000"
-		else if(istype(location,/area/station/bridge))
-			src.color = "#00aa00"
-		else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
-			src.color = "#aaaa00"
-		else if(istype(location, /area/station/science))
-			src.color = "#9933ff"
-		else if(istype(location, /area/station/medical))
-			src.color = "#0000ff"
-		else
-			src.color = "#663300"
-		src.overlays += image('icons/obj/machines/phones.dmi',"[dialicon]")
+		if(isnull(stripe_color)) // maps can override it now
+			if(istype(location,/area/station/security))
+				stripe_color = "#ff0000"
+			else if(istype(location,/area/station/bridge))
+				stripe_color = "#00ff00"
+			else if(istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
+				stripe_color = "#ffff00"
+			else if(istype(location, /area/station/science))
+				stripe_color = "#8409ff"
+			else if(istype(location, /area/station/medical))
+				stripe_color = "#3838ff"
+			else
+				stripe_color = "#b65f08"
+		src.UpdateOverlays(image('icons/obj/machines/phones.dmi',"[dialicon]"), "dial")
+		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
+		stripe_image.color = stripe_color
+		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
+		src.UpdateOverlays(stripe_image, "stripe")
 		// Generate a name for the phone.
 
 		if(isnull(src.phone_id))
@@ -67,6 +71,10 @@
 		START_TRACKING
 
 		return
+
+	update_icon()
+		. = ..()
+		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
 
 	disposing()
 
@@ -92,6 +100,7 @@
 		src.answered = 1
 
 		src.icon_state = "[answeredicon]"
+		UpdateIcon()
 		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
 
 		if(src.ringing == 0) // we are making an outgoing call
@@ -154,6 +163,7 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.icon_state = "[ringingicon]"
+		UpdateIcon()
 		if (!src.emagged)
 			if(user)
 				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
@@ -166,6 +176,7 @@
 			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
 			if(src.answered == 0)
 				src.icon_state = "[ringingicon]"
+				UpdateIcon()
 			return
 
 		if(src.connected == 0)
@@ -185,6 +196,7 @@
 				if(src.last_ring >= 2)
 					playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,40,0)
 					src.icon_state = "[ringingicon]"
+					UpdateIcon()
 					src.last_ring = 0
 
 
@@ -193,6 +205,7 @@
 		if(src.linked) // Other phone needs updating
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
 				src.linked.icon_state = "[src.linked.phoneicon]"
+				src.linked.UpdateIcon()
 			else if(src.linked.handset && src.linked.handset.holder)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_hangup.ogg",50,0)
 			src.linked.ringing = 0
@@ -201,6 +214,7 @@
 		src.ringing = 0
 		src.handset = null
 		src.icon_state = "[phoneicon]"
+		UpdateIcon()
 		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
 
 	// This makes phones do that thing that phones do
@@ -282,10 +296,18 @@
 		..()
 		icon_state = "handset"
 		src.parent = parent_phone
+		var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")
+		stripe_image.color = parent_phone.stripe_color
+		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.color = parent_phone.color
+		src.UpdateOverlays(stripe_image, "stripe")
 		if(picker_upper)
 			src.holder = picker_upper
 		processing_items.Add(src)
+
+	update_icon()
+		. = ..()
+		src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
 
 	disposing()
 		parent = null

@@ -1755,7 +1755,7 @@
 	if (!W)
 		return
 
-	hud.remove_item(W) // eh
+	hud?.remove_item(W) // eh
 
 	if (isitem(W))
 		if (W.two_handed) //This runtime is caused by grabbing a human.
@@ -1973,11 +1973,12 @@
 		I.add_fingerprint(src)
 		I.set_loc(src)
 		src.update_inhands()
-		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
-		hud.set_visible(hud.lhand, 0)
-		hud.set_visible(hud.rhand, 0)
-		hud.set_visible(hud.twohandl, 1)
-		hud.set_visible(hud.twohandr, 1)
+		if (hud)
+			hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
+			hud.set_visible(hud.lhand, 0)
+			hud.set_visible(hud.rhand, 0)
+			hud.set_visible(hud.twohandl, 1)
+			hud.set_visible(hud.twohandr, 1)
 
 		var/icon/IC = new/icon(I.icon)
 		var/width = IC.Width()
@@ -2005,7 +2006,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["lhand"])
 					return 1
 				else
 					return 0
@@ -2020,7 +2021,7 @@
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()
-					hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
+					hud?.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["rhand"])
 					return 1
 				else
 					return 0

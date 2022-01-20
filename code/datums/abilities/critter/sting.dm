@@ -66,3 +66,4 @@
 		icon_state = "fermid_sting"
 		venom_ids = list("ants", "histamine")
 		inject_amount = 8
+

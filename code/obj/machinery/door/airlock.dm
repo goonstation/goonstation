@@ -569,7 +569,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, mover) == dir) // Check for appropriate border.
+		if (get_dir(loc, mover) & dir) // Check for appropriate border.
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
@@ -582,7 +582,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			return 1
 
 	gas_cross(turf/target)
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, target) & dir)
 			return !density
 		else
 			return TRUE
@@ -593,7 +593,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir)
+		if (get_dir(loc, target) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,

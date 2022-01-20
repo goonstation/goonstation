@@ -667,6 +667,12 @@
 	desc = "Subject is a proficient surgeon."
 	id = "training_medical"
 
+/obj/trait/job/headsurgeon
+	name = "Party Surgeon"
+	cleanName = "Party Surgeon"
+	desc = "Subject was a blast at med-school parties."
+	id = "training_partysurgeon"
+
 /obj/trait/job/engineer
 	name = "Engineering Training"
 	cleanName = "Engineering Training"

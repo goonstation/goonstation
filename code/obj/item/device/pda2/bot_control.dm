@@ -201,7 +201,7 @@
 			if("summon")
 				post_status("bot_control", "command", "summon", "active", active, "target", summon_turf )
 				post_status("bot_control", "command", "bot_status", "active", active)
-				self_text("[active] summoned to [summon_turf]")
+				self_text("[active] summoned to [summon_turf.loc].")
 
 			if("proc")
 				post_status("bot_control", "command", "proc", "active", active)
@@ -223,7 +223,7 @@
 							self_text("Summon failed.")
 							break
 					if(length(bots) >= 1)
-						self_text("[english_list(bots)] summoned to [summon_turf].")
+						self_text("[english_list(bots)] summoned to [summon_turf.loc].")
 		src.lockdown = 0
 		src.all_guard = 0
 		PDA.updateSelfDialog()

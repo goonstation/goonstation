@@ -1,3 +1,6 @@
+/**
+ * Builds the entire syndicate buylist cache, retrieved by uplinks. Ideally only executed once during the pre-round
+ */
 proc/build_syndi_buylist_cache()
 	var/list/stuff = typesof(/datum/syndicate_buylist)
 	syndi_buylist_cache.Cut()
@@ -13,21 +16,44 @@ proc/build_syndi_buylist_cache()
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
 
 /datum/syndicate_buylist
+	/// Name of the buylist entry
 	var/name = null
-	var/item = null
-	var/item2 = null
-	var/item3 = null
-	var/cost = null // Cost of the item. Leave 0 to make it unavailable.
+	/// A typepath for the item that will be spawned when the datum is purchased
+	var/atom/item = null
+	/// A typepath for the second, optional, item that will be spawned when the datum is purchased
+	var/atom/item2 = null
+	/// A typepath for the third, optional, item that will be spawned when the datum is purchased
+	var/atom/item3 = null
+	/// The TC cost of the datum in a buylist. Set to 0 to make it unavailable
+	var/cost = null
+	/// The extended description that will go in the "about" section of the item
 	var/desc = null
-	var/list/job = null // For job-specific items.
-	var/datum/objective/objective = null // For objective-specific items. Needs to be a type e.g. /datum/objective/assassinate.
-	var/telecrystal = null //for the telecrystal-only category
-	var/list/blockedmode = null // For items that can't show up in certain modes (affects uplink and surplus crates). Defined by the game mode datum (checks for children too).
+	/// A list of job names that you want the item to be restricted to, e.g. `list("Clown", "Captain")`
+	var/list/job = null
+	/// For items that only can be purchased when you have a specfic objective. Needs to be a type, e.g. `/datum/objective/assassinate`
+	var/datum/objective/objective = null
+	/// Is this buylist entry for ejecting TC from an uplink?
+	var/telecrystal = FALSE
+	/// A list of gamemode datum types that prevent it from showing up (surplus and uplinks both affected), e.g. `list(/datum/game_mode/spy, /datum/game_mode/revolution)`
+	var/list/blockedmode = null
+	/// A list of gamemode datum types that require the gamemode to be set to for this buylist entry to show up, e.g. `list(/datum/game_mode/spy, /datum/game_mode/revolution)`
 	var/list/exclusivemode = null
-	var/vr_allowed = 1
-	var/not_in_crates = 0 // This should not go in surplus crates.
+	/// If the item should be allowed to be purchased in the VR murderbox
+	var/vr_allowed = TRUE
+	/// If the item should show up in surplus crates or not
+	var/not_in_crates = FALSE
+	/// The category of the item, currently unused (somewhat used in the Nukeop Commander uplink)
+	var/category
 
-	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate=FALSE) // Use this to run code when the item is spawned.
+	/**
+	 * Runs on the purchase of the buylist datum
+	 *
+	 * Arguments:
+	 * `item`, the item you're expecting
+	 * `owner`, the person who bought the item
+	 * `in_surplus_crate`, is TRUE if the item is in a surplus crate, FALSE otherwise.
+	 */
+	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate = FALSE)
 		return
 
 ////////////////////////////////////////// Standard items (generic & nukeops uplink) ///////////////////////////////
@@ -75,8 +101,6 @@ proc/build_syndi_buylist_cache()
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
 	blockedmode = list(/datum/game_mode/revolution)
-
-
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
@@ -193,7 +217,7 @@ proc/build_syndi_buylist_cache()
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
-		if (isnukeop(owner))
+		if (isnukeop(owner) || isnukeopgunbot(owner))
 			stabby.light_c.set_color(255, 0, 0)
 			stabby.bladecolor = "R"
 		return
@@ -523,6 +547,15 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	job = list("Miner")
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
+
+/datum/syndicate_buylist/traitor/kudzuseed
+	name = "Kudzu Seed"
+	item = /obj/item/kudzuseed
+	cost = 4
+	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
+	vr_allowed = 0
+	job = list("Botanist", "Staff Assistant")
+	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/syndicate_buylist/traitor/maneater
 	name = "Maneater Seed"
@@ -901,7 +934,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
-	item = /obj/item/gun/energy/laser_gun/pred
+	item = /obj/item/gun/energy/plasma_gun
 	cost = 6
 	desc = "An experimental laser design with a self-charging cerenkite battery."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
@@ -997,6 +1030,61 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
+
+/////////////////////////////////////////// Irregular Items //////////////////////////////////////////////////
+// For things that aren't seen in a regular uplink but are in the buylist datum, e.g. Syndicate commander uplink gear
+
+/datum/syndicate_buylist/commander
+	name = "You shouldn't see me!"
+	cost = 0
+	desc = "You shouldn't see me!"
+	exclusivemode = list(/datum/game_mode/nuclear) // Fun story here, I made the shit mistake of assuming that surplus crates and spy bounties couldn't roll this, leading to this shit https://imgur.com/a/uMaM0oV
+	not_in_crates = TRUE
+
+/datum/syndicate_buylist/commander/reinforcement
+	name = "Reinforcements"
+	item = /obj/item/remote/reinforcement_beacon
+	item2 = /obj/item/paper/reinforcement_info
+	cost = 2
+	desc = "Request a (probably) top-of-the-line Syndicate gunbot to help assist your team."
+	category = "Main"
+
+/datum/syndicate_buylist/commander/ammobag
+	name = "Ammo Bag"
+	item = /obj/item/ammo/ammobox/nukeop
+	cost = 2
+	desc = "A bag that allows you to fabricate standard ammo for most Syndicate weaponry. Due to power restrictions, ammo can only be fabricated a certain amount of times per bag. Ammo size restrictions apply."
+	category = "Main"
+
+/datum/syndicate_buylist/commander/ammobag_spec
+	name = "Specialist Ammo Bag"
+	item = /obj/item/ammo/ammobox/nukeop/spec_ammo
+	cost = 3
+	desc = "A bag that allows you to fabricate specialist ammo for some Syndicate weaponry. It even lets you fabricate explosive ammunition!"
+	category = "Main"
+
+/datum/syndicate_buylist/commander/designator
+	name = "Laser Designator"
+	item = /obj/item/device/laser_designator/syndicate
+	item2 = /obj/item/paper/designator_info
+	cost = 3
+	desc = "A handheld, monocular laser designator that allows you to call in heavy fire support from the Cairngorm. Comes with 2 charges."
+	category = "Main"
+
+/datum/syndicate_buylist/commander/deployment_pods
+	name = "Rapid Deployment Remote"
+	item = /obj/item/device/deployment_remote
+	item2 = /obj/item/paper/deployment_info
+	cost = 4
+	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
+	category = "Main"
+
+/datum/syndicate_buylist/commander/bomb_remote
+	name = "Nuclear Bomb Teleporter"
+	item = /obj/item/remote/nuke_summon_remote
+	cost = 1
+	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+	category = "Main"
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////
 

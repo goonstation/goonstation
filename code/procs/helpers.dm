@@ -136,7 +136,10 @@ var/global/obj/flashDummy
 
 	if(wattage && isliving(target)) //Probably unsafe.
 		target:shock(from, wattage, "chest", stun_coeff, 1)
-
+	if (isobj(target))
+		if(wattage && istype(target, /obj/grille))
+			var/obj/grille/G = target
+			G.lightningrod(wattage)
 	var/elecflashpower = 0
 	if (wattage > 12000)
 		elecflashpower = 6
@@ -2243,9 +2246,11 @@ var/global/list/allowed_restricted_z_areas
 
 		if (S == "glassware")
 			for (var/obj/item/reagent_containers/glass/G in view(CT, range))
-				G.smash()
+				if(G.can_recycle)
+					G.smash()
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/G2 in range(CT, range))
-				G2.smash()
+				if(G2.can_recycle)
+					G2.smash()
 
 	return 1
 

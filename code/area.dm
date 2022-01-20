@@ -546,7 +546,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				dest= pick(get_area_turfs(/area/station/maintenance/,1))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
 			jerk.set_loc(dest)
-			jerk.nodamage = 0
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -587,8 +586,10 @@ ABSTRACT_TYPE(/area/shuttle)
 	expandable = 0
 
 /area/shuttle/battle
+	name = "Battle Shuttle"
 	icon_state = "shuttle_escape-battle-shuttle"
 	var/warp_dir = EAST
+	sanctuary = 1
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		..()
@@ -3179,6 +3180,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/routing/airbridge
 		name = "Airbridge Router"
 
+/area/station/routing/sortingRoom
+		name = "Mail Sorting Room"
+
 /// Off-station research outpost. Used for Cog2.
 /area/research_outpost
 	name = "Research Outpost"
@@ -3253,6 +3257,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/syndicate_station/firing_range
 		name = "firing range"
 		icon_state = "blue"
+
+/area/syndicate_station/assault_pod
+		name = "forward assault pod"
+		icon_state = "red"
 
 /area/syndicate_station/medbay
 		name = "medical bay"

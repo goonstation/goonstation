@@ -5,7 +5,7 @@
 	icon_state = "repo"
 	item_state = "repo"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_function_flags = IMMUNE_TO_ACID
 	contraband = 3
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -24,8 +24,6 @@
 	desc = "How is the visor glowing like that?"
 	icon_state = "repo"
 	item_state = "repo"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	item_function_flags = IMMUNE_TO_ACID
 	blocked_from_petasusaphilic = TRUE
 	color_r = 0.7
@@ -170,3 +168,12 @@ obj/item/ammo/bullets/flechette_mag
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flechette)
 		..()
+
+// Office
+/obj/item/reagent_containers/food/drinks/flask/taskumatti
+	name = "taskumatti"
+	desc = "Korpikuusen kyynel...? "
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "taskumatti"
+	item_state = "taskumatti"
+	initial_reagents = list("omnizine"=10,"wine"=10,"cider"=10,"vodka"=10)

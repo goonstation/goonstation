@@ -370,6 +370,8 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
+		if(iswraith(M))
+			return
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
 	return null
@@ -380,7 +382,7 @@ proc/find_ghost_by_key(var/find_key)
 
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
-	desc = "Some sort of weird machine that you stuff people into to scan their genetic DNA for cloning."
+	desc = "A machine that you stuff living, and freshly not-so-living people into in order to scan them for cloning"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1

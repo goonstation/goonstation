@@ -173,9 +173,10 @@
 			return
 		if (owner.help_mode)
 			owner.help_mode = 0
+			boutput(owner, "<span class='notice'>Help Mode has been deactivated.</span>")
 		else
 			owner.help_mode = 1
-			boutput(owner, "<span class='notice'>Help Mode has been activated  To disable it, click on this button again.</span>")
+			boutput(owner, "<span class='notice'>Help Mode has been activated. To disable it, click on this button again.</span>")
 		src.button.icon_state = "blob-help[owner.help_mode]"
 		owner.update_buttons()
 
@@ -447,6 +448,7 @@
 			return
 		owner.playsound_local(owner.loc, "sound/voice/blob/blobconsume[rand(1, 2)].ogg", 80, 1)
 		B.visible_message("<span class='alert'><b>The blob consumes a piece of itself!</b></span>")
+		B.onKilled()
 		qdel(B)
 		src.deduct_bio_points()
 		src.do_cooldown()

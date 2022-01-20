@@ -157,40 +157,40 @@
 							//Uniform
 							if(H.w_uniform)
 								if (istype(H.w_uniform, /obj/item/clothing/under))
-									P.overlays += image("icon" = 'icons/mob/jumpsuits/worn_js.dmi', "icon_state" = H.w_uniform.icon_state, "layer" = FLOAT_LAYER)
+									P.overlays += image("icon" = 'icons/mob/clothing/jumpsuits/worn_js.dmi', "icon_state" = H.w_uniform.icon_state, "layer" = FLOAT_LAYER)
 									stealthy += 4
 							//Suit
 							if(H.wear_suit)
 								if (istype(H.wear_suit, /obj/item/clothing/suit))
-									P.overlays += image("icon" = 'icons/mob/overcoats/worn_suit.dmi', "icon_state" = H.wear_suit.icon_state, "layer" = FLOAT_LAYER)
+									P.overlays += image("icon" = 'icons/mob/clothing/overcoats/worn_suit.dmi', "icon_state" = H.wear_suit.icon_state, "layer" = FLOAT_LAYER)
 									stealthy += 2
 							//Back
 							if(H.back)
 								var/t1 = H.back.icon_state
-								P.overlays += image("icon" = 'icons/mob/back.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
+								P.overlays += image("icon" = 'icons/mob/clothing/back.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
 							//Mask
 							if (H.wear_mask)
 								if (istype(H.wear_mask, /obj/item/clothing/mask))
 									var/t1 = H.wear_mask.icon_state
-									P.overlays += image("icon" = 'icons/mob/mask.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
+									P.overlays += image("icon" = 'icons/mob/clothing/mask.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
 									if (H.wear_mask.c_flags & COVERSEYES)
 										stealthy += 2
 							//Shoes
 							if (H.shoes)
 								if (istype(H.shoes))
 									var/t1 = H.shoes.icon_state
-									P.overlays += image("icon" = 'icons/mob/feet.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
+									P.overlays += image("icon" = 'icons/mob/clothing/feet.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
 									stealthy++
 							//Gloves.  Zombie boxers??
 							if (H.gloves)
 								if (istype(H.gloves))
 									var/t1 = H.gloves.item_state
-									P.overlays += image("icon" = 'icons/mob/hands.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
+									P.overlays += image("icon" = 'icons/mob/clothing/hands.dmi', "icon_state" = t1, "layer" = FLOAT_LAYER)
 									stealthy++
 							//Head
 							if (H.head)
 								var/t1 = H.head.icon_state
-								var/icon/head_icon = icon('icons/mob/head.dmi', "[t1]")
+								var/icon/head_icon = icon('icons/mob/clothing/head.dmi', "[t1]")
 								if (istype(H.head, /obj/item/clothing/head/butt))
 									var/obj/item/clothing/head/butt/B = H.head
 									if (B.s_tone)
