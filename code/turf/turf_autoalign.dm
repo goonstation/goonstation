@@ -717,6 +717,46 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/lead)
 	icon_state = "mapiconw"
 	mod = "leadw-"
 
+// azone fancy walls by skeletonman0 starting with biodome - more coming soon hopefully
+ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
+/turf/unsimulated/wall/auto/adventure
+	name = "lead wall"
+	icon = 'icons/turf/walls_overgrown.dmi'
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_overlay = 1
+	connect_diagonal = 1
+	connects_to = list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
+	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom, /turf/unsimulated/wall/setpieces/stranger)
+	connects_with_overlay = list(/obj/machinery/door, /obj/window)
+
+/turf/unsimulated/wall/auto/adventure/overgrown1
+	name = "overgrown wall"
+	desc = "This wall is covered in vines."
+	icon = 'icons/turf/walls_overgrown.dmi'
+	mod = "root-"
+	icon_state = "root-0"
+
+/turf/unsimulated/wall/auto/adventure/overgrown2
+	name = "Rock Wall"
+	desc = "This wall is made of damp stone."
+	icon = 'icons/turf/walls_overgrown.dmi'
+	mod = "rock-"
+	icon_state = "rock-0"
+
+/turf/unsimulated/wall/auto/adventure/ancient
+	name = "strange wall"
+	desc = "A weird jet black metal wall indented with strange grooves and lines."
+	icon = 'icons/turf/walls_ancient.dmi'
+	mod = "ancient-"
+	icon_state = "ancient-0"
+
+/turf/unsimulated/wall/auto/adventure/cave
+	name = "cave wall"
+	icon = 'icons/turf/walls_cave.dmi'
+	mod = "cave-"
+	icon_state = "cave-0"
+
 // Some fun walls by Walpvrgis
 ABSTRACT_TYPE(turf/unsimulated/wall/auto/hedge)
 /turf/unsimulated/wall/auto/hedge
