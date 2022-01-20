@@ -1,5 +1,7 @@
 
 (t)wed jan 19 22
+(u)pali
+(*)The bug report button (in the top right corner) works again and has a new UI!
 (u)Flappybat and Flaborized and Virvatuli.
 (p)7130
 (e)🎨⚖|sprites, balance
@@ -12,7 +14,7 @@
 (+)Resprited and animated bullet casings.
 (u)Cogwerks
 (e)🗺🎨|mapping, sprites
-(+)Replaced my older drawn background assets with some fancier new 3D-rendered plasma giant, a couple moons, and stars 
+(+)Replaced my older drawn background assets with some fancier new 3D-rendered plasma giant, a couple moons, and stars
 (u)DimWhat
 (p)6997
 (e)🗺🎨|mapping, sprites
