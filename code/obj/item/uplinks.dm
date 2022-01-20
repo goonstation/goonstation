@@ -971,7 +971,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	New()
 		..()
 		var/num_players
-		for(var/client/C)
+		for(var/client/C in clients)
 			var/mob/new_player/player = C.mob
 			if (!istype(player))
 				continue
