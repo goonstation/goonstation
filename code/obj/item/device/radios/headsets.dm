@@ -334,7 +334,6 @@
 				var/datum/game_mode/nuclear/N = ticker.mode
 				the_frequency = N.agent_radiofreq
 			src.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
-			message_admins("setting headset to [the_frequency]")
 
 	leader
 		icon_override = "syndieboss"
