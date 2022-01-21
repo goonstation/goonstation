@@ -1,5 +1,9 @@
 
 (t)fri jan 21 22
+(u)glowbold
+(p)7238
+(e)|
+(+)Fixed scanners breaking the dwarfism gene effect
 (u)TTerc & Azrun
 (p)7173
 (e)🆕⚖|feature, balance
