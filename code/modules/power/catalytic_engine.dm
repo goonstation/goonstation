@@ -266,9 +266,9 @@
 		if(src.contained_rod)
 			switch(src.gentype)
 				if(GEN_ANODE)
-					src.rod_viability = src.contained_rod.anode_efficacy
+					src.rod_viability = src.contained_rod.anode_viability
 				if(GEN_CATHODE)
-					src.rod_viability = src.contained_rod.cathode_efficacy
+					src.rod_viability = src.contained_rod.cathode_viability
 			src.ovr_rod.color = src.contained_rod.color
 			if(src.mode == UNIT_OPEN)
 				src.ovr_rod.icon_state = "rod-high"
