@@ -151,7 +151,7 @@
 /obj/item/reagent_containers/emergency_injector/mutadone
 	name = "emergency auto-injector (mutadone)"
 	initial_reagents = "mutadone"
-	label = "purple"
+	label = "gray"
 
 /obj/item/reagent_containers/emergency_injector/heparin
 	name = "emergency auto-injector (heparin)"
