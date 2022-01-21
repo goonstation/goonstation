@@ -414,7 +414,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(src.view == world.view)
+	if(src.view == world.view || src.view == "21x15")
 		var/x = input("Enter view width in tiles: (1 - 59, default 15 (normal) / 21 (widescreen))", "Width", 21)
 		var/y = input("Enter view height in tiles: (1 - 30, default 15)", "Height", 15)
 
