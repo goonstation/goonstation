@@ -1708,10 +1708,6 @@
 "aVc" = (
 /obj/machinery/light/small,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -1720,7 +1716,11 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/simulated/floor/engine,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/simulated/floor/carpet/red/standard/narrow/south,
 /area/station/crew_quarters/quarters_west)
 "aVx" = (
 /obj/landmark/gps_waypoint,
@@ -5059,6 +5059,15 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"cNS" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A warning sign which reads 'ACID HAZARD'.";
+	name = "ACID HAZARD"
+	},
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	dir = 4
+	},
+/area/listeningpost)
 "cNY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/artifact)
@@ -5483,10 +5492,6 @@
 "cZG" = (
 /obj/machinery/light/small,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -5494,7 +5499,11 @@
 	dir = 4;
 	pixel_x = -32
 	},
-/turf/simulated/floor/engine,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/turf/simulated/floor/carpet/blue/standard/narrow/south,
 /area/station/crew_quarters/quarters_west)
 "cZI" = (
 /obj/machinery/light{
@@ -7342,20 +7351,10 @@
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
 "ejZ" = (
-/obj/rack,
-/obj/item/tank/oxygen,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = 4;
-	pixel_y = -2
+/obj/machinery/door/airlock/pyro/syndicate{
+	desc = "Seems to be a pretty sturdy door.";
+	name = "Listening Post"
 	},
-/obj/item/clothing/mask/breath{
-	pixel_x = -3
-	},
-/obj/item/clothing/shoes/flippers{
-	pixel_y = -12
-	},
-/obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/engine,
 /area/listeningpost)
 "ekF" = (
@@ -8227,12 +8226,12 @@
 	})
 "eJa" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/quarters_east)
@@ -10412,6 +10411,13 @@
 	dir = 8
 	},
 /area/listeningpost)
+"fXs" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	icon_state = "R12"
+	},
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "fXA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11442,6 +11448,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
+"gzc" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/acid,
+/area/space)
 "gzl" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -11567,6 +11580,13 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black/grime,
 /area/station/medical/medbay/surgery)
+"gBL" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/acid,
+/area/space)
 "gCc" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -11727,6 +11747,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"gGq" = (
+/obj/lattice,
+/obj/warp_beacon{
+	name = "Drop Capsule Site"
+	},
+/turf/space/fluid/acid,
+/area/space)
 "gGu" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
@@ -13091,12 +13118,12 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "hnw" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
-	name = "ACID HAZARD"
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/gray,
-/area/listeningpost)
+/turf/space/fluid/acid,
+/area/space)
 "hnF" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
@@ -14074,6 +14101,10 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"hPf" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/carpet/green/standard/narrow/north,
+/area/station/crew_quarters/quarters_west)
 "hPg" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -15607,12 +15638,15 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "iDp" = (
-/obj/machinery/door/airlock/pyro/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
 	name = "Listening Post"
 	},
-/turf/simulated/floor/black,
-/area/listeningpost)
+/turf/space/fluid/acid,
+/area/space)
 "iDO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18158,6 +18192,11 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
+"jVq" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	icon_state = "R3"
+	},
+/area/station/crew_quarters/quarters_west)
 "jVB" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -24494,6 +24533,11 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
+"nqH" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn{
+	icon_state = "R14"
+	},
+/area/station/crewquarters/cryotron)
 "nqP" = (
 /obj/fireworksbox,
 /turf/simulated/floor/engine,
@@ -24658,7 +24702,11 @@
 	name = "Warrens Hall"
 	})
 "nvj" = (
-/turf/simulated/floor/stairs/wide/other,
+/obj/machinery/door/airlock/pyro/syndicate{
+	desc = "Seems to be a pretty sturdy door.";
+	name = "Listening Post"
+	},
+/turf/simulated/floor/black,
 /area/listeningpost)
 "nvB" = (
 /obj/machinery/light,
@@ -25109,8 +25157,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "nJn" = (
-/obj/machinery/drainage/big,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/stairs/wide,
 /area/listeningpost)
 "nKe" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -28877,6 +28924,11 @@
 /obj/decal/tile_edge/line/white,
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
+"qcB" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn{
+	icon_state = "R11"
+	},
+/area/station/crewquarters/cryotron)
 "qcT" = (
 /obj/decal/boxingropeenter,
 /obj/decal/tile_edge/line/grey{
@@ -29621,7 +29673,7 @@
 /area/station/medical/medbay/surgery)
 "qyR" = (
 /obj/machinery/door/unpowered/wood/pyro,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/carpet/blue/standard/narrow/north,
 /area/station/crew_quarters/quarters_west)
 "qyZ" = (
 /obj/decal/tile_edge/line/yellow{
@@ -30608,15 +30660,8 @@
 	name = "The Warrens"
 	})
 "rfe" = (
-/obj/machinery/door/airlock/pyro/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	dir = 4;
-	name = "Listening Post"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/turf/simulated/floor,
+/obj/machinery/drainage/big,
+/turf/simulated/floor/engine,
 /area/listeningpost)
 "rfy" = (
 /obj/table/reinforced/auto,
@@ -31574,6 +31619,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
+"rNR" = (
+/turf/simulated/wall/auto/reinforced/supernorn{
+	icon_state = "R3"
+	},
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "rNU" = (
 /obj/decal/tile_edge/line/red{
 	dir = 10;
@@ -31758,7 +31810,7 @@
 	name = "Drop Capsule"
 	})
 "rTM" = (
-/turf/simulated/floor/stairs/wide/middle,
+/turf/simulated/floor/stairs/wide/other,
 /area/listeningpost)
 "rTO" = (
 /obj/decal/tile_edge{
@@ -33207,6 +33259,14 @@
 "sFH" = (
 /obj/lattice,
 /obj/machinery/launcher_loader/south,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13";
+	pixel_x = -4;
+	pixel_y = 22;
+	tag = ""
+	},
 /turf/space/fluid/acid,
 /area/space)
 "sFL" = (
@@ -35365,6 +35425,11 @@
 /area/station/hallway/secondary/exit)
 "tOD" = (
 /obj/grille/steel,
+/obj/item/paper{
+	info = "I Broke Down A Reinforced Wall And All I Got Was This Stupid Paper";
+	name = "odd note";
+	pixel_y = -5
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/north)
 "tOZ" = (
@@ -36138,7 +36203,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/head)
 "unp" = (
-/turf/simulated/floor/stairs/wide,
+/turf/simulated/floor/stairs/wide/middle,
 /area/listeningpost)
 "unD" = (
 /obj/decal/tile_edge/line/blue{
@@ -37400,6 +37465,13 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator_room)
+"uZZ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space/fluid/acid,
+/area/space)
 "vaa" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 9;
@@ -37871,6 +37943,11 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"vsb" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn{
+	icon_state = "R13"
+	},
+/area/station/crewquarters/cryotron)
 "vss" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/steel/reinforced{
@@ -39433,6 +39510,11 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/engine/caution/north,
 /area/station/hallway/primary/southeast)
+"wxl" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn{
+	icon_state = "R7"
+	},
+/area/station/crewquarters/cryotron)
 "wxp" = (
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/arcade)
@@ -41242,6 +41324,10 @@
 /obj/access_spawn/brig,
 /turf/simulated/floor/engine,
 /area/station/security/checkpoint/escape)
+"xDr" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/carpet/red/standard/narrow/north,
+/area/station/crew_quarters/quarters_west)
 "xDz" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -41519,6 +41605,19 @@
 	dir = 8
 	},
 /area/station/hallway/primary/northwest)
+"xNZ" = (
+/obj/machinery/light/small,
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/item/storage/wall{
+	dir = 4;
+	pixel_x = -32
+	},
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/carpet/green/standard/narrow/south,
+/area/station/crew_quarters/quarters_west)
 "xOk" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -71882,7 +71981,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+gBL
 bzS
 bzS
 bzS
@@ -72183,9 +72282,9 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
-bzS
+hwg
+gGq
+uZZ
 bzS
 bzS
 bzS
@@ -72486,7 +72585,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+gzc
 bzS
 bzS
 bzS
@@ -72697,7 +72796,7 @@ jxl
 jxl
 jxl
 jxl
-xQv
+fXs
 asM
 azl
 cPu
@@ -72994,12 +73093,12 @@ czO
 nmp
 nmp
 nmp
-nmp
+jVq
+wxl
 ldy
 ldy
 ldy
-ldy
-ldy
+vsb
 bmK
 bAs
 eNF
@@ -73598,14 +73697,14 @@ nmp
 nmp
 xcu
 nmp
-nmp
-ldy
+jVq
+vsb
 jKJ
 dYp
 dYp
 eTt
-ldy
-xQv
+nqH
+rNR
 xQv
 xQv
 boT
@@ -73899,7 +73998,7 @@ vTs
 nmp
 koX
 xcu
-qyR
+xDr
 aVc
 ldy
 dYp
@@ -74202,8 +74301,8 @@ nmp
 iWv
 xcu
 nmp
-nmp
-ldy
+jVq
+vsb
 dYp
 gYX
 dYp
@@ -74503,8 +74602,8 @@ nmp
 byF
 luK
 gAs
-qyR
-cZG
+hPf
+xNZ
 ldy
 fRF
 fZh
@@ -74806,8 +74905,8 @@ nmp
 nmp
 lAO
 nmp
-nmp
-ldy
+jVq
+qcB
 dSd
 dSd
 dSd
@@ -80189,8 +80288,8 @@ siC
 lTu
 nPd
 siC
-siC
 sfE
+bzS
 bzS
 bzS
 bzS
@@ -80489,10 +80588,10 @@ xhV
 osa
 ftM
 pki
+nJn
 wkQ
-wkQ
-wkQ
-pki
+cNS
+bzS
 bzS
 bzS
 bzS
@@ -80790,11 +80889,11 @@ huw
 xhV
 xhV
 xhV
-hDM
+nvj
 unp
-kLs
+rfe
 ejZ
-pki
+bzS
 bzS
 bzS
 bzS
@@ -81092,11 +81191,11 @@ hEt
 xhV
 xhV
 xhV
-iDp
+pki
 rTM
 kLs
-wkQ
-pki
+cNS
+bzS
 bzS
 bzS
 bzS
@@ -81394,11 +81493,11 @@ xIF
 uJE
 exg
 ngM
-kFA
-nvj
-nJn
-wkQ
-pki
+qWP
+siC
+siC
+gYn
+bzS
 bzS
 bzS
 bzS
@@ -81696,11 +81795,11 @@ xIF
 jAE
 ulQ
 sgl
-qWP
-hnw
-rfe
-hnw
-gYn
+pki
+bzS
+bzS
+bzS
+bzS
 bzS
 bzS
 bzS
@@ -82296,7 +82395,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+hnw
 bzS
 bzS
 bzS
@@ -82598,7 +82697,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+hnw
 bzS
 bzS
 bzS
@@ -82900,7 +82999,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+hnw
 bzS
 bzS
 bzS
@@ -83202,7 +83301,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+iDp
 bzS
 bzS
 bzS
