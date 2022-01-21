@@ -657,7 +657,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 
-/datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
+/datum/projectile/bullet/buckshot // buckshot pellets
 	name = "buckshot"
 	sname = "buckshot"
 	icon_state = "trace"

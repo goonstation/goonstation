@@ -1398,6 +1398,67 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 							C.forensic_ID = src.forensic_ID
 							C.set_loc(T)
 
+
+	sawnoff
+		name = "Sawn-off Shotgun"
+		desc = "A sawed-down shotgun once meant for suppressing riots. Looks a lot meaner now."
+		spread_angle = 5
+		icon = 'icons/obj/items/gun.dmi'
+		icon_state = "sawnshotty-empty"
+		item_state = "sawnshotty"
+		max_ammo_capacity = 6
+		force = MELEE_DMG_PISTOL //no stock to whack em with
+		default_magazine = /obj/item/ammo/bullets/buckshot_burst/six
+		contraband = 5
+		caliber = 0.72
+		auto_eject = 0
+		can_dual_wield = 0
+		two_handed = 1
+		has_empty_state = 1
+		gildable = 1
+
+
+		load_ammo()
+			ammo = new default_magazine
+			set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst)
+
+		update_icon()
+			. = ..()
+			src.icon_state = "sawnshotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
+
+		canshoot()
+			return(..() && src.racked_slide)
+
+		attack_self(mob/user as mob)
+			..()
+			src.rack(user)
+
+		rack(var/atom/movable/user)
+			var/mob/mob_user = null
+			if(ismob(user))
+				mob_user = user
+			if (!src.racked_slide) //Are we racked?
+				if (src.ammo.amount_left == 0)
+					boutput(mob_user, "<span class ='notice'>You are out of shells!</span>")
+					UpdateIcon()
+				else
+					src.racked_slide = TRUE
+					if (src.icon_state == "sawnshotty[src.gilded ? "-golden" : ""]") //"animated" racking
+						src.icon_state = "sawnshotty[src.gilded ? "-golden-empty" : "-empty"]" // having UpdateIcon() here breaks
+						animate(src, time = 0.2 SECONDS)
+						animate(icon_state = "sawnshotty[gilded ? "-golden" : ""]")
+					else
+						UpdateIcon() // Slide already open? Just close the slide
+					boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
+					playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
+					src.casings_to_eject = 0
+					if (src.ammo.amount_left < 6) // Do not eject shells if you're racking a full "clip"
+						var/turf/T = get_turf(src)
+						if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
+							var/obj/item/casing/C = new src.current_projectile.casing(T)
+							C.forensic_ID = src.forensic_ID
+							C.set_loc(T)
+
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."
 	name = "flare gun"
