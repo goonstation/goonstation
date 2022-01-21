@@ -1,4 +1,9 @@
 
+(t)fri jan 21 22
+(u)Zonespace
+(p)7241
+(e)🐛|bug
+(+)Syndicate Specialist ammobags now work with all nukeop guns again.
 (t)thu jan 20 22
 (u)zjdtmkhzt
 (p)7188
