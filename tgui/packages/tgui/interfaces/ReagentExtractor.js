@@ -264,18 +264,18 @@ const ExtractableList = (props, context) => {
         <Fragment key={index}>
           <Flex my={0.5}>
             <Flex.Item grow>
-              {extractable.name}
+              {extractable.name + ": " + extractable.id}
             </Flex.Item>
             <Flex.Item nowrap>
               <Button
-                // add an onClick here
+                onClick={() => act('extractingredient', { ingredient_id: extractable.id })}
               >
                 Extract
               </Button>
               <Button
                 icon="eject"
                 tooltip="Eject"
-                onClick={() => act('ejectingred')}
+                onClick={() => act('ejectingredient', { ingredient_id: extractable.id })}
               />
             </Flex.Item>
           </Flex>

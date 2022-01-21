@@ -764,6 +764,7 @@
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/mode = "overview"
 	var/autoextract = 0
+	var/nextingredientkey = 0
 	var/obj/item/reagent_containers/glass/extract_to = null
 	var/obj/item/reagent_containers/glass/inserted = null
 	var/obj/item/reagent_containers/glass/storage_tank_1 = null
@@ -833,10 +834,12 @@
 		.["containersData"] = containersData
 
 		var/list/ingredientsData = list()
-		for(var/obj/item/thisIngredient in src.ingredients)
+		for(var/ingredient_id in src.ingredients)
+			var/obj/item/thisIngredient = src.ingredients[ingredient_id]
 			if(thisIngredient)
 				var/list/thisIngredientData = list(
 					name = thisIngredient.name,
+					id = ingredient_id
 				)
 				ingredientsData += list(thisIngredientData)
 
@@ -866,12 +869,19 @@
 			if("insertcontainer")
 				if (src.inserted)
 					return
-				var/obj/item/I = usr.equipped()
-				if(istype(I, /obj/item/reagent_containers/glass/) || istype(I, /obj/item/reagent_containers/food/drinks/))
-					src.inserted = I
+				var/obj/item/inserting = usr.equipped()
+				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
+					src.inserted = inserting
 					usr.drop_item()
-					I.set_loc(src)
-					if(!src.extract_to) src.extract_to = I
+					inserting.set_loc(src)
+					if(!src.extract_to) src.extract_to = inserting
+					src.UpdateIcon()
+					. = TRUE
+			if("ejectingredient")
+				var/obj/item/ingredient = src.ingredients[params["ingredient_id"]]
+				if (istype(ingredient))
+					src.ingredients.Remove(ingredient)
+					ingredient.set_loc(src.output_target)
 					src.UpdateIcon()
 					. = TRUE
 			if("autoextract")
@@ -893,6 +903,16 @@
 				if (target)
 					src.extract_to = target
 					. = TRUE
+			if("extractingredient")
+				if (!src.extract_to || src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
+					return
+				var/obj/item/ingredient = src.ingredients[params["ingredient_id"]]
+				if (!istype(ingredient) || !ingredient.reagents)
+					return
+				src.doExtract(ingredient)
+				src.ingredients.Remove(ingredient)
+				qdel(ingredient)
+				. = TRUE
 			if("chemtransfer")
 				var/obj/item/reagent_containers/glass/from = containers[params["container_id"]]
 				var/obj/item/reagent_containers/glass/target = src.extract_to
@@ -1234,7 +1254,7 @@
 		return TRUE
 	else
 		O.set_loc(src)
-		src.ingredients += O
+		src.ingredients["[nextingredientkey++]"] = O
 		return TRUE
 
 /obj/submachine/seed_vendor
