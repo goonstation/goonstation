@@ -1869,6 +1869,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/armor_msg = ""
 	var/rangedprot = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
+		rangedprot = max(rangedprot-P.proj_data.armor_ignored,1)
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
