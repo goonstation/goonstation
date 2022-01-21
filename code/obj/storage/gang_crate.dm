@@ -47,6 +47,35 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT  | NO_MOUSEDROP_QOL
 	var/static/obj/gangloot_master/lootMaster = new /obj/gangloot_master()
 
+	only_gimmicks
+		New()
+			generate_gang_crate(list(1,1,1,1,1,1,1,1,1,1,1,1))
+			..()
+	some_weak
+		New()
+			generate_gang_crate(list(2,2,2))
+			..()
+	only_weak
+		New()
+			generate_gang_crate(list(2,2,2,2,2,2,2,2,2,2,2,2,2))
+			..()
+	some_middle
+		New()
+			generate_gang_crate(list(3,3,2,2,2))
+			..()
+	only_middle
+		New()
+			generate_gang_crate(list(2,2,2,2,2,2,2,2,2,2,2,2))
+			..()
+	some_strong
+		New()
+			generate_gang_crate(list(3,3,3,2,2,2))
+			..()
+	only_strong
+		New()
+			generate_gang_crate(list(3,3,3,3,3,3,3,3,3,3,3,3))
+			..()
+
 
 	New()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
@@ -392,6 +421,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		var instance = new /obj/gangloot_instance()
 		src.create_loot(get_turf(user),instance)
 		del(src)
+		return refund_token
 
 	proc/pick_weighted()
 
@@ -795,6 +825,9 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,rot=90,scale_y=0.7,scale_x=0.7)
 
+		syndieomnitool
+			create_loot(var/C)
+				spawn_item(C,/obj/item/tool/omnitool/syndicate,0,0)
 		// MID VALUE: ...
 		syndieomnitool
 			tier = GANG_CRATE_GEAR
@@ -834,6 +867,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/instrument/bikehorn/airhorn)
 
+
+		airhorn
+			create_loot(var/C)
+				spawn_item(C,/obj/item/instrument/bikehorn/airhorn,0,0)
 	medium_tall //2x2
 		size = list(2,2)
 
@@ -859,6 +896,22 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		//~4 Loose Grenades
 		//Insuls
 		//NVGs
+		mixed_sec
+			create_loot(var/C)
+				spawn_item(C,/obj/item/chem_grenade/flashbang,-4,4)
+				spawn_item(C,/obj/item/chem_grenade/flashbang,4,4)
+				spawn_item(C,/obj/item/chem_grenade/cryo,-4,-4)
+				spawn_item(C,/obj/item/chem_grenade/shock,4,-4)
+
+		stingers
+			create_loot(var/C)
+				spawn_item(C,/obj/item/old_grenade/stinger,-4,0)
+				spawn_item(C,/obj/item/old_grenade/stinger,4,0)
+		helmet
+			create_loot(var/C)
+				spawn_item(C,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),0,-2)
+				spawn_item(C,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),0,0)
+				spawn_item(C,pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, /proc/filter_trait_hats)),0,2)
 
 		gold
 			tier = GANG_CRATE_GEAR
@@ -1037,6 +1090,22 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 				spawn_item(C,I,/obj/item/gun/kinetic/hunting_rifle,off_x=-6,off_y=4)
 				spawn_item(C,I,/obj/item/gun/kinetic/hunting_rifle,off_x=-6,off_y=-4)*/
 
+		//LOW
+
+		money
+			create_loot(var/C)
+				spawn_item(C,/obj/item/spacecash/fivehundred, -8,-6)
+				spawn_item(C,/obj/item/spacecash/fivehundred, -8,-4)
+				spawn_item(C,/obj/item/spacecash/fivehundred, -8,-2)
+				spawn_item(C,/obj/item/spacecash/fivehundred, -8,0)
+				spawn_item(C,/obj/item/spacecash/fivehundred, -8,2)
+				spawn_item(C,/obj/item/spacecash/fivehundred, -8,4)
+				spawn_item(C,/obj/item/spacecash/fivehundred, 8,-6)
+				spawn_item(C,/obj/item/spacecash/fivehundred, 8,-4)
+				spawn_item(C,/obj/item/spacecash/fivehundred, 8,-2)
+				spawn_item(C,/obj/item/spacecash/fivehundred, 8,0)
+				spawn_item(C,/obj/item/spacecash/fivehundred, 8,2)
+				spawn_item(C,/obj/item/spacecash/fivehundred, 8,4)
 
 		mac10s
 			tier = GANG_CRATE_GUN_WEAK
