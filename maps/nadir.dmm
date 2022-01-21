@@ -9603,8 +9603,11 @@
 /area/station/science/teleporter)
 "fyJ" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "nadir_qmio"
+	},
+/obj/plasticflaps{
+	layer = 3.1
 	},
 /obj/machinery/door/poddoor/pyro{
 	autoclose = 1;
@@ -17871,7 +17874,7 @@
 /area/station/security/brig)
 "jQM" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "nadir_qmio"
 	},
 /turf/simulated/floor/engine,
@@ -39789,13 +39792,18 @@
 /area/station/janitor/office)
 "wJM" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "nadir_qmio"
 	},
 /obj/machinery/conveyor_switch{
 	id = "nadir_qmio";
 	pixel_x = 12;
 	pixel_y = 23
+	},
+/obj/machinery/door_control{
+	id = "cargo_swapabout";
+	name = "Cargo Shutters";
+	pixel_y = 26
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargooffice)
