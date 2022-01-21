@@ -71073,12 +71073,16 @@
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
 /obj/machinery/light,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
 /obj/artifact_paper_dispenser{
-	pixel_x = -5;
+	pixel_x = -6;
 	pixel_y = 10
 	},
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "daF" = (
