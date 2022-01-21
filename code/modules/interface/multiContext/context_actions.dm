@@ -364,7 +364,8 @@
 		. = FALSE
 		if ((get_dist(target,user) <= 1 && isliving(user)) && !GB?.occupant)
 			. = GBP && GB
-			GB.show_admin_panel(user)
+			if(.)
+				GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
