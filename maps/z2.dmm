@@ -73508,6 +73508,13 @@
 /obj/decal/stage_edge/dojo,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"iGH" = (
+/obj/storage/crate/packing,
+/obj/item/paint_can/random,
+/obj/item/pen/crayon/random,
+/obj/item/paper/nukeop_uplink_purchases,
+/turf/unsimulated/floor/black/grime,
+/area/syndicate_station/battlecruiser)
 "iHl" = (
 /obj/machinery/computer/ordercomp{
 	dir = 4
@@ -105514,7 +105521,7 @@ dfQ
 ubB
 aKf
 bqW
-dgW
+iGH
 aKf
 dhr
 dhE

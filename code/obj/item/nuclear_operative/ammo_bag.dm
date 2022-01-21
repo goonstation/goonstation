@@ -91,10 +91,13 @@
 				var/list/ammo_list = W.ammobag_magazines.Copy(2, 0)
 				ammo = pick(ammo_list)
 				ammo_cost = W.ammobag_restock_cost
-			else if(length(W.ammobag_magazines == 1))
+			else if(length(W.ammobag_magazines) == 1)
+				ammo = W.ammobag_magazines[1]
 				if(!W.ammobag_spec_required)
-					ammo = W.ammobag_magazines[1]
 					ammo_cost = W.ammobag_restock_cost - 1
+				else
+					ammo_cost = W.ammobag_restock_cost
+
 		else
 			ammo = W.ammobag_magazines[1]
 			ammo_cost = W.ammobag_restock_cost

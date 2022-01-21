@@ -1,4 +1,28 @@
 
+(t)fri jan 21 22
+(u)glowbold
+(p)7238
+(e)|
+(+)Fixed scanners breaking the dwarfism gene effect
+(u)TTerc & Azrun
+(p)7173
+(e)🆕⚖|feature, balance
+(*)Weedkiller (atrazine) can now affect kudzu tiles.
+(+)Atrazine will reduce the amount a tile of kudzu can spread and inhibit it from becoming more dense.
+(u)Zonespace
+(p)7241
+(e)🐛|bug
+(+)Syndicate Specialist ammobags now work with all nukeop guns again.
+(t)thu jan 20 22
+(u)zjdtmkhzt
+(p)7188
+(e)⚖|balance
+(+)Martian diplomats should now be able to use vocal translators.
+(u)Zonespace
+(p)7225
+(e)🗺🎨|mapping, sprites
+(+)There is now a manifest in the Cairngorm's storage room, containing stats on what's been purchased from the Nuclear Commander's uplink across rounds.
+(+)Nukeop Commander uplink has been resprited (thank you Dimwhat!)
 (t)wed jan 19 22
 (u)pali
 (*)The bug report button (in the top right corner) works again and has a new UI!
