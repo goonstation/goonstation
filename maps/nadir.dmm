@@ -22607,7 +22607,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes{
-	chargelevel = 40000;
+	chargelevel = 50000;
 	output = 25000
 	},
 /turf/simulated/floor/plating,
@@ -27771,7 +27771,7 @@
 "psV" = (
 /obj/cable,
 /obj/machinery/power/smes{
-	chargelevel = 40000;
+	chargelevel = 50000;
 	output = 25000
 	},
 /turf/simulated/floor/plating,
