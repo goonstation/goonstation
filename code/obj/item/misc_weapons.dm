@@ -235,6 +235,7 @@
 				src.bladecolor = null
 		src.icon_state = "[state_name]1-[src.bladecolor]"
 		src.item_state = "[state_name]1-[src.bladecolor]"
+		flick("sword_extend-[src.bladecolor]", src)
 		src.w_class = W_CLASS_BULKY
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
@@ -252,6 +253,7 @@
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
+		flick("sword_retract-[src.bladecolor]", src)
 		src.w_class = off_w_class
 	user.update_inhands()
 	src.add_fingerprint(user)
@@ -712,7 +714,7 @@
 		..()
 
 /obj/item/knife/butcher/attack(target as mob, mob/user as mob)
-	if (!istype(src,/obj/item/knife/butcher/predspear) && ishuman(target) && ishuman(user))
+	if (!istype(src,/obj/item/knife/butcher/hunterspear) && ishuman(target) && ishuman(user))
 		if (scalpel_surgery(target,user))
 			return
 
@@ -758,7 +760,7 @@
 
 /////////////////////////////////////////////////// Hunter Spear ////////////////////////////////////////////
 
-/obj/item/knife/butcher/predspear
+/obj/item/knife/butcher/hunterspear
 	name = "Hunting Spear"
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -770,6 +772,12 @@
 	throw_speed = 6
 	throw_range = 10
 	makemeat = 0
+
+	New()
+		..()
+		if(istype(src.loc, /mob/living))
+			var/mob/M = src.loc
+			src.AddComponent(/datum/component/self_destruct, M)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 

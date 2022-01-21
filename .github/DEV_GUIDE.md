@@ -82,7 +82,7 @@ You're just about done with that! Just one last thing you need to manually do.
 If you're a Goonstation developer, run `git submodule update --init` instead of this step.
 :::
 
-++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.** If you can't figure out how to make a empty file, use [this](https://www.dropbox.com/s/asvkccrk2fqkh14/__secret.dme).
+++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.** You can run the `initial_setup.bat` file at the root of the repository to do this automatically.
 
 That's it! Your local codebase is all set up to contribute now.
 

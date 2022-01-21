@@ -263,8 +263,8 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(synd_mob), synd_mob.slot_head)
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
-		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_l_hand)
-		synd_mob.equip_if_possible(new /obj/item/remote/nuke_summon_remote(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(synd_mob), synd_mob.slot_l_hand)
 	else
 		//synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
 		//synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
@@ -297,20 +297,6 @@
 	M.implanted = 1
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
-
-	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		the_frequency = N.agent_radiofreq
-
-	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
-		R.set_secure_frequency("h", the_frequency)
-
-		R.secure_classes = list(RADIOCL_SYNDICATE)
-		R.protected_radio = 1 // Ops can spawn with the deaf trait.
-		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
-
-	return
 
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
