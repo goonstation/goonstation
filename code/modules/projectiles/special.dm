@@ -200,9 +200,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/bullet/buckshot
 	casing = /obj/item/casing/shotgun/red
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	var/speed_max = 5
+	power = 60
+	var/speed_max = 45
 	var/speed_min = 60
-	var/spread_angle_variance = 5
+	var/spread_angle_variance = 8
 	var/dissipation_variance = 32
 
 	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
@@ -253,6 +254,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
 	sname = "nails"
+	implanted= null
 	cost = 1
 	pellets_to_fire = 8
 	spread_projectile_type = /datum/projectile/bullet/nails
@@ -260,6 +262,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle_variance = 10
 	damage_type = D_SPECIAL
 	power = 32
+
+/datum/projectile/special/spreader/buckshot_burst/wideshot
+	name = "birdshot"
+	sname = "birdshot"
+	implanted= null
+	cost = 1
+	pellets_to_fire = 16
+	spread_projectile_type = /datum/projectile/bullet/wideshot
+	casing = /obj/item/casing/shotgun/gray
+	spread_angle_variance = 16
+	damage_type = D_SPECIAL
+	power = 50
 
 /datum/projectile/special/spreader/uniform_burst/circle
 	name = "circular spread"

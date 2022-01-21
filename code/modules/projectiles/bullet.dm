@@ -23,6 +23,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 	// 0.40 - blowgun darts
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
+	// 0.77 - shotgun shell, 10ga
 	// 1.57 - grenade shell, 40mm
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 	ie_type = "K"
@@ -585,7 +586,7 @@ toxic - poisons
 			explosion_new(O, get_turf(O), 4, 1.75)
 
 //0.72
-/datum/projectile/bullet/a12
+/datum/projectile/bullet/a12 //standard slugs
 	name = "buckshot"
 	icon_state = "buckshot"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -602,6 +603,7 @@ toxic - poisons
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
+
 			if(proj.power >= 30)
 				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
 
@@ -663,6 +665,14 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 3
 	damage_type = D_KINETIC
+	on_pre_hit(atom/hit, dirflag, obj/projectile/proj)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if (M.get_ranged_protection() > 1)
+				hit_type = DAMAGE_BLUNT //prevents armored guys from bleeding and having bullets in them
+				proj.implanted = false
+				boutput(world,"done")
+		..()
 
 /datum/projectile/bullet/nails
 	name = "nails"
@@ -671,7 +681,7 @@ toxic - poisons
 	damage = 4
 	dissipation_rate = 3
 	dissipation_delay = 4
-	damage_type = D_SLASHING
+	damage_type = D_PIERCING //flechette-style rounds
 	casing = /obj/item/casing/shotgun/gray
 
 //for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
