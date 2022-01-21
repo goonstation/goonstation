@@ -147,7 +147,17 @@
 			add_avail(gen_rate WATTS)
 
 		desc = "Current Output: [engineering_notation(gen_rate)]W"
-		output_tier = clamp(round(gen_rate/10000), 0, 13)
+		if(gen_rate < 110000)
+			output_tier = clamp(round(gen_rate/10000), 0, 10)
+		else
+			switch(gen_rate)
+				if(110000 to 250000)
+					output_tier = 11
+				if(250001 to 500000)
+					output_tier = 12
+				if(500001 to INFINITY)
+					output_tier = 13
+
 		UpdateIcon()
 
 /obj/machinery/catalytic_rod_unit
@@ -374,10 +384,14 @@
 	item_state = "rods"
 	///Rod condition: decays over time, combines with generation efficacy to yield a production rate
 	var/condition = 100
-	///Generation efficacy for anode use. Influenced by material properties
+	///Generation efficacy for anode use. Influenced by material properties, increases dramatically above standard parameters
 	var/anode_efficacy = 0
-	///Generation efficacy for cathode use. Influenced by material properties
+	///Generation efficacy for cathode use. Influenced by material properties, increases dramatically above standard parameters
 	var/cathode_efficacy = 0
+	//Base viability before any efficacy exponentiation
+	var/anode_viability = 0
+	var/cathode_viability = 0
+
 	///Decay ratio: how fast rod will fall apart. Influenced by material corrosion resistance
 	var/decay_ratio = 0.999
 
@@ -404,10 +418,20 @@
 		///Corrosion resistance is usually 35%, meaning 0.99935 net decay ratio (60% after ~13m, 40% after ~24m). Total corrosion immunity = no decay.
 		var/decay_ratio_adjustment = src.material.getProperty("corrosion") * 0.00001
 		src.decay_ratio = src.decay_ratio + decay_ratio_adjustment
-		src.anode_efficacy = max(0,150 - (abs(75-src.material.getProperty("electrical")) * 2))
-		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_efficacy)
-			src.anode_efficacy = src.anode_efficacy * 1.2
-		src.cathode_efficacy = max(0,150 - (abs(75-src.material.getProperty("density")) * 2) + max(src.material.getProperty("stability")-50,0))
+		src.anode_viability = max(0,src.material.getProperty("electrical") * 2)
+		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
+			src.anode_viability = src.anode_viability * 1.2
+		src.cathode_viability = max(0,150 - (abs(75-src.material.getProperty("density")) * 2) + max(src.material.getProperty("stability")-50,0))
+
+		//Apply efficacy multiplier to viability. increases in parameters beyond standard exponentially increase the base efficacy
+		if(src.anode_viability > 100)
+			src.anode_efficacy = 100 * ((0.01 * src.anode_viability) ** 4)
+		else
+			src.anode_efficacy = src.anode_viability
+		if(src.cathode_viability > 100)
+			src.cathode_efficacy = 100 * ((0.01 * src.cathode_viability) ** 4)
+		else
+			src.cathode_efficacy = src.cathode_viability
 
 	///Consumes rod condition in furtherance of electrical generation; pass anode or cathode use for appropriate effectiveness factor
 	proc/expend_rod(var/expend_type)
