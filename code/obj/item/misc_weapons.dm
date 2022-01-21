@@ -235,6 +235,7 @@
 				src.bladecolor = null
 		src.icon_state = "[state_name]1-[src.bladecolor]"
 		src.item_state = "[state_name]1-[src.bladecolor]"
+		flick("sword_extend-[src.bladecolor]", src)
 		src.w_class = W_CLASS_BULKY
 		user.unlock_medal("The Force is strong with this one", 1)
 	else
@@ -252,6 +253,7 @@
 		src.stamina_cost = inactive_stamina_cost
 		src.icon_state = "[state_name]0"
 		src.item_state = "[state_name]0"
+		flick("sword_retract-[src.bladecolor]", src)
 		src.w_class = off_w_class
 	user.update_inhands()
 	src.add_fingerprint(user)
