@@ -252,6 +252,8 @@
 		owner.vis_contents += src.distort
 		src.filter = owner.get_filter("dwarfism")
 		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+		owner.remove_filter("dwarfism")
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
 
 	OnRemove()
 		owner.remove_filter("dwarfism")
