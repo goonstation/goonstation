@@ -83,6 +83,7 @@ Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 		if("confirm")
 			data = params
 			tgui_process.close_uis(src)
+			done = TRUE
 			. = TRUE
 		if("cancel")
 			tgui_process.close_uis(src)
