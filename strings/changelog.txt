@@ -1,5 +1,9 @@
 
 (t)thu jan 20 22
+(u)zjdtmkhzt
+(p)7188
+(e)⚖|balance
+(+)Martian diplomats should now be able to use vocal translators.
 (u)Zonespace
 (p)7225
 (e)🗺🎨|mapping, sprites
