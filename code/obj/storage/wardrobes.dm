@@ -34,7 +34,7 @@
 	/obj/item/clothing/under/pride/poly = 2,
 	/obj/item/clothing/under/pride/nb = 2,
 	/obj/item/clothing/under/pride/lesb = 2,
-	/obj/item/clothing/under/pride/vinc = 2,
+	/obj/item/clothing/under/pride/gaymasc = 2,
 	/obj/item/clothing/under/pride/trans = 2)
 
 /obj/storage/closet/wardrobe/black
