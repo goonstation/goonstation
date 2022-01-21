@@ -105,7 +105,7 @@
 	var/current_stage = 0
 	var/aggressive = 0
 	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
-	var/herbicide = FALSE
+	var/stunted = FALSE
 
 
 	get_desc()
@@ -258,7 +258,7 @@
 	if (dogrowth == 1)
 		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
-	if (src.growth < 20 && !herbicide)
+	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
 	if (!src.aggressive && src.growth >= 20)
@@ -328,9 +328,9 @@
 		src.take_damage(power*10, 1, "burn")
 
 /obj/spacevine/proc/herbicide(datum/reagent/R)
-	if(!src.herbicide)
+	if(!src.stunted)
 		if((src.current_stage < 2) || prob(33))
-			src.herbicide = TRUE
+			src.stunted = TRUE
 
 			//Swap green to red to turn brown, desaturate and soften slightly
 			var/new_color = list(0.20,	0.70,  0.10,  0.00,\
