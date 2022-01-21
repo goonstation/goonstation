@@ -64,8 +64,7 @@
 	sniper
 		name = "sniper magazine pouch"
 		icon_state = "ammopouch-double"
-		slots = 7
-		spawn_contents = list(/obj/item/ammo/bullets/rifle_762_NATO = 7)
+		spawn_contents = list(/obj/item/ammo/bullets/rifle_762_NATO = 5)
 
 	shotgun
 		name = "shotgun shell pouch"

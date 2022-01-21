@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/laser_gun/pred)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/plasma_gun)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -1402,6 +1402,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if(prob(20))
 			M.bioHolder.AddEffect("noir", magical=1)
 
+/datum/job/special/musician
+	name = "Musician"
+	wages = PAY_UNTRAINED
+	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+	slot_head = list(/obj/item/clothing/head/flatcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+
 // randomizd gimmick jobs
 
 /datum/job/special/random
@@ -1482,7 +1490,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
 			new /obj/item/instrument/whistle(B)
-			new /obj/item/clipboard/with_pen(B)
+			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
+			clipboard.set_owner(M)
 
 		return
 
@@ -1536,14 +1545,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_mask = list(/obj/item/clothing/mask/monkey_translator)
 	change_name_on_spawn = 1
 	starting_mutantrace = /datum/mutantrace/monkey
-
-/datum/job/special/random/musician
-	name = "Musician"
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
-	slot_head = list(/obj/item/clothing/head/flatcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/special/random/union
 	name = "Union Rep"
@@ -2665,27 +2666,13 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			M.set_mutantrace(morph)
 
 /datum/job/daily/saturday
-	name = "Part-time Vice Officer"
-	linkcolor = "#FF0000"
-	limit = 2
-	wages = PAY_TRADESMAN
-	allow_traitors = 0
-	cant_spawn_as_con = 1
-	cant_spawn_as_rev = 1
-	receives_badge = 1
-	receives_miranda = 1
-	slot_back = list(/obj/item/storage/backpack/withO2)
-	slot_belt = list(/obj/item/device/pda2/security)
-	slot_jump = list(/obj/item/clothing/under/misc/vice)
+	name = "Musician"
+	limit = 3
+	wages = PAY_UNTRAINED
+	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/security)
-	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
-	slot_poc2 = list(/obj/item/requisition_token/security/assistant)
-
-	New()
-		..()
-		src.access = get_access("Vice Officer")
-		return
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/battler
 	name = "Battler"

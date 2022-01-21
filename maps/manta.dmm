@@ -4770,7 +4770,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "aoV" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
@@ -4785,7 +4785,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aoX" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium,
 /obj/machinery/crema_switch{
 	pixel_y = 32
 	},
@@ -4827,7 +4827,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "apd" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ape" = (
@@ -18679,7 +18679,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "bbp" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/item/reagent_containers/food/snacks/pizza/meatball,
@@ -20479,13 +20479,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfC" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bfD" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/cool/very,
@@ -29001,6 +29001,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/storage/crate/adventure,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 6
 	},
@@ -31535,6 +31536,10 @@
 /area/shuttle/escape/station)
 "bKj" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 4;
+	pixel_y = 5
+	},
 /obj/item/storage/box/tapebox,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -35543,7 +35548,7 @@
 /turf/simulated/floor,
 /area/station/crewquarters/garbagegarbs)
 "gTH" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/light/incandescent/cool/very{

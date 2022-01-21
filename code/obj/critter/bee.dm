@@ -1810,27 +1810,27 @@
 				newLarva.reagents.add_reagent("wolfsbane", 10)
 				qdel (src)
 
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		var/turf/T = get_turf(A)
-		if (hatched || 0)//replace me too!!!
-			return
+		throw_impact(atom/A, datum/thrown_thing/thr)
+			var/turf/T = get_turf(A)
+			if (hatched || 0)//replace me too!!!
+				return
 
-		src.hatched = 1
-		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-		make_cleanable(/obj/decal/cleanable/eggsplat,T)
-		var/obj/critter/domestic_bee_larva/newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
-		if (bee_name)
-			newLarva.name = bee_name
-		if (bee_name == "sun larva")
-			newLarva.desc = "A sun...larva.  A space bee larva, but kinda weird."
-			newLarva.custom_desc = "A sun bee.  It's like a regular space bee, but it has a look of fiery passion.  Passion for doing bee stuff."
-		else
-			newLarva.desc = "A moon...larva.  A space bee larva, but kinda odd."
-			newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
-		newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
-		newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
-		qdel (src)
+			src.hatched = 1
+			src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			make_cleanable(/obj/decal/cleanable/eggsplat,T)
+			var/obj/critter/domestic_bee_larva/newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
+			if (bee_name)
+				newLarva.name = bee_name
+			if (bee_name == "sun larva")
+				newLarva.desc = "A sun...larva.  A space bee larva, but kinda weird."
+				newLarva.custom_desc = "A sun bee.  It's like a regular space bee, but it has a look of fiery passion.  Passion for doing bee stuff."
+			else
+				newLarva.desc = "A moon...larva.  A space bee larva, but kinda odd."
+				newLarva.custom_desc = "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes..."
+			newLarva.custom_bee_type = /obj/critter/domestic_bee/moon
+			newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+			qdel (src)
 
 /obj/item/bee_egg_carton
 	name = "space bee egg carton"

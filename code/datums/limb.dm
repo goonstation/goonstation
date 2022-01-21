@@ -338,6 +338,13 @@
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
 
+	dmr
+		proj = new/datum/projectile/bullet/ak47/semiauto
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
 /datum/limb/mouth
 	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
 	var/dam_low = 3
