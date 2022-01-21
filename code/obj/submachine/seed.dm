@@ -761,7 +761,7 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "reex-off"
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/mode = "overview"
 	var/autoextract = 0
 	var/obj/item/reagent_containers/glass/extract_to = null
@@ -785,6 +785,122 @@
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ReagentExtractor", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		var/list/containers = list(
+			inserted = src.inserted,
+			storage_tank_1 = src.storage_tank_1,
+			storage_tank_2 = src.storage_tank_2
+		)
+
+		var/list/containersData = list()
+		for(var/container_id in containers)
+			var/obj/item/reagent_containers/glass/thisContainer = containers[container_id]
+			if(thisContainer)
+				// Container data
+				var/datum/reagents/R = thisContainer.reagents
+				var/list/thisContainerData = list(
+					name = thisContainer.name,
+					id = container_id,
+					maxVolume = R.maximum_volume,
+					totalVolume = R.total_volume,
+					selected = src.extract_to == thisContainer
+				)
+
+				var/list/contentsTemp = list()
+				if(istype(R) && R.reagent_list.len>0)
+					// Reagent data
+					for(var/reagent_id in R.reagent_list)
+						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+						contentsTemp.Add(list(list(
+							name = reagents_cache[reagent_id],
+							id = reagent_id,
+							colorR = current_reagent.fluid_r,
+							colorG = current_reagent.fluid_g,
+							colorB = current_reagent.fluid_b,
+							volume = current_reagent.volume
+						)))
+				thisContainerData["contents"] = contentsTemp
+
+				containersData[container_id] = thisContainerData
+		.["containersData"] = containersData
+
+		var/list/ingredientsData = list()
+		for(var/obj/item/thisIngredient in src.ingredients)
+			if(thisIngredient)
+				var/list/thisIngredientData = list(
+					name = thisIngredient.name,
+				)
+				ingredientsData += list(thisIngredientData)
+
+		.["ingredientsData"] = ingredientsData
+
+		.["autoextract"] = src.autoextract
+
+
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
+		var/list/containers = list(
+			inserted = src.inserted,
+			storage_tank_1 = src.storage_tank_1,
+			storage_tank_2 = src.storage_tank_2
+		)
+		switch(action)
+			if("ejectcontainer")
+				if (src.inserted)
+					if (src.inserted == src.extract_to) src.extract_to = null
+					src.inserted.set_loc(src.output_target)
+					usr.put_in_hand_or_eject(src.inserted)
+					src.inserted = null
+					. = TRUE
+			if("insertcontainer")
+				if (src.inserted)
+					return
+				var/obj/item/I = usr.equipped()
+				if(istype(I, /obj/item/reagent_containers/glass/) || istype(I, /obj/item/reagent_containers/food/drinks/))
+					src.inserted = I
+					usr.drop_item()
+					I.set_loc(src)
+					if(!src.extract_to) src.extract_to = I
+					src.UpdateIcon()
+					. = TRUE
+			if("autoextract")
+				src.autoextract = !src.autoextract
+				. = TRUE
+			if("flush_reagent")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				var/id = params["reagent_id"]
+				if (target && target.reagents)
+					target.reagents.remove_reagent(id, 500)
+					. = TRUE
+			if("flush")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				if (target)
+					target.reagents.clear_reagents()
+					. = TRUE
+			if("extractto")
+				var/obj/item/reagent_containers/glass/target = containers[params["container_id"]]
+				if (target)
+					src.extract_to = target
+					. = TRUE
+			if("chemtransfer")
+				var/obj/item/reagent_containers/glass/from = containers[params["container_id"]]
+				var/obj/item/reagent_containers/glass/target = src.extract_to
+				if (from && from.reagents.total_volume && target && from != target)
+					from.reagents.trans_to(target, clamp(params["amount"], 1, 500))
+					. = TRUE
+		src.UpdateIcon()
+	/*
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
 
@@ -991,7 +1107,7 @@
 				else G.reagents.trans_to(T,amt)
 
 			src.updateUsrDialog()
-
+	*/
 	attackby(var/obj/item/W as obj, var/mob/user as mob)
 		if (isrobot(user))
 			boutput(user, "This machine is not compatible with mechanical users.")
@@ -1004,8 +1120,10 @@
 			src.inserted =  W
 			user.drop_item()
 			W.set_loc(src)
+			if(!src.extract_to) src.extract_to = W
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 			src.updateUsrDialog()
+			src.ui_interact(user)
 
 		else if (istype(W,/obj/item/satchel/hydro))
 			var/obj/item/satchel/S = W
@@ -1023,6 +1141,7 @@
 			S.UpdateIcon()
 			src.UpdateIcon()
 			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 
 		else
 			if (!src.canExtract(W))
@@ -1037,6 +1156,7 @@
 
 			src.UpdateIcon()
 			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
