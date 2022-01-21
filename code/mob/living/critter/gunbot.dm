@@ -146,11 +146,11 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/dmr
-		HH.name = "7.62 Marksman Rifle Arm"
+		HH.limb = new /datum/limb/gun/rifle
+		HH.name = "5.56 Rifle Arm"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handrifle"
-		HH.limb_name = "7.62 Marksman Rifle Arm"
+		HH.limb_name = "5.56 Rifle Arm"
 		HH.can_hold_items = FALSE
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE

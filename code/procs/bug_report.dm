@@ -2,7 +2,7 @@
 	var/datum/tgui_bug_report_form/form = new
 	form.ui_interact(user)
 	UNTIL(form.done || form.closed)
-	if (form.closed)
+	if (!form.done)
 		return
 	var/title = form.data["title"]
 	var/labels = list()
@@ -83,6 +83,7 @@ Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 		if("confirm")
 			data = params
 			tgui_process.close_uis(src)
+			done = TRUE
 			. = TRUE
 		if("cancel")
 			tgui_process.close_uis(src)

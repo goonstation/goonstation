@@ -1,4 +1,18 @@
 
+(t)fri jan 21 22
+(u)glowbold
+(p)7238
+(e)|
+(+)Fixed scanners breaking the dwarfism gene effect
+(u)TTerc & Azrun
+(p)7173
+(e)🆕⚖|feature, balance
+(*)Weedkiller (atrazine) can now affect kudzu tiles.
+(+)Atrazine will reduce the amount a tile of kudzu can spread and inhibit it from becoming more dense.
+(u)Zonespace
+(p)7241
+(e)🐛|bug
+(+)Syndicate Specialist ammobags now work with all nukeop guns again.
 (t)thu jan 20 22
 (u)zjdtmkhzt
 (p)7188
