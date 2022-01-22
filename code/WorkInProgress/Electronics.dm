@@ -439,7 +439,7 @@
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit
 	name = "ruckingenur kit"
-	desc = "A device that takes data scans, which then interprets and encodes them into blueprints for fabricators to read."
+	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
 	anchored = 1
