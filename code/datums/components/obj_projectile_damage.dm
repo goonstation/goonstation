@@ -20,11 +20,11 @@
 	var/obj/O = parent
 	switch(O._health/O._max_health)
 		if (0.60 to 0.90)
-			lines += "<span class='alert'>It is a little bit damaged.</span>"
+			lines += "<br><span class='alert'>It is a little bit damaged.</span>"
 		if (0.30 to 0.60)
-			lines += "<span class='alert'>It looks pretty beaten up.</span>"
+			lines += "<br><span class='alert'>It looks pretty beaten up.</span>"
 		if (0 to 0.30)
-			lines += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
+			lines += "<br><span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 /datum/component/obj_projectile_damage/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ATOM_HITBY_PROJ, COMSIG_ATOM_EXAMINE))

@@ -302,7 +302,7 @@ var/list/debris_map_colors = list(
 			var/turf/X = pick(debrisZ)
 			var/turf_check = FALSE
 
-			while(istype(get_area(X), /area/noGenerate) || !istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
+			while(istype(get_area(X), /area/noGenerate) || !istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)) || X.x >= 290 || X.y >= 290 || X.x <= 10 || X.y <= 10)
 				X = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -331,7 +331,7 @@ var/list/debris_map_colors = list(
 				var/shit_fucked = 0
 
 				while(ast_turfs.Find(rand_step) || !istype(rand_step, /turf/space) || (rand_step.loc.type != /area/space && !istype(rand_step.loc , /area/allowGenerate)))
-					if(ISDISTEDGE(rand_step, AST_MAPSEEDBORDER))
+					if(ISDISTEDGE(rand_step, AST_MAPSEEDBORDER) || !rand_step)
 						shit_fucked += 1
 					rand_step = get_step_rand(curr_turf)
 					LAGCHECK(LAG_REALTIME)
@@ -352,6 +352,7 @@ var/list/debris_map_colors = list(
 
 					full_ast_turfs += T2
 					var/turf/simulated/wall/asteroid/ast_wall2 = T2.ReplaceWith(/turf/simulated/wall/asteroid)
+					ast_wall2.hardness = ((ast_wall.x > 150 ? 300 - ast_wall.x : ast_wall.x) + (ast_wall.y > 150 ? 300 - ast_wall.y : ast_wall.y)) / 15
 			Turfspawn_Asteroid_SeedOre(full_ast_turfs, 1, debris_field = TRUE)
 
 		for(var/i in 1 to loot_thingies)
@@ -360,13 +361,10 @@ var/list/debris_map_colors = list(
 			var/ycalc
 			var/turf_check = FALSE
 
-			while(istype(get_area(possible_spot), /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)))
+			while(istype(get_area(possible_spot), /area/noGenerate) || !istype(possible_spot, /turf/space) || ISDISTEDGE(possible_spot, AST_MAPSEEDBORDER) || (possible_spot.loc.type != /area/space && !istype(possible_spot.loc, /area/allowGenerate)) || possible_spot.x >= 295 || possible_spot.y >= 295 || possible_spot.x <= 5 || possible_spot.y <= 5)
 				possible_spot = pick(debrisZ)
 				LAGCHECK(LAG_REALTIME)
 
-			while(length(getneighbours(possible_spot)) < 4) //double sanity check because fuuuuuuuccccckkk
-				possible_spot = pick(debrisZ)
-				LAGCHECK(LAG_REALTIME)
 
 			while(!turf_check) //there may be a better way to do this, but it works
 				var/atom/t_thing
@@ -380,8 +378,7 @@ var/list/debris_map_colors = list(
 					possible_spot = pick(debrisZ)
 					LAGCHECK(LAG_REALTIME)
 
-			var/turf/simulated/floor/base_floor = possible_spot.ReplaceWithFloor()
-			base_floor.to_plating()
+			var/obj/lattice/base_floor = new(possible_spot)
 			var/numberthing = rand(1, 10)
 			if(numberthing >= 8)
 				new/obj/storage/crate/loot(base_floor)
@@ -410,7 +407,7 @@ var/list/debris_map_colors = list(
 
 			var/list/neighbors = getneighbours(possible_spot)
 			for(var/turf/T in neighbors)
-				if(istype(get_area(T), /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)))
+				if(istype(get_area(T), /area/noGenerate) || !istype(T, /turf/space) || ISDISTEDGE(T, AST_MAPSEEDBORDER) || (T.loc.type != /area/space && !istype(T.loc, /area/allowGenerate)) || T.x >= 295 || T.y >= 295)
 					continue
 
 				var/floor_or_what = pick("turf", "obj", "nothing")
@@ -796,7 +793,7 @@ var/list/debris_map_colors = list(
 					logTheThing("debug", null, null, "Drone Beacon #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 					stop = TRUE
 				count++
-				if (count >= 100) //we really need these fucking things to spawn
+				if (count >= 60) //we really need these fucking things to spawn
 					logTheThing("debug", null, null, "Drone Beacon #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
 		else break
 

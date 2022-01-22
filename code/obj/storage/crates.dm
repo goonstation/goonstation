@@ -837,7 +837,7 @@
 	chems
 		make_my_stuff()
 			if (..())
-				var/rand_amount = rand(1, 3)
+				var/rand_amount = rand(2, 4)
 				for(var/i in 1 to rand_amount)
 					new/obj/item/reagent_containers/glass/flask/rand_reagent(src)
 				return TRUE
