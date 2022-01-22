@@ -793,12 +793,10 @@
 								secure_headset_mode = lowertext(copytext(message,3,end)) //why did i do this to the players
 							message = copytext(message, end)
 						else // Chances are they're using a regular radio prefix instead of a 2 letter one
-							if (lowertext(copytext(message,3,4) == " ")) // (This makes the :3 prefixes obsolete but fuck em they mess players up)
+							if (!lowertext(copytext(message,2,3) == " ")) // (This makes the :3 prefixes obsolete but fuck em they mess players up)
 								message_mode = "monitor"
 								secure_headset_mode = lowertext(copytext(message,2,3))
-								message = copytext(message, 4)
-							else
-								message = copytext(message, 3)
+							message = copytext(message, 3)
 
 				else
 					if (ishuman(src) || ismobcritter(src) || isrobot(src) || isshell(src)) // this is shit
