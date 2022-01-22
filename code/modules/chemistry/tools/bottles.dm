@@ -78,7 +78,7 @@
 
 /obj/item/reagent_containers/glass/bottle/aspirin
 	name = "bottle (salicylic acid)"
-	desc = "A small bottle containing salicyclic acid, used as a painkiller and in treating for moderate injuries."
+	desc = "A small bottle containing salicyclic acid, used as a painkiller and in treating moderate injuries."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
