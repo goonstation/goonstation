@@ -127,7 +127,7 @@
 
 /obj/item/reagent_containers/glass/bottle/morphine
 	name = "bottle (morphine)"
-	desc = "A small bottle of morphine, a powerful painkiller and sedative.  It has a warning label on it about addiction and minor toxicity."
+	desc = "A small bottle of morphine, a powerful painkiller and sedative. It has a warning label on it about addiction and minor toxicity."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "morphine"
