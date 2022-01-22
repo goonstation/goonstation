@@ -153,9 +153,50 @@
 #else
 		// dev server, save to a local save file instead to simulate clouddata
 		var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
-		simulated_cloud["[ckey(target)]"] << json_encode(data)
+		// need to wrap the clouddata within index named cdata
+		var/list/wrapper = list(cdata = data)
+		simulated_cloud["[ckey(target)]"] << json_encode(wrapper)
 #endif
 		return TRUE // I guess
+
+	/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
+	 * example input (formatted for readability)
+	 * 	{
+	 * 		"some_ckey":{
+	 * 			"persisten_bank":42069,
+	 * 			"peristent_bank_item":"none"
+	 * 		},
+	 * 		"some_other_ckey":{
+	 * 			"persisten_bank":1337,
+	 * 			"peristent_bank_item":"rubber_ducky"
+	 * 		}
+	 * 	}
+	**/
+	proc/cloud_put_bulk(json)
+		if (!rustg_json_is_valid(json))
+			stack_trace("cloud_put_bulk received an invalid json object.")
+			return FALSE
+		var/list/decoded_json = json_decode(json)
+		for (var/target_ckey as anything in decoded_json)
+			target_ckey = ckey(target_ckey)
+			var/list/data = cloud_fetch_target_data_only(target_ckey)
+			if(!data)
+				// this should never happen, hopefully
+				stack_trace("cloud_put_bulk unable to set local clouddata for [target_ckey], cloud_fetch_target_data_only returned no data! A database save will still be attempted in the upcoming API call.")
+				continue
+#ifdef LIVE_SERVER
+		// Via rust-g HTTP
+		var/datum/http_request/request = new() //If it fails, oh well...
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput_bulk&api_key=[config.spacebee_api_key]&value=[url_encode(json)]", "","")
+		request.begin_async()
+#else
+			// dev server, save to a local save file instead to simulate clouddata
+			var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
+			// need to wrap the clouddata within index named cdata
+			var/list/wrapper = list(cdata = data)
+			simulated_cloud["[ckey(target_ckey)]"] << json_encode(wrapper)
+#endif
+		return TRUE
 
 	/// Returns some cloud data on the client
 	proc/cloud_get( var/key )
