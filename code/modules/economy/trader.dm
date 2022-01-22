@@ -1594,7 +1594,7 @@ if
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-		src.goods_sell += new /datum/commodity/blackmarket/blob/chitin(src)/datum/commodity/blackmarket/blob/head
+		src.goods_sell += new /datum/commodity/blackmarket/blob/chitin(src)
 		src.goods_sell += new /datum/commodity/blackmarket/blob/head(src)
 		
 /////////////////////////////////////////////////////////
@@ -1729,12 +1729,12 @@ if
 		pickupdialoguefailure = "Some kind of error here? Says you don't have anything in your cart?"
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//	███╗   ███╗ █████╗ ██████╗     ██╗      █████╗ ██████╗ ██████╗ ██╗   ██╗	//
-//	████╗ ████║██╔══██╗██╔══██╗    ██║     ██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝	//
-//	██╔████╔██║███████║██║  ██║    ██║     ███████║██████╔╝██████╔╝ ╚████╔╝ 	//
-//	██║╚██╔╝██║██╔══██║██║  ██║    ██║     ██╔══██║██╔══██╗██╔══██╗  ╚██╔╝  	//
-//	██║ ╚═╝ ██║██║  ██║██████╔╝    ███████╗██║  ██║██║  ██║██║  ██║   ██║   	//
-//	╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝           //
+//       ███╗   ███╗ █████╗ ██████╗     ██╗      █████╗ ██████╗ ██████╗ ██╗   ██╗        //
+//       ████╗ ████║██╔══██╗██╔══██╗    ██║     ██╔══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝        //
+//       ██╔████╔██║███████║██║  ██║    ██║     ███████║██████╔╝██████╔╝ ╚████╔╝         //
+//       ██║╚██╔╝██║██╔══██║██║  ██║    ██║     ██╔══██║██╔══██╗██╔══██╗  ╚██╔╝          //
+//       ██║ ╚═╝ ██║██║  ██║██████╔╝    ███████╗██║  ██║██║  ██║██║  ██║   ██║           //
+//       ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝           //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/npc/trader/blackmarket/wrestler/
@@ -1757,16 +1757,19 @@ if
 ///███████ ███████ ███████ ███████ ██ ██   ████  ██████     //
 //////////////////////////////////////////////////////////////
 
-
-		src.goods_sell += new /datum/commodity/blackmarket/
-		src.goods_sell += new /datum/commodity/blackmarket/wrestler/videocard
-		src.goods_sell += new /datum/commodity/blackmarket/wrestler/
-		src.goods_sell += new /datum/commodity/blackmarket/wrestler/
-		src.goods_sell += new /datum/commodity/blackmarket/cowboyboots
-		src.goods_sell += new /datum/commodity/blackmarket/goldfishcracker
-		src.goods_sell += new /datum/commodity/blackmarket/
-		src.goods_sell += new /datum/commodity/blackmarket/
-
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/monkeyphoto(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/cigarbox(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/videocard(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/laptop(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/zippo(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/pinpointer(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/monkeywrench(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/beerbox(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/mop(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/rubberduck(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/cowboyboots(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/juicer(src)
+		src.goods_sell += new /datum/commodity/blackmarket/wrestler/shirts(src)
 
 /////////////////////////////////////////////////////////
 ///██████  ██    ██ ██    ██ ██ ███    ██  ██████     ///
@@ -1776,17 +1779,23 @@ if
 ///██████   ██████     ██    ██ ██   ████  ██████     ///
 /////////////////////////////////////////////////////////
 
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/uplink_telecrystal
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/nassa
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/sacred_sandal
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/magic_sandal
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/teapot
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/magic_sandal
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/shoecrafts
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/
-		src.goods_buy += new /datum/commodity/blackmarket/wrestler/
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/katana_nukeop(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/capsuit(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/uplink_telecrystal(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/dagger(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/glitch_gun(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/sacred_sandal(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/magic_sandal(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/hairballkey(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/chompskey(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/ghostgun(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/tsunami(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/teapot(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/goldfishcracker(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/shoecrafts(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/brick(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/pen(src)
+		src.goods_buy += new /datum/commodity/blackmarket/wrestler/brick(src)
 
 //////////////////////////////////////////////////////////////////////
 ///██████  ██  █████  ██       ██████   ██████  ██    ██ ███████    //
