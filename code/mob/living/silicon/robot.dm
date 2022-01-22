@@ -2978,20 +2978,9 @@
 	set name = "Recall to Mainframe"
 	return_mainframe()
 
-/mob/living/silicon/robot/proc/return_mainframe()
-	if (mainframe)
-		mainframe.return_to(src)
-		src.update_appearance()
-	else
-		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
-		return
-
-/mob/living/silicon/robot/proc/become_eye()
-	if (!mainframe)
-		return
-	return_mainframe()
-	mainframe.eye_view()
-	mainframe.eyecam.set_loc(src)
+/mob/living/silicon/robot/return_mainframe()
+	..()
+	src.update_appearance()
 
 /mob/living/silicon/robot/ghostize()
 	if (src.mainframe)

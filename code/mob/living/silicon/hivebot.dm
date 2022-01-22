@@ -722,20 +722,9 @@ Frequency:
 	set name = "Recall to Mainframe"
 	return_mainframe()
 
-/mob/living/silicon/hivebot/proc/return_mainframe()
-	if(mainframe)
-		mainframe.return_to(src)
-		src.UpdateIcon()
-	else
-		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
-		return
-
-/mob/living/silicon/hivebot/proc/become_eye()
-	if (!mainframe)
-		return
-	return_mainframe()
-	mainframe.eye_view()
-	mainframe.eyecam.set_loc(src)
+/mob/living/silicon/hivebot/return_mainframe()
+	..()
+	src.UpdateIcon()
 
 /mob/living/silicon/hivebot
 	clamp_values()
