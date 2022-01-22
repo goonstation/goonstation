@@ -495,6 +495,7 @@
 				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
 				M.reagents.add_reagent("neurotoxin", 15)
 				M.reagents.add_reagent("toxin", 6)
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 				M.emote("scream")
 				M.add_karma(1)
 		else
