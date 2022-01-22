@@ -185,8 +185,8 @@
 
 			//tailstuff
 			if (src.organHolder.tail) // Has a tail?
-				// Comment if their tail deviates from the norm. And that tail isnt some wierd bone thing.
-				if (src.organHolder.tail && !istype(src.organHolder.tail, /obj/item/organ/tail/bone) && (!(src.mob_flags & SHOULD_HAVE_A_TAIL) || src.organHolder.tail?.donor_original != src))
+				// Comment if their tail deviates from the norm.
+				if (src.organHolder.tail && (!(src.mob_flags & SHOULD_HAVE_A_TAIL) || src.organHolder.tail?.donor_original != src))
 					if (!src.organHolder.butt) // no butt?
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above the spot where [t_his] butt should be.</span>"
 					else
