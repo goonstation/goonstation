@@ -71,7 +71,7 @@
 
 /obj/item/reagent_containers/glass/bottle/saline
 	name = "bottle (saline-glucose)"
-	desc = "A small bottle containing saline-glucose solution, used to speed up healing and treat blood loss and shock."
+	desc = "A small bottle containing saline-glucose solution, used for treating blood loss and shock. It also speeds up recovery from small injuries."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "saline"
