@@ -2846,4 +2846,4 @@
 	icon_state = "udon"
 	needfork = TRUE
 	amount = 5
-	food_effects = list("food_hp_up","food_warm")
+	food_effects = list("food_hp_up","food_explosion_resist","food_warm")
