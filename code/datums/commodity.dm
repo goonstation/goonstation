@@ -3006,7 +3006,6 @@
 				comtype = /obj/item/clothing/suit/armor/tdome/red
 			if ("sunday")
 				comtype = /obj/item/clothing/suit/armor/NT_alt
-				/datum/commodity/blackmarket/surplus/baton
 				
 /datum/commodity/blackmarket/surplus/gloves
 	comname = "Tactical Gloves"
@@ -3430,7 +3429,7 @@
 	lowerfluc = -520
 
 /datum/commodity/blackmarket/wrestler/mop
-	comname = "Antique Mop"
+	comname = "Box of Beer"
 	comtype = /obj/item/mop/old
 	desc_sell = "Old style mops! Some SWEAR BY EM!"
 	price = 780
@@ -3441,9 +3440,9 @@
 	comname = "Golden Cigar Box"
 	comtype = /obj/item/cigarbox/gold
 	desc_sell = "These are the good kind, pal! THE TOP OF THE LINE!"
-	price = 5000000
-	upperfluc = 1000000
-	lowerfluc = -1000000
+	price = 1000000
+	upperfluc = 200000
+	lowerfluc = -200000
 
 /datum/commodity/blackmarket/wrestler/juicer
 	comname = "Box of Juicer Schweet's Rowdy Rillos"
@@ -3574,7 +3573,7 @@
 /datum/commodity/blackmarket/wrestler/pen
 	comname = "Fancy Pens"
 	comtype = /obj/item/pen/fancy
-	desc_sell = "I go through A LOT of these in my shows!"
+	desc_sell = "I'll pay top price for any of these you bring in!"
 	price = 350
 	baseprice = 350
 	upperfluc = 50
