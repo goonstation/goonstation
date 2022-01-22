@@ -298,7 +298,7 @@
 
 /obj/item/clothing/mask/clown_hat
 	name = "clown wig and mask"
-	desc = "Ever since makeup prices skyrocketed, performers have turned to other means in order to assume stage identities. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
+	desc = "A mask depicting the smug, dumb facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your b own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = 0.0
