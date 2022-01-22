@@ -164,11 +164,11 @@
 	 * 	{
 	 * 		"some_ckey":{
 	 * 			"persistent_bank":42069,
-	 * 			"peristent_bank_item":"none"
+	 * 			"persistent_bank_item":"none"
 	 * 		},
 	 * 		"some_other_ckey":{
 	 * 			"persistent_bank":1337,
-	 * 			"peristent_bank_item":"rubber_ducky"
+	 * 			"persistent_bank_item":"rubber_ducky"
 	 * 		}
 	 * 	}
 	**/
