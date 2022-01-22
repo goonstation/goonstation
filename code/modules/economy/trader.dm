@@ -1469,7 +1469,7 @@ if
 	icon_state = "blackmarketsurplus"
 	picture = "exclown.png"
 	name = "Max Lawman's Military Surplus"
-	trader_area = "/area/hallway/secondary/entry"
+	trader_area = "/area/diner/blackmarket"
 	angrynope = "*Lawman refuses to answer your call*"
 	whotext = "Max Lawman's Military Surplus sells a variety of armor and weaponry, new and old."
 
