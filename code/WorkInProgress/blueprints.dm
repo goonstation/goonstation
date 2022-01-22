@@ -376,7 +376,7 @@
 	"/obj/machinery/disposal", \
 	"/obj/machinery/gibber",
 	"/obj/machinery/floorflusher",
-	"/obj/machinery/driver_button", \
+	"/obj/machinery/activation_button/driver_button", \
 	"/obj/machinery/door_control",
 	"/obj/machinery/disposal",
 	"/obj/submachine/chef_oven",

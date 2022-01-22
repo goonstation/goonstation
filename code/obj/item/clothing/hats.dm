@@ -1335,7 +1335,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	attackby(obj/item/W as obj, mob/user as mob)
 		..()
 		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. Now you should be able to hear the radio using these!")
+			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
 			var/obj/item/device/radio/headset/H = W
 			H.icon = src.icon
 			H.name = src.name
@@ -1351,18 +1351,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	desc = "Aww, cute and fuzzy."
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. Meow you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
 
 	random
 		New()

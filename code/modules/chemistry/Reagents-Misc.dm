@@ -1218,6 +1218,7 @@ datum
 			var/counter = 1
 			var/fakedeathed = 0
 
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
@@ -1227,9 +1228,11 @@ datum
 					if (10 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 					if (19 to INFINITY)
-						M.changeStatus("paralysis", 3 SECONDS * mult)
+						M.changeStatus("weakened", 3 SECONDS * mult)
+						M.changeStatus("muted", 3 SECONDS * mult)
 				if (counter >= 19 && !fakedeathed)
-					M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS * mult))
+					M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS * mult))
+					M.setStatus("muted", max(M.getStatusDuration("muted"), 3 SECONDS * mult))
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
@@ -2861,6 +2864,12 @@ datum
 				if (growing.growthmode == "weed")
 					P.HYPdamageplant("poison",2)
 					P.growth -= 3
+
+			reaction_obj(var/obj/O, var/volume)
+				if (istype(O, /obj/spacevine))
+					var/obj/spacevine/kudzu = O
+					kudzu.herbicide(src)
+
 		safrole
 			name = "safrole"
 			id = "safrole"
