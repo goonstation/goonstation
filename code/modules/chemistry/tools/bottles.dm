@@ -113,7 +113,7 @@
 
 /obj/item/reagent_containers/glass/bottle/calomel
 	name = "bottle (calomel)"
-	desc = "A small bottle of calomel, for flushing chemicals from the blood stream in severe poisonings. It has a warning label on it about toxicity."
+	desc = "A small bottle of calomel, for flushing chemicals from the blood stream in cases with severe poisoning. It has a warning label on it about toxicity."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "calomel"
