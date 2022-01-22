@@ -401,7 +401,7 @@
 
 /obj/potted_plant
 	name = "potted plant"
-	desc = "Considering the fact that plants communicate through their roots, you wonder if this one feels lonely ever."
+	desc = "Considering the fact that plants communicate through their roots, you wonder if this one ever feels lonely."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ppot0"
 	anchored = 1
