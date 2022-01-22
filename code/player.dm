@@ -177,24 +177,33 @@
 			stack_trace("cloud_put_bulk received an invalid json object.")
 			return FALSE
 		var/list/decoded_json = json_decode(json)
-		for (var/target_ckey as anything in decoded_json)
-			target_ckey = ckey(target_ckey)
-			var/list/data = cloud_fetch_target_data_only(target_ckey)
-			if(!data)
-				// this should never happen, hopefully
-				stack_trace("cloud_put_bulk unable to set local clouddata for [target_ckey], cloud_fetch_target_data_only returned no data! A database save will still be attempted in the upcoming API call.")
+		var/list/sanitized = list()
+		for (var/json_ckey in decoded_json)
+			var/clean_ckey = ckey(json_ckey)
+			if (!length(decoded_json[json_ckey]))
+				stack_trace("cloud_put_bulk received ckey \"[clean_ckey]\" without any key pairs to save.")
 				continue
+			sanitized[clean_ckey] = list()
+			for (var/json_key in decoded_json[json_ckey])
+				var/value = decoded_json[json_ckey][json_key]
+				if (isnull(value))
+					value = "" //api wants empty strings, not nulls
+				sanitized[clean_ckey][json_key] = value
 #ifdef LIVE_SERVER
+		var/sanitized_json = json_encode(sanitized)
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput_bulk&api_key=[config.spacebee_api_key]&value=[url_encode(json)]", "","")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput_bulk&api_key=[config.spacebee_api_key]&value=[url_encode(sanitized_json)]", "","")
 		request.begin_async()
 #else
+			var/list/data = cloud_fetch_target_data_only("clean_ckey")
+			for (var/data_key in sanitized[clean_ckey])
+				data[data_key] = sanitized[clean_ckey][data_key]
 			// dev server, save to a local save file instead to simulate clouddata
 			var/savefile/simulated_cloud = new ("data/simulated_cloud.sav")
 			// need to wrap the clouddata within index named cdata
 			var/list/wrapper = list(cdata = data)
-			simulated_cloud["[ckey(target_ckey)]"] << json_encode(wrapper)
+			simulated_cloud["[clean_ckey]"] << json_encode(wrapper)
 #endif
 		return TRUE
 
