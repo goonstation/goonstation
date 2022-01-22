@@ -261,7 +261,7 @@ const ExtractableList = (props, context) => {
         </Button.Checkbox>
       )}>
       {extractables.map((extractable, index) => (
-        <Fragment key={index}>
+        <Fragment key={extractable.id}>
           <Flex my={0.5}>
             <Flex.Item grow>
               {extractable.name + ": " + extractable.id}

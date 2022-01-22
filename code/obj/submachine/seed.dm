@@ -878,11 +878,11 @@
 					src.UpdateIcon()
 					. = TRUE
 			if("ejectingredient")
-				var/obj/item/ingredient = src.ingredients[params["ingredient_id"]]
+				var/id = params["ingredient_id"]
+				var/obj/item/ingredient = src.ingredients[id]
 				if (istype(ingredient))
-					src.ingredients.Remove(ingredient)
+					src.ingredients.Remove(id)
 					ingredient.set_loc(src.output_target)
-					src.UpdateIcon()
 					. = TRUE
 			if("autoextract")
 				src.autoextract = !src.autoextract
@@ -906,11 +906,12 @@
 			if("extractingredient")
 				if (!src.extract_to || src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
 					return
-				var/obj/item/ingredient = src.ingredients[params["ingredient_id"]]
+				var/id = params["ingredient_id"]
+				var/obj/item/ingredient = src.ingredients[id]
 				if (!istype(ingredient) || !ingredient.reagents)
 					return
 				src.doExtract(ingredient)
-				src.ingredients.Remove(ingredient)
+				src.ingredients.Remove(id)
 				qdel(ingredient)
 				. = TRUE
 			if("chemtransfer")
