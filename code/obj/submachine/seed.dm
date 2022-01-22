@@ -794,33 +794,30 @@
 
 	ui_data(mob/user)
 		. = list()
-		var/list/containers = list(
-			inserted = src.inserted,
-			storage_tank_1 = src.storage_tank_1,
-			storage_tank_2 = src.storage_tank_2
-		)
+		var/list/containers = src.getContainers()
 
 		var/list/containersData = list()
+		// Container data
 		for(var/container_id in containers)
 			var/obj/item/reagent_containers/glass/thisContainer = containers[container_id]
 			if(thisContainer)
-				// Container data
 				var/datum/reagents/R = thisContainer.reagents
 				var/list/thisContainerData = list(
 					name = thisContainer.name,
 					id = container_id,
 					maxVolume = R.maximum_volume,
 					totalVolume = R.total_volume,
-					selected = src.extract_to == thisContainer
+					selected = src.extract_to == thisContainer,
+					contents = list()
 				)
 
-				var/list/contentsTemp = list()
+				var/list/contents = thisContainerData["contents"]
 				if(istype(R) && R.reagent_list.len>0)
 					// Reagent data
 					for(var/reagent_id in R.reagent_list)
 						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 
-						contentsTemp.Add(list(list(
+						contents.Add(list(list(
 							name = reagents_cache[reagent_id],
 							id = reagent_id,
 							colorR = current_reagent.fluid_r,
@@ -828,12 +825,12 @@
 							colorB = current_reagent.fluid_b,
 							volume = current_reagent.volume
 						)))
-				thisContainerData["contents"] = contentsTemp
-
 				containersData[container_id] = thisContainerData
+
 		.["containersData"] = containersData
 
 		var/list/ingredientsData = list()
+		// Ingredient/Extractable data
 		for(var/ingredient_id in src.ingredients)
 			var/obj/item/thisIngredient = src.ingredients[ingredient_id]
 			if(thisIngredient)
@@ -853,19 +850,16 @@
 		. = ..()
 		if(.)
 			return
-		var/list/containers = list(
-			inserted = src.inserted,
-			storage_tank_1 = src.storage_tank_1,
-			storage_tank_2 = src.storage_tank_2
-		)
+		var/list/containers = src.getContainers()
 		switch(action)
 			if("ejectcontainer")
-				if (src.inserted)
-					if (src.inserted == src.extract_to) src.extract_to = null
-					src.inserted.set_loc(src.output_target)
-					usr.put_in_hand_or_eject(src.inserted)
-					src.inserted = null
-					. = TRUE
+				if (!src.inserted)
+					return
+				if (src.inserted == src.extract_to) src.extract_to = null
+				src.inserted.set_loc(src.output_target)
+				usr.put_in_hand_or_eject(src.inserted)
+				src.inserted = null
+				. = TRUE
 			if("insertcontainer")
 				if (src.inserted)
 					return
@@ -875,7 +869,6 @@
 					usr.drop_item()
 					inserting.set_loc(src)
 					if(!src.extract_to) src.extract_to = inserting
-					src.UpdateIcon()
 					. = TRUE
 			if("ejectingredient")
 				var/id = params["ingredient_id"]
@@ -1143,7 +1136,6 @@
 			W.set_loc(src)
 			if(!src.extract_to) src.extract_to = W
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-			src.updateUsrDialog()
 			src.ui_interact(user)
 
 		else if (istype(W,/obj/item/satchel/hydro))
@@ -1161,7 +1153,6 @@
 
 			S.UpdateIcon()
 			src.UpdateIcon()
-			src.updateUsrDialog()
 			tgui_process.update_uis(src)
 
 		else
@@ -1176,7 +1167,6 @@
 			W.dropped()
 
 			src.UpdateIcon()
-			src.updateUsrDialog()
 			tgui_process.update_uis(src)
 			return
 
@@ -1193,6 +1183,7 @@
 				if (user.loc != staystill) break
 				if (P.type == O.type)
 					if (!src.tryLoading(P, user)) break
+					tgui_process.update_uis(src)
 					sleep(0.2 SECONDS)
 				else continue
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
@@ -1218,6 +1209,13 @@
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+/obj/submachine/chem_extractor/proc/getContainers()
+	. = list(
+		inserted = src.inserted,
+		storage_tank_1 = src.storage_tank_1,
+		storage_tank_2 = src.storage_tank_2
+	)
 
 /obj/submachine/chem_extractor/update_icon()
 	if (src.ingredients.len)

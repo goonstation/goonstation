@@ -1,5 +1,5 @@
-import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Dropdown, Flex, Icon, NoticeBox, NumberInput, Section, Stack, Tabs, Tooltip } from '../components';
+import { useBackend, useSharedState } from "../backend";
+import { Box, Button, Dimmer, Divider, Flex, Icon, NoticeBox, NumberInput, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 
@@ -13,28 +13,10 @@ const noContainer = {
   id: "inserted",
   maxVolume: 100,
   totalVolume: 0,
-  /*
-  contents: [
-    {
-      name: "Reagent 1",
-      volume: 10,
-      colorR: 0,
-      colorG: 255,
-      colorB: 0,
-    },
-    {
-      name: "Reagent 2",
-      volume: 50,
-      colorR: 0,
-      colorG: 0,
-      colorB: 255,
-    },
-  ],
-  */
-}; // PLACEHOLDER
+};
 
 export const ReagentExtractor = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
 
   const { containersData } = data;
 
@@ -77,7 +59,7 @@ export const ReagentExtractor = (props, context) => {
 };
 
 const ReagentDisplay = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act } = useBackend(context);
   const { insertable } = props;
   const container = props.container || noContainer;
   const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
@@ -179,7 +161,7 @@ const ReagentGraph = (props, context) => {
   return (
     <Flex>
       {contents.map((reagent, index) => (
-        <Flex.Item grow={reagent.volume/maxVolume} key={index}>
+        <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
           <Tooltip content={reagent.name + " (" + reagent.volume + "u)"} position="bottom">
             <Box
               py={3}
