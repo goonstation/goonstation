@@ -50,7 +50,7 @@
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "bottle (epinephrine)"
-	desc = "A small bottle. Contains epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in servere allergic reactions."
+	desc = "A small bottle. Contains epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 10
 	initial_reagents = "epinephrine"
