@@ -206,7 +206,7 @@
 
 /obj/item/reagent_containers/glass/bottle/synaptizine
 	name = "bottle (synaptizine)"
-	desc = "A small bottle of synaptizine, a non-addictive stimulant whose side effects can cause regeneration of nerve cells."// pulled this one outta my ass but it's important to convey it's brain medicine
+	desc = "A small bottle of synaptizine, a non-addictive stimulant whose side effects can cause regeneration of brain tissue."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "synaptizine"
