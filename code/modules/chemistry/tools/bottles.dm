@@ -227,14 +227,14 @@
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
 	name = "bottle (antihistamine)"
-	desc = "A small bottle of antihistamines, useful in reducing allergic reactions."
+	desc = "A small bottle of antihistamines, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"
 
 /obj/item/reagent_containers/glass/bottle/eyedrops
 	name = "bottle (oculine)"
-	desc = "A small bottle of combined eye and ear medication. A label on it reads: For best usage, apply topically."
+	desc = "A small bottle of combined eye and ear medication. A label on it reads: \"For ease of usage, apply topically.\""
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "oculine"

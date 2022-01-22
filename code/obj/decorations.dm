@@ -143,7 +143,7 @@
 
 /obj/shrub
 	name = "shrub"
-	desc = "A bush. Despite all your efforts, you can't seem to tell if it's real or not."
+	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
 	anchored = 1
