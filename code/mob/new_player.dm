@@ -232,6 +232,21 @@ mob/new_player
 				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 				return
 
+			if(living_pop_cap)
+				var/living_people = 0
+				for(var/client/C in clients)
+					LAGCHECK(LAG_LOW)
+					if(!C.mob)
+						continue
+					if(!istype(C.mob, /mob/living))
+						continue
+					living_people++
+					if(living_people >= living_pop_cap)
+						break
+				if(living_people >= living_pop_cap)
+					boutput(usr, "<span class='notice'>There are more people currently alive than is allowed. You may try again later or observe.</span>")
+					return
+
 			if (ticker?.mode)
 				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
 				if (S)

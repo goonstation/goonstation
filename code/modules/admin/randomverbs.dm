@@ -2803,3 +2803,19 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		logTheThing("admin", usr, AM, "has shipped [AM] to cargo.")
 		logTheThing("diary", usr, AM, "has shipped [AM] to cargo.", "admin")
 		message_admins("[key_name(usr)] has shipped [AM] to cargo.")
+
+/client/proc/set_living_pop_cap()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set desc = "Set the amount of living people allowed at once. Does not affect observers. Only applies to latejoiners."
+	set name = "Set Living Pop Cap"
+	admin_only
+	var/how_much = text2num(input(src, "What do you want the living population cap to be? (Set to 0 for no limit)"))
+
+	if(!isnum(how_much) || (how_much < 0))
+		boutput(src, "That number is invalid.")
+		return
+
+	living_pop_cap = how_much
+	logTheThing("admin", usr, null, "set the living population cap to [how_much == 0 ? "have no pop limit" : how_much].")
+	logTheThing("diary", usr, null, "set the living population cap to [how_much == 0 ? "have no pop limit" : how_much].", "admin")
+	message_admins("[key_name(usr)] set the living population cap to [how_much == 0 ? "have no pop limit" : how_much].")

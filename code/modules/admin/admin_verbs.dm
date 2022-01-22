@@ -187,7 +187,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
-		/client/proc/vpn_whitelist_remove
+		/client/proc/vpn_whitelist_remove,
+		/client/proc/set_living_pop_cap
 		),
 
 	4 = list(
