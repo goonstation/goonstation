@@ -447,7 +447,7 @@
 	icon_state = "spacescorpion"
 	critter_family = BUG
 	density = 1
-	health = 50
+	health = 30
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
