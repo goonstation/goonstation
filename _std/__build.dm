@@ -96,7 +96,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
 //#define MAP_OVERRIDE_CHIRON			// Chiron by Kusibu
 //#define MAP_OVERRIDE_OSHAN			// Oshan
-//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
+#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
 //#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
 //#define MAP_OVERRIDE_MANTA			// manta map
 //#define MAP_OVERRIDE_DENSITY
@@ -104,7 +104,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_OZYMANDIAS
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_ICARUS
-#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
+//#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 // #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
