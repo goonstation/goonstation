@@ -1,6 +1,10 @@
 
 (t)sat jan 22 22
 (u)Flaborized
+(p)7245
+(e)🎨|sprites
+(+)"Port-a" machines now have a teleporting animation.
+(u)Flaborized
 (p)7217
 (e)🎨|sprites
 (+)Added an animation for opening and closing zippo lighters.
