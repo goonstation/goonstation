@@ -1,4 +1,9 @@
 
+(t)sat jan 22 22
+(u)Flaborized
+(p)7217
+(e)🎨|sprites
+(+)Added an animation for opening and closing zippo lighters.
 (t)fri jan 21 22
 (u)glowbold
 (p)7238
