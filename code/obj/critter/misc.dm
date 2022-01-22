@@ -473,7 +473,6 @@
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
-			if (C.job == "Botanist") continue
 			if (C.health < 0) continue
 			if (C in src.friends) continue
 			if (iscarbon(C) && src.atkcarbon) src.attack = 1
