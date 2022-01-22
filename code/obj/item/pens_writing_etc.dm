@@ -503,7 +503,8 @@
 			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
+			logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
