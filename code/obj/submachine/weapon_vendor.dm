@@ -383,8 +383,8 @@
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
-	path = /obj/item/uplink/syndicate
-	description = "A standard syndicate uplink loaded with 12 telecrytals, allowing you to pick and choose from an array of syndicate items."
+	path = /obj/item/uplink/syndicate/nukeop
+	description = "A standard syndicate uplink loaded with 12 telecrystals, allowing you to pick and choose from an array of syndicate items."
 /*
 /datum/materiel/storage/rucksack
 	name = "Assault Rucksack"

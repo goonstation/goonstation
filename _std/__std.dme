@@ -72,6 +72,7 @@
 #include "defines\tooltips.dm"
 #include "defines\turf.dm"
 #include "defines\ui.dm"
+#include "defines\uplink.dm"
 #include "defines\vehicles.dm"
 #include "defines\wages.dm"
 #include "defines\watermap.dm"
