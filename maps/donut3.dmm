@@ -46686,6 +46686,10 @@
 /area/station/medical/medbay)
 "nyK" = (
 /obj/table/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /obj/item/item_box/pens{
 	pixel_x = -7;
 	pixel_y = 9

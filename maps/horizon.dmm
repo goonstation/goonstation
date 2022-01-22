@@ -52697,6 +52697,10 @@
 	},
 /obj/table/wood/auto,
 /obj/item/clipboard/with_pen,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /obj/item/storage/box/diskbox,
 /obj/disposalpipe/segment{
 	dir = 4

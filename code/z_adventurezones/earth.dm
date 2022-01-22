@@ -563,7 +563,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	Entered(atom/movable/Obj,atom/OldLoc)
 		if (isliving(Obj))
 			var/mob/living/L = Obj
-			if (L.ckey == "enakai" || L.ckey == "rodneydick")		//The aussies are immune due to constant exposure
+			if (down_under_verification(L))		//The aussies are immune due to constant exposure
 				return
 			var/matrix/M = L.transform
 			animate(L, transform = matrix(M, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
@@ -572,13 +572,14 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	Exited(atom/movable/Obj, atom/newloc)
 		if (isliving(Obj))
 			var/mob/living/L = Obj
-			if (L.ckey == "enakai" || L.ckey == "rodneydick")
+			if (down_under_verification(L))
 				return
 			var/matrix/M = L.transform
 			animate(L, transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
 			animate( transform = matrix(M, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 3)
 
-
+	proc/down_under_verification(var/mob/living/L)
+		return L.ckey in list("enakai", "rodneydick", "walpvrgis", "chrisb340")
 
 
 
