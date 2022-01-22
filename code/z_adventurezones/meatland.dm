@@ -926,19 +926,6 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		gibs(.)
 		qdel(src)
 
-
-/obj/item/clothing/suit/space/soviet
-	name = "Lastochka-19 space suit"
-	desc = "A bulky space suit used by the current Soviet space program.  This one smells like fart bologna."
-	icon_state = "sovspace"
-	item_state = "sov_suit"
-
-/obj/item/clothing/head/helmet/space/soviet
-	name = "cosmonaut helmet"
-	desc = "Korolyov's pride."
-	icon_state = "cosmonaut"
-	item_state = "cosmonaut"
-
 /obj/item/luggable_computer/cheget
 	name = "important-looking briefcase"
 	desc = "A lockable briefcase that looks really important.  It has insignias with cyrillic lettering on them."

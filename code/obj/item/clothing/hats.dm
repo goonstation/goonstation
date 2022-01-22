@@ -127,6 +127,11 @@ proc/filter_trait_hats(var/type)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
 
+/obj/item/clothing/head/emerg/old
+	name = "outdated emergency hood"
+	icon_state = "emerg-OLD"
+	desc = "A dusty out of date emergency hood. It hasn't seen use in a long time... which is probably bad."
+
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"

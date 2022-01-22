@@ -36,7 +36,7 @@
 
 	oldish
 		icon_state = "space-OLD"
-		desc = "A relic of the past."
+		desc = "An older model space helmet. Surprisingly still vacuum sealed."
 		item_state = null
 
 /obj/item/clothing/head/helmet/space/engineer
@@ -72,12 +72,40 @@
 		user.update_clothing()
 		return
 
+/obj/item/clothing/head/helmet/space/engineer/old
+	desc = "An out of date space helmet that comes equipped with a builtin flashlight."
+	icon_state = "espace0-OLD"
+
+	flashlight_toggle(var/mob/user, var/force_on = 0)
+		on = !on
+		src.icon_state = "espace[on]-OLD"
+		if (on)
+			light_dir.update(1)
+		else
+			light_dir.update(0)
+		user.update_clothing()
+		return
+
 /obj/item/clothing/head/helmet/space/engineer/april_fools
 	icon_state = "espace0-alt"
 
 	flashlight_toggle(var/mob/user, var/force_on = 0)
 		on = !on
 		src.icon_state = "espace[on]-alt"
+		if (on)
+			light_dir.update(1)
+		else
+			light_dir.update(0)
+		user.update_clothing()
+		return
+
+/obj/item/clothing/head/helmet/space/engineer/april_fools/old
+	desc = "An out of date space helmet that comes equipped with a builtin flashlight."
+	icon_state = "espace0-alt-OLD"
+
+	flashlight_toggle(var/mob/user, var/force_on = 0)
+		on = !on
+		src.icon_state = "espace[on]-alt-OLD"
 		if (on)
 			light_dir.update(1)
 		else
@@ -250,7 +278,7 @@
 
 	old
 		icon_state = "syndicate-OLD"
-		desc = "A relic of the past."
+		desc = "An older model of the dastardly Syndicate's space helmet. It's a miracle this thing is still intact after all these years."
 		item_state = null
 
 	commissar_cap
@@ -424,6 +452,17 @@
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)
+
+/obj/item/clothing/head/helmet/space/soviet
+	name = "cosmonaut helmet"
+	desc = "Korolyov's pride."
+	icon_state = "cosmonaut"
+	item_state = "cosmonaut"
+
+/obj/item/clothing/head/helmet/space/soviet/old
+	name = "old cosmonaut helmet"
+	desc = "A rather outdated space helmet from the earlier days of the Soviet space program."
+	icon_state = "cosmonaut-OLD"
 
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
