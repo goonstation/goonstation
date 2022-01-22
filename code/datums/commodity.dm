@@ -3430,7 +3430,7 @@
 	lowerfluc = -520
 
 /datum/commodity/blackmarket/wrestler/mop
-	comname = "Box of Beer"
+	comname = "Antique Mop"
 	comtype = /obj/item/mop/old
 	desc_sell = "Old style mops! Some SWEAR BY EM!"
 	price = 780
