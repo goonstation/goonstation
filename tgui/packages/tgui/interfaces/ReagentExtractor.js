@@ -3,6 +3,11 @@ import { Box, Button, Dimmer, Divider, Dropdown, Flex, Icon, NoticeBox, NumberIn
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 
+// Feel free to adjust this for performance
+const extractablesPerPage = 25;
+
+const clamp = (value, min, max) => Math.min(Math.max(min, value), max);
+
 const noContainer = {
   name: "No Beaker Inserted",
   id: "inserted",
@@ -250,8 +255,14 @@ const ExtractableList = (props, context) => {
   const { act, data } = useBackend(context);
   const { autoextract } = data;
   const extractables = data.ingredientsData || [];
+  const [page, setPage] = useSharedState(context, 'page', 1);
+  const totalPages = Math.max(1, Math.ceil(extractables.length / extractablesPerPage));
+  if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
+  const extractablesOnPage = extractables.slice(extractablesPerPage*(page - 1),
+    extractablesPerPage*(page - 1) + extractablesPerPage);
+
   return (
-    <Section fill scrollable
+    <Section fill
       title="Extractable Items"
       buttons={(
         <Button.Checkbox
@@ -260,28 +271,58 @@ const ExtractableList = (props, context) => {
           Auto-Extract
         </Button.Checkbox>
       )}>
-      {extractables.map((extractable, index) => (
-        <Fragment key={extractable.id}>
-          <Flex my={0.5}>
-            <Flex.Item grow>
-              {extractable.name + ": " + extractable.id}
-            </Flex.Item>
-            <Flex.Item nowrap>
-              <Button
-                onClick={() => act('extractingredient', { ingredient_id: extractable.id })}
-              >
-                Extract
-              </Button>
-              <Button
-                icon="eject"
-                tooltip="Eject"
-                onClick={() => act('ejectingredient', { ingredient_id: extractable.id })}
-              />
-            </Flex.Item>
-          </Flex>
-          <Divider /> {/* this is sometimes more thin than it should be and I have no idea why */}
-        </Fragment>
-      ))}
+      <Flex height="100%" direction="column">
+        <Flex.Item grow>
+          <Section scrollable fill>
+            {extractablesOnPage.map((extractable, index) => (
+              <Fragment key={extractable.id}>
+                <Flex>
+                  <Flex.Item grow>
+                    {extractable.name}
+                  </Flex.Item>
+                  <Flex.Item nowrap>
+                    <Button
+                      onClick={() => act('extractingredient', { ingredient_id: extractable.id })}
+                    >
+                      Extract
+                    </Button>
+                    <Button
+                      icon="eject"
+                      tooltip="Eject"
+                      onClick={() => act('ejectingredient', { ingredient_id: extractable.id })}
+                    />
+                  </Flex.Item>
+                </Flex>
+                <Divider />
+              </Fragment>
+            ))}
+          </Section>
+        </Flex.Item>
+        {totalPages < 2 || (
+          <Flex.Item textAlign="center" basis={1.5}>
+            <Button
+              icon="caret-left"
+              tooltip="Previous Page"
+              disabled={page < 2}
+              onClick={() => setPage(page - 1)}
+            />
+            <NumberInput
+              value={page}
+              format={value => "Page " + value + "/" + totalPages}
+              minValue={1}
+              maxValue={totalPages}
+              stepPixelSize={5}
+              onChange={(e, value) => setPage(value)}
+            />
+            <Button
+              icon="caret-right"
+              tooltip="Next Page"
+              disabled={page > totalPages - 1}
+              onClick={() => setPage(page + 1)}
+            />
+          </Flex.Item>
+        )}
+      </Flex>
     </Section>
   );
 };
