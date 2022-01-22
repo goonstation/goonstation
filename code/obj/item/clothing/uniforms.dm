@@ -209,6 +209,7 @@
 				src.desc = initial(src.desc)
 				src.icon_state = initial(src.icon_state)
 				src.item_state = "mlm"
+			src.UpdateIcon()
 
 
 
