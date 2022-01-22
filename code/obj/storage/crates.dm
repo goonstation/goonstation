@@ -429,7 +429,7 @@
 
 /obj/storage/crate/chest
 	name = "treasure chest"
-	desc = "Glittering gold. Trinkets and baubles, paid for in blood."
+	desc = "Glittering gold, trinkets and baubles. Paid for in blood."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "chest"
 	icon_opened = "chest-open"

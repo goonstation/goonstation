@@ -143,7 +143,7 @@
 
 /obj/shrub
 	name = "shrub"
-	desc = "A bush. Despite all your efforts, you can't seem to tell differentiate or not it's real."
+	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
 	anchored = 1
@@ -401,7 +401,7 @@
 
 /obj/potted_plant
 	name = "potted plant"
-	desc = "Considering the fact that plants communicate through their roots, you wonder if this one feels lonely ever."
+	desc = "Considering the fact that plants communicate through their roots, you wonder if this one ever feels lonely."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ppot0"
 	anchored = 1

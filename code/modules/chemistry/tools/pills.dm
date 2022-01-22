@@ -175,7 +175,7 @@
 
 /obj/item/reagent_containers/pill/salicylic_acid
 	name = "analgesic pill"
-	desc = "A painkiller pill, used to treat minor injuries."// less accurate to IRL but the old desc was really misleading
+	desc = "A painkiller used to treat minor injuries." 
 	icon_state = "pill4"
 
 	New()

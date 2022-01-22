@@ -50,7 +50,7 @@
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "bottle (epinephrine)"
-	desc = "A small bottle. Contains epinephrine, also known as a adrenaline. Used for stabilizing critical patients and as an antihistamine in server allergic reactions."
+	desc = "A small bottle. Contains epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 10
 	initial_reagents = "epinephrine"
@@ -71,14 +71,14 @@
 
 /obj/item/reagent_containers/glass/bottle/saline
 	name = "bottle (saline-glucose)"
-	desc = "A small bottle containing saline-glucose solution, used to treat blood loss, shock, and speed healing."
+	desc = "A small bottle containing saline-glucose solution, used for treating blood loss and shock. It also speeds up recovery from small injuries."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "saline"
 
 /obj/item/reagent_containers/glass/bottle/aspirin
 	name = "bottle (salicylic acid)"
-	desc = "A small bottle containing salicyclic acid, used as a painkiller and in treating for moderate injuries."
+	desc = "A small bottle containing salicyclic acid, used as a painkiller and in treating moderate injuries."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
@@ -99,21 +99,21 @@
 
 /obj/item/reagent_containers/glass/bottle/proconvertin
 	name = "bottle (proconvertin)"
-	desc = "A small bottle of coagulant, for helping reduce blood loss and blood pressure.  It has a warning label on it about hypertension."
+	desc = "A small bottle of coagulant, for helping reduce blood loss and blood pressure. It has a warning label on it about hypertension."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "proconvertin"
 
 /obj/item/reagent_containers/glass/bottle/filgrastim
 	name = "bottle (filgrastim)"
-	desc = "A small bottle of filgrastim, for stimulating blood production in heavy blood loss cases.  It has a warning label on it about hypertension."
+	desc = "A small bottle of filgrastim, for stimulating blood production in cases with heavy blood loss. It has a warning label on it about hypertension."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "filgrastim"
 
 /obj/item/reagent_containers/glass/bottle/calomel
 	name = "bottle (calomel)"
-	desc = "A small bottle of calomel, for flushing chemicals from the blood stream in severe poisonings. It has a warning label on it about toxicity."
+	desc = "A small bottle of calomel, for flushing chemicals from the blood stream in cases with severe poisoning. It has a warning label on it about toxicity."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "calomel"
@@ -127,7 +127,7 @@
 
 /obj/item/reagent_containers/glass/bottle/morphine
 	name = "bottle (morphine)"
-	desc = "A small bottle of morphine, a powerful painkiller and sedative.  It has a warning label on it about addiction and minor toxicity."
+	desc = "A small bottle of morphine, a powerful painkiller and sedative. It has a warning label on it about addiction and minor toxicity."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "morphine"
@@ -206,7 +206,7 @@
 
 /obj/item/reagent_containers/glass/bottle/synaptizine
 	name = "bottle (synaptizine)"
-	desc = "A small bottle of synaptizine, a non-addictive stimulant whose side effects can cause regeneration of nerve cells."// pulled this one outta my ass but it's important to convey it's brain medicine
+	desc = "A small bottle of synaptizine, a non-addictive stimulant whose side effects can cause regeneration of brain tissue."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "synaptizine"
@@ -227,14 +227,14 @@
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
 	name = "bottle (antihistamine)"
-	desc = "A small bottle of antihistamines, useful in reducing allergic reactions."
+	desc = "A small bottle of antihistamines, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"
 
 /obj/item/reagent_containers/glass/bottle/eyedrops
 	name = "bottle (oculine)"
-	desc = "A small bottle of combined eye and ear medication. A label on it reads: For best usage, apply topically."
+	desc = "A small bottle of combined eye and ear medication. A label on it reads: \"For ease of usage, apply topically.\""
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "oculine"
