@@ -7,7 +7,7 @@
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
-	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
+	desc = "An all-around electrical tool, capable of sending jolts of electricity into things and reading voltages, but most importantly, hacking airlocks and APCs without cutting too many wires."// I really hope they actually read voltage and not something else
 	m_amt = 50
 	g_amt = 20
 	mats = list("CRY-1", "CON-2")

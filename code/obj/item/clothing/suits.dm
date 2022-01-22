@@ -134,7 +134,7 @@
 
 	plastic
 		name = "plastic jacket"
-		desc = "A translucent plastic jacket. It looks flimsy and incredibly tacky."
+		desc = "A translucent, flimsy plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
 		icon_state = "jacket_plastic"
 		item_state = "jacket_plastic"
 
