@@ -163,11 +163,11 @@
 	 * example input (formatted for readability)
 	 * 	{
 	 * 		"some_ckey":{
-	 * 			"persisten_bank":42069,
+	 * 			"persistent_bank":42069,
 	 * 			"peristent_bank_item":"none"
 	 * 		},
 	 * 		"some_other_ckey":{
-	 * 			"persisten_bank":1337,
+	 * 			"persistent_bank":1337,
 	 * 			"peristent_bank_item":"rubber_ducky"
 	 * 		}
 	 * 	}
