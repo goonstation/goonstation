@@ -1,3 +1,6 @@
+(t)tue jan 22 21
+(u)Zonespace
+(*)Added a new verb, "set living pop cap", allowing you to set a maximum number of alive people that can be in a round at once. If there are more than this number, no new people can latejoin until the number goes back down below the threshold.
 (t)tue jan 15 21
 (u)BatElite
 (*)Added the light switches debug overlay, which shows how many switches are physically present in an area and where to find them.
