@@ -32,34 +32,19 @@
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
-	uses_multiple_icon_states = 1
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS
-	var/hood = 0
 	var/hcolor = null
 
 	New()
 		..()
+		src.AddComponent(/datum/component/toggle_hood, hood_style="hoodie[src.hcolor ? "-[hcolor]" : null]")
 		src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 		src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
-
-	attack_self(mob/user as mob)
-		src.hood = !(src.hood)
-		user.show_text("You flip [src]'s hood [src.hood ? "up" : "down"].")
-		if (src.hood)
-			src.over_hair = 1
-			src.body_parts_covered = HEAD|TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]-up"
-		else
-			src.over_hair = 0
-			src.body_parts_covered = TORSO|ARMS
-			src.icon_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
-			src.item_state = "hoodie[src.hcolor ? "-[hcolor]" : null]"
 
 	blue
 		desc = "Would fit well on a skeleton."

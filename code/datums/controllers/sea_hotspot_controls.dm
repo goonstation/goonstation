@@ -967,10 +967,11 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			random_brute_damage(M, 55, 1)
-			M.changeStatus("weakened", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+			if (isliving(M))
+				random_brute_damage(M, 55, 1)
+				M.changeStatus("weakened", 1 SECOND)
+				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)

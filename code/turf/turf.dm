@@ -1029,14 +1029,11 @@ proc/generate_space_color()
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
-	A.z = zlevel
-	if (newx)
-		A.x = newx
-	if (newy)
-		A.y = newy
-	SPAWN_DBG(0)
-		if ((A?.loc))
-			A.loc.Entered(A)
+	var/target_x = newx || A.x
+	var/target_y = newy || A.y
+	var/turf/target_turf = locate(target_x, target_y, zlevel)
+	if(target_turf)
+		A.set_loc(target_turf)
 #endif
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)

@@ -1729,6 +1729,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			spell_batpoof(src, cloak = 1)
 		if (special_sprint & SPRINT_SNIPER)
 			begin_sniping()
+		if (special_sprint & SPRINT_DESIGNATOR)
+			begin_designating()
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!(HAS_MOB_PROPERTY(src, PROP_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))

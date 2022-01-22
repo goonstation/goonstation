@@ -35239,7 +35239,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
+/area/station/crew_quarters/hor)
 "bMT" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_albert"
@@ -35926,7 +35926,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
+/area/station/crew_quarters/hor)
 "bOs" = (
 /obj/reagent_dispensers/foamtank,
 /obj/item/extinguisher,
@@ -37048,7 +37048,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "bQL" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = -24;
 	pixel_y = 8
@@ -38382,7 +38382,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bTO" = (
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = -24;
 	pixel_y = -8
@@ -45281,6 +45281,10 @@
 	pixel_x = -12;
 	pixel_y = 7
 	},
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /obj/item/device/audio_log{
 	pixel_x = 3;
 	pixel_y = 2
@@ -45738,7 +45742,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "cmU" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "artlabgun";
 	name = "Emergency Ejection Button";
@@ -53526,7 +53530,7 @@
 	pixel_x = -7;
 	pixel_y = 36
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_y = 26
 	},
@@ -54337,6 +54341,14 @@
 /obj/lattice,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"fNQ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/effects/background_objects/star_red,
+/turf/space,
+/area/space)
 "fOw" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -59470,6 +59482,10 @@
 	dir = 4
 	},
 /area/station/security/main)
+"pHh" = (
+/obj/effects/background_objects/x0,
+/turf/space,
+/area/space)
 "pIe" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -61306,6 +61322,14 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/security/main)
+"sGL" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/effects/background_objects/star_blue,
+/turf/space,
+/area/space)
 "sHJ" = (
 /obj/machinery/computer/solar_control/east{
 	dir = 4
@@ -64508,7 +64532,7 @@
 /area/station/engine/elect)
 "xVK" = (
 /obj/machinery/launcher_loader/west{
-	door_delay = 4
+	door_delay = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -81501,7 +81525,7 @@ adC
 adC
 adC
 adC
-adC
+pHh
 adC
 adC
 adC
@@ -95720,11 +95744,11 @@ aaw
 aaw
 aap
 bIP
-bIP
-bIP
+bJY
+bJY
 bMS
 bOr
-bIP
+bJY
 bJY
 jiw
 bJY
@@ -114053,7 +114077,7 @@ aaq
 aaq
 aaq
 aaq
-aaq
+sGL
 uIM
 adw
 aei
@@ -116287,7 +116311,7 @@ aap
 aaq
 aaq
 aaq
-aaq
+fNQ
 aaq
 acW
 adC

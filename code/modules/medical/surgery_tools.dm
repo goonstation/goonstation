@@ -1362,6 +1362,7 @@ CONTAINS:
 	item_state = "pen"
 	icon_on = "penlight1"
 	icon_off = "penlight0"
+	icon_broken = "penlightbroken"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 7
