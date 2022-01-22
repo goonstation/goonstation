@@ -743,6 +743,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	icon = 'icons/turf/walls_overgrown.dmi'
 	mod = "rock-"
 	icon_state = "rock-0"
+	connect_overlay = 0
 
 /turf/unsimulated/wall/auto/adventure/ancient
 	name = "strange wall"
