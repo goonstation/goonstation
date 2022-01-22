@@ -99,7 +99,7 @@
 
 /obj/item/reagent_containers/glass/bottle/proconvertin
 	name = "bottle (proconvertin)"
-	desc = "A small bottle of coagulant, for helping reduce blood loss and blood pressure.  It has a warning label on it about hypertension."
+	desc = "A small bottle of coagulant, for helping reduce blood loss and blood pressure. It has a warning label on it about hypertension."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "proconvertin"
