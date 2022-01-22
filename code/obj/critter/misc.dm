@@ -490,18 +490,25 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if(prob(35))
+		if(prob(50))
 			if (M.reagents)
 				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
 				M.reagents.add_reagent("neurotoxin", 15)
 				M.reagents.add_reagent("toxin", 6)
-				M.changeStatus("stunned", 1 SECONDS)
 				M.emote("scream")
 				M.add_karma(1)
 		else
 			random_brute_damage(M, rand(5,10),1)
-			M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
+			M.visible_message("<span class='combat'><B>[src]</B> tries to grab [src.target] with its pincers!</span>")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+			M.changeStatus("stunned", 2 SECONDS)
+
+	CritterAttack(mob/M)
+		random_brute_damage(M, rand(3,6),1)
+		M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
+		playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+
+
 
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
