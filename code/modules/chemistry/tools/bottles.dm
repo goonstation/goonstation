@@ -106,7 +106,7 @@
 
 /obj/item/reagent_containers/glass/bottle/filgrastim
 	name = "bottle (filgrastim)"
-	desc = "A small bottle of filgrastim, for stimulating blood production in heavy blood loss cases.  It has a warning label on it about hypertension."
+	desc = "A small bottle of filgrastim, for stimulating blood production in cases with heavy blood loss. It has a warning label on it about hypertension."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "filgrastim"
