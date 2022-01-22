@@ -332,7 +332,7 @@
 
 
 /obj/lattice
-	desc = "A series of intersecing metal rods, used as a structural skeleton for space stations and to facilitate movement in a vaccum."
+	desc = "A series of intersecing metal rods, used as a structural skeleton for space stations and to facilitate movement in a vacuum."
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "lattice"
