@@ -70,7 +70,9 @@ const ReagentDisplay = (props, context) => {
     <Section
       title={
         <Flex inline nowrap>
-          <Flex.Item grow overflow="hidden">
+          <Flex.Item grow
+            overflow="hidden"
+            style={{ "text-overflow": "ellipsis" }}>
             {container.name}
           </Flex.Item>
           <Flex.Item px={4} /> {/* this prevents the title buttons from being overlapped by the title text */}
@@ -193,9 +195,9 @@ const ReagentGraph = (props, context) => {
           </Box>
         }
         position="bottom">
-        <Box height="14px"
+        <Box height="14px" // same height as a Divider
           backgroundColor={contents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
-          textAlign="center"> {/* same height as a Divider */}
+          textAlign="center">
           {container.fake || (
             <Box
               as="span"
