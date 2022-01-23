@@ -43,6 +43,9 @@
 	/// an artifact crate is already "on the way"
 	var/artifacts_on_the_way = FALSE
 
+	///List of pending crates (used only for transception antenna, nadir cargo system)
+	var/list/pending_crates = list()
+
 	New()
 		..()
 
@@ -441,6 +444,17 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
+	//NADIR: Transception antenna cargo I/O
+#ifdef MAP_OVERRIDE_NADIR
+	proc/receive_crate(atom/movable/shipped_thing)
+
+		pending_crates.Add(shipped_thing)
+
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+#else
 	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
@@ -467,8 +481,6 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-
-
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
 				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
@@ -480,6 +492,7 @@
 						P.close()
 
 		shipped_thing.throw_at(target, 100, 1)
+#endif
 
 	proc/clear_path_to_market()
 		var/list/turf/to_clear = get_path_to_market()

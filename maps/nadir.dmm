@@ -450,9 +450,13 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/office)
 "alf" = (
-/obj/decal/tile_edge/floorguide/qm,
-/turf/simulated/floor/circuit/purple,
-/area/supply/spawn_point)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "alm" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/recharger{
@@ -4606,16 +4610,15 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "czo" = (
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 1
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/railing/purple/reinforced{
-	dir = 8;
-	layer = 2.9;
-	pixel_x = -5
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
 	},
-/turf/simulated/floor/circuit/purple,
-/area/supply/sell_point)
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "czE" = (
 /obj/machinery/door/poddoor{
 	id = "ai_core";
@@ -4660,14 +4663,6 @@
 	},
 /turf/unsimulated/wall/trench,
 /area/space)
-"cAT" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 5
-	},
-/area/station/quartermaster/magnet{
-	name = "Cargo Transception"
-	})
 "cBd" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/engine,
@@ -5914,11 +5909,12 @@
 	name = "Northwest Breach Hull"
 	})
 "dsf" = (
-/obj/decal/tile_edge/floorguide/qm{
-	dir = 8
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 10
 	},
-/turf/simulated/floor/circuit/purple,
-/area/supply/delivery_point)
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "dsv" = (
 /obj/table/auto,
 /obj/machinery/light/small{
@@ -11672,7 +11668,12 @@
 /turf/simulated/floor/engine,
 /area/station/medical/robotics)
 "gEI" = (
-/turf/simulated/floor/engine/caution/north,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -12778,23 +12779,28 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "hgN" = (
-/obj/decal/tile_edge/floorguide/evac{
-	dir = 4
+/obj/cable{
+	icon_state = "1-8"
 	},
-/obj/railing/purple/reinforced{
-	dir = 8;
-	layer = 2.9;
-	pixel_x = -5
+/obj/cable{
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/circuit/purple,
-/area/supply/sell_point)
+/turf/simulated/floor/engine/caution/east,
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "hhc" = (
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "hhk" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/engine/caution/west,
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/floorguide/qm{
+	dir = 8
+	},
+/turf/simulated/floor/engine/caution/south,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -16839,7 +16845,15 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southeast)
 "jlW" = (
-/turf/simulated/floor/engine/caution/west,
+/obj/machinery/networked/transception_pad,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/vintage,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -18678,13 +18692,16 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/cloner)
 "kkS" = (
-/obj/machinery/light/small/floor,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 10
+/obj/machinery/power/apc/autoname_east,
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "line1"
 	},
+/obj/item/device/calibrator,
+/turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -19809,7 +19826,7 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/sanctuary)
 "kOm" = (
-/turf/simulated/floor/engine/caution/south,
+/turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -21884,7 +21901,10 @@
 	icon_state = "1-4"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/engine/caution/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -22607,8 +22627,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes{
-	chargelevel = 50000;
-	output = 25000
+	chargelevel = 50000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -27771,8 +27790,7 @@
 "psV" = (
 /obj/cable,
 /obj/machinery/power/smes{
-	chargelevel = 50000;
-	output = 25000
+	chargelevel = 50000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
@@ -29406,7 +29424,14 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "qrT" = (
-/turf/simulated/floor/engine/caution/east,
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/floorguide/qm{
+	dir = 1
+	},
+/turf/simulated/floor/engine/caution/south,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -31254,6 +31279,16 @@
 /obj/machinery/recharger,
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
+"rzO" = (
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 5
+	},
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "rAP" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light/emergency{
@@ -33748,6 +33783,19 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/engine,
 /area/station/security/main)
+"sTW" = (
+/obj/machinery/networked/transception_pad,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "sUo" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
@@ -36571,7 +36619,6 @@
 	name = "South Catalytic Substation"
 	})
 "uyk" = (
-/obj/machinery/light/small/floor,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -36579,9 +36626,12 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 6
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "line1"
 	},
+/obj/item/device/calibrator,
+/turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -37125,10 +37175,11 @@
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "uQh" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 9
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
 	},
+/obj/item/device/calibrator,
+/turf/simulated/floor/engine/caution/north,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -39996,7 +40047,9 @@
 /turf/simulated/floor/engine,
 /area/station/storage/eva)
 "wMe" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/power/apc/autoname_north{
+	cell_type = 7500
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -90081,8 +90134,8 @@ kpS
 ftR
 uyk
 qrT
-qrT
-cAT
+sTW
+uQh
 mPw
 nsy
 mgm
@@ -90686,7 +90739,7 @@ oSF
 lSo
 czo
 hgN
-gEI
+rzO
 mPw
 iJJ
 hDs
