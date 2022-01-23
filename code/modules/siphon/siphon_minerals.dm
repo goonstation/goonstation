@@ -238,7 +238,11 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
-
+//telecrystal and gnesis have unusual formative conditions difficult to induce manually
+//should probably have highly specific parameters, maybe obtained through secrets?
+//idea in particular: the required shear is in the 96-105 range and chooses a different value every 60 or 90 sec
+//and the recipe is learned through a device that shows you when this value changes, so you need a rapidly adjustable resonator setup
+/*
 /datum/siphon_mineral/telecrystal
 	name = "Telecrystal"
 	tick_req = 200
@@ -249,7 +253,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 		src.tick_req = rand(200,230)
 		src.shear = rand(61,63)
 		..()
-
+*/
 //shear of 65 or higher should probably do Bad Things unless precisely set.
 /datum/siphon_mineral/starstone
 	name = "Starstone"
