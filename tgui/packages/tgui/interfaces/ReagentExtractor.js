@@ -1,5 +1,5 @@
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Flex, Icon, NoticeBox, NumberInput, Section, Stack, Tooltip } from '../components';
+import { Box, Button, ColorBox, Dimmer, Divider, Flex, Icon, NoticeBox, NumberInput, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 
@@ -13,6 +13,7 @@ const noContainer = {
   id: "inserted",
   maxVolume: 100,
   totalVolume: 0,
+  fake: true,
 };
 
 export const ReagentExtractor = (props, context) => {
@@ -31,7 +32,7 @@ export const ReagentExtractor = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           {/* Insertable Container */}
-          <Stack.Item>
+          <Stack.Item basis={19.5}>
             <ReagentDisplay container={inserted} insertable />
           </Stack.Item>
           <Stack.Item grow>
@@ -75,7 +76,7 @@ const ReagentDisplay = (props, context) => {
           <Flex.Item px={4} /> {/* this prevents the title buttons from being overlapped by the title text */}
         </Flex>
       }
-      buttons={(
+      buttons={
         <>
           <Button
             tooltip="Flush All"
@@ -93,7 +94,7 @@ const ReagentDisplay = (props, context) => {
             />
           )}
         </>
-      )}>
+      }>
       {!!props.container || (
         <Dimmer>
           <Button
@@ -106,7 +107,6 @@ const ReagentDisplay = (props, context) => {
         </Dimmer>
       )}
       <ReagentGraph container={container} />
-      <Divider />
       <ReagentList container={container} />
       <Flex wrap justify="center">
         <Flex.Item grow />
@@ -157,34 +157,56 @@ const ReagentDisplay = (props, context) => {
 
 const ReagentGraph = (props, context) => {
   const { container } = props;
-  const { maxVolume, totalVolume } = container;
+  const { maxVolume, totalVolume, finalColor } = container;
   const contents = container.contents || [];
 
   return (
-    <Flex>
-      {contents.map((reagent, index) => (
-        <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
-          <Tooltip content={reagent.name + " (" + reagent.volume + "u)"} position="bottom">
-            <Box
+    <Fragment>
+      <Flex>
+        {contents.map((reagent, index) => (
+          <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
+            <Tooltip content={`${reagent.name} (${reagent.volume}u)`} position="bottom">
+              <Box
+                py={3}
+                px={0}
+                my={0}
+                backgroundColor={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
+              />
+            </Tooltip>
+          </Flex.Item>
+        ))}
+        <Flex.Item grow={((maxVolume - totalVolume)/maxVolume)}>
+          <Tooltip content={`Nothing (${maxVolume - totalVolume}u)`} position="bottom">
+            <NoticeBox
               py={3}
               px={0}
               my={0}
-              backgroundColor={"rgba(" + reagent.colorR + ", " + reagent.colorG + ", " + reagent.colorB + ", 1)"}
+              backgroundColor="rgba(0, 0, 0, 0)" // invisible noticebox kind of nice
             />
           </Tooltip>
         </Flex.Item>
-      ))}
-      <Flex.Item grow={((maxVolume - totalVolume)/maxVolume)}>
-        <Tooltip content={"Nothing (" + (maxVolume - totalVolume) + "u)"} position="bottom">
-          <NoticeBox
-            py={3}
-            px={0}
-            my={0}
-            backgroundColor="rgba(0,0,0,0)" // invisible noticebox kind of nice
-          />
-        </Tooltip>
-      </Flex.Item>
-    </Flex>
+      </Flex>
+      <Tooltip
+        content={
+          <Box>
+            <ColorBox color={finalColor} /> Current Mixture Color
+          </Box>
+        }
+        position="bottom">
+        <Box height="14px"
+          backgroundColor={contents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
+          textAlign="center"> {/* same height as a Divider */}
+          {container.fake || (
+            <Box
+              as="span"
+              backgroundColor="rgba(0, 0, 0, 0.5)"
+              px={1}>
+              {`${totalVolume}/${maxVolume}`}
+            </Box>
+          )}
+        </Box>
+      </Tooltip>
+    </Fragment>
   );
 };
 
@@ -205,7 +227,7 @@ const ReagentList = (props, context) => {
                 style={{
                   "text-shadow": "0 0 3px #000;",
                 }}
-                color={"rgba(" + reagent.colorR + ", " + reagent.colorG + ", " + reagent.colorB + ", 1)"}
+                color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
               />
               {`( ${reagent.volume}u ) ${reagent.name}`}
             </Flex.Item>

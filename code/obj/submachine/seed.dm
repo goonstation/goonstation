@@ -808,11 +808,13 @@
 					maxVolume = R.maximum_volume,
 					totalVolume = R.total_volume,
 					selected = src.extract_to == thisContainer,
-					contents = list()
+					contents = list(),
+					finalColor = "#000000"
 				)
 
 				var/list/contents = thisContainerData["contents"]
 				if(istype(R) && R.reagent_list.len>0)
+					thisContainerData["finalColor"] = R.get_average_rgb()
 					// Reagent data
 					for(var/reagent_id in R.reagent_list)
 						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
