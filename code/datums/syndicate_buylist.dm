@@ -217,7 +217,7 @@ proc/build_syndi_buylist_cache()
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/spy_theft, /datum/game_mode/revolution)
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
-		if (isnukeop(owner))
+		if (isnukeop(owner) || isnukeopgunbot(owner))
 			stabby.light_c.set_color(255, 0, 0)
 			stabby.bladecolor = "R"
 		return
@@ -934,7 +934,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
-	item = /obj/item/gun/energy/laser_gun/pred
+	item = /obj/item/gun/energy/plasma_gun
 	cost = 6
 	desc = "An experimental laser design with a self-charging cerenkite battery."
 	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
@@ -1038,6 +1038,8 @@ This is basically useless for anyone but miners.
 	name = "You shouldn't see me!"
 	cost = 0
 	desc = "You shouldn't see me!"
+	exclusivemode = list(/datum/game_mode/nuclear) // Fun story here, I made the shit mistake of assuming that surplus crates and spy bounties couldn't roll this, leading to this shit https://imgur.com/a/uMaM0oV
+	not_in_crates = TRUE
 
 /datum/syndicate_buylist/commander/reinforcement
 	name = "Reinforcements"

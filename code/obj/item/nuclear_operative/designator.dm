@@ -7,8 +7,6 @@
 	desc = "A handheld monocular device with a laser built into it, used for calling in fire support."
 	icon_state = "laser_designator"
 	item_state = "electronic"
-	density = FALSE
-	anchored = FALSE
 	w_class = W_CLASS_SMALL
 	/// How many times can this be used?
 	var/uses = 1
@@ -219,6 +217,8 @@
 		if(!isnull(src.target_overlay))
 			target_turf.overlays -= src.target_overlay
 		explosion_new(user, target_turf, 75)
+		sound_turf = get_turf(src)
+		sound_offset_length = initial(sound_offset_length)
 		return TRUE
 
 

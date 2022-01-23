@@ -51577,6 +51577,10 @@
 /area/station/security/main)
 "oXc" = (
 /obj/table/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 4
+	},
 /obj/item/storage/box/tapebox,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,

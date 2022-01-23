@@ -185,8 +185,8 @@
 
 			//tailstuff
 			if (src.organHolder.tail) // Has a tail?
-				// Comment if their tail deviates from the norm. And that tail isnt some wierd bone thing.
-				if (src.organHolder.tail && !istype(src.organHolder.tail, /obj/item/organ/tail/bone) && (!(src.mob_flags & SHOULD_HAVE_A_TAIL) || src.organHolder.tail?.donor_original != src))
+				// Comment if their tail deviates from the norm.
+				if (src.organHolder.tail && (!(src.mob_flags & SHOULD_HAVE_A_TAIL) || src.organHolder.tail?.donor_original != src))
 					if (!src.organHolder.butt) // no butt?
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above the spot where [t_his] butt should be.</span>"
 					else
@@ -196,9 +196,7 @@
 					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
 
 			else // missing a tail?
-				if (src.mob_flags & IS_BONER) // They a skelly?
-					. += "<br><span class='alert'><B>[src.name]'s tailbone is missing!</B></span>" // ez, dont mention the wound, cus bone
-				else if (src.organHolder.chest.op_stage >= 10.0) // first person to call this a tailhole is getting dropkicked into the sun
+				if (src.organHolder.chest.op_stage >= 10.0) // first person to call this a tailhole is getting dropkicked into the sun
 					if (src.mob_flags & SHOULD_HAVE_A_TAIL) // Are they supposed to have a tail?
 						if (!src.organHolder.butt) // Also missing a butt?
 							. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back where [t_his] tail should be!</B></span>"

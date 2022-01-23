@@ -172,7 +172,7 @@
 /obj/item/device/radio/intercom/syndicate
 	name = "Syndicate Intercom"
 	frequency = R_FREQ_SYNDICATE
-	broadcasting = FALSE
+	broadcasting = TRUE
 	device_color = "#820A16"
 	hardened = TRUE
 

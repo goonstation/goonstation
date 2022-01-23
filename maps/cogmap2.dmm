@@ -30026,6 +30026,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "brm" = (
@@ -36828,6 +36829,14 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/nightvision,
 /obj/item/clothing/glasses/nightvision,
+/obj/item/breaching_charge{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/breaching_charge{
+	pixel_x = -6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bEL" = (
@@ -37410,6 +37419,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bFY" = (
@@ -43283,6 +43293,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bQj" = (
@@ -43958,6 +43969,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bRL" = (
@@ -44817,6 +44829,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "bTs" = (
@@ -68712,6 +68725,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/window/auto/reinforced,
 /obj/cable,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
 "cVS" = (
@@ -71067,12 +71081,16 @@
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
 /obj/machinery/light,
-/obj/item/hand_labeler,
-/obj/item/hand_labeler,
 /obj/artifact_paper_dispenser{
-	pixel_x = -5;
+	pixel_x = -6;
 	pixel_y = 10
 	},
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/hand_labeler,
+/obj/item/hand_labeler,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "daF" = (
@@ -78280,6 +78298,14 @@
 	pixel_x = -1;
 	pixel_y = 1
 	},
+/obj/item/breaching_charge{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/breaching_charge{
+	pixel_x = -6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "hJl" = (
@@ -78759,6 +78785,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
+"jOW" = (
+/obj/effects/background_objects/x0,
+/turf/space,
+/area/space)
 "jRr" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet{
@@ -79558,6 +79588,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"ozI" = (
+/obj/effects/background_objects/star_red,
+/turf/space,
+/area/space)
 "oGS" = (
 /obj/window/auto/reinforced,
 /obj/window_blinds/cog2{
@@ -80444,6 +80478,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"tQm" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/effects/background_objects/star_blue,
+/turf/space,
+/area/space)
 "tTd" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -96098,7 +96140,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jOW
 aaa
 aaa
 aaa
@@ -143166,7 +143208,7 @@ aPx
 aaa
 aaa
 aaa
-aam
+tQm
 aFi
 aXm
 aZe
@@ -143230,7 +143272,7 @@ cie
 aaI
 aaa
 aaa
-aaa
+ozI
 aaa
 ckG
 cuq

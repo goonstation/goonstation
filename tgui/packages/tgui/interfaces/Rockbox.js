@@ -72,7 +72,8 @@ export const Rockbox = (_props, context) => {
                                     onClick={() => act('toggle-ore-sell-status', { ore: currentOre.name })}
                                   />
                                   <Button
-                                    disabled={takeAmount > currentOre.amount}
+                                    color={currentOre.amount < takeAmount ? 'orange' : 'default'}
+                                    disabled={currentOre.amount === 0}
                                     onClick={() => act('dispense-ore', {
                                       ore: currentOre.name,
                                       take: takeAmount,
