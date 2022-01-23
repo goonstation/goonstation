@@ -1,5 +1,9 @@
 
 (t)sun jan 23 22
+(u)DimWhat
+(p)7176
+(e)🎨|sprites
+(*)Added a new hat and apron for the Head Surgeon role.
 (u)Azrun
 (p)7246
 (e)🆕🎨⚖|feature, sprites, balance
