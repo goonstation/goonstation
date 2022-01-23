@@ -40361,7 +40361,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 15000;
+	cell_type = 7500;
 	dir = 1;
 	name = "Transception Antenna APC";
 	pixel_y = 24;

@@ -1,10 +1,10 @@
 ///Station's transception anrray, used for cargo I/O operations on maps that include one
 var/global/obj/machinery/communications_dish/transception/transception_array
 
-//Cost to "kick-start" a transception, charged against area APC
-#define ARRAY_STARTCOST 400
-//Cost to follow through on the transception, regular power use
-#define ARRAY_TELECOST 1200
+//Cost to "kick-start" a transception, charged against area APC in cell units of power
+#define ARRAY_STARTCOST 150
+//Cost to follow through on the transception, charged against grid in grid units of power
+#define ARRAY_TELECOST 2500
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
