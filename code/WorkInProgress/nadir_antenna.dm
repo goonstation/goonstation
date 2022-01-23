@@ -2,7 +2,7 @@
 var/global/obj/machinery/communications_dish/transception/transception_array
 
 //Cost to "kick-start" a transception, charged against area APC
-#define ARRAY_STARTCOST 450
+#define ARRAY_STARTCOST 400
 //Cost to follow through on the transception, regular power use
 #define ARRAY_TELECOST 1200
 
