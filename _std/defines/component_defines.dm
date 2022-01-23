@@ -4,6 +4,8 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target?.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
+#define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, sigtype[2], ##arguments)
+
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
 
 /**
@@ -19,6 +21,9 @@
 
 /// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))
+
+/// Checks if a signal is "complex", i.e. it is handled by adding a special component and registering may have side effects and overhead
+#define IS_COMPLEX_SIGNAL(x) (length(x) == 2 && ispath(x[1], /datum/component/complexsignal))
 
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
