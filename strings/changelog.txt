@@ -1,5 +1,9 @@
 
 (t)sat jan 22 22
+(u)BatElite
+(p)7256
+(e)🐛|bug
+(*)AIs can also use normal radio prefixes now (though the :3 prefixes still work too)
 (u)Flaborized
 (p)7245
 (e)🎨|sprites
