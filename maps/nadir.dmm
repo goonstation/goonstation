@@ -24918,7 +24918,10 @@
 /turf/simulated/floor/black/grime,
 /area/station/chapel/office)
 "nve" = (
-/turf/simulated/wall/false_wall/reinforced,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
 /area/station/maintenance/storage{
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
@@ -26442,7 +26445,7 @@
 	name = "Southwest Breach Hull"
 	})
 "ouB" = (
-/obj/machinery/door/unpowered/wood/pyro,
+/obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/engine,
 /area/station/maintenance/storage{
 	icon_state = "crewquarters";
@@ -35567,17 +35570,7 @@
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "tKo" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/obj/item/storage/wall/random{
-	dir = 8;
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/black/grime,
 /area/station/maintenance/storage{
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
