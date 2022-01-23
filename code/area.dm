@@ -3721,9 +3721,9 @@ ABSTRACT_TYPE(/area/mining)
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
 /area/update_icon()
-	if(irradiated) //Don't update the icon whilst we have a radation blowout overlay
-		return
-	if ((fire || eject) && power_environ)
+	if(irradiated) //From a radiation blowout event
+		icon_state = "blowout"
+	else if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
 		else if(!fire && eject)
