@@ -64532,7 +64532,7 @@
 /area/station/engine/elect)
 "xVK" = (
 /obj/machinery/launcher_loader/west{
-	door_delay = 4
+	door_delay = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)

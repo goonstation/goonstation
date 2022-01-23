@@ -36829,6 +36829,14 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/nightvision,
 /obj/item/clothing/glasses/nightvision,
+/obj/item/breaching_charge{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/breaching_charge{
+	pixel_x = -6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bEL" = (
@@ -78289,6 +78297,14 @@
 /obj/item/breaching_hammer{
 	pixel_x = -1;
 	pixel_y = 1
+	},
+/obj/item/breaching_charge{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/breaching_charge{
+	pixel_x = -6;
+	pixel_y = -6
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
