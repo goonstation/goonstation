@@ -897,7 +897,7 @@
 					src.extract_to = target
 					. = TRUE
 			if("extractingredient")
-				if (!src.extract_to || src.extract_to.reagents.total_volume == src.extract_to.reagents.maximum_volume)
+				if (!src.extract_to || src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
 					return
 				var/id = params["ingredient_id"]
 				var/obj/item/ingredient = src.ingredients[id]

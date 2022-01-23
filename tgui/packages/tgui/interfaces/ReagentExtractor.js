@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Box, Button, Dimmer, Divider, Flex, Icon, NoticeBox, NumberInput, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
@@ -30,6 +30,7 @@ export const ReagentExtractor = (props, context) => {
       theme="ntos">
       <Window.Content>
         <Stack vertical fill>
+          {/* Insertable Container */}
           <Stack.Item>
             <ReagentDisplay container={inserted} insertable />
           </Stack.Item>
@@ -39,7 +40,7 @@ export const ReagentExtractor = (props, context) => {
               <Stack.Item grow>
                 <ExtractableList />
               </Stack.Item>
-              {/* Extraction Containers */}
+              {/* Storage Tanks */}
               <Stack.Item basis={18}>
                 <Stack vertical fill>
                   <Stack.Item basis={19.5} grow>
@@ -115,6 +116,7 @@ const ReagentDisplay = (props, context) => {
             width={17}
             textAlign="center"
             selected={container.selected}
+            tooltip="Select Extraction and Transfer Target"
             icon={container.selected ? "check-square-o" : "square-o"}
             onClick={() => act('extractto', { container_id: container.id })}
           >
@@ -237,7 +239,7 @@ const ExtractableList = (props, context) => {
   const { act, data } = useBackend(context);
   const { autoextract } = data;
   const extractables = data.ingredientsData || [];
-  const [page, setPage] = useSharedState(context, 'page', 1);
+  const [page, setPage] = useLocalState(context, 'page', 1);
   const totalPages = Math.max(1, Math.ceil(extractables.length / extractablesPerPage));
   if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
   const extractablesOnPage = extractables.slice(extractablesPerPage*(page - 1),
@@ -249,6 +251,7 @@ const ExtractableList = (props, context) => {
       buttons={(
         <Button.Checkbox
           checked={autoextract}
+          tooltip="Items will be extracted into the selected container automatically upon insertion."
           onClick={() => act('autoextract')}>
           Auto-Extract
         </Button.Checkbox>
@@ -293,7 +296,7 @@ const ExtractableList = (props, context) => {
               format={value => "Page " + value + "/" + totalPages}
               minValue={1}
               maxValue={totalPages}
-              stepPixelSize={5}
+              stepPixelSize={15}
               onChange={(e, value) => setPage(value)}
             />
             <Button
