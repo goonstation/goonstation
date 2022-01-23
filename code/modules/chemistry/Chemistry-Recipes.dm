@@ -3591,7 +3591,7 @@ datum
 				var/turf/reaction_loc = get_turf(my_atom)
 				if(!reaction_loc) return
 				var/date = time2text(world.realtime, "MMM DD")
-				if(prob(moon_list_2053[date]))
+				if(prob(((moon_list_2053[date] / 100) ** 4) * 100))
 					reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] The substance bubbles and gives off an almost lupine howl.</span>")
 				else
 					holder.del_reagent("werewolf_serum")
