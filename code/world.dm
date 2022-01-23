@@ -396,6 +396,9 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  zoldorf")
 		zoldorfsetup()
 
+		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
+		fluid_turf_setup(first_time=TRUE)
+
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
 
@@ -623,10 +626,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
-
-	Z_LOG_DEBUG("World/Init", "Initialize prefab shuttle datums...")
-	var/datum/prefab_shuttle/D = new
-	D.inialize_prefabs()
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
@@ -957,7 +956,7 @@ var/f_color_selector_handler/F_Color_Selector
 							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
-								twitch_mob.a_intent = lowertext(msg)
+								twitch_mob.set_a_intent(lowertext(msg))
 								if (ishuman(twitch_mob))
 									var/mob/living/carbon/human/H = twitch_mob
 									H.hud.update_intent()
@@ -986,7 +985,7 @@ var/f_color_selector_handler/F_Color_Selector
 								var/mob/living/carbon/human/H = twitch_mob
 
 								if (twitch_mob.a_intent != INTENT_HARM && twitch_mob.a_intent != INTENT_DISARM)
-									twitch_mob.a_intent = INTENT_HARM
+									twitch_mob.set_a_intent(INTENT_HARM)
 									H.hud.update_intent()
 
 								var/obj/item/equipped = H.equipped()
@@ -1178,6 +1177,8 @@ var/f_color_selector_handler/F_Color_Selector
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
+		var/list/plist = params2list(T)
+
 		if (T == "admins")
 			var/list/s = list()
 			var/n = 0
@@ -1197,7 +1198,6 @@ var/f_color_selector_handler/F_Color_Selector
 			s["mentors"] = n
 			return list2params(s)
 
-		var/list/plist = params2list(T)
 		switch(plist["type"])
 			if("irc")
 				if (!plist["nick"] || !plist["msg"]) return 0
@@ -1543,6 +1543,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
 				ircmsg["time"] = (world.timeofday - curtime) / 10
+				ircmsg["ticklag"] = world.tick_lag
+				ircmsg["runtimes"] = global.runtime_count
 				return ircbot.response(ircmsg)
 
 			if ("rev")

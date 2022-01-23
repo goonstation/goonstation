@@ -561,6 +561,52 @@ var/global/debug_messages = 0
 		src.verbs -= /client/proc/cmd_debug_del_all_check
 		src.delete_state = DELETE_STOP
 
+/client/proc/cmd_debug_del_half(var/typename as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Del-Half"
+	set desc = "Delete approximately half of instances of the selected type. *snap"
+
+	// to prevent REALLY stupid deletions
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
+	var/hsbitem = get_one_match(typename, /atom)
+	var/background =  alert("Run the process in the background?",,"Yes (High)","Yes (Low)" ,"No")
+
+	for(var/V in blocked)
+		if(V == hsbitem)
+			boutput(usr, "Can't delete that you jerk!")
+			return
+	if(hsbitem)
+		src.delete_state = DELETE_RUNNING
+		src.verbs += /client/proc/cmd_debug_del_all_cancel
+		src.verbs += /client/proc/cmd_debug_del_all_check
+		boutput(usr, "Deleting [hsbitem]...")
+		var/numdeleted = 0
+		var/numtotal = 0
+		for(var/atom/O in world)
+			if(istype(O, hsbitem))
+				numtotal++
+				if(prob(50))
+					qdel(O)
+					numdeleted++
+				if(background == "Yes (Low)")
+					LAGCHECK(LAG_LOW)
+				else if(background == "Yes (High)")
+					LAGCHECK(LAG_REALTIME)
+			if (src.delete_state == DELETE_STOP)
+				break
+			else if (src.delete_state == DELETE_CHECK)
+				boutput(usr, "Deleted [numdeleted]/[numtotal] instances of [hsbitem] so far.")
+				src.delete_state = DELETE_RUNNING
+
+		if(numtotal == 0) boutput(usr, "No instances of [hsbitem] found!")
+		else boutput(usr, "Deleted [numdeleted]/[numtotal] instances of [hsbitem]!")
+		logTheThing("admin", src, null, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
+		logTheThing("diary", src, null, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].", "admin")
+		message_admins("[key_name(src)] has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
+		src.verbs -= /client/proc/cmd_debug_del_all_cancel
+		src.verbs -= /client/proc/cmd_debug_del_all_check
+		src.delete_state = DELETE_STOP
+
 // cancels your del_all in process, if one is running
 /client/proc/cmd_debug_del_all_cancel()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -1371,6 +1417,59 @@ var/datum/flock/testflock
 
 	selection.RemoveComponent()
 	boutput(usr, "<span class='notice'>Removed [selection] from [target].</span>")
+
+/client/proc/delete_profiling_logs()
+	set desc = "Delete all saved profiling data, I hope you know what you're doing."
+	set name = "Delete profiling logs"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(input(usr, "Type in: 'delete profiling logs' to confirm:", "Confirmation of prof. logs deletion") != "delete profiling logs")
+		boutput(usr, "Deletion of profiling logs aborted.")
+		return
+	fdel("data/logs/profiling/")
+	logTheThing("admin", usr, null, "deleted profiling logs.")
+	logTheThing("diary", usr, null, "deleted profiling logs.")
+	message_admins("[key_name(usr)] deleted profiling logs.")
+	ircbot.export("admin_debug", list("key"=usr.ckey, "msg"="deleted profiling logs for this server."))
+
+/client/proc/cause_lag(a as num, b as num)
+	set desc = "Loops a times b times over some trivial statement."
+	set name = "cause lag"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(alert("Are you sure you want to cause lag?","Why would you do this?","Yes","No") != "Yes")
+		return
+
+	logTheThing("admin", usr, null, "decided to cause lag with parameters of [a] and [b]")
+
+	var/x = 0
+	boutput(src, "lag start [world.time] [TIME] (x=[x])")
+	for(var/i in 1 to a)
+		for(var/j in 1 to b)
+			x++
+	boutput(usr, "lag end [world.time] [TIME] (x=[x])")
+
+/client/proc/persistent_lag(cpu_usage as num)
+	set desc = "Makes it so lag is at least the set number."
+	set name = "persistent lag"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	admin_only
+
+	if(alert("Are you sure you want to set persistent lag to [cpu_usage]?","Why would you do this?","Yes","No") != "Yes")
+		return
+
+	logTheThing("admin", usr, null, "decided to set persistent lag to [cpu_usage]%.")
+
+	var/static/target_lag = null
+	target_lag = cpu_usage
+	while(target_lag > 0)
+		var/last_tick = world.time
+		while(world.tick_usage < target_lag)
+			;
+		while(world.time == last_tick)
+			sleep(0.001)
 
 #undef ARG_INFO_NAME
 #undef ARG_INFO_TYPE

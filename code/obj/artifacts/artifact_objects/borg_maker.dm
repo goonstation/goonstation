@@ -45,7 +45,8 @@
 			else
 				user.set_loc(get_turf(O.loc))
 			converting = TRUE
-			var/list/obj/item/parts/convertable_limbs = list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg)
+			// keep it truthy to avoid null values due to missing limbs
+			var/list/obj/item/parts/convertable_limbs = keep_truthy(list(humanuser.limbs.l_arm, humanuser.limbs.r_arm, humanuser.limbs.l_leg, humanuser.limbs.r_leg))
 			//figure out which limbs are already robotic and remove them from the list
 			for (var/obj/item/parts/limb in convertable_limbs)
 				if (!limb || (limb.kind_of_limb & LIMB_ROBOT))

@@ -63,6 +63,25 @@
 		boutput(usr, "<span class='alert'>Could not find [S] in the Global Variables list!!</span>" )
 		return
 
+/client/proc/debug_ref_variables(ref as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "View Ref Variables"
+	set desc = "(reference) Enter a ref to view its variables"
+
+	if (src.holder?.level < LEVEL_ADMIN)
+		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
+		tgui_alert(src.mob, "You must be at least an Administrator to use this command.", "Access Denied")
+		return
+
+	if(ref)
+		var/datum/D = locate(ref)
+		if(!D)
+			D = locate("\[[ref]\]")
+		if(!D)
+			boutput(src, "<span class='alert'>Bad ref or couldn't find that thing. Drats.</span>")
+			return
+		debug_variables(D)
+
 /client/proc/debug_variables(datum/D in world) // causes GC to lock up for a few minutes, the other option is to use atom/D but that doesn't autocomplete in the command bar
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "View Variables"
@@ -176,6 +195,7 @@
 
 	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
+	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
 
 	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
 		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
@@ -403,6 +423,9 @@
 	else
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
 
+	if(name == "particles")
+		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
+
 	html += "</td></tr>"
 
 	return html
@@ -493,6 +516,18 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to call a proc on something all rude-like.")
 		return
+	if (href_list["DMDump"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_ADMIN)
+			var/target = locate(href_list["DMDump"])
+			var/dump = dm_dump(target)
+			if(isnull(dump))
+				alert(usr, "DM Dump failed. Possibly output too long.", "DM Dump failed")
+			else
+				usr.Browse("<title>DM dump of [target] \ref[target]</title><pre>[dump]</pre>", "window=dm_dump_\ref[target];size=500x700")
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
+		return
 	if (href_list["AddComponent"])
 		usr_admin_only
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -506,6 +541,15 @@
 			debugRemoveComponent(locate(href_list["RemoveComponent"]))
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to remove a component from something all rude-like.")
+		return
+	if (href_list["Particool"])
+		usr_admin_only
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Particool"])
+			src.holder.particool = new /datum/particle_editor(D)
+			src.holder.particool.ui_interact(mob)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
 		return
 	if (href_list["Delete"])
 		usr_admin_only

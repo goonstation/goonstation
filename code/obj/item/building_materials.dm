@@ -812,7 +812,7 @@ MATERIAL
 					G.health = G.health_max
 					G.set_density(1)
 					G.ruined = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
@@ -925,7 +925,7 @@ MATERIAL
 				src.name = "heads on a spike"
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
-				src.desc = "The heads of [head1.donor] and [head2.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original] and [head2.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor] and [heads[2]:donor] impaled on a spike."*/
 			if(3)
@@ -933,7 +933,7 @@ MATERIAL
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
 				var/obj/item/organ/head/head3 = heads[3]
-				src.desc = "The heads of [head1.donor], [head2.donor] and [head3.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original], [head2.donor_original] and [head3.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor], [heads[2]:donor] and [heads[3]:donor] impaled on a spike."*/
 

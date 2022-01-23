@@ -134,47 +134,6 @@
 		return
 
 /* ===================================================== */
-/* ---------------------- Cup Rack --------------------- */
-/* ===================================================== */
-/obj/cup_rack
-	name = "coffee cup rack"
-	desc = "It's a rack to hang your fancy coffee cups." //*tip
-	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "cuprack7" //changes based on cup_ammount in updateicon
-	anchored = 1
-	var/cup_amount = 7
-	var/contained_cup = /obj/item/reagent_containers/food/drinks/espressocup
-	var/contained_cup_name = "espresso cup"
-
-	get_desc(dist, mob/user)
-		if (dist <= 2)
-			. += "There's [(src.cup_amount > 0) ? src.cup_amount : "no" ] [src.contained_cup_name][s_es(src.cup_amount)] on \the [src]."
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, src.contained_cup) & src.cup_amount < 7)
-			user.drop_item()
-			qdel(W)
-			src.cup_amount ++
-			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.updateicon()
-		else return ..()
-
-	attack_hand(mob/user as mob)
-		src.add_fingerprint(user)
-		if (src.cup_amount <= 0)
-			user.show_text("\The [src] doesn't have any [src.contained_cup_name]s left, doofus!", "red")
-		else
-			boutput(user, "You take \an [src.contained_cup_name] off of \the [src].")
-			src.cup_amount--
-			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/espressocup
-			user.put_in_hand_or_drop(P)
-			src.updateicon()
-
-	proc/updateicon()
-		src.icon_state = "cuprack[src.cup_amount]" //sets the icon_state to the ammount of cups on the rack
-		return
-
-/* ===================================================== */
 /* ---------------------- Coffeemaker ------------------ */
 /* ===================================================== */
 //Sorry for budging in here, whoever made the espresso machine. Lets just rename this to coffee.dm?
@@ -291,44 +250,69 @@
 	icon_state = "coffeemaker-sci"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/research
 
+/* ===================================================== */
+/* ---------------------- Racks --------------------- */
+/* ===================================================== */
 
-/* ===================================================== */
-/* ---------------------- Mug Rack --------------------- */
-/* ===================================================== */
-/obj/mug_rack
-	name = "coffee mug rack"
-	desc = "It's a rack to hang your not-so-fancy coffee cups." //*tip
-	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "mugrack4" //changes based on cup_ammount in updateicon
+ABSTRACT_TYPE(/obj/drink_rack)
+/obj/drink_rack
 	anchored = 1
-	var/cup_amount = 4
-	var/contained_cup = /obj/item/reagent_containers/food/drinks/mug/random_color
-	var/contained_cup_name = "mug"
+	var/amount_on_rack = null
+	var/max_amount = null
+	var/contained = null
+	var/contained_name = null
+	var/icon_state_prefix = null
 
 	get_desc(dist, mob/user)
 		if (dist <= 2)
-			. += "There's [(src.cup_amount > 0) ? src.cup_amount : "no" ] [src.contained_cup_name][s_es(src.cup_amount)] on \the [src]."
+			. += "There's [(src.amount_on_rack > 0) ? src.amount_on_rack : "no" ] [src.contained_name][s_es(src.amount_on_rack)] on \the [src]."
 
 	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, src.contained_cup) & src.cup_amount < 7)
+		if (istype(W, src.contained) & src.amount_on_rack < max_amount)
+			if (W.reagents.total_volume > 0)
+				var/turf/T = get_turf(src)
+				W.reagents.reaction(T)
+				boutput(user, "The [src.contained_name] wasn't empty! You spill its contents on the floor.")
 			user.drop_item()
 			qdel(W)
-			src.cup_amount ++
-			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.updateicon()
+			src.amount_on_rack ++
+			boutput(user, "You place \the [src.contained_name] back onto \the [src].")
+			src.UpdateIcon()
 		else return ..()
 
 	attack_hand(mob/user as mob)
 		src.add_fingerprint(user)
-		if (src.cup_amount <= 0)
-			user.show_text("\The [src] doesn't have any [src.contained_cup_name]s left, doofus!", "red")
+		if (src.amount_on_rack <= 0)
+			user.show_text("\The [src] doesn't have any [src.contained_name]s left, doofus!", "red")
 		else
-			boutput(user, "You take \a [src.contained_cup_name] off of \the [src].")
-			src.cup_amount--
-			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/mug
-			user.put_in_hand_or_drop(P)
-			src.updateicon()
+			boutput(user, "You take \an [src.contained_name] off of \the [src].")
+			src.amount_on_rack--
+			user.put_in_hand_or_drop(new contained)
+			src.UpdateIcon()
 
-	proc/updateicon()
-		src.icon_state = "mugrack[src.cup_amount]" //sets the icon_state to the amount of cups on the rack
+	update_icon()
+		src.icon_state = "[src.icon_state_prefix][src.amount_on_rack]" //sets the icon_state to the ammount on the rack
 		return
+
+/obj/drink_rack/cup
+	name = "coffee cup rack"
+	desc = "It's a rack to hang your fancy coffee cups." //*tip
+	icon = 'icons/obj/foodNdrink/espresso.dmi'
+	icon_state = "cuprack7" //changes based on cup_ammount in updateicon
+	amount_on_rack = 7
+	max_amount = 7
+	contained = /obj/item/reagent_containers/food/drinks/espressocup
+	contained_name = "espresso cup"
+	icon_state_prefix = "cuprack"
+
+/obj/drink_rack/mug
+	name = "coffee mug rack"
+	desc = "It's a rack to hang your not-so-fancy coffee cups." //*tip
+	icon = 'icons/obj/foodNdrink/espresso.dmi'
+	icon_state = "mugrack4" //changes based on cup_ammount in updateicon
+	amount_on_rack = 4
+	max_amount = 4
+	contained = /obj/item/reagent_containers/food/drinks/mug
+	contained_name = "mug"
+	icon_state_prefix = "mugrack"
+

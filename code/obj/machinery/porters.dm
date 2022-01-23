@@ -153,10 +153,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 				if (machinery_loc == home_loc)
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
+					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
 				else
 					P.set_loc(home_loc) // Send back to home location.
-					user.show_text("[src.machinery_name] send to home turf.", "blue")
+					flick("[P.icon_state]-tele", P)
+					user.show_text("[src.machinery_name] sent to home turf.", "blue")
 
 				if (hasvar(P, "occupant"))
 					if (istype(P, /obj/machinery/port_a_brig/))
@@ -526,7 +528,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	mats = 30
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/homeloc = null
 
@@ -837,13 +839,11 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	can_fall = 0
 	mats = null
 	ai_control_enabled = 1
+	window_size = "400x675"
 	var/homeloc = null
 
 	New()
 		..()
-
-
-
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))
 			portable_machinery = list()
@@ -854,24 +854,25 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/epinephrine, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/saline, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/atropine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/mannitol, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salbutamol, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salicylic_acid, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/anti_rad, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/insulin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/calomel, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/heparin, 2)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/proconvertin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/epinephrine, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/filgrastim, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/heparin, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/insulin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/mannitol, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/anti_rad, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/proconvertin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salbutamol, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salicylic_acid, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/saline, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/formaldehyde, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
 		product_list += new/datum/data/vending_product(/obj/item/bandage, 6)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
@@ -879,6 +880,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		//Hidden
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/random, rand(1, 3), hidden=1)
+
 
 	disposing()
 		if (islist(portable_machinery))

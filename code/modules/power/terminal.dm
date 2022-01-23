@@ -64,6 +64,7 @@
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
+				LAGCHECK(LAG_MED)
 
 			//qdel(signal)
 			return
@@ -133,6 +134,7 @@
 			for (var/obj/machinery/power/device as anything in src.powernet.data_nodes)
 				if(device != src)
 					device.receive_signal(signal, TRANSMISSION_WIRE)
+				LAGCHECK(LAG_MED)
 
 			if(signal)
 				qdel(signal)

@@ -52,11 +52,11 @@
 		return
 	if(src.locked)
 		src.locked = 0
-		update_icon()
+		UpdateIcon()
 	else
 		logTheThing("station",user,null,"[user] has bolted a door at [log_loc(src)].")
 		src.locked = 1
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
 	if(!src.arePowerSystemsOn() || (status & NOPOWER))
@@ -264,6 +264,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = 1
 	aiControlDisabled = 1
 	object_flags = BOTS_DIRBLOCK
+	mats = 0
 
 	meteorhit()
 		return
@@ -278,6 +279,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	hardened = 1
 	aiControlDisabled = 1
 	object_flags = BOTS_DIRBLOCK
+	mats = 0
 
 	meteorhit()
 		return
@@ -344,6 +346,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/pyro/command/syndicate
 	req_access = list(access_syndicate_commander)
+	mats = 0
 
 /obj/machinery/door/airlock/pyro/weapons
 	icon_state = "manta_closed"
@@ -459,6 +462,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	cant_emag = 1
 	hardened = 1
 	aiControlDisabled = 1
+	mats = 0
 
 	meteorhit()
 		return
@@ -547,6 +551,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	layer = 3.5
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	bumpopen(mob/user as mob)
 		if (src.density)
@@ -557,6 +562,76 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if (src.density)
 			src.autoclose = 0
 		..(user)
+
+	Cross(atom/movable/mover)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if (P.proj_data.window_pass)
+				return 1
+
+		if (get_dir(loc, mover) & dir) // Check for appropriate border.
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
+			return !density
+		else
+			return 1
+
+	gas_cross(turf/target)
+		if(get_dir(loc, target) & dir)
+			return !density
+		else
+			return TRUE
+
+	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+		if (istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if (P.proj_data.window_pass)
+				return 1
+
+		if (get_dir(loc, target) & dir)
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
+			return !density
+		else
+			return 1
+
+	update_nearby_tiles(need_rebuild)
+		if (!air_master) return 0
+
+		var/turf/simulated/source = loc
+		var/turf/simulated/target = get_step(source,dir)
+
+		if (need_rebuild)
+			if (istype(source)) // Rebuild resp. update nearby group geometry.
+				if (source.parent)
+					air_master.groups_to_rebuild |= source.parent
+				else
+					air_master.tiles_to_update |= source
+
+			if (istype(target))
+				if (target.parent)
+					air_master.groups_to_rebuild |= target.parent
+				else
+					air_master.tiles_to_update |= target
+		else
+			if (istype(source)) air_master.tiles_to_update |= source
+			if (istype(target)) air_master.tiles_to_update |= target
+
+		if (istype(source))
+			source.selftilenotify() //for fluids
+
+	xmasify()
+		return
 
 /obj/machinery/door/airlock/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
@@ -825,7 +900,7 @@ About the new airlock wires panel:
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
 				boutput(usr, "You hear a click from inside the door.")
-			update_icon()
+			UpdateIcon()
 			SPAWN_DBG(1 DECI SECOND)
 				src.shock(usr, 25)
 
@@ -938,7 +1013,7 @@ About the new airlock wires panel:
 			if (src.locked!=1)
 				src.locked = 1
 				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
-			update_icon()
+			UpdateIcon()
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
@@ -1189,7 +1264,7 @@ About the new airlock wires panel:
 		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
 	return 1
 
-/obj/machinery/door/airlock/update_icon(var/toggling = 0)
+/obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling ? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"
@@ -1216,13 +1291,13 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/play_animation(animation)
 	switch (animation)
 		if ("opening")
-			src.update_icon()
+			src.UpdateIcon()
 			if (p_open)
 				flick("o_[icon_base]_opening", src) // there's an issue with the panel overlay not being gone by the time the animation is nearly done but I can't make that stop, despite my best efforts
 			else
 				flick("[icon_base]_opening", src)
 		if ("closing")
-			src.update_icon()
+			src.UpdateIcon()
 			if (p_open)
 				flick("o_[icon_base]_closing", src)
 			else
@@ -1308,8 +1383,12 @@ About the new airlock wires panel:
 		if(world.time - src.last_bump <= 30)
 			return
 
-		if (issilicon(AM) && (aiControlDisabled == 1 || cant_emag))
-			return
+		if (issilicon(AM))
+			if (aiControlDisabled || cant_emag)
+				return
+			var/mob/silicon = AM
+			if (!silicon.mind)
+				return
 
 		src.last_bump = world.time
 		if (src.isElectrified())
@@ -1392,7 +1471,7 @@ About the new airlock wires panel:
 			src.heal_damage()
 			boutput(user, "<span class='notice'>Your repair the damage to [src].</span>")
 
-		src.update_icon()
+		src.UpdateIcon()
 		return
 	else if (isscrewingtool(C))
 		if (src.hardened == 1)
@@ -1403,7 +1482,7 @@ About the new airlock wires panel:
 			return
 		src.p_open = !(src.p_open)
 		tgui_process.update_uis(src)
-		src.update_icon()
+		src.UpdateIcon()
 	else if (issnippingtool(C) && src.p_open)
 		return src.Attackhand(user)
 	else if (ispulsingtool(C))
@@ -1424,7 +1503,7 @@ About the new airlock wires panel:
 		SPAWN_DBG( 0 )
 			src.operating = 1
 			play_animation("opening")
-			update_icon(1)
+			UpdateIcon(1)
 
 			sleep(src.operation_time)
 
@@ -1436,13 +1515,13 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
-			src.update_icon()
+			src.UpdateIcon()
 
 	else if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
 		SPAWN_DBG( 0 )
 			src.operating = 1
 			play_animation("closing")
-			update_icon(1)
+			UpdateIcon(1)
 
 			src.set_density(1)
 			sleep(1.5 SECONDS)
@@ -1453,7 +1532,11 @@ About the new airlock wires panel:
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
-			src.update_icon()
+			src.UpdateIcon()
+
+	else if (src.operating == -1) //broken
+		boutput(usr, "<span class='alert'>You try to pry [src]  [src.density ? "open" : "closed"], but it won't budge! It seems completely broken!</span>")
+
 	else if (src.welded)
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The sides of \the [src] seem to be welded.</span>")
 
@@ -1628,24 +1711,24 @@ obj/machinery/door/airlock
 
 			if("unlock")
 				locked = 0
-				update_icon()
+				UpdateIcon()
 				send_status(,senderid)
 
 			if("lock")
 				locked = 1
-				update_icon()
+				UpdateIcon()
 				send_status()
 
 			if("secure_open")
 				SPAWN_DBG(0)
 					locked = 0
-					update_icon()
+					UpdateIcon()
 
 					sleep(0.5 SECONDS)
 					open(1)
 
 					locked = 1
-					update_icon()
+					UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
@@ -1656,7 +1739,7 @@ obj/machinery/door/airlock
 
 					locked = 1
 					sleep(0.5 SECONDS)
-					update_icon()
+					UpdateIcon()
 					sleep(src.operation_time)
 					send_status(,senderid)
 
@@ -1753,7 +1836,7 @@ obj/machinery/door/airlock
 
 	initialize()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	New()
 		..()
@@ -1897,7 +1980,7 @@ obj/machinery/door/airlock
 			if("disruptMain")
 				if(!secondsMainPowerLost)
 					loseMainPower()
-					update_icon()
+					UpdateIcon()
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Main power is already offline.</span>")
@@ -1905,7 +1988,7 @@ obj/machinery/door/airlock
 			if("disruptBackup")
 				if(!secondsBackupPowerLost)
 					loseBackupPower()
-					update_icon()
+					UpdateIcon()
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>Backup power is already offline.</span>")

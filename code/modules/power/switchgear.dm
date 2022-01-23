@@ -115,7 +115,7 @@
 			return
 		if( href_list["set_apc"] )
 			var/obj/machinery/power/apc/A = locate(href_list["set_apc"])
-			if (A) A.circuit_disabled = min(max(0, text2num_safe(href_list["circuit_disabled"])), 1)
+			if (A) A.circuit_disabled = clamp(text2num_safe(href_list["circuit_disabled"]), 0, 1)
 			// todo: messing with the APC was a hack, need to have the APCs check the switchgear somehow
 			src.updateDialog()
 			return

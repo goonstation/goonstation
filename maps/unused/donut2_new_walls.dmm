@@ -1621,12 +1621,6 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "aen" = (
-/obj/machinery/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 24
-	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 9
 	},
@@ -1638,6 +1632,12 @@
 /area/station/science/lobby)
 "aep" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "artlabgun";
+	name = "Emergency Ejection Button";
+	pixel_x = 24
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 5
 	},
@@ -3332,10 +3332,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition2";
 	pixel_x = 24;
-	pixel_y = 8
+	pixel_y = -10
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -3702,10 +3702,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition1";
 	pixel_x = 24;
-	pixel_y = -8
+	pixel_y = 10
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -5770,7 +5770,7 @@
 /area/station/science/lobby)
 "ani" = (
 /turf/space,
-/area/shuttle/escape/station/donut2)
+/area/shuttle/escape/station)
 "anj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -6619,12 +6619,12 @@
 	icon_state = "tube1";
 	tag = ""
 	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/shuttle)
-"apA" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/shuttle)
@@ -10958,14 +10958,11 @@
 	dir = 1;
 	icon_state = "rwindow"
 	},
-/obj/machinery/driver_button{
-	id = "chapelgun";
-	name = "Chapel Mass Driver Button";
-	pixel_x = 24;
-	req_access_txt = "22";
-	text = "chapel"
-	},
 /obj/item/instrument/large/organ,
+/obj/machinery/activation_button/driver_button{
+	id = "chapelgun";
+	pixel_x = 24
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 10
 	},
@@ -13054,11 +13051,14 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aFr" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aFs" = (
 /obj/machinery/crema_switch{
+	id = "crematorium";
 	pixel_x = 24
 	},
 /obj/disposalpipe/trunk/morgue{
@@ -13733,7 +13733,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tech)
 "aGP" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aGQ" = (
@@ -17199,7 +17199,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
 "aOo" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 2
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aOp" = (
@@ -17507,6 +17509,9 @@
 	dir = 1;
 	pixel_x = -1
 	},
+/obj/machinery/traymachine/morgue{
+	dir = 2
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aPb" = (
@@ -17809,13 +17814,6 @@
 "aPL" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/medical/morgue)
-"aPM" = (
-/obj/morgue{
-	dir = 8;
-	icon_state = "morgue1"
-	},
-/turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "aPN" = (
 /obj/landmark/start{
@@ -19353,6 +19351,7 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/jetpack,
 /obj/item/clothing/suit/space/captain,
+/obj/item/clothing/head/helmet/space/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTm" = (
@@ -24754,6 +24753,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
+/obj/item/pen/crayon/golden,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen1"
@@ -29490,7 +29490,7 @@
 /obj/table/wood/round/auto,
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -27
 	},
 /turf/simulated/floor/carpet{
@@ -39350,6 +39350,16 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"eOF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
 "eOI" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -39482,7 +39492,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "fiX" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26
 	},
 /obj/table/auto,
@@ -41581,6 +41591,20 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/storage/emergency2)
+"lxj" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/shuttle)
 "lxB" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -41594,7 +41618,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "lzv" = (
@@ -58569,7 +58593,7 @@ arN
 arN
 aNE
 aOo
-aOo
+aQo
 aQo
 aPN
 aQo
@@ -59172,7 +59196,7 @@ aJT
 aMX
 arN
 aNE
-aQo
+aOo
 aQo
 aQo
 aQo
@@ -59474,8 +59498,8 @@ aJT
 arN
 arN
 aNE
-aPM
-aPM
+aOo
+aQo
 aQo
 aQr
 aQX
@@ -66071,13 +66095,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
+ani
+ani
+ani
+aaa
 aaa
 aaa
 aaa
@@ -66372,15 +66396,15 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -66674,16 +66698,16 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -66976,16 +67000,16 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -67276,19 +67300,19 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 aaa
@@ -67577,11 +67601,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -67879,11 +67903,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -68181,11 +68205,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -68197,7 +68221,7 @@ ani
 ani
 apo
 apz
-aom
+eOF
 anp
 kMA
 hSd
@@ -68483,11 +68507,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -68498,8 +68522,8 @@ ani
 ani
 ani
 aqH
-app
-app
+aom
+aom
 jqk
 aqL
 arb
@@ -68785,11 +68809,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
@@ -68799,10 +68818,15 @@ ani
 ani
 ani
 ani
-aaa
-adQ
-aaa
-app
+ani
+ani
+ani
+ani
+ani
+aqH
+aom
+aom
+jqk
 aqL
 fKn
 app
@@ -69087,11 +69111,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
@@ -69101,11 +69120,16 @@ ani
 ani
 ani
 ani
-aaa
-adQ
-aaa
-app
-aqL
+ani
+ani
+ani
+ani
+ani
+apo
+lxj
+eOF
+anp
+hUF
 fKn
 app
 arN
@@ -69389,11 +69413,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -69691,25 +69715,25 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-apo
-apA
-aom
-anp
-hUF
+abZ
+app
+aqL
 uiX
 aqh
 arN
@@ -69993,24 +70017,24 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
 aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-aqH
 app
-app
-jqk
 aqL
 aqZ
 iPP
@@ -70295,23 +70319,23 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
 aaa
 aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-aaa
-abZ
 app
 aqL
 aom
@@ -70597,21 +70621,21 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 app
@@ -70899,21 +70923,21 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
+ani
 aaa
-aaa
-aaa
-aaa
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
-ani
 aaa
 aaa
 app
@@ -71201,11 +71225,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ani
+ani
+ani
+ani
+ani
 ani
 ani
 ani
@@ -71503,14 +71527,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 ani
 ani
 ani
+ani
+ani
+ani
+aaa
+aoJ
 ani
 ani
 ani
@@ -71807,16 +71831,16 @@ aaa
 aaa
 aaa
 aaa
+ani
+ani
+ani
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aoJ
-aaa
-aaa
+ani
+ani
+ani
 aaa
 aaa
 aaa

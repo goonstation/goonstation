@@ -29,7 +29,7 @@
 	effect_process(var/obj/O)
 		if (..())
 			return
-		for (var/obj/V in orange(src.field_radius,O))
+		for (var/obj/V in orange(src.field_radius,get_turf(O)))
 			if (V.anchored)
 				continue
 
@@ -37,7 +37,7 @@
 				step_away(V,O)
 			else
 				step_towards(V,O)
-		for (var/mob/living/M in orange(src.field_radius,O))
+		for (var/mob/living/M in orange(src.field_radius,get_turf(O)))
 			if (src.gravity_type)
 				step_away(M,O)
 			else

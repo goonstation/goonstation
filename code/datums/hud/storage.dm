@@ -176,7 +176,7 @@
 		if(isitem(master))
 			var/obj/item/I = master
 			I.tooltip_rebuild = 1
-		master.update_icon()
+		master.UpdateIcon()
 
 	proc/add_item(obj/item/I, mob/user = usr)
 		update(user)

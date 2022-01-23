@@ -82,17 +82,17 @@
 
 	var/traitStr = ""
 	if(H.traitHolder)
-		for(var/X in H.traitHolder.traits)
-			var/obj/trait/T = getTraitById(X)
+		for(var/id in H.traitHolder.traits)
+			var/obj/trait/T = H.traitHolder.traits[id]
 			if(length(traitStr)) traitStr += " | [T.cleanName]"
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
-					M["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M["alg"] = reagent_id_to_name(AT.allergen)
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
+					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
 
 	M["traits"] = traitStr
 
@@ -289,6 +289,7 @@
 				Service.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>") //Future proofing, just in case
 			else
 				Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			continue
 #ifdef MAP_OVERRIDE_OSHAN // Radio host is on Oshan
 		if(rank == "Radio Show Host" || rank == "Talk Show Host")
 			Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
@@ -296,22 +297,22 @@
 			continue
 		Unassigned += "[staff_record["name"]] - [staff_record["rank"]]<br>"
 
-	sorted_manifest += "<b><u>Station Command:</b></u><br>"
+	sorted_manifest += "<b><u>Station Command:</u></b><br>"
 	for(var/crew in Command)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Station Security:</b></u><br>"
+	sorted_manifest += "<b><u>Station Security:</u></b><br>"
 	for(var/crew in Security)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Engineering and Supply:</b></u><br>"
+	sorted_manifest += "<b><u>Engineering and Supply:</u></b><br>"
 	for(var/crew in Engineering)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Medical and Research:</b></u><br>"
+	sorted_manifest += "<b><u>Medical and Research:</u></b><br>"
 	for(var/crew in Medsci)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Crew Service:</b></u><br>"
+	sorted_manifest += "<b><u>Crew Service:</u></b><br>"
 	for(var/crew in Service)
 		sorted_manifest += crew
-	sorted_manifest += "<b><u>Unassigned and Civilians:</b></u><br>"
+	sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
 	for(var/crew in Unassigned)
 		sorted_manifest += crew
 

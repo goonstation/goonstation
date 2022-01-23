@@ -23,10 +23,10 @@
 		cell = new(src)
 		cell.charge = 1000
 		cell.maxcharge = 1000
-		update_icon()
+		UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (on)
 			if(heating)
 				icon_state = "sheaterH"
@@ -96,7 +96,7 @@
 		else if (isscrewingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
 				src.remove_dialog(user)
@@ -143,7 +143,7 @@
 			else
 				on = !on
 				user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
-				update_icon()
+				UpdateIcon()
 
 
 
@@ -180,7 +180,7 @@
 				if("cellremove")
 					if(open && cell && !usr.equipped())
 						usr.put_in_hand_or_drop(cell)
-						cell.updateicon()
+						cell.UpdateIcon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -240,13 +240,13 @@
 						//boutput(world, "now at [removed.temperature]")
 
 					env.merge(removed)
-					update_icon()
+					UpdateIcon()
 					//boutput(world, "turf now at [env.temperature]")
 
 
 			else
 				on = 0
-				update_icon()
+				UpdateIcon()
 
 
 		return
@@ -275,10 +275,10 @@
 		cell = new(src)
 		cell.charge = 1000
 		cell.maxcharge = 1000
-		update_icon()
+		UpdateIcon()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if (on)
 			if(heating)
 				icon_state = "saunaH"
@@ -322,7 +322,7 @@
 		else if (isscrewingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=saunastove")
 				src.remove_dialog(user)
@@ -360,7 +360,7 @@
 		else
 			on = !on
 			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
-			update_icon()
+			UpdateIcon()
 
 			if (on)
 				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
@@ -386,7 +386,7 @@
 				if("cellremove")
 					if(open && cell && !usr.equipped())
 						usr.put_in_hand_or_drop(cell)
-						cell.updateicon()
+						cell.UpdateIcon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -443,13 +443,13 @@
 						//boutput(world, "now at [removed.temperature]")
 
 					env.merge(removed)
-					update_icon()
+					UpdateIcon()
 					//boutput(world, "turf now at [env.temperature]")
 
 
 			else
 				on = 0
-				update_icon()
+				UpdateIcon()
 
 
 		return

@@ -1142,7 +1142,7 @@ THROWING DARTS
 	sneaky = 1
 	New()
 		var/obj/item/implant/microbomb/macrobomb/newbomb = new/obj/item/implant/microbomb/macrobomb( src )
-		newbomb.explosionPower = rand(20,30)
+		newbomb.explosionPower = rand(22,32)
 		src.imp = newbomb
 		..()
 		return
@@ -1480,7 +1480,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Name:</b> Machine Language Translator<br>
 <b>Zone:</b> Cerebral Cortex<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
-<b>Important Notes:</b> Enables the host to transmit, recieve and understand digital transmissions used by most mechanoids.<BR>"}
+<b>Important Notes:</b> Enables the host to transmit, receive and understand digital transmissions used by most mechanoids.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/bloodmonitor))
 				dat += {"
 <b>Implant Specifications:</b><br>

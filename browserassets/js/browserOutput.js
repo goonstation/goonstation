@@ -349,7 +349,7 @@ function outputBatch(messages) {
     var bodyHeight = $('body').height();
     var messagesHeight = $messages.outerHeight();
     var scrollPos = document.documentElement.scrollTop;
-    var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance
+    var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance;
 
     for (var i = 0; i < list.length; i++) {
         output(list[i].message, list[i].group, i < list.length - 1, shouldScroll);

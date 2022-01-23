@@ -109,7 +109,7 @@ MATERIAL
 					G.health = G.health_max
 					G.set_density(1)
 					G.destroyed = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
@@ -309,7 +309,7 @@ MATERIAL
 						boutput(usr, text("<span class='alert'>You need at least two metal to build a closet.</span>"))
 						return
 					src.amount -= 2
-					var/atom/A = new /obj/closet( usr.loc )
+					var/atom/A = new /obj/storage/closet( usr.loc )
 					A.setMaterial(src.material)
 					logTheThing("station", usr, null, "builds a Closet in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 				if("fl_tiles")

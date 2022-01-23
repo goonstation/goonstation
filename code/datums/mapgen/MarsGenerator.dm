@@ -160,9 +160,9 @@
 		..()
 		SPAWN_DBG(3 SECONDS)
 			if(istype(src))
-				src.update_icon()
+				src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		var/dir_sum
 		// If there is rhyme or reason to the order of mars-c I can't find it...
 		var/list/lookup = list("1"=list("mars-s",1),
@@ -192,5 +192,5 @@
 			neighbors += get_step(src, direction)
 		src.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 		for(var/turf/unsimulated/wall/setpieces/martian/auto/cliff in neighbors)
-			cliff.update_icon()
+			cliff.UpdateIcon()
 

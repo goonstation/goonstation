@@ -37,6 +37,7 @@
 
 	var/points_per_crate = 10
 
+	var/list/datum/req_contract/complete_orders = list()
  	/// amount of artifacts in next resupply crate
 	var/artifact_resupply_amount = 0
 	/// an artifact crate is already "on the way"
@@ -415,9 +416,11 @@
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 			if(req_contracts.Find(contract_to_clear))
 				req_contracts -= contract_to_clear
+				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
 			else if(special_orders.Find(contract_to_clear))
 				special_orders -= contract_to_clear
+				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
 		else
 			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate

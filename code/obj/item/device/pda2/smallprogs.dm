@@ -62,12 +62,13 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/stored = ""
+		var/list/stored = list()
 		if(length(by_type[/obj/cryotron]))
 			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
 			for(var/L as anything in cryo_unit.stored_crew_names)
 				stored += "<i>- [L]<i><br>"
-		dat += "<b>In Cryogenic Storage:</b><hr>[stored]<br>"
+		if(length(stored))
+			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
 
 		return dat
 
@@ -379,7 +380,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"

@@ -27,6 +27,8 @@
 
 		last_dir = 0
 
+		shooting = FALSE
+
 	New(owner)
 		..()
 		src.owner = owner
@@ -42,6 +44,9 @@
 
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod) || !owner)
 			return
+
+		if(changed & KEY_SHOCK)
+			shooting = keys & KEY_SHOCK
 
 		if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT|KEY_RUN|KEY_BOLT))
 			if (!owner.engine) // fuck it, no better place to put this, only triggers on presses
@@ -92,11 +97,16 @@
 		if (istype(src.owner, /obj/machinery/vehicle/escape_pod))
 			return FALSE
 
+		var/can_user_act = user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user)
+
+		if(shooting && owner.m_w_system?.active && can_user_act && !GET_COOLDOWN(owner.m_w_system, "fire"))
+			owner.fire_main_weapon(user)
+
 		if (next_move > world.time)
 			return next_move - world.time
 
 		velocity_magnitude = 0
-		if (user && user == owner.pilot && !user.getStatusDuration("stunned") && !user.getStatusDuration("weakened") && !user.getStatusDuration("paralysis") && !isdead(user))
+		if (can_user_act)
 			if (owner?.engine?.active)
 
 				velocity_x	+= input_x * accel
@@ -177,11 +187,6 @@
 
 		next_move = world.time + delay
 		return delay
-
-	hotkey(mob/user, name)
-		switch (name)
-			if ("fire")
-				owner.fire_main_weapon() // just, fuck it.
 
 	modify_keymap(client/C)
 		..()

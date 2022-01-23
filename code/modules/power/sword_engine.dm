@@ -46,7 +46,7 @@
 		integrity_state = 1
 		online = 0
 		charging = 0
-		updateicon()
+		UpdateIcon()
 
 	else if (isscrewingtool(W))
 		if(integrity_state == 0)
@@ -61,7 +61,7 @@
 		if(integrity_state == 2 && action_buffer == 0)
 			boutput(user, "<span class='notice'>You screw the panel back!</span>")
 			integrity_state = 1
-		updateicon()
+		UpdateIcon()
 
 	else if (iswrenchingtool(W))
 		if(integrity_state == 0)
@@ -92,7 +92,7 @@
 				//	if(temp_term.master == src)
 				//		qdel(temp_term)
 				//		terminal = null
-		updateicon()
+		UpdateIcon()
 
 	else if (integrity_state == 2 && ispryingtool(W) && core_inserted)
 		if (user.hasStatus(list("weakened", "paralysis", "stunned")) || !isalive(user))
@@ -105,7 +105,7 @@
 		user.put_in_hand_or_drop(new /obj/item/sword_core)
 		user.show_message("<span class='notice'>You remove the SWORD core from the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is missing."
-		updateicon()
+		UpdateIcon()
 	else if (integrity_state == 2 && (istype(W,/obj/item/sword_core) && !core_inserted))
 		core_inserted = true
 		qdel(W)
@@ -113,7 +113,7 @@
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
 		online = 0
 		charging = 0
-		updateicon()
+		UpdateIcon()
 
 
 /obj/machinery/power/sword_engine/emp_act()
@@ -150,10 +150,10 @@
 			return
 		else
 			terminal.master = src
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/sword_engine/proc/updateicon()
+/obj/machinery/power/sword_engine/update_icon()
 	if (integrity_state == 0)
 		icon_state = "engine_mangled"
 		UpdateOverlays(null, "glow")
@@ -237,7 +237,7 @@
 			online = 0
 
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		UpdateIcon()
 
 	src.updateDialog()
 
@@ -263,7 +263,7 @@
 	loaddemand = lastout - excess
 
 	if (clev != chargedisplay())
-		updateicon()
+		UpdateIcon()
 
 
 /obj/machinery/power/sword_engine/add_avail(var/amount)
@@ -353,7 +353,7 @@
 			else if(text2num_safe(target) != null)
 				src.output = clamp(text2num_safe(target), 0 , SEMAXOUTPUT)
 				. = TRUE
-	src.updateicon()
+	src.UpdateIcon()
 
 #undef SEMAXCHARGELEVEL
 #undef SEMAXOUTPUT

@@ -18,8 +18,7 @@
 	system = "Communications"
 	icon_state = "com"
 	color = "#16CC77"
-	var/list/access_type = null
-	var/access_type_secondary = null
+	var/list/access_type = list(POD_ACCESS_STANDARD)
 	var/obj/item/device/ship_radio_control/rc_ship = null
 
 	mining
@@ -39,20 +38,19 @@
 		name = "Radioarbeiten Communication Array"
 		desc = "A cheaper soviet-made shipboard communicator. Often used by those who oppose NanoTrasen."
 		color = "#BA1313"
-		access_type = -1
+		access_type = list(POD_ACCESS_SYNDICATE)
 
 	wizard
 		name = "MagicaTech Communication Array"
 		desc = "A expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
 		color = "#E62DE6"
-		access_type = -2
+		access_type = list(POD_ACCESS_WIZARDS)
 
 	security
 		name = "Robustco Security Communication Array"
 		desc = "Enables long-distance communications and interfacing with pod bay door controls. Also allows to open security doors."
 		color = "#d6194b"
-		access_type = 1
-		access_type_secondary = 2
+		access_type = list(POD_ACCESS_SECURITY, POD_ACCESS_STANDARD)
 
 	opencomputer(mob/user as mob)
 		ship.intercom?.attack_self(user)
@@ -122,10 +120,7 @@
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.data["command"] = "open door"
 		if (com)
-			newsignal.data["access_type"] = com.access_type
-			newsignal.data["access_type"] = com.access_type_secondary
-		else
-			newsignal.data["access_type"] = 0
+			newsignal.data["access_type"] = jointext(com.access_type,";")
 		newsignal.data["doorpass"] = pass
 		newsignal.data["sender"] = net_id
 		src.post_signal(newsignal)

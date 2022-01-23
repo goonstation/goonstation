@@ -41,6 +41,7 @@
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
+	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
 
 /datum/game_mode/gang/announce()
@@ -55,7 +56,7 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = max(setup_min_teams, min(round((num_players) / 9), setup_max_teams)) //1 gang per 9 players
+	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > leaders_possible.len)
@@ -116,9 +117,6 @@
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
-
-	SPAWN_DBG (50 MINUTES)
-		force_shuttle()
 
 	return 1
 
@@ -206,6 +204,9 @@
 
 /datum/game_mode/gang/process()
 	..()
+	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
+		shuttle_called = TRUE
+		force_shuttle()
 	slow_process ++
 	if (slow_process < 60)
 		return
@@ -612,7 +613,7 @@
 	locker.gang = usr.mind.gang
 	ticker.mode:gang_lockers += locker
 	usr.mind.gang.locker = locker
-	locker.update_icon()
+	locker.UpdateIcon()
 
 	usr.verbs -= /client/proc/set_gang_base
 
@@ -921,7 +922,7 @@
 		SPAWN_DBG(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
-	proc/update_icon()
+	update_icon()
 		if(health <= 0)
 			src.UpdateOverlays(null, "light")
 			src.UpdateOverlays(null, "screen")
@@ -1098,7 +1099,7 @@
 
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				hadcannabis = 1
 
 			if(hadcannabis)
@@ -1140,7 +1141,7 @@
 			O.set_loc(src.loc)
 
 		icon_state = "secure-open"
-		update_icon()
+		UpdateIcon()
 
 		return
 
@@ -1149,7 +1150,7 @@
 		set_density(1)
 		icon_state = "gang"
 
-		update_icon()
+		UpdateIcon()
 
 		return
 

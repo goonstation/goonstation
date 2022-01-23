@@ -2,7 +2,7 @@
 /obj/item/device/radio/headset
 	name = "Radio Headset"
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
+	wear_image_icon = 'icons/mob/clothing/ears.dmi'
 	icon_state = "headset"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "headset"
@@ -322,9 +322,18 @@
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1
+	protected_radio = 1 // Ops can spawn with the deaf trait.
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate Operative"
+
+	New()
+		..()
+		SPAWN_DBG(1 SECOND)
+			var/the_frequency = R_FREQ_SYNDICATE
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+				var/datum/game_mode/nuclear/N = ticker.mode
+				the_frequency = N.agent_radiofreq
+			src.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
 
 	leader
 		icon_override = "syndieboss"
@@ -337,18 +346,45 @@
 		secure_classes = list("z" = RADIOCL_SYNDICATE, "l"=RADIOC_OTHER)
 		icon_state = "comtac"
 
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 		setupProperties()
 			..()
 			setProperty("disorient_resist_ear", 100)
+
+		pickup(mob/user)
+			if(isvirtual(user))
+				SPAWN_DBG(0)
+					var/obj/item/clothing/ears/plugs = new /obj/item/clothing/ears/earmuffs/earplugs(src.loc)
+					plugs.name = src.name
+					plugs.desc = src.desc
+					plugs.icon_state = src.icon_state
+					user.u_equip(src)
+					qdel(src)
+					user.put_in_hand_or_drop(plugs)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 	comtac
 		name = "Military Headset"
 		icon_state = "comtac"
 		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
+		New()
+			..()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
 		setupProperties()
 			..()
 			setProperty("disorient_resist_ear", 100)
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
 
 /obj/item/device/radio/headset/deaf
 	name = "Auditory Headset"

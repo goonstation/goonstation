@@ -198,8 +198,7 @@
 			src.set_loc(get_turf(H))
 			H.unequip_all()
 
-			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH)
-			H.client.preferences.copy_to(V,H,1)
+			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
 			if (!H.mind)
 				H.mind = new /datum/mind()
 				H.mind.ckey = H.ckey

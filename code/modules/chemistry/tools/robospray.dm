@@ -28,13 +28,13 @@
 	New()
 		..()
 		processing_items.Add(src)
-		src.update_icon()
+		src.UpdateIcon()
 
 	disposing()
 		..()
 		processing_items.Remove(src)
 
-	proc/update_icon()
+	update_icon()
 		if (botreagents[currentreagent] >= 1)
 			if (!src.fluid_image)
 				src.fluid_image = image(src.icon, "hypoover", -1)
@@ -58,7 +58,7 @@
 		currentreagent = pick.id
 		propername = pick.name
 		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
-		update_icon()
+		UpdateIcon()
 		tooltip_rebuild = 1
 		return
 
@@ -95,7 +95,7 @@
 		M.reagents.add_reagent(currentreagent, amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 		tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 		playsound(M, src.sound_inject, 80, 0)
 		return 0
 
@@ -113,7 +113,7 @@
 			botreagents[reagent] = min(amt + refill_amount, max_fill_amount)
 			if (reagent == currentreagent)
 				tooltip_rebuild = 1
-				update_icon()
+				UpdateIcon()
 
 		return 0
 

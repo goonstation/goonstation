@@ -11,7 +11,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 /obj/item/reagent_containers/hypospray
 	name = "hypospray"
-	desc = "An automated injector that will dump out any harmful chemicals it finds in itself."
+	desc = "An advanced device capable of injecting various medicines into a patient instantaneously. Dumps any harmful chemicals."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	initial_volume = 30
@@ -39,7 +39,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents.total_volume)
 			src.icon_state = "hypo1"
 			src.name = "hypospray ([src.reagents.get_master_reagent_name()])"
@@ -55,12 +55,13 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		signal_event("icon_updated")
 
 	on_reagent_change(add)
+		..()
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
-		update_icon()
+		UpdateIcon()
 		src.add_dialog(user)
 		var/dat = ""
 		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
@@ -111,7 +112,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 			user.show_text("[src]'s safeties have been reactivated.", "blue")
 		safe = 1
 		src.UpdateOverlays(null, "emagged")
-		src.update_icon()
+		src.UpdateIcon()
 		return 1
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -141,4 +142,4 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 		playsound(M, src.sound_inject, 80, 0)
 
-		update_icon()
+		UpdateIcon()

@@ -2,6 +2,7 @@
  * This file contains the stuff you need for using JPS (Jump Point Search) pathing, an alternative to A* that skips
  * over large numbers of uninteresting tiles resulting in much quicker pathfinding solutions. Mind that diagonals
  * cost the same as cardinal moves currently, so paths may look a bit strange, but should still be optimal.
+ * Ported from TGStation with permission from @Ryll-Ryll, also ryll is cool
  */
 
 /**
@@ -21,6 +22,8 @@
  * * required_goals: How many goals to find to succeed. Null for all.
  */
 /proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null)
+	if(isnull(ends))
+		return
 	var/single_end = !islist(ends)
 	if(single_end)
 		ends = list(ends)
@@ -145,13 +148,16 @@
 	..()
 	src.caller = caller
 	ends = list()
+	n_target_goals = length(goals)
 	for(var/goal in goals)
 		var/turf/T = get_turf(goal)
+		if(!istype(T))
+			n_target_goals--
+			continue
 		if(islist(ends[T]))
 			ends[T] += goal
 		else
 			ends[T] = list(goal)
-	n_target_goals = length(goals)
 	open = new /datum/heap(/proc/HeapPathWeightCompare)
 	sources = new()
 	src.id = id

@@ -344,7 +344,7 @@
 		if (href_list["duration"])
 			var/input = input("Duration in seconds (1-600)?","Temporary ID") as num
 			if(isnum_safe(input))
-				src.card_duration = min(max(input,1),600)
+				src.card_duration = clamp(input, 1, 600)
 
 			updatecardprice()
 			href = "temp_card=1"
@@ -468,7 +468,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I

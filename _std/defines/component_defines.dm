@@ -17,6 +17,9 @@
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
 
+/// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
+#define LoadComponent(arguments...) _LoadComponent(list(##arguments))
+
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
 	*
@@ -75,7 +78,12 @@
 #define COMSIG_UPDATE_ICON "atom_update_icon"
 /// when something triggers Crossed by entering this atom's turf (/atom/movable)
 #define COMSIG_ATOM_CROSSED "atom_crossed"
-
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
+/// When reagents change
+#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
@@ -134,6 +142,12 @@
 /// Triggers on destruction of a drone beacon
 #define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
 
+// ---- bomb assembly signals ----
+/// Triggers on the start of signalling the opening of an assembly bomb
+#define COMSIG_BOMB_SIGNAL_START "bomb_signal_start"
+/// Triggers when an assembly bomb's signalling is cancelled
+#define COMSIG_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
+
 // ---- implant signals ----
 /// When implanted
 #define COMSIG_IMPLANT_IMPLANTED "implant_implanted"
@@ -179,10 +193,21 @@
 /// sent when a mob throws something (target, params)
 #define COMSIG_MOB_THROW_ITEM "throw_item"
 
+/// sent when a mob throws something that lands nearby
+#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
+
+/// sent when a mob sets their a_intent var (mob, intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
+
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+
+/// When the mob vomits
+#define COMSIG_MOB_VOMIT "mob_vomit"
+
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+
 /// sent when defibbed status is added to a mob
 #define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 // ---- mob/living signals ----

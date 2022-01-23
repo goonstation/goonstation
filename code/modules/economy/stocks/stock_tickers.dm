@@ -154,7 +154,7 @@
 		available_shares += share_change // temporary
 
 		if (prob(25))
-			average_optimism = max(min(average_optimism + (rand(-3, 3) - current_trend * 0.15) / 100, 1), -1)
+			average_optimism = clamp(average_optimism + (rand(-3, 3) - current_trend * 0.15) / 100, -1, 1)
 
 		var/aspec = abs(speculation)
 		if (prob((aspec - 75) * 2))

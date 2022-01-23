@@ -13,7 +13,7 @@ Contains:
 	name = "tank"
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	var/datum/gas_mixture/air_contents = null
 	var/distribute_pressure = ONE_ATMOSPHERE
@@ -86,7 +86,7 @@ Contains:
 		return 1
 
 	proc/set_release_pressure(var/pressure as num)
-		distribute_pressure = min(max(0, pressure), TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if(iscarbon(src.loc))
@@ -344,6 +344,8 @@ Contains:
 				return 0.5
 			else
 				return 0
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mag[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 
@@ -396,6 +398,8 @@ Contains:
 				return 0.5
 			else
 				return 0
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
 #endif
@@ -426,7 +430,7 @@ Contains:
 	stamina_damage = 30
 	stamina_cost = 16
 	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
-	wear_image_icon = 'icons/mob/belt.dmi'
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
 
 	New()
@@ -652,6 +656,9 @@ Contains:
 			else
 				return 0
 
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mk2_[on]"))
+
 /obj/item/tank/jetpack/jetpackmk2/abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
 /obj/item/tank/jetpack/syndicate
@@ -673,5 +680,8 @@ Contains:
 		else
 			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
 		return
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]sjetpack_mag[on]"))
 
 /obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)

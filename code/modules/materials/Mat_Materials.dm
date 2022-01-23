@@ -603,6 +603,7 @@
 	name = "quartz"
 	desc = "Quartz is somewhat valuable but not paticularly useful."
 	color = "#BBBBBB"
+	alpha = 220
 	quality = 50
 	var/gem_tier = 3
 

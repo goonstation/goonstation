@@ -718,7 +718,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/energy/laser_gun/pred/vr)
+		supplies = list(/obj/item/gun/energy/plasma_gun/vr)
 
 	axe
 		name = "Energy Axes"

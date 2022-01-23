@@ -232,7 +232,7 @@
 		A.temperature_expose(null, temperature, volume)
 		if (isliving(A))
 			var/mob/living/H = A
-			var/B = min(55, max(0, temperature - 100 / 550))
+			var/B = clamp(temperature - 100 / 550, 0, 55)
 			H.update_burning(B)
 
 	proc/process(list/turf/simulated/possible_spread)
@@ -254,7 +254,7 @@
 			return 0
 
 		for (var/mob/living/L in loc)
-			L.update_burning(min(max(temperature / 60, 5),33))
+			L.update_burning(clamp(temperature / 60, 5, 33))
 
 		perform_exposure()
 

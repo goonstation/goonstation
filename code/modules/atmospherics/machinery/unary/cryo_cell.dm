@@ -100,10 +100,10 @@
 			move_inside()
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
@@ -255,6 +255,7 @@
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(G)
+				G.set_loc(src)
 		else if (istype(G, /obj/item/wrench))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
@@ -287,7 +288,7 @@
 		M.set_loc(src)
 		src.occupant = M
 		for (var/obj/O in src)
-			if (O == src.beaker)
+			if (O == src.beaker || O == src.defib)
 				continue
 			O.set_loc(get_turf(src))
 		src.add_fingerprint(user)
