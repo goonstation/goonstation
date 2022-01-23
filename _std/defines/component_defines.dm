@@ -101,6 +101,8 @@
 #define COMSIG_MOVABLE_RECEIVE_PACKET "mov_receive_packet"
 /// send this signal to send a radio packet (datum/signal/signal, receive_param / range, frequency), if frequency is null all registered frequencies are used
 #define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
+/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
+#define COMSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
 
 // ---- item signals ----
 
