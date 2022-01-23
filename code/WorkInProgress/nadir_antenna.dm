@@ -154,7 +154,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	attackby(obj/item/W, mob/user) //placeholder for netop
 		if(istype(W,/obj/item/device/calibrator))
 			var/cargotarget = input(usr,"TEMPORARY INTERFACE","Select Target",null) in shippingmarket.pending_crates
-			src.attempt_transceive(cargotarget)
+			if(cargotarget)
+				src.attempt_transceive(cargotarget)
 			return
 		else
 			..()
