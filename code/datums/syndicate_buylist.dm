@@ -14,7 +14,7 @@ proc/build_syndi_buylist_cache()
 	syndi_buylist_cache = sortList(syndi_buylist_cache)
 
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
-
+ABSTRACT_TYPE(/datum/syndicate_buylist)
 /datum/syndicate_buylist
 	/// Name of the buylist entry
 	var/name = null
@@ -60,6 +60,7 @@ proc/build_syndi_buylist_cache()
 // Note: traitor uplinks also list these, so you don't have to make two separate entries.
 // Note #2: Nuke ops-exclusive item: /datum/syndicate_buylist/traitor + "objective = /datum/objective/specialist/nuclear".
 
+ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic
 	name = "You shouldn't see me!"
 	cost = 0
@@ -243,6 +244,7 @@ proc/build_syndi_buylist_cache()
 
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
+ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor
 	name = "You shouldn't see me!"
 	cost = 0
@@ -889,6 +891,7 @@ This is basically useless for anyone but miners.
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 /datum/syndicate_buylist/surplus
 	name = "You shouldn't see me!"
 	cost = 0
@@ -1000,6 +1003,7 @@ This is basically useless for anyone but miners.
 /////////////////////////////////////////// Irregular Items //////////////////////////////////////////////////
 // For things that aren't seen in a regular uplink but are in the buylist datum, e.g. Syndicate commander uplink gear
 
+ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 /datum/syndicate_buylist/commander
 	name = "You shouldn't see me!"
 	cost = 0
@@ -1119,6 +1123,7 @@ This is basically useless for anyone but miners.
 
 // round specific
 
+ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 /datum/syndicate_buylist/generic/head_rev
 	name = "Head Rev Buylist Parent"
 	cost = 0
@@ -1133,13 +1138,11 @@ This is basically useless for anyone but miners.
 	cost = 5
 	desc = "This flash never runs out and will convert susceptible crew when a rev head uses it. It will also allow the rev head to break loyalty implants."
 
-
 /datum/syndicate_buylist/generic/head_rev/revflashbang
 	name = "Revolutionary Flashbang"
 	item = /obj/item/chem_grenade/flashbang/revolution
 	cost = 2
 	desc = "This single-use flashbang will convert all crew within range. It doesn't matter who primes the flash - it will convert all the same."
-
 
 /datum/syndicate_buylist/generic/head_rev/revsign
 	name = "Revolutionary Sign"
@@ -1147,13 +1150,11 @@ This is basically useless for anyone but miners.
 	cost = 4
 	desc = "This large revolutionary sign will inspire all nearby revolutionaries and grant them small combat buffs. A rev head needs to be holding this sign for it to have any effect."
 
-
 /datum/syndicate_buylist/generic/head_rev/rev_dagger
 	name = "Sacrificial Dagger"
 	item = /obj/item/dagger
 	cost = 2
 	desc = "An ornamental dagger for stabbing people with."
-
 
 /datum/syndicate_buylist/generic/head_rev/rev_normal_flash
 	name = "Flash"
