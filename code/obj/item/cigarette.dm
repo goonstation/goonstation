@@ -1129,9 +1129,11 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
-				if (!reagents && !infinite_fuel)
+				if (infinite_fuel)
+					src.activate(user)
+				if (!reagents)
 					return
-				if (!reagents.get_reagent_amount("fuel") && !infinite_fuel)
+				if (!reagents.get_reagent_amount("fuel"))
 					user.show_text("Out of fuel.", "red")
 					return
 				src.activate(user)
