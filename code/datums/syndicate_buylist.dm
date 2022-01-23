@@ -2,7 +2,7 @@
  * Builds the entire syndicate buylist cache, retrieved by uplinks. Ideally only executed once during the pre-round
  */
 proc/build_syndi_buylist_cache()
-	var/list/stuff = typesof(/datum/syndicate_buylist)
+	var/list/stuff = concrete_typesof(/datum/syndicate_buylist)
 	syndi_buylist_cache.Cut()
 	for(var/SB in stuff)
 		syndi_buylist_cache += new SB

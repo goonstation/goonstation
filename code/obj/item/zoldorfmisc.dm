@@ -280,7 +280,7 @@
 				redraw = 0
 				reference = src
 			if("Traitor")
-				var/list/buylist = typesof(/datum/syndicate_buylist)
+				var/list/buylist = concrete_typesof(/datum/syndicate_buylist)
 				var/datum/syndicate_buylist/thing = pick(buylist)
 				var/datum/syndicate_buylist/thing2 = new thing
 				if(thing2.item != null)
