@@ -1,5 +1,7 @@
 ///Station's transception anrray, used for cargo I/O operations on maps that include one
 var/global/obj/machinery/communications_dish/transception/transception_array
+
+//Cost to send or receive. Should be subject to tuning.
 #define ARRAY_TELECOST 1500
 
 /obj/machinery/communications_dish/transception
