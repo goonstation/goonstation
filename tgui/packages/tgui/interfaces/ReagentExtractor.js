@@ -166,7 +166,7 @@ const ReagentGraph = (props, context) => {
   const contents = container.contents || [];
 
   return (
-    <Fragment>
+    <>
       <Flex>
         {contents.map((reagent, index) => (
           <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
@@ -211,7 +211,7 @@ const ReagentGraph = (props, context) => {
           )}
         </Box>
       </Tooltip>
-    </Fragment>
+    </>
   );
 };
 
