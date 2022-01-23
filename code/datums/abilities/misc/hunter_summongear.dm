@@ -4,7 +4,7 @@
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 60 SECONDS
+	cooldown = 40 SECONDS
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
@@ -87,8 +87,12 @@
 						HC.send_to_target_mob(M)
 						cloak_found = TRUE
 						continue
-		if (!gun_found || !spear_found || !cloak_found)
-			boutput(M, __red("Your [gun_found == FALSE ? "plasma gun" : ""] [spear_found == FALSE ? "spear" : ""] [cloak_found == FALSE ? "cloaking device" : ""] is lost or destroyed."))
+		if (!gun_found)
+			boutput(M, __red("Your plasma gun is lost or destroyed!"))
+		else if (!spear_found)
+			boutput(M, __red("Your hunting spear is lost or destroyed!"))
+		else if (!cloak_found)
+			boutput(M, __red("Your cloaking device is lost or destroyed!"))
 
 	onInterrupt()
 		..()
