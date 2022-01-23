@@ -1033,7 +1033,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	proc/setup()
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
-			if ((istype(S, /datum/syndicate_buylist/commander) || (S.can_buy & purchase_flags)) && !src.commander_buylist.Find(S))
+			if ((istype(S, /datum/syndicate_buylist/commander) || (S.can_buy & purchase_flags)) && !(S in src.commander_buylist))
 				src.commander_buylist.Add(S)
 
 		var/list/names = list()
