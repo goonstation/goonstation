@@ -103,7 +103,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if (AC && !AC.cell)
 			return
 		var/obj/item/cell/C = AC.cell
-		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
+		var/combined_cost = (0.2 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge < combined_cost)
 			playsound(src.loc, "sound/effects/manta_alarm.ogg", 50, 1)
 			src.primed = FALSE
@@ -120,7 +120,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if (AC && !AC.cell)
 			return
 		var/obj/item/cell/C = AC.cell
-		var/combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
+		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge > combined_cost)
 			playsound(src.loc, "sound/machines/shieldgen_startup.ogg", 50, 1)
 			src.primed = TRUE
