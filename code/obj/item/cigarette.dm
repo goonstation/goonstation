@@ -1237,14 +1237,6 @@
 
 	process()
 		if (src.on)
-			if (!reagents)
-				if (ismob(src.loc))
-					src.deactivate(src.loc)
-				else
-					src.deactivate(null)
-				return
-			if (!infinite_fuel && reagents.get_reagent_amount("fuel"))
-				reagents.remove_reagent("fuel", 0.2)
 			var/turf/location = src.loc
 			if (ismob(location))
 				var/mob/M = location
@@ -1253,12 +1245,22 @@
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(700,5)
-			if (!reagents.get_reagent_amount("fuel"))
+
+			if (infinite_fuel) //skip all fuel checks
+				return
+			if (!reagents)
 				if (ismob(src.loc))
 					src.deactivate(src.loc)
 				else
 					src.deactivate(null)
 				return
+			if (reagents.get_reagent_amount("fuel"))
+				reagents.remove_reagent("fuel", 0.2)
+			if (!reagents.get_reagent_amount("fuel"))
+				if (ismob(src.loc))
+					src.deactivate(src.loc)
+				else
+					src.deactivate(null)
 			//sleep(1 SECOND)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
