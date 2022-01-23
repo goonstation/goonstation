@@ -6494,10 +6494,9 @@
 "dFe" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/machinery/light_switch/west,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
 /turf/simulated/floor/engine,
 /area/station/science/bot_storage)
 "dFA" = (
@@ -7301,9 +7300,8 @@
 "efM" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
 /turf/simulated/floor/engine,
 /area/station/storage/tools)
 "efZ" = (
@@ -8025,10 +8023,10 @@
 "eAR" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/storage/toolbox/mechanical{
+/obj/item/device/multitool,
+/obj/item/storage/toolbox/electrical{
 	pixel_y = 14
 	},
-/obj/item/device/multitool,
 /turf/simulated/floor/caution/west,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -12611,8 +12609,6 @@
 "hay" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/machinery/light,
@@ -18746,12 +18742,12 @@
 "kit" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "kiG" = (
@@ -19985,7 +19981,7 @@
 /area/station/chapel/sanctuary)
 "kOm" = (
 /obj/item/paper{
-	info = "Advanced controls have not been implemented. Please use control devices on pads to receive cargo, or use pads directly to send it. Heavy use of system may cause interruptions in antenna operation due to electrical draw; quartermasters are authorized to open the transception antenna APC for maintenance.";
+	info = "Advanced controls have not been implemented. Please use control devices on pads to receive cargo, or use pads directly to send it.<br><br>Heavy use of system may cause interruptions in antenna operation due to electrical draw; quartermasters are authorized to open the transception antenna APC for maintenance.";
 	name = "crinkled paper";
 	pixel_x = 1
 	},
@@ -20906,7 +20902,10 @@
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 14
 	},
-/obj/item/device/multitool,
+/obj/item/device/matanalyzer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -30374,14 +30373,14 @@
 	pixel_y = 8
 	},
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment/horizontal,
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargooffice)
 "qMM" = (
@@ -30794,7 +30793,10 @@
 "rbl" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
-/obj/item/device/multitool,
+/obj/item/device/matanalyzer{
+	pixel_x = 8;
+	pixel_y = -5
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -31405,7 +31407,6 @@
 "rtj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/machinery/camera{
@@ -33791,7 +33792,7 @@
 "sNc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -36405,8 +36406,8 @@
 "ukg" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/storage/toolbox/mechanical{
+/obj/item/cell/supercell,
+/obj/item/storage/toolbox/electrical{
 	pixel_y = 14
 	},
 /turf/simulated/floor/caution/west,
@@ -37367,7 +37368,7 @@
 "uMT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell,
 /turf/simulated/floor/caution/west,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -40367,7 +40368,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
-	cell_type = 7500;
+	cell_type = 15000;
 	dir = 1;
 	name = "Transception Antenna APC";
 	pixel_y = 24;
@@ -40433,10 +40434,10 @@
 "wOJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 14
 	},
+/obj/item/cell/supercell,
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"

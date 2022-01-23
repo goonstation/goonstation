@@ -1,8 +1,10 @@
 ///Station's transception anrray, used for cargo I/O operations on maps that include one
 var/global/obj/machinery/communications_dish/transception/transception_array
 
-//Cost to send or receive. Should be subject to tuning.
-#define ARRAY_TELECOST 1500
+//Cost to "kick-start" a transception, charged against area APC
+#define ARRAY_STARTCOST 450
+//Cost to follow through on the transception, regular power use
+#define ARRAY_TELECOST 1200
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
@@ -72,7 +74,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if(netnum != pad_netnum)
 			return
 		src.is_transceiving = TRUE
-		if(!src.use_area_cell_power(200)) //some electrical cost hits the cell directly, for "kick-starting" beam
+		if(!src.use_area_cell_power(ARRAY_STARTCOST))
 			return
 		use_power(ARRAY_TELECOST)
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 0)
@@ -101,7 +103,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if (AC && !AC.cell)
 			return
 		var/obj/item/cell/C = AC.cell
-		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_TELECOST
+		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge < combined_cost)
 			playsound(src.loc, "sound/effects/manta_alarm.ogg", 50, 1)
 			src.primed = FALSE
@@ -110,7 +112,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			. = TRUE
 		return
 
-	///Primed status restarts when power is restored
+	///Primed status restarts when power is sufficiently restored
 	proc/attempt_restart()
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
@@ -118,9 +120,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if (AC && !AC.cell)
 			return
 		var/obj/item/cell/C = AC.cell
-		var/combined_cost = (0.5 * C.maxcharge) + ARRAY_TELECOST
+		var/combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge > combined_cost)
-			playsound(src.loc, "sound/effects/manta_interface.ogg", 50, 1)
+			playsound(src.loc, "sound/machines/shieldgen_startup.ogg", 50, 1)
 			src.primed = TRUE
 			src.failsafe_active = FALSE
 			src.UpdateIcon()
@@ -230,12 +232,13 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get)
 		src.is_transceiving = TRUE
+		if(thing2get in shippingmarket.pending_crates)
+			shippingmarket.pending_crates.Remove(thing2get)
 		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //incoming cargo warning (stand clear)
 		SPAWN_DBG(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN_DBG(0.4 SECONDS)
-				if(thing2get in shippingmarket.pending_crates && transception_array.transceive(netnumber))
-					shippingmarket.pending_crates.Remove(thing2get)
+				if(transception_array.transceive(netnumber))
 					for(var/atom/movable/O as mob in src.loc)
 						if(istype(O,/mob/living/carbon/human) && prob(15))
 							telefrag(O) //get out the way
