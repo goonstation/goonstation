@@ -394,8 +394,8 @@ obj/machinery/atmospherics/pipe
 				boutput(user, "You start to repair the [src.name].")
 
 				var/positions = src.get_welding_positions()
-				actions.start(new /datum/action/bar/private/icon/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
-						list(user), W.icon, W.icon_state, "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
+						list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
 
 
 			else if(destroyed && istype(W, /obj/item/rods))

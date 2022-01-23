@@ -745,6 +745,11 @@ var/datum/action_controller/actions
 			border.icon = null
 			M.client?.images += bar.img
 			M.client?.images += border.img
+			if(place_to_put_bar)
+				target_bar.icon = null
+				target_border.icon = null
+				M.client?.images += target_bar.img
+				M.client?.images += target_border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
@@ -755,6 +760,11 @@ var/datum/action_controller/actions
 			M.client?.images -= border.img
 			qdel(bar.img)
 			qdel(border.img)
+			if(place_to_put_bar)
+				M.client?.images -= target_bar.img
+				M.client?.images -= target_border.img
+				qdel(target_bar.img)
+				qdel(target_border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -1205,7 +1215,7 @@ var/datum/action_controller/actions
 				H.show_text("You successfully remove the shackles.", "blue")
 
 
-/datum/action/bar/private/icon/welding
+/datum/action/bar/private/welding
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "welding"
@@ -1225,17 +1235,18 @@ var/datum/action_controller/actions
 	var/maximum_range = 1
 	/// a list of args for the proc thats called once the action bar finishes, if needed.
 	var/list/proc_args = null
+	bar_on_owner = FALSE
 
-	New(owner, target, duration, proc_path, proc_args, icon, icon_state, end_message, start, stop)
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
 		..()
 		src.owner = owner
 		src.target = target
+		place_to_put_bar = target
+
 		if(duration)
 			src.duration = duration
 		src.proc_path = proc_path
 		src.proc_args = proc_args
-		src.icon = icon
-		src.icon_state = icon_state
 		src.end_message = end_message
 		src.start_offset = start
 		src.end_offset = stop
@@ -1254,12 +1265,12 @@ var/datum/action_controller/actions
 			E.pixel_y = start_offset[2]
 			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
 
-	onInterrupt(var/flag)
-		..()
+	onDelete(var/flag)
 		if(E && ismovable(src.target))
 			var/atom/movable/M = src.target
 			M.vis_contents -= E
 			qdel(E)
+		..()
 
 	onEnd()
 		..()
