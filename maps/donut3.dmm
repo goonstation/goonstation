@@ -11095,8 +11095,7 @@
 /area/station/hallway/primary/south)
 "cYe" = (
 /obj/bookshelf/persistent{
-	layer = 10;
-	pixel_y = 32
+	layer = 10
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
@@ -20702,12 +20701,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "fJQ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/bookshelf/long,
+/obj/bookshelf,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "fKa" = (
@@ -23238,15 +23232,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
-"gyc" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/bookshelf/long/end_right,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "gyd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -43028,7 +43013,9 @@
 	},
 /area/station/medical/medbay/treatment)
 "mtR" = (
-/turf/simulated/wall/auto/supernorn/wood,
+/obj/bookshelf,
+/obj/bookshelf,
+/turf/simulated/floor/wood/six,
 /area/station/library)
 "mua" = (
 /turf/simulated/wall/auto/reinforced/jen/blue{
@@ -50378,10 +50365,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
-"oBH" = (
-/obj/bookshelf/long/end_right,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "oBQ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -55625,10 +55608,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"qbM" = (
-/obj/bookshelf/long,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "qce" = (
 /obj/cable{
 	d1 = 1;
@@ -65547,15 +65526,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
-"sQZ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/bookshelf/long/end_left,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "sRc" = (
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
@@ -81401,10 +81371,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/south_side)
-"xuS" = (
-/obj/bookshelf/long/end_left,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "xuV" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/closet/radiation,
@@ -109974,9 +109940,9 @@ sGu
 quz
 quz
 mtR
-sQZ
-mtR
-xuS
+iEn
+fJQ
+quz
 fUD
 sIK
 lmD
@@ -110276,9 +110242,9 @@ sGu
 vau
 quz
 mtR
+iEn
 fJQ
-mtR
-qbM
+quz
 fUD
 sIK
 gYc
@@ -110578,9 +110544,9 @@ mXZ
 cUw
 quz
 mtR
-gyc
-mtR
-oBH
+iEn
+fJQ
+quz
 fUD
 sIK
 ylb
