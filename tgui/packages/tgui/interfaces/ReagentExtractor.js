@@ -72,7 +72,10 @@ const ReagentDisplay = (props, context) => {
         <Flex inline nowrap>
           <Flex.Item grow
             overflow="hidden"
-            style={{ "text-overflow": "ellipsis" }}>
+            style={{
+              "text-overflow": "ellipsis",
+              "text-transform": "capitalize",
+            }}>
             {container.name}
           </Flex.Item>
           <Flex.Item px={4} /> {/* this prevents the title buttons from being overlapped by the title text */}
