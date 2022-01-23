@@ -415,6 +415,7 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 		name = "Click moving"
 		instructions = "Moving around with arrow keys or WASD is vastly inefficient when you need to cover large distances at once. You can also move around by right-clicking a tile, however. Right-click the marked tile to move there and proceed."
 		var/turf/target
+		var/list/allowed_to_rclick = list()
 		finished = 0
 
 		SetUp()
@@ -425,9 +426,14 @@ var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blo
 			var/tz = MT.initial_turf.z
 			target = locate(tx + 3, ty + 3, tz)
 			target.UpdateOverlays(marker,"marker")
+			for (var/turf/T in MT.tutorial_area)
+				if(T.name == "steel floor")
+					allowed_to_rclick += T
 
 		PerformAction(var/action, var/context)
-			if (action == "clickmove" && context == target)
+			if (!(context in allowed_to_rclick)) //Stop the player from suicide by cordon
+				return 0
+			else if (action == "clickmove" && context == target)
 				finished = 1
 				return 1
 			return 1 // bad but prevents chat spam which leads to crashes
