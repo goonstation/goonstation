@@ -1116,7 +1116,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
 	slot_suit = list(/obj/item/clothing/suit/labcoat)
-	slot_ears = list(/obj/item/device/radio/headset/command/md)
+	slot_ears = list(/obj/item/device/radio/headset/command/hs)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
 
 	New()
