@@ -235,7 +235,6 @@ mob/new_player
 			if(living_pop_cap)
 				var/living_people = 0
 				for(var/client/C in clients)
-					LAGCHECK(LAG_LOW)
 					if(!C.mob)
 						continue
 					if(!istype(C.mob, /mob/living))
