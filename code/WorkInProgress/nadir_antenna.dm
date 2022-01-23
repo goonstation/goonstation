@@ -73,9 +73,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		var/netnum = powernet.number
 		if(netnum != pad_netnum)
 			return
-		src.is_transceiving = TRUE
 		if(!src.use_area_cell_power(ARRAY_STARTCOST))
 			return
+		src.is_transceiving = TRUE
 		use_power(ARRAY_TELECOST)
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 0)
 		flick("beam",src.telebeam)
