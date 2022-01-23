@@ -765,8 +765,8 @@
 	desc = "A very large, sharp spear."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "hunter_spear"
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	item_state = "knife_b"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "hunter_spear"
 	force = 8.0
 	throwforce = 35.0
 	throw_speed = 6
