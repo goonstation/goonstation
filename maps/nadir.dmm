@@ -19985,7 +19985,7 @@
 /area/station/chapel/sanctuary)
 "kOm" = (
 /obj/item/paper{
-	info = "Advanced controls have not been implemented. Please use control devices on pads to receive cargo, or use pads directly to send it.";
+	info = "Advanced controls have not been implemented. Please use control devices on pads to receive cargo, or use pads directly to send it. Heavy use of system may cause interruptions in antenna operation due to electrical draw; quartermasters are authorized to open the transception antenna APC for maintenance.";
 	name = "crinkled paper";
 	pixel_x = 1
 	},
@@ -40363,11 +40363,15 @@
 /turf/simulated/floor/engine,
 /area/station/storage/eva)
 "wMe" = (
-/obj/machinery/power/apc/autoname_north{
-	cell_type = 7500
-	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	cell_type = 7500;
+	dir = 1;
+	name = "Transception Antenna APC";
+	pixel_y = 24;
+	req_access = list(43,31)
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner{

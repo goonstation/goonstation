@@ -72,12 +72,26 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if(netnum != pad_netnum)
 			return
 		src.is_transceiving = TRUE
+		if(!src.use_area_cell_power(200)) //some electrical cost hits the cell directly, for "kick-starting" beam
+			return
 		use_power(ARRAY_TELECOST)
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 0)
 		flick("beam",src.telebeam)
 		SPAWN_DBG(0.1 SECONDS)
 			src.is_transceiving = FALSE
 		return TRUE
+
+	///Directly discharge power from the area's cell
+	proc/use_area_cell_power(var/use_amount)
+		var/obj/machinery/power/apc/AC = get_local_apc(src)
+		if (!AC)
+			return 0
+		var/obj/item/cell/C = AC.cell
+		if (!C || C.charge < use_amount)
+			return 0
+		else
+			C.use(use_amount)
+			return 1
 
 	///If failsafe mode is active, disable primed status if power grows too low and (to be implemented) notify pad terminals of this failure
 	proc/failsafe_prompt() //returns true if error
@@ -111,6 +125,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			src.failsafe_active = FALSE
 			src.UpdateIcon()
 			. = TRUE
+		return
+
+	ex_act(severity) //tbi: damage and repair
 		return
 
 #undef ARRAY_TELECOST
@@ -176,7 +193,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if(inbound_target)
 			receive_a_thing(netnum,inbound_target)
 		else
-			send_a_thing(netnum,)
+			send_a_thing(netnum)
 		return
 
 	proc/send_a_thing(var/netnumber)
@@ -217,9 +234,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		SPAWN_DBG(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN_DBG(0.4 SECONDS)
-				if(transception_array.transceive(netnumber))
-					if(thing2get in shippingmarket.pending_crates) //this is still giga broken idk why
-						shippingmarket.pending_crates.Remove(thing2get)
+				if(thing2get in shippingmarket.pending_crates && transception_array.transceive(netnumber))
+					shippingmarket.pending_crates.Remove(thing2get)
 					for(var/atom/movable/O as mob in src.loc)
 						if(istype(O,/mob/living/carbon/human) && prob(15))
 							telefrag(O) //get out the way
