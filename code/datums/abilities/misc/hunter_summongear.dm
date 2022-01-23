@@ -57,7 +57,6 @@
 		var/spear_found = FALSE
 		var/cloak_found = FALSE
 		for(var/HG in by_cat[TR_CAT_HUNTER_GEAR])
-			message_admins("Found gear [HG]")
 			if (istype(HG, /obj/item/gun/energy/plasma_gun/hunter))
 				var/obj/item/gun/energy/plasma_gun/hunter/PG = HG
 				if (M.mind && M.mind.key == PG.hunter_key)
@@ -89,7 +88,7 @@
 						cloak_found = TRUE
 						continue
 		if (!gun_found || !spear_found || !cloak_found)
-			boutput(M, __red("Your whatever is lost or destroyed."))
+			boutput(M, __red("Your [gun_found == FALSE ? "plasma gun" : ""] [spear_found == FALSE ? "spear" : ""] [cloak_found == FALSE ? "cloaking device" : ""] is lost or destroyed."))
 
 	onInterrupt()
 		..()
