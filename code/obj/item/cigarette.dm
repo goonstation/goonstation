@@ -1119,8 +1119,9 @@
 
 	New()
 		..()
-		src.create_reagents(20)
-		reagents.add_reagent("fuel", 20)
+		if (!infinite_fuel)
+			src.create_reagents(20)
+			reagents.add_reagent("fuel", 20)
 
 		src.setItemSpecial(/datum/item_special/flame)
 		return
@@ -1128,9 +1129,9 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
 			if (!src.on)
-				if (!reagents)
+				if (!reagents && !infinite_fuel)
 					return
-				if (!reagents.get_reagent_amount("fuel"))
+				if (!reagents.get_reagent_amount("fuel") && !infinite_fuel)
 					user.show_text("Out of fuel.", "red")
 					return
 				src.activate(user)
