@@ -465,6 +465,12 @@
 			setProperty("heatprot", 10)
 			setProperty("movespeed", 0.4)
 
+/obj/item/clothing/suit/apron/surgeon
+	name = "surgeon's apron"
+	desc = "A white apron with a tendency to be spattered with red substances."
+	icon_state = "apron-surgeon"
+	item_state = "apron-surgeon"
+
 /obj/item/clothing/suit/labcoat
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."
