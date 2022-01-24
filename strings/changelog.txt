@@ -1,5 +1,9 @@
 
 (t)mon jan 24 22
+(u)BatElite
+(p)7285
+(e)🐛🗺|bug, mapping
+(+)Donut3's brig piping has been fixed.
 (u)Mr. Moriarty
 (p)7007
 (e)|
