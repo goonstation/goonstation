@@ -70,7 +70,7 @@
 
 /obj/item/breaching_hammer/rock_sledge
 	name = "Orpheus electric guitar"
-	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Bonk-Tek."
+	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Funk-Tek."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"

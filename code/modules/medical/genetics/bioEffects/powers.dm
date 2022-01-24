@@ -1983,7 +1983,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/datum/bioEffect/power/bigpuke/BP = linked_power
 		var/range = BP.range
 		range *= BP.power
@@ -1993,7 +1994,7 @@
 		owner.reagents.add_reagent("vomit",20)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -2004,11 +2005,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		SEND_SIGNAL(owner, COMSIG_MOB_VOMIT, 10)
 		return 0
@@ -2031,7 +2034,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/range = 3
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
@@ -2041,7 +2045,7 @@
 		owner.reagents.add_reagent("radium",5)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -2052,11 +2056,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		return 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

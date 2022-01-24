@@ -7796,7 +7796,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/morgue)
 "ava" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/disposalpipe/segment/morgue{
@@ -7810,7 +7810,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/disposalpipe/segment/morgue{
@@ -9542,7 +9542,7 @@
 /area/station/medical/morgue)
 "azi" = (
 /obj/machinery/light,
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/morgue)
 "azk" = (
@@ -12446,7 +12446,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aHa" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -12457,7 +12457,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aHb" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/specialroom/freezer/blue,
@@ -13118,7 +13118,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aID" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -25425,7 +25425,6 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/access_spawn/cargo,
 /obj/access_spawn/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -26514,7 +26513,6 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/access_spawn/cargo,
 /obj/access_spawn/mining,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
@@ -37868,7 +37866,7 @@
 	name = "Combustion Chamber Vent";
 	pixel_y = 28
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "combustion_ignition";
 	pixel_x = -12;
 	pixel_y = 28
@@ -52508,8 +52506,15 @@
 /area/station/science/testchamber)
 "cDp" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/head/helmet/camera,
-/obj/item/clothing/head/helmet/camera,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 7
+	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/camera{
+	pixel_y = -2
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -52674,8 +52679,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/computer/security/wooden_tv/small,
-/obj/table/wood/auto,
+/obj/storage/crate/adventure,
 /turf/simulated/floor/purple,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
@@ -52693,6 +52697,10 @@
 	},
 /obj/table/wood/auto,
 /obj/item/clipboard/with_pen,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /obj/item/storage/box/diskbox,
 /obj/disposalpipe/segment{
 	dir = 4

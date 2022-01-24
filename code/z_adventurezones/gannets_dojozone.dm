@@ -196,6 +196,9 @@ Contents:
 			if(A)
 				actions.start(new/datum/action/bar/icon/forge_katana(user, H, src, A), user)
 
+	proc/can_forge()
+		. = src.temperature >= (500 + T0C)
+
 	// black body radiation color temperature
 	proc/set_real_color()
 		var/input = temperature / 100
@@ -287,9 +290,10 @@ Contents:
 		if(outline)
 			outline:color = target.color
 		border.UpdateOverlays(icon_image, "action_icon")
-		if(target.temperature < (500 + T0C) )
+		if(!target.can_forge())
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(user,"[target] has cooled to a point where it can no longer be forged by [H].")
+			src.resumable = FALSE
 			return
 
 		if(target.strikes > target.strikes_to_complete)
@@ -298,9 +302,10 @@ Contents:
 
 	onStart()
 		..()
-		if(target.temperature < (500 + T0C) )
+		if(!target.can_forge())
 			interrupt(INTERRUPT_ALWAYS)
 			boutput(user,"[target] is too cold to be forged.")
+			src.resumable = FALSE
 			return
 		target.set_real_color()
 		if(!outline && length(icon_image.filters))
@@ -320,9 +325,11 @@ Contents:
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		playsound(target,'sound/impact_sounds/Metal_Clang_3.ogg', 60, pitch=1-(rand()*0.2))
-		target.strikes++
 
-		looped++
+		if(target.can_forge())
+			target.strikes++
+			looped++
+
 		src.onRestart()
 
 

@@ -25,3 +25,4 @@
 #define ismartian(x) (istype(x, /mob/living/critter/martian) || (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/martian)))
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
+#define isnukeopgunbot(x) (istype(x, /mob/living/critter/gunbot/syndicate) && x:mind && x:mind:special_role == ROLE_NUKEOP_GUNBOT)

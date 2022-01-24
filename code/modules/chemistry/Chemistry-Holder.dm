@@ -22,13 +22,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return 0
 	return 1
 
-proc/chemhood_check(mob/living/carbon/human/H)
-	if(H.wear_mask == /obj/item/clothing/head/chemhood && H.wear_suit == /obj/item/clothing/suit/chemsuit )
-		boutput(H, "<span class='alert'>FUCK YOU ACID</span>")
-		return 0
-	else
-		return 1
-
 datum
 	reagents
 		var/list/datum/reagent/reagent_list = new/list()
