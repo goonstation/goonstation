@@ -757,7 +757,7 @@ datum
 					M.changeStatus("weakened", 3 SECONDS)
 					if (prob(25))
 
-						M.visible_message("<span class='alert'>[M] horks all over \himself. Gross!</span>")
+						M.visible_message("<span class='alert'>[M] horks all over [himself_or_herself(M)]. Gross!</span>")
 						M.vomit()
 
 
@@ -1151,7 +1151,7 @@ datum
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 					if (prob(10))
-						M.visible_message("<span class='alert'>[M] horks all over \himself. Gross!</span>")
+						M.visible_message("<span class='alert'>[M] horks all over [himself_or_herself(M)]. Gross!</span>")
 						M.vomit()
 
 			on_mob_life(var/mob/M, var/mult = 1)
