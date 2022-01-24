@@ -24,10 +24,9 @@
 	do_antag_random_spawns = 0
 	escape_possible = 0
 
-/datum/game_mode/revolution/extended
+/datum/game_mode/revolution/extended //Does not end prematurely
 	name = "extended revolution"
 	config_tag = "revolution_extended"
-	round_limit = 0 //Do not end prematurely
 
 /datum/game_mode/revolution/announce()
 	boutput(world, "<B>The current game mode is - Revolution!</B>")
@@ -157,7 +156,7 @@
 
 /datum/game_mode/revolution/process()
 	..()
-	if (ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
+	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
 		gibwave_started = TRUE
 		start_gibwave()
 	if (world.time > win_check_freq)

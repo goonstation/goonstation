@@ -353,6 +353,14 @@ client/proc/toggle_ghost_respawns()
 	logTheThing("diary", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 
+/client/proc/iddqd()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "iddqd"
+	set popup_menu = 0
+	admin_only
+	usr.client.cmd_admin_godmode_self()
+	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
+
 /client/var/flying = 0
 /client/proc/noclip()
 	set name = "Toggle Your Noclip"
@@ -361,14 +369,6 @@ client/proc/toggle_ghost_respawns()
 
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
-
-/client/proc/iddqd()
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "iddqd"
-	set popup_menu = 0
-	admin_only
-	usr.client.cmd_admin_godmode_self()
-	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
 
 /client/proc/idclip()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -414,7 +414,7 @@ client/proc/toggle_ghost_respawns()
 	set name = "Toggle View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(src.view == world.view)
+	if(src.view == world.view || src.view == "21x15")
 		var/x = input("Enter view width in tiles: (1 - 59, default 15 (normal) / 21 (widescreen))", "Width", 21)
 		var/y = input("Enter view height in tiles: (1 - 30, default 15)", "Height", 15)
 

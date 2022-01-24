@@ -4,8 +4,6 @@
 	desc = "A single-use teleporter remote that summons the nuclear bomb to the user's current location."
 	icon_state = "bomb_remote"
 	item_state = "electronic"
-	density = 0
-	anchored = 0.0
 	w_class = W_CLASS_SMALL
 
 	var/charges = 1
