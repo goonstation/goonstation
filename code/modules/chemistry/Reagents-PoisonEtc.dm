@@ -1852,7 +1852,7 @@ datum
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
 					if(probmult(10))
-						H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+						H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 						H.vomit()
 					else if (prob(5))
 						var/damage = rand(1,10)
