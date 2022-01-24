@@ -11859,7 +11859,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/right/north,
+/obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "dko" = (
@@ -18261,7 +18261,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/south,
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "fax" = (
@@ -23135,7 +23135,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south,
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "gwO" = (
@@ -39662,7 +39662,7 @@
 /obj/shrub{
 	dir = 8
 	},
-/obj/disposalpipe/switch_junction/right/east,
+/obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/circuit/red,
 /area/station/security/main)
 "lwz" = (
@@ -42320,7 +42320,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -52392,14 +52392,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	dir = 2
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "pjy" = (
@@ -82560,7 +82558,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/black{
 	icon_state = "respect6"
 	},
