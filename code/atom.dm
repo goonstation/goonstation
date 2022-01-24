@@ -798,7 +798,7 @@
 	..()
 	return
 
-/atom/proc/relaymove()
+/atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
 
 /atom/proc/on_reagent_change(var/add = 0) // if the reagent container just had something added, add will be 1.
