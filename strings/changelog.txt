@@ -1,4 +1,17 @@
 
+(t)mon jan 24 22
+(u)BatElite
+(p)7285
+(e)🐛🗺|bug, mapping
+(+)Donut3's brig piping has been fixed.
+(u)Mr. Moriarty
+(p)7007
+(e)|
+(+)The Radio Show Host and the Communications Officer now have unique radio icons.
+(u)DimWhat
+(p)7035
+(e)⚖|balance
+(*)Made choking with sharp objects, like knives, deal much more bleed and a small amount of brute damage.
 (t)sun jan 23 22
 (u)adharainspace
 (p)7272
