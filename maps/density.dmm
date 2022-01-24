@@ -683,6 +683,19 @@
 /obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"bA" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2;
+	icon_state = "morgue1"
+	},
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/security/main)
 "bB" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -4429,6 +4442,12 @@
 /obj/machinery/door/unpowered/wood,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/bathroom)
+"jA" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/turf/simulated/floor/grass,
+/area/station/chapel/sanctuary)
 "jB" = (
 /obj/table/wood/auto,
 /obj/machinery/crema_switch{
@@ -4451,6 +4470,13 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
+/area/station/chapel/sanctuary)
+"jD" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2;
+	icon_state = "morgue1"
+	},
+/turf/simulated/floor/grass,
 /area/station/chapel/sanctuary)
 "jE" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -7076,13 +7102,6 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
-"qx" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2;
-	icon_state = "morgue1"
-	},
-/turf/simulated/floor/grass,
-/area/station/chapel/sanctuary)
 "uG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7129,12 +7148,6 @@
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
-"PB" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/grass,
-/area/station/chapel/sanctuary)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -7146,19 +7159,6 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
-"Yp" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2;
-	icon_state = "morgue1"
-	},
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/specialroom/freezer,
-/area/station/security/main)
 
 (1,1,1) = {"
 aa
@@ -45365,7 +45365,7 @@ hI
 cE
 iE
 ji
-PB
+jA
 ji
 ky
 aa
@@ -46271,7 +46271,7 @@ cE
 cE
 iE
 ji
-qx
+jD
 ji
 ky
 dM
@@ -56217,7 +56217,7 @@ bb
 as
 br
 as
-Yp
+bA
 bJ
 bQ
 cK
