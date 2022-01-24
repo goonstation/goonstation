@@ -352,7 +352,7 @@
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
-		if ((src.in_point_mode) || (src.client && src.client.check_key(KEY_POINT)))
+		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
 			src.point(target)
 			if (src.in_point_mode)
 				src.toggle_point_mode()
