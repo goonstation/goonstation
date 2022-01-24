@@ -1,5 +1,62 @@
 
+(t)mon jan 24 22
+(u)BatElite
+(p)7285
+(e)🐛🗺|bug, mapping
+(+)Donut3's brig piping has been fixed.
+(u)Mr. Moriarty
+(p)7007
+(e)|
+(+)The Radio Show Host and the Communications Officer now have unique radio icons.
+(u)DimWhat
+(p)7035
+(e)⚖|balance
+(*)Made choking with sharp objects, like knives, deal much more bleed and a small amount of brute damage.
+(t)sun jan 23 22
+(u)adharainspace
+(p)7272
+(e)|
+(+)Changed bookshelf sprites.
+(u)DimWhat
+(p)7176
+(e)🎨|sprites
+(*)Added a new hat and apron for the Head Surgeon role.
+(u)Azrun
+(p)7246
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Welding actionbars will only be seen by welder, but new animations for everyone to see!
+(t)sat jan 22 22
+(u)BatElite
+(p)7256
+(e)🐛|bug
+(*)AIs can also use normal radio prefixes now (though the :3 prefixes still work too)
+(u)Flaborized
+(p)7245
+(e)🎨|sprites
+(+)"Port-a" machines now have a teleporting animation.
+(u)Flaborized
+(p)7217
+(e)🎨|sprites
+(+)Added an animation for opening and closing zippo lighters.
+(t)fri jan 21 22
+(u)glowbold
+(p)7238
+(e)|
+(+)Fixed scanners breaking the dwarfism gene effect
+(u)TTerc & Azrun
+(p)7173
+(e)🆕⚖|feature, balance
+(*)Weedkiller (atrazine) can now affect kudzu tiles.
+(+)Atrazine will reduce the amount a tile of kudzu can spread and inhibit it from becoming more dense.
+(u)Zonespace
+(p)7241
+(e)🐛|bug
+(+)Syndicate Specialist ammobags now work with all nukeop guns again.
 (t)thu jan 20 22
+(u)zjdtmkhzt
+(p)7188
+(e)⚖|balance
+(+)Martian diplomats should now be able to use vocal translators.
 (u)Zonespace
 (p)7225
 (e)🗺🎨|mapping, sprites

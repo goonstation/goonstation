@@ -2143,12 +2143,12 @@
 	},
 /area/station/science/lobby)
 "aqf" = (
-/obj/disposalpipe/switch_junction/right/south,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/junction/right,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aqi" = (
@@ -5188,7 +5188,6 @@
 /area/station/ranch)
 "boW" = (
 /obj/cable,
-/obj/disposalpipe/switch_junction/right/south,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -5197,6 +5196,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/disposalpipe/junction/right,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "blue2"
@@ -10241,7 +10241,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/right/east,
+/obj/disposalpipe/junction/right{
+	dir = 4
+	},
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/west)
 "cMy" = (
@@ -11095,8 +11097,7 @@
 /area/station/hallway/primary/south)
 "cYe" = (
 /obj/bookshelf/persistent{
-	layer = 10;
-	pixel_y = 32
+	layer = 10
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
@@ -11858,7 +11859,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/right/north,
+/obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "dko" = (
@@ -18260,7 +18261,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/south,
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
 "fax" = (
@@ -20702,12 +20703,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "fJQ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/bookshelf/long,
+/obj/bookshelf,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "fKa" = (
@@ -23139,7 +23135,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south,
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "gwO" = (
@@ -23238,15 +23234,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
-"gyc" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/bookshelf/long/end_right,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "gyd" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange{
@@ -25169,8 +25156,7 @@
 /area/shuttle/arrival/station)
 "hch" = (
 /obj/disposalpipe/trunk{
-	dir = 8;
-	layer = -1
+	dir = 8
 	},
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -37373,10 +37359,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/disposalpipe/segment/brig,
+/obj/disposalpipe/junction/right/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "kMv" = (
@@ -39679,7 +39662,7 @@
 /obj/shrub{
 	dir = 8
 	},
-/obj/disposalpipe/switch_junction/right/east,
+/obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/circuit/red,
 /area/station/security/main)
 "lwz" = (
@@ -42337,7 +42320,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -43028,7 +43011,9 @@
 	},
 /area/station/medical/medbay/treatment)
 "mtR" = (
-/turf/simulated/wall/auto/supernorn/wood,
+/obj/bookshelf,
+/obj/bookshelf,
+/turf/simulated/floor/wood/six,
 /area/station/library)
 "mua" = (
 /turf/simulated/wall/auto/reinforced/jen/blue{
@@ -46686,6 +46671,10 @@
 /area/station/medical/medbay)
 "nyK" = (
 /obj/table/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /obj/item/item_box/pens{
 	pixel_x = -7;
 	pixel_y = 9
@@ -50374,10 +50363,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
-"oBH" = (
-/obj/bookshelf/long/end_right,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "oBQ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -52407,14 +52392,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	dir = 2
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "pjy" = (
@@ -55621,10 +55604,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"qbM" = (
-/obj/bookshelf/long,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "qce" = (
 /obj/cable{
 	d1 = 1;
@@ -65543,15 +65522,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/north_side)
-"sQZ" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/bookshelf/long/end_left,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "sRc" = (
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
@@ -74252,10 +74222,6 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/grey/side,
 /area/listeningpost)
-"vur" = (
-/obj/disposalpipe/junction/right/west,
-/turf/simulated/wall/auto/jen/blue,
-/area/station/crew_quarters/courtroom)
 "vux" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -78875,10 +78841,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"wJH" = (
-/obj/disposalpipe/segment/brig,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/courtroom)
 "wJP" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner{
 	dir = 4
@@ -79187,15 +79149,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
-"wOu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/brig,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/courtroom)
 "wOz" = (
 /obj/machinery/light_switch/north,
 /obj/blind_switch/area{
@@ -81397,10 +81350,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/south_side)
-"xuS" = (
-/obj/bookshelf/long/end_left,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "xuV" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/closet/radiation,
@@ -82609,7 +82558,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/black{
 	icon_state = "respect6"
 	},
@@ -109970,9 +109919,9 @@ sGu
 quz
 quz
 mtR
-sQZ
-mtR
-xuS
+iEn
+fJQ
+quz
 fUD
 sIK
 lmD
@@ -110272,9 +110221,9 @@ sGu
 vau
 quz
 mtR
+iEn
 fJQ
-mtR
-qbM
+quz
 fUD
 sIK
 gYc
@@ -110574,9 +110523,9 @@ mXZ
 cUw
 quz
 mtR
-gyc
-mtR
-oBH
+iEn
+fJQ
+quz
 fUD
 sIK
 ylb
@@ -117578,10 +117527,10 @@ qab
 wfe
 lxV
 gLe
-vur
-wJH
-wOu
-jTG
+uwa
+spN
+sqY
+mWf
 kMo
 ceG
 kXn

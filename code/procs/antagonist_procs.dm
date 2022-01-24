@@ -298,20 +298,6 @@
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
 
-	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		the_frequency = N.agent_radiofreq
-
-	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
-		R.set_secure_frequency("h", the_frequency)
-
-		R.secure_classes = list(RADIOCL_SYNDICATE)
-		R.protected_radio = 1 // Ops can spawn with the deaf trait.
-		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
-
-	return
-
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
 	var/alive = 0

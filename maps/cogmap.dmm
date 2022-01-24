@@ -45281,6 +45281,10 @@
 	pixel_x = -12;
 	pixel_y = 7
 	},
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /obj/item/device/audio_log{
 	pixel_x = 3;
 	pixel_y = 2
@@ -64528,7 +64532,7 @@
 /area/station/engine/elect)
 "xVK" = (
 /obj/machinery/launcher_loader/west{
-	door_delay = 4
+	door_delay = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
