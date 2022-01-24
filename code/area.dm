@@ -3263,6 +3263,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "firing range"
 		icon_state = "blue"
 
+/area/syndicate_station/assault_pod
+		name = "forward assault pod"
+		icon_state = "red"
+
 /area/syndicate_station/medbay
 		name = "medical bay"
 		icon_state = "purple"

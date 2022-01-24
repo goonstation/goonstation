@@ -603,14 +603,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"abx" = (
-/obj/machinery/driver_button{
-	id = "research";
-	name = "Research Emergency Mass Ejector Control";
-	pixel_y = 32
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northeast)
 "aby" = (
 /obj/machinery/conveyor/west{
 	id = "outbound"
@@ -1064,6 +1056,18 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
+"acj" = (
+/obj/machinery/traymachine/morgue,
+/obj/item/reagent_containers/food/snacks/pizza/meatball,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "ack" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
@@ -1088,6 +1092,10 @@
 /obj/disposalpipe/trunk/morgue{
 	dir = 8
 	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
+"acm" = (
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acn" = (
@@ -3032,6 +3040,11 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
+"agN" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "agO" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -3443,6 +3456,23 @@
 /obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
+"ahT" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/obj/machinery/crema_switch{
+	id = "crematorium";
+	pixel_y = 28
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/medical/crematorium)
 "ahU" = (
 /obj/disposaloutlet{
 	mailgroup = "medresearch";
@@ -7697,22 +7727,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/restroom)
-"ase" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber One Outlet";
-	on = 1;
-	target_pressure = 250
-	},
-/obj/machinery/ignition_switch{
-	id = "toxins_1";
-	pixel_x = 8;
-	pixel_y = 24
-	},
-/turf/simulated/floor/red,
-/area/research_outpost/toxins)
 "asf" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/firealarm{
@@ -7724,22 +7738,6 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
-"asg" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber Two Inlet";
-	on = 1;
-	target_pressure = 500
-	},
-/obj/machinery/ignition_switch{
-	id = "toxins_2";
-	pixel_x = -8;
-	pixel_y = 24
-	},
-/turf/simulated/floor/blue,
-/area/research_outpost/toxins)
 "ash" = (
 /obj/storage/secure/closet/medical{
 	name = "locker"
@@ -9721,18 +9719,6 @@
 	mail_tag = "artlab"
 	},
 /obj/disposalpipe/trunk/mail/south,
-/turf/simulated/floor/black,
-/area/station/science/artifact)
-"awS" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/tapebox,
-/obj/item/disk/data/tape{
-	layer = 3.5
-	},
-/obj/machinery/light_switch/auto,
-/obj/artifact_paper_dispenser{
-	pixel_x = 15
-	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "awT" = (
@@ -12928,6 +12914,13 @@
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/machinery/light/incandescent/warm/very,
 /obj/item/pen/crayon/lipstick,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/sauna)
+"aEH" = (
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "aEI" = (
@@ -45495,13 +45488,6 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"cpd" = (
-/obj/machinery/traymachine/locking/tanning,
-/obj/machinery/computer/tanning{
-	pixel_y = 32
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/sauna)
 "csr" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/closet/welding_supply,
@@ -45658,6 +45644,14 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"dpm" = (
+/obj/machinery/activation_button/driver_button{
+	id = "research";
+	name = "Research Emergency Mass Ejector Control";
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "dtX" = (
 /obj/machinery/camera/ranch{
 	dir = 10
@@ -47343,10 +47337,6 @@
 /obj/item/hand_labeler,
 /turf/simulated/floor,
 /area/research_outpost)
-"nSp" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "nYa" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -47400,23 +47390,6 @@
 /obj/item/spacecash/random/small,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
-"ovn" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/obj/machinery/crema_switch{
-	id = "crematorium";
-	pixel_y = 28
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
 "oDh" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -47629,18 +47602,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
-"pMt" = (
-/obj/machinery/traymachine/morgue,
-/obj/item/reagent_containers/food/snacks/pizza/meatball,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "pMV" = (
 /obj/cable{
 	d1 = 4;
@@ -48012,6 +47973,22 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"rPG" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 0;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber One Outlet";
+	on = 1;
+	target_pressure = 250
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "toxins_1";
+	pixel_x = 8;
+	pixel_y = 24
+	},
+/turf/simulated/floor/red,
+/area/research_outpost/toxins)
 "rUH" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
@@ -48056,11 +48033,6 @@
 /obj/access_spawn/research,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
-"sge" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "smn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
@@ -48381,6 +48353,22 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
+"uXL" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber Two Inlet";
+	on = 1;
+	target_pressure = 500
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "toxins_2";
+	pixel_x = -8;
+	pixel_y = 24
+	},
+/turf/simulated/floor/blue,
+/area/research_outpost/toxins)
 "uYc" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -48626,6 +48614,22 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"wKh" = (
+/obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/storage/box/tapebox,
+/obj/item/disk/data/tape{
+	layer = 3.5
+	},
+/obj/machinery/light_switch/auto,
+/obj/artifact_paper_dispenser{
+	pixel_x = 15
+	},
+/turf/simulated/floor/black,
+/area/station/science/artifact)
 "wOk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade)
@@ -80655,7 +80659,7 @@ aBo
 aCg
 aCQ
 aBo
-cpd
+aEH
 aFp
 aFV
 aam
@@ -83652,7 +83656,7 @@ aie
 aha
 agY
 ahu
-ovn
+ahT
 aiD
 ajq
 akg
@@ -94823,9 +94827,9 @@ axA
 afM
 agb
 chD
-pMt
-nSp
-sge
+acj
+acm
+agN
 ahn
 ahI
 ajJ
@@ -109631,7 +109635,7 @@ aqn
 aqn
 anx
 anx
-abx
+dpm
 apg
 ape
 ape
@@ -110242,7 +110246,7 @@ aqv
 asX
 auk
 avE
-awS
+wKh
 axT
 ayX
 aAe
@@ -131954,7 +131958,7 @@ aCV
 bbv
 bcd
 aeM
-ase
+rPG
 avk
 bdi
 aQb
@@ -132558,7 +132562,7 @@ aGs
 bbx
 afw
 agt
-asg
+uXL
 awB
 bel
 aRO

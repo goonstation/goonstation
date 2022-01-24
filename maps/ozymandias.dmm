@@ -1075,10 +1075,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
-"aoR" = (
-/obj/machinery/traymachine/locking/tanning,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "aoX" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor/airless/plating,
@@ -15307,6 +15303,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey,
 /area/station/bridge)
+"eqc" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "eqn" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -25608,6 +25614,16 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/chapel/sanctuary)
+"hhw" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/maintenance{
+	name = "Medical Booth Morgue"
+	})
 "hhE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35119,11 +35135,6 @@
 	dir = 8
 	},
 /area/station/mining/refinery)
-"jTq" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular,
-/turf/simulated/floor/purple/side,
-/area/station/science/artifact)
 "jTu" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -36751,6 +36762,10 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"kog" = (
+/obj/machinery/traymachine/locking/tanning,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "kok" = (
 /obj/decal/stage_edge/alt,
 /obj/machinery/disposal/mail/autoname/medbay/robotics,
@@ -38725,6 +38740,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"kSm" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/crematorium)
 "kSA" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -41614,16 +41635,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
-"lFv" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "lFy" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -43188,6 +43199,14 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/brig)
+"lYT" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "lZh" = (
 /obj/lattice,
 /obj/warp_beacon/engineering,
@@ -44494,14 +44513,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/data)
-"mqM" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "mqO" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47308,14 +47319,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
-"ngB" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "ngJ" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -49127,6 +49130,15 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
+"nHf" = (
+/obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/purple/side,
+/area/station/science/artifact)
 "nHA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -53956,6 +53968,12 @@
 	},
 /turf/simulated/floor/stairs,
 /area/station/engine/engineering/ce)
+"oWM" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "oWN" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -57619,12 +57637,6 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/science)
-"pZN" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/maintenance{
-	name = "Medical Booth Morgue"
-	})
 "pZP" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -61642,12 +61654,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/chapel/sanctuary)
-"reN" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/crematorium)
 "reS" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
@@ -68033,6 +68039,12 @@
 /obj/stool/chair,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"sMM" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/maintenance{
+	name = "Medical Booth Morgue"
+	})
 "sMQ" = (
 /obj/machinery/disposal,
 /obj/machinery/light{
@@ -69445,12 +69457,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
-"teH" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "teI" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -76040,10 +76046,6 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/ai_upload)
-"uNy" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "uNz" = (
 /obj/cable{
 	d1 = 1;
@@ -76942,10 +76944,6 @@
 "uYC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
-"uYQ" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "uYS" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/engine,
@@ -76998,6 +76996,10 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
+"uZI" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "uZO" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -78419,16 +78421,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grey,
 /area/station/storage/tools)
-"vrM" = (
-/obj/machinery/traymachine/morgue,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/maintenance{
-	name = "Medical Booth Morgue"
-	})
 "vrS" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
@@ -79499,6 +79491,10 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"vFc" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "vFe" = (
 /obj/item/clothing/suit/cardboard_box,
 /obj/landmark{
@@ -88562,6 +88558,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
+"xQl" = (
+/obj/machinery/traymachine/morgue,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "xQo" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -124010,7 +124014,7 @@ uyR
 sLO
 rKR
 xqJ
-aoR
+kog
 quZ
 qbB
 wUE
@@ -126957,7 +126961,7 @@ yaW
 mpK
 xLb
 gDW
-jTq
+nHf
 yaW
 sVn
 hhc
@@ -127665,8 +127669,8 @@ tAd
 jbo
 dDM
 wBW
-uNy
-mqM
+uZI
+xQl
 bys
 uFc
 eCc
@@ -128571,7 +128575,7 @@ qjc
 qUa
 rbI
 hcf
-reN
+kSm
 afu
 fgY
 hLU
@@ -138533,9 +138537,9 @@ kOn
 clo
 xhL
 xEX
-vrM
+hhw
 pbn
-pZN
+sMM
 wdE
 jWs
 dsS
@@ -139137,9 +139141,9 @@ ldy
 xYR
 brA
 xEX
-pZN
+sMM
 pbn
-pZN
+sMM
 wdE
 ekx
 vGw
@@ -141429,9 +141433,9 @@ vha
 tYu
 jng
 iUT
-uYQ
-ngB
-uYQ
+vFc
+lYT
+vFc
 vha
 tXM
 xCM
@@ -142335,9 +142339,9 @@ vha
 khp
 teM
 iUT
-teH
-teH
-teH
+oWM
+oWM
+oWM
 vha
 nwA
 cvU
@@ -142637,9 +142641,9 @@ vha
 tsD
 fOY
 ozC
-uYQ
-uYQ
-uYQ
+vFc
+vFc
+vFc
 vha
 ozA
 xCM
@@ -143540,12 +143544,12 @@ vlk
 ykP
 tXM
 vha
-teH
-lFv
+oWM
+eqc
 tpw
-teH
-lFv
-teH
+oWM
+eqc
+oWM
 vha
 tXM
 xCM

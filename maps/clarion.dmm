@@ -10586,6 +10586,12 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"atz" = (
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/crematorium)
 "atA" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -11470,6 +11476,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"avI" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/crematorium)
 "avJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11769,6 +11787,12 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
+/area/station/medical/crematorium)
+"awu" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "awv" = (
 /obj/machinery/power/apc{
@@ -30016,22 +30040,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
-"blL" = (
-/obj/machinery/atmospherics/binary/pump{
-	frequency = 1229;
-	icon_state = "intact_on";
-	id = "Chamber Inlet";
-	name = "chamber inlet pump";
-	on = 1;
-	target_pressure = 1000
-	},
-/obj/machinery/ignition_switch{
-	id = "tox_ignition1";
-	name = "Chamber Ignition Switch";
-	pixel_x = -24
-	},
-/turf/simulated/floor/blue,
-/area/station/science/lab)
 "blM" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -30836,27 +30844,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/turf/simulated/floor,
-/area/station/science/artifact)
-"bnT" = (
-/obj/table/reinforced/auto,
-/obj/item/hand_labeler,
-/obj/item/device/audio_log,
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -34209,25 +34196,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
-"btT" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 4;
-	icon_state = "line2"
-	},
-/obj/machinery/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_y = 28
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 21
-	},
-/turf/simulated/floor,
-/area/station/hangar/science)
 "btU" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4;
@@ -34861,6 +34829,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
+"bvi" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/traymachine/morgue,
+/obj/window/reinforced/west,
+/obj/window/reinforced/north,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "bvj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -34883,6 +34864,29 @@
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
+"bvl" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10;
+	pixel_y = -8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/window/reinforced/north,
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -35502,6 +35506,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
+"bws" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/traymachine/morgue,
+/obj/window/reinforced/west,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "bwt" = (
 /obj/cable{
 	d1 = 4;
@@ -35521,6 +35539,21 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
+"bwv" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -36092,6 +36125,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
+"bxC" = (
+/obj/machinery/light,
+/obj/machinery/traymachine/morgue,
+/obj/window/reinforced/west,
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "bxD" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -36109,6 +36152,20 @@
 	icon_state = "line1"
 	},
 /obj/critter/opossum/morty,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
+"bxF" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/item/reagent_containers/food/snacks/pizza{
+	icon_state = "pizza_m";
+	pixel_y = 10
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bxG" = (
@@ -39729,22 +39786,6 @@
 	dir = 8
 	},
 /area/station/engine/gas)
-"bEY" = (
-/obj/machinery/atmospherics/valve{
-	name = "combustion feed valve"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname  - SS13";
-	pixel_x = -10
-	},
-/obj/machinery/ignition_switch{
-	id = "combustion_ignition";
-	pixel_x = -24
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/core)
 "bEZ" = (
 /obj/cable{
 	d1 = 1;
@@ -44008,6 +44049,31 @@
 /obj/machinery/light,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/head/private)
+"cAd" = (
+/obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/hand_labeler,
+/obj/item/device/audio_log,
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/station/science/artifact)
 "cDI" = (
 /obj/disposalpipe/segment/food,
 /obj/table/reinforced/bar/auto{
@@ -44111,6 +44177,22 @@
 	dir = 8
 	},
 /area/station/storage/tools)
+"cQo" = (
+/obj/machinery/atmospherics/binary/pump{
+	frequency = 1229;
+	icon_state = "intact_on";
+	id = "Chamber Inlet";
+	name = "chamber inlet pump";
+	on = 1;
+	target_pressure = 1000
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition1";
+	name = "Chamber Ignition Switch";
+	pixel_x = -24
+	},
+/turf/simulated/floor/blue,
+/area/station/science/lab)
 "cSl" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -44990,19 +45072,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
-"eZR" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/traymachine/morgue,
-/obj/window/reinforced/west,
-/obj/window/reinforced/north,
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "faH" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail{
@@ -45210,21 +45279,6 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
-"fBt" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "fBM" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -45634,6 +45688,20 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"gCc" = (
+/obj/stool/bed,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/brig)
 "gIr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46124,20 +46192,6 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/station/security/brig)
-"hUy" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 6;
-	icon_state = "line2"
-	},
-/obj/item/reagent_containers/food/snacks/pizza{
-	icon_state = "pizza_m";
-	pixel_y = 10
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "hVE" = (
 /obj/pool/perspective{
 	dir = 9;
@@ -47662,29 +47716,6 @@
 	dir = 5
 	},
 /area/station/security/hos)
-"lyM" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10;
-	pixel_y = -8
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/obj/window/reinforced/north,
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "lzZ" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fpurple2"
@@ -48111,12 +48142,6 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-"ngV" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/crematorium)
 "nhz" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -49767,6 +49792,22 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"rNa" = (
+/obj/machinery/atmospherics/valve{
+	name = "combustion feed valve"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname  - SS13";
+	pixel_x = -10
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "combustion_ignition";
+	pixel_x = -24
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/core)
 "rNo" = (
 /obj/machinery/light_switch/west{
 	dir = 4
@@ -50145,6 +50186,30 @@
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"sLl" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/bed,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/turf/simulated/floor/grime,
+/area/station/security/brig)
+"sNn" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/obj/stool/bed,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "sOc" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -50168,20 +50233,10 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"sPG" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/traymachine/morgue,
-/obj/window/reinforced/west,
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
+"sOY" = (
+/obj/machinery/traymachine/locking/tanning,
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "sQp" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -50365,6 +50420,25 @@
 	icon_state = "wooden"
 	},
 /area/station/science/research_director)
+"tpj" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 4;
+	icon_state = "line2"
+	},
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "artlabgun";
+	name = "Emergency Ejection Button";
+	pixel_y = 28
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname  - SS13";
+	pixel_y = 21
+	},
+/turf/simulated/floor,
+/area/station/hangar/science)
 "tqd" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -50865,19 +50939,6 @@
 	icon_state = "fred1"
 	},
 /area/station/security/main)
-"uFa" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "uGr" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -51059,18 +51120,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"vdA" = (
-/obj/machinery/traymachine/morgue{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname  - SS13";
-	pixel_x = 10
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/crematorium)
 "vfm" = (
 /obj/machinery/light{
 	dir = 1;
@@ -51535,17 +51584,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"wri" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/decal/cleanable/dirt,
-/obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "wrD" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -51710,20 +51748,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"wPu" = (
-/obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/redblack{
-	dir = 6
-	},
-/area/station/security/brig)
 "wPX" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -51776,10 +51800,6 @@
 	dir = 1
 	},
 /area/station/engine/ptl)
-"xdK" = (
-/obj/machinery/traymachine/locking/tanning,
-/turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/pool)
 "xfP" = (
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -52033,12 +52053,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"xZO" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/crematorium)
 "ydF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -52053,16 +52067,6 @@
 	icon_state = "medstairs_wide"
 	},
 /area/station/science/teleporter)
-"yfq" = (
-/obj/machinery/light,
-/obj/machinery/traymachine/morgue,
-/obj/window/reinforced/west,
-/obj/decal/tile_edge/line/black{
-	dir = 10;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "yhA" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail{
@@ -75416,9 +75420,9 @@ bqL
 brV
 brX
 buf
-eZR
-sPG
-yfq
+bvi
+bws
+bxC
 byG
 bzL
 bAU
@@ -76187,9 +76191,9 @@ bqO
 brY
 bsL
 bui
-lyM
-fBt
-hUy
+bvl
+bwv
+bxF
 byG
 bzO
 bAW
@@ -78965,7 +78969,7 @@ aiZ
 arI
 arq
 asW
-xZO
+atz
 auk
 auU
 avJ
@@ -79481,8 +79485,8 @@ arq
 asW
 aui
 aum
-vdA
-ngV
+avI
+awu
 axh
 azO
 axW
@@ -79774,8 +79778,8 @@ bhl
 taa
 xRz
 bhl
-wri
-uFa
+sNn
+sLl
 bhl
 hUj
 bhl
@@ -80029,7 +80033,7 @@ mWV
 eyH
 bhl
 stC
-wPu
+gCc
 bhl
 wiz
 kby
@@ -80051,7 +80055,7 @@ bBj
 bCs
 bDx
 bEu
-bEY
+rNa
 bFH
 tqd
 bGL
@@ -83077,7 +83081,7 @@ arj
 arR
 asy
 sBO
-xdK
+sOY
 tQO
 qms
 pui
@@ -93656,7 +93660,7 @@ bjq
 bkC
 blK
 scS
-bnT
+cAd
 bpu
 bgS
 brB
@@ -93918,7 +93922,7 @@ bgS
 bgS
 brB
 bsB
-btT
+tpj
 buZ
 bwj
 bxt
@@ -94939,7 +94943,7 @@ bgV
 bhY
 bjs
 bkE
-blL
+cQo
 bna
 bnW
 bpw
