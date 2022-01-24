@@ -1540,7 +1540,7 @@ var/datum/action_controller/actions
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
-	icon_state = "cpr" //placeholder
+	icon_state = "cpr"
 	var/mob/living/target
 
 	New(target)
