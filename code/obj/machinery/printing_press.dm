@@ -564,7 +564,7 @@
 	name = "printing press setup warning"
 	info = {"
 <b>WARNING FOR ALL PROSPECTIVE BUILDERS OF THE NT-112 PRINTING PRESS</b>
-<br>In this shipment you recieved a frame for your new NT-112 Printing Press.
+<br>In this shipment you received a frame for your new NT-112 Printing Press.
 <br>This device takes up 2 standard floor tiles once fully deployed.
 <br>If you are seeking to set up your own NT-112 Printing Press, be aware:
 <ul>

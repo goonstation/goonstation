@@ -349,6 +349,7 @@ datum
 			name = "prions"
 			id = "prions"
 			description = "A disease-causing agent that is neither bacterial nor fungal nor viral and contains no genetic material."
+			taste = "<br>　　∧,,,∧<br>　 （ ・ω・） like prion disease...<br>　　( つ旦O<br>　　と＿)_)<br>"
 			reagent_state = LIQUID
 			minimum_to_infect = 5.1
 			fluid_r = 255

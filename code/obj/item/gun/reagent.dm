@@ -35,6 +35,7 @@
 			src.reagents.trans_to(P, P.proj_data.cost)
 
 	on_reagent_change(add)
+		..()
 		if(!add || !src.ammo_reagents)
 			src.UpdateIcon()
 			return

@@ -32,6 +32,7 @@
 
 /obj/machinery/New()
 	..()
+	START_TRACKING
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.
 		machine_registry[initial(machine_registry_idx)] += src
@@ -53,6 +54,7 @@
 	A?.machines += src
 
 /obj/machinery/disposing()
+	STOP_TRACKING
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
@@ -218,6 +220,14 @@
 	if(prob(25 * power / 20))
 		qdel(src)
 
+/obj/machinery/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.power_change()
+
+/obj/machinery/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.power_change()
+
 /obj/machinery/proc/get_power_wire()
 	var/obj/cable/C = null
 	for (var/obj/cable/candidate in get_turf(src))
@@ -235,6 +245,8 @@
 /obj/machinery/proc/powered(var/chan = EQUIP)
 	// returns true if the area has power on given channel (or doesn't require power).
 	// defaults to equipment channel
+	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
+		return 0
 	if (machines_may_use_wired_power && power_usage)
 		var/datum/powernet/net = get_direct_powernet()
 		if (net)
@@ -327,24 +339,6 @@
 	var/obj/machinery/door/d2 = null
 	anchored = 1.0
 	req_access = list(access_armory)
-
-/obj/machinery/driver_button
-	name = "Mass Driver Button"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a Mass Driver."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
-
-/obj/machinery/ignition_switch
-	name = "Ignition Switch"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a mounted igniter."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
 
 /obj/machinery/noise_switch
 	name = "Speaker Toggle"

@@ -349,7 +349,6 @@
 	icon = 'icons/ui/context32x32.dmi'
 	var/datum/geneboothproduct/GBP = null
 	var/obj/machinery/genetics_booth/GB = null
-	var/spamt = 0
 
 	disposing()
 		GBP = null
@@ -363,14 +362,9 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if (get_dist(target,user) <= 1 && isliving(user))
-			. = GBP && GB
-			if (GB?.occupant && world.time > spamt + 5)
-				user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
-				spamt = world.time
-				. = FALSE
-			if(.)
-				GB.show_admin_panel(user)
+		if (GBP && GB && (get_dist(target,user) <= 1 && isliving(user)) && !GB?.occupant)
+			. = TRUE
+			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")

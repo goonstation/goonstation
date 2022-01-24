@@ -184,7 +184,6 @@
 	/obj/item/camera = 2,
 	/obj/item/device/light/flashlight = 2,
 	/obj/item/paper/book/from_file/critter_compendium,
-	/obj/item/pinpointer/category/artifacts/safe,
 	/obj/item/reagent_containers/food/drinks/milk,
 	/obj/item/reagent_containers/food/snacks/sandwich/pb,
 	/obj/item/paper/note_from_mom)
@@ -569,7 +568,7 @@
 		name = "Class Crate - Combat Engineer"
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/paper/nast_manual,
-		/obj/item/turret_deployer,
+		/obj/item/turret_deployer/syndicate,
 		/obj/item/wrench/battle,
 		/obj/item/gun/kinetic/spes/engineer,
 		/obj/item/storage/pouch/shotgun/weak,

@@ -12,10 +12,6 @@
 	var/event_active
 	var/target_grump
 
-#ifdef RP_MODE
-	disabled = 1
-#endif
-
 	is_event_available(var/ignore_time_lock = 0)
 		. = ..()
 		if(.)

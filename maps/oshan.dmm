@@ -20,17 +20,6 @@
 "aad" = (
 /turf/space/fluid/warp_z5/realwarp,
 /area/space)
-"aae" = (
-/obj/machinery/cell_charger,
-/obj/item/device/radio/intercom{
-	dir = 8;
-	frequency = 1485;
-	name = "Security Intercom"
-	},
-/obj/table/glass/reinforced/auto,
-/obj/item/paper/telecrystal_update,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "aaf" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -615,7 +604,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "abx" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "research";
 	name = "Research Emergency Mass Ejector Control";
 	pixel_y = 32
@@ -1076,7 +1065,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "acj" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/item/reagent_containers/food/snacks/pizza/meatball,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -1114,7 +1103,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acm" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "acn" = (
@@ -3060,7 +3049,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "agN" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
@@ -3476,7 +3465,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "ahT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -4298,7 +4287,7 @@
 "ajT" = (
 /obj/table/glass/reinforced/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -7755,7 +7744,7 @@
 	on = 1;
 	target_pressure = 250
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "toxins_1";
 	pixel_x = 8;
 	pixel_y = 24
@@ -7782,7 +7771,7 @@
 	on = 1;
 	target_pressure = 500
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "toxins_2";
 	pixel_x = -8;
 	pixel_y = 24
@@ -9140,6 +9129,7 @@
 /obj/item/reagent_containers/food/snacks/pie/cream,
 /obj/item/storage/goodybag,
 /obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/aiModule/hologram_expansion/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "avv" = (
@@ -9773,6 +9763,10 @@
 /area/station/science/artifact)
 "awS" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = -6;
+	pixel_y = 5
+	},
 /obj/item/storage/box/tapebox,
 /obj/item/disk/data/tape{
 	layer = 3.5
@@ -12979,7 +12973,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "aEH" = (
-/obj/crematorium/tanning,
+/obj/machinery/traymachine/locking/tanning,
 /obj/machinery/computer/tanning{
 	pixel_y = 32
 	},
@@ -15393,7 +15387,7 @@
 /obj/machinery/light/incandescent/warm/very,
 /obj/table/round,
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -18558,7 +18552,7 @@
 	dir = 4
 	},
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -20200,9 +20194,7 @@
 "aXi" = (
 /obj/item/basketball,
 /obj/item/kitchen/food_box/donut_box,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/crevice{
 	pixel_x = -30
 	},
@@ -20266,9 +20258,9 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXq" = (
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/martian/floor,
@@ -24742,7 +24734,7 @@
 /area/evilreaver/bridge)
 "bjN" = (
 /obj/machinery/vending/alcohol,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 30
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
@@ -27976,7 +27968,7 @@
 	pixel_y = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_y = 32
 	},
 /turf/simulated/floor/black,
@@ -29808,6 +29800,10 @@
 	},
 /obj/item/device/detective_scanner{
 	pixel_x = -6
+	},
+/obj/item/hand_labeler{
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /obj/item/device/detective_scanner{
 	pixel_x = -3
@@ -32790,9 +32786,7 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/obj/storage/crate{
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "bDy" = (
@@ -33636,8 +33630,7 @@
 	name = "Net Cafe"
 	})
 "bFx" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/mining_tool/powerhammer,
@@ -33777,8 +33770,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
 "bFR" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/mine/stun,
@@ -33905,8 +33897,7 @@
 	name = "Net Cafe"
 	})
 "bGj" = (
-/obj/storage/crate{
-	name = "Dented Crate";
+/obj/storage/crate/bloody{
 	welded = 1
 	},
 /obj/item/clothing/suit/space/captain/blue,
@@ -34580,7 +34571,7 @@
 "bHP" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/yellow,
@@ -40630,7 +40621,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
@@ -44478,9 +44469,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/radio/lab)
-"ciK" = (
-/turf/simulated/floor/plating/random,
-/area/station/storage/eeva)
 "ciM" = (
 /obj/cable/reinforced{
 	icon_state = "1-2-thick"
@@ -44529,7 +44517,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/banana,
+/obj/item/old_grenade/spawner/banana,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -45855,6 +45843,17 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"ehY" = (
+/obj/machinery/cell_charger,
+/obj/item/device/radio/intercom{
+	dir = 8;
+	frequency = 1485;
+	name = "Security Intercom"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/item/paper/telecrystal_update,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "euS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47159,6 +47158,39 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"mLJ" = (
+/obj/rack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/electropack,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
 "mQr" = (
 /obj/cable{
 	d1 = 4;
@@ -48269,7 +48301,7 @@
 "uij" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 28
 	},
 /turf/simulated/floor/black,
@@ -48460,31 +48492,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
-"vLB" = (
-/obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
-/area/station/ai_monitored/armory)
 "vNf" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -57294,7 +57301,7 @@ aNb
 aOE
 aOY
 aPk
-aae
+ehY
 aPG
 aQs
 aNc
@@ -94015,7 +94022,7 @@ vex
 bWH
 gJy
 pij
-vLB
+mLJ
 bTR
 bRU
 bLr
@@ -103019,7 +103026,7 @@ cfS
 wFP
 ckK
 aDr
-ciK
+aDr
 aks
 aks
 bgD
@@ -104983,7 +104990,7 @@ aqn
 aqn
 aqn
 aqn
-ces
+aqn
 cer
 "}
 (187,1,1) = {"
@@ -105285,7 +105292,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+ces
 cer
 "}
 (188,1,1) = {"
@@ -106191,7 +106198,7 @@ aqn
 aqn
 aqn
 aqn
-ces
+aqn
 cer
 "}
 (191,1,1) = {"
@@ -106493,7 +106500,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+ces
 cer
 "}
 (192,1,1) = {"

@@ -18,7 +18,7 @@
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "bp" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 32
 	},
 /turf/simulated/floor/redwhite{

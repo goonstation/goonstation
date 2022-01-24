@@ -264,7 +264,7 @@
 /obj/machinery/cargo_router/Router10 // to outer router -> in
 	New()
 		destinations = list("Airbridge" = WEST, "Cafeteria" = WEST, "EVA" = WEST, "Disposals" = WEST, "QM" = SOUTH, "Engine" = WEST, "Catering" = WEST, "MedSci" = WEST, "Security" = WEST)
-		default_direction = SOUTH
+		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/Router11 // outer router -> up
@@ -291,6 +291,11 @@
 		default_direction = EAST
 		..()
 
+/obj/machinery/cargo_router/Router15 // undeliverable cargo outlet
+	New()
+		destinations = list("Airbridge" = WEST, "Cafeteria" = WEST, "EVA" = WEST, "Disposals" = WEST, "QM" = WEST, "Engine" = WEST, "Catering" = WEST, "MedSci" = WEST, "Security" = WEST)
+		default_direction = SOUTH
+		..()
 
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0

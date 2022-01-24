@@ -19,7 +19,9 @@ change the direction of created objects.<br>
 		if(ctrl)
 			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "Missile", "None")) || cinematic
 			return
-		objpath = get_one_match(input("Type path", "Type path", "/obj/closet"), /atom)
+		if (!objpath)
+			objpath = /obj/critter/domestic_bee/heisenbee
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		update_button_text(objpath)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)

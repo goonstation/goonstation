@@ -271,8 +271,9 @@
 		..()
 
 	on_removal()
-		. = ..()
+		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
+		. = ..()
 
 	///Taking items off a head
 	attack_self(mob/user as mob)

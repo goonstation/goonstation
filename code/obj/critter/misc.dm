@@ -492,7 +492,7 @@
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
 			if (pixel_y_inc > 20) return
-			var/image/I = image('icons/mob/head.dmi', src,  W.icon_state)
+			var/image/I = image('icons/mob/clothing/head.dmi', src,  W.icon_state)
 			I.pixel_y = pixel_y_inc
 			src.overlays += I
 			pixel_y_inc += 3

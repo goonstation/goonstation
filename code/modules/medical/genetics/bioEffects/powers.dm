@@ -162,6 +162,10 @@
 			using = 0
 			return 1
 
+		if (!(the_item in get_filtered_atoms_in_touch_range(owner, base_path)))
+			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			return 1
+
 		var/area/cur_area = get_area(owner)
 		var/turf/cur_turf = get_turf(owner)
 		if (isrestrictedz(cur_turf.z) && !cur_area.may_eat_here_in_restricted_z && (!owner.client || !owner.client.holder))
@@ -988,6 +992,9 @@
 			if(toxic)
 				var/turf/fart_turf = get_turf(owner)
 				fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
+
+			if (owner.getStatusDuration("burning"))
+				fireflash(get_turf(owner), 3 * linked_power.power)
 
 			SF.farting = 0
 			if (linked_power.power > 1)
@@ -1816,6 +1823,7 @@
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#333333"
@@ -1892,6 +1900,7 @@
 	ability_path = /datum/targetable/geneticsAbility/chameleon
 
 	OnAdd()
+		active = 0
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		..()
@@ -1974,7 +1983,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/datum/bioEffect/power/bigpuke/BP = linked_power
 		var/range = BP.range
 		range *= BP.power
@@ -1984,7 +1994,7 @@
 		owner.reagents.add_reagent("vomit",20)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -1995,11 +2005,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		SEND_SIGNAL(owner, COMSIG_MOB_VOMIT, 10)
 		return 0
@@ -2022,7 +2034,8 @@
 			return 1
 
 		var/turf/T = get_turf(target)
-		var/list/affected_turfs = getline(owner, T)
+		var/list/line_turfs = getline(owner, T)
+		var/list/affected_turfs = list()
 		var/range = 3
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of acidic puke!</b></span>")
 		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
@@ -2032,7 +2045,7 @@
 		owner.reagents.add_reagent("radium",5)
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in affected_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -2043,11 +2056,13 @@
 				continue
 			if (get_dist(owner,F) > range)
 				continue
-			owner.reagents.reaction(F,TOUCH)
+			affected_turfs += F
+		for(var/turf/F in affected_turfs)
+			owner.reagents.reaction(F,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/mob/living/L in F.contents)
-				owner.reagents.reaction(L,TOUCH)
+				owner.reagents.reaction(L,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 			for(var/obj/O in F.contents)
-				owner.reagents.reaction(O,TOUCH)
+				owner.reagents.reaction(O,TOUCH, owner.reagents.total_volume/length(affected_turfs))
 		owner.reagents.clear_reagents()
 		return 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

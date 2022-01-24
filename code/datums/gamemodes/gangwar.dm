@@ -41,6 +41,7 @@
 	var/datum/generic_radio_source/announcer_source = new /datum/generic_radio_source()
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/janktank_price = 300		//should start the same as /datum/gang_item/misc/janktank.
+	var/shuttle_called = FALSE
 	var/mob/kidnapping_target
 
 /datum/game_mode/gang/announce()
@@ -107,8 +108,16 @@
 		// uniform_prompt(leaderMind)
 
 	find_potential_hot_zones()
+
+	SPAWN_DBG (10 MINUTES)
+		process_hot_zones()
+
+	SPAWN_DBG (15 MINUTES)
+		process_kidnapping_event()
+
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()
+
 	return 1
 
 /datum/game_mode/gang/proc/force_shuttle()
@@ -195,18 +204,14 @@
 
 /datum/game_mode/gang/process()
 	..()
+	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
+		shuttle_called = TRUE
+		force_shuttle()
 	slow_process ++
 	if (slow_process < 60)
 		return
 	else
 		slow_process = 0
-
-	if (ticker.round_elapsed_ticks == 10 MINUTES)
-		process_hot_zones()
-	if (ticker.round_elapsed_ticks == 15 MINUTES)
-		process_kidnapping_event()
-	if (ticker.round_elapsed_ticks == 55 MINUTES)
-		force_shuttle()
 
 	for(var/datum/gang/G in gangs)
 		var/tmp_turf_points = G.num_areas_controlled()*15

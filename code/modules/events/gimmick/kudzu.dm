@@ -3,7 +3,7 @@
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "seeds"
+	icon_state = "seeds-kudzu"
 	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
 	attack(mob/M, mob/user)
@@ -34,15 +34,6 @@
 
 		else
 			return ..()
-
-/datum/syndicate_buylist/traitor/kudzuseed
-	name = "Kudzu Seed"
-	item = /obj/item/kudzuseed
-	cost = 4
-	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
-	vr_allowed = 0
-	job = list("Botanist", "Staff Assistant")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/random_event/major/kudzu
 	name = "Kudzu Outbreak"
@@ -114,6 +105,7 @@
 	var/current_stage = 0
 	var/aggressive = 0
 	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
+	var/stunted = FALSE
 
 
 	get_desc()
@@ -266,7 +258,7 @@
 	if (dogrowth == 1)
 		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
-	if (src.growth < 20)
+	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
 	if (!src.aggressive && src.growth >= 20)
@@ -335,6 +327,26 @@
 
 		src.take_damage(power*10, 1, "burn")
 
+/obj/spacevine/proc/herbicide(datum/reagent/R)
+	if(!src.stunted)
+		if((src.current_stage < 2) || prob(33))
+			src.stunted = TRUE
+
+			//Swap green to red to turn brown, desaturate and soften slightly
+			var/new_color = list(0.20,	0.70,  0.10,  0.00,\
+								 0.70,  0.10,  0.10,  0.50,\
+								 0.07,  0.10,  0.50,  0.00,\
+								 0.00,  0.00,  0.00,  0.70,\
+								 0.00,  0.00,  0.00,  0.00)
+			//Add damage texture to create dark banding
+			setTexture()
+			animate(src,time=2 SECONDS,color=new_color)
+			src.growth -= 10
+			src.to_spread = round(log(max(src.to_spread,1))*2)
+			src.update_self()
+		// Delay update to allow fluid controllers to manage
+		R.holder?.remove_reagent(R.id, src.current_stage, update_total=FALSE, reagents_change=FALSE)
+
 /obj/spacevine/living // these ones grow
 	run_life = 1
 
@@ -352,6 +364,9 @@
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
 				F.set_loc(src.loc)
+
+	herbicide()
+		return
 
 /obj/spacevine/alien/living
 	run_life = 1
@@ -410,7 +425,7 @@
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
 					SPAWN_DBG(1 SECOND)
 						qdel(src)
-					
+
 				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
