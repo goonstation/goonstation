@@ -189,7 +189,7 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
