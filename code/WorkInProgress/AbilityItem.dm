@@ -34,7 +34,7 @@
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1

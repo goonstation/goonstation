@@ -447,7 +447,7 @@
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
 			L.vomit()
