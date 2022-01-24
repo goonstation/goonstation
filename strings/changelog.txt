@@ -1,4 +1,9 @@
 
+(t)mon jan 24 22
+(u)DimWhat
+(p)7035
+(e)⚖|balance
+(*)Made choking with sharp objects, like knives, deal much more bleed and a small amount of brute damage.
 (t)sun jan 23 22
 (u)adharainspace
 (p)7272
