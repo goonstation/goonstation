@@ -485,6 +485,33 @@
 			logTheThing("combat",usr,null,"used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
 			return
 
+		else if (href_list["createcan"])
+			var/default = R.get_master_reagent_name()
+			var/input_name = input(usr, "Name the can:", "Name", default) as null|text
+			if(input_name && input_name != default)
+				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
+			var/bottlename = copytext(html_encode(input_name), 1, 32)
+
+			var/input_design = input(usr, "Choose the design (1~26):", "Design", default) as null|num
+
+			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1 || isnull(input_design) || input_design > 26 || input_design < 1)
+				return
+
+			var/obj/item/reagent_containers/food/drinks/cola/custom/C
+			if (R.total_volume <= 30)
+				C = new/obj/item/reagent_containers/food/drinks/cola/custom/small(src.output_target)
+				R.trans_to(C,30)
+				C.icon_state = "cola-[input_design]-small"
+			else
+				C = new/obj/item/reagent_containers/food/drinks/cola/custom(src.output_target)
+				R.trans_to(C,50)
+				C.icon_state = "cola-[input_design]"
+
+			C.name = "[bottlename]"
+			src.updateUsrDialog()
+			logTheThing("combat",usr,null,"used the [src.name] to create a can named [bottlename] containing [log_reagents(C)] at log_loc[src].")
+			return
+
 		else if (href_list["createpatch"])
 			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 			var/patchname = copytext(html_encode(input_name), 1, 32)
@@ -611,6 +638,7 @@
 				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill (100 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipill=1'>Create multiple pills (5 units min)</A> Bottle: <A href='?src=\ref[src];togglepillbottle=1'>[src.pill_bottle ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A><BR>"
+				dat += "<A href='?src=\ref[src];createcan=1'>Create can (50 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];createpatch=1'>Create patch (30 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipatch=1'>Create multiple patches (5 units min)</A> Box: <A href='?src=\ref[src];togglepatchbox=1'>[src.patch_box ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createampoule=1'>Create ampoule (5 units max)</A>"

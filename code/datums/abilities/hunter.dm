@@ -58,9 +58,9 @@
 		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
-		M.equip_if_possible(new /obj/item/cloaking_device(M), slot_r_store)
-		M.equip_if_possible(new /obj/item/knife/butcher/predspear(M), slot_l_hand)
-		M.equip_if_possible(new /obj/item/gun/energy/laser_gun/pred(M), slot_r_hand)
+		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
+		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_l_hand)
+		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_r_hand)
 
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()

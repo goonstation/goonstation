@@ -1805,3 +1805,9 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
 	icon_state = "witchhat_mint"
 	item_state = "witchhat_mint"
+
+/obj/item/clothing/head/bouffant
+	name = "bouffant scrub hat"
+	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
+	icon_state = "bouffant"
+	item_state = "bouffant"

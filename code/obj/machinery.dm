@@ -340,24 +340,6 @@
 	anchored = 1.0
 	req_access = list(access_armory)
 
-/obj/machinery/driver_button
-	name = "Mass Driver Button"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a Mass Driver."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
-
-/obj/machinery/ignition_switch
-	name = "Ignition Switch"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a mounted igniter."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
-
 /obj/machinery/noise_switch
 	name = "Speaker Toggle"
 	desc = "Makes things make noise."

@@ -503,7 +503,8 @@
 			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
+			logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -796,7 +797,7 @@
 /obj/item/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "clipboard00"
+	icon_state = "clipboard"
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
@@ -808,10 +809,14 @@
 	stamina_damage = 10
 	stamina_cost = 1
 	stamina_crit_chance = 5
+	var/tmp/list/image/overlay_images = null
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+		src.overlay_images = list()
+		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
+		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -927,9 +932,15 @@
 		return
 
 	proc/update()
-		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		if (locate(/obj/item/paper) in src)
+			src.UpdateOverlays(src.overlay_images["paper"], "paper")
+		else
+			src.ClearSpecificOverlays("paper")
+		if (src.pen)
+			src.UpdateOverlays(src.overlay_images["pen"], "pen")
+		else
+			src.ClearSpecificOverlays("pen")
 		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
-		return
 
 /obj/item/clipboard/with_pen
 	New()
@@ -937,6 +948,24 @@
 		src.pen = new /obj/item/pen(src)
 		src.update()
 		return
+
+/obj/item/clipboard/with_pen/inspector
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "clipboard_inspector"
+	name = "inspector's clipboard"
+	desc = "An official Nanotrasen Inspector's clipboard."
+	var/inspector_name = null
+	New()
+		..()
+		src.inhand_color = "#3F3F3F"
+		START_TRACKING
+	proc/set_owner(var/mob/living/carbon/human/M)
+		inspector_name = M.real_name
+		src.name = "Inspector [inspector_name]'s clipboard"
+	disposing()
+		STOP_TRACKING
+		..()
+
 
 /* =============== FOLDERS (wip) =============== */
 

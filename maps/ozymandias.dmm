@@ -35137,6 +35137,10 @@
 /area/station/mining/refinery)
 "jTq" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = 3;
+	pixel_y = 5
+	},
 /obj/item/storage/firstaid/regular,
 /turf/simulated/floor/purple/side,
 /area/station/science/artifact)

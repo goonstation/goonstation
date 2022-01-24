@@ -604,7 +604,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "abx" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "research";
 	name = "Research Emergency Mass Ejector Control";
 	pixel_y = 32
@@ -7744,7 +7744,7 @@
 	on = 1;
 	target_pressure = 250
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "toxins_1";
 	pixel_x = 8;
 	pixel_y = 24
@@ -7771,7 +7771,7 @@
 	on = 1;
 	target_pressure = 500
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "toxins_2";
 	pixel_x = -8;
 	pixel_y = 24
@@ -9763,6 +9763,10 @@
 /area/station/science/artifact)
 "awS" = (
 /obj/table/reinforced/auto,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = -6;
+	pixel_y = 5
+	},
 /obj/item/storage/box/tapebox,
 /obj/item/disk/data/tape{
 	layer = 3.5
