@@ -380,7 +380,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if(src.paired_lever != null && !remote_activation) paired_lever.vis_setlever(1)
 		else
 			src.disengage_drill()
-			if(src.paired_lever != null && !remote_activation)
+			if(src.paired_lever != null)
 				paired_lever.vis_setlever(0)
 				paired_lever.vis_setpanel(0)
 
