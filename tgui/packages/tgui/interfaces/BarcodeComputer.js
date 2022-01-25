@@ -14,7 +14,6 @@ const BarcodeComputerSection = (props, context) => {
         const {
           crate_tag,
           name,
-          icon,
         } = destination;
         return (
           <Button
@@ -37,6 +36,7 @@ const IDCard = (props, context) => {
       name,
       role,
       icon,
+      balance,
     },
   } = props;
   return (
@@ -53,6 +53,8 @@ const IDCard = (props, context) => {
         {name}
         <br />
         {role}
+        <br />
+        {`$${balance ? balance : 0}`}
       </Box>
     </Stack>
   );

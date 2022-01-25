@@ -317,6 +317,7 @@
 
 	icon = 'icons/obj/delivery.dmi'
 	icon_state = "barcode_comp"
+	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	var/printing = 0
@@ -351,32 +352,39 @@
 			ui.open()
 
 	ui_data(mob/user)
-		var/icon_src = null
-		if (scan)
-			//we have to do this mess because bicon returns the full img tag which TGUI won't render
-			var/bicon_split = splittext(bicon(scan), "\"")
-			icon_src = bicon_split[length(bicon_split) - 1]
-
 		var/list/destination_list = new()
 		for (var/destination in destinations)
 			destination_list += list(list("crate_tag" = destination)) //goddamn byond += overloading making me do listlist
 		. = list(
 			"amount" = print_amount,
-			"sections" = list(list("title" = "Local", "destinations" = destination_list)),
-			"card" = scan ? list("name" = scan.registered, "role" = scan.assignment, "icon" = icon_src) : null,
+			"sections" = list(list("title" = "Station", "destinations" = destination_list)),
 		)
+		if (scan)
+			//we have to do this mess because bicon returns the full img tag which tgui won't render
+			var/bicon_split = splittext(bicon(scan), "\"")
+			var/icon_src = bicon_split[length(bicon_split) - 1]
+
+			.["card"] = list(
+				"name" = scan.registered,
+				"role" = scan.assignment,
+				"icon" = icon_src,
+				"balance" = account?.get_field("current_money"),
+			)
+
 	ui_act(action, list/params)
 		. = ..()
 		if (.)
 			return
 		else if (action == "print")
-			var/destination = params["crate_tag"]
+			var/destination = strip_html(params["crate_tag"], 64)
 			print(destination)
 		else if (action == "set_amount")
 			if (printing)
 				return
 			var/amount = params["value"]
-			print_amount = amount
+			if (!amount || !isnum_safe(amount))
+				return
+			print_amount = clamp(amount, 1,5)
 			. = TRUE
 		else if (action == "reset_id")
 			scan = null
@@ -426,7 +434,7 @@
 		for (var/datum/trader/T in shippingmarket.active_traders)
 			if (T.hidden)
 				continue
-			traders += list(list("crate_tag" = T.crate_tag, "name" = T.name, "icon" = T.picture))
+			traders += list(list("crate_tag" = T.crate_tag, "name" = T.name))
 		.["sections"] += list(list("title" = "Traders", "destinations" = traders))
 		var/list/req_codes = new()
 		for (var/datum/req_contract/RC in shippingmarket.req_contracts)
