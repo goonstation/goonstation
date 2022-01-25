@@ -11,7 +11,7 @@
 	mats = 20
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_BUILT
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_BUILT // BUILT is required bypass the access check since req_access is used for deleting recipies
 	flags = NOSPLASH | FLUID_SUBMERGE
 	var/health = 100
 	var/mode = "ready"
