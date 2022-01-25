@@ -1,5 +1,9 @@
 
 (t)tue jan 25 22
+(u)LeahTheTech
+(p)7261
+(e)🆕|feature
+(+)Added a button to AI shells to eject in place, no more scrolling across half the map to find your shell again.
 (u)Stonepillar
 (p)7297
 (e)🐛|bug
