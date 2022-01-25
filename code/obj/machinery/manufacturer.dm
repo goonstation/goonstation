@@ -32,7 +32,7 @@
 	// 0 is =>, 1 is ==
 	var/base_material_class = /obj/item/material_piece/ // please only material pieces
 	var/obj/item/reagent_containers/glass/beaker = null
-	var/obj/item/disk/data/floppy/read_only/manudrive/manudrive = null
+	var/obj/item/disk/data/floppy/manudrive = null
 	var/list/resource_amounts = list()
 	var/area_name = null
 	var/output_target = null
@@ -1039,7 +1039,7 @@
 					user.u_equip(W)
 					W.dropped()
 
-		else if (istype(W,/obj/item/disk/data/floppy/read_only/manudrive))
+		else if (istype(W,/obj/item/disk/data/floppy))
 			if (src.manudrive)
 				boutput(user, "<span class='alert'>You swap out the manudrive in the manufacturer with a different one.</span>")
 				src.drive_recipes = null // redundancies sake
@@ -1062,9 +1062,6 @@
 				for (var/datum/computer/file/manudrive/MD in src.manudrive.root.contents)
 					src.drive_recipes = MD.drivestored
 
-
-		else if (istype(W,/obj/item/disk/data)) // Just for clarity sake
-			boutput(user, "<span class='alert'>Only manudrives are able to be inserted into manufacturers.</span>")
 
 		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
 			boutput(user, "<span class='alert'>The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.</span>")
@@ -1513,7 +1510,7 @@
 
 		if(src.manudrive)
 			if(src.queue[1] in src.drive_recipes)
-				var/obj/item/disk/data/floppy/read_only/manudrive/ManuD = src.manudrive
+				var/obj/item/disk/data/floppy/ManuD = src.manudrive
 				for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 					if(MD.fablimit == 0)
 						src.mode = "halt"
@@ -1714,7 +1711,7 @@
 		<tr><td colspan='2'><a href='?src=\ref[src];ejectmanudrive=\ref[src]' class='buttonlink'>&#9167;</a> [src.manudrive.name]</td></tr>
 			"}
 
-			var/obj/item/disk/data/floppy/read_only/manudrive/ManuD = src.manudrive
+			var/obj/item/disk/data/floppy/ManuD = src.manudrive
 			for (var/datum/computer/file/manudrive/MD in ManuD.root.contents)
 				if(MD.fablimit >= 0)
 					dat += {"
