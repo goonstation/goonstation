@@ -72,7 +72,7 @@
 	src.flock?.removeDrone(src)
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	flockdronegibs(get_turf(src))
-	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc)) //Shouldn't be possible, but someone managed it
+	if (src.mind || src.client) //Shouldn't be possible, but someone managed it
 		src.ghostize()
 	qdel(src)
 
