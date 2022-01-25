@@ -1,5 +1,9 @@
 
 (t)tue jan 25 22
+(u)zjdtmkhzt
+(p)7230
+(e)⚖|balance
+(+)Navbeacons are now mechanics scannable.
 (u)colossusqw
 (p)7244
 (e)🆕🎨|feature, sprites
