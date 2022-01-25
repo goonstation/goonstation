@@ -1701,7 +1701,7 @@ obj/item/whetstone
 	item_state = "wakizashi"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 15.0
+	force = 35.0
 	stamina_cost = 5
 	stamina_damage = 20
 	cant_drop = 1
@@ -1712,6 +1712,11 @@ obj/item/whetstone
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
+
+	standalone
+		cant_drop = 0
+		cant_self_remove = 0
+		cant_other_remove = 0
 
 	New()
 		..()
@@ -1742,7 +1747,6 @@ obj/item/whetstone
 
 			//scale blood loss down as they lose more, to save medbay having The Worst Day
 			if (C.blood_volume > 310)
-				var/jugg_value = user.reagents.get_reagent_amount("juggernaut")
 				playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
 				if (C.blood_volume >= 475)
 					blood_slash(C,8,null, turn(usr.dir,90), 4)

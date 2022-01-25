@@ -413,7 +413,7 @@
 			if(copy)
 				preUse(usr)
 				var/atom/step = get_step(usr, get_dir_pixel(usr, target, params))
-				copy.set_loc(step)
+				copy.set_loc(usr.loc)
 				copy.throw_at(target, 20, 3, params)
 				afterUse(usr)
 				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
@@ -674,7 +674,12 @@
 			if(master)
 				overrideStaminaDamage = master.stamina_damage * 0.8
 			return
-
+	
+	wakizashi //no movement cost, hooked into the ninja suit
+		damageMult = 0.8
+		moveDelay = 0
+		moveDelayDuration = 0
+		
 /datum/item_special/launch_projectile
 	cooldown = 3 SECONDS
 	staminaCost = 30
