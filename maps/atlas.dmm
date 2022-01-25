@@ -4666,7 +4666,7 @@
 	c_tag = "autotag";
 	dir = 6;
 	name = "autoname - SS13";
-	pixel_y = 18;
+	pixel_y = 20;
 	tag = ""
 	},
 /turf/simulated/floor,
