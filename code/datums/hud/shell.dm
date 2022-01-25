@@ -82,16 +82,20 @@
 
 		update_tools()
 			for (var/obj/item/I in last_tools)
+				I.set_loc(master.module) //All the set_loc calls in this proc are because some items (or really just the flashlight) need a location change to update component stuff correctly
 				remove_object(I)
 			var/obj/item/tool1 = master.module_states[1]
 			var/obj/item/tool2 = master.module_states[2]
 			var/obj/item/tool3 = master.module_states[3]
 			if (tool1)
 				add_object(tool1, HUD_LAYER+2, "CENTER-2:16, SOUTH")
+				tool1.set_loc(master)
 			if (tool2)
 				add_object(tool2, HUD_LAYER+2, "CENTER-1:16, SOUTH")
+				tool2.set_loc(master)
 			if (tool3)
 				add_object(tool3, HUD_LAYER+2, "CENTER:16, SOUTH")
+				tool3.set_loc(master)
 			last_tools = master.module_states.Copy()
 
 		update_tool_selector()

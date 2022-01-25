@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/laser_gun/pred)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/plasma_gun)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
 	slot_card = /obj/item/card/id/command
@@ -1113,9 +1113,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/medical_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/withO2)
+	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
+	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
+	slot_head = list(/obj/item/clothing/head/bouffant)
 	slot_ears = list(/obj/item/device/radio/headset/command/md)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
 
@@ -1490,7 +1491,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
 			new /obj/item/instrument/whistle(B)
-			new /obj/item/clipboard/with_pen(B)
+			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
+			clipboard.set_owner(M)
 
 		return
 
