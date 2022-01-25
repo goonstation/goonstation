@@ -221,6 +221,11 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
+"afd" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/poster/wallsign/barber,
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/barber_shop)
 "afk" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/engine,
@@ -3719,6 +3724,7 @@
 "bXf" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/rancher,
 /turf/simulated/floor/engine,
 /area/station/ranch)
 "bXn" = (
@@ -3955,10 +3961,12 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge)
 "cdv" = (
-/obj/machinery/shieldgenerator/energy_shield,
 /obj/disposalpipe/segment/food{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
@@ -5413,7 +5421,9 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/pharmacy)
 "cVr" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/southwest)
 "cVH" = (
@@ -5791,7 +5801,9 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "djc" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/north)
 "djh" = (
@@ -9046,7 +9058,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
 "fgt" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northeast)
 "fgH" = (
@@ -10194,6 +10208,7 @@
 "fNx" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/access_spawn/rancher,
 /turf/simulated/floor/engine,
 /area/station/ranch)
 "fNF" = (
@@ -11763,7 +11778,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/storage/emergencyinternals)
 "gCu" = (
@@ -11853,7 +11870,9 @@
 	})
 "gEL" = (
 /obj/machinery/light/small,
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -14549,7 +14568,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -15156,7 +15177,9 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "imj" = (
@@ -16228,6 +16251,11 @@
 /area/iss{
 	name = "Drop Capsule"
 	})
+"iOR" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/barber_pole,
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/barber_shop)
 "iPe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
@@ -16461,7 +16489,9 @@
 /area/station/crew_quarters/arcade)
 "iXa" = (
 /obj/machinery/light/small,
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -20150,13 +20180,15 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay)
 "kQN" = (
-/obj/machinery/shieldgenerator/energy_shield,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/storage)
@@ -20476,7 +20508,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
@@ -20606,7 +20640,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "ldf" = (
@@ -22199,7 +22235,9 @@
 	name = "Warrens Hall"
 	})
 "lSM" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/east)
 "lTt" = (
@@ -22768,7 +22806,9 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
 "mgm" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/south)
 "mgx" = (
@@ -23974,7 +24014,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "mOw" = (
@@ -27367,7 +27409,9 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
@@ -33416,7 +33460,9 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/surgery)
 "sBn" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -35451,7 +35497,9 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "tEr" = (
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -37487,7 +37535,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -37587,7 +37637,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northwest)
 "uQd" = (
@@ -38322,10 +38374,12 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northeast)
 "voE" = (
-/obj/machinery/shieldgenerator/energy_shield,
 /obj/disposalpipe/segment/food{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/west)
@@ -39313,9 +39367,11 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/Zeta)
 "vTc" = (
-/obj/machinery/shieldgenerator/energy_shield,
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
+	},
+/obj/machinery/shieldgenerator/energy_shield{
+	power_level = 2
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/storage)
@@ -42468,6 +42524,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/access_spawn/rancher,
 /turf/simulated/floor/engine,
 /area/station/ranch)
 "xVt" = (
@@ -76661,7 +76718,7 @@ bcA
 bcA
 bcA
 ylQ
-uzW
+afd
 jrk
 sdD
 jrk
@@ -77265,7 +77322,7 @@ lTt
 bcA
 owc
 qdK
-uzW
+iOR
 cTU
 sdD
 jrk
