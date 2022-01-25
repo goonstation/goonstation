@@ -521,7 +521,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	else
 		rollingtext += "Receive command will pick from<br>"
 		rollingtext += "pending cargo, or immediately import<br>"
-		rollingtext += "if all inbound cargo is identical.<br><br>"
+		rollingtext += "if pending cargo is label-identical.<br><br>"
 
 	for (var/device_index in src.known_pads)
 		var/minitext = ""
