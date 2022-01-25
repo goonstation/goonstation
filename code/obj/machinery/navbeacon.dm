@@ -18,9 +18,12 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/net_id = ""
+	var/datum/component/packet_connected/radio/code_component
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
 	object_flags = CAN_REPROGRAM_ACCESS
+	mats = 4
+	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
 		..()
@@ -28,7 +31,10 @@
 		UnsubscribeProcess()
 
 		var/turf/T = loc
-		hide(T.intact)
+		// the ruckingenur kit makes a temporary instance of an object when it is uploaded, which would cause issues here
+		// possibly there are also other ways to get a navbeacon that is not on a turf
+		if(isturf(T))
+			hide(T.intact)
 
 		if(!net_id)
 			net_id = generate_net_id(src)
@@ -37,9 +43,6 @@
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
-		if(!codes_txt)
-			return
-
 		codes = new()
 
 		var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
@@ -53,7 +56,7 @@
 			else
 				codes[e] = "1"
 
-		src.AddComponent( \
+		code_component = src.AddComponent( \
 			/datum/component/packet_connected/radio, \
 			"navbeacon", \
 			src.freq, \
@@ -64,6 +67,16 @@
 			FALSE \
 		)
 
+	/// adds or edits a code and also makes sure the packet component tag is updated appropriately
+	proc/set_code(var/code_key, var/code_value)
+		//codes.Remove(code_key)
+		codes[code_key] = code_value
+		code_component.add_tag(code_key)
+
+	/// removes a code and also makes sure the packet component tag is updated appropriately
+	proc/remove_code(var/code_key)
+		codes.Remove(code_key)
+		code_component.remove_tag(code_key)
 
 	// called when turf state changes
 	// hide the object if turf is intact
@@ -136,8 +149,7 @@
 				if (!signal.data["code_key"] || !signal.data["code_value"]) return
 				var/code_key = adminscrub(signal.data["code_key"])
 				var/code_value = adminscrub(signal.data["code_value"])
-				codes.Remove(code_key)
-				codes[code_key] = code_value
+				src.set_code(code_key, code_value)
 				post_status(signal.data["sender"])
 
 
@@ -286,14 +298,14 @@ Transponder Codes:<UL>"}
 						newval = codekey
 						return
 
-					codes.Remove(codekey)
-					codes[newkey] = newval
+					src.remove_code(codekey)
+					src.set_code(newkey, newval)
 
 					updateDialog()
 
 				else if(href_list["delete"])
 					var/codekey = href_list["code"]
-					codes.Remove(codekey)
+					src.remove_code(codekey)
 					updateDialog()
 
 				else if(href_list["add"])
@@ -312,7 +324,7 @@ Transponder Codes:<UL>"}
 					if(!codes)
 						codes = new()
 
-					codes[newkey] = newval
+					src.set_code(newkey, newval)
 
 					updateDialog()
 

@@ -59,7 +59,7 @@
 	light_type = null
 	brightness = 4.6
 
-	var/datum/component/loctargeting/simple_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R

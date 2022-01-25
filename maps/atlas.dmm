@@ -4658,7 +4658,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 22
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
