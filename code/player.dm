@@ -175,14 +175,28 @@
 
 	/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
 	 * example input (formatted for readability)
+	 *  command add adds a number onto the current value (record must exist in the cloud to update or it won't do anything)
+	 *  command replace overwrites the existing record
 	 * 	{
 	 * 		"some_ckey":{
-	 * 			"persistent_bank":42069,
-	 * 			"persistent_bank_item":"none"
+	 * 			"persistent_bank":{
+	 * 				"command":"add",
+	 * 				"value":42069
+	 * 			},
+	 * 			"persistent_bank_item":{
+	 * 				"command":"replace",
+	 * 				"value":"none"
+	 * 			}
 	 * 		},
 	 * 		"some_other_ckey":{
-	 * 			"persistent_bank":1337,
-	 * 			"persistent_bank_item":"rubber_ducky"
+	 * 			"persistent_bank":{
+	 * 				"command":"add",
+	 * 				"value":1337
+	 * 			},
+	 * 			"persistent_bank_item":{
+	 * 				"command":"replace",
+	 * 				"value":"rubber_ducky"
+	 * 			}
 	 * 		}
 	 * 	}
 	**/
@@ -199,10 +213,10 @@
 				continue
 			sanitized[clean_ckey] = list()
 			for (var/json_key in decoded_json[json_ckey])
-				var/value = decoded_json[json_ckey][json_key]
+				var/value = decoded_json[json_ckey][json_key][value]
 				if (isnull(value))
 					value = "" //api wants empty strings, not nulls
-				sanitized[clean_ckey][json_key] = value
+				sanitized[clean_ckey][json_key] = list ("command" = decoded_json[json_ckey][json_key][command], "value" = value)
 #ifdef LIVE_SERVER
 		var/sanitized_json = json_encode(sanitized)
 		// Via rust-g HTTP
@@ -210,7 +224,8 @@
 		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput_bulk&api_key=[config.spacebee_api_key]&value=[url_encode(sanitized_json)]", "","")
 		request.begin_async()
 #else
-		var/save_json
+// temp disabled
+/* 		var/save_json
 		var/list/decoded_save
 		if (fexists("data/simulated_cloud.json"))
 			save_json = file2text("data/simulated_cloud.json")
@@ -226,7 +241,7 @@
 
 		//t2f appends, but need to to replace
 		fdel("data/simulated_cloud.json")
-		text2file(json_encode(decoded_save),"data/simulated_cloud.json")
+		text2file(json_encode(decoded_save),"data/simulated_cloud.json") */
 #endif
 		return TRUE
 
