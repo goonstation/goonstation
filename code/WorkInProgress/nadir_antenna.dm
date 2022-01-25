@@ -154,11 +154,12 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	icon = 'icons/obj/machines/transception.dmi'
 	icon_state = "allquiet"
 	plane = PLANE_ABOVE_LIGHTING
+	mouse_opacity = 0
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
-	name = "transception pad"
+	name = "\proper transception pad"
 	anchored = 1
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
@@ -515,7 +516,12 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	if(!length(src.known_pads))
 		rollingtext += "NO DEVICES DETECTED<br>"
-		rollingtext += "Please Use Refresh Ping"
+		rollingtext += "Please Use Refresh Ping,<br>"
+		rollingtext += "Then Wait For Reply"
+	else
+		rollingtext += "Receive command will pick from<br>"
+		rollingtext += "pending cargo, or immediately import<br>"
+		rollingtext += "if all inbound cargo is identical.<br><br>"
 
 	for (var/device_index in src.known_pads)
 		var/minitext = ""

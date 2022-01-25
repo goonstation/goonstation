@@ -378,6 +378,7 @@
 "aiP" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
 /obj/access_spawn/cargo,
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "aiQ" = (
@@ -807,13 +808,9 @@
 	name = "South Catalytic Substation"
 	})
 "arM" = (
-/obj/storage/crate,
-/obj/item/clothing/head/merchant_hat,
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
 	},
-/turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "arY" = (
 /obj/cable{
@@ -3299,10 +3296,12 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/surgery)
 "bLx" = (
-/obj/disposalpipe/segment/mail/bent/south,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/machinery/computer/transception{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
@@ -13862,6 +13861,13 @@
 	dir = 4
 	},
 /area/station/science/teleporter)
+"hBE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/engine,
+/area/station/quartermaster/cargobay)
 "hBK" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -15327,6 +15333,10 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/engine,
 /area/station/security/processing)
+"iqA" = (
+/obj/disposalpipe/segment/mail/bent/south,
+/turf/simulated/floor/engine,
+/area/station/quartermaster/cargobay)
 "iqN" = (
 /obj/shrub{
 	desc = "A strangely familiar shrub somehow drawing nutrients from the plating beneath. Probably not safe.";
@@ -15562,11 +15572,11 @@
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/lobby)
 "ixw" = (
-/obj/machinery/manufacturer/qm,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/submachine/cargopad/qm,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "ixC" = (
@@ -18939,9 +18949,6 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
 	icon_state = "line1"
-	},
-/obj/machinery/computer/transception{
-	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
@@ -23616,22 +23623,18 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/maintenance/north)
 "mFa" = (
-/obj/storage/crate{
-	desc = "Whoa! What will they think of next?";
-	name = "Boxes in a Box"
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "line1"
 	},
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/decal/tile_edge/line/yellow{
-	dir = 8;
-	icon_state = "line1"
+/obj/disposalpipe/trunk/mail/east,
+/obj/disposaloutlet/north{
+	name = "undeliverable mail outlet"
 	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
@@ -24040,6 +24043,7 @@
 	})
 "mPK" = (
 /obj/storage/cart,
+/obj/item/clothing/head/merchant_hat,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "mPS" = (
@@ -24558,13 +24562,18 @@
 	name = "Northeast Breach Hull"
 	})
 "nhx" = (
-/obj/stool/chair{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/storage/crate{
+	desc = "Whoa! What will they think of next?";
+	name = "Boxes in a Box"
+	},
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "nhE" = (
@@ -26238,6 +26247,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/stool/chair{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "olA" = (
@@ -26695,6 +26707,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
+"oAu" = (
+/obj/disposalpipe/segment/mail/bent/west,
+/turf/simulated/floor/engine,
+/area/station/quartermaster/cargobay)
 "oAQ" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/industrial,
@@ -29781,6 +29797,9 @@
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/stool/chair/office/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -30488,14 +30507,12 @@
 /area/station/quartermaster/cargooffice)
 "qMM" = (
 /obj/machinery/light,
-/obj/disposaloutlet/north{
-	name = "undeliverable mail outlet"
-	},
-/obj/disposalpipe/trunk/mail/north,
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "qNh" = (
@@ -33947,13 +33964,11 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "sNY" = (
-/obj/machinery/computer/barcode/qm/no_belthell{
-	dir = 4
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/manufacturer/qm,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "sOa" = (
@@ -35682,7 +35697,9 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southwest)
 "tKm" = (
-/obj/submachine/cargopad/qm,
+/obj/vehicle/forklift{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "tKo" = (
@@ -37022,9 +37039,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/transception{
-	dir = 4
-	},
+/obj/machinery/computer/transception,
 /turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -90895,7 +90910,7 @@ pAd
 rTk
 kCG
 rTk
-rTk
+pAd
 rTk
 rTk
 rTk
@@ -91197,7 +91212,7 @@ pqZ
 ycT
 aAU
 kqe
-ycT
+pqZ
 ycT
 ycT
 ycT
@@ -91495,11 +91510,11 @@ ykm
 jHS
 eiM
 rTk
-pAd
-rTk
+iqA
+cRK
 aiP
-kpS
-rTk
+hBE
+oAu
 rTk
 rTk
 rTk
@@ -91797,7 +91812,7 @@ ykm
 lLS
 xiE
 rTk
-pAd
+rTk
 tKm
 kCG
 kpS
