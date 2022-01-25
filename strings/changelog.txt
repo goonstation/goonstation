@@ -1,5 +1,9 @@
 
 (t)tue jan 25 22
+(u)colossusqw
+(p)7244
+(e)🆕🎨|feature, sprites
+(*)Added scorpions to random pest events.
 (u)LeahTheTech
 (p)7261
 (e)🆕|feature
