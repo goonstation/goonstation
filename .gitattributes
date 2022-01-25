@@ -2,8 +2,8 @@
 * text=auto
 
 # BYOND code and other detritus
-*.dm	text
-*.dme	text
+*.dm	text eol=lf
+*.dme	text eol=lf
 *.dms	text
 *.dmf	text
 *.dmm text eol=lf
@@ -28,7 +28,7 @@
 *.ini	text
 *.conf	text
 *.ps1	text
-*.sh	text
+*.sh	text eol=lf
 *.bat	text
 *.rb	text
 *.py	text

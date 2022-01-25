@@ -89,6 +89,8 @@ var/global/datum/controller/processScheduler/processScheduler
 		// already created and set up so just add it.
 		addProcess(process, TRUE)
 
+	global.lag_detection_process.setup()
+
 /datum/controller/processScheduler/proc/start()
 	isRunning = 1
 	SPAWN_DBG(0)
@@ -306,6 +308,10 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/hasProcess(var/processName as text)
 	if (nameToProcessMap[processName])
 		return 1
+
+/datum/controller/processScheduler/proc/getProcess(var/processName as text)
+	RETURN_TYPE(/datum/controller/process)
+	. = nameToProcessMap[processName]
 
 /datum/controller/processScheduler/proc/killProcess(var/processName as text)
 	restartProcess(processName)

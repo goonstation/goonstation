@@ -738,9 +738,9 @@ SYNDICATE DRONE FACTORY AREAS
 	density = 0
 	var/ready = 1
 	var/resets = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!ready) return
 		if(ismob(AM))
 			if(AM:client)
@@ -818,9 +818,9 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
@@ -941,9 +941,9 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)

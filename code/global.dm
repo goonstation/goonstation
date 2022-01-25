@@ -14,7 +14,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf')
+var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf', 'code/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 
@@ -77,7 +77,7 @@ var/global
 
 	list/factions = list()
 
-	list/traitList = list() //List of trait objects
+	list/obj/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -297,6 +297,7 @@ var/global
 	farty_party = 0
 	deep_farting = 0
 	no_emote_cooldowns = 0
+	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
 
@@ -316,8 +317,8 @@ var/global
 
 	///////////////
 	//cyberorgan damage thresholds for emagging without emag
-	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
-	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney_L" = 0, "cyber_kidney_R" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
 	///////////////
 	list/logs = list ( //Loooooooooogs
@@ -338,6 +339,7 @@ var/global
 		"deleted" = list (  ),
 		"vehicle" = list (  ),
 		"tgui" = list (), //me 2
+		"computers" = list(),
 		"audit" = list()//im a rebel, i refuse to add that gross SPACING
 	)
 	savefile/compid_file 	//The file holding computer ID information
@@ -493,6 +495,16 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
+	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
+		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
+		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
+		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
+#if defined(MAP_OVERRIDE_POD_WARS)
+		,"pod_wars"
+#endif
+	)
+
+	hardRebootFilePath = "data/hard-reboot"
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

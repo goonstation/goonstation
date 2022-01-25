@@ -144,6 +144,11 @@ proc/create_fluff(datum/mind/target)
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill",
 		"much coveted Gooncode")
 
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
+
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
@@ -180,6 +185,11 @@ proc/create_fluff(datum/mind/target)
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
 
 		target_name = pick(items)
 		switch(target_name)
@@ -673,7 +683,7 @@ proc/create_fluff(datum/mind/target)
 
 	set_up()
 #ifdef RP_MODE
-		absorb_count = max(1, min(6, round((ticker.minds.len - 1) * 0.75)))
+		absorb_count = clamp(round((ticker.minds.len - 1) * 0.75), 1, 6)
 #else
 		absorb_count = min(10, (ticker.minds.len - 1))
 #endif
@@ -822,7 +832,7 @@ proc/create_fluff(datum/mind/target)
 		stat("Currently absorbed:", "[absorbs] souls")
 
 	set_up()
-		absorb_target = max(1, min(7, round((ticker.minds.len - 5) / 2)))
+		absorb_target = clamp(round((ticker.minds.len - 5) / 2), 1, 7)
 		explanation_text = "Absorb and retain the life essence of at least [absorb_target] mortal(s) that inhabit this material structure."
 
 	check_completion()
@@ -903,7 +913,7 @@ proc/create_fluff(datum/mind/target)
 	var/max_escapees
 
 	set_up()
-		max_escapees = max(min(5, round(ticker.minds.len / 10)), 1)
+		max_escapees = clamp(round(ticker.minds.len / 10), 1, 5)
 		explanation_text = "Force the mortals to remain stranded on this structure. No more than [max_escapees] may escape!"
 
 	check_completion()

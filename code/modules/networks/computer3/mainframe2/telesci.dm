@@ -64,6 +64,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/obj/perm_portal/start_portal
 	var/obj/perm_portal/end_portal
 	var/image/disconnectedImage
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WELDER | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
 	New()
 		..()
@@ -220,9 +221,9 @@ proc/is_teleportation_allowed(var/turf/T)
 							message_host("command=nack")
 							return
 
-						src.realx = round(  max(0, min(coords.destx, world.maxx+1)) )
-						src.realy = round(  max(0, min(coords.desty, world.maxy+1)) )
-						src.realz = round(  max(0, min(coords.destz, world.maxz+1)) )
+						src.realx = round(  clamp(coords.destx, 0, world.maxx+1) )
+						src.realy = round(  clamp(coords.desty, 0, world.maxy+1) )
+						src.realz = round(  clamp(coords.destz, 0, world.maxz+1) )
 						message_host("command=ack")
 
 					if ("send")
@@ -497,7 +498,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		leaveresidual(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message("<span class='alert'><b>The console emits a loud pop and an acrid smell fills the air! Did something malfunction?</b></span>")
+			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -526,7 +527,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
-			src.visible_message("<span class='alert'><b>The console emits a loud pop and an acrid smell fills the air! Did something malfunction?</b></span>")
+			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -560,7 +561,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		showswirl(target)
 		use_power(500000)
 		if(prob(2))
-			src.visible_message("<span class='alert'><b>The console emits a loud pop and an acrid smell fills the air! Did something malfunction?</b></span>")
+			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
 			YSUBTRACT = rand(0,100)
 			ZSUBTRACT = rand(0,world.maxz)
@@ -820,6 +821,8 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/readout = "&nbsp;"
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
+
+	deconstruct_flags = DECON_CROWBAR | DECON_MULTITOOL | DECON_WIRECUTTERS | DECON_WRENCH | DECON_DESTRUCT
 
 	New()
 		..()
@@ -1096,70 +1099,70 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		if (href_list["decreaseX"])
-			var/change = text2num(href_list["decreaseX"])
-			xtarget = min(max(0, xtarget-change),500)
+			var/change = text2num_safe(href_list["decreaseX"])
+			xtarget = clamp(xtarget-change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseX"])
-			var/change = text2num(href_list["increaseX"])
-			xtarget = min(max(0, xtarget+change),500)
+			var/change = text2num_safe(href_list["increaseX"])
+			xtarget = clamp(xtarget+change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["setX"])
 			var/change = input(usr,"Target X:","Enter target X coordinate",xtarget) as num
-			if(!isnum(change))
+			if(!isnum_safe(change))
 				return
-			xtarget = min(max(0, change),500)
+			xtarget = clamp(change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["decreaseY"])
-			var/change = text2num(href_list["decreaseY"])
-			ytarget = min(max(0, ytarget-change),500)
+			var/change = text2num_safe(href_list["decreaseY"])
+			ytarget = clamp(ytarget-change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseY"])
-			var/change = text2num(href_list["increaseY"])
-			ytarget = min(max(0, ytarget+change),500)
+			var/change = text2num_safe(href_list["increaseY"])
+			ytarget = clamp(ytarget+change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["setY"])
 			var/change = input(usr,"Target Y:","Enter target Y coordinate",ytarget) as num
-			if(!isnum(change))
+			if(!isnum_safe(change))
 				return
-			ytarget = min(max(0, change),500)
+			ytarget = clamp(change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["decreaseZ"])
-			var/change = text2num(href_list["decreaseZ"])
-			ztarget = min(max(0, ztarget-change),14)
+			var/change = text2num_safe(href_list["decreaseZ"])
+			ztarget = clamp(ztarget-change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["increaseZ"])
-			var/change = text2num(href_list["increaseZ"])
-			ztarget = min(max(0, ztarget+change),14)
+			var/change = text2num_safe(href_list["increaseZ"])
+			ztarget = clamp(ztarget+change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["setZ"])
 			var/change = input(usr,"Target Z:","Enter target Z coordinate",ztarget) as num
-			if(!isnum(change))
+			if(!isnum_safe(change))
 				return
-			ztarget = min(max(0, change),14)
+			ztarget = clamp(change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return

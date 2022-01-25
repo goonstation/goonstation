@@ -94,9 +94,9 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!(maniac_active & 1))
 			if(isliving(AM))
 				if(AM:client)
@@ -114,9 +114,9 @@ var/maniac_previous_victim = "Unknown"
 	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!(maniac_active & 1))
 			if(isliving(AM))
 				if(AM:client)
@@ -240,7 +240,7 @@ var/maniac_previous_victim = "Unknown"
 	name = "obsolete space suit"
 	desc = "You probably wouldn't be able to fit into this."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "space_old"
 	item_state = "space_old"

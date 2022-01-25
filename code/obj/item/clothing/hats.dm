@@ -4,7 +4,7 @@
 	name = "hat"
 	desc = "For your head!"
 	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf", "flubber")
@@ -103,10 +103,6 @@ proc/filter_trait_hats(var/type)
 	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
-
 
 /obj/item/clothing/head/bio_hood/nt
 	name = "NT bio hood"
@@ -194,7 +190,7 @@ proc/filter_trait_hats(var/type)
 			src.on = !src.on
 
 		if (src.on)
-			src.firesource = TRUE
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
@@ -381,7 +377,7 @@ proc/filter_trait_hats(var/type)
 					var/obj/item/clothing/mask/cigarette/C = packet.contents[1]
 					C.set_loc(src)
 					cigs.Add(C)
-					packet.update_icon()
+					packet.UpdateIcon()
 				success = 1
 
 		if(success)
@@ -458,6 +454,13 @@ proc/filter_trait_hats(var/type)
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
+
+/obj/item/clothing/head/chefhatpuffy
+	name = "Puffy Chef's Hat"
+	desc = "A chef's toque blanche, pleasantly puffy on top."
+	icon_state = "chef-puffy"
+	item_state = "chefhat"
+	wear_state = "chef-puffy"
 
 /obj/item/clothing/head/souschefhat
 	name = "Sous-Chef's hat"
@@ -902,7 +905,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/bighat
 	name = "large hat"
 	desc = "An unnaturally large piece of headwear"
-	wear_image_icon = 'icons/mob/bighat.dmi'
+	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "tophat"
 	w_class = W_CLASS_BULKY
 	blocked_from_petasusaphilic = TRUE
@@ -918,7 +921,7 @@ proc/filter_trait_hats(var/type)
 	is_syndicate = 1 //no easy replication thanks
 	cant_self_remove = 1
 	item_function_flags = IMMUNE_TO_ACID //shouldn't be able to just melt the Syndicate Hat.
-	var/datum/component/holdertargeting/sm_light/light_c
+	var/datum/component/loctargeting/sm_light/light_c
 	var/processing = 0
 
 	process()
@@ -947,7 +950,7 @@ proc/filter_trait_hats(var/type)
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, 0.94 * 255, 0.27 * 255, 0.27 * 255, 240)
 		light_c.update(1)
 
 		if (prob(10))
@@ -963,6 +966,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
+		logTheThing("combat", user, null, "equipped [src].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
@@ -1105,7 +1109,7 @@ proc/filter_trait_hats(var/type)
 		if (istype(W, /obj/item/cell)) // Moved from cell.dm (Convair880).
 			var/obj/item/cell/C = W
 
-			if (C.charge < 1500)
+			if (C.charge < 1000)
 				user.show_text("[C] needs more charge before you can do that.", "red")
 				return
 			if (!src.stunready)
@@ -1119,10 +1123,10 @@ proc/filter_trait_hats(var/type)
 			if (src.uses < 0)
 				src.uses = 0
 			src.uses = min(src.uses + 1, src.max_uses)
-			C.use(1500)
+			C.use(1000)
 			src.icon_state = text("[]-stun",src.icon_state)
 			src.item_state = text("[]-stun",src.item_state)
-			C.updateicon()
+			C.UpdateIcon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
 			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
 			return
@@ -1242,15 +1246,12 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/that/white
 	name = "white hat"
 	desc = "A white tophat."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "whtophat"
 	item_state = "whtophat"
 
 /obj/item/clothing/head/headsprout
 	name = "leaf hairclip"
 	desc = "A sign of a healthy, growing Staff Assistant."
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "headsprout"
 	item_state = "headsprout"
 
@@ -1285,28 +1286,24 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/pinwheel_hat
 	name = "pinwheel hat"
 	desc = "A fun hat with a little spinny wheel on it."
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pinwheel_hat"
 	item_state = "pinwheel_hat"
 
 /obj/item/clothing/head/frog_hat
 	name = "frog"
 	desc = "A hat shaped like a frog's head. Not made of frogs."
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "frog_hat"
 	item_state = "frog_hat"
 
 /obj/item/clothing/head/boater_hat
 	name = "boater hat"
 	desc = "A hat useful for cutting hair and singing songs in a quartet."
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "A hat favored by those in cold climates."
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "ushanka"
 	item_state = "ushanka"
 
@@ -1317,7 +1314,6 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/waitresshat
 	name = "diner waitress's hat"
 	desc = "Still smells faintly of hairspray."
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "waitresshat"
 	item_state = "waitresshat"
 
@@ -1328,7 +1324,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	name = "headband"
 	desc = "A band. For your head."
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
+	wear_image_icon = 'icons/mob/clothing/ears.dmi'
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
@@ -1339,7 +1335,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	attackby(obj/item/W as obj, mob/user as mob)
 		..()
 		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. Now you should be able to hear the radio using these!")
+			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
 			var/obj/item/device/radio/headset/H = W
 			H.icon = src.icon
 			H.name = src.name
@@ -1355,18 +1351,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	desc = "Aww, cute and fuzzy."
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		..()
-		if(istype(W,/obj/item/device/radio/headset))
-			user.show_message("You stuff the headset on the headband and tape it in place. Meow you should be able to hear the radio using these!")
-			var/obj/item/device/radio/headset/H = W
-			H.icon = src.icon
-			H.name = src.name
-			H.icon_state = src.icon_state
-			H.wear_image_icon = src.wear_image_icon
-			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
-			qdel(src)
 
 	random
 		New()
@@ -1429,7 +1413,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	name = "antlers"
 	desc = "Be a deer and wear these, won't you?"
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/bighat.dmi'
+	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "antlers"
 	item_state = "antlers"
 	w_class = W_CLASS_TINY
@@ -1439,7 +1423,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	name = "giraffe ears"
 	desc = "Wearing these will take your fashion to another level."
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/bighat.dmi'
+	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "giraffe"
 	item_state = "giraffe"
 	w_class = W_CLASS_TINY
@@ -1449,7 +1433,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	name = "bee antennae"
 	desc = "These antennae will make you look BEE-autiful!"
 	icon = 'icons/obj/clothing/item_ears.dmi'
-	wear_image_icon = 'icons/mob/bighat.dmi'
+	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "antennae"
 	item_state = "antennae"
 	w_class = W_CLASS_TINY
@@ -1461,8 +1445,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 /obj/item/clothing/head/barrette
 	name = "barrettes"
 	desc = "Not to be confused with a beret."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "barrette-blue"
 	item_state = "barrette-blue"
 	blocked_from_petasusaphilic = TRUE
@@ -1502,8 +1484,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 /obj/item/clothing/head/hairbow
 	name = "hairbow"
 	desc = "A huge bow that goes on your head."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "hbow-magenta"
 	item_state = "hbow-magenta"
 	w_class = W_CLASS_TINY
@@ -1587,11 +1567,10 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		item_state = "hbow-yellowpolkadot"
 
 /obj/item/clothing/head/rafflesia
-    name = "rafflesia"
-    desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
-    wear_image_icon = 'icons/mob/fruithat.dmi'
-    icon_state = "rafflesiahat"
-    item_state = "rafflesiahat"
+	name = "rafflesia"
+	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+	icon_state = "rafflesiahat"
+	item_state = "rafflesiahat"
 
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
@@ -1617,8 +1596,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 /obj/item/clothing/head/frenchberet
 	name = "\improper French beret"
 	desc = "Much more artistic than your standard beret."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "beret_wht"
 	item_state = "beret_wht"
 	w_class = W_CLASS_TINY
@@ -1665,8 +1642,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 /obj/item/clothing/head/goggles
 	name = "costume goggles"
 	desc = "They don't even fit over your eyes! How cheap."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "goggles_red"
 	item_state = "goggles_red"
 	w_class = W_CLASS_TINY
@@ -1704,8 +1679,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	name = "baseball cap"
 	desc = "Wear it normally, or flip it backwards to increase your coolness."
 	uses_multiple_icon_states = 1
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	var/hatflip = FALSE
 	var/hatcolour = "black"
 
@@ -1768,16 +1741,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 /obj/item/clothing/head/pirate_blk
 	name = "black pirate hat"
 	desc = "Heroic!"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_blk"
 	item_state = "pirate_blk"
 
 /obj/item/clothing/head/pirate_brn
 	name = "brown pirate hat"
 	desc = "Heroic!"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
 
@@ -1828,15 +1797,17 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 /obj/item/clothing/head/witchhat_purple
 	name = "purple witch hat"
 	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "witchhat_purple"
 	item_state = "witchhat_purple"
 
 /obj/item/clothing/head/witchhat_mint
 	name = "mint witch hat"
 	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 	icon_state = "witchhat_mint"
 	item_state = "witchhat_mint"
+
+/obj/item/clothing/head/bouffant
+	name = "bouffant scrub hat"
+	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
+	icon_state = "bouffant"
+	item_state = "bouffant"

@@ -8,6 +8,7 @@
 #define MENU_SEARCH_INPUT 4
 #define MENU_SETTINGS 5
 #define MENU_SELECT_PRINTER 6
+#define MENU_SEARCH_PICK 7
 
 #define FIELDNUM_NAME 1
 #define FIELDNUM_FULLNAME 2
@@ -24,7 +25,7 @@
 #define FIELDNUM_NOTES 13
 
 #define FIELDNUM_DELETE "d"
-#define FIELDNUM_NEWREC 99
+#define FIELDNUM_NEWREC "new"
 
 /datum/computer/file/terminal_program/secure_records
 	name = "SecMate"
@@ -40,6 +41,7 @@
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
 	var/obj/item/peripheral/network/radio/radiocard = null
 	var/tmp/last_arrest_report = 0 //When did we last report an arrest?
+	var/list/datum/db_record/possible_active = null
 
 	var/tmp/connected = 0
 	var/tmp/server_netid = null
@@ -51,7 +53,7 @@
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
 	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
-	var/setup_mail_freq = 1149 //Which frequency do we transmit PDA alerts on?
+	var/setup_mail_freq = FREQ_PDA //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
 	/*
@@ -112,7 +114,7 @@
 						src.print_index()
 
 					if ("2") //Search records
-						src.print_text("Please enter target name, ID, DNA, or fingerprint.")
+						src.print_text("Please enter target name, ID, DNA, rank, or fingerprint.")
 
 						src.menu = MENU_SEARCH_INPUT
 						return
@@ -194,7 +196,7 @@
 						return
 
 			if (MENU_SELECT_PRINTER)
-				var/printerNumber = round(text2num(command))
+				var/printerNumber = round(text2num_safe(command))
 				if (printerNumber == 0)
 					src.menu = MENU_SETTINGS
 					src.master.temp = null
@@ -212,14 +214,8 @@
 
 
 			if (MENU_INDEX)
-				var/index_number = round( max( text2num(command), 0) )
-				if (index_number == 0)
-					src.menu = MENU_MAIN
-					src.master.temp = null
-					src.print_text(mainmenu_text())
-					return
 
-				else if (index_number == 99)
+				if (lowertext(command) == FIELDNUM_NEWREC)
 					var/datum/db_record/G = new /datum/db_record(  )
 					G["name"] = "New Record"
 					G["full_name"] = "New Record"
@@ -238,6 +234,13 @@
 					if (src.print_active_record())
 						src.menu = MENU_IN_RECORD
 
+					return
+
+				var/index_number = round( max( text2num_safe(command), 0) )
+				if (index_number == 0)
+					src.menu = MENU_MAIN
+					src.master.temp = null
+					src.print_text(mainmenu_text())
 					return
 
 				if (!istype(record_database) || index_number > record_database.records.len)
@@ -284,7 +287,28 @@
 
 						return
 
-				var/field_number = round( max( text2num(command), 0) )
+					if (FIELDNUM_NEWREC)
+						if (src.active_secure)
+							return
+
+						var/datum/db_record/R = new /datum/db_record(  )
+						R["name"] = src.active_general["name"]
+						R["full_name"] = src.active_general["full_name"]
+						R["id"] = src.active_general["id"]
+						R["criminal"] = "None"
+						R["mi_crim"] = "None"
+						R["mi_crim_d"] = "No minor crime convictions."
+						R["ma_crim"] = "None"
+						R["ma_crim_d"] = "No major crime convictions."
+						R["notes"] = "No notes."
+						data_core.security.add_record(R)
+						src.active_secure = R
+
+						src.print_active_record()
+						src.menu = MENU_IN_RECORD
+						return
+
+				var/field_number = round( max( text2num_safe(command), 0) )
 				if (field_number == 0)
 					src.menu = MENU_INDEX
 					src.print_index()
@@ -312,27 +336,6 @@
 						src.menu = MENU_FIELD_INPUT
 						return
 
-					if (FIELDNUM_NEWREC)
-						if (src.active_secure)
-							return
-
-						var/datum/db_record/R = new /datum/db_record(  )
-						R["name"] = src.active_general["name"]
-						R["full_name"] = src.active_general["full_name"]
-						R["id"] = src.active_general["id"]
-						R["criminal"] = "None"
-						R["mi_crim"] = "None"
-						R["mi_crim_d"] = "No minor crime convictions."
-						R["ma_crim"] = "None"
-						R["ma_crim_d"] = "No major crime convictions."
-						R["notes"] = "No notes."
-						data_core.security.add_record(R)
-						src.active_secure = R
-
-						src.print_active_record()
-						src.menu = MENU_IN_RECORD
-						return
-
 			if (MENU_FIELD_INPUT)
 				if (!src.active_general)
 					src.print_text("<b>Error:</b> Record invalid.")
@@ -354,7 +357,7 @@
 							return
 
 					if (FIELDNUM_SEX)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								src.active_general["sex"] = "Female"
 							if (2)
@@ -368,7 +371,7 @@
 								return
 
 					if (FIELDNUM_AGE)
-						var/newAge = round( min( text2num(command), 99) )
+						var/newAge = round( min( text2num_safe(command), 99) )
 						if (newAge < 1)
 							src.print_text("Invalid age value. Please re-enter.")
 							return
@@ -388,7 +391,7 @@
 							return
 
 					if (FIELDNUM_PHOTO)
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1) // view
 								var/datum/computer/file/image/IMG = src.active_general["file_photo"]
 								if (!istype(IMG) || !IMG.ourIcon)
@@ -420,7 +423,7 @@
 							src.menu = MENU_IN_RECORD
 							return
 
-						switch (round( max( text2num(command), 0) ))
+						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
 								if (src.active_secure["criminal"] != "*Arrest*")
 									src.report_arrest(src.active_general["name"])
@@ -520,16 +523,47 @@
 				src.menu = MENU_IN_RECORD
 				return
 
+			if (MENU_SEARCH_PICK)
+				var/input = text2num_safe(ckey(strip_html(text)))
+				if(isnull(input) || input < 1 || input >> length(src.possible_active))
+					src.master.temp = null
+					src.print_text(mainmenu_text())
+					src.print_text("Previous operation cancelled.")
+					src.menu = MENU_MAIN
+					return
+
+				var/datum/db_record/result = src.possible_active[input]
+				src.active_general = result
+				src.active_secure = data_core.security.find_record("id", src.active_general["id"])
+				if(!src.active_secure)
+					data_core.security.find_record("name", src.active_general["name"])
+
+				src.menu = MENU_IN_RECORD
+				src.print_active_record()
+
 			if (MENU_SEARCH_INPUT)
 				var/searchText = ckey(strip_html(text))
 				if (!searchText)
 					return
 
-				var/datum/db_record/result = null
+				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					if((ckey(R["name"]) == searchText) || (ckey(R["dna"]) == searchText) || (ckey(R["id"]) == searchText) || (ckey(R["fingerprint"]) == searchText))
-						result = R
-						break
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					if(findtext(haystack, searchText))
+						results += R
+
+				var/datum/db_record/result = null
+				if(length(results) == 1)
+					result = results[1]
+				else if(length(results) > 1)
+					src.print_text("Multiple results found:")
+					var/i = 1
+					for(var/datum/db_record/R as anything in results)
+						src.print_text("\[[i++]\] [R["name"]]")
+					src.print_text("\[0\] Cancel")
+					src.menu = MENU_SEARCH_PICK
+					src.possible_active = results
+					return
 
 				if(!result)
 					src.print_text("No results found.")
@@ -664,7 +698,7 @@
 				<br>\[13]<b>Important Notes:</b> [src.active_secure["notes"]]"}
 			else
 				view_string += "<br><br><b>Security Record Lost!</b>"
-				view_string += "<br>\[99] Create New Security Record.<br>"
+				view_string += "<br>\[[FIELDNUM_NEWREC]] Create New Security Record.<br>"
 
 			view_string += "<br>Enter field number to edit a field<br>(R) Redraw (D) Delete (P) Print (0) Return to index."
 
@@ -676,7 +710,7 @@
 			var/dat = ""
 			if(!src.record_database || !length(src.record_database.records))
 				src.print_text("<b>Error:</b> No records found in database.")
-				dat += "<br><b>\[99]</b> Create New Record.<br>"
+				dat += "<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.<br>"
 
 			else
 				dat = "Please select a record:"
@@ -689,7 +723,7 @@
 
 					dat += "<br><b>\[[add_zero("[x]",leadingZeroCount)]]</b>[R["id"]]: [R["name"]]"
 
-				dat += "<br><b>\[[add_zero("99",leadingZeroCount)]]</b> Create New Record.<br>"
+				dat += "<br><b>\[[FIELDNUM_NEWREC]]</b> Create New Record.<br>"
 			dat += "<br><br>Enter record number, or 0 to return."
 
 			src.print_text(dat)
@@ -803,39 +837,39 @@
 			if (photo)
 				var/datum/computer/file/image/IMG = src.active_general["file_photo"]
 				if (!istype(IMG) || !IMG.ourIcon)
-					printRecord += "Photo data is corrupt!"
+					printRecord.fields += "Photo data is corrupt!"
 				else
-					printRecord += replacetext(IMG.asText(), "|n", "<br>")
+					printRecord.fields += replacetext(IMG.asText(), "|n", "<br>")
 
 			else
-				printRecord += "title=Security Record"
-				printRecord += "Security Record"
+				printRecord.fields += "title=Security Record"
+				printRecord.fields += "Security Record"
 				if (istype(src.active_general, /datum/db_record) && data_core.general.has_record(src.active_general))
 
-					printRecord += "Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]"
-					printRecord += "Sex: [src.active_general["sex"]]"
-					printRecord += "Age: [src.active_general["age"]]"
-					printRecord += "Rank: [src.active_general["rank"]]"
-					printRecord += "Fingerprint: [src.active_general["fingerprint"]]"
-					printRecord += "DNA: [src.active_general["dna"]]"
-					printRecord += "Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]"
-					printRecord += "Physical Status: [src.active_general["p_stat"]]"
-					printRecord += "Mental Status: [src.active_general["m_stat"]]"
+					printRecord.fields += "Full Name: [src.active_general["full_name"]] ID: [src.active_general["id"]]"
+					printRecord.fields += "Sex: [src.active_general["sex"]]"
+					printRecord.fields += "Age: [src.active_general["age"]]"
+					printRecord.fields += "Rank: [src.active_general["rank"]]"
+					printRecord.fields += "Fingerprint: [src.active_general["fingerprint"]]"
+					printRecord.fields += "DNA: [src.active_general["dna"]]"
+					printRecord.fields += "Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]"
+					printRecord.fields += "Physical Status: [src.active_general["p_stat"]]"
+					printRecord.fields += "Mental Status: [src.active_general["m_stat"]]"
 				else
-					printRecord += "General Record Lost!"
+					printRecord.fields += "General Record Lost!"
 
 				if ((istype(src.active_secure, /datum/db_record) && data_core.security.has_record(src.active_secure)))
 
-					printRecord += "Security Data"
-					printRecord += "Criminal Status: [src.active_secure["criminal"]]"
-					printRecord += "Minor Crimes: [src.active_secure["mi_crim"]]"
-					printRecord += "Details: [src.active_secure["mi_crim_d"]]"
-					printRecord += "Major Crimes: [src.active_secure["ma_crim"]]"
-					printRecord += "Details: [src.active_secure["ma_crim_d"]]"
-					printRecord += "Important Notes: [src.active_secure["notes"]]"
+					printRecord.fields += "Security Data"
+					printRecord.fields += "Criminal Status: [src.active_secure["criminal"]]"
+					printRecord.fields += "Minor Crimes: [src.active_secure["mi_crim"]]"
+					printRecord.fields += "Details: [src.active_secure["mi_crim_d"]]"
+					printRecord.fields += "Major Crimes: [src.active_secure["ma_crim"]]"
+					printRecord.fields += "Details: [src.active_secure["ma_crim_d"]]"
+					printRecord.fields += "Important Notes: [src.active_secure["notes"]]"
 
 				else
-					printRecord += "Security Record Lost!"
+					printRecord.fields += "Security Record Lost!"
 
 			//printRecord.name = "printout"
 
@@ -881,14 +915,14 @@
 
 				var/userid = format_username(user_data.registered)
 
-				udat["userid"] = userid
-				udat["access"] = list2params(user_data.access)
-				if (!udat["access"] || !udat["userid"])
+				udat.fields["userid"] = userid
+				udat.fields["access"] = list2params(user_data.access)
+				if (!udat.fields["access"] || !udat.fields["userid"])
 //					qdel(udat)
 					udat.dispose()
 					return 1
 
-				udat["service"] = "print"
+				udat.fields["service"] = "print"
 
 			if (udat)
 				signal.data_file = udat
@@ -941,6 +975,7 @@
 #undef MENU_SEARCH_INPUT
 #undef MENU_SETTINGS
 #undef MENU_SELECT_PRINTER
+#undef MENU_SEARCH_PICK
 
 #undef FIELDNUM_NAME
 #undef FIELDNUM_FULLNAME

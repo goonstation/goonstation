@@ -15,7 +15,6 @@
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	event_handler_flags = USE_HASENTERED
 
 /obj/effects/bad_smoke/Move()
 	. = ..()
@@ -30,9 +29,10 @@
 				M.emote("cough")
 	return
 
-/obj/effects/bad_smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effects/bad_smoke/Crossed(atom/movable/AM)
 	..()
-	if(iscarbon(M))
+	if(iscarbon(AM))
+		var/mob/living/carbon/M = AM
 		if (issmokeimmune(M))
 			return
 		else

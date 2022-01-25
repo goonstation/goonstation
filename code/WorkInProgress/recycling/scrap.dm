@@ -207,7 +207,7 @@
 
 // if other pile of scrap tries to enter the same turf, then add that pile to this one
 
-/obj/item/scrap/CanPass(var/obj/item/scrap/O)
+/obj/item/scrap/Cross(var/obj/item/scrap/O)
 
 	if(istype(O))
 

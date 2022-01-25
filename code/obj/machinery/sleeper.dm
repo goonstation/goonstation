@@ -240,7 +240,7 @@
 	anchored = 1
 	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -269,7 +269,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		SPAWN_DBG(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
@@ -285,15 +285,10 @@
 			occupant = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
 		return
-
-	CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	ex_act(severity)
 		switch (severity)
@@ -364,7 +359,7 @@
 		var/mob/living/carbon/human/H = G.affecting
 		H.set_loc(src)
 		src.occupant = H
-		src.update_icon()
+		src.UpdateIcon()
 #ifdef DATALOGGER
 		game_stats.Increment("sleeper")
 #endif
@@ -518,19 +513,23 @@
 	proc/go_out()
 		if (!src || !src.occupant)
 			return
-		for (var/obj/O in src)
-			if (O == src.our_console) // don't barf out the internal sleeper console tia
-				continue
-			O.set_loc(src.loc)
-		src.add_fingerprint(usr)
 		if (src.occupant.loc == src)
 			src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 1 SECOND)
-		src.occupant.force_laydown_standup()
-		src.occupant = null
-		src.update_icon()
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.occupant)
+			for (var/obj/O in src)
+				if (O == src.our_console) // don't barf out the internal sleeper console tia
+					continue
+				O.set_loc(src.loc)
+				src.add_fingerprint(usr)
+			src.occupant.changeStatus("weakened", 1 SECOND)
+			src.occupant.force_laydown_standup()
+			src.occupant = null
+			src.UpdateIcon()
+			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+			return
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -550,10 +549,10 @@
 				return
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
@@ -588,7 +587,7 @@
 		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/obj/O in src)
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue
@@ -670,7 +669,7 @@
 
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
-	desc = "An emergency transportation device for critically injured patients."
+	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
 	anchored = 0
 	mats = 30
@@ -689,6 +688,7 @@
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
 		..()
@@ -746,9 +746,6 @@
 		return
 	if (!occupant)
 		return
-	var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
-	if (!transmit_connection)
-		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
 	var/alertgroup = MGA_MEDCRIT
@@ -763,13 +760,12 @@
 	var/datum/signal/PDAsignal = get_free_signal()
 
 	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
-	PDAsignal.transmission_method = TRANSMISSION_RADIO
-	transmit_connection.post_signal(src, PDAsignal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
-	desc = "Your usual sleeper, but compact this time. Wow!"
+	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
 	anchored = 1

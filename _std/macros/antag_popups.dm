@@ -28,7 +28,9 @@
 #define SHOW_POLYMORPH_TIPS(M) M.Browse(grabResource("html/polymorph.html"), POLYMORPH_TIPS_WINDOW)
 
 // nuke
-#define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/syndiTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_COMMANDER_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopcommanderTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_NUKEOP_GUNBOT_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopgunbotTips.html"), ANTAG_TIPS_WINDOW)
 
 // revolution
 #define SHOW_REVHEAD_TIPS(M) M.Browse(grabResource("html/traitorTips/revTips.html"), ANTAG_TIPS_WINDOW)
@@ -55,7 +57,7 @@
 
 // various others
 #define SHOW_GRINCH_TIPS(M) M.Browse(grabResource("html/traitorTips/grinchTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_HUNTER_TIPS(M) M.Browse(grabResource("html/traitorTips/predatorTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_HUNTER_TIPS(M) M.Browse(grabResource("html/traitorTips/hunterTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_WEREWOLF_TIPS(M) M.Browse(grabResource("html/traitorTips/werewolfTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_WRESTLER_TIPS(M) M.Browse(grabResource("html/traitorTips/wrestlerTips.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_BATTLE_ROYALE_TIPS(M) M.Browse(grabResource("html/traitorTips/battleTips.html"), ANTAG_TIPS_WINDOW)
@@ -63,6 +65,7 @@
 #define SHOW_KUDZU_TIPS(M) M.Browse(grabResource("html/traitorTips/kudzu.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_FOOTBALL_TIPS(M) M.Browse(grabResource("html/traitorTips/football.html"), ANTAG_TIPS_WINDOW)
 #define SHOW_ZOMBIE_TIPS(M) M.Browse(grabResource("html/traitorTips/zombieTips.html"), ANTAG_TIPS_WINDOW)
+#define SHOW_SLASHER_TIPS(M) M.Browse(grabResource("html/traitorTips/slasherTips.html"), ANTAG_TIPS_WINDOW)
 
 // borg does things a little differently
 #define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
@@ -75,6 +78,9 @@
 
 // soulsteel posession
 #define SHOW_SOULSTEEL_TIPS(M) M.Browse(grabResource("html/soulsteel.html"), SOULSTEEL_TIPS_WINDOW)
+
+// slasher possession
+#define SHOW_SLASHER_POSSESSION_TIPS(M) M.Browse(grabResource("html/slasher_possession.html"), ANTAG_TIPS_WINDOW)
 
 // mindwipe from cloner zap chance
 #define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
@@ -118,6 +124,8 @@
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Nuke/Rev</b>
 	<a href='?src=\ref[src];action=nukeop'>Nuke Op</a> |
+	<a href='?src=\ref[src];action=nukeop-commander'>Nuke Op Commander</a> |
+	<a href='?src=\ref[src];action=nukeop-gunbot'>Nuke Op Gunbot</a> |
 	<a href='?src=\ref[src];action=revhead'>Rev Head</a> |
 	<a href='?src=\ref[src];action=revved'>Revved</a> |
 	<a href='?src=\ref[src];action=derevved'>De-Revved</a>
@@ -144,7 +152,8 @@
 	<a href='?src=\ref[src];action=wrestler'>Wrestler</a> |
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
-	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a>
+	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
+	<a href='?src=\ref[src];action=slasher'>The Slasher</a>
 	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
@@ -152,7 +161,8 @@
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
-	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a>
+	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
+	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a>
 </div>
 "}
 
@@ -210,6 +220,10 @@
 			// nuke/rev
 			if ("nukeop")
 				SHOW_NUKEOP_TIPS(M)
+			if ("nukeop-commander")
+				SHOW_NUKEOP_COMMANDER_TIPS(M)
+			if ("nukeop-gunbot")
+				SHOW_NUKEOP_GUNBOT_TIPS(M)
 			if ("revhead")
 				SHOW_REVHEAD_TIPS(M)
 			if ("revved")
@@ -258,6 +272,8 @@
 				SHOW_MARTIAN_TIPS(M)
 			if ("kudzu")
 				SHOW_KUDZU_TIPS(M)
+			if ("slasher")
+				SHOW_SLASHER_TIPS(M)
 			if ("arcfiend")
 				SHOW_ARCFIEND_TIPS(M)
 
@@ -271,6 +287,8 @@
 				SHOW_ANTAG_REMOVED_TIPS(M)
 			if ("soulsteel")
 				SHOW_SOULSTEEL_TIPS(M)
+			if ("slasher_possession")
+				SHOW_SLASHER_POSSESSION_TIPS(M)
 			if ("mindwipe")
 				SHOW_MINDWIPE_TIPS(M)
 

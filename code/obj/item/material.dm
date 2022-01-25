@@ -15,7 +15,7 @@
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = INFINITY
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -47,7 +47,7 @@
 				boutput(user, "<span class='notice'>You put [src] in [W].</span>")
 				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
 				if (oreamt == W:maxitems) boutput(user, "<span class='notice'>[W] is now full!</span>")
-				W:satchel_updateicon()
+				W:UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
@@ -55,7 +55,7 @@
 	attack_hand(mob/user as mob)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
@@ -64,7 +64,8 @@
 		else
 			..(user)
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if (isobserver(AM))
 			return
 		else if (isliving(AM))
@@ -72,7 +73,7 @@
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
 			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable)
 				src.set_loc(S.satchel)
-				S.satchel.satchel_updateicon()
+				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
 					playsound(H, "sound/machines/chime.ogg", 20, 1)
@@ -573,7 +574,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	burn_possible = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -585,7 +586,7 @@
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
-	HasEntered(AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
@@ -633,7 +634,7 @@
 	H.changeStatus("weakened", 3 SECONDS)
 	H.force_laydown_standup()
 	var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
-	affecting.take_damage(force, 0)
+	affecting?.take_damage(force, 0)
 	H.UpdateDamageIcon()
 
 
@@ -876,7 +877,7 @@
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
-		if ((W.material && !istype(W,/obj/item/material_piece)) || istype(W,/obj/item/wizard_crystal))
+		if (src.is_valid(W))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
 			W.dropped()
@@ -901,7 +902,7 @@
 					if (istype(S))
 						S.hud.remove_object(O)
 			if (istype(B) && .)
-				B.satchel_updateicon()
+				B.UpdateIcon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)
@@ -995,7 +996,7 @@
 			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
 			else boutput(user, "<span class='alert'>No material loaded!</span>")
 
-		else if (istype(O, /obj/item/raw_material/) || istype(O, /obj/item/sheet/) || istype(O, /obj/item/rods/) || istype(O, /obj/item/tile/) || istype(O, /obj/item/cable_coil))
+		else if (is_valid(O))
 			quickload(user,O)
 		else
 			..()
@@ -1010,12 +1011,8 @@
 				continue
 			if (M.name != O.name)
 				continue
-			if(!istype(M, /obj/item/cable_coil))
-				if (!istype(M.material))
-					continue
-				if (!(M.material.material_flags & MATERIAL_CRYSTAL) && !(M.material.material_flags & MATERIAL_METAL))
-					continue
-
+			if(!src.is_valid(M))
+				continue
 			M.set_loc(src)
 			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
@@ -1044,3 +1041,8 @@
 			return S
 
 		return output_location
+
+	proc/is_valid(var/obj/item/I)
+		if (!istype(I))
+			return
+		return (I.material && !istype(I,/obj/item/material_piece)) || istype(I,/obj/item/wizard_crystal)

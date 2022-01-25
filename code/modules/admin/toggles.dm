@@ -45,11 +45,14 @@ var/list/popup_verbs_to_toggle = list(\
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
+/client/proc/toggle_ghost_respawns,\
+/client/proc/toggle_adminwho_alerts,\
 /client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
 /client/proc/toggle_literal_disarm,\
+/client/proc/toggle_spooky_light_plane,\
 /datum/admins/proc/toggleooc,\
 /datum/admins/proc/togglelooc,\
 /datum/admins/proc/toggleoocdead,\
@@ -176,6 +179,24 @@ var/global/IP_alerts = 1
 	src.holder.attacktoggle = !src.holder.attacktoggle
 	boutput(usr, "<span class='notice'>Toggled attack log messages [src.holder.attacktoggle ?"on":"off"]!</span>")
 
+client/proc/toggle_ghost_respawns()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Ghost Respawn offers"
+	set desc = "Toggles receiving offers to respawn as a ghost"
+	admin_only
+
+	src.holder.ghost_respawns = !src.holder.ghost_respawns
+	boutput(usr, "<span class='notice'>Toggled ghost respawn offers [src.holder.ghost_respawns ?"on":"off"]!</span>")
+
+/client/proc/toggle_adminwho_alerts()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Who/Adminwho alerts"
+	set desc = "Toggles the alerts for players using Who/Adminwho"
+	admin_only
+
+	src.holder.adminwho_alerts = !src.holder.adminwho_alerts
+	boutput(usr, "<span class='notice'>Toggled who/adminwho alerts [src.holder.adminwho_alerts ?"on":"off"]!</span>")
+
 /client/proc/toggle_rp_word_filtering()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle \"Low RP\" Word Alerts"
@@ -240,7 +261,7 @@ var/global/IP_alerts = 1
 			src.toggle_popup_verbs()
 		boutput(usr, "<span class='notice'>Player mode now OFF.</span>")
 	else
-		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to recieve") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
+		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to receive") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
 		switch (choice)
 			if ("ASAY, AHELP & MHELP")
 				player_mode = 1
@@ -332,6 +353,14 @@ var/global/IP_alerts = 1
 	logTheThing("diary", usr, null, "has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]", "admin")
 	message_admins("[key_name(usr)] has toggled their nodamage to [(usr.nodamage ? "On" : "Off")]")
 
+/client/proc/iddqd()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "iddqd"
+	set popup_menu = 0
+	admin_only
+	usr.client.cmd_admin_godmode_self()
+	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
+
 /client/var/flying = 0
 /client/proc/noclip()
 	set name = "Toggle Your Noclip"
@@ -340,14 +369,6 @@ var/global/IP_alerts = 1
 
 	usr.client.flying = !usr.client.flying
 	boutput(usr, "Noclip mode [usr.client.flying ? "ON" : "OFF"].")
-
-/client/proc/iddqd()
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "iddqd"
-	set popup_menu = 0
-	admin_only
-	usr.client.cmd_admin_godmode_self()
-	boutput(usr, "<span class='notice'><b>Degreelessness mode [usr.nodamage ? "On" : "Off"]</b></span>")
 
 /client/proc/idclip()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -393,7 +414,7 @@ var/global/IP_alerts = 1
 	set name = "Toggle View Range"
 	set desc = "switches between 1x and custom views"
 
-	if(src.view == world.view)
+	if(src.view == world.view || src.view == "21x15")
 		var/x = input("Enter view width in tiles: (1 - 59, default 15 (normal) / 21 (widescreen))", "Width", 21)
 		var/y = input("Enter view height in tiles: (1 - 30, default 15)", "Height", 15)
 
@@ -972,3 +993,23 @@ var/global/IP_alerts = 1
 #endif
 	else
 		boutput(src, "You cannot perform this action. You must be of a higher administrative rank!")
+
+/client/proc/toggle_spooky_light_plane()
+	set name = "Toggle Spooky Light Mode"
+	set desc = "toggle thresholded lighting plane"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	admin_only
+
+	var/inp = input(usr, "What lighting threshold to set? 0 - 255", "What lighting threshold to set? 0 - 255. Cancel to disable.", 255 - 24) as num|null
+	if(!isnull(inp))
+		spooky_light_mode = 255 - inp
+	else // turn off
+		spooky_light_mode = 0
+	for(var/client/C in clients)
+		var/atom/plane_parent = C.get_plane(PLANE_LIGHTING)
+		animate(plane_parent, time=4 SECONDS, color=spooky_light_mode ? list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2) : null)
+		animate(C, time=4 SECONDS, color=spooky_light_mode ? "#AAAAAA" : null)
+
+	logTheThing("admin", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	logTheThing("diary", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")

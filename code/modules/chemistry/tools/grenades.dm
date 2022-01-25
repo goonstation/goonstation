@@ -24,6 +24,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	move_triggered = 1
+	var/is_dangerous = TRUE
 	var/detonating = 0
 
 
@@ -152,15 +153,19 @@
 	proc/arm(mob/user as mob)
 		if (src.state || src.stage != 2)
 			return 1
-		var/area/a = get_area(src)
-		if(a.sanctuary) return
+		var/area/A = get_area(src)
+		if(A.sanctuary)
+			return
 		// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
 		var/log_reagents = null
 		if (src.name == "grenade")
 			for (var/obj/item/reagent_containers/glass/G in src.beakers)
 				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
-		message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-		logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+
+		if(!A.dont_log_combat)
+			if(is_dangerous)
+				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1
@@ -168,8 +173,6 @@
 		playsound(src, "sound/weapons/armbomb.ogg", 75, 1, -3)
 		SPAWN_DBG(3 SECONDS)
 			if (src && !src.disposed)
-				a = get_area(src)
-				if(a.sanctuary) return
 				if(user?.equipped() == src)
 					user.u_equip(src)
 				explode()
@@ -234,11 +237,12 @@
 
 /obj/item/chem_grenade/metalfoam
 	name = "metal foam grenade"
-	desc = "Used for emergency sealing of air breaches."
+	desc = "After activating, creates a mess of foamed metal. Useful for plugging the hull up."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "metalfoam"
 	icon_state_armed = "metalfoam1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -254,11 +258,12 @@
 
 /obj/item/chem_grenade/firefighting
 	name = "fire fighting grenade"
-	desc = "Can help to put out dangerous fires from a distance."
+	desc = "Propells firefighting foam in a wide area around it after activation, putting out fires."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "firefighting"
 	icon_state_armed = "firefighting1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -278,6 +283,7 @@
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -494,6 +500,7 @@
 	icon_state = "luminol"
 	icon_state_armed = "luminol1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()
@@ -516,6 +523,7 @@
 	icon_state = "fog"
 	icon_state_armed = "fog1"
 	stage = 2
+	is_dangerous = FALSE
 
 	New()
 		..()

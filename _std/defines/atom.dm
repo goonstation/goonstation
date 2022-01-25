@@ -2,6 +2,9 @@
 
 #define isatom(A) (isloc(A))
 
+/// built-in isobj returns true for /atom/movable
+#define isobj(A) (istype(A, /obj))
+
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 #define SPACE_PUSHING 1 //used for removing us from mantapush list when we get deleted
@@ -19,9 +22,9 @@
 #define USE_FLUID_ENTER 2 	//Atom implements EnteredFluid() call in some way.
 #define USE_GRAB_CHOKE 4	//Atom can be held as an item and have a grab inside it to choke somebuddy
 #define HANDLE_STICKER 8	//Atom implements var/active = XXX and responds to sticker removal methods (burn-off + acetone). this atom MUST have an 'active' var. im sory.
-#define USE_HASENTERED 16	//Atom implements HasEntered() call in some way.
+// 16 UNUSED
 #define USE_CHECKEXIT 32	//Atom implements CheckExit() call in some way.
-#define USE_CANPASS 64		//Atom implements CanPass() call in some way. (doesnt affect turfs, put this on mobs or objs)
+// 64 UNUSED
 #define IMMUNE_MANTA_PUSH 128			//cannot be pushed by MANTAwaters
 #define IMMUNE_SINGULARITY 256
 #define IMMUNE_SINGULARITY_INACTIVE 512

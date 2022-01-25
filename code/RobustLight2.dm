@@ -23,7 +23,7 @@ proc/get_moving_lights_stats()
 	var/turf/_E = get_step(src, EAST); \
 	var/turf/_NE = get_step(src, NORTHEAST); \
 	if(!_N || !_E || !_NE) { break }; \
-	src.RL_MulOverlay.color = list( \
+	src.RL_MulOverlay?.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
 		_N.RL_LumR, _N.RL_LumG, _N.RL_LumB, 0, \

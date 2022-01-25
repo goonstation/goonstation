@@ -14,7 +14,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		elecflash_ma.alpha = 255
 		elecflash_ma.invisibility = INVIS_NONE
 		elecflash_ma.layer = TURF_LAYER
-		elecflash_ma.plane = PLANE_OVERLAY_EFFECTS
+		elecflash_ma.plane = PLANE_ABOVE_LIGHTING
 		elecflash_ma.mouse_opacity = 0
 
 	elecflash_ma.icon_state = "[power][pick("a","b","c")]"

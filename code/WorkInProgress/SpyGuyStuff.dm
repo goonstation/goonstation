@@ -222,9 +222,6 @@ proc/Create_Tommyname()
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
-	update_icon()
-		return
-
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		for(var/mob/O in AIviewers(user, null))
 			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
@@ -310,9 +307,8 @@ proc/Create_Tommyname()
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
 		..()
 		on_trigger(AM)
 
@@ -326,7 +322,7 @@ proc/Create_Tommyname()
 	on_trigger(atom/movable/triggerer)
 		if(isliving(triggerer) || locate(/mob) in triggerer)
 			if(!assigned_area) assigned_area = get_area(src)
-			assigned_area.wake_critters()
+			assigned_area.wake_critters(isliving(triggerer) ? triggerer : locate(/mob/living) in triggerer)
 
 /obj/trigger/throw
 	name = "throw trigger"
@@ -875,6 +871,7 @@ proc/Create_Tommyname()
 	wire_readied = new_readiness
 	// Try to stretch the wire
 	if(!src.setTwoHanded(new_readiness))
+		usr.show_text("You need two free hands in order to activate the [src.name].", "red")
 		wire_readied = 0
 		return
 

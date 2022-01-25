@@ -244,6 +244,10 @@
 	var/is_playing = 0
 	var/obj/item/record/record_inside = null
 
+	New()
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
 /obj/submachine/record_player/attackby(obj/item/W as obj, mob/user as mob)
 	if (istype(W, /obj/item/record))
 		if(has_record)
@@ -270,12 +274,9 @@
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
-			pdaSignal.transmission_method = TRANSMISSION_RADIO
-			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 			//////
 			src.is_playing = 1
 #ifdef UNDERWATER_MAP
@@ -791,12 +792,9 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			src.is_playing = 1
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
-			var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
-			pdaSignal.transmission_method = TRANSMISSION_RADIO
-			if(transmit_connection != null)
-				transmit_connection.post_signal(src, pdaSignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 			//////
 			sleep(6000)
 			is_playing = 0

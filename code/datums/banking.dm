@@ -362,7 +362,7 @@
 		switch(href_list["operation"])
 
 			if ("enterpin")
-				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				var/enterpin = usr.enter_pin("ATM")
 				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN
@@ -717,6 +717,19 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "bank2"
 
+/obj/submachine
+	name = "You shouldn't see me!"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "atm"
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 /obj/submachine/ATM
 	name = "ATM"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -878,7 +891,7 @@
 		switch(href_list["operation"])
 
 			if ("enterpin")
-				var/enterpin = input(usr, "Please enter your PIN number.", "ATM", 0) as null|num
+				var/enterpin = usr.enter_pin("ATM")
 				if (enterpin == src.scan.pin)
 					if(TryToFindRecord())
 						src.state = STATE_LOGGEDIN

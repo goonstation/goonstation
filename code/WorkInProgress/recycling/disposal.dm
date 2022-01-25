@@ -41,6 +41,9 @@
 		else
 			src.set_loc(D)
 
+		if (length(D.contents) > LOG_FLUSHING_THRESHOLD)
+			message_admins("[length(D.contents)] atoms flushed by [D] at [log_loc(D)] last touched by: [key_name(D.fingerprintslast)].")
+
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
@@ -48,7 +51,7 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-
+			LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process
@@ -82,7 +85,7 @@
 				last = curr
 				curr = curr.transfer(src)
 				if(!curr)
-					last.expel(src, loc, dir)
+					last.expel(src, get_turf(loc), dir)
 
 				if(!(count--))
 					active = 0
@@ -158,7 +161,7 @@
 
 	// called to vent all gas in holder to a location
 	proc/vent_gas(var/atom/location)
-		location.assume_air(gas)  // vent all gas to turf
+		location?.assume_air(gas)  // vent all gas to turf
 		gas = null
 		return
 
@@ -252,13 +255,14 @@
 	// change visibility status and force update of icon
 	hide(var/intact)
 		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
-		updateicon()
+		UpdateIcon()
 
 	// update actual icon_state depending on visibility
 	// if invisible, set alpha to half the norm
 	// this will be revealed if a T-scanner is used
 	// if visible, use regular icon_state
-	proc/updateicon()
+	update_icon()
+
 		icon_state = base_icon_state
 		alpha = invisibility ? 128 : 255
 		return
@@ -337,7 +341,7 @@
 		if(H)
 			// holder was present
 			H.active = 0
-			var/turf/T = src.loc
+			var/turf/T = get_turf(src)
 			if(T.density)
 				// broken pipe is inside a dense turf (wall)
 				// this is unlikely, but just dump out everything into the turf in case
@@ -711,6 +715,8 @@
 		var/same_group = 0
 		if(src.mail_tag && (H.mail_tag in src.mail_tag))
 			same_group = 1
+		else if(isnull(src.mail_tag) && isnull(H.mail_tag)) // our tag is null, meaning we route anything without a tag!
+			same_group = 1 // (mail_tag is a list so we can't combine these two checks, at least not easily/cleanly)
 
 		var/nextdir = nextdir(H.dir, same_group)
 		H.set_dir(nextdir)
@@ -887,7 +893,6 @@
 				if (istype(newIngredient, /obj/item/reagent_containers/food/snacks/prison_loaf))
 					var/obj/item/reagent_containers/food/snacks/prison_loaf/otherLoaf = newIngredient
 					newLoaf.loaf_factor += otherLoaf.loaf_factor * 1.2
-					newLoaf.loaf_recursion = otherLoaf.loaf_recursion + 1
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
@@ -917,11 +922,6 @@
 				else
 					newLoaf.loaf_factor++
 
-				H.contents -= newIngredient
-				newIngredient.set_loc(null)
-				newIngredient = null
-
-				//LAGCHECK(LAG_MED)
 				qdel(newIngredient)
 
 			newLoaf.update()
@@ -989,7 +989,6 @@
 	throwforce = 0
 	initial_volume = 1000
 	var/loaf_factor = 1
-	var/loaf_recursion = 1
 	var/processing = 0
 
 	New()
@@ -1007,7 +1006,7 @@
 		STOP_TRACKING
 
 	proc/update()
-		var/orderOfLoafitude = max( 0, min( round( log(8, loaf_factor)), MAXIMUM_LOAF_STATE_VALUE ) )
+		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
 
 		src.w_class = min(orderOfLoafitude+1, 4)
@@ -1171,22 +1170,23 @@
 			else
 				return fromdir
 
-	updateicon()
+	update_icon()
+
 		icon_state = "pipe-mech[active]"//[invisibility ? "f" : null]"
 		alpha = invisibility ? 128 : 255
 		return
 
 	proc/toggleactivation()
 		src.active = !src.active
-		updateicon()
+		UpdateIcon()
 
 	proc/activate()
 		src.active = 1
-		updateicon()
+		UpdateIcon()
 
 	proc/deactivate()
 		src.active = 0
-		updateicon()
+		UpdateIcon()
 
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
@@ -1621,6 +1621,46 @@
 		else
 			return 0
 
+/obj/disposalpipe/trunk/zlevel
+	icon_state = "pipe-v"
+
+	getlinked()
+		return
+
+	welded()
+		return
+
+	ex_act(severity)
+		return
+
+	// test health for brokenness
+	healthcheck()
+		return
+
+	transfer(var/obj/disposalholder/H)
+		if(H.dir == DOWN)		// we just entered from a disposer
+			return ..()		// so do base transfer proc
+
+		// otherwise, go to the linked object
+		var/turf/T = get_turf(src)
+		var/obj/disposalpipe/P
+
+		P = locate() in T.get_disjoint_objects_by_type(DISJOINT_TURF_CONNECTION_DISPOSAL, /obj/disposalpipe/trunk)
+		if(P)
+			H.set_dir(DOWN)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.set_loc(P)
+		else			// if wasn't a pipe, then set loc to turf
+			H.set_loc(T)
+			return null
+
+		return P
+
+
 // a broken pipe
 /obj/disposalpipe/broken
 	icon_state = "pipe-b"
@@ -1659,8 +1699,7 @@
 	var/mailgroup = null
 	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
 	throw_speed = 1
 
 	ex_act(var/severity)
@@ -1687,25 +1726,21 @@
 
 		SPAWN_DBG(1 DECI SECOND)
 			target = get_ranged_target_turf(src, dir, range)
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if(!src.net_id)
-				src.net_id = generate_net_id(src)
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	disposing()
 		var/obj/disposalpipe/trunk/trunk = locate() in src.loc
 		if (trunk && trunk.linked == src)
 			trunk.linked = null
 		trunk = null
-
-		radio_controller.remove_object(src, "[frequency]")
 		..()
 
 	// expel the contents of the holder object, then delete it
 	// called when the holder exits the outlet
 	proc/expel(var/obj/disposalholder/H)
-		if (message && (mailgroup || mailgroup2) && radio_connection)
+		if (message && (mailgroup || mailgroup2))
 			var/groups = list()
 			if (mailgroup)
 				groups += mailgroup
@@ -1715,7 +1750,6 @@
 
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "text_message"
 			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 			newsignal.data["message"] = "[message]"
@@ -1723,7 +1757,7 @@
 			newsignal.data["group"] = groups
 			newsignal.data["sender"] = src.net_id
 
-			radio_connection.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 		flick("outlet-open", src)
 		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)

@@ -52,9 +52,10 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "bball_spin"
-	..()
+	. = ..()
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
@@ -93,7 +94,7 @@
 	anchored = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
@@ -151,7 +152,8 @@
 							src.pixel_x = -20
 		return
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (src.active)
 			return
 		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
@@ -290,7 +292,7 @@
 
 /obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
-	..()
+	. = ..()
 
 /obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
@@ -32,6 +32,11 @@
 		else if (a_drawer)
 			a_drawer.set_loc(get_turf(src))
 
+		#ifdef XMAS
+		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+			xmasify()
+		#endif
+
 		SPAWN_DBG(0)
 			if (src.auto && ispath(src.auto_type) && src.icon_state == "0") // if someone's set up a special icon state don't mess with it
 				src.set_up()
@@ -51,6 +56,15 @@
 		var/area/Ar = get_area(src)
 		if (Ar)
 			Ar.sims_score = min(Ar.sims_score + bonus, 100)
+
+	proc/xmasify()
+		var/in_cafeteria = istype(get_area(src), /area/station/crew_quarters/cafeteria)
+		if(in_cafeteria && fixed_random(src.x / world.maxx, src.y / world.maxy) <= 0.2)
+			var/obj/item/reagent_containers/food/drinks/eggnog/nog = new(src.loc)
+			nog.layer += 0.1
+		if(fixed_random(src.x / world.maxx, src.y / world.maxy) >= (in_cafeteria ? 0.6 : 0.9))
+			var/obj/item/a_gift/festive/gift = new(src.loc)
+			gift.layer += 0.1
 
 	proc/set_up()
 		if (!ispath(src.auto_type))
@@ -311,9 +325,7 @@
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group || (height==0)) return 1
-
+	Cross(atom/movable/mover)
 		if (!src.density || (mover.flags & TABLEPASS || istype(mover, /obj/newmeteor)) )
 			return 1
 		else
@@ -331,8 +343,6 @@
 			return
 
 		var/obj/item/I = O
-		if(I.loc == user && I.cant_drop)
-			return
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
 		if(istype(O.loc, /obj/item/storage))
@@ -348,7 +358,7 @@
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
 				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
@@ -489,6 +499,16 @@
 	auto
 		auto = 1
 
+/obj/table/scrap
+	name = "scrap table"
+	desc = "It's literally made of garbage."
+	icon = 'icons/obj/furniture/table_scrap.dmi'
+	auto_type = /obj/table/scrap/auto
+	parts_type = /obj/item/furniture_parts/table/scrap
+
+	auto
+		auto = 1
+
 /obj/table/folding
 	name = "folding table"
 	desc = "A table with a faux wood top designed for quick assembly and toolless disassembly."
@@ -516,6 +536,25 @@
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, null), user)
 		return
 
+/obj/table/syndicate
+	name = "crimson glass table"
+	desc = "An industrial grade table with a crimson glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_syndicate.dmi'
+	auto_type = /obj/table/syndicate
+	parts_type = /obj/item/furniture_parts/table/syndicate
+
+	auto
+		auto = TRUE
+
+/obj/table/nanotrasen
+	name = "azure glass table"
+	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
+	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
+	auto_type = /obj/table/nanotrasen
+	parts_type = /obj/item/furniture_parts/table/nanotrasen
+
+	auto
+		auto = TRUE
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */

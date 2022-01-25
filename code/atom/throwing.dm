@@ -21,7 +21,7 @@
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))
-				if(!A.CanPass(src, src.loc, 1.5))
+				if(!A.Cross(src))
 					src.throw_impact(A, thr)
 					. = TRUE
 
@@ -37,10 +37,11 @@
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
+	if(src.disposed)
+		return
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return
-
 	src.material?.triggerOnAttack(src, src, hit_atom)
 	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
@@ -56,7 +57,7 @@
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 
-/atom/movable/Bump(atom/O)
+/atom/movable/bump(atom/O)
 	if(src.throwing)
 		var/found_any = FALSE
 		// can be optimized later by storing list on the atom itself if this ever becomes a problem (it won't)
@@ -70,8 +71,9 @@
 		src.throwing = 0
 	..()
 
-/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1,
+/atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+	SHOULD_CALL_PARENT(TRUE)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return
 	if(!target) return
@@ -130,6 +132,7 @@
 		transform_original = transform_original,
 		params = params,
 		thrown_from = thrown_from,
+		thrown_by = thrown_by,
 		return_target = usr, // gross
 		bonus_throwforce = bonus_throwforce,
 		end_throw_callback = end_throw_callback

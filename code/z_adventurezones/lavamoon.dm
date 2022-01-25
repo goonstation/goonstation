@@ -794,7 +794,6 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "radhood"
 	item_state = "radhood"
 
-//obj/closet/iomoon
 /obj/storage/closet/iomoon
 	name = "\improper Thermal Hazard Equipment"
 	desc = "A locker intended to carry protective clothing."
@@ -1583,6 +1582,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					break
 
 	Crossed(var/atom/crosser as mob|obj)
+		..()
 		if (!activator || !(activator in src.loc))
 			//if (crosser.density && !isshell(crosser))
 			if (!isitem(crosser) && !isshell(crosser))
@@ -1810,7 +1810,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			id = params2list(id)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")

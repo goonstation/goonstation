@@ -8,14 +8,14 @@
 		if (..())
 			return
 		var/list/option_list = list()
-		for(var/type in concrete_typesof(/datum/special_order))
-			var/datum/special_order/O = type
+		for(var/type in concrete_typesof(/datum/req_contract/special))
+			var/datum/req_contract/special/O = type
 			option_list[initial(O.name)] = type
 		var/selection = tgui_input_list(usr,"Which special order?", "Special Order Menu", option_list)
 		if(selection)
 			src.event_effect(option_list[selection])
 
-	event_effect(datum/special_order/order_type)
+	event_effect(datum/req_contract/special/order_type)
 		..()
 		// build list of possible orders
 
@@ -23,19 +23,118 @@
 		if(!ispath(order_type))
 			if(!special_order_weights)
 				special_order_weights = list()
-				for(var/type in concrete_typesof(/datum/special_order))
-					var/datum/special_order/O = type
+				for(var/type in concrete_typesof(/datum/req_contract/special))
+					var/datum/req_contract/O = type
 					special_order_weights[type] = initial(O.weight)
 			order_type = weighted_pick(special_order_weights)
-		var/datum/special_order/new_order = new order_type
-		LAZYLISTADD(shippingmarket.active_orders, new_order)
+		var/datum/req_contract/special/new_order = new order_type
+		LAZYLISTADD(shippingmarket.special_orders, new_order)
 
 		if(new_order.sendingCrate)
 			new_order.pack_crate()
 			shippingmarket.receive_crate(new_order.sendingCrate)
 		else
-			shippingmarket.receive_crate(new_order.requisition)
+			shippingmarket.receive_crate(new_order.req_sheet)
 
+/obj/item/paper/requisition
+	name = "Order Requisition"
+
+/obj/item/paper/requisition/weed_sample
+	info = {"Hellos, we the people of <B>\[REDACTED\]</B> would like to partake in what appears to be a human past time.  A sampling of your fine flora!<BR>
+	%ITEMS%
+	Love and solutions,<BR/>
+	%TARGET%"}
+
+	New()
+		..()
+		info = replacetext(info, "%TARGET%", pick("X̶e̸e̶ ̵P̶'̸X'", "TOM", "Smith Smithington", "Mx. Grey"))
+		src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+
+/obj/item/paper/requisition/pizza_party
+	info = {"We have quite the situation where all our pizza ovens are having a fit.  We a number of orders to fill and could really use your help, my manager said by any means necessary!  We have quotas to meet! We have <i>guarantee</i> to uphold!<BR>
+	%ITEMS%
+	Thanks this could really save the day,<BR/>
+	%TARGET%"}
+
+	New()
+		..()
+		var/target_name = ""
+		if(prob(50))
+			target_name += pick_string_autokey("names/first_female.txt")
+		else
+			target_name = pick_string_autokey("names/first_male.txt")
+		target_name += " [pick_string_autokey("names/last.txt")]"
+		info = replacetext(info, "%TARGET%", target_name)
+		if(src.type == /obj/item/paper/requisition/pizza_party)
+			src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+
+	nt
+		info = {"TO: Space Station 13<BR/>
+		FROM: CentComm<BR/>
+		<BR/><p>We are in quite the pickle.  Someone said we would coordinate a pizza party to celebrate employee of the month for %BDAY% but all our typical suppliers say they are <i>unavailable</i> and may not arrive in the estimated lifetime of the employee in question.  This should greatly improve the morale of a nearby outpost!</p><BR>
+		%ITEMS%
+		Don't let a fellow employee down!<BR/>
+		%TARGET%"}
+		New()
+			..()
+			var/target_name = ""
+			if(prob(50))
+				target_name += pick_string_autokey("names/first_female.txt")
+			else
+				target_name = pick_string_autokey("names/first_male.txt")
+			target_name += " [pick_string_autokey("names/last.txt")]"
+			info = replacetext(info, "%BDAY%", target_name)
+			src.stamp(rand(130,180), rand(160,190), rand(-40,40), "stamp-req-nt.png", "stamp-centcom")
+
+
+/obj/item/paper/requisition/blood
+	info = {"<BR/><BR/><BR/>
+	<p>Blood. Blood. Blood. Blood. Blood. Blood. Blood. Blood. Blood. Blood.</p>
+	<BR/><BR/>
+	%ITEMS%
+	<BR/>"}
+
+	New()
+		..()
+		if(prob(2))
+			if(prob(50))
+				info += "Alucard"
+			else
+				info += "V. D."
+		src.stamp(rand(50,160), rand(50,90), rand(-60,-20), "stamp-gtc.png", "stamp-syndicate")
+		src.stamp(rand(50,160), rand(190,290), rand(-40,40), "stamp-gtc.png", "stamp-syndicate")
+		src.stamp(rand(120,260), rand(50,390), rand(20,60), "stamp-gtc.png", "stamp-syndicate")
+
+/obj/item/paper/requisition/surgery/organ_swap
+	info = {"TO: Space Station 13<BR/>
+	FROM: Outpost \[REDACTED\]<BR/>
+	<h3>Cadaver Surgery Exercise 32-21-A</h3>
+	<BR/><p>Replace all internal organs of the individual co-located with these instructions.</p><BR/>
+	<BR/><p>Removed organs are to be destroyed.</p><BR/>
+	<BR/><p>Return individual once complete for evaluation.</p><BR/>
+	<BR/><BR/>
+	<i>All information included or obtained regarding the individual should be ignored and are all part of the training exercise.</i>"}
+	New()
+		..()
+		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "stamp-classified.png", "stamp-syndicate")
+
+
+/obj/item/paper/requisition/food_order
+	info = {"TO: Space Station 13<BR/>
+	FROM: %FOOD_COMPANY%<BR/>
+	<h3>Food Order:</h3>
+	%ITEMS%
+	"}
+	var/static/list/company = list("SpaceHub Delivery Services", "SnackAttack - Hunger Destroyer", "FoodDirect", "CelestialEats Delivery", "Technically Fresh")
+	New()
+		..()
+
+		info = replacetext(info, "%FOOD_COMPANY%", pick(company))
+		src.stamp(rand(90,260), rand(150,390), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+
+//non-integrated special order system
+
+/*
 /datum/commodity/proc/item_check(var/obj)
 		return TRUE
 
@@ -337,99 +436,4 @@ ABSTRACT_TYPE(/datum/special_order/chef)
 					shippingmarket.active_orders -= src
 					return FALSE
 		return TRUE
-
-/obj/item/paper/requisition
-	name = "Order Requisition"
-
-/obj/item/paper/requisition/weed_sample
-	info = {"Hellos, we the people of <B>\[REDACTED\]</B> would like to partake in what appears to be a human past time.  A sampling of your fine flora!<BR>
-	%ITEMS%
-	Love and solutions,<BR/>
-	%TARGET%"}
-
-	New()
-		..()
-		info = replacetext(info, "%TARGET%", pick("X̶e̸e̶ ̵P̶'̸X'", "TOM", "Smith Smithington", "Mx. Grey"))
-		src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
-
-/obj/item/paper/requisition/pizza_party
-	info = {"We have quite the situation where all our pizza ovens are having a fit.  We a number of orders to fill and could really use your help, my manager said by any means necessary!  We have quotas to meet! We have <i>guarantee</i> to uphold!<BR>
-	%ITEMS%
-	Thanks this could really save the day,<BR/>
-	%TARGET%"}
-
-	New()
-		..()
-		var/target_name = ""
-		if(prob(50))
-			target_name += pick_string_autokey("names/first_female.txt")
-		else
-			target_name = pick_string_autokey("names/first_male.txt")
-		target_name += " [pick_string_autokey("names/last.txt")]"
-		info = replacetext(info, "%TARGET%", target_name)
-		if(src.type == /obj/item/paper/requisition/pizza_party)
-			src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
-
-	nt
-		info = {"TO: Space Station 13<BR/>
-		FROM: CentComm<BR/>
-		<BR/><p>We are in quite the pickle.  Someone said we would coordinate a pizza party to celebrate employee of the month for %BDAY% but all our typical suppliers say they are <i>unavailable</i> and may not arrive in the estimated lifetime of the employee in question.  This should greatly improve the morale of a nearby outpost!</p><BR>
-		%ITEMS%
-		Don't let a fellow employee down!<BR/>
-		%TARGET%"}
-		New()
-			..()
-			var/target_name = ""
-			if(prob(50))
-				target_name += pick_string_autokey("names/first_female.txt")
-			else
-				target_name = pick_string_autokey("names/first_male.txt")
-			target_name += " [pick_string_autokey("names/last.txt")]"
-			info = replacetext(info, "%BDAY%", target_name)
-			src.stamp(rand(130,180), rand(160,190), rand(-40,40), "stamp-req-nt.png", "stamp-centcom")
-
-
-/obj/item/paper/requisition/blood
-	info = {"<BR/><BR/><BR/>
-	<p>Blood. Blood. Blood. Blood. Blood. Blood. Blood. Blood. Blood. Blood.</p>
-	<BR/><BR/>
-	%ITEMS%
-	<BR/>"}
-
-	New()
-		..()
-		if(prob(2))
-			if(prob(50))
-				info += "Alucard"
-			else
-				info += "V. D."
-		src.stamp(rand(50,160), rand(50,90), rand(-60,-20), "stamp-gtc.png", "stamp-syndicate")
-		src.stamp(rand(50,160), rand(190,290), rand(-40,40), "stamp-gtc.png", "stamp-syndicate")
-		src.stamp(rand(120,260), rand(50,390), rand(20,60), "stamp-gtc.png", "stamp-syndicate")
-
-/obj/item/paper/requisition/surgery/organ_swap
-	info = {"TO: Space Station 13<BR/>
-	FROM: Outpost \[REDACTED\]<BR/>
-	<h3>Cadaver Surgery Exercise 32-21-A</h3>
-	<BR/><p>Replace all internal organs of the individual co-located with these instructions.</p><BR/>
-	<BR/><p>Removed organs are to be destroyed.</p><BR/>
-	<BR/><p>Return individual once complete for evaluation.</p><BR/>
-	<BR/><BR/>
-	<i>All information included or obtained regarding the individual should be ignored and are all part of the training exercise.</i>"}
-	New()
-		..()
-		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "stamp-classified.png", "stamp-syndicate")
-
-
-/obj/item/paper/requisition/food_order
-	info = {"TO: Space Station 13<BR/>
-	FROM: %FOOD_COMPANY%<BR/>
-	<h3>Food Order:</h3>
-	%ITEMS%
-	"}
-	var/static/list/company = list("SpaceHub Delivery Services", "SnackAttack - Hunger Destroyer", "FoodDirect", "CelestialEats Delivery", "Technically Fresh")
-	New()
-		..()
-
-		info = replacetext(info, "%FOOD_COMPANY%", pick(company))
-		src.stamp(rand(90,260), rand(150,390), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+*/

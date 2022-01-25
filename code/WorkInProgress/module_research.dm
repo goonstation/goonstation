@@ -702,7 +702,7 @@ var/global/datum/module_research_controller/module_control = new
 			return
 		if (!researching)
 			if (href_list["menu"])
-				machine_state = text2num(href_list["menu"])
+				machine_state = text2num_safe(href_list["menu"])
 			if (href_list["locked"])
 				machine_state = MR_MACHINE_STATE_LOCKED
 				substate = locate(href_list["locked"]) in module_control.locked_tech
@@ -756,7 +756,7 @@ var/global/datum/module_research_controller/module_control = new
 					icon_state = "moduler-on"
 					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 			if (href_list["buydp"])
-				var/amt = text2num(href_list["buydp"])
+				var/amt = text2num_safe(href_list["buydp"])
 				var/cost = amt * 30
 				if (wagesystem.research_budget >= cost)
 					wagesystem.research_budget -= cost
@@ -769,7 +769,7 @@ var/global/datum/module_research_controller/module_control = new
 				if (T && (T in module_control.unlocked_tech))
 					current_module += T
 			if (href_list["remove"])
-				var/i = text2num(href_list["remove"])
+				var/i = text2num_safe(href_list["remove"])
 				if (i <= current_module.len)
 					current_module.Cut(i, i+1)
 			if (href_list["name"])

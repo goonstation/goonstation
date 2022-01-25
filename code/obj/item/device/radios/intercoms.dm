@@ -169,12 +169,27 @@
 	initialize()
 		set_frequency(frequency)
 
+/obj/item/device/radio/intercom/syndicate
+	name = "Syndicate Intercom"
+	frequency = R_FREQ_SYNDICATE
+	broadcasting = TRUE
+	device_color = "#820A16"
+	hardened = TRUE
+
+	initialize()
+		if(istype(ticker.mode, /datum/game_mode/nuclear))
+			var/datum/game_mode/nuclear/N = ticker.mode
+			if(N.agent_radiofreq)
+				set_frequency(N.agent_radiofreq)
+		else
+			set_frequency(frequency)
 
 ////// adventure area intercoms
 
 /obj/item/device/radio/intercom/adventure/owlery
 	name = "Owlery Intercom"
 	frequency = R_FREQ_INTERCOM_OWLERY
+	locked_frequency = TRUE
 	broadcasting = 0
 	device_color = "#3344AA"
 
@@ -184,6 +199,7 @@
 /obj/item/device/radio/intercom/adventure/syndcommand
 	name = "Suspicious Intercom"
 	frequency = R_FREQ_INTERCOM_SYNDCOMMAND
+	locked_frequency = TRUE
 	broadcasting = 1
 	device_color = "#BB3333"
 

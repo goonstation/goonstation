@@ -18,8 +18,6 @@
 		src.flags |= UNCRUSHABLE
 
 	proc/setup(var/L,var/list/viral_list)
-		set_loc(L)
-
 		if (random_icon_states && length(src.random_icon_states) > 0)
 			src.icon_state = pick(src.random_icon_states)
 		if (src.random_dir)
@@ -232,7 +230,7 @@ obj/decal/fakeobjects
 
 obj/decal/fakeobjects/cargopad
 	name = "Cargo Pad"
-	desc = "Used to recieve objects transported by a Cargo Transporter."
+	desc = "Used to receive objects transported by a Cargo Transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
 	anchored = 1
@@ -409,14 +407,14 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
+	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -425,7 +423,7 @@ obj/decal/fakeobjects/teleport_pad
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 
@@ -437,7 +435,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ringrope"
 	layer = OBJ_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
 
 	rotatable = 0
 	foldable = 0
@@ -458,12 +456,12 @@ obj/decal/fakeobjects/teleport_pad
 			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
 			buckle_in(M, user, 1)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0) // stolen from window.dm
+	Cross(atom/movable/mover) // stolen from window.dm
 		if (mover && mover.throwing & THROW_CHAIRFLIP)
 			return 1
 		if (src.dir == SOUTHWEST || src.dir == SOUTHEAST || src.dir == NORTHWEST || src.dir == NORTHEAST || src.dir == SOUTH || src.dir == NORTH)
 			return 0
-		if(get_dir(loc, target) == dir)
+		if(get_dir(loc, mover) & dir)
 
 			return !density
 		else
@@ -472,7 +470,7 @@ obj/decal/fakeobjects/teleport_pad
 	CheckExit(atom/movable/O as mob|obj, target as turf)
 		if (!src.density)
 			return 1
-		if (get_dir(O.loc, target) == src.dir)
+		if (get_dir(O.loc, target) & src.dir)
 			return 0
 		return 1
 
@@ -518,9 +516,9 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = 1
 	plane = PLANE_FLOOR
-	event_handler_flags = USE_HASENTERED
 
-/obj/decal/icefloor/HasEntered(var/atom/movable/AM)
+/obj/decal/icefloor/Crossed(atom/movable/AM)
+	..()
 	if (iscarbon(AM))
 		var/mob/M =	AM
 		// drsingh fix for undefined variable mob/living/carbon/monkey/var/shoes

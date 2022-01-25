@@ -93,6 +93,13 @@
 	proc/getTooltip()
 		. = desc
 
+/**
+ 	* Used to generate text specifically for the chef examining food. Otherwise fallbacks to getTooltip().
+ 	*/
+	proc/getChefHint()
+		. = getTooltip()
+
+
 	/**
 		* Information that should show up when an object has this effect and is examined.
 		*/
@@ -118,10 +125,12 @@
 		icon_state = "heart+"
 		unique = 1
 		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
-
 		getTooltip()
 			. = "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
-
+		onAdd(optional=null) // added so strange reagent can be triggered by shocking someone's heart to restart it
+			..()
+			var/mob/M = owner
+			SEND_SIGNAL(M, COMSIG_MOB_SHOCKED_DEFIB)
 	staminaregen
 		id = "staminaregen"
 		name = ""
@@ -223,6 +232,8 @@
 		var/filter
 		var/leave_cleanable = 0
 		var/mob_owner = null
+		var/do_color = TRUE
+		var/message = " melts."
 
 		onAdd(optional=null)
 			. = ..()
@@ -230,12 +241,19 @@
 			owner.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
 			src.filter = owner.get_filter("acid_displace")
 			if(length(statusargs))
-				src.leave_cleanable = statusargs["leave_cleanable"]
-				src.mob_owner = statusargs["mob_owner"]
-			owner.color = list(0.8, 0, 0,\
-								0, 0.8, 0,\
-								0, 0, 0.8,\
-								0.1, 0.4, 0.1)
+				if("leave_cleanable" in statusargs)
+					src.leave_cleanable = statusargs["leave_cleanable"]
+				if("mob_owner" in statusargs)
+					src.mob_owner = statusargs["mob_owner"]
+				if("do_color" in statusargs)
+					src.do_color = statusargs["do_color"]
+				if("message" in statusargs)
+					src.message = statusargs["message"]
+			if(do_color)
+				owner.color = list(0.8, 0, 0,\
+									0, 0.8, 0,\
+									0, 0, 0.8,\
+									0.1, 0.4, 0.1)
 
 			animate(filter, size=8, time=duration, easing=SINE_EASING)
 
@@ -252,8 +270,7 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			for(var/mob/M in AIviewers(5, owner))
-				boutput(M, "<span class='alert'>\the [owner] melts.</span>")
+			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
 			qdel(owner)
 
 	simplehot/stimulants
@@ -1055,6 +1072,64 @@
 		clicked(list/params)
 			H.resist()
 
+	incorporeal
+		id = "incorporeal"
+		name = "Incorporeal"
+		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
+		icon_state = "incorporeal"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessing
+		id = "possessing"
+		name = "Possessing"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be temporarily transferred into their body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessed
+		id = "possessed"
+		name = "Possessed"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be transferred back into your body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	soulstolen
+		id = "soulstolen"
+		name = "soulstolen"
+		desc = "The Slasher has stolen your soul!"
+		icon_state = "incorporeal"
+		unique = TRUE
+		visible = FALSE
+		maxDuration = INFINITE_STATUS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
 	buckled
 		id = "buckled"
 		name = "Buckled"
@@ -1591,7 +1666,7 @@
 				wrap_pathogen(L.reagents, P, 10)
 			#endif
 		if(probmult(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
 		return ..(timePassed)
 
@@ -1693,7 +1768,7 @@
 
 	onRemove()
 		. = ..()
-		if (!ismob(owner)) return
+		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
 
@@ -1892,6 +1967,13 @@
 			return
 		return ..(timePassed)
 
+/datum/statusEffect/muted
+	id = "muted"
+	name = "Muted"
+	icon_state = "muted"
+	desc = "You don't have the strength to say anything louder than a whisper!"
+	maxDuration = 30 SECONDS
+
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES
 	id = "drowsy"
@@ -1927,3 +2009,80 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+/datum/statusEffect/poisoned
+	id = "poisoned"
+	name = "Poisoned"
+	desc = "Something <i>really</i> didn't sit well with you."
+	icon_state = "poisoned"
+	movement_modifier = /datum/movement_modifier/poisoned //bit less punishing than regular slowed
+
+	onAdd()
+		..()
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+
+	onRemove()
+		..()
+		UnregisterSignal(owner, COMSIG_MOB_VOMIT)
+
+	onUpdate(var/timePassed)
+		var/mob/living/L = owner
+		var/tox = 0
+		var/puke_prob = 0
+		switch(timePassed)
+			if(0 to 20 SECONDS)
+				tox = 0.1
+				puke_prob = 0.5
+			if(20 SECONDS to 60 SECONDS)
+				tox = 0.4
+				puke_prob = 1
+			if(60 SECONDS to INFINITY)
+				tox = 1
+				puke_prob = 2
+		L.take_toxin_damage(tox)
+		if(prob(2))
+			L.emote(pick("groan", "moan", "shudder"))
+		if(prob(2))
+			L.change_eye_blurry(rand(5,10))
+		if(prob(puke_prob))
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.vomit()
+
+	//firstly: sorry
+	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
+	proc/reduce_duration_on_vomit(var/mob/M, var/vomit_power)
+		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
+		boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
+
+///APC status that locks lighting circuit offline
+/datum/statusEffect/lights_out
+	id = "lightsout"
+	visible = 0
+	var/oldstate
+
+	onAdd(optional)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			oldstate = APC.lighting
+			APC.lighting = 0
+			APC.UpdateIcon()
+			APC.update()
+
+
+	onUpdate(timePassed)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC) && APC.lighting != 0)
+			APC.lighting = 0
+			APC.UpdateIcon()
+			APC.update()
+
+
+	onRemove()
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			APC.lighting = oldstate
+			APC.UpdateIcon()
+			APC.update()

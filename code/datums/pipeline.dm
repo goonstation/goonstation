@@ -209,7 +209,7 @@ datum/pipeline
 			var/turf/simulated/modeled_location = target
 
 			// Turf with walls or without air
-			if(modeled_location.blocks_air || !modeled_location.air)
+			if(modeled_location.gas_impermeable || !modeled_location.air)
 				if((modeled_location.heat_capacity>0) && (partial_heat_capacity>0))
 					delta_temperature = src.air.temperature - modeled_location.temperature
 

@@ -174,7 +174,7 @@ turf
 		New()
 			..()
 
-			if(!blocks_air)
+			if(!gas_impermeable)
 				air = new /datum/gas_mixture
 
 				#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
@@ -209,10 +209,10 @@ turf
 					active_hotspot = null
 			if(being_superconductive)
 				air_master.active_super_conductivity.Remove(src)
-			if(blocks_air)
+			if(gas_impermeable)
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
-					if(air_master && istype(tile) && !tile.blocks_air)
+					if(air_master && istype(tile) && !tile.gas_impermeable)
 						air_master.tiles_to_update |= tile
 			qdel(air)
 			if (gas_icon_overlay)
@@ -289,7 +289,7 @@ turf
 
 			for(var/direction in cardinal)
 				LAGCHECK(LAG_REALTIME)
-				if(CanPass(null, get_step(src,direction), 0, 0))
+				if(gas_cross(get_step(src,direction)))
 					air_check_directions |= direction
 
 			if(parent)
@@ -413,7 +413,7 @@ turf
 
 		super_conduct()
 			var/conductivity_directions = 0
-			if(blocks_air)
+			if(gas_impermeable)
 				//Does not participate in air exchange, so will conduct heat across all four borders at this time
 				conductivity_directions = NORTH|SOUTH|EAST|WEST
 

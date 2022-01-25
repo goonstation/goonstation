@@ -52,7 +52,7 @@
 		src.add_dialog(usr)
 		if (href_list["setid"])
 			if(src.allowed(usr))
-				src.id = text2num(href_list["setid"])
+				src.id = text2num_safe(href_list["setid"])
 				src.alarm()
 		if (href_list["openall"])
 			if(src.allowed(usr))

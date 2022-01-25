@@ -59,10 +59,16 @@
 
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
-
-		for (var/datum/db_record/t as anything in data_core.general.records)
-			dat += "[t["name"]] - [t["rank"]]<br>"
+		dat += get_manifest()
 		dat += "<br>"
+
+		var/list/stored = list()
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		if(length(stored))
+			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
 
 		return dat
 
@@ -151,13 +157,27 @@
 			if("alert")
 				status_signal.data["picture_state"] = data1
 
-		src.post_signal(status_signal,"1435")
+		src.post_signal(status_signal, "status_display")
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"status_display",\
+			FREQ_STATUS_DISPLAY, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "status_display"))
 
 //Signaler
 /datum/computer/file/pda_program/signaler
 	name = "Signalix 5"
 	size = 8
-	var/send_freq = 1457 //Frequency signal is sent at, should be kept within normal radio ranges.
+	var/send_freq = FREQ_SIGNALER //Frequency signal is sent at, should be kept within normal radio ranges.
 	var/send_code = 30
 	var/last_transmission = 0 //No signal spamming etc
 
@@ -204,14 +224,15 @@ Code:
 				signal.data["message"] = "ACTIVATE"
 				signal.data["code"] = send_code
 
-				src.post_signal(signal,"[send_freq]")
+				src.post_signal(signal, "signaller")
 				return
 
 		else if (href_list["adj_freq"])
-			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			src.send_freq = sanitize_frequency(src.send_freq + text2num_safe(href_list["adj_freq"]))
+			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
-			src.send_code += text2num(href_list["adj_code"])
+			src.send_code += text2num_safe(href_list["adj_code"])
 			src.send_code = round(src.send_code)
 			src.send_code = min(100, src.send_code)
 			src.send_code = max(1, src.send_code)
@@ -219,6 +240,20 @@ Code:
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"signaller",\
+			send_freq, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "signaller"))
 
 //Supply record monitor
 /datum/computer/file/pda_program/qm_records
@@ -274,7 +309,7 @@ Code:
 			return
 
 		if (href_list["adj_volume"])
-			var/adjust_num = text2num(href_list["adj_volume"])
+			var/adjust_num = text2num_safe(href_list["adj_volume"])
 			src.honk_volume += adjust_num
 			if(src.honk_volume < 1)
 				src.honk_volume = 1
@@ -345,7 +380,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"
@@ -467,6 +502,36 @@ Code:
 
 		return dat
 
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"report",\
+			FREQ_PDA, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "report"))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!src.temp || connection_id != "report" || signal.encryption)
+			return
+
+		if(signal.data["command"] == "reply_alerts")
+			src.temp = null
+
+			if(signal.data["severe_list"])
+				src.severe_alerts = splittext(signal.data["severe_list"], ";")
+			if(signal.data["minor_list"])
+				src.minor_alerts = splittext(signal.data["minor_list"], ";")
+
+			src.master.updateSelfDialog()
+
 	Topic(href, href_list)
 		if(..())
 			return
@@ -484,22 +549,6 @@ Code:
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
-		return
-
-	receive_signal(datum/signal/signal)
-		if(..() || !src.temp)
-			return
-
-		if(signal.data["command"] == "reply_alerts")
-			src.temp = null
-
-			if(signal.data["severe_list"])
-				src.severe_alerts = splittext(signal.data["severe_list"], ";")
-			if(signal.data["minor_list"])
-				src.minor_alerts = splittext(signal.data["minor_list"], ";")
-
-			src.master.updateSelfDialog()
-
 		return
 
 
@@ -600,7 +649,7 @@ Code:
 
 	var/temp = null
 	var/last_scan = 0
-	var/report_freq = 1447
+	var/report_freq = FREQ_HYDRO
 	var/list/status_reports = list()
 
 	proc/post_status(var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -620,9 +669,19 @@ Code:
 
 		src.post_signal(signal, report_freq)
 
-	init()
-		//boutput(world, "<h5>Adding [master]@[master.loc]:[report_freq]")
-		radio_controller.add_object(master, "[report_freq]")
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"hydro_report",\
+			report_freq, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "hydro_report"))
 
 	return_text()
 		if(..())
@@ -704,7 +763,7 @@ Code:
 			return
 
 		if (href_list["alert"])
-			confirm_menu = text2num(href_list["alert"])
+			confirm_menu = text2num_safe(href_list["alert"])
 
 		else if (href_list["confirm"])
 			if (href_list["confirm"] == "y")
@@ -734,7 +793,6 @@ Code:
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
@@ -1005,7 +1063,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
 			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
-			if(!fine_amount) return
+			if(!isnum_safe(fine_amount)) return
 			fine_amount = min(fine_amount,1000)
 			fine_amount = max(fine_amount,1)
 
@@ -1139,12 +1197,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			// pda alert ////////
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
+
 			//////////////////
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 

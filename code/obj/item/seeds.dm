@@ -124,6 +124,7 @@
 
 /obj/item/seed/maneater/
 	name = "strange seed"
+	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
 /obj/item/seed/creeper/
@@ -141,10 +142,19 @@
 	seedcolor = "#00FF00"
 	auxillary_datum = /datum/plant/herb/cannabis
 
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
+
 // weird alien plants
 
 /obj/item/seed/alien
 	name = "strange seed"
+	icon_state = "seeds-alien"
 	isstrange = 1
 
 	New()

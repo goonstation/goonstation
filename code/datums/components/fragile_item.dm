@@ -17,6 +17,14 @@
 	/// Sound played at the location of the item breaking.
 	var/sound_to_play_on_breaking
 
+TYPEINFO(/datum/component/fragile_item)
+	initialization_args = list(
+		ARG_INFO("safe_hits", "num", "Buffer of hits before rolling for breaking", 3),
+		ARG_INFO("probability_of_breaking", "num", "Chance that the item will break once all safe hits are consumed", 40),
+		ARG_INFO("stay_in_hand", "num", "If the item left behind should stay in the user's hand (bool)", TRUE),
+		ARG_INFO("type_to_break_into", "num", "Path of stuff to break into", /obj/item/raw_material/shard/glass),
+		ARG_INFO("sound_to_play_on_breaking", "text", "Sound effect that plays when the item breaks", "sound/impact_sounds/Crystal_Shatter_1.ogg")
+	)
 /datum/component/fragile_item/Initialize(var/safe_hits = 3, var/probability_of_breaking = 40, var/stay_in_hand = 1, var/type_to_break_into = /obj/item/raw_material/shard/glass, var/sound_to_play_on_breaking = "sound/impact_sounds/Crystal_Shatter_1.ogg")
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE

@@ -91,8 +91,8 @@ var/list/clothingbooth_items = list()
 		var/itempath = text2path(href_list["path"])
 		switch(href_list["command"])
 			if("spawn")
-				if(text2num(cb_item.cost) <= src.money)
-					money -= text2num(cb_item.cost)
+				if(text2num_safe(cb_item.cost) <= src.money)
+					money -= text2num_safe(cb_item.cost)
 					usr.put_in_hand_or_drop(new itempath(src))
 				else
 					boutput(usr, "<span class='alert'>The clothing machine rattles and roars with anger! You must offer more tribute to the goblin tailor!</span>")
@@ -140,19 +140,18 @@ var/list/clothingbooth_items = list()
 		else
 			boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
 
-	else
+	else if (istype(weapon, /obj/item/grab))
 		var/obj/item/grab/G = weapon
-		if(istype(G))
-			if (ismob(G.affecting))
-				var/mob/GM = G.affecting
-				if ((istype(src, /obj/machinery/clothingbooth)) && (src.open == 1))
-					GM.set_loc(src)
-					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
-					src.set_open(0)
-					qdel(G)
-					logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
-					actions.interrupt(G.affecting, INTERRUPT_MOVE)
-					actions.interrupt(user, INTERRUPT_ACT)
+		if (ismob(G.affecting))
+			var/mob/GM = G.affecting
+			if (src.open)
+				GM.set_loc(src)
+				user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
+				src.set_open(0)
+				qdel(G)
+				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
+	else
+		..()
 
 /obj/machinery/clothingbooth/proc/set_open(var/new_open)
 	if(new_open == src.open)

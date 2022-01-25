@@ -25,6 +25,8 @@
 
 	disposing()
 		particleMaster.active_particles -= src
+		for(var/turf/T in src.vis_locs)
+			T.vis_contents -= src
 		..()
 
 // --------------------------------------------------------------------------------------------------------------------------------------
@@ -47,6 +49,7 @@ var/datum/particleMaster/particleMaster = new
 			particleTypes[typeDatum.name] = typeDatum
 
 	proc/SpawnSystem(var/datum/particleSystem/system)
+		RETURN_TYPE(/datum/particleSystem)
 		if (!istype(system))
 			return
 
@@ -132,7 +135,8 @@ var/datum/particleMaster/particleMaster = new
 
 		if (istype(pType))
 			var/obj/particle/p = new_particle(particleTime)
-			p.loc = get_turf(location)
+			var/turf/T = get_turf(location)
+			T?.vis_contents += p
 			p.color = particleColor
 			if (particleSprite)
 				p.override_state = particleSprite
@@ -353,6 +357,8 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	name = "tpbeam"
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "tpbeam"
+	var/start_y = -16
+	var/end_y = 32
 
 	MatrixInit()
 		first = matrix(1, 0.1, MATRIX_SCALE)
@@ -360,16 +366,21 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Apply(var/obj/particle/par)
 		if(..())
-			par.pixel_x += rand (-16, 16)
-			par.pixel_y = -16
+			par.pixel_x += rand (-10, 10)
+			par.pixel_y = start_y
 			par.alpha = 0
 
 			par.transform = first
 
 			animate(par, time = 3, alpha = 255)
-			animate(transform = second, time = 15 + rand(0,6), pixel_y = 32, alpha = 0)
+			animate(transform = second, time = 2.2 SECONDS + rand(0,6), pixel_y = end_y, alpha = 0)
 
 			MatrixInit()
+
+/datum/particleType/tpbeam/down
+	name = "tpbeamdown"
+	start_y = 16
+	end_y = -16
 
 /datum/particleType/swoosh
 	name = "swoosh"
@@ -475,8 +486,12 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 			par.transform = first
 
-			var/move_x = ((par.target.x-par.loc.x) * 2) * 32 + rand(-14, 14)
-			var/move_y = ((par.target.y-par.loc.y) * 2) * 32 + rand(-14, 14)
+			if(!length(par.vis_locs))
+				return
+			var/turf/T = par.vis_locs[1]
+
+			var/move_x = ((par.target.x-T.x) * 2) * 32 + rand(-14, 14)
+			var/move_y = ((par.target.y-T.y) * 2) * 32 + rand(-14, 14)
 
 			animate(par,transform = second, time = 25, pixel_y = move_y,  pixel_x = move_x , easing = SINE_EASING)
 			animate(transform = third, time = 5, easing = LINEAR_EASING|EASE_OUT)
@@ -606,12 +621,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if (!par.loc)
+			if(!length(par.vis_locs))
 				return
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
-				move_x = (par.target.x-par.loc.x)*32 + rand(-32, 0)
-				move_y = (par.target.y-par.loc.y)*32 + rand(-32, 0)
+				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
+				move_y = (par.target.y-T.y)*32 + rand(-32, 0)
 			else
 				move_x = rand(-64, 64)
 				move_y = rand(-64, 64)
@@ -639,12 +655,13 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			var/move_x
 			var/move_y
 
-			if (!par.loc)
+			if(!length(par.vis_locs))
 				return
+			var/turf/T = par.vis_locs[1]
 
 			if (par.target)
-				move_x = (par.target.x-par.loc.x)*32 + rand(-32, 0)
-				move_y = (par.target.y-par.loc.y)*32 + rand(-32, 0)
+				move_x = (par.target.x-T.x)*32 + rand(-32, 0)
+				move_y = (par.target.y-T.y)*32 + rand(-32, 0)
 			else
 				move_x = rand(-64, 64)
 				move_y = rand(-64, 64)
@@ -1004,11 +1021,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			src.particleColor = particleColor
 			src.particleSprite = particleSprite
 			src.target = target
-			Init()
+			InitPar()
 		else
 			Die()
 
-	proc/Init()
+	proc/InitPar()
 		sleepCounter = 1
 
 	proc/Run()
@@ -1048,7 +1065,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "elecpart_green", 15, "#00DD00")
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1073,7 +1090,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "sparkle", 10, "#ff0000")
 
-	Init()
+	InitPar()
 		sleepCounter = 3
 
 	Run()
@@ -1115,7 +1132,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "swoosh", 45, "#5C0E80")
 
-	Init()
+	InitPar()
 		sleepCounter = 30
 
 	Run()
@@ -1131,7 +1148,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "elecpart", 15, "#5577CC")
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1148,7 +1165,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location, var/atom/destination)
 		..(location, "fireSpray", 10, null, destination)
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1260,14 +1277,31 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "tpbeam", 28)
 
-	Init()
-		sleepCounter = 20
+	InitPar()
+		sleepCounter = 6
 
 	Run()
 		if (..())
 			if (sleepCounter > 0)
 				sleepCounter--
-				for(var/i=0, i<rand(1,3), i++)
+				for(var/i=0, i<rand(1,4), i++)
+					SpawnParticle()
+				Sleep(1)
+			else
+				Die()
+
+/datum/particleSystem/tpbeamdown
+	New(var/atom/location = null)
+		..(location, "tpbeamdown", 28)
+
+	InitPar()
+		sleepCounter = 6
+
+	Run()
+		if (..())
+			if (sleepCounter > 0)
+				sleepCounter--
+				for(var/i=0, i<rand(1,4), i++)
 					SpawnParticle()
 				Sleep(1)
 			else
@@ -1277,7 +1311,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "fireTest", 21)
 
-	Init()
+	InitPar()
 		sleepCounter = 1000
 
 	Run()
@@ -1303,7 +1337,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "radevent_warning", 50)
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1319,7 +1353,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "radevent_pulse", 7)
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1335,7 +1369,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "bhole_warning", 108)
 
-	Init()
+	InitPar()
 		sleepCounter = 100
 
 	Run()
@@ -1351,7 +1385,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "soundwave", 4)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(5,12)
 
 	Run()
@@ -1380,7 +1414,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/color)
 		..(location, "blob_attack", 70, color)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(2,5)
 
 	Run()
@@ -1396,7 +1430,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/color)
 		..(location, "blob_heal", 60, color)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(3,4)
 
 	Run()
@@ -1486,7 +1520,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		source.copy_to(copied)
 		particleColor = copied.get_master_color(1)
 
-	Init()
+	InitPar()
 		sleepCounter = 2
 
 	Die()
@@ -1508,7 +1542,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location, var/atom/destination)
 		..(location, "mechpart", get_dist(location, destination) * 5,  "#00FF00", destination)
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1524,7 +1558,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location, var/direction)
 		..(location, "gravaccel", 25, "#1155ff", get_step(location, direction))
 
-	Init()
+	InitPar()
 		sleepCounter = 30
 
 	Run()
@@ -1561,7 +1595,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		SpawnParticle()	//want this particle system to display asap - needs to show up at the same time as its flavor text, not after
 
 
-	Init()
+	InitPar()
 		sleepCounter = 2
 
 	Run()

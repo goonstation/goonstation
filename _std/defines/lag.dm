@@ -40,6 +40,8 @@
 #define MIN_TICKLAG 0.4
 /// max value ticklag can be
 #define OVERLOADED_WORLD_TICKLAG 1.4
+/// where to start ticklag if many players present
+#define SEMIOVERLOADED_WORLD_TICKLAG 1.0
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
@@ -55,8 +57,27 @@
 /// how often to check for time dilation, against world.time, so counted in game ticks.
 #define TICKLAG_DILATE_INTERVAL 20
 
+/// whether we want to profile in advance of a lagspike every tick to catch relevant lagspike info
+// #define PRE_PROFILING_ENABLED
+/// what value must world.cpu cross upwards to trigger automatic profiling
+#define CPU_START_PROFILING_THRESHOLD 150
+/// what value must world.cpu cross upwards to trigger automatic profiling but this one ignores CPU_START_PROFILING_COUNT
+#define CPU_START_PROFILING_IMMEDIATELY_THRESHOLD 500 // 300
+/// what value must world.cpu cross downwards to stop automatic profiling
+#define CPU_STOP_PROFILING_THRESHOLD 100
+/// how many ticks in a row does world.cpu needs to be above the threshold to start profiling
+#define CPU_START_PROFILING_COUNT 100 // 10
+/// how many ticks in a row does world.cpu needs to be below the threshold to stop profiling
+#define CPU_STOP_PROFILING_COUNT 20
+/// how long the round needs to be in progress before we can start profiling
+#define CPU_PROFILING_ROUNDSTART_GRACE_PERIOD 10 SECONDS
+/// even if world.cpu is normal if tick took this amount of time profiling will start
+#define TICK_TIME_PROFILING_THRESHOLD 15 SECONDS // 1 SECOND
+
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120
+/// when pcount is above this number on round start, increase ticklag to SEMIOVERLOADED_WORLD_TICKLAG to try to maintain smoothness
+#define SEMIOVERLOAD_PLAYERCOUNT 85
 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define OSHAN_LIGHT_OVERLOAD 18
 /// whenn pcount is <= this number, speed up Life() processing a bit

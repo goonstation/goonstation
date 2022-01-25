@@ -44,7 +44,7 @@ var/datum/action_controller/actions
 			interrupt(owner, INTERRUPT_ACTION)
 			for(var/datum/action/OA in running[owner])
 				//Meant to catch users starting the same action twice, and saving the first-attempt from deletion
-				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && OA.resumable)
+				if(OA.id == A.id && OA.state == ACTIONSTATE_DELETE && (OA.interrupt_flags & INTERRUPT_ACTION) && OA.resumable)
 					OA.onResume()
 					qdel(A)
 					return OA
@@ -745,6 +745,11 @@ var/datum/action_controller/actions
 			border.icon = null
 			M.client?.images += bar.img
 			M.client?.images += border.img
+			if(place_to_put_bar)
+				target_bar.icon = null
+				target_border.icon = null
+				M.client?.images += target_bar.img
+				M.client?.images += target_border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
@@ -755,6 +760,11 @@ var/datum/action_controller/actions
 			M.client?.images -= border.img
 			qdel(bar.img)
 			qdel(border.img)
+			if(place_to_put_bar)
+				M.client?.images -= target_bar.img
+				M.client?.images -= target_border.img
+				qdel(target_bar.img)
+				qdel(target_border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -848,7 +858,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(issilicon(source))
+			if(issilicon(source) || item.cant_drop) //Fix for putting item arm objects into others' inventory
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
@@ -1114,6 +1124,11 @@ var/datum/action_controller/actions
 			var/mob/living/carbon/human/H = target
 			duration = round(duration * H.handcuffs.remove_other_multiplier)
 
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if(H.traitHolder.hasTrait("training_security"))
+				duration = round(duration / 2)
+
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -1199,6 +1214,83 @@ var/datum/action_controller/actions
 					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
 
+
+/datum/action/bar/private/welding
+	duration = 2 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "welding"
+	var/obj/effects/welding/E
+	var/list/start_offset
+	var/list/end_offset
+
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+	bar_on_owner = FALSE
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+		..()
+		src.owner = owner
+		src.target = target
+		place_to_put_bar = target
+
+		if(duration)
+			src.duration = duration
+		src.proc_path = proc_path
+		src.proc_args = proc_args
+		src.end_message = end_message
+		src.start_offset = start
+		src.end_offset = stop
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		if(!E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+			E.pixel_x = start_offset[1]
+			E.pixel_y = start_offset[2]
+			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+
+	onDelete(var/flag)
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+
+		if (src.target)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
 
 //CLASSES & OBJS
 
@@ -1444,6 +1536,114 @@ var/datum/action_controller/actions
 		if(owner && target)
 			mop.clean(target, owner)
 
+/datum/action/bar/icon/CPR
+	duration = 4 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "cpr"
+	var/mob/living/target
+
+	New(target)
+		..()
+		src.target = target
+
+	onUpdate()
+		..()
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0 || !src.can_cpr())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		owner.visible_message("<span class='notice'><B>[owner] is trying to perform CPR on [target]!</B></span>")
+		..()
+
+	onEnd()
+		if(get_dist(owner, target) > 1 || !target || !owner || target.health > 0)
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		target.take_oxygen_deprivation(-15)
+		target.losebreath = 0
+		target.changeStatus("paralysis", -2 SECONDS)
+
+		if(target.find_ailment_by_type(/datum/ailment/malady/flatline) && target.health > -50)
+			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
+				target.cure_disease_by_path(/datum/ailment/malady/flatline)
+
+		owner.visible_message("<span class='notice'>[owner] performs CPR on [target]!</span>")
+		src.onRestart()
+
+	proc/can_cpr()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/human_owner = owner
+			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
+				boutput(human_owner, "<span class='alert'>You need to take off your headgear before you can give CPR!</span>")
+				return FALSE
+
+			if (human_owner.wear_mask)
+				boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
+				return FALSE
+
+		if (ishuman(target))
+			var/mob/living/carbon/human/human_target = target
+			if (human_target.head && (human_target.head.c_flags & COVERSMOUTH))
+				boutput(owner, "<span class='alert'>You need to take off [human_target]'s headgear before you can give CPR!</span>")
+				return FALSE
+
+			if (human_target.wear_mask)
+				boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
+				return FALSE
+
+		if (isdead(target))
+			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			return FALSE
+
+		return TRUE
+
+/datum/action/bar/icon/forcefeed
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	var/mob/mob_owner
+	var/mob/consumer
+	var/obj/item/reagent_containers/food/snacks/foodish //only works with food for now, will generalize for organs and glasses and such later
+
+	New(var/mob/consumer, var/foodish, var/icon, var/icon_state)
+		..()
+		src.consumer = consumer
+		src.foodish = foodish
+		src.icon = icon
+		src.icon_state = icon_state
+
+	onStart()
+		if (!ismob(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.mob_owner = owner
+
+		if(get_dist(owner, consumer) > 1 || !consumer || !owner || mob_owner.equipped() != foodish)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+
+	onUpdate()
+		..()
+		if(get_dist(owner, consumer) > 1 || !consumer || !owner || mob_owner.equipped() != foodish)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(get_dist(owner, consumer) > 1 || !consumer || !owner || mob_owner.equipped() != foodish)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		foodish.take_a_bite(consumer, mob_owner)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30
@@ -1532,7 +1732,7 @@ var/datum/action_controller/actions
 
 			var/turf/T = get_turf(M)
 			if (T.active_liquid)
-				T.active_liquid.HasEntered(M, T)
+				T.active_liquid.Crossed(M)
 
 		else
 			interrupt(INTERRUPT_ALWAYS)

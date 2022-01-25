@@ -10,7 +10,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
@@ -346,13 +346,13 @@
 
 	proc/on_damaged(mob/user)
 		if(registered_area) //In case some butt fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		return
 
 
 	proc/on_pet(mob/user)
 		if(registered_area) //In case some nice person fiddles with a hibernating critter
-			registered_area.wake_critters()
+			registered_area.wake_critters(user)
 		if (!user)
 			return 1 // so things can do if (..())
 		return
@@ -414,12 +414,9 @@
 	proc/patrol_to(var/towhat)
 		step_to(src, towhat)
 
-	Bump(M as mob|obj)
-		if (istype(M, /obj/machinery/door/))
-			var/obj/machinery/door/D = M
-			D.Bumped(src) // Doesn't call that automatically for some inexplicable reason.
-		else if ((isliving(M)) && (!src.anchored))
-			src.set_loc(M:loc)
+	bump(atom/M as mob|obj)
+		if ((isliving(M)) && (!src.anchored))
+			src.set_loc(M.loc)
 			src.frustration = 0
 
 	bullet_act(var/obj/projectile/P)

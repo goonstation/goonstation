@@ -109,7 +109,7 @@
 	density = 0
 	var/obj/target = null
 	anchored = 1.0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
 	SPAWN_DBG(0)
@@ -117,11 +117,10 @@
 		return
 	return
 
-/obj/warp_portal/HasEntered(AM as mob|obj)
+/obj/warp_portal/Crossed(atom/movable/AM as mob|obj)
+	..()
 	SPAWN_DBG(0)
 		src.teleport(AM)
-		return
-	return
 
 /obj/warp_portal/New()
 	..()

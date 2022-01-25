@@ -54,6 +54,8 @@
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
+		if (prob(50))
+			new /obj/item/clothing/head/helmet/firefighter(src)
 		if (prob(30))
 			new /obj/item/clothing/suit/fire(src)
 			new /obj/item/clothing/mask/gas/emergency(src)
@@ -86,7 +88,8 @@
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
-	/obj/item/stamp)
+	/obj/item/stamp,
+	/obj/item/canvas)
 
 	make_my_stuff()
 		..()
@@ -198,9 +201,10 @@
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
@@ -283,10 +287,11 @@ obj/item/storage/wall/clothingrack/hatrack
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
@@ -333,7 +338,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()
@@ -357,7 +362,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()

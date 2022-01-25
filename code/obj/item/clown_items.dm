@@ -20,7 +20,7 @@ VUVUZELA
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/mob/living/carbon/human/last_touched
 
@@ -28,7 +28,8 @@ VUVUZELA
 	last_touched = user
 	..()
 
-/obj/item/bananapeel/HasEntered(AM as mob|obj)
+/obj/item/bananapeel/Crossed(atom/movable/AM as mob|obj)
+	..()
 	if(istype(src.loc, /turf/space))
 		return
 	if (iscarbon(AM))

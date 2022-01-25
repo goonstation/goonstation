@@ -16,7 +16,7 @@
 	var/charge = 0
 	var/powered = FALSE
 
-	event_handler_flags = USE_CANPASS
+
 	// flockdrones can pass through this
 	passthrough = TRUE
 

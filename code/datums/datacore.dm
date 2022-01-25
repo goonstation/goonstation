@@ -82,17 +82,17 @@
 
 	var/traitStr = ""
 	if(H.traitHolder)
-		for(var/X in H.traitHolder.traits)
-			var/obj/trait/T = getTraitById(X)
+		for(var/id in H.traitHolder.traits)
+			var/obj/trait/T = H.traitHolder.traits[id]
 			if(length(traitStr)) traitStr += " | [T.cleanName]"
 			else traitStr = T.cleanName
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
-					M["alg"] = reagent_id_to_name(AT.allergic_players[H])
+					M["alg"] = reagent_id_to_name(AT.allergen)
 					M["alg_d"] = "Allergy information imported from CentCom database."
 				else
-					M["alg"] += ", [reagent_id_to_name(AT.allergic_players[H])]"
+					M["alg"] += ", [reagent_id_to_name(AT.allergen)]"
 
 	M["traits"] = traitStr
 
@@ -233,6 +233,90 @@
 
 			return
 		return
+
+///Returns the crew manifest, but sorted according to the individual's rank.
+/proc/get_manifest()
+	var/list/sorted_manifest
+	var/list/Command = list()
+	var/list/Security = list()
+	var/list/Engineering = list()
+	var/list/Medsci = list()
+	var/list/Service = list()
+	var/list/Unassigned = list()
+	var/medsci_integer = 0 // Used to check if one of medsci's two heads has already been added to the manifest
+	for(var/datum/db_record/staff_record as anything in data_core.general.records)
+		var/rank = staff_record["rank"]
+		if(rank in command_jobs)
+			if(rank == "Captain")
+				Command.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				continue // Only Continue as Captain, as non-captain command staff appear both in the command section and their departmental section
+			else
+				Command.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+				if(rank == "Communications Officer")
+					continue
+
+		if((rank in security_jobs) || (rank in security_gimmicks))
+			if(rank in command_jobs)
+				Security.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+			else if(rank in command_gimmicks)
+				Security.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+			else
+				Security.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			continue
+
+		if((rank in engineering_jobs) || (rank in engineering_gimmicks))
+			if(rank in command_jobs)
+				Engineering.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+			else if(rank in command_gimmicks)
+				Engineering.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+			else
+				Engineering.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			continue
+		if((rank in medsci_jobs) || (rank in medsci_gimmicks))
+			if(rank in command_jobs)
+				Medsci.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+				medsci_integer++
+			else if(rank in command_gimmicks)
+				Medsci.Insert(medsci_integer + 1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>") // If there are two heads, both an MD and RD, medsci_integer will be at two, thus the Head Surgeon gets placed at 3 in the manifest
+			else
+				Medsci.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			continue
+
+		if((rank in service_jobs) || (rank in service_gimmicks))
+			if(rank in command_jobs)
+				Service.Insert(1, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>")
+			else if(rank in command_gimmicks)
+				Service.Insert(2, "<b>[staff_record["name"]] - [staff_record["rank"]]</b><br>") //Future proofing, just in case
+			else
+				Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+			continue
+#ifdef MAP_OVERRIDE_OSHAN // Radio host is on Oshan
+		if(rank == "Radio Show Host" || rank == "Talk Show Host")
+			Service.Add("[staff_record["name"]] - [staff_record["rank"]]<br>")
+#endif
+			continue
+		Unassigned += "[staff_record["name"]] - [staff_record["rank"]]<br>"
+
+	sorted_manifest += "<b><u>Station Command:</u></b><br>"
+	for(var/crew in Command)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Station Security:</u></b><br>"
+	for(var/crew in Security)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Engineering and Supply:</u></b><br>"
+	for(var/crew in Engineering)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Medical and Research:</u></b><br>"
+	for(var/crew in Medsci)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Crew Service:</u></b><br>"
+	for(var/crew in Service)
+		sorted_manifest += crew
+	sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
+	for(var/crew in Unassigned)
+		sorted_manifest += crew
+
+	return sorted_manifest
 
 /datum/ticket
 	var/name = "ticket"

@@ -28,6 +28,7 @@
 #define ROLE_SLEEPER_AGENT "sleeper agent"
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDSLAVE "mindslave"
+#define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
 
 // gimmicks
 #define ROLE_BATTLER "battler"
@@ -35,3 +36,4 @@
 #define ROLE_OMNITRAITOR "omnitraitor"
 #define ROLE_GRINCH "grinch"
 #define ROLE_FLOOR_GOBLIN "floor_goblin"
+#define ROLE_SLASHER "slasher"

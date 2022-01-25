@@ -58,8 +58,8 @@
 		return
 
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		if ((!( yes ) || src.now_pushing))
+	bump(atom/movable/AM as mob|obj)
+		if (src.now_pushing)
 			return
 		src.now_pushing = 1
 
@@ -264,7 +264,7 @@
 		src.dependent = 0
 		return 0
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	bump(atom/movable/AM as mob|obj, yes = 1)
 		if ((!( yes ) || src.now_pushing))
 			return
 		src.now_pushing = 1

@@ -223,7 +223,9 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.personalized_stink)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
@@ -246,10 +248,11 @@
 
 	OnAdd()
 		. = ..()
-		owner.add_filter("dwarfism", 1, displacement_map_filter(size=0, render_source = src.distort.render_target))
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
 		owner.vis_contents += src.distort
 		src.filter = owner.get_filter("dwarfism")
-		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 	OnRemove()
 		owner.remove_filter("dwarfism")
@@ -265,7 +268,8 @@
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=newval, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+			animate(src.filter, size=0, time=0)
+			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"

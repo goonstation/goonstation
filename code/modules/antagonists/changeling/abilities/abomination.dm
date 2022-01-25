@@ -31,7 +31,7 @@
 			H.set_mutantrace(/datum/mutantrace/abomination)
 			setalive(H)
 			H.real_name = "Shambling Abomination"
-			H.name = "Shambling Abomination"
+			H.UpdateName()
 			H.update_face()
 			H.update_body()
 			H.update_clothing()
@@ -64,7 +64,7 @@
 			C.points = max(C.points - 15, 0)
 			var/D = pick(C.absorbed_dna)
 			H.real_name = D
-			H.name = D
+			H.UpdateName()
 			H.bioHolder.CopyOther(C.absorbed_dna[D])
 		H.update_face()
 		H.update_body()

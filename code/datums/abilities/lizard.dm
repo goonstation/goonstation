@@ -43,9 +43,9 @@
 		if (liz.organHolder?.head)
 			var/obj/item/organ/head/hed = liz.organHolder.head
 			if(hed.head_type == HEAD_LIZARD)
-				hed.update_icon(ignore_transplant = 1) // Chromatophores are chromatophores
+				hed.UpdateIcon(/*makeshitup*/ null, /*ignore_transplant*/TRUE) // Chromatophores are chromatophores
 			else
-				hed.update_icon(ignore_transplant = 0)
+				hed.UpdateIcon(/*makeshitup*/ null, /*ignore_transplant*/FALSE)
 		if (istype(liz?.organHolder.tail, /obj/item/organ/tail/lizard))
 			var/obj/item/organ/tail/T = liz.organHolder.tail
 			T.colorize_tail(liz.bioHolder.mobAppearance)

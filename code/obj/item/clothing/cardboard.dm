@@ -2,7 +2,7 @@
 	name = "cardboard box"
 	desc = "A pretty large box, made of cardboard. Looks a bit worn out."
 	icon = 'icons/obj/clothing/overcoats/item_suit_cardboard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_cardboard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_cardboard.dmi'
 	icon_state = "c_box"
 	item_state = "c_box"
 	density = 1
@@ -91,9 +91,14 @@
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
 		if (prob(50))
 			new /obj/machinery/bot/medbot/head_surgeon(src.loc)
 			qdel(src)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_HEAD_SURGEON)
+		. = ..()
 
 	proc/speak(var/message)
 		if (!message)

@@ -1022,7 +1022,7 @@
 	get_desc()
 		return last_result_text ? "<br>The ball is currently on [last_result_text]." : ""
 
-	proc/update_icon()
+	update_icon()
 		if (running == 0)
 			src.icon_state = "roulette_w0"
 		else if (running == 1)
@@ -1039,7 +1039,7 @@
 		else
 			src.visible_message("[src] starts spinning!")
 		src.running = 1
-		update_icon()
+		UpdateIcon()
 		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
 		sleep(real_run_time - 10)
 		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
@@ -1061,7 +1061,7 @@
 		last_result_text = "<span style='padding: 0 0.5em; color: white; background-color: [background_color];'>[src.last_result]</span> [result_color]"
 		src.visible_message("<span class='success'>[src] lands on [last_result_text]!</span>")
 		src.running = 0
-		update_icon()
+		UpdateIcon()
 		sleep(1 SECONDS)
 		src.maptext_x = -1
 		src.maptext_y = 8

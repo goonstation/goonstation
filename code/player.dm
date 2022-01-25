@@ -124,10 +124,25 @@
 			return FALSE
 		clouddata[key] = "[value]"
 
+#ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
 		request.begin_async()
+#else
+		var/json = null
+		var/list/decoded_json
+		if (fexists("data/simulated_cloud.json"))
+			json = file2text("data/simulated_cloud.json")
+			decoded_json = json_decode(json)
+		else
+			decoded_json = list()
+		// need to wrap the clouddata within index named cdata
+		decoded_json["[ckey(ckey)]"] = list(cdata = clouddata)
+		//t2f appends, but need to to replace
+		fdel("data/simulated_cloud.json")
+		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
+#endif
 		return TRUE // I guess
 
 	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
@@ -137,11 +152,83 @@
 			return FALSE
 		data[key] = "[value]"
 
+#ifdef LIVE_SERVER
 		// Via rust-g HTTP
 		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[target]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
 		request.begin_async()
+#else
+		var/json = null
+		var/list/decoded_json
+		if (fexists("data/simulated_cloud.json"))
+			json = file2text("data/simulated_cloud.json")
+			decoded_json = json_decode(json)
+		else
+			decoded_json = list()
+		// need to wrap the clouddata within index named cdata
+		decoded_json["[ckey(target)]"] = list(cdata = data)
+		//t2f appends, but need to to replace
+		fdel("data/simulated_cloud.json")
+		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
+#endif
 		return TRUE // I guess
+
+	/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
+	 * example input (formatted for readability)
+	 * 	{
+	 * 		"some_ckey":{
+	 * 			"persistent_bank":42069,
+	 * 			"persistent_bank_item":"none"
+	 * 		},
+	 * 		"some_other_ckey":{
+	 * 			"persistent_bank":1337,
+	 * 			"persistent_bank_item":"rubber_ducky"
+	 * 		}
+	 * 	}
+	**/
+	proc/cloud_put_bulk(json)
+		if (!rustg_json_is_valid(json))
+			stack_trace("cloud_put_bulk received an invalid json object.")
+			return FALSE
+		var/list/decoded_json = json_decode(json)
+		var/list/sanitized = list()
+		for (var/json_ckey in decoded_json)
+			var/clean_ckey = ckey(json_ckey)
+			if (!length(decoded_json[json_ckey]))
+				stack_trace("cloud_put_bulk received ckey \"[clean_ckey]\" without any key pairs to save.")
+				continue
+			sanitized[clean_ckey] = list()
+			for (var/json_key in decoded_json[json_ckey])
+				var/value = decoded_json[json_ckey][json_key]
+				if (isnull(value))
+					value = "" //api wants empty strings, not nulls
+				sanitized[clean_ckey][json_key] = value
+#ifdef LIVE_SERVER
+		var/sanitized_json = json_encode(sanitized)
+		// Via rust-g HTTP
+		var/datum/http_request/request = new() //If it fails, oh well...
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput_bulk&api_key=[config.spacebee_api_key]&value=[url_encode(sanitized_json)]", "","")
+		request.begin_async()
+#else
+		var/save_json
+		var/list/decoded_save
+		if (fexists("data/simulated_cloud.json"))
+			save_json = file2text("data/simulated_cloud.json")
+			decoded_save = json_decode(save_json)
+		else
+			decoded_save = list()
+
+		for (var/sani_ckey in sanitized)
+			if (!decoded_save[sani_ckey])
+				decoded_save[sani_ckey] = list(cdata = list())
+			for (var/data_key in sanitized[sani_ckey])
+				decoded_save[sani_ckey]["cdata"][data_key] = sanitized[sani_ckey][data_key]
+
+		//t2f appends, but need to to replace
+		fdel("data/simulated_cloud.json")
+		text2file(json_encode(decoded_save),"data/simulated_cloud.json")
+#endif
+		return TRUE
 
 	/// Returns some cloud data on the client
 	proc/cloud_get( var/key )
@@ -178,12 +265,13 @@
 
 	/// Returns cloud data and saves from goonhub for the target ckey in list form
 	proc/cloud_fetch_target_ckey(target)
+#ifdef LIVE_SERVER
 		if(!cdn) return
 		target = ckey(target)
 		if (!target) return
 
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "https://spacebee.goonhub.com/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -198,6 +286,27 @@
 			return
 		else
 			return ret
+#else
+		if (!target) return
+		/// holds our json string
+		var/json
+		/// holds our list made from decoding json
+		var/list/decoded_json
+		// make sure the files actually exists before we try to read it, if it doesn't then just return a blank list to work with
+		if (fexists("data/simulated_cloud.json"))
+			// file was found, lets decode it
+			json = file2text("data/simulated_cloud.json")
+			decoded_json = json_decode(json)
+		else
+			decoded_json = list()
+
+		// do we have an entry for the target ckey?
+		if (decoded_json[target])
+			return decoded_json[target]
+		else
+			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
+			return list(cdata = list())
+#endif
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)

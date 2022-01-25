@@ -189,6 +189,7 @@ var/datum/respawn_controls/respawn_controller
 		M.is_respawned_player = 1
 		M.key = the_client.key
 		M.Login()
+		M.mind.purchased_bank_item = null
 		master.unsubscribeRespawnee(src.ckey)
 
 /client/proc/respawn_via_controller()

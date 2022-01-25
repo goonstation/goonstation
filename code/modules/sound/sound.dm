@@ -48,7 +48,7 @@
 			var/datum/gas_mixture/air = T.return_air()
 			if (air)
 				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
-				attenuate = min(1, max(0, attenuate))
+				attenuate = clamp(attenuate, 0, 1)
 
 	return attenuate
 
@@ -156,7 +156,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	var/scaled_dist
 	var/storedVolume
 
-	for (var/mob/M in GET_NEARBY(source_turf, MAX_SOUND_RANGE + extrarange))
+	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
+	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
+	for (var/mob/M in GET_NEARBY(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
 		var/client/C = M.client
 		if (!C)
 			continue
@@ -299,7 +301,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
-			S.pan = max(-100, min(100, dx/8.0 * 100))
+			S.pan = clamp(dx/8.0 * 100, -100, 100)
 
 		src << S
 
@@ -617,6 +619,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
  		"skelly" = sound('sound/misc/talk/skelly.ogg'),	"skelly!" = sound('sound/misc/talk/skelly_exclaim.ogg'),"skelly?" = sound('sound/misc/talk/skelly_ask.ogg'), \
 		"blub" = sound('sound/misc/talk/blub.ogg'),	"blub!" = sound('sound/misc/talk/blub_exclaim.ogg'),"blub?" = sound('sound/misc/talk/blub_ask.ogg'), \
 		"cow" = sound('sound/misc/talk/cow.ogg'),	"cow!" = sound('sound/misc/talk/cow_exclaim.ogg'),"cow?" = sound('sound/misc/talk/cow_ask.ogg'), \
+		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
+		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)

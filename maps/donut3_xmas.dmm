@@ -18108,7 +18108,7 @@
 	},
 /obj/table/auto,
 /obj/machinery/coffeemaker/research,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 29
 	},
 /turf/simulated/floor/purpleblack{
@@ -20868,7 +20868,7 @@
 "fKZ" = (
 /obj/table/auto,
 /obj/machinery/coffeemaker/botany,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 32
 	},
 /obj/decal/tile_edge/line/green{
@@ -26370,7 +26370,7 @@
 /obj/decal/tile_edge/stripe/xmas{
 	dir = 4
 	},
-/obj/machinery/vehicle/miniputt/nanoputt{
+/obj/machinery/vehicle/miniputt/nanoputt/security{
 	dir = 8
 	},
 /turf/simulated/floor/snow/snowball{
@@ -39118,7 +39118,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southwest,
 /obj/table/wood/round/auto,
 /obj/table/wood/round/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 3;
 	pixel_y = 29
 	},
@@ -42425,7 +42425,7 @@
 "mnL" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/jen,
-/area/shuttle/escape/station/donut3)
+/area/shuttle/escape/station)
 "mnY" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -45689,7 +45689,7 @@
 /obj/machinery/coffeemaker{
 	pixel_y = 4
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 33
 	},
 /turf/simulated/floor/wood,
@@ -46550,7 +46550,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "nBo" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 8
 	},
 /turf/simulated/floor/snow/snowball{
@@ -50320,7 +50320,7 @@
 	pixel_y = 2
 	},
 /obj/table/wood/auto,
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = -26;
 	pixel_y = 6
 	},
@@ -52536,7 +52536,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "pon" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -55477,7 +55477,7 @@
 /obj/item/reagent_containers/food/drinks/espressocup{
 	pixel_x = 7
 	},
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = 1;
 	pixel_y = 30
 	},
@@ -58367,7 +58367,7 @@
 /area/station/chapel/sanctuary)
 "qRB" = (
 /turf/simulated/floor/plating/jen,
-/area/shuttle/escape/station/donut3)
+/area/shuttle/escape/station)
 "qRD" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/conveyor{
@@ -63405,7 +63405,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "smO" = (
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_x = 29;
 	pixel_y = 5
 	},
@@ -69474,7 +69474,7 @@
 /obj/machinery/coffeemaker/medbay{
 	pixel_y = 2
 	},
-/obj/mug_rack{
+/obj/drink_rack/mug{
 	pixel_y = 33
 	},
 /turf/simulated/floor/wood/five,

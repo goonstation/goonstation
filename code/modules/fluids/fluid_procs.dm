@@ -13,7 +13,7 @@
 		var/atom/thing = A
 		if (!A)
 			continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE))
 			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
@@ -60,6 +60,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (airborne)
 			for(var/reagent_id in R.reagent_list)
 				if (reagent_id in ban_from_airborne_fluid) return
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if (reagent_id in ban_from_fluid) return
@@ -69,6 +70,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
 					if (reagent_id in ban_from_airborne_fluid) return
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
@@ -114,8 +116,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 
-	R.trans_to_direct(FG.reagents, react_volume, index=index)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
+	R.trans_to_direct(FG.reagents, react_volume, index=index)
+	F.UpdateIcon()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src

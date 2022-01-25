@@ -216,7 +216,7 @@
 						else
 							splice_chance += S.splice_mod
 
-				splice_chance = max(0,min(splice_chance,100))
+				splice_chance = clamp(splice_chance, 0, 100)
 
 				dat += "<b>Chance of Successful Splice:</b> [splice_chance]%<br>"
 				dat += "<A href='?src=\ref[src];splice=1'>(Proceed)</A> <A href='?src=\ref[src];splice_cancel=1'>(Cancel)</A><BR>"
@@ -244,7 +244,7 @@
 			boutput(usr, "<span class='alert'>You need to be closer to the machine to do that!</span>")
 			return
 		if(href_list["page"])
-			var/ops = text2num(href_list["page"])
+			var/ops = text2num_safe(href_list["page"])
 			switch(ops)
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "seedlist"
@@ -360,7 +360,8 @@
 						S.name = stored.name
 						S.plant_seed_color(stored.seedcolor)
 						if (stored.hybrid)
-							var/datum/plant/hybrid = new /datum/plant(S)
+							var/hybrid_type = stored.type
+							var/datum/plant/hybrid = new hybrid_type(S)
 							for(var/V in stored.vars)
 								if (issaved(stored.vars[V]) && V != "holder")
 									hybrid.vars[V] = stored.vars[V]
@@ -493,7 +494,7 @@
 							splice_chance += S.splice_mod
 
 			// Cap probability between 0 and 100
-			splice_chance = max(0,min(splice_chance,100))
+			splice_chance = clamp(splice_chance, 0, 100)
 			if (prob(splice_chance)) // We're good, so start splicing!
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes
@@ -678,11 +679,13 @@
 					boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
-				S.satchel_updateicon()
+				S.UpdateIcon()
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
+			return
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
 			return
 		if (!isitem(O))
 			return
@@ -750,7 +753,7 @@
 
 /obj/submachine/chem_extractor/
 	name = "Reagent Extractor"
-	desc = "A machine which can extract reagents from organic matter."
+	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
 	anchored = 1
 	mats = 6
@@ -891,12 +894,12 @@
 			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
-			var/ops = text2num(href_list["page"])
+			var/ops = text2num_safe(href_list["page"])
 			switch(ops)
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "transference"
 				else src.mode = "overview"
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
@@ -914,12 +917,12 @@
 				src.ingredients.Remove(I)
 				I.set_loc(src.output_target)
 				boutput(usr, "<span class='notice'>You eject [I] from the machine!</span>")
-				src.update_icon()
+				src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (href_list["autoextract"])
 			src.autoextract = !src.autoextract
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if (href_list["flush_reagent"])
@@ -941,7 +944,7 @@
 			var/target = input(usr, "Extract to which target?", "Reagent Extractor", 0) in ext_targets
 			if(get_dist(usr, src) > 1) return
 			src.extract_to = target
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["extractingred"])
@@ -958,7 +961,7 @@
 					src.doExtract(I)
 					src.ingredients -= I
 					qdel(I)
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else if(href_list["chemtransfer"])
@@ -1017,8 +1020,8 @@
 			else
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
-			S.satchel_updateicon()
-			src.update_icon()
+			S.UpdateIcon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 
 		else
@@ -1032,11 +1035,13 @@
 			user.u_equip(W)
 			W.dropped()
 
-			src.update_icon()
+			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if (!in_interact_range(src, user)  || !IN_RANGE(user, O, 1))
+			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O, /obj/item/satchel/hydro))
 			return src.Attackby(O, user)
 		if (!src.canExtract(O)) ..()
@@ -1050,7 +1055,7 @@
 					sleep(0.2 SECONDS)
 				else continue
 			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
-		src.update_icon()
+		src.UpdateIcon()
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -1073,7 +1078,7 @@
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
 
-/obj/submachine/chem_extractor/proc/update_icon()
+/obj/submachine/chem_extractor/update_icon()
 	if (src.ingredients.len)
 		src.icon_state = "reex-on"
 	else
@@ -1087,7 +1092,7 @@
 		return
 
 	I.reagents.trans_to(src.extract_to, I.reagents.total_volume)
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/submachine/chem_extractor/proc/canExtract(O)
 	. = FALSE
@@ -1257,7 +1262,7 @@
 			src.updateUsrDialog()
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num(href_list["cutwire"])
+			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -1266,7 +1271,7 @@
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
+			var/twire = text2num_safe(href_list["pulsewire"])
 			if (!usr.find_tool_in_hand(TOOL_PULSING) && !isAI(usr))
 				boutput(usr, "You need a multitool or similar!")
 				return

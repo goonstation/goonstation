@@ -72,7 +72,7 @@
 	..()
 	SPAWN_DBG(0.5 SECONDS)
 		if (src)
-			src.updateicon()
+			src.UpdateIcon()
 	return
 
 /obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
@@ -145,7 +145,7 @@
 			loaded = T.amount
 			qdel(T)
 		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
-		src.updateicon()
+		src.UpdateIcon()
 	//Regular ID
 	else
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
@@ -159,7 +159,9 @@
 			src.updateUsrDialog()
 		else
 			..()
-
+			src.health -= W.force * 0.5
+			if (src.health <= 0)
+				src.explode()
 
 /obj/machinery/bot/floorbot/Topic(href, href_list)
 	if (..())
@@ -305,7 +307,7 @@
 
 		// we are not there. how do we get there
 		if (!src.path || !length(src.path))
-			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 120)
+			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 20)
 			if (!src.path || !length(src.path))
 				// answer: we don't. try to find something else then.
 				src.targets_invalid |= turf2coordinates(src.target)
@@ -324,7 +326,7 @@
 		src.floorbottargets -= turf2coordinates(src.target)
 		src.target = null
 		src.anchored = 0
-		src.updateicon()
+		src.UpdateIcon()
 		src.repairing = 0
 		src.oldtarget = null
 		src.oldloc = null
@@ -373,7 +375,7 @@
 	else
 		src.amount += T.amount
 		qdel(T)
-	src.updateicon()
+	src.UpdateIcon()
 	src.floorbottargets -= turf2coordinates(src.target)
 	src.target = null
 	src.repairing = 0
@@ -406,7 +408,7 @@
 	src.target = null
 	src.repairing = 0
 
-/obj/machinery/bot/floorbot/proc/updateicon()
+/obj/machinery/bot/floorbot/update_icon()
 	if (src.amount > 0)
 		src.icon_state = "floorbot[src.on]"
 	else
@@ -461,6 +463,9 @@
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
+	new /obj/item/tile/steel(src.loc)
+	new /obj/item/device/prox_sensor(src.loc)
+	new /obj/item/storage/toolbox/mechanical/empty(src.loc)
 	qdel(src)
 	return
 
@@ -532,7 +537,7 @@
 
 		master.repairing = 0
 		master.amount -= 1
-		master.updateicon()
+		master.UpdateIcon()
 		master.anchored = 0
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)
@@ -592,7 +597,7 @@
 
 		T.ReplaceWithSpace()
 		master.repairing = 0
-		master.updateicon()
+		master.UpdateIcon()
 		master.anchored = 0
 		master.floorbottargets -= master.turf2coordinates(master.target)
 		master.target = master.find_target(1)

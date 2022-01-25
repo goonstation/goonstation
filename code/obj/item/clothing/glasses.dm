@@ -3,7 +3,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/item_glasses.dmi'
-	wear_image_icon = 'icons/mob/eyes.dmi'
+	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
 	w_class = W_CLASS_SMALL
@@ -590,3 +590,25 @@
 				H.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+
+
+
+/obj/item/clothing/glasses/packetvision
+	name = "\improper Packetvision HUD"
+	desc = "These let you see wireless packets like some sort of a hackerman."
+	item_state = "glasses"
+	icon_state = "glasses"
+	color = "#a0ffa0"
+	color_r = 0.9
+	color_g = 1.0
+	color_b = 0.9
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_mob(user)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
+		..()

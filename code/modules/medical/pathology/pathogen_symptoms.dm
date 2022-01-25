@@ -598,8 +598,8 @@ obj/hallucinated_item
 	New(myloc, myowner, var/obj/prototype)
 		..()
 		myowner = owner
-		name = prototype.name
-		desc = prototype.desc
+		name = prototype?.name || "something unknown"
+		desc = prototype?.desc
 
 	attack_hand(var/mob/M)
 		if (M == owner)

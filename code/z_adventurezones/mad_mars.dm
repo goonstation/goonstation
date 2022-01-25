@@ -244,7 +244,7 @@
 	desc = "Hey, it's not red at all!"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "mars"
-	blocks_air = 1
+	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0
@@ -281,7 +281,7 @@
 	desc = "A suit designed to withstand intense dust storms."
 	icon_state = "mars_blue"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
 	c_flags = SPACEWEAR
 	permeability_coefficient = 0.1

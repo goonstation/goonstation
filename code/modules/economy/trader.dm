@@ -102,7 +102,7 @@
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+				var/enterpin = usr.enter_pin("Card Reader")
 				if (enterpin == I:pin)
 					boutput(usr, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
@@ -169,6 +169,8 @@
 			if (account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
+				if(!isnum_safe(quantity))
+					return
 				if (quantity < 1)
 					quantity = 0
 					return
@@ -206,7 +208,7 @@
 		else if (href_list["haggleb"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
 				if(N)
 					if(patience == N.haggleattempts)
@@ -245,7 +247,7 @@
 		else if (href_list["haggles"])
 
 			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(askingprice)
+			if(isnum_safe(askingprice))
 				var/datum/commodity/N = locate(href_list["haggles"]) in goods_buy
 				if(N)
 					if(patience == N.haggleattempts)
@@ -345,7 +347,7 @@
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(I:registered)
 					if(account)
-						var/enterpin = input(usr, "Please enter your PIN number.", "Card Reader", 0) as null|num
+						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == I:pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
 							src.scan = I
@@ -703,7 +705,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "You recieve visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "You receive visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
 		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
 
@@ -821,6 +823,7 @@
 				src.goods_sell += new /datum/commodity/podparts/ballistic(src)
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
 #ifdef MAP_OVERRIDE_MANTA
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -1091,6 +1094,7 @@
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
 
 
 		/////////////////////////////////////////////////////////

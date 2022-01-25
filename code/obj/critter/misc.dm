@@ -109,7 +109,7 @@
 	New()
 		..()
 		src.toolbox_style = pick(src.toolbox_list)
-		src.update_icon()
+		src.UpdateIcon()
 		if (prob(src.switcharoo))
 			switch (src.toolbox_style)
 				if ("blue")
@@ -130,11 +130,11 @@
 		if (src.alive)
 			switch (task)
 				if ("thinking")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("chasing")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("attacking")
-					src.update_icon()
+					src.UpdateIcon()
 
 	ChaseAttack(mob/M)
 		..()
@@ -143,7 +143,7 @@
 	CritterAttack(mob/M)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.toolbox_style)
 			src.toolbox_style = pick(src.toolbox_list)
 			src.dead_state = "mimic_[src.toolbox_style]1-dead"
@@ -377,7 +377,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))
@@ -492,7 +492,7 @@
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
 			if (pixel_y_inc > 20) return
-			var/image/I = image('icons/mob/head.dmi', src,  W.icon_state)
+			var/image/I = image('icons/mob/clothing/head.dmi', src,  W.icon_state)
 			I.pixel_y = pixel_y_inc
 			src.overlays += I
 			pixel_y_inc += 3
@@ -1425,7 +1425,7 @@
 			else
 				src.visible_message("[src] slithers around happily!")
 
-	CanPass(atom/mover, turf/target, height=0, air_group=0)
+	Cross(atom/mover)
 		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else

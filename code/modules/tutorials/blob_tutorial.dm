@@ -2,16 +2,19 @@
 	name = "Blob Tutorial Zone 1"
 	icon_state = "yellow"
 	sound_group = "blob1"
+	dont_log_combat = TRUE
 
 /area/blob/tutorial_zone_2
 	name = "Blob Tutorial Zone 2"
 	icon_state = "green"
 	sound_group = "blob2"
+	dont_log_combat = TRUE
 
 /area/blob/tutorial_zone_3
 	name = "Blob Tutorial Zone 3"
 	icon_state = "blue"
 	sound_group = "blob3"
+	dont_log_combat = TRUE
 
 var/global/list/blob_tutorial_areas = list(/area/blob/tutorial_zone_1, /area/blob/tutorial_zone_2, /area/blob/tutorial_zone_3)
 

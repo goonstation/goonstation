@@ -1,10 +1,12 @@
 datum/mind
 	var/key
 	var/ckey
+	var/displayed_key
 	var/mob/current
 	var/mob/virtual
 
 	var/memory
+	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
 	var/miranda // sec's miranda rights thingy.
 	var/last_miranda_time = 0 // this is different than last_memory_time, this is when the rights were last SAID, not last CHANGED
@@ -49,10 +51,8 @@ datum/mind
 	var/dnr = 0
 	var/joined_observer = 0 //keep track of whether this player joined round as an observer (blocks them from bank payouts)
 
-	var/luck = 50 // todo:
-	var/sanity = 100 // implement dis
-
 	var/handwriting = null
+	var/color = null
 
 	var/obj/item/organ/brain/brain
 
@@ -71,13 +71,17 @@ datum/mind
 	//avoid some otherwise frequent istype checks
 	var/stealth_objective = 0
 
+	var/show_respawn_prompts = TRUE
+
 	New(mob/M)
 		..()
 		if (M)
 			current = M
 			key = M.key
 			ckey = M.ckey
+			displayed_key = M.key
 			src.handwriting = pick(handwriting_styles)
+			src.color = pick_string("colors.txt", "colors")
 		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
 	proc/transfer_to(mob/new_character)

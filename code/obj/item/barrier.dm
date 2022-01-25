@@ -35,7 +35,7 @@
 			B.setProperty("exploprot", 10)
 			. = ..()
 
-	proc/update_icon()
+	update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"
 
@@ -80,7 +80,7 @@
 
 			can_disarm = src.status
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		else
 			user.show_text("You need two free hands in order to activate the [src.name].", "red")

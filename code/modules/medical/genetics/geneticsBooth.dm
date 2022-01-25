@@ -40,7 +40,7 @@
 	pixel_x = -3
 	anchored = 1
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 
@@ -96,6 +96,8 @@
 		workingoverlay.pixel_y = 2
 		workingoverlay.layer = src.layer + 0.1
 
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
 	disposing()
 		STOP_TRACKING
 		if(occupant)
@@ -121,7 +123,7 @@
 		else if (started)
 			eject_occupant(0)
 
-		updateicon()
+		UpdateIcon()
 		..()
 
 
@@ -145,10 +147,6 @@
 					if (name_sel == P.name)
 						select_product(P)
 						break
-			if(occupant && occupant != user)
-				user.show_text("There's someone else inside!")
-				return
-
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
@@ -192,6 +190,8 @@
 					if(href_list["op"])
 						P = locate(href_list["op"])
 						var/price = input(usr, "Please enter price for [P.name].", "Gene Price", 0) as null|num
+						if(!isnum_safe(price))
+							return
 						price = max(price,0)
 						P.cost = price
 
@@ -203,7 +203,7 @@
 							if(!selected_product || selected_product.locked)
 								selected_product = null
 								just_pick_anything()
-								updateicon()
+								UpdateIcon()
 							reload_contexts()
 
 			show_admin_panel(usr)
@@ -215,7 +215,7 @@
 	proc/select_product(var/datum/geneboothproduct/P)
 		selected_product = P
 		abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-		updateicon()
+		UpdateIcon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
 		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
@@ -226,10 +226,10 @@
 				continue
 			selected_product = P
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-			updateicon()
+			UpdateIcon()
 			break
 
-	proc/updateicon()
+	update_icon()
 		if (powered())
 			light.enable()
 			if (occupant && started>1)
@@ -276,7 +276,7 @@
 				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1)
 			occupant = null
 
-			updateicon()
+			UpdateIcon()
 
 		started = 0
 		var/turf/dispense = (override_dir ? get_step(src.loc, override_dir) : get_step(src.loc, eject_dir))
@@ -333,7 +333,6 @@
 						M.show_text("No bank account found for [perp_id.registered]!", "blue")
 
 	proc/notify_sale(var/budget_inc, var/split_with = 0)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [budget_inc] credits earned from last booth sale."
@@ -341,30 +340,25 @@
 			string += "Splitting half of profits with [split_with]."
 
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
 
 	proc/notify_empty(var/datum/geneboothproduct/GBP)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
-	CanPass(var/mob/M, var/atom/oldloc)
+	Cross(var/mob/M)
 		.= ..()
-		if (oldloc && oldloc.y == src.y)
+		if (M && M.y == src.y)
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
-					eject_dir = get_dir(oldloc,src)
+					eject_dir = get_dir(M,src)
 					M.set_loc(src)
 					occupant = M
 					letgo_hp = initial(letgo_hp)
@@ -376,7 +370,7 @@
 						M.show_text("[src] is warming up. Please hold still.", "blue")
 						spam_time = world.time
 
-					updateicon()
+					UpdateIcon()
 					.= 1
 				else
 					if (world.time > spam_time + 3 SECONDS)

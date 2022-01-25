@@ -99,8 +99,9 @@
 		count_healths()
 
 		SPAWN_DBG(0)
-			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-			src.attach_hud(zone_sel)
+			if(!src.disposed)
+				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -367,6 +368,7 @@
 			return
 
 		var/obj/item/I = src.equipped()
+		var/turf/thrown_from = get_turf(src)
 
 		if (!I || !isitem(I) || I.cant_drop)
 			return
@@ -406,7 +408,7 @@
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
 				M.inertia_dir = get_dir(src,target)
-			I.throw_at(target, I.throw_range, I.throw_speed, params)
+			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
 
@@ -1209,7 +1211,7 @@
 	proc/on_wake()
 		return
 
-/mob/living/critter/Bump(atom/A, yes)
+/mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
 		return
@@ -1219,16 +1221,16 @@
 /mob/living/critter/hotkey(name)
 	switch (name)
 		if ("help")
-			src.a_intent = INTENT_HELP
+			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
 		if ("disarm")
-			src.a_intent = INTENT_DISARM
+			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
 		if ("grab")
-			src.a_intent = INTENT_GRAB
+			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
 		if ("harm")
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
 			src.drop_item()

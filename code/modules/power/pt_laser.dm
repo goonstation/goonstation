@@ -59,7 +59,7 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
 	for(var/obj/O in laser_parts)
@@ -82,7 +82,7 @@
 		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
 	return 1
 
-/obj/machinery/power/pt_laser/proc/updateicon(var/started_firing = 0)
+/obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null
 	if(status & BROKEN || charge == 0)
 		overlays += image('icons/obj/pt_laser.dmi', "unpowered")
@@ -170,7 +170,7 @@
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
 	if (round(adjusted_output) == 0)
@@ -264,7 +264,7 @@
 	if(!T) return //just in case
 
 	firing = 1
-	updateicon(1)
+	UpdateIcon(1)
 
 	for(var/dist = 0, dist < range, dist += 1) // creates each field tile
 		T = get_step(T, dir)
@@ -282,7 +282,7 @@
 
 /obj/machinery/power/pt_laser/proc/restart_firing()
 	firing = 1
-	updateicon(1)
+	UpdateIcon(1)
 	melt_blocking_objects()
 	update_laser()
 
@@ -452,11 +452,11 @@
 		if(2.0)
 			if (prob(50))
 				status |= BROKEN
-				updateicon()
+				UpdateIcon()
 		if(3.0)
 			if (prob(25))
 				status |= BROKEN
-				updateicon()
+				UpdateIcon()
 	return
 
 /obj/machinery/power/pt_laser/proc/process_laser()
@@ -480,7 +480,7 @@
 	density = 0
 	luminosity = 1
 	invisibility = INVIS_ALWAYS
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/power = 0
 	var/active = 1
 	var/obj/machinery/power/pt_laser/source = null
@@ -496,7 +496,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
@@ -514,7 +514,8 @@
 /obj/lpt_laser/ex_act(severity)
 	return
 
-/obj/lpt_laser/HasEntered(var/atom/movable/AM)
+/obj/lpt_laser/Crossed(atom/movable/AM)
+	..()
 	if (src.active && isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
 			source.affecting_mobs |= AM

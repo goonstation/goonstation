@@ -12,7 +12,7 @@
 	var/chargerate = 400
 	var/mob/living/silicon/ghostdrone/occupant = null
 	var/transition = 0 //For when closing
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_MULTITOOL
 
 	New()
@@ -52,12 +52,12 @@
 				return
 		return 1
 
-	HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/AM as mob|obj)
 		..()
 		if (!src.occupant && isghostdrone(AM) && !src.transition)
 			src.turnOn(AM)
 
-	HasExited(atom/movable/AM as mob|obj)
+	Uncrossed(atom/movable/AM as mob|obj)
 		..()
 		if (AM.loc != src.loc && src.occupant == AM && isghostdrone(AM))
 			src.turnOff()
@@ -145,9 +145,9 @@
 /obj/machinery/drone_recharger/factory
 	var/id = "ghostdrone"
 	mats = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
-	HasEntered(atom/movable/AM as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/AM as mob|obj)
 		if (!src.occupant && istype(AM, /obj/item/ghostdrone_assembly) && !src.transition)
 			src.createDrone(AM)
 		..()
