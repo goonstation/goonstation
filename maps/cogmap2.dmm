@@ -68172,7 +68172,10 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor/arrival{
 	dir = 9
 	},

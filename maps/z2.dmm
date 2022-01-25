@@ -37403,7 +37403,9 @@
 	})
 "cfO" = (
 /obj/bookshelf/persistent{
-	file_name = "data/persistent_bookshelf_cairngorm.json"
+	density = 0;
+	file_name = "data/persistent_bookshelf_cairngorm.json";
+	pixel_y = 19
 	},
 /obj/storage/crate/bin{
 	desc = "A large bin, for trash.";
