@@ -1081,6 +1081,7 @@ var/global/list/soundCache = list(
  	"sound/musical_instruments/organ/bach2.ogg" = 'sound/musical_instruments/organ/bach2.ogg',\
  	"sound/musical_instruments/organ/bridal1.ogg" = 'sound/musical_instruments/organ/bridal1.ogg',\
  	"sound/musical_instruments/organ/funeral.ogg" = 'sound/musical_instruments/organ/funeral.ogg',\
+ 	"sound/musical_instruments/partybutton.ogg" = 'sound/musical_instruments/partybutton.ogg',\
  	"sound/musical_instruments/piano/furelise.ogg" = 'sound/musical_instruments/piano/furelise.ogg',\
  	"sound/musical_instruments/piano/gymno.ogg" = 'sound/musical_instruments/piano/gymno.ogg',\
  	"sound/musical_instruments/piano/lune.ogg" = 'sound/musical_instruments/piano/lune.ogg',\
