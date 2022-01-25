@@ -1307,7 +1307,7 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto,
-/turf/space,
+/turf/simulated/floor/plating,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/research)
 "adv" = (
