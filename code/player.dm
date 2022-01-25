@@ -213,10 +213,10 @@
 				continue
 			sanitized[clean_ckey] = list()
 			for (var/json_key in decoded_json[json_ckey])
-				var/value = decoded_json[json_ckey][json_key][value]
+				var/value = decoded_json[json_ckey][json_key]["value"]
 				if (isnull(value))
 					value = "" //api wants empty strings, not nulls
-				sanitized[clean_ckey][json_key] = list ("command" = decoded_json[json_ckey][json_key][command], "value" = value)
+				sanitized[clean_ckey][json_key] = list ("command" = decoded_json[json_ckey][json_key]["command"], "value" = value)
 #ifdef LIVE_SERVER
 		var/sanitized_json = json_encode(sanitized)
 		// Via rust-g HTTP
