@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, FREQ_HARMONIC_SIPHON)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
 		..()
 
 	disposing()
@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			reply.data["REFRESH_UI"] = TRUE
 		var/readouts = src.build_readouts(reply)
 		if(readouts) reply.data["devdat"] = readouts //see associated proc
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN_DBG(0.3 SECONDS)
 			src.post_signal(reply)
 		return
 

@@ -155,33 +155,93 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	icon_state = "allquiet"
 	plane = PLANE_ABOVE_LIGHTING
 
-/obj/machinery/networked/transception_pad
+/obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
 	name = "transception pad"
 	anchored = 1
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 16
-	timeout = 10
+	mats = list("MET-2"=5,"CON-2"=2,"CON-1"=5)
 	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
-	device_tag = "PNET_CARGONODE"
 	var/is_transceiving = FALSE
+	var/frequency = FREQ_TRANSCEPTION_SYS
+	var/net_id
+	///Used for clarity in transception interlink computer
+	var/pad_id = null
 
-	attack_hand(mob/user) //placeholder for netop
-		src.attempt_transceive()
+	New()
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.pad_id = "[pick(vowels_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]-[rand(0,9)][rand(0,9)][rand(0,9)]"
+		src.name = "transception pad [pad_id]"
+		..()
+
+	receive_signal(datum/signal/signal)
+		if(status & NOPOWER)
+			return
+
+		if(!signal || signal.encryption || !signal.data["sender"])
+			return
+
+		var/sender = signal.data["sender"]
+		if(!sender)
+			return
+
+		switch(signal.data["address_1"])
+			if("ping")
+				var/area/where_pad_is = get_area(src)
+				var/name_of_place = where_pad_is.name ? where_pad_is.name : "UNKNOWN"
+				var/datum/signal/reply = new
+				reply.data["address_1"] = sender
+				reply.data["command"] = "ping_reply"
+				reply.data["device"] = "PNET_TRANSC_PAD"
+				reply.data["netid"] = src.net_id
+				reply.data["data"] = name_of_place
+				reply.data["padid"] = src.pad_id
+				reply.data["opstat"] = src.check_transceive()
+				SPAWN_DBG(0.5 SECONDS)
+					src.post_signal(reply)
+			else
+				if(signal.data["address_1"] != src.net_id) //this is dumb redundant
+					return
+				var/sigcommand = lowertext(signal.data["command"])
+				switch(sigcommand)
+					if("send")
+						src.attempt_transceive()
+					if("receive")
+						var/sigindex = signal.data["data"]
+						if(isnum_safe(sigindex))
+							src.attempt_transceive(sigindex)
 		return
 
-	attackby(obj/item/W, mob/user) //placeholder for netop
-		if(istype(W,/obj/item/device/calibrator))
-			var/cargotarget = input(usr,"TEMPORARY INTERFACE","Select Target",null) in shippingmarket.pending_crates
-			if(cargotarget)
-				src.attempt_transceive(cargotarget)
+	proc/post_signal(datum/signal/signal,var/newfreq)
+		if(!signal)
 			return
-		else
-			..()
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
 
-	proc/attempt_transceive(var/inbound_target = FALSE)
+		signal.source = src
+		signal.data["sender"] = src.net_id
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+
+	///Polls to see if transception connection is online
+	proc/check_transceive()
+		. = FALSE
+		if(!transception_array)
+			return
+		var/datum/powernet/powernet = src.get_direct_powernet()
+		if(!powernet)
+			return
+		var/netnum = powernet.number
+		if(transception_array.can_transceive(netnum) == FALSE)
+			return
+		return TRUE
+
+	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo, send otherwise
+	proc/attempt_transceive(var/cargo_index = null)
 		if(src.is_transceiving)
 			return
 		if(!transception_array)
@@ -192,8 +252,12 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		var/netnum = powernet.number
 		if(transception_array.can_transceive(netnum) == FALSE)
 			return
-		if(inbound_target)
-			receive_a_thing(netnum,inbound_target)
+		if(cargo_index != null)
+			if(shippingmarket.pending_crates[cargo_index])
+				var/obj/inbound_target = shippingmarket.pending_crates[cargo_index]
+				receive_a_thing(netnum,inbound_target)
+			else
+				return
 		else
 			send_a_thing(netnum)
 		return
@@ -276,3 +340,225 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		M.emote("scream")
 		M.changeStatus("stunned", 5 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
+
+
+/obj/machinery/computer/transception
+	name = "\improper Transception Interlink"
+	desc = "A console capable of remotely connecting to and operating cargo transception pads."
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "QMpad"
+	req_access = list(access_cargo)
+	circuit_type = /obj/item/circuitboard/transception
+	object_flags = CAN_REPROGRAM_ACCESS
+	frequency = FREQ_TRANSCEPTION_SYS
+	var/net_id
+	var/last_ping = 0
+	var/temp = null
+	///list of transception pads known to the interlink
+	var/list/known_pads = list()
+	///formatted version of above pad list
+	var/formatted_list = null
+	///thing to avoid having to update the list every time you click the window
+	var/list_is_updated = FALSE
+	///variable to queue dialog update after list is refreshed
+	var/queue_dialog_update = FALSE
+
+	light_r = 1
+	light_g = 0.9
+	light_b = 0.7
+
+	New()
+		..()
+		if(prob(1))
+			desc = "A console capable of remotely connecting to and operating cargo transception pads. Smells faintly of cilantro."
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+
+	receive_signal(datum/signal/signal)
+		if(status & NOPOWER)
+			return
+
+		if(!signal || signal.encryption || !signal.data["sender"])
+			return
+
+		var/sender = signal.data["sender"]
+
+		if(sender)
+			switch(signal.data["command"])
+				if("ping_reply")
+					if(signal.data["device"] != "PNET_TRANSC_PAD")
+						return
+					src.list_is_updated = FALSE
+					var/device_netid = "DEV_[signal.data["netid"]]" //stored like this so it overwrites existing entries for partial refreshes
+					var/list/manifest = new()
+					manifest["Identifier"] = signal.data["padid"]
+					manifest["INT_TARGETID"] = signal.data["netid"]
+					manifest["Location"] = signal.data["data"]
+					manifest["Array Connection"] = signal.data["opstat"] ? "OK" : "ERR"
+					src.known_pads[device_netid] = manifest
+					src.queue_dialog_update = TRUE
+		return
+
+	process()
+		..()
+		if(src.queue_dialog_update)
+			src.updateUsrDialog()
+			src.queue_dialog_update = FALSE
+
+	//construct command packet to send out; specify cargo index for receive, otherwise defaults to send
+	proc/build_command(var/com_target,var/cargo_index)
+		if(com_target)
+			var/datum/signal/yell = new
+			yell.data["address_1"] = com_target
+			if(cargo_index)
+				yell.data["command"] = "receive"
+				yell.data["data"] = cargo_index
+			else
+				yell.data["command"] = "send"
+			SPAWN_DBG(0.5 SECONDS)
+				src.post_signal(yell)
+		return
+
+	proc/try_pad_ping()
+		if( (last_ping && ((last_ping + 10) >= world.time) ) || !src.net_id)
+			return 1
+
+		src.known_pads.Cut()
+		src.list_is_updated = FALSE
+
+		last_ping = world.time
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.data["address_1"] = "ping"
+		newsignal.data["sender"] = src.net_id
+		newsignal.source = src
+		src.post_signal(newsignal)
+
+	proc/post_signal(datum/signal/signal,var/newfreq)
+		if(!signal)
+			return
+		var/freq = newfreq
+		if(!freq)
+			freq = src.frequency
+
+		signal.source = src
+		signal.data["sender"] = src.net_id
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
+
+/obj/machinery/computer/transception/attack_hand(var/mob/user as mob)
+	if(!src.allowed(user))
+		boutput(user, "<span class='alert'>Access Denied.</span>")
+		return
+
+	if(..())
+		return
+
+	src.add_dialog(user)
+	var/HTML
+
+	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
+		<style type='text/css'>
+			body {
+				font-family: Verdana, sans-serif;
+				background: #222228;
+				color: #ddd;
+				text-align: center;
+				}
+			strong {
+				color: #fff;
+				}
+			a {
+				color: #6ce;
+				text-decoration: none;
+				}
+			a:hover, a:active {
+				color: #cff;
+				}
+			img, a img {
+				border: 0;
+				}
+		</style>
+	"} : {"
+	<style type='text/css'>
+		/* when chui is on apparently do nothing, cargo cult moment */
+	</style>
+	"}
+
+	HTML += {"
+	[header_thing_chui_toggle]
+	<title>Transception Interlink</title>
+	<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			margin: 0.2em 0;
+			background: #111520;
+			text-align: center;
+			padding: 0.2em;
+			border-top: 1px solid #456;
+			border-bottom: 1px solid #456;
+		}
+
+		h2 { font-size: 130%; }
+		h3 { font-size: 110%; margin-top: 1em; }
+	</style>"}
+
+	src.build_formatted_list()
+	if (src.formatted_list)
+		HTML += src.formatted_list
+
+	user.Browse(HTML, "window=transception_\ref[src];title=Transception Interlink;size=350x550;")
+	onclose(user, "transception_\ref[src]")
+	return
+
+/obj/machinery/computer/transception/proc/build_formatted_list()
+	if(src.list_is_updated) return
+	var/rollingtext = "<h2>Connected Pads <A href='[topicLink("ping")]'>(Ping)</A></h2>" //ongoing contents chunk, begun with head bit
+
+	if(!length(src.known_pads))
+		rollingtext += "NO DEVICES DETECTED<br>"
+		rollingtext += "Please Use Refresh Ping"
+
+	for (var/device_index in src.known_pads)
+		var/minitext = ""
+		var/list/manifest = known_pads[device_index]
+		for(var/field in manifest)
+			if(field != "INT_TARGETID")
+				minitext += "<strong>[field]</strong> &middot; [manifest[field]]<br>"
+		rollingtext += minitext
+		rollingtext += "<A href='[topicLink("send","\ref[device_index]")]'>Send</A> | "
+		rollingtext += "<A href='[topicLink("receive","\ref[device_index]")]'>Receive</A><br><br>"
+
+	src.formatted_list = rollingtext
+	src.list_is_updated = TRUE
+	return
+
+//aa ee oo
+/obj/machinery/computer/transception/proc/topicLink(action, subaction, var/list/extra)
+	return "?src=\ref[src]&action=[action][subaction ? "&subaction=[subaction]" : ""]&[extra && islist(extra) ? list2params(extra) : ""]"
+
+/obj/machinery/computer/transception/Topic(href, href_list)
+	if(..())
+		return
+
+	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
+
+	switch (href_list["action"])
+		if ("ping")
+			src.try_pad_ping()
+
+		if ("receive")
+			var/manifest_identifier = locate(subaction) in src.known_pads
+			var/list/manifest = known_pads[manifest_identifier]
+			if(manifest["Identifier"])
+				var/wanted_thing = input(usr,"! WORK IN PROGRESS !","Select Cargo",null) in shippingmarket.pending_crates
+				var/thingpos = shippingmarket.pending_crates.Find(wanted_thing)
+				if(thingpos)
+					src.build_command(manifest["INT_TARGETID"],thingpos)
+
+		if ("send")
+			var/manifest_identifier = locate(subaction) in src.known_pads
+			var/list/manifest = known_pads[manifest_identifier]
+			if(manifest["Identifier"])
+				src.build_command(manifest["INT_TARGETID"])
+
+	src.add_fingerprint(usr)
+	return

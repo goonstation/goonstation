@@ -9076,6 +9076,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/item/circuitboard/transception,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "fhJ" = (
@@ -12973,9 +12974,6 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
 	icon_state = "line1"
-	},
-/obj/decal/tile_edge/floorguide/qm{
-	dir = 8
 	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/quartermaster/magnet{
@@ -17058,7 +17056,7 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/southeast)
 "jlW" = (
-/obj/machinery/networked/transception_pad,
+/obj/machinery/transception_pad,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -18942,7 +18940,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/item/device/calibrator,
+/obj/machinery/computer/transception{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -20068,11 +20068,6 @@
 /turf/simulated/floor/engine,
 /area/station/chapel/sanctuary)
 "kOm" = (
-/obj/item/paper{
-	info = "Advanced controls have not been implemented. Please use control devices on pads to receive cargo, or use pads directly to send it.<br><br>Heavy use of system may cause interruptions in antenna operation due to electrical draw; quartermasters are authorized to open the transception antenna APC for maintenance.";
-	name = "crinkled paper";
-	pixel_x = 1
-	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -26078,7 +26073,6 @@
 /area/station/ranch)
 "oeW" = (
 /obj/machinery/door/airlock/pyro/command/alt,
-/obj/access_spawn/heads,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29786,9 +29780,6 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
 	icon_state = "line1"
-	},
-/obj/decal/tile_edge/floorguide/qm{
-	dir = 1
 	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/quartermaster/magnet{
@@ -34164,7 +34155,7 @@
 /turf/simulated/floor/engine,
 /area/station/security/main)
 "sTW" = (
-/obj/machinery/networked/transception_pad,
+/obj/machinery/transception_pad,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -35576,11 +35567,6 @@
 "tHG" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
-	},
-/obj/item/device/light/zippo,
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
@@ -35588,6 +35574,23 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/item/circuitboard/aiupload{
+	pixel_x = -2;
+	pixel_y = 15
+	},
+/obj/item/aiModule/reset{
+	pixel_x = 2;
+	pixel_y = 13
+	},
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/device/light/zippo,
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = 5;
+	pixel_y = 14
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
@@ -37019,7 +37022,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/item/device/calibrator,
+/obj/machinery/computer/transception{
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -37578,7 +37583,6 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/item/device/calibrator,
 /turf/simulated/floor/engine/caution/north,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"

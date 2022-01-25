@@ -276,7 +276,7 @@
 		var/minitext = ""
 		var/list/manifest = known_devices[device_index]
 		for(var/field in manifest)
-			if(field == "Intensity") //calibration isn't in yet, add it, seriously !!!!!!!!!!!
+			if(field == "Intensity")
 				var/maxintens = manifest["Maximum Intensity"]
 				minitext += "<strong>[field]</strong> &middot; [manifest[field]][maxintens ? " / [maxintens]" : ""] "
 				minitext += "<A href='[topicLink("calibrate","\ref[device_index]")]'>(Calibrate)</A><br>"
