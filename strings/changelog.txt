@@ -1,5 +1,9 @@
 
 (t)tue jan 25 22
+(u)Flaborized
+(p)7293
+(e)🎨|sprites
+(*)Resprited the blob UI buttons.
 (u)zjdtmkhzt
 (p)7230
 (e)⚖|balance
