@@ -316,7 +316,8 @@
 				return
 		src.point(src.target)
 		var/obj/A = src.target
-		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc)) A = A.loc
+		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
+			A = A.loc
 		if (ishuman(A?.loc) && prob(30))
 			speak(pick(src.chase_lines))
 		src.doing_something = 1
