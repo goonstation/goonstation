@@ -153,10 +153,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 				if (machinery_loc == home_loc)
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
+					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
 				else
 					P.set_loc(home_loc) // Send back to home location.
-					user.show_text("[src.machinery_name] send to home turf.", "blue")
+					flick("[P.icon_state]-tele", P)
+					user.show_text("[src.machinery_name] sent to home turf.", "blue")
 
 				if (hasvar(P, "occupant"))
 					if (istype(P, /obj/machinery/port_a_brig/))
