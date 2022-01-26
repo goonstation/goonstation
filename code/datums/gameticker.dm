@@ -758,8 +758,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 				bank_earnings.Subscribe( player.client )
 
 	//do bulk commit
-	cloud_put_bulk(json_encode(bulk_commit))
-	logTheThing("debug", null, null, "Done with spacebux")
+	SPAWN_DBG(0)
+		cloud_put_bulk(json_encode(bulk_commit))
+		logTheThing("debug", null, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
 		P.build_curr_contents()
