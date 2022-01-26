@@ -333,7 +333,7 @@
 	proc/print(var/destination)
 		if (printing)
 			return
-		printing = 1
+		printing = TRUE
 		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
 		sleep(1.75 SECONDS)
 		for (var/i in 0 to src.print_amount)
