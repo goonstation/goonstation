@@ -1,4 +1,5 @@
 /obj/machinery/computer/shuttle
+	var/alreadymagged = FALSE
 	name = "Shuttle"
 	icon_state = "shuttle"
 	var/auth_need = 3.0
@@ -166,21 +167,28 @@
 
 	if (user)
 		var/choice = alert(user, "Would you like to launch the shuttle?","Shuttle control", "Launch", "Cancel")
-		if(get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
-		switch(choice)
-			if("Launch")
-				if (emergency_shuttle.timeleft() <= 90)
-					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 20 seconds!</B></span>")
-					emergency_shuttle.settimeleft( 20 )
-					logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 20 seconds.")
+		if (get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+
+		if (alreadymagged == FALSE)
+			switch(choice)
+				if("Launch")
+					alreadymagged=TRUE
+					if (emergency_shuttle.timeleft() <= 90)
+						boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 20 seconds!</B></span>")
+						emergency_shuttle.settimeleft( 20 )
+						logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 20 seconds.")
+						return 1
+					else if(emergency_shuttle.timeleft() <= 30)
+						boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+						emergency_shuttle.settimeleft( 10 )
+						logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
+						return 1
+				if("Cancel")
 					return 1
-				else if(emergency_shuttle.timeleft() <= 30)
-					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
-					emergency_shuttle.settimeleft( 10 )
-					logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
-					return 1
-			if("Cancel")
-				return 1
+		else
+			boutput(user, "<span class='alert'>You have already emagged the shuttle.</span>")
+			return 1
+
 	else
 		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 		emergency_shuttle.settimeleft( 10 )
