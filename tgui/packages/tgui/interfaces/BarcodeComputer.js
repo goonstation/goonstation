@@ -89,7 +89,7 @@ export const BarcodeComputer = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section title="Scanned ID card">
+            <Section title="Scanned ID card" fill>
               <Box align="center">
                 <Button onClick={() => { act("reset_id"); }} color="grey">
                   <IDCard align="right" card={card} />

@@ -370,6 +370,8 @@
 				"icon" = icon_src,
 				"balance" = account?.get_field("current_money"),
 			)
+		else
+			.["card"] = null
 
 	ui_act(action, list/params)
 		. = ..()
@@ -390,6 +392,7 @@
 			scan = null
 			account = null
 			. = TRUE
+			src.updateUsrDialog()
 		// cogwerks - uncomment this stuff if/when custom locations are ready
 		/*else if (action == "remove")
 			if(destinations.Find(params["remove"]))
@@ -437,6 +440,7 @@
 			traders += list(list("crate_tag" = T.crate_tag, "name" = T.name))
 		.["sections"] += list(list("title" = "Traders", "destinations" = traders))
 		var/list/req_codes = new()
+		req_codes += list(list("crate_tag" = "REQ-THIRDPARTY", "name" = "Third party"))
 		for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 			req_codes += list(list("crate_tag" = RC.req_code, "name" = RC.name))
 		.["sections"] += list(list("title" = "Requisition contracts", "destinations" = req_codes))
