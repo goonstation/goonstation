@@ -270,7 +270,7 @@ function output(message, group, skipNonEssential, forceScroll) {
 
 			//get classes from messages, compare if its in messageclasses, and if so, add to entry
 			let addedClass = false;
-			let $message = $(message);
+			let $message = $('<span>'+message+'</span>');
 			$.each(opts.messageClasses, function (key, value) {
 				if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
 					entry.className += ' ' + value;
