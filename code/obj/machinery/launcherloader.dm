@@ -338,7 +338,6 @@
 		sleep(1.75 SECONDS)
 		for (var/i = 0; i < src.print_amount; i++)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
-			// var/dest = strip_html(href_list["print"], 64)
 			B.name = "Barcode Sticker ([destination])"
 			B.destination = destination
 			B.scan = src.scan
@@ -393,16 +392,6 @@
 			account = null
 			. = TRUE
 			src.updateUsrDialog()
-		// cogwerks - uncomment this stuff if/when custom locations are ready
-		/*else if (action == "remove")
-			if(destinations.Find(params["remove"]))
-				destinations.Remove(params["remove"])
-
-		else if (action == "add")
-			var/input = input(usr,"Enter new tag:","Tag","") as text
-			if(length(input) && !destinations.Find(input))
-				destinations.Add(input)*/
-
 
 	attackby(var/obj/item/I as obj, mob/user as mob)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
