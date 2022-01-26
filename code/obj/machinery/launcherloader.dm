@@ -333,10 +333,10 @@
 	proc/print(var/destination)
 		if (printing)
 			return
-		printing = 1
+		printing = TRUE
 		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
 		sleep(1.75 SECONDS)
-		for (var/i = 0; i < src.print_amount; i++)
+		for (var/i in 0 to src.print_amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			B.name = "Barcode Sticker ([destination])"
 			B.destination = destination
