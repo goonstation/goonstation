@@ -320,7 +320,7 @@
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 
-	var/printing = 0
+	var/printing = FALSE
 	var/print_amount = 1
 
 	// log account information for QM sales
