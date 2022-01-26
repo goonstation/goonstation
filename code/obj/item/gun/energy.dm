@@ -1034,6 +1034,7 @@
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
+			src.AddComponent(/datum/component/send_to_target_mob, src)
 			src.hunter_key = M.mind.key
 			START_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 			flick("[src.base_item_state]-tele", src)
@@ -1041,28 +1042,6 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
-
-	proc/send_to_target_mob(var/mob/living/M)
-		if (!src || !istype(src) || !M || !istype(M))
-			return
-
-		src.visible_message("<span class='alert'><b>The [src.name] is suddenly warped away!</b></span>")
-		elecflash(src)
-
-		if (ismob(src.loc))
-			var/mob/HH = src.loc
-			HH.u_equip(src)
-		if (istype(src.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = src.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(src)
-
-		src.set_loc(get_turf(M))
-		flick("[src.base_item_state]-tele", src)
-		if (!M.put_in_hand(src))
-			M.show_text("[src.name] summoned successfully. You can find it on the floor at your current location.", "blue")
-		else
-			M.show_text("[src.name] summoned successfully. You can find it in your hand.", "blue")
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 /obj/item/gun/energy/pickpocket

@@ -63,7 +63,7 @@
 					if (get_turf(M.loc) == get_turf(PG.loc))
 						gun_found = TRUE
 					else
-						PG.send_to_target_mob(M)
+						SEND_SIGNAL(PG, COMSIG_SEND_TO_MOB, M, TRUE)
 						gun_found = TRUE
 			else if (istype(HG, /obj/item/knife/butcher/hunterspear))
 				var/obj/item/knife/butcher/hunterspear/HS = HG
@@ -71,7 +71,7 @@
 					if (get_turf(M.loc) == get_turf(HS.loc))
 						spear_found = TRUE
 					else
-						HS.send_to_target_mob(M)
+						SEND_SIGNAL(HS, COMSIG_SEND_TO_MOB, M, TRUE)
 						spear_found = TRUE
 			else if (istype(HG, /obj/item/cloaking_device/hunter))
 				var/obj/item/cloaking_device/hunter/HC = HG
@@ -79,7 +79,7 @@
 					if (get_turf(M.loc) == get_turf(HC.loc))
 						cloak_found = TRUE
 					else
-						HC.send_to_target_mob(M)
+						SEND_SIGNAL(HC, COMSIG_SEND_TO_MOB, M, TRUE)
 						cloak_found = TRUE
 		if (!gun_found)
 			boutput(M, "<span class='alert'>Your plasma gun is lost or destroyed!</span>")
