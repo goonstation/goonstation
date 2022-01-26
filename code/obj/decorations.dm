@@ -113,7 +113,7 @@
 
 /obj/river
 	name = "River"
-	desc = "Some flowing water"
+	desc = "Some flowing water."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "river"
 	anchored = 1

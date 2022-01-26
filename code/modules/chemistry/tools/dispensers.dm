@@ -138,7 +138,7 @@
 
 /obj/reagent_dispensers/foamtank
 	name = "foamtank"
-	desc = "A massive tank full of firefighting foam, for refilling extinguishers"
+	desc = "A massive tank full of firefighting foam, for refilling extinguishers."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "foamtank"
 	amount_per_transfer_from_this = 25

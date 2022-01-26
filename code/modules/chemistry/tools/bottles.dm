@@ -78,7 +78,7 @@
 
 /obj/item/reagent_containers/glass/bottle/aspirin
 	name = "bottle (salicylic acid)"
-	desc = "A small bottle containing salicyclic acid, used as a painkiller and in treating moderate injuries."
+	desc = "A small bottle containing salicyclic acid, used as a painkiller and for treating moderate injuries."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "salicylic_acid"
@@ -99,7 +99,7 @@
 
 /obj/item/reagent_containers/glass/bottle/proconvertin
 	name = "bottle (proconvertin)"
-	desc = "A small bottle of coagulant, for helping reduce blood loss and blood pressure. It has a warning label on it about hypertension."
+	desc = "A small bottle of coagulant, for reducing blood loss and increasing blood pressure. It has a warning label on it about hypertension."
 	bottle_style = "2"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "proconvertin"
@@ -213,7 +213,7 @@
 
 /obj/item/reagent_containers/glass/bottle/pancuronium
 	name = "pancuronium bottle"
-	desc = "A small bottle of pancuronium, an extreme muslce relaxant. It has a warning label on it about impaired breathing and unconciousness."
+	desc = "A small bottle of pancuronium, an extreme muscle relaxant. It has a warning label on it about impaired breathing and unconciousness."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "pancuronium"
@@ -227,7 +227,7 @@
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
 	name = "bottle (antihistamine)"
-	desc = "A small bottle of antihistamines, useful for reducing the severity of allergic reactions."
+	desc = "A small bottle of antihistamine, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"
@@ -262,7 +262,7 @@
 
 /obj/item/reagent_containers/glass/bottle/fluorosurfactant
 	name = "fluorosurfactant bottle"
-	desc = "A small bottle of fluorosurfactant, a chemical that foams rapidly when mixed with water"
+	desc = "A small bottle of fluorosurfactant, a chemical that foams rapidly when mixed with water."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "fluorosurfactant"
