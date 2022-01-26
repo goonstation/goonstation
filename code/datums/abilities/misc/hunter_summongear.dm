@@ -23,7 +23,7 @@
 		return 0
 
 /datum/action/bar/private/icon/hunter_summongear
-	duration = 50
+	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
 	id = "hunter_gearteleport"
 	icon = 'icons/mob/screen1.dmi'
@@ -59,43 +59,37 @@
 		for(var/HG in by_cat[TR_CAT_HUNTER_GEAR])
 			if (istype(HG, /obj/item/gun/energy/plasma_gun/hunter))
 				var/obj/item/gun/energy/plasma_gun/hunter/PG = HG
-				if (M.mind && M.mind.key == PG.hunter_key)
+				if (M.mind?.key == PG.hunter_key)
 					if (get_turf(M.loc) == get_turf(PG.loc))
 						gun_found = TRUE
-						continue
 					else
 						PG.send_to_target_mob(M)
 						gun_found = TRUE
-						continue
 			else if (istype(HG, /obj/item/knife/butcher/hunterspear))
 				var/obj/item/knife/butcher/hunterspear/HS = HG
-				if (M.mind && M.mind.key == HS.hunter_key)
+				if (M.mind?.key == HS.hunter_key)
 					if (get_turf(M.loc) == get_turf(HS.loc))
 						spear_found = TRUE
-						continue
 					else
 						HS.send_to_target_mob(M)
 						spear_found = TRUE
-						continue
 			else if (istype(HG, /obj/item/cloaking_device/hunter))
 				var/obj/item/cloaking_device/hunter/HC = HG
-				if (M.mind && M.mind.key == HC.hunter_key)
+				if (M.mind?.key == HC.hunter_key)
 					if (get_turf(M.loc) == get_turf(HC.loc))
 						cloak_found = TRUE
-						continue
 					else
 						HC.send_to_target_mob(M)
 						cloak_found = TRUE
-						continue
 		if (!gun_found)
-			boutput(M, __red("Your plasma gun is lost or destroyed!"))
-		else if (!spear_found)
-			boutput(M, __red("Your hunting spear is lost or destroyed!"))
-		else if (!cloak_found)
-			boutput(M, __red("Your cloaking device is lost or destroyed!"))
+			boutput(M, "<span class='alert'>Your plasma gun is lost or destroyed!</span>")
+		if (!spear_found)
+			boutput(M, "<span class='alert'>Your hunting spear is lost or destroyed!</span>")
+		if (!cloak_found)
+			boutput(M, "<span class='alert'>Your cloaking device is lost or destroyed!</span>")
 
 	onInterrupt()
 		..()
 
 		var/mob/living/M = owner
-		boutput(M, __red("You were interrupted!"))
+		boutput(M, "<span class='alert'>You were interrupted!</span>")
