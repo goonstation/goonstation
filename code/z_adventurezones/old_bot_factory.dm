@@ -277,6 +277,7 @@
 	secure = 2
 
 	update_icon()
+
 		if (src.open)
 			src.locked = 0
 			src.remove_prefixes("locked")

@@ -14,7 +14,7 @@
 
 	New()
 		..()
-		src.satchel_updateicon()
+		src.UpdateIcon()
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		var/proceed = 0
@@ -33,7 +33,7 @@
 			boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			W.add_fingerprint(user)
 			if (src.contents.len == src.maxitems) boutput(user, "<span class='notice'>[src] is now full!</span>")
-			src.satchel_updateicon()
+			src.UpdateIcon()
 			tooltip_rebuild = 1
 		else boutput(user, "<span class='alert'>[src] is full!</span>")
 
@@ -44,7 +44,7 @@
 				I.set_loc(T)
 				I.add_fingerprint(user)
 			boutput(user, "<span class='notice'>You empty out [src].</span>")
-			src.satchel_updateicon()
+			src.UpdateIcon()
 			tooltip_rebuild = 1
 		else ..()
 
@@ -76,7 +76,7 @@
 					user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
 					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
 					user.put_in_hand_or_drop(getItem)
-					src.satchel_updateicon()
+					src.UpdateIcon()
 			tooltip_rebuild = 1
 		return ..(user)
 
@@ -136,7 +136,7 @@
 				I.set_loc(src)
 				I.add_fingerprint(user)
 				if (!(interval++ % 5))
-					src.satchel_updateicon()
+					src.UpdateIcon()
 					sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (src.contents.len >= src.maxitems)
@@ -144,10 +144,11 @@
 					break
 			boutput(user, "<span class='notice'>You finish filling \the [src].</span>")
 		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
-		src.satchel_updateicon()
+		src.UpdateIcon()
 		tooltip_rebuild = 1
 
-	proc/satchel_updateicon()
+	update_icon()
+
 		var/perc
 		if (src.contents.len > 0 && src.maxitems > 0)
 			perc = (src.contents.len / src.maxitems) * 100
@@ -222,7 +223,8 @@
 		flags = null
 		w_class = W_CLASS_NORMAL
 
-		satchel_updateicon()
+		update_icon()
+
 			return
 
 		// ITS GONNA BE CLICKY AND OPEN OK   SHUT UP
@@ -265,6 +267,6 @@
 		for(var/i = 0, i < maxitems, i++)
 			var/obj/item/toy/figure/F = new()
 			F.set_loc(src)
-			src.satchel_updateicon()
+			src.UpdateIcon()
 		tooltip_rebuild = 1
 

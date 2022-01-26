@@ -348,7 +348,7 @@
 	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.")
 	for(var/area/A in world)
 		A.eject = 1
-		A.updateicon()
+		A.UpdateIcon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
 		shake_camera(N, 120, 8)
@@ -380,7 +380,7 @@
 	for(var/area/A in world)
 		LAGCHECK(LAG_LOW)
 		A.eject = 0
-		A.updateicon()
+		A.UpdateIcon()
 
 /mob/proc/spin()
 	set category = "Spells"

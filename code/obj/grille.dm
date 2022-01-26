@@ -21,7 +21,7 @@
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -30,7 +30,7 @@
 				if (map_setting && ticker)
 					src.update_neighbors()
 
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		var/list/neighbors = null
@@ -40,7 +40,7 @@
 				neighbors += O //find all of our neighbors before we move
 		..()
 		for (var/obj/grille/O in neighbors)
-			O?.update_icon() //now that we are in nullspace tell them to update
+			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
 	steel
 #ifdef IN_MAP_EDITOR
@@ -77,7 +77,7 @@
 		connects_to_turf = null
 		event_handler_flags = 0
 
-		update_icon(special_icon_state)
+		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
 				return
 
@@ -164,13 +164,13 @@
 
 			amount -= armor
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			update_icon("cut")
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -183,14 +183,14 @@
 
 		amount = get_damage_after_percentage_based_armor_reduction(cut_resist,amount)
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			drop_rods(1)
-			update_icon("cut")
+			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -201,13 +201,13 @@
 			return
 
 		amount = get_damage_after_percentage_based_armor_reduction(corrode_resist,amount)
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			update_icon("corroded")
+			UpdateIcon("corroded")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	damage_heat(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -222,13 +222,13 @@
 				// Not applying enough heat to melt it
 				return
 
-		src.health = max(0,min(src.health - amount,src.health_max))
+		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			update_icon("melted")
+			UpdateIcon("melted")
 			src.set_density(0)
 			src.ruined = 1
 		else
-			update_icon()
+			UpdateIcon()
 
 	meteorhit(var/obj/M)
 		if (istype(M, /obj/newmeteor/massive))
@@ -277,6 +277,10 @@
 		src.visible_message("<span class='alert'><B>[src] was hit by [AM].</B></span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
+			if(src?.material.hasProperty("electrical"))
+				shock(AM, 100 - (60 - src.material.getProperty("electrical")))  // sure loved people being able to throw corpses into these without any consequences.
+			else
+				shock(AM, 100) // no electrical stat means that it returns -1, default value is 60
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
@@ -416,7 +420,8 @@
 					damage_blunt(W.force * 0.5)
 		return
 
-	proc/update_icon(var/special_icon_state)
+	update_icon(var/special_icon_state)
+
 		if (ruined)
 			return
 
@@ -472,7 +477,7 @@
 
 	proc/update_neighbors()
 		for (var/obj/grille/G in orange(1,src))
-			G.update_icon()
+			G.UpdateIcon()
 
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))
@@ -516,6 +521,17 @@
 			return 0
 
 		return src.electrocute(user, prb, net, ignore_gloves)
+
+	proc/lightningrod(lpower)
+		if (!anchored)
+			return FALSE
+		var/net = get_connection()
+		if (!powernets[net])
+			return FALSE
+		if (src?.material.hasProperty("electrical")) // if the material being checked does not have the stat set, it will return -1 which is bad
+			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical"))
+		else
+			powernets[net].newavail += lpower / 100 * (100 - 60) // electrical default value is 60 according to Mat_Properties.dm
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))

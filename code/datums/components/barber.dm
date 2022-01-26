@@ -84,7 +84,7 @@
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
-		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace.name] mutant race at [log_loc(user)].")
+		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed at [log_loc(user)].")
 		return ATTACK_PRE_DONT_ATTACK
 
 	if(non_murderous_failure)
@@ -151,7 +151,7 @@
 		M.emote("cry")
 		M.emote("scream")
 		if (M.organHolder?.head)
-			M.organHolder.head.update_icon()
+			M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
 	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))

@@ -1162,7 +1162,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	name = "museum of lunar history t-shirt"
 	desc = "Size small.  However, just fifty years ago this would have been considered an XXL."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "moon_tshirt"
 	item_state = "moon_tshirt"
@@ -1273,7 +1273,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 	process()
 		if (status & NOPOWER)
-			update_icon()
+			UpdateIcon()
 			return
 
 		return ..()
@@ -1565,7 +1565,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if(!(status & NOPOWER) && program)
 			program.process()
 
-		update_icon()
+		UpdateIcon()
 
 	updateUsrDialog(var/reason)
 		var/list/nearby = viewers(1, src)

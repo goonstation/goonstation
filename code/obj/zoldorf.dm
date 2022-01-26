@@ -193,8 +193,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if(istype(H))
 			holderim = image(H.flat_icon)
 		holderim.filters += filter(type="alpha", icon=image('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
-		holderim.overlays += image('icons/mob/overcoats/worn_suit.dmi', icon_state="wizard")
-		holderim.overlays += image('icons/mob/head.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/head.dmi', icon_state="wizard")
 		holderim.pixel_y = -3
 
 		//overlay player

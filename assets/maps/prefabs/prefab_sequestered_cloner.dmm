@@ -143,7 +143,7 @@
 	name = "Molecular Integrity Hazard";
 	pixel_y = -4
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/sequestered_cloner)
 "ob" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -263,7 +263,7 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "rW" = (
-/obj/storage/secure/closet/command/chief_engineer{
+/obj/storage/secure/closet/command/chief_engineer/puzzle{
 	locked = 0;
 	pixel_x = -8
 	},
@@ -295,7 +295,7 @@
 	},
 /area/prefab/sequestered_cloner)
 "tI" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/sequestered_cloner)
 "tJ" = (
 /turf/simulated/floor/plating,
@@ -717,7 +717,7 @@
 /obj/cable{
 	icon_state = "5-9"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/sequestered_cloner)
 "Me" = (
 /obj/decal/cleanable/blood/tracks,

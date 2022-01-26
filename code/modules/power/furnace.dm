@@ -29,7 +29,7 @@
 		else
 			on_inactive()
 
-		update_icon()
+		UpdateIcon()
 
 	proc/on_burn()
 		add_avail(src.genrate)
@@ -37,7 +37,7 @@
 	proc/on_inactive()
 		return
 
-	proc/update_icon()
+	update_icon()
 		if(active != last_active)
 			last_active = active
 			if(src.active)
@@ -78,6 +78,9 @@
 			else
 				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
+				if (!isdead(grab.affecting))
+					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
+					return
 				if(target?.buckled || target?.anchored)
 					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
 					return

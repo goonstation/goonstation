@@ -3,9 +3,8 @@
 	desc = "A manufacturing unit calibrated to produce parts for ships."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resource_amt = 20
 	var/team_num = 0			//NT = 1, SY = 2
-
+	free_resource_amt = 20
 	free_resources = list(
 		/obj/item/material_piece/mauxite,
 		/obj/item/material_piece/pharosium,
@@ -42,7 +41,19 @@
 	)
 
 	New()
+		START_TRACKING
+		..()
 		add_team_armor()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	claim_free_resources(datum/game_mode/pod_wars/PW)
+		if (team_num == TEAM_NANOTRASEN)
+			src.resource_amounts = PW.team_NT.resources
+		else if (team_num == TEAM_SYNDICATE)
+			src.resource_amounts = PW.team_SY.resources
 		..()
 
 	proc/add_team_armor()
@@ -246,7 +257,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	category = "Ammo"
 
 /obj/machinery/manufacturer/mining/pod_wars/
+	var/team_num = 0
+
 	New()
+		START_TRACKING
 		available -= /datum/manufacture/ore_accumulator
 		available -= /datum/manufacture/jetpack
 
@@ -256,13 +270,28 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 		hidden = list()
 		..()
 
+	disposing()
+		STOP_TRACKING
+		..()
+
+	claim_free_resources(datum/game_mode/pod_wars/PW)
+		if (team_num == TEAM_NANOTRASEN)
+			src.resource_amounts = PW.team_NT.resources
+		else if (team_num == TEAM_SYNDICATE)
+			src.resource_amounts = PW.team_SY.resources
+		..()
+
 /obj/machinery/manufacturer/mining/pod_wars/syndicate
+	team_num = TEAM_SYNDICATE
+
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/syndicate
 		available += /datum/manufacture/pod_wars/jetpack/syndicate
 		..()
 
 /obj/machinery/manufacturer/mining/pod_wars/nanotrasen
+	team_num = TEAM_NANOTRASEN
+
 	New()
 		available += /datum/manufacture/pod_wars/accumulator/nanotrasen
 		available += /datum/manufacture/pod_wars/jetpack

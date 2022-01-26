@@ -36,6 +36,7 @@ export interface CharacterPreferencesData {
   pdaColor: string;
   pdaRingtone: string;
   skinTone: string;
+  specialStyle: string;
   eyeColor: string;
   customColor1: string;
   customStyle1: string;

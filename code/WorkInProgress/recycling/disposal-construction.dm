@@ -183,7 +183,7 @@
 					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
-					P.updateicon()
+					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
 
 					qdel(src)

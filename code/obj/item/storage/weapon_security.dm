@@ -180,7 +180,7 @@
 /obj/item/storage/box/banana_grenade_kit
 	name = "banana grenade box"
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 // Detective luminol grenades
 /obj/item/storage/box/luminol_grenade_kit
@@ -214,7 +214,7 @@
 	name = "experimental biological grenade box"
 	desc = "A box of experimental biological grenades."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
 
 /obj/item/storage/box/crowdgrenades
 	name = "crowd dispersal grenades"

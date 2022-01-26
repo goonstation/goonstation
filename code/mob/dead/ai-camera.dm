@@ -33,6 +33,8 @@
 	var/y_edge = 0
 	var/turf/T = 0
 
+	var/outer_eye_atom = null
+
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
@@ -134,6 +136,25 @@
 			last_loc = src.loc
 			..()
 
+	set_eye(atom/new_eye)
+		var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
+		if( !(T && isrestrictedz(T.z)) )
+			src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)
+		else
+			src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+
+		if(new_eye && new_eye != src)
+			var/atom/movable/temp = new_eye
+			while(!istype(temp.loc, /turf))
+				temp = temp.loc
+			UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+			outer_eye_atom = temp
+		else
+			UnregisterSignal(src.outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+		. = ..()
+
+
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
@@ -198,25 +219,7 @@
 			mainframe.switchCamera(locate(href_list["switchcamera"]))
 		if (href_list["showalerts"])
 			mainframe.ai_alerts()
-		if (href_list["termmsg"]) //Oh yeah, message that terminal!
-			var/termid = href_list["termmsg"]
-			if(!termid || !(termid in mainframe.terminals))
-				boutput(src, "That terminal is not connected!")
-				return
-			var/t = input(usr, "Please enter message", termid, null) as text
-			if (!t)
-				return
 
-			if(isdead(mainframe))
-				boutput(src, "You cannot interface with a terminal because you are dead!")
-				return
-
-			t = copytext(adminscrub(t), 1, 65)
-			//Send the actual message signal
-			boutput(src, "<b>([termid]):</b> [t]")
-			mainframe.post_status(termid, "command","term_message","data",t)
-			//Might as well log what they said too!
-			logTheThing("diary", src, null, ": [t]", "say")
 		return
 
 	Stat()
@@ -257,8 +260,8 @@
 	say_radio()
 		src.mainframe.say_radio()
 
-	say_main_radio()
-		src.mainframe.say_main_radio()
+	say_main_radio(msg as text)
+		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
 		if (mainframe)
@@ -318,6 +321,18 @@
 		set name = "State All Laws"
 		if (mainframe)
 			mainframe.ai_state_laws_all()
+
+	verb/ai_set_laws_all()
+		set category = "AI Commands"
+		set name = "Set Fake Laws"
+		if (mainframe)
+			mainframe.ai_set_fake_laws()
+
+	verb/ai_state_laws_fake()
+		set category = "AI Commands"
+		set name = "State Fake Laws"
+		if (mainframe)
+			mainframe.ai_state_fake_laws()
 
 	verb/ai_statuschange()
 		set category = "AI Commands"
@@ -437,6 +452,13 @@
 		if(mainframe)
 			mainframe.ai_station_announcement()
 
+	verb/view_messageLog()
+		set name = "View Message Log"
+		set desc = "View all messages sent by terminal connections."
+		set category = "AI Commands"
+		if(mainframe)
+			mainframe.view_messageLog()
+
 //---TURF---//
 /turf/var/image/aiImage
 /turf/var/list/cameras = null
@@ -490,9 +512,9 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 //pod wars has no AI so this is just a waste of time...
 #ifndef MAP_OVERRIDE_POD_WARS
+		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 
 		var/lastpct = 0
 		var/thispct = 0
@@ -552,3 +574,17 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
 	world.updateCameraVisibility()
 
+/mob/dead/aieye/proc/check_eye_z(source)
+	var/atom/movable/temp = source
+	while(!istype(temp.loc, /turf))
+		temp = temp.loc
+	if(temp != source)
+		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+		outer_eye_atom = temp
+
+	var/turf/T = get_turf(temp)
+	if(isrestrictedz(T?.z))
+		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+	else
+		src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)

@@ -2,14 +2,13 @@
 
 obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
-#define MAXCOIL 120
 #define STARTCOIL 30 //base type starting coil amt
 /obj/item/cable_coil
 	name = "cable coil"
 	var/base_name = "cable coil"
 	desc = "A coil of power cable."
 	amount = STARTCOIL
-	max_stack = MAXCOIL
+	max_stack = 120
 	stack_type = /obj/item/cable_coil // so cut cables can stack with partially depleted full coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -43,7 +42,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		src.amount = length
 		pixel_x = rand(-2,2)
 		pixel_y = rand(-2,2)
-		updateicon()
+		UpdateIcon()
 		..(loc)
 		if (spawn_conductor_name)
 			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
@@ -94,7 +93,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return 1
 		else
 			amount -= used
-			updateicon()
+			UpdateIcon()
 			return 1
 
 	proc/take(var/amt, var/newloc)
@@ -109,11 +108,11 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		src.use(amt)
 		var/obj/item/cable_coil/C = new /obj/item/cable_coil(newloc)
 		C.amount = amt
-		C.updateicon()
+		C.UpdateIcon()
 		C.setInsulator(insulator)
 		C.setConductor(conductor)
 
-	proc/updateicon()
+	update_icon()
 		if (amount <= 0)
 			qdel(src)
 		else if (amount >= 1 && amount <= 4)
@@ -158,7 +157,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	cable_obj_type = /obj/cable/reinforced
 
-	New(loc, length = MAXCOIL)
+	New(loc, length = max_stack)
 		..(loc, length)
 
 /obj/item/cable_coil/reinforced/cut
@@ -238,23 +237,25 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		src.amount--
 		take(1, usr.loc)
 		boutput(user, "You cut a piece off the [base_name].")
-		src.updateicon()
+		src.UpdateIcon()
 		return
 
 	else if (istype(W, /obj/item/cable_coil))
+		if(isrobot(user))
+			src.max_stack = 500
 		var/obj/item/cable_coil/C = W
 		if(!isSameMaterial(C.conductor, src.conductor) || !isSameMaterial(C.insulator, src.insulator))
 			boutput(user, "You cannot link together cables made from different materials. That would be silly.")
 			return
 
-		if (C.amount >= MAXCOIL)
+		if (C.amount >= max_stack)
 			boutput(user, "The coil is too long, you cannot add any more cable to it.")
 			return
 
-		if ((C.amount + src.amount <= MAXCOIL))
+		if ((C.amount + src.amount <= max_stack))
 			C.amount += src.amount
 			boutput(user, "You join the cable coils together.")
-			C.updateicon()
+			C.UpdateIcon()
 			if(istype(src.loc, /obj/item/storage))
 				var/obj/item/storage/storage = src.loc
 				storage.hud.remove_object(src)
@@ -266,17 +267,17 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return
 
 		else
-			boutput(user, "You transfer [MAXCOIL - src.amount ] length\s of cable from one coil to the other.")
-			src.amount -= (MAXCOIL-C.amount)
-			src.updateicon()
-			C.amount = MAXCOIL
-			C.updateicon()
+			boutput(user, "You transfer [max_stack - src.amount ] length\s of cable from one coil to the other.")
+			src.amount -= (max_stack-C.amount)
+			src.UpdateIcon()
+			C.amount = max_stack
+			C.UpdateIcon()
 			return
 
 /obj/item/cable_coil/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
 	for (var/obj/item/cable_coil/C in view(1, user))
-		C.updateicon()
+		C.UpdateIcon()
 
 // called when cable_coil is clicked on a turf/simulated/floor
 /obj/item/cable_coil/proc/turf_place_between(turf/A, turf/B)
@@ -298,7 +299,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	applyCableMaterials(NC, src.insulator, src.conductor)
 	NC.d1 = 0
 	NC.d2 = dirn
-	NC.updateicon()
+	NC.UpdateIcon()
 	NC.update_network()
 	NC.log_wirelaying(usr)
 	src.use(1)
@@ -342,7 +343,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		applyCableMaterials(NC, src.insulator, src.conductor)
 		NC.d1 = nd1
 		NC.d2 = nd2
-		NC.updateicon()
+		NC.UpdateIcon()
 		NC.update_network()
 		NC.log_wirelaying(usr)
 		src.use(1)
@@ -380,7 +381,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		C.d1 = 0
 		C.d2 = dirn
 		C.add_fingerprint(user)
-		C.updateicon()
+		C.UpdateIcon()
 		C.update_network()
 		applyCableMaterials(C, src.insulator, src.conductor)
 		C.log_wirelaying(user)
@@ -427,7 +428,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			NC.d1 = 0
 			NC.d2 = fdirn
 			NC.add_fingerprint()
-			NC.updateicon()
+			NC.UpdateIcon()
 			NC.update_network()
 			NC.log_wirelaying(user)
 			src.use(1)
@@ -458,7 +459,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		NC.d1 = nd1
 		NC.d2 = nd2
 		NC.add_fingerprint()
-		NC.updateicon()
+		NC.UpdateIcon()
 		NC.update_network()
 		NC.log_wirelaying(user)
 		src.use(1)

@@ -11,7 +11,7 @@
 
 /obj/machinery/disposal
 	name = "disposal unit"
-	desc = "A pneumatic waste disposal unit."
+	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "disposal"
 	anchored = 1
@@ -96,7 +96,7 @@
 			if (action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
 				for(var/obj/item/O in S.contents) O.set_loc(src)
-				S.satchel_updateicon()
+				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		if (istype(I,/obj/item/storage/) && I.contents.len)
@@ -686,7 +686,6 @@
 			else
 				..()
 				return
-			actions.interrupt(target, INTERRUPT_MOVE)
 			target.set_loc(chute)
 
 			if (msg)

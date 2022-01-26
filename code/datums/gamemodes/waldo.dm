@@ -23,7 +23,7 @@
 	for(var/mob/new_player/player in mobs)
 		if (player.client && player.ready) num_players++
 
-	var/num_waldos = max(1, min(round(num_players / 6), waldos_possible))
+	var/num_waldos = clamp(round(num_players / 6), 1, waldos_possible)
 
 	var/list/chosen_waldos = antagWeighter.choose(pool = possible_waldos, role = "waldo", amount = num_waldos, recordChosen = 1)
 	for (var/datum/mind/waldo in chosen_waldos)

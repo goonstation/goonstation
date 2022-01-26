@@ -23,7 +23,7 @@
 
 		switch(lowertext(command))
 			if ("help")
-				src.print_text("Command List:<br> read_power - Gets power usage<br>power_ratios - Displays sub-system power ratios.<br>damage - Lists damaged systems<br>set_power (thrusters/weapons/shields) (percentage) - Adjusts how much power subsystems recieve.<br>reboot (turret_l/turret_r/engine/life_support/pod_weapons/pod_navigation/pod_defense) - Restores basic functions of the given system while degrading the ship.")
+				src.print_text("Command List:<br> read_power - Gets power usage<br>power_ratios - Displays sub-system power ratios.<br>damage - Lists damaged systems<br>set_power (thrusters/weapons/shields) (percentage) - Adjusts how much power subsystems receive.<br>reboot (turret_l/turret_r/engine/life_support/pod_weapons/pod_navigation/pod_defense) - Restores basic functions of the given system while degrading the ship.")
 				return
 
 			if ("reboot")
@@ -80,10 +80,10 @@
 		if ((..()) || (!signal))
 			return
 		if (command == "read_power")
-			var/list/recieved = params2list(signal.data["usage_breakdown"])
+			var/list/received = params2list(signal.data["usage_breakdown"])
 			src.print_text("Power: [signal.data["used_last"]]Pu / [signal.data["prod_last"]]Pu")
-			for(var/X in recieved)
-				src.print_text("--[X]: [recieved[X]]")
+			for(var/X in received)
+				src.print_text("--[X]: [received[X]]")
 			src.print_text("<br>")
 			return
 
@@ -272,7 +272,7 @@
 					return
 				var/datum/signal/newsignal = get_free_signal()
 
-				percentage = min(max(percentage, 1), 500)
+				percentage = clamp(percentage, 1, 500)
 
 				switch(lowertext(signal.data["system"]))
 					if("thrusters")

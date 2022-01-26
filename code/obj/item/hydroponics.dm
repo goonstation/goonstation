@@ -53,7 +53,7 @@
 		..()
 		SPAWN_DBG(0.5 SECONDS)
 			if (src)
-				src.update_icon()
+				src.UpdateIcon()
 		BLOCK_SETUP(BLOCK_ROD)
 		return
 
@@ -72,7 +72,7 @@
 		src.check_health()
 		return
 
-	proc/update_icon()
+	update_icon()
 		set_icon_state("[src.base_state][src.active ? null : "_off"]")
 		return
 
@@ -166,7 +166,7 @@
 			boutput(user, "<span class='notice'>[src] is now off.</span>")
 			src.force = off_force
 		tooltip_rebuild = 1
-		src.update_icon()
+		src.UpdateIcon()
 		user.update_inhands()
 		src.add_fingerprint(user)
 		return

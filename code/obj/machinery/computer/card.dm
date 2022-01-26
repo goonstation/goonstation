@@ -420,6 +420,7 @@
 			if (t1 == "Custom Assignment")
 				t1 = input(usr, "Enter a custom job assignment.", "Assignment")
 				t1 = strip_html(t1, 100, 1)
+				logTheThing("station", usr, null, "changes the assignment on the ID card from [src.modify.assignment] to [t1]")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
 				src.modify.access = get_access(t1)

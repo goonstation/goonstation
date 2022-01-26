@@ -78,7 +78,7 @@
 					return ..()
 				else
 					C.amount -= 8
-					C.updateicon()
+					C.UpdateIcon()
 					user.drop_item()
 					var/obj/item/dynassembly/fruit/A = new /obj/item/dynassembly/fruit(get_turf(src))
 					A.newpart(A,src,1) //returns assembly we created, fruit we made it from, and 1st run

@@ -281,7 +281,7 @@
 	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
-		var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+		var/enterpin = usr.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
 			boutput(user, "<span class='notice'>Card authorized.</span>")
 			src.scan = card
@@ -1125,7 +1125,7 @@
 
 /obj/machinery/vending/medical
 	name = "NanoMed Plus"
-	desc = "Medical drug dispenser."
+	desc = "An ID-selective dispenser for drugs and medical equipment"
 	icon_state = "med"
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
@@ -1231,7 +1231,7 @@
 
 /obj/machinery/vending/security
 	name = "SecTech"
-	desc = "A security equipment vendor."
+	desc = "An ID-selective dispenser for security equipment."
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
@@ -1262,7 +1262,7 @@
 
 /obj/machinery/vending/security_ammo //ass jam time yes
 	name = "AmmoTech"
-	desc = "A restricted ammunition vendor."
+	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
@@ -1771,7 +1771,7 @@
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
-			C.updateicon()
+			C.UpdateIcon()
 			wiresinstalled = FALSE
 		else if (state == "DECONSTRUCTED")
 			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
@@ -2231,7 +2231,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 1)
 
 /obj/machinery/vending/standard
-	desc = "A standard vending machine."
+	desc = "A vending machine full of various useful tools and devices that definitely cannot be used to make bombs"
 	icon_state = "standard"
 	icon_panel = "standard-panel"
 	acceptcard = 0
@@ -2774,7 +2774,7 @@
 		if(href_list["changepressure"])
 			var/change = input(usr,"Target Pressure (10.1325-1013.25):","Enter target pressure",target_pressure) as num
 			if(isnum_safe(change))
-				target_pressure = min(max(10.1325, change),1013.25)
+				target_pressure = clamp(change, 10.1325, 1013.25)
 				src.updateUsrDialog()
 
 		if(href_list["fill"])

@@ -132,7 +132,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 		// proximity
 		if (1)
@@ -155,7 +155,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 
 		// timer
@@ -178,7 +178,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 	qdel(src)
 
 

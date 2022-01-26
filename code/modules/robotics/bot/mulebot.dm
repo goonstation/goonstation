@@ -302,7 +302,7 @@
 						usr.put_in_hand_or_drop(cell)
 
 						cell.add_fingerprint(usr)
-						cell.updateicon()
+						cell.UpdateIcon()
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
@@ -576,8 +576,11 @@
 								mode = 2
 
 						else		// failed to move
-
-							//boutput(world, "Unable to move.")
+							// we did not move, so let us see if we are being blocked by a door
+							var/obj/machinery/door/block_door = locate(/obj/machinery/door/) in next
+							if (block_door)
+								// we patiently wait for the door - they only need half their operation time until they are non-dense
+								sleep(block_door.operation_time/2)
 
 							blockcount++
 							mode = 4

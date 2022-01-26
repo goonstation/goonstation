@@ -610,7 +610,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/electropack
 	name = "\improper Electropack"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "electropack0"
 	var/code = 2.0
 	var/on = 0.0
@@ -767,7 +767,7 @@ Code:
 	frequency = FREQ_SIGNALER
 	var/delay = 0
 	var/airlock_wire = null
-	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that recieves the signal."
+	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
 
 /*
 /obj/item/device/radio/signaler/examine()
@@ -869,14 +869,17 @@ obj/item/device/radio/signaler/attackby(obj/item/W as obj, mob/user as mob)
 		if (src.master && istype(src.master, /obj/item/device/transfer_valve))
 			logTheThing("bombing", usr, null, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
 
 		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
 			var/obj/item/assembly/rad_ignite/RI = src.master
 			logTheThing("bombing", usr, null, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
 
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
 			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			SEND_SIGNAL(src.master, COMSIG_BOMB_SIGNAL_START)
 		SPAWN_DBG(0)
 			src.master.receive_signal(signal)
 	for(var/mob/O in hearers(1, src.loc))

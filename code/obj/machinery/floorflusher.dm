@@ -68,6 +68,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			trunk = locate() in src.loc
 			if(!trunk)
@@ -85,6 +86,7 @@
 			qdel(air_contents)
 			air_contents = null
 		..()
+		STOP_TRACKING
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -198,11 +200,6 @@
 		if(status & BROKEN)
 			src.remove_dialog(user)
 			return
-
-		//fall in hilariously
-		boutput(user, "You slip and fall in.")
-		user.set_loc(src)
-		update()
 
 
 	// eject the contents of the unit

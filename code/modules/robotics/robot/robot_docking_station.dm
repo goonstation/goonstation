@@ -320,10 +320,11 @@
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
-			R.name = newname
+			R.real_name = "[newname]"
+			R.UpdateName()
 			if (R.internal_pda)
-				R.internal_pda.name = "[R]'s Internal PDA Unit"
-				R.internal_pda.owner = "[R]"
+				R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+				R.internal_pda.owner = "[R.name]"
 
 		if (href_list["selfservice"])
 			if (isrobot(usr))
@@ -445,7 +446,7 @@
 				src.upgrades.Remove(O)
 				R.upgrades.Add(O)
 				O.set_loc(R)
-				boutput(R, "<span class='notice'>You recieved [O]! It can be activated from your panel.</span>")
+				boutput(R, "<span class='notice'>You received [O]! It can be activated from your panel.</span>")
 				R.hud.update_upgrades()
 			if (istype(O, /obj/item/robot_module))
 				if (R.module)
@@ -567,11 +568,11 @@
 						C.legs_mod = mod
 				if ("fx")
 					C.fx[1] = input(usr,"How much red? (0 to 255)" ,"Eye and Glow", 0) as num
-					C.fx[1] = max(min(C.fx[1], 255), 0)
+					C.fx[1] = clamp(C.fx[1], 0, 255)
 					C.fx[2] = input(usr,"How much green? (0 to 255)" ,"Eye and Glow", 0) as num
-					C.fx[2] = max(min(C.fx[2], 255), 0)
+					C.fx[2] = clamp(C.fx[2], 0, 255)
 					C.fx[3] = input(usr,"How much blue? (0 to 255)" ,"Eye and Glow", 0) as num
-					C.fx[3] = max(min(C.fx[3], 255), 0)
+					C.fx[3] = clamp(C.fx[3], 0, 255)
 			R.update_appearance()
 			R.update_bodypart()
 

@@ -56,8 +56,8 @@
 					clone.abilityHolder = H.abilityHolder.deepCopy()
 					clone.abilityHolder.transferOwnership(clone)
 					clone.abilityHolder.remove_unlocks()
-				if(H.traitHolder && length(H.traitHolder.traits))
-					clone.traitHolder.traits = H.traitHolder.traits.Copy()
+				if(!isnull(H.traitHolder))
+					H.traitHolder.copy_to(clone.traitHolder)
 				clone.real_name = user.real_name
 				clone.UpdateName()
 
