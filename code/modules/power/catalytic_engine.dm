@@ -408,7 +408,7 @@
 		name = "catalytic cathode rod"
 		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped on one end with an indicative symbol."
 		New()
-			var/datum/material/M = getMaterial("mauxite")
+			var/datum/material/M = getMaterial("steel")
 			src.setMaterial(M)
 			src.setupMaterial()
 			..()
@@ -421,7 +421,8 @@
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 2)
 		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
 			src.anode_viability = src.anode_viability * 1.2
-		src.cathode_viability = max(0,150 - (abs(75-src.material.getProperty("density")) * 2) + max(src.material.getProperty("stability")-50,0))
+		var/cathode_density_adjustment = 190 - floor(abs(65-src.material.getProperty("density")) * 3)
+		src.cathode_viability = max(0,cathode_density_adjustment + max(src.material.getProperty("stability")-50,0))
 
 		//Apply efficacy multiplier to viability. increases in parameters beyond standard exponentially increase the base efficacy
 		if(src.anode_viability > 100)
