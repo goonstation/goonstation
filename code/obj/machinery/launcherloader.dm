@@ -349,14 +349,23 @@
 		if(!ui)
 			ui = new(user, src, "BarcodeComputer")
 			ui.open()
+	//needs to be called whenever destinations, shippingmarket.active_traders or shippingmarket.req_contracts changes
+	static/proc/update_ui_data()
+		for_by_tcl(computer, /obj/machinery/computer/barcode)
+			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
+				computer.update_static_data(null, ui)
 
-	ui_data(mob/user)
+	ui_static_data(mob/user)
 		var/list/destination_list = new()
 		for (var/destination in destinations)
 			destination_list += list(list("crate_tag" = destination)) //goddamn byond += overloading making me do listlist
+		. = list()
+		.["sections"] = list(list("title" = "Station", "destinations" = destination_list))
+
+
+	ui_data(mob/user)
 		. = list(
 			"amount" = print_amount,
-			"sections" = list(list("title" = "Station", "destinations" = destination_list)),
 		)
 		if (scan)
 			//we have to do this mess because bicon returns the full img tag which tgui won't render
@@ -420,7 +429,7 @@
 	New()
 		..()
 
-	ui_data(mob/user)
+	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
 		for (var/datum/trader/T in shippingmarket.active_traders)

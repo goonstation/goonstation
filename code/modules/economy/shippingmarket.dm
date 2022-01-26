@@ -71,6 +71,8 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
+		/obj/machinery/computer/barcode.update_ui_data()
+
 		time_between_shifts = 6000 // 10 minutes
 		time_until_shift = time_between_shifts + rand(-900,1200)
 
@@ -229,6 +231,8 @@
 			while(removed_count > 0)
 				removed_count--
 				src.active_traders += new /datum/trader/generic(src)
+
+			/obj/machinery/computer/barcode.update_ui_data()
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
