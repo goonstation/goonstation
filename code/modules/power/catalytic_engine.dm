@@ -188,7 +188,7 @@
 	var/oldmode = UNIT_INACTIVE
 	///True while toggling between modes
 	var/toggling = FALSE
-	///Rod contained within the rod unit
+	///Rod contained within the rod units
 	var/obj/item/catalytic_rod/contained_rod
 
 	left
@@ -421,7 +421,9 @@
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 2)
 		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
 			src.anode_viability = round(src.anode_viability * 1.3)
-		var/cathode_density_adjustment = 190 - abs(65-src.material.getProperty("density")) * 3
+		var/cathode_density_adjustment = 180 - abs(70-src.material.getProperty("density")) * 2
+		if(cathode_density_adjustment < 80) //effectiveness ramps down harsher at lower density, culminating at zero
+			cathode_density_adjustment = round((cathode_density_adjustment - 30) * 1.6)
 		src.cathode_viability = max(0,cathode_density_adjustment + max(src.material.getProperty("stability")-50,0))
 
 		//Apply efficacy multiplier to viability. increases in parameters beyond standard exponentially increase the base efficacy

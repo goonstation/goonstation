@@ -12102,7 +12102,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base viability is conductivity x 2; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>65 Density ideal; Stability above 50 is bonus<br><br>Corrosion resistance slows rate of decay";
+	info = "ANODE PARAMETERS<br>Base viability is conductivity x 2; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>70 Density ideal; Stability above 50 is bonus<br><br>Corrosion resistance slows rate of decay";
 	name = "printed card";
 	pixel_y = 6
 	},
@@ -22087,7 +22087,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base viability is conductivity x 2; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>65 Density ideal; Stability above 50 is bonus<br><br>Corrosion resistance slows rate of decay";
+	info = "ANODE PARAMETERS<br>Base viability is conductivity x 2; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>70 Density ideal; Stability above 50 is bonus<br><br>Corrosion resistance slows rate of decay";
 	name = "printed card";
 	pixel_y = 6
 	},
