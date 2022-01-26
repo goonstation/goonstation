@@ -169,10 +169,16 @@
 		if(get_dist(user, src) > 1 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
 		switch(choice)
 			if("Launch")
-				boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
-				emergency_shuttle.settimeleft( 10 )
-				logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
-				return 1
+				if (emergency_shuttle.timeleft() <= 90)
+					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 20 seconds!</B></span>")
+					emergency_shuttle.settimeleft( 20 )
+					logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 20 seconds.")
+					return 1
+				else if(emergency_shuttle.timeleft() <= 30)
+					boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
+					emergency_shuttle.settimeleft( 10 )
+					logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
+					return 1
 			if("Cancel")
 				return 1
 	else
