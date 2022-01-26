@@ -415,6 +415,8 @@
 			if("transfer_spacebux")
 				if(!usr.client)
 					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
+				usr.client.player.cloud_fetch_data_only()
+				usr.client.load_persistent_bank()
 				var/amount = input("How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer") as num|null
 				if(!amount)
 					return
@@ -437,6 +439,8 @@
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
 
 			if("withdraw_spacebux")
+				usr.client.player.cloud_fetch_data_only()
+				usr.client.load_persistent_bank()
 				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)
 				amount = clamp(amount, 0, 1000000)
 				if(amount <= 0)

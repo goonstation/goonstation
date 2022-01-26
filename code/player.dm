@@ -194,6 +194,13 @@
 			clouddata = data["cdata"]
 			return TRUE
 
+	/// Refreshes clouddata
+	proc/cloud_fetch_data_only()
+		var/list/data = cloud_fetch_target_data_only(src.ckey)
+		if (data)
+			clouddata = data
+			return TRUE
+
 	/// returns the clouddata of a target ckey in list form
 	proc/cloud_fetch_target_data_only(target)
 		var/list/data = cloud_fetch_target_ckey(target)
