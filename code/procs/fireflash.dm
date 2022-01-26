@@ -195,16 +195,14 @@
 	return affected
 
 /* DYNAMIC FIREFLASH TODO:
-add a sound like this is a real fireball
+add a sound like this is a real fireball (harder than it sounds, want the sound to be audible even from edges so needs to be replayable)
 make this hurt stuff better
-add blob logic to this
-anything mbc suggest i steal from their fluidcode
-perhaps reduce temperature as the fireball expands?
+add blob logic to this (what does this mean)
+perhaps reduce temperature of hotspots as the fireball expands?
 make expansion vary based on "pressure" - either real, or just based on how much its expanded recently
 make it disappear slower initially, then faster as more disappears?
-make it damage walls / windows / grilles / basically anything solid it cant expand into - scale with heat?
-make it heat the air??? (idk tho :flooshed:)
-maybe make the hotspot pool_after_delay proc less stinky?
+once object damaging is implemented on all objects, make this damage stuff on the turf and stuff it tries to expand into
+make it heat the air??? (controversial)
 maybe loop thru everything on the turf, and save significant things, instead of multiple locate calls?? (thz mbc)
 
 ok so idea to fix some issues: add fireflash checking FIRST, before any other neighbor checking. THEN:
@@ -212,19 +210,26 @@ dont remove successfully hotspotted turfs from the candidates list (so now the l
 this should mean that now itll update the fireflashes when someone opens a door, since thats still a potential spread candidate
 */
 
+/// center is the start of the fireflash, volume is how many tiles it can spread, temp is the temp of the center of the fireflash
 /proc/fireflash_dynamic(atom/center, volume, temp = rand(1500,2500))
 	if (center)
-		var/turf/origin = get_turf(center) //get the starting turf
-		var/list/tiles_to_process = list(origin) //add the starting turf to our list
+		var/turf/origin = get_turf(center)
+		//add the starting turf to our list
+		var/list/tiles_to_process = list(origin)
+		// associated list of turf = list(objects). turfs are associated with a list of objects inside of them that stop fireflashes
+//		var/list/spread_stopping_objects = list()
 		volume--
-		var/obj/hotspot/origin_hotspot = unpool(/obj/hotspot)
+
+		var/obj/hotspot/origin_hotspot = new /obj/hotspot
 		origin_hotspot.temperature = temp
 		origin_hotspot.volume = 400 //do some testing as to Why is this number???? ?????
 		origin_hotspot.set_real_color()
 		origin_hotspot.set_loc(origin)
-		origin_hotspot.pool_after_delay(3.0 SECONDS)
 		origin.active_hotspot = origin_hotspot
 		origin.hotspot_expose(origin_hotspot.temperature, origin_hotspot.volume)
+
+		SPAWN_DBG(3 SECONDS) // remove after 3 second delay
+			qdel(origin_hotspot)
 
 		for (var/atom/A in origin)
 			A.temperature_expose(null, origin_hotspot.temperature, origin_hotspot.volume)
@@ -283,16 +288,18 @@ this should mean that now itll update the fireflashes when someone opens a door,
 					else
 						if (volume > 0) //check if have enough volume to make a new fireflash
 							volume--
-							//new_hotspots_made++
-							var/obj/hotspot/new_hotspot = unpool(/obj/hotspot)
+							var/obj/hotspot/new_hotspot = new /obj/hotspot
 							new_hotspot.temperature = temp
 							new_hotspot.volume = 400 //do some testing as to Why is this number???? ?????
 							new_hotspot.set_real_color()
 							new_hotspot.set_loc(candidate_tile)
-							new_hotspot.pool_after_delay(3.0 SECONDS) //how long the hotspot sits around before dissipating
+
 							candidate_tile.active_hotspot = new_hotspot
 							candidate_tile.hotspot_expose(new_hotspot.temperature, new_hotspot.volume)
 							found_neighbors.Add(candidate_tile) // add it to the found neighbors list
+
+							SPAWN_DBG(3 SECONDS) // remove after 3 second delay
+								qdel(new_hotspot)
 
 							for (var/atom/affected in candidate_tile)
 								LAGCHECK(LAG_REALTIME)

@@ -283,10 +283,3 @@
 
 	ex_act()
 		return
-
-/obj/hotspot/proc/pool_after_delay(var/delay) //todo: check if these are in a processing loop, then use process time comparisons to delete it instead
-	if (!delay)
-		return
-	SPAWN_DBG(delay)
-		if (!src.pooled)
-			pool(src)
