@@ -750,12 +750,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						"value" = player.client.persistent_bank_item
 					)
 				)
-
-				bank_earnings.pilot_bonus = pilot_bonus
-				bank_earnings.final_payout = earnings
-				bank_earnings.held_item = player.client.persistent_bank_item
-				bank_earnings.new_balance = player.client.persistent_bank + earnings
-				bank_earnings.Subscribe( player.client )
+				SPAWN_DBG(0)
+					bank_earnings.pilot_bonus = pilot_bonus
+					bank_earnings.final_payout = earnings
+					bank_earnings.held_item = player.client.persistent_bank_item
+					bank_earnings.new_balance = player.client.persistent_bank + earnings
+					bank_earnings.Subscribe( player.client )
 
 	//do bulk commit
 	SPAWN_DBG(0)
