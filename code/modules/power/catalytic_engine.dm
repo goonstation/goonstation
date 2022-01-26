@@ -422,7 +422,7 @@
 		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
 			src.anode_viability = round(src.anode_viability * 1.3)
 		var/cathode_density_adjustment = 180 - abs(70-src.material.getProperty("density")) * 2
-		if(cathode_density_adjustment < 80) //effectiveness ramps down harsher at lower density, culminating at zero
+		if(cathode_density_adjustment < 80) //effectiveness ramps down harsher at lower density; this is a "low pass filter" of sorts
 			cathode_density_adjustment = round((cathode_density_adjustment - 30) * 1.6)
 		src.cathode_viability = max(0,cathode_density_adjustment + max(src.material.getProperty("stability")-50,0))
 
