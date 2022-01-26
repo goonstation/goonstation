@@ -50,8 +50,6 @@
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE              (1<<23)
-/// If an item can attack-self while user is stunned
-#define ALWAYS_INTERACTIVE              (1<<24)
 
 //Item function flags
 
@@ -65,6 +63,8 @@
 #define IMMUNE_TO_ACID 8
 /// prevents items from heating anything up while burning
 #define COLD_BURN 16
+/// allow in-hand use while user is stunned
+#define ALWAYS_INTERACTIVE              32
 
 //tool flags
 #define TOOL_CLAMPING 1

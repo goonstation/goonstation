@@ -6,18 +6,19 @@
 	icon_state = "space_shuriken_harm"
 	throw_spin = 1
 	throw_speed = 3
+	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	amount = 1
 	var/lethal = true
 
-	New() 
+	New()
 		..()
 		src.setItemSpecial(/datum/item_special/throwing)
 		create_inventory_counter()
 		if (!lethal)
 			icon_state = "space_shuriken"
 			update_icon()
-	
-	
+
+
 	split_stack(var/toRemove)
 		if(toRemove < 1) return 0
 		if (toRemove == amount)
@@ -28,7 +29,7 @@
 			P.icon_state = "space_shuriken"
 		src.change_stack_amount(-toRemove)
 		return P
-	
+
 	throw_begin(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1)
 		if (amount > 1)
 			var/target_turf = get_turf(target)
@@ -42,14 +43,14 @@
 			src.amount = 1
 		src.inventory_counter.hide_count()
 		..()
-	
+
 
 	dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
 			if (!src.throwing)
 				del(src)
-	
+
 	throw_impact(atom/M)
 		..()
 		playsound(src.loc, "sound/weapons/lasersound.ogg", 100, 1)
@@ -59,13 +60,13 @@
 				elecflash(usr,power=2)
 				playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 				usr.set_loc(get_turf(src.loc))
-			
+
 			// penalise excessive teleporting
 			if (usr.get_stamina() > 50)
-				usr.do_disorient(50, 0, 0, disorient = 0) 
-			else 
-				usr.do_disorient(50, 0, 0, disorient = 20) 
-			
+				usr.do_disorient(50, 0, 0, disorient = 0)
+			else
+				usr.do_disorient(50, 0, 0, disorient = 20)
+
 			random_brute_damage(M, 8)
 			take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 			if (ishuman(M))

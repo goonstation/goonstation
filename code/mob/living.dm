@@ -488,9 +488,11 @@
 	actions.interrupt(src, INTERRUPT_ACT)
 
 	boutput(src,"try it, [target]")
-	if ((!src.stat && !is_incapacitated(src)) || (target.flags & ALWAYS_INTERACTIVE))
+	boutput(src,"try eee, [target.flags & ALWAYS_INTERACTIVE]")
+	var/obj/item/equipped = src.equipped()
+
+	if ((!src.stat && !is_incapacitated(src)) || (target == equipped && equipped.item_function_flags & ALWAYS_INTERACTIVE))
 		boutput(src,"see")
-		var/obj/item/equipped = src.equipped()
 		var/use_delay = (target.flags & CLICK_DELAY_IN_CONTENTS || !(target in src.contents)) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		var/grace_penalty = 0
 		if ((target == equipped || use_delay) && world.time < src.next_click) // if we ignore next_click on attack_self we get... instachoking, so let's not do that

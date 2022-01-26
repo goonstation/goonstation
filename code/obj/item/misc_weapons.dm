@@ -1707,8 +1707,8 @@ obj/item/whetstone
 	cant_drop = 1
 	cant_self_remove = 1
 	cant_other_remove = 1
-	flags = FPRINT | CONDUCT | TABLEPASS | ALWAYS_INTERACTIVE
-	item_function_flags = IMMUNE_TO_ACID
+	flags = FPRINT | CONDUCT | TABLEPASS
+	item_function_flags = IMMUNE_TO_ACID | ALWAYS_INTERACTIVE
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
