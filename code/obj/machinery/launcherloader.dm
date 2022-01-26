@@ -342,7 +342,7 @@
 			B.destination = destination
 			B.scan = src.scan
 			B.account = src.account
-		printing = TRUE
+		printing = FALSE
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
