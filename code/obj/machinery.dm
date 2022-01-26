@@ -25,13 +25,14 @@
 	var/tmp/machine_registry_idx // List index for misc. machines registry, used in loops where machines of a specific type are needed
 	var/base_tick_spacing = 6 // Machines proc every 1*(2^tier-1) seconds. Or something like that.
 	var/cap_base_tick_spacing = 60
-	var/last_process
+	var/tmp/last_process
 	var/requires_power = TRUE // machine requires power, used in tgui_broken_state
 	// New() and disposing() add and remove machines from the global "machines" list
 	// This list is used to call the process() proc for all machines ~1 per second during a round
 
 /obj/machinery/New()
 	..()
+	START_TRACKING
 
 	if (!isnull(initial(machine_registry_idx))) 	// we can use initial() here to skip a lookup from this instance's vars which we know won't contain this.
 		machine_registry[initial(machine_registry_idx)] += src
@@ -53,6 +54,7 @@
 	A?.machines += src
 
 /obj/machinery/disposing()
+	STOP_TRACKING
 	if (!isnull(initial(machine_registry_idx)))
 		machine_registry[initial(machine_registry_idx)] -= src
 	UnsubscribeProcess()
@@ -108,29 +110,29 @@
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 	LAGCHECK(LAG_LOW)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibdown1"
-	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib.streak_cleanable(SOUTH)
 	LAGCHECK(LAG_LOW)
 
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
+	gib.streak_cleanable(WEST)
 	LAGCHECK(LAG_LOW)
 
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
+	gib.streak_cleanable(EAST)
 	LAGCHECK(LAG_LOW)
 
 	// RANDOM
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
-	gib.streak(alldirs)
+	gib.streak_cleanable(cardinal)
 
 /obj/machinery/Topic(href, href_list)
 	..()
@@ -141,7 +143,7 @@
 		//boutput(usr, "<span class='alert'>You are unable to do that currently!</span>")
 		return 1
 	if(!hasvar(src,"portable") || !src:portable)
-		if ((!in_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src, usr) || !istype(src.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			if (!usr)
 				message_coders("[type]/Topic(): no usr in Topic - [name] at [showCoords(x, y, z)].")
 			else if ((x in list(usr.x - 1, usr.x, usr.x + 1)) && (y in list(usr.y - 1, usr.y, usr.y + 1)) && z == usr.z && isturf(loc))
@@ -149,14 +151,14 @@
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	else
-		if ((!in_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
+		if ((!in_interact_range(src.loc, usr) || !istype(src.loc.loc, /turf)) && !issilicon(usr) && !isAI(usr))
 			//boutput(usr, "<span class='alert'>You must be near the machine to do this!</span>")
 			return 1
 	src.add_fingerprint(usr)
 	return 0
 
 /obj/machinery/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/attack_hand(mob/user as mob)
 	. = ..()
@@ -164,7 +166,7 @@
 		return 1
 	if(user && (user.lying || user.stat))
 		return 1
-	if(!in_range(src, user) || !istype(src.loc, /turf))
+	if(!in_interact_range(src, user) || !istype(src.loc, /turf))
 		return 1
 
 	if (user)
@@ -218,6 +220,14 @@
 	if(prob(25 * power / 20))
 		qdel(src)
 
+/obj/machinery/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.power_change()
+
+/obj/machinery/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.power_change()
+
 /obj/machinery/proc/get_power_wire()
 	var/obj/cable/C = null
 	for (var/obj/cable/candidate in get_turf(src))
@@ -235,6 +245,8 @@
 /obj/machinery/proc/powered(var/chan = EQUIP)
 	// returns true if the area has power on given channel (or doesn't require power).
 	// defaults to equipment channel
+	if (istype(src.loc, /obj/item/electronics/frame)) //if in a frame, we are never powered
+		return 0
 	if (machines_may_use_wired_power && power_usage)
 		var/datum/powernet/net = get_direct_powernet()
 		if (net)
@@ -273,6 +285,18 @@
 	var/area/A = get_area(src)		// make sure it's in an area
 	if(!A || !isarea(A))
 		return
+
+#ifdef MACHINE_PROCESSING_DEBUG
+	var/list/machines = detailed_machine_power[A]
+	if(!machines)
+		detailed_machine_power[A] = list()
+		machines = detailed_machine_power[A]
+	var/list/machine = machines[src]
+	if(!machine)
+		machines[src] = list()
+		machine = machines[src]
+	machine += -amount
+#endif
 
 	A.use_power(amount, chan)
 
@@ -315,24 +339,6 @@
 	var/obj/machinery/door/d2 = null
 	anchored = 1.0
 	req_access = list(access_armory)
-
-/obj/machinery/driver_button
-	name = "Mass Driver Button"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a Mass Driver."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
-
-/obj/machinery/ignition_switch
-	name = "Ignition Switch"
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "launcherbtt"
-	desc = "A remote control switch for a mounted igniter."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
 
 /obj/machinery/noise_switch
 	name = "Speaker Toggle"

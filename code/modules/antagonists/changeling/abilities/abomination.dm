@@ -31,7 +31,7 @@
 			H.set_mutantrace(/datum/mutantrace/abomination)
 			setalive(H)
 			H.real_name = "Shambling Abomination"
-			H.name = "Shambling Abomination"
+			H.UpdateName()
 			H.update_face()
 			H.update_body()
 			H.update_clothing()
@@ -56,7 +56,7 @@
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if(!C || C.points < 15)
 			boutput(H, __red("You weren't strong enough to change back safely and blacked out!"))
-			H.changeStatus("paralysis", 100)
+			H.changeStatus("paralysis", 10 SECONDS)
 		else
 			boutput(H, __red("You revert back to your original form. It leaves you weak."))
 			H.changeStatus("weakened", 5 SECONDS)
@@ -64,7 +64,7 @@
 			C.points = max(C.points - 15, 0)
 			var/D = pick(C.absorbed_dna)
 			H.real_name = D
-			H.name = D
+			H.UpdateName()
 			H.bioHolder.CopyOther(C.absorbed_dna[D])
 		H.update_face()
 		H.update_body()

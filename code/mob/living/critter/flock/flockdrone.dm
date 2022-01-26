@@ -145,7 +145,7 @@
 	src.anchored = 1 // unfun nerds ruin everything yet again
 	src.is_npc = 0 // technically false, but it turns off the AI
 	src.icon_state = "drone-dormant"
-	src.a_intent = INTENT_DISARM // stop swapping places
+	src.set_a_intent(INTENT_DISARM ) // stop swapping places
 
 /mob/living/critter/flock/drone/proc/undormantize()
 	src.dormant = 0
@@ -154,7 +154,7 @@
 	src.damaged = -1
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
-	src.a_intent = INTENT_HELP // default
+	src.set_a_intent(INTENT_HELP ) // default
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = 0
@@ -202,7 +202,7 @@
 
 /mob/living/critter/flock/drone/is_spacefaring() return 1
 
-/mob/living/critter/flock/drone/CanPass(atom/movable/mover)
+/mob/living/critter/flock/drone/Cross(atom/movable/mover)
 	if(isflock(mover))
 		return 1
 	else
@@ -280,16 +280,16 @@
 	switch (act)
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 60, 1)
 				return "<b>[src]</b> beeps."
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 60, 1)
 				return "<b>[src]</b> beeps grumpily!"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(get_turf(src), "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh") //no good sound for it - moon
 			if (src.emote_check(voluntary, 50))
@@ -308,12 +308,12 @@
 	var/obj/item/I = absorber.item
 
 	if(I)
-		var/absorb = min(src.absorb_rate, max(0, I.health))
+		var/absorb = clamp(src.absorb_rate, 0, I.health)
 		I.health -= absorb
 		src.resources += src.absorb_per_health * absorb
-		playsound(get_turf(src), "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
+		playsound(src, "sound/effects/sparks[rand(1,6)].ogg", 50, 1)
 		if(I && I.health <= 0) // fix runtime Cannot read null.health
-			playsound(get_turf(src), "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
 			I.dropped(src)
 			if(I.contents.len > 0)
 				var/anything_tumbled = 0
@@ -338,17 +338,17 @@
 				src.resources += C.resources
 				boutput(src, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resources to your own (you now have [src.resources] resource[src.resources == 1 ? "" : "s"]). </span>")
 			if(istype(I, /obj/item/raw_material))
-				pool(I) //gotta pool stuff bruh
+				qdel(I) //gotta pool stuff bruh
 			else
 				qdel(I)
 	// AI ticks are handled in mob_ai.dm, as they ought to be
 
 /mob/living/critter/flock/drone/process_move(keys)
-	if(keys && src.grabbed_by.len)
+	if(keys && length(src.grabbed_by))
 		// someone is grabbing us, and we want to move
 		++src.antigrab_counter
 		if(src.antigrab_counter >= src.antigrab_fires_at)
-			playsound(get_turf(src), "sound/effects/electric_shock.ogg", 40, 1, -3)
+			playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
 			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 			for(var/obj/item/grab/G in src.grabbed_by)
 				var/mob/living/L = G.assailant
@@ -363,14 +363,14 @@
 				if(!floor.on)
 					floor.on()
 			src.start_floorrunning()
-	else if(src.floorrunning)
+	else if(keys && src.floorrunning)
 		src.end_floorrunning()
 	. = ..()
 
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	playsound(get_turf(src), "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 1
 	src.set_density(0)
 	animate_flock_floorrun_start(src)
@@ -378,7 +378,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning()
 	if(!src.floorrunning)
 		return
-	playsound(get_turf(src), "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
 	src.floorrunning = 0
 	src.set_density(1)
 	animate_flock_floorrun_end(src)
@@ -389,7 +389,7 @@
 	else
 		return ..()
 
-/mob/living/critter/flock/drone/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/living/critter/flock/drone/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(floorrunning)
 		return 1
 	else
@@ -533,7 +533,7 @@
 	src.flock?.removeDrone(src)
 	..()
 	src.icon_state = "drone-dead"
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 	src.set_density(0)
 	desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 
@@ -551,17 +551,17 @@
 	for(var/i=1 to num_pieces)
 		switch(rand(100))
 			if(0 to 45)
-				B = unpool(/obj/item/raw_material/scrap_metal)
+				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
 				B.setMaterial(getMaterial("gnesis"))
 			if(46 to 90)
-				B = unpool(/obj/item/raw_material/shard)
+				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
 				B.setMaterial(getMaterial("gnesisglass"))
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(get_turf(src), "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -622,7 +622,7 @@
 			. += B // always drop brain
 	// handle our contents, such as whatever item we're trying to eat or what we're holding
 	for(var/atom/movable/O in src.contents)
-		if(istype(O, /obj/screen))
+		if(istype(O, /atom/movable/screen))
 			continue // no UI elements please
 		. += O
 

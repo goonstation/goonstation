@@ -13,7 +13,7 @@
 	name = "seashell"
 	icon = 'icons/obj/sealab_objects.dmi'
 	desc = "Hey, you remember collecting these things as a kid! Wait - you didn't grow up here!"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	rand_pos = 1
 	var/database_id = null
 
@@ -37,7 +37,7 @@
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 
 	New()
 		..()
@@ -59,7 +59,7 @@
 
 
 //mbc : added dumb layer code to keep perspective intact *most of the time*
-/obj/sea_plant/CanPass(atom/A, turf/T)
+/obj/sea_plant/Cross(atom/A)
 	if (ismob(A))
 
 		var/mob/M = A
@@ -78,7 +78,7 @@
 					has_fluid_move_gear = 1
 
 		if (!has_fluid_move_gear)
-			A.setStatus("slowed", 5, optional = 4)
+			A.setStatus("slowed", 0.5 SECONDS, optional = 4)
 
 		if (get_dir(src,A) & SOUTH || pixel_y > 0) //If we approach from underneath, fudge the layer so the drawing order doesn't break perspective
 			src.layer = 3.9
@@ -92,7 +92,7 @@
 	//	return 1
 	else return 1
 
-/obj/sea_plant/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective

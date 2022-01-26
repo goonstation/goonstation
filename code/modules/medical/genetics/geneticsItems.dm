@@ -7,7 +7,7 @@
 	icon_state = "injector_1"
 	force = 3
 	throwforce = 3
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/uses = 1
 
 	attack(mob/M as mob, mob/user as mob)
@@ -22,6 +22,7 @@
 			user.visible_message("<span class='alert'><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
 			src.injected(user,user)
 		else
+			logTheThing("combat", user, M, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 			actions.start(new/datum/action/bar/icon/genetics_injector(M,src), user)
 
 	proc/injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
@@ -29,7 +30,7 @@
 			return 1
 		if(!istype(target.bioHolder))
 			return 1
-		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name]")
+		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
 		return 0
 
 	proc/update_appearance()
@@ -145,7 +146,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	w_class = 1
+	w_class = W_CLASS_TINY
 	hide_attack = 1
 	var/obj/item/genetics_injector/dna_injector/payload = null
 

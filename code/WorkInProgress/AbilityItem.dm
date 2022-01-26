@@ -34,7 +34,7 @@
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
@@ -115,31 +115,8 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/welding/W = the_item
-		if(W.up)
-			W.up = !W.up
-			W.icon_state = "welding"
-			boutput(the_mob, "You flip the mask down. The mask is now protecting you from eye damage.")
-			if (!W.nodarken) //Used for The Welder
-				W.see_face = !W.see_face
-				W.color_r = 0.3 // darken
-				W.color_g = 0.3
-				W.color_b = 0.3
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "weldup"
-
-			W.flip_down()
-		else
-			W.up = !W.up
-			W.see_face = !W.see_face
-			W.icon_state = "welding-up"
-			boutput(the_mob, "You flip the mask up. The mask is now providing greater armor to your head.")
-			W.color_r = 1 // default
-			W.color_g = 1
-			W.color_b = 1
-			the_mob.set_clothing_icon_dirty()
-			icon_state = "welddown"
-
-			W.flip_up()
+		W.up ? W.flip_down(the_mob) : W.flip_up(the_mob)
+		icon_state = "[W.up ? "welddown" : "weldup"]"
 		..()
 
 
@@ -153,6 +130,15 @@
 			W.unbutton()
 		else
 			W.button()
+		..()
+
+/obj/ability_button/hood_toggle
+	name = "Toggle Hood"
+	icon_state = "hood_up"
+
+	execute_ability()
+		var/obj/item/clothing/suit/W = the_item
+		W.attack_self(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle
@@ -212,7 +198,7 @@
 			qdel(src)
 			return
 
-		playsound(get_turf(the_mob), 'sound/effects/bamf.ogg', 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
 
 		if(prob(explosion_chance) || R.emagged)
 			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
@@ -258,12 +244,12 @@
 				for(var/i=0, i<15, i++)
 					if(isnull(the_mob))
 						break
-					var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
+					var/obj/effect/smoketemp/A = new /obj/effect/smoketemp
 					A.set_loc(the_mob.loc)
 					SPAWN_DBG(1 SECOND)
 						src = null // Detatch this from the parent proc so we get to stay alive if the shoes blow up.
 						if(A)
-							pool(A)
+							qdel(A)
 					sleep(0.1 SECONDS)
 
 			the_mob.throw_at(curr, 16, 3)
@@ -282,17 +268,17 @@
 			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
-		playsound(get_turf(the_mob), "sound/effects/bamf.ogg", 100, 1)
+		playsound(the_mob, "sound/effects/bamf.ogg", 100, 1)
 
 		SPAWN_DBG(0)
 			for(var/i=0, i<R.soniclength, i++)
 				if(!the_mob) break
-				var/obj/effect/smoketemp/A = unpool(/obj/effect/smoketemp)
+				var/obj/effect/smoketemp/A = new /obj/effect/smoketemp
 				A.set_loc(the_mob.loc)
 				SPAWN_DBG(1 SECOND)
 					src = null
 					if(A)
-						pool(A)
+						qdel(A)
 				if (!step(the_mob, the_mob.dir) && R.sonicbreak) break
 				sleep(10 - R.soniclevel)
 			..()
@@ -304,16 +290,6 @@
 	opacity = 0
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
-
-	pooled()
-		..()
-		icon = null
-		icon_state = null
-
-	unpooled()
-		..()
-		icon = initial(icon)
-		icon_state = initial(icon_state)
 
 ////////////////////////////////////////////////////////////
 
@@ -337,6 +313,7 @@
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
 		J.toggle()
+		src.icon_state = J.on ? "off" : "on"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -739,7 +716,7 @@
 		the_mob = M
 
 	proc/show_buttons()
-		if(!the_mob || !islist(src.ability_buttons) || !ability_buttons.len) return
+		if(!the_mob || !islist(src.ability_buttons) || !length(ability_buttons)) return
 		if(!the_mob.item_abilities.Find(ability_buttons[1]))
 			the_mob.item_abilities.Add(ability_buttons)
 			the_mob.need_update_item_abilities = 1
@@ -773,7 +750,7 @@
 		if(!the_mob) return
 		the_mob.item_abilities = list()
 
-//HEY this should be moved over to use /obj/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
+//HEY this should be moved over to use /atom/movable/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
 /obj/ability_button
 	name = "baseButton"
 	desc = ""

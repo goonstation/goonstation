@@ -91,7 +91,7 @@
 		var/list/subcommands = list()
 		var/list/piped_list = command2list(text, "^", scriptvars, subcommands)//scripting ? scriptvars : null)
 		piped_list.len = min(piped_list.len, setup_max_piped_commands)
-		piping = piped_list.len
+		piping = length(piped_list)
 		pipetemp = ""
 		var/script_counter = 0
 		//script_iteration = 0//reset stack each time someone types stuff
@@ -106,7 +106,7 @@
 
 			while (subPlace)
 
-				var/subIndex = text2num( copytext( text, subPlace+4, subPlace+5) )
+				var/subIndex = text2num_safe( copytext( text, subPlace+4, subPlace+5) )
 
 				if (isnum(subIndex) && subIndex > 0 && subIndex <= subcommands.len)
 
@@ -132,7 +132,7 @@
 			var/list/command_list = parse_string(text, src.scriptvars)
 			var/command = lowertext(command_list[1])
 			command_list.Cut(1,2) //Remove the command that we are now processing.
-			while (!command && command_list.len)
+			while (!command && length(command_list))
 				command = command_list[1]
 				command_list.Cut(1,2)
 
@@ -221,13 +221,18 @@
 						if (pipetemp)
 							echo_text = pipetemp
 
+						var/add_newline = TRUE
+						if (command_list[1] == "-n")
+							add_newline = FALSE
+							command_list.Cut(1,2)
+
 						if(istype(command_list) && (command_list.len > 0))
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
 							pipetemp = echo_text
 						else
-							if (echo_text && !dd_hassuffix(echo_text, "|n"))
+							if (echo_text && add_newline && !dd_hassuffix(echo_text, "|n"))
 								echo_text += "|n"
 							message_user(echo_text, "multiline")
 
@@ -345,7 +350,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(elsePosition)
-									piping = piped_list.len
+									piping = length(piped_list)
 								continue //Continue processing any piped commands following this.
 							if (0)
 								scriptstat &= ~SCRIPT_IF_TRUE
@@ -353,7 +358,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(1,elsePosition+1)
-									piping = piped_list.len
+									piping = length(piped_list)
 									pipetemp = null
 									continue
 
@@ -389,7 +394,7 @@
 						if (!command_list.len)
 							continue
 
-						. = text2num(command_list[1])
+						. = text2num_safe(command_list[1])
 						if (!isnum(.) || . < 0)
 							continue
 
@@ -507,7 +512,7 @@
 					. += "[. ? " " : null][command_list[i]]"
 
 				scriptvarsToPass["*"] = .
-				scriptvarsToPass["argc"] = command_list.len
+				scriptvarsToPass["argc"] = length(command_list)
 
 				var/list/childScript = script_format( exec.fields.Copy() )
 				//boutput(world, "bloop script loaded, pip")
@@ -582,12 +587,12 @@
 
 		//Something something immersion something something 32-bit signed someting fixed point something.
 		script_clampvalue(var/clampnum)
-			//return round( min( max(text2num(clampnum), -2147483647), 2147483648) ) // good riddance
-			return round( min( max(clampnum, -2147483647), 2147483600), 0.01 ) // 2147483648
+			//return round( min( max(text2num_safe(clampnum), -2147483647), 2147483648) ) // good riddance
+			return round( clamp(clampnum, -2147483647, 2147483600), 0.01 ) // 2147483648
 
 		script_isNumResult(var/current, var/result)
 
-			if (isnum(text2num(current)) && isnum(text2num(result)))
+			if (isnum(text2num_safe(current)) && isnum(text2num_safe(result)))
 				return 1
 
 			return 0
@@ -600,11 +605,11 @@
 				//boutput(world, "current_command = \[[current_command]]")
 				command_stream.Cut(1,2)
 
-				if (text2num(current_command) != null)
+				if (text2num_safe(current_command) != null)
 					if (stack.len > MAX_STACK_DEPTH)
 						return ERR_STACK_OVER
 
-					stack += script_clampvalue( text2num(current_command) )
+					stack += script_clampvalue( text2num_safe(current_command) )
 					continue
 
 				var/result = null
@@ -615,7 +620,7 @@
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
-							result = text2num(stack[stack.len]) + text2num(stack[stack.len-1])
+							result = text2num_safe(stack[stack.len]) + text2num_safe(stack[stack.len-1])
 							stack[--stack.len] = script_clampvalue( result )
 
 						else

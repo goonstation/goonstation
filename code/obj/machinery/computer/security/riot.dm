@@ -4,16 +4,15 @@
 	density = 0
 	var/auth_need = 3.0
 	var/list/authorized
-	var/list/authorized_registered
-	var/datum/radio_frequency/radio_connection = null
+	var/list/authorized_registered = null
 	var/net_id = null
-	var/datum/radio_frequency/control_frequency = "1461"
+	var/control_frequency = "1461"
 	var/radiorange = 3
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
-	lr = 1
-	lg = 0.3
-	lb = 0.3
+	light_r =1
+	light_g = 0.3
+	light_b = 0.3
 
 	var/authed = 0
 	var/area/armory_area
@@ -24,20 +23,13 @@
 			armory_area = get_area_by_type(/area/station/security/armory)
 
 		src.net_id = generate_net_id(src)
-		SPAWN_DBG(0.5 SECONDS)
-			if (radio_controller)
-				radio_connection = radio_controller.add_object(src, "[control_frequency]")
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)
 
 		/*for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.no_access = 1
 		*/
 		..()
-
-	disposing()
-		if (radio_controller)
-			radio_controller.remove_object(src, "[control_frequency]")
-		. = ..()
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)
@@ -55,9 +47,8 @@
 				pingsignal.data["sender"] = src.net_id
 				pingsignal.data["address_1"] = target
 				pingsignal.data["command"] = "ping_reply"
-				pingsignal.transmission_method = TRANSMISSION_RADIO
 
-				radio_connection.post_signal(src, pingsignal, radiorange)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, radiorange)
 			return
 
 		var/datum/signal/returnsignal = get_free_signal()
@@ -68,12 +59,15 @@
 			if ("help")
 				if (!signal.data["topic"])
 					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
-					returnsignal.data["topics"] = "authorize"
+					returnsignal.data["topics"] = "authorize,unauthorize"
 				else
 					returnsignal.data["topic"] = signal.data["topic"]
 					switch (lowertext(signal.data["topic"]))
 						if ("authorize")
 							returnsignal.data["description"] = "Authorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
+							returnsignal.data["args"] = "acc_code"
+						if ("unauthorize")
+							returnsignal.data["description"] = "Unauthorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
 							returnsignal.data["args"] = "acc_code"
 						else
 							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
@@ -89,9 +83,21 @@
 				else
 					returnsignal.data["command"] = "nack"
 					returnsignal.data["data"] = "badpass"
+			if ("unauthorize")
+				if(!IN_RANGE(signal.source, src, radiorange))
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "outofrange"
+				else if (signal.data["acc_code"] == netpass_heads)
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["acc_code"] = netpass_security
+					returnsignal.data["data"] = "unauthorize"
+					unauthorize()
+				else
+					returnsignal.data["command"] = "nack"
+					returnsignal.data["data"] = "badpass"
 			else
 				return //COMMAND NOT RECOGNIZED
-		radio_connection.post_signal(src, returnsignal, radiorange)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
 
 
 	proc/authorize()
@@ -120,6 +126,25 @@
 
 				LAGCHECK(LAG_REALTIME)
 
+	proc/unauthorize()
+		if(src.authed)
+
+			authed = 0
+			icon_state = "drawbr0"
+
+			for (var/obj/machinery/door/airlock/D in armory_area)
+				if (D.has_access(access_security))
+					D.req_access = list(access_maxsec)
+				LAGCHECK(LAG_REALTIME)
+
+			if (armory_area)
+				for(var/obj/O in armory_area)
+					if (istype(O,/obj/storage/secure/crate))
+						O.req_access = list(access_maxsec)
+					else if (istype(O,/obj/machinery/vending))
+						O.req_access = list(access_maxsec)
+
+				LAGCHECK(LAG_REALTIME)
 
 	proc/print_auth_needed(var/mob/author)
 		if (author)
@@ -132,7 +157,7 @@
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user as mob)
 	if (ishuman(user))
-		return src.attackby(user:wear_id, user)
+		return src.Attackby(user:wear_id, user)
 	..()
 
 //kinda copy paste from shuttle auth :)
@@ -142,9 +167,6 @@
 		return ..()
 	if (!user)
 		return ..()
-	if(authed)
-		boutput(user, "Armory has already been authorized!")
-		return
 
 	if (istype(W, /obj/item/device/pda2) && W:ID_card)
 		W = W:ID_card
@@ -153,24 +175,50 @@
 		return ..()
 
 	if (!W:access) //no access
+		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
 	var/list/cardaccess = W:access
-	if(!istype(cardaccess, /list) || !cardaccess.len) //no access
+	if(!istype(cardaccess, /list) || !length(cardaccess)) //no access
+		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
-	if(!(access_security in W:access)) //doesn't have this access
+	if(!(access_securitylockers in W:access)) //doesn't have this access
+		src.add_fingerprint(user)
 		boutput(user, "The access level of [W] is not high enough.")
 		return
+
+	if(authed && (!(access_maxsec in W:access)))
+		boutput(user, "Armory has already been authorized!")
+		return
+
+	if(authed && (access_maxsec in W:access))
+		var/choice = alert(user, "Would you like to unauthorize security's access to riot gear?", "Armory Unauthorization", "Unauthorize", "No")
+		if(get_dist(user, src) > 1) return
+		src.add_fingerprint(user)
+		switch(choice)
+			if("Unauthorize")
+				if(GET_COOLDOWN(src, "unauth"))
+					boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
+					playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
+					return
+				if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
+					unauthorize()
+					playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
+					boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
+					return
+			if("No")
+				return
 
 	if (!src.authorized)
 		src.authorized = list()
 		src.authorized_registered = list()
 
-	var/choice = alert(user, text("Would you like to (un)authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
+	var/choice = alert(user, text("Would you like to authorize access to riot gear? [] authorization\s are still needed.", src.auth_need - src.authorized.len), "Armory Auth", "Authorize", "Repeal")
 	if(get_dist(user, src) > 1) return
+	src.add_fingerprint(user)
 	switch(choice)
 		if("Authorize")
 			if (user in src.authorized)

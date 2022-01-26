@@ -2,6 +2,8 @@
 	name = "The Colosseum"
 	virtual = 1
 	ambient_light = "#bfbfbf"
+	dont_log_combat = TRUE
+
 
 	Entered(var/atom/A)
 		..()
@@ -475,7 +477,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 
 	src.debug_variables(colosseum_controller)
 
-/turf/unsimulated/floor/setpieces/gauntlet/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/turf/unsimulated/floor/setpieces/gauntlet/Cross(atom/movable/mover)
 	if (istype(mover, /obj/machinery/colosseum_putt))
 		return 0
 	return ..()
@@ -484,9 +486,9 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	name = "Colosseum Hangar Floor"
 	desc = "You wonder if that little flashing white thing is a pod or a butt."
 	icon_state = "gauntfloorPod"
-	event_handler_flags = USE_CANPASS
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/machinery/colosseum_putt))
 			return 1
 		return ..()
@@ -498,7 +500,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	New(var/barLength = 4, var/is_left = 0)
 		..()
 		for (var/i = 1, i <= barLength, i++)
-			var/obj/screen/S = new /obj/screen()
+			var/atom/movable/screen/S = new /atom/movable/screen()
 			var/edge = is_left ? "WEST" : "EAST"
 			S.layer = HUD_LAYER
 			S.name = "health"
@@ -518,21 +520,21 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		health_overlay = image('icons/obj/colosseum.dmi', "health")
 
 	proc/add_to_hud(var/datum/hud/H)
-		for (var/obj/screen/S in barBits)
+		for (var/atom/movable/screen/S in barBits)
 			H.add_object(S)
 
 	proc/add_to(var/mob/M)
 		if (M.client)
-			for (var/obj/screen/S in barBits)
+			for (var/atom/movable/screen/S in barBits)
 				M.client.screen += S
 
 	proc/remove_from(var/mob/M)
 		if (M.client)
-			for (var/obj/screen/S in barBits)
+			for (var/atom/movable/screen/S in barBits)
 				M.client.screen -= S
 
 	proc/update_health_overlay(var/health_value, var/health_max, var/shield_value, var/shield_max)
-		for (var/obj/screen/S in barBits)
+		for (var/atom/movable/screen/S in barBits)
 			S.overlays.len = 0
 		add_overlay(health_value, health_max, 204, 0, 0, 0, 204, 0)
 		if (shield_value > 0)
@@ -544,7 +546,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
 		var/percentage = value / max_value
 		var/remaining = round(percentage * 100)
-		var/bars = barBits.len
+		var/bars = length(barBits)
 		var/eachBar = 100 / bars
 		var/missingBars = 0
 		health_overlay.color = rgb(lerp(r0, r1, percentage), lerp(g0, g1, percentage), lerp(b0, b1, percentage))
@@ -553,7 +555,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 		missingBars--
 
 		for (var/i = 1, i <= bars, i++)
-			var/obj/screen/S = barBits[i]
+			var/atom/movable/screen/S = barBits[i]
 			if (i <= missingBars)
 				continue
 			else if (i == missingBars + 1)
@@ -572,7 +574,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				S.overlays += health_overlay
 
 	proc/add_counter(var/bit, var/value, var/textcolor)
-		var/obj/screen/counter = barBits[bit]
+		var/atom/movable/screen/counter = barBits[bit]
 		if (value < 0)
 			counter.overlays += image('icons/obj/colosseum.dmi', "INF")
 		else
@@ -596,8 +598,8 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 			counter.overlays += right
 
 /datum/colosseumIndicator
-	var/obj/screen/hud/indicated_icon
-	var/obj/screen/counter
+	var/atom/movable/screen/hud/indicated_icon
+	var/atom/movable/screen/counter
 	var/datum/colosseumSystem/tracking
 	var/force_rebuild = 0
 	var/data_displayed = null
@@ -939,7 +941,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				icon_state = "seeker"
 				rarity_class = 2
 
-/obj/screen/colosseumHelp
+/atom/movable/screen/colosseumHelp
 	name = "Help"
 	icon = 'icons/mob/blob_ui.dmi'
 	icon_state = "blob-help0"
@@ -994,7 +996,7 @@ proc/get_colosseum_message(var/name, var/message)
 	var/datum/colosseumIndicator/shotcount_indicator
 	var/datum/colosseumIndicator/shotdamage_indicator
 	var/datum/healthBar/health_bar
-	var/obj/screen/colosseumHelp/help
+	var/atom/movable/screen/colosseumHelp/help
 	var/obj/colosseum_radio/radio = null
 	var/next_fire_primary = 0
 	var/next_fire_secondary = 0
@@ -1138,7 +1140,7 @@ proc/get_colosseum_message(var/name, var/message)
 			boutput(usr, "<span class='alert'>You currently have no secondary weapon.</span>")
 		update_indicators(INDICATOR_SECONDARY)
 
-	Bump(atom/A)
+	bump(atom/A)
 		//walk(src, 0)
 		flying = 0
 		src.set_dir(facing)
@@ -1393,7 +1395,7 @@ proc/get_colosseum_message(var/name, var/message)
 		update_indicators(INDICATOR_HEALTH)
 
 	ex_act(var/severity)
-		var/actual_severity = max(min(4 - severity, 3), 1)
+		var/actual_severity = clamp(4 - severity, 1, 3)
 		var/multiplier = actual_severity * actual_severity
 		var/damage = rand(25, 75) * 0.1 * multiplier
 		take_damage(damage, 2, 2)
@@ -1469,7 +1471,7 @@ proc/get_colosseum_message(var/name, var/message)
 				explosion_new(src, T, 5)
 			for(T in range(src,1))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
-				var/obj/decal/cleanable/machine_debris/C = unpool(/obj/decal/cleanable/machine_debris)
+				var/obj/decal/cleanable/machine_debris/C = new /obj/decal/cleanable/machine_debris
 				C.setup(T)
 
 			qdel(src)
@@ -1544,6 +1546,7 @@ proc/get_colosseum_message(var/name, var/message)
 				icon_state = "powerup_primary"
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1577,6 +1580,7 @@ proc/get_colosseum_message(var/name, var/message)
 			return 1
 
 		Crossed(var/atom/A)
+			..()
 			if (disposed)
 				return
 			if (istype(A, /obj/machinery/colosseum_putt))
@@ -1668,7 +1672,7 @@ proc/get_colosseum_message(var/name, var/message)
 				. = ..()
 				C.simple.power += amount
 				C.update_indicators(INDICATOR_SHOTDAMAGE)
-				C.simple.update_icon()
+				C.simple.UpdateIcon()
 
 			t2
 				amount = 4
@@ -1751,6 +1755,7 @@ proc/get_colosseum_message(var/name, var/message)
 			explosion_new(src, get_turf(src), 5)
 
 	Crossed(var/atom/A)
+		..()
 		if (disposed)
 			return
 		if (istype(A, /obj/machinery/colosseum_putt) || istype(A, /obj/critter/gunbot/drone))

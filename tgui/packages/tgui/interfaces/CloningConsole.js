@@ -6,7 +6,6 @@
 * @license ISC
 */
 
-import { Fragment } from 'inferno';
 import { useBackend, useLocalState, useSharedState } from '../backend';
 import { Box, Button, ColorBox, Flex, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -40,6 +39,7 @@ const healthToColor = (oxy, tox, burn, brute) => {
 const Tab = {
   Functions: 'functions',
   Records: 'records',
+  Pods: 'pods',
 };
 
 const Types = {
@@ -75,9 +75,9 @@ export const CloningConsole = (props, context) => {
 
   return (
     <Window
-      theme={cloneSlave ? 'syndicate' : 'ntos'}
+      theme={cloneSlave.some(Boolean) ? 'syndicate' : 'ntos'}
       width={540}
-      height={700}>
+      height={595}>
       <Window.Content>
         {deletionTarget && (
           <Modal
@@ -130,6 +130,13 @@ export const CloningConsole = (props, context) => {
               Records
             </Tabs.Tab>
             <Tabs.Tab
+              icon="box"
+              selected={tab === Tab.Pods}
+              onClick={() => setTab(Tab.Pods)}
+            >
+              Pods
+            </Tabs.Tab>
+            <Tabs.Tab
               icon="wrench"
               selected={tab === Tab.Functions}
               onClick={() => setTab(Tab.Functions)}
@@ -145,6 +152,7 @@ export const CloningConsole = (props, context) => {
         )}
         <StatusSection />
         {tab === Tab.Records && <Records />}
+        {tab === Tab.Pods && <Pods />}
         {tab === Tab.Functions && <Functions />}
       </Window.Content>
     </Window>
@@ -162,7 +170,7 @@ const Functions = (props, context) => {
   } = data;
 
   return (
-    <Fragment>
+    <>
       <Section title="Advanced Genetic Analysis">
         <Box>
           <Box bold>Notice:</Box>
@@ -215,9 +223,8 @@ const Functions = (props, context) => {
         <Section
           title="Disk Controls"
           buttons={
-            <Fragment>
+            <>
               <Button
-                disabled={diskReadOnly}
                 icon="upload"
                 color={"blue"}
                 onClick={() => act("load")}>
@@ -229,39 +236,36 @@ const Functions = (props, context) => {
                 onClick={() => act("eject")}>
                 Eject Disk
               </Button>
-            </Fragment>
+            </>
           }
         >
           <Box>
             <Icon
               color={diskReadOnly ? 'bad' : 'good'}
-              name={diskReadOnly ? 'times' : 'check'}
+              name={'check'}
             />
             {' '}
             {diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}
           </Box>
         </Section>
       )}
-    </Fragment>
+    </>
   );
 };
 
 const StatusSection = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    completion,
-    meatLevels,
-    occupantScanned,
-    podGone,
-    scannerGone,
     scannerLocked,
+    occupantScanned,
     scannerOccupied,
+    scannerGone,
   } = data;
 
   const message = data.message || { text: '', status: '' };
 
   return (
-    <Fragment>
+    <>
       <Section
         title="Status Messages"
         height={7}
@@ -287,40 +291,6 @@ const StatusSection = (props, context) => {
             </Box>
           </TypedNoticeBox>
         )}
-      </Section>
-      <Section title="Cloning Pod Status">
-        <LabeledList>
-          <LabeledList.Item label="Completion">
-            {!podGone && (
-              <ProgressBar
-                value={completion}
-                maxValue={100}
-                minValue={0}
-                ranges={{
-                  good: [90, Infinity],
-                  average: [25, 90],
-                  bad: [-Infinity, 25],
-                }}
-              />
-            )}
-            {!!podGone && 'No Pod Detected'}
-          </LabeledList.Item>
-          <LabeledList.Item label="Bio-Matter">
-            {!podGone && (
-              <ProgressBar
-                value={meatLevels}
-                maxValue={100}
-                minValue={0}
-                ranges={{
-                  good: [50, 100],
-                  average: [25, 50],
-                  bad: [0, 25],
-                }}
-              />
-            )}
-            {!!podGone && 'No Pod Detected'}
-          </LabeledList.Item>
-        </LabeledList>
       </Section>
       <Section
         title="Scanner Controls"
@@ -360,24 +330,24 @@ const StatusSection = (props, context) => {
           </Button>
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };
 
 const Records = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    allowedToDelete,
     disk,
     diskReadOnly,
-    podGone,
+    allowedToDelete,
+    meatLevels,
   } = data;
   const records = data.cloneRecords || [];
   // N.B. uses `deletionTarget` that is shared with CloningConsole component
   const [, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
 
   return (
-    <Fragment>
+    <>
       <Section
         mb={0}
         title="Records"
@@ -400,7 +370,7 @@ const Records = (props, context) => {
                 style={{
                   position: 'absolute',
                   left: '50%',
-                  top: '50%',
+                  top: '20%',
                   transform: 'translate(-40%, 22px)',
                 }}
                 fontSize="9px"
@@ -480,7 +450,7 @@ const Records = (props, context) => {
                     )}
                     {!!disk && (
                       <Button
-                        icon={(!!diskReadOnly || !!record.saved) ? '' : ''}
+                        icon={(!!diskReadOnly || !!record.saved) ? '' : 'save'}
                         color="blue"
                         alignText="center"
                         width="22px"
@@ -501,7 +471,7 @@ const Records = (props, context) => {
                     <Button
                       icon="dna"
                       color={"good"}
-                      disabled={podGone}
+                      disabled={!meatLevels.length}
                       onClick={() => act('clone', { ckey: record.ckey })}>
                       Clone
                     </Button>
@@ -512,6 +482,56 @@ const Records = (props, context) => {
           </Flex.Item>
         </Flex>
       </Section>
-    </Fragment>
+    </>
   );
+};
+
+const Pods = (props, context) => {
+  const { data } = useBackend(context);
+  const {
+    completion,
+    meatLevels,
+    podNames,
+  } = data;
+
+  if (!meatLevels.length) {
+    return (
+      <Section title="Cloning Pod Status">
+        <Box>
+          <Icon color="bad"
+            name="times" />
+          {" No Pod Detected"}
+        </Box>
+      </Section>
+    );
+  }
+
+  return meatLevels.map((meat, i) => (
+    <Section key={"pod" + i} title={podNames[i].replace(/cloning pod/, "Cloning Pod") + " Status"}>
+      <LabeledList>
+        <LabeledList.Item label="Completion">
+          <ProgressBar
+            value={completion[i]}
+            maxValue={100}
+            minValue={0}
+            ranges={{
+              good: [90, Infinity],
+              average: [25, 90],
+              bad: [-Infinity, 25],
+            }} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Bio-Matter">
+          <ProgressBar
+            value={meat}
+            maxValue={100}
+            minValue={0}
+            ranges={{
+              good: [50, 100],
+              average: [25, 50],
+              bad: [0, 25],
+            }} />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  ));
 };

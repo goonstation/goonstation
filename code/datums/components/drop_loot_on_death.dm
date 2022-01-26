@@ -3,6 +3,10 @@
 // component removes itself after triggering and dropping the items
 // duplicate components' item(s) are added to the old component's list
 
+TYPEINFO(/datum/component/drop_loot_on_death)
+	initialization_args = list(
+		ARG_INFO("loot", "type", "Path or list of paths for loot to drop on death")
+	)
 /datum/component/drop_loot_on_death
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/items_to_drop

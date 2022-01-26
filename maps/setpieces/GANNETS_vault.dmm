@@ -258,8 +258,8 @@
 /area/wtc)
 "aN" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/deep_blue_sea,
-/obj/item/paper/book/moby_dick,
+/obj/item/paper/book/from_file/deep_blue_sea,
+/obj/item/paper/book/from_file/moby_dick,
 /turf/simulated/floor/black/side{
 	icon_state = "greyblack";
 	dir = 4

@@ -13,7 +13,7 @@
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
@@ -27,13 +27,14 @@
 	var/slashed = 0
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 		if (src.stand)
-			src.stand.update_icon()
+			src.stand.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents && src.reagents.total_volume)
-			var/iv_state = max(min(round((src.reagents.total_volume / src.reagents.maximum_volume) * 100, 10) / 10, 100), 0) //Look away, you fool! Like the sun, this section of code is harmful for your eyes if you look directly at it
+			var/iv_state = clamp(round((src.reagents.total_volume / src.reagents.maximum_volume) * 100, 10) / 10, 0, 100) //Look away, you fool! Like the sun, this section of code is harmful for your eyes if you look directly at it
 			if (!src.fluid_image)
 				src.fluid_image = image(src.icon, "IV-0")
 			src.fluid_image.icon_state = "IV-[iv_state]"
@@ -60,17 +61,17 @@
 
 	pickup(mob/user)
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	dropped(mob/user)
 		..()
 		SPAWN_DBG(0)
-			src.update_icon()
+			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		src.mode = !(src.mode)
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 		if (!ishuman(M))
@@ -222,6 +223,7 @@
 	anchored = 0
 	density = 0
 	var/image/fluid_image = null
+	var/image/bag_image = null
 	var/obj/item/reagent_containers/iv_drip/IV = null
 	var/obj/paired_obj = null
 	mats = 10
@@ -231,23 +233,26 @@
 			var/list/examine_list = src.IV.examine()
 			return examine_list.Join("\n")
 
-	proc/update_icon()
-		src.overlays = null
+	update_icon()
 		if (!src.IV)
 			src.icon_state = "IVstand"
 			src.name = "\improper IV stand"
-			return
+			src.UpdateOverlays(null, "fluid")
+			src.UpdateOverlays(null, "bag")
 		else
-			src.icon_state = "IVstand1"
+			if(!src.bag_image)
+				src.bag_image = image(src.icon, icon_state = "IVstand1")
+			src.UpdateOverlays(src.bag_image, "bag")
 			src.name = "\improper IV stand ([src.IV])"
 			if (src.IV.reagents.total_volume)
 				if (!src.fluid_image)
-					src.fluid_image = image(src.icon, "IVstand1-fluid", -1)
+					src.fluid_image = image(src.icon, icon_state = "IVstand1-fluid")
 				src.fluid_image.icon_state = "IVstand1-fluid"
 				var/datum/color/average = src.IV.reagents.get_average_color()
 				src.fluid_image.color = average.to_rgba()
-				src.overlays += src.fluid_image
-			return
+				src.UpdateOverlays(src.fluid_image, "fluid")
+			else
+				src.UpdateOverlays(null, "fluid")
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
@@ -263,10 +268,10 @@
 			newIV.set_loc(src)
 			src.IV = newIV
 			newIV.stand = src
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else if (src.IV)
-			//src.IV.attackby(W, user)
+			//src.IV.Attackby(W, user)
 			W.afterattack(src.IV, user)
 			return
 		else
@@ -280,14 +285,14 @@
 			user.put_in_hand_or_drop(oldIV)
 			oldIV.stand = null
 			src.IV = null
-			src.update_icon()
+			src.UpdateIcon()
 			return
 		else
 			return ..()
 
 	MouseDrop(atom/over_object as mob|obj)
 		var/atom/movable/A = over_object
-		if (usr && !usr.restrained() && !usr.stat && in_range(src, usr) && in_range(over_object, usr) && istype(A))
+		if (usr && !usr.restrained() && !usr.stat && in_interact_range(src, usr) && in_interact_range(over_object, usr) && istype(A))
 			if (src.IV && ishuman(over_object))
 				src.IV.attack(over_object, usr)
 				return

@@ -63,12 +63,9 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				process()
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 
 	proc/process()
 		if (!soundSubscribers)
@@ -148,7 +145,6 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
@@ -156,7 +152,8 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		reagents.add_reagent("acid",20)
 		reagents.add_reagent("vomit",5)
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if(!istype(A, /obj/item/skull))
 			reagents.reaction(A, TOUCH, 2)
 		if (prob(50) && isliving(A))
@@ -234,7 +231,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 		New()
 			..()
 			if (src.loc)
-				src.loc.invisibility = 100 //Hide the floor below us so people don't just right click and see two floors.
+				src.loc.invisibility = INVIS_ALWAYS_ISH //Hide the floor below us so people don't just right click and see two floors.
 
 		attackby(obj/item/O as obj, mob/user as mob)
 			if (src.alive && ispryingtool(O))
@@ -244,7 +241,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 					gibs(src.loc)
 					if (src.loc)
 						new /obj/item/tile/steel (src.loc)
-						src.loc.invisibility = 0
+						src.loc.invisibility = INVIS_NONE
 
 					qdel(src)
 					return
@@ -412,7 +409,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 				return 1
 
 		var/list/exploded_sentence = splittext(message, " ")
-		if (!exploded_sentence || !exploded_sentence.len)
+		if (!exploded_sentence || !length(exploded_sentence))
 			return 1
 
 		if (exploded_sentence.len > 1)
@@ -1543,7 +1540,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	name = "generic puzzle logic element"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/output_ids = null //legacy
 	var/inputs_required = 1
 	var/input_counter = 0
@@ -1629,7 +1626,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 	pickup(var/mob/user)
 		if (ishuman(user))
 			boutput(user, "<span class='alert'>[src] clamps down on your arm!  Mercy sakes!</span>")
-			src.w_class = 10
+			src.w_class = W_CLASS_BUBSIAN
 		return ..()
 
 	dropped()
@@ -1644,7 +1641,7 @@ var/list/meatland_fx_sounds = list('sound/ambience/spooky/Meatzone_Squishy.ogg',
 
 		if((last_shot + 15) <= world.time)
 			if (user.health <= 0)
-				boutput(usr, "<span class='alert'>You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
+				boutput(user, "<span class='alert'>You try to fire, but just feel woozy, bolts of pain shooting up your arm.</span>")
 				return
 
 			last_shot = world.time

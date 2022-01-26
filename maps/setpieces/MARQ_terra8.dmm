@@ -953,7 +953,7 @@
 /area/bunker/lv2)
 "cv" = (
 /obj/table/round/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/unsimulated/floor/darkblue/checker,
 /area/terraeight/fog/ground/lv5)
 "cw" = (
@@ -2178,7 +2178,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "industrial atmospheric processor"
 	},
@@ -2576,7 +2576,7 @@
 /area/terraeight/fog/ground/lv4)
 "fU" = (
 /obj/table/reinforced/auto,
-/obj/item/card_box/booster,
+/obj/item/stg_booster,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line-broken1";
 	dir = 1
@@ -4928,7 +4928,7 @@
 /area/terraeight/fog/ground)
 "kH" = (
 /obj/table,
-/obj/item/card_box/trading,
+/obj/item/stg_box,
 /obj/map/light/screen,
 /turf/unsimulated/floor/concrete{
 	icon_state = "floor-notile"
@@ -8121,7 +8121,7 @@
 	},
 /obj/table/wood/auto,
 /obj/item/clipboard/with_pen,
-/obj/item/card_box/booster,
+/obj/item/stg_booster,
 /obj/item/pen/infrared,
 /turf/unsimulated/floor/carpet/grime,
 /area/bunker/lv0)

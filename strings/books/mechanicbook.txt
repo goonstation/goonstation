@@ -1,0 +1,145 @@
+	<BIG><B>Quick-start Guide</B></BIG>
+	<br>
+	<br>To connect Components to each other you use drag and drop.
+	<br>For this to work the components need to be secured into place by means of a Wrench.
+	<br>You need to be holding a multi-Tool to be able to change Connections and Options of Components.
+	<br>
+	<br>A basic construction would look something like :
+	<br><I>Wrench a Button Component into Place.</I>
+	<br><I>Wrench a Graviton Accelerator into Place.</I>
+	<br><I>Drag the Button onto the Accelerator and drop.</I>
+	<br><I>Set the Button as Trigger.</I>
+	<br><I>Select the only existing target input on the Accelerator.</I>
+	<br>
+	<br>Using the Button will now activate the Accelerator.
+	<br>
+	<br>You can see the Connections between Components when they are not covered by Tiles.
+	<br>Just use a Crowbar to reveal the Plating and you'll be able to see what's connected to what.
+	<br>
+	<br>The Components can also be connected to some Machines and Gadgets around the Station.
+	<br>You could try messing around with Doors or vending Machines.
+	<br>If you want to connect two non-component objects together - say two Doors,
+	<br>you will have to use a Component between the two Objects. Relays are easily used for this.
+	<br>You would connect the Relay to Door 1 as Receiver and then connect the Relay to Door 2 as Trigger.
+	<br>
+	<br>Most Components offer additional Options in their right-Click Menu when you are standing right next to them.
+	<br>These Options can range from Rotation to setting the output Signal and such Things.
+	<br>
+	<br><I>Information about the specific Components follows below.</I>
+	<br>
+	<hr>
+	<br><BIG><B>Component specific Information</B></BIG>
+	<br>
+	<br><B>AND Component:</B>
+	<br>Sends specified signal when both inputs receive a Signal within a specified Time Frame.
+	<br>
+	<br>
+	<br><B>Button:</B>
+	<br>Sends set Signal when used.
+	<br>
+	<br>
+	<br><B>Delay Component:</B>
+	<br>Delays an incoming signal a certain amount of time before sending it to its connections.
+	<br>
+	<br>
+	<br><B>Graviton Accelerator:</B>
+	<br>Accelerates objects on it into a given direction for 3 seconds after being activated.
+	<br>
+	<br>
+	<br><B>Gun Component:</B>
+	<br>Shoots a Gun in the given Direction.
+	<br>Needs to have a Gun installed before it can be used. Simply use the Gun on the Component.
+	<br>
+	<br>
+	<br><B>E-Gun Component:</B>
+	<br>Shoots a Gun in the given Direction.
+	<br>Needs to have a Gun installed before it can be used. Simply use the Gun on the Component.
+	<br>This Component only works for Energy based Guns with Power Cells in them.
+	<br>Can recharge the Gun inside it at the Cost of temporarily deactivating itself.
+	<br>Additionally, there is a short cooldown Period between Shots.
+	<br>
+	<br>
+	<br><B>LED Component:</B>
+	<br>Provides light when triggered.
+	<br>The \"set rgb\" Input takes a Color in the HTML Color Code Format, for Example: #FF1200 .
+	<br>
+	<br>
+	<br><B>Letter Display Component:</B>
+	<br>Displays a single letter from the input signal.
+	<br>Set the letter index to choose which letter is displayed.  For example, if the letter index is 2, and an input signal of "Hello" arrives, "E" will be displayed.
+	<br>
+	<br>
+	<br><B>Microphone Component:</B>
+	<br>Forwards nearby speech as signal.
+	<br>The "Toggle Show-Source" option determines whether the component adds the source's name to the signal or not.
+	<br>
+	<br>
+	<br><B>OR Component:</B>
+	<br>Sends a specified Signal when it receives a specified Signal in one of its Inputs.
+	<br>
+	<br>
+	<br><B>Pressure Sensor:</B>
+	<br>Detects Pressure and dispatches Signal.
+	<br>
+	<br>
+	<br><B>RegEx Find Component:</B>
+	<br>Attempts to find an expression within a String. If found it can either forward the found String as Signal or send its own Signal.
+	<br>The type of RegEx used is PCRE. Look-ahead or look-behind assertions are not supported.
+	<br>
+	<br>
+	<br><B>RegEx Replace Component:</B>
+	<br>Attempts to find an expression within a String and then replaces it. Forwards the modified String as Signal. Also has an Input that lets you set the Expression.
+	<br>The type of RegEx used is PCRE. Look-ahead or look-behind assertions are not supported.
+	<br>
+	<br>
+	<br><B>Relay Component:</B>
+	<br>Forwards an input signal to another Target. If Signal changing is enabled, the Component will change the incoming Signal to its own before relaying it.
+	<br>
+	<br>
+	<br><B>Selection Component:</B>
+	<br>Holds a List of Signals that can be manipulated, browsed and sent.
+	<br>Can be set to randomly select Items for sending or triggered to send a random Item once.
+	<br>
+	<br>
+	<br><B>Signal Builder Component:</B>
+	<br>Builds a String out of incoming Signals until it is triggered to send whats in the Buffer at which point the accumulated String will be sent and the Buffer cleared.
+	<br>The starting/ending String Settings allow you to define a String that will be put at the Beginning or End of each String.
+	<br>
+	<br>
+	<br><B>Signal Check Component:</B>
+	<br>Sends either its own Signal or the input Signal when it receives a Signal that has the set Trigger String in it somewhere.  Can be toggled to trigger when it does NOT find the specified string.
+	<br>For Example: Trigger -> cat, Incoming Signal -> \"catswithhats\" -> the Component activates. This is not case-sensitive.
+	<br>
+	<br>
+	<br><B>Sound Synthesizer:</B>
+	<br>Speaks whatever Signal it receives out loud. Rate-limited to 2 Seconds.
+	<br>
+	<br>
+	<br><B>Teleport Component:</B>
+	<br>To link Pads set the ID to the same string on both Pads. If there are more than 2 Pads with the same ID, Destinations will be picked at random.
+	<br>Has an Input that allows a message to change the ID of the Pad and through that its Destination.
+	<br>Individual Pads can be set to send only Mode - in this Mode they can not be the Target Location of other Pads with the same ID.
+	<br>This is useful if you want to have several Pads teleport to one exit Pad.
+	<br>
+	<br>
+	<br><B>Toggle Component:</B>
+	<br>Can be turned on, off or be toggled. Outputs 2 different Signals depending on its new State - one for on and one for off.
+	<br>Can also be triggered to just output the appropriate Signal without doing anything else.
+	<br>
+	<br>
+	<br><B>Wifi Component:</B>
+	<br>The "send radio message" Command accepts Messages in the Format of command=herp&data=derp which will then be sent on the set Frequency.
+	<br>The Component can receive a sendmsg Radio Signal that will send the Data in the \"data\" Portion of the Signal to the Outputs of this Component.
+	<br>Following the previous Syntax a sendmsg Signal would look like this : address_1=WIFICompoAddHere&command=sendmsg&data=MyCompoCommand
+	<br>Normal PDA Messages can also be used to trigger the Component.
+	<br>The frequency can be changed wirelessly as well by using the setfreq Command : address_1=WIFICompoAddHere&command=setfreq&data=1419
+	<br>If you enable the forward all option, the Component will forward any Radio Messages it receives, unprocessed and in the above format, to its Outputs.
+	<br>By disabling NetID filtering you can make the Component react to any and all Radio Messages on its frequency.
+	<br>The Component will blink green when it receives a wireless Message and blink red when it sends a wireless Message."
+	<br>
+	<br>
+	<br><B>Wifi Signal Splitter Component:</B>
+	<br>Returns the value of a field within a Radio signal. The components Trigger Field is the Field you want the Value of.
+	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
+	<br>
+	<br>

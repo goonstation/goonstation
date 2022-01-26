@@ -8,7 +8,7 @@
 	amount = 1
 	throwforce = 1
 	force = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/gears
 	name = "gears"
@@ -18,7 +18,7 @@
 	amount = 1
 	throwforce = 1
 	force = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/lens
 	name = "Lens"
@@ -28,7 +28,7 @@
 	amount = 1
 	throwforce = 1
 	force = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	var/clarity = 20 //probably somewhere between 0-100 ish
 	var/focal_strength = 20 //1-100 ish
 
@@ -49,21 +49,21 @@
 		icon_state = "small_coil"
 		throwforce = 3
 		force = 3
-		w_class = 1
+		w_class = W_CLASS_TINY
 
 	large
 		name = "large coil"
 		icon_state = "large_coil"
 		throwforce = 5
 		force = 5
-		w_class = 2
+		w_class = W_CLASS_SMALL
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
 	desc = "what"
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
@@ -82,39 +82,44 @@
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
 			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
-			playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
+			playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 			last_laugh = world.time
 
 	process()
-		if(prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
+		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
-		// No teleporting if youre in a crate
-		if(istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		// No teleporting if youre in a container
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
 			return
 		// Nobody can ever see Chompski move
-		for(var/mob/M in viewers(src))
-			if(M.mind) // Only players. Monkeys and NPCs are fine. Chompski trusts them.
+		for (var/mob/M in viewers(src))
+			if (M.mind) // Only players. Monkeys and NPCs are fine. Chompski trusts them.
 				return
 		//oh boy time to move
-		playsound(src.loc,"sound/misc/gnomechuckle.ogg" ,50,1)
-		var/obj/crate = pick(by_type[/obj/storage])
-		while(crate.z != 1)
-			crate = pick(by_type[/obj/storage])
-		src.set_loc(crate)
 
+		var/obj/storage/container = null
 
+		var/list/eligible_containers = list()
+		for_by_tcl(iterated_container, /obj/storage)
+			if (!iterated_container.open && iterated_container.z == Z_LEVEL_STATION)
+				eligible_containers += iterated_container
+		if (!length(eligible_containers))
+			return
+		container = pick(eligible_containers)
 
+		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
+		src.set_loc(container)
 /obj/item/c_tube
 	name = "cardboard tube"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "c_tube"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 5
 	stamina_cost = 1
 
@@ -142,11 +147,11 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "c_sheet"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 
@@ -162,7 +167,7 @@
 
 /obj/item/dummy
 	name = "dummy"
-	invisibility = 101.0
+	invisibility = INVIS_ALWAYS
 	anchored = 1.0
 	flags = TABLEPASS
 	burn_possible = 0
@@ -173,7 +178,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "rubber_chicken"
 	item_state = "rubber_chicken"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 3
@@ -181,7 +186,7 @@
 /obj/item/module
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	flags = FPRINT|TABLEPASS|CONDUCT
@@ -219,7 +224,7 @@
 	icon_state = "brick"
 	item_state = "brick"
 	force = 8
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throwforce = 10
 	rand_pos = 1
 	stamina_damage = 40
@@ -230,7 +235,7 @@
 	name = "E-Meter"
 	desc = "A device for measuring Body Thetan levels."
 	icon = 'icons/obj/items/device.dmi'
-	icon_state = "securotronOld"
+	icon_state = "emeter"
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (ismob(M))
@@ -247,12 +252,11 @@
 	icon_state = "eldritch-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "eldritch" // temp
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	force = 1
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "eldritch" = 3)
 
 /obj/item/hell_horn/attack_self(mob/user as mob)
 	if (spam_flag == 0)
@@ -281,8 +285,8 @@
 	attack(mob/M as mob, mob/user as mob)
 		src.add_fingerprint(user)
 
-		playsound(get_turf(M), "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)
-		playsound(get_turf(M), "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+		playsound(M, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)
+		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
 							"<span class='alert'>You hear something squeak.</span>")
@@ -323,7 +327,7 @@
 
 
 	proc/check_whitelist(var/mob/user as mob)
-		if (src.emagged || !src.safe_smokables || (islist(src.safe_smokables) && !src.safe_smokables.len))
+		if (src.emagged || !src.safe_smokables || (islist(src.safe_smokables) && !length(src.safe_smokables)))
 			return
 
 		var/found = 0
@@ -332,8 +336,8 @@
 				src.reagents.del_reagent(reagent_id)
 				found = 1
 		if (found)
-			if (usr)
-				usr.show_text("[src] identifies and removes a non-smokable substance.", "red")
+			if (user)
+				user.show_text("[src] identifies and removes a non-smokable substance.", "red")
 			else if (ismob(src.loc))
 				var/mob/M = src.loc
 				M.show_text("[src] identifies and removes a non-smokable substance.", "red")
@@ -342,6 +346,7 @@
 
 
 	on_reagent_change(add)
+		..()
 		if (!src.emagged && add)
 			src.check_whitelist()
 
@@ -467,11 +472,11 @@
 			playsound(src.loc,"sound/misc/Boxingbell.ogg",50,1)
 
 /obj/item/trophy
-	name = "Solarium Trophy"
-	desc = "Awarded for bravely solving the Solarium after 42 people got to it first"
-	anchored = 1
-	density = 1
-	icon = 'icons/obj/32x64.dmi'
+	name = "trophy"
+	desc = "You're winner! You did it! You did the thing! Good job!"
+	anchored = 0
+	density = 0
+	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
 
 /obj/item/battlepass
@@ -509,7 +514,7 @@
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "superbuttshell"
 	c_flags = EQUIPPED_WHILE_HELD
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	var/mob/living/carbon/human/owner = null
 	var/changed = 0
 	var/pickup_time = 0
@@ -551,7 +556,7 @@
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
-				owner.client.respawn_target(owner,1)
+				INVOKE_ASYNC(owner.client, /client.proc/respawn_target, owner, 1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
 				owner = null

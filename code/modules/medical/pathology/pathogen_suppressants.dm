@@ -115,7 +115,7 @@
 					P.infected.show_message("<span class='notice'>You feel better.</span>")
 					P.stage--
 					P.symptom_data["suppressant"] = 0
-				return 1
+			return 1
 		else
 			P.symptom_data["suppressant"] = 0
 		return 0

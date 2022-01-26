@@ -71,8 +71,8 @@
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
-			var/obj/item/clothing/suit/space/suit = new()
-			var/obj/item/clothing/head/helmet/space/helmet = new()
+			var/obj/item/clothing/suit/space/custom/suit = new()
+			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
 			suit.set_loc(getOutputLocation(owner))
 			helmet.set_loc(getOutputLocation(owner))
 			var/obj/item/fab = getObjectByPartName("Fabric")
@@ -273,7 +273,7 @@
 	category = "Components"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Arrowhead"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -291,7 +291,7 @@
 	category = "Weapons"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Shaft"; required_amount = 3} ())
+		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Head"; required_amount = 1} ())
 		..()
 
@@ -315,7 +315,7 @@
 
 	New()
 		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Arrowhead"; required_amount = 1} ())
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Shaft"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -666,13 +666,21 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		var/obj/item/sheet/newObj = new()
+		var/num = round(amount/5)
+		amount = amount%5
 		var/obj/item/source = getObjectByPartName("Sheet")
-		if(source?.material)
-			newObj.setMaterial(source.material)
-		newObj.change_stack_amount((amount * 10) - newObj.amount)
-		newObj.set_loc(getOutputLocation(owner))
-		return
+		for(var/i in 1 to num)
+			var/obj/item/sheet/newObj = new()
+			if(source?.material)
+				newObj.setMaterial(source.material)
+			newObj.change_stack_amount(50 - newObj.amount)
+			newObj.set_loc(getOutputLocation(owner))
+		if(amount > 0)
+			var/obj/item/sheet/newObj = new()
+			if(source?.material)
+				newObj.setMaterial(source.material)
+			newObj.change_stack_amount((amount*10) - newObj.amount)
+			newObj.set_loc(getOutputLocation(owner))
 
 /datum/matfab_recipe/cell_small
 	name = "Small energy cell"
@@ -739,7 +747,7 @@
 			refined.material.triggersOnAttack.Cut()
 			refined.material.addTrigger(refined.material.triggersOnAttack, A)
 
-			var/obj/item/material_piece/wad/W = unpool(/obj/item/material_piece/wad)
+			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
 			if(refined?.material)
 				refined.material.canMix = 0

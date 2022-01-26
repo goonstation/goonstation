@@ -207,7 +207,7 @@
 							boutput(usr, "You insert [I].")
 
 			else if (href_list["dipsw"] && (status & NOPOWER))
-				var/switchNum = text2num(href_list["dipsw"])
+				var/switchNum = text2num_safe(href_list["dipsw"])
 				if (switchNum < 1 || switchNum > 8)
 					return 1
 
@@ -227,7 +227,7 @@
 				return
 
 			if (!src.hd)
-				boutput(usr, "<span class='alert'>The memory core has already been removed.</span>")
+				boutput(user, "<span class='alert'>The memory core has already been removed.</span>")
 				return
 
 			status |= MAINT
@@ -236,7 +236,7 @@
 			src.hd = null
 			src.posted = 0
 
-			boutput(usr, "You pry out the memory core.")
+			boutput(user, "You pry out the memory core.")
 			src.updateUsrDialog()
 			return
 
@@ -247,6 +247,7 @@
 
 
 	process()
+		set waitfor = 0
 		..()
 		if(status & (NOPOWER|BROKEN|MAINT) || !processing)
 			return
@@ -261,8 +262,13 @@
 				if (prog.disposed)
 					src.processing[progIndex] = null
 					continue
-
-				prog.process()
+				try
+					prog.process()
+				catch(var/exception/e)
+					if(findtext(e.name, "Maximum recursion level reached"))
+						src.unload_all()
+					else
+						throw e
 /*
 		for(var/datum/computer/file/mainframe_program/P in src.processing)
 			if (P)
@@ -355,7 +361,9 @@
 					file = signal.data_file.copy_file()
 				if(src.os && data)
 					src.os.term_input(data, target, file)
-					//qdel(file)
+					if(!isnull(usr))
+						var/atom/source = signal.source
+						logTheThing("computers", usr, null, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
 
 				return
 
@@ -494,7 +502,7 @@
 					return 0
 
 			if(!(program in src.processing))
-				if (src.os == program && src.processing.len)
+				if (src.os == program && length(src.processing))
 					src.processing.len++
 					for (var/x = src.processing.len, x > 0, x--)
 						var/datum/computer/file/mainframe_program/P = src.processing[x]
@@ -520,7 +528,7 @@
 
 					if (!success)
 						src.processing += program
-						program.progid = src.processing.len
+						program.progid = length(src.processing)
 
 			if (user && !allow_fork)
 				program.useracc = user
@@ -946,7 +954,7 @@
 	if (!the_message)
 		return 1
 
-	for (var/obj/machinery/networked/mainframe/aMainframe as() in machine_registry[MACHINES_MAINFRAMES])
+	for (var/obj/machinery/networked/mainframe/aMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 		LAGCHECK(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue

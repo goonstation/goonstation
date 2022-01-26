@@ -24,6 +24,16 @@
 				holder.liver = null
 		..()
 
+/obj/item/organ/liver/synth
+	name = "synthliver"
+	organ_name = "synthliver"
+	icon_state = "plant"
+	desc = "For all you vegan Hannibal Lecters."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_liver", "plant_liver_bloom")
+
 /obj/item/organ/liver/cyber
 	name = "cyberliver"
 	desc = "A fancy robotic liver to replace one that someone's lost!"
@@ -31,6 +41,7 @@
 	// item_state = "heart_robo1"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 	var/overloading = 0
@@ -61,9 +72,9 @@
 		return 1
 
 	breakme()
-		. = ..()
-		overloading = 0
+		if(..())
+			overloading = 0
 
 	on_removal()
-		. = ..()
 		overloading = 0
+		. = ..()

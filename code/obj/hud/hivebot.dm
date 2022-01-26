@@ -10,7 +10,7 @@
 	src.mov_int = list(  )
 	src.darkMask = list(  )
 
-	var/obj/screen/using
+	var/atom/movable/screen/using
 
 
 //Radio
@@ -113,21 +113,21 @@
 //End of Intent
 
 //Cell
-	myhive:cells = new /obj/screen( null )
+	myhive:cells = new /atom/movable/screen( null )
 	myhive:cells.icon = 'icons/mob/screen1_robot.dmi'
 	myhive:cells.icon_state = "charge-empty"
 	myhive:cells.name = "cell"
 	myhive:cells.screen_loc = ui_cell
 
 //Health
-	myhive.healths = new /obj/screen( null )
+	myhive.healths = new /atom/movable/screen( null )
 	myhive.healths.icon = 'icons/mob/screen1_robot.dmi'
 	myhive.healths.icon_state = "health0"
 	myhive.healths.name = "health"
 	myhive.healths.screen_loc = ui_bothealth
 
 //Installed Module
-	myhive.hands = new /obj/screen( null )
+	myhive.hands = new /atom/movable/screen( null )
 	myhive.hands.icon = 'icons/mob/screen1_robot.dmi'
 	myhive.hands.icon_state = "nomod"
 	myhive.hands.name = "module"
@@ -143,34 +143,34 @@
 	src.adding += using
 
 //Store
-	myhive.throw_icon = new /obj/screen(null)
+	myhive.throw_icon = new /atom/movable/screen(null)
 	myhive.throw_icon.icon = 'icons/mob/screen1_robot.dmi'
 	myhive.throw_icon.icon_state = "store"
 	myhive.throw_icon.name = "store"
 	myhive.throw_icon.screen_loc = ui_botstore
 
 //Temp
-	myhive.bodytemp = new /obj/screen( null )
+	myhive.bodytemp = new /atom/movable/screen( null )
 	myhive.bodytemp.icon_state = "temp0"
 	myhive.bodytemp.name = "body temperature"
 	myhive.bodytemp.screen_loc = ui_bottemp
 
 //does nothing (fire and oxy)
-	myhive.oxygen = new /obj/screen( null )
+	myhive.oxygen = new /atom/movable/screen( null )
 	myhive.oxygen.icon = 'icons/mob/screen1_robot.dmi'
 	myhive.oxygen.icon_state = "oxy0"
 	myhive.oxygen.name = "oxygen"
 	myhive.oxygen.screen_loc = ui_boto2
 
 
-	myhive.pullin = new /obj/screen( null )
+	myhive.pullin = new /atom/movable/screen( null )
 	myhive.pullin.icon = 'icons/mob/screen1_robot.dmi'
 	myhive.pullin.icon_state = "pull0"
 	myhive.pullin.name = "pull"
 	myhive.pullin.screen_loc = ui_botpull
 
 /*
-	myhive.rest = new /obj/screen( null )
+	myhive.rest = new /atom/movable/screen( null )
 	myhive.rest.icon = 'icons/mob/screen1_robot.dmi'
 	myhive.rest.icon_state = "rest0"
 	myhive.rest.name = "rest"
@@ -189,10 +189,10 @@
 	myhive:cells.add_to_client(myhive.client)
 	myhive.pullin.add_to_client(myhive.client)
 
-	for(var/obj/screen/O in adding)
+	for(var/atom/movable/screen/O in adding)
 		O.add_to_client(myhive.client)
 
-	for(var/obj/screen/O in other)
+	for(var/atom/movable/screen/O in other)
 		O.add_to_client(myhive.client)
 
 

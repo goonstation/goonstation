@@ -22,7 +22,7 @@
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
-	ircmsg["name"] = src.mob.real_name
+	ircmsg["name"] = stripTextMacros(src.mob.real_name)
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("asay", ircmsg)
 

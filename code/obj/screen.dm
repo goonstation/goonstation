@@ -1,4 +1,4 @@
-/obj/screen
+/atom/movable/screen
 	name = "screen"
 	icon = 'icons/mob/screen1.dmi'
 	layer = HUD_LAYER
@@ -6,14 +6,14 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-/obj/screen/proc/clicked(list/params, mob/user = null)
+/atom/movable/screen/proc/clicked(list/params, mob/user = null)
 
-/obj/screen/proc/add_to_client(var/client/C)
+/atom/movable/screen/proc/add_to_client(var/client/C)
 	if (clients)
 		clients |= C
 	C.screen += src
 
-/obj/screen/disposing()
+/atom/movable/screen/disposing()
 	if (clients)
 		for(var/client/C in clients)
 			if (C.mob)
@@ -27,15 +27,15 @@
 	clients = null
 	..()
 
-/obj/screen/grab
+/atom/movable/screen/grab
 	name = "grab"
 
-/obj/screen/intent_sel
+/atom/movable/screen/intent_sel
 	name = "Intent Select"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "help"
 
-/obj/screen/stamina_background
+/atom/movable/screen/stamina_background
 	name = "stamina"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "stamina"
@@ -52,13 +52,14 @@
 	if (src.hud && src.hud.stamina)
 		src.hud.stamina.desc = newDesc
 
-/obj/screen/stamina_bar
+/atom/movable/screen/stamina_bar
 	name = "Stamina"
 	desc = ""
 	icon = 'icons/mob/hud_human_new.dmi'
 	icon_state = "stamina_bar"
 	var/last_val = -123123
 	var/tooltipTheme = "stamina"
+	var/last_update = 0
 	layer = HUD_LAYER-1
 
 	New(var/mob/living/carbon/C)
@@ -73,10 +74,11 @@
 					src.icon = hud_style
 
 	proc/getDesc(var/mob/living/C)
-		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + C.get_stam_mod_regen())]"
+		return "[C.stamina] / [C.stamina_max] Stamina. Regeneration rate : [(C.stamina_regen + GET_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS))]"
 
 	proc/update_value(var/mob/living/C)
-		if(C.stamina == last_val) return //No need to change anything
+		last_update = TIME
+		if(C.stamina_max <= 0 || abs(C.stamina - last_val) * 32 / C.stamina_max <= 1) return //No need to change anything
 		else last_val = C.stamina
 
 		if(C.stamina < 0)
@@ -118,7 +120,7 @@
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
 
-/obj/screen/intent_sel/clicked(list/params)
+/atom/movable/screen/intent_sel/clicked(list/params)
 	var/icon_x = text2num(params["icon-x"])
 	var/icon_y = text2num(params["icon-y"])
 
@@ -128,27 +130,27 @@
 
 	if (icon_y > 16)
 		if (icon_x > 16) //Upper Right
-			user.a_intent = INTENT_DISARM
+			user.set_a_intent(INTENT_DISARM)
 			src.icon_state = "disarm"
 			if(literal_disarm && ishuman(user))
 				var/mob/living/carbon/human/H = user
 				H.limbs.l_arm.sever()
 				H.limbs.r_arm.sever()
 		else //Upper Left
-			user.a_intent = INTENT_HELP
+			user.set_a_intent(INTENT_HELP)
 			src.icon_state = "help"
 
 	else
 		if (icon_x > 16) //Lower Right
-			user.a_intent = INTENT_HARM
+			user.set_a_intent(INTENT_HARM)
 			src.icon_state = "harm"
 		else //Lower Left
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			src.icon_state = "grab"
 
 	boutput(user, "<span class='hint'>Your intent is now set to '[user.a_intent]'.</span>")
 
-/obj/screen/clicked(list/params)
+/atom/movable/screen/clicked(list/params)
 	switch(src.name)
 		if("stamina")
 			out(usr, src.desc)

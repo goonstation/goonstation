@@ -29,7 +29,7 @@
 				boutput(H, "<span class='alert'>You bash your head on the ground.</span>")
 				H.TakeDamageAccountArmor("head", 5, 0, 0, DAMAGE_BLUNT)
 				H.take_brain_damage(2)
-				H.changeStatus("paralysis", 100)
+				H.changeStatus("paralysis", 10 SECONDS)
 				H.make_jittery(1000)
 			else
 				boutput(H, "<span class='alert'>You bash your head on the ground - good thing you were wearing a helmet!</span>")

@@ -6,6 +6,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #else
 	preload_rsc = 1
 #endif
+	parent_type = /datum
 	var/datum/player/player = null
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
@@ -31,6 +32,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/queued_click = 0
 	var/joined_date = null
 	var/adventure_view = 0
+	/// controls whether or not the varedit page is refreshed after altering variables
+	var/refresh_varedit_onchange = TRUE
 	var/list/hidden_verbs = null
 
 	var/datum/buildmode_holder/buildmode = null
@@ -99,7 +102,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	var/datum/interfaceSizeHelper/screen/screenSizeHelper = null
 	var/datum/interfaceSizeHelper/map/mapSizeHelper = null
 
-	var/obj/screen/screenHolder //Invisible, holds images that are used as render_sources.
+	var/atom/movable/screen/screenHolder //Invisible, holds images that are used as render_sources.
 
 	var/experimental_intents = 0
 
@@ -125,6 +128,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	return
 
 /client/Del()
+	src.mob?.move_dir = 0
+
 	if (player_capa && src.login_success)
 		player_cap_grace[src.ckey] = TIME + 2 MINUTES
 	/* // THIS THING IS BREAKING THE REST OF THE PROC FOR SOME REASON AND I HAVE NO IDEA WHY
@@ -286,7 +291,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<body>
 									<h1>You have been banned.</h1>
 									<span class='banreason'>Reason: [isbanned].</span><br>
-									If you believe you were unjustly banned, head to <a href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
+									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.
 								</body>
 							</html>
 						"}
@@ -298,7 +303,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
-//vpn check (for ban evasion purposes) api documentation: https://vpnapi.io/api-documentation
+//vpn check (for ban evasion purposes)
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
 		var/vpn_kick_string = {"
@@ -308,8 +313,13 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 								<title>VPN or Proxy Detected</title>
 							</head>
 							<body>
-								<h1>Please disable your VPN, close the game, and rejoin.</h1><br>
-								If you are not using a VPN please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and ask an admin for help.
+								<h1>Warning: VPN or proxy connection detected</h1>
+
+                                Please disable your VPN or proxy, close the game, and rejoin.<br>
+                                <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
+								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and request an admins assistance with  whitelisting your account.
+                                 <br> <br>
+                                 If an admin is not immediately available you may also use the <b><u>/report</u></b> command in our discord server to submit a ticket to the administration. Please be sure to include your byond ckey (aka your username), and the name of your ISP in your ticket to avoid delays.
 							</body>
 						</html>
 					"}
@@ -320,11 +330,15 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
 			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
 			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-			src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-			sleep(3 SECONDS)
+			if(do_compid_analysis)
+				do_computerid_test(src) //Will ban yonder fucker in case they are prix
+				check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
 			if (src)
-				del(src)
-			return
+				src.mob.Browse(vpn_kick_string, "window=vpnbonked")
+				sleep(3 SECONDS)
+				if (src)
+					del(src)
+				return
 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
@@ -332,7 +346,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			var/list/data
 			try
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
-
 				// Goonhub API error encountered
 				if (data["error"])
 					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
@@ -340,7 +353,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 				// Successful Goonhub API query
 				else
-					if (data["whitelisted"])
+					var/result = dpi(data)
+					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
 
@@ -348,7 +362,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 						data = json_decode(html_decode(data["response"]))
 
 						// VPN checker service returns error responses in a "message" property
-						if (data["message"])
+						if (data["success"] == false)
 							// Yes, we're forcing a cache for a no-VPN response here on purpose
 							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
 							//			  so we want to avoid spamming the goonhub API this round for literally no gain
@@ -357,24 +371,27 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
 						// Successful VPN check
-						else
-							var/list/security_info = data["security"]
-
-							// IP is a known VPN, cache locally and kick
-							if (security_info["vpn"] == true)
-								global.vpn_ip_checks["[src.address]"] = true
-								logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]")
-								logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: [json_encode(data["network"])]", "admin")
-								message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+						// IP is a known VPN, cache locally and kick
+						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 75))
+							global.vpn_ip_checks["[src.address]"] = true
+							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
+							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
+							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
+							ircbot.export("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
+							if(do_compid_analysis)
+								do_computerid_test(src) //Will ban yonder fucker in case they are prix
+								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
+							if (src)
 								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
 								sleep(3 SECONDS)
 								if (src)
 									del(src)
 								return
 
-							// IP is not a known VPN
-							else
-								global.vpn_ip_checks["[src.address]"] = false
+						// IP is not a known VPN
+						else
+							global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
 				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
@@ -475,18 +492,15 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				src.cmd_ass_day_rules()
 #endif
 
-			if (src.byond_version < 513 || src.byond_build < 1526)
+			if (src.byond_version < 514 || src.byond_build < 1566)
 				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
 					src << link("http://www.byond.com/download/")
-				else
+/*
+ 				else
 					alert(src, "You won't be able to play without updating, sorry!")
 					del(src)
 					return
-
-// Let's throw it here, why not! -ZeWaka
-#if DM_BUILD < 1526 && !defined(SPACEMAN_DMM)
-#error Please update your BYOND version to the latest stable release.
-#endif
+*/
 
 		else
 			if (noir)
@@ -508,10 +522,14 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
+#ifdef LIVE_SERVER
 		if (cdn)
 			if(!cloud_available())
 				src.player.cloud_fetch()
-
+#else
+		// dev server, uses local save file to simulate clouddata
+		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
+#endif
 			if(cloud_available())
 				src.load_antag_tokens()
 				src.load_persistent_bank()
@@ -524,6 +542,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
 						else
 							volumes += old_volumes[i]
+
+				// Show login notice, if one exists
+				src.show_login_notice()
 
 		src.mob.reset_keymap()
 
@@ -631,6 +652,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(istype(composite))
 		for(var/datum/abilityHolder/inner_holder in composite.holders)
 			inner_holder.locked = FALSE
+
+	if(spooky_light_mode)
+		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
+		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
+		src.color = "#AAAAAA"
+
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
@@ -782,13 +809,16 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/new_bank_value = persistent_bank + amt
-	src.set_persistent_bank(new_bank_value)
+	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
+	cloud_put_bulk(json_encode(earnings))
+	persistent_bank += amt
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
+	player.cloud_fetch_data_only()
+	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
 		return 1
@@ -898,25 +928,11 @@ var/global/curr_day = null
 /client/verb/changeServer(var/server as text)
 	set name = "Change Server"
 	set hidden = 1
-	var/serverURL
-	var/serverName
-	switch (server)
-		if (1, "rp")
-			serverName = "Goonstation Roleplay"
-			serverURL = "byond://goon1.goonhub.com:26100"
-		if (2, "main")
-			serverName = "Goonstation"
-			serverURL = "byond://goon2.goonhub.com:26200"
-		if (3, "main2")
-			serverName = "Goonstation Roleplay Overflow"
-			serverURL = "byond://goon3.goonhub.com:26300"
-		if (4, "main3")
-			serverName = "Goonstation Overflow"
-			serverURL = "byond://goon4.goonhub.com:26400"
+	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
-	if (serverURL)
-		boutput(usr, "You are being redirected to [serverName]...")
-		usr << link(serverURL)
+	if (server)
+		boutput(usr, "You are being redirected to [game_server.name]...")
+		usr << link(game_server.url)
 
 
 /*
@@ -925,7 +941,7 @@ var/global/curr_day = null
 	if (!(ishuman(usr))) return
 	var/mob/living/carbon/human/H = usr
 	if (istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/abuttontest))
-		var/obj/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
+		var/atom/movable/screen/ability_button/spell/U = H.wear_suit.ability_buttons[2]
 		U.execute_ability()
 */
 
@@ -956,7 +972,7 @@ var/global/curr_day = null
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
-		M = whois_ckey_to_mob_reference(targetCkey)
+		M = ckey_to_mob(targetCkey)
 
 	switch(href_list["action"])
 		if ("priv_msg_irc")
@@ -974,7 +990,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -999,7 +1015,7 @@ var/global/curr_day = null
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|text
 			if(!(src.holder && (src.holder.rank in list("Host", "Coder"))))
-				t = strip_html(t,500)
+				t = strip_html(t, 1500)
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -1008,7 +1024,7 @@ var/global/curr_day = null
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
-			ircmsg["name"] = src.mob.real_name
+			ircmsg["name"] = stripTextMacros(src.mob.real_name)
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
@@ -1035,9 +1051,9 @@ var/global/curr_day = null
 
 				var/t = input("Message:", text("Mentor Message")) as null|text
 				if (href_list["target"])
-					M = whois_ckey_to_mob_reference(href_list["target"])
+					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && (src.holder.rank in list("Host", "Coder"))))
-					t = strip_html(t,500)
+					t = strip_html(t, 1500)
 				if (!( t ))
 					return
 				if (!src || !src.mob) //ZeWaka: Fix for null.client
@@ -1045,12 +1061,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
@@ -1058,9 +1077,9 @@ var/global/curr_day = null
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
-				ircmsg["name"] = src.mob.real_name
+				ircmsg["name"] = stripTextMacros(src.mob.real_name)
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-				ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
 				ircbot.export("mentorpm", ircmsg)
 
@@ -1093,8 +1112,12 @@ var/global/curr_day = null
 			ehjax.topic("main", href_list, src)
 
 		if("resourcePreloadComplete")
-			bout(src, "<span class='notice'><b>Preload completed.</b></span>")
+			boutput(src, "<span class='notice'><b>Preload completed.</b></span>")
 			src.Browse(null, "window=resourcePreload")
+			return
+
+		if ("loginnotice_ack")
+			src.acknowledge_login_notice()
 			return
 
 	. = ..()
@@ -1130,6 +1153,11 @@ var/global/curr_day = null
 /client/proc/cloud_available()
 	return src.player.cloud_available()
 
+/client/proc/message_one_admin(source, message)
+	if(!src.holder)
+		return
+	boutput(src, replacetext(replacetext(message, "%admin_ref%", "\ref[src.holder]"), "%client_ref%", "\ref[src]"))
+
 /proc/add_test_screen_thing()
 	var/client/C = input("For who", "For who", null) in clients
 	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
@@ -1159,13 +1187,13 @@ var/global/curr_day = null
 
 	var/subtr_color = rgb(s_r, s_g, s_b)
 
-	var/si_r = max(min(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
-	var/si_g = max(min(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
-	var/si_b = max(min(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 1), 0)
+	var/si_r = clamp(input("Red spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
+	var/si_g = clamp(input("Green spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
+	var/si_b = clamp(input("Blue spectrum intensity (0-1)", "Intensity", 1.0) as num, 0, 1)
 
 	var/multip_color = rgb(si_r * 255, si_g * 255, si_b * 255)
 
-	var/obj/screen/S = new
+	var/atom/movable/screen/S = new
 	S.icon = 'icons/mob/whiteview.dmi'
 	S.blend_mode = BLEND_SUBTRACT
 	S.color = subtr_color
@@ -1175,7 +1203,7 @@ var/global/curr_day = null
 
 	C.screen += S
 
-	var/obj/screen/M = new
+	var/atom/movable/screen/M = new
 	M.icon = 'icons/mob/whiteview.dmi'
 	M.blend_mode = BLEND_MULTIPLY
 	M.color = multip_color
@@ -1391,7 +1419,7 @@ var/global/curr_day = null
 	src.resizeTooltipEvent()
 
 	//tell the interface helpers to recompute data
-	src.mapSizeHelper.update()
+	src.mapSizeHelper?.update()
 
 /client/verb/autoscreenshot()
 	set hidden = 1
@@ -1454,7 +1482,7 @@ var/global/curr_day = null
 </head>
 <body>
 <video autoplay style="position:fixed;top:0px;right:0px;left:0px;bottom:0px">
-<source src="http://cdn.goonhub.com/misc/cinematics/[name].mp4" type="video/mp4">
+<source src="[config.cdn]/misc/cinematics/[name].mp4" type="video/mp4">
 </video>
 
 <script type="text/javascript">
@@ -1467,6 +1495,12 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
+
+#ifndef SECRETS_ENABLED
+/client/proc/dpi(list/data)
+	return
+#endif
+
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)
 		C.showCinematic(name, removeOnFinish)
@@ -1507,7 +1541,10 @@ input.text-color=[_SKIN_TEXT];\
 saybutton.background-color=[_SKIN_COMMAND_BG];\
 saybutton.text-color=[_SKIN_TEXT];\
 info.tab-background-color=[_SKIN_INFO_TAB_BG];\
-info.tab-text-color=[_SKIN_TEXT]"
+info.tab-text-color=[_SKIN_TEXT];\
+mainwindow.hovertooltip.background-color=[_SKIN_BG];\
+mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
+"
 
 /client/verb/sync_dark_mode()
 	set hidden=1

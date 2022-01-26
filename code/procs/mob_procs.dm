@@ -112,20 +112,18 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
 	.= 0
 
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.9) //we need to fall under this movedelay value in order to slip :O
-	if (src.m_intent == "walk")
-		slip_delay = BASE_SPEED_SUSTAINED - (WALK_DELAY_ADD*0.5)
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.15) //we need to fall under this movedelay value in order to slip :O
 
-	if (!walking_matters)
-		slip_delay = 10
+	if (walking_matters)
+		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
-	var/movedelay = max(movement_delay_real, min(world.time - src.next_move,world.time - src.last_pulled_time))
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
 	if (ignore_actual_delay)
 		movedelay = movement_delay_real
 
@@ -141,13 +139,13 @@
 			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
-		src.pulling = null
+		src.remove_pulling()
 
 		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
 		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
 		.= 1
 
-/mob/living/carbon/human/slip(walking_matters = 1, running = 0, ignore_actual_delay = 0)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
 	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 
@@ -173,7 +171,7 @@
 	var/class = ""
 	switch (color)
 		if ("red") class = "alert"
-		if ("blue") class = "notify"
+		if ("blue") class = "notice"
 		if ("green") class = "success"
 
 	boutput(src, "<span class='[class]'>[message]</span>", group)
@@ -251,7 +249,7 @@
 			mod_animation = 20
 			if (hulk == 0)
 				mod_weak = rand(1, 2)
-			mod_eyeblurry = rand(4, 6)
+			mod_eyeblurry = rand(6, 8)
 			mod_eyedamage = rand(2, 3)
 		else if (istype(H.glasses, /obj/item/clothing/glasses/nightvision) || H.eye_istype(/obj/item/organ/eye/cyber/nightvision))
 			H.show_text("<b>Your night vision goggles intensify the bright flash of light.</b>", "red")
@@ -259,8 +257,10 @@
 			mod_animation = 30
 			if (hulk == 0)
 				mod_weak = rand(3, 4)
-			mod_eyeblurry = rand(6, 8)
+			mod_eyeblurry = rand(8, 10)
 			mod_eyedamage = rand(3, 5)
+		else
+			mod_eyeblurry = rand(4, 6)
 
 	// No negative values.
 	animation_duration = max(0, animation_duration + mod_animation)
@@ -280,12 +280,12 @@
 
 	// Stun target mob.
 	if (safety == 0)
-		src.flash(animation_duration)
+		//src.flash(animation_duration)
 #ifdef USE_STAMINA_DISORIENT
 		src.do_disorient(stamina_damage, weakened = weak*20, stunned = stun*20, disorient = disorient_time, remove_stamina_below_zero = 0, target_type = DISORIENT_EYE)
 #else
-		changeStatus("weakened", weak*20)
-		changeStatus("stunned", stun*20)
+		changeStatus("weakened", weak*2 SECONDS)
+		changeStatus("stunned", stun*2 SECONDS)
 #endif
 
 		if (!issilicon(src))
@@ -308,17 +308,13 @@
 		src.update_burning(burn)
 		src.TakeDamage("head", 0, 5)
 
-	if (prob(max(0, min(uncloak_prob, 100))))
-		for (var/obj/item/cloaking_device/C in src)
-			if (C.active)
-				C.deactivate(src)
-				src.visible_message("<span class='notice'><b>[src]'s cloak is disrupted!</b></span>")
-		for (var/obj/item/device/disguiser/D in src)
-			if (D.on)
-				D.disrupt(src)
-				src.visible_message("<span class='notice'><b>[src]'s disguiser is disrupted!</b></span>")
+	if (prob(clamp(uncloak_prob, 0, 100)))
+		SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(src, COMSIG_DISGUISER_DEACTIVATE)
 
-	return
+	if (safety)
+		return 0
+	return 1
 
 /mob/proc/hearing_check(var/consciousness_check = 0)
 	return 1
@@ -423,7 +419,7 @@
 		if (ear_tempdeaf > 0)
 			src.take_ear_damage(ear_tempdeaf, 1)
 
-		if (weak == 0 && stun == 0 && prob(max(0, min(drop_item, 100))))
+		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
 			src.show_message(__red("<B>You drop what you were holding to clutch at your ears!</B>"))
 			src.drop_item()
 
@@ -435,7 +431,7 @@
 		return 0
 
 	if (src.mind.master)
-		var/mob/mymaster = whois_ckey_to_mob_reference(src.mind.master)
+		var/mob/mymaster = ckey_to_mob(src.mind.master)
 		if (mymaster && (mymaster == dominator))
 			return 1
 
@@ -449,82 +445,29 @@
 	return 1
 
 /proc/man_or_woman(var/mob/subject)
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "person"
-
-	switch (subject.gender)
-		if ("male")
-			return "man"
-		if ("female")
-			return "woman"
-		else
-			return "person"
+	return subject.get_pronouns().preferredGender
 
 /proc/his_or_her(var/mob/subject)
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "their"
-
-	switch (subject.gender)
-		if ("male")
-			return "his"
-		if ("female")
-			return "her"
-		else
-			return "their"
+	return subject.get_pronouns().possessive
 
 /proc/him_or_her(var/mob/subject)
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "them"
-
-	switch (subject.gender)
-		if ("male")
-			return "him"
-		if ("female")
-			return "her"
-		else
-			return "them"
+	return subject.get_pronouns().objective
 
 /proc/he_or_she(var/mob/subject)
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they"
-
-	switch (subject.gender)
-		if ("male")
-			return "he"
-		if ("female")
-			return "she"
-		else
-			return "they"
+	return subject.get_pronouns().subjective
 
 /proc/hes_or_shes(var/mob/subject)
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "they're"
-
-	switch (subject.gender)
-		if ("male")
-			return "he's"
-		if ("female")
-			return "she's"
-		else
-			return "they're"
+	var/datum/pronouns/pronouns = subject.get_pronouns()
+	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
 /proc/himself_or_herself(var/mob/subject)
-	if (!subject || subject.bioHolder && subject.bioHolder.mobAppearance && subject.bioHolder.mobAppearance.pronouns)
-		return "themselves"
-
-	switch(subject.gender)
-		if ("male")
-			return "himself"
-		if ("female")
-			return "herself"
-		else
-			return "themselves"
+	return subject.get_pronouns().reflexive
 
 /mob/proc/get_explosion_resistance()
 	return 0
 
 /mob/living/carbon/human/get_explosion_resistance()
-	return GET_MOB_PROPERTY(src, PROP_EXPLOPROT)/100
+	return min(GET_MOB_PROPERTY(src, PROP_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
 	return
@@ -792,8 +735,9 @@
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
+	var/PWT_to_see = null
 
-	if (isadminghost(src))
+	if (isadminghost(src) || src.client?.adventure_view)
 		see_everything = 1
 	else
 		if (istype(ticker.mode, /datum/game_mode/revolution))
@@ -813,17 +757,21 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			if(src.mind.gang != null)
 				gang_to_see = src.mind.gang
+		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			// var/datum/game_mode/pod_wars/PW = ticker.mode
+			PWT_to_see = get_pod_wars_team_num(src)
 		if (issilicon(src)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = src
-			if (src.mind.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
+			if (src.mind.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
-		if (isnukeop(src))
+		if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
 		if (iswizard(src))
 			see_wizards = 1
-		if (src.mind && src.mind.special_role == "grinch")
+		if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
 
 	// Clear existing overlays.
@@ -839,7 +787,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -854,13 +802,13 @@
 
 		if (M.current && issilicon(M.current)) // We need to look for borged antagonists too.
 			var/mob/living/silicon/S = M.current
-			if (M.special_role == "syndicate robot" || (S.syndicate && !S.dependent)) // No AI shells.
+			if (M.special_role == ROLE_SYNDICATE_ROBOT || (S.syndicate && !S.dependent)) // No AI shells.
 				if (see_everything || see_traitors)
 					if (!see_everything && isdead(S)) continue
 					var/I = image(antag_syndieborg, loc = M.current)
 					can_see.Add(I)
 					robot_override = 1
-			if (M.special_role == "emagged robot" || (S.emagged && !S.dependent))
+			if (M.special_role == ROLE_EMAGGED_ROBOT || (S.emagged && !S.dependent))
 				if (see_everything)
 					var/I = image(antag_emagged, loc = M.current)
 					can_see.Add(I)
@@ -868,79 +816,84 @@
 
 		if (robot_override != 1)
 			switch (M.special_role)
-				if ("traitor", "hard-mode traitor", "sleeper agent")
+				if (ROLE_TRAITOR, ROLE_HARDMODE_TRAITOR, ROLE_SLEEPER_AGENT)
 					if (see_everything || see_traitors)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_traitor, loc = M.current)
 							can_see.Add(I)
-				if ("changeling")
+				if (ROLE_CHANGELING)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_changeling, loc = M.current)
 							can_see.Add(I)
-				if ("wizard")
+				if (ROLE_WIZARD)
 					if (see_everything || see_wizards)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_wizard, loc = M.current)
 							can_see.Add(I)
-				if ("vampire")
+				if (ROLE_VAMPIRE)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_vampire, loc = M.current)
 							can_see.Add(I)
-				if ("hunter")
+				if (ROLE_HUNTER)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_hunter, loc = M.current)
 							can_see.Add(I)
-				if ("werewolf")
+				if (ROLE_WEREWOLF)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_werewolf, loc = M.current)
 							can_see.Add(I)
-				if ("mindslave")
+				if (ROLE_MINDSLAVE)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_mindslave, loc = M.current)
 							can_see.Add(I)
-				if ("vampthrall")
+				if (ROLE_VAMPTHRALL)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_vampthrall, loc = M.current)
 							can_see.Add(I)
-				if ("wraith")
+				if (ROLE_WRAITH)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_wraith, loc = M.current)
 							can_see.Add(I)
-				if ("blob")
+				if (ROLE_BLOB)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_blob, loc = M.current)
 							can_see.Add(I)
-				if ("omnitraitor")
+				if (ROLE_OMNITRAITOR)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_omnitraitor, loc = M.current)
 							can_see.Add(I)
-				if ("wrestler")
+				if (ROLE_WRESTLER)
 					if (see_everything)
 						if (M.current)
 							var/I = image(antag_wrestler, loc = M.current)
 							can_see.Add(I)
-				if ("grinch")
+				if (ROLE_GRINCH)
 					if (see_everything || see_xmas)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_grinch, loc = M.current)
 							can_see.Add(I)
-				if ("spy_thief")
+				if (ROLE_SPY_THIEF)
 					if (see_everything)
 						if (M.current)
 							if (!see_everything && isobserver(M.current)) continue
 							var/I = image(antag_spy_theft, loc = M.current)
+							can_see.Add(I)
+				if (ROLE_ARCFIEND)
+					if (see_everything)
+						if (M.current)
+							var/I = image(antag_arcfiend, loc = M.current)
 							can_see.Add(I)
 				else
 					if (see_everything)
@@ -1018,6 +971,39 @@
 					if (!see_everything && isobserver(M.current)) continue
 					var/II = image(antag_gang, loc = M.current)
 					can_see.Add(II)
+	else if (istype(ticker.mode, /datum/game_mode/pod_wars))
+		var/datum/game_mode/pod_wars/mode = ticker.mode
+		if (PWT_to_see || see_everything)
+			for (var/datum/mind/M in (mode.team_NT.members + mode.team_SY.members))
+				if (M.current)
+					var/cur_team
+					cur_team = get_pod_wars_team_num(M.current)
+					if (!see_everything && isobserver(M.current)) continue
+					if (PWT_to_see == cur_team)//NANOTRASEN
+						if (cur_team == 1)
+							var/image/I = image(pod_wars_NT, loc = M.current)
+							I.pixel_y = 4
+							can_see.Add(I)
+						if (cur_team == 2)
+					// else if (PWT_to_see == cur_team)//SYNDICATE
+							var/image/I = image(pod_wars_SY, loc = M.current)
+							I.pixel_y = 4
+							can_see.Add(I)
+
+			//show commanders to everyone, can't hide.
+			//Alright, I'll confess. this draws the commander over the other one. idk how this shit works and it works anyway, I'm not in the mood to learn for real. -Kyle
+			if(mode.team_NT.commander && mode.team_NT.commander.current)
+				// if (PWT_to_see == mode.team_NT || see_everything)
+				var/image/I = image(pod_wars_NT_CMDR, loc = mode.team_NT.commander.current)
+				I.pixel_y = 4
+				can_see.Add(I)
+
+			if(mode.team_SY.commander && mode.team_SY.commander.current)
+				// if (PWT_to_see == mode.team_SY || see_everything)
+				var/image/I = image(pod_wars_SY_CMDR, loc = mode.team_SY.commander.current)
+				I.pixel_y = 4
+				can_see.Add(I)
+
 
 	if (can_see.len > 0)
 		//logTheThing("debug", src, null, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
@@ -1033,7 +1019,7 @@
 	if (!src || !ismob(src) || !target || !isobj(target))
 		return 0
 
-	if (!islist(can_smash) || !can_smash.len)
+	if (!islist(can_smash) || !length(can_smash))
 		return 0
 
 	for (var/S in can_smash)
@@ -1056,7 +1042,8 @@
 
 		if (S == "door" && istype(target, /obj/machinery/door))
 			var/obj/machinery/door/door = target
-			door.tear_apart(src)
+			SPAWN_DBG(0)
+				door.tear_apart(src)
 			return 1
 
 		if (S == "table" && istype(target, /obj/table))
@@ -1123,7 +1110,22 @@
 	if (\
 		(src.wear_suit 	&& src.wear_suit.permeability_coefficient 	<= 0.01) && \
 		(src.head 		&& src.head.permeability_coefficient 		<= 0.01) && \
-		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.01) && \
+		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.10) && \
 		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
 		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
 		.=1
+
+
+/// Changes ghost invisibility for the round.
+// Default value set in global.dm: INVIS_GHOST
+/proc/change_ghost_invisibility(var/new_invis)
+	var/prev_invis = ghost_invisibility
+	ghost_invisibility = new_invis
+	for (var/mob/dead/observer/G in mobs)
+		G.invisibility = new_invis
+		REMOVE_MOB_PROPERTY(G, PROP_INVISIBILITY, G)
+		APPLY_MOB_PROPERTY(G, PROP_INVISIBILITY, G, new_invis)
+		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
+			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+
+

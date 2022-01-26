@@ -93,7 +93,7 @@ const AirlockAndAccessPanel = (props, context) => {
           </Tabs.Tab>
         </Tabs>
         {tabIndex === 1 && (
-          <Fragment>
+          <>
             <Section fitted backgroundColor="transparent">
               {(!canAiControl || !!noPower) && (
                 <Modal
@@ -111,7 +111,7 @@ const AirlockAndAccessPanel = (props, context) => {
             {!!canAiHack && (
               <Hack />
             )}
-          </Fragment>
+          </>
         )}
         {tabIndex === 2 && (
           <AccessPanel />

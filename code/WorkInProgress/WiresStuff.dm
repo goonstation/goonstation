@@ -193,7 +193,7 @@ var/global/deathConfettiActive = 0
 		return ..()
 
 	setup_healths()
-		add_hh_robot(-150, 150, 1.15)
+		add_hh_robot(150, 1.15)
 
 
 /client/proc/ghostdroneAll()
@@ -220,7 +220,6 @@ var/global/deathConfettiActive = 0
 
 	admin_only
 
-	var/hardRebootFilePath = "data/hard-reboot"
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
 

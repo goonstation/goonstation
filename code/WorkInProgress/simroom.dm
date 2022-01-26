@@ -110,7 +110,7 @@
 /obj/machinery/sim/transmitter/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["setup"])
 			if(active)
@@ -140,11 +140,11 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 
-	if (M == usr)
+	if (M == user)
 		user.visible_message("<span class='notice'>[user] buckles in!</span>")
 	else
 		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
@@ -200,14 +200,14 @@
 
 /obj/machinery/sim/vr_bed/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/sim/vr_bed/disposing()
 	go_out()
 	. = ..()
 
 
-/obj/machinery/sim/vr_bed/proc/update_icon()
+/obj/machinery/sim/vr_bed/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
@@ -271,12 +271,12 @@
 	Station_VNet.Enter_Vspace(M, src, src.network)
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
 	var/lpm = params2list(params)
-	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
+	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"] && alert("Are you sure you want to enter VR?","Are you sure?","Yes","No") == "Yes")
 		src.move_inside()
 	else return ..()
 
@@ -344,7 +344,7 @@
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
@@ -383,24 +383,19 @@
 /obj/machinery/sim/vr_bed/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["time"])
 			if(src.allowed(usr))
-				src.timing = text2num(href_list["time"])
+				src.timing = text2num_safe(href_list["time"])
 		else
 			if (href_list["tp"])
 				if(src.allowed(usr))
-					var/tp = text2num(href_list["tp"])
+					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
-					src.time = min(max(round(src.time), 0), 300)
+					src.time = clamp(round(src.time), 0, 300)
 		src.updateUsrDialog()
 	return
-
-/obj/machinery/sim/vr_bed/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
-	..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -417,7 +412,7 @@
 
 
 /obj/machinery/sim/programcomp/proc/interacted(mob/user)
-	if ( (!in_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=mm")
 		return
@@ -451,7 +446,7 @@
 /obj/machinery/sim/programcomp/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		switch(href_list["set"])
 			if("grass")

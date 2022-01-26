@@ -36,6 +36,9 @@ var/list/dirty_keystates = list()
 		if(!isnull(numkey) && M.abilityHolder)
 			if (M.abilityHolder.actionKey(numkey))
 				return
+		if(!isnull(numkey) && src.buildmode?.is_active)
+			if(src.buildmode.number_key_pressed(numkey, keys_modifier))
+				return
 
 		var/action = src.keymap.check_keybind(key, keys_modifier)
 
@@ -191,16 +194,17 @@ var/list/dirty_keystates = list()
 
 		if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
 			var/list/contexts = mob.checkContextActions(object)
-			if(contexts.len)
+
+			if(length(contexts))
 				mob.showContextActions(contexts, object)
 				return
 
 		var/mob/user = usr
 		// super shit hack for swapping hands over the HUD, please replace this then murder me
-		if (istype(object, /obj/screen) && (!parameters["middle"] || istype(object, /obj/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
+		if (istype(object, /atom/movable/screen) && (!parameters["middle"] || istype(object, /atom/movable/screen/ability)) && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 			if (istype(usr, /mob/dead/target_observer))
 				return
-			var/obj/screen/S = object
+			var/atom/movable/screen/S = object
 			S.clicked(parameters)
 			return
 
@@ -222,12 +226,6 @@ var/list/dirty_keystates = list()
 				if( get_dist(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
-
-		// if (parameters["left"])	//Had to move this up into here as the clickbuffer was causing issues.
-		// 	var/list/contexts = mob.checkContextActions(object)
-		// 	if(contexts.len)
-		// 		mob.showContextActions(contexts, object)
-		// 		return
 
 		if(prob(10) && user.traitHolder && iscarbon(user) && isturf(object.loc) && user.traitHolder.hasTrait("clutz"))
 			var/list/filtered = list()
@@ -336,10 +334,10 @@ var/list/dirty_keystates = list()
 		while (1)
 			process_keystates()
 
-			for(var/client/C as() in clients) // as() is ok here since we nullcheck
+			for(var/client/C as anything in clients) // as() is ok here since we nullcheck
 				C?.mob?.internal_process_move(C.key_state)
 
-			for(var/datum/aiHolder/ai as() in ai_move_scheduled) // as() is ok here since we nullcheck
+			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as() is ok here since we nullcheck
 				if (ai?.move_target)
 					ai.move_step()
 

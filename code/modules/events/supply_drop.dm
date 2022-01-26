@@ -22,6 +22,11 @@
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in battle_pass_holders)
 			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
+		SPAWN_DBG(20 SECONDS)
+			for(var/datum/mind/M in ticker.minds)
+				if (M in battle_pass_holders)
+					continue
+				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
 
 /obj/effect/supplymarker
 	name = ""
@@ -48,7 +53,7 @@
 
 /obj/effect/supplydrop
 	name = "supply drop"
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "lootdrop"
 	density = 0
 	anchored = 1
@@ -59,10 +64,10 @@
 	New(atom/loc, var/obj_path, var/no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
-		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
+		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 75, 0)
 		SPAWN_DBG(dropTime)
 			new/obj/effect/supplyexplosion(src.loc)
-			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 50, 1)
 			for(var/mob/M in view(7, src.loc))
 				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc)
@@ -107,7 +112,7 @@
 	var/obj_path
 
 	New(atom/loc, var/obj_path_arg)
-		filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
+		add_filter("loot drop", 1, drop_shadow_filter(x=0, y=0, size=5, offset=0, color=rgb(240,202,133)))
 		obj_path = obj_path_arg
 		return ..()
 
@@ -116,13 +121,13 @@
 		used = 1
 		set_density(0)
 		icon_state = "attachecase_open"
-		filters = list()
+		remove_filter("loot drop")
 		lootbox(user, obj_path)
 		return
 
 /proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/obj/screen/lootcrateicon/crate(user, obj_path))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
 	return
 
 /proc/makeRandomLootTrash()
@@ -226,7 +231,7 @@
 
 	return I
 
-/obj/screen/lootcratepreview
+/atom/movable/screen/lootcratepreview
 	icon = null
 	screen_loc = "1,1"
 	name = ""
@@ -241,7 +246,7 @@
 			filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
 		..()
 
-/obj/screen/lootcrateicon
+/atom/movable/screen/lootcrateicon
 	icon = 'icons/effects/320x320.dmi'
 	screen_loc = "1,1"
 	name = ""
@@ -287,9 +292,9 @@
 				else
 					AM = makeRandomLootTrash()
 				if(istype(H))
-					var/obj/screen/lootcrateicon/background/B = new/obj/screen/lootcrateicon/background(src)
-					var/obj/screen/lootcrateicon/sparks/S = new/obj/screen/lootcrateicon/sparks(src)
-					var/obj/screen/lootcratepreview/P = new/obj/screen/lootcratepreview(src)
+					var/atom/movable/screen/lootcrateicon/background/B = new/atom/movable/screen/lootcrateicon/background(src)
+					var/atom/movable/screen/lootcrateicon/sparks/S = new/atom/movable/screen/lootcrateicon/sparks(src)
+					var/atom/movable/screen/lootcratepreview/P = new/atom/movable/screen/lootcratepreview(src)
 					P.icon = AM.icon
 					P.icon_state = AM.icon_state
 					P.color = AM.color

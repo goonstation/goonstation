@@ -19,9 +19,11 @@ var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
 var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
+var/global/logLength = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
+	var/forceNonDiaryLoggingToo = FALSE
 
 	if (source)
 		source = constructName(source, type)
@@ -56,6 +58,7 @@ var/global/first_adminhelp_happened = 0
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 
 	else
 		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
@@ -66,6 +69,7 @@ var/global/first_adminhelp_happened = 0
 				logs["audit"] += ingameLog
 				diaryLogging = 1
 				diaryType = "audit"
+				forceNonDiaryLoggingToo = TRUE
 			if ("admin") logs["admin"] += ingameLog
 			if ("admin_help") logs["admin_help"] += ingameLog
 			if ("mentor_help") logs["mentor_help"] += ingameLog
@@ -83,6 +87,7 @@ var/global/first_adminhelp_happened = 0
 			if ("pathology") logs["pathology"] += ingameLog
 			if ("deleted") logs["deleted"] += ingameLog
 			if ("vehicle") logs["vehicle"] += ingameLog
+			if ("computers") logs["computers"] += ingameLog
 			if ("diary")
 				switch (diaryType)
 					//These are things we log in the out of game logs (the diary)
@@ -105,8 +110,9 @@ var/global/first_adminhelp_happened = 0
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-		if (!diaryLogging && config.allowRotatingFullLogs)
+		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 	return
 
 /proc/logDiary(text)
@@ -142,7 +148,9 @@ var/global/first_adminhelp_happened = 0
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
+	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
+	logLength++
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
@@ -165,8 +173,17 @@ var/global/first_adminhelp_happened = 0
 	if (ismob(ref))
 		mobRef = ref
 		traitor = checktraitor(mobRef)
-		if (mobRef.real_name)
-			name = mobRef.real_name
+		if (mobRef.name)
+			if (ishuman(mobRef))
+				var/mob/living/carbon/human/humanRef = mobRef
+				if (mobRef.name != mobRef.real_name && (mobRef.name == "Unknown" || mobRef.name == humanRef.wear_id?:registered))
+					name = "[mobRef.real_name] (disguised as [mobRef.name])"
+				else
+					name = mobRef.name
+			else
+				name = mobRef.name
+			if (length(mobRef.name_suffixes))
+				name = mobRef.real_name
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
@@ -181,8 +198,17 @@ var/global/first_adminhelp_happened = 0
 		if (clientRef.mob)
 			mobRef = clientRef.mob
 			traitor = checktraitor(mobRef)
-			if (mobRef.real_name)
-				name = clientRef.mob.real_name
+			if (mobRef.name)
+				if (ishuman(clientRef.mob))
+					var/mob/living/carbon/human/humanRef = clientRef.mob
+					if (clientRef.mob.name != clientRef.mob.real_name && (clientRef.mob.name == "Unknown" || clientRef.mob.name == humanRef.wear_id?:registered))
+						name = "[clientRef.mob.real_name] (disguised as [clientRef.mob.name])"
+					else
+						name = clientRef.mob.name
+				else
+					name = clientRef.mob.name
+				if (length(clientRef.mob.name_suffixes))
+					name = clientRef.mob.real_name
 			if (!isdead(mobRef))
 				dead = 0
 		if (clientRef.key)
@@ -245,7 +271,26 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	//Wire: Added this so I don't get a bunch of logs for fukken drones shooting pods WHO CARES
 	if (istype(P.shooter, /obj/critter/))
 		return
+
+//Pod wars friendly fire check
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/friendly_fire = 0
+	if (shooter_data != SHOT)
+		//if you shoot a teammate
+		if (ismob(SHOT) && get_pod_wars_team_num(shooter_data) == get_pod_wars_team_num(SHOT))
+			friendly_fire = 1
+
+	if (friendly_fire)
+		logTheThing("combat", shooter_data, SHOT, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			var/datum/game_mode/pod_wars/mode = ticker.mode
+			mode.stats_manager?.inc_friendly_fire(shooter_data)
+	else
+		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+#else
 	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+#endif
+
 
 /proc/log_reagents(var/atom/A as turf|obj|mob)
 	var/log_reagents = ""

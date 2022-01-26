@@ -4,7 +4,7 @@
 #define PROJ_PASSOBJ			(1<<2)
 
 //pass flags on hit thing take priotity if they exist
-#define PROJ_ATOM_PASSTHROGH	(1<<4)
+#define PROJ_ATOM_PASSTHROUGH	(1<<4)
 #define PROJ_ATOM_CANNOT_PASS	(1<<5)
 #define PROJ_OBJ_HIT_OTHER_OBJS	(1<<6)
 
@@ -28,8 +28,3 @@
 
 //default max range for 'unlimited' range projectiles
 #define PROJ_INFINITE_RANGE 500
-
-//fullauto stuff
-#define FULLAUTO_INACTIVE 0
-#define FULLAUTO_ACTIVE 1
-#define FULLAUTO_ALWAYS_ACTIVE 2

@@ -5,15 +5,15 @@
 	var/list/authorized = list(  )
 	desc = "A computer that controls the movement of the nearby shuttle."
 
-	lr = 0.6
-	lg = 1
-	lb = 0.1
+	light_r =0.6
+	light_g = 1
+	light_b = 0.1
 
 /obj/machinery/computer/shuttle/embedded
 	icon_state = "shuttle-embed"
 	density = 0
 	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
-	plane = PLANE_LIGHTING - 1
+	plane = PLANE_DEFAULT
 
 	north
 		dir = NORTH
@@ -30,6 +30,11 @@
 	west
 		dir = WEST
 		pixel_x = -25
+
+/obj/machinery/computer/shuttle/embedded/syndieshuttle
+	name = "Shuttle Computer"
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "syndiepc4"
 
 /obj/machinery/computer/asylum_shuttle
 	name = "Asylum Shuttle"
@@ -192,7 +197,7 @@
 			return
 
 		var/list/cardaccess = W:access
-		if(!istype(cardaccess, /list) || !cardaccess.len) //no access
+		if(!istype(cardaccess, /list) || !length(cardaccess)) //no access
 			boutput(user, "The access level of [W:registered]\'s card is not high enough. ")
 			return
 
@@ -255,7 +260,7 @@
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
@@ -273,26 +278,35 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span class='alert'>The Mining Shuttle has been Called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The Mining Shuttle has been called and will leave shortly!</span>")
 		SPAWN_DBG(10 SECONDS)
 			call_shuttle()
 
 /obj/machinery/computer/mining_shuttle/proc/call_shuttle()
+	var/area/start_location
+	var/area/end_location
 	if(miningshuttle_location == 0)
-		var/area/start_location = locate(/area/shuttle/mining/space)
-		var/area/end_location = locate(/area/shuttle/mining/station)
+		start_location = locate(/area/shuttle/mining/space)
+		end_location = locate(/area/shuttle/mining/station)
 		start_location.move_contents_to(end_location)
 		miningshuttle_location = 1
 	else
 		if(miningshuttle_location == 1)
-			var/area/start_location = locate(/area/shuttle/mining/station)
-			var/area/end_location = locate(/area/shuttle/mining/space)
+			start_location = locate(/area/shuttle/mining/station)
+			end_location = locate(/area/shuttle/mining/space)
 			start_location.move_contents_to(end_location)
 			miningshuttle_location = 0
 
+
+	if(station_repair.station_generator)
+		if(istype(start_location, /area/shuttle/mining/station))
+			var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+			if(length(turfs_to_fix))
+				station_repair.repair_turfs(turfs_to_fix)
+
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Mining Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Mining Shuttle has moved!</span>")
 
 	return
 
@@ -324,14 +338,14 @@
 /obj/machinery/computer/prison_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
 			if(!active)
 				for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span class='alert'>The Prison Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Prison Shuttle has been called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
@@ -349,15 +363,17 @@
 	//Prison -> Station -> Outpost -> Prison.
 	//Skip outpost if there's a lockdown there.
 	//drsingh took outpost out for cogmap prison shuttle
+	var/area/start_location
+	var/area/end_location
 	switch(brigshuttle_location)
 		if(0)
-			var/area/start_location = locate(/area/shuttle/brig/prison)
-			var/area/end_location = locate(/area/shuttle/brig/station)
+			start_location = locate(/area/shuttle/brig/prison)
+			end_location = locate(/area/shuttle/brig/station)
 			start_location.move_contents_to(end_location)
 			brigshuttle_location = 1
 		if(1)
-			var/area/start_location = locate(/area/shuttle/brig/station)
-			var/area/end_location = null
+			start_location = locate(/area/shuttle/brig/station)
+			end_location = null
 			//if(researchshuttle_lockdown)
 			end_location = locate(/area/shuttle/brig/prison)
 			//else
@@ -376,9 +392,14 @@
 			brigshuttle_location = 0
 		*/
 
+	if(station_repair.station_generator)
+		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+		if(length(turfs_to_fix))
+			station_repair.repair_turfs(turfs_to_fix)
+
 	for(var/obj/machinery/computer/prison_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Prison Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Prison Shuttle has moved!</span>")
 
 	return
 
@@ -416,10 +437,10 @@
 /obj/machinery/computer/research_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (isturf(src.loc) && in_range(src, usr))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (isturf(src.loc) && in_interact_range(src, usr))) || (issilicon(usr)))
 		src.add_dialog(usr)
 		if (href_list["send"])
-			for(var/obj/machinery/shuttle/engine/propulsion/eng as() in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
+			for(var/obj/machinery/shuttle/engine/propulsion/eng as anything in machine_registry[MACHINES_SHUTTLEPROPULSION]) // ehh
 				if(eng.stat1 == 0 && eng.stat2 == 0 && eng.id == "zeta")
 					boutput(usr, "<span class='alert'>Propulsion thruster damaged. Unable to move shuttle.</span>")
 					return
@@ -433,7 +454,7 @@
 			if(!active)
 				for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 					active = 1
-					C.visible_message("<span class='alert'>The Research Shuttle has been Called and will leave shortly!</span>")
+					C.visible_message("<span class='alert'>The Research Shuttle has been called and will leave shortly!</span>")
 
 				SPAWN_DBG(10 SECONDS)
 					call_shuttle()
@@ -451,21 +472,28 @@
 		boutput(usr, "<span class='alert'>This shuttle is currently on lockdown and cannot be used.</span>")
 		return
 
+	var/area/start_location
+	var/area/end_location
 	if(researchshuttle_location == 0)
-		var/area/start_location = locate(/area/shuttle/research/outpost)
-		var/area/end_location = locate(/area/shuttle/research/station)
+		start_location = locate(/area/shuttle/research/outpost)
+		end_location = locate(/area/shuttle/research/station)
 		start_location.move_contents_to(end_location)
 		researchshuttle_location = 1
 	else
 		if(researchshuttle_location == 1)
-			var/area/start_location = locate(/area/shuttle/research/station)
-			var/area/end_location = locate(/area/shuttle/research/outpost)
+			start_location = locate(/area/shuttle/research/station)
+			end_location = locate(/area/shuttle/research/outpost)
 			start_location.move_contents_to(end_location)
 			researchshuttle_location = 0
 
+	if(station_repair.station_generator)
+		var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+		if(length(turfs_to_fix))
+			station_repair.repair_turfs(turfs_to_fix)
+
 	for(var/obj/machinery/computer/research_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Research Shuttle has Moved!</span>")
+		C.visible_message("<span class='alert'>The Research Shuttle has moved!</span>")
 
 	return
 
@@ -505,7 +533,7 @@
 /obj/machinery/computer/asylum_shuttle/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if(href_list["asylum"])
@@ -564,10 +592,15 @@
 
 			start_location.move_contents_to(end_location)
 
+			if(station_repair.station_generator)
+				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+				if(length(turfs_to_fix))
+					station_repair.repair_turfs(turfs_to_fix)
+
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
 				C.shuttle_loc = target_loc
-				C.visible_message("<span class='alert'>The Asylum Shuttle has Moved!</span>")
+				C.visible_message("<span class='alert'>The Asylum Shuttle has moved!</span>")
 			return
 
 
@@ -593,7 +626,7 @@
 /obj/machinery/computer/icebase_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
@@ -601,6 +634,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
@@ -657,7 +691,7 @@
 /obj/machinery/computer/biodome_elevator/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		if (href_list["send"])
@@ -665,6 +699,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
+					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
 				SPAWN_DBG(5 SECONDS)
 					call_shuttle()
 
@@ -742,3 +777,218 @@ proc/bioele_accident()
 	bioele_accidents++
 	bioele_shifts_since_accident = 0
 	bioele_save_stats()
+
+
+// JOHN BILL'S JUICIN' BUS
+// This is used for reliable transport between Z3 and Z5 (ever since the diner moved to Z5)
+// And also for certain adventure zones!
+// You can ask warc for details but c'mon it's just copypasted prison shuttle code (for now)
+
+
+var/bombini_saved = 0
+
+/obj/machinery/computer/shuttle_bus
+	name = "John's Bus"
+	icon_state = "shuttle"
+	machine_registry_idx = MACHINES_SHUTTLECOMPS
+
+/obj/machinery/computer/shuttle_bus/embedded
+	icon_state = "shuttle-embed"
+	density = 0
+	layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
+
+
+	north
+		dir = NORTH
+		pixel_y = 25
+
+	east
+		dir = EAST
+		pixel_x = 25
+
+	south
+		dir = SOUTH
+		pixel_y = -25
+
+	west
+		dir = WEST
+		pixel_x = -25
+
+
+
+
+/obj/machinery/computer/shuttle_bus/attack_hand(mob/user as mob)
+	if(..())
+		return
+	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
+
+	switch(johnbus_location)
+		if(0)
+			dat += "Shuttle Location: Diner"
+		if(1)
+			dat += "Shuttle Location: Frontier Space Owlery"
+		if(2)
+			dat += "Shuttle Location: Old Mining Station"
+		if(3)
+			dat += "Shuttle Location: Juicer Schweet's"
+
+
+	dat += "<BR>"
+	switch(johnbus_destination)
+		if(0)
+			dat += "Shuttle Destination: Diner"
+		if(1)
+			dat += "Shuttle Destination: Frontier Space Owlery"
+		if(2)
+			dat += "Shuttle Destination: Old Mining Station"
+		if(3)
+			dat += "Shuttle Destination: Juicer Schweet's"
+
+	dat += "<BR><BR>"
+	if(johnbus_active)
+		dat += "Status: Cruisin"
+	else
+		dat += "<a href='byond://?src=\ref[src];dine=1'>Set Target: Diner</a><BR>"
+		dat += "<a href='byond://?src=\ref[src];owle=1'>Set Target: Owlery</a><BR>"
+#ifndef UNDERWATER_MAP
+		dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: Old Mining Station</a><BR>"
+#endif
+		if(johnbill_shuttle_fartnasium_active) // here's how you can set conditional locations
+			dat += "<a href='byond://?src=\ref[src];fart=1'>Set Target: Juicer Schweet's</a><BR>"
+		dat += "<BR>"
+		if (johnbus_location != johnbus_destination)
+			dat += "<a href='byond://?src=\ref[src];send=1'>Send It</a><BR><BR>"
+		else
+			dat += "Let's go somewhere else, ok?<BR>"
+
+	user.Browse(dat, "window=shuttle")
+	onclose(user, "shuttle")
+	return
+
+/obj/machinery/computer/shuttle_bus/Topic(href, href_list)
+	if(..())
+		return
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
+
+		if (href_list["send"])
+			if(!johnbus_active)
+				var/turf/T = get_turf(src)
+				johnbus_active = 1
+				for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
+
+					C.visible_message("<span class='alert'>John is starting up the engines, this could take a minute!</span>")
+
+				for(var/obj/machinery/computer/shuttle_bus/embedded/B in machine_registry[MACHINES_SHUTTLECOMPS])
+					T = get_turf(B)
+					SPAWN_DBG(1 DECI SECOND)
+						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
+						sleep(3 SECONDS)
+						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
+						src.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
+						sleep(5 SECONDS)
+						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
+						for(var/mob/living/M in range(src.loc, 10))
+							shake_camera(M, 5, 8)
+							M.add_karma(0.1)
+
+						sleep(2 SECONDS)
+						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
+						sleep(3 SECONDS)
+						src.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
+						playsound(T, "sound/machines/pod_alarm.ogg", 60, 1)
+						var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(src)
+						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+						smoke.set_up(5, 0, smokyEngine)
+						smoke.start()
+						sleep(4 SECONDS)
+						playsound(T, "sound/machines/boost.ogg", 60, 1)
+						for(var/mob/living/M in range(src.loc, 10))
+							shake_camera(M, 10, 16)
+
+				T = get_turf(src)
+				SPAWN_DBG(25 SECONDS)
+					playsound(T, "sound/effects/flameswoosh.ogg", 70, 1)
+					call_shuttle()
+
+		else if (href_list["dine"])
+			if(!johnbus_active)
+				johnbus_destination = 0
+				var/turf/T = get_turf(src)
+				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+
+		else if (href_list["owle"])
+			if(!johnbus_active)
+				johnbus_destination = 1
+				var/turf/T = get_turf(src)
+				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+
+		else if (href_list["mine"])
+			if(!johnbus_active)
+				johnbus_destination = 2
+				var/turf/T = get_turf(src)
+				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+
+		else if (href_list["fart"])
+			if(!johnbus_active)
+				johnbus_destination = 3
+				var/turf/T = get_turf(src)
+				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+
+
+		else if (href_list["close"])
+			src.remove_dialog(usr)
+			usr.Browse(null, "window=shuttle")
+
+	src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	return
+
+
+/obj/machinery/computer/shuttle_bus/proc/call_shuttle()
+	var/area/end_location = null
+	var/area/start_location = null
+
+	switch(johnbus_destination)
+		if(0)
+			end_location = locate(/area/shuttle/john/diner)
+		if(1)
+			end_location = locate(/area/shuttle/john/owlery)
+		if(2)
+			end_location = locate(/area/shuttle/john/mining)
+		if(3)
+			end_location = locate(/area/shuttle/john/grillnasium)
+
+	switch(johnbus_location)
+		if(0)
+			start_location = locate(/area/shuttle/john/diner)
+			start_location.move_contents_to(end_location)
+
+		if(1)
+			start_location = locate(/area/shuttle/john/owlery)
+
+			if(!bombini_saved)
+				for(var/obj/npc/trader/bee/b in start_location)
+					bombini_saved = 1
+					for(var/mob/M in start_location)
+						boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
+
+			start_location.move_contents_to(end_location)
+
+		if(2)
+			start_location = locate(/area/shuttle/john/mining)
+			start_location.move_contents_to(end_location)
+
+		if(3)
+			start_location = locate(/area/shuttle/john/grillnasium)
+			start_location.move_contents_to(end_location)
+
+	johnbus_location = johnbus_destination
+
+	johnbus_active = 0
+
+	for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
+
+		C.visible_message("<span class='alert'>John's Juicin' Bus has Moved!</span>")
+
+	return

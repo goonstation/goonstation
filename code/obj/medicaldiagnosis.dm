@@ -70,7 +70,7 @@
 								else if(H.reagents.has_reagent("cannabidiol") || H.reagents.has_reagent("antihistamine") || (H.reagents.has_reagent("ethanol") && H.reagents.get_reagent_amount("ethanol") < 25))
 									boutput(user, "<span style=\"color:blue\">You hear slightly slow breathing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
 									playsound(user, "sound/effects/sleepstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
-								else if(H.reagents.has_reagent("epinephrine") || H.reagents.has_reagent("methamphetamine") || H.reagents.has_reagent("crank") || H.reagents.has_reagent("stimulants") || H.reagents.has_reagent("energydrink") )
+								else if(H.reagents.has_reagent("epinephrine") || H.reagents.has_reagent("methamphetamine") || H.reagents.has_reagent("crank") || H.hasStatus("stimulants") || H.reagents.has_reagent("energydrink") )
 									boutput(user, "<span style=\"color:blue\">You hear fast breathing inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
 									playsound(user, "sound/effects/hyperventstethoscope.ogg", 40, 0, -6) // reusing because the sounds are similar
 								else if((20 < H.get_oxygen_deprivation()) && (H.get_oxygen_deprivation() < 80))

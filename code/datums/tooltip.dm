@@ -12,7 +12,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,

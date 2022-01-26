@@ -52,6 +52,7 @@
 #endif
 	boutput(client.mob, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span> You</b>: [msg]</font></span>")
 	logTheThing("admin_help", client.mob, null, "HELP: [msg]")
+	var/logLine = global.logLength
 	logTheThing("diary", client.mob, null, "HELP: [msg]", "ahelp")
 
 	if (!first_adminhelp_happened)
@@ -59,13 +60,16 @@
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "First Adminhelp Notice"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
 		ircbot.export("help", ircmsg)
 
+	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.real_name
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
 	ircmsg["msg"] = html_decode(msg)
+	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
 	ircbot.export("help", ircmsg)
 
 /mob/verb/mentorhelp()
@@ -83,6 +87,8 @@
 	if(mmouse) // mouse in your pocket takes precedence over mhelps
 		var/msg = input("Please enter your whispers to the mouse:") as null|text
 		msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+		if (!msg)
+			return
 		var/class = mmouse.is_admin ? "adminooc" : "mhelp"
 		boutput(mmouse, "<span class='[class]'><b>[client.mob]</b> whispers: \"<i>[msg]</i>\"</span>")
 		boutput(client.mob, "<span class='[class]'>You whisper to \the [mmouse]: \"<i>[msg]</i>\"</span>")
@@ -107,6 +113,8 @@
 	var/msg = input("Please enter your help request to mentors:") as null|text
 
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
+	if (client.can_see_mentor_pms())
+		msg = linkify(msg)
 
 	if (!msg)
 		return
@@ -132,9 +140,13 @@
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
 	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+#ifdef DATALOGGER
+	game_stats.Increment("mentorhelps")
+#endif
+	var/dead = isdead(client.mob) ? "Dead" : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[client.mob.real_name] \[[client.mob.job]]" : client.mob.real_name
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export("mentorhelp", ircmsg)
 
@@ -150,6 +162,9 @@
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
 		return
+	if(client.cloud_available() && client.cloud_get( "prayer_banner" ))
+		boutput(client.mob, "You have been banned from using this command.")
+		return
 
 	if (IsGuestKey(client.key))
 		boutput(client.mob, "You are not authorized to communicate over these channels.")
@@ -163,6 +178,9 @@
 	if(!msg)
 		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for as the gods may be the vengeful sort!") as null|text
 
+	if(msg)
+		phrase_log.log_phrase("prayer", msg)
+
 	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN)
 
 	if (!msg)
@@ -175,7 +193,9 @@
 	if (client.mob.mind)
 		src.add_karma(-1)
 
-	if (client.mob.traitHolder?.hasTrait("atheist"))
+	var/is_atheist = client.mob.traitHolder?.hasTrait("atheist")
+
+	if (is_atheist)
 		boutput(client.mob, "You feel ridiculous doing it, but manage to get through a silent prayer,</B> <I>\"[msg]\"</I>")
 		client.mob.take_oxygen_deprivation(10)
 		logTheThing("admin_help", client.mob, null, "PRAYER (atheist): [msg]")
@@ -184,6 +204,11 @@
 		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
 		logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
 		logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
+
+#ifdef DATALOGGER
+	game_stats.Increment("prayers")
+#endif
+
 	var/audio
 
 	for (var/client/C)
@@ -193,7 +218,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.5em'":""]><B>PRAYER: </B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST)" : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
@@ -205,7 +230,7 @@
 
 /proc/do_admin_pm(var/C, var/mob/user) //C is a passed ckey
 
-	var/mob/M = whois_ckey_to_mob_reference(C)
+	var/mob/M = ckey_to_mob(C)
 	if(M)
 		if (!( ismob(M) ))
 			return
@@ -219,7 +244,7 @@
 
 		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|text
 
-		M = whois_ckey_to_mob_reference(C)
+		M = ckey_to_mob(C)
 		user = user_client.mob
 
 		if(!(user && user.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))
@@ -260,9 +285,9 @@
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""
-		ircmsg["name"] = user.real_name
+		ircmsg["name"] = stripTextMacros(user.real_name)
 		ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
-		ircmsg["name2"] = (M != null && M.real_name != null) ? M.real_name : ""
+		ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 		ircmsg["msg"] = html_decode(t)
 		ircbot.export("pm", ircmsg)
 

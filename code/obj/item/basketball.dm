@@ -6,7 +6,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bball"
 	item_state = "bball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throw_range = 10
 	throwforce = 0
@@ -43,7 +43,7 @@
 					JOB_XP(M, "Clown", 1)
 					return
 				// catch the ball!
-				src.attack_hand(M)
+				src.Attackhand(M)
 				M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
 				logTheThing("combat", M, null, "catches [src]")
 				return
@@ -52,9 +52,10 @@
 			M.changeStatus("stunned", 2 SECONDS)
 			return
 
-/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "bball_spin"
-	..()
+	. = ..()
 
 /obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/plutonium_core))
@@ -66,7 +67,7 @@
 		var/obj/item/plutonium_core/P = W
 		src.payload = W
 		if(src.loc == user)
-			P.plutonize(usr.verbs)
+			P.plutonize(user.verbs)
 		return
 	..(W, user)
 	return
@@ -75,7 +76,7 @@
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
-		payload.plutonize(usr.verbs)
+		payload.plutonize(user.verbs)
 	return
 
 /obj/item/basketball/unequipped(var/mob/usr)
@@ -93,7 +94,7 @@
 	anchored = 0
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
@@ -151,7 +152,8 @@
 							src.pixel_x = -20
 		return
 
-	HasEntered(atom/A)
+	Crossed(atom/movable/A)
+		..()
 		if (src.active)
 			return
 		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
@@ -196,11 +198,11 @@
 		if (!A || isarea(A) || isturf(A))
 			return
 		src.active = 1
-		playsound(get_turf(src), "rustle", 75, 1)
-		A.invisibility = 100
+		playsound(src, "rustle", 75, 1)
+		A.invisibility = INVIS_ALWAYS_ISH
 		flick("bbasket1", src)
 		SPAWN_DBG(1.5 SECONDS)
-			A.invisibility = 0
+			A.invisibility = INVIS_NONE
 			src.active = 0
 
 /obj/item/bballbasket/testing
@@ -214,7 +216,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "plutonium"
 	item_state = "egg3"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throwforce = 10
 
@@ -246,7 +248,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bloodbowlball"
 	item_state = "bloodbowlball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 10
 	throw_range = 10
 	throwforce = 2
@@ -271,7 +273,7 @@
 						if(V.client)
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
 							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
-					T.changeStatus("stunned", 50)
+					T.changeStatus("stunned", 5 SECONDS)
 					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
 					return
@@ -279,18 +281,18 @@
 					src.visible_message("<span class='combat'>[T] catches the [src.name] but gets cut.</span>")
 					T.TakeDamage(T.hand == 1 ? "l_arm" : "r_arm", 15, 0)
 					take_bleeding_damage(T, null, 10, DAMAGE_CUT)
-					src.attack_hand(T)
+					src.Attackhand(T)
 					return
 				// catch the ball!
 				else
-					src.attack_hand(T)
+					src.Attackhand(T)
 					T.visible_message("<span class='combat'>[M] catches the [src.name]!</span>")
 					return
 	return
 
 /obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
-	..()
+	. = ..()
 
 /obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)

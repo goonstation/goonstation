@@ -52,6 +52,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	endurance = 0
 	genome = 10
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
+	mutations = list(/datum/plantmutation/oat/salt)
 
 /datum/plant/crop/rice
 	name = "Rice"
@@ -83,6 +84,21 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 	assoc_reagents = list("nitrogen")
 
+/datum/plant/crop/peas
+	name = "Peas"
+	seedcolor = "#77AA77"
+	crop = /obj/item/reagent_containers/food/snacks/plant/peas
+	starthealth = 40
+	growtime = 50
+	harvtime = 130
+	cropsize = 2
+	harvests = 4
+	endurance = 0
+	vending = 1
+	genome = 8
+	mutations = list(/datum/plantmutation/peas/ammonia)
+	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
+
 /datum/plant/crop/corn
 	name = "Corn"
 	seedcolor = "#FFFF00"
@@ -94,7 +110,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	harvests = 3
 	endurance = 2
 	genome = 10
-	mutations = list(/datum/plantmutation/corn/clear)
+	mutations = list(/datum/plantmutation/corn/clear, /datum/plantmutation/corn/pepper)
 	commuts = list(/datum/plant_gene_strain/photosynthesis,/datum/plant_gene_strain/splicing/bad)
 	assoc_reagents = list("cornstarch")
 
@@ -112,7 +128,12 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	genome = 7
 	special_proc = 1
 	assoc_reagents = list("synthflesh")
-	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,/datum/plantmutation/synthmeat/eye)
+	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,
+	/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,
+	/datum/plantmutation/synthmeat/eye,/datum/plantmutation/synthmeat/lung,
+	/datum/plantmutation/synthmeat/appendix,/datum/plantmutation/synthmeat/pancreas,
+	/datum/plantmutation/synthmeat/liver,/datum/plantmutation/synthmeat/kidney,
+	/datum/plantmutation/synthmeat/spleen, /datum/plantmutation/synthmeat/stomach,)
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/unstable)
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
@@ -121,10 +142,31 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		if (!DNA) return
 		if (reagent == "nanites" && (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/synthmeat/butt)))
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt/buttbot)
-
-/obj/machinery/bot/buttbot/synth //Opinion: i personally think this should be in the same file as buttbots
-	name = "Organic Buttbot" //TODO: This and synthbutts need to use the new green synthbutt sprites
-	desc = "What part of this even makes any sense."
+		switch(reagent)
+			if("simethicone")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt)
+			if("synthflesh")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/limb)
+			if("mannitol")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/brain)
+			if("blood")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/heart)
+			if("oculine")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/eye)
+			if("salbutamol")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/lung)
+			if("compost")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/appendix)
+			if("sugar")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/pancreas)
+			if("ethanol")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/liver)
+			if("urine")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/kidney)
+			if("proconvertin")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/spleen)
+			if("charcoal")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/stomach)
 
 /datum/plant/crop/sugar
 	name = "Sugar"
@@ -224,3 +266,4 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	endurance = 0
 	genome = 6
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
+	mutations = list(/datum/plantmutation/coffee/mocha, /datum/plantmutation/coffee/latte)

@@ -139,11 +139,11 @@
 /obj/storage/closet/flock/proc/take_damage(var/force, var/mob/user as mob)
 	if (!isnum(force) || force <= 0)
 		return
-	src.health_attack = max(0,min(src.health_attack - force,src.health_max))
+	src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
 	if (src.health_attack <= 0)
 		var/turf/T = get_turf(src)
 		playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-		var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+		var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 		S.set_loc(T)
 		S.setMaterial(getMaterial("gnesisglass"))
 		src.dump_contents()
@@ -159,7 +159,7 @@
 
 	if(isflock(user))
 		if (!src.toggle())
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 	else
 		boutput(user, "<span class='alert'>Nothing you can do can persuade this thing to either open or close. Bummer.</span>")
 
@@ -257,7 +257,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 
-	update_icon(special_icon_state) //fix for perspective grilles fucking these up
+	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
 			return
 
@@ -279,15 +279,17 @@
 /obj/grille/flock/New()
 	..()
 	setMaterial("gnesis")
-	src.update_icon()
+	src.UpdateIcon()
 
 
 // flockdrones can always move through
-/obj/grille/flock/CanPass(atom/movable/mover, turf/target)
-	if (istype(mover, /mob/living/critter/flock/drone) && !mover:floorrunning)
+/obj/grille/flock/Cross(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
-		return 1
-	return ..()
+		. = TRUE
+
 
 /obj/grille/flock/special_desc(dist, mob/user)
 	if(isflock(user))

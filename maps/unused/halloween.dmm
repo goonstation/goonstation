@@ -2352,7 +2352,7 @@
 	d2 = 4
 	},
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "foresolar";
 	name = "North Solar Control";
 	track = 2
@@ -11044,7 +11044,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "avq" = (
-/obj/displaycase,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+},
 /turf/simulated/floor,
 /area/station/bridge)
 "avr" = (
@@ -11766,7 +11768,7 @@
 	d2 = 2
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "awS" = (
@@ -13742,7 +13744,7 @@
 "aAx" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "aAy" = (
@@ -17512,7 +17514,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/engineering{
 	name = "Engine Monitoring"
@@ -18884,7 +18886,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aJx" = (
@@ -26827,7 +26829,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "southsolar";
 	name = "South Solar Control";
 	track = 2
@@ -29690,7 +29692,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "beB" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "prisonsolar";
 	name = "Prison Solar Control";
 	track = 2
@@ -39541,7 +39543,7 @@
 	name = "Engineering Outpost"
 	})
 "byF" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "engout-solar";
 	name = "Outpost solar control"
 	},

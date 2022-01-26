@@ -1,14 +1,17 @@
 /mob/dead
 	stat = 2
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 
 // dead
+/mob/dead/New()
+	..()
+	src.flags |= UNCRUSHABLE
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)
 	return
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/Cross(atom/movable/mover)
 	return 1
 
 /mob/dead/say_understands()
@@ -53,6 +56,7 @@
 	if(src?.client?.preferences.auto_capitalization)
 		message = capitalize(message)
 
+	phrase_log.log_phrase("deadsay", message)
 	. = src.say_dead(message)
 
 	for (var/mob/M in hearers(null, null))
@@ -83,7 +87,7 @@
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
 				var/fart_on_other = 0
 				for (var/obj/item/storage/bible/B in src.loc)
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
 					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"

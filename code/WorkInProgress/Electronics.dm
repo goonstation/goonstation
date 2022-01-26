@@ -6,7 +6,7 @@
 	force = 5
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -23,7 +23,6 @@
 /obj/item/electronics/battery
 	name = "battery"
 	icon_state = "batt1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/battery/New()
 	src.icon_state = pick("batt1", "batt2", "batt3")
@@ -33,7 +32,6 @@
 /obj/item/electronics/board
 	name = "board"
 	icon_state = "board1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/board/New()
 	src.icon_state = pick("board1", "board2", "board3")
@@ -43,7 +41,6 @@
 /obj/item/electronics/fuse
 	name = "fuse"
 	icon_state = "fuse1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/fuse/New()
 	src.icon_state = pick("fuse1", "fuse2", "fuse3")
@@ -53,7 +50,6 @@
 /obj/item/electronics/switc
 	name = "switch"
 	icon_state = "switch1"
-	module_research = list("electronics" = 2)
 
 /obj/item/electronics/switc/New()
 	src.icon_state = pick("switch1", "switch2", "switch3")
@@ -63,7 +59,6 @@
 /obj/item/electronics/keypad
 	name = "keypad"
 	icon_state = "keypad1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/keypad/New()
 	src.icon_state = pick("keypad1", "keypad2", "keypad3")
 	randompix()
@@ -72,7 +67,6 @@
 /obj/item/electronics/screen
 	name = "screen"
 	icon_state = "screen1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/screen/New()
 	src.icon_state = pick("screen1", "screen2", "screen3")
 	randompix()
@@ -81,7 +75,6 @@
 /obj/item/electronics/capacitor
 	name = "capacitor"
 	icon_state = "capacitor1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/capacitor/New()
 	src.icon_state = pick("capacitor1", "capacitor2", "capacitor3")
 	randompix()
@@ -90,7 +83,6 @@
 /obj/item/electronics/buzzer
 	name = "buzzer"
 	icon_state = "buzzer"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/buzzer/New()
 	randompix()
 	..()
@@ -98,7 +90,6 @@
 /obj/item/electronics/resistor
 	name = "resistor"
 	icon_state = "resistor1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/resistor/New()
 	src.icon_state = pick("resistor1", "resistor2")
 	randompix()
@@ -107,7 +98,6 @@
 /obj/item/electronics/bulb
 	name = "bulb"
 	icon_state = "bulb1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/bulb/New()
 	src.icon_state = pick("bulb1", "bulb2")
 	randompix()
@@ -116,7 +106,6 @@
 /obj/item/electronics/relay
 	name = "relay"
 	icon_state = "relay1"
-	module_research = list("electronics" = 2)
 /obj/item/electronics/bulb/New()
 	src.icon_state = pick("relay1", "relay2")
 	randompix()
@@ -131,7 +120,6 @@
 	var/dir_needed = 0
 	//var/list/parts = new/list()
 	var/list/needed_parts = new/list()
-	module_research = list("electronics" = 3, "engineering" = 1)
 	var/obj/deconstructed_thing = null
 
 
@@ -266,7 +254,7 @@
 /obj/item/electronics/frame/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_range(src, usr) && istype(src.loc, /turf)))
+	if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -299,9 +287,10 @@
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)
-		O.was_built_from_frame(user, 1)
-	//O.mats = "Built"
-	O.deconstruct_flags |= DECON_BUILT
+		if(istype(O))
+			O.was_built_from_frame(user, 1)
+	if(istype(O))
+		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
 	return
@@ -321,19 +310,19 @@
 				break
 
 	if (istype(R))
-		var/looper = round(R.item_amounts[1] / 10, 1)
+		var/looper = round(R.item_amounts[1] / 10)
 		while (looper > 0)
-			var/obj/item/material_piece/mauxite/M = unpool(/obj/item/material_piece/mauxite)
+			var/obj/item/material_piece/mauxite/M = new /obj/item/material_piece/mauxite
 			M.set_loc(get_turf(src))
 			looper--
-		looper = round(R.item_amounts[2] / 10, 1)
+		looper = round(R.item_amounts[2] / 10)
 		while (looper > 0)
-			var/obj/item/material_piece/pharosium/P = unpool(/obj/item/material_piece/pharosium)
+			var/obj/item/material_piece/pharosium/P = new /obj/item/material_piece/pharosium
 			P.set_loc(get_turf(src))
 			looper--
-		looper = round(R.item_amounts[3] / 10, 1)
+		looper = round(R.item_amounts[3] / 10)
 		while (looper > 0)
-			var/obj/item/material_piece/molitz/M = unpool(/obj/item/material_piece/molitz)
+			var/obj/item/material_piece/molitz/M = new /obj/item/material_piece/molitz
 			M.set_loc(get_turf(src))
 			looper--
 	else
@@ -387,9 +376,8 @@
 	force = 10
 	hit_type = DAMAGE_BURN
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 40
-	module_research = list("electronics" = 3, "engineering" = 1)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!isobj(target))
@@ -417,11 +405,10 @@
 	force = 2
 	hit_type = DAMAGE_BLUNT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 50
 	var/list/scanned = list()
 	var/viewstat = 0
-	module_research = list("electronics" = 3, "engineering" = 3, "analysis" = 2)
 
 	syndicate
 		is_syndicate = 1
@@ -445,10 +432,6 @@
 				boutput(user, "<span class='alert'>You have already scanned that object.</span>")
 				return
 
-		for(var/datum/electronics/scanned_item/I in mechanic_controls.scanned_items)
-			if(final_type == I.item_type)
-				boutput(user, "<span class='alert'>That object already exists in the scanned database.</span>")
-				return
 		animate_scanning(O, "#FFFF00")
 		src.scanned += final_type
 		boutput(user, "<span class='notice'>Item scan successful.</span>")
@@ -462,95 +445,276 @@
 	anchored = 1
 	density = 1
 	//var/datum/electronics/electronics_items/link = null
+	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 
 	var/processing = 0
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_RUCK
 	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
+	var/datum/mechanic_controller/ruck_controls
+	///net_id of the ruck that will send messages
+	var/host_ruck
+	///list of rucks we've seen send a SYNC or SYNCREPLY (or even DROP but that's weird)
+	var/list/known_rucks = null
+	var/boot_time = null
+	var/data_initialized = FALSE
 
 /obj/machinery/rkit/New()
-	..()
-	//link = mechanic_controls
-	SPAWN_DBG(0.8 SECONDS)
-		if(radio_controller)
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-		if(!src.net_id)
-			src.net_id = generate_net_id(src)
-			mechanic_controls.rkit_addresses += src.net_id
+	. = ..()
+	known_rucks = new
+	ruck_controls = new
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
+	if(!src.net_id)
+		src.net_id = generate_net_id(src)
+		ruck_controls.rkit_addresses += src.net_id
+		host_ruck = src.net_id
+
+	src.AddComponent( \
+		/datum/component/packet_connected/radio, \
+		"ruck", \
+		src.frequency, \
+		src.net_id, \
+		"receive_signal", \
+		FALSE, \
+		"TRANSRKIT", \
+		FALSE \
+	)
 
 /obj/machinery/rkit/disposing()
-	radio_controller?.remove_object(src, "[frequency]")
-	radio_connection = null
+	if (src.net_id == host_ruck) send_sync(1) //Everyone needs to find a new master
+	SPAWN_DBG(0.8 SECONDS) //Wait for the sync to send
+		if (src.net_id)
+			ruck_controls.rkit_addresses -= src.net_id
+		..()
 
-	if (src.net_id)
-		mechanic_controls.rkit_addresses -= src.net_id
+/obj/machinery/rkit/power_change()
+	. = ..()
+	//This will run when we're created and find a host ruck
+	if(status & (NOPOWER|BROKEN))
+		if (src.net_id == host_ruck) send_sync(1)
+		return
 
-	//link = null
+	if (powered())
+		send_sync()
+	else
+		if (src.net_id == host_ruck) send_sync(1)
 
-	..()
+/obj/machinery/rkit/proc/send_sync(var/dispose) //Request SYNCREPLY from other rucks
+	//If dispose is true we use "DROP" which won't be saved as the host
+	SPAWN_DBG(rand(5, 10)) //Keep these out of sync a little, less spammy
+		if(!boot_time) boot_time = world.time
+		host_ruck = src.net_id //We're the host until someone else proves they are
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		if(!dispose)
+			newsignal.data["command"] = "SYNC"
+		else
+			newsignal.data["command"] = "DROP"
+		newsignal.data["address_tag"] = "TRANSRKIT"
+		newsignal.data["sender"] = src.net_id
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+
+/obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
+	SPAWN_DBG(0.5 SECONDS) //This proc sends responses so there must be a delay
+		var/datum/computer/file/electronics_scan/scanFile = new
+		scanFile.scannedName = O.name
+		scanFile.scannedPath = O.item_type
+		scanFile.scannedMats = O.mats
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		if(!internal)
+			newsignal.data["command"] = "NEW"
+		else
+			newsignal.data["command"] = "UPLOAD"
+		newsignal.data["address_tag"] = target
+		newsignal.data["address_1"] = target
+		newsignal.data["sender"] = src.net_id
+		newsignal.data_file = scanFile
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+
+/obj/machinery/rkit/proc/pda_message(var/target, var/message)
+	SPAWN_DBG(0.5 SECONDS) //response proc
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = "RKIT-MAILBOT"
+		newsignal.data["message"] = message
+		if (target) newsignal.data["address_1"] = target
+		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+		newsignal.data["sender"] = src.net_id
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
+
+/obj/machinery/rkit/proc/transfer_database(target)
+	//If we have a database of items, and we're the host, and we see a new ruck
+	//Upload our database to it
+	var/datum/computer/file/electronics_bundle/rkitFile = new
+	rkitFile.ruckData = ruck_controls
+	rkitFile.target = target
+	rkitFile.known_rucks = src.known_rucks.Copy()
+	SPAWN_DBG(0.5 SECONDS)
+		var/datum/signal/newsignal = get_free_signal()
+		newsignal.source = src
+		newsignal.data["command"] = "UPLOAD"
+		newsignal.data["address_1"] = target
+		newsignal.data["sender"] = src.net_id
+		newsignal.data_file = rkitFile
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+	known_rucks |= target
+
+//Run this if there's a file and return
+//This will either work, or you rejected a signal that had a file it didn't need
+/obj/machinery/rkit/proc/process_upload(datum/signal/signal)
+	var/target = signal.data["sender"]
+	var/command = signal.data["command"]
+	if(!target || (command != "add" && command != "UPLOAD") || (!istype(signal.data_file, /datum/computer/file/electronics_scan) && !istype(signal.data_file, /datum/computer/file/electronics_bundle)))
+		return
+	//If we get a database file, check that we just booted and that the file was made for us
+	//And also that we haven't already digested a database
+	var/datum/computer/file/electronics_bundle/rkitFile = signal.data_file
+	if (istype(rkitFile) && !data_initialized && !isnull(boot_time) && rkitFile.target == src.net_id)
+		var/datum/mechanic_controller/originalData = rkitFile.ruckData
+		src.known_rucks = rkitFile.known_rucks
+		known_rucks |= target
+		data_initialized = TRUE
+		SPAWN_DBG(0.5 SECONDS)
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.data["command"] = "SYNCREPLY"
+			newsignal.data["address_tag"] = "TRANSRKIT"
+			newsignal.data["sender"] = src.net_id
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+		if(world.time - boot_time <= 3 SECONDS)
+			for (var/datum/electronics/scanned_item/O in originalData.scanned_items)
+				ruck_controls.scan_in(O.name, O.item_type, O.mats, O.locked) //Copy the database on digest so we never waste the effort
+			updateDialog()
+			return
+
+		return
+
+	else if(istype(rkitFile))
+		return
+
+	//And then process blueprint files
+	//Scan them in if we haven't seen them before
+	//UPLOAD is the internal command and doesn't generate PDA messages
+	//add is sent by PDA scanners and does generate messages
+	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
+
+	for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+		if(scanFile.scannedPath == O.item_type)
+			if (command == "UPLOAD" || src.net_id != host_ruck) //Don't send a failure message if the it's an internal transfer("UPLOAD" command)
+				//And don't send a message if we're not the host
+				return //But we already had that blueprint, so we do leave
+
+			pda_message(target, "Notice: Item already in database.")
+
+			return
+	var/strippedName = scanFile.scannedName
+	ruck_controls.scan_in(strippedName, scanFile.scannedPath, scanFile.scannedMats)
+	updateDialog()
+
+	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
+		return
+
+	pda_message(target, "Notice: Item entered into database.")
 
 /obj/machinery/rkit/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
 		return
 
-	if(!signal || signal.encryption || !signal.data["sender"])
+	if(!signal || !signal.data["sender"] || isnull(boot_time))
 		return
 
 	var/target = signal.data["sender"]
-	if((signal.data["address_1"] == "ping") && target)
-		SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+	var/command = signal.data["command"]
 
+	//LOCK can come in encrypted
+	if(signal.data["address_tag"] == "TRANSRKIT" && signal.data["acc_code"] == netpass_heads && !isnull(signal.data["DATA"]) && !isnull(signal.data["LOCK"]))
+		var/targetitem = signal.data["DATA"]
+		var/targetlock = signal.data["LOCK"]
+		if (istext(targetlock))
+			targetlock = text2num_safe(targetlock)
+
+		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+			if (targetitem == O.name)
+				O.locked = targetlock
+				updateDialog()
+		return
+
+	if(signal.encryption)
+		return
+
+
+	if((signal.data["address_1"] == "ping") && target)
+		SPAWN_DBG(0.5 SECONDS)	//Send a reply for those curious jerks
+								//Any replies in receive signal need a delay
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_RADIO
 			newsignal.data["command"] = "ping_reply"
 			newsignal.data["device"] = "NET_RKANALZYER"
 			newsignal.data["netid"] = src.net_id
-
 			newsignal.data["address_1"] = target
 			newsignal.data["sender"] = src.net_id
-
-			radio_connection.post_signal(src, newsignal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 		return
 
-	if(signal.data["address_1"] != src.net_id || !target || signal.data["command"] != "add" || !istype(signal.data_file, /datum/computer/file/electronics_scan))
+	//Signals that take TRANSRKIT or the net_id
+	if (signal.data["address_tag"] == "TRANSRKIT" || signal.data["address_1"] == src.net_id)
+		if (!isnull(signal.data_file))
+			process_upload(signal)
+			return
+	else
+		//Didn't match either, we're done here
 		return
 
-	var/datum/computer/file/electronics_scan/scanFile = signal.data_file
-	for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
-		if(scanFile.scannedPath == O.item_type)
+	//Signals that take TRANSRKIT
+	if(signal.data["address_tag"] == "TRANSRKIT")
+
+		if(command == "SYNCREPLY" && target)
+			if (target > host_ruck) //pick the highest net_id
+				host_ruck = target
+				//Wait we're done here?
+				return
+
+
+		//Set the host ruck to the highest net_id we see, and if it's a DROP command, don't save that net_id
+		if((command == "SYNC" || command == "DROP") && target)
+
+			if(length(ruck_controls.scanned_items) && src.net_id == host_ruck && !(target in known_rucks))
+				//If we have a database of items, and we're the host, and we see a new ruck
+				//Upload our database to it
+				transfer_database(target)
+				return
+
+			known_rucks |= target
+			//Got a sync time to reset this to ourselves
+			host_ruck = src.net_id //We're the master!
+			if (target > host_ruck && command == "SYNC") //Unless they are
+				host_ruck = target
+
 			SPAWN_DBG(0.5 SECONDS)
-
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
-				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "RKIT-MAILBOT"
-				newsignal.data["message"] = "Notice: Item already in database."
-				newsignal.data["address_1"] = target
-				newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+				newsignal.data["command"] = "SYNCREPLY"
+				newsignal.data["address_tag"] = "TRANSRKIT"
 				newsignal.data["sender"] = src.net_id
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
-				radio_connection.post_signal(src, newsignal)
 			return
+	//And anything down here runs if addressed by only net_id
 
-	mechanic_controls.scan_in(scanFile.scannedName, scanFile.scannedPath, scanFile.scannedMats)
-	SPAWN_DBG(0.5 SECONDS)
-
-		var/datum/signal/newsignal = get_free_signal()
-		newsignal.source = src
-		newsignal.transmission_method = TRANSMISSION_RADIO
-		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "RKIT-MAILBOT"
-		newsignal.data["message"] = "Notice: Item entered into database."
-		newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
-		newsignal.data["sender"] = src.net_id
-
-		radio_connection.post_signal(src, newsignal)
+	//I have no idea why anyone would want blueprint files
+	//But I love making packets cryptic
+	//Oh okay we have a distributed network now, THAT'S what this is for
+	if(command == "DOWNLOAD" && target && !isnull(signal.data["data"]))
+		var/targetitem = signal.data["data"]
+		for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+			if (targetitem == O.name)
+				upload_blueprint(O, target)
 
 /obj/machinery/rkit/attackby(obj/item/W as obj, mob/user as mob)
 	if(status & (NOPOWER|BROKEN))
@@ -562,21 +726,26 @@
 		var/match_check = 1
 		for(var/X in S.scanned)
 			match_check = 0
-			for(var/datum/electronics/scanned_item/O in mechanic_controls.scanned_items)
-				if(S.scanned == O.item_type)
+			for(var/datum/electronics/scanned_item/O in ruck_controls.scanned_items)
+				if(X == O.item_type)
 					S.scanned -= X
 					match_check = 1
 					break
 			if (!match_check)
 				var/obj/tempobj = new X (src)
-				mechanic_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
-				SPAWN_DBG(4 SECONDS)
-					qdel(tempobj)
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				if(O)
+					upload_blueprint(O, "TRANSRKIT", 1)
+					SPAWN_DBG(4 SECONDS)
+						qdel(tempobj)
 				S.scanned -= X
 				add_count++
-
-		if (add_count > 0)
+		if (add_count==  1)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
+			pda_message(null, "Notice: Item entered into database.")
+		else if (add_count > 0)
+			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
+			pda_message(null, "Notice: [add_count] new items entered into database.")
 		else
 			boutput(user, "<span class='alert'>No new items entered into kit.</span>")
 
@@ -586,16 +755,22 @@
 /obj/machinery/rkit/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	var/dat
+	var/hide_allowed = src.allowed(usr)
 	dat = "<b>Ruckingenur Kit</b><HR>"
 
 	dat += "<b>Scanned Items:</b><br>"
-	for(var/datum/electronics/scanned_item/S in mechanic_controls.scanned_items)
+	for(var/datum/electronics/scanned_item/S in ruck_controls.scanned_items)
 		dat += "<u>[S.name]</u><small> "
 		//dat += "<A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		if (S.item_mats && src.olde)
 			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=done'>Frame</A>"
 		else if (S.blueprint)
-			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+			if(!S.locked || hide_allowed || src.olde)
+				dat += " * <A href='?src=\ref[src];op=\ref[S];tp=blueprint'>Blueprint</A>"
+			else
+				dat += " * Blueprint Disabled"
+		if(hide_allowed)
+			dat += " * <A href='?src=\ref[src];op=\ref[S];tp=lock'>[S.locked ? "Locked" : "Unlocked"]</A>"
 		dat += "</small><br>"
 	dat += "<br>"
 
@@ -608,7 +783,7 @@
 /obj/machinery/rkit/Topic(href, href_list)
 	if (usr.stat)
 		return
-	if ((in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+	if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 		switch(href_list["tp"])
@@ -627,7 +802,7 @@
 					if (src.no_print_spam && world.time < src.no_print_spam + 25)
 						usr.show_text("[src] isn't done with the previous print job.", "red")
 					else
-						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in mechanic_controls.scanned_items
+						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 						if (istype(O.blueprint, /datum/manufacture/mechanics/))
 							usr.show_text("Print job started...", "blue")
 							var/datum/manufacture/mechanics/M = O.blueprint
@@ -637,7 +812,25 @@
 								if (src)
 									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 
-		updateDialog()
+			if("lock")
+				if(href_list["op"])
+
+					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
+					O.locked = !O.locked
+					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
+						if(O.name == OP.name)
+							OP.locked = O.locked
+					updateDialog()
+					var/datum/signal/newsignal = get_free_signal()
+					newsignal.source = src
+					newsignal.data["address_tag"] = "TRANSRKIT"
+					newsignal.data["acc_code"] = netpass_heads
+					newsignal.data["LOCK"] = O.locked
+					newsignal.data["DATA"] = O.name
+					newsignal.data["sender"] = src.net_id
+					newsignal.encryption = "ERR_12845_NT_SECURE_PACKET:"
+					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
+
 	else
 		usr.Browse(null, "window=rkit")
 		src.remove_dialog(usr)
@@ -645,7 +838,7 @@
 
 /obj/item/deconstructor
 	name = "deconstruction device"
-	desc = "A device meant to facilitate the deconstruction of scannable machines."
+	desc = "A saw-like device capable of taking apart reverse-engineered machines. Or your crewmates."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "deconstruction-saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -655,8 +848,7 @@
 	hitsound = 'sound/machines/chainsaw_green.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	w_class = 3.0
-	module_research = list("electronics" = 3, "engineering" = 1)
+	w_class = W_CLASS_NORMAL
 
 	proc/finish_decon(atom/target,mob/user)
 		if (!isobj(target))
@@ -666,15 +858,21 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-
-		var/obj/item/electronics/frame/F = new(get_turf(target))
+		var/obj/item/electronics/frame/F = new
+		var/turf/target_loc = get_turf(target)
 		F.name = "[target.name] frame"
-		F.deconstructed_thing = target
-		O.set_loc(F)
+		if(O.deconstruct_flags & DECON_DESTRUCT)
+			F.store_type = O.type
+			qdel(O)
+		else
+			F.deconstructed_thing = target
+			O.set_loc(F)
+		// move frame to the location after object is gone, so crushers do not crusher themselves
+		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
-		F.w_class = 4
+		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
 
@@ -700,6 +898,10 @@
 
 		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
+			return
+
+		if(locate(/mob/living) in O)
+			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
 		if (isrestrictedz(O.z) && !isitem(target))
@@ -763,7 +965,7 @@
 			var/datum/contextAction/deconstruction/pulse/newcon = new
 			decon_contexts += newcon
 
-		.+= decon_contexts.len
+		.+= length(decon_contexts)
 
 
 /datum/action/bar/icon/deconstruct_obj
@@ -782,19 +984,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null)
+		if(get_dist(owner, O) > 1 || O == null || owner == null || D == null || locate(/mob/living) in O)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
@@ -819,4 +1021,4 @@
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	hit_type = DAMAGE_BLUNT
 	tool_flags = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL

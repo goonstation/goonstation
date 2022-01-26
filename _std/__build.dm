@@ -29,7 +29,6 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
-
 //////////// OPTIONS TO GO FAST
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
@@ -107,12 +106,17 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
 //#define MAP_OVERRIDE_PAMGOC			// Pamgoc
-//#define MAP_OVERRIDE_WRESTLEMAP		// Wrestlemap by Overtone
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+// #define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
 
+//////////// Unit Test Framework
+
+//#define UNIT_TESTS
+//#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
 
 //////////// HOLIDAYS AND OTHER SUCH TOGGLES
 
-//#define RP_MODE
+//#define RP_MODE 1
 //#define HALLOWEEN 1
 //#define XMAS 1
 //#define CANADADAY 1
@@ -123,9 +127,6 @@ o+`        `-` ``..-:yooos-..----------..`
 
 var/global/vcs_revision = "1"
 var/global/vcs_author = "bob"
-
-var/global/ci_dm_version_major = "1"
-var/global/ci_dm_version_minor = "100"
 
 // The following describe when the server was compiled
 #define BUILD_TIME_TIMEZONE_ALPHA "EST" // Server is EST

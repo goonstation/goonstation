@@ -32,7 +32,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sound_group = "biodome"
 
 /area/crater/biodome
-	name = "Botanical Research Biodome"
+	name = "Botanical Research Outpost Gamma"
 	icon_state = "green"
 	force_fullbright = 0
 	sound_environment = 1
@@ -92,7 +92,199 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "cave-dark"
 	fullbright = 0
 
-////////////////////// cogwerks - crypt place
+
+////////////////// BIODOME EXPANSION PROJECT AREAS ///////////////////
+/area/swampzone
+	name = "X-05 Fatuus"
+	icon_state = "green"
+	force_fullbright = 0
+	filler_turf = "/turf/unsimulated/floor/auto/dirt"
+	ambient_light = rgb(75, 100, 100)
+	sound_environment = 15
+	skip_sims = 1
+	sims_score = 0
+	sound_group = "swamp_outdoors"
+
+	heights
+		name = "X-05 Heights"
+		icon_state = "blue"
+		ambient_light = rgb(180, 150, 150)
+		sound_group = "swamp_heights"
+		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+	ground
+		name = "X-05 Swamplands"
+		sound_group = "swamp_surface"
+		sound_loop = 'sound/ambience/nature/Rain_Heavy.ogg'
+		sound_environment = 19
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "rain_overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Rain_ThunderDistant.ogg','sound/ambience/nature/Wind_Cold1.ogg','sound/ambience/nature/Wind_Cold2.ogg','sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg', 'sound/voice/animal/werewolf_howl.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+		forest
+			name = "X-05 Forest"
+			sound_group = "swamp_forest"
+			sound_environment = 15
+
+		canyon
+			name = "X-05 Canyon"
+			sound_group = "swamp_canyon"
+			sound_environment = 14
+
+
+	deeps
+		name = "X-05 Deep Swamp"
+		icon_state = "green"
+		ambient_light = rgb(10, 50, 35)
+		sound_group = "swamp_deeps"
+		sound_environment = 22
+		sound_loop = 'sound/ambience/station/Underwater/ocean_ambi2.ogg'
+
+
+		New()
+			..()
+
+			overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "swampwater-overlay", layer = EFFECTS_LAYER_BASE)
+			SPAWN_DBG(1 SECOND)
+				process()
+
+		proc/process()
+			while(current_state < GAME_STATE_FINISHED)
+				sleep(10 SECONDS)
+				if (current_state == GAME_STATE_PLAYING)
+					if(!played_fx_2 && prob(10))
+						sound_fx_2 = pick('sound/ambience/nature/Lavamoon_DeepBubble1.ogg','sound/ambience/nature/Lavamoon_DeepBubble2.ogg', 'sound/ambience/nature/Lavamoon_RocksBreaking1.ogg', 'sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg')
+						for(var/mob/M in src)
+							if (M.client)
+								M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+
+
+////// interiors /////
+/area/swampzone/interiors
+	name = "X-05 Settlement"
+	icon_state = "yellow"
+	ambient_light = null
+	sound_environment = 2
+	sound_loop = 'sound/ambience/station/Station_MechanicalThrum2.ogg'
+
+	outbuildings
+		name = "X-05 Outbuildings"
+		sound_group = "swamp_outbuildings"
+		icon_state = "blue"
+
+	tunnels
+		name = "X-05 Utility Tunnels"
+		sound_group = "swamp_tunnels"
+		icon_state = "orange"
+		sound_environment = 13
+
+	basements
+		name = "X-05 Basements"
+		sound_group = null
+		icon_state = "yellow"
+		sound_environment = 5
+
+	bonktek
+		name = "BonkTek Pyramid"
+		sound_group = "swamp_bonktek"
+		icon_state = "purple"
+		sound_environment = 9
+		sound_loop = 'sound/ambience/station/Station_MechanicalThrum5.ogg'
+
+		lounge
+			name = "Zero G-Tek Lounge"
+			sound_environment = 11
+			sound_loop = 'sound/ambience/station/JazzLounge1.ogg'
+
+		security
+			name = "Bonktek Security Office"
+			icon_state = "red"
+			sound_environment = 2
+
+		waffletek
+			name = "WaffleTek Restaurant"
+			icon_state = "blue"
+			sound_environment = 4
+
+		funktek
+			name = "FunkTek Shop"
+			icon_state = "blue"
+			sound_environment = 4
+
+		blastotek
+			name = "BlastoTek Shop"
+			icon_state = "blue"
+			sound_environment = 4
+
+		shootingrange
+			name = "BlastoTek Shooting Range"
+			icon_state = "red"
+			sound_environment = 10
+
+		genetek
+			name = "GeneTek Office"
+			icon_state = "blue"
+			sound_environment = 5
+
+		electek
+			name = "ElecTek Substation"
+			icon_state = "yellow"
+			sound_environment = 2
+
+		bathroom
+			name = "Bathroom"
+			icon_state = "white"
+			sound_environment = 3
+
+		maintenance
+			name = "Bonktek Maintenance Corridors"
+			icon_state = "orange"
+			sound_environment = 13
+
+	quarry
+		name = "X-05 Quarry"
+		icon_state = "orange"
+		sound_group = "swamp_quarry"
+		sound_environment = 18
+
+
+	caves
+		name = "X-05 Caves"
+		icon_state = "blue"
+		sound_group = "swamp_caves"
+		sound_environment = 8
+////////////////////// crypt place
 
 /area/crypt
 	sound_group = "crypt"
@@ -185,7 +377,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sims_score = 0
 	sound_group = "catacombs"
 
-////// cogwerks - lava turf
+////// lava turf
 
 /turf/unsimulated/floor/lava
 	name = "Lava"
@@ -243,6 +435,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_NOSHADOW_ABOVE
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "lightshaft"
 	luminosity = 2
@@ -381,13 +574,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 		active = 1
 
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(tile)
 
 		SPAWN_DBG(0.5 SECONDS)
-			tile.invisibility = 100
+			tile.invisibility = INVIS_ALWAYS_ISH
 			tile.opacity = 1
 			active = 0
 
@@ -422,13 +615,13 @@ SYNDICATE DRONE FACTORY AREAS
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
 
 		var/turf/picked = pick(possible)
-		if(src.loc.invisibility) src.loc.invisibility = 0
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
 		if(src.loc.opacity) src.loc.opacity = 0
 
 		src.set_loc(picked)
 
 		SPAWN_DBG(0.5 SECONDS)
-			picked.invisibility = 100
+			picked.invisibility = INVIS_ALWAYS_ISH
 			picked.opacity = 1
 			active = 0
 
@@ -447,7 +640,7 @@ SYNDICATE DRONE FACTORY AREAS
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 
 /obj/item/whip
 	name = "whip"
@@ -457,17 +650,17 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "whip"
 	item_state = "c_tube"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	New()
 		. = ..()
 		src.special = null
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == usr) return
+		if(target == user) return
 
-		if(get_dist(usr, target) > 5)
-			boutput(usr, "<span class='alert'>That is too far away!</span>")
+		if(get_dist(user, target) > 5)
+			boutput(user, "<span class='alert'>That is too far away!</span>")
 			return
 
 		var/atom/target_r = target
@@ -486,13 +679,13 @@ SYNDICATE DRONE FACTORY AREAS
 			var/turf/T = O.loc
 
 			if(locate(/obj/decal/stalagmite) in T)
-				boutput(usr, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
-				usr.set_loc(T)
+				boutput(user, "<span class='alert'>You pull yourself to the stalagmite using the whip.</span>")
+				user.set_loc(T)
 			else if(locate(/obj/decal/stalagtite) in T)
-				boutput(usr, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
-				usr.set_loc(T)
+				boutput(user, "<span class='alert'>You pull yourself to the stalagtite using the whip.</span>")
+				user.set_loc(T)
 
-			SPAWN_DBG(0.2 SECONDS) pool(O)
+			SPAWN_DBG(0.2 SECONDS) qdel(O)
 
 		if(istype(target_r, /obj/whip_trg_dummy)) qdel(target_r)
 
@@ -540,14 +733,14 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/boulder_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
 	var/resets = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!ready) return
 		if(ismob(AM))
 			if(AM:client)
@@ -621,13 +814,13 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/sneaky_wall_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
@@ -652,7 +845,7 @@ SYNDICATE DRONE FACTORY AREAS
 	protective_temperature = 1000
 	cant_self_remove = 1
 	cant_other_remove = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	var/processing = 0
 
 	setupProperties()
@@ -660,6 +853,7 @@ SYNDICATE DRONE FACTORY AREAS
 		setProperty("coldprot", 80)
 		setProperty("heatprot", 80)
 		setProperty("movespeed", 2)
+		setProperty("disorient_resist", 35)
 
 // scare the everliving fuck out of the player when they equip it
 // what else should this thing do? idk yet. maybe some crazy hallucinations with an ancient blood reagent or something? something like the obsidian crown?
@@ -731,7 +925,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "shovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
@@ -743,20 +937,20 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/lightning_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
 				if(prob(15))
 					active = 1
 					SPAWN_DBG(5 SECONDS) active = 0
-					playsound(get_turf(AM), pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
+					playsound(AM, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 
 					for(var/mob/M in view(src, 5))
 						M.flash(3 SECONDS)
@@ -784,17 +978,16 @@ SYNDICATE DRONE FACTORY AREAS
 	proc/crumble()
 		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
 		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
-		var/obj/effects/bad_smoke/smoke = unpool(/obj/effects/bad_smoke)
+		var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke
 		smoke.name = "dust cloud"
 		smoke.set_loc(src.loc)
 		icon_state = "rubble"
 		set_density(0)
 		opacity = 0
-		src = null
 		SPAWN_DBG(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
-				pool(smoke)
+				qdel(smoke)
 		return
 
 /////////////////////////////// ALCHEMY CIRCLE STUFF
@@ -806,7 +999,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "pstone"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/datum/light/light
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -835,10 +1028,10 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "powder"
 	item_state = "injector"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(!in_range(target, usr) && !istype(target, /obj/alchemy/circle))
+		if(!in_interact_range(target, user) && !istype(target, /obj/alchemy/circle))
 			return
 		if(target == loc) return
 		boutput(user, "<span class='notice'>Your sprinkle some powder on \the [target].</span>")
@@ -939,7 +1132,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol.set_loc(src.loc)
 			symbol = null
 			overlays.Cut()
-			boutput(usr, "<span class='notice'>You remove the Symbol.</span>")
+			boutput(user, "<span class='notice'>You remove the Symbol.</span>")
 		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
@@ -948,7 +1141,7 @@ SYNDICATE DRONE FACTORY AREAS
 			symbol = W
 			symbol.set_loc(src)
 			overlays += symbol
-			boutput(usr, "<span class='notice'>You put the Symbol in the Circle.</span>")
+			boutput(user, "<span class='notice'>You put the Symbol in the Circle.</span>")
 		return
 
 /obj/alchemy/circle
@@ -988,7 +1181,7 @@ SYNDICATE DRONE FACTORY AREAS
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				world << sound('sound/effects/mag_pandroar.ogg', volume=60) // heh
+				playsound_global(world, "sound/effects/mag_pandroar.ogg", 60) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
@@ -1060,7 +1253,7 @@ SYNDICATE DRONE FACTORY AREAS
 	desc = "A hand-held device for communicating with some sort of satellite."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "satcom"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
 		if (..())
@@ -1135,7 +1328,7 @@ var/satellite_crash_event_status = -1
 			satellite_crash_event_status = -1
 			return
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/particle_count = rand(8,16)
 		while (particle_count--)
 			var/obj/effects/expl_particles/EP = new /obj/effects/expl_particles {pixel_y = 600; name = "space debris";} (pick(orange(src,3)))
@@ -1215,3 +1408,6 @@ var/satellite_crash_event_status = -1
 /area/drone/assembly
 	name = "Assembly Floor"
 	icon_state = "storage"
+
+
+

@@ -367,7 +367,7 @@ obj/item/gnomechompski/elf
 	name = "Russian Hootolver"
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "hootolver"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	m_amt = 2000
@@ -433,10 +433,10 @@ obj/item/gnomechompski/elf
 		var/input = alert("Would you like to attempt to absorb the core into your body?","Hoot or not to hoot.", "Yes","No")
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
-			usr.visible_message("<span class='alert'><b>[usr] absorbs the [src] into their body!")
+			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
 			sleep(1.5 SECONDS)
 			playsound(user.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
-			usr.reagents.add_reagent("hootonium", 10)
+			user.reagents.add_reagent("hootonium", 10)
 			qdel(src)
 
 /datum/ailment/disease/hootonium
@@ -457,8 +457,7 @@ obj/item/gnomechompski/elf
 			if (prob(50))
 				affected_mob.make_jittery(25)
 			if (prob(15))
-				playsound(get_turf(affected_mob), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-				make_cleanable( /obj/decal/cleanable/vomit, affected_mob.loc)
+				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
@@ -479,8 +478,7 @@ obj/item/gnomechompski/elf
 			if  (prob(35))
 				boutput(affected_mob, "<B>[pick("Oh g-HOOT", "Whats happe-ho-ing to me?", "It hurts!")]</B>")
 			if (prob(15))
-				playsound(get_turf(affected_mob), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-				make_cleanable( /obj/decal/cleanable/vomit, affected_mob.loc)
+				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
@@ -505,8 +503,7 @@ obj/item/gnomechompski/elf
 			if(prob(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")
 			if (prob(15))
-				playsound(get_turf(affected_mob), pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-				make_cleanable( /obj/decal/cleanable/vomit, affected_mob.loc)
+				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
@@ -622,7 +619,7 @@ obj/item/gnomechompski/elf
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/device/key/owl))
-			boutput(usr, "You insert the key into the wall causing it to slide into a crevice below!")
+			boutput(user, "You insert the key into the wall causing it to slide into a crevice below!")
 			playsound(src.loc, "sound/effects/rockscrape.ogg", 50, 1, -1)
 			qdel(src)
 
@@ -666,16 +663,17 @@ obj/item/gnomechompski/elf
 	icon_state = "bullpup"
 	rechargeable = 0
 	custom_cell_max_capacity = 100
+	cell_type = /obj/item/ammo/power_cell/self_charging
 
 	New()
-		cell = new/obj/item/ammo/power_cell/self_charging
-		current_projectile = new/datum/projectile/wonk
+		set_current_projectile(new/datum/projectile/wonk)
 		projectiles = list(current_projectile)
 		..()
 
-		update_icon()
-		if(cell)
-			var/ratio = min(1, src.cell.charge / src.cell.max_charge)
+		UpdateIcon()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
 			src.icon_state = "bullpup[ratio]"
 
@@ -826,7 +824,7 @@ obj/critter/madnessowl
 	scavenger = 1
 	var/turftarget = null
 
-	Bump(atom/movable/AM)
+	bump(atom/movable/AM)
 		..()
 		if(isobj(AM))
 
@@ -1111,8 +1109,8 @@ obj/critter/madnessowl/switchblade
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
 				user.throw_at(T, 3, 2)
-				user.changeStatus("weakened", 5)
-				user.changeStatus("stunned", 5)
+				user.changeStatus("weakened", 0.5 SECONDS)
+				user.changeStatus("stunned", 0.5 SECONDS)
 
 
 		if (src.alive && src.health <= 0) src.CritterDeath()
@@ -1223,7 +1221,7 @@ obj/critter/madnessowl/switchblade
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
 				if(iscarbon(M))
-					M.changeStatus("weakened", 4)
+					M.changeStatus("weakened", 0.4 SECONDS)
 				frenzy(src.target)
 
 			if (isdead(M)) // devour corpses
@@ -1524,22 +1522,22 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 			cantalk = 0
 			if(prob(5))
 				playsound(src.loc, "sound/ambience/owlzone/owlsfx[rand(1,5)].ogg", 50, 1)
-				usr.visible_message("<span class='notice'>Greg Jr emits a haunting hoot as you pull the string on their back.")
+				user.visible_message("<span class='notice'>Greg Jr emits a haunting hoot as you pull the string on their back.")
 				cantalk = 1
 			else
 				playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 50, 1)
-				usr.visible_message("<span class='notice'>[usr] pull the string located at the back of Greg Jr.")
+				user.visible_message("<span class='notice'>[user] pull the string located at the back of Greg Jr.")
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
-					usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")
+					user.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")
 					sleep(1 SECOND)
-					usr.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
-					new /obj/item/audio_tape/beepoker(get_turf(usr))
+					user.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
+					new /obj/item/audio_tape/beepoker(get_turf(user))
 					seensol = 1
 					cantalk = 1
 					return
 				else
-					usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\"")
+					user.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\"")
 					sleep(3 SECONDS)
 					cantalk = 1
 					sleep(2 SECONDS)

@@ -24,6 +24,17 @@
 	icon_state = "id"
 	spawn_contents = list(/obj/item/f_card = 7)
 */
+/obj/item/storage/box/morphineinjectors
+	name = "morphine autoinjector box"
+	icon_state = "box"
+	desc = "Contains four morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+
+/obj/item/storage/lunchbox/robustdonuts
+	name = "robust donuts lunchbox"
+	icon_state = "lunchbox"
+	desc = "Contains two robust donuts and two robusted donuts, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -169,7 +180,7 @@
 /obj/item/storage/box/banana_grenade_kit
 	name = "banana grenade box"
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 // Detective luminol grenades
 /obj/item/storage/box/luminol_grenade_kit
@@ -203,7 +214,19 @@
 	name = "experimental biological grenade box"
 	desc = "A box of experimental biological grenades."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
+
+/obj/item/storage/box/crowdgrenades
+	name = "crowd dispersal grenades"
+	desc = "A box of crowd dispersal grenades"
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
+
+/obj/item/storage/box/stun_landmines
+	name = "non-lethal landmine box"
+	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
 
 /* -------------------- Traitor Gear -------------------- */
 
@@ -244,7 +267,7 @@
 	sneaky = 1
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	max_wclass = 3
 
 	New()
@@ -335,6 +358,20 @@
 	desc = "Just a regular ordinary box. It smells like almonds a little bit. Probably some chef kept their cooking supplies there."
 	icon_state = "box"
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
+
+
+/obj/item/storage/box/blowgun
+	name = "instrument case"
+	desc = "A hardshell case for musical instruments."
+	icon_state = "briefcase_black"
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
+	/obj/item/storage/pouch/poison_dart = 2)
+
+/obj/item/storage/box/chameleonbomb
+	name = "chameleon bomb case"
+	desc = "A case that contains 2 syndicate chameleon bombs"
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

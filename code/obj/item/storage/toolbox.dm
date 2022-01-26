@@ -12,7 +12,7 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	//cogwerks - burn vars
@@ -90,6 +90,9 @@
 		/obj/item/wirecutters/yellow,\
 		/obj/item/device/analyzer/atmospheric)
 
+	empty
+		spawn_contents = list()
+
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"
 	icon_state = "yellow"
@@ -98,15 +101,30 @@
 	spawn_contents = list(/obj/item/screwdriver,\
 	/obj/item/wirecutters,\
 	/obj/item/device/t_scanner,\
-	/obj/item/crowbar,\
-	/obj/item/cable_coil = 3)
+	/obj/item/crowbar)
+
+	make_my_stuff()
+		var/picked = pick(/obj/item/cable_coil,\
+		/obj/item/cable_coil/yellow,\
+		/obj/item/cable_coil/orange,\
+		/obj/item/cable_coil/blue,\
+		/obj/item/cable_coil/green,\
+		/obj/item/cable_coil/purple,\
+		/obj/item/cable_coil/black,\
+		/obj/item/cable_coil/hotpink,\
+		/obj/item/cable_coil/brown,\
+		/obj/item/cable_coil/white)
+		spawn_contents.Add(picked)
+		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
+			spawn_contents.Add(picked,picked)
+		. = ..()
+
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
 	mechanic_spawn
 		spawn_contents = list(/obj/item/electronics/scanner,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
-		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
 		/obj/item/reagent_containers/food/snacks/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)
@@ -116,7 +134,7 @@
 	desc = "A metal container designed to hold various tools. This variety holds art supplies."
 	icon_state = "green"
 	item_state = "toolbox-green"
-	spawn_contents = list(/obj/item/paint_can/random = 7)
+	spawn_contents = list(/obj/item/paint_can/random = 6, /obj/item/item_box/crayon = 1)
 
 /* -------------------- Memetic Toolbox -------------------- */
 
@@ -161,7 +179,7 @@
 			return
 		if (src.contents.len >= 7)
 			return
-		if (((istype(W, /obj/item/storage) && W.w_class > 2) || src.loc == W))
+		if (((istype(W, /obj/item/storage) && W.w_class > W_CLASS_SMALL) || src.loc == W))
 			return
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
@@ -238,7 +256,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 100, 1)
+		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
 
 		..()
 		return
@@ -286,7 +304,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 100, 1)
+	src.playsound_local(src.loc,"sound/effects/screech.ogg", 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
@@ -340,7 +358,7 @@
 			affected_mob.delStatus("weakened")
 			affected_mob.delStatus("paralysis")
 			affected_mob.dizziness = max(0,affected_mob.dizziness-10)
-			affected_mob:drowsyness = max(0,affected_mob:drowsyness-10)
+			affected_mob.changeStatus("drowsy", -20 SECONDS)
 			affected_mob:sleeping = 0
 			D.stage = 1
 			switch (progenitor.hunger)
@@ -365,7 +383,7 @@
 					progenitor.consume(affected_mob)
 					return
 
-			progenitor.hunger += min(max((progenitor.force / 10), 1), 10)
+			progenitor.hunger += clamp((progenitor.force / 10), 1, 10)
 
 		else if(D.stage == 4)
 			if(get_dist(get_turf(progenitor),src) <= 7)

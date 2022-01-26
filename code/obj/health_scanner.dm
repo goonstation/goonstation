@@ -32,7 +32,7 @@
 
 /obj/health_scanner/wall
 	name = "health status screen"
-	desc = "A screen that shows health information recieved from connected floor scanners."
+	desc = "A screen that shows health information received from connected floor scanners."
 	icon_state = "wallscan1"
 	var/list/partners // who do we know?
 	var/examine_range = (SQUARE_TILE_WIDTH - 1) / 2 // from how far away can people examine the screen
@@ -45,11 +45,11 @@
 		if (dist > src.examine_range && !issilicon(usr))
 			. += "<br>It's too far away to see what it says.[prob(10) ? " Who decided the text should be <i>that</i> small?!" : null]"
 		else
-			if (!src.partners || !src.partners.len)
+			if (!src.partners || !length(src.partners))
 				return . += "<font color='red'>ERROR: NO CONNECTED SCANNERS</font>"
 			var/data = null
 			for (var/obj/health_scanner/floor/my_partner in src.partners)
-				data += my_partner.scan()
+				data += my_partner.scan(ignore_cooldown = TRUE)
 			if (data)
 				. += "<br>It says:<br>[data]"
 			else
@@ -72,16 +72,18 @@
 					src.add_partner(possible_partner)
 
 	proc/add_partner(obj/health_scanner/floor/F)
-		if (src.partners.Find(F))
-			return
-		src.partners += F
+		src.partners |= F
 
 /obj/health_scanner/floor
 	name = "health scanner"
 	desc = "An in-floor health scanner that sends its data to connected status screens."
 	icon_state = "floorscan1"
+	plane = PLANE_FLOOR
 	var/time_between_scans = 3 SECONDS
-	var/on_cooldown = FALSE
+
+	New()
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	find_partners(var/in_range = 0)
 		if (in_range)
@@ -94,28 +96,24 @@
 					possible_partner.add_partner(src)
 
 	Crossed(atom/movable/AM)
+		..()
 		if (ishuman(AM))
 			boutput(AM, src.scan(TRUE))
 
-	proc/scan(var/alert = FALSE)
+	proc/scan(var/alert = FALSE, ignore_cooldown = FALSE)
 		var/data = null
-		if (on_cooldown)
+		if (!ignore_cooldown && ON_COOLDOWN(src, "scan_cooldown", time_between_scans))
 			data += "<font color='red'>ERROR: SCANNER ON COOLDOWN</font>"
 		else
-			on_cooldown = TRUE
 			for (var/mob/living/carbon/human/H in get_turf(src))
 				data += "[scan_health(H, 1, 1, 1, 1)]"
+				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
 			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
-			SPAWN_DBG(time_between_scans)
-				on_cooldown = FALSE
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/new_signal = get_free_signal()
 		new_signal.data = list("command"="text_message", "sender_name"="HEALTH-MAILBOT", "sender"="00000000", "address_1"="00000000", "group"=list(MGD_MEDBAY, MGA_MEDCRIT), "message"="CRIT ALERT: [H] in [get_area(src)].")
-		new_signal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection)
-			transmit_connection.post_signal(src, new_signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal, null, "pda")

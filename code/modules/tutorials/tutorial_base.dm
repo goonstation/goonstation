@@ -1,4 +1,4 @@
-/datum/tutorial
+/datum/tutorial_base
 	var/name = "Tutorial"
 	var/mob/owner = null
 	var/list/steps = list()
@@ -96,7 +96,7 @@
 /datum/tutorialStep
 	var/name = "Tutorial Step"
 	var/instructions = "Do something"
-	var/datum/tutorial/tutorial = null
+	var/datum/tutorial_base/tutorial = null
 
 	proc
 		SetUp()

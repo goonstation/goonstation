@@ -34,7 +34,8 @@
 			var/image/I = X
 			P.overlays += I
 
-		holder.owner.say("GIN EMUS") // ^-- No speech bubble.
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("GIN EMUS") // ^-- No speech bubble.
 		..()
 
 		var/turf/curr_turf = get_turf(holder.owner)
@@ -59,7 +60,7 @@
 	name = ""
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/can_move = 1
 	mouse_opacity = 0
 	density = 0

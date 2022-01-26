@@ -1,7 +1,6 @@
 /obj/item/clothing/head/fruithat
 	name = "fruit basket hat"
 	desc = "Where do these things even come from? It reeks of welch, and it's not the grapes."
-	wear_image_icon = 'icons/mob/fruithat.dmi'
 	icon_state = "fruithat"
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
@@ -19,8 +18,6 @@
 				M.nutrition += 20
 				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.bites)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -43,8 +40,6 @@
 				M.nutrition += 20
 				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
 				if (!src.amount)
-					M.visible_message("<span class='alert'>[M] finishes eating [src].</span>",\
-					"<span class='alert'>You finish eating [src].</span>")
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
@@ -83,7 +78,7 @@
 					return ..()
 				else
 					C.amount -= 8
-					C.updateicon()
+					C.UpdateIcon()
 					user.drop_item()
 					var/obj/item/dynassembly/fruit/A = new /obj/item/dynassembly/fruit(get_turf(src))
 					A.newpart(A,src,1) //returns assembly we created, fruit we made it from, and 1st run

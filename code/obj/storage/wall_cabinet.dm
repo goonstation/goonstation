@@ -7,7 +7,7 @@
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
 	force = 8.0
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	anchored = 1.0
 	density = 0
 	mats = 8
@@ -54,6 +54,8 @@
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
+		if (prob(50))
+			new /obj/item/clothing/head/helmet/firefighter(src)
 		if (prob(30))
 			new /obj/item/clothing/suit/fire(src)
 			new /obj/item/clothing/mask/gas/emergency(src)
@@ -82,11 +84,12 @@
 	pixel_y = 32
 	spawn_contents = list(/obj/item/paper_bin = 2,
 	/obj/item/hand_labeler,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
-	/obj/item/stamp)
+	/obj/item/stamp,
+	/obj/item/canvas)
 
 	make_my_stuff()
 		..()
@@ -198,9 +201,10 @@
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
@@ -261,6 +265,15 @@
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
+/obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
+	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
+	/obj/item/clothing/suit/hoodie = 1,
+	/obj/item/clothing/suit/wintercoat = 1,
+	/obj/item/clothing/suit/labcoat/hitman = 1,
+	/obj/item/clothing/suit/johnny_coat = 1,
+	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
+
 obj/item/storage/wall/clothingrack/hatrack
 	name = "hat shelf"
 	desc = "It's a shelf designed for many hats."
@@ -274,10 +287,11 @@ obj/item/storage/wall/clothingrack/hatrack
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
@@ -312,7 +326,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/toolshelf
 	name = "tool shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1
@@ -324,7 +338,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()
@@ -335,7 +349,7 @@ obj/item/storage/wall/clothingrack/hatrack
 
 /obj/item/storage/wall/mineralshelf
 	name = "mineral shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1
@@ -348,7 +362,7 @@ obj/item/storage/wall/clothingrack/hatrack
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()

@@ -21,7 +21,7 @@
 		if (IsGuestKey(user.key))
 			return 0
 
-		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
 		var/savefile/F
 		if (returnSavefile)
@@ -49,6 +49,7 @@
 		F["[profileNum]_screamsound"] << AH.screamsound
 		F["[profileNum]_voicetype"] << AH.voicetype
 		F["[profileNum]_PDAcolor"] << src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
 		F["[profileNum]_random_blood"] << src.random_blood
 		F["[profileNum]_blood_type"] << src.blType
 
@@ -64,12 +65,13 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_neutral_pronouns"] << AH.pronouns
+			F["[profileNum]_pronouns"] << (isnull(AH.pronouns) ? "" : AH.pronouns.name)
 			F["[profileNum]_eye_color"] << AH.e_color
 			F["[profileNum]_hair_color"] << AH.customization_first_color
 			F["[profileNum]_facial_color"] << AH.customization_second_color
 			F["[profileNum]_detail_color"] << AH.customization_third_color
 			F["[profileNum]_skin_tone"] << AH.s_tone
+			F["[profileNum]_special_style"] << AH.special_style
 			F["[profileNum]_hair_style_name"] << AH.customization_first
 			F["[profileNum]_facial_style_name"] << AH.customization_second
 			F["[profileNum]_detail_style_name"] << AH.customization_third
@@ -81,17 +83,20 @@
 		F["[profileNum]_job_prefs_2"] << src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
-		F["[profileNum]_be_changeling"] << src.be_changeling
-		F["[profileNum]_be_revhead"] << src.be_revhead
-		F["[profileNum]_be_syndicate"] << src.be_syndicate
-		F["[profileNum]_be_wizard"] << src.be_wizard
 		F["[profileNum]_be_traitor"] << src.be_traitor
-		F["[profileNum]_be_werewolf"] << src.be_werewolf
-		F["[profileNum]_be_vampire"] << src.be_vampire
+		F["[profileNum]_be_syndicate"] << src.be_syndicate
+		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
+		F["[profileNum]_be_revhead"] << src.be_revhead
+		F["[profileNum]_be_changeling"] << src.be_changeling
+		F["[profileNum]_be_wizard"] << src.be_wizard
+		F["[profileNum]_be_werewolf"] << src.be_werewolf
+		F["[profileNum]_be_vampire"] << src.be_vampire
+		F["[profileNum]_be_arcfiend"] << src.be_arcfiend
 		F["[profileNum]_be_wraith"] << src.be_wraith
 		F["[profileNum]_be_blob"] << src.be_blob
+		F["[profileNum]_be_conspirator"] << src.be_conspirator
 		F["[profileNum]_be_flock"] << src.be_flock
 		F["[profileNum]_be_misc"] << src.be_misc
 
@@ -149,7 +154,7 @@
 			path = savefile_path(user)
 			if (!fexists(path))
 				return 0
-			profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+			profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 			F = new /savefile(path, -1)
 
 		var/version = null
@@ -204,6 +209,7 @@
 		F["[profileNum]_screamsound"] >> AH.screamsound
 		F["[profileNum]_voicetype"] >> AH.voicetype
 		F["[profileNum]_PDAcolor"] >> src.PDAcolor
+		F["[profileNum]_pda_ringtone_index"] >> src.pda_ringtone_index
 		F["[profileNum]_random_blood"] >> src.random_blood
 		F["[profileNum]_blood_type"] >> src.blType
 
@@ -219,7 +225,13 @@
 
 		// AppearanceHolder details
 		if (src.AH)
-			F["[profileNum]_neutral_pronouns"] >> AH.pronouns
+			var/saved_pronouns
+			F["[profileNum]_pronouns"] >> saved_pronouns
+			for (var/P as anything in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
+				var/datum/pronouns/pronouns = get_singleton(P)
+				if (saved_pronouns == pronouns.name)
+					AH.pronouns = pronouns
+					break
 			F["[profileNum]_eye_color"] >> AH.e_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color
 			F["[profileNum]_hair_color"] >> AH.customization_first_color_original
@@ -229,6 +241,7 @@
 			F["[profileNum]_detail_color"] >> AH.customization_third_color_original
 			F["[profileNum]_skin_tone"] >> AH.s_tone
 			F["[profileNum]_skin_tone"] >> AH.s_tone_original
+			F["[profileNum]_special_style"] >> AH.special_style
 			F["[profileNum]_hair_style_name"] >> AH.customization_first
 			F["[profileNum]_hair_style_name"] >> AH.customization_first_original
 			F["[profileNum]_facial_style_name"] >> AH.customization_second
@@ -237,23 +250,38 @@
 			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
+			if(!istype(src.AH.customization_first,/datum/customization_style))
+				src.AH.customization_first = find_style_by_name(src.AH.customization_first)
+			if(!istype(src.AH.customization_second,/datum/customization_style))
+				src.AH.customization_second = find_style_by_name(src.AH.customization_second)
+			if(!istype(src.AH.customization_third,/datum/customization_style))
+				src.AH.customization_third = find_style_by_name(src.AH.customization_third)
+			if(!istype(src.AH.customization_first_original,/datum/customization_style))
+				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original)
+			if(!istype(src.AH.customization_second_original,/datum/customization_style))
+				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original)
+			if(!istype(src.AH.customization_third_original,/datum/customization_style))
+				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite
 		F["[profileNum]_job_prefs_2"] >> src.jobs_med_priority
 		F["[profileNum]_job_prefs_3"] >> src.jobs_low_priority
 		F["[profileNum]_job_prefs_4"] >> src.jobs_unwanted
-		F["[profileNum]_be_changeling"] >> src.be_changeling
-		F["[profileNum]_be_revhead"] >> src.be_revhead
-		F["[profileNum]_be_syndicate"] >> src.be_syndicate
-		F["[profileNum]_be_wizard"] >> src.be_wizard
 		F["[profileNum]_be_traitor"] >> src.be_traitor
-		F["[profileNum]_be_werewolf"] >> src.be_werewolf
-		F["[profileNum]_be_vampire"] >> src.be_vampire
+		F["[profileNum]_be_syndicate"] >> src.be_syndicate
+		F["[profileNum]_be_syndicate_commander"] >> src.be_syndicate_commander
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
+		F["[profileNum]_be_revhead"] >> src.be_revhead
+		F["[profileNum]_be_changeling"] >> src.be_changeling
+		F["[profileNum]_be_wizard"] >> src.be_wizard
+		F["[profileNum]_be_werewolf"] >> src.be_werewolf
+		F["[profileNum]_be_vampire"] >> src.be_vampire
+		F["[profileNum]_be_arcfiend"] >> src.be_arcfiend
 		F["[profileNum]_be_wraith"] >> src.be_wraith
 		F["[profileNum]_be_blob"] >> src.be_blob
+		F["[profileNum]_be_conspirator"] >> src.be_conspirator
 		F["[profileNum]_be_flock"] >> src.be_flock
 		F["[profileNum]_be_misc"] >> src.be_misc
 
@@ -300,6 +328,10 @@
 		if(!is_valid_color_string(src.PDAcolor)) //how?
 			src.PDAcolor = "#6F7961"
 
+		get_all_character_setup_ringtones()
+		if(!(src.pda_ringtone_index in selectable_ringtones))
+			src.pda_ringtone_index = "Two-Beep"
+
 		if (!istext(src.hud_style))
 			src.hud_style = "New"
 		if (!istext(src.target_cursor))
@@ -310,8 +342,8 @@
 		if (src.traitPreferences.traits_selected == null)
 			src.traitPreferences.traits_selected = list()
 
-		for (var/T in src.traitPreferences.traits_selected)
-			if (!traitList.Find(T)) src.traitPreferences.traits_selected.Remove(T)
+		for (var/T as anything in src.traitPreferences.traits_selected)
+			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
 
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
@@ -357,7 +389,7 @@
 		if (!fexists(path))
 			return 0
 
-		profileNum = max(1, min(profileNum, SAVEFILE_PROFILES_MAX))
+		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 
 		var/savefile/F = new /savefile(path, -1)
 
@@ -383,7 +415,7 @@
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?get&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -411,7 +443,7 @@
 
 		// Fetch via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]&data=[url_encode(exported)]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?put&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]&data=[url_encode(exported)]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()
@@ -430,7 +462,7 @@
 
 		// Request deletion via HTTP from goonhub
 		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "http://spacebee.goonhub.com/api/cloudsave?delete&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.ircbot_api]", "", "")
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?delete&ckey=[user.ckey]&name=[url_encode(name)]&api_key=[config.spacebee_api_key]", "", "")
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()

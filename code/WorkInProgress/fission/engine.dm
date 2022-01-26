@@ -41,7 +41,7 @@ ENGINE
 			if(src.id == F.id)
 				F.theEngine = src
 
-	proc/updateicon()
+	update_icon()
 		if(status & BROKEN)
 			icon_state = "enginebrok"
 			active = 0
@@ -59,7 +59,7 @@ ENGINE
 			icon_state = "engineoff"
 
 	power_change()
-		updateicon()
+		UpdateIcon()
 		..()
 
 	process()
@@ -88,7 +88,7 @@ ENGINE
 			src.active = !src.active
 			boutput(user, "You turn [src.active ? "on" : "off"] the engine.")
 			if(src.active == 0) src.lastpower = 0
-			updateicon()
+			UpdateIcon()
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -110,7 +110,7 @@ REACTOR
 /obj/fission
 	anchored = 1
 	density = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 // 3 or so reactors or whatever
 /obj/machinery/fission/reactor
@@ -168,7 +168,7 @@ REACTOR
 		controlRods.len = 5
 
 	process()
-		updateicon()
+		UpdateIcon()
 
 		if (status & BROKEN)
 			return
@@ -220,7 +220,7 @@ REACTOR
 					// This count to see if there already exists
 					// a radiation trace gas
 					var/count = 0
-					if(T:air:trace_gases && T:air:trace_gases.len)
+					if(T:air:trace_gases && length(T:air:trace_gases))
 						for(var/datum/gas/G in T:air:trace_gases)
 							if(istype(G, /datum/gas/rad_particles))
 								count++
@@ -261,7 +261,7 @@ REACTOR
 
 	proc/setupCherenkovRad()
 
-	proc/updateicon()
+	UpdateIcon()
 		if (status & BROKEN)
 			icon_state = "reactoroff"
 			return
@@ -294,7 +294,7 @@ REACTOR
 			// This count to see if there already exists
 			// a radiation trace gas
 			var/count = 0
-			if(T:air:trace_gases && T:air:trace_gases.len)
+			if(T:air:trace_gases && length(T:air:trace_gases))
 				for(var/datum/gas/G in T:air:trace_gases)
 					if(istype(G, /datum/gas/rad_particles))
 						count++

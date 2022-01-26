@@ -20,7 +20,7 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		C.remove_stam_mod_regen("bloodclot")
+		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
 		C.remove_stam_mod_max("bloodclot")
 
 /datum/ailment/disease/bloodclot/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
@@ -66,7 +66,7 @@
 					return
 				if (prob(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					C.add_stam_mod_regen("bloodclot", -2)
+					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
 				if (prob(5))
 					affected_mob.losebreath ++
@@ -82,14 +82,14 @@
 					return
 				if (prob(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					C.add_stam_mod_regen("bloodclot", -2)
+					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
 				if (prob(8))
 					affected_mob.take_brain_damage(10)
 				if (prob(5))
 					affected_mob.stuttering += 1
 				if (prob(2))
-					affected_mob.drowsyness += 1
+					affected_mob.changeStatus("drowsy", 1 SECONDS)
 				if (prob(5))
 					affected_mob.emote(pick("faint", "collapse", "twitch", "groan"))
 			else // a limb or whatever
@@ -114,6 +114,6 @@
 					src.affected_area = null
 					if (iscarbon(affected_mob))
 						var/mob/living/carbon/C = affected_mob
-						C.remove_stam_mod_regen("bloodclot")
+						REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
 						C.remove_stam_mod_max("bloodclot")
 */

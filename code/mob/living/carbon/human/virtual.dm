@@ -89,7 +89,7 @@
 				return
 		..()
 
-	whisper(message as text)
+	whisper(message as text, forced=FALSE)
 		if (isghost)
 			boutput(usr, "You may not use that emote as a Virtual Spectre.")
 			return
@@ -127,14 +127,15 @@
 
 	cast()
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
-		setdead(holder.owner)
-		holder.owner.death(0)
+		var/mob/M = holder.owner
+		setdead(M)
+		M.death(0)
 
-		Station_VNet.Leave_Vspace(holder.owner)
+		Station_VNet.Leave_Vspace(M)
 
 
 
-/obj/screen/ability/topBar/virtual
+/atom/movable/screen/ability/topBar/virtual
 	clicked(params)
 		var/datum/targetable/virtual/spell = owner
 		//var/datum/abilityHolder/holder = owner.holder

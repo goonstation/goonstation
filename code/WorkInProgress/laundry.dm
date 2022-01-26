@@ -24,9 +24,9 @@
 
 /obj/submachine/laundry_machine/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
-/obj/submachine/laundry_machine/proc/update_icon()
+/obj/submachine/laundry_machine/update_icon()
 	ENSURE_IMAGE(src.image_door, src.icon, "laundry[src.open]")
 	src.UpdateOverlays(src.image_door, "door")
 
@@ -52,9 +52,9 @@
 	if (!src.contents.len || !src.on) // somehow there's nothing in the machine or it's turned off somehow, whoops!
 		processing_items.Remove(src)
 		src.visible_message("[src] lets out a grumpy buzz!")
-		playsound(get_turf(src), "sound/machines/buzz-two.ogg", 50, 1)
+		playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
 		src.on = 0
-		src.update_icon()
+		src.UpdateIcon()
 		src.generate_html()
 		return
 
@@ -69,9 +69,9 @@
 			src.cycle = DRY
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
-			playsound(get_turf(src), "sound/machines/chime.ogg", 30, 1)
-			playsound(get_turf(src), "sound/machines/engine_highpower.ogg", 30, 1)
-			src.update_icon()
+			playsound(src, "sound/machines/chime.ogg", 30, 1)
+			playsound(src, "sound/machines/engine_highpower.ogg", 30, 1)
+			src.UpdateIcon()
 			src.generate_html()
 		else // drying is done!
 			processing_items.Remove(src)
@@ -81,24 +81,24 @@
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
-			playsound(get_turf(src), "sound/machines/ding.ogg", 50, 1)
-			src.update_icon()
+			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			src.UpdateIcon()
 			src.generate_html()
 	else
 		src.cycle_current++
 		if (src.cycle == PRE) // just started up!
 			src.cycle = WASH
 			src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
-			playsound(get_turf(src), "sound/machines/click.ogg", 50, 1)
-			playsound(get_turf(src), "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
-			src.update_icon()
+			playsound(src, "sound/machines/click.ogg", 50, 1)
+			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
+			src.UpdateIcon()
 			src.generate_html()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
-			playsound(get_turf(src), "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
+			playsound(src, "sound/impact_sounds/Liquid_Slosh_2.ogg", 100, 1)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
-			playsound(get_turf(src), "sound/machines/engine_highpower.ogg", 30, 1)
+			playsound(src, "sound/machines/engine_highpower.ogg", 30, 1)
 			src.shake()
 
 /obj/submachine/laundry_machine/proc/shake(var/amt = 5)
@@ -118,7 +118,7 @@
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
-		else if (!istype(W, /obj/item/clothing) && W.w_class > 5)
+		else if (!istype(W, /obj/item/clothing) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
 		else if (src.contents.len >= src.load_max)
@@ -131,7 +131,7 @@
 			user.u_equip(W)
 			W.set_loc(src)
 			src.visible_message("[user] puts [W] into [src].")
-			src.update_icon()
+			src.UpdateIcon()
 			return
 	else
 		return ..()
@@ -179,7 +179,7 @@
 		T = istype(T) ?  T : get_turf(src)
 		for (var/atom/movable/AM in src)
 			AM.set_loc(T)
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/submachine/laundry_machine/Topic(href, href_list)
 	..()
@@ -206,7 +206,7 @@
 				src.unload()
 				src.cycle = PRE
 
-	src.update_icon()
+	src.UpdateIcon()
 	src.generate_html()
 	src.show_window(usr)
 	return

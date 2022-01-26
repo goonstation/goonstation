@@ -18,6 +18,7 @@
 		return
 
 	on_reagent_change()
+		..()
 		reagents.maximum_volume = reagents.total_volume // This should make the blood slide... permanent.
 		if (reagents.has_reagent("blood") || reagents.has_reagent("bloodc"))
 			icon_state = "slide1"
@@ -102,7 +103,7 @@
 			var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
 			var/uid = P.pathogens[1]
 			var/datum/pathogen/PT = P.pathogens[uid]
-			if (medium?.id != PT.body_type.growth_medium)
+			if (medium && medium.id != PT.body_type.growth_medium)
 				set_dirty("The pathogen is unable to cultivate on the growth medium.")
 		if (ctime <= 0)
 			ctime = 8
@@ -139,6 +140,7 @@
 					set_dirty("The pathogen in the petri dish starved to death.")
 
 	on_reagent_change()
+		..()
 		if (reagents.total_volume < 0.5)
 			return
 		if (dirty)
@@ -162,9 +164,9 @@
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
-									nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 								else
-									nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 					else
@@ -173,9 +175,9 @@
 				else if (RE.pathogen_nutrition)
 					for (var/N in RE.pathogen_nutrition)
 						if (N in nutrition)
-							nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 						else
-							nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 					src.reagents.reagent_list -= R
 					src.reagents.update_total()
 				else
@@ -190,16 +192,16 @@
 					if (src.medium)
 						processing_items |= src
 				else if (R in pathogen_controller.media)
-					if (src.medium?.id != R)
+					if (src.medium && src.medium.id != R)
 						set_dirty("There are multiple, incompatible growth media in the petri dish.")
 					else if (!src.medium)
 						src.medium = src.reagents.reagent_list[R]
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
-									nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 								else
-									nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 						if (src.reagents.has_reagent("pathogen"))
@@ -208,17 +210,17 @@
 						if (RE.pathogen_nutrition)
 							for (var/N in RE.pathogen_nutrition)
 								if (N in nutrition)
-									nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 								else
-									nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+									nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 						src.reagents.reagent_list -= R
 						src.reagents.update_total()
 				else if (RE.pathogen_nutrition)
 					for (var/N in RE.pathogen_nutrition)
 						if (N in nutrition)
-							nutrition[N] += RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] += RE.volume / length(RE.pathogen_nutrition)
 						else
-							nutrition[N] = RE.volume / RE.pathogen_nutrition.len
+							nutrition[N] = RE.volume / length(RE.pathogen_nutrition)
 					src.reagents.reagent_list -= R
 					src.reagents.update_total()
 				else
@@ -266,6 +268,15 @@
 		src.reagents = R
 		..()
 
+/obj/item/reagent_containers/glass/vial/plastic
+	name = "plastic vial"
+	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
+
 /obj/item/reagent_containers/glass/vial/prepared
 	name = "Totally Safe(tm) pathogen sample"
 	desc = "A vial. Can hold up to 5 units."
@@ -278,10 +289,11 @@
 		..()
 		SPAWN_DBG(2 SECONDS)
 			#ifdef CREATE_PATHOGENS // PATHOLOGY REMOVAL
-			var/datum/pathogen/P = unpool(/datum/pathogen)
+			var/datum/pathogen/P = new /datum/pathogen
 			if(FM)
 				P.forced_microbody = FM
 			P.create_weak()
+			P.setup(1)
 			var/datum/reagents/RE = src.reagents
 			RE.add_reagent("pathogen", 5)
 			var/datum/reagent/blood/pathogen/R = RE.get_reagent("pathogen")

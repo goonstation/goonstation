@@ -86,7 +86,7 @@
 				air_contents.merge(removed)
 
 		src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/portable_atmospherics/pump/return_air()
@@ -107,7 +107,7 @@
 /obj/machinery/portable_atmospherics/pump/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/pump/attack_hand(var/mob/user as mob)
 
@@ -166,17 +166,17 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 				logTheThing("station", usr, null, "removed a tank from [src] [log_atmos(src)], pumping its contents into the air at [log_loc(src)].")
 
 		if (href_list["pressure_adj"])
-			var/diff = text2num(href_list["pressure_adj"])
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
+			var/diff = text2num_safe(href_list["pressure_adj"])
+			target_pressure = clamp(target_pressure+diff, 0, 10*ONE_ATMOSPHERE)
 
 		else if (href_list["pressure_set"])
 			var/change = input(usr,"Target Pressure (0-[10*ONE_ATMOSPHERE]):","Enter target pressure",target_pressure) as num
-			if(!isnum(change)) return
-			target_pressure = min(10*ONE_ATMOSPHERE, max(0, change))
+			if(!isnum_safe(change)) return
+			target_pressure = clamp(change, 0, 10*ONE_ATMOSPHERE)
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
-		update_icon()
+		UpdateIcon()
 	else
 		usr.Browse(null, "window=pump")
 		return
@@ -189,7 +189,7 @@ Target Pressure: <A href='?src=\ref[src];pressure_adj=-100'>-</A> <A href='?src=
 
 	if (!on) //Can't chop your head off if the fan's not spinning
 		on = 1
-		update_icon()
+		UpdateIcon()
 
 	user.visible_message("<span class='alert'><b>[user] forces [his_or_her(user)] head into [src]'s unprotected fan, mangling it in a horrific and violent display!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")

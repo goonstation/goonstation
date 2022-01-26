@@ -137,7 +137,7 @@ var/const/PHASER_SNIPER = 256
 	item_state = "gun"
 	m_amt = 2000
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
 
@@ -156,7 +156,7 @@ var/const/PHASER_SNIPER = 256
 	name = "phaser"
 	icon_state = "phaser"
 	desc = "Set phasers to 'Robust'"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	item_state = "gun"
 	force = 10.0
 	throw_speed = 2
@@ -199,7 +199,7 @@ var/const/PHASER_SNIPER = 256
 		var/energy_old = min(125,src.charges)
 		P.safeties = src.safeties
 		P.charges = energy_old
-		P.update_icon()
+		P.UpdateIcon()
 		qdel(src)
 
 	examine()
@@ -335,7 +335,7 @@ var/const/PHASER_SNIPER = 256
 
 		return
 
-	proc/update_icon()
+	update_icon()
 		var/ratio = src.charges / maximum_charges
 		ratio = round(ratio, 0.25) * 100
 		src.icon_state = text("phaser[]", ratio)
@@ -369,7 +369,7 @@ var/const/PHASER_SNIPER = 256
 		else
 			src.charges -= charges_per_shot
 
-		update_icon()
+		UpdateIcon()
 
 		SPAWN_DBG(0)
 
@@ -430,8 +430,8 @@ var/const/PHASER_SNIPER = 256
 								sleep(0.5 SECONDS)
 								step_towards(M,myloc)
 
-					var/obj/projectile/PBul = unpool(/obj/projectile)
-					var/obj/projectile/PLas = unpool(/obj/projectile)
+					var/obj/projectile/PBul = new /obj/projectile
+					var/obj/projectile/PLas = new /obj/projectile
 					PBul.proj_data = new /datum/projectile/bullet/revolver_357(  )
 					PLas.proj_data = new /datum/projectile/laser(  )
 					for(var/obj/machinery/bot/B in view(O.range,O.loc))
@@ -493,10 +493,10 @@ var/const/PHASER_SNIPER = 256
 					switch(O.power)
 						if(1 to 33)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
-								var/obj/OV = unpool(/obj/effects/sparks)
+								var/obj/OV = new /obj/effects/sparks
 								OV.set_loc(T)
 								OV.set_dir(pick(alldirs))
-								SPAWN_DBG(2 SECONDS) if (OV) pool(OV)
+								SPAWN_DBG(2 SECONDS) if (OV) qdel(OV)
 						if(34 to 66)
 							playsound(O.loc, "sound/effects/exlow.ogg", 65, 1)
 							for(var/turf/simulated/floor/T in view(O.range,O.loc))
@@ -530,11 +530,11 @@ var/const/PHASER_SNIPER = 256
 	Topic(href, href_list)
 		if(overloading) return
 		if(usr.stat || usr.restrained()) return
-		if(!in_range(src, usr)) return
+		if(!in_interact_range(src, usr)) return
 		src.add_dialog(usr)
 		if (href_list["power"])
 			var/change = href_list["power"]
-			prop_power += text2num(change)
+			prop_power += text2num_safe(change)
 			if(prop_power < 0) prop_power = 0
 			if(prop_power > 50 && safeties) prop_power = 50
 			if(prop_power > 100) prop_power = 100
@@ -544,7 +544,7 @@ var/const/PHASER_SNIPER = 256
 			return
 		else if (href_list["focus"])
 			var/change = href_list["focus"]
-			prop_range += text2num(change)
+			prop_range += text2num_safe(change)
 			if(prop_range < 0) prop_range = 0
 			if(prop_range > prop_maxrange) prop_range = prop_maxrange
 			update_settings()
@@ -553,7 +553,7 @@ var/const/PHASER_SNIPER = 256
 		else if (href_list["overload"])
 			boutput(usr, "<span class='alert'>Your phaser overloads.</span>");
 			overloading = 1
-			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1)
+			playsound(usr, "sound/weapons/phaseroverload.ogg", 65, 1) //this sound is now gone so find a new one if this code gets reimplemented
 			SPAWN_DBG(6 SECONDS)
 				var/turf/curr = get_turf(src)
 				curr.hotspot_expose(700,125)

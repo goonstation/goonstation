@@ -7,7 +7,7 @@
 	anchored = 1
 	layer = OBJ_LAYER
 	plane = PLANE_NOSHADOW_BELOW
-	invisibility = 2
+	invisibility = INVIS_CLOAK
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
 	var/lasers = 0
@@ -116,7 +116,6 @@
 	.= list()
 
 	for(var/mob/living/C in mobs)
-		LAGCHECK(LAG_HIGH)
 		if (!C)
 			continue
 		if (!iscarbon(C) && !ismobcritter(C))
@@ -135,7 +134,6 @@
 		var/area/station/turret_protected/T = A
 		if (T.blob_list.len)
 			for(var/obj/blob/B in T.blob_list)
-				LAGCHECK(LAG_HIGH)
 				if (!B)
 					continue
 				if (!istype(B.loc,/turf))
@@ -159,12 +157,12 @@
 	*/
 
 /obj/machinery/turret/proc/isDown()
-	return (invisibility!=0)
+	return (invisibility != INVIS_NONE)
 
 /obj/machinery/turret/proc/popUp()
 	if (!isDown()) return
 	if ((!isPopping()) || src.popping==-1)
-		invisibility = 0
+		invisibility = INVIS_NONE
 		popping = 1
 		if (src.cover!=null)
 			flick("popup", src.cover)
@@ -182,7 +180,7 @@
 			src.cover.icon_state = "turretCover"
 		SPAWN_DBG(1.3 SECONDS)
 			if (popping==-1)
-				invisibility = 2
+				invisibility = INVIS_CLOAK
 				popping = 0
 				set_density(0)
 
@@ -303,9 +301,9 @@
 						src.post_status(sender, "command", "device_reply", status_string)
 				if("setmode")
 					var/list/L = params2list(signal.data["data"])
-					if(!L || !L.len) return
-					var/new_lethal_state = text2num(L["lethal"])
-					var/new_enabled_state = text2num(L["active"])
+					if(!L || !length(L)) return
+					var/new_lethal_state = text2num_safe(L["lethal"])
+					var/new_enabled_state = text2num_safe(L["active"])
 					if(!isnull(new_lethal_state))
 						if(new_lethal_state)
 							src.lasers = 1
@@ -363,9 +361,9 @@
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
 	if (issilicon(user) || isAI(user))
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 	else // trying to unlock the interface
-		if (src.allowed(usr))
+		if (src.allowed(user))
 			locked = !locked
 			boutput(user, "You [ locked ? "lock" : "unlock"] the panel.")
 			if (locked)
@@ -374,7 +372,7 @@
 					user.Browse(null, "window=turretid")
 			else
 				if (user.using_dialog_of(src))
-					src.attack_hand(usr)
+					src.Attackhand(user)
 		else
 			boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -385,7 +383,7 @@
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	if(!in_range(src, user))
+	if(!in_interact_range(src, user))
 		boutput(user, text("Too far away."))
 		src.remove_dialog(user)
 		user.Browse(null, "window=turretid")
@@ -448,7 +446,7 @@
 			logTheThing("combat", usr, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
 			message_admins("[key_name(usr)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
 		src.updateTurrets()
-	src.attack_hand(usr)
+	src.Attackhand(usr)
 
 /obj/machinery/turretid/receive_silicon_hotkey(var/mob/user)
 	..()
@@ -460,18 +458,18 @@
 		. = 1
 		src.enabled = !src.enabled
 		boutput(user, "You have <B>[src.enabled ? "en" : "dis"]abled</B> the turrets.")
-		logTheThing("combat", usr, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
+		logTheThing("combat", user, null, "turned [enabled ? "ON" : "OFF"] turrets from control \[[showCoords(src.x, src.y, src.z)]].")
 		src.updateTurrets()
 	else if(user.client.check_key(KEY_BOLT))
 		. = 1
 		src.lethal = !src.lethal
 		boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
 		if(src.lethal)
-			logTheThing("combat", usr, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
+			message_admins("[key_name(user)] set turrets to LETHAL from control \[[showCoords(src.x, src.y, src.z)]].")
 		else
-			logTheThing("combat", usr, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
-			message_admins("[key_name(usr)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			logTheThing("combat", user, null, "set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
+			message_admins("[key_name(user)] set turrets to STUN from control \[[showCoords(src.x, src.y, src.z)]].")
 		src.updateTurrets()
 
 
@@ -480,9 +478,9 @@
 		var/area/A = get_area(turret)
 		if (A.type == src.turretArea)
 			turret.setState(enabled, lethal)
-			src.updateicon()
+			src.UpdateIcon()
 
-/obj/machinery/turretid/proc/updateicon()
+/obj/machinery/turretid/update_icon()
 	if (src.enabled)
 		if (src.lethal)
 			icon_state = "ai1"

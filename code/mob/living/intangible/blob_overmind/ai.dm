@@ -237,7 +237,7 @@
 		SPAWN_DBG(0)
 			var/max_extra_ticks = 4
 			var/extra_ticks_left = max_extra_ticks
-			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && extra_ticks_left-- && world.tick_usage < 80)
+			while(bio_points >= bio_points_max * 2/3 && ai_ticks_queued_up <= 4 && extra_ticks_left-- && APPROX_TICK_USE < 80)
 				sleep(4 SECONDS / (max_extra_ticks + 1))
 				src.ai_process()
 			ai_ticks_queued_up--
@@ -251,9 +251,9 @@
 			closed.len = 0
 			open_low.len = 0
 			open_medium.len = 0
-			for (var/turf/C as() in all)
+			for (var/turf/C as anything in all)
 				evaluate(C)
-			for (var/turf/T as() in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
+			for (var/turf/T as anything in block(locate(src.x - 30, src.y - 30, src.z), locate(src.x + 30, src.y + 30, src.z)))
 				if (!(T in all))
 					evaluate(T)
 
@@ -317,7 +317,7 @@
 					var/g = hex2num(copytext(color, 4, 6))
 					var/b = hex2num(copytext(color, 6))
 					var/hsv = rgb2hsv(r,g,b)
-					organ_color = hsv2rgb( hsv[1], hsv[2], 1 )
+					organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
 
 					if (istype(T, /turf/space))
 						return // Do not deploy on space.
@@ -475,7 +475,7 @@
 					return
 				var/obj/blob/A
 				if (!A)
-					for (var/i = 0, i < 20, i++)
+					for (var/i in 1 to 20)
 						var/obj/blob/C = pick(blobs)
 						if (C.type == /obj/blob)
 							A = C
@@ -629,12 +629,14 @@
 		for_by_tcl(blob, /obj/blob)
 			for(var/dir in cardinal)
 				var/turf/T = get_step(blob.loc, dir)
+				if(!istype(T))
+					continue
 				if(!T.density && !(locate(/obj/blob) in T) || blob.type == /obj/blob/nucleus && blob.overmind == src)
 					current[blob] = 1
 					break
 		while(length(current))
 			var/list/next = list()
-			for(var/obj/blob/blob as() in current)
+			for(var/obj/blob/blob as anything in current)
 				visited[blob] = 1
 				if(blob.type == /obj/blob)
 					final_target = blob
@@ -689,7 +691,7 @@
 		return 0
 
 	onBlobHit(var/obj/blob/B, var/mob/M)
-		if (!prob(max(1, min(100, (2000 - 100 * get_dist(B, src)) / 13))))
+		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
 			return
 		if (!(M in attackers))
 			attackers += M
@@ -701,7 +703,7 @@
 		counter = 0
 
 	onBlobDeath(var/obj/blob/B, var/mob/M)
-		if (!prob(max(1, min(100, (2000 - 100 * get_dist(B, src)) / 13))))
+		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
 			return
 		attacker = M
 		if (istype(B, /obj/blob/ribosome))

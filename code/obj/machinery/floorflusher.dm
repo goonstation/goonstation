@@ -9,7 +9,6 @@
 	anchored = 1
 	density = 0
 	flags = NOSPLASH
-	event_handler_flags = USE_HASENTERED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0 //is it open
@@ -69,6 +68,7 @@
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		START_TRACKING
 		SPAWN_DBG(0.5 SECONDS)
 			trunk = locate() in src.loc
 			if(!trunk)
@@ -77,15 +77,16 @@
 			else
 				trunk.linked = src	// link the pipe trunk to self
 
-			air_contents = unpool(/datum/gas_mixture)
+			air_contents = new /datum/gas_mixture
 			//gas.volume = 1.05 * CELLSTANDARD
 			update()
 
 	disposing()
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
 		..()
+		STOP_TRACKING
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
@@ -117,7 +118,8 @@
 
 	// mouse drop another mob or self
 
-	HasEntered(atom/AM)
+	Crossed(atom/movable/AM)
+		..()
 		//you can fall in if its open
 		if (open == 1)
 			if (isobj(AM))
@@ -125,6 +127,7 @@
 				var/obj/O = AM
 				src.visible_message("[O] falls into [src].")
 				O.set_loc(src)
+				flush = 1
 				update()
 
 			if (isliving(AM))
@@ -134,11 +137,17 @@
 				var/mob/living/M = AM
 				if (M.buckled)
 					M.buckled = null
-				boutput(M, "You fall into the [src].")
-				src.visible_message("[M] falls into the [src].")
+				boutput(M, "You fall into [src].")
+				src.visible_message("[M] falls into [src].")
 				M.set_loc(src)
 				flush = 1
 				update()
+
+			if(current_state <= GAME_STATE_PREGAME)
+				SPAWN_DBG(0)
+					flush()
+					sleep(1 SECOND)
+					openup()
 
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
@@ -154,8 +163,8 @@
 			msg = "[user.name] falls into [src]."
 			boutput(user, "You fall into [src].")
 		else if(target != user && !user.restrained())
-			msg = "[user.name] pushes [target.name] into the [src]!"
-			boutput(user, "You push [target.name] into the [src]!")
+			msg = "[user.name] pushes [target.name] into [src]!"
+			boutput(user, "You push [target.name] into [src]!")
 		else
 			return
 		target.set_loc(src)
@@ -185,17 +194,12 @@
 
 	// human interact with machine
 	attack_hand(mob/user as mob)
-		src.add_fingerprint(usr)
+		src.add_fingerprint(user)
 		if (open != 1)
 			return
 		if(status & BROKEN)
 			src.remove_dialog(user)
 			return
-
-		//fall in hilariously
-		boutput(user, "You slip and fall in.")
-		user.set_loc(src)
-		update()
 
 
 	// eject the contents of the unit
@@ -248,7 +252,7 @@
 		flushing = 1
 
 		closeup()
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -285,7 +289,7 @@
 		flick("floorflush_a", src)
 		src.icon_state = "floorflush_o"
 		for(var/atom/movable/AM in src.loc)
-			src.HasEntered(AM) // try to flush them
+			src.Crossed(AM) // try to flush them
 
 	proc/closeup()
 		open = 0
@@ -306,27 +310,23 @@
 			AM?.throw_at(target, 5, 1)
 
 		H.vent_gas(loc)
-		pool(H)
+		qdel(H)
 
 
 /obj/machinery/floorflusher/industrial
 	name = "industrial loading chute"
 	desc = "Totally just a giant disposal chute"
 	icon = 'icons/obj/delivery.dmi'
-	event_handler_flags = USE_HASENTERED
 
 	New()
 		..()
 		SPAWN_DBG(1 SECOND)
 			openup()
 
-	Crossed(atom/movable/AM)
-		if (AM && AM.loc == src.loc)
-			HasEntered(AM)
-
 		return 1
 
-	HasEntered(atom/movable/AM)
+	Crossed(atom/movable/AM)
+		..()
 		if (open == 1)
 			if (isobj(AM))
 				if (AM.anchored) return
@@ -352,6 +352,12 @@
 				M.set_loc(src)
 				flush = 1
 				update()
+
+			if(current_state <= GAME_STATE_PREGAME)
+				SPAWN_DBG(0)
+					flush()
+					sleep(1 SECOND)
+					openup()
 
 	process()
 		if(status & BROKEN)			// nothing can happen if broken

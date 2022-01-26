@@ -182,7 +182,7 @@
 
 /obj/decal/fakeobjects/robotarm
 	name = "robot arm"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
 	anchored = 1
 	density = 1
@@ -244,7 +244,7 @@
 	desc = "Hey, it's not red at all!"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "mars"
-	blocks_air = 1
+	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0
@@ -281,10 +281,10 @@
 	desc = "A suit designed to withstand intense dust storms."
 	icon_state = "mars_blue"
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
 	c_flags = SPACEWEAR
-	permeability_coefficient = 0.02
+	permeability_coefficient = 0.1
 	protective_temperature = 700
 
 	setupProperties()
@@ -498,7 +498,7 @@
 		if(crashed == 2)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 		boutput(rider, "<span class='combat'><B>You are flung over the [src]'s handlebars!</B></span>")
-		rider.changeStatus("stunned", 80)
+		rider.changeStatus("stunned", 8 SECONDS)
 		rider.changeStatus("weakened", 5 SECONDS)
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -522,15 +522,8 @@
 	update()
 	return
 
-/obj/vehicle/marsrover/relaymove(mob/user as mob, dir)
-	if(rider)
-		if(istype(src.loc, /turf/space))
-			return
-		icon_state = "marsrover2"
-		walk(src, dir, 2)
-	else
-		for(var/mob/M in src.contents)
-			M.set_loc(src.loc)
+/obj/vehicle/marsrover/do_special_on_relay(mob/user as mob, dir)
+	icon_state = "marsrover2"
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))
@@ -589,18 +582,6 @@
 				src.visible_message("<span class='combat'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	return
 
-/obj/vehicle/marsrover/bullet_act(flag, A as obj)
-	if(rider)
-		eject_rider()
-		rider.bullet_act(flag, A)
-	return
-
-/obj/vehicle/marsrover/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
-
 /obj/vehicle/marsrover/disposing()
 	if(rider)
 		boutput(rider, "<span class='combat'><B>Your rover is destroyed!</B></span>")
@@ -649,7 +630,7 @@
 			sleep(6 SECONDS)
 			if (current_state == GAME_STATE_PLAYING)
 				if(prob(10))
-					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'), volume=100)
+					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
 					sound_delay = rand(0, 50)
 				else
 					S = null
@@ -661,7 +642,7 @@
 						H << mysound
 						if(S)
 							SPAWN_DBG(sound_delay)
-								H << S
+								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"
@@ -678,7 +659,7 @@
 			if (!isdead(jerk))
 				if((istype(jerk:wear_suit, /obj/item/clothing/suit/armor/mars))&&(istype(jerk:head, /obj/item/clothing/head/helmet/mars))) return
 				random_brute_damage(jerk, 100)
-				jerk.changeStatus("weakened", 400)
+				jerk.changeStatus("weakened", 40 SECONDS)
 				step(jerk,EAST)
 				if(prob(50))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)

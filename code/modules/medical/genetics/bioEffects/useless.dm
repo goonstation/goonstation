@@ -2,6 +2,7 @@
 	name = "Glowy"
 	desc = "Endows the subject with bioluminescent skin. Color and intensity may vary by subject."
 	id = "glowy"
+	icon_state = "glowy"
 	probability = 99
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 3
@@ -21,15 +22,29 @@
 	name = "Cranial Keratin Formation"
 	desc = "Enables the growth of a compacted keratin formation on the subject's head."
 	id = "horns"
+	icon_state = "horns"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "A pair of horns erupt from your head."
 	msgLose = "Your horns crumble away into nothing."
+	var/hornstyle = "random"
 
 	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "horns", layer = MOB_LAYER)
+		if(hornstyle == "random")
+			hornstyle = pick("horns","horns_ram","horns_ramblk","horns_dark","horns_beige","horns_light","horns_sml","horns_unicorn")
+
+		overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[hornstyle]", layer = MOB_LAYER)
+		if (ismonkey(owner))
+			overlay_image.pixel_y = -6
 		..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "hornstyle")
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "[newval]", layer = MOB_LAYER)
+			if(ismonkey(owner))
+				overlay_image.pixel_y = -6
+			owner.UpdateOverlays(overlay_image, id)
 
 /datum/bioEffect/horns/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
@@ -42,11 +57,13 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "demon_horns"
+	hornstyle = "horns_devil"
 
 /datum/bioEffect/particles
 	name = "Dermal Glitter"
 	desc = "Causes the subject's skin to shine and gleam."
 	id = "shiny"
+	icon_state = "dermal_glitter"
 	effectType = EFFECT_TYPE_POWER
 	probability = 66
 	msgGain = "Your skin looks all blinged out."
@@ -79,7 +96,7 @@
 		var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 		holder_skin = AH.s_tone
 		var/list/L = hex_to_rgb_list(AH.s_tone)
-		var/new_color = ((L["r"] + L["g"] + L["b"]) / 3) - 20
+		var/new_color = ((L[1] + L[2] + L[3]) / 3) - 20
 		if (new_color < 0)
 			new_color = 0
 		AH.s_tone = rgb(new_color, new_color, new_color)
@@ -108,6 +125,7 @@
 	name = "Melanin Suppressor"
 	desc = "Shuts down all melanin production in the subject's body."
 	id = "albinism"
+	icon_state = "albinism"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	isBad = 1
@@ -190,15 +208,14 @@
 	isBad = 1
 	msgGain = "You feel sweaty."
 	msgLose = "You feel much more hygenic."
-	var/personalized_stink = "Wow, it stinks in here!"
+	var/personalized_stink = null
 
 	New()
 		..()
-		src.personalized_stink = stinkString()
 		if (prob(5))
-			src.variant = 2
+			src.personalized_stink = stinkString()
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (owner.reagents.has_reagent("menthol"))
 			return
@@ -206,30 +223,75 @@
 			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
 				if (C == owner)
 					continue
-				if (src.variant == 2)
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+				else if (src.personalized_stink)
 					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
 				else
 					boutput(C, "<span class='alert'>[stinkString()]</span>")
+
+
+/obj/effect/distort/dwarf
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "distort-dwarf"
+
+/datum/bioEffect/dwarf
+	name = "Dwarfism"
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	id = "dwarf"
+	msgGain = "Did everything just get bigger?"
+	msgLose = "You feel tall!"
+	icon_state  = "dwarf"
+	var/filter = null
+	var/obj/effect/distort/dwarf/distort = new
+	var/size = 127
+
+	OnAdd()
+		. = ..()
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("dwarfism")
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+
+	OnRemove()
+		owner.remove_filter("dwarfism")
+		owner.vis_contents -= src.distort
+		src.filter = null
+		. = ..()
+
+	disposing()
+		qdel(src.distort)
+		src.distort = null
+		. = ..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "size" && src.filter)
+			animate(src.filter, size=0, time=0)
+			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
 	desc = "Encourages growth of ethanol-producing symbiotic fungus in the subject's body."
 	id = "drunk"
+	icon_state = "ethanol_prod"
 	isBad = 1
 	msgGain = "You feel drunk!"
 	msgLose = "You feel sober."
 	probability = 99
+	stability_loss = -5
 	var/reagent_to_add = "ethanol"
 	var/reagent_threshold = 80
 	var/add_per_tick = 1
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
 		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick)
+			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"
@@ -248,8 +310,8 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "bee"
-	reagent_threshold = 40
-	add_per_tick = 1.2
+	reagent_threshold = 12
+	add_per_tick = 6 //ensures we always have bee sickness
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
@@ -267,7 +329,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reagent_to_add = "penteticacid"
-	reagent_threshold = 40
+	reagent_threshold = 12
 	add_per_tick = 4
 
 /datum/bioEffect/drunk/random
@@ -286,6 +348,7 @@
 	lockedGaps = 10
 	lockedDiff = 6
 	lockedChars = list("G","C","A","T","U")
+	stability_loss = 15
 	lockedTries = 10
 	curable_by_mutadone = 0
 	can_scramble = 0
@@ -297,7 +360,7 @@
 	New()
 		..()
 		if (all_functional_reagent_ids.len > 1)
-			reagent_to_add = pick(all_functional_reagent_ids - list("big_bang_precursor", "big_bang", "nitrotri_parent", "nitrotri_wet", "nitrotri_dry"))
+			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
 
@@ -308,8 +371,9 @@
 	probability = 0.25
 	var/change_prob = 25
 	add_per_tick = 7
+	stability_loss = 25
 
-	OnLife()
+	OnLife(var/mult)
 		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		..()
@@ -327,6 +391,7 @@
 	name = "Dactyl Crystallization"
 	desc = "The subject's digits crystallize and, when struck together, emit a pleasant noise."
 	id = "chime_snaps"
+	icon_state = "chime_snaps"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "Your fingers and toes turn transparent and crystalline."
@@ -336,6 +401,7 @@
 	name = "Dermal Glow"
 	desc = "Causes the subject's skin to emit faint light patterns."
 	id = "aura"
+	icon_state = "aura"
 	effectType = EFFECT_TYPE_POWER
 	probability = 99
 	msgGain = "You start to emit a pulsing glow."
@@ -364,7 +430,7 @@
 	blockGaps = 3
 	msgGain = "You feel as if you're impossibly young."
 	msgLose = "You feel like you're your own age again."
-	stability_loss = 10
+	stability_loss = 0
 
 	OnAdd()
 		holder.age = (0 - holder.age)
@@ -383,8 +449,8 @@
 	blockGaps = 3
 	msgGain = "You feel like you're growing younger - no wait, older?"
 	msgLose = "You feel like you're aging normally again."
-	stability_loss = 10
-	OnLife()
+	stability_loss = 0
+	OnLife(var/mult)
 		..()
 		if (prob(33))
 			holder.age = rand(-80, 80)
@@ -398,6 +464,7 @@
 	name = "Blazing Aura"
 	desc = "Causes the subject's skin to emit harmless false fire."
 	id = "aura_fire"
+	icon_state = "blazing_aura"
 	effectType = EFFECT_TYPE_POWER
 	occur_in_genepools = 0
 	msgGain = "You burst into flames!"

@@ -79,12 +79,11 @@
   icon_state = "atmos"
   item_state = "analyzer"
   rand_pos = 1
-  w_class = 2
+  w_class = W_CLASS_SMALL
   flags = FPRINT | TABLEPASS | ONBELT
   var/on = 0
   var/sleep = 0
   var/muted = 0
-  var/obj/item/ammo/power_cell/cell = null // using gun ammo cells due to not wanting to add a special snowflake small battery
   health = 20
   var/area/prev_area = null
   var/asleep = 0
@@ -96,8 +95,7 @@
 
 /obj/item/device/pocketbuddy/New()
   ..()
-  if (!src.cell)
-    src.cell = new/obj/item/ammo/power_cell // TODO: a more buddy-specific cell (maybe even a new power cell type?)
+  AddComponent(src, /datum/component/cell_holder, new/obj/item/ammo/power_cell) // TODO: a more buddy-specific cell (maybe even a new power cell type?)
   // TODO: subscribe to global event system/child system thereof for pocketbuddies?
   src.prev_area = get_area(src)
 
@@ -119,7 +117,7 @@
 
 /obj/item/device/pocketbuddy/attack_self(mob/user as mob)
   if(!src.on)
-    if(src.cell.charge > 0)
+    if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)
       boutput(user, "<span class='notice'>You turn the pocketbuddy on!</span>")
       turn_on()
     else
@@ -135,7 +133,7 @@
 
 /obj/item/device/pocketbuddy/proc/turn_on()
   src.on = 1
-  playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+  playsound(src, "sound/machines/twobeep.ogg", 50, 1)
   //speak("Pocketbuddy v0.9 - Copyright 2051-2053 Thinktronic Data Systems, LTD.")
   src.speak("System message. Pocketbuddy v0.9 initializing.")
   sleep(2 SECONDS)
@@ -144,14 +142,16 @@
 
 /obj/item/device/pocketbuddy/proc/turn_off()
   src.speak("Pocketbuddy shutting down.")
-  playsound(get_turf(src), "sound/machines/twobeep.ogg", 50, 1)
+  playsound(src, "sound/machines/twobeep.ogg", 50, 1)
   src.on = 0
   processing_items -= src
 
 /obj/item/device/pocketbuddy/process()
   src.manage_power()
   var/area/here = get_area(src)
-  src.speak("Power: [cell.charge].")
+  var/list/ret = list()
+  if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+    src.speak("Power: [ret["charge"]].")
   if(here != src.prev_area)
     src.prev_area = here
     src.speak(src.get_quip_for(here))
@@ -160,7 +160,7 @@
 /obj/item/device/pocketbuddy/proc/manage_power()
   if(!on) return 1
 
-  if(!cell || (cell.charge <= 0))
+  if(!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
     turn_off()
     return 1
 
@@ -168,7 +168,7 @@
   if(asleep)
     to_draw = (to_draw / 4)
 
-  cell.use(to_draw)
+  SEND_SIGNAL(src, COMSIG_CELL_USE, to_draw)
 
   //if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
   //  speak("Critical battery.")

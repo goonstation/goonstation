@@ -2,7 +2,7 @@
 //mbc : the indentation of this file got all fucked up somehow. That's why we work on different indentation levels depending on the proc. Have fun!
 
 /mob/living/critter/changeling
-	name = "fire cirr into the sun"
+	name = "fire me into the sun"
 	real_name = "for this should not be seen"
 	desc = "dial 555-imcoder now for prizes"
 	density = 1
@@ -58,12 +58,12 @@
 			user.drop_item()
 			W.set_loc(src)
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<b>[user]</b> puts a hat on [src]!","You put a hat on [src]!")
 			return
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.hat && !src.hat_shown)
 			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = src.layer + 0.005)
 			hat_image.pixel_x = hat_x_offset
@@ -87,9 +87,9 @@
 		if (hat)
 			hat.set_loc(src.loc)
 			hat = 0
-			update_icon()
+			UpdateIcon()
 		if (!gibbed)
-			playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
 		death_effect()
 		..()
 
@@ -158,7 +158,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
@@ -221,7 +221,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -234,8 +234,8 @@
 		HH.can_hold_items = 1
 
 	setup_healths()
-		add_hh_flesh(-5, 5, 1)
-		add_hh_flesh_burn(-10, 4, 1.25)
+		add_hh_flesh(5, 1)
+		add_hh_flesh_burn(4, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 
@@ -267,9 +267,10 @@
 				else
 					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
 
-		var/dna_gain = absorbed_dna + 4
+		var/dna_gain = absorbed_dna
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
 			dna_gain = dna_gain / 2
+		dna_gain += 4
 		boutput(hivemind_owner.owner, __blue("A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
@@ -333,12 +334,12 @@
 		// EYE CAN SEE FOREVERRRR
 		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
-		add_hh_flesh(-3, 3, 1)
-		add_hh_flesh_burn(-10, 2, 1.25)
+		add_hh_flesh(3, 1)
+		add_hh_flesh_burn(2, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 	return_to_master()
@@ -360,8 +361,6 @@
 			else
 				dna_gain = 2 // bad_ideas.txt
 
-		if (isdead(src))
-			dna_gain = dna_gain / 2
 		boutput(hivemind_owner.owner, __blue("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
 		hivemind_owner.points += dna_gain
 		hivemind_owner.insert_into_hivemind(src)
@@ -386,7 +385,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -428,7 +427,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -450,8 +449,8 @@
 		src.add_stam_mod_max("small_animal", 25)
 
 	setup_healths()
-		add_hh_flesh(-16, 16, 1)
-		add_hh_flesh_burn(-10, 5, 1.25)
+		add_hh_flesh(16, 1)
+		add_hh_flesh_burn(5, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 
@@ -477,8 +476,6 @@
 					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
 
 		var/dna_gain = 6 //spend dna
-		if (isdead(src))	//if the legworm is dead, the changeling can only gain half of what was spent
-			dna_gain = dna_gain / 2
 		boutput(hivemind_owner.owner, __blue("A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
@@ -507,9 +504,9 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src),"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src,"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					var/turf/fart_turf = get_turf(src)
-					fart_turf.fluid_react_single("toxic_fart",1,airborne = 1)
+					fart_turf.fluid_react_single("[prob(20)?"very_":""]toxic_fart",1,airborne = 1)
 					return "<b><span class='alert'>[src] farts!</span></b>"
 		return null
 
@@ -527,8 +524,8 @@
 		src.flags ^= TABLEPASS
 
 	setup_healths()
-		add_hh_flesh(-16, 16, 1)
-		add_hh_flesh_burn(-10, 5, 1.25)
+		add_hh_flesh(16, 1)
+		add_hh_flesh_burn(5, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 	return_to_master()
@@ -544,8 +541,6 @@
 					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
 
 		var/dna_gain = 1 //spend dna
-		if (isdead(src))	//if the legworm is dead, the changeling can only gain half of what was spent
-			dna_gain = 0
 		boutput(hivemind_owner.owner, __blue("A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!"))
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
@@ -572,7 +567,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -599,8 +594,8 @@
 		src.flags ^= TABLEPASS | DOORPASS
 
 	setup_healths()
-		add_hh_flesh(-40, 40, 1)
-		add_hh_flesh_burn(-20, 20, 1.25)
+		add_hh_flesh(40, 1)
+		add_hh_flesh_burn(20, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 
@@ -615,7 +610,7 @@
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
 		src.set_loc(H)
-		H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 100))
+		H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 10 SECONDS))
 
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
@@ -650,7 +645,7 @@
 				src.layer = target.layer - 0.01
 				src.visible_message("[src] hides under [target]!")
 			src.hat_shown = 0
-			update_icon()
+			UpdateIcon()
 
 /mob/living/critter/changeling/headspider/death_effect()
 	var/datum/abilityHolder/changeling/C = changeling

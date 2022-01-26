@@ -133,6 +133,8 @@
 			use_obj = src.loc
 			if (user in use_obj)
 				return UI_CLOSE
+		if (src.our_sleeper?.occupant == user)
+			return UI_DISABLED
 		return min(
 			tgui_broken_state.can_use_topic(use_obj, user),
 			tgui_default_state.can_use_topic(use_obj, user),
@@ -238,7 +240,7 @@
 	anchored = 1
 	mats = 25
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -263,9 +265,11 @@
 	var/maximum_poison = 5
 	var/inject_poison = 2.5
 
+	var/allow_self_service = 1
+
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		SPAWN_DBG(0.6 SECONDS)
 			if (src && !src.link)
 				var/turf/T = get_turf(src)
@@ -281,15 +285,10 @@
 			occupant = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		ENSURE_IMAGE(src.image_lid, src.icon, "sleeperlid[!isnull(occupant)]")
 		src.UpdateOverlays(src.image_lid, "lid")
 		return
-
-	CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	ex_act(severity)
 		switch (severity)
@@ -360,7 +359,7 @@
 		var/mob/living/carbon/human/H = G.affecting
 		H.set_loc(src)
 		src.occupant = H
-		src.update_icon()
+		src.UpdateIcon()
 #ifdef DATALOGGER
 		game_stats.Increment("sleeper")
 #endif
@@ -514,19 +513,23 @@
 	proc/go_out()
 		if (!src || !src.occupant)
 			return
-		for (var/obj/O in src)
-			if (O == src.our_console) // don't barf out the internal sleeper console tia
-				continue
-			O.set_loc(src.loc)
-		src.add_fingerprint(usr)
 		if (src.occupant.loc == src)
 			src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 1 SECOND)
-		src.occupant.force_laydown_standup()
-		src.occupant = null
-		src.update_icon()
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.occupant)
+			for (var/obj/O in src)
+				if (O == src.our_console) // don't barf out the internal sleeper console tia
+					continue
+				O.set_loc(src.loc)
+				src.add_fingerprint(usr)
+			src.occupant.changeStatus("weakened", 1 SECOND)
+			src.occupant.force_laydown_standup()
+			src.occupant = null
+			src.UpdateIcon()
+			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+			return
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -540,17 +543,20 @@
 			return
 
 		if (target == user)
-			move_inside()
+			if(allow_self_service)
+				move_inside()
+			else
+				return
 		else if (can_operate(user))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
-			target.attack_hand(user)
-			user.a_intent = previous_user_intent
+			target.Attackhand(user)
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user))
 					if (istype(user.equipped(), /obj/item/grab))
-						src.attackby(user.equipped(), user)
+						src.Attackby(user.equipped(), user)
 		return
 
 	proc/can_operate(var/mob/M)
@@ -578,10 +584,10 @@
 
 		if (!can_operate(usr)) return
 
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/obj/O in src)
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue
@@ -607,7 +613,7 @@
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user)) return
+		if (!isalive(user) || iswraith(user)) return
 		src.go_out()
 		add_fingerprint(user)
 
@@ -663,12 +669,13 @@
 
 /obj/machinery/sleeper/port_a_medbay
 	name = "Port-A-Medbay"
-	desc = "An emergency transportation device for critically injured patients."
+	desc = "A transportation and stabilization device for critically injured patients."
 	icon = 'icons/obj/porters.dmi'
 	anchored = 0
 	mats = 30
 	p_class = 1.2
 	var/homeloc = null
+	allow_self_service = 0
 	/// Mailgroups it'll try to send PDA notifications to
 	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
@@ -681,6 +688,7 @@
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
 		..()
@@ -693,7 +701,7 @@
 
 	attack_hand(mob/user as mob)
 		if (our_console)
-			our_console.attack_hand(user)
+			our_console.Attackhand(user)
 			interact_particle(user,src)
 
 	examine()
@@ -728,14 +736,15 @@
 			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
+	move_inside()
+		boutput(usr, "<span class='notice'>You can't seem to shove yourself into the [src] without it tipping over as you climb in.</span>")
+		return
+
 /// Yells at doctors to check the thing when it's sent home
 /obj/machinery/sleeper/port_a_medbay/proc/PDA_alert_check()
 	if (src.loc != homeloc)
 		return
 	if (!occupant)
-		return
-	var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency(FREQ_PDA)
-	if (!transmit_connection)
 		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
@@ -751,13 +760,12 @@
 	var/datum/signal/PDAsignal = get_free_signal()
 
 	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
-	PDAsignal.transmission_method = TRANSMISSION_RADIO
-	transmit_connection.post_signal(src, PDAsignal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 
 /obj/machinery/sleeper/compact
 	name = "Compact Sleeper"
-	desc = "Your usual sleeper, but compact this time. Wow!"
+	desc = "Has the same air supply and stabilization capabilites as your usual model, but compact this time. Wow!"
 	icon = 'icons/obj/compact_machines.dmi'
 	icon_state = "compact_sleeper"
 	anchored = 1
@@ -777,5 +785,5 @@
 
 	attack_hand(mob/user as mob)
 		if (our_console)
-			our_console.attack_hand(user)
+			our_console.Attackhand(user)
 			interact_particle(user,src)

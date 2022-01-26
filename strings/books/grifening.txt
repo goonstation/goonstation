@@ -1,0 +1,67 @@
+<center><h2>Spacemen the Grifening: Expanded Edition</h2></center><hr>
+<center><i>The Definitive Handbook for Space's #1 Trading Card Game!</i></center>
+	<h3>Foreword:</h3>
+	<i>Be greeted by sugary soft-drinks and spooky cultists! You are now officially a </i><b>Nerd</b><i> but do not be afraid! You can indulge in the endless fun of collectible card-games like this one!</i>
+	<br>
+	<br>
+	Spacemen the Grifening is a 2 player party-game; well worth the fun!
+	The machine that spit out this wonderful piece of literature can sell you a few booster packs or a starter set to get going! Each booster pack contains cards for 3 Mobs, 3 Friends, 3 Effects, and 1 area. Feel free to buy a deck and begin immediately! You can collect all the different cards available in Spacemen the Grifening in a Spacemen the Griffening deck box. There are also rare foiled versions of each card to seek out.
+	<br>
+	<br>
+	With more experience you can even create your own deck - feel free to experiment and start your own tournament!
+	<hr>
+	<h3>Rules:</h3>
+	<ul style='list-style-type:disc'>
+		<li><b>At Game Start</b>
+			<ul style='list-style-type:circle'>
+				<li>Each player initially has 100 HP. Normally, the player who loses all of their HP first loses the game. There are additional ways to win.</li>
+				<br>
+				<li>Both players stock up their hand with <i>3</i> cards. The person taking the first turn has to draw another card according to the following Draw Phase.</li>
+				<br>
+				<li>The person who will be drawing first can be determined by a coin flip with a pre-inspected fair coin.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Draw Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Draw one card unless otherwise specified.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Main Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Play any amount of Effect and Equipment cards - you may also play up to 1 Creature card.</li>
+				<br>
+				<li>You may have up to 5 total Effect, Equipment and Creature cards on your side of field at any given time. There must be only 1 area card on the table; playing a new area card discards the previous one.</li>
+				<br>
+			</ul>
+		</li>
+		<li><b>Battle Phase</b>
+			<ul style='list-style-type:circle'>
+				<li>Each creature on your side of the field may attack up to once unless incapacitated or otherwise prevented by an Effect. No cards may be played after the beginning of the Battle Phase unless allowed by a special effect, but face-down cards may be activated.</li>
+				<br>
+				<li>A creature is defeated in normal battle if its <i>DEF is lower than the ATK</i> of the attacking creature. The difference is then subtracted from the HP of the player whose creature was defeated. Defeated creatures must be moved to the player's Discard pile unless otherwise noted. All Equipment and Effects attached to the defeated Creature must be discarded.</li>
+				<br>
+				<li>If the attack fails <i>(DEF is higher than the attacker's ATK)</i>, then the difference is subtracted from the HP of the attacker, and additionally, if the <i>ATK of the defender is higher than the DEF of the attacker</i>, the attacking creature is defeated.</li>
+				<br>
+				<li>After a player completes their Battle Phase, the next player then begins their turn by going through the Draw Phase, Main Phase, and Battle Phase. Once the second player is done with their Battle Phase, the first player begins their turn by starting again at the Draw Phase, and so on.</li>
+				<br>
+			</ul>
+		<li><b>Important Game Information</b>
+			<ul style='list-style-type:circle'>
+				<li>Each player must play with a minimum of 40 and a maximum of 80 cards.</li>
+				<br>
+				<li>If a player must draw and is out of cards to draw, that player loses.</li>
+				<br>
+				<li>If a player plays a particular dark flower card, they immediately win the game. Other penalties may apply to usage of non-foiled versions of this card.
+			</ul>
+		</li></ul></li>
+	<h3>Tips:</h3><hr>
+	<ul style='list-style-type:disc'>
+		<li>1) There are themed sets of cards that work great in combination with one another! Try to build your deck around that!</li>
+		<li>2) Tap your Equipment, Effect or even the board's area card to differentiate between Creatures!</li>
+		<li>3) Cards which are face-down on the table can surprise your opponent!</li>
+		<li>4) Just because a Creature died and has to be put on your Discard pile does not mean it is out of the game yet!</li>
+		<li>5) Keep some dice nearby. Some cards might require a bit of luck!</li>
+		<li>6) Buy more cards! Spend your cash!</li>
+	</ul>

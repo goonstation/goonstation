@@ -5,7 +5,7 @@
 	color = "#0000ff"
 	anchored = 1
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /obj/swapAreaLowerLeft
 	name = "lower left corner"
@@ -14,7 +14,7 @@
 	color = "#0000ff"
 	anchored = 1
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 
 /area/swap
 	name = ""
@@ -48,7 +48,7 @@
 		logTheThing("debug", null, null, "Starting SwapDelete (size : [props.maxX - props.sourceX]x - [props.maxY - props.sourceY]y) at [time2text(world.timeofday)]")
 		var/count = 0
 		var/list/block = block(locate(props.sourceX, props.sourceY, props.sourceZ),locate(props.maxX, props.maxY, props.sourceZ))
-		for(var/turf/T as() in block)
+		for(var/turf/T as anything in block)
 			for(var/Y in T)
 				if(isobj(Y) && !istype(Y, /obj/overlay/tile_effect))
 					qdel(Y)

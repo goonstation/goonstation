@@ -19,17 +19,16 @@
 	var/list/areaindex = list()
 
 	for_by_tcl(R, /obj/item/device/radio/beacon)
-		if (!istype(R, /obj/item/device/radio/beacon/jones))
-			LAGCHECK(LAG_LOW)
-			var/turf/T = get_turf(R)
-			if (!T)
-				continue
-			var/tmpname = T.loc.name
-			if (areaindex[tmpname])
-				tmpname = "[tmpname] ([++areaindex[tmpname]])"
-			else
-				areaindex[tmpname] = 1
-			L[tmpname] = R
+		LAGCHECK(LAG_LOW)
+		var/turf/T = get_turf(R)
+		if (!T)
+			continue
+		var/tmpname = T.loc.name
+		if (areaindex[tmpname])
+			tmpname = "[tmpname] ([++areaindex[tmpname]])"
+		else
+			areaindex[tmpname] = 1
+		L[tmpname] = R
 
 	for_by_tcl(I, /obj/item/implant/tracking)
 		LAGCHECK(LAG_LOW)

@@ -45,13 +45,13 @@
 		var/datum/reagent/reagent = new reagent_type()
 
 		if(isnull(src.target))
-			if(prob(60) || !by_type[/obj/machinery/drainage] || !by_type[/obj/machinery/drainage].len)
+			if(prob(60) || !by_type[/obj/machinery/drainage] || !length(by_type[/obj/machinery/drainage]))
 				src.target = pick(get_area_turfs(/area/station)) // don't @ me
 				target.visible_message("<span class='alert'><b>A rift to a [reagent.name] dimension suddenly warps into existence!</b></span>")
 			else
 				var/obj/machinery/drainage/drain = pick(by_type[/obj/machinery/drainage])
 				drain.clogged = 60 // about 3 minutes
-				drain.update_icon()
+				drain.UpdateIcon()
 				src.target = get_turf(drain)
 				target.visible_message("<span class='alert'><b>\The [drain] overflows with [reagent.name]!</b></span>")
 
@@ -65,10 +65,10 @@
 
 		message_admins("Random flood event triggered on ([showCoords(target.x, target.y, target.z)]) with [amount] [reagent.name].")
 
-		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target)
 		SPAWN_DBG(1.5 SECONDS)
-			pool(swirl)
+			qdel(swirl)
 
 		src.target = initial(src.target)
 		src.amount = initial(src.amount)

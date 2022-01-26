@@ -1,4 +1,4 @@
-/obj/screen/hud/robotstorage
+/atom/movable/screen/hud/robotstorage
 	MouseEntered(location, control, params)
 		if (src.name)
 			src.maptext_x = 34
@@ -8,7 +8,7 @@
 		src.maptext = null
 
 /datum/hud/robot
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		mod1
 		mod2
 		mod3
@@ -27,12 +27,12 @@
 		temp
 
 		pda
-		mainframe
+		eyecam
 
 	var/list/screen_tools = list()
 
-	var/list/obj/screen/hud/upgrade_bg = list()
-	var/list/obj/screen/hud/upgrade_slots = list()
+	var/list/atom/movable/screen/hud/upgrade_bg = list()
+	var/list/atom/movable/screen/hud/upgrade_slots = list()
 	var/show_upgrades = 1
 
 	var/items_screen = 1
@@ -49,9 +49,9 @@
 	var/image/storage_bg
 
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 
 	clear_master()
 		master = null
@@ -127,7 +127,7 @@
 				if (i > master.module.tools.len)
 					break
 				var/obj/item/I = master.module.tools[i]
-				var/obj/screen/hud/S = screen_tools[sid]
+				var/atom/movable/screen/hud/S = screen_tools[sid]
 
 				if (!I) // if the item has been deleted, just show an empty slot.
 					S.name = null
@@ -215,7 +215,7 @@
 		src.close = create_screen("close", "Close", 'icons/mob/screen1.dmi', "x", "1, 1", HUD_LAYER+1)
 		remove_screen(close)
 		for (var/i = 1, i <= 7, i++)
-			var/S = create_screen("object[i]", "object", null, null, "1, [10 - i]", HUD_LAYER + 1, customType = /obj/screen/hud/robotstorage)
+			var/S = create_screen("object[i]", "object", null, null, "1, [10 - i]", HUD_LAYER + 1, customType = /atom/movable/screen/hud/robotstorage)
 			remove_screen(S)
 			screen_tools += S
 
@@ -264,11 +264,11 @@
 		pda = create_screen("pda", "Cyborg PDA", 'icons/mob/hud_ai.dmi', "pda", "WEST, NORTH+0.5", HUD_LAYER)
 		pda.underlays += "button"
 
-		mainframe = create_screen("mainframe", "Return to Mainframe", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
-		mainframe.underlays += "block"
+		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
+		eyecam.underlays += "block"
 
 
-	scrolled(id, dx, dy, user, parms, obj/screen/hud/scr)
+	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
 		if(!master || user != master) return
 		switch(id)
 			if("object1", "object2", "object3", "object4", "object5", "object6", "object7", "next", "nextbg", "prev", "prevbg", "boxes")
@@ -281,7 +281,7 @@
 					else items_screen--
 					update_equipment()
 
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 		switch (id)
@@ -331,15 +331,33 @@
 				master.radio_menu()
 			if ("intent")
 				if (master.a_intent == INTENT_HELP)
-					master.a_intent = INTENT_HARM
+					master.set_a_intent(INTENT_HARM)
 				else
-					master.a_intent = INTENT_HELP
+					master.set_a_intent(INTENT_HELP)
 				update_intent()
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
-				update_pulling()
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && GET_DIST(master, to_pull) <= 1)
+						usr = master // gross
+						to_pull.pull()
 			if ("upgrades")
 				set_show_upgrades(!src.show_upgrades)
 			if ("upgrade1") // this is horrifying
@@ -377,16 +395,16 @@
 				last_health = -1
 			if ("pda")
 				master.access_internal_pda()
-			if ("mainframe")
-				master.return_mainframe()
+			if ("eyecam")
+				master.become_eye()
 
 	proc/update_status_effects()
-		for(var/obj/screen/statusEffect/G in src.objects)
+		for(var/atom/movable/screen/statusEffect/G in src.objects)
 			remove_screen(G)
 
-		for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
+		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
 			if(!master.statusEffects || !(S in master.statusEffects))
-				pool(statusUiElements[S])
+				qdel(statusUiElements[S])
 				src.statusUiElements.Remove(S)
 				qdel(S)
 
@@ -394,10 +412,10 @@
 		var/pos_x = spacing - 0.2 - 1
 
 		if(master.statusEffects)
-			for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+			for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 				if(!S.visible) continue
 				if((S in statusUiElements) && statusUiElements[S])
-					var/obj/screen/statusEffect/U = statusUiElements[S]
+					var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 					U.icon = icon_hud
 					U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-2.7"
 					U.update_value()
@@ -405,7 +423,7 @@
 					pos_x -= spacing
 				else
 					if(S.visible)
-						var/obj/screen/statusEffect/U = unpool(/obj/screen/statusEffect)
+						var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
 						U.init(master,S)
 						U.icon = icon_hud
 						statusUiElements.Add(S)
@@ -428,16 +446,16 @@
 				return
 			show_upgrades = show
 			if (show)
-				for (var/obj/screen/hud/H in upgrade_bg)
+				for (var/atom/movable/screen/hud/H in upgrade_bg)
 					add_screen(H)
-				for (var/obj/screen/hud/H in upgrade_slots)
+				for (var/atom/movable/screen/hud/H in upgrade_slots)
 					add_screen(H)
 				for (var/obj/item/roboupgrade/upgrade in last_upgrades)
 					add_object(upgrade, HUD_LAYER+2)
 			else
-				for (var/obj/screen/hud/H in upgrade_bg)
+				for (var/atom/movable/screen/hud/H in upgrade_bg)
 					remove_screen(H)
-				for (var/obj/screen/hud/H in upgrade_slots)
+				for (var/atom/movable/screen/hud/H in upgrade_slots)
 					remove_screen(H)
 				for (var/obj/item/roboupgrade/upgrade in last_upgrades)
 					remove_object(upgrade)
@@ -547,8 +565,8 @@
 
 			// I put this here because there's nowhere else for it right now.
 			// @TODO robot hud needs a general update() call imo.
-			if (src.mainframe)
-				mainframe.invisibility = (master.mainframe ? 0 : 101)
+			if (src.eyecam)
+				eyecam.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
 
 
 		update_pulling()
@@ -574,9 +592,9 @@
 		update_upgrades()
 			var/startx = 5 - master.max_upgrades
 			if (master.max_upgrades != upgrade_slots.len)
-				for (var/obj/screen/hud/H in upgrade_bg)
+				for (var/atom/movable/screen/hud/H in upgrade_bg)
 					remove_screen(H)
-				for (var/obj/screen/hud/H in upgrade_slots)
+				for (var/atom/movable/screen/hud/H in upgrade_slots)
 					remove_screen(H)
 
 				upgrade_bg.len = 0
@@ -592,9 +610,9 @@
 					upgrade_slots += create_screen("upgrade[i+1]", "Upgrade [i+1]", icon_hud, "upgrade0", "CENTER+[startx+i]:24, SOUTH+1:4", HUD_LAYER+1)
 
 				if (!show_upgrades) // this is dumb
-					for (var/obj/screen/hud/H in upgrade_bg)
+					for (var/atom/movable/screen/hud/H in upgrade_bg)
 						remove_screen(H)
-					for (var/obj/screen/hud/H in upgrade_slots)
+					for (var/atom/movable/screen/hud/H in upgrade_slots)
 						remove_screen(H)
 
 			for (var/obj/item/roboupgrade/upgrade in last_upgrades)
@@ -604,7 +622,7 @@
 				if (i >= upgrade_slots.len)
 					break
 
-				var/obj/screen/hud/slot = upgrade_slots[i+1]
+				var/atom/movable/screen/hud/slot = upgrade_slots[i+1]
 				slot.icon_state = "upgrade[upgrade.activated]"
 				if (show_upgrades)
 					add_object(upgrade, HUD_LAYER+2, "CENTER+[startx+i]:24, SOUTH+1:4")

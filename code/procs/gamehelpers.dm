@@ -25,7 +25,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","Readster")
+var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN
@@ -81,7 +81,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 /proc/get_area_name(N) //get area by it's name
 
 	for(var/area/A in world)
-		LAGCHECK(LAG_LOW)
 		if(A.name == N)
 			return A
 	return 0
@@ -97,11 +96,13 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 
 	return null
 
-/proc/in_range(atom/source, atom/user)
-	if(bounds_dist(source, user) == 0 || get_dist(source, user) <= 1) // fucking byond
-		return 1
+/// For interacting with stuff.
+/proc/in_interact_range(atom/source, atom/user)
+	. = FALSE
+	if(bounds_dist(source, user) == 0 || IN_RANGE(source, user, 1)) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
+		return TRUE
 	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return 1
+		return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -126,33 +127,35 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","R
 					sleep(0.5 SECONDS)
 					qdel(O)
 
-				return 1
+				return TRUE
 
 		else if (isobj(source))
 			var/obj/SO = source
 			if(SO.can_access_remotely(user))
-				return 1
+				return TRUE
 
 	if (mirrored_physical_zone_created) //checking for vistargets if true
 		var/turf/T = get_turf(source)
 		if (T.vistarget)
 			if(bounds_dist(T.vistarget, user) == 0 || get_dist(T.vistarget, user) <= 1)
-				return 1
-
-	return 0 //not in range and not telekinetic
+				return TRUE
 
 
-var/obj/item/dummy/click_dummy = new
 /proc/test_click(turf/from, turf/target)
+	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
+	click_dummy.set_loc(from)
 	for (var/atom/A in from)
 		if (A.flags & ON_BORDER)
 			if (!A.CheckExit(click_dummy, target))
-				return 0
+				click_dummy.set_loc(null)
+				return FALSE
 	for (var/atom/A in target)
-		if (A.flags & ON_BORDER)
-			if (!A.CanPass(click_dummy, from, 1, 0))
-				return 0
-	return 1
+		if ((A.flags & ON_BORDER))
+			if (!A.Cross(click_dummy))
+				click_dummy.set_loc(null)
+				return FALSE
+	click_dummy.set_loc(null)
+	return TRUE
 
 /proc/can_reach(mob/user, atom/target)
 	if (target in bible_contents)
@@ -170,16 +173,13 @@ var/obj/item/dummy/click_dummy = new
 		if (C && target != C)
 			return 0
 	if (isturf(user.loc))
-		if (!in_range(target, user))
+		if (!in_interact_range(target, user))
 			return 0
 		var/T1 = get_turf(user)
 		var/T2 = get_turf(target)
 		if (T1 == T2)
 			return 1
 		else
-			if (!click_dummy)
-				click_dummy = new
-
 			var/dir = get_dir(T1, T2)
 			if (dir & (dir-1))
 				var/dir1, dir2
@@ -196,13 +196,13 @@ var/obj/item/dummy/click_dummy = new
 					if (SOUTHWEST)
 						dir1 = SOUTH
 						dir2 = WEST
-				var/D1 = get_step(T1, dir1)
-				var/D2 = get_step(T1, dir2)
+				var/turf/D1 = get_step(T1, dir1)
+				var/turf/D2 = get_step(T1, dir2)
 
-				if (test_click(T1, D1))
+				if (!D1.density && test_click(T1, D1))
 					if ((target.flags & ON_BORDER) || test_click(D1, T2))
 						return 1
-				if (test_click(T1, D2))
+				if (!D2.density && test_click(T1, D2))
 					if ((target.flags & ON_BORDER) || test_click(D2, T2))
 						return 1
 			else
@@ -221,12 +221,13 @@ var/obj/item/dummy/click_dummy = new
 	. = list()
 
 	var/turf/T = get_turf(center)
-	for_by_tcl(theAI, /mob/living/silicon/ai)
-		if (theAI.deployed_to_eyecam)
-			var/mob/dead/aieye/AIeye = theAI.eyecam
-			if(IN_RANGE(center, AIeye, distance) && T.cameras && T.cameras.len)
-				. += AIeye
-				. += theAI
+	if(length(T?.cameras))
+		for_by_tcl(theAI, /mob/living/silicon/ai)
+			if (theAI.deployed_to_eyecam)
+				var/mob/dead/aieye/AIeye = theAI.eyecam
+				if(IN_RANGE(center, AIeye, distance))
+					. += AIeye
+					. += theAI
 
 //Kinda sorta like viewers but includes observers. In theory.
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
@@ -247,7 +248,7 @@ var/obj/item/dummy/click_dummy = new
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
-		for(var/mob/M as() in by_cat[TR_CAT_OMNIPRESENT_MOBS])
+		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
 				. |= M
 
@@ -264,18 +265,14 @@ var/obj/item/dummy/click_dummy = new
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-/proc/can_act(var/mob/M, var/include_cuffs = 1)
-	if(!M) return 0 //Please pass the M, I need a sprinkle of it on my potatoes.
-	if(include_cuffs && M.hasStatus("handcuffed")) return 0
-	if(M.getStatusDuration("stunned")) return 0
-	if(M.getStatusDuration("weakened")) return 0
-	if(M.getStatusDuration("paralysis")) return 0
-	if(M.stat) return 0
-	return 1
-
 #define CLUWNE_NOISE_DELAY 50
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
+	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	var/prefix = prefixAndMessage[1]
+	message = prefixAndMessage[2]
+
 	if (!H || !istext(message))
 		return
 
@@ -286,7 +283,7 @@ var/obj/item/dummy/click_dummy = new
 			if (istype(S,/datum/bioEffect/speech/))
 				message = S.OnSpeak(message)
 
-	if (H.grabbed_by && H.grabbed_by.len)
+	if (H.grabbed_by && length(H.grabbed_by))
 		for (var/obj/item/grab/rag_muffle/RM in H.grabbed_by)
 			if (RM.state > 0)
 				message = mufflespeech(message)
@@ -295,12 +292,12 @@ var/obj/item/dummy/click_dummy = new
 	if (iscluwne(H))
 		message = honk(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
+			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 	if (ishorse(H))
 		message = neigh(message)
 		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(get_turf(H), pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
+			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
 			H.last_cluwne_noise = world.time
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
@@ -350,7 +347,7 @@ var/obj/item/dummy/click_dummy = new
 	if (prob(30)) message = replacetext(message, "?", " Eh?")
 #endif
 
-	return message
+	return prefix + message
 
 
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -557,7 +554,7 @@ var/obj/item/dummy/click_dummy = new
 		return rgb(r,g,b,a)
 
 
-/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0)
+/area/proc/move_contents_to(var/area/A, var/turftoleave=null, var/ignore_fluid = 0, turf_to_skip=null)
 	//Takes: Area. Optional: turf type to leave behind.
 	//Returns: Nothing.
 	//Notes: Attempts to move the contents of one area to another area.
@@ -570,7 +567,7 @@ var/obj/item/dummy/click_dummy = new
 
 	var/src_min_x = 0
 	var/src_min_y = 0
-	for (var/turf/T as() in turfs_src)
+	for (var/turf/T as anything in turfs_src)
 		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
 		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
 	DEBUG_MESSAGE("src_min_x = [src_min_x], src_min_y = [src_min_y]")
@@ -578,7 +575,7 @@ var/obj/item/dummy/click_dummy = new
 	var/trg_min_x = 0
 	var/trg_min_y = 0
 	var/trg_z = 0
-	for (var/turf/T as() in turfs_trg)
+	for (var/turf/T as anything in turfs_trg)
 		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
 		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
 		trg_z = T.z
@@ -586,7 +583,7 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T?.loc != A) continue
+		if(T?.loc != A || istype(S, turf_to_skip)) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
 		T.set_density(S.density)
@@ -594,9 +591,10 @@ var/obj/item/dummy/click_dummy = new
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		for (var/atom/movable/AM as() in S)
+		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
+			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue
 			AM.set_loc(T)
 		if(turftoleave)
 			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
@@ -649,3 +647,113 @@ proc/get_opaqueness(var/trans)	// 0=transparent, 255=fully opaque
 
 proc/LoadSavefile(name)
 	. = new/savefile(name)
+
+/// Returns a turf at the edge of a squared circle of specified radius around a thing
+proc/GetRandomPerimeterTurf(var/atom/A, var/dist = 10, var/dir)
+	var/turf/T = get_turf(A)
+	if(!isturf(T))
+		return
+	var/T_x = T.x
+	var/T_y = T.y
+	var/T_z = T.z
+	var/out_x
+	var/out_y
+	var/x_or_y = pick("x", "y") // Which edge of the squircle isn't randomized
+	if(dir)
+		if(dir == NORTH || dir == SOUTH)
+			x_or_y = "y"
+		else
+			x_or_y = "x"
+	if(x_or_y == "x")
+		if(dir)
+			if(dir == EAST)
+				out_x = clamp(T_x + dist, 1, world.maxx)
+			else if (dir == WEST)
+				out_x = clamp(T_x - dist, 1, world.maxx)
+		else
+			out_x = clamp(pick((T_x + dist), (T_x - dist)), 1, world.maxx)
+		out_y = clamp(rand(T_y - dist, T_y + dist), 1, world.maxy)
+	else
+		if(dir)
+			if(dir == NORTH)
+				out_y = clamp(T_y + dist, 1, world.maxy)
+			else if (dir == SOUTH)
+				out_y = clamp(T_y - dist, 1, world.maxy)
+		else
+			out_y = clamp(pick((T_y + dist), (T_y - dist)), 1, world.maxy)
+		out_x = clamp(rand(T_x - dist, T_x + dist), 1, world.maxx)
+	T = locate(out_x, out_y, T_z)
+	if(isturf(T))
+		return T
+
+proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/params, var/thrown_from, var/throw_type, var/allow_anchored, var/bonus_throwforce, var/end_throw_callback)
+	if(istype(A))
+		var/turf/Y = GetRandomPerimeterTurf(A, dist)
+		A.throw_at(Y, dist, speed, params, thrown_from, throw_type, allow_anchored, bonus_throwforce, end_throw_callback)
+
+
+
+/// get_ouija_word_list
+// get a list of words for an ouija board
+proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/words_max = 8, var/include_nearby_mobs_chance = 40, var/include_most_mobs_chance = 20, include_said_phrases_chance = 10)
+	var/list/words = list()
+
+	// Generic Ouija words
+	for(var/i in 1 to rand(words_min, words_max))
+		var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+		words |= picked
+
+	if (prob(include_nearby_mobs_chance))
+		var/list/mobs = observersviewers(Center = source)
+		if (length(mobs))
+			var/mob/M = pick(mobs)
+			words |= (M.real_name ? M.real_name : M.name)
+
+	if(prob(include_said_phrases_chance))
+		words |= phrase_log.random_phrase("say")
+
+	if (prob(include_most_mobs_chance))
+
+		var/roll = rand(0, 200)
+		switch (roll)
+			if (0)
+				// any actual antag
+				var/list/player_pool = list()
+				for (var/mob/M in mobs)
+					if (!M.client || istype(M, /mob/new_player) || !checktraitor(M))
+						continue
+					player_pool += M
+				if (length(player_pool))
+					var/mob/M = pick(player_pool)
+					words |= (M.real_name ? M.real_name : M.name)
+			if (1 to 5)
+				// fake wraith
+				words |= call(/mob/wraith/proc/make_name)()
+			if (6 to 10)
+				// fake blob (heh)
+				var/blobname = phrase_log.random_phrase("name-blob")
+				words |= strip_html(copytext(blobname, 1, 26) + " the Blob")
+			if (10 to 20)
+				// fake nukeop (uses the real nukeop company name, too)
+				// Copied from gamemodes/nuclear.dm
+				var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
+				//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
+				var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
+				words |= "[syndicate_name()] Operative [pick(callsign_list)]"
+			if (20 to 30)
+				// fake wizard
+				var/wizname = phrase_log.random_phrase("name-wizard")
+				words |= strip_html(copytext(wizname, 1, 26))
+
+			else
+				// any random living mob
+				var/list/player_pool = list()
+				for (var/mob/M in mobs)
+					if (!M.client || istype(M, /mob/new_player))
+						continue
+					player_pool += M
+				if (length(player_pool))
+					var/mob/M = pick(player_pool)
+					words |= (M.real_name ? M.real_name : M.name)
+
+	return words

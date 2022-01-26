@@ -191,7 +191,7 @@
 				generator_metrics[++generator_metrics.len] = g_metric
 				return
 
-			last = generator_metrics.len
+			last = length(generator_metrics)
 
 			g_metric["output_d2x"] = g_metric["output_dx"] - generator_metrics[last]["output_dx"]
 
@@ -342,7 +342,7 @@
 				chamber_metrics[++chamber_metrics.len] = c_metric
 				return
 
-			last = chamber_metrics.len
+			last = length(chamber_metrics)
 
 			/* averaged values */
 			c_metric["o2_d2x"] = c_metric["o2_dx"] - chamber_metrics[last]["o2_dx"]
@@ -469,7 +469,7 @@
 				meter_metrics["[p_tag]"][++meter_metrics["[p_tag]"].len] = m_metric
 				return
 
-			last = meter_metrics["[p_tag]"].len
+			last = length(meter_metrics["[p_tag]"])
 
 			m_metric["o2_d2x"] = m_metric["o2_dx"] - meter_metrics["[p_tag]"][last]["o2_dx"]
 			m_metric["toxins_d2x"] = m_metric["toxins_dx"] - meter_metrics["[p_tag]"][last]["toxins_dx"]
@@ -520,7 +520,7 @@
 				ret["moles"] = TOTAL_MOLES(G)
 
 				if(length(G.trace_gases))
-					for(var/datum/gas/T as() in G.trace_gases)
+					for(var/datum/gas/T as anything in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
 							ret["n2o"] = T.moles
 						else if(istype(T, /datum/gas/oxygen_agent_b))
@@ -545,7 +545,7 @@
 					ret["moles"] = TOTAL_MOLES(G)
 
 				if(G && length(G.trace_gases))
-					for(var/datum/gas/T as() in G.trace_gases)
+					for(var/datum/gas/T as anything in G.trace_gases)
 						if(istype(T, /datum/gas/sleeping_agent))
 							ret["n2o"] = T.ARCHIVED(moles)
 						else if(istype(T, /datum/gas/oxygen_agent_b))
@@ -740,14 +740,14 @@
 				O.air_contents.toxins = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			for(var/obj/machinery/portable_atmospherics/canister/oxygen/O in area_contents)
 				O.air_contents.volume = 1000000
 				O.air_contents.oxygen = (O.maximum_pressure*O.filled)*O.air_contents.volume/(R_IDEAL_GAS_EQUATION*O.air_contents.temperature)
 				O.pressure_resistance = FLOAT_HIGH
 				O.temperature_resistance = FLOAT_HIGH
-				O.update_icon()
+				O.UpdateIcon()
 
 			#endif
 
@@ -1643,14 +1643,14 @@
 	onclose(user, "reactorstats")
 
 /obj/machinery/power/reactor_stats/attackby(obj/item/W as obj, mob/user as mob)
-	src.attack_hand(user)
+	src.Attackhand(user)
 
 /obj/machinery/power/reactor_stats/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
 /obj/machinery/power/reactor_stats/Topic(href, href_list)
 	if(href_list["nav_h"])
-		src.curpage = text2num(href_list["nav_h"])
+		src.curpage = text2num_safe(href_list["nav_h"])
 	else if(href_list["avg_reset"])
 		avg_reset()
 	else if(href_list["refresh_toggle"])

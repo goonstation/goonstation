@@ -17,7 +17,7 @@ var/list/xp_cache = list()
 	return
 
 /proc/show_xp_summary(var/key, var/mob/M) //ONLY EVER SPAWN THIS
-	if(xp_archive.Find(key))
+	if(key in xp_archive)
 		var/loadingHtml = {"<p>Loading your XP stats. Hang on ...</p><br>"}
 		M.Browse(loadingHtml, "window=xpsummary;size=350x450;title=Experience")
 

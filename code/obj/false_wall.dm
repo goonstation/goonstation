@@ -2,7 +2,7 @@
 	name = "wall"
 	icon = 'icons/obj/doors/Doorf.dmi'
 	icon_state = "door1"
-	blocks_air = 0
+	gas_impermeable = 0
 	var/operating = null
 	var/visible = 1
 	var/floorname
@@ -30,7 +30,7 @@
 		..()
 		//Hide the wires or whatever THE FUCK
 		src.levelupdate()
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
 		SPAWN_DBG(0)
 			src.find_icon_state()
@@ -39,9 +39,9 @@
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
-					W.update_icon()
+					W.UpdateIcon()
 				for (var/obj/grille/G in orange(1,src))
-					G.update_icon()
+					G.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -126,7 +126,7 @@
 				F.name = floorname1
 				F.icon = flooricon1
 				F.icon_state = flooricon_state1
-				F.intact = floorintact1
+				F.setIntact(floorintact1)
 				F.burnt = floorburnt1
 				//a false wall turns into a sheet of metal and displaced girders
 				var/atom/A = new /obj/item/sheet(F)
@@ -150,7 +150,7 @@
 				return ..(S, user)
 			else return
 		else
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 
 	proc/open()
 		if (src.operating)
@@ -162,12 +162,12 @@
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
-			src.blocks_air = 0
+			src.gas_impermeable = 0
 			src.pathable = 1
 			src.update_air_properties()
 			src.RL_SetOpacity(0)
 			if(!floorintact)
-				src.intact = 0
+				src.setIntact(FALSE)
 				src.levelupdate()
 			if(checkForMultipleDoors())
 				update_nearby_tiles()
@@ -181,12 +181,12 @@
 		src.name = "wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
 			src.RL_SetOpacity(1)
-		src.intact = 1
+		src.setIntact(TRUE)
 		update_nearby_tiles()
 		SPAWN_DBG(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -208,14 +208,15 @@
 				var/turf/T = get_step(src, dir)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					// neither of us are reinforced
-					if (!istype(W, r_wall_path) && !istype(src, /turf/simulated/wall/false_wall/reinforced))
-						dirs |= dir
-					// both of us are reinforced
-					else if (istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced))
+					if (istype(W, /turf/simulated/wall/false_wall) || \
+							istype(W, wall_path) || \
+							istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced)
+						)
 						dirs |= dir
 					if (W.light_mod) //If the walls have a special light overlay, apply it.
 						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
+			var/turf/simulated/wall/auto/T = istype(src, /turf/simulated/wall/false_wall/reinforced) ? r_wall_path : wall_path
+			mod = initial(T.mod)
 			src.icon_state = "[mod][num2text(dirs)]"
 		return src.icon_state
 
@@ -237,13 +238,13 @@
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.icon_state = "door1"
 		src.set_density(1)
-		src.blocks_air = 1
+		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
 			src.opacity = 0
 			src.RL_SetOpacity(1)
-		src.intact = 1
+		src.setIntact(TRUE)
 		update_nearby_tiles()
 		if(src.was_rwall)
 			src.ReplaceWithRWall()

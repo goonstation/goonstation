@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="{{resource("css/clothingbooth.css")}}">
 		<script>json = !!BOOTH_LIST!!;</script>
 		<script>srcRef = "!!SRC_REF!!";</script>
+		<script>previewID = "!!PREVIEW_ID!!";</script>
 		<script src="{{resource("js/clothingbooth.js")}}"></script>
 	</head>
 	<body>
@@ -12,8 +13,7 @@
 			<div class="column scrollable categories">
 			</div>
 			<div class="column two">
-				<img class="preview" id="image" src="previewimage.png">
-				<img class="preview" id="image_overlay" src="" style="position:absolute">
+				<div id="preview"></div>
 			</div>
 		</div>
 		<div class="items scrollable">

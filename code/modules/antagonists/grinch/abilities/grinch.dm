@@ -32,14 +32,14 @@
 			C.abilityHolder.addAbility(/datum/targetable/grinch/instakill)
 			C.abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_GRINCH_TIPS(src)
 
 	else return
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/grinch
+/atom/movable/screen/ability/topBar/grinch
 	clicked(params)
 		var/datum/targetable/grinch/spell = owner
 		if (!istype(spell))
@@ -72,8 +72,8 @@
 /////////////////////////////////////////////// Grinch spell parent ////////////////////////////
 
 /datum/targetable/grinch
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "template"  // No custom sprites yet.
+	icon = 'icons/mob/grinch_ui.dmi'
+	icon_state = "grinchtemplate"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
@@ -82,7 +82,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/grinch/B = new /obj/screen/ability/topBar/grinch(null)
+		var/atom/movable/screen/ability/topBar/grinch/B = new /atom/movable/screen/ability/topBar/grinch(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -94,7 +94,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/grinch()
+			src.object = new /atom/movable/screen/ability/topBar/grinch()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

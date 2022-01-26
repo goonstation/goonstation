@@ -132,15 +132,9 @@ var/sound/iomoon_alarm_sound = null
 					iomoon_alarm_sound.status = SOUND_UPDATE
 
 	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
+		. = ..()
 		if(ambientSound && ismob(Obj))
-//			if(Obj:client)
-//				ambientSound.status = SOUND_UPDATE
-//				Obj << ambientSound
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
+			soundSubscribers |= Obj
 /*
 	Exited(atom/movable/Obj)
 		if(ambientSound && ismob(Obj))
@@ -673,7 +667,7 @@ var/sound/iomoon_alarm_sound = null
 			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			for(var/obj/O in affected)
-				SPAWN_DBG(0.6 SECONDS) pool(O)
+				SPAWN_DBG(0.6 SECONDS) qdel(O)
 
 			if(isliving(target_r)) //Probably unsafe.
 				playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
@@ -800,7 +794,6 @@ var/sound/iomoon_alarm_sound = null
 	icon_state = "radhood"
 	item_state = "radhood"
 
-//obj/closet/iomoon
 /obj/storage/closet/iomoon
 	name = "\improper Thermal Hazard Equipment"
 	desc = "A locker intended to carry protective clothing."
@@ -1211,7 +1204,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				end_iomoon_blowout()
 				SPAWN_DBG(0)
-					var/datum/effects/system/spark_spread/E = unpool(/datum/effects/system/spark_spread)
+					var/datum/effects/system/spark_spread/E = new /datum/effects/system/spark_spread
 					E.set_up(8,0, src.loc)
 					E.start()
 					src.icon_state = "powercore_core_die"
@@ -1237,7 +1230,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					playsound(src.loc, "explosion", 75, 1)
 					sleep(2.5 SECONDS)
 					//qdel(rotors)
-					src.invisibility = 100
+					src.invisibility = INVIS_ALWAYS_ISH
 
 					var/obj/decal/exitMarker = locate("IOMOON_BOSSDEATH_EXIT")
 					if (istype(exitMarker))
@@ -1271,7 +1264,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 				SPAWN_DBG(0.6 SECONDS)
 					for (var/obj/O in lineObjs)
-						pool(O)
+						qdel(O)
 
 				state = STATE_RECHARGING
 				last_state_time = ticker.round_elapsed_ticks
@@ -1365,13 +1358,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (src.broken) return
 		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
 			return
-
-		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
-		if (!istype(otherLadder))
-			return
-
-		user.visible_message("", "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
-		user.set_loc(get_turf(otherLadder))
+		src.climb(user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (src.broken) return
@@ -1380,6 +1367,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			user.lastattacked = src
 			src.visible_message("<span class='alert'><b>[user] is trying to shove [W:affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
 			return attack_hand(W:affecting)
+
+	proc/climb(mob/user as mob)
+		var/obj/ladder/otherLadder = locate("ladder_[id][src.icon_state == "ladder"]")
+		if (!istype(otherLadder))
+			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
+			return
+		boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
+		user.set_loc(get_turf(otherLadder))
 
 //Puzzle elements
 
@@ -1505,7 +1500,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		SPAWN_DBG(1 SECOND)
 			if (src.opened)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				src.set_density(0)
 				light.enable()
 			else
@@ -1529,7 +1524,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
 		set_density(0)
-		invisibility = 100
+		invisibility = INVIS_ALWAYS_ISH
 		light.disable()
 		SPAWN_DBG(1.3 SECONDS)
 			changing_state = 0
@@ -1549,8 +1544,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
+		for(var/mob/living/L in get_turf(src))
+			L.gib()
+
 		set_density(1)
-		invisibility = 0
+		invisibility = INVIS_NONE
 
 		light.enable()
 		if (next && next != src)
@@ -1584,6 +1582,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					break
 
 	Crossed(var/atom/crosser as mob|obj)
+		..()
 		if (!activator || !(activator in src.loc))
 			//if (crosser.density && !isshell(crosser))
 			if (!isitem(crosser) && !isshell(crosser))
@@ -1720,7 +1719,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "This is obviously an ancient unlocking gizmo of some sort.  Clearly."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "robotkey-blue"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	var/keytype = 0 //0: blue, 1: red
 
 	red
@@ -1811,7 +1810,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			id = params2list(id)
 
 	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands())
+		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1 || !user.can_use_hands() || !ishuman(user))
 			return
 
 		user.visible_message("<span class='alert'>[user] presses [src].</span>", "<span class='alert'>You press [src].</span>")

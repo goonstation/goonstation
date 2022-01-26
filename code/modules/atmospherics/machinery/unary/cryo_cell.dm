@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/unary/cryo_cell
-	name = "cryo cell"
+	name = "cryogenic healing pod"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = 1
@@ -70,8 +70,9 @@
 
 					process_occupant()
 				else
-					src.go_out()
-					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					if(occupant.mind)
+						src.go_out()
+						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
 
 		if(air_contents)
 			ARCHIVED(temperature) = air_contents.temperature
@@ -99,14 +100,14 @@
 			move_inside()
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
-			target.attack_hand(user)
-			user.a_intent = previous_user_intent
+			target.Attackhand(user)
+			user.set_a_intent(previous_user_intent)
 			SPAWN_DBG(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
-						src.attackby(user.equipped(), user)
+						src.Attackby(user.equipped(), user)
 		return
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
@@ -254,6 +255,7 @@
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(G)
+				G.set_loc(src)
 		else if (istype(G, /obj/item/wrench))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
@@ -286,7 +288,7 @@
 		M.set_loc(src)
 		src.occupant = M
 		for (var/obj/O in src)
-			if (O == src.beaker)
+			if (O == src.beaker || O == src.defib)
 				continue
 			O.set_loc(get_turf(src))
 		src.add_fingerprint(user)
@@ -325,7 +327,7 @@
 				return
 			occupant.bodytemperature += 50*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + HEAT_CAPACITY(air_contents))
 			occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-			occupant.changeStatus("burning",-100)
+			occupant.changeStatus("burning", -10 SECONDS)
 			var/mob/living/carbon/human/H = 0
 			if (ishuman(occupant))
 				H = occupant
@@ -399,7 +401,7 @@
 			boutput(usr, "The cell is not corrrectly connected to its pipe network!")
 			return
 
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		for (var/obj/O in src)

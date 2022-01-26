@@ -6,7 +6,7 @@
 	uses_multiple_icon_states = 1
 	var/paintcolor = "neutral"
 	item_state = "paintcan"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	desc = "A can of impossible to remove paint."
 
 /obj/item/paint/attack_self(mob/user as mob)
@@ -191,9 +191,6 @@
 
 				if (6)
 					if (istype(W, /obj/item/tile))
-						if (W.name != "maintenance panel")
-							user.visible_message("[user] tries to use a common floor tile in place of the maintenance panel! How silly!", "<span class='alert'>That is a floor tile, not a maintenance panel! It doesn't even fit!</span>")
-							return
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
@@ -235,7 +232,7 @@
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
 							delme.fingerprintslast = src.fingerprintslast
 
-							invisibility = 100
+							invisibility = INVIS_ALWAYS_ISH
 							set_density(0)
 							sleep(15 SECONDS)
 							qdel(delme)
@@ -263,7 +260,7 @@ var/list/cached_colors = new/list()
 	var/paint_intensity = 0.5
 	var/add_orig = 0.0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	attack_hand(mob/user as mob)
 		..()
@@ -317,7 +314,7 @@ var/list/cached_colors = new/list()
 			1 - paint_intensity + add_orig, 0, 0,
 			0, 1 - paint_intensity + add_orig, 0,
 			0, 0, 1 - paint_intensity + add_orig,
-			paint_intensity * color_list["r"]/255, paint_intensity * color_list["g"]/255, paint_intensity * color_list["b"]/255)
+			paint_intensity * color_list[1]/255, paint_intensity * color_list[2]/255, paint_intensity * color_list[3]/255)
 
 /obj/item/paint_can/random
 	name = "random paint can"

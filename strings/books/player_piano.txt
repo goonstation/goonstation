@@ -1,0 +1,60 @@
+	<h1><b>Everything You Need To Know About The Player Piano</b></h1>
+	<br>
+	<br>This book is meant to give you an idea of how to work the player piano.
+	<br>
+	<br>
+	<br><B>Basics:</B>
+	<br>
+	<br>Your player piano takes raw text that you input through the interface and turns it into notes!
+	<br>A note will play approximately every half second.
+	<br>You can enable looping on the piano by using the piano key!
+	<br>The piano key will also let you reset everything on the piano (like a factory reset) if something goes really crazy.
+	<br>A "note" in the player piano has four parts, each separated by a comma:
+	<br>
+	<br>*The Note Name
+	<br>*Accidentals
+	<br>*Dynamics
+	<br>*Octave
+	<br>
+	<br>Each note "cluster" needs to be separated by a vertical pipe, like so: A,B,F,3|B,B,F,3
+	<br>
+	<br>Note Name: Either A,B,C,D,E,F or G if you want to play a note, or R if you don't. (IMPORTANT: READ FURTHER FOR HOW TO REST)
+	<br>
+	<br>Accidentals: B for flat, S for sharp, N for natural.
+	<br>
+	<br>Dynamics: P for piano (quietest), MP for mezzo piano, N for neutral, MF for mezzo forte and F for forte (loudest).
+	<br>
+	<br>Octave: Notes can be on one of three octaves: 3, 4 or 5. 3 is low, 5 is high. The only exception is G Sharp, which can only be 3 or 4.
+	<br>
+	<br><B>Limitations:</B>
+	<br>
+	<br>*If you want a note to be a rest, you'll need to put an R in for every field on the note: (R,R,R,R|)
+	<br>*You cannot change the duration of a note.
+	<br>*If you want to play notes at the same time, you will need to link multiple pianos together. Input notes, make one piano play, and electronics will handle the rest.
+	<br>*BE SURE TO LINK ALL PIANOS TOGETHER. IF YOU HAVE THREE, YOU WILL NEED TO LINK THE FIRST AND SECOND, SECOND AND THIRD, AND FIRST AND THIRD.
+	<br>*You cannot play below octave 3 or above octave 5 (Including C6)
+	<br>*Even though it's not likely you'll run into it, there is a limit for the number of characters you can input (2048 characters, 256 notes.)
+	<br>
+	<br><B>Maintenance:</B>
+	<br>
+	<br>*You can use your piano's key to activate a built in factory reset.
+	<br>*You can use your piano's key to enable or disable the looping circuit.
+	<br>*You can use your piano's key to set the interval of notes from 0.25 to 0.5 seconds. The default timing is 0.5 seconds.
+	<br>*You can access your piano's internal workings by prying off the front panel.
+	<br>*You can use a multitool to reset the piano's memory once you have access to its insides.
+	<br>*You can use a multitool to link player pianos together like you would a mechcomp component.
+	<br>*If your linked pianos sound weird, you may have linked a set of pianos together multiple times. Use a multitool or key to reset and relink <i>carefully</i>.
+	<br>*You can use a wirecutter to disable looping. (WARNING, THIS IS PERMANENT, DON'T LOSE YOUR DAMN KEY)
+	<br>*You can use a screwdriver to raise and lower the wheel bolts, making the piano moveable.
+	<br>
+	<br><B>Understanding Your Piano's Language</B>
+	<br>
+	<br>Your piano will often make noises. But don't worry! It's just communicating with you. And if you can't speak piano, you have this handy little book to help.
+	<br>
+	<br>*An angry sounding beep means that the piano is busy and you can't interface with it.
+	<br>*Whirring followed by a complete shutdown means that your note input was too long for the piano.
+	<br>*A lot of horrible mechanical noise followed by a complete shutdown means that the tempo you tried to input was too fast or slow.
+	<br>*Ratcheting followed by a complete shutdown means that you forgot to input a piece of a note cluster somewhere.
+	<br>*A lot of noise followed by a count of beeps means that a note you tried to play doesn't exist. The number of beeps is the position of the note.
+	<br>*If the song ends earlier than expected, make sure that you don't have any double vertical bars in your input.
+	<br>*And remember, if things are funky and not working, use your piano reset key!

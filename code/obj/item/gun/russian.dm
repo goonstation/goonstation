@@ -2,7 +2,7 @@
 	desc = "Fun for the whole family!"
 	name = "\improper Russian revolver"
 	icon_state = "revolver"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
 	m_amt = 2000
@@ -86,3 +86,10 @@
 	attack_self(mob/user)
 		if(!shotsLeft)
 			..()
+/obj/item/gun/russianrevolver/jk47
+	name = "\improper JK-47 rifle"
+	desc = "The cold-war classic!  Well, um, a model.  Probably?"
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "ak47"
+	item_state = "ak47"
+	two_handed = TRUE

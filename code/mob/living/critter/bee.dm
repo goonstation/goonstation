@@ -62,7 +62,7 @@
 		SPAWN_DBG(0)
 			ADMIN_BEES_ONLY
 			//statlog_bees(src)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!isdead(src))
 				animate_bumble(src)
@@ -141,7 +141,6 @@
 		if (!gibbed)
 			animate(src)
 		for (var/obj/critter/domestic_bee/fellow_bee in view(7,src)) // once mobcritters have AI we can change this to the mob version of bees, but for now we do this
-			LAGCHECK(LAG_HIGH)
 			if (fellow_bee?.alive)
 				fellow_bee.aggressive = 1
 				SPAWN_DBG(0.7 SECONDS)
@@ -181,12 +180,12 @@
 
 	on_sleep()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	on_wake()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -200,7 +199,7 @@
 				src.shorn = 1
 				src.shorn_time = world.time
 				user.visible_message("<b>[user]</b> shears \the [src]!","You shear \the [src].")
-				var/obj/item/material_piece/cloth/beewool/BW = unpool(/obj/item/material_piece/cloth/beewool)
+				var/obj/item/material_piece/cloth/beewool/BW = new /obj/item/material_piece/cloth/beewool
 				BW.set_loc(src.loc)
 				return
 
@@ -304,7 +303,7 @@
 		// animate_bumble(src)
 		src.is_dancing = 0
 
-	proc/update_icon()
+	update_icon()
 		if (src.has_color_overlay && src.color)
 			src.icon_color = src.color
 			src.color = null
@@ -378,9 +377,9 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len))
+			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
 				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.assoc_reagents.len)
+				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
 					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
 
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
@@ -482,10 +481,6 @@
 			if (MT.reagents.get_reagent_amount(venom1) < 10)
 				MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
-			var/datum/ailment_data/disease/plague = MT.find_ailment_by_type(/datum/ailment/disease/space_plague)
-			if (istype(plague))
-				//That bee venom plague treatment does not work at all in this manner. However, future.
-				MT.cure_disease(plague)
 		MT.TakeDamage("All", src.brute_damage, 0, 0, DAMAGE_STAB)//armor piercing stingers
 		return 0
 
@@ -567,7 +562,7 @@
 
 				honeycube.set_loc(holder.owner.loc)
 				holder.owner.visible_message("<b>[holder.owner] regurgitates [MT]!</b>")
-				playsound(get_turf(holder.owner), "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(holder.owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 		return 0
 
 /datum/targetable/critter/bee_teleport
@@ -599,14 +594,14 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
 		if(do_buzz)
-			playsound(get_turf(holder.owner), 'sound/voice/animal/buzz.ogg', 100, 1)
+			playsound(holder.owner, 'sound/voice/animal/buzz.ogg', 100, 1)
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN_DBG(2.5 SECONDS)
 			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
-				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 200))
+				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 20 SECONDS))
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -726,6 +721,18 @@
 	icon_state_sleep = "madbee-sleep"
 	icon_body = "madbee"
 
+/mob/living/critter/small_animal/bee/moth
+	name = "moth"
+	desc = "It appears to be a hybrid of a domestic space-bee and a moth. How cute!"
+	icon_state = "moth-wings"
+	icon_state_dead = "moth-dead"
+	icon_state_sleep = "moth-sleep"
+	icon_body = "moth"
+	honey_color = rgb(207, 207, 207)
+	speechverb_say = "flutters"
+	speechverb_exclaim = "squeaks"
+	speechverb_ask = "flutters"
+
 /mob/living/critter/small_animal/bee/zombee
 	name = "zombee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types.<br>This one seems kinda sick, poor thing."
@@ -774,9 +781,9 @@
 			return
 		else
 			setunconscious(src)
-			src.setStatus("paralysis", 100)
-			src.setStatus("stunned", 100)
-			src.setStatus("weakened", 100)
+			src.setStatus("paralysis", 10 SECONDS)
+			src.setStatus("stunned", 10 SECONDS)
+			src.setStatus("weakened", 10 SECONDS)
 			src.sleeping = 10
 			src.playing_dead--
 			src.hud.update_health()
@@ -958,7 +965,7 @@
 		src.icon_state = "bubsbee"
 		src.sleeping = rand(10, 20)
 		src.setStatus("paralysis", 2 SECONDS)
-		src.update_icon()
+		src.UpdateIcon()
 		src.visible_message("<span class='notice'>[src] gets tired from all that work and takes a nap!</span>")
 		src.is_dancing = 0
 
@@ -1045,5 +1052,46 @@
 			for (var/mob/O in hearers(src, null))
 				O.show_message("[src] beeps[prob(50) ? " in a comforted manner, and gives [user] the ASCII" : ""].",2)
 		return
+
+
+obj/effects/bees
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = new/particles/swarm/bees
+
+	New(atom/movable/A)
+		..()
+		if(istype(A))
+			A.vis_contents += src
+
+	disposing()
+		var/atom/movable/A
+		A = src.loc
+		if(istype(A))
+			A.vis_contents -= src
+		. = ..()
+
+
+particles/swarm/bees
+	icon = 'icons/misc/bee.dmi'
+	icon_state = list("mini-bee"=1, "mini-bee2"=1)
+	friction = 0.10
+	count = 10
+	spawning = 0.35
+	fade = 5
+#ifndef SPACEMAN_DMM
+	fadein = 5
+#endif
+	lifespan = generator("num", 50, 80, LINEAR_RAND)
+	width = 64
+	position = generator("box", list(-10,-10,0), list(10,10,50))
+	bound1 = list(-32, -32, -100)
+	bound2 = list(32, 32, 100)
+	gravity = list(0, -0.1)
+	drift = generator("box", list(-0.4, -0.1, 0), list(0.4, 0.15, 0))
+	velocity = generator("box", list(-2, -0.1, 0), list(2, 0.5, 0))
+	height = 64
+
+	start_none
+		count = 0
 
 #undef ADMIN_BEES_ONLY

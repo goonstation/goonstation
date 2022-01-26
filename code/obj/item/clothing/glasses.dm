@@ -3,12 +3,13 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/item_glasses.dmi'
-	wear_image_icon = 'icons/mob/eyes.dmi'
+	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "glasses"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	c_flags = COVERSEYES
 	var/allow_blind_sight = 0
+	wear_layer = MOB_GLASSES_LAYER
 	block_vision = 0
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
@@ -75,14 +76,16 @@
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
 		toggler.set_clothing_icon_dirty()
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
-		playsound(get_turf(src), "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
+					APPLY_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 				else
 					H.vision.set_scan(0)
+					REMOVE_MOB_PROPERTY(toggler, PROP_MESONVISION, src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
@@ -90,12 +93,17 @@
 			return
 		if (slot == SLOT_GLASSES && on)
 			user.vision.set_scan(1)
+			APPLY_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 	unequipped(var/mob/living/user)
 		..()
 		if(!isliving(user))
 			return
 		user.vision.set_scan(0)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_MESONVISION, src)
 
 /obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
@@ -117,6 +125,14 @@
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
+
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
@@ -144,7 +160,7 @@
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(get_turf(user), "sound/voice/yeaaahhh.ogg", 100, 0)
+				playsound(user, "sound/voice/yeaaahhh.ogg", 100, 0)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
@@ -162,7 +178,6 @@
 	name = "\improper Security HUD"
 	desc = "Sunglasses with a high tech sheen."
 	icon_state = "sec"
-	var/client/assigned = null
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
@@ -177,40 +192,16 @@
 				H.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
-		return
-
-	process()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			addIcons()
-			if (loc != assigned.mob)
-				assigned.images.Remove(arrestIconsAll)
-				assigned = null
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in arrestIconsAll)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			assigned = user.client
-			processing_items |= src
-		return
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
 
 	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
 		..()
-		if (assigned)
-			assigned.images.Remove(arrestIconsAll)
-			assigned = null
-		processing_items.Remove(src)
-		return
 
 /obj/item/clothing/glasses/sunglasses/sechud/superhero
 	name = "superhero mask"
@@ -230,6 +221,22 @@
 	color_r = 1
 	color_g = 0.8 // red tint
 	color_b = 0.8
+	/// For seeing through walls
+	var/upgraded = FALSE
+
+	equipped(mob/user, slot)
+		. = ..()
+		if(upgraded)
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+		else
+			APPLY_MOB_PROPERTY(user, PROP_THERMALVISION, src)
+
+	unequipped(mob/user)
+		. = ..()
+		if(upgraded)
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION_MK2, src)
+		else
+			REMOVE_MOB_PROPERTY(user, PROP_THERMALVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -239,8 +246,18 @@
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
+				if(upgraded)
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+				else
+					REMOVE_MOB_PROPERTY(H, PROP_THERMALVISION, src)
+
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+					if(H.glasses == src)
+						if(upgraded)
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION_MK2, src)
+						else
+							APPLY_MOB_PROPERTY(H, PROP_THERMALVISION, src)
 		return
 
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
@@ -248,6 +265,7 @@
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
+	upgraded = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -310,24 +328,15 @@
 	attackby(obj/item/W as obj, mob/user as mob)
 		if ((isscrewingtool(W) || istype(W, /obj/item/pen)) && !pinhole)
 			if( equipper && equipper.glasses == src )
-				var/obj/item/organ/eye/theEye = equipper.drop_organ((block_eye == "L") ? "left_eye" : "right_eye")
-				if(theEye)
+				var/obj/item/organ/eye/theEye = equipper.drop_organ((src.icon_state == "eyepatch-L") ? "left_eye" : "right_eye")
+				pinhole = 1
+				block_eye = null
+				appearance_flags |= RESET_COLOR
+				if(!theEye)
 					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
-				appearance_flags |= RESET_COLOR
-				W.underlays += theEye
-				W.underlays += src
-				pinhole = 1
-				block_eye = null
-				equipper.u_equip(src)
-				theEye.set_loc(W)
-				src.set_loc(W)
-				equipper = null
-				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your [theEye] and when you pull [W] away your eye comes with it!!</span>")
-
-				W.name_prefix("eye")
-				W.UpdateName()
+				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!</span>")
 				return
 			else
 				pinhole = 1
@@ -340,7 +349,7 @@
 		return ..()
 	attack_self(mob/user)
 
-		if (src.block_eye == "R")
+		if (src.icon_state == "eyepatch-R")
 			src.block_eye = "L"
 		else
 			src.block_eye = "R"
@@ -406,7 +415,6 @@
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
 	uses_multiple_icon_states = 1
-	var/client/assigned = null
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	mats = 8
@@ -418,40 +426,15 @@
 		..()
 		setProperty("disorient_resist_eye", 15)
 
-	//proc/updateIcons() //I wouldve liked to avoid this but i dont want to put this inside the mobs life proc as that would be more code.
-	process()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			addIcons()
-
-			if (loc != assigned.mob)
-				assigned.images.Remove(health_mon_icons)
-				assigned = null
-
-	proc/addIcons()
-		if (assigned)
-			for (var/image/I in health_mon_icons)
-				if (!I || !I.loc || !src)
-					continue
-				if (I.loc.invisibility && I.loc != src.loc)
-					continue
-				else
-					assigned.images.Add(I)
-
 	equipped(var/mob/user, var/slot)
 		..()
 		if (slot == SLOT_GLASSES)
-			assigned = user.client
-		processing_items |= src
-		return
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
-		if (assigned)
-			assigned.images.Remove(health_mon_icons)
-			assigned = null
-		processing_items.Remove(src)
-		return
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
@@ -506,6 +489,12 @@
 	unequipped(mob/user)
 		. = ..()
 		REMOVE_MOB_PROPERTY(user, PROP_SPECTRO, src)
+
+/obj/item/clothing/glasses/spectro/monocle //used for bartender job reward
+	name = "spectroscopic monocle"
+	icon_state = "spectro_monocle"
+	item_state = "spectro_monocle"
+	desc = "Such a dapper eyepiece! And a practical one at that."
 
 // testing thing for static overlays
 /obj/item/clothing/glasses/staticgoggles
@@ -583,6 +572,14 @@
 	color_g = 1
 	color_b = 0.5
 
+	equipped(mob/user, slot)
+		. = ..()
+		APPLY_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+
+	unequipped(mob/user)
+		. = ..()
+		REMOVE_MOB_PROPERTY(user, PROP_NIGHTVISION, src)
+
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
@@ -593,3 +590,25 @@
 				H.bioHolder.AddEffect("bad_eyesight")
 				SPAWN_DBG(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
+
+
+
+/obj/item/clothing/glasses/packetvision
+	name = "\improper Packetvision HUD"
+	desc = "These let you see wireless packets like some sort of a hackerman."
+	item_state = "glasses"
+	icon_state = "glasses"
+	color = "#a0ffa0"
+	color_r = 0.9
+	color_g = 1.0
+	color_b = 0.9
+
+	equipped(var/mob/user, var/slot)
+		..()
+		if (slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_mob(user)
+
+	unequipped(var/mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
+		..()

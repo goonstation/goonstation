@@ -8,52 +8,55 @@ This table of contents must be manually maintained.
 Make sure to add new items to this list if you document new components.
 -->
 
-- [General Concepts](#general-concepts)
-- [`tgui/components`](#tguicomponents)
-  - [`AnimatedNumber`](#animatednumber)
-  - [`BlockQuote`](#blockquote)
-  - [`Box`](#box)
-  - [`Button`](#button)
-  - [`Button.Checkbox`](#buttoncheckbox)
-  - [`Button.Confirm`](#buttonconfirm)
-  - [`Button.Input`](#buttoninput)
-  - [`ByondUi`](#byondui)
-  - [`Collapsible`](#collapsible)
-  - [`ColorBox`](#colorbox)
-  - [`Dimmer`](#dimmer)
-  - [`Divider`](#divider)
-  - [`Dropdown`](#dropdown)
-  - [`Flex`](#flex)
-  - [`Flex.Item`](#flexitem)
-  - [`Grid`](#grid)
-  - [`Grid.Column`](#gridcolumn)
-  - [`Icon`](#icon)
-  - [`Icon.Stack`](#iconstack)
-  - [`Input`](#input)
-  - [`Knob`](#knob)
-  - [`LabeledControls`](#labeledcontrols)
-  - [`LabeledControls.Item`](#labeledcontrolsitem)
-  - [`LabeledList`](#labeledlist)
-  - [`LabeledList.Item`](#labeledlistitem)
-  - [`LabeledList.Divider`](#labeledlistdivider)
-  - [`Modal`](#modal)
-  - [`NoticeBox`](#noticebox)
-  - [`NumberInput`](#numberinput)
-  - [`ProgressBar`](#progressbar)
-  - [`RoundGauge`](#roundgauge)
-  - [`Section`](#section)
-  - [`Slider`](#slider)
-  - [`Table`](#table)
-  - [`Table.Row`](#tablerow)
-  - [`Table.Cell`](#tablecell)
-  - [`Tabs`](#tabs)
-  - [`Tabs.Tab`](#tabstab)
-  - [`Tooltip`](#tooltip)
-- [`tgui/interfaces/common`](#tguiinterfacescommon)
-  - [`HealthStat`](#healthstat)
-- [`tgui/layouts`](#tguilayouts)
-  - [`Window`](#window)
-  - [`Window.Content`](#windowcontent)
+- [Component Reference](#component-reference)
+  - [General Concepts](#general-concepts)
+  - [`tgui/components`](#tguicomponents)
+    - [`AnimatedNumber`](#animatednumber)
+    - [`BlockQuote`](#blockquote)
+    - [`Box`](#box)
+    - [`Button`](#button)
+    - [`Button.Checkbox`](#buttoncheckbox)
+    - [`Button.Confirm`](#buttonconfirm)
+    - [`Button.Input`](#buttoninput)
+    - [`ByondUi`](#byondui)
+    - [`Collapsible`](#collapsible)
+    - [`ColorBox`](#colorbox)
+    - [`Dimmer`](#dimmer)
+    - [`Divider`](#divider)
+    - [`Dropdown`](#dropdown)
+    - [`Flex`](#flex)
+    - [`Flex.Item`](#flexitem)
+    - [`Grid`](#grid)
+    - [`Grid.Column`](#gridcolumn)
+    - [`Icon`](#icon)
+    - [`Icon.Stack`](#iconstack)
+    - [`Input`](#input)
+    - [`Knob`](#knob)
+    - [`LabeledControls`](#labeledcontrols)
+    - [`LabeledControls.Item`](#labeledcontrolsitem)
+    - [`LabeledList`](#labeledlist)
+    - [`LabeledList.Item`](#labeledlistitem)
+    - [`LabeledList.Divider`](#labeledlistdivider)
+    - [`Modal`](#modal)
+    - [`NoticeBox`](#noticebox)
+    - [`NumberInput`](#numberinput)
+    - [`ProgressBar`](#progressbar)
+    - [`RoundGauge`](#roundgauge)
+    - [`Section`](#section)
+    - [`Slider`](#slider)
+    - [`Stack`](#stack)
+    - [`Stack.Item`](#stackitem)
+    - [`Table`](#table)
+    - [`Table.Row`](#tablerow)
+    - [`Table.Cell`](#tablecell)
+    - [`Tabs`](#tabs)
+    - [`Tabs.Tab`](#tabstab)
+    - [`Tooltip`](#tooltip)
+  - [`tgui/interfaces/common`](#tguiinterfacescommon)
+    - [`HealthStat`](#healthstat)
+  - [`tgui/layouts`](#tguilayouts)
+    - [`Window`](#window)
+    - [`Window.Content`](#windowcontent)
 
 ## General Concepts
 
@@ -187,6 +190,7 @@ all available horizontal space.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
 - `nowrap: boolean` - Stops text from wrapping.
+- `preserveWhitespace: boolean` - Preserves line-breaks and spacing in text.
 - `textAlign: string` - Align text inside the box.
   - `left` (default)
   - `center`
@@ -221,11 +225,7 @@ Buttons allow users to take actions, and make choices, with a single click.
 - `selected: boolean` - Activates the button (gives it a green color).
 - `tooltip: string` - A fancy, boxy tooltip, which appears when hovering
 over the button.
-- `tooltipPosition: string` - Position of the tooltip.
-  - `top` - Show tooltip above the button.
-  - `bottom` (default) - Show tooltip below the button.
-  - `left` - Show tooltip on the left of the button.
-  - `right` - Show tooltip on the right of the button.
+- `tooltipPosition?: string` - Position of the tooltip. See [`Popper`](#Popper) for valid options.
 - `ellipsis: boolean` - If button width is constrained, button text will
 be truncated with an ellipsis. Be careful however, because this prop breaks
 the baseline alignment.
@@ -307,6 +307,8 @@ It supports a full set of `Box` properties for layout purposes.
 - `params: any` - An object with parameters, which are directly passed to
 the `winset` proc call. You can find a full reference of these parameters
 in [BYOND controls and parameters guide](https://secure.byond.com/docs/ref/skinparams.html).
+- `hideOnScroll: boolean` - If true, this component does not render if any
+parent containers are scrolled away from the top.
 
 ### `Collapsible`
 
@@ -343,6 +345,7 @@ Content is automatically centered inside the dimmer.
 **Props:**
 
 - See inherited props: [Box](#box)
+- `full: boolean` - Covers the entire Window, therefore working with scrollables.
 
 ### `Divider`
 
@@ -363,12 +366,16 @@ and displays selected entry.
 **Props:**
 
 - See inherited props: [Box](#box)
+- See inherited props: [Icon](#icon)
 - `options: string[]` - An array of strings which will be displayed in the
 dropdown when open
 - `selected: string` - Currently selected entry
 - `width: number` - Width of dropdown button and resulting menu
-- `over: boolean` - dropdown renders over instead of below
-- `color: string` - color of dropdown button
+- `over: boolean` - Dropdown renders over instead of below
+- `color: string` - Color of dropdown button
+- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `noscroll: boolean` - Whether or not the dropdown menu should have a scroll bar
+- `displayText: string` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
@@ -388,10 +395,9 @@ to the left, and certain elements to the right:
 
 ```jsx
 <Flex>
-  <Flex.Item>
+  <Flex.Item grow={1}>
     Button description
   </Flex.Item>
-  <Flex.Item grow={1} />
   <Flex.Item>
     <Button>
       Perform an action
@@ -400,16 +406,14 @@ to the left, and certain elements to the right:
 </Flex>
 ```
 
-Flex item with `grow` property serves as a "filler", to separate the other
-two flex items as far as possible from each other.
+Flex item with `grow` property will grow to take all available empty space,
+while flex items without grow will take the minimum amount of space. This
+effectively places the last flex item to the very end of the flex container.
 
 **Props:**
 
 - See inherited props: [Box](#box)
-- `spacing: number` - Spacing between flex items, in integer units
-(1 unit - 0.5em). Does not directly relate to a flex css property
-(adds a modifier class under the hood), and only integer numbers are
-supported.
+- ~~`spacing: number`~~ - **Removed in tgui 4.3**, use [Stack](#stack) instead.
 - `inline: boolean` - Makes flexbox container inline, with similar behavior
 to an `inline` property on a `Box`.
 - `direction: string` - This establishes the main-axis, thus defining the
@@ -456,16 +460,16 @@ when they overflow the line.
 - `order: number` - By default, flex items are laid out in the source order.
 However, the order property controls the order in which they appear in the
 flex container.
-- `grow: number` - This defines the ability for a flex item to grow if
-necessary. It accepts a unitless value that serves as a proportion. It
+- `grow: number | boolean` - This defines the ability for a flex item to grow
+if necessary. It accepts a unitless value that serves as a proportion. It
 dictates what amount of the available space inside the flex container the
 item should take up. This number is unit-less and is relative to other
 siblings.
-- `shrink: number` - This defines the ability for a flex item to shrink
-if necessary. Inverse of `grow`.
-- `basis: string` - This defines the default size of an element before any
-flex-related calculations are done. Has to be a length (e.g. `20%`, `5rem`),
-an `auto` or `content` keyword.
+- `shrink: number | boolean` - This defines the ability for a flex item to
+shrink if necessary. Inverse of `grow`.
+- `basis: number | string` - This defines the default size of an element
+before any flex-related calculations are done. Has to be a length
+(e.g. `20%`, `5rem`), an `auto` or `content` keyword.
   - **Important:** IE11 flex is buggy, and auto width/height calculations
   can sometimes end up in a circular dependency. This usually happens, when
   working with tables inside flex (they have wacky internal widths and such).
@@ -697,7 +701,7 @@ Must be a direct child of a layout component (e.g. [Window](#window)).
 
 **Props:**
 
-- See inherited props: [Box](#box)
+- See inherited props: [Box](#box) and [Dimmer](#dimmer)
 
 ### `NoticeBox`
 
@@ -741,6 +745,16 @@ Default is about 250ms, increase it if you still see flickering.
 the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
+
+### `Popper`
+
+Popper lets you position elements so that they don't go out of the bounds of the window. See [popper.js](https://popper.js.org/) for more information.
+
+**Props:**
+
+- `popperContent: InfernoNode` - The content that will be put inside the popper.
+- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options], but the one you want most is `placement`. Valid placements are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. You can also use "auto" (with an optional "-start" or "-end"), where a best fit will be chosen.
+- `additionalStyles: { ... }` - A map of CSS styles to add to the element that will contain the popper.
 
 ### `ProgressBar`
 
@@ -837,10 +851,12 @@ If you want to have a button on the right side of an section title
 </Section>
 ```
 
+**New:** Sections can now be nested, and will automatically font size of the
+header according to their nesting level. Previously this was done via `level`
+prop, but now it is automatically calculated.
+
 - See inherited props: [Box](#box)
 - `title: string` - Title of the section.
-- `level: number` - Section level in hierarchy. Default is 1, higher number
-means deeper level of nesting. Must be an integer number.
 - `buttons: any` - Buttons to render aside the section title.
 - `fill: boolean` - If true, fills all available vertical space.
 - `fitted: boolean` - If true, removes all section padding.
@@ -881,6 +897,76 @@ Default is about 250ms, increase it if you still see flickering.
 the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
+
+### `Stack`
+
+A higher-level component, that is based on [Flex](#flex). The main difference
+from `Flex`, is that this component automatically adds spacing between
+all stack items, reducing the boilerplate that you have to write!
+
+Consists of two elements: `<Stack>` and `<Stack.Item>`.
+
+Stacks can be vertical by adding a `vertical` property.
+
+**Example:**
+
+```jsx
+<Stack>
+  <Stack.Item grow>
+    Button description
+  </Stack.Item>
+  <Stack.Item>
+    <Button>
+      Perform an action
+    </Button>
+  </Stack.Item>
+</Stack>
+```
+
+**Example of a high-level window layout:**
+
+Stacks can be used for high level window layout.
+Make sure to use the `fill` property.
+
+```jsx
+<Window>
+  <Window.Content>
+    <Stack fill>
+      <Stack.Item>
+        <Section fill>
+          Sidebar
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <Stack fill vertical>
+          <Stack.Item grow>
+            <Section fill scrollable>
+              Main content
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              Bottom pane
+            </Section>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  </Window.Content>
+</Window>
+```
+
+**Props:**
+
+- See inherited props: [Flex](#flex)
+- `fill: boolean` - If set, stack will fill all available height.
+- `vertical: boolean` - If set, stack will work in vertical mode.
+
+### `Stack.Item`
+
+**Props:**
+
+- See inherited props: [Flex.Item](#flexitem)
 
 ### `Table`
 
@@ -954,25 +1040,41 @@ Notice that tabs do not contain state. It is your job to track the selected
 tab, handle clicks and place tab content where you need it. In return, you get
 a lot of flexibility in regards to how you can layout your tabs.
 
-Tabs also support a vertical configuration. This is usually paired with a
-[Flex](#flex) component to render tab content to the right.
+Tabs also support a vertical configuration. This is usually paired with
+[Stack](#stack) to render tab content to the right.
 
 ```jsx
-<Flex>
-  <Flex.Item>
+<Stack>
+  <Stack.Item>
     <Tabs vertical>
       ...
     </Tabs>
-  </Flex.Item>
-  <Flex.Item grow={1} basis={0}>
+  </Stack.Item>
+  <Stack.Item grow={1} basis={0}>
     Tab content.
-  </Flex.Item>
-</Flex>
+  </Stack.Item>
+</Stack>
+```
+
+If you need to combine a tab section with other elements, or if you want to
+add scrollable functionality to tabs, pair them with the [Section](#section)
+component:
+
+```jsx
+<Section fill fitted scrollable width="128px">
+  <Tabs vertical>
+    ...
+  </Tabs>
+  ... other things ...
+</Section>
 ```
 
 **Props:**
 
 - See inherited props: [Box](#box)
+- `fluid: boolean` - If true, tabs will take all available horizontal space.
+- `fill: boolean` - Similarly to `fill` on [Section](#section), tabs will fill
+all available vertical space. Only makes sense in a vertical configuration.
 - `vertical: boolean` - Use a vertical configuration, where tabs will be
 stacked vertically.
 - `children: Tab[]` - This component only accepts tabs as its children.
@@ -1003,17 +1105,16 @@ it is recommended to use that prop instead.
 Usage:
 
 ```jsx
-<Box position="relative">
-  Sample text.
-  <Tooltip
-    position="bottom"
-    content="Box tooltip" />
-</Box>
+<Tooltip position="bottom" content="Box tooltip">
+  <Box position="relative">
+    Sample text.
+  </Box>
+</Tooltip>
 ```
 
 **Props:**
 
-- `position: string` - Tooltip position.
+- `position?: string` - Tooltip position. See [`Popper`](#Popper) for valid options. Defaults to "auto".
 - `content: string` - Content of the tooltip. Must be a plain string.
 Fragments or other elements are **not** supported.
 
@@ -1050,9 +1151,7 @@ it in one way or another.
 Example:
 
 ```jsx
-<Window
-  theme="hackerman"
-  resizable>
+<Window theme="hackerman">
   <Window.Content scrollable>
     Hello, world!
   </Window.Content>
@@ -1066,7 +1165,9 @@ Example:
 - `theme: string` - A name of the theme.
   - For a list of themes, see `packages/tgui/styles/themes`.
 - `title: string` - Window title.
-- `resizable: boolean` - Controls resizability of the window.
+- `width: number` - Window width.
+- `height: number` - Window height.
+- `canClose: boolean` - Controls the ability to close the window.
 - `children: any` - Child elements, which are rendered directly inside the
 window. If you use a [Dimmer](#dimmer) or [Modal](#modal) in your UI,
 they should be put as direct childs of a Window, otherwise you should be

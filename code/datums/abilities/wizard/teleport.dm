@@ -1,7 +1,7 @@
 /datum/targetable/spell/teleport
 	name = "Teleport"
 	desc = "Teleports you to an area of your choice after a short delay."
-	icon_state = "phaseshift"
+	icon_state = "teleport"
 	targeted = 0
 	cooldown = 450
 	requires_robes = 1
@@ -124,6 +124,10 @@
 
 		if (2)
 			src.visible_message("<span class='alert'><b>[src]</b> presses a button and teleports away.</span>")
+			var/datum/targetable/spell/teleport/tele = src.abilityHolder.getAbility(/datum/targetable/spell/teleport)
+			if(istype(tele))
+				boutput(src, "<span class='notice'>The teleport computer interferes with your teleport spell.</span>")
+				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
 			src.say("SCYAR NILA [uppertext(A)]")

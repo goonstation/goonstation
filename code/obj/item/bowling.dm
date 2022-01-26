@@ -2,17 +2,18 @@
 	name = "bowling suit"
 	desc = "Who's up for some bowling?"
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "bowling"
 	item_state = "bowling"
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/bowling_ball
 	name = "bowling ball"
 	desc = "Just keep rollin' rollin'."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bowling_ball"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 5
 	throw_speed = 1
 
@@ -38,7 +39,8 @@
 			hitMob.stuttering = max(damMax-5, hitMob.stuttering)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
-	throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		src.icon_state = "bowling_ball_spin"
 		..()

@@ -59,3 +59,7 @@
 //cooldowns
 #define REST_TOGGLE_COOLDOWN 0.1 SECONDS
 #define EAT_COOLDOWN 0.5 SECONDS
+
+//skipped_mobs_list flags
+#define SKIPPED_MOBS_LIST (1 << 0)
+#define SKIPPED_AI_MOBS_LIST (1 << 1)

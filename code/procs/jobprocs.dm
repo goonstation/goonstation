@@ -30,8 +30,10 @@
 				continue
 			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
+			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
+				continue
 
-		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == "spy_thief")
+		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			continue
 		if (J.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			continue
@@ -123,6 +125,7 @@
 			// of us are quite stupid enough to edit the AI's limit to -1 preround and have a
 			// horrible multicore PC station round.. (i HOPE anyway)
 			for(var/mob/new_player/candidate in pick1)
+				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
 				candidate.mind.assigned_role = JOB.name
@@ -130,6 +133,7 @@
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
+				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
 				candidate.mind.assigned_role = JOB.name
@@ -137,6 +141,7 @@
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
+				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
 				candidate.mind.assigned_role = JOB.name
@@ -161,7 +166,7 @@
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if(checktraitor(player) && JOB.cant_spawn_as_rev)
+			if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
 				continue
@@ -171,7 +176,7 @@
 			continue
 		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
-		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == "spy_thief")
+		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
@@ -255,7 +260,7 @@
 			//Promote Chief Engineer
 			if (istype(JOB, /datum/job/command/chief_engineer))
 				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -265,7 +270,7 @@
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
 				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -275,7 +280,7 @@
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
 				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !picks.len)
+				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
 				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
@@ -290,6 +295,7 @@
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
+		if(!player?.mind) continue
 		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
 		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
@@ -305,6 +311,87 @@
 	if (!picks.len)
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
+
+/proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
+	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
+	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), H.slot_w_uniform)
+	else if (length(JOB.slot_jump))
+		H.equip_new_if_possible(JOB.slot_jump[1], H.slot_w_uniform)
+	// Backpack and contents
+	if (JOB.slot_back && length(JOB.slot_back) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_back), H.slot_back)
+	else if (length(JOB.slot_back))
+		H.equip_new_if_possible(JOB.slot_back[1], H.slot_back)
+	if (JOB.slot_back && length(JOB.items_in_backpack))
+		for (var/X in JOB.items_in_backpack)
+			if(ispath(X))
+				H.equip_new_if_possible(X, H.slot_in_backpack)
+	// Belt and contents
+	if (JOB.slot_belt && length(JOB.slot_belt) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
+	else if (length(JOB.slot_belt))
+		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
+	if (JOB.slot_belt && length(JOB.items_in_belt) && istype(H.belt, /obj/item/storage))
+		for (var/X in JOB.items_in_belt)
+			if(ispath(X))
+				H.equip_new_if_possible(X, H.slot_in_belt)
+	// Footwear
+	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), H.slot_shoes)
+	else if (length(JOB.slot_foot))
+		H.equip_new_if_possible(JOB.slot_foot[1], H.slot_shoes)
+	// Suit
+	if (JOB.slot_suit && length(JOB.slot_suit) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), H.slot_wear_suit)
+	else if (length(JOB.slot_suit))
+		H.equip_new_if_possible(JOB.slot_suit[1], H.slot_wear_suit)
+	// Ears
+	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), H.slot_ears)
+	else if (length(JOB.slot_ears))
+		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],/obj/item/device/radio/headset)))
+			H.equip_new_if_possible(JOB.slot_ears[1], H.slot_ears)
+	// Mask
+	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), H.slot_wear_mask)
+	else if (length(JOB.slot_mask))
+		H.equip_new_if_possible(JOB.slot_mask[1], H.slot_wear_mask)
+	// Gloves
+	if (JOB.slot_glov && length(JOB.slot_glov) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), H.slot_gloves)
+	else if (length(JOB.slot_glov))
+		H.equip_new_if_possible(JOB.slot_glov[1], H.slot_gloves)
+	// Eyes
+	if (JOB.slot_eyes && length(JOB.slot_eyes) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), H.slot_glasses)
+	else if (length(JOB.slot_eyes))
+		H.equip_new_if_possible(JOB.slot_eyes[1], H.slot_glasses)
+	// Head
+	if (JOB.slot_head && length(JOB.slot_head) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_head), H.slot_head)
+	else if (length(JOB.slot_head))
+		H.equip_new_if_possible(JOB.slot_head[1], H.slot_head)
+	// Left pocket
+	if (JOB.slot_poc1 && length(JOB.slot_poc1) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_store)
+	else if (length(JOB.slot_poc1))
+		H.equip_new_if_possible(JOB.slot_poc1[1], H.slot_l_store)
+	// Right pocket
+	if (JOB.slot_poc2 && length(JOB.slot_poc2) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), H.slot_r_store)
+	else if (length(JOB.slot_poc2))
+		H.equip_new_if_possible(JOB.slot_poc2[1], H.slot_r_store)
+	// Left hand
+	if (JOB.slot_lhan && length(JOB.slot_lhan) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_hand)
+	else if (length(JOB.slot_lhan))
+		H.equip_new_if_possible(JOB.slot_lhan[1], H.slot_l_hand)
+	// Right hand
+	if (JOB.slot_rhan && length(JOB.slot_rhan) > 1)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_r_hand)
+	else if (length(JOB.slot_rhan))
+		H.equip_new_if_possible(JOB.slot_rhan[1], H.slot_r_hand)
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
@@ -340,6 +427,13 @@
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
+
+		//remove problem traits from people on pod_wars
+		if (istype(ticker.mode, /datum/game_mode/pod_wars))
+			H.traitHolder.removeTrait("immigrant")
+			H.traitHolder.removeTrait("pilot")
+			H.traitHolder.removeTrait("puritan")
+
 		H.Equip_Job_Slots(JOB)
 
 	var/possible_new_mob = JOB.special_setup(src, no_special_spawn) //If special_setup creates a new mob for us, it should return the new mob!
@@ -352,7 +446,7 @@
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest)
+	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("immigrant"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -361,55 +455,55 @@
 			med_note = src.client.preferences.medical_note
 		data_core.addManifest(src, sec_note, med_note)
 
-	SPAWN_DBG(0)
-		if (ishuman(src))
-			if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
-				src:spawnId(rank)
-			if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
-				//Has the immigrant trait - they're hiding in a random locker
-				var/list/obj/storage/SL = list()
-				for_by_tcl(S, /obj/storage)
-					// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
-					if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
-						var/turf/simulated/T = S.loc
-						//Simple checks done, now do some environment checks to make sure it's survivable
-						if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
-							SL.Add(S)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (src.traitHolder && !src.traitHolder.hasTrait("immigrant"))
+			H.spawnId(rank)
+		if (src.traitHolder && src.traitHolder.hasTrait("immigrant"))
+			//Has the immigrant trait - they're hiding in a random locker
+			var/list/obj/storage/SL = list()
+			for_by_tcl(S, /obj/storage)
+				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
+				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
+					var/turf/simulated/T = S.loc
+					//Simple checks done, now do some environment checks to make sure it's survivable
+					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
+						SL.Add(S)
 
-				if(SL.len > 0)
-					src.set_loc(pick(SL))
+			if(SL.len > 0)
+				src.set_loc(pick(SL))
 
-			if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
-				var/turf/pilotSpawnLocation = null
+		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
+			var/turf/pilotSpawnLocation = null
 
-				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
-				#else														//This part of the code executes only if the map is a space one.
-				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
-				#endif
-				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
-					qdel(snappedDrone)
-				V.finish_board_pod(src)
+			#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+			while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+			if (pilotSpawnLocation)										//Sanity check.
+				src.set_loc(pilotSpawnLocation)
+			var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+			#else														//This part of the code executes only if the map is a space one.
+			while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+			if (pilotSpawnLocation)										//Sanity check.
+				src.set_loc(pilotSpawnLocation)
+			var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+			#endif
+			for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+				qdel(snappedDrone)
+			V.finish_board_pod(src)
 
-			if (prob(10) && islist(random_pod_codes) && random_pod_codes.len)
-				var/obj/machinery/vehicle/V = pick(random_pod_codes)
-				random_pod_codes -= V
-				if (V?.lock?.code)
-					boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
-					if (src.mind)
-						src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
+		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
+			var/obj/machinery/vehicle/V = pick(random_pod_codes)
+			random_pod_codes -= V
+			if (V?.lock?.code)
+				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
+				if (src.mind)
+					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
-			if (istraitor(src) && src.mind.late_special_role == 1)
-				//put this here because otherwise it's called before they have a PDA
-				equip_traitor(src)
+		if (istraitor(src) && src.mind.late_special_role == 1)
+			//put this here because otherwise it's called before they have a PDA
+			equip_traitor(src)
 
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)
@@ -417,7 +511,7 @@
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
-				for (var/obj/machinery/computer/announcement/A as() in machine_registry[MACHINES_ANNOUNCEMENTS])
+				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
@@ -434,14 +528,11 @@
 	return
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
+	equip_job_items(JOB, src)
 	if (JOB.slot_back)
-		src.equip_new_if_possible(JOB.slot_back, slot_back)
 		if (istype(src.back, /obj/item/storage))
-			for (var/X in JOB.items_in_backpack)
-				if(ispath(X))
-					src.equip_new_if_possible(X, slot_in_backpack)
 			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/D = new /obj/item/disk/data/floppy(src)
+				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
@@ -459,18 +550,18 @@
 					R.fields["abilities"] = A
 
 				SPAWN_DBG(0)
-					if(src.traitHolder && src.traitHolder.traits.len)
-						R.fields["traits"] = src.traitHolder.traits.Copy()
+					if(!isnull(src.traitHolder))
+						R.fields["traits"] = src.traitHolder.copy()
 
 				R.fields["imp"] = null
 				R.fields["mind"] = src.mind
-				R.name = "CloneRecord-[ckey(src.real_name)]"
 				D.root.add_file(R)
 
 				if (JOB.receives_security_disk)
 					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
 					authrec.fields = list("SEC"="[netpass_security]")
 					D.root.add_file( authrec )
+					D.read_only = 1
 
 				D.name = "data disk - '[src.real_name]'"
 
@@ -498,40 +589,6 @@
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, slot_in_backpack)
 
-	if (JOB.slot_jump)
-		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
-
-	if (JOB.slot_belt)
-		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-		if (JOB?.items_in_belt.len && istype(src.belt, /obj/item/storage))
-			for (var/X in JOB.items_in_belt)
-				if(ispath(X))
-					src.equip_new_if_possible(X, slot_in_belt)
-
-	if (JOB.slot_foot)
-		src.equip_new_if_possible(JOB.slot_foot, slot_shoes)
-	if (JOB.slot_suit)
-		src.equip_new_if_possible(JOB.slot_suit, slot_wear_suit)
-	if (JOB.slot_ears)
-		if (!(src.traitHolder && src.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears,/obj/item/device/radio/headset)))
-			src.equip_new_if_possible(JOB.slot_ears, slot_ears)
-	if (JOB.slot_mask)
-		src.equip_new_if_possible(JOB.slot_mask, slot_wear_mask)
-	if (JOB.slot_glov)
-		src.equip_new_if_possible(JOB.slot_glov, slot_gloves)
-	if (JOB.slot_eyes)
-		src.equip_new_if_possible(JOB.slot_eyes, slot_glasses)
-	if (JOB.slot_head)
-		src.equip_new_if_possible(JOB.slot_head, slot_head)
-	if (JOB.slot_poc1)
-		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
-	if (JOB.slot_poc2)
-		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
-	if (JOB.slot_rhan)
-		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
-	if (JOB.slot_lhan)
-		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
-
 	if (src.traitHolder?.hasTrait("immigrant") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
@@ -542,10 +599,15 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 		trinket = null //You better stay null, you hear me!
+	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
+		trinket = src.create_wig()
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(childrentypesof(/obj/item/clothing/head) - (typesof(/obj/item/clothing/head/bighat))) //IM A MONSTER DONT LOOK AT ME. NOOOOOOOOOOO
+		var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
 		trinket = new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
 		trinket = new/obj/item/clothing/head/tinfoil_hat
@@ -587,6 +649,16 @@
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				trinket.set_loc(get_turf(src))
 
+	if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
+		if (src.limbs)
+			SPAWN_DBG(6 SECONDS)
+				if (prob(50))
+					if (src.limbs.l_arm)
+						qdel(src.limbs.l_arm.remove(0))
+				else
+					if (src.limbs.r_arm)
+						qdel(src.limbs.r_arm.remove(0))
+				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 	return
 
 /mob/living/carbon/human/proc/spawnId(rank)
@@ -610,14 +682,15 @@
 			if(prob(50)) realName = replacetext(realName, "t", pick("d", "k"))
 			if(prob(50)) realName = replacetext(realName, "p", pick("b", "t"))
 
-			var/datum/data/record/B = FindBankAccountByName(src.real_name)
-			if (B?.fields["name"])
-				B.fields["name"] = realName
+			var/datum/db_record/B = FindBankAccountByName(src.real_name)
+			if (B?["name"])
+				B["name"] = realName
 
 		C.registered = realName
 		C.assignment = JOB.name
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 		C.access = JOB.access.Copy()
+		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, slot_wear_id))
 			src.equip_if_possible(C, slot_in_backpack)
@@ -633,13 +706,14 @@
 	boutput(src, "<span class='notice'>Your pin to your ID is: [C.pin]</span>")
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
+	src.mind?.remembered_pin = C.pin
 
 	if (wagesystem.jobs[JOB.name])
 		var/cashModifier = 1.0
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
-		var/obj/item/spacecash/S = unpool(/obj/item/spacecash)
+		var/obj/item/spacecash/S = new /obj/item/spacecash
 		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
 
 		if (isnull(src.get_slot(slot_r_store)))
@@ -663,39 +737,7 @@
 		boutput(src, "<span class='alert'><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
 		return
 
-	if (JOB.slot_back)
-		src.equip_new_if_possible(JOB.slot_back, slot_back)
-	if (JOB.slot_back && JOB?.items_in_backpack.len)
-		for (var/X in JOB.items_in_backpack)
-			if(ispath(X))
-				src.equip_new_if_possible(X, slot_in_backpack)
-	if (JOB.slot_jump)
-		src.equip_new_if_possible(JOB.slot_jump, slot_w_uniform)
-	if (JOB.slot_belt)
-		src.equip_new_if_possible(JOB.slot_belt, slot_belt)
-	if (JOB.slot_foot)
-		src.equip_new_if_possible(JOB.slot_foot, slot_shoes)
-	if (JOB.slot_suit)
-		src.equip_new_if_possible(JOB.slot_suit, slot_wear_suit)
-	if (JOB.slot_ears)
-		if (!(src.traitHolder && src.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears,/obj/item/device/radio/headset)))
-			src.equip_new_if_possible(JOB.slot_ears, slot_ears)
-	if (JOB.slot_mask)
-		src.equip_new_if_possible(JOB.slot_mask, slot_wear_mask)
-	if (JOB.slot_glov)
-		src.equip_new_if_possible(JOB.slot_glov, slot_gloves)
-	if (JOB.slot_eyes)
-		src.equip_new_if_possible(JOB.slot_eyes, slot_glasses)
-	if (JOB.slot_head)
-		src.equip_new_if_possible(JOB.slot_head, slot_head)
-	if (JOB.slot_poc1)
-		src.equip_new_if_possible(JOB.slot_poc1, slot_l_store)
-	if (JOB.slot_poc2)
-		src.equip_new_if_possible(JOB.slot_poc2, slot_r_store)
-	if (JOB.slot_rhan)
-		src.equip_new_if_possible(JOB.slot_rhan, slot_r_hand)
-	if (JOB.slot_lhan)
-		src.equip_new_if_possible(JOB.slot_lhan, slot_l_hand)
+	equip_job_items(JOB, src)
 
 	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(rank)
@@ -707,22 +749,31 @@
 
 	return
 
-// this proc is shit, make a better one 2day
-proc/bad_traitorify(mob/H, traitor_role="hard-mode traitor")
-	var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-	var/num_objectives = rand(1,3)
-	var/datum/objective/new_objective = null
-	for(var/i = 0, i < num_objectives, i++)
-		var/select_objective = pick(eligible_objectives)
-		new_objective = new select_objective
-		new_objective.owner = H.mind
-		new_objective.set_up()
-		H.mind.objectives += new_objective
-
-	H.mind.special_role = traitor_role
-	H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
-	if(!(H.mind in ticker.mode.traitors))
-		ticker.mode.traitors += H.mind
+// Convert mob to generic hard mode traitor or alternatively agimmick
+proc/antagify(mob/H, var/traitor_role, var/agimmick)
+	if (!(H.mind))
+		message_admins("Attempted to antagify [H] but could not find mind")
+		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
+		return
+	if (!agimmick)
+		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+		var/num_objectives = rand(1,3)
+		var/datum/objective/new_objective = null
+		for(var/i = 0, i < num_objectives, i++)
+			var/select_objective = pick(eligible_objectives)
+			new_objective = new select_objective
+			new_objective.owner = H.mind
+			new_objective.set_up()
+			H.mind.objectives += new_objective
+			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			ticker.mode.traitors |= H.mind
+	else
+		ticker.mode.Agimmicks |= H.mind
+		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+	if (traitor_role)
+		H.mind.special_role = traitor_role
+	else
+		H.mind.special_role = H.name
 	if (H.mind.current)
 		H.mind.current.antagonist_overlay_refresh(1, 0)
 
@@ -755,6 +806,6 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/clothing/head/mj_hat, /obj/item/clothing/head/red, /obj/item/clothing/head/that, /obj/item/clothing/head/wig, /obj/item/clothing/head/turban, /obj/item/dice/magic8ball,
 /obj/item/reagent_containers/food/drinks/mug/random_color, /obj/item/reagent_containers/food/drinks/skull_chalice, /obj/item/pen/marker/random, /obj/item/pen/crayon/random,
 /obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie, /obj/item/instrument/triangle, /obj/item/instrument/tambourine, /obj/item/instrument/cowbell,
-/obj/item/toy/plush/small/bee, /obj/item/paper/book/the_trial, /obj/item/paper/book/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
+/obj/item/toy/plush/small/bee, /obj/item/paper/book/from_file/the_trial, /obj/item/paper/book/from_file/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
 /obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
 /obj/item/seed/alien)

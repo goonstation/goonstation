@@ -18,8 +18,7 @@
 	H.update_colorful_parts()
 
 	abilityHolder.addAbility(/datum/targetable/steal_shoes)
-	abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
-	abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
+	abilityHolder.addAbility(/datum/targetable/hide_between_floors)
 	abilityHolder.addAbility(/datum/targetable/ankle_bite)
 	ticker.mode.Agimmicks.Add(H)
 
@@ -77,6 +76,61 @@
 		.["Shoes stolen:"] = points
 		return
 
+/datum/targetable/hide_between_floors
+	name = "Toggle Reveal"
+	desc = "Toggle your ability to hide between the floor tiles."
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "floorgoblin_hide"
+	targeted = 0
+	cooldown = 0
+
+	tryCast()
+		if (is_incapacitated(holder.owner))
+			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			src.holder.locked = 0
+			return 999
+		. = ..()
+
+	cast(atom/T)
+		var/mob/M = src.holder.owner
+		if (!M) return
+		var/turf/floorturf = get_turf(M)
+		var/x_coeff = rand(0, 1)	// open the floor horizontally
+		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
+		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
+
+		if(M.layer == BETWEEN_FLOORS_LAYER)
+			M.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
+			APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
+			REMOVE_MOB_PROPERTY(M, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
+			REMOVE_MOB_PROPERTY(M, PROP_NEVER_DENSE, "floorswitching")
+			M.set_density(initial(M.density))
+			if (floorturf.intact)
+				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			SPAWN_DBG(0.4 SECONDS)
+				if(M)
+					M.layer = MOB_LAYER
+					M.plane = PLANE_DEFAULT
+					REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
+				if(floorturf?.intact)
+					animate_slide(floorturf, 0, 0, 4)
+
+		else
+			APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
+			if (floorturf.intact)
+				animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			SPAWN_DBG(0.4 SECONDS)
+				if(M)
+					REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "floorswitching")
+					APPLY_MOB_PROPERTY(M, PROP_NO_MOVEMENT_PUFFS, "floorswitching")
+					APPLY_MOB_PROPERTY(M, PROP_NEVER_DENSE, "floorswitching")
+					M.flags |= NODRIFT | DOORPASS | TABLEPASS
+					M.set_density(0)
+					M.layer = BETWEEN_FLOORS_LAYER
+					M.plane = PLANE_FLOOR
+				if(floorturf?.intact)
+					animate_slide(floorturf, 0, 0, 4)
+
 /datum/targetable/ankle_bite
 	name = "Ankle Bite"
 	desc = "Trip a target by biting at their ankles."
@@ -111,7 +165,7 @@
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 		var/turf/floorturf = get_turf(holder.owner)
 
-		if(holder.owner.plane == PLANE_UNDERFLOOR)
+		if(holder.owner.layer == BETWEEN_FLOORS_LAYER)
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			APPLY_MOB_PROPERTY(holder.owner, PROP_CANTMOVE, "floorbiting")
 			SPAWN_DBG(0.4 SECONDS)
@@ -169,7 +223,7 @@
 
 		var/mob/living/carbon/human/target_human = target
 		var/turf/floorturf = get_turf(holder.owner)
-		if(holder.owner.plane == PLANE_UNDERFLOOR && floorturf)
+		if(holder.owner.layer == BETWEEN_FLOORS_LAYER && floorturf)
 			var/x_coeff = rand(0, 1)	// open the floor horizontally
 			var/y_coeff = !x_coeff // or vertically but not both - it looks weird
 			var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath

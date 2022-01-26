@@ -200,7 +200,7 @@
 							src.print_text("New mailserver address set.")
 
 					if (2)
-						var/new_max_lines = round(text2num(command))
+						var/new_max_lines = round(text2num_safe(command))
 						if (new_max_lines < 1 || new_max_lines > 64)
 							src.print_text("Invalid value.")
 						else
@@ -238,7 +238,7 @@
 						src.print_text("Mode set to: Reply to Mail Entry.")
 
 					else
-						var/index_number = round( max( text2num(command), 0) )
+						var/index_number = round( max( text2num_safe(command), 0) )
 						if (index_number == 0)
 							src.menu = MENU_MAIN
 							src.master.temp = null
@@ -263,7 +263,7 @@
 								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									var/dat = ""
-									var/end_max = max( min(mail_temp.len, max_lines) - 8, 0)
+									var/end_max = clamp(length(mail_temp), 8, max_lines) - 8
 									for (var/i = 1, i <= end_max, i++)
 										dat += "<br>[mail_temp[i]]"
 
@@ -338,7 +338,7 @@
 								return
 
 			if (MENU_MAIL_VIEW)
-				if (command == "0" || (!src.mail_temp || !src.mail_temp.len))
+				if (command == "0" || (!src.mail_temp || !length(src.mail_temp)))
 					src.menu = MENU_MAIL_INDEX
 					src.master.temp = null
 					src.print_text(mailbox_text())
@@ -478,7 +478,7 @@
 									return
 
 								if ("!del")
-									if (!istype(src.mail_temp) || !src.mail_temp.len)
+									if (!istype(src.mail_temp) || !length(src.mail_temp))
 										return
 
 									src.mail_temp.len--
@@ -500,7 +500,7 @@
 						return
 
 					if (EDIT_MODE_FWD_TARGET)
-						if (command == "0" || !istype(mail_temp) || !mail_temp.len)
+						if (command == "0" || !istype(mail_temp) || !length(mail_temp))
 							src.menu = MENU_MAIL_INDEX
 							src.master.temp = null
 							src.print_text(mailbox_text())
@@ -624,7 +624,7 @@
 								src.mail_temp = null
 
 							var/list/headerList = params2list(entryRecord.fields[1])
-							if (!headerList || !headerList.len)
+							if (!headerList || !length(headerList))
 								return
 
 							src.header_temp = headerList
@@ -769,7 +769,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 
 		mailbox_text()
 			. = "Message List:"
-			if (istype(mail_index) && mail_index.len)
+			if (istype(mail_index) && length(mail_index))
 				var/leadingZeroCount = length("[mail_index.len]")
 				for (var/i = 1, i <= mail_index.len, i++)
 					var/iTitle = mail_index[i]

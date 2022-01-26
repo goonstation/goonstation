@@ -6,6 +6,8 @@
 	var/powergenerated = 200 //how much power for components the engine generates
 	var/currentgen = 200 //handles engine power debuffs
 	var/warprecharge = 300 //Interval it takes for warp to be ready again
+	//delay between dropping wormhole and being able to enter it
+	var/portaldelay = 3 SECONDS
 	var/status = "Normal"
 	var/speedmod = 2 // how fast should the vehicle be, lower is faster
 	var/wormholeQueued = 0 //so users cant open a million inputs and bypass all cooldowns
@@ -66,7 +68,7 @@
 		boutput(usr, "[ship.ship_message("No sensors detected! Unable to calculate warp trajectory!")]")
 		return
 
-	//brake the pod, we must stop to calculate warp trajectory. 
+	//brake the pod, we must stop to calculate warp trajectory.
 	if (istype(ship.movement_controller, /datum/movement_controller/pod))
 		var/datum/movement_controller/pod/MCP = ship.movement_controller
 		if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
@@ -82,8 +84,17 @@
 
 
 	var/list/beacons = list()
-	for(var/obj/warp_beacon/W in warp_beacons)
+	//This is bad and dumb. I should turn the by_type[/obj/warp_beacon] list into a manager datum, but this is already taking too long. -kyle
+	//I realize the possiblity of a bug where if you sit here ready to warp when it's about to change and then warp, but whatever
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/pilot_team = get_pod_wars_team_num(ship?.pilot)
+	for(var/obj/warp_beacon/pod_wars/W in by_type[/obj/warp_beacon])
+		if (W.current_owner == pilot_team)
+			beacons += W
+#else
+	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 		beacons += W
+#endif
 	for (var/obj/machinery/tripod/T in machine_registry[MACHINES_MISC])
 		if (istype(T.bulb, /obj/item/tripod_bulb/beacon))
 			beacons += T
@@ -92,6 +103,13 @@
 	if(!target)
 		wormholeQueued = 0
 		return
+
+#if defined(MAP_OVERRIDE_POD_WARS)
+	var/obj/warp_beacon/pod_wars/W = target
+	if (istype(W) && W.current_owner != pilot_team)
+		boutput(usr, "Your access codes to this beacon are no longer working!")
+		return
+#endif
 	var/turf/T = ship.loc
 	if (!T.allows_vehicles)
 		boutput(usr, "[ship.ship_message("Cannot create wormhole on this flooring!")]")
@@ -115,7 +133,7 @@
 	portal_px_offset(P, warp_dir, dist)
 	animate(P, transform = matrix(1, MATRIX_SCALE), pixel_x = 0, pixel_y = 0, time = 30, easing = ELASTIC_EASING )
 
-	sleep(30)
+	sleep(portaldelay)
 	P.target = target
 	ready = 0
 	warp_autopilot = 0
@@ -127,7 +145,7 @@
 	switch(direction)
 		if(NORTH)
 			A.pixel_y = -dist*32
-		if(SOUTH)
+		if(SOUTH) 
 			A.pixel_y = dist*32
 		if(EAST)
 			A.pixel_x = -dist*32
@@ -171,3 +189,9 @@
 	warprecharge = -1 //This disables the ability to create wormholes completely.
 	speedmod = 2
 	icon_state = "engine-4"
+
+/obj/item/shipcomponent/engine/escape
+	name = "Rickety Old Engine"
+	desc = "This engine can probably make a warp jump. Once."
+	warprecharge = 20 MINUTES
+	portaldelay = 0 SECONDS

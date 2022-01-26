@@ -1,5 +1,4 @@
-import { Fragment } from 'inferno';
-import { Button, LabeledList, Section, Box, Flex, Divider } from '../../components';
+import { Box, Button, Divider, Flex, LabeledList, Section } from '../../components';
 import { DetonatorTimer } from './DetonatorTimer';
 
 export const Detonator = props => {
@@ -56,7 +55,7 @@ const DetonatorWires = props => {
               <Box
                 height={1.7}>
                 { (wireStatus && wireStatus[i]) ? (
-                  <Fragment>
+                  <>
                     <Button
                       icon="cut"
                       content="Cut"
@@ -65,7 +64,7 @@ const DetonatorWires = props => {
                       icon="bolt"
                       content="Pulse"
                       onClick={() => onWireInteract("pulse", i)} />
-                  </Fragment>)
+                  </>)
                   : (
                     <Box
                       color="average"

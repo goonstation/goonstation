@@ -1,0 +1,45 @@
+	<h3> Creature Conspectus</h3>
+	<b>Agent</b>, Syndicate
+	<br>
+	<br>Frequency: Rare
+	<br>NO. Appearing: 1-5
+	<br>Armor Class: 5
+	<br>Move: 5"
+	<br>Hit Dice: 1 + 1
+	<br>% in Lair: 0%
+	<br>Treasure Type: See below
+	<br>NO. of Attacks: 1
+	<br>Damage/Attack: 4-8
+	<br>Special Attacks: Casts Fireball on death.
+	<br>Special Defenses: Nil
+	<br>Void Resistance: Variable (See below)
+	<br>Intelligence: Average
+	<br>Alignment: Lawful Maladjusted
+	<br>Size: M
+	<br>Psionic Ability: Telepathic communication with other Agents.
+	<hr>
+	<b>Greysuit</b>, armored
+	<br>
+	<br>Frequency: Uncommon
+	<br>NO. Appearing: 1-3
+	<br>Armor Class: 6
+	<br>Move: 5"
+	<br>Hit Dice: 1 + 1
+	<br>% in Lair: 0%
+	<br>Treasure Type: See below
+	<br>NO. of Attacks: 1
+	<br>Damage/Attack: 4-8
+	<br>Special Attacks: 50% likely to adminhelp
+	<br>Special Defenses: Nil
+	<br>Void Resistance: Nil
+	<br>Intelligence: Low
+	<br>Alignment: Chaotic Maladjusted
+	<br>Size: M
+	<br>Psionic Ability: Nil
+	<p>This lesser humanoid, native to the deepest caverns of Maynnetince, is a variant of the common greysuit exhibiting a series of peculiar
+	defensive mutations.  Firstly, the torso of the creature is a encased in a thick hide of a notably darker hue than that of an ordinary greysuit.
+	Secondly, the head of the beast differs significantly from their unarmored brethren, with a large done of protective grey bone encasing much of the skull.
+	The armored greysuit's eyes also receive a limited degree of protection from a translucent manner of tertiary eyelid attached directly to the skull case.
+	The true danger of the armored greysuit, however, comes from its choice of weapon: many (65% chance) wield a fearsome shockmace into combat.<br>
+	The corpse of this fiend may yield its namesake armor (For details, see pg 289).</p>
+	<hr>

@@ -87,7 +87,7 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(get_turf(usr), "sound/weapons/launcher.ogg", 70, 0, 0)
+	playsound(usr, "sound/weapons/launcher.ogg", 70, 0, 0)
 	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -98,7 +98,7 @@
 	set category = "Batman"
 	set name = "Batarang \[Combat]"
 	usr.visible_message("<span class='alert'>[usr] tosses a batarang at [T]!</span>", "<span class='alert'>You toss a batarang at [T]!</span>")
-	playsound(get_turf(usr), pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+	playsound(usr, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
@@ -109,7 +109,7 @@
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (get_dist(A,T) < 1)
-			playsound(get_turf(T), "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
+			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
@@ -346,3 +346,31 @@
 				T.throw_at(tturf, 4, 2)
 		sleep(0.1 SECONDS)
 
+obj/item/batarang
+	name = "Batarang"
+	desc = "A metal boomerang in the shape of a bat, it looks sharp."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "batarang"
+
+	force = 5
+	contraband = 4
+
+	throwforce = 8
+	throw_range = 10
+	throw_speed = 1
+	throw_return = 1
+	hitsound = "sound/impact_sounds/Flesh_Stab_3.ogg"
+	hit_type = DAMAGE_CUT
+
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if (ishuman(hit_atom))
+			var/mob/living/carbon/human/H = hit_atom
+			H.changeStatus("weakened", 1 SECONDS)
+			H.force_laydown_standup()
+			take_bleeding_damage(H, null, 10)
+			playsound(src, hitsound, 60, 1)
+
+		else
+			return

@@ -24,7 +24,7 @@
 		src.overlays += image('icons/obj/objects.dmi', "DAn-Oe")
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(var/mob/user as mob)
 		src.add_dialog(user)
@@ -56,7 +56,7 @@
 
 	Topic(href, href_list)
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Attempt to Create Vaccine
 				if (src.datareagent == "N/A" || src.datareagent == "No virii detected")
 					for(var/mob/O in hearers(src, null))
@@ -70,7 +70,7 @@
 				src.icon_state = "DAn-on"
 				for(var/mob/O in hearers(src, null))
 					O.show_message(text("<b>[]</b> states, 'Commencing work.'", src), 1)
-				if(src.active_vial.reagents && src.active_vial.reagents.reagent_list.len)
+				if(src.active_vial.reagents && length(src.active_vial.reagents.reagent_list))
 					for(var/current_id in src.active_vial.reagents.reagent_list)
 						var/datum/reagent/disease/current_disease = src.active_vial.reagents.reagent_list[current_id]
 						if(istype(current_disease))

@@ -746,7 +746,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "acf" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "engout-solar";
 	name = "Outpost solar control"
 	},
@@ -2107,7 +2107,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "afG" = (
@@ -5984,14 +5984,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"asj" = (
-/obj/table/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor/carpet/arcade/blank,
-/area/station/crew_quarters/captain)
 "ask" = (
 /obj/table/auto,
 /obj/item/card/id/captains_spare,
@@ -6429,10 +6421,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "att" = (
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/captain)
-"atu" = (
-/obj/displaycase,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "atv" = (
@@ -14160,7 +14148,7 @@
 /turf/simulated/floor,
 /area/station/engine/storage)
 "aUg" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -17824,7 +17812,7 @@
 /area/station/hallway/secondary/exit)
 "bgN" = (
 /turf/space,
-/area/shuttle/escape/station/destiny)
+/area/shuttle/escape/station)
 "bgO" = (
 /obj/machinery/light,
 /obj/stool/chair/comfy/shuttle{
@@ -18339,18 +18327,6 @@
 	},
 /obj/item/ammo/bullets/a38,
 /obj/item/ammo/bullets/a38/stun,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
-"biv" = (
-/obj/machinery/light/small,
-/obj/table/wood{
-	dir = 9
-	},
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "biw" = (
@@ -20061,7 +20037,7 @@
 	dir = 8;
 	tag = "icon-tube1 (WEST)"
 	},
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "bmU" = (
@@ -23382,10 +23358,7 @@
 	name = "Cookomatic Multi-Oven Owner's Manual"
 	},
 /obj/window/reinforced/south,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "buF" = (
@@ -28153,6 +28126,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"edc" = (
+/obj/table/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/station/crew_quarters/captain)
 "edA" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -28567,7 +28548,7 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "fpz" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control"
 	},
@@ -28773,6 +28754,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/engineering)
+"fYF" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/captain)
 "gck" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -30379,6 +30366,18 @@
 	},
 /turf/simulated/floor,
 /area/station/science/chemistry)
+"kBd" = (
+/obj/machinery/light/small,
+/obj/table/wood{
+	dir = 9
+	},
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "kBe" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -33198,7 +33197,7 @@
 /turf/simulated/floor,
 /area/station/teleporter)
 "sRs" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control"
 	},
@@ -72466,7 +72465,7 @@ aaa
 aaa
 aaa
 arE
-asj
+edc
 atp
 auK
 arE
@@ -75185,7 +75184,7 @@ aqo
 ark
 apu
 asq
-atu
+fYF
 auR
 arE
 aab
@@ -78833,7 +78832,7 @@ bcq
 bdJ
 bdG
 bhx
-biv
+kBd
 bcq
 aTW
 bAx

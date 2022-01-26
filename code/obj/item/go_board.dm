@@ -57,8 +57,8 @@
 							break
 				if(matchfound == 0)
 					src.piecelist.Add(list(list("position"=href_list["position"],"color"=href_list["color"])))
-				var offsetx = text2num(href_list["offsetx"])
-				var offsety = text2num(href_list["offsety"])
+				var offsetx = text2num_safe(href_list["offsetx"])
+				var offsety = text2num_safe(href_list["offsety"])
 				var color = href_list["color"]
 
 				if(!(src.GetOverlayImage("[href_list["position"]]")))
@@ -179,7 +179,7 @@
 			boutput(user, "<span style=\"color:red\">This piece doesn't go in that bowl, silly!</span>")
 			return
 
-		src.visible_message("<span><b>[usr]</b> adds [total] [color] stones to the bowl!</span>")
+		src.visible_message("<span><b>[user]</b> adds [total] [color] stones to the bowl!</span>")
 
 /obj/item/gobowl/b
 	name = "bowl of black stones"
@@ -197,7 +197,7 @@
 
 /obj/item/gostone
 	icon = 'icons/obj/items/items.dmi'
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/item/gostone/b
 	name = "black stone"

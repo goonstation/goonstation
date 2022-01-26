@@ -1,7 +1,7 @@
 /datum/projectile/rad_bolt
 	name = "bolt"
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "bullet" // changed from radbolt - cogwerks
+	icon_state = "cbbolt" // changed from radbolt - cogwerks
 //How much of a punch this has, tends to be seconds/damage before any resist
 	power = 100
 //How much ammo this costs
@@ -34,5 +34,7 @@ toxic - poisons
 	hit_ground_chance = 50
 	//Can we pass windows
 	window_pass = 1
-	//no visible message upon bullet_act
+	//no visible message upon bullet_act and no armor block message
 	silentshot = 1
+	//Prevent impact effect
+	ie_type = null

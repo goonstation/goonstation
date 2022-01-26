@@ -6,7 +6,7 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		key_name = input("Remote name", "Remote name", "remote control") as text
 		boutput(usr, "<span class='notice'>Left click to place remotes, right click triggerables to (de)select them for automatic assignment to the keys. Ctrl+click anywhere to finish.</span>")
@@ -19,13 +19,13 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
@@ -35,21 +35,21 @@
 				key.triggered = selected_triggerable.Copy()
 				SPAWN_DBG(1 SECOND)
 					key.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
 				if (object in selected_triggerable)
 					object.overlays -= selection
 					selected_triggerable -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						object.overlays += selection
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/item/adventurepuzzle/triggerer/remotecontrol
 	name = "remote control"

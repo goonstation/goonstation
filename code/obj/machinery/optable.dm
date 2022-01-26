@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1.0
 	mats = 25
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER 
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0.0
 
@@ -22,12 +22,10 @@
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
 				qdel(src)
 				return
 		if(3.0)
@@ -41,15 +39,13 @@
 		qdel(src)
 
 /obj/machinery/optable/attack_hand(mob/user as mob)
-	if (usr.is_hulk())
+	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
 		qdel(src)
 	return
 
-/obj/machinery/optable/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
+/obj/machinery/optable/Cross(atom/movable/O as mob|obj)
 	if (!O)
 		return 0
 	if ((O.flags & TABLEPASS || istype(O, /obj/newmeteor)))

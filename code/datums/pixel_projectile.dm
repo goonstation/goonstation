@@ -137,7 +137,7 @@ atom/movable/proc/set_pos_px(px, py)
 		var/self = src
 		src = null
 		SPAWN_DBG(0)
-			if (self) pool(self)
+			if (self) qdel(self)
 
 	proc/update()
 		//update position
@@ -247,7 +247,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	m_amt = 2000
 	force = 10.0
 	throwforce = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 6
 	contraband = 0
@@ -335,12 +335,12 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		return
 	//Update that icon, having it here means we dont need it in each process_ammo proc
-	update_icon()
+	UpdateIcon()
 	//Play a sound if we have one
 	if(src.current_projectile.shot_sound)
 		playsound(user, src.current_projectile.shot_sound, 50)
 	//Don't even create the new projectile if the target isn't turf
-	var/obj/pixel_projectile/P = unpool(/obj/pixel_projectile)
+	var/obj/pixel_projectile/P = new /obj/pixel_projectile
 	P.setup( get_turf(user) , 10 ) // number is velocity
 	//Give it the info datum and shoooot
 	P.fire(current_projectile, user, target)
@@ -359,7 +359,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 	..()
 	return
 
-/obj/item/pixel_gun/proc/update_icon()
+/obj/item/pixel_gun/UpdateIcon()
 	return 0
 
 /obj/item/pixel_gun/proc/process_ammo(var/mob/user)
@@ -385,7 +385,7 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		..()
 
-	update_icon()
+	UpdateIcon()
 		if(cell)
 			var/ratio = src.cell.charge / src.cell.max_charge
 			ratio = round(ratio, 0.25) * 100
@@ -439,11 +439,11 @@ turf/proc/collide_here(var/obj/pixel_projectile/p)
 			..()
 
 	attack_hand(mob/user as mob)
-		if ((user.r_hand == src || user.l_hand == src) && src.contents && src.contents.len)
+		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			if (src.cell&&!src.rechargeable)
 				user.put_in_hand_or_drop(src.cell)
 				src.cell = null
-				update_icon()
+				UpdateIcon()
 				src.add_fingerprint(user)
 		else
 			return ..()

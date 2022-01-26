@@ -19,7 +19,7 @@
 	var/gain_rate = 1
 	var/drain_rate = 1
 
-	var/obj/screen/hud/hud = new
+	var/atom/movable/screen/hud/hud = new
 
 	New(var/is_control = 0)
 		..()
@@ -115,7 +115,7 @@
 		var/prev_value = value
 		var/affection_mod = amt < 0 ? drain_rate : gain_rate //Negative change, use drain modifier, positive, use gain modifier
 
-		value = max(min(value + (amt * affection_mod), 100), 0)
+		value = clamp(value + (amt * affection_mod), 0, 100)
 		if (prev_value < 100 && value >= 100)
 			onFill()
 		else if (prev_value > 0 && value <= 0)
@@ -280,7 +280,7 @@
 			*/
 			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
 			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.create_weak()
 				P.spread = 0
 				holder.owner.infected(P)
@@ -673,7 +673,7 @@ var/global/datum/simsControl/simsController = new()
 			var/mob/living/carbon/human/H = owner
 			for (var/name in motives)
 				var/datum/simsMotive/M = motives[name]
-				var/obj/screen/hud/hud = M.hud
+				var/atom/movable/screen/hud/hud = M.hud
 				hud.screen_loc = "NORTH-[SY],EAST"
 				SY++
 				H.hud.add_screen(hud)
@@ -683,7 +683,7 @@ var/global/datum/simsControl/simsController = new()
 			var/mob/living/carbon/human/H = owner
 			for (var/name in motives)
 				var/datum/simsMotive/M = motives[name]
-				var/obj/screen/hud/hud = M.hud
+				var/atom/movable/screen/hud/hud = M.hud
 				H.hud.remove_screen(hud)
 			if (plumbob && islist(H.attached_objs))
 				H.attached_objs -= plumbob
@@ -701,7 +701,7 @@ var/global/datum/simsControl/simsController = new()
 		..()
 
 	proc/updateHudIcons(var/icon/I)
-		if (!I || !src.motives.len)
+		if (!I || !length(src.motives))
 			return
 		for (var/name in motives)
 			var/datum/simsMotive/M = motives[name]
@@ -709,7 +709,7 @@ var/global/datum/simsControl/simsController = new()
 				M.updateHudIcon(I)
 
 	proc/getMoodActionMultiplier()
-		if (!motives || !motives.len)
+		if (!motives || !length(motives))
 			return 1
 		if (!base_mood_value)
 			base_mood_value = 1
@@ -756,7 +756,7 @@ var/global/datum/simsControl/simsController = new()
 				attach_plum(owner)
 
 			plumbob.color = rgb((1 - color_t) * 255, color_t * 255, 0)
-			plumbob.light.set_color(1 - color_t, color_t, 0)
+			plumbob.add_simple_light("plumbob", list(1 - color_t, color_t, 0, 100))
 
 /obj/effect/plumbob
 	name = "plumbob"
@@ -766,24 +766,20 @@ var/global/datum/simsControl/simsController = new()
 	anchored = 1.0
 	pixel_y = 32
 	var/mob/living/owner
-	var/datum/light/light
 
 	New()
 		..()
 		animate_bumble(src, Y1 = 32, Y2 = 30, slightly_random = 0)
-		light = new /datum/light/point
-		light.attach(src)
-		light.set_brightness(0.5)
-		light.enable()
+		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (owner)
-			owner.attackby(W, user)
+			owner.Attackby(W, user)
 
 	attack_hand(mob/user as mob)
 		if (owner)
-			owner.attack_hand(user)
+			owner.Attackhand(user)
 
 	attack_ai(mob/user as mob)
 		if (owner)

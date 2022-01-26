@@ -25,6 +25,8 @@
 	blood_id = "oil"
 	use_stamina = 0
 	can_lie = 0
+	canbegrabbed = FALSE // silicons can't be grabbed, they're too bulky or something
+	grabresistmessage = "but can't get a good grip!"
 
 	dna_to_absorb = 0 //robots dont have DNA for fuck sake
 
@@ -54,6 +56,20 @@
 
 /mob/living/silicon/proc/show_laws()
 	return
+
+/mob/living/silicon/proc/return_mainframe()
+	if (mainframe)
+		mainframe.return_to(src)
+	else
+		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
+		return
+
+/mob/living/silicon/proc/become_eye()
+	if (!mainframe)
+		return
+	src.return_mainframe()
+	mainframe.eye_view()
+	mainframe.eyecam.set_loc(src)
 
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
@@ -156,6 +172,12 @@
 /mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
 	return
 
+/mob/living/silicon/has_any_hands()
+	// no hands :(
+
+	// unless...
+	. = istype(src.equipped(), /obj/item/magtractor)
+
 /mob/living/silicon/put_in_hand(obj/item/I, hand)
 	if (!I) return 0
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))
@@ -171,7 +193,7 @@
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
 
-	var/inrange = in_range(target, src)
+	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
 	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
@@ -485,14 +507,20 @@ var/global/list/module_editors = list()
 	else
 		return 1
 
-/mob/living/silicon/choose_name(var/retries = 3)
+/mob/living/silicon/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	var/newname
+	if(isnull(default_name))
+		default_name = src.real_name
 	for (retries, retries > 0, retries--)
-		newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", src.real_name) as null|text
+		if(force_instead)
+			newname = default_name
+		else
+			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			if(newname && newname != default_name)
+				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
 			src.real_name = borgify_name("Robot")
-			src.name = src.real_name
-			return
+			break
 		else
 			newname = strip_html(newname, MOB_NAME_MAX_LENGTH, 1)
 			if (!length(newname) || copytext(newname,1,2) == " ")
@@ -501,13 +529,18 @@ var/global/list/module_editors = list()
 			else
 				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
 					src.real_name = newname
-					src.name = newname
-					return 1
+					break
 				else
 					continue
 	if (!newname)
 		src.real_name = borgify_name("Robot")
-		src.name = src.real_name
+
+	src.UpdateName()
+
+/mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
+	. = ..()
+	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+	src.internal_pda.owner = "[src.name]"
 
 /proc/borgify_name(var/start_name = "Robot")
 	if (!start_name) // somehow
@@ -528,9 +561,9 @@ var/global/list/module_editors = list()
 
 	if (remove == 1)
 		if (src.mind.special_role && src.mind.master) // Synthetic thralls are a thing, somehow.
-			if (src.mind.special_role == "mindslave")
+			if (src.mind.special_role == ROLE_MINDSLAVE)
 				remove_mindslave_status(src, "mslave", "death")
-			else if (src.mind.special_role == "vampthrall")
+			else if (src.mind.special_role == ROLE_VAMPTHRALL)
 				remove_mindslave_status(src, "vthrall", "death")
 			else if (src.mind.master)
 				remove_mindslave_status(src, "otherslave", "death")
@@ -544,15 +577,15 @@ var/global/list/module_editors = list()
 			var/role = ""
 			var/persistent = 0
 			if (src.emagged)
-				role = "emagged robot"
+				role = ROLE_EMAGGED_ROBOT
 			else if (src.syndicate && !src.emagged)
-				role = "Syndicate robot"
+				role = ROLE_SYNDICATE_ROBOT
 
 			var/mob/M
 			if (source && ismob(source))
 				M = source
 
-			if (src.mind.special_role == "emagged robot" || src.mind.special_role == "syndicate robot")
+			if (src.mind.special_role == ROLE_EMAGGED_ROBOT || src.mind.special_role == ROLE_SYNDICATE_ROBOT)
 				var/copy = src.mind.special_role
 				remove_antag(src, null, 1, 0)
 				if (!src.mind.former_antagonist_roles.Find(copy))
@@ -611,7 +644,7 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was made an emagged robot.[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = "emagged robot"
+				src.mind.special_role = ROLE_EMAGGED_ROBOT
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 
@@ -632,7 +665,7 @@ var/global/list/module_editors = list()
 					logTheThing("combat", src, M2 ? M2 : null, "was made a Syndicate robot at [log_loc(src)].[M2 ? " Source: [constructTarget(M2,"combat")]" : ""]")
 
 			if (!src.mind.special_role) // Preserve existing antag role (if any).
-				src.mind.special_role = "syndicate robot"
+				src.mind.special_role = ROLE_SYNDICATE_ROBOT
 				if (!(src.mind in ticker.mode.Agimmicks))
 					ticker.mode.Agimmicks += src.mind
 

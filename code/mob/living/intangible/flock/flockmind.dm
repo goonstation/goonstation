@@ -14,6 +14,7 @@
 /mob/living/intangible/flock/flockmind/New()
 	..()
 
+	APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 	src.last_time = world.timeofday
 
@@ -62,7 +63,7 @@
 	if(src.flock)
 		var/obj/flock_structure/rift/r = new(get_turf(src), src.flock)
 		r.mainflock = src.flock
-		playsound(get_turf(src), "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
+		playsound(src, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
@@ -81,17 +82,11 @@
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 
-/mob/living/intangible/flock/flockmind/proc/addAbility(var/abilityType)
-	src.abilityHolder.addAbility(abilityType)
-
-/mob/living/intangible/flock/flockmind/proc/removeAbility(var/abilityType)
-	src.abilityHolder.removeAbility(abilityType)
-
 /mob/living/intangible/flock/flockmind/death(gibbed)
 	if(src.client)
 		boutput(src, "<span class='alert'>With the last of your drones dying, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
 	src.flock?.perish()
-	src.invisibility = 0
+	REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = 0
 	flick("flockmind-death", src)

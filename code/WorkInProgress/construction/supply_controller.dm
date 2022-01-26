@@ -290,7 +290,7 @@
 
 /datum/supply_control/cable_kit
 	maximum_stock = 3
-	supply_packs = list(/datum/supply_packs/electrical/red)
+	supply_packs = list(/datum/supply_packs/electrical)
 
 /datum/supply_control/homing_kit
 	maximum_stock = 3
@@ -733,7 +733,7 @@
 						showswirl(get_turf(out_target))
 						out_target.used()
 		else if (href_list["mode"])
-			mode = text2num(href_list["mode"])
+			mode = text2num_safe(href_list["mode"])
 		attack_hand(usr)
 
 	attack_hand(var/mob/user)

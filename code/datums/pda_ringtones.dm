@@ -5,6 +5,11 @@
 /// Pick a random index
 #define RINGLIST_RANDOM 2
 
+/// type filter for ringtones that're suposed to be selectable at roundstart
+proc/filter_is_character_setup_ringtone(type)
+	var/datum/ringtone/r_tone = type
+	return initial(r_tone.canSpawnWith)
+
 /// Ringtones that'll get mashed into a PDA
 /datum/ringtone
 	var/name = "Two-Beep"
@@ -50,6 +55,10 @@
 	var/descText = "Description:"
 	/// Does this ringtone have special message-specific functionality?
 	var/readMessages = 0
+	/// Can this ringtone be selected through character creation?
+	var/canSpawnWith = 1
+	/// Extrarange added to all ringtones here
+	var/extrarange_adjustment = -27
 
 	New(var/obj/item/device/pda2/thisPDA)
 		..()
@@ -64,7 +73,7 @@
 	proc/PlayRingtone(var/use_short = 0)
 		if(!istype(holder))
 			return // we havent been put in a PDA yet!
-		playsound(get_turf(src.holder), ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex], src.pitchList[src.ringListIndex])
+		playsound(src.holder, ((use_short && src.has_short) ? src.ringShortList[src.ringListIndex] : src.ringList[src.ringListIndex]), src.volList[src.ringListIndex], src.varyList[src.ringListIndex], src.rangeList[src.ringListIndex] + extrarange_adjustment, src.pitchList[src.ringListIndex])
 		src.DoSpecialThing(src.ringListIndex)
 		if(src.alertList[ringListIndex])
 			. = src.alertList[ringListIndex]
@@ -110,6 +119,7 @@
 									"ARF")
 	pitchList = list(0.8, 1, 0.7, 1, 1.1, 1, 1, 0.6)
 	rangeList = list(5, 0, 0, 0, 0, 0, 0, 0)
+	extrarange_adjustment = -24
 	listCycleType = RINGLIST_RANDOM
 	succText = "<span class='alert'>*WELCOME THE HECK TO THE PACK*</span>"
 	previewMessage = "GRR RAGH ARGFH AWROO RAFF RARFH THIS IS A PREVIEW OF THE M'F'IN WOLF PACK THRASHTONE TRY BEFORE YOU BUY ARGH WOOF AGRR"
@@ -118,6 +128,7 @@
 	previewText = "<b><u><i>WOOF</i></u></b>"
 	nameText = "<b><u><i>ALPHAAA</i></u></b>:"
 	descText = "<b><u><i>WOOF</i></u></b>:"
+	canSpawnWith = 0
 
 /datum/ringtone/dogs/lessdogs
 	name = "dog pack"
@@ -175,6 +186,7 @@
 	previewText = "Preview"
 	nameText = "Learnventure:"
 	descText = ""
+	canSpawnWith = 0
 	var/agentname
 	var/explode = 1
 	var/detonating
@@ -220,6 +232,7 @@
 	previewText = "Rehearsal!"
 	nameText = "Role:"
 	descText = "Motivation:"
+	canSpawnWith = 0
 
 /datum/ringtone/clown/horn
 	name = "Buzzo's Bleater"
@@ -459,7 +472,7 @@ bathing in her ennui and showering her with money.
 	nameText = "Idea:"
 	descText = "Inspiration:"
 
-/datum/ringtone/basic/ring9
+/datum/ringtone/basic/ring10
 	name = "Stance"
 	desc = "Ever again."
 	ringList = list('sound/machines/phones/ringtones/ringtone5_short.ogg')
@@ -562,23 +575,24 @@ bathing in her ennui and showering her with money.
 	previewSender = "Rhettifort 'Ret' Kid"
 
 /datum/ringtone/retkid/ring8
-	name = "ringtone.dm,59: Cannot read null.name"
+	name = "ringtone.dm,58: Cannot read null.name"
 	desc = "piss"
 	ringList = list('sound/machines/phones/ringtones/ringers9.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort9.ogg')
 	succText = "<span class='notice'>*Ringtone set to \"null.SND\"*</span>"
-	previewMessage = "pda_ringtone.dm,570: Cannot read null.previewMessage"
-	previewSender = "pda_ringtone.dm,571: Cannot read null.previewSender"
+	previewMessage = "pda_ringtones.dm,575: Cannot read null.previewMessage"
+	previewSender = "pda_ringtones.dm,576: Cannot read null.previewSender"
+	canSpawnWith = 0
 
 	New(obj/item/device/pda2/thisPDA)
 		. = ..()
 		src.desc = {"proc name: return text (/datum/computer/file/pda_program/ringtone/return_text)<br>
-  source file: ringtone.dm,59<br>
+  source file: ringtone.dm,58<br>
   usr: null<br>
-  src: ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8)<br>
+  src: ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8)<br>
   src.loc: null<br>
   call stack:<br>
-ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_text()<br>
+ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_text()<br>
 "}
 
 /datum/ringtone/retkid/ring9
@@ -612,6 +626,7 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 									"Oh yeah that bus actually exploded down there, raaaad.")
 	pitchList = list(1, 1, 1, 1, 1, 1, 1)
 	rangeList = list(15, 15, 15, 15, 15, 15, 0)
+	extrarange_adjustment = -22
 	listCycleType = RINGLIST_RANDOM
 	succText = "*KABLAMMO installed!*"
 	previewMessage = "SounDreamS Professional Ultrasystems LTD cannot be held liable for any damage done to your device's speakers."
@@ -620,6 +635,7 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	previewText = "Sample"
 	nameText = "SounPacK:"
 	descText = "DescrIptioN:"
+	canSpawnWith = 0
 
 	DoSpecialThing(var/index)
 		animate_shockwave(src.holder)
@@ -650,6 +666,7 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 									"ALCOHOL IS A SIN.")
 	pitchList = list(1, 1, 1, 1, 1, 1, 1)
 	rangeList = list(5, 5, 5, 5, 5, 5, 5)
+	extrarange_adjustment = -22
 	listCycleType = RINGLIST_RANDOM
 	succText = "*Modern Commando installed!*"
 	previewMessage = "Ready to serve up your project a nice hot cup of lead? Or, rather, a set of sound effects that give that impression?"
@@ -692,7 +709,7 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	proc/MakeSoundPlay(var/index)
 		if(!src.holder || index > length(src.ringList))
 			return 1
-		playsound(get_turf(src.holder), src.ringList[index], src.volList[index], src.varyList[index], pitch = src.pitchList[index])
+		playsound(src.holder, src.ringList[index], src.volList[index], src.varyList[index], pitch = src.pitchList[index])
 
 /datum/ringtone/syndie/lasersword
 	name = "SPACEBATTLE - Realistic Sci-Fi FX"
@@ -704,6 +721,7 @@ ringtone.dm,59: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 									"heyo")
 	pitchList = list(1, 1)
 	rangeList = list(5, 5)
+	extrarange_adjustment = -22
 	listCycleType = RINGLIST_RANDOM
 	succText = "*SPACEBATTLE installed!*"
 	previewMessage = "Do note that some viewers will complain about being able to hear space battles in space."

@@ -1,5 +1,5 @@
 /obj/item/noisemaker
-	name = "Sound Synthesiser"
+	name = "sound synthesizer"
 	desc = "Either the most awesome or most annoying thing in the universe, depending on which side of it you're on."
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "bike_horn"
@@ -7,7 +7,7 @@
 	var/custom_file = null
 
 	attack_self(var/mob/user as mob)
-		if (PROC_ON_COOLDOWN(1 SECOND))
+		if (ON_COOLDOWN(src, "attack_self", 1 SECOND))
 			return
 		if(custom_file)
 			playsound(src.loc, custom_file, 100, 1)

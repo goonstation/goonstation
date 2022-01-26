@@ -12,7 +12,7 @@
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
-	var/datum/tutorial/blob/tutorial
+	var/datum/tutorial_base/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
@@ -39,6 +39,8 @@
 	var/upgrade_id = 1
 	var/nucleus_reflectivity = 0
 	var/image/nucleus_overlay
+	var/total_placed = 0
+	var/next_pity_point = 100
 
 	var/datum/blob_ability/shift_power = null
 	var/datum/blob_ability/ctrl_power = null
@@ -80,9 +82,9 @@
 		src.add_ability(/datum/blob_ability/set_color)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
-		src.invisibility = 10
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = 15
+		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
 		my_material = copyMaterial(getMaterial("blob"))
 		my_material.color = "#ffffff"
@@ -145,10 +147,10 @@
 
 			//maybe other debuffs here in the future
 
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max) //these are rounded in point displays
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + genBonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //these are rounded in point displays
 
 		else
-			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max) //ditto above
+			newBioPoints = clamp((src.bio_points + (base_gen_rate + gen_rate_bonus - gen_rate_used) * mult), 0, src.bio_points_max + (base_gen_rate + gen_rate_bonus - gen_rate_used) * (mult - 1)) //ditto above
 
 		src.bio_points = newBioPoints
 
@@ -165,6 +167,11 @@
 			next_evo_point += initial(next_evo_point)
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
+
+		if (total_placed >= next_pity_point)
+			next_pity_point += initial(next_pity_point)
+			evo_points++
+			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
 
 		if (blobs.len >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
@@ -221,8 +228,10 @@
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")
 
 		stat("Blob Size:", blobs.len)
+		stat("Total spreads:", total_placed)
 		stat("Evo Points:", evo_points)
 		stat("Next Evo Point at size:", next_evo_point)
+		stat("Total spreads needed for additional point:", next_pity_point)
 		stat("Living nuclei:", nuclei.len)
 		stat("Unplaced extra nuclei:", extra_nuclei)
 		stat("Next Extra Nucleus at size:", next_extra_nucleus)
@@ -265,9 +274,9 @@
 			return 0.75 + movement_delay_modifier
 
 	click(atom/target, params)
-		if (istype(target,/obj/screen/blob/))
+		if (istype(target,/atom/movable/screen/blob/))
 			if (params["middle"])
-				var/obj/screen/blob/B = target
+				var/atom/movable/screen/blob/B = target
 				if (B.ability)
 					B.ability.onUse()
 					return
@@ -287,19 +296,20 @@
 			src.update_buttons()
 			return
 		else
-			if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
-				if (src.tutorial)
-					if (!tutorial.PerformAction("clickmove", T))
-						return
-				src.set_loc(T)
-				return
+			if(params["right"])
+				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
+					if (src.tutorial)
+						if (!tutorial.PerformAction("clickmove", T))
+							return
+					src.set_loc(T)
+					return
 
-			if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
-				var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (OS)
-					src.set_loc(OS)
-				else
-					src.z = 1
+				if (T && isghostrestrictedz(T.z) && !restricted_z_allowed(src, T) && !(src.client && src.client.holder))
+					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+					if (OS)
+						src.set_loc(OS)
+					else
+						src.z = 1
 
 	say_understands() return 1
 	can_use_hands()	return 0
@@ -322,6 +332,8 @@
 		src.gen_rate_used = 0
 		src.evo_points = 0
 		src.next_evo_point = initial(src.next_evo_point)
+		src.next_pity_point = initial(src.next_pity_point)
+		src.total_placed = 0
 		src.spread_upgrade = 0
 		src.spread_mitigation = 0
 		src.viewing_upgrades = 1
@@ -435,7 +447,7 @@
 			return
 
 		//src.client.screen -= src.item_abilities
-		for(var/obj/screen/blob/B in src.client.screen)
+		for(var/atom/movable/screen/blob/B in src.client.screen)
 			src.client.screen -= B
 
 		var/pos_x = 1
@@ -517,7 +529,7 @@
 
 	proc/BlobPointsBezierApproximation(var/t)
 		// t = number of tiles occupied by the blob
-		t = max(0, min(1000, t))
+		t = clamp(t, 0, 1000)
 		var/points
 
 		if (t < 514)
@@ -574,7 +586,7 @@
 		hat.set_loc(src)
 
 
-/obj/screen/blob
+/atom/movable/screen/blob
 	plane = PLANE_HUD
 	var/datum/blob_ability/ability = null
 	var/datum/blob_upgrade/upgrade = null
@@ -584,8 +596,8 @@
 	var/image/cooldown = null
 	var/image/darkener = null
 
-	var/obj/screen/pseudo_overlay/point_overlay
-	var/obj/screen/pseudo_overlay/cooldown_overlay
+	var/atom/movable/screen/pseudo_overlay/point_overlay
+	var/atom/movable/screen/pseudo_overlay/cooldown_overlay
 
 	New()
 		..()
@@ -596,10 +608,10 @@
 		var/image/I = image('icons/mob/blob_ui.dmi',"darkener")
 		I.alpha = 100
 		darkener = I
-		//var/obj/screen/pseudo_overlay/T = new /obj/screen/pseudo_overlay(src)
-		//var/obj/screen/pseudo_overlay/S = new /obj/screen/pseudo_overlay(src)
-		point_overlay = new /obj/screen/pseudo_overlay()
-		cooldown_overlay = new /obj/screen/pseudo_overlay()
+		//var/atom/movable/screen/pseudo_overlay/T = new /atom/movable/screen/pseudo_overlay(src)
+		//var/atom/movable/screen/pseudo_overlay/S = new /atom/movable/screen/pseudo_overlay(src)
+		point_overlay = new /atom/movable/screen/pseudo_overlay()
+		cooldown_overlay = new /atom/movable/screen/pseudo_overlay()
 		src.vis_contents += point_overlay
 		src.vis_contents += cooldown_overlay
 		cooldown_overlay.icon = 'icons/mob/spell_buttons.dmi'
@@ -622,9 +634,9 @@
 
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!istype(O,/obj/screen/blob/) || !isblob(user))
+		if (!istype(O,/atom/movable/screen/blob/) || !isblob(user))
 			return
-		var/obj/screen/blob/source = O
+		var/atom/movable/screen/blob/source = O
 		if (!istype(src.ability) || !istype(source.ability))
 			boutput(user, "<span class='alert'>You may only switch the places of ability buttons.</span>")
 			return

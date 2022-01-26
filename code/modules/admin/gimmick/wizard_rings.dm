@@ -58,15 +58,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 		unequipped(var/mob/user)
 			..()
-			var/show_message = 0
-			if (user?.bioHolder.HasEffect("telekinesis"))
-				user.bioHolder.RemoveEffect("telekinesis")
-				show_message = 1
-			if (user?.bioHolder.HasEffect("hulk"))
-				user.bioHolder.RemoveEffect("hulk")
-				show_message = 1
-			if (show_message)
+			if (user?.bioHolder.RemoveEffect("hulk"))
 				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
+			REMOVE_MOB_PROPERTY(user, PROP_PASSIVE_WRESTLE, "empower")
+			REMOVE_MOB_PROPERTY(user, PROP_STAMINA_REGEN_BONUS, "empower")
+
 	staff
 		name = "ring of cthulhu"
 		desc = "Looking at this ring makes your head hurt."
@@ -232,44 +228,47 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = 1
+				L.spell_soulguard = 2
 
 		unequipped(var/mob/user)
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
 				L.spell_soulguard = 0
-	//random rings
-	rnd
-		var/list/possible_rings = null	//instead of picking from all spell types, pick from this list of spells to make the ring. should be the lowest level path name of the ring
 
-		New()
-			..()
+//random rings
+/obj/wizard_ring_generator
+	mouse_opacity = 0
 
-			var/obj/item/clothing/gloves/ring/wizard/ring
-			if (possible_rings)
-				var/ring_type = pick(possible_rings)
-				ring = text2path("/obj/item/clothing/gloves/ring/wizard/[ring_type]")
-			else
-				var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard/rnd
-				ring = pick(L)
-			
-			src.name = initial(ring.name)
-			src.desc = initial(ring.desc)
-			src.icon_state = initial(ring.icon_state)
-			src.ability_path = initial(ring.ability_path)
+	var/list/possible_rings = null	//instead of picking from all spell types, pick from this list of spells to make the ring. should be the lowest level path name of the ring
 
-		offensive
-			possible_rings = list("fireball", "magic_missile", "blind", "ice_burst", "prismatic_spray", "cluwne", "shocking_touch", "rathens_secret", "pandemonium", "sticks_to_snakes", "staff", "golem", "polymorph")
+	New()
+		..()
 
-			less_deadly
-				possible_rings = list("fireball", "magic_missile", "blind", "ice_burst", "prismatic_spray", "pandemonium", "sticks_to_snakes", "golem")
-		defensive
-			possible_rings = list("phase_shift", "teleport", "blink", "spell_shield", "warp", "forcewall", "pandemonium", "doppelganger", "soulguard")
-		utility
-			possible_rings = list("knock", "empower", "phase_shift", "clairvoyance", "animate_dead", "teleport", "pandemonium", "sticks_to_snakes", "soulguard")
+		var/path
+		if (possible_rings)
+			var/ring_type = pick(possible_rings)
+			path = text2path("/obj/item/clothing/gloves/ring/wizard/[ring_type]")
+		else
+			path = pick(concrete_typesof(/obj/item/clothing/gloves/ring/wizard))
+
+		new path(src.loc)
+		possible_rings = null
+		//Need the spawn for it to work with the admin spawn menu properly
+		SPAWN_DBG(1 SECOND)
+			qdel(src)
+
+	offensive
+		possible_rings = list("fireball", "magic_missile", "blind", "ice_burst", "prismatic_spray", "cluwne", "shocking_touch", "rathens_secret", "pandemonium", "sticks_to_snakes", "staff", "golem", "polymorph")
+
 		less_deadly
-			possible_rings = list("fireball", "magic_missile", "knock", "blind", "empower", "phase_shift", "clairvoyance", "ice_burst", "prismatic_spray", "animate_dead", "teleport", "blink", "rathens_secret", "spell_shield", "warp", "forcewall", "pandemonium", "bull_charge", "sticks_to_snakes", "doppelganger", "soulguard")
+			possible_rings = list("fireball", "magic_missile", "blind", "ice_burst", "prismatic_spray", "pandemonium", "sticks_to_snakes", "golem")
+	defensive
+		possible_rings = list("phase_shift", "teleport", "blink", "spell_shield", "warp", "forcewall", "pandemonium", "doppelganger", "soulguard")
+	utility
+		possible_rings = list("knock", "empower", "phase_shift", "clairvoyance", "animate_dead", "teleport", "pandemonium", "sticks_to_snakes", "soulguard")
+	less_deadly
+		possible_rings = list("fireball", "magic_missile", "knock", "blind", "empower", "phase_shift", "clairvoyance", "ice_burst", "prismatic_spray", "animate_dead", "teleport", "blink", "rathens_secret", "spell_shield", "warp", "forcewall", "pandemonium", "bull_charge", "sticks_to_snakes", "doppelganger", "soulguard")
 
 /client/proc/create_all_wizard_rings()
 	set name = "Create All Wizard Rings"
@@ -280,7 +279,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 
 	var/turf/T_LOC = get_turf(src.mob)
 
-	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard/rnd
+	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard)
 	var/index = 1
 	for (var/turf/T in range(T_LOC, 3))
 		if (index <= L.len)

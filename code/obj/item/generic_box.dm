@@ -7,7 +7,7 @@
 	icon_state = "item_box"
 	force = 1
 	throwforce = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = 1
 	var/contained_item = /obj/item/sticker/gold_star
 	var/list/contained_items = null
@@ -84,6 +84,25 @@
 		name = "box of bee stickers"
 		contained_item = /obj/item/sticker/bee
 
+	glow_sticker
+		name = "glow stickers"
+		desc = "A box of stickers that glow when stuck to things."
+		contained_item = null
+		item_amount = 20
+
+		New()
+			. = ..()
+			contained_item = pick(concrete_typesof(/obj/item/sticker/glow))
+
+	googly_eyes
+		name = "box of googly eyes"
+		desc = "If you give it googly eyes, it immediately becomes better!"
+		contained_item = /obj/item/sticker/googly_eye
+
+		angry
+			name ="box of angry googly eyes"
+			contained_item = /obj/item/sticker/googly_eye/angry
+
 	award_ribbon
 		name = "box of award ribbons"
 		contained_item = /obj/item/sticker/ribbon
@@ -106,6 +125,28 @@
 		desc = "It's like a box that a pile of sticky notes would come in, but it's actually the pile, too. So there's a pile in the box. Or the pile... IS the box? Quantum sticky note pile-box? Whatever, I've been trying to get this to work for a few hours and making a special little sticky note container is the last thing I want to do right now. Fuck."
 		contained_item = /obj/item/sticker/postit
 
+	crayon // stonepillar's crayon project
+		name = "rapid crayon creation device"
+		desc = "It's the StephiMatic(tm) rapid crayon creation device! Perfect for the budding artist. Ages 5 and up!"
+		contained_item = /obj/item/pen/crayon
+
+		add_to(var/obj/item/I)
+			if(..())
+				qdel(I)
+				return 1
+			return 0
+
+		take_from()
+			var/newColor = input("Pick crayon color:","Crayon color") as null|color
+			if(!isnull(newColor))
+				var/obj/item/pen/crayon/newCrayon = new /obj/item/pen/crayon
+				newCrayon.color = newColor
+				newCrayon.font_color = newColor
+				newCrayon.name = "cheap-looking [hex2color_name(newColor)] crayon"
+				return newCrayon
+			return 0
+
+
 	assorted
 		name = "box of assorted things"
 		desc = "Wow! A marvel of technology, this box doesn't store just ONE item, but an assortment of items! The future really is here."
@@ -120,7 +161,7 @@
 			desc = "Oh my god.. ALL THE STICKERS! ALL IN ONE PLACE? WHAT CAN THIS MEAN!!!"
 
 			set_contained_items()
-				contained_items = childrentypesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - childrentypesof( /obj/item/sticker/barcode )
+				contained_items = concrete_typesof( /obj/item/sticker/ ) - /obj/item/sticker/spy - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow )
 
 			robot//this type sticks things by clicking on them with a cooldown
 				name = "box shaped sticker dispenser"
@@ -151,7 +192,16 @@
 				max_item_amount = 10
 
 				set_contained_items()
-					contained_items = childrentypesof( /obj/item/sticker/ ) - childrentypesof( /obj/item/sticker/barcode ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+					contained_items = concrete_typesof( /obj/item/sticker/ ) - typesof( /obj/item/sticker/barcode, /obj/item/sticker/glow ) - /obj/item/sticker/spy - /obj/item/sticker/ribbon/first_place - /obj/item/sticker/ribbon/second_place - /obj/item/sticker/ribbon/third_place
+
+			glow_sticker
+				name = "glow stickers"
+				desc = "A box of stickers that glow various colors when stuck to things."
+				contained_item = null
+				item_amount = 20
+
+				set_contained_items()
+					contained_items = concrete_typesof(/obj/item/sticker/glow)
 
 		ornaments
 			name = "box of assorted ornaments"
@@ -171,6 +221,7 @@
 				set_contained_items()
 					contained_items = typesof(/obj/item/sticker/xmas_ornament)
 
+
 		take_from()
 			if( !contained_items.len )
 				boutput( usr, "Dag, this box has nothing special about it. Oh well." )
@@ -189,6 +240,7 @@
 		icon_empty = "patchbox-med-empty"
 		var/icon_color = "patchbox-med-coloring"
 		var/image/box_color
+		flags = FPRINT | TABLEPASS | EXTRADELAY
 
 		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
 			var/obj/item/reagent_containers/patch/temp = src.take_from()
@@ -283,7 +335,7 @@
 					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
-				else if (src.item_amount == 0 && src.contents.len) // count if we already have things inside!
+				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!
 					for (var/obj/item/thing in src.contents)
 						if (istype(thing, src.contained_item))
 							src.item_amount++
@@ -304,7 +356,7 @@
 			src.open = 1
 		else
 			boutput(user, "<span class='alert'>[src] is already open!</span>")
-		src.update_icon()
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
@@ -322,7 +374,7 @@
 			if (I)
 				user.put_in_hand_or_drop(I)
 				boutput(user, "You take \an [I] out of [src].")
-				src.update_icon()
+				src.UpdateIcon()
 				return
 			else
 				boutput(user, "<span class='alert'>[src] is empty!</span>")
@@ -359,7 +411,7 @@
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
-		if (!in_range(user, src) || !in_range(user, O))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			boutput(user, "<span class='alert'>That's too far away!</span>")
 			return
 		if (!istype(O, src.contained_item))
@@ -378,6 +430,8 @@
 				continue
 			if (thing in user)
 				continue
+			if (thing in src)
+				continue
 			src.add_to(thing, user, 0)
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill)
@@ -393,14 +447,14 @@
 			if (src.item_amount >= 1)
 				src.item_amount--
 				tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			return myItem
 		else if (src.item_amount != 0) // should be either a positive number or -1
 			if (src.item_amount >= 1)
 				src.item_amount--
 				tooltip_rebuild = 1
 			var/obj/item/newItem = new src.contained_item(src)
-			src.update_icon()
+			src.UpdateIcon()
 			return newItem
 		else
 			return 0
@@ -426,7 +480,7 @@
 			if (src.item_amount != -1)
 				src.item_amount ++
 				tooltip_rebuild = 1
-			src.update_icon()
+			src.UpdateIcon()
 			if (user && show_messages)
 				boutput(user, "You stuff [I] into [src].")
 				user.u_equip(I)
@@ -437,7 +491,8 @@
 				boutput(user, "<span class='alert'>You can't seem to make [I] fit into [src].</span>")
 			return 0
 
-	proc/update_icon()
+	update_icon()
+
 		src.inventory_counter.update_number(src.item_amount)
 		if (src.open && !src.item_amount)
 			src.icon_state = src.icon_empty

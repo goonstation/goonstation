@@ -4,7 +4,7 @@
 /datum/projectile/slam
 	name = "slam"
 	icon = null
-	icon_state = null
+	icon_state = "slam"
 	power = 1
 	ks_ratio = 0
 	damage_type = D_SPECIAL
@@ -60,17 +60,17 @@
 			hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
 			boutput(charger, __red("You slam into [hit]! Ouch!"))
 			charger.changeStatus("stunned", 3 SECONDS)
-			playsound(get_turf(hit), "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 		else if (isobj(hit))
 			var/obj/H = hit
 			if (H.anchored)
 				hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
 				boutput(charger, __red("You slam into [hit]! Ouch!"))
 				charger.changeStatus("stunned", 3 SECONDS)
-				playsound(get_turf(hit), "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+				playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 			else
 				hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
-				playsound(get_turf(hit), "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+				playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 				boutput(charger, __red("You slam into [hit]!"))
 				var/kbdir = angle_to_dir(angle)
 				step(H, kbdir, 2)
@@ -79,7 +79,7 @@
 						step(H, kbdir, 2)
 		else if (ismob(hit))
 			var/mob/M = hit
-			playsound(get_turf(hit), "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 			hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
 			boutput(charger, __red("You slam into [hit]!"))
 			boutput(M, __red("<b>[charger] slams into you!</b>"))
@@ -104,6 +104,33 @@
 	name = "Slam"
 	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
 	icon_state = "slam"
+	cooldown = 100
+	targeted = 1
+	target_anything = 1
+
+	var/datum/projectile/slam/proj = new
+
+	cast(atom/target)
+		if (..())
+			return 1
+		var/turf/T = get_turf(target)
+		if (!T)
+			return 1
+		var/mob/M = holder.owner
+		var/turf/S = get_turf(M)
+		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
+		if (!O)
+			return 1
+		if (!O.was_setup)
+			O.setup()
+		O.special_data["owner"] = src
+		O.launch()
+		return 0
+
+/datum/targetable/critter/slam_polymorph
+	name = "Slam"
+	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
+	icon_state = "slam_polymorph"
 	cooldown = 100
 	targeted = 1
 	target_anything = 1

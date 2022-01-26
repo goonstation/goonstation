@@ -173,13 +173,13 @@
 		return
 
 	if (!traitor_mob.r_store)
-		traitor_mob.equip_if_possible(new /obj/item/device/flash(traitor_mob), traitor_mob.slot_r_store)
+		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_r_store)
 	else if (!traitor_mob.l_store)
-		traitor_mob.equip_if_possible(new /obj/item/device/flash(traitor_mob), traitor_mob.slot_l_store)
+		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_l_store)
 	else if (istype(traitor_mob.back, /obj/item/storage/) && traitor_mob.back.contents.len < 7)
-		traitor_mob.equip_if_possible(new /obj/item/device/flash(traitor_mob), traitor_mob.slot_in_backpack)
+		traitor_mob.equip_if_possible(new /obj/item/camera/spy(traitor_mob), traitor_mob.slot_in_backpack)
 	else
-		var/obj/F2 = new /obj/item/device/flash(get_turf(traitor_mob))
+		var/obj/F2 = new /obj/item/camera/spy(get_turf(traitor_mob))
 		traitor_mob.put_in_hand_or_drop(F2)
 
 	var/pda_pass = null
@@ -187,36 +187,53 @@
 	//find a PDA, hide the uplink inside
 	var/loc = ""
 	var/obj/item/device/R = null
-	if (!R && istype(traitor_mob.belt, /obj/item/device/pda2))
+	if (istype(traitor_mob.belt, /obj/item/device/pda2))
 		R = traitor_mob.belt
 		loc = "on your belt"
-	if (!R && istype(traitor_mob.r_store, /obj/item/device/pda2))
+	else if (istype(traitor_mob.wear_id, /obj/item/device/pda2))
+		R = traitor_mob.wear_id
+		loc = "in your ID slot"
+	else if (istype(traitor_mob.r_store, /obj/item/device/pda2))
 		R = traitor_mob.r_store
-		loc = "In your pocket"
-	if (!R && istype(traitor_mob.l_store, /obj/item/device/pda2))
+		loc = "in your right pocket"
+	else if (istype(traitor_mob.l_store, /obj/item/device/pda2))
 		R = traitor_mob.l_store
-		loc = "In your pocket"
-	if (!R && istype(traitor_mob.l_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.l_hand
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
-			R = foo
-			loc = "in the [S.name] in your left hand"
-			break
-	if (!R && istype(traitor_mob.r_hand, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.r_hand
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
-			R = foo
-			loc = "in the [S.name] in your right hand"
-			break
-	if (!R && istype(traitor_mob.back, /obj/item/storage))
-		var/obj/item/storage/S = traitor_mob.back
-		var/list/L = S.get_contents()
-		for (var/obj/item/device/pda2/foo in L)
-			R = foo
-			loc = "in the [S.name] in your backpack"
-			break
+		loc = "in your left pocket"
+	else if (istype(traitor_mob.l_hand, /obj/item/device/pda2))
+		R = traitor_mob.l_hand
+		loc = "in your left hand"
+	else if (istype(traitor_mob.r_hand, /obj/item/device/pda2))
+		R = traitor_mob.r_hand
+		loc = "in your right hand"
+	else
+		if (istype(traitor_mob.l_hand, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.l_hand
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] in your left hand"
+				break
+		if (istype(traitor_mob.r_hand, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.r_hand
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] in your right hand"
+				break
+		if (istype(traitor_mob.back, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.back
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] on your back"
+				break
+		if (istype(traitor_mob.belt, /obj/item/storage))
+			var/obj/item/storage/S = traitor_mob.belt
+			var/list/L = S.get_contents()
+			for (var/obj/item/device/pda2/foo in L)
+				R = foo
+				loc = "in the [S.name] on your belt"
+				break
 
 	if (!R) //They have no PDA. Make one!
 		R = new /obj/item/device/pda2(traitor_mob)
@@ -246,8 +263,8 @@
 		synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(synd_mob), synd_mob.slot_head)
 		synd_mob.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(synd_mob), synd_mob.slot_wear_suit)
 		synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(synd_mob), synd_mob.slot_ears)
-		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_l_hand)
-		synd_mob.equip_if_possible(new /obj/item/remote/nuke_summon_remote(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/katana_sheath/nukeop(synd_mob), synd_mob.slot_r_hand)
+		synd_mob.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(synd_mob), synd_mob.slot_l_hand)
 	else
 		//synd_mob.equip_if_possible(new /obj/item/clothing/head/helmet/swat(synd_mob), synd_mob.slot_head)
 		//synd_mob.equip_if_possible(new /obj/item/clothing/suit/armor/vest(synd_mob), synd_mob.slot_wear_suit)
@@ -281,24 +298,10 @@
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
 
-	var/the_frequency = R_FREQ_SYNDICATE
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		the_frequency = N.agent_radiofreq
-
-	for (var/obj/item/device/radio/headset/R in synd_mob.contents)
-		R.set_secure_frequency("h", the_frequency)
-
-		R.secure_classes = list(RADIOCL_SYNDICATE)
-		R.protected_radio = 1 // Ops can spawn with the deaf trait.
-		R.frequency = the_frequency // let's see if this stops rounds from being ruined every fucking time
-
-	return
-
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
 	var/alive = 0
-	var/alive_antags = ticker.mode.traitors.len + ticker.mode.Agimmicks.len
+	var/alive_antags = ticker.mode.traitors.len + length(ticker.mode.Agimmicks)
 
 	for (var/datum/mind/antag in ticker.mode.traitors)
 		var/mob/M = antag.current
@@ -341,3 +344,31 @@
 		return 0
 	else
 		return ((dead - observer) / all)
+
+/// Associative list of role defines and their respective client preferences.
+var/list/roles_to_prefs = list(
+	ROLE_TRAITOR = "be_traitor",
+	ROLE_SPY_THIEF = "be_spy",
+	ROLE_NUKEOP = "be_syndicate",
+	ROLE_VAMPIRE = "be_vampire",
+	ROLE_GANG_LEADER = "be_gangleader",
+	ROLE_WIZARD = "be_wizard",
+	ROLE_CHANGELING = "be_changeling",
+	ROLE_WEREWOLF = "be_werewolf",
+	ROLE_BLOB = "be_blob",
+	ROLE_WRAITH = "be_wraith",
+	ROLE_HEAD_REV = "be_revhead",
+	ROLE_CONSPIRATOR = "be_conspirator",
+	ROLE_ARCFIEND = "be_arcfiend",
+	ROLE_FLOCKMIND = "be_flock",
+	ROLE_MISC = "be_misc"
+	)
+
+/**
+  * Return the name of a preference variable for the given role define.
+  *
+  * Arguments:
+  * * role - role to return a client preference for.
+  */
+/proc/get_preference_for_role(var/role)
+	return roles_to_prefs[role]

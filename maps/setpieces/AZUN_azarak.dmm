@@ -945,7 +945,7 @@
 /area/space)
 "dt" = (
 /obj/table/wood/round,
-/obj/item/paper/book/icarus_ovid,
+/obj/item/paper/book/from_file/icarus_ovid,
 /turf/unsimulated/floor/carpet/purple/fancy/junction/sw_e,
 /area/space)
 "du" = (

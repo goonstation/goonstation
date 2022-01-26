@@ -9,11 +9,10 @@
 	var/const/min_time = 0
 	var/const/min_detonator_time = 90
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	m_amt = 100
 	mats = 2
 	desc = "A device that emits a signal when the time reaches 0."
-	module_research = list("devices" = 1, "miniaturization" = 4)
 
 /obj/item/device/timer/proc/time()
 	src.c_state(0)
@@ -65,9 +64,9 @@
 		last_tick = TIME
 
 		if (!src.master)
-			src.updateDialog()
+			src.updateSelfDialog()
 		else
-			src.master.updateDialog()
+			src.master.updateSelfDialog()
 
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.
@@ -105,7 +104,10 @@
 		return
 
 	if ((src in user) || (src.master && (src.master in user)) || (get_dist(src, user) <= 1 && istype(src.loc, /turf)) || src.is_detonator_trigger())
-		src.add_dialog(user)
+		if (!src.master)
+			src.add_dialog(user)
+		else
+			src.master.add_dialog(user)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
 		var/detonator_trigger = src.is_detonator_trigger()
@@ -117,14 +119,17 @@
 		onclose(user, "timer")
 	else
 		user.Browse(null, "window=timer")
-		src.remove_dialog(user)
+		if (!src.master)
+			src.remove_dialog(user)
+		else
+			src.master.remove_dialog(user)
 
 	return
 
 /obj/item/device/timer/proc/is_detonator_trigger()
 	if (src.master)
 		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_range(src.master.master, usr))
+			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
 				return 1
 	return 0
 
@@ -137,10 +142,13 @@
 	if (usr.stat || usr.restrained() || usr.lying)
 		return
 	var/can_use_detonator = src.is_detonator_trigger() && !src.timing
-	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_range(src, usr) && istype(src.loc, /turf))
-		src.add_dialog(usr)
+	if (can_use_detonator || (src in usr) || (src.master && (src.master in usr)) || in_interact_range(src, usr) && istype(src.loc, /turf))
+		if (!src.master)
+			src.add_dialog(usr)
+		else
+			src.master.add_dialog(usr)
 		if (href_list["time"])
-			src.timing = text2num(href_list["time"])
+			src.timing = text2num_safe(href_list["time"])
 			if(timing)
 				src.c_state(1)
 				processing_items |= src
@@ -148,33 +156,38 @@
 			if (src.master && istype(master, /obj/item/device/transfer_valve))
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/assembly/time_ignite)) //Timer-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
-
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if(src.master && istype(src.master, /obj/item/assembly/time_bomb))	//Timer-detonated single-tank bombs
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
-
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 			else if (src.master && istype(src.master, /obj/item/mine)) // Land mine.
 				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
+				SEND_SIGNAL(src.master, "[timing ? COMSIG_BOMB_SIGNAL_START : COMSIG_BOMB_SIGNAL_CANCEL]")
 
 		if (href_list["tp"])
-			var/tp = text2num(href_list["tp"])
+			var/tp = text2num_safe(href_list["tp"])
 			src.time += tp
-			src.time = min(max(round(src.time), src.min_time), src.max_time)
+			src.time = clamp(round(src.time), src.min_time, src.max_time)
 			if (can_use_detonator && src.time < src.min_detonator_time)
 				src.time = src.min_detonator_time
 
 		if (href_list["close"])
 			usr.Browse(null, "window=timer")
-			src.remove_dialog(usr)
+			if (!src.master)
+				src.remove_dialog(usr)
+			else
+				src.master.remove_dialog(usr)
 			return
 
 		if (!src.master)
-			src.updateDialog()
+			src.updateSelfDialog()
 		else
-			src.master.updateDialog()
+			src.master.updateSelfDialog()
 
 		src.add_fingerprint(usr)
 	else

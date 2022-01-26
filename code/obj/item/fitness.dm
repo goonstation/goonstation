@@ -15,7 +15,7 @@
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 2)
-		user.changeStatus("fitness_stam_regen",1000)
+		user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 	wizard
 		icon_state = "punchingbagwizard"
@@ -43,7 +43,7 @@
 			else
 				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
 				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
-			user.changeStatus("fitness_stam_regen",1000)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 /obj/fitness/stacklifter
 	name = "Weight Machine"
@@ -67,7 +67,7 @@
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -90,7 +90,7 @@
 					H.sims.affectMotive("fun", 4)
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
-			user.changeStatus("fitness_stam_regen",1000)
+			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
 
 /obj/fitness/weightlifter
@@ -107,6 +107,8 @@
 		if(in_use)
 			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
 			return
+		else if(HAS_MOB_PROPERTY(user, PROP_CANTMOVE))
+			return
 		else
 			in_use = 1
 			icon_state = "fitnessweight-c"
@@ -121,7 +123,7 @@
 			W.anchored = 1
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			usr.visible_message(text("<span class='alert'><B>[usr] is [bragmessage]!</B></span>"))
+			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)
@@ -150,7 +152,7 @@
 			icon_state = "fitnessweight"
 			qdel(W)
 			boutput(user, "<span class='notice'>[finishmessage]</span>")
-			user.changeStatus("fitness_stam_max",1000)
+			user.changeStatus("fitness_stam_max", 100 SECONDS)
 
 /obj/item/rubberduck
 	name = "rubber duck"
@@ -159,7 +161,7 @@
 	icon_state = "rubber_duck"
 	item_state = "sponge"
 	throwforce = 1
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	var/spam_flag = 0

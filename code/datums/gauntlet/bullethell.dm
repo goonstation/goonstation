@@ -5,7 +5,7 @@
 	else if (O.special_data["lastloc"] != O.loc)
 		update = 1
 	if (update)
-		var/ocl = O.crossing.len
+		var/ocl = length(O.crossing)
 		if (!ocl)
 			return
 		if ("1" in O.special_data)
@@ -49,7 +49,7 @@
 	on_end(var/obj/projectile/O)
 		proj_tracer_on_end(O)
 
-	projectile_speed = 18
+	projectile_speed = 24
 	power = 30
 	dissipation_delay = 8
 	dissipation_rate = 5

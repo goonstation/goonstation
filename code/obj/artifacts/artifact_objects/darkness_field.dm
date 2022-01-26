@@ -4,13 +4,15 @@
 
 /datum/artifact/darkness_field
 	associated_object = /obj/artifact/darkness_field
-	rarity_class = 2
+	type_name = "Darkness Generator"
+	rarity_weight = 350
 	max_triggers = 3
 	validtypes = list("wizard","eldritch","precursor")
 	react_xray = list(15,90,90,11,"NONE")
 	var/field_radius = 0
 	var/field_time = 0
 	var/max_alpha = 255
+	var/list/obj/overlay/darkness_field/darkfields = list()
 
 	New()
 		..()
@@ -26,12 +28,18 @@
 		O.visible_message("<span class='alert'><b>[O]</b> emits a wave of absolute darkness!</span>")
 		O.anchored = 1
 		var/turf/T = get_turf(O)
-		new /obj/overlay/darkness_field(T, field_time, radius = 0.5 + field_radius, max_alpha = max_alpha)
-		new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, field_time, radius = 0.5 + field_radius, max_alpha = max_alpha)
+		darkfields += new /obj/overlay/darkness_field(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
+		darkfields += new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
 		SPAWN_DBG(field_time)
 			if (O)
-				O.anchored = 0
 				O.ArtifactDeactivated()
+
+	effect_deactivate(obj/O)
+		if(..())
+			return
+		O.anchored = 0
+		for(var/obj/overlay/darkness_field/D as anything in darkfields)
+			D.deactivate()
 
 /obj/overlay/darkness_field
 	icon = 'icons/effects/vision.dmi' // sorry

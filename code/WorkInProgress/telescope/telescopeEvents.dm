@@ -94,6 +94,17 @@
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
+/datum/telescope_event/cow
+	name = "Void Diner"
+	name_undiscovered = "Unusual signal"
+	id = "cw"
+	size = 25
+	tags = TAG_TELEPORT_LOC
+
+	New()
+		..()
+		telescopeDialogue = new/datum/dialogueMaster/telescopeCow(src)
+
 //MINING STUFF BELOW
 /datum/telescope_event/ore_miraclium
 	name = "Miraclium asteroid"

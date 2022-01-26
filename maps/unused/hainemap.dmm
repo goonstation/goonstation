@@ -3072,7 +3072,7 @@
 /area/space)
 "iR" = (
 /obj/table/wood/round/auto,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2";
 	dir = 2
@@ -7688,7 +7688,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "we" = (

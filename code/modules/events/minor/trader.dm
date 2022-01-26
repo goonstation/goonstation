@@ -20,6 +20,9 @@
 #endif
 		var/docked_where = shuttle == "diner" ? "space diner" : "station";
 		command_alert("A merchant shuttle has docked with the [docked_where].", "Commerce and Customs Alert")
+		for(var/client/C in clients)
+			if(C.mob && (C.mob.z == Z_LEVEL_STATION))
+				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 30, 0)
 		var/area/start_location = null
 		var/area/end_location = null
 		if(shuttle == "diner")
@@ -59,7 +62,7 @@
 
 		for (var/turf/P in start_location)
 			if (istype(P, centcom_turf))
-				new map_turf(P)
+				P.ReplaceWith(map_turf, FALSE, TRUE, FALSE, TRUE)
 
 		end_location.color = null
 
@@ -83,13 +86,15 @@
 
 			for (var/turf/O in end_location)
 				if (istype(O, map_turf))
-					new centcom_turf(O)
+					O.ReplaceWith(centcom_turf, FALSE, TRUE, FALSE, TRUE)
 
 			end_location.move_contents_to(start_location, map_turf)
 
 			#ifdef UNDERWATER_MAP
 			start_location.color = OCEAN_COLOR
 			#endif
+
+			station_repair.repair_turfs(dstturfs)
 
 			active = 0
 

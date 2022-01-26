@@ -69,7 +69,7 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
+		invisibility = (intact && level==1) ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		update()
 
 	// returns the type path of disposalpipe corresponding to this item dtype
@@ -93,29 +93,31 @@
 				return /obj/disposalpipe/mechanics_sensor
 		return
 
-
+	// click the junction with empty hand to change direction
+	attack_hand(mob/user)
+		if(!anchored)
+			if(ptype == 2)
+				ptype = 3
+				set_dir(turn(dir, 180))
+				boutput(user, "You change the pipe junction's direction.")
+			else if (ptype == 3)
+				ptype = 2
+				set_dir(turn(dir, 180))
+				boutput(user, "You change the pipe junction's direction.")
+			update()
 
 	// attackby item
+	// crowbar: rotate
+	// screwdriver: disassemble
 	// wrench: (un)anchor
 	// weldingtool: convert to real pipe
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(ispryingtool(I))
-			if(!anchored)
-				var/input = input("Select a config to modify!", "Config", null) as null|anything in list("Rotate","Flip")
-				if((user in range(1,src)) && (!anchored))
-					switch(input)
-						if("Rotate")
-							set_dir(turn(dir, -90))
-							update()
-						if("Flip")
-							set_dir(turn(dir, 180))
-							if(ptype == 2)
-								ptype = 3
-							else if(ptype == 3)
-								ptype = 2
-							update()
-				return
+		if(ispryingtool(I) && !anchored)
+			set_dir(turn(dir, -90))
+			update()
+			return
+
 		if(isscrewingtool(I))
 			boutput(user, "You take the pipe segment apart.")
 			// var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
@@ -128,7 +130,7 @@
 			return
 
 		var/turf/T = src.loc
-		if(T.intact)
+		if(T.intact && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
 			boutput(user, "You can only attach the pipe if the floor plating is removed.")
 			return
 
@@ -138,7 +140,7 @@
 			var/pdir = CP.dpdir
 			if(istype(CP, /obj/disposalpipe/broken))
 				pdir = CP.dir
-			if(pdir & dpdir)
+			if((pdir & dpdir) && (iswrenchingtool(I) || isweldingtool(I))) //see the comment above
 				boutput(user, "There is already a pipe at that location.")
 				return
 
@@ -181,7 +183,7 @@
 					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
-					P.updateicon()
+					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
 
 					qdel(src)

@@ -12,7 +12,7 @@
 #define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
 
 /// Returns the sign of the given number (1 or -1)
-#define sign(x) ((x) != 0 ? (x) / abs(x) : 0)
+#define sign(x) (((x) > 0) - ((x) < 0))
 
 /// cotangent
 #define cot(x) (cos(x) / sin(x))
@@ -21,23 +21,27 @@
 /// Used for lag-compensating prob rolls.
 #define percentmult(x, mult) (100 * (1 - ((1 - (clamp((x), 0, 100) / 100))**mult)))
 
-//#define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))
-//this is hecka ugly, so im just leaving the proc in
-
-/// difference in degrees between two angles in degrees
-/proc/angledifference(a1,a2)
-	.= ( a2 - a1 + 180 ) % 360 - 180
-	if (. < -180)
-		.+= 360
+/// difference in degrees from angle x to angle y
+#define angledifference(x,y) ((((y) - (x) + 180) % 360 - 180) + (((((y) - (x) + 180) % 360 - 180) < -180) ? 360 : 0))
 
 /// isnum() returns TRUE for NaN. Also, NaN != NaN. Checkmate, BYOND.
 #define isnan(x) ( (x) != (x) )
 
 /// Returns true if the number is infinity or -infinity
-#define isinf(x) (isnum((x)) && (((x) == text2num("inf")) || ((x) == text2num("-inf"))))
+#define isinf(x) (isnum((x)) && (((x) == INFINITY) || ((x) == -INFINITY)))
 
 /// NaN isn't a number, damn it. Infinity is a problem too.
 #define isnum_safe(x) ( isnum((x)) && !isnan((x)) && !isinf((x)) ) //By ike709
+
+/// Parses a number except for NaNs and infinities
+proc/text2num_safe(x)
+	. = text2num(x)
+	if(isnum_safe(.))
+		return
+	return null
+
+/// rand() but for floats, returns a random floating point number between L and H
+#define randfloat(L, H) (L + rand() * (H - L))
 
 //bit math helpers
 
@@ -80,3 +84,11 @@
 
 /// creates a binary number that is length bits long. all bits in the number are turned off
 #define CREATE_EMPTY_BINARY_NUM(length) (0)
+
+/// Linearly interpolates a and b based on t
+#define lerp(a, b, t) ((a) * (1 - (t)) + (b) * (t))
+
+/// pseudorandom number based on x, y in range 0 to 1
+/proc/fixed_random(x, y)
+	. = sin(x * 12.9898 + y * 78.233) * 43758.5453
+	. -= round(.)

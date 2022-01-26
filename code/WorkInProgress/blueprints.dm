@@ -344,7 +344,7 @@
 	item_state = "gun"
 
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5
 
@@ -354,7 +354,6 @@
 	var/list/turf/roomList = new/list()
 
 	var/list/permittedObjectTypes = list(\
-	"/obj/closet", \
 	"/obj/stool", \
 	"/obj/grille", \
 	"/obj/window", \
@@ -377,7 +376,7 @@
 	"/obj/machinery/disposal", \
 	"/obj/machinery/gibber",
 	"/obj/machinery/floorflusher",
-	"/obj/machinery/driver_button", \
+	"/obj/machinery/activation_button/driver_button", \
 	"/obj/machinery/door_control",
 	"/obj/machinery/disposal",
 	"/obj/submachine/chef_oven",
@@ -386,22 +385,23 @@
 	"/obj/machinery/optable",
 	"/obj/machinery/mass_driver", \
 //	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
-	"/obj/machinery/manufacturer", \
 	"/obj/machinery/sleeper", \
 	"/obj/machinery/sleep_console", \
 	"/obj/submachine/slot_machine", \
 	"/obj/machinery/deep_fryer",
 	"/obj/submachine/ATM", \
-	"/obj/submachine/slot_machine",
 	"/obj/submachine/ice_cream_dispenser",
 	"/obj/machinery/portable_atmospherics", \
 	"/obj/machinery/ai_status_display",
-	"/obj/noticeboard",
 	"/obj/securearea",
 	"/obj/submachine/mixer",
 	"/obj/submachine/foodprocessor"
 	)
 
+	var/list/blacklistedObjectTypes = list(\
+	"/obj/disposalpipe/loafer",
+	"/obj/submachine/slot_machine/item",
+	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
 	var/savefile/save = new/savefile("data/blueprints.dat")
@@ -430,7 +430,7 @@
 			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
 			return
 
-		for(var/turf/t as() in roomList)
+		for(var/turf/t as anything in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -498,7 +498,7 @@
 		var/maxx = 0
 		var/maxy = 0
 
-		for(var/turf/t as() in roomList)
+		for(var/turf/t as anything in roomList)
 			if(t.x < minx) minx = t.x
 			if(t.y < miny) miny = t.y
 
@@ -524,8 +524,10 @@
 			save["state"] << curr.icon_state
 
 			for(var/obj/o in curr)
-				if (istype(o, /obj/disposalpipe/loafer)) // Sorry.
-					continue
+				for(var/p in blacklistedObjectTypes)
+					var/type = text2path(p)
+					if(istype(o, type))
+						break//no
 				var/permitted = 0
 				for(var/p in permittedObjectTypes)
 					var/type = text2path(p)

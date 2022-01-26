@@ -13,7 +13,7 @@
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_point = 400
 	burn_possible = 2
 	burn_output = 750
@@ -24,8 +24,6 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
-	module_research = list("efficiency" = 1)
-	module_research_type = /obj/item/spacecash
 	inventory_counter_enabled = 1
 	var/default_min_amount = 0
 	var/default_max_amount = 0
@@ -45,18 +43,6 @@
 		src.amount = max(amt,default_amount)
 		src.update_stack_appearance()
 
-	unpooled()
-		..()
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
-		src.amount = max(1, default_amount) //take higher
-		src.update_stack_appearance()
-
-	pooled()
-		if (usr)
-			usr.u_equip(src) //wonder if that will work?
-		amount = 1
-		..()
-
 	update_stack_appearance()
 		src.UpdateName()
 		src.inventory_counter.update_number(src.amount)
@@ -64,13 +50,13 @@
 			if (-INFINITY to 9)
 				src.icon_state = "cashgreen"
 			if (10 to 49)
-				src.icon_state = "spacecash"
-			if (50 to 499)
 				src.icon_state = "cashblue"
-			if (500 to 999)
+			if (50 to 499)
 				src.icon_state = "cashindi"
-			if (1000 to 999999)
+			if (500 to 999)
 				src.icon_state = "cashpurp"
+			if (1000 to 999999)
+				src.icon_state = "cashred"
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
@@ -100,14 +86,14 @@
 	attack_hand(mob/user as mob)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				change_stack_amount( 0 - amt )
-				var/obj/item/spacecash/young_money = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/young_money = new /obj/item/spacecash
 				young_money.setup(user.loc, amt)
-				young_money.attack_hand(user)
+				young_money.Attackhand(user)
 		else
 			..(user)
 
@@ -142,6 +128,10 @@
 	default_min_amount = 1000
 	default_max_amount = 1000
 
+/obj/item/spacecash/hundredthousand
+	default_min_amount = 100000
+	default_max_amount = 100000
+
 /obj/item/spacecash/million
 	default_min_amount = 1000000
 	default_max_amount = 1000000
@@ -173,19 +163,11 @@
 		..()
 		processing_items |= src
 
-	pooled()
-		processing_items -= src
-		..()
-
-	unpooled()
-		..()
-		processing_items |= src
-
 	update_stack_appearance()
 		return
 
 	UpdateName()
-		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","cosby ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
+		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
 
 	process()
 		src.amount = rand(1, 1000) / rand(10, 1000)
@@ -200,7 +182,7 @@
 	attack_hand(mob/user as mob)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (amt)
+			if (isnum_safe(amt))
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
@@ -232,19 +214,6 @@
 		item_state = "moneybag"
 		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 
-	unpooled()
-		..()
-		amount = rand(1,10000)
-		name = "money bag"
-		desc = "Loadsamoney!"
-		icon = 'icons/obj/items/items.dmi'
-		icon_state = "moneybag"
-		item_state = "moneybag"
-		inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-
-	pooled()
-		..()
-
 
 
 /obj/item/spacebux // Not space cash. Actual spacebux. Wow.
@@ -263,7 +232,7 @@
 	throwforce = 1.0
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_possible = 0
 	health = 1000
 	amount = 1
@@ -289,19 +258,6 @@
 		tooltip_rebuild = 1
 		src.amount = amt
 		src.update_stack_appearance()
-
-	unpooled()
-		..()
-		src.amount = 0
-		src.spent = 0
-		src.update_stack_appearance()
-
-	pooled()
-		if (usr)
-			usr.u_equip(src) //wonder if that will work?
-		src.amount = 0
-		src.spent = 0
-		..()
 
 	update_stack_appearance()
 		src.UpdateName()
@@ -371,7 +327,7 @@
 	attack_hand(mob/user as mob)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
-			if (amt && src.loc == user && !user.equipped())
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return

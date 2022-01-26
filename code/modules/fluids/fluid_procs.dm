@@ -13,7 +13,7 @@
 		var/atom/thing = A
 		if (!A)
 			continue
-		if(IS_SOLID_TO_FLUID(thing) && thing.density)
+		if(IS_SOLID_TO_FLUID(thing) && (thing.density || thing.flags & FLUID_DENSE))
 			return 0 // && !istype(thing,/obj/grille) && !istype(thing,/obj/table) && !istype(thing,/obj/structure/girder)) return 0
 	return 1
 
@@ -27,6 +27,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		///HEY HEY LOOK AT ME TODO : This is kind of a band-aid. I'm not sure why, but tilenotify() doesn't trigger when it should sometimes. do this to be absolutely sure!
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
+			if (!T) continue
 			if(T.active_liquid)
 				T.active_liquid.blocked_dirs = 0
 				if (T.active_liquid.group && !T.active_liquid.group.updating)
@@ -58,20 +59,22 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!index)
 		if (airborne)
 			for(var/reagent_id in R.reagent_list)
-				if (ban_from_airborne_fluid.Find(reagent_id)) return
+				if (reagent_id in ban_from_airborne_fluid) return
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
-				if (ban_from_fluid.Find(reagent_id)) return
+				if (reagent_id in ban_from_fluid) return
 	else // We only care about one chem
 		var/CI = 1
 		if (airborne)
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
-					if (ban_from_airborne_fluid.Find(reagent_id)) return
+					if (reagent_id in ban_from_airborne_fluid) return
+			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
-					if (ban_from_fluid.Find(reagent_id)) return
+					if (reagent_id in ban_from_fluid) return
 
 
 	var/datum/fluid_group/FG
@@ -81,7 +84,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -98,7 +101,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -113,8 +116,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 
-	R.trans_to_direct(FG.reagents, react_volume, index=index)
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
+	R.trans_to_direct(FG.reagents, react_volume, index=index)
+	F.UpdateIcon()
 
 	if (!airborne)
 		var/turf/simulated/floor/T = src
@@ -133,9 +137,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 
 	if (airborne)
-		if (ban_from_airborne_fluid.Find(reagent_name)) return
+		if (reagent_name in ban_from_airborne_fluid) return
 	else
-		if (ban_from_fluid.Find(reagent_name)) return
+		if (reagent_name in ban_from_fluid) return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -145,7 +149,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (airborne)
 		if (!src.active_airborne_liquid)
 			FG = new /datum/fluid_group/airborne
-			F = unpool(/obj/fluid/airborne)
+			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -162,7 +166,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	else
 		if (!src.active_liquid)
 			FG = new
-			F = unpool(/obj/fluid)
+			F = new /obj/fluid
 			src.active_liquid = F
 			F.set_up(src)
 			if (react_volume == 0)
@@ -213,7 +217,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	//if possible_cleanable has a value, handle exclusively this decal. don't search thru the turf.
 	if (possible_cleanable)
-		if (possible_cleanable.qdeled || possible_cleanable.pooled) return
+		if (possible_cleanable.qdeled || possible_cleanable.disposed) return
 		if (istype(possible_cleanable, /obj/decal/cleanable/blood/dynamic))
 			var/obj/decal/cleanable/blood/dynamic/blood = possible_cleanable
 			var/blood_dna = blood.blood_DNA
@@ -241,7 +245,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	//all right, tally up the cleanables and attempt to call fluid_reacts on them
 	var/list/cleanables = list()
 	for (var/obj/decal/cleanable/C in src)
-		if (C.qdeled || C.pooled) continue
+		if (C.qdeled || C.disposed) continue
 		//if (C.dry) continue
 		if (istype(C,/obj/decal/cleanable/blood/dynamic)) continue // handled above
 		if (!C.can_fluid_absorb) continue
@@ -253,13 +257,13 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	for (var/obj/decal/cleanable/C in cleanables)
 		if (C?.reagents)
 			for(var/reagent_id in C.reagents.reagent_list)
-				if (ban_stacking_into_fluid.Find(reagent_id)) return
+				if (reagent_id in ban_stacking_into_fluid) return
 			var/datum/reagents/R = new(C.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 			C.reagents.copy_to(R)
 			C.clean_forensic()
 			src.fluid_react(R, R.total_volume)
 		else if (C?.can_sample && C.sample_reagent)
-			if ((!grab_any_amount && ban_stacking_into_fluid.Find(C.sample_reagent)) || ban_from_fluid.Find(C.sample_reagent)) return
+			if ((!grab_any_amount && (C.sample_reagent in ban_stacking_into_fluid)) || (C.sample_reagent in ban_from_fluid)) return
 			var/sample = C.sample_reagent
 			var/amt = C.sample_amt
 			C.clean_forensic()

@@ -6,11 +6,12 @@
 	density = 1
 	anchored = 0
 	event_handler_flags = IMMUNE_MANTA_PUSH
-	var/health = 150
+	_health = 150
+	_max_health = 150
 	var/armed = 0
 	var/det_time = 0
-	var/timer_default = 6000 // 10 min.
-	var/timer_modifier_disk = 1800 // +3 (crew member) or -3 (nuke ops) min.
+	var/timer_default = 10 MINUTES
+	var/timer_modifier_disk = 3 MINUTES // +3 (crew member) or -3 (nuke ops) min.
 	var/motion_sensor_triggered = 0
 	var/done = 0
 	var/debugmode = 0
@@ -66,13 +67,13 @@
 				S.visible_message("<span class='alert'>[S] cannot withstand the intense radiation and crumbles to pieces!</span>")
 				qdel(S)
 
-		if(det_time && src.simple_light && !src.started_light_animation && det_time - ticker.round_elapsed_ticks <= 2 MINUTES)
+		if(det_time && src.simple_light && !src.started_light_animation && det_time - TIME <= 2 MINUTES)
 			src.started_light_animation = 1
 			var/matrix/trans = matrix()
 			trans.Scale(3)
 			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
-		if (det_time && ticker.round_elapsed_ticks >= det_time)
+		if (det_time && TIME >= det_time)
 			SPAWN_DBG(0)
 				explode()
 			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
@@ -92,11 +93,11 @@
 					. += "The authenticaion disk has been inserted."
 
 			if (!src.anchored)
-				. += "The floor bolts have been unsecured. The bomb can be moved around."
+				. += "The floor bolts are unsecure. The bomb can be moved around."
 			else
-				. += "It is firmly anchored to the floor by its floor bolts. A screwdriver could undo them."
+				. += "It is firmly anchored to the floor by its floor bolts."
 
-			switch(src.health)
+			switch(src._health)
 				if(80 to 125)
 					. += "<span class='alert'>It is a little bit damaged.</span>"
 				if(40 to 79)
@@ -147,11 +148,13 @@
 									src.image_light.icon_state = "nblightc"
 									src.UpdateOverlays(src.image_light, "light")
 								//src.icon_state = "nuclearbomb2"
-								src.det_time = ticker.round_elapsed_ticks + src.timer_default
+								src.det_time = TIME + src.timer_default
 								src.add_simple_light("nuke", list(255, 127, 127, 127))
 								command_alert("\A [src] has been armed in [A]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [A] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-								world << sound('sound/machines/bomb_planted.ogg')
+								playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
 								logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+								if(istype(NUKEMODE, /datum/game_mode/nuclear))
+									NUKEMODE.shuttle_available = 0
 
 					else
 						boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
@@ -190,6 +193,12 @@
 					timer_modifier = src.timer_modifier_disk
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W.name], extending the bomb's timer by [src.timer_modifier_disk / 10] seconds!</span>")
 
+					if (user.mind && user.mind.assigned_role == "Captain") //the fat frog did it!
+						user.unlock_medal("Brown Pants", 1)
+
+					if(istype(ticker.mode, /datum/game_mode/nuclear))
+						ticker.mode.shuttle_available = 1
+
 				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
 				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
@@ -227,12 +236,17 @@
 
 			if (src.armed && src.anchored && !(user.mind in NUKEMODE.syndicates))
 				if (isscrewingtool(W))
-					actions.start(new /datum/action/bar/icon/unanchorNuke(src), user)
+					// Give the player a notice so they realize what has happened
+					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
 				//else if (istype(W,/obj/item/wirecutters/))
 				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
 				//	open_wire_panel(user)
 				//	return
+
+		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[usr] repairs the [src]!", null)
+			return
 
 		if (W && !(istool(W, TOOL_SCREWING | TOOL_SNIPPING) || istype(W, /obj/item/disk/data/floppy/read_only/authentication)))
 			switch (W.force)
@@ -249,7 +263,6 @@
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
 
-		..()
 		return
 
 	ex_act(severity)
@@ -267,11 +280,6 @@
 		src.take_damage(power)
 		return
 
-	emp_act()
-		src.take_damage(rand(25,35))
-		if (armed && det_time)
-			det_time += rand(-300,600)
-
 	meteorhit()
 		src.take_damage(rand(30,60))
 
@@ -288,19 +296,24 @@
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
+	proc/repair_nuke()
+		src._health = min(src._health+5, src._max_health)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		return
+
 	proc/open_wire_panel(var/mob/user)
 		user.s_active = src.wirepanel
 		wirepanel.update()
 		user.attach_hud(src.wirepanel)
 
 	proc/get_countdown_timer()
-		var/timeleft = round((det_time - ticker.round_elapsed_ticks)/10 ,1)
+		var/timeleft = round((det_time - TIME)/10 ,1)
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft
 
 	proc/take_damage(var/amount)
-		if(!isitspacemas)
-			switch(src.health)
+		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
+			switch(src._health)
 				if(80 to 125)
 					src.icon_state = "nuclearbomb1"
 				if(40 to 80)
@@ -309,8 +322,8 @@
 					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
-		src.health = max(0,src.health - amount)
-		if (src.health < 1)
+		src._health = max(0,src._health - amount)
+		if (src._health < 1)
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
 			robogibs(src.loc,null)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
@@ -410,13 +423,13 @@
 	onEnd()
 		..()
 		if (owner && the_bomb)
-			var/timer_modifier = round((the_bomb.det_time - ticker.round_elapsed_ticks) / 2)
+			var/timer_modifier = round((the_bomb.det_time - TIME) / 2)
 			the_bomb.anchored = 0
 
 			for (var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
 
-			if (ticker.round_elapsed_ticks < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
+			if (TIME < (the_bomb.det_time - timer_modifier) && !the_bomb.motion_sensor_triggered)
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
 				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
@@ -434,10 +447,10 @@
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = 0
-	var/health = 10
+	_health = 10
 
 	proc/checkhealth()
-		if (src.health <= 0)
+		if (src._health <= 0)
 			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,src.loc)
@@ -448,6 +461,6 @@
 		..()
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
-		src.health -= W.force
+		src._health -= W.force
 		checkhealth()
 		return

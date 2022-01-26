@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	amount = 5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
@@ -55,15 +55,9 @@
 			return
 		if (user)
 			if (M != user)
-				M.visible_message("<span class='alert'>[M] has been applied with [src] by [user]</span>",)
+				M.visible_message("<span class='alert'>[user] applies [src] to [M].</span>",)
 			else
-				var/t_himself = "itself"
-				if (user.gender == MALE)
-					t_himself = "himself"
-				else if (user.gender == FEMALE)
-					t_himself = "herself"
-
-				M.visible_message("<span class='alert'>[M] applied [src] on [t_himself]</span>")
+				M.visible_message("<span class='alert'>[M] applies [src] to [himself_or_herself(M)].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M

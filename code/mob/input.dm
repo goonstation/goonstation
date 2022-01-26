@@ -11,6 +11,12 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
+	if (changed & KEY_EXAMINE)
+		if (keys & KEY_EXAMINE && HAS_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES))
+			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+		else
+			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
 		if (controller)
@@ -29,6 +35,12 @@
 		if (keys & KEY_LEFT)
 			move_x -= 1
 		if (move_x || move_y)
+			if(!src.move_dir && src.canmove && src.restrained())
+				for(var/mob/M in range(src, 1))
+					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
+						boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
+						break
+
 			src.move_dir = angle2dir(arctan(move_y, move_x))
 			attempt_move(src)
 		else
@@ -47,7 +59,11 @@
 		if (controller)
 			return controller.process_move(src, keys)
 
-	if (isdead(src) && !isobserver(src) && !istype(src, /mob/zoldorf))
+	if (isdead(src) && isliving(src))
+		if (keys)
+			// Ghostize people who are trying to move while in a dead body.
+			boutput(src, "<span class='notice'>You leave your dead body. You can use the 'Re-enter Corpse' command to return to it.</span>")
+			src.ghostize()
 		return
 
 	if (src.next_move - world.time >= world.tick_lag / 10)
@@ -56,7 +72,9 @@
 	if (src.move_dir)
 		var/running = 0
 		var/mob/living/carbon/human/H = src
-		if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if ((keys & KEY_RUN) && \
+		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
+			  !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			running = 1
 		if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 			H.pushing = 0
@@ -65,7 +83,9 @@
 		var/move_dir = src.move_dir
 		if (move_dir & (move_dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
-		if (src.client && src.client.flying)
+		if (src.client && src.client.flying || (ismob(src) && HAS_MOB_PROPERTY(src, PROP_NOCLIP)))
+			if(isnull(get_step(src, move_dir)))
+				return
 			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks
@@ -80,13 +100,11 @@
 			src.glide_size = glide
 			next_move = world.time + (running ? 0.5 : 1.5)
 			return (running ? 0.5 : 1.5)
-		if(ishuman(src)) // ugly hack pls replace src.canmove by direct GET_MOB_PROPERTY() call once available
-			H.update_canmove()
+		src.update_canmove()
 		if (src.canmove)
 			if (src.restrained())
 				for(var/mob/M in range(src, 1))
-					if ((M.pulling == src && (!M.restrained() && isalive(M))) || src.grabbed_by.len)
-						boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
+					if ((M.pulling == src && (!M.restrained() && isalive(M))) || length(src.grabbed_by))
 						return
 
 			var/misstep_angle = 0
@@ -115,7 +133,7 @@
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 					if (get_dist(src, G.affecting) > 1)
 						qdel(G)
-				for (var/obj/item/grab/G as() in src.grabbed_by)
+				for (var/obj/item/grab/G as anything in src.grabbed_by)
 					if (istype(G) && get_dist(src, G.assailant) > 1)
 						if (G.state > 1)
 							delay += G.assailant.p_class
@@ -156,7 +174,7 @@
 
 					if (!spacemove) // yes, this is dumb
 						// also fuck it.
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
+						var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
 						I.set_loc(src.loc)
 						I.set_dir(src.dir)
 						flick("ion_fade", I)
@@ -164,7 +182,7 @@
 						I.pixel_x = src.pixel_x
 						I.pixel_y = src.pixel_y
 						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
+							if (I && !I.disposed) qdel(I)
 
 				if (!spacemove) // buh
 					// if the gameticker doesn't exist yet just work with no cooldown
@@ -184,7 +202,7 @@
 					src.pushing = 0
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
-					for (var/obj/item/grab/G as() in src.grabbed_by)
+					for (var/obj/item/grab/G as anything in src.grabbed_by)
 						if (G?.state < GRAB_NECK) continue
 						do_step = 0
 						break
@@ -203,7 +221,7 @@
 							for(var/obj/item/grab/gunpoint/G in grabbed_by)
 								G.shoot()
 
-						for (var/obj/item/grab/G as() in src.grabbed_by)
+						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
 							if (G.state < GRAB_NECK) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
@@ -215,14 +233,25 @@
 
 					if (src.loc != old_loc)
 						if (running)
-							src.remove_stamina(STAMINA_COST_SPRINT)
+							src.remove_stamina((src.lying ? 3 : 1) * STAMINA_COST_SPRINT)
 							if (src.pulling)
-								src.remove_stamina(STAMINA_COST_SPRINT-1)
+								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
+
+						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
+							if (!src.client.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
+								//just fall over in place when in space (to prevent zooming)
+								var/turf/current_turf = get_turf(src)
+								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
+									src.throw_at(get_step(src, move_dir), 1, 1)
+								src.setStatus("resting", duration = INFINITE_STATUS)
+								src.force_laydown_standup()
+								src.emote("wheeze")
+								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
 
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((get_dist(old_loc, src.pulling) > 1 && get_dist(src, src.pulling) > 1)|| src.pulling == src) // fucks sake
-								src.pulling = null
+							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
 								pulling += src.pulling
@@ -235,7 +264,7 @@
 							if (A == src || A == pushing)
 								continue
 							if (!isturf(A.loc) || A.anchored)
-								return // whoops
+								continue // whoops
 							A.animate_movement = SYNC_STEPS
 							A.glide_size = glide
 							step(A, get_dir(A, old_loc))

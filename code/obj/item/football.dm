@@ -2,10 +2,11 @@
 	name = "space-american football pads"
 	desc = "A protective suit designed for players of the ancient sport of space-american football. This armor bears colors of the Spacecow Wobbegongs, who won the 2048 series!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("meleeprot", 8)
@@ -20,6 +21,7 @@
 	desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacecow Wobbegongs logo printed on it!"
 	icon_state = "fb_blue"
 	c_flags = COVERSEYES | COVERSMOUTH
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 6)
@@ -32,8 +34,9 @@
 	name = "athletic pants"
 	desc = "These are athletic pants bearing the colors of the Spacecow Wobbegongs. The fabric feels like victory."
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
+	item_function_flags = IMMUNE_TO_ACID
 
 	red
 		desc = "These are athletic pants bearing the colors of the Spacissippi Timberdoodles. The fabric smells like rivalry."
@@ -47,6 +50,7 @@
 	kick_bonus = 4
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
+	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/clothing/suit/armor/football/equipped(var/mob/user, var/slot)
 	..()
@@ -56,7 +60,7 @@
 
 /mob/living/carbon/human/proc/wearing_football_gear()
 	return ( (src.wear_suit && istype(src.wear_suit,/obj/item/clothing/suit/armor/football)) \
-			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats)) \
+			&& (src.shoes && istype(src.shoes,/obj/item/clothing/shoes/cleats) || istype(mutantrace, /datum/mutantrace/cow)) \
 			&& (src.w_uniform && istype(src.w_uniform,/obj/item/clothing/under/football)) )
 
 
@@ -141,7 +145,8 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					D.try_force_open(src)
+					SPAWN_DBG(0)
+						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 					qdel(O)
@@ -167,7 +172,7 @@
 	icon_state = "football"
 	uses_multiple_icon_states = 1
 	item_state = "football"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 0
 	throw_range = 10
 	throwforce = 0
@@ -181,7 +186,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	throw_range = 15
 	throwforce = 10
-	w_class = 5
+	w_class = W_CLASS_HUGE
 	// look it is VERY IMPORTANT
 	plane = PLANE_HUD - 1
 	var/obj/maptext_junk/indicator
@@ -193,7 +198,7 @@
 		indicator.maptext_y = 38
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
-		src.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
 
 	pickup(mob/M)
 		..()
@@ -239,7 +244,7 @@
 				var/mob/living/carbon/human/user = usr
 				if (H.mind && user.mind && H.mind.special_role == user.mind.special_role)
 					playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
-					src.attack_hand(H)
+					src.Attackhand(H)
 					H.visible_message("<span class='combat'>[user] passes \the [src] to [H]!</span>", "<span class='combat'>You pass \the [src] to [H]!</span>")
 					return
 
@@ -248,12 +253,13 @@
 	ex_act(severity)
 		return
 
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
-	..()
+	. = ..()
 
 /obj/item/football/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-	..(hit_atom)
+	. = ..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)
 		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)

@@ -1065,20 +1065,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/tenebrae)
-"cs" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/teleporter)
 "ct" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/caution/corner/misc{
@@ -1172,25 +1158,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/tenebrae)
-"cF" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/radio/headset/multifreq,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "cG" = (
 /obj/cable{
 	d1 = 2;
@@ -1282,7 +1249,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "cU" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -2870,7 +2837,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gc" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "tene";
 	name = "Tenebrae solar panel control"
@@ -4169,6 +4136,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/stool/bed,
+/obj/landmark/start{
+	name = "Chief Engineer"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -4189,10 +4164,6 @@
 	dir = 4
 	},
 /obj/storage/crate/rcd,
-/obj/machinery/phone/wall{
-	pixel_x = 24;
-	pixel_y = 4
-	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -4614,7 +4585,7 @@
 "jT" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/redblack{
@@ -4673,6 +4644,10 @@
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 9;
+	pixel_y = 5
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
@@ -5740,9 +5715,9 @@
 	})
 "lX" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
+/obj/item/chem_grenade/flashbang,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
 /obj/item/reagent_containers/emergency_injector/atropine,
@@ -5887,22 +5862,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"mo" = (
-/obj/table/wood/auto,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
-/obj/item/device/audio_log,
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/obj/item/device/detective_scanner,
-/obj/item/pen,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "mp" = (
 /obj/table/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -5916,7 +5875,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "mr" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "ms" = (
@@ -6162,7 +6121,7 @@
 "mN" = (
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /turf/simulated/floor/black/grime,
 /area/station/security/secwing)
 "mO" = (
@@ -6464,19 +6423,12 @@
 /turf/simulated/floor/redblack,
 /area/station/security/secwing)
 "nr" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -6556,7 +6508,7 @@
 	},
 /area/station/hangar/sec)
 "nA" = (
-/obj/machinery/vehicle/miniputt/nanoputt,
+/obj/machinery/vehicle/miniputt/nanoputt/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "nB" = (
@@ -7824,7 +7776,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/hammer)
 "pZ" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "ham";
 	name = "Hammer solar panel control"
@@ -9008,7 +8960,7 @@
 	name = "Asclepius Command"
 	})
 "sr" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2
 	},
 /turf/simulated/floor/sanitary/white,
@@ -9453,8 +9405,8 @@
 "th" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria{
@@ -9486,7 +9438,7 @@
 	})
 "tl" = (
 /obj/machinery/light/small,
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
@@ -9599,7 +9551,7 @@
 	name = "Asclepius Command"
 	})
 "tu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -10393,11 +10345,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -12129,7 +12081,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "ya" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "asc";
 	name = "Asclepius solar panel control"
@@ -12896,7 +12848,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zt" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "dio";
 	name = "Dionysus solar panel control"
@@ -13674,7 +13626,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "AT" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /obj/machinery/crema_switch{
@@ -13790,7 +13742,7 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/carpet/arcade,
 /area/station/storage/tech)
 "Bf" = (
@@ -13835,7 +13787,7 @@
 /area/station/chapel/sanctuary)
 "Bk" = (
 /obj/table/auto,
-/obj/item/card_box/suit,
+/obj/item/card_box/plain,
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/captain{
@@ -14614,15 +14566,6 @@
 	opacity = 0
 	},
 /turf/simulated/floor/plating,
-/area/station/bridge/captain{
-	name = "Meridian Command"
-	})
-"CL" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	pixel_y = 6
-	},
-/turf/simulated/floor/black,
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
@@ -16145,7 +16088,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "maru";
 	name = "Maru solar panel control"
 	},
@@ -16185,7 +16128,7 @@
 /obj/airbridge_controller{
 	id = "escape";
 	primary_controller = 1;
-	tunnel_width = 2
+	tunnel_width = 3
 	},
 /turf/space,
 /area/space)
@@ -16380,7 +16323,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "meri";
 	name = "Meridian solar panel control"
@@ -17051,13 +16994,10 @@
 /area/station/maintenance/south{
 	name = "Demeter Operations Room"
 	})
-"Hs" = (
-/turf/space,
-/area/shuttle/escape/station/cogmap2)
 "Ht" = (
 /obj/airbridge_controller{
 	id = "escape";
-	tunnel_width = 2
+	tunnel_width = 3
 	},
 /turf/space,
 /area/space)
@@ -17115,7 +17055,7 @@
 	name = "Demeter Operations Room"
 	})
 "Hy" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "deme";
 	name = "Demeter solar panel control"
@@ -17529,7 +17469,7 @@
 /obj/item/storage/box/diskbox,
 /obj/item/storage/box/tapebox,
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /obj/item/device/multitool,
 /obj/cable{
 	icon_state = "1-8"
@@ -17574,7 +17514,7 @@
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/postit_stack{
+/obj/item/item_box/postit{
 	pixel_x = 3;
 	pixel_y = 1
 	},
@@ -17887,7 +17827,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "IV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -18183,7 +18123,7 @@
 "JG" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/playing_cards/suit,
+/obj/item/card_group/plain,
 /obj/item/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
@@ -18631,7 +18571,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "damaged vaporator unit"
 	},
@@ -22681,6 +22621,9 @@
 /area/station/science/construction{
 	name = "Tenebrae Maintenance"
 	})
+"Rn" = (
+/turf/space,
+/area/shuttle/escape/station)
 "Ro" = (
 /obj/machinery/dispenser,
 /turf/simulated/floor/darkpurple,
@@ -24233,7 +24176,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "Wg" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 8;
 	id = "erebus";
 	name = "Erebus solar panel control"
@@ -24255,6 +24198,16 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"Wl" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = new /obj/item/captaingun;
+	pixel_y = 6
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/captain{
+	name = "Meridian Command"
 	})
 "Wn" = (
 /obj/grille/catwalk{
@@ -24472,7 +24425,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "WV" = (
-/obj/submachine/chicken_feed_grinder,
+/obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
@@ -24626,6 +24579,22 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Xq" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/item/device/audio_log,
+/obj/item/audio_tape,
+/obj/item/audio_tape,
+/obj/item/device/detective_scanner,
+/obj/item/pen,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "Xr" = (
 /obj/decal/poster/wallsign/stencil/right/one{
 	layer = 2;
@@ -24805,6 +24774,20 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"XN" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/teleporter)
 "XQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25379,6 +25362,25 @@
 /area/station/engine/power{
 	name = "Erebus Power Room"
 	})
+"ZE" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/radio/headset/multifreq,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "ZH" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
@@ -58877,7 +58879,7 @@ aa
 aa
 kU
 xx
-mo
+Xq
 mV
 ny
 kT
@@ -59547,8 +59549,8 @@ Qo
 bG
 bU
 bU
-cs
-cF
+XN
+ZE
 cS
 dp
 Iq
@@ -61036,7 +61038,7 @@ aa
 aa
 BM
 Cl
-CL
+Wl
 Dm
 DN
 Eg
@@ -66186,16 +66188,16 @@ Aw
 aa
 aa
 aa
+Rn
+Rn
+Rn
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66486,20 +66488,20 @@ GA
 Hb
 Aw
 aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -66788,20 +66790,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67090,20 +67092,20 @@ Gi
 Hb
 Aw
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67391,21 +67393,21 @@ UF
 GA
 PV
 Aw
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67693,21 +67695,21 @@ GA
 GA
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -67995,21 +67997,21 @@ aa
 aa
 Xa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68298,20 +68300,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68600,20 +68602,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -68902,20 +68904,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69204,20 +69206,20 @@ aa
 Xa
 aa
 Ht
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69506,20 +69508,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -69808,20 +69810,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70110,20 +70112,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70412,20 +70414,20 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-aa
-aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -70714,19 +70716,19 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
-aa
-aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71016,17 +71018,17 @@ aa
 Xa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
+aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71319,16 +71321,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71621,16 +71623,16 @@ Xa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -71924,14 +71926,14 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
 aa
 aa
-aa
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
 aa
 aa
 aa
@@ -72226,11 +72228,11 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
-Hs
-Hs
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72529,9 +72531,9 @@ aa
 aa
 aa
 aa
-Hs
-Hs
-Hs
+aa
+aa
+aa
 aa
 aa
 aa

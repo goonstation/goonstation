@@ -3,7 +3,7 @@
 	icon_state = "multitool"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	force = 5.0
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 5.0
 	throw_range = 15
 	throw_speed = 3
@@ -11,7 +11,6 @@
 	m_amt = 50
 	g_amt = 20
 	mats = list("CRY-1", "CON-2")
-	module_research = list("tools" = 5, "devices" = 2)
 
 
 	New()

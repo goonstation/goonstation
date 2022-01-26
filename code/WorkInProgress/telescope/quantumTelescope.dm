@@ -6,6 +6,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 	name = "quantum telescope"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
+	circuit_type = /obj/item/circuitboard/telescope
 
 	var/mob/using = null
 
@@ -21,13 +22,10 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			rebuildEventList(using)
 
 	proc/boot_if_away()
-		if(using && (!using.client || using.client.inactivity >= 600 || get_dist(src, using) > 1))
+		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using)))
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null
 		return
-
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
 
 	attack_hand(mob/user as mob)
 		if(status & (BROKEN|NOPOWER))
@@ -108,8 +106,8 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 							break
 
 				if("ping")
-					var/vX = text2num(href_list["x"])
-					var/vY = text2num(href_list["y"])
+					var/vX = text2num_safe(href_list["x"])
+					var/vY = text2num_safe(href_list["y"])
 					for(var/A in tele_man.events_active)
 						var/datum/telescope_event/E = tele_man.events_active[A]
 						if(E.id == tracking_id)
@@ -120,6 +118,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 							var/disty = abs(vY - E.loc_y)
 							var/dist = (distx * distx + disty * disty) ** 0.5
 							if (dist <= E.size)
+								using.playsound_local(src.loc, "sound/machines/found.ogg", 50, 1)
 								E.onDiscover(src)
 								tele_man.events_active.Remove(tracking_id)
 								tele_man.events_found.Add(tracking_id)
@@ -128,6 +127,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 								rebuildEventList(using)
 								callJsFunc(using, "byondFound", list(E.loc_x, E.loc_y, E.size, E.id))
 							else
+								using.playsound_local(src.loc, "sound/machines/sweep.ogg", 50, 1)
 								//callJsFunc(using, "showFooterMsg", list("dist [(distx + disty)]"))
 								rebuildEventList(using)
 

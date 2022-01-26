@@ -1,8 +1,87 @@
+//bot go brr?
 //GUNS GUNS GUNS
+/datum/projectile/special/target_designator
+	sname = "foo"
+	name = "bar"
+	cost = 0
+	dissipation_rate = 0
+	projectile_speed = 12800
+	casing = /obj/item/casing/cannon
+	power = 1
+	max_range = 500
+	damage_type = D_SPECIAL
+	shot_sound = null
+	hit_mob_sound = null
+	hit_object_sound = null
+	silentshot = TRUE
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		for(var/obj/O in affected)
+			O.alpha = 0
+			O.color = "#ff0000"
+			animate(O, time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.2 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 0, easing = JUMP_EASING | EASE_IN)
+			animate(time = 0.1 SECONDS, alpha = 255, easing = JUMP_EASING | EASE_IN)
+
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				O.color = initial(O.color)
+				qdel(O)
+			var/datum/projectile/bullet/howitzer/hack = new
+			hack.on_hit(end)
+			qdel(hack)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/bullet/rifle_3006/rakshasa
+	sname = "\improper Rakshasa"
+	name = "\improper Rakshasa round"
+	icon_state = "sniper_bullet"
+	dissipation_rate = 0
+	projectile_speed = 12800
+	casing = /obj/item/casing/cannon
+	power = 125
+	implanted = /obj/item/implant/projectile/rakshasa
+	icon_turf_hit = "bhole-large"
+	goes_through_walls = 1
+	pierces = -1
+
+	on_end(obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(P))
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,1,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0)
+		for(var/obj/O in affected)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN_DBG(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		. = ..()
+		hit.ex_act(2)
+
+/obj/item/ammo/bullets/rifle_3006/rakshasa
+	name = "\improper Rakshasa round"
+	desc = "..."
+	ammo_type = new/datum/projectile/bullet/rifle_3006/rakshasa
+
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/48x32.dmi'
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	has_empty_state = 1
@@ -16,10 +95,11 @@
 	can_dual_wield = 0
 	two_handed = 1
 	var/datum/projectile/bullet/g11/small/smallproj = new
+	default_magazine = /obj/item/ammo/bullets/g11
 
 	New()
-		current_projectile = new/datum/projectile/bullet/g11
-		ammo = new/obj/item/ammo/bullets/g11
+		set_current_projectile(new/datum/projectile/bullet/g11)
+		ammo = new default_magazine
 		. = ..()
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
@@ -111,8 +191,7 @@
 			return
 		..()
 
-//TODO fix this to be better
-/*
+
 /obj/item/gun/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
@@ -121,87 +200,36 @@
 	New()
 		..()
 		ammo.amount_left = 30
-		AddComponent(/datum/component/holdertargeting/smartgun, 3)
+		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
-/datum/component/holdertargeting/smartgun
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	signals = list(COMSIG_LIVING_SPRINT_START)
-	mobtype = /mob/living
-	proctype = .proc/begin_targetloop
-	var/turf/target
-	var/list/targets = list()
-	var/targetting = 0
-	var/shooting = 0
-	var/maxlocks
-	var/obj/item/gun/G
 
-	Initialize(_maxlocks = 3)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
-			return COMPONENT_INCOMPATIBLE
-		else
-			G = parent
-		maxlocks = _maxlocks
+/datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
+	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
 
-	on_dropped(datum/source, mob/user)
+//smart extinguisher
+/obj/item/gun/flamethrower/extinguisher
+	name = "smart fire extinguisher"
+	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
+	icon = 'icons/obj/items/items.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "fire_extinguisher0"
+	item_state = "fireextinguisher0"
+	swappable_tanks = 0
+	spread_angle = 10
+	mode = 1 //magic number bad
+
+	New()
 		. = ..()
-		src.shooting = 0
-		src.targetting = 0
-		src.targets.len = 0
+		fueltank = new/obj/item/reagent_containers/glass/beaker/extractor_tank/thick(src)
+		gastank = new/obj/item/tank/oxygen(src)
+		src.fueltank.reagents.add_reagent("ff-foam", 1000)
+		src.amt_chem = 20
+		AddComponent(/datum/component/holdertargeting/smartgun/extinguisher, 1)
+		src.current_projectile.shot_number = 3
+		src.chem_divisor = 3
 
-/datum/component/holdertargeting/smartgun/proc/begin_targetloop(mob/living/user)
-	if(!targetting)
-		targetting = 1
-		targets.len = 0
-		APPLY_MOB_PROPERTY(user, PROP_CANTSPRINT, src)
-		RegisterSignal(user, COMSIG_MOB_CLICK, .proc/shootemall)
-		SPAWN_DBG(0)
-			src.targetloop(user)
-
-/datum/component/holdertargeting/smartgun/proc/shootemall(mob/user, atom/target, params)
-	if(targetting && !shooting)
-		SPAWN_DBG(0)
-			shooting = 1
-			shootloop:
-				for(var/mob/M in targets)
-					for(var/i in 1 to targets[M])
-						if(!shooting || !G.canshoot())
-							break shootloop
-						G.shoot(get_turf(M),get_turf(user),user)
-						sleep(1)
-			targets.len = 0
-			shooting = 0
-		return RETURN_CANCEL_CLICK
-
-/datum/component/holdertargeting/smartgun/proc/targetloop(mob/living/user)
-	var/ding = 0
-	var/shotcount = 0
-	while(targetting)
-		sleep(1 SECOND)
-		ding = 0
-		for(var/mob/M in mobs)
-			if(!G || !(user?.client.check_key(KEY_RUN)))
-				targetting = 0
-				break
-			if(IN_RANGE(user, M, 7) && isliving(M) && in_cone_of_vision(user, M) && !(targets[M] >= maxlocks || istype(M.get_id(), /obj/item/card/id/syndicate)) && shotcount < checkshots(G))
-				targets[M] = targets[M] ? targets[M] + 1 : 1
-				ding = 1
-				shotcount++
-				continue
-		if(ding)
-			user.playsound_local(user, "sound/machines/chime.ogg", 5, 0)
-	//loop ended - reset values
-	REMOVE_MOB_PROPERTY(user, PROP_CANTSPRINT, src)
-	UnregisterSignal(user, COMSIG_MOB_CLICK)
-
-/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
-	if(istype(G, /obj/item/gun/kinetic))
-		var/obj/item/gun/kinetic/K = G
-		return round(K.ammo.amount_left * K.current_projectile.cost)
-	else if(istype(G, /obj/item/gun/energy))
-		var/obj/item/gun/energy/E = G
-		return round(E.cell.charge * E.current_projectile.cost)
-	else return G.canshoot() * INFINITY //idk, just let it happen
-*/
+/datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
+	return (M.hasStatus("burning"))
 
 /obj/item/gun/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
@@ -211,10 +239,12 @@
 	caliber = 0.512
 	max_ammo_capacity = 6
 	has_empty_state = 1
+	default_magazine = /obj/item/ammo/bullets/gyrojet
+	fire_animation = TRUE
 
 	New()
-		ammo = new/obj/item/ammo/bullets/gyrojet
-		current_projectile = new/datum/projectile/bullet/gyrojet
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/gyrojet)
 		. = ..()
 
 /obj/item/ammo/bullets/gyrojet
@@ -228,7 +258,7 @@
 
 /datum/projectile/bullet/gyrojet
 	name = "gyrojet bullet"
-	projectile_speed = 5
+	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
 	power = 10
@@ -243,10 +273,10 @@
 		O.internal_speed = projectile_speed
 
 	tick(obj/projectile/O)
-		O.internal_speed = min(O.internal_speed * 1.25, 56)
+		O.internal_speed = min(O.internal_speed * 1.25, 32)
 
 	get_power(obj/projectile/P, atom/A)
-		return 10 + P.internal_speed
+		return 15 + P.internal_speed
 
 //desert eagle. The biggest, baddest handgun
 /obj/item/gun/kinetic/deagle
@@ -261,20 +291,23 @@
 	caliber = list(0.50, 0.41, 0.357, 0.38, 0.355, 0.22) //the omnihandgun
 	has_empty_state = 1
 	gildable = 1
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/deagle50cal
 
 	New()
-		current_projectile = new/datum/projectile/bullet/deagle50cal
-		ammo = new/obj/item/ammo/bullets/deagle50cal
+		set_current_projectile(new/datum/projectile/bullet/deagle50cal)
+		ammo = new default_magazine
 		. = ..()
 
 	//gimmick deagle that decapitates
 	decapitation
 		force = 18.0 //mmm, pistol whip
 		throwforce = 50 //HEAVY pistol
+		default_magazine = /obj/item/ammo/bullets/deagle50cal/decapitation
 		New()
 			. = ..()
-			current_projectile = new/datum/projectile/bullet/deagle50cal/decapitation
-			ammo = new/obj/item/ammo/bullets/deagle50cal/decapitation
+			set_current_projectile(new/datum/projectile/bullet/deagle50cal/decapitation)
+			ammo = new default_magazine
 
 //.50AE deagle ammo
 /obj/item/ammo/bullets/deagle50cal
@@ -319,7 +352,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	flags = FPRINT | TABLEPASS
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throw_speed = 4
@@ -374,7 +407,7 @@
 //Suggestion box
 /obj/suggestion_box
 	name = "suggestion box"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
@@ -409,21 +442,31 @@
 				new /obj/decal/cleanable/paper(T)
 		return ..()
 
-//lily's office
-obj/item/gun/reagent/syringe/lovefilled
-	ammo_reagents = list("love")
+/obj/item/mutation_orb/cat_orb
+	name = "essence of catness"
+	desc = "Nya?"
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "orb_fire"
+
+	envelop_message = "fur"
+	leaving_message = "meowing softly and vanishing"
+
 	New()
 		. = ..()
-		src.reagents?.maximum_volume = 750
-		src.reagents.add_reagent("love", src.reagents.maximum_volume)
+		color = list(0.3, 0.4, 0.3, 0, 1, 0, 0, 0, 1)
+		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cat", magical = 1),
+		new /datum/mutation_orb_mutdata(id = "accent_uwu", magical = 1),
+		new /datum/mutation_orb_mutdata(id = "dwarf", magical = 1)
+		)
 
+//lily's office
 /obj/item/storage/desk_drawer/lily/
 	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
 	/obj/item/reagent_containers/food/snacks/cake,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
 	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate,\
+	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
 	/obj/item/reagent_containers/food/snacks/cake,\
 )
 
@@ -466,7 +509,7 @@ obj/item/gun/reagent/syringe/lovefilled
 	item_state = "geiger"
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	throwforce = 3
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	mats = 5
@@ -502,7 +545,7 @@ obj/item/gun/reagent/syringe/lovefilled
 		. = ..()
 
 	proc/process()
-		if(!PROC_ON_COOLDOWN(30 SECONDS))
+		if(!ON_COOLDOWN(src, "process", 30 SECONDS))
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)

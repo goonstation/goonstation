@@ -15,7 +15,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 9.0
 	throwforce = 15.0
 	throw_speed = 5
@@ -40,15 +40,15 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
 			src.amount = diff
-			var/obj/item/rods/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -72,15 +72,14 @@ MATERIAL
 				var/makemetal = round(src.amount / 2)
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets of metal do you want to make?","Welding",1) as num
-				if (weldinput < 1) return
+				if (weldinput < 1 || !isnum_safe(weldinput)) return
 				if (weldinput > makemetal) weldinput = makemetal
-			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(usr.loc)
+			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
-			src.amount -= weldinput * 2
+			src.consume_rods(weldinput * 2)
 
 			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
-			if(src.amount < 1)	qdel(src)
 			return
 		if (istype(W, /obj/item/rods))
 			var/obj/item/rods/R = W
@@ -97,7 +96,6 @@ MATERIAL
 			else
 				R.amount += src.amount
 				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
-				//SN src = null
 				qdel(src)
 				return
 		return
@@ -105,13 +103,13 @@ MATERIAL
 	attack_self(mob/user as mob)
 		if (user.weakened | user.getStatusDuration("stunned"))
 			return
-		if (locate(/obj/grille, usr.loc))
-			for(var/obj/grille/G in usr.loc)
+		if (locate(/obj/grille, user.loc))
+			for(var/obj/grille/G in user.loc)
 				if (G.destroyed)
 					G.health = G.health_max
 					G.set_density(1)
 					G.destroyed = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
@@ -124,13 +122,13 @@ MATERIAL
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = usr.loc
+			var/turf/T = user.loc
 			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.weakened && !usr.getStatusDuration("stunned"))
+				if (T == user.loc && !user.weakened && !user.getStatusDuration("stunned"))
 					src.amount -= 2
-					var/atom/G = new /obj/grille(usr.loc)
+					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Grille in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 		if (src.amount < 1)
 			qdel(src)
 			return
@@ -153,7 +151,7 @@ MATERIAL
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of thick metal, from which one can construct a multitude of objects."
 		//cogwerks - burn vars
@@ -177,15 +175,15 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/metal/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -206,7 +204,6 @@ MATERIAL
 		else
 			W.amount += src.amount
 			boutput(user, "<span class='notice'>You add the metal to the stack. It now has [W.amount] sheets.</span>")
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -250,7 +247,6 @@ MATERIAL
 				return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])
@@ -259,7 +255,7 @@ MATERIAL
 					if (makerods > 50) makerods = 50
 					boutput(usr, "<span class='notice'>You could make up to [makerods] rods with the amount of metal you have.</span>")
 					var/rodsinput = input("How many rods do you want to make? (Minimum of 2)","Metal Crafting",1) as num
-					if (rodsinput < 2) return
+					if (rodsinput < 2 || !isnum_safe(rodsinput)) return
 					if (rodsinput > makerods) rodsinput = makerods
 
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
@@ -313,7 +309,7 @@ MATERIAL
 						boutput(usr, text("<span class='alert'>You need at least two metal to build a closet.</span>"))
 						return
 					src.amount -= 2
-					var/atom/A = new /obj/closet( usr.loc )
+					var/atom/A = new /obj/storage/closet( usr.loc )
 					A.setMaterial(src.material)
 					logTheThing("station", usr, null, "builds a Closet in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
 				if("fl_tiles")
@@ -321,7 +317,7 @@ MATERIAL
 					if (maketiles > 80) maketiles = 80
 					boutput(usr, "<span class='notice'>You could make up to [maketiles] tiles with the amount of metal you have.</span>")
 					var/tileinput = input("How many tiles do you want to make? (Minimum of 4)","Metal Crafting",1) as num
-					if (tileinput < 4) return
+					if (tileinput < 4 || !isnum_safe(tileinput)) return
 					if (tileinput > maketiles) tileinput = maketiles
 
 					var/obj/item/tile/R = new /obj/item/tile( usr.loc )
@@ -408,7 +404,7 @@ MATERIAL
 	throwforce = 15.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of reinforced metal, used for making thicker walls and stronger metal objects."
 		//cogwerks - burn vars
@@ -439,15 +435,15 @@ MATERIAL
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/r_metal/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/r_metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
@@ -465,7 +461,6 @@ MATERIAL
 			W.amount = src.max_stack
 		else
 			W.amount += src.amount
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -477,7 +472,6 @@ MATERIAL
 			return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])

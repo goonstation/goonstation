@@ -12,19 +12,24 @@
 	icon_state = "left"
 	var/base_state = "left"
 	visible = 0
-	flags = ON_BORDER
+	flags = FPRINT | ON_BORDER
+	health = 500
+	health_max = 500
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
-	object_flags = CAN_REPROGRAM_ACCESS
+	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK | HAS_DIRECTIONAL_BLOCKING
 
 	New()
 		..()
 
-		if (src.req_access && src.req_access.len)
+		if (src.req_access && length(src.req_access))
 			src.icon_state = "[src.icon_state]"
 			src.base_state = src.icon_state
+		return
+
+	xmasify()
 		return
 
 	attack_hand(mob/user as mob)
@@ -32,7 +37,7 @@
 			user.show_text("You cannot control this door.", "red")
 			return
 		else
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
@@ -95,16 +100,29 @@
 		close()
 		return 1
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir) // Check for appropriate border.
+		if (get_dir(loc, mover) & dir) // Check for appropriate border.
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1
+
+	gas_cross(turf/target)
+		if(get_dir(loc, target) & dir)
+			return !density
+		else
+			return TRUE
 
 	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 		if (istype(mover, /obj/projectile))
@@ -112,7 +130,14 @@
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir)
+		if (get_dir(loc, target) & dir)
+			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
+				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
+					// If they're pulling something and the door would open anyway,
+					// just let the door open instead.
+					return 0
+				animate_door_squeeze(mover)
+				return 1 // they can pass through a closed door
 			return !density
 		else
 			return 1
@@ -208,7 +233,7 @@
 			return
 		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || usr.stat || usr.restrained())
 			return
-		if (!in_range(src, usr))
+		if (!in_interact_range(src, usr))
 			usr.show_text("You are too far away.", "red")
 			return
 		if (src.hardened == 1)

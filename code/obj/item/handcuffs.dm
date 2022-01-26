@@ -4,7 +4,7 @@
 	icon_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	m_amt = 500
@@ -16,7 +16,7 @@
 	desc = "Adjustable metal rings joined by cable, made to be applied to a person in such a way that they are unable to use their hands. Difficult to remove from oneself."
 	custom_suicide = 1
 
-/obj/item/handcuffs/setMaterial(var/datum/material/mat1, appearance, setname)
+/obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
 	..()
 	if (mat1.mat_id == "silver")
 		name = "silver handcuffs"
@@ -36,7 +36,7 @@
 		return 0
 	user.canmove = 0
 	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
-	playsound(get_turf(user), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+	playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 	user.emote("scream")
 	SPAWN_DBG(1 SECOND)
 		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
@@ -44,7 +44,7 @@
 		if (skull)
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
-		playsound(get_turf(user), "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+		playsound(user, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 		health_update_queue |= user
 
 /* do not do this thing here:
@@ -60,7 +60,7 @@
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 
@@ -78,7 +78,7 @@
 	return 1
 
 /obj/item/handcuffs/attack(mob/M as mob, mob/user as mob)
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!usr.bioHolder.HasEffect("lost_left_arm") && !usr.bioHolder.HasEffect("lost_right_arm"))
+	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -142,7 +142,7 @@
 
 /obj/item/handcuffs/tape_roll
 	name = "ducktape"
-	desc = "Our new top of the line high-tech handcuffs"
+	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
 	flags = FPRINT | TABLEPASS | ONBELT
 	m_amt = 200

@@ -12,10 +12,11 @@ export const Modal = props => {
   const {
     className,
     children,
+    full,
     ...rest
   } = props;
   return (
-    <Dimmer>
+    <Dimmer full={full}>
       <div
         className={classes([
           'Modal',

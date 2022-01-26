@@ -11,7 +11,7 @@ proc/pick_landmark(name, default=null)
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
 	anchored = 1
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/deleted_on_start = TRUE
 	var/add_to_landmarks = TRUE
 	var/data = null // data to associatively save with the landmark
@@ -66,14 +66,28 @@ var/global/list/job_start_locations = list()
 /obj/landmark/cruiser_entrance
 	name = LANDMARK_CRUISER_ENTRANCE
 
+/obj/landmark/cruiser_center
+	name = LANDMARK_CRUISER_CENTER
+
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
 	icon_state = "xp"
-	var/shuttle = SHUTTLE_NODEF
 
 	New()
-		src.data = src.shuttle// save dir
+		src.data = src.dir
 		..()
+
+	north
+		dir = NORTH
+
+	south
+		dir = SOUTH
+
+	east
+		dir = EAST
+
+	west
+		dir = WEST
 
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
@@ -139,6 +153,7 @@ var/global/list/job_start_locations = list()
 	var/type_to_spawn = null
 	var/spawnchance = 100
 	var/static/list/name_to_type = list(
+		"juicer_gene" = /mob/living/carbon/human/geneticist,
 		"shitty_bill" = /mob/living/carbon/human/biker,
 		"john_bill" = /mob/living/carbon/human/john,
 		"big_yank" = /mob/living/carbon/human/big_yank,
@@ -160,13 +175,15 @@ var/global/list/job_start_locations = list()
 		"seamonkeyspawn_rich" = /mob/living/carbon/human/npc/monkey/sea/rich,
 		"seamonkeyspawn_lab" = /mob/living/carbon/human/npc/monkey/sea/lab,
 		"waiter" = /mob/living/carbon/human/waiter,
-		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey
+		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey,
+		"dolly" = /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
 	)
 
 	New()
-		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance))
+		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
 			SPAWN_DBG(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
-				initialize()
+				if(!src.disposed)
+					initialize()
 		..()
 
 	initialize()
@@ -213,14 +230,28 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
 
+/obj/landmark/lrt/voiddiner
+	name = "Void Diner"
+
+/obj/landmark/character_preview_spawn
+	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
+
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
 	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
-	var/targetZ = 1 // target z-level to push it's contents to
-	var/xOffset = 0 // use only for pushing to the same z-level
-	var/yOffset = 0 // use only for pushing to the same z-level
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#FF0000"
+	/// target z-level to push it's contents to
+	var/targetZ = 1
+	/// x offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/xOffset = 0
+	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/yOffset = 0
 	add_to_landmarks = FALSE
+	/// modifier for restricting criteria of what gets warped by mirror
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
+	var/novis = FALSE
 
 	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
@@ -229,20 +260,33 @@ var/global/list/job_start_locations = list()
 		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
 		var/turf/T = get_turf(src)
 		if (!T) return
-		T.appearance_flags |= KEEP_TOGETHER
-		T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
-		if(warptarget_modifier) T.vistarget.warptarget = T
-		T.updateVis()
-		T.vistarget.fullbright = TRUE
-		T.vistarget.RL_Init()
+		if(novis)
+			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+			W.warptarget = T
+		else
+			T.appearance_flags |= KEEP_TOGETHER
+			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+			if (T.vistarget)
+				if(warptarget_modifier)
+					T.vistarget.warptarget = T
+				T.updateVis()
+				T.vistarget.fullbright = TRUE
+				T.vistarget.RL_Init()
 		..()
+
+/obj/landmark/viscontents_spawn/no_vis
+	name = "instant hole spawn"
+	desc = "Point it at a turf. Stuff that goes there? goes here instead. Got it?"
+	novis = TRUE
 
 /obj/landmark/viscontents_spawn/no_warp
 	warptarget_modifier = LANDMARK_VM_WARP_NONE
-
-/turf/var/turf/vistarget = null	// target turf for projecting its contents elsewhere
-/turf/var/turf/warptarget = null // target turf for teleporting its contents elsewhere
-/turf/var/turf/warptarget_modifier = null // control who gets warped
+/// target turf for projecting its contents elsewhere
+/turf/var/turf/vistarget = null
+/// target turf for teleporting its contents elsewhere
+/turf/var/turf/warptarget = null
+/// control who gets warped to warptarget
+/turf/var/turf/warptarget_modifier = null
 
 /turf/proc/updateVis()
 	if(vistarget)

@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	desc = "..."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	w_class = 1
+	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
@@ -29,22 +29,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
 
-	proc/setup_reagents(new_initial_reagents) //proccall overhead idk man dont put this in new just copy paste :)
-		ensure_reagent_holder()
-		create_initial_reagents(new_initial_reagents)
-
-	pooled()
-		if (src.reagents)
-			src.reagents.clear_reagents()
-		..()
-
-	unpooled()
-		if (src.reagents)
-			src.reagents.clear_reagents()
-		..()
-		setup_reagents(last_new_initial_reagents)
-
-
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
@@ -59,9 +43,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!src.reagents)
 			src.initial_reagents = null // don't need you no mo
 			return
-		if ((islist(new_reagents) && new_reagents.len) || istext(new_reagents))
+		if ((islist(new_reagents) && length(new_reagents)) || istext(new_reagents))
 			src.initial_reagents = new_reagents
-		if (islist(src.initial_reagents) && src.initial_reagents.len)
+		if (islist(src.initial_reagents) && length(src.initial_reagents))
 			for (var/current_id in src.initial_reagents)
 				if (!istext(current_id)) // we can't do shit hereeee
 					continue
@@ -103,12 +87,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			var/atom/target_loc = usr.loc
 			var/ok = 1
 			var/atom/L = src
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
 			L = over_object
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
@@ -139,6 +123,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "null"
 	item_state = "null"
 	amount_per_transfer_from_this = 10
+	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
@@ -176,7 +161,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					boutput(user, "<span class='notice'>You splash all of the solution onto [target].</span>")
 					target.visible_message("<span class='alert'><b>[user.name]</b> splashes the [src.name]'s contents onto [target.name]!</span>")
 				else
-					boutput(user, "<span class='notice'>You apply [src.amount_per_transfer_from_this] units of the solution to [target].</span>")
+					boutput(user, "<span class='notice'>You apply [min(src.amount_per_transfer_from_this,src.reagents.total_volume)] units of the solution to [target].</span>")
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
 				logTheThing("combat", user, MOB, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
@@ -217,7 +202,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
 		else if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
-			if (!target.reagents.total_volume && target.reagents)
+			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
 
@@ -321,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			boutput(user, "<span class='notice'>You rip up the [I] into tiny pieces and sprinkle it into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
-			pool(I)
+			qdel(I)
 
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
@@ -365,10 +350,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
-		else if (istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
+		else if (istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
 				user.visible_message("<span class='alert'><b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!</span>")
+				I.tooltip_rebuild = 1
 			else
+				if(istype(I, /obj/item/ammo/bullets))
+					var/obj/item/ammo/A = I
+					I = A.ammo_type
 				if (I.material && I.material.mat_id == "silver")
 					boutput(user, "<span class='notice'>[I] is already coated, more silver won't do any good.</span>")
 				else
@@ -385,6 +374,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 						boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 				else
 					boutput(user, "The [W.name] is empty.")
+			else
+				boutput(user, "You need to slice open the [W.name] first!")
 
 			return
 		else
@@ -393,16 +384,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
-			boutput(user, "<span class='notice'>You tighten your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
 			src.splash_all_contents = 0
 		else
-			boutput(user, "<span class='notice'>You loosen your grip on the [src].</span>")
+			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
 			src.splash_all_contents = 1
 		return
 
 	proc/smash()
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc(src.loc)
 		var/turf/U = src.loc
 		src.reagents.reaction(U)
@@ -430,9 +421,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "bucket"
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
-	initial_volume = 50
+	initial_volume = 120
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
 	var/bucket_sensor_type = /obj/item/bucket_sensor
@@ -449,7 +441,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		else if (istype(D, /obj/item/mop))
 			if (src.reagents.total_volume >= 2)
 				src.reagents.trans_to(D, 2)
-				user.show_text("You wet the mop", "blue")
+				user.show_text("You wet the mop.", "blue")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			else
 				user.show_text("Out of water!", "blue")
@@ -457,6 +449,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if (src.reagents.total_volume)
 				user.show_text("<b>You start cutting [src], causing it to spill!</b>", "red")
 				src.reagents.reaction(get_turf(src))
+				src.reagents.clear_reagents()
 			else
 				user.show_text("You start cutting [src].")
 			if (!do_mob(user, src))

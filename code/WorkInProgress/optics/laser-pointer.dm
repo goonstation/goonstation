@@ -14,7 +14,7 @@
 	var/peak_output = 0.005	// max output 5 mW
 	layer = OBJ_LAYER + 0.1
 
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	m_amt = 500
 	g_amt = 100
 	w_amt = 200
@@ -39,7 +39,7 @@
 		else
 			turn_off()
 
-		updateicon()
+		UpdateIcon()
 
 	Move(var/atom/newloc,var/newdir)
 		. = ..(newloc,newdir)
@@ -63,5 +63,5 @@
 		turn_off()
 		turn_on()
 
-	proc/updateicon()
+	UpdateIcon()
 		icon_state = "pointer[on]"

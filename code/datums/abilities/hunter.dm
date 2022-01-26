@@ -14,7 +14,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_taketrophy)
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			SHOW_HUNTER_TIPS(src)
 
 	else return
@@ -34,7 +34,7 @@
 		M.delStatus("slowed")
 		M.change_misstep_chance(-INFINITY)
 		M.stuttering = 0
-		M.drowsyness = 0
+		M.delStatus("drowsy")
 
 		if (M.hasStatus("handcuffed"))
 			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
@@ -48,6 +48,7 @@
 		M.unequip_all()
 
 		var/obj/item/implant/microbomb/hunter/B = new /obj/item/implant/microbomb/hunter(M)
+		M.implant.Add(B)
 		B.implanted = 1
 		B.implanted(M)
 
@@ -57,9 +58,9 @@
 		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
-		M.equip_if_possible(new /obj/item/cloaking_device(M), slot_r_store)
-		M.equip_if_possible(new /obj/item/knife/butcher/predspear(M), slot_l_hand)
-		M.equip_if_possible(new /obj/item/gun/energy/laser_gun/pred(M), slot_r_hand)
+		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
+		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_l_hand)
+		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_r_hand)
 
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
@@ -103,22 +104,22 @@
 					// Antagonist check.
 					if (checktraitor(H))
 						switch (H.mind.special_role) // Ordered by skull value.
-							if ("omnitraitor")
+							if (ROLE_OMNITRAITOR)
 								skull_type = /obj/item/skull/crystal
 								skull_desc = "A trophy taken from a mystic, all-powerful creature. It is an immeasurable honor."
-							if ("hunter")
+							if (ROLE_HUNTER)
 								skull_type = /obj/item/skull/strange
 								skull_desc = "A trophy taken from a hunter, the finest hunters of all."
-							if ("changeling")
+							if (ROLE_CHANGELING)
 								skull_type = /obj/item/skull/odd
 								skull_desc = "A trophy taken from a shapeshifting alien! It is an immense honor."
-							if ("werewolf")
+							if (ROLE_WEREWOLF)
 								skull_value = 4
 								skull_desc = "A grand trophy from a lycanthrope, a very capable hunter. It is an immense honor."
-							if ("wizard")
+							if (ROLE_WIZARD)
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
-							if ("vampire")
+							if (ROLE_VAMPIRE)
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
@@ -223,7 +224,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/hunter
+/atom/movable/screen/ability/topBar/hunter
 	clicked(params)
 		var/datum/targetable/hunter/spell = owner
 		if (!istype(spell))
@@ -267,7 +268,7 @@
 	var/hunter_only = 0
 
 	New()
-		var/obj/screen/ability/topBar/hunter/B = new /obj/screen/ability/topBar/hunter(null)
+		var/atom/movable/screen/ability/topBar/hunter/B = new /atom/movable/screen/ability/topBar/hunter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -279,7 +280,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/hunter()
+			src.object = new /atom/movable/screen/ability/topBar/hunter()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)

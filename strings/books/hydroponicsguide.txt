@@ -1,0 +1,197 @@
+<html>
+<head>
+<style type="text/css">
+div.code
+{
+padding:5px;
+border:1px solid black;
+margin:1px;
+font-family:"courier";
+font-size:12px;
+background-color:lightgray;
+}
+div.tips
+{
+padding:10px;
+border:5px solid gray;
+margin:0px;
+font-family:"Arial";
+font-size:12px;
+font-weight:bold;
+}
+body
+{
+color:black;
+background-color:white;
+}
+h1
+{
+font-family:"Arial Black";
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+h2
+{
+font-family:"Arial Black";
+text-align:left;
+font-size:18px;
+}
+p
+{
+font-family:"Arial";
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>The Helpful Hydroponics Handbook</h1>
+<p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date.<br>
+<h2>Introduction</h2>
+<p>Hello! Do you have QUESTIONS about PROBLEMS? Are those problems of a gardening and plants nature? Well boy howdy is this the book for you! It's time to put an end to those plant woes!</p>
+
+<h2>The Target Demographic</h2>
+<p>Obviously, this book is targeted mainly at Botanists, Gardeners and other plant-growing folks.<br>
+Of course if you are not one of these people there's no reason you can't try your hand anyway!
+Gardening is awesome, easy and fun! I hope you like the smell of dirt!</p>
+<p>If you're already an experienced gardener, keep an eye out for advanced tips, which look like this:
+<div class="tips">
+<li>This is a tip! Get the hint?</div>
+<br><br>
+<h2>Chapter 1: Basic Gardening</h2>
+<p>So, you've got an empty Hydroponics tray, some seeds and a burning desire to grow some goddamn plants. The next step should be obvious: Plant that seed in the tray!</p>
+<p>If you're using one of the standard issue Hydroponics growing trays, the plant should begin to grow almost immediatley. Most issues with the plant will be taken care of automatically by the tray.</p>
+<p>However, you will need to ensure that the tray is kept filled with water - but not too much! Apart from this, simply tend to the plant until it becomes ready to harvest, as will be indicated by a flashing blue light.</p>
+<p>Now, I know what you're thinking. "It can't be that simple, surely!" Well you're wrong! If all you want to do is simply plant, grow and harvest, this is literally all you need to do. Even a prehistoric hunter-gatherer can do it!</p>
+<p>However, there are other things you can do to ensure a much better harvest and gardening experience. For example, you can add compost and other nutrients to the plant's solution to ensure the plant becomes and stays very healthy.</p>
+<p>A healthy plant is a happy plant, and a happy plant will grow more viable produce!</p>
+<p>Also, consider regularly checking the plant by hand - this will alert you to any issues with the tray or the plant that require correction.</p>
+<div class="tips">
+<li> Keep an eye on the LED displays on your Hydroponics tray. Flashing blue means a harvest is ready, Red means the plant is in poor condition. The bar on the side shows you how much water you have - aim for green!
+<li> If trays are kept empty, eventually strange weeds may start to grow in them. Even keeping a dead plant in a tray will prevent weeds! Some weeds can be rather bad to have around!
+</div>
+<br><br>
+<h2>Chapter 2: Tools of the Trade</h2>
+<p>Well, now you know how to grow a plant and harvest it all well and good. You may find yourself asking however, <i>what do I use to go about doing this?! What is all the stuff in here!?</i> Slow down, junior. We'll get to that.</p>
+<p>A good Botanist is provided with many different tools to perform their work. Most likely, you'll be able to find an assortment of these tools in either a supplied set of lockers, or in a GardenGear vending machine.</p>
+<p>First of all, we have the humble and iconic Watering Can. A symbol for any gardener! Standard watering cans can hold quite a lot of reagents, but you'll mostly just want to keep water in it. Most often botanists will be supplied with a high-capacity water tank.</p>
+<p>The water tank holds a LOT of water inside - just attach the Watering Can to the spigot, give it a turn, and you'll have a lot of water to feed your plants! The tank will automatically fill the can as full as it can get, so don't worry about spills.</p>
+<p>Bags of Compost are another item that should be used often and well. These familiar old brown bags contain a lot of nutritious mulch that will make your plants healthy. Specifics will be covered later.</p>
+<p>There is also the trusty green and brown Compost Bin! This device not only stores quite a lot of compost mulch for refilling your bags, but it can also convert any unwanted produce into more mulch! Just place the produce inside and the process is automatic.</p>
+<p>A good Botanist is also advised to make a lot of use of Produce Satchels. These handy little bags can hold a lot of food, plants, and seeds. Anything that's related to hydroponics and/or cooking can go in one of these bags! They hold a lot of stuff!</p>
+<p>Sometimes though, there's times where plants decide to be a pain. Getting annoyed at Creepers killing your plants? Radweed giving you a nasty case of poisoning? This is where you'll want to use your trusty Chainsaw! Just hack up the plant and it's as good as gone!</p>
+<p>If the Chainsaw doesn't work, try Weedkiller. Weedkiller solution has an extremely toxic effect on undesirable weed-like plants, while being completely harmless to regular plants. This is especially good against pesky Lasher plants!</p>
+<p>The Plant Analyzer isn't neccessary if you're just doing basic planting and harvesting, but it's a must-have if you want to get into botanical genetic engineering. This will be covered in a later chapter.</p>
+<p>The Seed Fabricator is the large, vending machine-like object that you can't take with you (unless you want to be crushed, I guess), but it's vital - without it, you wouldn't be able to get any plant seeds! Any seeds obtained from this will have a completely clean genetic slate, also.</p>
+<p>The Reagent Extractor accepts various produce, and extracts valuable reagents from them. This is especially important if you want to farm herbs!</p>
+<p>Finally, we have the PlantMaster Mk3 plant genetics manipulator, seed extractor and seed infuser! This is the piece de resistance if you want to engage in genetic engineering - but that's a complicated subject we'll tackle later!</p>
+<div class="tips">
+<li> Other common objects can come in handy, too. Beakers can be inserted in the Reagent Extractor and PlantMaster, and screwdrivers and wrenches can be used to bolt down trays so they don't get knocked around.
+</div>
+<h2>Chapter 3: Nutrient Solutions</h2>
+<p>So, now we know the basics of plant maintenance, growing, and harvesting. What can we do to become better at our craft?</p>
+<p>As was mentioned before, adding nutrients and other additives to the soil is a good idea - they encourage growth and good health in your plants, which is better for your harvests.</p>
+<p>However, there are many different kinds of additives, some good and some bad. Obviously adding bad things like toxins or chlorine to the soil won't do you much good at all!</p>
+<p>So what can we add? Most Botanists are equipped by standard with compost bags and weedkiller bottles. Weedkiller is harmless to normal plants, but will destroy undesirable plants such as Creepers or Lashers.</p>
+<p>Compost is a very basic additive which will slowly make a plant healthier as it absorbs the nutrients. There are no drawbacks - however, it is not very quick or efficient! Ammonia, if available, will have a similar effect to compost.</p>
+<p>Phosphorus and Diethylamine, if available, will encourage the plant to grow quicker by offering more stimulating nutrients. Again however, they are not the most efficient of additives.</p>
+<p>There exist other additive solutions - they are very efficient, but often come with drawbacks. Unfortunately, the recipes for these are closely guarded formulas. All we can tell you is that they all use plant nutrients as a base!</p>
+<p>Due to the high availability of these additives however, Botanists are often supplied with one or two bottles of each. After that, it is up to the botanist to experiment with chemistry and see if they can find how to make more!</p>
+<div class="tips">
+<li> Mutagenic Formula encourages the plant to mutate wildly. However, it does cause some damage to the plant as well as stunted growth.
+<li> Ammonia encourages very rapid plant growth, but will cause the tray to dry out much faster than usual.
+<li> Potash encourages large harvests. However, it has been known to shorten the plant's lifespan.
+<li> Saltpetre can help create much more potent produce, but it can result in smaller crop yields.
+<li> Mutadone Formula is a healthy plant solution that aims to rectify genetic problems. Sadly, plant growth will be slowed to near-zero while it is present in the solution.
+</div>
+<h2>Chapter 4: Gladly Grow Genetically Great Goods</h2>
+<p>So, you're finally rolling in the brassicas, huh? Growing large batches of well-tended and healthy crops, supplying everyone with more food and medicine than they can possibly eat. This is the life, huh?</p>
+<p>What if I told you there's more. That's right! You've only glimpsed a tiny bit of the potential inherent in Hydroponics! Through manipulating the genes of plants, you can create new strains of plant that live longer, produce more, produce better, and ARE better for everyone!</p>
+<p>I'm sure you're just jonesing to sign up for some mad science. Well you're in luck! Remember the Plant Analyzer and PlantMaster Mk3 mentioned back in chapter two of this handbook? This is where those two tools come in - your gateway to genetic engineering!</p>
+<p>Plant Analyzers can be used on growing plants, fruit, and seeds. When used, the analyzer will give a readout of every useful gene in the plant's genetic structure, as well as detailing the plant's species and a few other things.</p>
+<p>Maturation Rate is the gene that influences how long a plant takes to grow from a small sapling into an adult plant. With this gene, a higher readout is better as it means a quicker growth cycle.</p>
+<p>Production Rate is the gene dealing with how long it takes an adult plant to produce viable crops. Again, higher is better. Essentially, every time a plant is harvested it is returned to the beginning of the adult stage of its growth cycle -
+ a plant could take a long time to grow but produce new batches of crop relatively quickly between harvests thanks to this gene.</p>
+<p>The Lifespan gene differs somewhat in function between fruits and other plants. In fruits, it controls how many harvests a plant can produce before it will die. In other plants it is not quite as useful, but still important - the gene controls how healthy a plant will generally be
+when it is first planted. A poor Lifespan gene in a non-fruit plant will result in a sickly plant that requires a lot of care to nurse it back to health. So keep this one high irregardless!</p>
+<p>The Yield gene simply influences how much viable produce a plant can generate per harvest. If the yield gene falls too low, a plant may not produce anything at all!</p>
+<p>Potency mainly comes into play when producing herbs, but it can also affect certain other crops. Generally speaking, the more potent a plant is, the more concentrated the reagent it produces will be within the leaves, fruits or what-have-you that you harvest. If you're growing
+ medicinal herbs, this is a very important gene as it allows you to squeeze more reagent out of each herb!</p>
+<p>Endurance deals with the plant's ability to resist damage from various sources. Generally speaking, drought and poison are the most commonly resisted types of damage. Fire and physical damage usually are too much for a plant to resist, and thus this gene will do nothing against them.</p>
+<p>The Analyzer will also display any genetic strains that are present - these are mutant strains that can affect various things about a plant. Known strains will be covered in an addendum. This section will also show if abnormal genetic strains are present - these are rare mutations that
+drastically affect a plant's crop production. Most often these will also be directly visible by observing the plant itself - mutated plants often manifest strange alterations to their appearance!</p>
+<p>Next to each gene (and the species) you will see either "D" or "r". This denotes whether that gene is Dominant or Recessive - this will be important later!</p>
+<p>Several different things cause a plant's genes to mutate. Plants will mutate somewhat naturally whenever they are first planted in a tray. Exposure to mutagens or radiation will also cause mutations of varying severity - the stronger the source, the more drastic the mutation.</p>
+<p>In addition to the nutrient tonics mentioned earlier, the PlantMaster Mk3 allows you much more control over this wild and wacky process they call genetic development! Firstly, the PlantMaster features a seed extractor - this simply maximises the amount of seeds you have to work with
+by extracting as many as it can from a piece of produce. All seeds within a single piece of produce will share the same genetic makeup too, so you'll have a lot more room for error!</p>
+<p>Secondly, the PlantMaster allows you to splice two seeds together to create a new hybrid seed. This is where dominance and recession comes into play! Select two seeds, and you'll be told their chances of successfully splicing - the chances will be much higher if you use two seeds
+from species that are similar, such as two fruits, or two herbs. You can splice seeds between species lines, but it will be much more difficult.</p>
+<p>When two seeds are successfully spliced, the genes will be mixed. Dominant genes will take precedence over recessive genes! If you have a seed with a bad dominant yield gene and one with a good recessive yield gene, think twice before you splice! The resultant hybrid seed will
+take the bad gene, because it's dominant! If your two seeds are both dominant or recessive in one gene however, what will happen most often is that the hybrid's gene will be an average of the two genes. This does not apply to the species gene however - try as we might, we still can't
+grow those sweet, sweet corn melon hybrids. So don't try and fuse two species together! It won't work!</p>
+<p>Through splicing, you can potentially take a seed with good genes in one area, splice it with a seed that covers the weak genes or adds further advantages, and end up with a seed that has the benefits of both and drawbacks of neither! There are other benefits to splicing seeds, too -
+genetic strains that normally only manifest in one species of plant will be shared in the new hybrid. That prized Immortality strain in your Cannabis plant can finally be a reality!</p>
+<p>The PlantMaster is also capable of performing infusions. Infusion is a process whereby a reagent is injected into paticular parts of a seed, hopefully without killing it, in order to forcibly induce genetic changes. You will need at least ten units of a reagent to perform this process,
+and a beaker of course! Also a seed. That's important too. Different species can react differently to different kinds of reagent, but some have a universal effect on all plants. For instance, infusing a seed with one of the plant nutrient tonics is most likely a great idea - they are designed
+to stimulate genes, and what better way to do that than by injecting it directly into the seed's genes? You might not want to infuse a seed with acid, though. That tends to just dissolve it.</p>
+<p>Of course, due to the physical damage involved in injecting a seed full of stuff, infusion will always damage the seed a little - certain reagents might cause a lot of damage in addition to this! In some cases, infusions can also trigger drastic mutations in a plant - try infusing a wheat
+seed with iron and see what happens. We love that one! Don't be afraid to experiment - you don't have to use your best genetically engineered seeds for infusing, after all. That's what science is all about!</p>
+<p>Now you've learned most of what we know. We hope this handbook has been of great use to you! Don't forget to check the addendums for further information!</p>
+<div class="tips">
+<li> Don't infuse a single seed too much - in addition to the risk of destroying it, damaged seeds tend to grow unhealthy plants. You'll have to nurse any plant growing from a damaged seed back to good health before it'll produce much in the way of crops.
+</div>
+<h2>Addendum 1: Common Weeds</h2>
+<p><b>Spaceborne Fungus</b> (<i>metafungi</i>)</p>
+<p>It is not known whether terrestrial mushroom spores were accidentally brought into space or smuggled deliberately, but they now propagate quite rapidly in many space stations, the ventilation systems helping their spores to get around most of the stations.
+A subspecies of these mushrooms are often found as a mold growing in damp, dark and poorly travelled places aboard space stations. Mostly harmless.</p>
+<p><b>Space Grass</b> (<i>metagraminoidae</i>)</p>
+<p>Often humorously termed "Astro Turf", this spaceborne grass is of terrestrial origin and has adapted so well to space that it can grow harmlessly on nearly any surface if seeds of this plant are scattered upon it.</p>
+<p><b>Lasher Brambles</b> (<i>metasalsola lividium</i>)</p>
+<p>A strange, space-borne mutation of the terrestrial tumbleweed, Lashers are a thorny, bright cyan plant known to be sensitive to nearby motion. They often "lash out" at nearby lifeforms, cutting them with thorny vines. Extermination recommended.</p>
+<p><b>Creeper Vine</b> (<i>metahedera pervasis</i>)</p>
+<p>These fuschia roots and vines are known for their rapid growth and displacement of other plant species. If a tray is contaminated by Creepers and cannot be disinfected, keep it away from other nearby trays. The creeper vine has been known to actively seek other plants
+to attack them and replace them with more instances of itself.</p>
+<p><b>Radiator Weed</b> (<i>xenocuries nauseus</i>)</p>
+<p>One of the first non-terrestrial plants discovered, spores of this fungus-like plant are often found floating dormantly in space. Unfortunately, it is rather dangerous - the main "bulb" of the plant has been known to emit dangerous levels of ionizing radiation.
+The plant takes a while to reach this stage - when the green bulb begins glowing, the plant should be considered a health hazard. It can induce radiation poisoning in humans, and mutations and damage to nearby plants.</p>
+<p><b>Toxic Slurry Pod</b> (<i>xenobulba putrescens</i>)</p>
+<p>A more recently discovered alien plant, it is sadly no less dangerous or pervasive than the Radiator Weed. The main body of the plant is a green fleshy mass which contains a putrid sludge of unknown function - this sludge is known to be very toxic and can have significant
+negative effects on human and plant health. The main body of the plant has been known to fill itself with this sludge to such a degree that it reaches an internal pressure it is no longer capable of withstanding and bursts, splattering the sludge across a large radius. Hardened
+globules of this sludge can be harvested from the plant however - with proper processing to remove the toxins, the "slurryfruit" has caught on in some colonies as a delicacy.</p>
+<h2>Addendum 2: Known Gene Strains</h2>
+<p><b>Fast Metabolism</b>: This strain accelerates a plant's growth, but causes it to drain reagents from its environment more quickly.</p>
+<p><b>Slow Metabolism</b>: This strain causes a plant to grow more slowly but also use less reagents.</p>
+<p><b>Toxin Immunity</b>: Any kind of toxin or poison will not harm a plant carrying this strain.</p>
+<p><b>Radiation Immunity</b>: Radioactive chemicals cannot damage plants with this strain, but may still cause plants to mutate.</p>
+<p><b>Drought Resistance</b>: When no water is available, plants with this strain will deteriorate a lot slower.</p>
+<p><b>Damage Resistance</b>: Harmful things like toxins and physical trauma from chainsaws are less damaging to plants with this gene strain.</p>
+<p><b>Vulnerability</b>: Plants with this strain are more easily damaged by toxins or physical trauma.</p>
+<p><b>Stabilizer</b>: This strain prevents plants from randomly mutating or from mutating via reagent exposure.</p>
+<p><b>Mutagenic</b>: Plants with the Mutagenic strain are more likely to randomly mutate.</p>
+<p><b>Anti-Mutagenic</b>: Plants with this strain are less likely to randomly mutate.</p>
+<p><b>Advanced Photosynthesis</b>: Providing additional light to plants with this strain triggers quicker maturation.</p>
+<p><b>Enhanced Yield</b>: Harvests from plants with this strain will be much more bountiful.</p>
+<p><b>Stunted Yield</b>: The harvest yield from plants with this strain will be poor.</p>
+<p><b>Hyperaquacity</b>: This strain causes the affected plants to develop produce that contain higher water content, which appears related to the potency of the plant.</p>
+<p><b>Toxic</b>: This strain causes plants to give harvests of produce that contain toxins making them unsafe for consumption. The toxin content also appears related to the potency of the plant.</p>
+<p><b>Enzymatic</b>: A plant with this strain is capable of producing in its tissues booster enzyme, with the quantity of enzyme produced being determined by the plant potency.</p>
+<p><b>Superior Quality</b>: Harvests from plants with this strain will be of higher quality, and large produce can contain more reagents.</p>
+<p><b>Inferior Quality</b>: Plants with this strain result in harvests of low-quality produce that are smaller and hold fewer reagents inside.</p>
+<p><b>Immortal</b>: A highly desirable strain that ensures a fruiting plant will never die from being harvested.</p>
+<p><b>Unstable</b>: Plants carrying this strain will continually mutate by themselves.</p>
+<p><b>Rapid Growth</b>: A very desirable strain that causes the plant to grow far faster than usual.</p>
+<p><b>Accelerator</b>: A strain that has the potential to rapidly accelerate maturation and production of a plant.</p>
+<p><b>Stunted Growth</b>: This strain will cause the plant to grow much more slowly.</p>
+<p><b>Poor Health</b>: The condition of plants carrying this strain will deteriorate over time.</p>
+<p><b>Seedless</b>: A very negative strain that prevents the host plant from reproducing at all.</p>
+<p><b>Splice Enabler</b>: A strain that allows the plant to be spliced more easily, and could potentially allow for splicing between two otherwise incompatible plants.</p>
+<p><b>Splice Blocker</b>: Seeds with this strain are fragile and more likely to fail in being spliced with other seeds. </p>
+<p><b>Terminator</b>: Development of this gene strain has the potential to trigger apoptosis and cause a plant to immediately die.
+
+<p>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at the following sources:
+<ul>
+	<li><a href="https://wiki.ss13.co/Guide_to_Botany" target="Goonstation Wiki: Guide to Botany">https://wiki.ss13.co/Guide_to_Botany</a></li></ul>
+</body>
+</html>

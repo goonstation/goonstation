@@ -15,10 +15,10 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
-	if (M == usr)
+	if (M == user)
 		user.visible_message("<span class='notice'>[M] buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 	else
 		user.visible_message("<span class='notice'>[M] is buckled in by [user].</span>", "<span class='notice'>You buckle in [M].</span>")
@@ -27,7 +27,7 @@
 	M.set_loc(src.loc)
 	implantgo(M)
 	src.add_fingerprint(user)
-	playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+	playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 	M.setStatus("buckled", duration = INFINITE_STATUS)
 	return
 
@@ -41,7 +41,7 @@
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-			playsound(get_turf(src), "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
 	return
 
 /obj/machinery/imp/chair/proc/implantgo(mob/M as mob)

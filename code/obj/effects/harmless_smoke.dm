@@ -10,23 +10,20 @@
 	pixel_x = -32
 	pixel_y = -32
 
-	pooled()
-		..()
-
 /*
 /obj/effects/harmless_smoke/New()
 	..()
 	SPAWN_DBG(10 SECONDS)
-		pool(src)
+		qdel(src)
 	return
 */
 /obj/effects/harmless_smoke/proc/kill(var/time)
 	SPAWN_DBG(time)
-		pool(src)
+		qdel(src)
 
 
 proc/harmless_smoke_puff(var/turf/location, var/duration = 100)
 	if(!istype(location)) return
-	var/obj/effects/harmless_smoke/smoke = unpool(/obj/effects/harmless_smoke)
+	var/obj/effects/harmless_smoke/smoke = new /obj/effects/harmless_smoke
 	smoke.set_loc(location)
 	smoke.kill(100)

@@ -80,7 +80,7 @@
 			src.real_name = "Satan"
 			src.name = "Satan"
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
@@ -114,7 +114,7 @@
 
 	initializeBioholder()
 		bioHolder.age = 400
-		bioHolder.mobAppearance.customization_first = "Pompadour"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customization_first_color = "#000000"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
@@ -131,6 +131,7 @@
 			src.bioHolder.AddEffect("accent_void", 0, 0, 1)
 			abilityHolder.addAbility(/datum/targetable/gimmick/spooky)
 			abilityHolder.addAbility(/datum/targetable/gimmick/Jestershift)
+			abilityHolder.addAbility(/datum/targetable/gimmick/scribble)
 
 		SPAWN_DBG(1 SECOND)
 			abilityHolder.updateButtons()
@@ -149,17 +150,48 @@ mob/living/carbon/human/cluwne/satan
 	New()
 		..()
 		SPAWN_DBG(0)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
-			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
+			src.bioHolder.AddEffect("horns", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("aura_fire", 0, 0, 0, 1)
 			src.bioHolder.AddEffect("superfartgriff")
-			src.bioHolder.AddEffect("bigpuke", 0, 0, 1)
-			src.bioHolder.AddEffect("melt", 0, 0, 1)
+			src.bioHolder.AddEffect("bigpuke", 0, 0, 0, 1)
+			src.bioHolder.AddEffect("melt", 0, 0, 0, 1)
 
 mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this for an admin gimmick.
 	New()
 		..()
 		SPAWN_DBG(0)
 			src.unkillable = 1 //for the megasatan in you
+
+/*
+ * Chicken man belongs in human zone, not ai zone
+ */
+/mob/living/carbon/human/chicken
+	name = "chicken man"
+	real_name = "chicken man"
+	desc = "half man, half BWAHCAWCK!"
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#endif
+	New()
+		. = ..()
+		SPAWN_DBG(0.5 SECONDS)
+			if (!src.disposed)
+				src.bioHolder.AddEffect("chicken", 0, 0, 1)
+
+/mob/living/carbon/human/chicken/ai_controlled
+	is_npc = TRUE
+	uses_mobai = TRUE
+	New()
+		. = ..()
+		src.ai = new /datum/aiHolder/wanderer(src)
+
+/datum/aiHolder/wanderer
+	New()
+		. = ..()
+		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
+		W.transition_task = W
+		default_task = W
+
 
 // how you gonna have father ted and father jack and not father dougal? smh
 
@@ -204,6 +236,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
@@ -214,6 +247,15 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		//Whoever does eventually put him back in the game : Use a global list of bartenders or something. Dont check all_viewers
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
+
+/mob/living/carbon/human/fatherjack/cow
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
+	initializeBioholder()
+		. = ..()
+		src.real_name = "Father Milk"
 
 //biker // cogwerks - bringing back the bikers for the diner, now less offensive
 
@@ -243,7 +285,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	if (src.client)
 		for (var/atom/I in src.hud.inventory_bg)
-			if (istype(I,/obj/screen/hud))
+			if (istype(I,/atom/movable/screen/hud))
 				hudlist += I
 
 	for (var/obj/item/I in src.contents)
@@ -280,8 +322,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		var/obj/item/W = src.equipped()
 		if (!src.restrained())
-			if (istype(picked,/obj/screen/hud))
-				var/obj/screen/hud/HUD = picked
+			if (istype(picked,/atom/movable/screen/hud))
+				var/atom/movable/screen/hud/HUD = picked
 				var/list/params = empty_mouse_params()
 				HUD.clicked(HUD.id, src, params)
 			else if (istype(picked,/obj/ability_button))
@@ -296,7 +338,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			else if(W)
 				W.attack(picked, src, ran_zone("chest"))
 			else
-				picked.attack_hand(src)
+				picked.Attackhand(src)
 
 		.= picked
 
@@ -339,7 +381,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/head_of_security, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/dirty_vest, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/paper/postcard/owlery, slot_l_hand)
 		//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, slot_ears)
 		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
@@ -355,7 +397,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.customization_second = "Tramp"
+		bioHolder.mobAppearance.customization_first_color = "#292929"
+		bioHolder.mobAppearance.customization_second_color = "#292929"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/gimmick/shitty_hair
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/shitty_beard
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		bioHolder.mobAppearance.gender = "male"
@@ -372,8 +417,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 
 		if (!src.client && src.z != 2)
-			var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
-
+			var/list/afterlife_bar_turfs = get_area_turfs(/area/afterlife/bar/barspawn)
+			if(!length(afterlife_bar_turfs))
+				return
+			var/turf/target_turf = pick(afterlife_bar_turfs)
 			var/mob/living/carbon/human/biker/newbody = new()
 			newbody.set_loc(target_turf)
 			newbody.overlays += image('icons/misc/32x64.dmi',"halo")
@@ -452,9 +499,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						if(W)
 							W.attack(target, src, ran_zone("chest"))
 						else
-							target.attack_hand(src)
+							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -488,7 +535,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			var/area/A = get_area(src)
 			var/list/alive_mobs = list()
 			var/list/dead_mobs = list()
-			if (A.population && A.population.len)
+			if (A.population && length(A.population))
 				for(var/mob/living/M in oview(5,src))
 					if(!isdead(M))
 						alive_mobs += M
@@ -513,6 +560,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					switch(speech_type)
 						if(1)
 							say("[BILL_PICK("greetings")] [M.name].")
+							M.add_karma(2)
 
 						if(2)
 							say("[BILL_PICK("question")] you lookin' at, [BILL_PICK("insults")]?")
@@ -624,12 +672,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
@@ -637,9 +686,18 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			if (get_dist(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
+					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
-				J.a_intent = INTENT_HARM
+				J.set_a_intent(INTENT_HARM)
+
+
+/mob/living/carbon/human/biker/cow
+	real_name = "Beefy Bill"
+
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
 
 
 // merchant
@@ -759,7 +817,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		bioHolder.age = 44
 		bioHolder.bloodType = "Worchestershire"
-		bioHolder.mobAppearance.customization_first = "Pompadour"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customization_first_color = "#F6D646"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
@@ -773,6 +831,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if (special) //vamp or ling
 			src.target = M
 			src.ai_state = AI_ATTACKING
@@ -783,6 +842,14 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		//Whoever does eventually put him back in the game : Use a global list of bartenders or something. Dont check all_viewers
 		//	for (var/mob/living/carbon/human/npc/diner_bartender/BT in all_viewers(7, src))
 			//	BT.protect_from(M, src)
+
+/mob/living/carbon/human/don_glab/cow
+	real_name = "Donald \"Don\" Glabs" //NEED COW JOKE NAME!
+
+	New()
+		..()
+		src.bioHolder.AddEffect("cow")
+
 
 /mob/living/carbon/human/tommy
 	sound_list_laugh = list('sound/voice/tommy_hahahah.ogg', 'sound/voice/tommy_hahahaha.ogg')
@@ -803,7 +870,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.real_name = Create_Tommyname()
 
 		src.gender = "male"
-		bioHolder.mobAppearance.customization_first = "Dreadlocks"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.s_tone = "#FAD7D0"
 		bioHolder.mobAppearance.s_tone_original = "#FAD7D0"
@@ -883,6 +950,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			gender = pick(MALE,FEMALE)
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(10))
@@ -911,7 +979,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		bioHolder.age = 49
-		bioHolder.mobAppearance.customization_first = "Full Beard"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/beard/fullbeard
 		bioHolder.mobAppearance.customization_first_color = "#555555"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"
@@ -938,6 +1006,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		if(isdead(src))
 			return
 		if(prob(20))

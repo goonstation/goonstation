@@ -23,7 +23,8 @@
 
 	wizard_mob.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
 	wizard_mob.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-	wizard_mob.cust_two_state = "wiz"
+	wizard_mob.bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
+	wizard_mob.bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/wiz
 	wizard_mob.update_colorful_parts()
 
 	var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(wizard_mob, in_vr = vr)
@@ -155,7 +156,7 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/spell
+/atom/movable/screen/ability/topBar/spell
 	clicked(params)
 		var/datum/targetable/spell/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -171,7 +172,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -288,7 +289,7 @@
 		if (!holder || !holder.owner)
 			qdel(src)
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/spell()
+			src.object = new /atom/movable/screen/ability/topBar/spell()
 		object.icon = src.icon
 		if (src.last_cast > world.time)
 			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
@@ -299,7 +300,7 @@
 		object.owner = src
 
 	castcheck()
-		return !istype(src, /datum/targetable/spell/prismatic_spray/admin) && holder.owner.wizard_castcheck(src)
+		return holder.owner.wizard_castcheck(src)
 
 	cast(atom/target)
 		if(ishuman(holder.owner))

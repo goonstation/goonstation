@@ -1,10 +1,15 @@
+/obj/item/storage/box/stimulants
+	name = "stimulants box"
+	desc = "A box containing 3 stimpacks. Use responsibly."
+	spawn_contents = list(/obj/item/stimpack = 3)
+
 /obj/item/stimpack
 	name = "Stimpack"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "stims"
 	throw_speed = 1
 	throw_range = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/empty = 0
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if(empty)
@@ -16,7 +21,7 @@
 		src.empty = 1
 		src.icon_state = "stims0"
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		user.reagents?.add_reagent("stimulants", 50)
+		user.changeStatus("stimulants", 3 MINUTES)
 		return
 
 /obj/item/stimpack/large_dose
@@ -25,6 +30,6 @@
 			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
 			return
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")
-		user.reagents?.add_reagent("stimulants", 200)
+		user.changeStatus("stimulants", 15 MINUTES)
 		qdel(src)
 		return

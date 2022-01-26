@@ -51,13 +51,13 @@ var/global/list/cached_concrete_types
 	* ALSO OKAY:
 	* ```dm
 	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-  * hats -= /obj/item/clothing/head/hosberet
+	* hats -= /obj/item/clothing/head/hosberet
 	* ```
 	*
 	* NOT OKAY:
 	* ```dm
 	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
-  * hats -= /obj/item/clothing/head/hosberet
+	* hats -= /obj/item/clothing/head/hosberet
 	* ```
 	*/
 proc/concrete_typesof(type, cache=TRUE)
@@ -109,12 +109,35 @@ proc/filtered_concrete_typesof(type, filter)
 	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 	*/
 proc/get_singleton(type)
-	if(!singletons)
-		singletons = list()
+	RETURN_TYPE(type)
 	if(!(type in singletons))
 		singletons[type] = new type
 	return singletons[type]
-var/global/list/singletons
+
+var/global/list/singletons = list()
+
+
+/// Find predecessor of a type
+proc/predecessor_path_in_list(type, list/types)
+	while(type)
+		if(type in types)
+			return type
+		type = type2parent(type)
+	return null
+
+/**
+	* Returns the maximal subtype (i.e. the most subby) in a list of given types
+	*/
+proc/maximal_subtype(var/list/L)
+	if (!(length(L)))
+		.= null
+	else
+		.= L[1]
+		for (var/t in L)
+			if (ispath(t, .))
+				.= t
+			else if (!(ispath(., t)))
+				return null // paths in L aren't linearly ordered
 
 // by_type and by_cat stuff
 
@@ -126,14 +149,18 @@ var/global/list/singletons
 #define STOP_TRACKING
 #else
 #define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
+#if DM_BUILD >= 1552
+#define STOP_TRACKING by_type[......].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ....... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#else
 #define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
+#endif
 #endif
 
 /// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
 var/list/list/by_type = list()
 
 /// Performs a typecheckless for loop with var/iterator over by_type[_type]
-#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as() in by_type[##_type])
+#define for_by_tcl(_iterator, _type) for(var ##_type/##_iterator as anything in by_type[##_type])
 
 // sometimes we want to have a list of objects of multiple types, without having to traverse multiple lists
 // to do that add START_TRACKING_CAT("category") to New, unpooled, or whatever proc you want to start tracking the objects in (eg: tracking dead humans, put start tracking in death())
@@ -154,12 +181,128 @@ var/list/list/by_cat = list()
 #define TR_CAT_LIGHT_GENERATING_TURFS "light_generating_turfs"
 #define TR_CAT_CRITTERS "critters"
 #define TR_CAT_PETS "pets"
+#define TR_CAT_PW_PETS "pod_wars_pets"
 #define TR_CAT_PODS_AND_CRUISERS "pods_and_cruisers"
 #define TR_CAT_NERVOUS_MOBS "nervous_mobs"
 #define TR_CAT_SHITTYBILLS "shittybills"
 #define TR_CAT_JOHNBILLS "johnbills"
 #define TR_CAT_OTHERBILLS "otherbills"
 #define TR_CAT_TELEPORT_JAMMERS "teleport_jammers"
+#define TR_CAT_RADIO_JAMMERS "radio_jammers"
+#define TR_CAT_BURNING_MOBS "dudes_on_fire"
+#define TR_CAT_BURNING_ITEMS "items_on_fire"
 #define TR_CAT_OMNIPRESENT_MOBS "omnipresent_mobs"
+#define TR_CAT_CHAPLAINS "chaplains"
+#define TR_CAT_SOUL_TRACKING_ITEMS "soul_tracking_items"
+#define TR_CAT_CLOWN_DISBELIEF_MOBS "clown_disbelief_mobs"
+#define TR_CAT_CANNABIS_OBJ_ITEMS "cannabis_objective"
+#define TR_CAT_HEAD_SURGEON "head_surgeon"
+#define TR_CAT_SPY_STICKERS_REGULAR "spysticker_regular"
+#define TR_CAT_SPY_STICKERS_DET "spysticker_det"
+#define TR_CAT_ARTIFACTS "artifacts"
+#define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
 // powernets? processing_items?
 // mobs? ai-mobs?
+
+
+/// type-level information type
+/typeinfo
+	parent_type = /datum
+
+/typeinfo/datum
+
+/typeinfo/atom
+	parent_type = /typeinfo/datum
+
+/typeinfo/turf
+	parent_type = /typeinfo/atom
+
+/typeinfo/area
+	parent_type = /typeinfo/atom
+
+/typeinfo/atom/movable
+
+/typeinfo/obj
+	parent_type = /typeinfo/atom/movable
+
+/typeinfo/mob
+	parent_type = /typeinfo/atom/movable
+
+/**
+ * Declares typeinfo for some type.
+ *
+ * Example:
+ * ```
+ * TYPEINFO(/atom)
+ * 	var/monkeys_hate = FALSE
+ *
+ * TYPEINFO(/obj/item/clothing/glasses/blindfold)
+ * 	monkeys_hate = TRUE
+ * ```
+ *
+ * Treat this as if you were defining a type. You can add vars and procs, override vars and procs etc.
+ * There might be minor issues if you define TYPEINFO of one type multiple times. Consider using `/typeinfo/THE_TYPE` for subsequent additions
+ * to the object's typeinfo **if you know it has already been declared once using TYPEINFO**.
+*/
+#define TYPEINFO(TYPE) \
+	TYPE/typeinfo_type = /typeinfo ## TYPE; \
+	TYPE/get_typeinfo() { /* maybe unnecessary, possibly replace the proc with a macro */ \
+		RETURN_TYPE(/typeinfo ## TYPE); \
+		return get_singleton(src.typeinfo_type); \
+	} \
+	/typeinfo ## TYPE
+
+
+/// var storing the subtype of /typeinfo relevant for this object
+/datum/var/typeinfo_type = /typeinfo/datum
+
+/**
+ * Retrieves the typeinfo datum for this datum's type.
+ *
+ * Example:
+ * ```
+ * var/obj/item/item_in_hand = src.equipped()
+ * var/typeinfo/atom/typeinfo = item_in_hand.get_typeinfo()
+ * if(typeinfo.monkeys_hate)
+ * 	src.throw(src.equipped(), somewhere)
+ * ```
+*/
+/datum/proc/get_typeinfo()
+	RETURN_TYPE(/typeinfo/datum)
+	return get_singleton(src.typeinfo_type)
+
+/**
+ * Retrieves the typeinfo datum for a given type.
+ *
+ * Example:
+ * ```
+ * for(var/type in types)
+ * 	var/typeinfo/atom/typeinfo = get_type_typeinfo(type)
+ * 	if(!typeinfo.admin_spawnable)
+ * 		continue
+ * 	valid_types += type
+ * ```
+*/
+proc/get_type_typeinfo(type)
+	RETURN_TYPE(/typeinfo/datum) // change to /typeinfo if we ever implement /typeinfo for non-datums for some reason
+	var/datum/type_dummy = type
+	return get_singleton(initial(type_dummy.typeinfo_type))
+
+/**
+ * Returns the parent type of a given type.
+ * Assumes that parent_type was not overriden.
+ */
+/proc/type2parent(child)
+	var/string_type = "[child]"
+	var/last_slash = findlasttext(string_type, "/")
+	if(last_slash == 1)
+		switch(child)
+			if(/datum)
+				return null
+			if(/obj, /mob)
+				return /atom/movable
+			if(/area, /turf)
+				return /atom
+			else
+				return /datum
+	return text2path(copytext(string_type, 1, last_slash))

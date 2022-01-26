@@ -12,7 +12,7 @@ Buildable meters
 	icon_state = "straight"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	level = 2
 
 /obj/item/weapon/pipe/New()
@@ -24,11 +24,11 @@ Buildable meters
 /obj/item/weapon/pipe/proc/update()
 	var/list/nlist = list("pipe", "bent pipe", "h/e pipe", "bent h/e pipe", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
 	name = nlist[pipe_type+1] + " fitting"
-	updateicon()
+	UpdateIcon()
 
 //update the icon of the item
 
-/obj/item/weapon/pipe/proc/updateicon()
+/obj/item/weapon/pipe/UpdateIcon()
 
 	var/list/islist = list("straight", "bend", "he-straight", "he-bend", "connector", "manifold", "junction", "vent", "valve", "pump", "filter")
 
@@ -44,8 +44,8 @@ Buildable meters
 
 /obj/item/weapon/pipe/hide(var/i)
 
-	invisibility = i ? 101 : 0		// make hidden pipe items invisible
-	updateicon()
+	invisibility = i ? INVIS_ALWAYS : INVIS_NONE		// make hidden pipe items invisible
+	UpdateIcon()
 
 
 //called when a turf is attacked with a pipe item
@@ -361,7 +361,7 @@ Buildable meters
 							OP.pl = PL1
 							OP.plnum = PL1.linenumber
 						PL1.nodes = plist
-						PL1.numnodes = plist.len
+						PL1.numnodes = length(plist)
 						PL1.capmult = plist.len+1
 
 
@@ -399,7 +399,7 @@ Buildable meters
 	icon_state = "meter"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = W_CLASS_BULKY
 
 /obj/item/weapon/pipe_meter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (iswrenchingtool(W))
@@ -419,7 +419,7 @@ Buildable meters
 	icon_state = "filter_control"
 	item_state = "buildpipe"
 	flags = TABLEPASS|FPRINT
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	var/control = null
 
 /obj/item/weapon/filter_control/verb/set_control()
@@ -475,5 +475,5 @@ Buildable meters
 
 		FC.control = src.control
 		FC.add_fingerprint(user)
-		FC.updateicon()
+		FC.UpdateIcon()
 		qdel(src)

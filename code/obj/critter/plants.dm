@@ -64,7 +64,7 @@
 					M.transforming = 1
 					M.canmove = 0
 					M.icon = null
-					M.invisibility = 101
+					APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 					if(ishuman(M))
 						animation = new(src.loc)
 						animation.icon_state = "blank"
@@ -104,6 +104,9 @@
 	name_the_meat = 0
 	death_text = "%src% messily splatters into a puddle of tomato sauce!"
 	chase_text = "viciously lunges at"
+	atk_brute_amt = 4
+	crit_brute_amt = 6
+	crit_chance = 10
 	meat_type = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	generic = 0
 
@@ -133,7 +136,7 @@
 	ChaseAttack(mob/M)
 		..()
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
-		random_brute_damage(M, rand(2,5),1)
+		random_brute_damage(M, rand(4,6),1)
 
 	CritterAttack(mob/M)
 		..()

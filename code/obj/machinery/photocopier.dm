@@ -191,7 +191,7 @@
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					var/num_sel = input("How many copies do you want to make?", "Photocopier Controls") as num
-					if (num_sel && get_dist(user, src) <= 1)
+					if (isnum_safe(num_sel) && num_sel && get_dist(user, src) <= 1)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
 							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)

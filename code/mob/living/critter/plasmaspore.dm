@@ -19,5 +19,5 @@
 		qdel(src)
 
 	setup_healths()
-		add_hh_flesh(-1, 1, 1)
-		add_hh_flesh_burn(-1, 1, 1)
+		add_hh_flesh(1, 1)
+		add_hh_flesh_burn(1, 1)

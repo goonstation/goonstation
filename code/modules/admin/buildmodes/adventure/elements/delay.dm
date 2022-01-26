@@ -6,7 +6,7 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		time_delay = input("Timing amount (in 1/10 seconds)", "Timing amount", 5) as num
 		var/per = input("Is this periodic? (Repeatedly triggers until aborted if started.)", "Periodic", "yes") in list("yes", "no")
 		periodic = (per == "yes") ? 1 : 0
@@ -21,13 +21,13 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
@@ -36,7 +36,7 @@
 				timer.time_delay = time_delay
 				timer.periodic = periodic
 				timer.triggered = selected_triggerable.Copy()
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/triggerer/delay))
 				var/obj/adventurepuzzle/triggerable/triggerer/delay/timer = object
 				timer.trigger("start")
@@ -46,18 +46,18 @@
 					selected_triggerable -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						object.overlays += selection
 						selected_triggerable += object
 						selected_triggerable[object] = act
 					else
-						boutput(usr, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerable/triggerer/delay
 	name = "delay"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "timer0"
 	density = 0

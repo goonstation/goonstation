@@ -45,7 +45,8 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
-	w_class = 2
+	var/icon_broken = "flightbroken"
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
 	g_amt = 20
@@ -55,23 +56,22 @@
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7
-	module_research = list("science" = 1, "devices" = 1)
 	light_type = null
 	brightness = 4.6
 
-	var/datum/component/holdertargeting/simple_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
 		col_g = G
 		col_b = B
-		light_dir = src.AddComponent(/datum/component/holdertargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
 		light_dir.update(0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)
 			if (user)
-				usr.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
+				user.show_text("You short out the voltage regulator in the lighting circuit.", "blue")
 			src.emagged = 1
 		else
 			if (user)
@@ -95,7 +95,7 @@
 			return
 
 		src.on = !src.on
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -109,8 +109,8 @@
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
-				icon_state = "flightbroken"
-				name = "broken flashlight"
+				icon_state = icon_broken
+				name = "broken [name]"
 				src.broken = 1
 			else
 				light_dir.update(1)
@@ -125,22 +125,22 @@
 	icon_state = "glowstick-green0"
 	var/base_state = "glowstick-green"
 	name = "emergency glowstick"
-	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	w_class = 2
+	desc = "A small tube that reacts chemicals in order to produce a larger radius of illumination than PDA lights. A label on it reads, WARNING: USE IN RAVES, DANCING, OR FUN WILL VOID WARRANTY."// I love the idea of a glowstick having a warranty so I'm leaving the description like this
+	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
 	col_r = 0.0
 	col_g = 0.9
 	col_b = 0.1
-	brightness = 0.6
+	brightness = 0.33
 	height = 0.75
 	var/color_name = "green"
 	light_type = null
-	var/datum/component/holdertargeting/simple_light/light_c
+	var/datum/component/loctargeting/sm_light/light_c
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/holdertargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
 	proc/burst()
@@ -326,6 +326,10 @@
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+
+			else if (W.firesource)
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				W.firesource_interact()
 		else
 			return ..()
 
@@ -350,6 +354,7 @@
 		if (!src) return
 		if (!src.on)
 			src.on = 1
+			src.firesource = FIRESOURCE_OPEN_FLAME
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
@@ -361,6 +366,7 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
+			src.firesource = FALSE
 			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
@@ -412,7 +418,7 @@
 		if(src.on && !src.did_thing)
 			src.did_thing = 1
 			//what should it do, other than this sound?? i tried a particle system but it didn't work :{
-			playsound(get_turf(src), pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
+			playsound(src, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 65, 0)
 
 		return
 
@@ -432,7 +438,7 @@
 	icon_state = "lava_lamp0"
 	icon_on = "lava_lamp1"
 	icon_off = "lava_lamp0"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
@@ -440,7 +446,7 @@
 	brightness = 0.8
 
 	attack_self(mob/user as mob)
-		playsound(get_turf(src), "sound/items/penclick.ogg", 30, 1)
+		playsound(src, "sound/items/penclick.ogg", 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)

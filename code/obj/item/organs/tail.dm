@@ -33,6 +33,13 @@
 			build_mob_tail_image()
 			update_tail_icon()
 
+	disposing()
+		if(holder)
+			on_removal()
+			holder.tail = null
+			holder.donor.update_body()
+		. = ..()
+
 	proc/colorize_tail(var/datum/appearanceHolder/AHL)
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
@@ -71,14 +78,9 @@
 
 			var/fluff = pick("slap", "shove", "place", "press", "jam")
 
-			if(istype(src, /obj/item/organ/tail/bone))
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
-				user, "<span class='alert'>You [fluff] the coccygeal coruna of [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum![prob(1) ? " The tailbone wiggles happily." : ""]</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] the coccygeal coruna of [src] onto the apex of your sacrum![prob(1) ? " Your tailbone wiggles happily." : ""]</span>")
-			else	// Any other tail
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
-				user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
+			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "press" ? "es" : "s"] [src] onto the apex of [H == user ? "[his_or_her(H)]" : "[H]'s"] sacrum!</span>",\
+			user, "<span class='alert'>You [fluff] [src] onto the apex of [H == user ? "your" : "[H]'s"] sacrum!</span>",\
+			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][H == user && fluff == "press" ? "es" : "s"] [src] onto the apex of your sacrum!</span>")
 
 		else if (!H.organHolder.tail && H.organHolder.chest.op_stage >= 11.0 && src.can_attach_organ(H, user))
 			attachment_successful = 1
@@ -124,8 +126,8 @@
 				src.holder?.donor?.bioHolder?.AddEffect(src.failure_ability, 0, 0, 0, 1)
 
 	unbreakme()
-		. = ..()
-		src.holder?.donor?.bioHolder?.RemoveEffect(src.failure_ability)
+		if(..())
+			src.holder?.donor?.bioHolder?.RemoveEffect(src.failure_ability)
 
 
 	// builds the mob tail image, the one that gets displayed on the mob when attached
@@ -152,7 +154,7 @@
 
 	proc/human_monkey_tail_interchange(var/tail_iconstate as text, var/human_getting_monkey_tail as num, var/monkey_getting_human_tail as num)
 		if (!tail_iconstate || (human_getting_monkey_tail && monkey_getting_human_tail))
-			logTheThing("debug", src, null, "HumanMonkeyTailInterchange fucked up. tail_iconstate = [tail_iconstate], [human_getting_monkey_tail] && [monkey_getting_human_tail]. call lagg")
+			logTheThing("debug", usr, null, "([src])HumanMonkeyTailInterchange fucked up. tail_iconstate = [tail_iconstate], [human_getting_monkey_tail] && [monkey_getting_human_tail]. call lagg")
 			return null	// Something went wrong
 		if (!human_getting_monkey_tail && !monkey_getting_human_tail)	// tail's going to the right place
 			return tail_iconstate	// Send it as-is
@@ -212,6 +214,16 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "cow_over_suit_1"	// just the tail, no nose
 
+/obj/item/organ/tail/pug
+	name = "pug tail"
+	desc = "A rather stubby tail, covered in wiry hair."
+	icon_state = "tail-pug"
+	organ_image_icon = 'icons/mob/pug/fawn.dmi'
+	tail_num = TAIL_PUG
+	organ_image_under_suit_1 = "pug_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "pug_over_suit"
+
 /obj/item/organ/tail/wolf
 	name = "wolf tail"
 	desc = "A long, fluffy tail."
@@ -223,19 +235,6 @@
 	organ_image_under_suit_1 = "wolf_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "wolf_over_suit"
-
-/obj/item/organ/tail/bone
-	name = "tailbone"
-	desc = "A short piece of bone."
-	icon_state = "tail-bone"
-	organ_image_icon = 'icons/mob/human.dmi'
-	created_decal = null	// just a piece of bone
-	tail_num = TAIL_SKELETON
-	edible = 0
-	made_from = "bone"
-	organ_image_under_suit_1 = null
-	organ_image_under_suit_2 = null
-	organ_image_over_suit = null
 
 /obj/item/organ/tail/monkey/seamonkey
 	name = "seamonkey tail"
@@ -266,3 +265,4 @@
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"
+	colorful = 1

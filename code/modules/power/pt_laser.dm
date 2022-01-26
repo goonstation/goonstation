@@ -33,6 +33,7 @@
 	var/output_multi = 1e6
 	var/emagged = FALSE
 	var/lifetime_earnings = 0
+	var/undistributed_earnings = 0
 	var/excess = null //for tgui readout
 	var/is_charging = FALSE //for tgui readout
 
@@ -58,7 +59,7 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
 	for(var/obj/O in laser_parts)
@@ -81,7 +82,7 @@
 		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
 	return 1
 
-/obj/machinery/power/pt_laser/proc/updateicon(var/started_firing = 0)
+/obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null
 	if(status & BROKEN || charge == 0)
 		overlays += image('icons/obj/pt_laser.dmi', "unpowered")
@@ -144,7 +145,7 @@
 				dont_update = 1 //so the firing animation runs
 				charge -= adj_output
 				if(selling)
-					power_sold()
+					power_sold(adj_output)
 		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
 			stop_firing()
 		else //firing and have enough power to carry on
@@ -169,7 +170,7 @@
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
-		updateicon()
+		UpdateIcon()
 
 /obj/machinery/power/pt_laser/proc/power_sold(adjusted_output)
 	if (round(adjusted_output) == 0)
@@ -177,37 +178,44 @@
 
 	var/output_mw = adjusted_output / 1e6
 
-	#define BUX_PER_SEC_CAP 5000 //at inf power, generate 5000$/tick, also max amt to drain/tick
+	#define LOW_CAP (20) //provide a nice scalar for deminishing returns instead of a slow steady climb
+	#define BUX_PER_WORK_CAP (5000-LOW_CAP) //at inf power, generate 5000$/tick, also max amt to drain/tick
 	#define ACCEL_FACTOR 69 //our acceleration factor towards cap
 	#define STEAL_FACTOR 4 //Adjusts the curve of the stealing EQ (2nd deriv/concavity)
 
-	//For equation + explaination, https://www.desmos.com/calculator/62w5igbqwo
+	//For equation + explanation, https://www.desmos.com/calculator/r8bsyz5gf9
 	//Adjusted to give a decent amt. of cash/tick @ 50GW (said to be average hellburn)
-	var/generated_moolah =   (2*output_mw*BUX_PER_SEC_CAP)/(2*output_mw + BUX_PER_SEC_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	var/generated_moolah = (2*output_mw*BUX_PER_WORK_CAP)/(2*output_mw+BUX_PER_WORK_CAP*ACCEL_FACTOR) //used if output_mw > 0
+	generated_moolah += (4*output_mw*LOW_CAP)/(4*output_mw + LOW_CAP)
 
 	if (output_mw < 0) //steals money since you emagged it
-		generated_moolah = (-2*output_mw*BUX_PER_SEC_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_SEC_CAP*STEAL_FACTOR*ACCEL_FACTOR)
+		generated_moolah = (-2*output_mw*BUX_PER_WORK_CAP)/(2*STEAL_FACTOR*output_mw - BUX_PER_WORK_CAP*STEAL_FACTOR*ACCEL_FACTOR)
 
 	lifetime_earnings += generated_moolah
+	generated_moolah += undistributed_earnings
+	undistributed_earnings = 0
 
-	var/list/accounts = list()
-	for(var/datum/data/record/t in data_core.bank)
-		if(t.fields["job"] == "Chief Engineer")
-			accounts += t
-			accounts += t //fuck it
-		else if(t.fields["job"] == "Engineer")
-			accounts += t
+	// the double chief engineer seems to be intentional however silly it may seem
+	var/list/accounts = \
+		data_core.bank.find_records("job", "Chief Engineer") + \
+		data_core.bank.find_records("job", "Chief Engineer") + \
+		data_core.bank.find_records("job", "Engineer")
 
-	if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
+	if(!length(accounts)) // no engineering staff but someone still started the PTL
+		wagesystem.station_budget += generated_moolah
+	else if(abs(generated_moolah) >= accounts.len*2) //otherwise not enough to split evenly so don't bother I guess
 		wagesystem.station_budget += round(generated_moolah/2)
 		generated_moolah -= round(generated_moolah/2) //no coming up with $$$ out of air!
 
-		for(var/datum/data/record/t in accounts)
-			t.fields["current_money"] += round(generated_moolah/accounts.len)
+		for(var/datum/db_record/t as anything in accounts)
+			t["current_money"] += round(generated_moolah/accounts.len)
+		undistributed_earnings += generated_moolah-(round(generated_moolah/accounts.len) * (length(accounts)))
+	else
+		undistributed_earnings += generated_moolah
 
 	#undef STEAL_FACTOR
 	#undef ACCEL_FACTOR
-	#undef BUX_PER_SEC_CAP
+	#undef BUX_PER_WORK_CAP
 
 /obj/machinery/power/pt_laser/proc/get_barrel_turf()
 	var/x_off = 0
@@ -256,7 +264,7 @@
 	if(!T) return //just in case
 
 	firing = 1
-	updateicon(1)
+	UpdateIcon(1)
 
 	for(var/dist = 0, dist < range, dist += 1) // creates each field tile
 		T = get_step(T, dir)
@@ -274,7 +282,7 @@
 
 /obj/machinery/power/pt_laser/proc/restart_firing()
 	firing = 1
-	updateicon(1)
+	UpdateIcon(1)
 	melt_blocking_objects()
 	update_laser()
 
@@ -295,7 +303,7 @@
 
 /obj/machinery/power/pt_laser/proc/stop_firing()
 	for(var/obj/lpt_laser/L in laser_parts)
-		L.invisibility = 101 //make it invisible
+		L.invisibility = INVIS_ALWAYS //make it invisible
 		L.active = 0
 		L.light.disable()
 	affecting_mobs = list()
@@ -310,14 +318,14 @@
 	var/counter = 1
 	for(var/obj/lpt_laser/L in laser_parts)
 		if(counter <= active_num)
-			L.invisibility = 0 //make it visible
+			L.invisibility = INVIS_NONE //make it visible
 			L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 			L.active = 1
 			L.light.enable()
 			L.burn_all_living_contents()
 			counter++
 		else
-			L.invisibility = 101
+			L.invisibility = INVIS_ALWAYS
 			L.active = 0
 			L.light.disable()
 
@@ -444,11 +452,11 @@
 		if(2.0)
 			if (prob(50))
 				status |= BROKEN
-				updateicon()
+				UpdateIcon()
 		if(3.0)
 			if (prob(25))
 				status |= BROKEN
-				updateicon()
+				UpdateIcon()
 	return
 
 /obj/machinery/power/pt_laser/proc/process_laser()
@@ -471,8 +479,8 @@
 	anchored = 2
 	density = 0
 	luminosity = 1
-	invisibility = 101
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	invisibility = INVIS_ALWAYS
+	event_handler_flags = USE_FLUID_ENTER
 	var/power = 0
 	var/active = 1
 	var/obj/machinery/power/pt_laser/source = null
@@ -488,7 +496,7 @@
 	light.enable()
 
 	SPAWN_DBG(0)
-		alpha = clamp(((log(10, src.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		alpha = clamp(((log(10, max(src.power,1)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 		if(active)
 			if(istype(src.loc, /turf) && power > 5e7)
 				src.loc:hotspot_expose(power/1e5,5) //1000K at 100MW
@@ -499,19 +507,18 @@
 				if (isintangible(L))
 					continue
 				if (!burn_living(L,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-					if (!source.affecting_mobs.Find(L))
-						source.affecting_mobs.Add(L)
+					source.affecting_mobs |= L
 
 	..()
 
 /obj/lpt_laser/ex_act(severity)
 	return
 
-/obj/lpt_laser/HasEntered(var/atom/movable/AM)
+/obj/lpt_laser/Crossed(atom/movable/AM)
+	..()
 	if (src.active && isliving(AM) && !isintangible(AM))
 		if (!burn_living(AM,power) && source) //burn_living() returns 1 if they are gibbed, 0 otherwise
-			if (!source.affecting_mobs.Find(AM))
-				source.affecting_mobs.Add(AM)
+			source.affecting_mobs |= AM
 
 /obj/lpt_laser/Uncrossed(var/atom/movable/AM)
 	if(isliving(AM) && source)

@@ -12,7 +12,7 @@
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
 	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | NO_MOUSEDROP_QOL
+	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
@@ -31,6 +31,10 @@
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
 	var/welded = 0
+	var/image/weld_image
+	//Offsets for the weld icon, rather than make icons for every slightly off crate or closet
+	var/weld_image_offset_X = 0 //Positive is right, negative is left
+	var/weld_image_offset_Y = 0 //Positive is up, negative is down
 	var/locked = 0
 	var/emagged = 0
 	var/jiggled = 0
@@ -38,7 +42,7 @@
 	var/health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
-	var/datum/data/record/account = null
+	var/datum/db_record/account = null
 	var/last_relaymove_time
 	var/is_short = 0 // can you not stand in it?  ie, crates?
 	var/open_fail_prob = 50
@@ -53,11 +57,15 @@
 	var/made_stuff
 
 	var/grab_stuff_on_spawn = TRUE
+
 	New()
 		..()
 		START_TRACKING
+		weld_image = image(src.icon, src.icon_welded)
+		weld_image.pixel_x = weld_image_offset_X
+		weld_image.pixel_y = weld_image_offset_Y
 		SPAWN_DBG(1 DECI SECOND)
-			src.update_icon()
+			src.UpdateIcon()
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
 				for (var/atom/movable/A in src.loc)
@@ -69,6 +77,7 @@
 		..()
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
+		. = 1
 		if (!islist(src.spawn_contents))
 			return 0
 
@@ -80,9 +89,9 @@
 				amt = abs(spawn_contents[thing])
 			do new thing(src)	//Two lines! I TOLD YOU I COULD DO IT!!!
 			while (--amt > 0)
-		return 1
 
-	proc/update_icon()
+	update_icon()
+
 		if (src.open)
 			flick(src.opening_anim,src)
 			src.icon_state = src.icon_opened
@@ -91,12 +100,12 @@
 			src.icon_state = src.icon_closed
 
 		if (src.welded)
-			src.UpdateOverlays(image(src.icon, src.icon_welded), "welded")
+			src.UpdateOverlays(weld_image, "welded")
 		else
 			src.UpdateOverlays(null, "welded")
 
 	emp_act()
-		if (!src.open && src.contents.len)
+		if (!src.open && length(src.contents))
 			for (var/atom/A in src.contents)
 				if (ismob(A))
 					var/mob/M = A
@@ -104,10 +113,9 @@
 				if (isitem(A))
 					var/obj/item/I = A
 					I.emp_act()
-		return
 
 	alter_health()
-		return get_turf(src)
+		. = get_turf(src)
 
 	relaymove(mob/user as mob)
 		if (is_incapacitated(user))
@@ -125,7 +133,7 @@
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - get_dist(src, M))]>THUD, thud!</font>")
-				playsound(get_turf(src), "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+				playsound(src, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -154,7 +162,7 @@
 		src.visible_message("<span class='alert'><b>[user]</b> kicks [src] open!</span>")
 
 	attack_hand(mob/user as mob)
-		if (!in_range(src, user))
+		if (!in_interact_range(src, user))
 			return
 
 		interact_particle(user,src)
@@ -163,7 +171,7 @@
 			user.show_text("It won't open!", "red")
 			return
 		else if (!src.toggle(user))
-			return src.attackby(null, user)
+			return src.Attackby(null, user)
 
 	attackby(obj/item/W as obj, mob/user as mob)
 		if (istype(W, /obj/item/cargotele))
@@ -172,17 +180,25 @@
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			if(secure && locked)
+				user.show_text("Access Denied", "red")
+				return
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
+				user.show_text("[src] cannot fit any more items!", "red")
+				return
+			var/amt = length(W.contents)
 			if (amt)
 				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [src]!", "blue")
 				else
@@ -234,7 +250,7 @@
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
 					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -246,7 +262,7 @@
 				if (!src.open)
 					src.locked = !src.locked
 					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return
@@ -262,41 +278,52 @@
 		else
 			return ..()
 
-	proc/check_if_enterable(var/mob/living/L, var/skip_penalty=0)
-		//return 1 if a mob can enter, 0 if not
+	proc/check_if_enterable(var/atom/movable/thing, var/skip_penalty=0)
+		//return 1 if an atom can enter, 0 if not (this is used for scooting over crates and dragging things into crates)
+		var/mob/living/L = thing
 		if(istype(L) && L.buckled)
-			return 0
-		var/turf/T = get_turf(src)
-		var/no_go = 0
-		if (T.density)
-			no_go = T
-		else
-			for (var/obj/thingy in T)
-				if (thingy == src)
+			return FALSE
+		var/turf/dest_turf = get_turf(src)
+		var/turf/orig_turf = get_turf(thing)
+		if (orig_turf == dest_turf) return TRUE
+		var/no_go
+
+		//Mostly copy pasted from turf/Enter. Sucks, but we need an object rather than a boolean
+		//First, check for directional blockers on the entering object's tile
+		if (orig_turf.checkingexit > 0)
+			for(var/obj/obstacle in orig_turf)
+				if(obstacle == thing)
 					continue
-				if (istype(thingy, /obj/storage) && thingy:is_short)
-					continue
-				if (thingy.density)
-					no_go = thingy
+				if(obstacle.event_handler_flags & USE_CHECKEXIT)
+					var/obj/O = thing
+					if (!istype(O) || !(HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && HAS_FLAG(obstacle.object_flags, HAS_DIRECTIONAL_BLOCKING) \
+					  && obstacle.dir == O.dir))
+						if(!obstacle.CheckExit(thing, dest_turf))
+							no_go = obstacle
+
+		//next, check if the turf itself prevents something from entering it (i.e. it's a wall)
+		if (isnull(no_go))
+			no_go = !dest_turf.Enter(L) ? dest_turf : null
+
+		//finally, check if there's anything else on the turf that would prevent us from entering it (e.g. dense objects)
+		if(isnull(no_go))
+			for(var/atom/A in dest_turf)
+				if(A != src && !A.Cross(L))
+					no_go = A
 					break
 
-		if (no_go) // no more scooting around walls and doors okay
-			if(!skip_penalty & istype(L))
-				L.visible_message("<span class='alert'><b>[L]</b> scoots around [src], right into [no_go]!</span>",\
-				"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
-				if (!L.hasStatus("weakened"))
-					L.changeStatus("weakened", 4 SECONDS)
-				if (prob(25))
-					L.show_text("You hit your head on [no_go]!", "red")
-					L.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-
-			. = 0
+		if(no_go)
+			if (istype(L))
+				L.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			thing.Bump(no_go)
+			. = FALSE
 		else
-			. = 1
+			. = TRUE
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || isAI(user))
 			return
 
 		if (!src.is_acceptable_content(O))
@@ -343,13 +370,23 @@
 		if (!src.open)
 			src.open()
 
-		if (T.contents.len >= src.max_capacity)
+		if (count_turf_items() >= max_capacity)
 			user.show_text("[src] is too full!", "red")
 			return
 
 		if (O.loc == user)
+			var/obj/item/I = O
+			if(istype(I) && I.cant_drop)
+				return
+			if(istype(I) && I.equipped_in_slot && I.cant_self_remove)
+				return
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
+
+		else if(istype(O.loc, /obj/item/storage))
+			var/obj/item/storage/storage = O.loc
+			O.set_loc(get_turf(O))
+			storage.hud.remove_item(O)
 
 		SPAWN_DBG(0.5 SECONDS)
 			var/stuffed = FALSE
@@ -373,8 +410,10 @@
 					if(!istype(thing, drag_type))
 						continue
 					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20)))*10, 2)
+						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
 					if (thing in user)
+						continue
+					if (!check_if_enterable(thing))
 						continue
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
@@ -384,7 +423,7 @@
 						break
 					if (user.loc != staystill)
 						break
-					if (T.contents.len >= src.max_capacity)
+					if (length(T.contents) >= max_capacity)
 						break
 				user.show_text("You finish stuffing [type_name] into [src]!", "blue")
 				SPAWN_DBG(0.5 SECONDS)
@@ -403,17 +442,15 @@
 
 	attack_ai(mob/user)
 		if (can_reach(user, src) <= 1 && (isrobot(user) || isshell(user)))
-			return src.attack_hand(user)
+			. = src.Attackhand(user)
 
 	alter_health()
-		return get_turf(src)
+		. = get_turf(src)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
+	Cross(atom/movable/mover)
+		. = open
 		if (src.is_short)
 			return 0
-		return open
 
 	ex_act(severity)
 		switch (severity)
@@ -445,13 +482,13 @@
 		return
 
 	proc/is_acceptable_content(var/atom/A)
+		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
 		if (istype(A, /obj/decal/skeleton)) // uuuuuuugh
 			return 1
-		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /obj/screen) || istype(A, /obj/storage)))
+		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage)))
 			return 0
-		return 1
 
 	var/obj/storage/entangled
 	proc/open(var/entangleLogic, var/mob/user)
@@ -469,14 +506,15 @@
 		if(entangled && !entangleLogic)
 			entangled.entangled = src
 			entangled.close(1)
-			contents = entangled.contents
+			for(var/atom/movable/AM in entangled)
+				AM.set_loc(src.open ? src.loc : src)
 
 		if (user)
 			src.dump_contents(user)
 		else
 			src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, src.open_sound, 15, 1, -3)
 		return 1
@@ -505,14 +543,14 @@
 		for (var/mob/M in get_turf(src))
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying)
+			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
 				step_away(M, src, 1)
 				continue
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
 				for_by_tcl(O, /obj/storage)
-					if (O.z != src.z || O.open || !O.can_open())
+					if (O.z != src.z || O.open || !O.can_open() || isrestrictedz(O.z))
 						continue
 					myPals.Add(O)
 
@@ -532,10 +570,11 @@
 
 		if(entangled && !entangleLogic)
 			entangled.entangled = src
-			entangled.contents = src.contents
+			for(var/atom/movable/AM in src)
+				AM.set_loc(entangled.open ? entangled.loc : entangled)
 			entangled.open(1)
 
-		src.update_icon()
+		src.UpdateIcon()
 		playsound(src.loc, src.close_sound, 15, 1, -3)
 		return 1
 
@@ -549,24 +588,32 @@
 		p_class = initial(p_class) + maxPClass
 
 	proc/can_open()
+		. = TRUE
 		if (src.welded || src.locked)
 			return 0
-		return 1
+
+	proc/count_turf_items()
+		var/turf/T = get_turf(src)
+		var/crate_contents = length(T.contents)
+		for(var/obj/O in T.contents)
+			if(!isitem(O) || O == src || O.anchored)
+				crate_contents--
+		return crate_contents
 
 	proc/can_close()
+		. = TRUE
 		var/turf/T = get_turf(src)
 		if (!T) return 0
-		if (T.contents.len > src.max_capacity)
+		if (count_turf_items() > max_capacity)
 			return 0
 		for (var/obj/storage/S in T)
 			if (S != src)
 				return 0
-		return 1
 
 	proc/intact_frame()
+		. = TRUE
 		if (!src.intact_frame)
 			return 0
-		return 1
 
 	proc/dump_contents(var/mob/user)
 		if(src.spawn_contents && make_my_stuff()) //Make the stuff when the locker is first opened.
@@ -576,9 +623,9 @@
 		for (var/obj/O in src)
 			O.set_loc(newloc)
 			if(istype(O,/obj/item/mousetrap))
-				var/obj/item/mousetrap/m = O
-				if(m.armed && user)
-					m.triggered(user)
+				var/obj/item/mousetrap/our_trap = O
+				if(our_trap.armed && user)
+					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
@@ -613,7 +660,7 @@
 		else
 			weldman.visible_message("<span class='alert'>[weldman] unwelds [src].</span>") // walt-fuck_you.ogg
 			src.welded = 0
-		src.update_icon()
+		src.UpdateIcon()
 		for (var/mob/M in src.contents)
 			src.log_me(weldman, M, src.welded ? "welds" : "unwelds")
 		return
@@ -701,6 +748,12 @@
 				src.close()
 		return
 
+	mob_flip_inside(var/mob/user)
+		..(user)
+		if (prob(33) && src.can_flip_bust)
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			src.bust_out()
+
 /datum/action/bar/icon/storage_disassemble
 	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -737,12 +790,12 @@
 
 	onStart()
 		..()
-		playsound(get_turf(the_storage), "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_storage, "sound/items/Ratchet.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_storage), "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_storage, "sound/items/Deconstruct.ogg", 50, 1)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
@@ -765,17 +818,15 @@
 	var/icon_redlight = "redlight"
 	var/icon_sparks = "sparks"
 	var/always_display_locks = 0
-	var/datum/radio_frequency/radio_control = 1431
+	var/radio_control = FREQ_SECURE_STORAGE
 	var/net_id
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
-			if (isnum(src.radio_control) && radio_controller)
-				radio_control = max(1000, min(round(radio_control), 1500))
-				src.net_id = generate_net_id(src)
-				radio_controller.add_object(src, "[src.radio_control]")
-				src.radio_control = radio_controller.return_frequency("[src.radio_control]")
+		if (isnum(src.radio_control))
+			radio_control = clamp(round(radio_control), 1000, 1500)
+			src.net_id = generate_net_id(src)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, radio_control)
 
 	update_icon()
 		..()
@@ -804,7 +855,6 @@
 		if (signal.data["address_1"] == src.net_id)
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["sender"] = src.net_id
 			reply.data["address_1"] = sender
 			switch (lowertext(signal.data["command"]))
@@ -833,7 +883,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -845,7 +895,7 @@
 						. = 1
 						src.locked = !src.locked
 						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.update_icon()
+						src.UpdateIcon()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -854,24 +904,23 @@
 				else
 					return //COMMAND NOT RECOGNIZED
 			SPAWN_DBG(0.5 SECONDS)
-				src.radio_control.post_signal(src, reply, 2)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 		else if (signal.data["address_1"] == "ping")
 			var/datum/signal/reply = get_free_signal()
 			reply.source = src
-			reply.transmission_method = TRANSMISSION_RADIO
 			reply.data["address_1"] = sender
 			reply.data["command"] = "ping_reply"
 			reply.data["device"] = "WNET_SECLOCKER"
 			reply.data["netid"] = src.net_id
 			SPAWN_DBG(0.5 SECONDS)
-				src.radio_control.post_signal(src, reply, 2)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, 2)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged) // secure crates checked for being locked/welded but so long as you aren't telling the thing to open I don't see why that was needed
 			src.emagged = 1
 			src.locked = 0
-			src.update_icon()
+			src.UpdateIcon()
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			if (user)
 				user.show_text("You short out the lock on [src].", "blue")
@@ -883,16 +932,10 @@
 			return 0
 		else if (src.emagged)
 			src.emagged = 0
-			src.update_icon()
+			src.UpdateIcon()
 			if (user)
 				user.show_text("You repair the lock on [src].", "blue")
 			return 1
-
-	mob_flip_inside(var/mob/user)
-		..(user)
-		if (prob(33) && src.can_flip_bust)
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
-			src.bust_out()
 
 #undef RELAYMOVE_DELAY
 

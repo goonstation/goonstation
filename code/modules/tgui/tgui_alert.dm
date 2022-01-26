@@ -12,9 +12,9 @@
  * * message - The content of the alert, shown in the body of the TGUI window.
  * * title - The of the alert modal, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
  */
-/proc/tgui_alert(mob/user, message, title, list/buttons, timeout = 60 SECONDS)
+/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -25,7 +25,7 @@
 			return
 	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
 	alert.ui_interact(user)
-	alert.wait()
+	UNTIL(alert.choice || alert.closed)
 	if (alert)
 		. = alert.choice
 		qdel(alert)
@@ -40,9 +40,9 @@
  * * title - The of the alert modal, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
  */
-/proc/tgui_alert_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -76,10 +76,11 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
+/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, copyButtons = TRUE)
 	src.title = title
 	src.message = message
-	src.buttons = buttons.Copy()
+	if (copyButtons)
+		src.buttons = buttons.Copy()
 	if (timeout)
 		src.timeout = timeout
 		src.start_time = TIME
@@ -92,14 +93,6 @@
 	qdel(buttons)
 	buttons = null
 	. = ..()
-
-/**
- * Waits for a user's response to the tgui_modal's prompt before returning. Returns early if
- * the window was closed by the user.
- */
-/datum/tgui_modal/proc/wait()
-	while (!choice && !closed)
-		LAGCHECK(LAG_MED)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -115,14 +108,16 @@
 	. = tgui_always_state
 
 /datum/tgui_modal/ui_data(mob/user)
+	if(timeout)
+		. = list()
+		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
+
+/datum/tgui_modal/ui_static_data(mob/user)
 	. = list(
 		"title" = title,
 		"message" = message,
 		"buttons" = buttons
 	)
-
-	if(timeout)
-		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_modal/ui_act(action, list/params)
 	. = ..()
@@ -164,6 +159,3 @@
 		return
 	callback.InvokeAsync(choice)
 	qdel(src)
-
-/datum/tgui_modal/async/wait()
-	return

@@ -12,6 +12,7 @@
 #define MGD_BOTANY "botany"
 #define MGD_KITCHEN "kitchen"
 #define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
+#define MGD_MINING "mining"
 
 // Mail Groups (Other)
 // These cannot be joined or left.
@@ -20,7 +21,6 @@
 #define MGO_SILICON "silicon"
 #define MGO_JANITOR "janitor"
 #define MGO_ENGINEER "engineer"
-#define MGO_MINING "mining"
 #define MGO_MECHANIC "mechanic"
 
 // Mail Groups (Alerts)
@@ -40,3 +40,4 @@
 #define MGA_CARGOREQUEST "Cargo Request"
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
+#define MGA_TRACKING "Tracking Alert"

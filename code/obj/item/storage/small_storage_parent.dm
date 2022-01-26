@@ -18,7 +18,7 @@
 	var/list/spawn_contents = list()
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -29,14 +29,23 @@
 	buildTooltipContent()
 		. = ..()
 		var/list/L = get_contents()
-		. += "<br>Holding [L.len]/[slots] objects"
+		. += "<br>Holding [length(L)]/[slots] objects"
 		lastTooltipContent = .
 
+	// TODO: initalize
 	New()
 		hud = new(src)
 		..()
 		SPAWN_DBG(1 DECI SECOND)
 			src.make_my_stuff()
+
+	Entered(Obj, OldLoc)
+		. = ..()
+		src.hud?.add_item(Obj)
+
+	Exited(Obj, newloc)
+		. = ..()
+		src.hud?.remove_item(Obj)
 
 	disposing()
 		if (hud)
@@ -61,11 +70,8 @@
 					I.emp_act()
 		return
 
-	proc/update_icon()
-		return
-
 	proc/make_my_stuff() // use this rather than overriding the container's New()
-		if (!islist(src.spawn_contents) || !src.spawn_contents.len)
+		if (!islist(src.spawn_contents) || !length(src.spawn_contents))
 			return 0
 		var/total_amt = 0
 		for (var/thing in src.spawn_contents)
@@ -92,9 +98,16 @@
 		if (O in src.contents)
 			user.drop_item()
 			SPAWN_DBG(1 DECI SECOND)
-				O.attack_hand(user)
+				O.Attackhand(user)
 		else if (isitem(O) && !istype(O, /obj/item/storage) && !O.anchored)
-			src.attackby(O, user, O.loc)
+			user.swap_hand()
+			if(user.equipped() == null)
+				O.Attackhand(user)
+				if(O in user.equipped_list())
+					src.Attackby(O, user, O.loc)
+			else
+				boutput(user, __blue("Your hands are full!"))
+			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
 	proc/check_can_hold(obj/item/W)
@@ -103,7 +116,7 @@
 		.= 1
 		if (W.cant_drop)
 			return -1
-		if (islist(src.can_hold) && src.can_hold.len)
+		if (islist(src.can_hold) && length(src.can_hold))
 			var/ok = 0
 			if (src.in_list_or_max && W.w_class <= src.max_wclass)
 				ok = 1
@@ -128,6 +141,20 @@
 			return
 		var/canhold = src.check_can_hold(W,user)
 		if (canhold <= 0)
+			if(istype(W, /obj/item/storage) && (canhold == 0 || canhold == -1))
+				//is the storage locked?
+				if (istype(W, /obj/item/storage/secure))
+					var/obj/item/storage/secure/S = W
+					if (S.locked)
+						boutput(user, "<span class='alert'>[S] is locked and cannot be opened!</span>")
+						return
+				var/obj/item/storage/S = W
+				for (var/obj/item/I in S.get_contents())
+					if(src.check_can_hold(I) > 0)
+						src.Attackby(I, user, S)
+				return
+			if(!does_not_open_in_pocket)
+				attack_hand(user)
 			switch (canhold)
 				if(0)
 					boutput(user, "<span class='alert'>[src] cannot hold [W].</span>")
@@ -148,12 +175,12 @@
 
 		if (T && istype(T, /obj/item/storage))
 			src.add_contents(W)
-			T.hud.remove_item(W)
+//			T.hud.remove_item(W)
 		else
-			src.add_contents(W)
 			user.u_equip(W)
-		hud.add_item(W)
-		update_icon()
+			src.add_contents(W)
+//		hud.add_item(W, user)
+		UpdateIcon()
 		add_fingerprint(user)
 		animate_storage_rustle(src)
 		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
@@ -163,7 +190,7 @@
 
 	dropped(mob/user as mob)
 		if (hud)
-			hud.update()
+			hud.update(user)
 		..()
 
 	proc/mousetrap_check(mob/user)
@@ -175,37 +202,39 @@
 				"<span class='alert'><B>You reach into \the [src], but there was a live mousetrap in there!</B></span>")
 				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 				. = 1
+			break
 		for (var/obj/item/mine/M in src)
 			if (M.armed && M.used_up != 1)
 				user.visible_message("<span class='alert'><B>[user] reaches into \the [src] and sets off a [M.name]!</B></span>",\
 				"<span class='alert'><B>You reach into \the [src], but there was a live [M.name] in there!</B></span>")
 				M.triggered(user)
 				. = 1
+			break
 
 	MouseDrop(atom/over_object, src_location, over_location)
 		..()
-		var/obj/screen/hud/S = over_object
+		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
 			playsound(src.loc, "rustle", 50, 1, -5)
 			if (!usr.restrained() && !usr.stat && src.loc == usr)
 				if (S.id == "rhand")
 					if (!usr.r_hand)
 						usr.u_equip(src)
-						usr.put_in_hand(src, 0)
+						usr.put_in_hand_or_drop(src, 0)
 				else
 					if (S.id == "lhand")
 						if (!usr.l_hand)
 							usr.u_equip(src)
-							usr.put_in_hand(src, 1)
+							usr.put_in_hand_or_drop(src, 1)
 				return
-		if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
 			if (src.mousetrap_check(usr))
 				return
 			usr.s_active = src.hud
-			hud.update()
+			hud.update(usr)
 			usr.attach_hud(src.hud)
 			return
 		if (usr.is_in_hands(src))
@@ -250,16 +279,16 @@
 			if (src.mousetrap_check(user))
 				return
 			user.s_active = src.hud
-			hud.update()
+			hud.update(user)
 			user.attach_hud(src.hud)
 			src.add_fingerprint(user)
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M in hud.mobs)
+			for (var/mob/M as anything in hud.mobs)
 				if (M != user)
 					M.detach_hud(hud)
-			hud.update()
+			hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()
@@ -267,21 +296,20 @@
 
 	proc/get_contents()
 		RETURN_TYPE(/list)
-		var/list/cont = src.contents.Copy()
-		for(var/atom/A in cont)
+		. = src.contents.Copy()
+		for(var/atom/A as anything in .)
 			if(!istype(A, /obj/item) || istype(A, /obj/item/grab))
-				cont.Remove(A)
-		return cont
+				. -= A
 
 	proc/add_contents(obj/item/I)
 		I.set_loc(src)
 
 	proc/get_all_contents()
-		var/list/L = list()
-		L += get_contents()
-		for (var/obj/item/storage/S in get_contents())
-			L += S.get_all_contents()
-		return L
+		. = list()
+		var/our_contents = get_contents()
+		. += our_contents
+		for (var/obj/item/storage/S in our_contents)
+			. += S.get_all_contents()
 
 /obj/item/storage/box
 	name = "box"
@@ -320,19 +348,20 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_state = "contsolid"
 	can_hold = list(/obj/item/reagent_containers/pill)
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	max_wclass = 1
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
 
 /obj/item/storage/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 40
@@ -346,13 +375,22 @@
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+/obj/item/storage/briefcase/toxins
+	name = "toxins research briefcase"
+	icon_state = "briefcase_rd"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "rd-case"
+	max_wclass = 4 // parity with secure briefcase
+	desc = "A large briefcase for experimental toxins research."
+	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
+
 /obj/item/storage/desk_drawer
 	name = "desk drawer"
 	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 2
 	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
 	mechanics_type_override = /obj/item/storage/desk_drawer
@@ -365,7 +403,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(get_turf(src), "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return
@@ -385,7 +423,7 @@
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	max_wclass = 3
 
 	New()

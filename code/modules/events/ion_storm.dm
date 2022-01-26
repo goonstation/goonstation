@@ -114,7 +114,13 @@
 		..()
 
 		// Fuck up the AI's laws
-		var/pickedLaw = pick(new_laws)
+		var/pickedLaw
+		if(prob(33))
+			pickedLaw = phrase_log.random_custom_ai_law(replace_names=TRUE)
+		else
+			pickedLaw = pick(new_laws)
+		if(isnull(pickedLaw))
+			pickedLaw = pick(new_laws)
 		if (prob(50))
 			var/num = rand(1,15)
 			ticker.centralized_ai_laws.laws_sanity_check()
@@ -152,109 +158,111 @@
 				S << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 				ticker.centralized_ai_laws.show_laws(S)
 
-		sleep(message_delay * 0.25)
+		SPAWN_DBG(message_delay * 0.25)
 
-		// Fuck up a couple of APCs
-		if (!station_apcs.len)
-			var/turf/T = null
-			for (var/obj/machinery/power/apc/foundAPC in machine_registry[MACHINES_POWER])
-				if (foundAPC.z != 1)
+			// Fuck up a couple of APCs
+			if (!station_apcs.len)
+				var/turf/T = null
+				for (var/obj/machinery/power/apc/foundAPC in machine_registry[MACHINES_POWER])
+					if (foundAPC.z != 1)
+						continue
+					T = get_turf(foundAPC)
+					if (!istype(T.loc,/area/station/))
+						continue
+					station_apcs += foundAPC
+
+			var/obj/machinery/power/apc/foundAPC = null
+			var/apc_diceroll = 0
+			var/amount = amt_apcs_to_mess_up
+
+			while (amount > 0)
+				amount--
+				foundAPC = pick(station_apcs)
+
+				apc_diceroll = rand(1,4)
+				switch(apc_diceroll)
+					if (1)
+						foundAPC.lighting = 0
+					if (2)
+						foundAPC.equipment = 0
+					if (3)
+						foundAPC.environ = 0
+					if (4)
+						foundAPC.environ = 0
+						foundAPC.equipment = 0
+						foundAPC.lighting = 0
+				foundAPC.update()
+				foundAPC.UpdateIcon()
+
+			sleep(message_delay * 0.25)
+
+			// Fuck up a couple of doors
+			if (!station_doors.len)
+				var/turf/T = null
+				for_by_tcl (foundDoor, /obj/machinery/door)
+					if (foundDoor.z != 1)
+						continue
+					if (foundDoor.cant_emag)
+						continue
+					T = get_turf(foundDoor)
+					if (!istype(T.loc,/area/station/))
+						continue
+					station_doors += foundDoor
+
+			var/obj/machinery/door/foundDoor = null
+			var/door_diceroll = 0
+			amount = amt_doors_to_mess_up
+
+			while (amount > 0)
+				foundDoor = pick(station_doors)
+				if(isnull(foundDoor))
 					continue
-				T = get_turf(foundAPC)
-				if (!istype(T.loc,/area/station/))
-					continue
-				station_apcs += foundAPC
+				amount--
 
-		var/obj/machinery/power/apc/foundAPC = null
-		var/apc_diceroll = 0
-		var/amount = amt_apcs_to_mess_up
+				door_diceroll = rand(1,3)
+				switch(door_diceroll)
+					if(1)
+						foundDoor.secondsElectrified = -1
+					if(2)
+						foundDoor.locked = 1
+						foundDoor.UpdateIcon()
+					if(3)
+						if (foundDoor.density)
+							foundDoor.open()
+						else
+							foundDoor.close()
 
-		while (amount > 0)
-			amount--
-			foundAPC = pick(station_apcs)
+			sleep(message_delay * 0.25)
 
-			apc_diceroll = rand(1,4)
-			switch(apc_diceroll)
-				if (1)
-					foundAPC.lighting = 0
-				if (2)
-					foundAPC.equipment = 0
-				if (3)
-					foundAPC.environ = 0
-				if (4)
-					foundAPC.environ = 0
-					foundAPC.equipment = 0
-					foundAPC.lighting = 0
-			foundAPC.update()
-			foundAPC.updateicon()
+			// Fuck up a couple of lights
+			if (!station_lights.len)
+				var/turf/T = null
+				for (var/obj/machinery/light/foundLight in stationLights)
+					if (foundLight.z != 1)
+						continue
+					if (!foundLight.removable_bulb)
+						continue
+					T = get_turf(foundLight)
+					if (!istype(T.loc,/area/station/))
+						continue
+					station_lights += foundLight
 
-		sleep(message_delay * 0.25)
+			var/obj/machinery/light/foundLight = null
+			var/light_diceroll = 0
+			amount = amt_lights_to_mess_up
 
-		// Fuck up a couple of doors
-		if (!station_doors.len)
-			var/turf/T = null
-			for (var/obj/machinery/door/foundDoor in by_type[/obj/machinery/door])
-				if (foundDoor.z != 1)
-					continue
-				T = get_turf(foundDoor)
-				if (!istype(T.loc,/area/station/))
-					continue
-				station_doors += foundDoor
+			while (amount > 0)
+				amount--
+				foundLight = pick(station_lights)
 
-		var/obj/machinery/door/foundDoor = null
-		var/door_diceroll = 0
-		amount = amt_doors_to_mess_up
+				light_diceroll = rand(1,3)
+				switch(light_diceroll)
+					if(1)
+						foundLight.broken()
+					if(2)
+						foundLight.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
+						foundLight.brightness = rand(4,32) / 10
+					if(3)
+						foundLight.on = 0
 
-		while (amount > 0)
-			foundDoor = pick(station_doors)
-			if(isnull(foundDoor))
-				continue
-			amount--
-
-			door_diceroll = rand(1,3)
-			switch(door_diceroll)
-				if(1)
-					foundDoor.secondsElectrified = -1
-				if(2)
-					foundDoor.locked = 1
-					foundDoor.update_icon()
-				if(3)
-					if (foundDoor.density)
-						foundDoor.open()
-					else
-						foundDoor.close()
-
-		sleep(message_delay * 0.25)
-
-		// Fuck up a couple of lights
-		if (!station_lights.len)
-			var/turf/T = null
-			for (var/obj/machinery/light/foundLight in stationLights)
-				if (foundLight.z != 1)
-					continue
-				if (!foundLight.removable_bulb)
-					continue
-				T = get_turf(foundLight)
-				if (!istype(T.loc,/area/station/))
-					continue
-				station_lights += foundLight
-
-		var/obj/machinery/light/foundLight = null
-		var/light_diceroll = 0
-		amount = amt_lights_to_mess_up
-
-		while (amount > 0)
-			amount--
-			foundLight = pick(station_lights)
-
-			light_diceroll = rand(1,3)
-			switch(light_diceroll)
-				if(1)
-					foundLight.broken()
-				if(2)
-					foundLight.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
-					foundLight.brightness = rand(4,32) / 10
-				if(3)
-					foundLight.on = 0
-
-			foundLight.update()
+				foundLight.update()

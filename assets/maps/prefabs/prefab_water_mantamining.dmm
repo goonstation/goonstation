@@ -1,183 +1,1481 @@
-"aa" = (/turf/variableTurf/wall,/area/noGenerate)
-"ab" = (/turf/variableTurf/clear,/area/noGenerate)
-"ac" = (/obj/decal/fakeobjects/pipe{dir = 1},/obj/machinery/crusher,/obj/map/light/dimreddish,/turf/variableTurf/clear,/area/noGenerate)
-"ad" = (/obj/decal/fakeobjects/pipe{dir = 5; tag = "icon-intact (NORTHEAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"ae" = (/obj/decal/fakeobjects/pipe{dir = 5},/obj/decal/fakeobjects/pipe{dir = 4; icon_state = "intact"},/turf/variableTurf/clear,/area/noGenerate)
-"af" = (/obj/decal/fakeobjects/shuttleengine{desc = "A robotic claw, it might still work."; name = "robotic claw"},/turf/variableTurf/clear,/area/noGenerate)
-"ag" = (/obj/decal/fakeobjects/pipe{dir = 9},/obj/decal/fakeobjects/pipe{dir = 4; icon_state = "intact"},/turf/variableTurf/clear,/area/noGenerate)
-"ah" = (/obj/decal/fakeobjects/pipe{dir = 9; tag = "icon-intact (NORTHWEST)"},/turf/variableTurf/clear,/area/noGenerate)
-"ai" = (/obj/decal/fakeobjects/pipe{dir = 5},/turf/variableTurf/clear,/area/noGenerate)
-"aj" = (/obj/decal/fakeobjects/pipe{dir = 5},/obj/decal/fakeobjects/pipe{dir = 4; tag = "icon-intact-f (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"ak" = (/obj/decal/fakeobjects/pipe{dir = 9},/obj/decal/fakeobjects/pipe{dir = 4; tag = "icon-intact-f (EAST)"},/turf/variableTurf/clear,/area/noGenerate)
-"al" = (/obj/decal/fakeobjects/pipe{desc = ""; icon = 'icons/obj/disposal.dmi'; icon_state = "pipe-s"; name = "coolant pipe"},/turf/variableTurf/clear,/area/noGenerate)
-"am" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"an" = (/turf/variableTurf/clear,/area/space)
-"ao" = (/obj/table/reinforced/auto,/obj/machinery/recharger,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"ap" = (/obj/machinery/computer/announcement{name = "Communications Office Announcement Computer"; req_access_txt = ""},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aq" = (/obj/table/reinforced/auto,/obj/item/paper/book/pocketguide/mining1,/obj/item/paper/book/pocketguide/mining2,/obj/item/paper/book/minerals{pixel_x = 0; pixel_y = 0},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"ar" = (/obj/stool/chair/yellow{dir = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"as" = (/turf/simulated/floor,/area/prefab/tunnelsnake)
-"at" = (/obj/stool/chair/yellow{dir = 1},/obj/machinery/light/incandescent/netural{dir = 4; nostick = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"au" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/tunnelsnake)
-"av" = (/obj/stool/chair/yellow{dir = 1},/obj/machinery/light/incandescent/netural{dir = 8; icon_state = "tube1"; nostick = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aw" = (/obj/wingrille_spawn/auto/crystal,/obj/decal/xmas_lights,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"ax" = (/obj/machinery/drainage/big,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"ay" = (/obj/machinery/door/airlock/pyro/external{dir = 8; name = "The Tunnel Snake"},/obj/decal/garland{dir = 4},/turf/simulated/floor/grime,/area/prefab/tunnelsnake)
-"az" = (/obj/miningteleporter,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aA" = (/obj/machinery/door/airlock/pyro/external{dir = 8; name = "The Tunnel Snake"},/obj/decal/garland{dir = 4},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aB" = (/obj/item/storage/toilet/random{pixel_y = 8},/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"aC" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"aD" = (/obj/machinery/light/incandescent/netural{dir = 4},/turf/simulated/floor/stairs,/area/prefab/tunnelsnake)
-"aE" = (/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"aF" = (/obj/decoration/toiletholder{pixel_y = 32},/obj/item/rubberduck,/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"aG" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/noGenerate)
-"aH" = (/obj/machinery/light/incandescent/netural,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aI" = (/obj/machinery/door/airlock/pyro/external{dir = 8; name = "The Tunnel Snake"},/obj/decal/garland{dir = 8},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aJ" = (/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aK" = (/obj/machinery/door/airlock/pyro/external{dir = 8; name = "The Tunnel Snake"},/obj/decal/garland{dir = 8},/turf/simulated/floor/grime,/area/prefab/tunnelsnake)
-"aL" = (/obj/machinery/drainage,/obj/machinery/light/incandescent/netural,/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"aM" = (/obj/submachine/chef_sink/chem_sink{tag = "icon-sink (NORTH)"; icon_state = "sink"; dir = 1},/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"aN" = (/obj/machinery/shower{dir = 4; icon_state = "showerhead"; pixel_y = 6},/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"aO" = (/obj/stool/bed,/obj/item/storage/wall/mining,/obj/item/clothing/suit/bedsheet{bcolor = "yellow"; icon_state = "bedsheet-yellow"},/obj/landmark/start{name = "Miner"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aP" = (/obj/rack,/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering,/obj/item/clothing/mask/breath{pixel_x = -3},/obj/item/clothing/shoes/flippers{pixel_y = -12},/obj/item/tank/emergency_oxygen,/obj/item/tank/jetpack,/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aQ" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 6; icon_state = "line1"},/obj/machinery/light/incandescent/netural{dir = 8; icon_state = "tube1"; nostick = 1},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aR" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aS" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 10; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aT" = (/obj/machinery/light/incandescent/netural,/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aU" = (/obj/machinery/door/airlock/pyro/engineering{dir = 2; name = "Bridge"},/obj/access_spawn/mining,/obj/decal/garland,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aV" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 4; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aW" = (/obj/shrub{color = ""},/turf/simulated/floor/grass/random,/area/prefab/tunnelsnake)
-"aX" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 8; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"aY" = (/obj/machinery/door/airlock/pyro/engineering{dir = 4; name = "Mining Teleporter"},/obj/access_spawn/mining,/obj/decal/garland{dir = 4},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"aZ" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 5; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"ba" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 1; icon_state = "line1"},/obj/stool/bench/auto,/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bb" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 9; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bc" = (/obj/stool/bench/auto,/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bd" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 6; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"be" = (/obj/stool/bench/auto,/obj/decal/tile_edge/line/green{color = "#e7c88c"; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bf" = (/obj/machinery/door/airlock/pyro/engineering{dir = 4; name = "Bathroom"},/obj/access_spawn/mining,/obj/decal/garland{dir = 8},/turf/simulated/floor/sanitary,/area/prefab/tunnelsnake)
-"bg" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 8; icon_state = "line1"},/obj/machinery/light/incandescent/netural{dir = 4},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bh" = (/obj/machinery/vending/coffee,/obj/decal/poster/wallsign/poster_mining{pixel_y = 32},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bi" = (/obj/decal/tile_edge/line/green{color = "#e7c88c"; dir = 1; icon_state = "line1"},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bj" = (/obj/machinery/vending/snack,/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bk" = (/obj/decal/cleanable/dirt/dirt5,/obj/storage/crate,/obj/item/shipcomponent/secondary_system/orescoop,/obj/item/shipcomponent/secondary_system/orescoop,/obj/item/shipcomponent/secondary_system/orescoop,/obj/item/shipcomponent/secondary_system/orescoop,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bl" = (/obj/machinery/manufacturer/mining,/obj/machinery/light/incandescent/netural{dir = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bm" = (/obj/decal/cleanable/dirt/dirt4,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bn" = (/obj/decal/cleanable/dirt/dirt5,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bo" = (/obj/machinery/nanofab/mining,/obj/machinery/light/incandescent/netural{dir = 1},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bp" = (/obj/machinery/portable_reclaimer,/obj/item/storage/wall/medical{pixel_y = 32},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bq" = (/obj/machinery/processor,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"br" = (/obj/storage/cart{name = "ore cart"},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bs" = (/obj/decal/cleanable/dirt/dirt2,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bt" = (/obj/table/auto,/obj/item/device/gps{pixel_y = -4; rand_pos = 0},/obj/item/device/gps{rand_pos = 0},/obj/item/device/gps{pixel_y = 4; rand_pos = 0},/obj/item/device/gps{pixel_y = 8; rand_pos = 0},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bu" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bv" = (/obj/table/auto,/obj/item/cargotele{pixel_x = 5; pixel_y = 8},/obj/item/cargotele{pixel_x = -5; pixel_y = 8},/obj/machinery/light/incandescent/netural{dir = 8; icon_state = "tube1"; nostick = 1},/obj/machinery/recharger{pixel_x = -7},/obj/machinery/recharger{pixel_x = 5},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bw" = (/obj/table/auto,/obj/item/storage/toolbox/electrical{pixel_y = 7},/obj/item/storage/toolbox/electrical{pixel_y = 4},/obj/item/storage/toolbox/mechanical{pixel_y = 1},/obj/item/storage/toolbox/mechanical{pixel_y = -2},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"bx" = (/obj/table/auto,/obj/item/device/matanalyzer{pixel_x = 3; pixel_y = 5},/obj/item/device/matanalyzer{pixel_x = 3; pixel_y = 5},/obj/item/device/matanalyzer{pixel_x = 3; pixel_y = 5},/obj/machinery/light/incandescent/netural{dir = 4},/turf/simulated/floor,/area/prefab/tunnelsnake)
-"by" = (/obj/machinery/manufacturer/general,/turf/simulated/floor/caution/south,/area/prefab/tunnelsnake)
-"bz" = (/turf/simulated/floor/caution/south,/area/prefab/tunnelsnake)
-"bA" = (/obj/reagent_dispensers/fueltank,/turf/simulated/floor/caution/south,/area/prefab/tunnelsnake)
-"bB" = (/obj/machinery/r_door_control/podbay/mining/new_walls/east{id = "door1"},/turf/variableTurf/clear,/area/noGenerate)
-"bC" = (/obj/machinery/nanofab/refining,/turf/simulated/floor/caution/south,/area/prefab/tunnelsnake)
-"bD" = (/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bE" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bF" = (/obj/machinery/r_door_control/podbay/mining/new_walls/west{id = "door3"},/turf/variableTurf/clear,/area/noGenerate)
-"bG" = (/obj/machinery/recharge_station,/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bH" = (/obj/machinery/door/airlock/pyro/engineering{dir = 4; name = "Mining"},/obj/access_spawn/mining,/obj/decal/garland{dir = 4},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bI" = (/obj/machinery/vehicle/tank/minisub/mining,/obj/machinery/drainage/big,/obj/machinery/r_door_control/podbay/mining/new_walls/north{id = "door1"},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bJ" = (/obj/storage/crate,/obj/item/shipcomponent/sensor/mining,/obj/item/shipcomponent/sensor/mining,/obj/item/shipcomponent/sensor/mining,/obj/item/shipcomponent/sensor/mining,/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bK" = (/obj/machinery/manufacturer/hangar,/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bL" = (/obj/machinery/vehicle/tank/minisub/mining,/obj/machinery/drainage/big,/obj/machinery/r_door_control/podbay/mining/new_walls/north{id = "door3"},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bM" = (/obj/machinery/door/airlock/pyro/engineering{dir = 4; name = "Mining"},/obj/cable{icon_state = "4-8"},/obj/access_spawn/mining,/obj/decal/garland{dir = 8},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bN" = (/obj/machinery/light/incandescent/netural{dir = 8; icon_state = "tube1"; nostick = 1},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bO" = (/obj/decal/cleanable/dirt/dirt2,/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bP" = (/obj/submachine/cargopad{name = "Tunnel Snake Teleport Pad"},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bQ" = (/obj/machinery/light/incandescent/netural{dir = 4},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bR" = (/obj/machinery/door/airlock/pyro/engineering{dir = 4; name = "Mining"},/obj/access_spawn/mining,/obj/decal/garland{dir = 8},/turf/simulated/floor/orange,/area/prefab/tunnelsnake)
-"bS" = (/obj/machinery/vehicle/tank/minisub/mining,/obj/machinery/drainage/big,/obj/machinery/r_door_control/podbay/mining/new_walls/north{id = "door2"},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bT" = (/obj/storage/crate,/obj/item/shipcomponent/secondary_system/cargo,/obj/item/shipcomponent/secondary_system/cargo,/obj/item/shipcomponent/secondary_system/cargo,/obj/item/shipcomponent/secondary_system/cargo,/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bU" = (/obj/decal/xmas_lights,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/tunnelsnake)
-"bV" = (/obj/machinery/vehicle/tank/minisub/mining,/obj/machinery/drainage/big,/obj/machinery/r_door_control/podbay/mining/new_walls/north{id = "door4"},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"bW" = (/obj/machinery/r_door_control/podbay/mining/new_walls/east{id = "door2"},/turf/variableTurf/clear,/area/noGenerate)
-"bX" = (/obj/wingrille_spawn/auto,/obj/decal/xmas_lights,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"bY" = (/obj/machinery/r_door_control/podbay/mining/new_walls/west{id = "door4"},/turf/variableTurf/clear,/area/noGenerate)
-"bZ" = (/obj/machinery/door/airlock/pyro/engineering{dir = 2; name = "Hangar"},/obj/access_spawn/mining,/obj/decal/garland,/turf/simulated/floor/grime,/area/prefab/tunnelsnake)
-"ca" = (/obj/machinery/shuttle/engine/heater/seaheater_left,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"cb" = (/obj/machinery/power/furnace,/obj/machinery/light/incandescent/netural{dir = 1},/turf/simulated/floor/plating/random,/area/prefab/tunnelsnake)
-"cc" = (/obj/decal/tile_edge/stripe/extra_big{tag = "icon-xtra_bigstripe-edge (WEST)"; icon_state = "xtra_bigstripe-edge"; dir = 8},/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"cd" = (/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"ce" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 4},/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"cf" = (/obj/machinery/power/furnace,/obj/cable{d2 = 8; icon_state = "0-8"},/obj/machinery/light/incandescent/netural{dir = 1},/turf/simulated/floor/plating/random,/area/prefab/tunnelsnake)
-"cg" = (/obj/machinery/shuttle/engine/propulsion/sea_propulsion,/turf/variableTurf/clear,/area/noGenerate)
-"ch" = (/obj/machinery/shuttle/engine/heater/seaheater_right,/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"ci" = (/obj/decal/tile_edge/stripe/extra_big{tag = "icon-xtra_bigstripe-edge (WEST)"; icon_state = "xtra_bigstripe-edge"; dir = 8},/obj/storage/crate/furnacefuel,/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"cj" = (/obj/machinery/power/smes/magical,/obj/cable,/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"ck" = (/obj/machinery/drainage/big,/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"cl" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 4},/obj/storage/crate/furnacefuel,/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"cm" = (/obj/machinery/door/poddoor/blast/pyro{dir = 4; icon_state = "bdoormid1"; id = "door1"},/obj/forcefield/energyshield/perma/doorlink,/obj/decal/garland{dir = 4},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"cn" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-L"},/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"co" = (/obj/lattice{icon_state = "lattice-dir"},/turf/variableTurf/clear,/area/noGenerate)
-"cp" = (/obj/decal/fakeobjects/shuttlethruster{icon_state = "alt_propulsion"},/turf/variableTurf/clear,/area/prefab/sea_mining)
-"cq" = (/obj/lattice{icon_state = "lattice-dir"; dir = 2},/obj/machinery/light/runway_light/delay3,/turf/variableTurf/clear,/area/noGenerate)
-"cr" = (/obj/lattice{icon_state = "lattice-dir"; dir = 2},/obj/machinery/light/runway_light/delay2,/turf/variableTurf/clear,/area/noGenerate)
-"cs" = (/obj/lattice{icon_state = "lattice-dir"; dir = 2},/obj/machinery/light/runway_light,/turf/variableTurf/clear,/area/noGenerate)
-"ct" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 1},/obj/warp_beacon/trench_mining,/turf/variableTurf/clear,/area/noGenerate)
-"cu" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater-R"},/turf/simulated/floor/plating,/area/prefab/tunnelsnake)
-"cv" = (/obj/table/reinforced/auto,/obj/item/storage/toolbox/mechanical,/turf/simulated/floor,/area/prefab/tunnelsnake)
-"cw" = (/turf/simulated/floor/grime,/area/prefab/tunnelsnake)
-"cx" = (/obj/machinery/door/poddoor/blast/pyro{dir = 4; icon_state = "bdoormid1"; id = "door3"},/obj/forcefield/energyshield/perma/doorlink,/obj/decal/garland{dir = 8},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"cy" = (/obj/machinery/door/poddoor/blast/pyro{dir = 4; icon_state = "bdoormid1"; id = "door2"},/obj/forcefield/energyshield/perma/doorlink,/obj/decal/garland{dir = 4},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"cz" = (/obj/machinery/door/poddoor/blast/pyro{dir = 4; icon_state = "bdoormid1"; id = "door4"},/obj/forcefield/energyshield/perma/doorlink,/obj/decal/garland{dir = 8},/turf/simulated/floor/shuttlebay,/area/prefab/tunnelsnake)
-"cA" = (/obj/machinery/door/airlock/pyro/engineering{dir = 2; name = "Engine Room"},/obj/access_spawn/mining,/obj/decal/garland,/turf/simulated/floor/black,/area/prefab/tunnelsnake)
-"cB" = (/obj/machinery/door/airlock/pyro/external{dir = 2; name = "The Tunnel Snake"},/obj/decal/garland,/turf/simulated/floor/black,/area/prefab/tunnelsnake)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1
+	},
+/obj/machinery/crusher,
+/obj/map/light/dimreddish,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ab" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ac" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5;
+	tag = "icon-intact (NORTHEAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ad" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	icon_state = "intact"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ae" = (
+/obj/decal/fakeobjects/shuttleengine{
+	desc = "A robotic claw, it might still work.";
+	name = "robotic claw"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"af" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	icon_state = "intact"
+	},
+/turf/variableTurf/clear,
+/area/prefab/tunnelsnake)
+"ag" = (
+/turf/variableTurf/clear,
+/area/prefab/tunnelsnake)
+"ah" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/variableTurf/clear,
+/area/prefab/tunnelsnake)
+"ai" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	tag = "icon-intact-f (EAST)"
+	},
+/turf/variableTurf/clear,
+/area/prefab/tunnelsnake)
+"aj" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	tag = "icon-intact-f (EAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ak" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	tag = "icon-intact (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"an" = (
+/turf/variableTurf/clear,
+/area/space)
+"ao" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"ap" = (
+/obj/machinery/computer/announcement{
+	name = "Communications Office Announcement Computer";
+	req_access_txt = ""
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aq" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/pocketguide/mining,
+/obj/item/paper/book/from_file/minerals{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"at" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"au" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/tunnelsnake)
+"av" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	tag = "icon-intact (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/prefab/tunnelsnake)
+"ax" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "";
+	icon = 'icons/obj/disposal.dmi';
+	icon_state = "pipe-s";
+	name = "coolant pipe"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ay" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"az" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aC" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/tunnelsnake)
+"aE" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	icon_state = "tube1";
+	nostick = 1
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aF" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"aL" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8;
+	name = "The Tunnel Snake"
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aM" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aO" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/device/multitool,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aP" = (
+/obj/item/storage/toilet/random{
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"aQ" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/stairs,
+/area/prefab/tunnelsnake)
+"aR" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 2;
+	name = "Bridge"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aS" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"aT" = (
+/obj/miningteleporter,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"aV" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"aW" = (
+/obj/shrub{
+	color = ""
+	},
+/turf/simulated/floor/grass/random,
+/area/prefab/tunnelsnake)
+"aX" = (
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/obj/item/rubberduck,
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"aZ" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bb" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bc" = (
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bd" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	icon_state = "tube1";
+	nostick = 1
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"be" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bg" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bh" = (
+/turf/simulated/floor/grime,
+/area/prefab/tunnelsnake)
+"bi" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/stool/bench/auto,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bj" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bk" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Mining Teleporter"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bm" = (
+/obj/stool/bench/auto,
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bn" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Bathroom"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"bo" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Mining"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bp" = (
+/obj/machinery/drainage,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"bq" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	icon_state = "sink";
+	tag = "icon-sink (NORTH)"
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"br" = (
+/obj/machinery/shower{
+	dir = 4;
+	icon_state = "showerhead";
+	pixel_y = 6
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"bs" = (
+/obj/machinery/vending/coffee,
+/obj/decal/poster/wallsign/poster_mining{
+	pixel_y = 32
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bt" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bu" = (
+/obj/stool/bed,
+/obj/item/storage/wall/mining,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bv" = (
+/obj/rack,
+/obj/item/clothing/suit/space/diving/engineering,
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering,
+/obj/item/clothing/mask/breath{
+	pixel_x = -3
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/jetpack,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bw" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 2;
+	name = "Hangar"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor/grime,
+/area/prefab/tunnelsnake)
+"bx" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"by" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Mining"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bz" = (
+/obj/machinery/manufacturer/mining,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bA" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bB" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bC" = (
+/obj/decal/tile_edge/line/green{
+	color = "#e7c88c";
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bD" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"bF" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"bG" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 1
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bI" = (
+/obj/storage/cart{
+	name = "ore cart"
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bK" = (
+/obj/reagent_dispensers/fueltank,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/caution/south,
+/area/prefab/tunnelsnake)
+"bL" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bM" = (
+/turf/simulated/floor/sanitary,
+/area/prefab/tunnelsnake)
+"bP" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"bQ" = (
+/turf/simulated/floor/caution/south,
+/area/prefab/tunnelsnake)
+"bW" = (
+/obj/machinery/nanofab/mining,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bY" = (
+/obj/machinery/portable_reclaimer,
+/obj/item/storage/wall/medical{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"bZ" = (
+/obj/stool/bench/auto,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"ca" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "door1"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"cb" = (
+/obj/machinery/vehicle/tank/minisub/mining,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"cd" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"cf" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"cg" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "door2"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"ch" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "door3"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"cj" = (
+/obj/machinery/processor,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"ck" = (
+/obj/submachine/cargopad{
+	name = "Tunnel Snake Teleport Pad"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"cn" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"co" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 2;
+	name = "Engine Room"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"cq" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"cr" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 2;
+	name = "The Tunnel Snake"
+	},
+/turf/simulated/floor/black,
+/area/noGenerate)
+"ct" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cu" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"cv" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/prefab/tunnelsnake)
+"cw" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8;
+	name = "The Tunnel Snake"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/tunnelsnake)
+"cV" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"dS" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	icon_state = "tube1";
+	nostick = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"fb" = (
+/obj/machinery/power/furnace,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/tunnelsnake)
+"fg" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"fj" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"hF" = (
+/obj/machinery/shuttle/engine/heater/seaheater_right,
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"jz" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/north{
+	id = "door2"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"kr" = (
+/obj/table/auto,
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/cargotele{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	icon_state = "tube1";
+	nostick = 1
+	},
+/obj/machinery/recharger{
+	pixel_x = -7
+	},
+/obj/machinery/recharger{
+	pixel_x = 5
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"nQ" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"oe" = (
+/obj/machinery/drainage/big,
+/obj/machinery/r_door_control/podbay/mining/new_walls/north{
+	id = "door1"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"qA" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"qP" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"rl" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/warp_beacon/trench_mining,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"tq" = (
+/obj/table/auto,
+/obj/item/device/matanalyzer{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"vr" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/caution/south,
+/area/prefab/tunnelsnake)
+"wW" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/caution/south,
+/area/prefab/tunnelsnake)
+"xV" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/east{
+	id = "door1"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"xX" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/orange,
+/area/prefab/tunnelsnake)
+"zw" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/north{
+	id = "door4"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"Aw" = (
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"AM" = (
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"Di" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/west{
+	id = "door3"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Es" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge";
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"EL" = (
+/obj/machinery/ore_cloud_storage_container,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"GI" = (
+/obj/storage/crate,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/obj/item/shipcomponent/secondary_system/orescoop,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"GT" = (
+/obj/machinery/drainage/big,
+/obj/machinery/r_door_control/podbay/mining/new_walls/north{
+	id = "door3"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"HR" = (
+/obj/table/auto,
+/obj/item/device/gps{
+	pixel_y = -4;
+	rand_pos = 0
+	},
+/obj/item/device/gps{
+	rand_pos = 0
+	},
+/obj/item/device/gps{
+	pixel_y = 4;
+	rand_pos = 0
+	},
+/obj/item/device/gps{
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/turf/simulated/floor,
+/area/prefab/tunnelsnake)
+"Iu" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge";
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"Jj" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/west{
+	id = "door4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"KW" = (
+/obj/machinery/shuttle/engine/propulsion/sea_propulsion,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"LI" = (
+/obj/machinery/power/smes/magical,
+/obj/cable,
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"LX" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/east{
+	id = "door2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Mr" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"Nb" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	dir = 4;
+	icon_state = "bdoormid1";
+	id = "door4"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/tunnelsnake)
+"Om" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/black,
+/area/prefab/tunnelsnake)
+"Ql" = (
+/obj/machinery/shuttle/engine/heater/seaheater_left,
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"Sj" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"SJ" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"Uc" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"UK" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"WN" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/tunnelsnake)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaa
-abacacabacacabacacabacacab
-abadaeafagahabaiajafakahab
-abababalamawawawamalababan
-anababalamaoapaqamalabanan
-anababalamarasatamalabanan
-anababalamasasasamalababan
-ababauauauavasarauauauaban
-ababayaxaAasasasaIaxaKaban
-ababauauauauasauauauauabab
-abaGauaucvauaUauaBauauaGab
-abauazasasaCaDauaEaFauauab
-abaucwaHasaYaJbfaLaMaNauab
-abauauauauauaJauauauauauab
-abaCaOaPauaQaRaSauaPaOaCab
-abaCaTaJbHaVaWaXbMaJaTaCab
-abauauauauaZbabbauauauauab
-abaCaOaPauaJbcaJauaPaOaCab
-abaCaTaJbHbdbeaSbRaJaTaCab
-abauauauauaVaWbgauauauauab
-abababaubhaZbibbbjauababab
-abababaubUbXbZbXbUauababab
-ababauaublasbmbkboauauabab
-abauaubpasasasasasbqauauab
-abaCbrasbsasbtasasasbuaCab
-abaCbvasasasbwasbnasbxaCab
-abaCbybzbzbzbAbzbzbzbCaCab
-bBauaubDbEbDbGbDbDbDauaubF
-abcmbIbDbDbDbKbDbEbDbLcxab
-abauaubNbObDbPbDbDbQauauab
-abcybSbDbTbDbDbDbJbDbVczab
-bWauauauauaucAauauauauaubY
-abcaaucbcccdcdcdcecfauchab
-abcgauaucicjckcjclauaucgab
-abababauauaucBauauauababab
-ababababcncucocncuabababab
-ababababcpcpcocpcpabababab
-anananabababcoabababananan
-anananabababcoabababananan
-anananabababcqabababananan
-anananabababcrabababananan
-anananabababcsabababananan
-anananabababctabababananan
-anananabababababababananan
-ananananananananananananan
-ananananananananananananan
-ananananananananananananan
-ananananananananananananan
+at
+ab
+ab
+an
+an
+an
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+xV
+ab
+ab
+LX
+ab
+ab
+ab
+ab
+ab
+ab
+an
+an
+an
+an
+an
+an
+an
+"}
+(2,1,1) = {"
+at
+aa
+ac
+ab
+ab
+ab
+ab
+ab
+ab
+aF
+au
+au
+au
+aC
+aC
+au
+aC
+aC
+au
+ab
+ab
+ab
+au
+aC
+aC
+aC
+au
+ca
+ca
+au
+cg
+cg
+aF
+Ql
+KW
+ab
+an
+an
+an
+an
+an
+an
+an
+"}
+(3,1,1) = {"
+at
+aa
+ad
+ab
+ab
+ab
+au
+cw
+au
+au
+aT
+bh
+au
+bu
+bx
+au
+bu
+bx
+au
+ab
+ab
+au
+au
+bI
+kr
+vr
+au
+oe
+bD
+au
+jz
+cV
+au
+aF
+aF
+ab
+ab
+an
+an
+an
+an
+an
+an
+"}
+(4,1,1) = {"
+at
+ab
+ae
+ax
+ax
+ax
+au
+aM
+au
+au
+AM
+bj
+au
+bv
+bc
+au
+bv
+bc
+au
+au
+au
+au
+bY
+AM
+AM
+bQ
+bD
+cb
+bD
+dS
+bD
+cb
+au
+fb
+aF
+aF
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(5,1,1) = {"
+at
+aa
+af
+cv
+cv
+cv
+au
+aL
+au
+aO
+AM
+AM
+au
+au
+bo
+au
+au
+bo
+au
+bs
+au
+bz
+AM
+cu
+AM
+bQ
+bD
+bD
+Mr
+bD
+cn
+bD
+au
+Iu
+Es
+aF
+Uc
+Sj
+ab
+ab
+ab
+ab
+ab
+"}
+(6,1,1) = {"
+at
+aa
+av
+cv
+ao
+ay
+aE
+AM
+au
+au
+aC
+bk
+au
+bd
+aV
+aZ
+bc
+bB
+aV
+aZ
+aC
+AM
+AM
+AM
+AM
+bQ
+bD
+bD
+bD
+bD
+bD
+bD
+au
+Aw
+LI
+aF
+SJ
+Sj
+ab
+ab
+ab
+ab
+ab
+"}
+(7,1,1) = {"
+at
+ab
+ag
+cv
+ap
+AM
+AM
+AM
+AM
+aR
+aQ
+bc
+bc
+be
+aW
+bi
+bZ
+bm
+aW
+bt
+bw
+bA
+nQ
+HR
+bG
+bK
+bP
+GI
+EL
+cd
+ck
+bD
+co
+Aw
+cq
+cr
+ct
+ct
+qP
+fj
+UK
+rl
+ab
+"}
+(8,1,1) = {"
+at
+aa
+ah
+cv
+aq
+az
+AM
+AM
+au
+au
+au
+bn
+au
+aS
+bg
+bb
+bc
+aS
+bC
+bb
+aC
+AM
+AM
+AM
+AM
+bQ
+bD
+bD
+bD
+bD
+bD
+bD
+au
+Aw
+LI
+aF
+Uc
+Sj
+ab
+ab
+ab
+ab
+ab
+"}
+(9,1,1) = {"
+at
+aa
+ai
+cv
+cv
+cv
+au
+aL
+au
+aP
+bM
+bp
+au
+au
+by
+au
+au
+bo
+au
+bF
+au
+bW
+AM
+AM
+qA
+bQ
+bD
+bD
+bD
+Mr
+bD
+bD
+au
+fg
+Om
+aF
+SJ
+Sj
+ab
+ab
+ab
+ab
+ab
+"}
+(10,1,1) = {"
+at
+ab
+ae
+ax
+ax
+ax
+au
+aM
+au
+au
+aX
+bq
+au
+bv
+bc
+au
+bv
+bc
+au
+au
+au
+au
+cj
+AM
+AM
+bQ
+bD
+cb
+bD
+cf
+bD
+cb
+au
+WN
+aF
+aF
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(11,1,1) = {"
+at
+aa
+aj
+ab
+ab
+ab
+au
+cw
+au
+au
+au
+br
+au
+bu
+bx
+au
+xX
+bx
+au
+ab
+ab
+au
+au
+bL
+tq
+wW
+au
+GT
+bD
+au
+zw
+cV
+au
+aF
+aF
+ab
+ab
+an
+an
+an
+an
+an
+an
+"}
+(12,1,1) = {"
+at
+aa
+ak
+an
+an
+ab
+ab
+ab
+ab
+aF
+au
+au
+au
+aC
+aC
+au
+aC
+aC
+au
+ab
+ab
+ab
+au
+aC
+aC
+aC
+au
+ch
+ch
+au
+Nb
+Nb
+aF
+hF
+KW
+ab
+an
+an
+an
+an
+an
+an
+an
+"}
+(13,1,1) = {"
+at
+ab
+an
+an
+an
+an
+an
+an
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+Di
+ab
+ab
+Jj
+ab
+ab
+ab
+ab
+ab
+ab
+an
+an
+an
+an
+an
+an
+an
 "}

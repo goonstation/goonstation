@@ -48,7 +48,7 @@ obj/structure/ex_act(severity)
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 			if (src.material)
 				src.material.triggerOnAttacked(src, user, user, src)
-			for (var/mob/N in AIviewers(usr, null))
+			for (var/mob/N in AIviewers(user, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
 		if (prob(80))
@@ -70,7 +70,7 @@ obj/structure/ex_act(severity)
 						var/datum/material/M = getMaterial("steel")
 						A.setMaterial(M)
 				else
-					del(src)
+					qdel(src)
 
 		else
 			boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
@@ -144,10 +144,10 @@ obj/structure/ex_act(severity)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && the_tool != source.equipped())
+		if (istype(source) && !equipped_or_holding(the_tool, source))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (istype(source) && the_tool != source.equipped() && the_tool.amount >= 2 && interaction == GIRDER_PLATE)
+		if (istype(source) && !equipped_or_holding(the_tool, source) && the_tool.amount >= 2 && interaction == GIRDER_PLATE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -157,20 +157,20 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(get_turf(the_girder), "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_girder, "sound/items/Ratchet.ogg", 100, 1)
 			if (GIRDER_UNSECURESUPPORT)
 				verbing = "unsecuring support struts from"
-				playsound(get_turf(the_girder), "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(the_girder, "sound/items/Screwdriver.ogg", 100, 1)
 			if (GIRDER_REMOVESUPPORT)
 				verbing = "removing support struts from"
-				playsound(get_turf(the_girder), "sound/items/Wirecutter.ogg", 100, 1)
+				playsound(the_girder, "sound/items/Wirecutter.ogg", 100, 1)
 			if (GIRDER_DISLODGE)
 				verbing = "dislodging"
-				playsound(get_turf(the_girder), "sound/items/Crowbar.ogg", 100, 1)
+				playsound(the_girder, "sound/items/Crowbar.ogg", 100, 1)
 			if (GIRDER_REINFORCE)
 				verbing = "reinforcing"
 			if (GIRDER_SECURE)
-				playsound(get_turf(the_girder), "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_girder, "sound/items/Ratchet.ogg", 100, 1)
 				verbing = "securing"
 			if (GIRDER_PLATE)
 				verbing = "plating"
@@ -182,7 +182,7 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(get_turf(the_girder), "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_girder, "sound/items/Ratchet.ogg", 100, 1)
 				var/atom/A = new /obj/item/sheet(get_turf(the_girder))
 				if (the_girder.material)
 					A.setMaterial(the_girder.material)
@@ -236,13 +236,7 @@ obj/structure/ex_act(severity)
 					var/datum/material/M = getMaterial("steel")
 					WALL.setMaterial(M)
 				WALL.inherit_area()
-				// drsingh attempted fix for Cannot read null.amount
-				if (!isnull(S))
-					S.amount -= 2
-					if (S.amount <= 0)
-						qdel(the_tool)
-					else
-						S.inventory_counter.update_number(S.amount)
+				S?.change_stack_amount(-2)
 
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
@@ -253,7 +247,7 @@ obj/structure/ex_act(severity)
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 			if (src.material)
 				src.material.triggerOnAttacked(src, user, user, src)
-			for (var/mob/N in AIviewers(usr, null))
+			for (var/mob/N in AIviewers(user, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
 		if (prob(70))
@@ -297,7 +291,7 @@ obj/structure/ex_act(severity)
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
 		FW.known_by += user
-		S.consume_sheets(1)
+		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 		qdel(src)
@@ -325,6 +319,7 @@ obj/structure/ex_act(severity)
 	density = 1
 	opacity = 1
 	var/health = 30
+	var/health_max = 30
 	var/builtby = null
 	var/anti_z = 0
 
@@ -334,10 +329,10 @@ obj/structure/ex_act(severity)
 	anti_zombie
 		name = "anti-zombie wooden barricade"
 		anti_z = 1
+
 		get_desc()
 			..()
-			. += "Looks like normal spacemen can easily pull themselves over it."
-
+			. += "Looks like normal spacemen can easily pull themselves over or crawl under it."
 	proc/checkhealth()
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><b>[src] collapses!</b></span>")
@@ -360,10 +355,13 @@ obj/structure/ex_act(severity)
 			var/mob/living/carbon/human/H = user
 			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
 				H.set_loc(get_turf(src))
-				H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
-				boutput(H, "<span class='alert'><b>OWW! You bruise yourself slightly!</span>")
-				random_brute_damage(H, 5)
-				src.health -= rand(0,2)
+				if (health > 15)
+					H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
+					boutput(H, "<span class='alert'><b>OWW! You bruise yourself slightly!</span>")
+					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
+					random_brute_damage(H, 5)
+					src.health -= rand(0,2)
+					checkhealth()
 				return
 
 		if (ishuman(user))
@@ -384,6 +382,9 @@ obj/structure/ex_act(severity)
 			return
 
 	attackby(var/obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/plank))
+			actions.start(new /datum/action/bar/icon/plank_repair_wall(W, src, 30), user)
+			return
 		..()
 		user.lastattacked = src
 		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)

@@ -8,11 +8,28 @@
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	var/image/fluid_image
 	p_class = 1.2
+
+	New()
+		. = ..()
+		src.fluid_image = image(src.icon, "fluid", -1)
+
+	update_icon()
+		if (reagents.total_volume)
+			var/datum/color/average = reagents.get_average_color()
+			src.fluid_image.color = average.to_rgba()
+			src.UpdateOverlays(src.fluid_image, "fluid")
+		else
+			src.ClearSpecificOverlays("fluid")
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
 
 /obj/mopbucket/New()
 	..()
-	create_reagents(200)
+	create_reagents(400)
 	START_TRACKING
 
 /obj/mopbucket/disposing()
@@ -52,30 +69,21 @@
 	src.transfer_all_reagents(over_object, usr)
 
 /obj/mopbucket/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!in_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
+	if (!in_interact_range(user, src) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying || user.buckled)
 		return
 
 	if (O == user)
 		//check to see if the user is trying to go through walls, etc.
 		var/turf/T = get_turf(src)
-		var/no_go = 0
-		if (T.density)
-			no_go = T //can''t pass through walls
-		else
-			for (var/obj/thingy in T)
-				if (thingy == src)
-					continue
-				if (thingy.density) //can't pass through dense objects
-					no_go = thingy
+		var/no_go = !T.Enter(user) ? T : null
+		if(isnull(no_go))
+			for(var/atom/A in T)
+				if(A != src && !A.Cross(user))
+					no_go = A
 					break
-		if (no_go)
-			user.visible_message("<span class='alert'><b>[user]</b> scoots around [src], right into [no_go]!</span>",\
-			"<span class='alert'>You scoot around [src], right into [no_go]!</span>")
-			if (!user.hasStatus("weakened"))
-				user.changeStatus("weakened", 4 SECONDS)
-			if (prob(25))
-				user.show_text("You hit your head on [no_go]!", "red")
-				user.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT) //emotional harm. I guess.
+		if(no_go)
+			user.show_text("You bump into \the [no_go] as you try to scoot over \the [src].", "red")
+			user.Bump(no_go)
 			return
 
 		if (iscarbon(O))

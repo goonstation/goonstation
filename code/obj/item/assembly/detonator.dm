@@ -31,7 +31,7 @@
 	throwforce = 2.0
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /obj/item/assembly/detonator/New()
 	..()
@@ -101,7 +101,7 @@
 				src.part_ig = null
 				src.part_mt = null
 				user.u_equip(src)
-				del(src)
+				qdel(src)
 				user.show_message("<span class='notice'>You sever the connection between the multitool and the igniter. The assembly falls apart.</span>")
 			else
 				user.show_message("<span class='alert'>The [W.name] doesn't seem to fit into the slot!</span>")
@@ -171,7 +171,7 @@
 				src.attachments.Cut()
 				user.show_message("<span class='notice'>You disconnect the timer from the assembly, and reenable its external controls.</span>")
 			if (isscrewingtool(W))
-				if (!src.trigger && !src.attachments.len)
+				if (!src.trigger && !length(src.attachments))
 					user.show_message("<span class='alert'>You cannot remove any attachments, as there are none attached.</span>")
 					return
 				var/list/options = list(src.trigger)
@@ -258,7 +258,7 @@
 		src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</span></b>")
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
-		del(src)
+		qdel(src)
 		return
 	src.attachedTo.visible_message("<b><span class='alert'>A sparking noise is heard as the igniter goes off. The plasma tank blows, creating a microexplosion and rupturing the canister.</span></b>")
 	if (MIXTURE_PRESSURE(attachedTo.air_contents) < 7000)
@@ -267,7 +267,7 @@
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
-		del(src)
+		qdel(src)
 		return
 	if (attachedTo.air_contents.temperature < 100000)
 		src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</span></b>")
@@ -275,7 +275,7 @@
 		src.attachedTo.healthcheck()
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null
-		del(src)
+		qdel(src)
 		return
 
 	var/turf/epicenter = get_turf(loc)
@@ -298,6 +298,8 @@
 
 /obj/item/assembly/detonator/proc/failsafe_engage()
 	if (src.part_fs.timing)
+		return
+	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it
 		return
 	src.safety = 0
 	src.part_fs.timing = 1

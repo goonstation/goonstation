@@ -109,7 +109,7 @@
 	New()
 		..()
 		src.toolbox_style = pick(src.toolbox_list)
-		src.update_icon()
+		src.UpdateIcon()
 		if (prob(src.switcharoo))
 			switch (src.toolbox_style)
 				if ("blue")
@@ -130,11 +130,11 @@
 		if (src.alive)
 			switch (task)
 				if ("thinking")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("chasing")
-					src.update_icon()
+					src.UpdateIcon()
 				if ("attacking")
-					src.update_icon()
+					src.UpdateIcon()
 
 	ChaseAttack(mob/M)
 		..()
@@ -143,7 +143,7 @@
 	CritterAttack(mob/M)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.toolbox_style)
 			src.toolbox_style = pick(src.toolbox_list)
 			src.dead_state = "mimic_[src.toolbox_style]1-dead"
@@ -299,7 +299,7 @@
 /obj/critter/spirit
 	name = "spirit"
 	desc = null
-	invisibility = 10
+	invisibility = INVIS_GHOST
 	icon_state = "spirit"
 	health = 10
 	aggressive = 1
@@ -325,11 +325,11 @@
 		if (src.alive)
 			switch(task)
 				if("thinking")
-					src.invisibility = 10
+					src.invisibility = INVIS_GHOST
 				if("chasing")
-					src.invisibility = 0
+					src.invisibility = INVIS_NONE
 				if("attacking")
-					src.invisibility = 0
+					src.invisibility = INVIS_NONE
 
 	seek_target()
 		src.anchored = 0
@@ -377,7 +377,7 @@
 		else
 			..()
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (istype(proj.proj_data, /datum/projectile/energy_bolt_antighost))
@@ -441,6 +441,75 @@
 			M.reagents.add_reagent("toxin", 2)
 			M.add_karma(1)
 
+/obj/critter/spacescorpion
+	name = "space scorpion"
+	desc = "A scorpion in space."
+	icon_state = "spacescorpion"
+	critter_family = BUG
+	density = 1
+	health = 30
+	aggressive = 1
+	defensive = 1
+	wanderer = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+	atkcarbon = 1
+	atksilicon = 1
+	firevuln = 1
+	brutevuln = 1
+	angertext = "snips at"
+	butcherable = 0
+	flags = NOSPLASH | OPENCONTAINER
+	flying = 0
+
+	CritterDeath()
+		..()
+		src.reagents.add_reagent("toxin", 20, null)
+		src.reagents.add_reagent("neurotoxin", 80, null)
+		return
+
+	seek_target()
+		src.anchored = 0
+		for (var/mob/living/C in hearers(src.seekrange,src))
+			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if (iscarbon(C) && !src.atkcarbon) continue
+			if (issilicon(C) && !src.atksilicon) continue
+			if (C.health < 0) continue
+			if (C in src.friends) continue
+			if (iscarbon(C) && src.atkcarbon) src.attack = 1
+			if (issilicon(C) && src.atksilicon) src.attack = 1
+
+			if (src.attack)
+				src.target = C
+				src.oldtarget_name = C.name
+				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
+				src.task = "chasing"
+				break
+			else
+				continue
+
+	ChaseAttack(mob/M)
+		..()
+		if(prob(50))
+			if (M.reagents)
+				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
+				M.reagents.add_reagent("neurotoxin", 15)
+				M.reagents.add_reagent("toxin", 6)
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				M.emote("scream")
+				M.add_karma(1)
+		else
+			random_brute_damage(M, rand(5,10),1)
+			M.visible_message("<span class='combat'><B>[src]</B> tries to grab [src.target] with its pincers!</span>")
+			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+			M.changeStatus("stunned", 2 SECONDS)
+
+	CritterAttack(mob/M)
+		random_brute_damage(M, rand(3,6),1)
+		M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
+		playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+
+
+
 /obj/critter/spacebee/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
@@ -492,7 +561,7 @@
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
 			if (pixel_y_inc > 20) return
-			var/image/I = image('icons/mob/head.dmi', src,  W.icon_state)
+			var/image/I = image('icons/mob/clothing/head.dmi', src,  W.icon_state)
 			I.pixel_y = pixel_y_inc
 			src.overlays += I
 			pixel_y_inc += 3
@@ -679,9 +748,8 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		var/datum/chemical_reaction/smoke/thesmoke = new
-		thesmoke.on_reaction(src.reagents, 12)
-		invisibility = 100
+		src.reagents.smoke_start(12)
+		invisibility = INVIS_ALWAYS_ISH
 		SPAWN_DBG(5 SECONDS)
 			qdel(src)
 
@@ -786,7 +854,7 @@
 			if(iscarbon(M))
 				if(to_deal > (((sword_damage_max-sword_damage_min)/2)+sword_damage_min) && prob(50))
 					src.visible_message("<span class='combat'><B>[src] knocks down [M]!</B></span>")
-					M:changeStatus("weakened", 80)
+					M:changeStatus("weakened", 8 SECONDS)
 			SPAWN_DBG(2.5 SECONDS)
 				src.attacking = 0
 		else
@@ -832,7 +900,7 @@
 	firevuln = 0
 	brutevuln = 0
 	seekrange = 5
-	invisibility = 1
+	invisibility = INVIS_INFRA
 	flying = 1
 	is_pet = FALSE
 
@@ -864,7 +932,7 @@
 		else
 			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1, -1)
 		if(iscarbon(M) && prob(50))
-			if(M.see_invisible < 2)
+			if(M.see_invisible < INVIS_CLOAK)
 				boutput(M, "<span class='combat'><b>You are forced to the ground by an unseen being!</b></span>")
 			else
 				boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
@@ -992,6 +1060,9 @@
 
 			src.attacking = 0
 
+	blob_act(power)
+		return
+
 	attack_hand(var/mob/user as mob)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
@@ -1004,7 +1075,7 @@
 		else
 			if (istype(W, /obj/item/baton))
 				var/obj/item/baton/B = W
-				if (B.can_stun(1, 1, user) == 1)
+				if (B.can_stun(1, user) == 1)
 					user.visible_message("<span class='combat'><b>[user] shocks the [src.name] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, the [src.name] appears damaged!</b></span>")
 					B.process_charges(-1, user)
 					src.health--
@@ -1057,7 +1128,7 @@
 	dead_state = "ancientrobot" // fades away
 	death_text = "%src% fades away."
 	post_pet_text = " For some reason! Not like that's weird or anything!"
-	invisibility = 10
+	invisibility = INVIS_GHOST
 	health = 30
 	firevuln = 0
 	brutevuln = 0.5
@@ -1131,7 +1202,7 @@
 			return
 		src.name = pick("something","weird thing","odd thing","whatchamacallit","thing","something weird","old thing")
 		src.icon_state = "ancientrobot-appear"
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 		SPAWN_DBG(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
 		return
@@ -1396,7 +1467,7 @@
 			return
 
 	proc/contents_check()
-		if(!src.allow_empty && !src.contents.len)
+		if(!src.allow_empty && !length(src.contents))
 			src.visible_message("<span class='notice'><B>[src]</B> realizes that its material essence is missing and vanishes in a puff of logic!</span>")
 			qdel(src)
 
@@ -1404,7 +1475,7 @@
 		contents_check()
 		src.attacking = 1
 		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		playsound(src.loc, "sound/weapons/genhit1.ogg", 50, 1, -1)
+		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
 		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
 		SPAWN_DBG(1 SECOND)
 			src.attacking = 0
@@ -1423,7 +1494,7 @@
 			else
 				src.visible_message("[src] slithers around happily!")
 
-	CanPass(atom/mover, turf/target, height=0, air_group=0)
+	Cross(atom/mover)
 		if (istype(mover, /obj/projectile))
 			return prob(50)
 		else

@@ -316,7 +316,7 @@ Obsidian Crown
 	name = "obsidian crown"
 	desc = "A crown, apparently made of obsidian, and also apparently very bad news."
 	icon_state = "obcrown"
-
+	blocked_from_petasusaphilic = TRUE
 	magical = 1
 	var/processing = 0
 	var/armor_paired = 0
@@ -324,6 +324,7 @@ Obsidian Crown
 
 	equipped(var/mob/user, var/slot)
 		..()
+		logTheThing("combat", user, null, "equipped [src].")
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)
@@ -441,7 +442,7 @@ Obsidian Crown
 		host.delStatus("weakened")
 		host.delStatus("paralysis")
 		host.dizziness = max(0,host.dizziness-10)
-		host.drowsyness = max(0,host.drowsyness-10)
+		host.changeStatus("drowsy", -20 SECONDS)
 		host.sleeping = 0
 
 		health_update_queue |= host

@@ -2262,7 +2262,7 @@
 /area/maintenance/westsolar)
 "aeE" = (
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control";
 	track = 2
@@ -2881,7 +2881,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control";
 	track = 2
@@ -7706,7 +7706,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/chapel/main)
 "aoG" = (
@@ -12519,7 +12519,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/engine/power)
 "ayL" = (
@@ -13032,7 +13032,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/engine/proto)
 "azN" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/engine/proto)
@@ -17383,8 +17383,8 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/paper/book/hydroponicsguide,
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /turf/simulated/floor,
 /area/hydroponics)
 "aHR" = (
@@ -21062,7 +21062,7 @@
 	dir = 5
 	},
 /obj/item/storage/tapebox,
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/white,
 /area/artifact)
 "aOr" = (
@@ -22478,11 +22478,11 @@
 /area/turret_protected/Zeta)
 "aQS" = (
 /obj/table,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 6;
 	pixel_y = 5
 	},
-/obj/item/paper/book/dwainedummies,
+/obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor,
 /area/zeta{
 	name = "Research Sector"
@@ -25399,10 +25399,7 @@
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
 	},
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/black,
 /area/crew_quarters/bar)
 "aWg" = (
@@ -25969,22 +25966,6 @@
 	icon_state = "2-4";
 	d1 = 2;
 	d2 = 4
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/security/detectives_office)
-"aXu" = (
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
 	},
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -27332,13 +27313,10 @@
 /obj/item/kitchen/utensil/fork,
 /obj/item/kitchen/utensil/spoon,
 /obj/item/kitchen/utensil/knife,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/reagent_containers/glass/bottle/icing,
 /obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 8
 	},
@@ -32584,26 +32562,6 @@
 /obj/item/card/id/captains_spare,
 /obj/item/pinpointer,
 /obj/item/hand_tele,
-/turf/simulated/floor/blue,
-/area/crew_quarters/captain)
-"bjq" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/table{
-	contents = newlist();
-	dir = 1;
-	icon_state = "tabledir"
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
 /turf/simulated/floor/blue,
 /area/crew_quarters/captain)
 "bjr" = (
@@ -42684,10 +42642,7 @@
 /obj/table/woodentable{
 	dir = 9
 	},
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/unsimulated/floor/carpet,
 /area/centcom)
 "bGl" = (
@@ -44275,21 +44230,6 @@
 	},
 /turf/simulated/floor,
 /area/wreckage/bridge)
-"bJY" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor,
-/area/wreckage/bridge)
 "bJZ" = (
 /obj/machinery/light,
 /turf/simulated/floor/plating/airless,
@@ -44597,10 +44537,6 @@
 /area/wreckage/bridge)
 "bKG" = (
 /obj/stool/bed,
-/turf/simulated/floor,
-/area/wreckage/bridge)
-"bKH" = (
-/obj/displaycase,
 /turf/simulated/floor,
 /area/wreckage/bridge)
 "bKI" = (
@@ -45670,7 +45606,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/wreckage/bridge)
 "bMD" = (
@@ -50539,7 +50475,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "h7solar";
 	name = "Hemera Solar Control"
 	},
@@ -56273,7 +56209,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -67282,6 +67218,63 @@
 	icon_state = "astedge"
 	},
 /area/space)
+"dzO" = (
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/obj/table{
+	contents = newlist();
+	dir = 1;
+	icon_state = "tabledir"
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor/blue,
+/area/crew_quarters/captain)
+"hgy" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor,
+/area/wreckage/bridge)
+"nDU" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor,
+/area/wreckage/bridge)
+"oRv" = (
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/security/detectives_office)
 
 (1,1,1) = {"
 aaa
@@ -90153,7 +90146,7 @@ biJ
 biV
 bjb
 bji
-bjq
+dzO
 bjz
 bjE
 aaa
@@ -93971,7 +93964,7 @@ aTN
 aUB
 aVz
 aWF
-aXu
+oRv
 aYf
 aYK
 aZy
@@ -206934,7 +206927,7 @@ bJO
 bJV
 bKg
 bKr
-bKH
+nDU
 bJN
 bKi
 bLo
@@ -207612,7 +207605,7 @@ aaa
 aaa
 bJF
 bJN
-bJY
+hgy
 bKi
 bKu
 bKK

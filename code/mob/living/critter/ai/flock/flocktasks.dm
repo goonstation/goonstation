@@ -55,8 +55,8 @@
 		// let's not spam eggs all the time
 		if(isnull(locate(/obj/flock_structure/egg) in F))
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), F, 0, null, /proc/heuristic, 40))
-				. += F
+			. += F
+	. = get_path_to(holder.owner, ., 40, 0)
 
 ////////
 
@@ -121,7 +121,7 @@
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
-		if(istype(reserved) && !isfeathertile(reserved) && cirrAstar(get_turf(holder.owner), reserved, 1, null, /proc/heuristic, 20))
+		if(istype(reserved) && !isfeathertile(reserved) && get_path_to(holder.owner, reserved, 20, 1))
 			. += reserved
 			return
 		// if there's a priority tile we can go for, do it
@@ -129,8 +129,7 @@
 		if(length(priority_turfs))
 			for(var/turf/simulated/PT in priority_turfs)
 				// if we can get a valid path to the target, include it for consideration
-				if(cirrAstar(get_turf(holder.owner), PT, 1, null, /proc/heuristic, 80))
-					. += PT
+				. += PT
 
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
@@ -139,8 +138,8 @@
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue // this tile's been claimed by someone else
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), T, 1, null, /proc/heuristic, 40))
-				. += T
+			. += T
+	. = get_path_to(holder.owner, ., 60, 1)
 
 ////////
 
@@ -199,7 +198,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HELP
+		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -210,8 +209,8 @@
 			continue
 		if(F.get_health_percentage() < 0.66 && !isdead(F))//yeesh dont try to repair something which is dead
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
-				. += F
+			. += F
+	. = get_path_to(holder.owner, ., 40, 1)
 
 ////////
 
@@ -265,7 +264,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HELP
+		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -275,8 +274,8 @@
 	for(var/obj/flock_structure/ghost/S in view(max_dist, F))
 		if(S.flock == F.flock && S.goal > S.currentmats)
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(F), get_turf(S), 1, null, /proc/heuristic, 40))
-				. += S
+			. += S
+	. = get_path_to(holder.owner, ., 40, 1)
 
 ////////
 
@@ -331,8 +330,8 @@
 	for(var/obj/storage/S in view(max_dist, holder.owner))
 		if(!S.open && !S.welded && !S.locked)
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(S), 1, null, /proc/heuristic, 10))
-				. += S
+			. += S
+	. = get_path_to(holder.owner, ., 10, 1)
 
 ////////
 
@@ -385,10 +384,10 @@
 /datum/aiTask/sequence/goalbased/rummage/get_targets()
 	. = list()
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(I.contents.len > 0 && I.loc != holder.owner && I.does_not_open_in_pocket)
+		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 10))
-				. += I
+			. += I
+	. = get_path_to(holder.owner, ., 10, 1)
 
 ////////
 
@@ -426,7 +425,7 @@
 				return
 			else
 				// we've opened a HUD, do a fake HUD click, because i am dedicated to this whole puppetry schtick
-				container_target.hud.clicked("boxes", F, dummy_params)
+				container_target.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					// we got an item from the thing, THROW IT
 					// we can't actually fake a throw command because we don't have a client (no, so do a bit more trickery to simulate it)
@@ -486,8 +485,8 @@
 				if(P.amount <= 0)
 					continue // do not try to fetch paper out of an empty paper bin forever
 			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(I), 1, null, /proc/heuristic, 40))
-				. += I
+			. += I
+	. = get_path_to(holder.owner, ., 40, 1)
 
 ////////
 
@@ -629,7 +628,7 @@
 		else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
 			if(owncritter.active_hand != 2) // nanite spray
 				owncritter.set_hand(2)
-				owncritter.a_intent = INTENT_DISARM
+				owncritter.set_a_intent(INTENT_DISARM)
 				owncritter.hud.update_intent()
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target)
@@ -643,9 +642,8 @@
 				// mob is a valid target, check if they're not already in a cage
 				if(!istype(M.loc.type, /obj/icecube/flockdrone))
 					// if we can get a valid path to the target, include it for consideration
-					if(cirrAstar(get_turf(holder.owner), get_turf(M), 1, null, /proc/heuristic, 40))
-						// GO AND IMPRISON THEM
-						. += M
+					. += M
+	. = get_path_to(holder.owner, ., 40, 1)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -665,7 +663,7 @@
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
-		F.a_intent = INTENT_HARM
+		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
@@ -675,9 +673,8 @@
 		if(F == holder.owner)
 			continue
 		if(isdead(F))
-			// if we can get a valid path to the target, include it for consideration
-			if(cirrAstar(get_turf(holder.owner), get_turf(F), 1, null, /proc/heuristic, 40))
-				. += F
+			. += F
+	. = get_path_to(holder.owner, ., 40, 1)
 
 ////////
 

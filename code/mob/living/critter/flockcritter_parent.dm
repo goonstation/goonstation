@@ -6,7 +6,7 @@
 	density = 0
 	say_language = "feather"
 	voice_name = "synthetic chirps"
-	see_invisible = 9
+	see_invisible = INVIS_FLOCKMIND
 	speechverb_say = "chirps"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "inquires"
@@ -35,8 +35,8 @@
 	can_lie = 0 // no rotate when dead
 
 /mob/living/critter/flock/setup_healths()
-	add_hh_robot(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-	add_hh_robot_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+	add_hh_robot(src.health_brute, src.health_brute_vuln)
+	add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
@@ -86,12 +86,9 @@
 		return
 	if (dd_hasprefix(message, "*"))
 		return
-	else if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		message = copytext(message, 2)
+
+	var/prefixAndMessage = separate_radio_prefix_and_message(message)
+	message = prefixAndMessage[2]
 
 	if(!src.is_npc)
 		message = gradientText("#3cb5a3", "#124e43", message)
@@ -111,18 +108,18 @@
 
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
-		playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
+		playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = 1
 		SPAWN_DBG(5 SECONDS)
 			var/obj/fire_foam/F = (locate(/obj/fire_foam) in src.loc)
 			if (!F)
-				F = unpool(/obj/fire_foam)
+				F = new /obj/fire_foam
 				F.set_loc(src.loc)
 				SPAWN_DBG(10 SECONDS)
 					if (F && !F.disposed)
-						pool(F)
-			playsound(get_turf(src), "sound/effects/spray.ogg", 50, 1, -3)
+						qdel(F)
+			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
 			src.extinguishing = 0
@@ -165,7 +162,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || isfeathertile(target) || !F?.can_afford(20))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -178,9 +175,9 @@
 			// do effect
 			var/flick_anim = "spawn-floor"
 			if(istype(target, /turf/simulated/floor) || istype(target, /turf/space))
-				src.decal = unpool(/obj/decal/flock_build_floor)
+				src.decal = new /obj/decal/flock_build_floor
 			if(istype(target, /turf/simulated/wall))
-				src.decal = unpool(/obj/decal/flock_build_wall)
+				src.decal = new /obj/decal/flock_build_wall
 				flick_anim = "spawn-wall"
 			if(src.decal)
 				src.decal.set_loc(target)
@@ -196,7 +193,7 @@
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			if(src.decal)
-				pool(src.decal)
+				qdel(src.decal)
 			if(F.flock)
 				F.flock.unreserveTurf(target, F.real_name)
 
@@ -205,7 +202,7 @@
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			if(src.decal)
-				pool(src.decal)
+				qdel(src.decal)
 			if(F.flock)
 				F.flock.convert_turf(target, F.real_name)
 			else
@@ -239,7 +236,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F?.can_afford(src.cost) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -254,7 +251,7 @@
 
 			// do effect
 			var/flick_anim = "spawn-wall"
-			src.decal = unpool(/obj/decal/flock_build_wall)
+			src.decal = new /obj/decal/flock_build_wall
 			if(src.decal)
 				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
@@ -262,12 +259,12 @@
 	onInterrupt(var/flag)
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 
 	onEnd()
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 		var/mob/living/critter/flock/drone/F = owner
 		if(F)
 			F.pay_resources(cost)
@@ -298,7 +295,7 @@
 			return
 		if(F && prob(40))
 			animate_shake(F)
-			playsound(get_turf(F), pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1)
+			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1)
 
 	onStart()
 		..()
@@ -313,7 +310,7 @@
 			F.canmove = 1
 			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)
-			playsound(get_turf(F), "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
+			playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1)
 			F.pay_resources(100)
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -337,7 +334,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(10))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F.can_afford(10))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -404,7 +401,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (target == null || owner == null || !in_range(owner, target, 1) || !F.can_afford(15))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1) || !F.can_afford(15))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -419,27 +416,27 @@
 					"You hear strange building noises.")
 				target.was_harmed(F, null, "flock", INTENT_DISARM)
 				// do effect
-				src.decal = unpool(/obj/decal/flock_build_wall)
+				src.decal = new /obj/decal/flock_build_wall
 				if(src.decal)
 					src.decal.set_loc(target)
 					flick("spawn-wall", src.decal)
-				playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
+				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
 
 	onInterrupt()
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 
 	onEnd()
 		..()
 		if(src.decal)
-			pool(src.decal)
+			qdel(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F && target && in_range(owner, target))
+		if(F && target && in_interact_range(owner, target))
 			var/obj/icecube/flockdrone/cage = new /obj/icecube/flockdrone(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			F.pay_resources(15)
-			playsound(get_turf(target), "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
+			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
 ///
 //decon action
@@ -460,7 +457,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_range(owner, target, 1))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -478,7 +475,7 @@
 				var/turf/T = get_turf(target)
 				var/obj/storage/closet/flock/c = target
 				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-				var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+				var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 				S.set_loc(T)
 				S.setMaterial(getMaterial("gnesisglass"))
 				c.dump_contents()
@@ -490,17 +487,17 @@
 			if(/obj/machinery/door/feather)
 				var/turf/T = get_turf(target)
 				playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
-				var/obj/item/raw_material/shard/S = unpool(/obj/item/raw_material/shard)
+				var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 				S.set_loc(T)
 				S.setMaterial(getMaterial("gnesisglass"))
-				S = unpool(/obj/item/raw_material/shard)
+				S = new /obj/item/raw_material/shard
 				S.set_loc(T)
 				S.setMaterial(getMaterial("gnesis"))
 				qdel(target)
 				target = null
 			if(/obj/table/flock, /obj/table/flock/auto)
 				var/obj/table/flock/f = target
-				playsound(get_turf(f), "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(f, "sound/items/Deconstruct.ogg", 50, 1)
 				f.deconstruct()
 //
 //deposit action
@@ -520,7 +517,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_range(owner, target, 1))
+		if (target == null || owner == null || !in_interact_range(owner, target, 1))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -537,3 +534,5 @@
 		amounttopay = min(F.resources, difference, 10)
 		F.pay_resources(amounttopay)
 		target.currentmats += amounttopay
+		if(F.resources && !F.is_npc) //npc check just to make sure it doesnt interfere with their ai.
+			src.onRestart() //restart the action akin to automenders

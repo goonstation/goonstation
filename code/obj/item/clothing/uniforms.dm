@@ -4,9 +4,7 @@
 	name = "jumpsuit"
 	desc = "A serviceable and comfortable jumpsuit used by nearly everyone on the station."
 	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js.dmi'
-	var/image/wear_image_fat = null
-	var/image/wear_image_fat_icon = 'icons/mob/jumpsuits/worn_js_fat.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "black"
 	item_state = "black"
@@ -19,6 +17,7 @@
 	burn_output = 800
 	burn_possible = 1
 	health = 50
+	var/team_num
 
 	duration_remove = 6.5 SECONDS
 
@@ -27,42 +26,6 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
-
-/obj/item/clothing/under/New()
-	wear_image_fat = image(wear_image_fat_icon)
-	wear_image_fat.icon_state = icon_state
-	..()
-
-// Experimental composite jumpsuit
-
-/obj/item/clothing/under/experimental
-	name = "experimental hi-tech jumpsuit"
-	desc = "The very height of fabric technology."
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_experiment.dmi'
-	icon_state = "white"
-	item_state = "white"
-	var/list/component_images = list("jacket","sleeves","pants", "stripe_sides", "zipper")
-	var/list/component_colors = list("#FFFFFF","#FFFFFF","#FFFFFF", "#FFFFFF","#666666")
-	var/list/component_alphas = list(255,255,255,255,255)
-	var/list/images = list()
-
-	New()
-		..()
-		update_images()
-
-	proc/update_images()
-		var/list_counter = 0
-		src.images = list()
-
-		for (var/C as() in src.component_images)
-			list_counter++
-			var/image/suit_image = image(icon = src.wear_image_icon, icon_state = C, layer = MOB_CLOTHING_LAYER)
-			suit_image.icon_state = C
-			suit_image.alpha = src.component_alphas[list_counter]
-			suit_image.color = src.component_colors[list_counter]
-			src.images += suit_image
-
-		src.color = src.component_colors[1]
 
 
 /obj/item/clothing/under/crafted
@@ -181,15 +144,20 @@
 		name = "pink jumpsuit"
 		icon_state = "pink"
 		item_state = "pink"
+
+	unremovable
+		cant_self_remove = 1
+		cant_other_remove = 1
 //PRIDE
 /obj/item/clothing/under/pride
-	name = "pride jumpsuit"
+	name = "LGBT pride jumpsuit"
 	desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the LGBT flag."
 	icon = 'icons/obj/clothing/uniforms/item_js_pride.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_pride.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_pride.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
+	burn_possible = 0
 
 	ace
 		name = "ace pride jumpsuit"
@@ -235,7 +203,7 @@
 
 	poly
 		name = "poly pride jumpsuit"
-		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag."
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the polysexual pride flag. Previously mistaken for polyamorous in uniform fabricators - the responsible employee was promptly terminated under all applicable versions of Space Law."
 		icon_state ="poly"
 		item_state = "poly"
 
@@ -266,7 +234,7 @@
 	name = "staff assistant's jumpsuit"
 	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
 	icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_rank.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
 	icon_state = "assistant"
 	item_state = "assistant"
@@ -319,9 +287,8 @@
 
 	dress
 		icon_state = "hop-dress"
-		item_state = "hop-dress"
 
-/obj/item/clothing/under/rank/head_of_securityold
+/obj/item/clothing/under/rank/head_of_security
 	name = "head of security's uniform"
 	desc = "It's bright red and rather crisp, much like security's victims tend to be."
 	icon_state = "hos"
@@ -343,7 +310,7 @@
 		icon_state = "hos-fancy-alt"
 		item_state = "hos-fancy-alt"
 
-/obj/item/clothing/under/misc/head_of_security
+/obj/item/clothing/under/misc/dirty_vest //HoS uniform from the Elite Security era
 	name = "dirty vest"
 	desc = "This outfit has seen better days."
 	icon_state = "vest"
@@ -418,6 +385,12 @@
 	icon_state = "security"
 	item_state = "security"
 
+	assistant
+		name = "security assistant uniform"
+		desc = "Wait, is that velcro?"
+		icon_state = "security-assistant"
+		item_state = "security-assistant"
+
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
@@ -443,7 +416,7 @@
 
 /obj/item/clothing/under/rank/roboticist
 	name = "roboticist's jumpsuit"
-	desc = "Red and black really helps highlight the cranial fluid stains."
+	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
 	permeability_coefficient = 0.50
@@ -473,6 +446,17 @@
 	april_fools
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
+
+/obj/item/clothing/under/rank/pathologist
+	name = "pathologist's jumpsuit"
+	desc = "Scientifically proven to block up to 99% of pathogens."
+	icon_state = "pathology"
+	item_state = "pathology"
+	permeability_coefficient = 0.50
+
+	april_fools
+		icon_state = "medical-alt"
+		item_state = "medical-alt"
 
 // Engineering
 
@@ -519,7 +503,7 @@
 /obj/item/clothing/under/rank/orangeoveralls
 	name = "construction worker's overalls"
 	desc = "Durable overalls for the hard worker who likes to build things."
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	icon = 'icons/obj/clothing/uniforms/item_js.dmi'
 	icon_state = "overalls_orange"
 	item_state = "overalls_orange"
@@ -583,7 +567,7 @@
 	name = "prisoner's jumpsuit"
 	desc = "Busted."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 	icon_state = "prisoner"
 	item_state = "prisoner"
@@ -594,6 +578,10 @@
 	icon_state = "clown"
 	item_state = "clown"
 
+	New()
+		..()
+		AddComponent(/datum/component/clown_disbelief_item)
+
 	fancy
 		icon_state = "clown-fancy"
 		item_state = "clown-fancy"
@@ -602,6 +590,22 @@
 		name = "clown dress"
 		icon_state = "clown-dress"
 		item_state = "clown-dress"
+
+/obj/item/clothing/under/misc/mimefancy
+	name = "fancy mime suit"
+	desc = "A suit perfect for more sophisticated mimes. Wait... This isn't just a bleached clown suit, is it?"
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+	icon_state = "mime-fancy"
+	item_state = "mime-fancy"
+
+/obj/item/clothing/under/misc/mimedress
+	name = "mime dress"
+	desc = "You may be trapped in an invisible box forever and ever, but at least you look stylish!"
+	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+	icon_state = "mime-dress"
+	item_state = "mime-dress"
 
 /obj/item/clothing/under/misc/vice
 	name = "vice officer's suit"
@@ -624,8 +628,8 @@
 /obj/item/clothing/under/misc/hydroponics
 	name = "senior botanist's jumpsuit"
 	desc = "Anyone wearing this has probably grown a LOT of weed in their time."
-	icon_state = "hydro"
-	item_state = "hydro"
+	icon_state = "hydro-senior"
+	item_state = "hydro-senior"
 
 /obj/item/clothing/under/misc/mail
 	name = "mailman's jumpsuit"
@@ -678,22 +682,49 @@
 		item_state = "lawyerR"
 
 /obj/item/clothing/under/misc/lawyer/red/demonic
+	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
 		..()
-		setProperty("rangedprot", 1)
-		setProperty("meleeprot", 6)
+		setProperty("coldprot", 40) //slightly worse than a spacesuit
+		setProperty("heatprot", 40) //slightly worse than a firesuit
+		setProperty("rangedprot", 1.5) //buffed from 1, felt needed, tune up or down as needed
+		setProperty("meleeprot", 7) //buffed from 6, felt needed, tune up or down as needed
 
 /obj/item/clothing/under/misc/syndicate
 	name = "tactical turtleneck"
 	desc = "Non-descript, slightly suspicious civilian clothing."
 	icon_state = "syndicate"
 	item_state = "syndicate"
+	team_num = TEAM_SYNDICATE
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/turds
 	name = "NT-SO Jumpsuit"
 	desc = "A Nanotrasen Special Operations jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
+	team_num = TEAM_NANOTRASEN
+	#ifdef MAP_OVERRIDE_POD_WARS
+	attack_hand(mob/user)
+		if (get_pod_wars_team_num(user) == team_num)
+			..()
+		else
+			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			make_fake_explosion(src)
+			user.u_equip(src)
+			src.dropped(user)
+			qdel(src)
+	#endif
 
 /obj/item/clothing/under/misc/NT
 	name = "nanotrasen jumpsuit"
@@ -749,7 +780,7 @@
 	name = "athletic shorts"
 	desc = "95% Polyester, 5% Spandex!"
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "shortsGy"
 	item_state = "shortsGy"
@@ -808,7 +839,7 @@
 	name = "white basketball jersey"
 	desc = "An all-white jersey. Be careful not to stain it!"
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "jerseyW"
 	item_state = "jerseyW"
@@ -828,8 +859,8 @@
 	blue
 		name = "blue basketball jersey"
 		desc = "A jersey with the Mississippi Singularities away colors."
-		icon_state = "jerseyB"
-		item_state = "jerseyB"
+		icon_state = "jerseyBl"
+		item_state = "jerseyBl"
 
 	purple
 		name = "purple basketball jersey"
@@ -860,7 +891,7 @@
 	name = "white swimsuit"
 	desc = "This piece of clothing is good for when you want to be in the water, but not wearing your normal clothes, but also not naked."
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "fswimW"
 	item_state = "fswimW"
@@ -895,7 +926,7 @@
 	name = "referee uniform"
 	desc = "For when yelling at athletes is your job, not just your hobby."
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "referee"
 	item_state = "referee"
@@ -904,7 +935,7 @@
 	name = "shirt and pants"
 	desc = "A button-down shirt and some pants."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	icon_state = "shirt_n_pant-b"
 	item_state = "shirt_n_pant-b"
 
@@ -918,7 +949,7 @@
 	name = "shirt and black pants"
 	desc = "A button-down shirt and some black pants."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	icon_state = "shirt_n_pant-b"
 	item_state = "shirt_n_pant-b"
 
@@ -945,7 +976,7 @@
 	name = "shirt and brown pants"
 	desc = "A button-down shirt and some brown pants."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	icon_state = "shirt_n_pant-br"
 	item_state = "shirt_n_pant-br"
 
@@ -972,7 +1003,7 @@
 	name = "shirt and white pants"
 	desc = "A button-down shirt and some white pants."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	icon_state = "shirt_n_pant-w"
 	item_state = "shirt_n_pant-w"
 
@@ -1062,7 +1093,6 @@
 
 	dress
 		icon_state = "suitT-dress"
-		item_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
@@ -1080,7 +1110,7 @@
 	name = "medical scrubs"
 	desc = "A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "scrub-w"
 	item_state = "white"
@@ -1094,17 +1124,12 @@
 		item_state = "darkred"
 
 	blue
-		icon_state = "scrub-b"
+		icon_state = "scrub-n"
 		item_state = "darkblue"
 
 	purple
-		icon_state = "scrub-p"
+		icon_state = "scrub-v"
 		item_state = "lightpurple"
-
-		New()
-			..()
-			if(prob(50))
-				src.icon_state = "scrub-pr"
 
 	orange
 		icon_state = "scrub-o"
@@ -1124,7 +1149,7 @@
 	name = "gown"
 	desc = "A light cloth gown that ties in the back, given to medical patients when undergoing examinations or medical operations."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
 	icon_state = "patient"
 	item_state = "lightblue"
@@ -1135,13 +1160,13 @@
 	name = "towel"
 	desc = "Made of nice, soft terrycloth. Very important when adventuring."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "towel"
 	item_state = "towel"
 	layer = MOB_LAYER
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
 	body_parts_covered = TORSO
@@ -1184,7 +1209,7 @@
 					return
 				else
 					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = unpool(/obj/item/material_piece/cloth/cottonfabric)
+						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
 						CF.set_loc(get_turf(src))
 					boutput(user, "You rip up [src].")
 					user.u_equip(src)
@@ -1233,10 +1258,10 @@
 			T.wet = 0
 			dried ++
 		for (var/obj/decal/cleanable/water/W in T)
-			pool(W)
+			qdel(W)
 			dried ++
 		for (var/obj/decal/cleanable/urine/U in T) // ew
-			pool(U)
+			qdel(U)
 			dried ++
 		return dried
 
@@ -1246,7 +1271,7 @@
 	name = "sailor uniform"
 	desc = "What's with these guys?! It's like one of my Japanese animes!"
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 	icon_state = "sailor"
 	item_state = "sailor"
@@ -1276,13 +1301,13 @@
 	icon_state = "princess"
 	item_state = "princess"
 
-/obj/item/clothing/under/gimmick/cosby
-	name = "cosby sweater"
-	desc = "Symbol of a legendary 80's sitcom dad."
-	icon_state = "cosby1"
-	item_state = "cosby1"
+/obj/item/clothing/under/gimmick/sweater
+	name = "comfy sweater"
+	desc = "A colourful and cozy jumper."
+	icon_state = "sweater1"
+	item_state = "sweater1"
 	New()
-		icon_state = "cosby[pick(1,2,3)]"
+		icon_state = "sweater[pick(1,2,3)]"
 		..()
 
 /obj/item/clothing/under/gimmick/chaps
@@ -1395,8 +1420,6 @@
     desc = "Woah, these guys stopped touring in '37. Vintage!"
     icon_state = "bandshirt"
     item_state = "bandshirt"
-    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 /obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user as mob)
 	if  ( ..() && !disturbed )
@@ -1409,19 +1432,282 @@
     desc = "I'm a political prisoner from Space Cuba and I want my fucking human rights now!"
     icon_state = "colmob"
     item_state = "colmob"
-    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 /obj/item/clothing/under/misc/rusmob
     name = "soviet mobster suit"
     desc = "She Swallows Burning Coals."
     icon_state = "rusmob"
     item_state = "rusmob"
-    icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
-    wear_image_icon = 'icons/mob/jumpsuits/worn_js_misc.dmi'
 
 /obj/item/clothing/under/gimmick/jester
     name = "jester's outfit"
     desc = "Outfit of a not-so-funny-clown."
     icon_state = "jester"
     item_state = "jester"
+
+/obj/item/clothing/under/misc/spade
+    name = "spade jumpsuit"
+    desc = "A suit suit. This suit's suit is a spade."
+    icon_state = "spade"
+    item_state = "spade"
+
+/obj/item/clothing/under/misc/club
+    name = "club jumpsuit"
+    desc = "A suit suit. This suit's suit is a club."
+    icon_state = "club"
+    item_state = "club"
+
+/obj/item/clothing/under/misc/heart
+    name = "heart jumpsuit"
+    desc = "A suit suit. This suit's suit is a heart. D'aww."
+    icon_state = "heart"
+    item_state = "heart"
+
+/obj/item/clothing/under/misc/diamond
+    name = "diamond jumpsuit"
+    desc = "A suit suit. This suit's suit is a diamond."
+    icon_state = "diamond"
+    item_state = "diamond"
+
+/obj/item/clothing/under/misc/tech_shirt
+    name = "tech shirt"
+    desc = "A shirt with a fancy, vaguely sci-fi pattern on it."
+    icon_state = "tech_shirt"
+    item_state = "tech_shirt"
+
+/obj/item/clothing/under/misc/flannel
+    name = "flannel shirt"
+    desc = "Perfect for chopping wood or drinking coffee."
+    icon_state = "flannel"
+    item_state = "flannel"
+
+/obj/item/clothing/under/misc/fish
+    name = "fish shirt"
+    desc = "It reads, 'Fish'."
+    icon_state = "fish"
+    item_state = "fish"
+
+/obj/item/clothing/under/misc/collar_pink
+    name = "pink collar shirt"
+    desc = "A plain pink collared shirt."
+    icon_state = "pink_collar"
+    item_state = "pink_collar"
+
+/obj/item/clothing/under/misc/fancy_vest
+    name = "fancy vest"
+    desc = "It's even got a real flower!"
+    icon_state = "fancy_vest"
+    item_state = "fancy_vest"
+
+/obj/item/clothing/under/misc/flame_purple
+    name = "purple flame shirt"
+    desc = "Basic fire colors are so passé."
+    icon_state = "flame_purple"
+    item_state = "flame_purple"
+
+/obj/item/clothing/under/misc/flame_rainbow
+    name = "rainbow flame shirt"
+    desc = "Monochromatic fire colors are so démodé."
+    icon_state = "flame_rainbow"
+    item_state = "flame_rainbow"
+
+/obj/item/clothing/under/misc/bubble
+    name = "bubble shirt"
+    desc = "Soothing bubbles for a calm shirt."
+    icon_state = "bubble"
+    item_state = "bubble"
+
+/obj/item/clothing/under/misc/tricolor
+    name = "Tricolor Jumpsuit"
+    desc = "A jumpsuit that shows your serious about pizza."
+    icon_state = "tricolor"
+    item_state = "tricolor"
+
+// WALPVRGIS fashion
+
+/obj/item/clothing/under/misc/casdressblk
+    name = "Black Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection. This one's for the goths."
+    icon_state = "casdress_black"
+    item_state = "casdress_black"
+
+/obj/item/clothing/under/misc/casdressblu
+    name = "Blue Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection. Like the sky on Earth used to look like!"
+    icon_state = "casdress_blue"
+    item_state = "casdress_blue"
+
+/obj/item/clothing/under/misc/casdressgrn
+    name = "Green Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection. Reminds you of summer."
+    icon_state = "casdress_green"
+    item_state = "casdress_green"
+
+/obj/item/clothing/under/misc/casdresspnk
+    name = "Pink Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection. So neon, it almost hurts to look at."
+    icon_state = "casdress_pink"
+    item_state = "casdress_pink"
+
+/obj/item/clothing/under/misc/casdresswht
+    name = "White Tshirt Dress"
+    desc = "From the Spring/Summer 2053 collection. A blank slate, or a minimal look."
+    icon_state = "casdress_white"
+    item_state = "casdress_white"
+
+/obj/item/clothing/under/misc/casdressbolty
+    name = "Bolt Tshirt Dress"
+    desc = "Positively electric."
+    icon_state = "casdress_bolty"
+    item_state = "casdress_bolty"
+
+/obj/item/clothing/under/misc/casdressboltp
+    name = "Purple Bolt Tshirt Dress"
+    desc = "Striking, just like lightning."
+    icon_state = "casdress_boltp"
+    item_state = "casdress_boltp"
+
+/obj/item/clothing/under/misc/casdressleoy
+    name = "Leopard Tshirt Dress"
+    desc = "Leopard print is always in."
+    icon_state = "casdress_leoy"
+    item_state = "casdress_leoy"
+
+/obj/item/clothing/under/misc/casdressleop
+    name = "Pink Leopard Tshirt Dress"
+    desc = "Pink leopard print is DEFINITELY always in."
+    icon_state = "casdress_leop"
+    item_state = "casdress_leop"
+
+/obj/item/clothing/under/misc/sktdress_red
+    name = "Red and Black Skirt Dress"
+    desc = "Goes perfectly with your clipboard and radio headset!"
+    icon_state = "sktdress_red"
+    item_state = "sktdress_red"
+
+/obj/item/clothing/under/misc/sktdress_purple
+    name = "Purple and Black Skirt Dress"
+    desc = "Goes perfectly with your clipboard and radio headset!"
+    icon_state = "sktdress_purple"
+    item_state = "sktdress_purple"
+
+/obj/item/clothing/under/misc/sktdress_blue
+    name = "Blue and Black Skirt Dress"
+    desc = "Goes perfectly with your clipboard and radio headset!"
+    icon_state = "sktdress_blue"
+    item_state = "sktdress_blue"
+
+/obj/item/clothing/under/misc/sktdress_gold
+    name = "Gold and Black Skirt Dress"
+    desc = "Goes perfectly with your clipboard and radio headset!"
+    icon_state = "sktdress_gold"
+    item_state = "sktdress_gold"
+
+/obj/item/clothing/under/misc/sfjumpsuitbp
+    name = "Black and Purple Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate hacker."
+    icon_state = "scifi_jump_pb"
+    item_state = "scifi_jump_pb"
+
+/obj/item/clothing/under/misc/sfjumpsuitrb
+    name = "Black and Red Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate hacker."
+    icon_state = "scifi_jump_rb"
+    item_state = "scifi_jump_rb"
+
+/obj/item/clothing/under/misc/sfjumpsuitpnk
+    name = "Pink and Blue Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate hacker."
+    icon_state = "scifi_jump_pnk"
+    item_state = "scifi_jump_pnk"
+
+/obj/item/clothing/under/misc/sfjumpsuitbee
+    name = "Bee Sci-Fi Jumpsuit"
+    desc = "Wear this to immediately become the ultimate bee hacker."
+    icon_state = "scifi_jump_yb"
+    item_state = "scifi_jump_yb"
+
+/obj/item/clothing/under/misc/casualjeanswb
+    name = "White Shirt and Jeans"
+    desc = "Look at those knee tears! You're too cool for school!"
+    icon_state = "casual_jeans_wb"
+    item_state = "casual_jeans_wb"
+
+/obj/item/clothing/under/misc/casualjeansskr
+    name = "Red Skull Shirt and Jeans"
+    desc = "You're not evil, just misunderstood."
+    icon_state = "casual_jeans_skullr"
+    item_state = "casual_jeans_skullr"
+
+/obj/item/clothing/under/misc/casualjeansskb
+    name = "Black Skull Shirt and Jeans"
+    desc = "You're not evil, just misunderstood."
+    icon_state = "casual_jeans_skullb"
+    item_state = "casual_jeans_skullb"
+
+/obj/item/clothing/under/misc/casualjeansyel
+    name = "Yellow Shirt and Jeans"
+    desc = "For when you want to be both a ray of sunshine, and also grunge."
+    icon_state = "casual_jeans_yshirt"
+    item_state = "casual_jeans_yshirt"
+
+/obj/item/clothing/under/misc/casualjeansacid
+    name = "Skull Shirt and Acid Wash Jeans"
+    desc = "It's 1993 and you're dressed to start your new grunge garage band."
+    icon_state = "casual_jeans_skullbshort"
+    item_state = "casual_jeans_skullbshort"
+
+/obj/item/clothing/under/misc/casualjeansgrey
+    name = "Grey Shirt and Jeans"
+    desc = "Blend into the crowd while still looking cool."
+    icon_state = "casual_jeans_grey"
+    item_state = "casual_jeans_grey"
+
+/obj/item/clothing/under/misc/casualjeanspurp
+    name = "Purple Shirt and White Jeans"
+    desc = "A E S T H E T I C."
+    icon_state = "casual_jeans_purp"
+    item_state = "casual_jeans_purp"
+
+/obj/item/clothing/under/misc/casualjeansblue
+    name = "Blue Shirt and Jeans"
+    desc = "You patched up the tears in this pair of jeans because your knees got cold."
+    icon_state = "casual_jeans_blue"
+    item_state = "casual_jeans_blue"
+
+/obj/item/clothing/under/misc/casualjeanskhaki
+    name = "Khaki Shirt and Jeans"
+    desc = "Perfect for adventuring."
+    icon_state = "casual_jeans_khaki"
+    item_state = "casual_jeans_khaki"
+
+/obj/item/clothing/under/misc/racingsuitbee
+    name = "Bee Racing Jumpsuit"
+    desc = "Sting like a bee... Fly like a bee..."
+    icon_state = "racing_jump_yb"
+    item_state = "racing_jump_yb"
+
+/obj/item/clothing/under/misc/racingsuitpnk
+    name = "Pink and Blue Racing Jumpsuit"
+    desc = "Just because you're inside a MiniPutt, doesn't mean you can't still be fashionable."
+    icon_state = "racing_jump_pnk"
+    item_state = "racing_jump_pnk"
+
+/obj/item/clothing/under/misc/racingsuitrbw
+    name = "Blue and White Racing Jumpsuit"
+    desc = "You feel like you should wear this while piloting a robot, instead."
+    icon_state = "racing_jump_rbw"
+    item_state = "racing_jump_rbw"
+
+/obj/item/clothing/under/misc/racingsuitprp
+    name = "Purple and Black Racing Jumpsuit"
+    desc = "Mysterious, just like you."
+    icon_state = "racing_jump_prp"
+    item_state = "racing_jump_prp"
+
+//Western Jumpsuit
+/obj/item/clothing/under/misc/western
+    name = "Western Shirt and Pants"
+    desc = "Now comes with a matching belt buckle and leather straps!"
+    icon_state = "western"
+    item_state = "western"

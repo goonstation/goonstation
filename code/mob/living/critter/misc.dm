@@ -15,8 +15,8 @@
 	add_abilities = list(/datum/targetable/critter/envelope)
 
 	setup_healths()
-		add_hh_flesh(-8, 8, 0.25)
-		add_hh_flesh_burn(-8, 8, 0.01)
+		add_hh_flesh(8, 0.25)
+		add_hh_flesh_burn(8, 0.01)
 
 	death(var/gibbed)
 		..(0) // go through the normal death stuff but don't gib them
@@ -24,7 +24,7 @@
 		src.transforming = 1
 		src.canmove = 0
 		src.icon = null
-		src.invisibility = 101
+		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 		if (src.mind || src.client)
 			src.ghostize()
@@ -53,7 +53,7 @@
 		else
 			if (istype(W, /obj/item/baton))
 				var/obj/item/baton/B = W
-				if (B.can_stun(1, 1, user) == 1)
+				if (B.can_stun(1, user) == 1)
 					user.visible_message("<span class='combat'><b>[user] shocks [src] with [B]!</b></span>", "<span class='combat'><b>While your baton passes through, [src] appears damaged!</b></span>")
 					B.process_charges(-1, user)
 

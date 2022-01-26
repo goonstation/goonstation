@@ -19,7 +19,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	density = 0
 	anchored = 0
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	mats = 4
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
@@ -153,10 +153,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 				if (machinery_loc == home_loc)
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
+					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
 				else
 					P.set_loc(home_loc) // Send back to home location.
-					user.show_text("[src.machinery_name] send to home turf.", "blue")
+					flick("[P.icon_state]-tele", P)
+					user.show_text("[src.machinery_name] sent to home turf.", "blue")
 
 				if (hasvar(P, "occupant"))
 					if (istype(P, /obj/machinery/port_a_brig/))
@@ -180,6 +182,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 /obj/item/remote/porter/port_a_brig
 	name = "Port-A-Brig Remote"
+	icon_state = "pbrig"
 	desc = "A remote that summons a Port-A-Brig."
 	machinery_name = "Port-a-Brig"
 
@@ -223,6 +226,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
+	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
 
 	get_machinery()
 		if (!src)
@@ -378,16 +382,27 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return 0
 
 	relaymove(mob/user as mob)
-		if(!usr || !isalive(usr) || usr.getStatusDuration("stunned") != 0)
+		if(!user || !isalive(user) || user.getStatusDuration("stunned") != 0)
 			return
 		src.go_out()
 		return
+
+	Exited(atom/movable/Obj)
+		..()
+		if(Obj == src.occupant)
+			src.occupant = null
+			build_icon()
+			for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
+				I.set_loc(src.loc)
+
+			if (processing)
+				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
-			if (src.allowed(usr))
+			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
 				if (src.occupant)
@@ -408,14 +423,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			if (src.locked)
 				boutput(user, "<span class='alert'>The Port-A-Brig is locked!</span>")
 				return
-			var/mob/living/carbon/human/H = G.affecting
-			H.set_loc(src)
-			src.occupant = H
-			for(var/obj/O in src)
-				O.set_loc(src.loc)
 			src.add_fingerprint(user)
-			build_icon()
-			qdel(W)
+			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
@@ -436,21 +445,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			icon_state = "port_a_brig_0"
 
 	proc/go_out()
-		if (!src.occupant)
-			return
 		if (src.locked)
 			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
 			return
-		src.occupant.set_loc(src.loc)
-		src.occupant.changeStatus("weakened", 2 SECONDS)
-		src.occupant = null
-		build_icon()
-		for (var/obj/item/I in src) //What if you drop something while inside? WHAT THEN HUH?
-			I.set_loc(src.loc)
-
-		if (processing)
-			UnsubscribeProcess()
-
+		if(src.occupant)
+			src.occupant.set_loc(src.loc)
+			src.occupant.changeStatus("weakened", 2 SECONDS)
 		return
 
 	verb/move_eject()
@@ -462,26 +462,50 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		add_fingerprint(usr)
 		return
 
-	verb/move_inside()
-		set src in oview(1)
-		set category = "Local"
-		if (!ishuman(usr))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
-			return
-		if (src.occupant)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is already occupied!</span>")
-			return
-		if (src.locked)
-			boutput(usr, "<span class='alert'>The Port-A-Brig is locked!</span>")
-			return
-		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
-			return
-		usr.pulling = null
-		usr.set_loc(src)
-		src.occupant = usr
-		src.add_fingerprint(usr)
-		build_icon()
-		return
+/datum/action/bar/portabrig_shove_in
+	duration = 3 SECONDS
+	var/mob/victim
+	var/obj/item/grab/G
+	var/obj/machinery/port_a_brig/brig
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+
+	New(obj/machinery/port_a_brig/brig, mob/user, mob/victim, obj/item/grab/G)
+		..()
+		src.owner = user
+		src.brig = brig
+		src.victim = victim
+		src.G = G
+
+	onStart()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] begins shoving [victim] into [src.brig]!</span>")
+
+
+	onUpdate()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if (!src.owner || !src.victim || QDELETED(G))
+			interrupt(INTERRUPT_ALWAYS)
+		if (!IN_RANGE(src.owner, src.brig, 1) || !IN_RANGE(src.victim, src.brig, 1))
+			interrupt(INTERRUPT_ALWAYS)
+		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
+		victim.set_loc(src.brig)
+		src.brig.occupant = victim
+		for(var/obj/O in src.brig)
+			O.set_loc(src.brig.loc)
+		src.brig.build_icon()
+		qdel(G)
+
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -504,7 +528,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	mats = 30
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/homeloc = null
 
@@ -532,7 +556,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
-	CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
+	Cross(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
 		if (air_group || (height==0))
 			return 1
 		..()
@@ -631,7 +655,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			return
 		if (!isalive(usr) || usr.getStatusDuration("stunned") != 0)
 			return
-		usr.pulling = null
+		usr.remove_pulling()
 		usr.set_loc(src)
 		src.occupant = usr
 		src.add_fingerprint(usr)
@@ -751,22 +775,22 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN_DBG(rand(10,40))
-								M.visible_message("<span class='alert'>[M] pukes all over \himself.</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
+								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
 								M.change_misstep_chance(40)
-								M.drowsyness += 2
+								M.changeStatus("drowsy", 10 SECONDS)
 								M.vomit()
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 200, 1)
+							M.changeStatus("radiation", 20 SECONDS, 1)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 300, 2)
+							M.changeStatus("radiation", 30 SECONDS, 2)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
 						for(var/mob/living/carbon/human/M in src.contents)
-							M.changeStatus("radiation", 400, 3)
+							M.changeStatus("radiation", 40 SECONDS, 3)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol
 								// s_tone now an RGB rather than a numeric value so disabling this for the moment
@@ -813,15 +837,13 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.2
 	can_fall = 0
-	mats = 30
+	mats = null
 	ai_control_enabled = 1
+	window_size = "400x675"
 	var/homeloc = null
 
 	New()
 		..()
-
-
-
 		UnsubscribeProcess()
 		if (!islist(portable_machinery))
 			portable_machinery = list()
@@ -832,24 +854,25 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 20)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/epinephrine, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/saline, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/atropine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/mannitol, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salbutamol, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salicylic_acid, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/anti_rad, 8)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/insulin, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/calomel, 6)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/heparin, 2)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/proconvertin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/charcoal, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/antihistamine, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/epinephrine, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/filgrastim, 6)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/heparin, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/insulin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/mannitol, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/anti_rad, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/proconvertin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salbutamol, 8)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/salicylic_acid, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/saline, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/spaceacillin, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/synaptizine, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe/formaldehyde, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 4)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
 		product_list += new/datum/data/vending_product(/obj/item/bandage, 6)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_upgrade, 4)
@@ -857,6 +880,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		//Hidden
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/random, rand(1, 3), hidden=1)
+
 
 	disposing()
 		if (islist(portable_machinery))

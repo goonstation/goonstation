@@ -4,8 +4,9 @@
 	name = "ears"
 	icon = 'icons/obj/clothing/item_ears.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
-	wear_image_icon = 'icons/mob/ears.dmi'
-	w_class = 1.0
+	wear_image_icon = 'icons/mob/clothing/ears.dmi'
+	w_class = W_CLASS_TINY
+	wear_layer = MOB_EARS_LAYER
 	throwforce = 2
 	block_hearing_when_worn = HEARING_BLOCKED
 

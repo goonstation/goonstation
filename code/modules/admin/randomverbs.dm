@@ -68,7 +68,7 @@
 
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
 			if (PLoc)
-				M.changeStatus("paralysis", 80)
+				M.changeStatus("paralysis", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
@@ -99,6 +99,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
+		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, __blue("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -378,8 +379,8 @@
 		// More info would be nice (Convair880).
 		var/dat = ""
 		for (var/mob/living/silicon/S in mobs)
-			if (S.mind && S.mind.special_role == "vampthrall" && ismob(whois_ckey_to_mob_reference(S.mind.master)))
-				dat += "<br>[S] is a vampire's thrall, only obeying [whois_ckey_to_mob_reference(S.mind.master)]."
+			if (S.mind && S.mind.special_role == ROLE_VAMPTHRALL && ismob(ckey_to_mob(S.mind.master)))
+				dat += "<br>[S] is a vampire's thrall, only obeying [ckey_to_mob(S.mind.master)]."
 			else
 				if (isAI(S)) continue // Rogue AIs modify the global lawset.
 				if (S.mind && !S.dependent)
@@ -462,7 +463,7 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 /*
-	for (var/obj/machinery/computer/communications/C as() in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/C as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			var/obj/item/paper/P = new /obj/item/paper( C.loc )
 			P.name = "paper- '[command_name()] Update.'"
@@ -685,6 +686,14 @@
 
 	src.holder.viewPlayerNotes(ckey(target))
 
+/client/proc/cmd_admin_set_loginnotice(target as text)
+	set name = "Set Player LoginNotice"
+	set desc = "Change a player's login notice."
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	admin_only
+
+	src.holder.setLoginNotice(ckey(target))
+
 /client/proc/cmd_admin_polymorph(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Polymorph Player"
@@ -771,21 +780,24 @@
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
 		else if (href_list["customization_first"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_first = new_style
 				src.tf_holder.mobAppearance.customization_first_original = new_style
 
 		else if (href_list["customization_second"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_second = new_style
 				src.tf_holder.mobAppearance.customization_second_original = new_style
 
 		else if (href_list["customization_third"])
-			var/new_style = input(usr, "Please select style", "Polymorph Menu")  as null|anything in (customization_styles + customization_styles_gimmick)
+			var/list/customization_types = concrete_typesof(/datum/customization_style)
+			var/new_style = select_custom_style(customization_types, usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_third = new_style
@@ -802,7 +814,7 @@
 			var/new_age = input(usr, "Please select type in age: [minage]-[maxage]", "Polymorph Menu")  as num
 
 			if(new_age)
-				src.tf_holder.age = max(min(round(text2num(new_age)), maxage), minage)
+				src.tf_holder.age = clamp(round(text2num(new_age)), minage, maxage)
 
 		else if (href_list["blType"])
 			var/blTypeNew = input(usr, "Please select a blood type:", "Polymorph Menu")  as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
@@ -926,13 +938,13 @@
 
 		dat += "<hr><b>Bottom Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_first_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_first_color]\"><tr><td>C1</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customization_first.name]</a>"
 		dat += "<hr><b>Mid Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_second_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_second_color]\"><tr><td>C2</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customization_second.name]</a>"
 		dat += "<hr><b>Top Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customization_third_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customization_third_color]\"><tr><td>C3</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customization_third.name]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.e_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.e_color]\"><tr><td>EC</td></tr></table></font>"
@@ -1014,15 +1026,15 @@
 		if (AH.customization_first_color == null)
 			AH.customization_first_color = "#101010"
 		if (AH.customization_first == null)
-			AH.customization_first = "None"
+			AH.customization_first = new /datum/customization_style/none
 		if (AH.customization_second_color == null)
 			AH.customization_second_color = "#101010"
 		if (AH.customization_second == null)
-			AH.customization_second = "None"
+			AH.customization_second = new /datum/customization_style/none
 		if (AH.customization_third_color == null)
 			AH.customization_third_color = "#101010"
 		if (AH.customization_third == null)
-			AH.customization_third = "None"
+			AH.customization_third = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
@@ -1068,31 +1080,25 @@
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_hair)
-			customization_first_r = customization_styles[src.tf_holder.mobAppearance.customization_first]
+			customization_first_r = src.tf_holder.mobAppearance.customization_first.id
 			if(!customization_first_r)
-				customization_first_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_first]
-				if(!customization_first_r)
-					customization_first_r = "None"
+				customization_first_r = "none"
 			var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r)
 			hair_s.Blend(src.tf_holder.mobAppearance.customization_first_color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_beard)
-			customization_second_r = customization_styles[src.tf_holder.mobAppearance.customization_second]
+			customization_second_r = src.tf_holder.mobAppearance.customization_second.id
 			if(!customization_second_r)
-				customization_second_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_second]
-				if(!customization_second_r)
-					customization_second_r = "None"
+				customization_second_r = "none"
 			var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r)
 			facial_s.Blend(src.tf_holder.mobAppearance.customization_second_color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_detail)
-			customization_third_r = customization_styles[src.tf_holder.mobAppearance.customization_third]
+			customization_third_r = src.tf_holder.mobAppearance.customization_third.id
 			if(!customization_third_r)
-				customization_third_r = customization_styles_gimmick[src.tf_holder.mobAppearance.customization_third]
-				if(!customization_third_r)
-					customization_third_r = "none"
+				customization_third_r = "none"
 			var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r)
 			detail_s.Blend(src.tf_holder.mobAppearance.customization_third_color, ICON_MULTIPLY)
 			eyes_s.Blend(detail_s, ICON_OVERLAY)
@@ -1106,9 +1112,12 @@
 	set name = "Remove All Labels"
 	set popup_menu = 0
 
-	for (var/mob/M in mobs)
-		M.name_suffixes = null
-		M.UpdateName()
+	for (var/atom/A in world)
+		if(!isnull(A.name_suffixes))
+			A.name_suffixes = null
+			A.UpdateName()
+		LAGCHECK(LAG_LOW)
+
 	return
 
 /client/proc/cmd_admin_aview()
@@ -1146,18 +1155,18 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!adventure_view || mob.see_invisible < 21)
+	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
-		mob.see_invisible = 21
+		mob.see_invisible = INVIS_ADVENTURE
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = 16 // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
-			mob.see_invisible = 0 // it'll sort itself out on the next Life() tick anyway
+			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
@@ -1479,7 +1488,7 @@
 
 	A.reagents.add_reagent("pathogen", amount)
 	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = unpool(/datum/pathogen)
+	var/datum/pathogen/P = new /datum/pathogen
 	P.setup(1)
 	R.pathogens += P.pathogen_uid
 	R.pathogens[P.pathogen_uid] = P
@@ -1564,7 +1573,7 @@
 			Bee.alive = 1
 			//Bee.icon_state = initial(Bee.icon_state)
 			Bee.set_density(initial(Bee.density))
-			Bee.update_icon()
+			Bee.UpdateIcon()
 			Bee.on_revive()
 			Bee.visible_message("<span class='alert'>[Bee] seems to rise from the dead!</span>")
 			revived ++
@@ -1751,11 +1760,11 @@
 			E << sound('sound/misc/lawnotify.ogg', volume=100, wait=0)
 
 	switch (former_role)
-		if ("mindslave") return
-		if ("vampthrall") return
+		if (ROLE_MINDSLAVE) return
+		if (ROLE_VAMPTHRALL) return
 		if ("spyslave") return
-		if ("blob") M.humanize(1)
-		if ("wraith") M.humanize(1)
+		if (ROLE_BLOB) M.humanize(1)
+		if (ROLE_WRAITH) M.humanize(1)
 		else
 			if (ishuman(M))
 				// They could be in a pod or whatever, which would have unfortunate results when respawned.
@@ -1976,6 +1985,44 @@
 	logTheThing("admin", usr, target, "began following [target].")
 	logTheThing("diary", usr, target, "began following [target].", "admin")
 
+/client/proc/admin_observe_random_player()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Observe Random Player"
+	set desc = "Observe a random living logged-in player."
+	admin_only
+
+	if (!isobserver(src.mob))
+		boutput(src, "<span class='alert'>Error: you must be an observer to use this command.</span>")
+		return
+
+	if (istype(src.mob, /mob/dead/target_observer))
+		var/mob/dead/target_observer/TO = src.mob
+		TO.stop_observing()
+
+	var/mob/dead/observer/O = src.mob
+	var/client/C
+	var/mob/M
+	var/i = 0 // prevent infinite loops in worst case scenario
+
+	while (!isliving(M))
+		i++
+		if (i > 10) // sorry, magic
+			boutput(src, "<span class='alert'>Error: no valid players found.</span>")
+			return
+		C = pick(clients)
+		if (C?.mob)
+			M = C.mob
+
+	O.insert_observer(M)
+
+/client/proc/orp()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "ORP"
+	set popup_menu = 0
+	admin_only
+
+	src.admin_observe_random_player()
+
 /client/proc/admin_pick_random_player()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	set name = "Pick Random Player"
@@ -2028,7 +2075,7 @@ var/global/night_mode_enabled = 0
 		if(APC.area && APC.area.workplace)
 			APC.do_not_operate = night_mode_enabled
 			APC.update()
-			APC.updateicon()
+			APC.UpdateIcon()
 
 /client/proc/admin_set_ai_vox()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -2298,7 +2345,7 @@ var/global/night_mode_enabled = 0
 	if (!M || !src.mob || !M.client || !M.client.player || M.client.player.shamecubed)
 		return 0
 	if(isdead(M))
-		M.invisibility = 0
+		M.invisibility = INVIS_NONE
 	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
 
 	var/turf/targetLoc = src.mob.loc
@@ -2311,7 +2358,8 @@ var/global/night_mode_enabled = 0
 			//R.set_dir(direction)
 			R.name = "robust shamecube glass"
 			R.desc = "A pane of robust, yet shameful, glass."
-		var/turf/void = new/turf/unsimulated/floor/void(get_step(targetLoc, direction))
+		var/turf/orig = get_step(targetLoc, direction)
+		var/turf/void = orig.ReplaceWith(/turf/unsimulated/floor/void, FALSE, TRUE, FALSE, TRUE)
 		void.name = "shameful void"
 		void.desc = "really is just a shame"
 		new/area/shamecube(get_step(targetLoc, direction))
@@ -2402,11 +2450,11 @@ var/global/night_mode_enabled = 0
 		boutput(src, "No telesci modifiers! Perhaps they haven't been set up yet.")
 	else
 		var/tx = (T.x + XSUBTRACT) / XMULTIPLY
-		tx = (  max(0, min(tx, world.maxx+1)) )
+		tx = clamp(tx, 0, world.maxx+1)
 		var/ty = (T.y + YSUBTRACT) / YMULTIPLY
-		ty = (  max(0, min(ty, world.maxy+1)) )
+		ty = clamp(ty, 0, world.maxy+1)
 		var/tz = T.z + ZSUBTRACT
-		tz = (  max(0, min(tz, world.maxz+1)) )
+		tz = clamp(tz, 0, world.maxz+1)
 		boutput(src, "Telesci Coords: [tx], [ty], [tz]")
 
 
@@ -2452,16 +2500,19 @@ var/global/night_mode_enabled = 0
 		if (!medal)
 			return
 
+	var/revoke = (alert(src, "Mass grant or revoke medals?", "Mass grant/revoke", "Grant", "Revoke") == "Revoke")
 	var/key = input("Enter player key", "Player key", null) as null|text
-	var/mob/M = new /mob
 	while(key)
-		M.key = key
-		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
+		var/player = ckey(key)
+		var/result
+		if (revoke)
+			result = world.ClearMedal(medal, player, config.medal_hub, config.medal_password)
+		else
+			result = world.SetMedal(medal, player, config.medal_hub, config.medal_password)
 		if (isnull(result))
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
 		key = input("Enter player key", "Player key", null) as null|text
-	qdel(M)
 
 /client/proc/copy_medals(var/old_key as null|text, var/new_key as null|text)
 	set name = "Copy Medals"
@@ -2549,7 +2600,7 @@ var/global/night_mode_enabled = 0
 		//search all offices for an office with the same ckey variable as the usr.
 		if (office.ckey == src.ckey)
 			var/list/turfs = get_area_turfs(office.type)
-			if (islist(turfs) && turfs.len)
+			if (islist(turfs) && length(turfs))
 
 				for (var/turf/T in turfs)
 					//search all turfs for a chair if we can't find one, put em anywhere (might make personalized chairs in the future...)
@@ -2619,7 +2670,6 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					T.vistarget.warptarget = null
 					T.vistarget.fullbright = initial(T.vistarget.fullbright)
 					T.vistarget.RL_Init()
-					RL_UPDATE_LIGHT(T.vistarget)
 					T.vistarget = null
 					T.warptarget = null
 					summoning_office = FALSE
@@ -2666,4 +2716,90 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("No")
 				return
 	else
-		boutput(src, "You must be at least a Administrator to use this command.")
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_disco_lights()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Disco Lights"
+	set desc = "Set every light on the station to a random color"
+	var/R = null
+	var/G = null
+	var/B = null
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Set every light on the station to a random color?",,"Yes","No"))
+			if("Yes")
+				for (var/obj/machinery/light/L as anything in stationLights)
+					R = rand(100)/100
+					G = rand(100)/100
+					B = rand(100)/100
+					if ((R + G + B) < 1)
+						switch (rand(1,3))
+							if (1)
+								R = 1
+							if (2)
+								G = 1
+							if (3)
+								B = 1
+					L.light?.set_color(R, G, B)
+					LAGCHECK(LAG_LOW)
+				logTheThing("admin", src, null, "set every light on the station to a random color.")
+				logTheThing("diary", src, null, "set every light on the station to a random color.", "admin")
+				message_admins("[key_name(src)] set every light on the station to a random color.")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_blindfold_monkeys()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "See No Evil"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Really blindfold all monkeys?",,"Yes","No"))
+			if("Yes")
+				for (var/mob/living/carbon/human/M in mobs)
+					if (!ismonkey(M))
+						continue
+					var/obj/item/clothing/glasses/G = M.glasses
+					if (G)
+						M.u_equip(G)
+						qdel(G)
+					var/obj/item/clothing/glasses/blindfold/B = new()
+					M.force_equip(B, M.slot_glasses)
+
+				logTheThing("admin", src, null, "has blindfolded every monkey.")
+				logTheThing("diary", src, null, "has blindfolded every monkey.", "admin")
+
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_special_shuttle()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Special Shuttle"
+	set desc = "Spawn in a special escape shuttle"
+	admin_only
+	if(src.holder.level >= LEVEL_ADMIN)
+		var/list/shuttles = get_prefab_shuttles()
+		var/datum/prefab_shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
+		if(shuttle.load())
+			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
+			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
+			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+/client/proc/cmd_admin_ship_movable_to_cargo(atom/movable/AM)
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
+	set name = "Ship to Cargo"
+	set popup_menu = 0
+	admin_only
+
+	if (AM.anchored)
+		boutput(src, "Target is anchored and you probably shouldn't be shipping it!")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to ship [AM]?", "Confirmation", list("Yes", "No")) == "Yes")
+		shippingmarket.receive_crate(AM)
+		logTheThing("admin", usr, AM, "has shipped [AM] to cargo.")
+		logTheThing("diary", usr, AM, "has shipped [AM] to cargo.", "admin")
+		message_admins("[key_name(usr)] has shipped [AM] to cargo.")

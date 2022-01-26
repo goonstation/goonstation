@@ -111,7 +111,7 @@ client/proc/open_dj_panel()
 			logTheThing("admin", usr, null, "played ambient sound [loaded_sound]")
 			logTheThing("diary", usr, null, "played ambient sound [loaded_sound]", "admin")
 			message_admins("[admin_key(usr.client)] played ambient sound [loaded_sound]")
-			playsound(get_turf(usr), loaded_sound, sound_volume, sound_frequency)
+			playsound(usr, loaded_sound, sound_volume, sound_frequency)
 
 		if("play-remote")
 			usr.client?.play_youtube_audio()

@@ -19,13 +19,13 @@
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		del(bar.img)
-		del(border.img)
+		qdel(bar.img)
+		qdel(border.img)
 		..()
 
 	onUpdate()
 		if (bar)
-			var/complete = max(min((sCurr / sMax), 1), 0)
+			var/complete = clamp((sCurr / sMax), 0, 1)
 			var/matrix/newMtx = matrix(complete, 1, MATRIX_SCALE)
 			animate( bar, transform = newMtx, pixel_x = -nround( ((30 - (30 * complete)) / 2) ), time = 3 )
 		//..()
@@ -81,7 +81,7 @@
 
 /obj/vehicle/skateboard/proc/adjustSickness(var/mod)
 	var/oldSick = sickness
-	sickness = min(100, max(0, sickness + mod))
+	sickness = clamp(sickness + mod, 0, 100)
 	var/howSick = round(sickness / 5)
 	if(howSick > round(oldSick / 5))
 		trickPopup(howSick)
@@ -134,7 +134,7 @@
 			continue
 		C.show_message(textother, 1, group = "[src]_Skateboard")
 
-/obj/vehicle/skateboard/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/skateboard/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 
@@ -320,17 +320,7 @@
 	*/
 	return
 
-/obj/vehicle/skateboard/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
 
-/obj/vehicle/skateboard/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/skateboard/disposing()
 	if(rider)

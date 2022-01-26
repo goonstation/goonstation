@@ -22,7 +22,7 @@
 	icon_state = "pen"
 	flags = FPRINT | ONBELT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
@@ -40,6 +40,7 @@
 	var/spam_flag_message = 0 // one message appears for every five times you click the pen if you're just sitting there jamming on it
 	var/spam_timer = 20
 	var/symbol_setting = null
+	var/material_uses = 10
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -72,7 +73,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(get_turf(user), "sound/items/penclick.ogg", 50, 1)
+			playsound(user, "sound/items/penclick.ogg", 50, 1)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -82,6 +83,16 @@
 			SPAWN_DBG(src.spam_timer)
 				if (src)
 					src.spam_flag_sound = 0
+
+	proc/apply_material_to_drawing(obj/decal/cleanable/writing/drawing, mob/user)
+		if(src.material)
+			drawing.setMaterial(src.material)
+			src.material_uses--
+			if(src.material_uses <= 0)
+				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
+				src.removeMaterial()
+			return TRUE
+		return FALSE
 
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
@@ -94,6 +105,7 @@
 		if (!t || get_dist(T, user) > 1)
 			src.in_use = 0
 			return
+		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
@@ -101,8 +113,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/* not used because it doesn't work (yet?)
 		if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
@@ -126,6 +138,8 @@
 		if (src.color != src.font_color)
 			src.font_color = src.color
 			src.color_name = hex2color_name(src.color)
+		if(src.material)
+			src.material_uses = initial(src.material_uses)
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -144,7 +158,7 @@
 	desc = "A pretty swag pen."
 	icon_state = "pen_fancy"
 	font_color = "blue"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
@@ -164,7 +178,7 @@
 	desc = "The core is graphite, not lead, don't worry!"
 	icon_state = "pencil-y"
 	font_color = "#808080"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	clicknoise = 0
@@ -181,7 +195,7 @@
 	desc = "Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
-	font = "Permanent Marker, cursive"
+	font = "'Permanent Marker', cursive"
 	webfont = "Permanent Marker"
 	clicknoise = 0
 
@@ -298,6 +312,19 @@
 		font_color = "#FF00FF"
 		color_name = "pink"
 
+	golden // HoP's crayon
+		name = "golden crayon"
+		desc = "The result of years of bribes and extreme bureaucracy."
+		color = "#D4AF37"
+		font_color = "#D4AF37"
+		mat_changename = 0
+		color_name = "golden"
+		material_uses = 123456 // it's not plated. its solid gold-wax alloy!
+
+		New()
+			..()
+			src.setMaterial(getMaterial("gold"))
+
 	random
 		New()
 			..()
@@ -352,12 +379,14 @@
 			else
 				src.font_color = random_saturated_hex_color(1)
 				src.color_name = hex2color_name(src.font_color)
+				src.color = src.font_color
 
 		write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
 			if (!T || !user || src.in_use || get_dist(T, user) > 1)
 				return
 			src.font_color = random_saturated_hex_color(1)
 			src.color_name = hex2color_name(src.font_color)
+			src.color = src.font_color
 			..()
 
 	custom_suicide = 1
@@ -474,7 +503,8 @@
 			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
+			logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -493,8 +523,7 @@
 			G.color_name = src.color_name
 			G.real_name = t
 			G.UpdateName()
-		if (src.material)
-			G.setMaterial(src.material)
+		apply_material_to_drawing(G, user)
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			G.pixel_x = text2num(params["icon-x"]) - size / 2
@@ -575,7 +604,7 @@
 	attack(mob/M as mob, mob/user as mob, def_zone)
 		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
-			playsound(user.loc, "sound/misc/chalkeat_[rand(1,2)].ogg", 60, 1)
+			playsound(user.loc, "sound/items/eatfoodshort.ogg", rand(30, 60), 1)
 			src.chalk_health -= rand(2,5)
 			if (src.chalk_health <= 1)
 				src.chalk_break(user)
@@ -622,8 +651,8 @@
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
-		if (src.material)
-			G.setMaterial(src.material)
+		if(apply_material_to_drawing(G, user))
+			;
 		/*if (src.uses_handwriting && user?.mind?.handwriting)
 			G.font = user.mind.handwriting
 			G.webfont = 1
@@ -692,21 +721,23 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(input(usr,"Label text?","Set label","") as null|text), 1, 32)
+		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		if(str)
+			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
 			return
 		if(url_regex?.Find(str))
 			str = null
 		if (!str || !length(str))
-			boutput(usr, "<span class='notice'>Label text cleared.</span>")
+			boutput(user, "<span class='notice'>Label text cleared.</span>")
 			src.label = null
 			return
 		if (length(str) > 30)
-			boutput(usr, "<span class='alert'>Text too long.</span>")
+			boutput(user, "<span class='alert'>Text too long.</span>")
 			return
 		src.label = "[str]"
-		boutput(usr, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", usr, null, "sets a hand labeler label to \"[str]\".")
+		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -740,6 +771,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
+		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
 			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
@@ -765,22 +797,26 @@
 /obj/item/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "clipboard00"
+	icon_state = "clipboard"
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
 	stamina_damage = 10
 	stamina_cost = 1
 	stamina_crit_chance = 5
+	var/tmp/list/image/overlay_images = null
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+		src.overlay_images = list()
+		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
+		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -801,7 +837,7 @@
 		if ((usr.stat || usr.restrained()))
 			return
 
-		if (!usr.contents.Find(src))
+		if (!(src in usr.contents))
 			return
 
 		src.add_dialog(usr)
@@ -839,7 +875,7 @@
 			if (href_list["write"])
 				var/obj/item/P = locate(href_list["write"])
 				if ((P && P.loc == src))
-					P.attackby(available_pen, usr)
+					P.Attackby(available_pen, usr)
 
 			else if (href_list["title"])
 				if (istype(available_pen, /obj/item/pen/odd))
@@ -870,15 +906,7 @@
 				src.update()
 			src.add_fingerprint(user)
 		else
-			/*
-			if (user.contents.Find(src))
-				SPAWN_DBG( 0 )
-					src.attack_self(user)
-					return
-			else
-			*/
 			return ..()
-		return
 
 	attackby(obj/item/P as obj, mob/user as mob)
 
@@ -904,9 +932,15 @@
 		return
 
 	proc/update()
-		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		if (locate(/obj/item/paper) in src)
+			src.UpdateOverlays(src.overlay_images["paper"], "paper")
+		else
+			src.ClearSpecificOverlays("paper")
+		if (src.pen)
+			src.UpdateOverlays(src.overlay_images["pen"], "pen")
+		else
+			src.ClearSpecificOverlays("pen")
 		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
-		return
 
 /obj/item/clipboard/with_pen
 	New()
@@ -914,6 +948,24 @@
 		src.pen = new /obj/item/pen(src)
 		src.update()
 		return
+
+/obj/item/clipboard/with_pen/inspector
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "clipboard_inspector"
+	name = "inspector's clipboard"
+	desc = "An official Nanotrasen Inspector's clipboard."
+	var/inspector_name = null
+	New()
+		..()
+		src.inhand_color = "#3F3F3F"
+		START_TRACKING
+	proc/set_owner(var/mob/living/carbon/human/M)
+		inspector_name = M.real_name
+		src.name = "Inspector [inspector_name]'s clipboard"
+	disposing()
+		STOP_TRACKING
+		..()
+
 
 /* =============== FOLDERS (wip) =============== */
 
@@ -924,9 +976,9 @@
 	icon_state = "folder" //futureproofed icons baby
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "folder"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throwforce = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
@@ -986,7 +1038,7 @@
 	burn_output = 900
 	burn_possible = 1
 	health = 10
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 	var/offset = 1
 
@@ -1042,7 +1094,7 @@
 
 		user.Browse("<HTML><HEAD><TITLE>[src.name] - [cur_page.name]</TITLE>[font_junk]</HEAD><BODY>Page [page] of [pages.len]<BR><a href='byond://?src=\ref[src];action=first_page'>First Page</a> <a href='byond://?src=\ref[src];action=title_book'>Title Book</a> <a href='byond://?src=\ref[src];action=last_page'>Last Page</a><BR>[prev_page]<a href='byond://?src=\ref[src];action=write;page=[page]'>Write</a> <a href='byond://?src=\ref[src];action=title_page;page=[page]'>Title</a> [next_page]<HR><TT>[.]</TT></BODY></HTML>", "window=[src.name]")
 
-		onclose(usr, "[src.name]")
+		onclose(user, "[src.name]")
 		return null
 
 	attack_self(var/mob/user)
@@ -1069,7 +1121,7 @@
 				src.display_booklet_contents(usr,page_num - 1)
 			if ("write")
 				if (istype(usr.equipped(), /obj/item/pen))
-					cur_page.attackby(usr.equipped(),usr)
+					cur_page.Attackby(usr.equipped(),usr)
 					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
@@ -1094,7 +1146,7 @@
 				src.visible_message("[user] staples [P] at the back of [src].")
 				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			else
-				boutput(usr, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
+				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
 			..()
 		return
@@ -1102,13 +1154,13 @@
 /* =============== STICKY NOTES =============== */
 
 /obj/item/postit_stack
-	name = "stack of crappy old sticky notes"
-	desc = "A little stack of notepaper that you can stick to things. These are the old ones that suck a lot."
+	name = "SHOULDN'T BE SEEING THIS"
+	desc = "OLD AND BAD"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit_stack"
-	force = 1
+	/* force = 1
 	throwforce = 1
-	w_class = 1
+	w_class = W_CLASS_TINY
 	amount = 10
 	burn_point = 220
 	burn_output = 200
@@ -1143,8 +1195,111 @@
 		"You stick a sticky note to [T].")
 		var/obj/item/pen/pen = user.find_type_in_hand(/obj/item/pen)
 		if (pen)
-			P.attackby(pen, user)
+			P.Attackby(pen, user)
 		src.amount --
 		if (src.amount < 0)
 			qdel(src)
 			return
+*/
+
+/* ============== PRINTERS & TYPEWRITERS ================= */
+
+/obj/item/pen/typewriter
+	name = "integrated typewriter pen"
+	desc = "A mechanical pen that writes on paper inside the portable typewriter. How did you even get this?"
+	font = "Monospace"
+	clicknoise = FALSE
+
+	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
+		return
+
+/obj/item/portable_typewriter
+	name = "portable typewriter"
+	desc = "A portable typewriter, whoa!"
+	icon_state = "portable_typewriter"
+	icon = 'icons/obj/writing.dmi'
+	flags = FPRINT | ONBELT | TABLEPASS
+	throwforce = 0
+	w_class = W_CLASS_TINY
+	var/paper_creation_cooldown = 1 MINUTE
+	var/can_create_paper = FALSE
+
+	var/obj/item/paper/stored_paper = null
+	var/obj/item/pen/pen
+
+	New()
+		..()
+		if(isnull(src.pen))
+			src.pen = new /obj/item/pen/typewriter(src)
+
+	attack_self(mob/user)
+		. = ..()
+		if(isnull(src.stored_paper))
+			if(!src.can_create_paper)
+				return
+			if(ON_COOLDOWN(src, "create_paper", src.paper_creation_cooldown))
+				boutput(user, "<span class='alert'>\The [src]'s paper-manufacturing mechanism is recharging.</span>")
+				return
+			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
+			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
+			src.UpdateIcon()
+			src.stored_paper.Attackby(src.pen, user)
+		else
+			src.stored_paper.Attackby(src.pen, user)
+
+	attack_hand(mob/user)
+		if(src.loc == user && src.stored_paper)
+			var/obj/item/paper/paper = src.stored_paper
+			if(src.eject_paper(user.loc))
+				user.put_in_hand_or_drop(paper)
+		else
+			. = ..()
+
+	update_icon()
+		if(src.stored_paper)
+			src.icon_state = "portable_typewriter-full"
+		else
+			src.icon_state = "portable_typewriter"
+
+	proc/eject_paper(atom/target, mob/user)
+		if(isnull(src.stored_paper))
+			return FALSE
+		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
+		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
+			playsound(src.loc, "sound/machines/typewriter.ogg", 60, 0)
+			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
+		src.stored_paper.set_loc(target)
+		src.stored_paper = null
+		src.UpdateIcon()
+		return TRUE
+
+	attackby(obj/item/W, mob/user, params)
+		if(istype(W, /obj/item/paper))
+			user.drop_item(W)
+			W.set_loc(src)
+			src.stored_paper = W
+			src.UpdateIcon()
+		else
+			. = ..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(istype(target, /obj/item/paper))
+			var/obj/item/paper/paper = target
+			if(isnull(stored_paper))
+				paper.set_loc(src)
+				src.stored_paper = paper
+				user.visible_message("<span class='notice'>[user] sucks up \the [paper] into \the [src].</span>", "<span class='notice'>You suck up \the [paper] into \the [src].</span>")
+				src.UpdateIcon()
+			else
+				boutput(user, "<span class='alert'>\The [src] already has a paper in it.</span>")
+		else if(isfloor(target) || istype(target, /obj/table))
+			if(src.stored_paper)
+				src.eject_paper(get_turf(target), user)
+
+/obj/item/portable_typewriter/borg
+	name = "integrated typewriter"
+	desc = "A built-in typewriter that can even create its own paper, whoa!"
+	cant_drop = TRUE
+	paper_creation_cooldown = 10 SECONDS
+	can_create_paper = TRUE

@@ -29,6 +29,7 @@ var/list/ban_from_airborne_fluid = list()
 	mouse_opacity = 1
 	opacity = 0
 	layer = FLUID_AIR_LAYER
+	flags = NOSPLASH
 
 	set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
@@ -45,55 +46,25 @@ var/list/ban_from_airborne_fluid = list()
 
 	done_init()
 		var/i = 0
-		for(var/atom/A in range(0,src))
-			if (src.pooled) return
-			//var/atom/A = atom
-			src.HasEntered(A,A.loc)
+		for(var/atom/movable/A in range(0,src))
+			if (src.disposed) return
+			src.Crossed(A)
 			i++
 			if (i > 40)
 				break
-			LAGCHECK(LAG_MED)
 
 	turf_remove_cleanup(turf/the_turf)
 		the_turf.active_airborne_liquid = null
 
-	pooled()
-		src.pooled = 1
-
+	disposing()
 		//this is slow, hopefully we can do without
 		//if (src.group)
 			//if (src in src.group.members)
 			//	src.group.members -= src
 
-		src.group = 0
-		opacity = 0
-
-		name = "cloud"
-		icon_state = "airborne"
-
-		finalcolor = "#ffffff"
-		finalalpha = 100
-		alpha = 255
-		color = "#ffffff"
-		amt = 0
-		avg_viscosity = initial(avg_viscosity)
-		movement_speed_mod = 0
-		group = 0
-		touched_other_group = 0
-		//float_anim = 0
-		step_sound = 0
-		last_spread_was_blocked = 0
-		last_depth_level = 0
-		touched_channel = 0
-		is_setup = 0
-		blocked_dirs = 0
-		blocked_perspective_objects["[dir]"] = 0
-		my_depth_level = 0
+		src.group = null
+		src.touched_other_group = null
 		..()
-
-	unpooled()
-		..()
-		src.step_sound = 0
 
 	//ALTERNATIVE to force ingest in life
 	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
@@ -139,13 +110,13 @@ var/list/ban_from_airborne_fluid = list()
 		src.group.reagents.trans_to(M, react_volume)
 
 	//incorporate touch_modifier?
-	HasEntered(atom/A, atom/oldloc)
-		if (!src.group || !src.group.reagents || src.pooled || istype(A,/obj/fluid))
+	Crossed(atom/movable/A)
+		..()
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid))
 			return
+		A.EnteredAirborneFluid(src, A.last_turf)
 
-		A.EnteredAirborneFluid(src,oldloc)
-
-	HasExited(atom/movable/AM, atom/newloc)
+	Uncrossed(atom/movable/AM, atom/newloc)
 		return
 		//if (AM.event_handler_flags & USE_FLUID_ENTER)
 		//	AM.ExitedFluid(src,newloc)
@@ -161,6 +132,7 @@ var/list/ban_from_airborne_fluid = list()
 		src.touched_channel = 0
 		blocked_dirs = 0
 		spawned_any = 0
+		purge_smoke_blacklist(src.group.reagents)
 
 		var/turf/t
 		if(!waterflow_enabled) return
@@ -178,7 +150,7 @@ var/list/ban_from_airborne_fluid = list()
 				if (IS_PERSPECTIVE_WALL(t))
 					blocked_perspective_objects["[dir]"] = 1
 				continue
-			if (t.active_airborne_liquid && !t.active_airborne_liquid.pooled)
+			if (t.active_airborne_liquid && !t.active_airborne_liquid.disposed)
 				blocked_dirs++
 				if (t.active_airborne_liquid.group && t.active_airborne_liquid.group != src.group)
 					touched_other_group = t.active_airborne_liquid.group
@@ -220,7 +192,7 @@ var/list/ban_from_airborne_fluid = list()
 					LAGCHECK(LAG_MED)
 					spawned_any = 1
 					src.icon_state = "airborne"
-					var/obj/fluid/F = unpool(/obj/fluid/airborne)
+					var/obj/fluid/F = new /obj/fluid/airborne
 					F.set_up(t,0)
 					if (!F || !src.group) continue //set_up may decide to remove F
 
@@ -255,6 +227,11 @@ var/list/ban_from_airborne_fluid = list()
 						else
 							step_away(push_thing,src)
 
+					for(var/atom/A in F.loc)
+						if (A.event_handler_flags & USE_FLUID_ENTER)
+							A.EnteredAirborneFluid(F, F.loc)
+					F.loc.EnteredAirborneFluid(F, F.loc)
+
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/effects/smoke_tile_spread.ogg', 30,1,7)
 
@@ -274,19 +251,15 @@ var/list/ban_from_airborne_fluid = list()
 		var/obj/fluid/current_fluid = 0
 		var/visited_changed = 0
 		while(queue.len)
-			LAGCHECK(LAG_MED)
 			current_fluid = queue[1]
 			queue.Cut(1, 2)
 
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_MED)
 				t = get_step( current_fluid, dir )
 				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
 				if (!t.active_airborne_liquid.group)
 					t.active_airborne_liquid.removed()
 					continue
-
-				LAGCHECK(LAG_MED)
 
 				//Old method : search through 'visited' for 't.active_airborne_liquid'. Probably slow when you have big groups!!
 				//if(t.active_airborne_liquid in visited) continue
@@ -294,7 +267,7 @@ var/list/ban_from_airborne_fluid = list()
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_airborne_liquid.x]_[t.active_airborne_liquid.y]_[t.active_airborne_liquid.z]"] = t.active_airborne_liquid
 				visited_changed = (visited.len != visited_changed)
 
@@ -308,21 +281,16 @@ var/list/ban_from_airborne_fluid = list()
 							if (adjacent_match_quit <= 0)
 								return 0 //bud nippin
 
-			LAGCHECK(LAG_MED)
-
 	try_connect_to_adjacent()
 		var/turf/t
 		for( var/dir in cardinal )
 			t = get_step( src, dir )
 			if( !t ) continue
-			if (!t.active_airborne_liquid || t.active_airborne_liquid.pooled) continue
+			if (!t.active_airborne_liquid || t.active_airborne_liquid.disposed) continue
 			if (t.active_airborne_liquid && t.active_airborne_liquid.group && src.group != t.active_airborne_liquid.group)
 				t.active_airborne_liquid.group.join(src.group)
-			LAGCHECK(LAG_MED)
-
 
 	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
-		LAGCHECK(LAG_LOW)
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
@@ -332,8 +300,6 @@ var/list/ban_from_airborne_fluid = list()
 		src.finalcolor = rgb(average.r, average.g, average.b)
 
 		animate( src, color = finalcolor, alpha = finalalpha, time = 5 )
-
-		LAGCHECK(LAG_LOW)
 
 		if (neighbor_was_removed)
 			last_spread_was_blocked = 0
@@ -366,19 +332,10 @@ var/list/ban_from_airborne_fluid = list()
 /obj/effects/EnteredAirborneFluid(obj/fluid/F as obj)
 	.=0
 
+/obj/blob/EnteredAirborneFluid(obj/fluid/F)
+	F.group.reagents.reaction(src, TOUCH, F.amt, 0)
+
 /mob/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
-	.=0
-	var/entered_group = 1 //Did the entering atom cross from a non-fluid to a fluid tile?
-
-	var/turf/T = get_turf(oldloc)
-	var/turf/currentloc = get_turf(src)
-	if (currentloc != T && T?.active_airborne_liquid)
-		entered_group = 0
-
-	if (entered_group)
-		F.just_do_the_apply_thing(src)
-
-/mob/living/carbon/human/EnteredAirborneFluid(obj/fluid/airborne/F as obj, atom/oldloc)
 	.=0
 	var/entered_group = 1 //Did the entering atom cross from a non-fluid to a fluid tile?
 

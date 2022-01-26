@@ -22,17 +22,16 @@
 			APPLY_MOB_PROPERTY(M, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
 
 	on_removal()
-		. = ..()
 		REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
+		. = ..()
 
 	unbreakme()
 		..()
-		if(donor)
+		if(..() && donor)
 			APPLY_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src, digestion_efficiency)
 
 	breakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			REMOVE_MOB_PROPERTY(src.donor, PROP_DIGESTION_EFFICIENCY, src)
 
 	disposing()
@@ -41,6 +40,16 @@
 				holder.intestines = null
 		..()
 
+/obj/item/organ/intestines/synth
+	name = "synthintestines"
+	organ_name = "synthintestines"
+	icon_state = "plant"
+	desc = "The large intestine is made from a root like material... that's a bit unsettling."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
+
 /obj/item/organ/intestines/cyber
 	name = "cyberintestines"
 	desc = "A fancy robotic intestines to replace one that someone's lost!"
@@ -48,6 +57,7 @@
 	// item_state = "heart_robo1"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 

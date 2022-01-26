@@ -1,9 +1,9 @@
 var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
-"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "stimulants", "synaptizine", "anti_rad",\
+"silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt")
+"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD")
 
 /* =================================================== */
 /* -------------------- Hypospray -------------------- */
@@ -11,7 +11,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 /obj/item/reagent_containers/hypospray
 	name = "hypospray"
-	desc = "An automated injector that will dump out any harmful chemicals it finds in itself."
+	desc = "An advanced device capable of injecting various medicines into a patient instantaneously. Dumps any harmful chemicals."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	initial_volume = 30
@@ -19,8 +19,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
-	module_research = list("science" = 3, "medicine" = 2)
-	module_research_type = /obj/item/reagent_containers/hypospray
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1
@@ -38,10 +36,10 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 
 	New()
 		..()
-		if (src.safe && islist(chem_whitelist) && chem_whitelist.len)
+		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents.total_volume)
 			src.icon_state = "hypo1"
 			src.name = "hypospray ([src.reagents.get_master_reagent_name()])"
@@ -57,12 +55,13 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		signal_event("icon_updated")
 
 	on_reagent_change(add)
+		..()
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)
-		src.update_icon()
+		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
-		update_icon()
+		UpdateIcon()
 		src.add_dialog(user)
 		var/dat = ""
 		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
@@ -112,8 +111,8 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (user)
 			user.show_text("[src]'s safeties have been reactivated.", "blue")
 		safe = 1
-		src.overlays = null
-		src.update_icon()
+		src.UpdateOverlays(null, "emagged")
+		src.UpdateIcon()
 		return 1
 
 	attack(mob/M as mob, mob/user as mob, def_zone)
@@ -141,6 +140,6 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (src.safe && M.health < 90)
 			JOB_XP(user, "Medical Doctor", 1)
 
-		playsound(get_turf(M), src.sound_inject, 80, 0)
+		playsound(M, src.sound_inject, 80, 0)
 
-		update_icon()
+		UpdateIcon()

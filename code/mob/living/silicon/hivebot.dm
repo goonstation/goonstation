@@ -52,7 +52,7 @@
 
 /mob/living/silicon/hivebot/New(loc, mainframe)
 	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
-	updateicon()
+	UpdateIcon()
 
 	if (mainframe)
 		dependent = 1
@@ -90,8 +90,8 @@
 	src.sight |= SEE_OBJS
 
 	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = 2
-	src.updateicon()
+	src.see_invisible = INVIS_CLOAK
+	src.UpdateIcon()
 /*
 	if(src.client)
 		SPAWN_DBG(0)
@@ -291,7 +291,7 @@
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				else
-					playsound(get_turf(src), src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("johnny")
@@ -482,24 +482,17 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/Bump(atom/movable/AM as mob|obj, yes)
-	SPAWN_DBG( 0 )
-		if ((!( yes ) || src.now_pushing))
-			return
-		if (!istype(AM, /atom/movable))
-			return
-		if (!src.now_pushing)
-			src.now_pushing = 1
-			if (!AM.anchored)
-				var/t = get_dir(src, AM)
-				step(AM, t)
-			src.now_pushing = null
-
-		if(AM)
-			AM.last_bumped = world.timeofday
-			AM.Bumped(src)
+/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
+	if (src.now_pushing)
 		return
-	return
+	if (!istype(AM, /atom/movable))
+		return
+	if (!src.now_pushing)
+		src.now_pushing = 1
+		if (!AM.anchored)
+			var/t = get_dir(src, AM)
+			step(AM, t)
+		src.now_pushing = null
 
 /mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
 	if (isweldingtool(W))
@@ -536,7 +529,7 @@
 	else if (istype(W, /obj/item/clothing/suit/bee))
 		boutput(user, "You stuff [src] into [W]! It fits surprisingly well.")
 		src.beebot = 1
-		src.updateicon()
+		src.UpdateIcon()
 		qdel(W)
 		return
 	else
@@ -545,7 +538,8 @@
 /mob/living/silicon/hivebot/attack_hand(mob/user)
 	user.lastattacked = src
 	if(!user.stat)
-		actions.interrupt(src, INTERRUPT_ATTACKED)
+		if (user.a_intent != INTENT_HELP)
+			actions.interrupt(src, INTERRUPT_ATTACKED)
 		switch(user.a_intent)
 			if(INTENT_HELP) //Friend person
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
@@ -558,7 +552,7 @@
 					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
 					boutput(user, "You pull [B] off of [src]!")
 					src.beebot = 0
-					src.updateicon()
+					src.UpdateIcon()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
 					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
@@ -602,8 +596,7 @@
 			return 0
 	return 1
 
-/mob/living/silicon/hivebot/proc/updateicon()
-
+/mob/living/silicon/hivebot/update_icon()
 	src.overlays = null
 
 	if (isalive(src))
@@ -729,18 +722,14 @@ Frequency:
 	set name = "Recall to Mainframe"
 	return_mainframe()
 
-/mob/living/silicon/hivebot/proc/return_mainframe()
-	if(mainframe)
-		mainframe.return_to(src)
-		src.updateicon()
-	else
-		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
-		return
+/mob/living/silicon/hivebot/return_mainframe()
+	..()
+	src.UpdateIcon()
 
 /mob/living/silicon/hivebot
 	clamp_values()
 		..()
-		sleeping = max(min(sleeping, 1), 0)
+		sleeping = clamp(sleeping, 0, 1)
 		bruteloss = max(bruteloss, 0)
 		fireloss = max(fireloss, 0)
 		if (src.stuttering)
@@ -797,7 +786,7 @@ Frequency:
 	..()
 
 	update_clothing()
-	updateicon()
+	UpdateIcon()
 
 	if (src.mainframe)
 		src.real_name = "SHELL/[src.mainframe]"
@@ -812,7 +801,7 @@ Frequency:
 
 /mob/living/silicon/hivebot/Logout()
 	..()
-	updateicon()
+	UpdateIcon()
 
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
@@ -998,7 +987,7 @@ Frequency:
 		if (C.tg_controls)
 			C.apply_keybind("robot_tg")
 
-	updateicon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
+	update_icon() // Haine wandered in here and just junked up this code with bees.  I'm so sorry it's so ugly aaaa
 		src.overlays = null
 
 		if(isalive(src))
@@ -1055,7 +1044,7 @@ Frequency:
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "ai-interface"
 	item_state = "ai-interface"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 //obj/item/cell/shell_cell moved to cells.dm
 
@@ -1065,7 +1054,7 @@ Frequency:
 	icon = 'icons/mob/hivebot.dmi'
 	icon_state = "shell-frame"
 	item_state = "shell-frame"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radio = 0
@@ -1075,15 +1064,11 @@ Frequency:
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)
 			var/obj/item/sheet/M = W
-			if (M.amount >= 1)
+			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.icon_state = "shell-plate"
-				M.amount -= 1
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
 				return
 			else
 				boutput(user, "You need at least one metal sheet to add plating! How are you even seeing this message?! How do you have a metal sheet that has no metal sheets in it?!?!")
@@ -1100,7 +1085,7 @@ Frequency:
 			if (coil.amount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
 				if (coil.amount < 1)
@@ -1119,7 +1104,7 @@ Frequency:
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1136,7 +1121,7 @@ Frequency:
 			if (!src.has_radio)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.icon_state = "shell-radio"
 				src.has_radio = 1
 				qdel(W)
@@ -1153,7 +1138,7 @@ Frequency:
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
-				playsound(get_turf(src), "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
 				src.has_interface = 1
 				qdel(W)
 				return

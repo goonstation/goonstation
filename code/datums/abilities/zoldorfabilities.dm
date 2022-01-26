@@ -6,7 +6,7 @@
 	notEnoughPointsMessage = "<span class='alert'>You do not have enough souls to use that ability.</span>"
 	cast_while_dead = 1
 
-/obj/screen/ability/topBar/zoldorf
+/atom/movable/screen/ability/topBar/zoldorf
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -22,7 +22,7 @@
 	preferred_holder_type = /datum/abilityHolder/zoldorf
 
 	New()
-		var/obj/screen/ability/topBar/zoldorf/B = new /obj/screen/ability/topBar/zoldorf(null)
+		var/atom/movable/screen/ability/topBar/zoldorf/B = new /atom/movable/screen/ability/topBar/zoldorf(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -338,7 +338,7 @@
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
 			var/obj/machinery/playerzoldorf/pz = user.loc
 			user.homebooth = pz
-			var/staticiterations = pz.brandlist.len
+			var/staticiterations = length(pz.brandlist)
 			for(var/i=1,i<=staticiterations,i++)
 				if(pz.brandlist[i]==null)
 					pz.brandlist -= pz.brandlist[i]
@@ -560,10 +560,11 @@
 		if (holder.help_mode)
 			holder.help_mode = 0
 			src.object.icon_state = "helpoff"
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = 1
 			src.object.icon_state = "helpon"
-			boutput(holder.owner, "<span class='success'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='success'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='success'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='success'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
 			boutput(holder.owner, "<span class='success'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")

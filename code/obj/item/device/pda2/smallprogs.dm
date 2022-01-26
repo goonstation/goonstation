@@ -24,7 +24,7 @@
 	name = "BankBuddy"
 	size = 8
 
-	var/tmp/datum/data/record/bank_record = null
+	var/tmp/datum/db_record/bank_record = null
 
 	return_text()
 		if (..())
@@ -40,8 +40,8 @@
 		if (!src.master || !src.master.owner)
 			return 0
 
-		for(var/datum/data/record/B in data_core.bank)
-			if(lowertext(B.fields["name"]) == lowertext(src.master.owner))
+		for(var/datum/db_record/B as anything in data_core.bank.records)
+			if(lowertext(B["name"]) == lowertext(src.master.owner))
 				src.bank_record = B
 				return 1
 		return 0
@@ -59,10 +59,16 @@
 
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
-
-		for (var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+		dat += get_manifest()
 		dat += "<br>"
+
+		var/list/stored = list()
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		if(length(stored))
+			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
 
 		return dat
 
@@ -108,7 +114,7 @@
 					post_status("alert", href_list["alert"])
 
 				if("setmsg1")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -119,7 +125,7 @@
 					src.master.updateSelfDialog()
 
 				if("setmsg2")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -151,13 +157,27 @@
 			if("alert")
 				status_signal.data["picture_state"] = data1
 
-		src.post_signal(status_signal,"1435")
+		src.post_signal(status_signal, "status_display")
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"status_display",\
+			FREQ_STATUS_DISPLAY, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "status_display"))
 
 //Signaler
 /datum/computer/file/pda_program/signaler
 	name = "Signalix 5"
 	size = 8
-	var/send_freq = 1457 //Frequency signal is sent at, should be kept within normal radio ranges.
+	var/send_freq = FREQ_SIGNALER //Frequency signal is sent at, should be kept within normal radio ranges.
 	var/send_code = 30
 	var/last_transmission = 0 //No signal spamming etc
 
@@ -204,14 +224,15 @@ Code:
 				signal.data["message"] = "ACTIVATE"
 				signal.data["code"] = send_code
 
-				src.post_signal(signal,"[send_freq]")
+				src.post_signal(signal, "signaller")
 				return
 
 		else if (href_list["adj_freq"])
-			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			src.send_freq = sanitize_frequency(src.send_freq + text2num_safe(href_list["adj_freq"]))
+			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
-			src.send_code += text2num(href_list["adj_code"])
+			src.send_code += text2num_safe(href_list["adj_code"])
 			src.send_code = round(src.send_code)
 			src.send_code = min(100, src.send_code)
 			src.send_code = max(1, src.send_code)
@@ -220,10 +241,24 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"signaller",\
+			send_freq, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "signaller"))
+
 //Supply record monitor
 /datum/computer/file/pda_program/qm_records
 	name = "Supply Records"
-	size = 8
+	size = 6
 
 	return_text()
 		if(..())
@@ -274,7 +309,7 @@ Code:
 			return
 
 		if (href_list["adj_volume"])
-			var/adjust_num = text2num(href_list["adj_volume"])
+			var/adjust_num = text2num_safe(href_list["adj_volume"])
 			src.honk_volume += adjust_num
 			if(src.honk_volume < 1)
 				src.honk_volume = 1
@@ -345,7 +380,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"
@@ -467,6 +502,36 @@ Code:
 
 		return dat
 
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"report",\
+			FREQ_PDA, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "report"))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!src.temp || connection_id != "report" || signal.encryption)
+			return
+
+		if(signal.data["command"] == "reply_alerts")
+			src.temp = null
+
+			if(signal.data["severe_list"])
+				src.severe_alerts = splittext(signal.data["severe_list"], ";")
+			if(signal.data["minor_list"])
+				src.minor_alerts = splittext(signal.data["minor_list"], ";")
+
+			src.master.updateSelfDialog()
+
 	Topic(href, href_list)
 		if(..())
 			return
@@ -484,22 +549,6 @@ Code:
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
-		return
-
-	receive_signal(datum/signal/signal)
-		if(..() || !src.temp)
-			return
-
-		if(signal.data["command"] == "reply_alerts")
-			src.temp = null
-
-			if(signal.data["severe_list"])
-				src.severe_alerts = splittext(signal.data["severe_list"], ";")
-			if(signal.data["minor_list"])
-				src.minor_alerts = splittext(signal.data["minor_list"], ";")
-
-			src.master.updateSelfDialog()
-
 		return
 
 
@@ -575,7 +624,7 @@ Code:
 		if(length(by_type[/obj/machinery/power/vent_capture]))
 			. += "<BR><h4>Vent Capture Unit Status</h4>"
 			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/power/monitor/smes) in V.powernet?.nodes) )
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
 					engine_found = TRUE
 					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
 			. += "<BR>"
@@ -600,7 +649,7 @@ Code:
 
 	var/temp = null
 	var/last_scan = 0
-	var/report_freq = 1447
+	var/report_freq = FREQ_HYDRO
 	var/list/status_reports = list()
 
 	proc/post_status(var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -620,9 +669,19 @@ Code:
 
 		src.post_signal(signal, report_freq)
 
-	init()
-		//boutput(world, "<h5>Adding [master]@[master.loc]:[report_freq]")
-		radio_controller.add_object(master, "[report_freq]")
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"hydro_report",\
+			report_freq, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "hydro_report"))
 
 	return_text()
 		if(..())
@@ -686,10 +745,13 @@ Code:
 				dat += "Alert Sent -- Please wait for a response.<br>Additional alerts will be available shortly."
 
 			else
-				dat += "<center>Please select alert type:<br>"
-				dat += "<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=3'>Security Alert</a>"
+				dat += {"
+				<center>Please select alert type:<br>
+				<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>
+				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
+				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
+				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				"}
 
 		else
 			dat += "<center><b>Please confirm: <a href='?src=\ref[src];confirm=y'>Y</a> / <a href='?src=\ref[src];confirm=n'>N</a></b></center>"
@@ -701,7 +763,7 @@ Code:
 			return
 
 		if (href_list["alert"])
-			confirm_menu = text2num(href_list["alert"])
+			confirm_menu = text2num_safe(href_list["alert"])
 
 		else if (href_list["confirm"])
 			if (href_list["confirm"] == "y")
@@ -724,12 +786,13 @@ Code:
 				mailgroup = MGD_MEDBAY
 			if (2)
 				mailgroup = MGO_ENGINEER
-			if (3 to INFINITY)
+			if (3)
 				mailgroup = MGD_SECURITY
+			if (4 to INFINITY)
+				mailgroup = MGO_JANITOR
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
@@ -738,7 +801,7 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && eye_loc.cameras.len))
+			if (!(eye_loc.cameras && length(eye_loc.cameras)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
@@ -903,11 +966,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
-					var/PDAownerjob = "Unknown Job"
-					for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-						if(G.fields["name"] == PDAowner)
-							PDAownerjob = G.fields["rank"]
-							break
+					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
@@ -950,11 +1009,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
 			if(!ticket_target) return
@@ -972,41 +1027,34 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_job = PDAownerjob
 			T.text = ticket_text
 			T.target_byond_key = get_byond_key(T.target)
-			T.issuer_byond_key = get_byond_key(T.issuer)
+			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
+			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
 
 
-/*			for(var/datum/data/record/S in data_core.security) //there is probably a better way of doing this too
-				if(S.fields["name"] == ticket_target)
-					if(S.fields["notes"] == "No notes.")
-						S.fields["notes"] = ticket_text
-					else S.fields["notes"] += ticket_text
+/*			for(var/datum/db_record/S as anything in data_core.security.records) //there is probably a better way of doing this too
+				if(S["name"] == ticket_target)
+					if(S["notes"] == "No notes.")
+						S["notes"] = ticket_text
+					else S["notes"] += ticket_text
 					break*/
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
-			var/has_bank_record = 0
-			for(var/datum/data/record/B in data_core.bank) //this too
-				if(B.fields["name"] == ticket_target)
-					has_bank_record = 1
-					break
+			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
 			if(!has_bank_record)
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
@@ -1015,7 +1063,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
 			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
-			if(!fine_amount) return
+			if(!isnum_safe(fine_amount)) return
 			fine_amount = min(fine_amount,1000)
 			fine_amount = max(fine_amount,1)
 
@@ -1026,15 +1074,16 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer = PDAowner
 			F.issuer_job = PDAownerjob
 			F.target_byond_key = get_byond_key(F.target)
-			F.issuer_byond_key = get_byond_key(F.issuer)
+			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
+			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 				SPAWN_DBG(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
-					var/obj/item/paper/p = unpool(/obj/item/paper)
+					var/obj/item/paper/p = new /obj/item/paper
 					p.set_loc(get_turf(src.master))
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
@@ -1044,19 +1093,15 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/datum/fine/F = locate(href_list["approve"])
 
-			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
+			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN_DBG(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Fine Notification - [F.target]"
 				p.info = ticket_text
@@ -1152,12 +1197,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			// pda alert ////////
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
+
 			//////////////////
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
@@ -1230,4 +1273,54 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			src.master.updateSelfDialog()
 
 		src.master.add_fingerprint(usr)
+		return
+
+/datum/computer/file/pda_program/gps
+	name = "Space GPS"
+	size = 2
+	var/x = -1
+	var/y = -1
+	var/z = -1
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<h4>Space GPS: Pocket Edition</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];getloc=1'>Get Coordinates</a>"
+		if (x >= 0)
+
+			var/landmark = "Unknown"
+			switch (src.z)
+				if (1)
+					landmark = capitalize(station_or_ship())
+				if (2)
+					landmark = "Restricted"
+				if (3)
+					landmark = "Debris Field"
+				if (5)
+					#ifdef UNDERWATER_MAP
+					landmark = "Trench"
+					#else
+					landmark = "Asteroid Field"
+					#endif
+
+			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
+
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["getloc"])
+			var/turf/T = get_turf(usr)
+			src.x = T.x
+			src.y = T.y
+			src.z = T.z
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
 		return

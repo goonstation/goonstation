@@ -1,0 +1,218 @@
+<h1>NT MEDICAL DIVISION</h1>
+		<p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date.</i></p>
+		<h2>ESSENTIAL MEDICINES LIST FOR NANOTRASEN FACILITIES</h2>
+		<br>
+		<hr>
+		<h2>PHYSICAL TRAUMA</h2>
+		<hr>
+		<h3>Styptic Powder</h3>
+		<div class ="styptic">
+		<ul>
+			<li>Aluminium Sulfate helps control bleeding and heal physical wounds.
+			<li>This compound can be prepared by combining aluminium and oxygen with with sulfuric acid.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Synthflesh (topical)
+			<li>Cryoxadone (cryogenics)
+			<li>Omnizine (systemic)
+		</div>
+		<br>
+		<hr>
+		<h2>BURNS</h2>
+		<hr>
+		<h3>Silver Sulfadiazine</h3>
+		<div class ="sulfa">
+		<ul>
+			<li>This antibacterial compound is used to treat burn victims.
+			<li>Prepare sulfur, oxygen and chlorine.
+			<li>React with ammonia and combine with silver.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Synthflesh (topical)
+			<li>Cryoxadone (cryogenics)
+			<li>Omnizine (systemic)
+		</div>
+		<br>
+		<hr>
+		<h2>POISONINGS</h2>
+		<hr>
+		<h3>Activated Charcoal</h3>
+		<div class ="charcoal">
+		<ul>
+			<li>Activated Charcoal helps to absorb toxins from the body and heal moderate toxin damage.
+			<li>Heat ashes together with salt at 374 K to produce activated charcoal.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Pentetic Acid: A potent chelating agent, structurally quite similar to EDTA.
+		</div>
+		<h3>Calomel</h3>
+		<div class = "calomel">
+		<ul>
+			<li>Calomel, or Mercurous Chloride, is a rapid purgative that will remove other reagents from the body. It is quite toxic.
+			<li>It should be used only when the the poisons in your patient are worse than Calomel itself.
+			<li>Preparation: heat mercury and chlorine together to 374 K.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Pentetic Acid
+		</div>
+		<br>
+		<hr>
+		<h2>RADIATION</h2>
+		<hr>
+		<h3>Potassium Iodide</h3>
+		<div class ="antirad">
+		<ul>
+			<li>Potassium Iodide is a medicinal drug used to counter the effects of radiation poisoning.
+			<li>React potassium with iodine. All done!
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Pentetic Acid
+		</div>
+		<br>
+		<hr>
+		<h2>CRITICAL HEALTH CRISES</h2>
+		<hr>
+		<h3>Saline-Glucose Solution</h3>
+		<div class ="saline">
+		<ul>
+			<li>This saline and glucose solution can help ward off shock and promote healing.
+			<li>It is a simple mixture of salt, water and sugar.
+		</div>
+		<h3>Epinephrine</h3>
+		<div class ="epinephrine">
+		<ul>
+			<li>Epinephrine is a potent neurotransmitter, used in medical emergencies to halt anaphylactic shock and prevent cardiac arrest.
+			<li>It can be synthesized by combining hydrogen, oxygen, and phenol with chlorine, acetone, and diethylamine.
+			<li>In the event that your station lacks these precursors... well, make do with something similar.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Atropine
+		</div>
+		<br>
+		<hr>
+		<h2>PAIN</h2>
+		<hr>
+		<h3>Salicylic Acid</h3>
+		<div class="salicylic acid">
+		<ul>
+			<li>This is a is a standard salicylate pain reliever and fever reducer. It will help relieve slowed movement from injuries.
+			<li>Synthesis: treat sodium and phenol with carbon and oxygen, then acidify with sulfuric acid.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Morphine (HIGHLY ADDICTIVE. HIGH DOSES MAY LEAD TO SEDATION OR COMA.)
+		</div>
+		<br>
+		<hr>
+		<h2>SUFFOCATION</h2>
+		<hr>
+		<h3>Salbutamol</h3>
+		<div class = "salbutamol">
+		<ul>
+			<li>Salbutamol is a common bronchodilation medication for asthmatics. It may help with other breathing problems as well.
+			<li>Synthesis: treat oil with bromine, ammonia, and lithium and aluminium.
+		<br>
+		<h4><i>Advanced:</i></h4>
+		<ul>
+			<li>Perfluorodecalin (liquid breathing)
+			<li>Cryoxadone (cryogenics)
+			<li>Omnizine
+		</div>
+		<br>
+		<hr>
+		<h2>ADVANCED MEDICINES</h2>
+		<hr>
+		<h3>Synthflesh</h3>
+		<div class ="synthflesh">
+		<ul>
+			<li>Synthetic flesh, or synthflesh, is a useful laboratory-create grafting compound for treating severe injuries to dermal and muscle tissues.
+			<li>Synthesis: combine carbon, blood, and Styptic Powder.
+		</div>
+		<h3>Cryoxadone</h3>
+		<div class ="cryoxadone">
+		<ul>
+			<li>Cryoxadone is a cryogenic healing ketone derived from acetone that is useful for deep tissue repairs of damage that otherwise might require surgical interference.
+			<li>Synthesis: create an acetyl group by first mixing oil, welding fuel, and oxygen.
+			<li>In a separate beaker, nitrogenate plasma and water to form cryostylane.
+			<li>In a third beaker, create unstable mutagen by combining radium, plasma, and chlorine.
+			<li>Combine all reagents in a beaker with plasma.
+		</div>
+		<h3>Pentetic Acid</h3>
+		<div class ="pentetic acid">
+		<ul>
+			<li>Also known as DTPA, Pentetic Acid combines an amine backbone with carboxymethyl groups that are useful in removing metal ions and other toxins from the body.
+			<li>Synthesis: create formaldehyde by mixing ethanol, silver, and oxygen at 424 K.
+			<li>Very carefully prepare a cyanide group by heating ammonia, oil, and oxygen at 374 K in a separate beaker, while wearing a mask with appropriate ventilation.
+			<li>Combine both mixtures with ammonia, sodium, chlorine, and welding fuel.
+		</div>
+		<h3>Atropine</h3>
+		<div class ="atropine">
+		<ul>
+			<li>Atropine is a useful alkaloid in treating nerve agents and poisonings, and can help situationally in treating slowed heart rate from supression of the cardiac system.
+			<li>Synthesis: mix ethanol, phenol, diethylamine, and acetone in sulfuric acid.
+		</div>
+		<h3>Perfluorodecalin</h3>
+		<div class ="Perfluorodecalin">
+		<ul>
+			<li>A fluorocarbon, Perfluorodecalin has the ability to dissolve a large molar quantity of oxygen; topical application allows it to release stored oxygen to a target location. Can be applied internally for tissue oxygenation.
+			<li>Synthesis: hydrogenate fluorine and combine with Salicylic Acid, then heat to 374 K.
+		</div>
+		<br>
+		<hr>
+		<h2>VARIOUS OTHER PROBLEMS</h2>
+		<hr>
+		<h3>Diphenhydramine</h3>
+		<div class ="diphenhydramine">
+		<ul>
+			<li>Anti-allergy medication. May cause drowsiness.
+			<li>Synthesis route involves mixing oil, carbon, bromine, and ethanol with diethylamine.
+		</div>
+		<h3>Spaceacillin</h3>
+		<div class = "spaceacillin">
+		<ul>
+			<li>An all-purpose antibiotic agent extracted from space fungus.
+			<li>Combine space fungus with ethanol as a solvent.
+		</div>
+		<h3>Mannitol</h3>
+		<div class ="mannitol">
+		<ul>
+			<li>Mannitol is a sugar alcohol that can help alleviate cranial swelling.
+			<li>Hydrolyze sugar in water, then hydrogenate.
+		</div>
+		<h3>Oculine</h3>
+		<div class ="oculine">
+		<ul>
+			<li>Oculine is a combined eye and ear medication with antibiotic effects.
+		</div>
+		<h3>Haloperidol</h3>
+		<div class ="haloperidol">
+		<ul>
+			<li>Haloperidol is a powerful antipsychotic and sedative. Will help control psychiatric problems, but may cause brain damage.
+		</div>
+		<h3>Mutadone</h3>
+		<div class ="mutadone">
+		<ul>
+			<li>Mutadone is an experimental bromide that can cure genetic abnomalities.
+		</div>
+		<br>
+		<hr>
+		<i>This is not a complete list of all available medications. Further research and development efforts by NT Medical and Science divisions are strongly encouraged.</i>
+		<b><p>More information can be acquired at the following sources:</b><p>
+		<ul>
+			<li><a href="https://wiki.ss13.co/Chemicals" target="Goonstation Wiki: Chemicals">Chemistry references</a>
+		</li></ul>
+		<br>
+		<p>Trent's Anatomy:</p>
+		<ul>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Introduction">Introduction</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#The_Tools">Tools</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Doing_Surgery">Surgery</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Functions">Organ Functions</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Diseases">Organ Diseases</a>
+			<li><a href="https://wiki.ss13.co/Trent%27s_Anatomy#Organ_Damage_Treatment">Treatments</a></li></ul>

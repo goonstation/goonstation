@@ -4,8 +4,9 @@
 
 	on_equip(datum/source, mob/equipper, slot)
 		SHOULD_CALL_PARENT(0)
-		SHOULD_NOT_OVERRIDE(1)
+		. = 0
 		if((slot in valid_slots) && istype(equipper, mobtype))
+			. = 1
 			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_BEGIN, .proc/on_block_begin, TRUE)
 			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_END, .proc/on_block_end, TRUE)
 			var/obj/item/grab/block/B
@@ -22,7 +23,6 @@
 
 	on_unequip(datum/source, mob/user)
 		SHOULD_CALL_PARENT(0)
-		SHOULD_NOT_OVERRIDE(1)
 		UnregisterSignal(user, COMSIG_UNARMED_BLOCK_BEGIN)
 		if(affectedBlock)
 			on_block_end(user, affectedBlock)

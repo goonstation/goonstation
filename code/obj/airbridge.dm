@@ -16,7 +16,7 @@
 	desc = "This is an invisible thing. Yet you can see it. You notice reality unraveling around you."
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "airbr"
-	invisibility = 99
+	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
 	density = 0
 
@@ -52,7 +52,6 @@
 
 	proc/get_link()
 		for_by_tcl(C, /obj/airbridge_controller)
-			LAGCHECK(LAG_LOW)
 			if(C.z == src.z && C.id == src.id && C != src)
 				linked = C
 				break
@@ -182,7 +181,8 @@
 				light.alpha = 255
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
-				light.filters = null
+				light.remove_filter("alpha white")
+				light.remove_filter("alpha black")
 				var/obj/machinery/light/l = light
 				if(istype(l))
 					l.seton(1)
@@ -215,7 +215,8 @@
 				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
 			sleep(1 SECOND)
 			for(var/obj/light in my_lights)
-				light.filters = null
+				light.remove_filter("alpha white")
+				light.remove_filter("alpha black")
 				light.alpha = 0
 
 			var/turf/curr
@@ -254,7 +255,7 @@
 /obj/machinery/computer/airbr
 	name = "Airbridge Computer"
 	desc = "Used to control the airbridge."
-	var/id = "noodles"
+	id = "noodles"
 	icon_state = "airbr0"
 
 	// set this var to 1 in the map editor if you want the airbridge to establish and pressurize when the round starts
@@ -281,7 +282,7 @@
 	initialize()
 		..()
 		update_status()
-		if (starts_established && links.len)
+		if (starts_established && length(links))
 			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 
@@ -303,7 +304,7 @@
 	process()
 		..()
 		update_status()
-		if (starts_established && links.len)
+		if (starts_established && length(links))
 			SPAWN_DBG(1 SECOND)
 				do_initial_extend()
 		return
@@ -481,6 +482,6 @@
 
 	attack_hand(mob/user as mob)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(usr, "<span class='notice'>[C.toggle_bridge()]</span>")
+			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break
 		return

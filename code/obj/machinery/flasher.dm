@@ -244,10 +244,10 @@
 		if (!src.anchored)
 			light.disable()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
-			src.overlays = null
+			src.UpdateOverlays(null, "anchor")
 
 		else if (src.anchored)
 			if ( powered() )
 				light.enable()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
-			src.overlays += "[base_state]-s"
+			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")

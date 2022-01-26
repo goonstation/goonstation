@@ -129,7 +129,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 				adjust_temp(temp as num)
 					set src in world
 					set category = "Minor"
@@ -143,7 +143,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 				adjust_temp(temp as num)
 					set src in world
 					set category = "Minor"
@@ -157,7 +157,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 
 				toggle_direction()
 					set src in world
@@ -165,7 +165,7 @@ obj/machinery/atmospherics
 
 					pump_direction = !pump_direction
 
-					update_icon()
+					UpdateIcon()
 
 				change_pressure_parameters()
 					set src in world
@@ -195,7 +195,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 			verb
 				trigger_inject()
 					set src in world
@@ -211,7 +211,7 @@ obj/machinery/atmospherics
 
 					on = !on
 
-					update_icon()
+					UpdateIcon()
 
 				toggle_scrubbing()
 					set src in world
@@ -219,7 +219,7 @@ obj/machinery/atmospherics
 
 					scrubbing = !scrubbing
 
-					update_icon()
+					UpdateIcon()
 
 				change_rate(amount as num)
 					set src in world
@@ -235,7 +235,7 @@ obj/machinery/atmospherics
 
 				on = !on
 
-				update_icon()
+				UpdateIcon()
 
 			change_pressure(amount as num)
 				set src in world
@@ -249,7 +249,7 @@ obj/machinery/atmospherics
 
 				if(node_in1)
 					var/node_ratio = input(usr, "Node 1 Ratio? ([dir2text(get_dir(src, node_in1))])") as num
-					node_ratio = min(max(0,node_ratio),1)
+					node_ratio = clamp(node_ratio, 0, 1)
 
 					node1_concentration = node_ratio
 					node2_concentration = 1-node_ratio
@@ -268,7 +268,7 @@ obj/machinery/atmospherics
 
 				on = !on
 
-				update_icon()
+				UpdateIcon()
 
 			change_pressure(amount as num)
 				set src in world
@@ -276,21 +276,6 @@ obj/machinery/atmospherics
 
 				target_pressure = amount
 
-	unary/oxygen_generator
-		verb
-			toggle()
-				set src in world
-				set category = "Minor"
-
-				on = !on
-
-				update_icon()
-
-			change_rate(amount as num)
-				set src in world
-				set category = "Minor"
-
-				oxygen_content = amount
 	binary/pump
 		verb
 			DEBUG_MESSAGE()
@@ -310,7 +295,7 @@ obj/machinery/atmospherics
 
 				on = !on
 
-				update_icon()
+				UpdateIcon()
 			change_pressure(amount as num)
 				set src in world
 				set category = "Minor"
@@ -400,16 +385,16 @@ turf/simulated
 			overlays = null
 			for(var/direction in cardinal)
 				if(group_border&direction)
-					overlays += icon('icons/turf_analysis.dmi',"red_arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"red_arrow",direction)
 				else if(air_check_directions&direction)
-					overlays += icon('icons/turf_analysis.dmi',"arrow",direction)
+					overlays += icon('icons/Testing/turf_analysis.dmi',"arrow",direction)
 		air_status()
 			set src in world
 			set category = "Minor"
 			var/datum/gas_mixture/GM = return_air()
 			boutput(usr, "<span class='notice'>@[x],[y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] w [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(active_hotspot)?("<span class='alert'>BURNING</span>"):(null)]")
 			if(length(GM.trace_gases))
-				for(var/datum/gas/trace_gas as() in GM.trace_gases)
+				for(var/datum/gas/trace_gas as anything in GM.trace_gases)
 					boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
 
 		force_temperature(temp as num)
@@ -438,7 +423,7 @@ turf/simulated
 			set category = "Minor"
 
 			if(amount>1)
-				var/datum/gas_mixture/adding = unpool(/datum/gas_mixture)
+				var/datum/gas_mixture/adding = new /datum/gas_mixture
 				var/datum/gas/sleeping_agent/trace_gas = adding.get_or_add_trace_gas_by_type(var/datum/gas/sleeping_agent)
 
 				trace_gas.moles = amount
@@ -556,7 +541,7 @@ mob
 				group.marker = 0
 
 			for(var/turf/simulated/floor/S in world)
-				S.icon = 'icons/turf_analysis.dmi'
+				S.icon = 'icons/Testing/turf_analysis.dmi'
 				if(S.parent)
 					if(S.parent.group_processing)
 						if(S.parent.marker == 0)

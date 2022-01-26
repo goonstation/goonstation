@@ -1,16 +1,16 @@
 /obj/item/device/flash
 	name = "flash"
-	desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
+	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
 	uses_multiple_icon_states = 1
 	icon_state = "flash"
+	force = 1
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "electronic"
 	mats = 2
-	module_research = list("energy" = 1, "devices" = 3)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
@@ -66,7 +66,22 @@
 		src.desc = "A device that emits an extremely bright light when used. Useful for briefly stunning people or starting a dance party."
 		return 1
 
-
+	get_desc()
+		. = ..()
+		if (src.status == 0)
+			. += "\nThe bulb has been burnt out"
+		else
+			switch(src.use)
+				if(0 to 4)
+					. += "\nThe bulb is in perfect condition."
+				if(4 to 6)
+					. += "\nThe bulb is in good condition"
+				if(6 to 8)
+					. += "\nThe bulb is in decent condition"
+				if(8 to 10)
+					. += "\nThe bulb is in bad condition"
+				else
+					. += "\nThe bulb is in terrible condition"
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M as mob, mob/user as mob)
@@ -126,7 +141,7 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, "sound/weapons/flash.ogg", 100, 1)
 	flick(src.animation_type, src)
 	src.l_time = world.time
 	if (!src.turboflash)
@@ -151,14 +166,19 @@
 		eye_damage = src.eye_damage_mod + rand(0, (1 * flash_power))
 
 	// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
-	M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
+	var/blind_success = M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 	if (src.emagged)
 		user.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 
 	convert(M,user)
 
 	// Log entry.
-	M.visible_message("<span class='alert'>[user] blinds [M] with the [src.name]!</span>")
+	var/blind_msg_target = "!"
+	var/blind_msg_others = "!"
+	if (!blind_success)
+		blind_msg_target = " but your eyes are protected!"
+		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
+	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
 	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
@@ -215,7 +235,7 @@
 			return
 
 	// Play animations.
-	playsound(get_turf(src), "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, "sound/weapons/flash.ogg", 100, 1)
 	flick(src.animation_type, src)
 	src.l_time = world.time
 
@@ -231,14 +251,22 @@
 			qdel(animation)
 
 	// Flash target mobs.
-	for (var/mob/living/M in oviewers((3 + src.range_mod), get_turf(src)))
-		if (src.turboflash)
-			M.apply_flash(35, 0, 0, 25)
-		else
-			var/dist = get_dist(get_turf(src),M)
-			dist = min(dist,4)
-			dist = max(dist,1)
-			M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+	for (var/atom/A in oviewers((3 + src.range_mod), get_turf(src)))
+		var/mob/living/M
+		if (istype(A, /obj/vehicle))
+			var/obj/vehicle/V = A
+			if (V.rider && V.rider_visible)
+				M = V.rider
+		else if (ismob(A))
+			M = A
+		if (M)
+			if (src.turboflash)
+				M.apply_flash(35, 0, 0, 25)
+			else
+				var/dist = get_dist(get_turf(src),M)
+				dist = min(dist,4)
+				dist = max(dist,1)
+				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 
 
 	// Handle bulb wear.
@@ -259,7 +287,7 @@
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
-			//playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+			//playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
 
 			var/mob/living/carbon/human/H = M
 			var/safety = 0
@@ -291,7 +319,8 @@
 
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
-	if (use > 1 && prob(max(0,(use*1.2) + burn_mod)))
+	tooltip_rebuild = 1
+	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
 		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
 		set_icon_state("flash3")
@@ -317,20 +346,6 @@
 	else if (isscrewingtool(W))
 		boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
 		secure = !secure
-	else if (ispulsingtool(W))
-		if (src.status == 0)
-			boutput(user, "<span class='alert'>The bulb has been burnt out.</span>")
-		else
-			if (src.use <= 0)
-				boutput(user, "<span class='notice'>The bulb is in perfect condition.</span>")
-			else if (src.use>0 && src.use<5)
-				boutput(user, "<span class='notice'>The bulb is in good condition.</span>")
-			else if (src.use>5 && src.use<10)
-				boutput(user, "<span class='notice'>The bulb is in decent condition.</span>")
-			else if (src.use>10 && src.use<15)
-				boutput(user, "<span class='notice'>The bulb is in bad condition.</span>")
-			else
-				boutput(user, "<span class='notice'>The bulb is in terrible condition.</span>")
 	else
 		return ..()
 
@@ -426,7 +441,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(get_turf(src), "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
+			playsound(src, "sound/weapons/rev_flash_startup.ogg", 60, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

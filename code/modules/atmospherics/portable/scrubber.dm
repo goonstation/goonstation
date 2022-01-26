@@ -26,7 +26,7 @@
 
 /obj/machinery/portable_atmospherics/scrubber/proc/scrub(datum/gas_mixture/removed)
 	//Filter it
-	var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+	var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 	if (filtered_out && removed)
 		filtered_out.temperature = removed.temperature
 		#define _FILTER_OUT_GAS(GAS, ...) \
@@ -43,7 +43,7 @@
 
 		if(length(removed.trace_gases))
 			var/datum/gas/filtered_gas
-			for(var/datum/gas/trace_gas as() in removed.trace_gases)
+			for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 				filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
 				filtered_gas.moles = trace_gas.moles
 				removed.remove_trace_gas(trace_gas)
@@ -72,7 +72,7 @@
 		if(src.on)
 			src.on = FALSE
 			src.updateDialog()
-			src.update_icon()
+			src.UpdateIcon()
 			src.visible_message("<span class='alert'>[src] shuts down due to lack of APC power.</span>")
 		return
 
@@ -100,7 +100,7 @@
 		power_usage += filtered_out_moles * 700 WATTS
 		A.use_power(power_usage, ENVIRON)
 		src.updateDialog()
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents
@@ -115,13 +115,25 @@
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(user)
-	..()
+	else if(iswrenchingtool(W))
+		if(!connected_port)//checks for whether the scrubber is connected to a port, if it is calls parent.
+			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			if(!possible_port)//checks for whether there's something that could be connected to on the scrubber's loc, if there is it calls parent.
+				if(src.anchored)
+					src.anchored = 0
+					boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
+				else
+					src.anchored = 1
+					boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
+			else ..()
+		else ..()
+	else ..()
 
 
 /obj/machinery/portable_atmospherics/scrubber/attack_ai(var/mob/user as mob)
 	if(!src.connected_port && get_dist(src, user) > 7)
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
 
@@ -166,17 +178,17 @@ Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src
 				holding = null
 
 		if (href_list["volume_adj"])
-			var/diff = text2num(href_list["volume_adj"])
-			inlet_flow = min(100, max(0, inlet_flow+diff))
+			var/diff = text2num_safe(href_list["volume_adj"])
+			inlet_flow = clamp(inlet_flow+diff, 0, 100)
 
 		else if (href_list["volume_set"])
 			var/change = input(usr,"Target inlet flow (0-[100]):","Enter target inlet flow",inlet_flow) as num
 			if(!isnum(change)) return
-			inlet_flow = min(100, max(0, change))
+			inlet_flow = clamp(change, 0, 100)
 
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
-		update_icon()
+		UpdateIcon()
 	else
 		usr.Browse(null, "window=scrubber")
 		return

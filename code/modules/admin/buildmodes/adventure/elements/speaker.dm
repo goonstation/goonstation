@@ -17,9 +17,9 @@
 		boutput(usr, "<span class='notice'>Left click to place speaker, right click to simulate message. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -31,11 +31,11 @@
 				speaker.anchored = speaker_anchored
 				speaker.message = message
 				if (speaker_type == "invisible")
-					speaker.invisibility = 20
+					speaker.invisibility = INVIS_ADVENTURE
 				else
 					SPAWN_DBG(1 SECOND)
 						speaker.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/speaker))
 				object:speak()
 
@@ -77,4 +77,4 @@
 		F["[path].message"] >> message
 		F["[path].speaker_type"] >> speaker_type
 		if (speaker_type == "invisible")
-			src.invisibility = 20
+			src.invisibility = INVIS_ADVENTURE

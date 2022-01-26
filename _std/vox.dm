@@ -130,7 +130,7 @@ proc/vox_help(var/mob/user)
 
 		voxhelp_cache += "</body></html>"
 
-	usr.Browse(voxhelp_cache, "window=voxhelp;size=300x600")
+	user.Browse(voxhelp_cache, "window=voxhelp;size=300x600")
 
 /client/proc/cmd_admin_intercom_announce()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

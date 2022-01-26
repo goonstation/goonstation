@@ -3,6 +3,11 @@
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
 
+#define _MECHCOMP_VALIDATE_RESPONSE_GOOD 0
+#define _MECHCOMP_VALIDATE_RESPONSE_BAD 1
+#define _MECHCOMP_VALIDATE_RESPONSE_HALT 2
+#define _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER 3
+
 /datum/mechanicsMessage
 	var/signal = "1"
 	var/list/nodes = list()
@@ -12,7 +17,7 @@
 	nodes.Add(A)
 
 /datum/mechanicsMessage/proc/hasNode(var/atom/A)
-	return nodes.Find(A)
+	return (A in nodes)
 
 /datum/mechanicsMessage/proc/isTrue() //Thanks for not having bools , byond.
 	if(istext(signal))
@@ -73,15 +78,13 @@
 
 	var/defaultSignal = "1"
 
-/datum/component/mechanics_holder/Initialize(can_manually_set_signal = 0)
+/datum/component/mechanics_holder/Initialize()
 	src.connected_outgoing = list()
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
 
 	src.configs.Add(list(DC_ALL))
-	if(can_manually_set_signal)
-		allowManualSingalSetting()
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -196,10 +199,15 @@
 	var/fired = 0
 	for(var/atom/A in src.connected_outgoing)
 		//Note: a target not handling a signal returns 0.
-		if(SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal) != 0)
+		var/validated = SEND_SIGNAL(parent,_COMSIG_MECHCOMP_DISPATCH_VALIDATE, A, msg.signal)
+		if(validated == _MECHCOMP_VALIDATE_RESPONSE_HALT) //The component wants signal processing to stop NOW
+			return fired
+		if(validated == _MECHCOMP_VALIDATE_RESPONSE_BAD) //The component wants this signal to be skipped
 			continue
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RECEIVE_MSG, src.connected_outgoing[A], cloneMessage(msg))
 		fired = 1
+		if(validated == _MECHCOMP_VALIDATE_RESPONSE_HALT_AFTER) //The component wants signal processing to stop AFTER this signal
+			return fired
 	return fired
 
 //Used to copy a message because we don't want to pass a single message to multiple components which might end up modifying it both at the same time.
@@ -289,17 +297,25 @@
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/attackby(var/comsig_target, obj/item/W as obj, mob/user)
+	if(istype(comsig_target, /obj/machinery/door))
+		var/obj/machinery/door/hacked_door = comsig_target
+		if(hacked_door.p_open)
+			return
+	if(istype(comsig_target, /obj/machinery/vending))
+		var/obj/machinery/vending/hacked_vendor = comsig_target
+		if(hacked_vendor.panel_open)
+			return
 	if(!ispulsingtool(W) || !isliving(user) || user.stat)
 		return 0
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-		if(selected_config && in_range(parent, user))
+		if(selected_config && in_interact_range(parent, user))
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
-					if(!in_range(parent, user) || user.stat)
+					if(!in_interact_range(parent, user) || user.stat)
 						return
-					inp = trim(adminscrub(inp), 1)
+					inp = trim(strip_html_tags(inp))
 					if(length(inp))
 						defaultSignal = inp
 						boutput(user, "Signal set to [inp]")

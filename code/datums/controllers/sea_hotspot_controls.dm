@@ -60,14 +60,14 @@
 					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
+						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining))
 							turf_color = "station"
 						else
 							turf_color = "other"
 
 					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
 
-			for (var/beacon in warp_beacons)
+			for (var/beacon in by_type[/obj/warp_beacon])
 				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
 					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
@@ -315,9 +315,6 @@
 				if (H && H.closest_hotspot == src)
 					dowsers += H
 
-
-				LAGCHECK(LAG_HIGH)
-
 			for (var/thing in dowsers)
 				var/obj/item/heat_dowsing/H = thing
 				if (H.deployed)
@@ -356,7 +353,6 @@
 				phenomena_flags |= PH_FIRE
 
 		var/found = 0
-		LAGCHECK(LAG_REALTIME)
 		for (var/mob/living/M in range(6, C))
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
@@ -369,8 +365,6 @@
 				M.changeStatus("weakened", 1 SECOND)
 				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
-			LAGCHECK(LAG_HIGH)
-
 		if (phenomena_flags & PH_FIRE_WEAK)
 			fireflash(phenomena_point,0)
 
@@ -378,7 +372,7 @@
 			fireflash(phenomena_point,1)
 
 		if (phenomena_flags & PH_EX)
-			explosion(0, phenomena_point, -1, -1, 2, 3)
+			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
 			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
@@ -465,9 +459,9 @@
 	item_state = "dowsing"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	throwforce = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 6
 	throw_speed = 4
 	throw_range = 5
@@ -555,7 +549,7 @@
 
 						val += round(diff, 1)
 
-				val = min(max(val,0),20)
+				val = clamp(val, 0, 20)
 
 				if (placed)
 					placed = 0
@@ -588,6 +582,17 @@
 		processing_items -= src
 		..()
 
+	afterattack(var/turf/T, var/mob/user)
+		if (istype(T) && !T.density)
+			processing_items |= src
+
+			user.drop_item()
+			src.set_loc(T)
+			src.deploy()
+
+			return
+		..()
+
 
 	proc/deploy()
 		processing_items |= src
@@ -608,21 +613,9 @@
 /turf/space/fluid/attack_hand(var/mob/user)
 	var/obj/item/heat_dowsing/H = locate() in src
 	if (H)
-		H.attack_hand(user)
+		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/heat_dowsing))
-		processing_items |= W
-
-		var/obj/item/heat_dowsing/H = W
-
-		user.drop_item()
-		W.set_loc(src)
-
-		H.deploy()
-
-		return
-
 	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 		return
@@ -716,13 +709,13 @@
 		var/obj/machinery/power/vent_capture/V = new /obj/machinery/power/vent_capture(src.loc)
 		V.built = 1
 		//V.built = 0
-		//V.update_icon()
+		//V.UpdateIcon()
 		qdel(src)
 
 /obj/machinery/power/vent_capture
 	name = "vent capture unit"
 	desc = "A piece of machinery that converts vent output into electricity."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydrovent_1"
 	density = 1
 	anchored = 1
@@ -743,7 +736,7 @@
 	ex_act(severity)
 		return //nah
 
-	proc/update_icon()
+	update_icon()
 		icon_state = icon_state = "hydrovent_[built]"
 
 	disposing()
@@ -788,11 +781,11 @@
 		if (!built)
 			if (ispryingtool(W)) //blah i don care
 				built = 1
-				update_icon()
+				UpdateIcon()
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
-				src.loc.attackby(W,user)
+				src.loc.Attackby(W,user)
 				return
 		..()
 
@@ -831,7 +824,7 @@
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "stomper0"
 	density = 1
 	anchored = 0
@@ -848,7 +841,7 @@
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	mats = 8
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
 	var/mode_toggle = 0
@@ -871,24 +864,24 @@
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
 		..()
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "stomper[on]"
 
 	attack_hand(var/mob/living/carbon/human/user as mob)
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !usr.equipped())
-				usr.put_in_hand_or_drop(cell)
-				cell.updateicon()
+			if(cell && !user.equipped())
+				user.put_in_hand_or_drop(cell)
+				cell.UpdateIcon()
 				cell = null
 
-				usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
-			update_icon()
+			UpdateIcon()
 			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
@@ -925,12 +918,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -939,7 +932,7 @@
 		else if (ispryingtool(I))
 			open = !open
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			UpdateIcon()
 		else
 			..()
 
@@ -958,7 +951,7 @@
 			return
 
 		on = 0
-		update_icon()
+		UpdateIcon()
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
@@ -974,10 +967,11 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			random_brute_damage(M, 55, 1)
-			M.changeStatus("weakened", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+			if (isliving(M))
+				random_brute_damage(M, 55, 1)
+				M.changeStatus("weakened", 1 SECOND)
+				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)
@@ -1030,6 +1024,11 @@
 		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(locate(/obj/machinery/power/vent_capture) in T)
+			V.visible_message("<span class='notice'>[V] beeps grumpily and aborts construction.</span>", "<span class='notice'>You hear a grumpy beeping.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && V && T)
 			V.finish_build(T)
 
@@ -1117,7 +1116,7 @@
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_trench"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER+1
@@ -1143,8 +1142,8 @@
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)
-			if (usr.client && hotspot_controller)
-				hotspot_controller.show_map(usr.client)
+			if (user.client && hotspot_controller)
+				hotspot_controller.show_map(user.client)
 			return
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\

@@ -8,7 +8,7 @@
 	boutput(world, "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
-		world << csound(sound_to_play)
+		playsound_global(world, sound_to_play, 100)
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
@@ -18,7 +18,7 @@
 	boutput(world, "<span class='[css_class]'>[text]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
-		world << csound(sound_to_play)
+		playsound_global(world, sound_to_play, 100)
 
 /proc/advanced_command_alert(var/text, var/title="", var/sound_to_play = "")
 	if(!text) return 0
@@ -72,7 +72,7 @@
 				boutput(M, "<span class='alert'>[text]</span><br>")
 
 	if (sound_to_play && length(sound_to_play) > 0)
-		world << csound(sound_to_play)
+		playsound_global(world, sound_to_play, 100)
 
 	return 1
 

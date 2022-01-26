@@ -23,7 +23,7 @@ Contains:
 	item_state = "assembly"
 	var/status = 0.0
 	throwforce = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 10
 	force = 2
@@ -159,7 +159,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -173,7 +173,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -222,7 +222,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
@@ -339,8 +339,6 @@ Contains:
 			src.part5.set_loc(T)
 			src.part5.master = null
 			src.part5 = null
-
-		//SN src = null
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -380,7 +378,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -394,7 +392,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Beaker Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing("bombing", user, null, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [showCoords(src.x, src.y, src.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -427,7 +425,7 @@ Contains:
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
 		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -441,7 +439,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
@@ -556,7 +554,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -570,7 +568,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
+			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(user.x, user.y, user.z)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -604,7 +602,7 @@ Contains:
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
 		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -618,7 +616,7 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state()
 		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")

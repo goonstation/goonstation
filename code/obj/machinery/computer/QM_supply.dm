@@ -62,50 +62,53 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
 		for (var/R in sell_crate)
-			if (istype(R, /obj/item/reagent_containers) || ishuman(R)) //heh
+			var/list/patho = null
+			if (istype(R, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = R
-				var/list/patho = RC.reagents.aggregate_pathogens()
-				for (var/uid in patho)
-					if (!(uid in src.analysis_by_uid))
-						var/datum/pathogen/P = patho[uid]
-						var/datum/cdc_contact_analysis/D = new
-						D.uid = uid
-						var/sym_count = max(min(length(P.effects), 7), 2)
-						D.time_factor = sym_count * rand(10, 15) // 200, 600
-						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
-						D.name = P.name
-						var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
-						var/ds = "weak"
-						switch (P.stages)
-							if (4)
-								ds = "potent"
-							if (5)
-								ds = "deadly"
-						var/df = "a relatively one-sided"
-						switch (sym_count)
-							if (3 to 4)
-								df = "a somewhat colorful"
-							if (5 to 6)
-								df = "a rather diverse"
-							if (7)
-								df = "an incredibly symptomatic"
-						D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
-						var/datum/pathogen/copy = unpool(/datum/pathogen)
-						copy.setup(0, P, 0, null)
-						D.assoc_pathogen = copy
-						src.analysis_by_uid[uid] = D
-						src.ready_to_analyze += D
-				if (ishuman(RC))
-					var/mob/living/carbon/human/H = RC
-					H.ghostize()
+				patho = RC.reagents.aggregate_pathogens()
 				qdel(RC)
+			else if (ishuman(R)) // heh
+				var/mob/living/carbon/human/H = R
+				patho = H.reagents.aggregate_pathogens()
+				H.ghostize()
+				qdel(H)
+			else
+				qdel(R)
+				continue
+			for (var/uid in patho)
+				if (!(uid in src.analysis_by_uid))
+					var/datum/pathogen/P = patho[uid]
+					var/datum/cdc_contact_analysis/D = new
+					D.uid = uid
+					var/sym_count = clamp(length(P.effects), 2, 7)
+					D.time_factor = sym_count * rand(10, 15) // 200, 600
+					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
+					D.name = P.name
+					var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
+					var/ds = "weak"
+					switch (P.stages)
+						if (4)
+							ds = "potent"
+						if (5)
+							ds = "deadly"
+					var/df = "a relatively one-sided"
+					switch (sym_count)
+						if (3 to 4)
+							df = "a somewhat colorful"
+						if (5 to 6)
+							df = "a rather diverse"
+						if (7)
+							df = "an incredibly symptomatic"
+					D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
+					var/datum/pathogen/copy = new /datum/pathogen
+					copy.setup(0, P, 0, null)
+					D.assoc_pathogen = copy
+					src.analysis_by_uid[uid] = D
+					src.ready_to_analyze += D
 			qdel(sell_crate)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 var/global/datum/cdc_contact_controller/QM_CDC = new()
 
@@ -116,11 +119,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	req_access = list(access_supply_console)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
 	var/last_cdc_message = null
 	var/hacked = 0
 	var/tradeamt = 1
 	var/in_dialogue_box = 0
+	var/printing = 0
 	var/obj/item/card/id/scan = null
 	var/list/datum/supply_pack
 
@@ -128,19 +133,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/last_market_update = -INFINITY
 	var/price_list = null
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
-	disposing()
-		radio_controller.remove_object(src, "1435")
+	New()
 		..()
-
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -158,11 +157,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/card/emag))
+/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
-	else
-		return src.attack_hand(user)
+		..()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -174,7 +172,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/timer = shippingmarket.get_market_timeleft()
 	src.add_dialog(user)
-	post_signal("supply")
+	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
 	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
@@ -373,6 +371,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			Contact CDC &middot;
 			Traders
+			Requisitions
 			RockBox Controls
 		</div>
 	</div>
@@ -389,6 +388,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
 			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
+			<a href='[topicLink("requis_list")]'>Requisitions</a> &bull;
 			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
 		</div>
 	</div>
@@ -431,9 +431,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.temp += "We have no unanalyzed pathogen samples from your station.<br>"
 	else
 		src.temp += "We're currently analyzing the pathogen sample [QM_CDC.current_analysis.name]. We can <A href='[topicLink("cdc_analyze")]'>analyze something different</A>, if you want."
-		if (QM_CDC.current_analysis.description_available > ticker.round_elapsed_ticks)
+		if (QM_CDC.current_analysis.description_available <= ticker.round_elapsed_ticks)
 			src.temp += "Here's what we have so far: <br>[QM_CDC.current_analysis.desc]<br>"
-			if (QM_CDC.current_analysis.cure_available > ticker.round_elapsed_ticks)
+			if (QM_CDC.current_analysis.cure_available <= ticker.round_elapsed_ticks)
 				src.temp += "We've also discovered a method to synthesize a cure for this pathogen.<br>"
 				QM_CDC.completed_analysis += QM_CDC.current_analysis
 				QM_CDC.current_analysis = null
@@ -587,7 +587,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
 				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
 				. += {"</ul>"}
 				return .
@@ -649,7 +649,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
 	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
@@ -705,7 +705,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [(QM_CDC.next_crate - ticker.round_elapsed_ticks)] seconds!</span>"
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
 			else
 				if (wagesystem.shipping_budget < 5)
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
@@ -747,11 +747,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					if (QM_CDC.current_analysis)
 						var/datum/cdc_contact_analysis/A = QM_CDC.current_analysis
 						A.time_done += ticker.round_elapsed_ticks - A.begun_at
-						if (A.cure_available >= ticker.round_elapsed_ticks)
+						if (A.cure_available <= ticker.round_elapsed_ticks)
 							QM_CDC.completed_analysis += A
 						else
 							QM_CDC.ready_to_analyze += A
 					QM_CDC.current_analysis = C
+					QM_CDC.ready_to_analyze -= C
 					C.begun_at = ticker.round_elapsed_ticks
 					C.description_available = C.begun_at + C.time_factor - C.time_done
 					C.cure_available = C.description_available + C.time_factor
@@ -766,7 +767,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
-			var/count = text2num(href_list["count"])
+			var/count = text2num_safe(href_list["count"])
 			var/cost = 0
 			switch (count)
 				if (1)
@@ -844,7 +845,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				src.updateUsrDialog()
 				return
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 			var/total_stuff_in_cart = 0
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
@@ -983,7 +984,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				cart_cost += C.price * C.amount
 				total_cart_amount += C.amount
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
@@ -1008,6 +1009,30 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			T.wipe_cart()
 			src.trader_dialogue_update("cart",T)
 
+		if ("pin_contract")
+			var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+			if(RC)
+				if(RC.pinned)
+					RC.pinned = FALSE
+					shippingmarket.has_pinned_contract = FALSE
+				else if(!shippingmarket.has_pinned_contract)
+					RC.pinned = TRUE
+					shippingmarket.has_pinned_contract = TRUE
+			src.requisitions_update()
+
+		if ("requis_list")
+			if (!shippingmarket.req_contracts.len)
+				boutput(usr, "<span class='alert'>No requisitions are currently on offer.</span>")
+				return
+			if (signal_loss >= 75)
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
+				return
+			src.requisitions_update()
+
+		if ("print_req")
+			if(!src.printing)
+				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				src.print_requisition(RC)
 
 		if ("mainmenu")
 			src.temp = null
@@ -1015,6 +1040,51 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+
+/obj/machinery/computer/supplycomp/proc/requisitions_update()
+	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
+	src.temp += "To fulfill these contracts, please send full requested<br>"
+	src.temp += "complement of items with the contract's Requisitions tag.<br>"
+	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
+	src.temp += "One contract at a time may be pinned, which reserves it<br>"
+	src.temp += "for your use, even through market shifts.<br><br>"
+	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
+	src.temp += "send the included requisition sheet; please be aware<br>"
+	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
+	src.temp += "and your shipment may not be returned if insufficient."
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
+		src.temp += "Contract Reward:"
+		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
+			src.temp += "<br>"
+			if(RC.payout > 0) src.temp += "[RC.payout] Credits<br>"
+			for(var/datum/rc_itemreward/RI in RC.item_rewarders)
+				if(RI.count) src.temp += "[RI.count]x [RI.name]<br>"
+				else src.temp += "[RI.name]<br>"
+			src.temp += "<br>"
+		else
+			src.temp += " [RC.payout] Credits<br>"
+		src.temp += "Requisition Code: [RC.req_code]<br><br>"
+		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
+		src.temp += "[RC.requis_desc]"
+		if(RC.req_class == AID_CONTRACT)
+			src.temp += "URGENT - Cannot Be Reserved<br>"
+		else
+			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
+		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
+
+/obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
+	src.printing = 1
+	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	SPAWN_DBG(2 SECONDS)
+		var/obj/item/paper/thermal/P = new(src.loc)
+		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
+		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
+		P.info += uppertext(contract.requis_desc)
+		P.info += "</center></font>"
+		P.name = "Requisition: [contract.name]"
+		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
@@ -1187,14 +1257,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return 1
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency("1435")
-
-	if(!frequency) return
-
 	var/datum/signal/status_signal = get_free_signal()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
 
-	frequency.post_signal(src, status_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

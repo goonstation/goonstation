@@ -1,0 +1,11 @@
+name: Size-Based Labeling
+on: pull_request_target
+jobs:
+  size-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: size-label
+        uses: "pascalgn/size-label-action@v0.4.2"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          IGNORED: "**/*.bundle.*\n**/*.chunk.*" # **/*.dmm\n

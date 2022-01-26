@@ -33,11 +33,11 @@
 			// 		src.donor.cure_disease(disease)
 			// return
 	on_removal()
-		..()
 		//Add stomach contents on mob to this object for transplants
 		if (iscarbon(src.donor))
 			src.contents = src.donor.stomach_process
 			src.donor.stomach_process = list()
+		..()
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -67,6 +67,16 @@
 				output += "[S] = [L[S]]\n"
 			boutput(user, "<br><span style='color:purple'><b>[src]</b> contains:\n [output]</span>")
 
+/obj/item/organ/stomach/synth
+	name = "synthstomach"
+	organ_name = "synthstomach"
+	icon_state = "plant"
+	desc = "Nearly functionally identical to a pitcher plant... weird."
+	synthetic = 1
+	New()
+		..()
+		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
+
 /obj/item/organ/stomach/cyber
 	name = "cyberstomach"
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
@@ -74,6 +84,7 @@
 	// item_state = "heart_robo1"
 	made_from = "pharosium"
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	mats = 6
 
@@ -83,17 +94,15 @@
 			ADD_STATUS_LIMIT(M, "Food", 6)
 
 	on_removal()
-		. = ..()
 		REMOVE_STATUS_LIMIT(src.donor, "Food")
+		. = ..()
 
 	unbreakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			ADD_STATUS_LIMIT(src.donor, "Food", 6)
 
 	breakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			REMOVE_STATUS_LIMIT(src.donor, "Food")
 
 	emag_act(mob/user, obj/item/card/emag/E)

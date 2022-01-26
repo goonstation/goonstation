@@ -1,0 +1,228 @@
+<html>
+<head>
+<style type="text/css">
+div.code
+{
+padding:5px;
+border:1px solid black;
+margin:1px;
+font-family:"courier";
+font-size:12px;
+background-color:lightgray;
+}
+div.tips
+{
+padding:10px;
+border:5px solid gray;
+margin:0px;
+font-family:"Arial";
+font-size:12px;
+font-weight:bold;
+}
+body
+{
+color:black;
+background-color:white;
+}
+h1
+{
+font-family:"Arial Black";
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+h2
+{
+font-family:"Arial Black";
+text-align:left;
+font-size:18px;
+}
+p
+{
+font-family:"Arial";
+font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Mineralogy 101</h1>
+<p><i>Disclaimer: At the time of writing, all information in this book is correct. However, over time, the information may become out of date.<br>
+<h2>Introduction</h2>
+<p>The distinction between minerals in a mining and/or manufacturing environment can sometimes get rather confusing.
+Over the course of this handbook, we hope to give you at least a rudimentary education on the various minerals most commonly
+found in a space environment, and what they should be used for. This is especially helpful if you are trying to understand
+the NanoTrasen <i>"AutoArtisan"</i> standard-issue Manufacturing Units.</p>
+
+<h2>Mauxite</h2>
+<p>Classification: Sturdy Metal</p>
+<p>Mauxite is a common metal alloy, characterised by its dull reddish-brown color and mild coppery smell. It is commonly used
+in construction projects due to being very durable while still rather easy to work with, no doubt due to it being an alloy
+comprised mostly of naturally occurring steel with elements of copper and zinc also present among other elements.
+It tends to be rather easy to find in space due to its abundance, and poses little risk during extraction or refinement.</p>
+
+<h2>Pharosium</h2>
+<p>Classification: Sturdy Metal, Conductor</p>
+<p>Easily recognizable due to its distinct bright orange hue, Pharosium is a conductive metal found in plentiful quantity
+and as such is generally considered an industry standard. It finds most common use in electrical wiring and circuit boards.
+Often, basic electronics are comprised mostly of Pharosium and Mauxite in their construction.
+</p>
+
+<h2>Molitz</h2>
+<p>Classification: High Density Crystal</p>
+<p>Somewhat similar to both Quartz and glass found on Earth, Molitz is a crystal formation that bears the best qualities of
+both, being durable enough to withstand significant shock, and at the same time easy to work with due to its abundance and
+malleability. It most often finds use in glass installations on space stations, most often affixed into place as a fine
+sealant and durable enough to not pose a potential atmospheric hazard in everyday circumstances. A rare pink variant termed
+<i>Molitz Beta</i> can be rarely found in deposits of regular Molitz. <i>Molitz Beta</iv> crystals contain higher oxygen content
+which can be released from them upon heating, making them highly desirable combustion catalysts for combustion power systems.
+</p>
+
+<h2>Char</h2>
+<p>Classification: Not Construction Grade Material</p>
+<p>Char is a black, flaky substance mostly comprised of carbon, and bears a significant similarity to coal. While it is not
+generally used in construction projects due to its brittle and weak structure, it does often find use as a fuel source for
+basic combustion power systems. It can also be used in chemistry, as a means of acquiring large amounts of carbon and other
+trace elements. The origin of this mineral is unknown, as the process of creating coal could not feasibly occur in deep space.
+</p>
+
+<h2>Cobryl</h2>
+<p>Classification: Metal</p>
+<p>While it rarely finds use in industrial and construction projects, Cobryl nevertheless finds itself as a notable material
+due to its popularity with industries that deal in luxury. It is light blue in coloration, and when properly treated and
+cleaned displays a unique lustre not seen in other materials. It has marginal strength as a metal and as such can be used in
+small-scale constructions, but it should not be used for anything that requires significant sturdiness.
+</p>
+
+<h2>Cytine</h2>
+<p>Classification: Crystal</p>
+<p>Cytines are small gemstones of varying color. While no stronger than Molitz at best, they are prized by jewel collectors
+and luxury goods traders for their compact shapes, light weight and highly varied color.
+</p>
+
+<h2>Fibrilith</h2>
+<p>Classification: Crystal</p>
+<p>Fibrilith is a highly strange mineral known for both its unusual threaded molecular structure and its extreme softness for
+a mineral substance. While it is not paticularly useful in any kind of construction project, it has been successfully woven
+into a fabric highly similar to linen. As such, it is prized by textile industries and used in clothing.
+</p>
+
+<h2>Bohrum</h2>
+<p>Classification: Dense Metal, Dense Matter</p>
+<p>Well known among the scientific community for its bizarre chemical makeup, Bohrum is equally well known among the
+construction industry for its incredible resilience to damage. It is known to be an alloy of iron, titanium, krypton, xenon,
+silver and lead, as well as several previously undiscovered chemical elements which are subject to intense research. While
+the noble gases have been formed into compounds in laboratory settings, having them occur naturally with such complexity was
+previously considered unthinkable. In spite of these unknown qualities, Bohrum as has yet proven to be an incredibly safe
+material to work with and possesses immense strength as a construction material, though its high density makes it very heavy
+and thus it is not suited to certain structural projects.
+</p>
+
+<h2>Claretine</h2>
+<p>Classification: Crystal, High Energy Conductor</p>
+<p>A mineral salt of a brilliant bright red coloration, Claretine is a high-end electrical conductor, able to conduct immense
+amounts of electricity without suffering any damage at all. At paticularly high energy states, Pharosium and other lower
+grade conductors have been known to lose efficiency due to heat and eventually break down and melt - Claretine appears to
+have an incredible resistance to heat in general, and thus is spun into wire spools and used for electrical wiring in
+paticularly high-energy systems. It is not common however, and should be used resourcefully.
+</p>
+
+<h2>Telecrystal</h2>
+<p>Classification: Crystal, High Energy Power Source</p>
+<p>With its deep purple coloration and constantly shimmering lustre, one may be prone to mistaking Telecrystal as any other
+kind of gemstone - beautiful, but ultimately of little practical use. This is not the case; Telecrystal is well known among
+industries and science for its extremely unusual spatial warping properties. Though it is generally not able to transmit
+large amounts of matter reliably, it has seen some use in experimental (often illegal) technology, particularly by smugglers
+and terrorists dealing in articles of contraband. However, despite its use as a matter transmitter and potent energy source,
+Telecrystal is generally not established as a safe material, and caution should be exercised when handling and using it.
+Research continues on this mineral to this day.
+</p>
+
+<h2>Miracle Matter</h2>
+<p>Classification: Anomalous</p>
+<p>Extremely unusual in every regard, Miracle Matter is largely considered a chameleon among minerals, well known for
+arbitrarily mimicing the molecular structure and chemical composition of other minerals under highly specific conditions.
+While research continues on the subject, it is suspected that subjecting Miracle Matter to a high degree of shock in the
+presence of dust or regolith from other minerals will cause it to mimic the structure of whatever mineral dust first touches
+it after the Miracle Matter is \"activated\", so to speak.
+</p>
+
+<h2>Uqill</h2>
+<p>Classification: Extraordinarily Dense Crystalline Matter</p>
+<p>Uqill is an extremely dense and heavy mineral, known for its dull jet black appearance. While extremely difficult to work
+with due to its profound resilience, Uqill is generally used when large amounts of raw matter are needed in a compressed
+space, such as the industry standard Dyna*Tech Rapid Construction Device (known more coloquially as \"RCD\". It also finds
+use in drills and other materials that require a great deal of robustness.
+</p>
+
+<h2>Cerenkite</h2>
+<p>Classification: Sturdy Metal, Conductor, Signifcant Power Source</p>
+<p>Cerenkite is a light blue highly radioactive soft metal that is used as a power source in various industries. While the
+dangers of mining radioactive minerals are already well known, Cerenkite poses its own particular hazard in that it is
+notoriously prone to accumulating regolith (a fine mineral dust) which is easily disturbed and dispersed into the air when
+the mineral is handled. As such, miners risk being exposed both externally and internally to the radiation if the proper
+precautions are not taken when handling Cerenkite.
+</p>
+
+<h2>Plasmastone</h2>
+<p>Classification: Crystal, Conductor, Significant Power Source</p>
+<p>One of the physical naturally occurring forms of the scientifically nebulous <i>"Plasma"</i> substance that almost exclusively
+powers modern space travel and industry. This is plasma in a crystalline form - care should be taken when handling it, as it
+will explode if exposed to high temperatures or flames, though not to the same degree as the far more violent Erebite (which
+can sometimes be found in plasmastone seams). Plasmastone of course has many of the same properties as plasma in other matter
+states and such can find use as a power source for certain devices.
+</p>
+
+<h2>Viscerite</h2>
+<p>Classification: Not Particularly Useful for Construction</p>
+<p>Viscerite is a common material that oftentimes appears as gooey purple blobs. The theorized point of origin for the substance
+is from Martian colonies, though the activities that result in the deposit of Viscerite into asteroids is not currently understood.
+Thought not particularly useful in construction projects, it can be re-spun into fabric, or used as an organic material supplement
+for biomatter intensive processes like cloning.
+</p>
+
+<h2>Koshmarite</h2>
+<p>Classification: Crystal</p>
+<p>Koshmarite is a fairly common fiber that occurs in deposits of unknown origins. It is dusted in a fine layer of regolith, as Cerenkite
+is, though the pourous surface leads to less scatter of the regolith when handled. It should still be treated as a radiation hazard to
+personnel working with it. It also has incredibly high albedo, leading to strong reflectance of light. Some believe that Koshmarite appears
+to pulsate, though it is not known if these visual effects were conjurations brought on to the observers by acute radiation sickness.
+</p>
+
+<h2>Syreline</h2>
+<p>Classification: Metal</p>
+<p>Syreline is of immense value to the luxury commodity industry, being an alloy of several precious metals and having
+beautiful light refracting and reflecting properties in its natural state. While it is soft and a poor choice for building
+materials, the prices it commands on the mineral market more than make up for its physical weakness.
+</p>
+
+<h2>Gold</h2>
+<p>Classification: Metal, Conductor, Reflective Material</p>
+<p>Gold is of immense value as a raw ore that can be traded in the commodity industry. It, like Syreline, has light-refracting properties,
+but is a comparatively poor conductor to some of the other mineral types one may encounter. It is not particularly useful to
+construction, and primarily is desirable as a part of luxury exports from a station's shipping department.
+</p>
+
+<h2>Erebite</h2>
+<p>Classification: Crystal, High Energy Conductor</p>
+Erebite is an infamously dangerous and volatile mineral that has become increasingly rare in space mining as of late,
+no doubt due to its propensity to violently explode if exposed to even mild amounts of heat or shock. Several high profile
+industrial accidents have been caused by improper erebite handling. In spite of its hostile and deadly nature however,
+erebite has unique energy-altering properties that make it invaluable as an internal power source, or as explosives.
+<p>
+</p>
+
+<h2>Starstone</h2>
+<p>Classification: Extraordinarily Dense Crystalline Matter</p>
+<p>Starstone is a highly rare mineral not found in the vast majority of mining areas. While not paticularly useful as a
+construction grade material (being only as strong as mid-grade Molitz at best), the unusual star-shaped crystal lattices
+making up this jewel make the few instances of it found by astrogeologists highly prized collectors items. Sapient members
+of the Rock Snake race in paticular tend to buy these for high prices, as even a small five gram crystal is able to provide
+several months worth of nutrients for them.
+</p>
+
+<p><i>More information on minerals can be found by consulting a mentor or at Nanotrasen's on-line data-base at:
+<ul>
+	<li><a href="https://wiki.ss13.co/Guide_to_Mining#Ore" target="Goonstation Wiki: Guide to Mining">https://wiki.ss13.co/Guide_to_Mining#Ore</a></li></ul>
+</p>

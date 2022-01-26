@@ -76,7 +76,7 @@
 "bx" = (/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/slimy_honk)
 "by" = (/obj/stool/chair{icon_state = "chair"; dir = 8},/obj/item/reagent_containers/balloon,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/slimy_honk)
 "bz" = (/obj/table/round/auto,/obj/item/storage/goodybag,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/slimy_honk)
-"bA" = (/obj/stool/chair,/obj/item/clothing/under/misc/clown/pink,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/slimy_honk)
+"bA" = (/obj/stool/chair,/obj/item/gun/reagent/syringe/love,/obj/item/clothing/under/misc/clown/pink,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/slimy_honk)
 "bB" = (/obj/decal/cleanable/vomit/spiders,/turf/simulated/floor/grass{name = "astroturf"},/area/prefab/slimy_honk)
 "bC" = (/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/carpet/purple,/area/prefab/slimy_honk)
 "bD" = (/obj/stool,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet,/area/prefab/slimy_honk)

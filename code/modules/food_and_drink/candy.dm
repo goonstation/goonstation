@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 /obj/item/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Man, that shit looks good. I bet it's got nougat. Fuck."
@@ -49,8 +50,8 @@
 			icon_state = "nougat1"
 
 /obj/item/reagent_containers/food/snacks/candy/caramel
-	name = "Goatze's Caramel Cremes"
-	desc = "You know you've thought of this when reading the name.  Shame on you."
+	name = "'Hole Zone Layer' caramel creme"
+	desc = "You know that missing O-Zone from earth? We made it in a candy!"
 	real_name = "caramel"
 	icon_state = "caramel"
 	food_effects = list("food_energized")
@@ -164,7 +165,8 @@
 	real_name = "Hetz's Cup"
 	initial_reagents = list("chocolate" = 10)
 
-/obj/item/reagent_containers/food/snacks/candy/jellybean/
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
+/obj/item/reagent_containers/food/snacks/candy/jellybean
 	name = "jelly bean"
 	desc = "YOU SHOULDN'T SEE THIS OBJECT"
 	icon_state = "bean"
@@ -305,9 +307,9 @@
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
 			SPAWN_DBG(0)
-				src.update_icon()
+				src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (src.icon_random)
 			return
 		if (src.reagents)
@@ -325,7 +327,7 @@
 		SPAWN_DBG(0)
 			if (src.icon_state == "lpop-")
 				src.icon_state = "lpop-[rand(1,6)]"
-			if (islist(src.flavors) && src.flavors.len)
+			if (islist(src.flavors) && length(src.flavors))
 				for (var/i=5, i>0, i--)
 					src.reagents.add_reagent(pick(src.flavors), 1)
 
@@ -405,7 +407,7 @@
 	var/phrase
 	var/list/heart_phrases = list("Be Mine", "XOXO", "Kiss Me", "Love", "U Rock", "I <3 U", "i wuv u", "U Leave Me Breathless", "UR my man", "Cutie Pie", "U-R-2 Cute",
 	 "Love Bug", "Hot Lips", "UR A STAR", "ME & U", "UR A QT", "Thank U", "Soul Mate", "Sol Mate", "Awesome", "Bee Mine", "Sweet as Honey", "True Love", "Ooh La La", "I GIB U WUV",
-	 "Change to Love Intent", "Robust Me", "Don't Robust my <3", "Love Transfer Valve", "You're Stunning", "Absorb my Heart", "Owl luv u forever", "We have Chemistry", "Be my Comdom",
+	 "Change to Love Intent", "Robust Me", "Don't Robust my <3", "Love Transfer Valve", "You're Stunning", "Absorb my Heart", "Owl luv u forever", "We have Chemistry",
 	 "Law 4: Rearrange the alphabet and put U and AI together", "HALP THE CUTIE IS GRIFFIN MEH", "CUTECURITY!!!", "I honk u", "All access to my <3", "Greytide my heart", "Wear my butt as a hat",
 	 "Maecho love", "Love birds", "Bee still my heart", "Get in my clown car", "Meet me in maintenance", "Let's fly into the sun", "Deep fried love")
 

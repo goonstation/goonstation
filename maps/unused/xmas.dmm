@@ -5149,7 +5149,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -11384,7 +11384,7 @@
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "avG" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -15954,22 +15954,6 @@
 	icon_state = "carpetS"
 	},
 /area/security/detectives_office)
-"aEl" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/table/woodentable,
-/obj/item/camera_test{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/turf/simulated/floor{
-	icon_state = "carpetS"
-	},
-/area/security/detectives_office)
 "aEm" = (
 /obj/table/woodentable{
 	dir = 6
@@ -16588,23 +16572,6 @@
 	icon_state = "snow"
 	},
 /area/crew_quarters/captain)
-"aFs" = (
-/obj/table{
-	tag = "icon-tabledir (SOUTHEAST)";
-	icon_state = "tabledir";
-	dir = 6
-	},
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/turf/simulated/floor{
-	icon_state = "snow"
-	},
-/area/crew_quarters/captain)
 "aFt" = (
 /turf/simulated/wall/r_wall,
 /area/crew_quarters/captain)
@@ -17194,12 +17161,6 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/turf/simulated/floor{
-	icon_state = "snow"
-	},
-/area/crew_quarters/captain)
-"aGt" = (
-/obj/displaycase,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -18090,7 +18051,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/inner)
 "aHV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -19792,7 +19753,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -30070,7 +30031,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -31197,7 +31158,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -32919,7 +32880,7 @@
 /turf/simulated/floor/plating/airless,
 /area/solar/south)
 "bjm" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -49932,7 +49893,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "tds-solar";
 	name = "Factory Solar Control"
 	},
@@ -56251,7 +56212,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "ntoutpost-solar";
 	name = "Outpost Solar Control";
 	track = 2
@@ -56432,7 +56393,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/old_outpost/engine)
 "cjL" = (
@@ -56466,7 +56427,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/black,
 /area/old_outpost/control)
 "cjQ" = (
@@ -58171,6 +58132,47 @@
 	},
 /turf/simulated/wall/asteroid,
 /area/space)
+"eQN" = (
+/obj/table{
+	tag = "icon-tabledir (SOUTHEAST)";
+	icon_state = "tabledir";
+	dir = 6
+	},
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/turf/simulated/floor{
+	icon_state = "snow"
+	},
+/area/crew_quarters/captain)
+"fZY" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/table/woodentable,
+/obj/item/camera{
+	desc = "A one use - polaroid camera. 30 photos left.";
+	name = "detectives camera";
+	pictures_left = 30
+	},
+/turf/simulated/floor{
+	icon_state = "carpetS"
+	},
+/area/security/detectives_office)
+"ljU" = (
+/obj/displaycase{
+	displayed = new /obj/item/captaingun
+	},
+/turf/simulated/floor{
+	icon_state = "snow"
+	},
+/area/crew_quarters/captain)
 
 (1,1,1) = {"
 aaa
@@ -89367,7 +89369,7 @@ auR
 aCO
 aDn
 aDN
-aEl
+fZY
 aEH
 aFc
 aFp
@@ -90735,7 +90737,7 @@ aFi
 aFq
 aFJ
 aGd
-aGt
+ljU
 aFt
 aGZ
 aHe
@@ -91413,7 +91415,7 @@ aDU
 aEt
 aEN
 aCR
-aFs
+eQN
 aFL
 aGg
 aGw

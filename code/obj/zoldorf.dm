@@ -23,7 +23,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 /obj/machinery/playerzoldorf/proc/updateui(var/mob/exclude,var/item_path) //opening a zoldorf ui adds a player to a list (they are removed on close). this proc references
 	var/wasnull = 0														  //a list of all players currently viewing the interface and dynamically updates everyone for full syncing
 	// TODO: this should use updateUsrDialog instead
-	var/staticiterations = src.openwindows.len
+	var/staticiterations = length(src.openwindows)
 	for(var/i=1,i<=staticiterations,i++)
 		if((src.openwindows[i] == exclude) || (src.openwindows[i] == null) || !(src.openwindows[i] in range(1,src)))
 			if(src.openwindows[i]==null) //checking for nulls
@@ -41,7 +41,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				staticiterations--
 				i--
 	if(wasnull == 1) //if any nulls were found, declog the list
-		staticiterations = src.openwindows.len
+		staticiterations = length(src.openwindows)
 		for(var/i=1,i<=staticiterations,i++)
 			if(src.openwindows[i] == null)
 				src.openwindows -= src.openwindows[i]
@@ -193,8 +193,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if(istype(H))
 			holderim = image(H.flat_icon)
 		holderim.filters += filter(type="alpha", icon=image('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
-		holderim.overlays += image('icons/mob/overcoats/worn_suit.dmi', icon_state="wizard")
-		holderim.overlays += image('icons/mob/head.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/head.dmi', icon_state="wizard")
 		holderim.pixel_y = -3
 
 		//overlay player
@@ -473,7 +473,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					item.stock--
 					item.raw_list["stock"]--
 		else
-			if((text2num(href_list["credits"]) <= src.credits) && (text2num(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
+			if((text2num_safe(href_list["credits"]) <= src.credits) && (text2num_safe(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
 				usr << output("return","Zoldorf.browser:serverconfirm")
 				var/obj/item/moneyreturn = new /obj/item/spacecash(get_turf(src),src.credits)
 				src.credits = 0

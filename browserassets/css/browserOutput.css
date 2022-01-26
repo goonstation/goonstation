@@ -33,6 +33,12 @@ a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
 .emoji {font-family: "Segoe UI Emoji" !important;}
+img.emoji {
+	height: 1em;
+	width: 1em;
+	margin: 0 .05em 0 .1em;
+	vertical-align: -0.1em;
+}
 
 
 /*****************************************
@@ -65,6 +71,16 @@ a.popt {text-decoration: none;}
 	border: 1px solid gray;
 	border-radius: 2px;
 }
+
+#messages.filter-Admin .admin,
+#messages.filter-Combat .combat,
+#messages.filter-Radios .radio,
+#messages.filter-Speech .say,
+#messages.filter-OOC .ooc,
+#messages.filter-Misc .misc {
+	display: none;
+}
+
 #newMessages {
 	position: fixed;
 	display: block;
@@ -138,6 +154,41 @@ a.popt {text-decoration: none;}
 	float: right;
 }
 #options .decreaseFont {border-top: 0;}
+
+/* TOOLTIPS */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 50%;
+	white-space: nowrap;
+}
+
+.tooltip .tooltiptext::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color:#555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
 
 /* POPUPS */
 .popup {
@@ -284,10 +335,12 @@ a.popt {text-decoration: none;}
 .medal {color: #808000;}
 .combat {color: #ff0000;}
 .say {}
+.sing {color: #B87AB8;}
 .blobsay {color: #226622;}
+.bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
 .hivesay {color: #663500;}
-.ghoulsay {color: #600f89;}
+.thrallsay {color: #600f89;}
 .kudzusay {color: #005c0e;}
 .astralsay {color: #2AABA4;}
 .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
@@ -303,16 +356,16 @@ a.popt {text-decoration: none;}
 h1.alert, h2.alert {color: #000000;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
-.highlight {background: yellow;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
 .rcommand {color: #334E6D;}
 .rsecurity {color: #E00000;}
+.rdetective {color: #a00000;}
 .rengineering {color: #A86800;}
-.rmedical {color: #461B7E;}
-.rresearch {color: #153E7E;}
+.rmedical {color: #153E7E;}
+.rresearch {color: #461B7E;}
 .rcivilian {color: #A10082;}
 .rsyndicate {color: #962121;}
 .rother {color: #800080;}
@@ -334,6 +387,11 @@ h1.alert, h2.alert {color: #000000;}
 .who-list span, .who-list a {
 	display: inline-block;
 	margin-right: 10px;
+}
+.highlight {
+	background: yellow;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
 }
 
 /* bog-standard dark theme with easy, unsaturated colors */
@@ -366,7 +424,23 @@ body.theme-dark .radio {color: #3fcc3f;}
 body.theme-dark .contextMenu {background-color: rgb(48, 48, 48);}
 body.theme-dark .contextMenu a {color: rgb(216, 216, 216);}
 body.theme-dark .contextMenu a:hover {background-color: rgb(92, 92, 92);}
-body.theme-dark  .popup {background-color: rgb(48, 48, 48);}
+body.theme-dark .popup {background-color: rgb(48, 48, 48);}
+body.theme-dark .popup .close {
+	background: #333;
+	color: #aaa;
+}
+body.theme-dark .popup .close:hover {background: #444;}
+body.theme-dark .popup .head {
+	background: rgb(22, 22, 22);
+	color: #ddd;
+	border-bottom: 2px solid rgb(3, 80, 3);
+}
+body.theme-dark .popup input {border: 1px solid rgb(104, 104, 104); background: rgb(61, 61, 61); color: rgb(204, 204, 204);}
+body.theme-dark .popup input[type=text]:hover, body.theme-dark .popup input[type=text]:active, body.theme-dark .popup input[type=text]:focus {border-color: green;}
+body.theme-dark .popup input[type=submit] {background: rgb(70, 70, 70); color: #ddd; }
+body.theme-dark .popup input[type=submit]:hover, body.theme-dark .popup input[type=submit]:focus, body.theme-dark .popup input[type=submit]:active {background: rgb(75, 75, 75);}
+
+
 body.theme-dark a {color: #6464ff;}
 body.theme-dark a:visited {color: #ae6fff;}
 body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}
@@ -399,10 +473,12 @@ body.theme-dark .gfartooc {color: #60c4e6;}
 body.theme-dark .gfartlooc {color: #92cbdf;}
 body.theme-dark .gfartadmin {color: #c2953c;}
 body.theme-dark .combat {color: #e20000;}
+body.theme-dark .sing {color: #D8BFD8;}
 body.theme-dark .blobsay {color: #4ec44e;}
+body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}
 body.theme-dark .hivesay {color: #e2a059;}
-body.theme-dark .ghoulsay {color: #9347b9;}
+body.theme-dark .thrallsay {color: #9347b9;}
 body.theme-dark .kudzusay {color: #4bc75e;}
 body.theme-dark .astralsay {color: #60d4cf;}
 body.theme-dark .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
@@ -426,9 +502,10 @@ body.theme-dark .rstandard {color: #3fcc3f;}
 body.theme-dark .rintercom {color: #4dc1c9;}
 body.theme-dark .rcommand {color: #7ca6d6;}
 body.theme-dark .rsecurity {color: #e43535;}
+body.theme-dark .rdetective {color: #af4242;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #ac83e2;}
-body.theme-dark .rresearch {color: #3f69ac;}
+body.theme-dark .rmedical {color: #3A88AC;}
+body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
 body.theme-dark .rother {color: #bd46bd;}

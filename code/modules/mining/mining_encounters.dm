@@ -34,7 +34,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(2,6),rand(0,40))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,6))
@@ -79,7 +79,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(2,6),0)
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,6))
@@ -109,7 +109,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
@@ -165,7 +165,7 @@
 			amount--
 			the_gem = pick(gems)
 			if (floors.len) //ZeWaka: Fix for pick() from empty list
-				var/obj/item/G = unpool(the_gem)
+				var/obj/item/G = new the_gem
 				G.set_loc(pick(floors))
 
 /////////////TELESCOPE ENCOUNTERS BELOW
@@ -196,7 +196,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"miraclium",rand(2,9))
 
@@ -226,7 +226,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"mauxite",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -257,7 +257,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		var/list/left = Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"gold",rand(2,4))
 		Turfspawn_Asteroid_SeedSpecificOre(left,"syreline",rand(3,6))
@@ -289,7 +289,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"molitz",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -320,7 +320,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"pharosium",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -351,7 +351,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"bohrum",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -382,7 +382,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"char",rand(2,5))
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
@@ -413,7 +413,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"nanite cluster",rand(2,5))
 
@@ -443,9 +443,9 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
-		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"erebite",rand(2,8))
+		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"erebite",rand(1,4))
 
 /datum/mining_encounter/tel_cerenkite
 	name = "Cerenkite asteroid"
@@ -473,7 +473,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"cerenkite",rand(2,8))
 
@@ -503,7 +503,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"koshmarite",rand(2,8))
 
@@ -533,7 +533,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"viscerite",rand(2,8))
 
@@ -563,7 +563,7 @@
 			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
-			AST.update_icon()
+			AST.UpdateIcon()
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"starstone",rand(1,2))
 // Terrain Gen Procs
@@ -715,11 +715,12 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/A
+
+	var/turf/A = locate(center.x, center.y, center.z)
 	if (hollow)
-		A = new /turf/simulated/floor/plating/airless/asteroid(locate(center.x, center.y, center.z),0)
+		A = A.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 	else
-		A = new base_rock(locate(center.x, center.y, center.z),0)
+		A = A.ReplaceWith(base_rock, FALSE, TRUE, FALSE, TRUE)
 	generated_turfs += A
 	var/turf/simulated/wall/asteroid/B
 	var/turf/simulated/floor/plating/airless/asteroid/F
@@ -742,11 +743,12 @@
 				if (area_restriction && S.loc.type != area_restriction)
 					continue
 				if (hollow && total_distance < size / 2)
-					F = new /turf/simulated/floor/plating/airless/asteroid(locate(S.x, S.y, S.z),0)
-					//F.stone_color = B.stone_color
+					var/turf/T = locate(S.x, S.y, S.z)
+					F = T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 					generated_turfs += F
 				else
-					B = new base_rock(locate(S.x, S.y, S.z),0)
+					var/turf/T = locate(S.x, S.y, S.z)
+					B = T.ReplaceWith(base_rock, FALSE, TRUE, FALSE, TRUE)
 					stone_color = B.stone_color
 					generated_turfs += B
 
@@ -766,13 +768,14 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/A = new /turf/simulated/floor/plating/airless(locate(center.x, center.y, center.z),0)
+	var/turf/A = locate(center.x, center.y, center.z)
+	A = A.ReplaceWith(/turf/simulated/floor/plating/airless, FALSE, TRUE, FALSE, TRUE)
 	generated_turfs += A
 	var/turf/B = null
 
 	while (current_range < size - 1)
 		current_range++
-		current_chance = max(2,min(current_chance - 25,100))
+		current_chance = clamp(current_chance - 25, 2, 100)
 		for (var/turf/space/S in range(current_range,A))
 			if (get_dist(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
@@ -783,7 +786,8 @@
 					continue
 
 				if (prob(current_chance))
-					B = new /turf/simulated/floor/plating/airless(locate(S.x, S.y, S.z),0)
+					B = locate(S.x, S.y, S.z)
+					B = B.ReplaceWith(/turf/simulated/floor/plating/airless, FALSE, TRUE, FALSE, TRUE)
 					generated_turfs += B
 				else
 					if (prob(round(current_chance / 2)))
@@ -819,7 +823,7 @@
 		picker = rand(1,6)
 		switch(picker)
 			if (1 to 3)
-				I = unpool(/obj/item/raw_material/scrap_metal)
+				I = new /obj/item/raw_material/scrap_metal
 				I.set_loc(pick(turfs_near_center))
 				I.setMaterial(scrap_material)
 			if (4)

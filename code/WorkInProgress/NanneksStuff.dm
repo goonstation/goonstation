@@ -149,7 +149,7 @@ This works
 
 	proc/build_composite_icon(var/atom/C)
 		var/icon/composite = icon(C.icon, C.icon_state, C.dir, 1)
-		for(var/image/I as() in C.overlays)
+		for(var/image/I as anything in C.overlays)
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 		return composite
 

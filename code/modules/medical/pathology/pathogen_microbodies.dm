@@ -129,6 +129,7 @@ datum/microbody/fungi
 
 	uniqueid = 3
 	module_id = "fungi"
+	auto_immunize = 1
 
 datum/microbody/parasite
 	name = "Parasites"
@@ -147,6 +148,7 @@ datum/microbody/parasite
 
 	uniqueid = 4
 	module_id = "parasite"
+	auto_immunize = 1
 
 datum/microbody/gmcell // TODO: I kind of removed mutations so I should really rename this, I guess
 	name = "Great Mutatis cell"
@@ -170,4 +172,5 @@ datum/microbody/gmcell // TODO: I kind of removed mutations so I should really r
 	module_id = "gmcell"
 
 	nutrients = list("dna_mutagen")
+	auto_immunize = 1
 	amount = 0.35

@@ -37,9 +37,9 @@
 		abilityHolder.updateButtons()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = "Trimmed"
-		bioHolder.mobAppearance.customization_second = "Full Beard"
-		bioHolder.mobAppearance.customization_third = "Eyebrows"
+		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
 		bioHolder.mobAppearance.customization_first_color = "#555555"
 		bioHolder.mobAppearance.customization_second_color = "#555555"
 		bioHolder.mobAppearance.customization_third_color = "#555555"
@@ -92,7 +92,7 @@
 	icon_state = "cknight_hood"
 	see_face = 0
 
-/obj/screen/ability/topBar/cyalume_knight
+/atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
 		var/datum/targetable/cyalume_knight/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -108,7 +108,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='hint'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -138,7 +138,7 @@
 	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	points = 100
 	pointName = "force"
-	//var/obj/screen/kudzu/meter/nutrients_meter = null
+	//var/atom/movable/screen/kudzu/meter/nutrients_meter = null
 	var/const/MAX_POINTS = 100
 
 	onLife(var/mult = 1)
@@ -157,7 +157,7 @@
 
 	New(datum/abilityHolder/holder)
 		..(holder)
-		var/obj/screen/ability/topBar/cyalume_knight/B = new /obj/screen/ability/topBar/cyalume_knight(null)
+		var/atom/movable/screen/ability/topBar/cyalume_knight/B = new /atom/movable/screen/ability/topBar/cyalume_knight(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -221,7 +221,7 @@
 			return 1
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(get_turf(sword), 'sound/effects/gust.ogg', 70, 1)
+		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
@@ -243,7 +243,7 @@
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (get_dist(sword,my_mob) <= 1)
-				playsound(get_turf(my_mob), 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
 					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
@@ -303,7 +303,7 @@
 
 		var/mob/owner_mob = holder.owner
 		owner_mob.visible_message("<span class='alert'><b>[holder.owner] thrusts the palm of his hand forward, releasing an overwhelming gust of wind!</b></span>")
-		playsound(get_turf(holder.owner), 'sound/effects/gust.ogg', 50, 1)
+		playsound(holder.owner, 'sound/effects/gust.ogg', 50, 1)
 		var/increment_value = (end_angle - start_angle) / (num_projectiles - 1)
 		var/current_angle = start_angle
 		var/i
@@ -454,7 +454,7 @@
 		var/original_pixel_y = mob_target.pixel_y
 
 		M.visible_message("<span class='alert'><b>[M] extends his open hand forward in a grasping motion, freezing [mob_target] in place!</b></span>")
-		mob_target.changeStatus("stunned", 150)
+		mob_target.changeStatus("stunned", 15 SECONDS)
 		mob_target.force_laydown_standup()
 
 		sleep(1.5 SECONDS)
@@ -599,7 +599,7 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(get_turf(M), 'sound/items/mender.ogg', 50, 1)
+			playsound(M, 'sound/items/mender.ogg', 50, 1)
 		else
 			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
@@ -666,26 +666,24 @@
 /datum/mutation_orb_mutdata
 	// AddEffect arguments
 	var/id
-	var/variant
 	var/time  // how long they have the mutation, 0 means forever
 	var/stabilized  // doesn't affect genetic stability
 	var/magical  // can't be removed and costs no genetic stability
 
 	// additional settings
-	var/powerboosted = 0
+	var/power = 1
 	var/energyboosted = 0
 	var/synchronized = 0
 	var/reinforced = 0
 	var/hardoverride = 0 // AddEffect won't add a power if the subject already has it. If this is 1, it will remove and overwrite any pre-existing mutations of the same type.
 
-	New(id, variant = 0, time = 0, stabilized = 0, magical = 0, powerboosted = 0, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
+	New(id, time = 0, stabilized = 0, magical = 0, power = 1, energyboosted = 0, synchronized = 0, reinforced = 0, hardoverride = 0)
 		. = ..()
 		src.id = id
-		src.variant = variant
 		src.time = time
 		src.stabilized = stabilized
 		src.magical = magical
-		src.powerboosted = powerboosted
+		src.power = power
 		src.energyboosted = energyboosted
 		src.synchronized = synchronized
 		src.reinforced = reinforced
@@ -720,14 +718,14 @@
 				if (mut.hardoverride) // if overwriting, remove pre-existing mutation if one exists
 					user.bioHolder.RemoveEffect(mut.id)
 
-				var/datum/bioEffect/added_effect = user.bioHolder.AddEffect(mut.id, mut.variant, mut.time, mut.stabilized, mut.magical)
+				var/datum/bioEffect/added_effect = user.bioHolder.AddEffect(mut.id, mut.power, mut.time, mut.stabilized, mut.magical)
 
 				if (!mut.magical && mut.reinforced)
 					added_effect.curable_by_mutadone = mut.reinforced
 
+
 				if (istype(added_effect, /datum/bioEffect/power/)) // apply chromosomes if provided and the mutation is a power
 					var/datum/bioEffect/power/added_power = added_effect
-					added_power.power = mut.powerboosted
 					added_power.safety = mut.synchronized
 					if (mut.energyboosted)
 						if (added_effect.cooldown != 0)
@@ -790,7 +788,7 @@
 		if (did_something)
 			var/turf/T = get_turf(target)
 			T.visible_message("<span class='notice'>As [user] brings \the [src] near [target], \the [src] spontaneously bursts into flames and [target]'s wounds appear to fade away!</span>")
-			var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
 			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)

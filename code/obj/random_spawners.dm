@@ -5,7 +5,7 @@
 	icon_state = "itemspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
 	var/min_amt2spawn = 0
@@ -15,6 +15,7 @@
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
+	// TODO: initialize
 	New()
 		..()
 		SPAWN_DBG(1 DECI SECOND)
@@ -23,7 +24,7 @@
 			qdel(src)
 
 	proc/spawn_items()
-		if (islist(src.guaranteed) && src.guaranteed.len)
+		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
 					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")
@@ -35,11 +36,11 @@
 				for (amt, amt>0, amt--)
 					closet_check_spawn(new_item)
 
-		if (!islist(src.items2spawn) || !src.items2spawn.len)
+		if (!islist(src.items2spawn) || !length(src.items2spawn))
 			logTheThing("debug", src, null, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
-			if (!islist(src.rare_items2spawn) || !src.rare_items2spawn.len)
+			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
 				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)
@@ -77,8 +78,7 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy,
-	/obj/item/reagent_containers/food/snacks/candy/chocolate,
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
 	/obj/item/reagent_containers/food/snacks/candy/nougat,
 	/obj/item/reagent_containers/food/snacks/candy/butterscotch,
 	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
@@ -538,7 +538,7 @@
 	/obj/item/paper_bin,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -604,7 +604,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -670,7 +670,7 @@
 	/obj/item/paper,
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/staple_gun/red)
 
 	one
@@ -797,7 +797,6 @@
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
-	/obj/item/hairball,
 	/obj/item/hand_labeler,
 	/obj/item/light/bulb/neutral,
 	/obj/item/light/tube/neutral,
@@ -937,7 +936,7 @@
 	icon_state = "podspawn"
 	density = 0
 	anchored = 1.0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
 
@@ -1097,8 +1096,7 @@
 	/obj/item/parts/robot_parts/leg/right/treads,
 	/obj/item/parts/robot_parts/leg/left/treads,
 	/obj/item/organ/eye/cyber/prodoc,
-	/obj/item/organ/eye/cyber/nightvision,
-	/obj/item/organ/eye/cyber/sechud)
+	/obj/item/organ/eye/cyber/nightvision)
 
 /obj/random_item_spawner/critter
 	name = "random critter spawner"
@@ -1362,7 +1360,7 @@
 		/obj/item/clothing/under/gimmick/dolan,
 		/obj/item/clothing/under/gimmick/jetson,
 		/obj/item/clothing/under/gimmick/princess,
-		/obj/item/clothing/under/gimmick/cosby,
+		/obj/item/clothing/under/gimmick/sweater,
 		/obj/item/clothing/under/gimmick/chaps,
 		/obj/item/clothing/under/gimmick/vault13,
 		/obj/item/clothing/under/gimmick/murph,
@@ -1426,8 +1424,7 @@
 	icon_state = "rand_mask"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/mask/hunter,
-						/obj/item/clothing/mask/owl_mask,
+	items2spawn = list(/obj/item/clothing/mask/owl_mask,
 						/obj/item/clothing/mask/smile,
 						/obj/item/clothing/mask/batman,
 						/obj/item/clothing/mask/clown_hat,
@@ -1435,7 +1432,6 @@
 						/obj/item/clothing/mask/balaclava,
 						/obj/item/clothing/mask/spiderman,
 						/obj/item/clothing/mask/horse_mask,
-						/obj/item/clothing/mask/gas/inquis,
 						/obj/item/clothing/mask/gas/plague,
 						/obj/item/clothing/mask/skull,
 						/obj/item/clothing/mask/niccage,
@@ -1492,6 +1488,30 @@
 	lots
 		min_amt2spawn = 5
 		max_amt2spawn = 7
+
+/obj/random_item_spawner/pizza
+	name = "random pizza spawner"
+	icon_state = "rand_pizza"
+	min_amt2spawn = 2
+	max_amt2spawn = 2
+	rare_chance = 1
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/bad,
+						/obj/item/reagent_containers/food/snacks/pizza/pepperbad,
+						/obj/item/reagent_containers/food/snacks/pizza/mushbad)
+	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+/obj/random_item_spawner/cola
+	name = "random cola spawner"
+	icon_state = "rand_pizza"
+	min_amt2spawn = 2
+	max_amt2spawn = 2
+	rare_chance = 2
+	items2spawn = list(/obj/item/reagent_containers/food/drinks/cola,
+						/obj/item/reagent_containers/food/drinks/cola/random,
+						/obj/item/reagent_containers/food/drinks/peach,
+						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
+						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
+	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
 
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
@@ -1601,29 +1621,30 @@
 	icon_state = "rand_shoes"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/shoes/cleats,
+	items2spawn = list(/obj/item/clothing/shoes/bootsblk,
+						/obj/item/clothing/shoes/bootsblu,
 						/obj/item/clothing/shoes/cowboy,
 						/obj/item/clothing/shoes/cyborg,
 						/obj/item/clothing/shoes/dress_shoes,
+						/obj/item/clothing/shoes/heels/dancin,
 						/obj/item/clothing/shoes/flippers,
 						/obj/item/clothing/shoes/fuzzy,
-						/obj/item/clothing/shoes/galoshes,
 						/obj/item/clothing/shoes/gogo,
 						/obj/item/clothing/shoes/heels,
-						/obj/item/clothing/shoes/jetpack,
 						/obj/item/clothing/shoes/macho,
-						/obj/item/clothing/shoes/magnetic,
 						/obj/item/clothing/shoes/mj_shoes,
+						/obj/item/clothing/shoes/mjblack,
+						/obj/item/clothing/shoes/mjwhite,
 						/obj/item/clothing/shoes/moon,
 						/obj/item/clothing/shoes/rocket,
 						/obj/item/clothing/shoes/rollerskates,
 						/obj/item/clothing/shoes/sailormoon,
-						/obj/item/clothing/shoes/sandal,
 						/obj/item/clothing/shoes/swat,
 						/obj/item/clothing/shoes/thong,
 						/obj/item/clothing/shoes/tourist,
 						/obj/item/clothing/shoes/utenashoes,
 						/obj/item/clothing/shoes/virtual,
+						/obj/item/clothing/shoes/witchfinder,
 						/obj/item/clothing/shoes/ziggy)
 
 	one

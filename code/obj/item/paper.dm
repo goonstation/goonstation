@@ -30,13 +30,13 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_blank"
 	uses_multiple_icon_states = 1
-	wear_image_icon = 'icons/mob/head.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	var/info = ""
 	var/stampable = 1
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER
@@ -83,42 +83,6 @@
 		src.pixel_y = rand(-8, 8)
 		src.pixel_x = rand(-9, 9)
 
-/obj/item/paper/pooled()
-
-	..()
-	name = "paper"
-	info = 0
-	src.icon_state = "paper_blank"
-	health = 10
-
-/obj/item/paper/unpooled()
-
-	..()
-	name = initial(name)
-	info = initial(info)
-	icon_state = initial(icon_state)
-	health = initial(health)
-	sealed = initial(sealed)
-
-
-	if (src.reagents)
-		src.reagents.clear_reagents()
-		src.reagents.add_reagent("paper", 10)
-	else
-		src.create_reagents(10)
-		reagents.add_reagent("paper", 10)
-
-	if (!src.offset)
-		return
-	else
-		src.pixel_y = rand(-8, 8)
-		src.pixel_x = rand(-9, 9)
-	SPAWN_DBG(0)
-		if (src.info && src.icon_state == "paper_blank")
-			icon_state = "paper"
-
-	return
-
 /obj/item/paper/examine(mob/user)
 	. = ..()
 	ui_interact(user)
@@ -139,27 +103,27 @@
 		src.examine(user)
 	else
 		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		if(src.pooled) //It's possible to queue multiple of these menus before resolving any.
+		if(src.disposed) //It's possible to queue multiple of these menus before resolving any.
 			return
-		usr.u_equip(src)
+		user.u_equip(src)
 		if (fold == "Paper hat")
-			usr.show_text("You fold the paper into a hat! Neat.", "blue")
+			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
-			usr.put_in_hand_or_drop(H)
+			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
 			if (fold == "Paper plane")
-				usr.show_text("You fold the paper into a plane! Neat.", "blue")
-				F = new /obj/item/paper/folded/plane(usr)
+				user.show_text("You fold the paper into a plane! Neat.", "blue")
+				F = new /obj/item/paper/folded/plane(user)
 			else
-				usr.show_text("You crumple the paper into a ball! Neat.", "blue")
-				F = new /obj/item/paper/folded/ball(usr)
+				user.show_text("You crumple the paper into a ball! Neat.", "blue")
+				F = new /obj/item/paper/folded/ball(user)
 			F.info = src.info
 			F.old_desc = src.desc
 			F.old_icon_state = src.icon_state
-			usr.put_in_hand_or_drop(F)
+			user.put_in_hand_or_drop(F)
 
-		pool(src)
+		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	var/mob/living/silicon/ai/user
@@ -175,6 +139,18 @@
 		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
 		onclose(usr, "[src.name]")
 	return
+
+/obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
+	if(length(stamps) < PAPER_MAX_STAMPS)
+		var/list/stamp_info = list(list(stamp_png, x, y, r))
+		LAZYLISTADD(stamps, stamp_info)
+	if(icon_state)
+		var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[icon_state]");
+		var/matrix/stamp_matrix = matrix()
+		stamp_matrix.Scale(1, 1)
+		stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
+		stamp_overlay.transform = stamp_matrix
+		src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -205,22 +181,14 @@
 			if(!src.stampable)
 				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
 				return
-			var/stamp_x = text2num(params["x"])
-			var/stamp_y = text2num(params["y"])
-			var/stamp_r = text2num(params["r"])	// rotation in degrees
+			var/stamp_x = text2num_safe(params["x"])
+			var/stamp_y = text2num_safe(params["y"])
+			var/stamp_r = text2num_safe(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
-			if(length(stamps) < PAPER_MAX_STAMPS)
-				var/list/stamp_info = list(list(stamp.current_state, stamp_x, stamp_y, stamp_r))
-				LAZYLISTADD(stamps, stamp_info)
-				/// This does the overlay stuff
-				var/image/stamp_overlay = image('icons/obj/writing.dmi', "paper_[stamp.icon_state]");
-				var/matrix/stamp_matrix = matrix()
-				stamp_matrix.Scale(1, 1)
-				stamp_matrix.Translate(rand(-2, 2), rand(-3, 2))
-				stamp_overlay.transform = stamp_matrix
 
-				src.UpdateOverlays(stamp_overlay, "stamps_[length(stamps) % PAPER_MAX_STAMPS_OVERLAYS]")
-				update_static_data(usr,ui)
+			if(length(stamps) < PAPER_MAX_STAMPS)
+				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
+				update_static_data(usr, ui)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
 			else
 				boutput(usr, "There is no where else you can stamp!")
@@ -232,18 +200,17 @@
 			var/in_paper = params["text"]
 			var/paper_len = length(in_paper)
 
-			field_counter = params["fieldCounter"] ? text2num(params["fieldCounter"]) : field_counter
+			field_counter = params["fieldCounter"] ? text2num_safe(params["fieldCounter"]) : field_counter
 
 			if(paper_len > PAPER_MAX_LENGTH)
 				// Side note, the only way we should get here is if
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+				logTheThing("debug", src, null, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
 			if(paper_len == 0)
 				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
-				logTheThing("PAPER: [key_name(ui.user)] writing to paper [name]")
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
@@ -251,16 +218,17 @@
 			. = TRUE
 
 /obj/item/paper/ui_static_data(mob/user)
-	. = list()
-	.["name"] = src.name
-	.["sizeX"] = src.sizex
-	.["sizeY"] = src.sizey
-	.["text"] = src.info
-	.["max_length"] = PAPER_MAX_LENGTH
-	.["paperColor"] = src.color || "white"	// color might not be set
-	.["stamps"] = src.stamps
-	.["stampable"] = src.stampable
-	.["sealed"] = src.sealed
+	. = list(
+		"name" = src.name,
+		"sizeX" = src.sizex,
+		"sizeY" = src.sizey,
+		"text" = src.info,
+		"max_length" = PAPER_MAX_LENGTH,
+		"paperColor" = src.color || "white",	// color might not be set
+		"stamps" = src.stamps,
+		"stampable" = src.stampable,
+		"sealed" = src.sealed,
+	)
 
 /obj/item/paper/ui_data(mob/user)
 	. = list(
@@ -272,7 +240,7 @@
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
-	T = time_type + ": [time2text(ticker.round_elapsed_ticks, "hh:mm:ss")]"
+	T = time_type + ": [time2text(world.timeofday, "DD MMM 2053, hh:mm:ss")]"
 
 	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(
@@ -301,6 +269,10 @@
 			var/obj/item/clipboard/C = src.loc
 			if(istype(C.pen, /obj/item/pen))
 				O = C.pen
+		if(istype(src.loc, /obj/item/portable_typewriter))
+			var/obj/item/portable_typewriter/typewriter = src.loc
+			if(istype(typewriter.pen, /obj/item/pen))
+				O = typewriter.pen
 	if(istype(O, /obj/item/pen))
 		var/obj/item/pen/PEN = O
 		. += list(
@@ -330,9 +302,11 @@
 		)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
+	if(istype(P, /obj/item/portable_typewriter))
+		return // suppress attack sound, the typewriter will load the paper in afterattack
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
-			boutput(usr, "<span class='alert'>You can't write on [src].</span>")
+			boutput(user, "<span class='alert'>You can't write on [src].</span>")
 			return
 		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
 			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
@@ -341,7 +315,7 @@
 		return
 	else if(istype(P, /obj/item/stamp))
 		if(src.sealed)
-			boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+			boutput(user, "<span class='alert'>You can't stamp [src].</span>")
 			return
 		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
 		ui_interact(user)
@@ -351,8 +325,8 @@
 		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
-		usr.u_equip(src)
-		pool(src)
+		user.u_equip(src)
+		qdel(src)
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -362,15 +336,18 @@
 /obj/item/paper/proc/build_fields(var/length)
 	var/pixel_width = (14 + (12 * (length-1)))
 	src.field_counter++
-	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_3" maxlength=[length] size=[length] />\]"}
+	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
 
 
 /obj/item/paper/thermal
-	name = "Thermal Paper"
+	name = "thermal paper"
 	stampable = 0
 	icon_state = "thermal_paper"
 	sealed = 1
 	item_function_flags = SMOKELESS
+
+/obj/item/paper/thermal/portable_printer
+	sealed = 0
 
 /obj/item/paper/alchemy/
 	name = "'Chemistry Information'"
@@ -386,13 +363,13 @@
 	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
 	<b>That's all there is to it!</b><br>
 	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary HEALTH MONITOR IMPLANT into the subject, which may be viewed from the cloning console.
+	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which may be viewed from the cloning console.
 	Profile Deletion has been restricted to \[Station Head\] level access.</p>
 	<h4>Cloning from a profile</h4>
 	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
 	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
-	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (With SPEEDCLONE technology) are roughly 90 seconds.
+	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
 	The cloning pod may be unlocked early with any \[Medical Researcher\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
 	<h4>Profile Management</h4>
@@ -431,7 +408,8 @@
 /obj/item/paper/HangarGuide
 	name ="'Ship Basics'"
 	info ={"In order to open the hangar doors, either look-up the password via the hangar control computer, or use the handy button near every hangar to get it.<BR>
-		In order to uninstall and install parts use a crowbar on a ship to open the maintenance panel, If you want to install a part, simply use the part on the ship. If you want to uninstall a part simply use an empty hand on the maintenance panel. Make sure to close the panel when you are done.<br>
+		In order to uninstall and install parts use a crowbar on a ship to open the maintenance panel, If you want to install a part, simply use the part on the ship.
+		If you want to uninstall a part simply use an empty hand on the maintenance panel. Make sure to close the panel when you are done.<br>
 		In order to use the cargo loader on a crate, simply make ensure the crate is behind the ship, and the loader will handle the rest."}
 
 /obj/item/paper/Map
@@ -470,20 +448,24 @@ ASC: Aux. Solar Control<BR>
 	name = "'Cryogenics Instruction Manual'"
 	fonts = list("Special Elite" = 1)
 	info = {"<h4><center><span style='font-family: Special Elite, cursive;'>NanoTrasen Cryogenics Chambers<br>Instruction Manual</span></center></h4>
-	All NanoTrasen spaceships are equipped with multiple cryogenics tubes, meant to store and heal critically wounded patients using cryoxadone. Use this guide for proper setup and handling instructions.<br><br>
+	All NanoTrasen spaceships are equipped with multiple cryogenics tubes, meant to store and heal critically wounded patients using cryoxadone. Use this guide for proper
+	setup and handling instructions.<br><br>
 	<h4>Setting Up the Cryogenics Chambers</h4>
 	<ol type="1">
 	<li>Secure a filled canister of O2 or another suitable air mixture to the attached connector using a wrench.</li>
-	<li>Add a 50-unit supply of cryoxadone to each of the two cryogenics chambers. There should be two nearby beakers for this purpose; if they are missing or empty, it is recommended that a request be sent to the research department to synthesize an additional supply.</li>
+	<li>Add a 50-unit supply of cryoxadone to each of the two cryogenics chambers. There should be two nearby beakers for this purpose; if they are missing or empty, it is recommended
+	that a request be sent to the Research Department to synthesize an additional supply.</li>
 	<li>Set the freezer to the lowest possible temperature setting (73.15 K, the default) if necessary.</li>
 	<li>Turn on the power on the freezer and leave it on.</li>
 	<li>One can add a defibrillator to attempt to revive subjects as well.</li>
 	</ol>
-	Note that the supply of cryoxadone will not deplete unless there is a patient present in the cryogenics chamber. However, the oxygen slowly depletes if the cryogenics chambers themselves are turned on, so it is recommended to leave them switched off unless a patient is present.<br><br>
+	Note that the supply of cryoxadone will not deplete unless there is a patient present in the cryogenics chamber. However, the oxygen slowly depletes if the cryogenics chambers
+	themselves are turned on, so it is recommended to leave them switched off unless a patient is present.<br><br>
 	<h4>Treating a Patient Using the Cryogenics Chambers</h4>
 	<ol type="1">
 	<li>Stabilize the patient's health using CPR or cardiac stimulants.</li>
-	<li>Remove any exosuit, headgear, and any other insulative materials being worn by the patient. Failure to remove these will deter the effects of the cryoxadone and halt the healing process.</li>
+	<li>Remove any exosuit, headgear, and any other insulative materials being worn by the patient. Failure to remove these will deter the effects of the cryoxadone and halt the
+	healing process.</li>
 	<li>Check to ensure that the gas temperature is at optimal levels and there is no contamination in the system.</li>
 	<li>Put the patient in the cryogenics chamber and turn it on.</li>
 	</ol>
@@ -494,13 +476,58 @@ ASC: Aux. Solar Control<BR>
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
 
-/obj/item/paper/Toxin
-	name = "'Chemical Information'"
-	info = "Known Onboard Toxins:<BR>\n\tGrade A Semi-Liquid Plasma:<BR>\n\t\tHighly poisonous. You cannot sustain concentrations above 15 units.<BR>\n\t\tA gas mask fails to filter plasma after 50 units.<BR>\n\t\tWill attempt to diffuse like a gas.<BR>\n\t\tFiltered by scrubbers.<BR>\n\t\tThere is a bottled version which is very different<BR>\n\t\t\tfrom the version found in canisters!<BR>\n<BR>\n\t\tWARNING: Highly Flammable. Keep away from heat sources<BR>\n\t\texcept in a enclosed fire area!<BR>\n\t\tWARNING: It is a crime to use this without authorization.<BR>\nKnown Onboard Anti-Toxin:<BR>\n\tAnti-Toxin Type 01P: Works against Grade A Plasma.<BR>\n\t\tBest if injected directly into bloodstream.<BR>\n\t\tA full injection is in every regular Med-Kit.<BR>\n\t\tSpecial toxin Kits hold around 7.<BR>\n<BR>\nKnown Onboard Chemicals (other):<BR>\n\tRejuvenation T#001:<BR>\n\t\tEven 1 unit injected directly into the bloodstream<BR>\n\t\t\twill cure paralysis and sleep toxins.<BR>\n\t\tIf administered to a dying patient it will prevent<BR>\n\t\t\tfurther damage for about units*3 seconds.<BR>\n\t\t\tit will not cure them or allow them to be cured.<BR>\n\t\tIt can be administeredd to a non-dying patient<BR>\n\t\t\tbut the chemicals disappear just as fast.<BR>\n\tSleep Toxin T#054:<BR>\n\t\t5 units wilkl induce precisely 1 minute of sleep.<BR>\n\t\t\tThe effects are cumulative.<BR>\n\t\tWARNING: It is a crime to use this without authorization"
-
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
-	info = "<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written authority from the Detective.<BR>\nThe Captain/HoP/Warden is ct as the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants, security during trial, and prisoner transport.<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did it but what happened. He must take special care to catalogue everything and don't leave anything out. Write out all the evidence on paper. Make sure you take an appropriate number of fingerprints. IF he must ask someone questions he has permission to confront them. If the person refuses he can ask a judicial authority to write a subpoena for questioning. If again he fails to respond then that person is to be jailed as insubordinate and obstructing justice. Said person will be released after he cooperates.<BR>\n<BR>\nONCE the FT has a clear idea as to who the criminal is he is to write an arrest warrant on the piece of paper. IT MUST LIST THE CHARGES. The FT is to then go to the judicial authority and explain a small version of his case. If the case is moderately acceptable the authority should sign it. Security must then execute said warrant.<BR>\n<BR>\n<B>Pre-Pre-Trial Phase:</B><BR>\nNow a legal representative must be presented to the defendant if said defendant requests one. That person and the defendant are then to be given time to meet (in the jail IS ACCEPTABLE). The defendant and his lawyer are then to be given a copy of all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions, THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO if the defense will be seeking not guilty by mental defect it must state this at this time to allow ample time for examination.<BR>\nNow at this time each side is to compile a list of witnesses. By default, the defendant is on both lists regardless of anything else. Also the defense and prosecution can compile more evidence beforehand BUT in order for it to be used the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.<BR>\n<B>Possible Motions:</B><BR>\n1. <U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt security.<BR>\n2. <U>Free Movement-</U> Basically the defendant is to be kept uncuffed before and during the trial.<BR>\n3. <U>Subpoena Witness-</U> If the defense presents god reasons for needing a witness but said person fails to cooperate then a subpoena is issued.<BR>\n4. <U>Drop the Charges-</U> Not enough evidence is there for a trial so the charges are to be dropped. The FT CAN RETRY but the judicial authority must carefully reexamine the new evidence.<BR>\n5. <U>Declare Incompetent-</U> Basically the defendant is insane. Once this is granted a medical official is to examine the patient. If he is indeed insane he is to be placed under care of the medical staff until he is deemed competent to stand trial.<BR>\n<BR>\nALL SIDES MOVE TO A COURTROOM<BR>\n<B>Pre-Trial Hearings:</B><BR>\nA judicial authority and the 2 sides are to meet in the trial room. NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty then proceed directly to sentencing phase. Now the sides each present their motions to the judicial authority. He rules on them. Each side can debate each motion. Then the judicial authority gets a list of crew members. He first gets a chance to look at them all and pick out acceptable and available jurors. Those jurors are then called over. Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER before dismissal the judicial authority MUST agree to the reasoning.<BR>\n<BR>\n<B>The Trial:</B><BR>\nThe trial has three phases.<BR>\n1. <B>Opening Arguments</B>- Each side can give a short speech. They may not present ANY evidence.<BR>\n2. <B>Witness Calling/Evidence Presentation</B>- The prosecution goes first and is able to call the witnesses on his approved list in any order. He can recall them if necessary. During the questioning the lawyer may use the evidence in the questions to help prove a point. After every witness the other side has a chance to cross-examine. After both sides are done questioning a witness the prosecution can present another or recall one (even the EXACT same one again!). After prosecution is done the defense can call witnesses. After the initial cases are presented both sides are free to call witnesses on either list.<BR>\nFINALLY once both sides are done calling witnesses we move onto the next phase.<BR>\n3. <B>Closing Arguments</B>- Same as opening.<BR>\nThe jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict. REMEMBER: They mix between some charges being guilty and others not guilty (IE if you supposedly killed someone with a gun and you unfortunately picked up a gun without authorization then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry.). Once they have agreed they present their verdict. If unable to reach a verdict and feel they will never they call a deadlocked jury and we restart at Pre-Trial phase with an entirely new set of jurors.<BR>\n<BR>\n<B>Sentencing Phase:</B><BR>\nIf the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part. <BR>\nI. Each side can present more evidence/witnesses in any order. There is NO ban on emotional aspects or anything. The prosecution is to submit a suggested penalty. After all the sides are done then the judicial authority is to give a sentence.<BR>\nII. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If NOT then the judge selects a sentence.<BR>\n<BR>\nTADA you're done. Security then executes the sentence and adds the applicable convictions to the person's record.<BR>\n"
+	info = {"<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written
+	authority from the Detective.<BR>\nThe Captain/HoP is the judicial authority.<BR>\nThe Security Officers are responsible for executing warrants,
+	security during trial, and prisoner transport.
+	<BR>\n<BR>\n<B>Investigative Phase:</B><BR>\nAfter the crime has been committed the Detective's job is to gather evidence and try to ascertain not only who did
+	it but what happened. They must take special care to catalogue everything and don't leave anything out.
+	Write out all the evidence on paper. Make sure you take an appropriate number of fingerprints. If you must ask someone questions, you have permission to confront them.
+	If the person refuses, the Detective can ask a judicial authority to write a subpoena for questioning. If again the suspect fails to respond then that person
+	is to be jailed as insubordinate and obstructing justice. Said person will be released after they cooperate.
+	<BR>\n<BR>\nONCE the Detective has a clear idea as to who the criminal is, they are to write an arrest warrant on the piece of paper.
+	IT MUST LIST THE CHARGES. The Detective is to then go to the judicial authority and explain a small version of their case. If the case is moderately
+	acceptable the authority should sign it. Security must then execute said warrant.
+	<BR>\n<BR>\n<B>Pre-Pre-Trial Phase:</B><BR>\nNow a legal representative must be presented to the defendant if said defendant requests one.
+	That person and the defendant are then to be given time to meet (in the jail IS ACCEPTABLE). The defendant and their lawyer	are then to be given a copy of
+	all the evidence that will be presented at trial (rewriting it all on paper is fine). THIS IS CALLED THE DISCOVERY PACK. With a few exceptions,
+	THIS IS THE ONLY EVIDENCE BOTH SIDES MAY USE AT TRIAL. IF the prosecution will be seeking the death penalty it MUST be stated at this time. ALSO, if the defense will be
+	seeking not guilty by mental defect, it must be stated this at this time to allow ample time for examination.
+	<BR>\nNow at this time each side is to compile a list of witnesses.
+	By default, the defendant is on both lists regardless of anything else. Also the defense and prosecution can compile more evidence beforehand BUT in order for it to be used
+	the evidence MUST also be given to the other side.\nThe defense has time to compile motions against some evidence here.
+	<BR>\n<B>Possible Motions:</B><BR>\n1.
+	<U>Invalidate Evidence-</U> Something with the evidence is wrong and the evidence is to be thrown out. This includes irrelevance or corrupt Security.<BR>\n2.
+	<U>Free Movement-</U> Basically, the defendant is to be kept uncuffed before and during the trial.<BR>\n3.
+	<U>Subpoena Witness-</U> If the defense presents good reasons for needing a witness but said person fails to cooperate then a subpoena is issued.<BR>\n4.
+	<U>Drop the Charges-</U> Not enough evidence is there for a trial so the charges are to be dropped. The Detective CAN RETRY but the judicial authority must carefully
+	reexamine the new evidence.<BR>\n5.
+	<U>Declare Incompetent-</U> The defendant is insane. Once this is granted, a medical official is to examine the patient. If they are indeed insane, they are to be placed
+	under care of the medical staff until they are deemed competent to stand trial.
+	<BR>\n<BR>\nALL SIDES MOVE TO A COURTROOM<BR>\n
+	<B>Pre-Trial Hearings:</B><BR>\nA judicial authority and the 2 sides are to meet in the trial room.
+	NO ONE ELSE BESIDES A SECURITY DETAIL IS TO BE PRESENT. The defense submits a plea. If the plea is guilty, then proceed directly to sentencing phase.
+	Now the sides each present their motions to the judicial authority. The judicial authority rules on them. Each side can debate each motion. Then the judicial authority
+	gets a list of crew members. The judicial authority first gets a chance	to look at them all and pick out acceptable and available jurors. Those jurors are then called over.
+	Each side can ask a few questions and dismiss jurors they find too biased. HOWEVER, before dismissal the judicial authority MUST agree to the reasoning.
+	<BR>\n<BR>\n<B>The Trial:</B><BR>\nThe trial has three phases.<BR>\n1.
+	<B>Opening Arguments</B> - Each side can give a short speech. They may not present ANY evidence.<BR>\n2.
+	<B>Witness Calling/Evidence Presentation</B> - The prosecution goes first and is able to call the witnesses on their approved list in any order.
+	They can recall them if necessary. During the questioning the lawyer may use the evidence in the questions to help prove a point.
+	After every witness, the other side has a chance to cross-examine. After both sides are done questioning a witness the prosecution can present another witness or recall one
+	(even the EXACT same one again!). After prosecution is done the defense can call witnesses. After the initial cases are presented both sides are free to call witnesses on either
+	list.<BR>\nFINALLY once both sides are done calling witnesses we move onto the next phase.<BR>\n3.
+	<B>Closing Arguments</B>- Same procedure as Opening Arguments.<BR>\nThe jury then deliberates IN PRIVATE. THEY MUST ALL AGREE on a verdict.
+	REMEMBER: They can mix between some charges being guilty and others not guilty (IE, if you supposedly killed someone with a gun and you	unfortunately picked up a gun without
+	authorization then you CAN be found not guilty of murder BUT guilty of possession of illegal weaponry). Once they have agreed, they present	their verdict. If unable to reach
+	a verdict and feel they never will, they call a deadlocked jury and we restart at Pre-Trial phase with an entirely new set of jurors.
+	<BR>\n<BR>\n<B>Sentencing Phase:</B>
+	<BR>\nIf the death penalty was sought (you MUST have gone through a trial for death penalty) then skip to the second part.
+	<BR>\nI. Each side can present more evidence/witnesses in any order. There is NO ban on emotional aspects. The prosecution is to submit a suggested penalty.
+	After all the sides are done, then the judicial authority is to give a sentence.
+	<BR>\nII. The jury stays and does the same thing as I. Their sole job is to determine if the death penalty is applicable. If NOT then the judge selects a
+	sentence.<BR>\n<BR>\nTADA you're done. Security then executes the sentence and adds the applicable convictions to the person's record.<BR>\n"}
 
 /obj/item/paper/flag
 	icon_state = "flag_neutral"
@@ -508,13 +535,39 @@ ASC: Aux. Solar Control<BR>
 	item_state = "paper"
 	anchored = 1.0
 
-/obj/item/paper/jobs
-	name = "'Job Information'"
-	info = "Information on all formal jobs that can be assigned on Space Station 13 can be found on this document.<BR>\nThe data will be in the following form.<BR>\nGenerally lower ranking positions come first in this list.<BR>\n<BR>\n<B>Job Name</B>   general access>lab access-engine access-systems access (atmosphere control)<BR>\n\tJob Description<BR>\nJob Duties (in no particular order)<BR>\nTips (where applicable)<BR>\n<BR>\n<B>Research Assistant</B> 1>1-0-0<BR>\n\tThis is probably the lowest level position. Anyone who enters the space station after the initial job\nassignment will automatically receive this position. Access with this is restricted. Head of Personnel should\nappropriate the correct level of assistance.<BR>\n1. Assist the researchers.<BR>\n2. Clean up the labs.<BR>\n3. Prepare materials.<BR>\n<BR>\n<B>Staff Assistant</B> 2>0-0-0<BR>\n\tThis position assists the security officer in his duties. The staff assisstants should primarily br\npatrolling the ship waiting until they are needed to maintain ship safety.\n(Addendum: Updated/Elevated Security Protocols admit issuing of low level weapons to security personnel)<BR>\n1. Patrol ship/Guard key areas<BR>\n2. Assist security officer<BR>\n3. Perform other security duties.<BR>\n<BR>\n<B>Technical Assistant</B> 1>0-0-1<BR>\n\tThis is yet another low level position. The technical assistant helps the engineer and the statian\ntechnician with the upkeep and maintenance of the station. This job is very important because it usually\ngets to be a heavy workload on station technician and these helpers will alleviate that.<BR>\n1. Assist Station technician and Engineers.<BR>\n2. Perform general maintenance of station.<BR>\n3. Prepare materials.<BR>\n<BR>\n<B>Medical Assistant</B> 1>1-0-0<BR>\n\tThis is the fourth position yet it is slightly less common. This position doesn't have much power\noutside of the med bay. Consider this position like a nurse who helps to upkeep medical records and the\nmaterials (filling syringes and checking vitals)<BR>\n1. Assist the medical personnel.<BR>\n2. Update medical files.<BR>\n3. Prepare materials for medical operations.<BR>\n<BR>\n<B>Research Technician</B> 2>3-0-0<BR>\n\tThis job is primarily a step up from research assistant. These people generally do not get their own lab\nbut are more hands on in the experimentation process. At this level they are permitted to work as consultants to\nthe others formally.<BR>\n1. Inform superiors of research.<BR>\n2. Perform research alongside of official researchers.<BR>\n<BR>\n<B>Detective</B> 3>2-0-0<BR>\n\tThis job is in most cases slightly boring at best. Their sole duty is to\nperform investigations of crine scenes and analysis of the crime scene. This\nalleviates SOME of the burden from the security officer. This person's duty\nis to draw conclusions as to what happened and testify in court. Said person\nalso should stroe the evidence ly.<BR>\n1. Perform crime-scene investigations/draw conclusions.<BR>\n2. Store and catalogue evidence properly.<BR>\n3. Testify to superiors/inquieries on findings.<BR>\n<BR>\n<B>Station Technician</B> 2>0-2-3<BR>\n\tPeople assigned to this position must work to make sure all the systems aboard Space Station 13 are operable.\nThey should primarily work in the computer lab and repairing faulty equipment. They should work with the\natmospheric technician.<BR>\n1. Maintain SS13 systems.<BR>\n2. Repair equipment.<BR>\n<BR>\n<B>Atmospheric Technician</B> 3>0-0-4<BR>\n\tThese people should primarily work in the atmospheric control center and lab. They have the very important\njob of maintaining the delicate atmosphere on SS13.<BR>\n1. Maintain atmosphere on SS13<BR>\n2. Research atmospheres on the space station. (safely please!)<BR>\n<BR>\n<B>Engineer</B> 2>1-3-0<BR>\n\tPeople working as this should generally have detailed knowledge as to how the propulsion systems on SS13\nwork. They are one of the few classes that have unrestricted access to the engine area.<BR>\n1. Upkeep the engine.<BR>\n2. Prevent fires in the engine.<BR>\n3. Maintain a safe orbit.<BR>\n<BR>\n<B>Medical Researcher</B> 2>5-0-0<BR>\n\tThis position may need a little clarification. Their duty is to make sure that all experiments are safe and\nto conduct experiments that may help to improve the station. They will be generally idle until a new laboratory\nis constructed.<BR>\n1. Make sure the station is kept safe.<BR>\n2. Research medical properties of materials studied of Space Station 13.<BR>\n<BR>\n<B>Scientist</B> 2>5-0-0<BR>\n\tThese people study the properties, particularly the toxic properties, of materials handled on SS13.\nTechnically they can also be called Plasma Technicians as plasma is the material they routinly handle.<BR>\n1. Research plasma<BR>\n2. Make sure all plasma is properly handled.<BR>\n<BR>\n<B>Medical Doctor (Officer)</B> 2>0-0-0<BR>\n\tPeople working this job should primarily stay in the medical area. They should make sure everyone goes to\nthe medical bay for treatment and examination. Also they should make sure that medical supplies are kept in\norder.<BR>\n1. Heal wounded people.<BR>\n2. Perform examinations of all personnel.<BR>\n3. Moniter usage of medical equipment.<BR>\n<BR>\n<B>Security Officer</B> 3>0-0-0<BR>\n\tThese people should attempt to keep the peace inside the station and make sure the station is kept safe. One\nside duty is to assist in repairing the station. They also work like general maintenance personnel. They are not\ngiven a weapon and must use their own resources.<BR>\n(Addendum: Updated/Elevated Security Protocols admit issuing of weapons to security personnel)<BR>\n1. Maintain order.<BR>\n2. Assist others.<BR>\n3. Repair structural problems.<BR>\n<BR>\n<B>Head of Security</B> 4>5-2-2<BR>\n\tPeople assigned as Head of Security should issue orders to the security staff. They should\nalso carefully moderate the usage of all security equipment. All security matters should be reported to this person.<BR>\n1. Oversee security.<BR>\n2. Assign patrol duties.<BR>\n3. Protect the station and staff.<BR>\n<BR>\n<B>Head of Personnel</B> 4>4-2-2<BR>\n\tPeople assigned as head of personnel will find themselves moderating all actions done by personnel. \nAlso they have the ability to assign jobs and access levels.<BR>\n1. Assign duties.<BR>\n2. Moderate personnel.<BR>\n3. Moderate research. <BR>\n<BR>\n<B>Captain</B> 5>5-5-5 (unrestricted station wide access)<BR>\n\tThis is the highest position youi can aquire on Space Station 13. They are allowed anywhere inside the\nspace station and therefore should protect their ID card. They also have the ability to assign positions\nand access levels. They should not abuse their power.<BR>\n1. Assign all positions on SS13<BR>\n2. Inspect the station for any problems.<BR>\n3. Perform administrative duties.<BR>\n"
-
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"
-	info = "Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-<BR>\n\t\t\tEvacuate to a nearby safe area!"
+	info = {"Alert Levels:<BR>\nBlue- Emergency<BR>\n\t1. Caused by fire<BR>\n\t2. Caused by manual interaction<BR>\n\tAction:<BR>\n\t\tClose all fire doors. These can
+	only be opened by reseting the alarm<BR>\nRed- Ejection/Self Destruct<BR>\n\t1. Caused by module operating computer.<BR>\n\tAction:<BR>\n\t\tAfter the specified time
+	the module will eject completely.<BR>\n<BR>\nEngine Maintenance Instructions:<BR>\n\tShut off ignition systems:<BR>\n\tActivate internal power<BR>\n\tActivate orbital
+	balance matrix<BR>\n\tRemove volatile liquids from area<BR>\n\tWear a fire suit<BR>\n<BR>\n\tAfter<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner
+	<BR>\n<BR>\nToxin Laboratory Procedure:<BR>\n\tWear a gas mask regardless<BR>\n\tGet an oxygen tank.<BR>\n\tActivate internal atmosphere<BR>\n<BR>\n\tAfter
+	<BR>\n\t\tDecontaminate<BR>\n\t\tVisit medical examiner<BR>\n<BR>\nDisaster Procedure:<BR>\n\tFire:<BR>\n\t\tActivate sector fire alarm.<BR>\n\t\tMove to a safe area.
+	<BR>\n\t\tGet a fire suit<BR>\n\t\tAfter:<BR>\n\t\t\tAssess Damage<BR>\n\t\t\tRepair damages<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tMeteor Shower:<BR>\n\t\tActivate fire alarm
+	<BR>\n\t\tMove to the back of ship<BR>\n\t\tAfter<BR>\n\t\t\tRepair damage<BR>\n\t\t\tIf needed, Evacuate<BR>\n\tAccidental Reentry:<BR>\n\t\tActivate fire alrms in front of ship.
+	<BR>\n\t\tMove volatile matter to a fire proof area!<BR>\n\t\tGet a fire suit.<BR>\n\t\tStay secure until an emergency ship arrives.<BR>\n<BR>\n\t\tIf ship does not arrive-
+	<BR>\n\t\t\tEvacuate to a nearby safe area!"}
+
+/obj/item/paper/martian_manifest
+	name = "Tattered paper"
+	icon_state = "paper_burned"
+	info = {"
+	<br>      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PPIN </b>░█=-<b>IFEST</b><br>
+	<br><br>  &nbsp;&nbsp;&nbsp;<b><u>ent:</u></b> Kingsw ░░█tems ░9A
+	<br><br>- rate of x4 dat† tap s \[FRAG░LE\]
+	<br><br>- EVA equipment f   = ▓  -- ▀█ ency aid
+	<br><br>- Prot▓ ▓e= AI- ██░█c▓re \[EXTR█▓░Y FRAGILE\]
+	<br><br>- \[CO▓░IDENTIAL\]&nbsp;&nbsp;█▓ ▓
+	<br><br>- mergency com░dy resu███ ▓█░
+	<br><br>- Pro█░ssio-al cl=wns (x▓)
+	<br><br>- Asso ted civil▓n grad▓█ goods
+	<br><i>Note: Shipment exp▓▓ted to a███ve no late than J█░▓░20█░</i>
+	<br><i>Client wil&nbsp;&nbsp;██rate a late or damaged shipment</i>
+	"}
+
+	New()
+		. = ..()
+		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
 
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
@@ -556,6 +609,30 @@ Only trained personnel should operate station systems. Follow all procedures car
 	disposing()
 		STOP_TRACKING
 		. = ..()
+
+/obj/item/paper/hellburn
+	name = "paper- 'memo #R13-08-A'"
+	info = {"<h3 style="border-bottom: 1px solid black; width: 80%;">Nanotrasen Toxins Research</h3>
+<tt>
+<strong>MEMORANDUM &nbsp; &nbsp; * CONFIDENTIAL *</strong><br>
+<br><strong>DATE:</strong> 02/19/53
+<br><strong>FROM:</strong> NT Research Division.
+<br><strong>TO:&nbsp&nbsp;</strong> Space Station 13's Research Director
+<br><strong>SUBJ:</strong> Toxins Research Project #08-A
+<br>
+<p>
+The enclosed samples are to be used in continued plasma research.  Our current understanding is that the gas released from "Molitz Beta" in the presence of
+sufficient temperatures and plasma cause an unusual phenomenon. The gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation
+allowing for temperatures we have been unable to fully realize. This only seems to occur when combustion is incomplete and can be observed visually as a gentle swirling of the flame.
+</p>
+<p>
+Please exercise caution in your testing, the result can best be described as a hellfire.  Ensure adequate safety messures are in place to purge the fire.
+</p>
+<p>All findings and documents related to Project #08-A are to be provided in triplicate to CentComm on physical documents only. <b>DO NOT</b> provide this data digitally
+as it may become compromised.
+</p>
+</tt>
+<center><span style="font-family: 'Dancing Script';">Is this a Hellburn???!!?</span></center>"}
 
 /obj/item/paper/zeta_boot_kit
 	name = "Paper-'Instructions'"
@@ -600,9 +677,11 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Re:re: Break-in!"
 	info = {"Some fucking asshole broke into our vault all by themselves! How the hell did they even manage that?<br>
 			<br>
-			They messed with the <b><i>Ouroboros Engine</i></b> and those dumb fucks blew up most of the vault too. Nearly blinded myself looking at all that gold. They must have tried using that alchemy stone without a conduit, damn lucky the damage wasn't spread any further<br>
+			They messed with the <b><i>Ouroboros Engine</i></b> and those dumb fucks blew up most of the vault too. Nearly blinded myself looking at all that gold.
+			They must have tried using that alchemy stone without a conduit, damn lucky the damage wasn't spread any further<br>
 			<br>
-			Sent the NTSOs off to the remains of Site Tempus on that dead planet again to hopefully recover the artifact. Gunna need it to revert this place back to how it was. Thank god we were able to recover the Engine.<br>
+			Sent the NTSOs off to the remains of Site Tempus on that dead planet again to hopefully recover the artifact. Gunna need it to revert this place back
+			to how it was. Thank god we were able to recover the Engine.<br>
 			<br>
 			Up your bloody security before this happens again. You know how dangerous using that artifact is. We'll be the ones blowing up next time. Or worse!"}
 
@@ -627,7 +706,8 @@ Only trained personnel should operate station systems. Follow all procedures car
     name = "paper - Where are the security segways?"
     icon_state = "paper"
     info = {"<h4>Where are the security segways?</h4><br>
-    Many of you have asked "where are the security segways?". Well let me tell you that we finally got rid of those filthy stains on the cover of the Space Law and permanently brigged them in some warehouse on the ship.
+    Many of you have asked "where are the security segways?". Well let me tell you that we finally got rid of those filthy stains on the cover of the Space Law
+	and permanently brigged them in some warehouse on the ship.
     <br>
     Now quit bothering us with your nonsensical questions and get back to work!
     <br>
@@ -636,7 +716,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/mantasecscanners
 	name = "paper - Security Officers are so dumb!"
 	icon_state = "paper"
-	info ={"Man, I can't believe how ridiculously dumb those security officers are! It's been weeks since I cut the wires to the security scanners on the left and right side of security and yet they still haven't noticed!<br>
+	info ={"Man, I can't believe how ridiculously dumb those security officers are! It's been weeks since I cut the wires to the security scanners on the left
+	and right side of security and yet they still haven't noticed!<br>
 	I swear, as soon as I'll get out of here, I'm going to go and snatch that sweet medal that Head of Security has in his office."}
 
 /obj/item/paper/mantanote
@@ -673,21 +754,25 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	We hope that it will keep you alive long enough for us to find a potential replacement candidate to do your job.
 
-	With best regards, Nanotrasen HR department. <br>"}
+	With best regards,<br>Nanotrasen HR Department. <br>"}
 
 /obj/item/paper/antisingularity
 	name = "paper - How to properly operate Singularity Buster rocket launcher"
 	icon_state = "paper"
 	info = {"<center><h2>How to properly operate Singularity Buster rocket launcher</h2></center>
 	<h3>Quick word from the manufacturer</h3><hr>
-	Please note that this highly experimental weapon is designed to reliably collapse a singularity in order to prevent catastrophic damage to the station. The singularity buster rockets are theoretically harmless to humans. Please do not try shooting a rocket at a human.<hr>
+	Please note that this highly experimental weapon is designed to reliably collapse a singularity in order to prevent catastrophic damage to the station.
+	The singularity buster rockets are theoretically harmless to humans. Please do not try shooting a rocket at a human.<hr>
 	<h3>Operating Singularity Buster rocket launcher</h3><hr>
 	<ul style='list-style-type:disc'>
-		<li>1) Carefully pick up a singularity buster rocket and load it into the loading chamber of the rocket launcher. Please make sure not to hit the rocket on any hard surfaces while doing so as this may lead to matter destabilization. </li>
-		<li>2) Pick up the rocket launcher on your shoulders, yet again making sure not to hit the rocket launcher on any hard surfaces as this might accidentally disintegrate the weapon.</li>
+		<li>1) Carefully pick up a singularity buster rocket and load it into the loading chamber of the rocket launcher. Please make sure not to hit the rocket
+		on any hard surfaces while doing so as this may lead to matter destabilization. </li>
+		<li>2) Pick up the rocket launcher on your shoulders, yet again making sure not to hit the rocket launcher on any hard surfaces as this might accidentally
+		disintegrate the weapon.</li>
 		<li>3) Point the rocket launcher carefully towards the center of a rogue singularity.</li>
-		<li>4) Press the trigger and prepare for the rocket to fly out of the barrel. This might be a good moment to pray for your safety if you are into that kind of thing as there is a slight chance for the rocket to destabilize and cause a new singularity to appear in it's location. </li>
-		<li>5) Singularities gravitional pull may move the rocket off course, requiring several attempts at collapsing the singularity.</li>
+		<li>4) Press the trigger and prepare for the rocket to fly out of the barrel. This might be a good moment to pray for your safety if you are into that
+		kind of thing as there is a slight chance for the rocket to destabilize and cause a new singularity to appear in its location. </li>
+		<li>5) Singularities' gravitional pull may move the rocket off course, requiring several attempts at collapsing a singularity.</li>
 	</ul>
 	"}
 
@@ -696,16 +781,21 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "paper"
 	info = {"<center><h2>How to properly install official Nanotrasen neon lining</h2></center>
 	<h3>Product description</h3><hr>
-	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining are what you need. Now with color change modules!<hr>
+	Ever wanted to spice up your bar? Build a meditation room? Enhance the station halls in case of an emergency? Then this official Nanotrasen neon lining
+	is what you need. Now with color-change modules!<hr>
 	<h3>Modifying the neon lining</h3><hr>
 	<ul style='list-style-type:disc'>
-		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes officially supported.</li>
-		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from the it's attachment point.</li>
-		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape the pattern's value is higher than the maximum for that shape, the value gets automatically reset to 0.</li>
-		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it off/on is to cut/mend the wires that connect to said power source.</li>
-		<li>5) To adjust the lining's rotation, simply unscrew it from it's attachment point. The lining will automatically snap to the next available rotation and screw itself into a new attachment point.</li>
-		<li>6) Due to safety concerns caused by our previous prototype of the product, the color change modules are only active when the lining is detached and thus in a coil.</li>
-		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function of it's rotation program. This essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
+		<li>1) A wrench can be used to change the shape of the lining. Currently only 6 shapes are officially supported.</li>
+		<li>2) To turn an already attached piece of lining back into a coil, carefully use a crowbar to detach it from its attachment point.</li>
+		<li>3) Apply a standard multitool to change the pattern of the lining. If upon changing shape, the pattern's value is higher than the maximum for that shape,
+		the value gets automatically reset to 0.</li>
+		<li>4) As this version is designed to be more flexible and compact, the lining feeds only on an internal power source. Due to this the only way to turn it
+		off/on is to cut/mend the wires that connect to said power source.</li>
+		<li>5) To adjust the lining's rotation, simply unscrew it from its attachment point. The lining will automatically snap to the next available rotation and
+		screw itself into a new attachment point.</li>
+		<li>6) Due to safety concerns caused by our previous prototype of the product, the color-change modules are only active when the lining is detached and thus in a coil.</li>
+		<li>7) There have been reports that when the lining is in the short line shape, using a multitool to change the pattern sometimes triggers the movement function. This
+		essentially shifts the lining a bit. We understand that this might be a bit unintuitive, but since this isn't hazardous we have no intentions of fixing it.</li>
 	</ul>
 	"}
 
@@ -759,7 +849,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "paper"
 	info = {"<center><h2>So you've contracted a pathogen!</h2></center>
 	Hello, dear customer!<hr>
-	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
+	Pathogens can be scary! But you can rest easy knowing that your health is in safe hands now that you have contacted the CDC. Simply place a pathogen
+	sample into the biohazard crate and send it back to us and we will have you cured in no time!<hr>
 	<h3>How to send a pathogen sample</h3><hr>
 	<ul style='list-style-type:disc'>
 		<li>1) Fill a reagent container with a blood sample from a person afflicted with the pathogen you are seeking to cure. (For instance, you could use the syringe we sent you!)</li>
@@ -768,7 +859,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 		<li>4) As soon as we receive your sample, you can contact us using your Quartermaster's Console to ask us to start analyzing it.</li>
 		<li>5) Once we are done analyzing your sample, we will offer to sell you cures. Buying a pack of multiple cures at a time will be cheaper for you!</li>
 	</ul>
-	We hope that you have found this pamphlet enlightening and we hope to receive your sample soon!<hr>
+	We hope that you have found this pamphlet enlightening and we look forward to receiving your sample soon!<hr>
 	Remember, only you can prevent deadly pathogens!
 	"}
 
@@ -782,7 +873,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<br>
 	<br>
 	<br>
-	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling, or cries for help...<b>ignore them</b>!
+	So read carefully and heed the precautions! Keep the fridges closed! All of them! Do not look inside...and if you happen to hear any clawing, grumbling,
+	or cries for help...<b>ignore them</b>!
 	<br>
 	<br>
 	The freight is extremely valuable! Any light or human flesh exposed to said cargo will cost your pal Discount Dan an arm, a leg and a space-tastic lawsuit!
@@ -823,7 +915,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 	desc = "A scribbled note - created with burning rage."
 	info = {"<center><h3>MICE?!</h3></center>
 	<hr>
-	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy; unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
+	<i>Ey! Yo! What the hell? You think you can take a day off - relax - and then these hungry n'angry food pirates come along! Damn Thompson McGreasy;
+	unable to close his trash-pod he arrived in. Now we gotta deal with some mutant mice problem!</i>
 	"}
 
 /obj/item/paper/fortune
@@ -833,7 +926,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "fortune"
 
 	var/static/list/action = list("Beware of", "Keep an eye on", "Seek out", "Be wary of", "Make friends with", "Aid", "Talk to", "Avoid")
-	var/static/list/who = list("Zero-G Chem-Co Commander", "Shambling Abomination", "Merlin", "GeneTek Operative Javelin (as Destiny Calls)", "Remy", "Dr. Acula", "Morty")
+	var/static/list/who = list("Officer Beepsky", "Shambling Abomination", "Remy", "Dr. Acula", "Morty", "Sylvester", "Jones", "the staff assistant next to you", "the clown")
 	var/static/list/thing = list("are in possession of highly dangerous contraband.", "murdered a bee.", "kicked George.", "are a Syndicate operative.", "are a murderer.", "have disguised themselves from their true form.",
 	"are not who they claim to be.", "know Shitty Bill's secret.", "are lonely.", "hugged a space bear and survived to tell the tale.", "know the legendary double-fry technique.", "have the power to reanimate the dead.",
 	"consort with wizards.", "sell really awesome drugs.", "have all-access.", "know the king.", "make amazing pizza.", "have a toolbox and are not afraid to use it.")
@@ -847,8 +940,8 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 		if(!initialized)
 			initialized = TRUE
-			for(var/datum/data/record/t in data_core.general)
-				who += "[t.fields["name"]]"
+			for(var/datum/db_record/t as anything in data_core.general.records)
+				who += "[t["name"]]"
 
 		switch(randme)
 			if(1)
@@ -1044,7 +1137,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	amount = 10.0
 	item_state = "sheet-metal"
 	throwforce = 1
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 7
 
@@ -1061,7 +1154,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	return
 
 /obj/item/paper_bin/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -1073,13 +1166,17 @@ Only trained personnel should operate station systems. Follow all procedures car
 	else
 		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
 			src.amount--
-			var/obj/item/paper/P = unpool(/obj/item/paper)
+			var/obj/item/paper/P = new /obj/item/paper
 			P.set_loc(src)
 			user.put_in_hand_or_drop(P)
 			if (rand(1,100) == 13)
 				P.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 	src.update()
 	return
+
+/obj/item/paper_bin/attack_self(mob/user as mob)
+	..()
+	src.Attackhand(user)
 
 /obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
@@ -1122,7 +1219,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	item_state = "stamp"
 	flags = FPRINT | TABLEPASS
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 60
@@ -1331,8 +1428,14 @@ Only trained personnel should operate station systems. Follow all procedures car
 	throw_spin = 0
 
 /obj/item/paper/folded/plane/hit_check(datum/thrown_thing/thr)
-	if(src.throwing)
+	if(src.throwing && src.sealed)
 		src.throw_unlimited = 1
+
+/obj/item/paper/folded/plane/attack_self(mob/user as mob)
+	if (src.sealed) //Set throwing vars when unfolding (mostly in the parent call) so that an unfolded paper "plane" behaves like regular paper
+		throw_speed = 3 //default for paper
+		throw_spin = 1
+	..()
 
 /obj/item/paper/folded/ball
 	name = "paper ball"
@@ -1340,13 +1443,13 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "paperball"
 
 /obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
-	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
+	if (iscarbon(M) && M == user && src.sealed)
+		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
+		playsound(M,"sound/misc/gulp.ogg", 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
-		src = null
-		usr.u_equip(P)
-		pool(P)
+		user.u_equip(P)
+		qdel(P)
 	else
 		..()
 
@@ -1402,42 +1505,41 @@ automatically adopt your criminal control strategy of choice.<br>
 <td>The perfect crowd control option, this Mode stuns all your enemies within a close radius, but leaves you untouched!</td>
 </tr>
 <tr>
-<td><b>"Execute"</b></td>
+<td><b>"Execute" / "Exterminate"</b></td>
 <td>30 PU</td>
 <td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
 </tr>
 <tr>
-<td><b>"Hotshot"</b></td>
+<td><b>"Hotshot" / "Incendiary"</b></td>
 <td>60 PU</td>
 <td>This handy flare gun/flamethrower option is sure to heat things up! The Lawbringer™ is not certified fireproof. Do not set on fire.</td>
 </tr>
 <tr>
-<td><b>"Smokeshot"</b></td>
+<td><b>"Smokeshot" / "Fog"</b></td>
 <td>50 PU</td>
 <td>Never use a riot launcher again! These smoke grenades will let you manage line of sight with ease.</td>
 </tr>
 <tr>
-<td><b>"Knockout"</b></td>
+<td><b>"Knockout" /  "Sleepshot"</b></td>
 <td>60 PU</td>
 <td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 </tr>
 <tr>
-<td><b>"Bigshot"*</b></td>
+<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
 <td>170 PU</td>
 <td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
 </tr>
 <tr>
-<td><b>"Clownshot"</b></td>
+<td><b>"Clownshot" / "Clown"</b></td>
 <td>15 PU</td>
 <td>Lawbringer™ warranty is voided if exposed to clowns. Keep them at bay.</td>
 </tr>
 <tr>
-<td><b>"Pulse"</b></td>
+<td><b>"Pulse" / "Push" / "Throw"</b></td>
 <td>35 PU</td>
 <td>Just like our patented Pulse Rifle™s, this Mode sends your enemies flying! Keep crime at arm's length!</td>
 </tr>
 </table>
-<i><b>*</b>Also accepted for this Mode: "High Explosive," "HE."</i>
 <hr>
 <p><b>Disclaimer:</b> Nanotrasen Arms Division cannot be held liable in the case of inconvenience, failure or death,
 as per your Nanotrasen Employment Agreement. If any of the Modes are found to be ineffective, underpowered,
@@ -1473,3 +1575,128 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+
+/obj/item/paper/ranch_guide
+	name = "Ranch Field Guide"
+	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
+	icon_state = "ranch_guide"
+	sizex = 1100
+	sizey = 800
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
+
+/obj/item/paper/iou
+	name = "IOU"
+	desc = "Somebody took whatever was in here."
+	icon_state = "postit-writing"
+	info = {"<h2>IOU</h2>"}
+
+/obj/item/paper/shooting_range_note1 //shooting range prefab junk
+	name = "secure safe note"
+	desc = "Someone left a reminder in neat cursive. The post-it looks nearly new."
+	icon_state = "postit-writing"
+	info = {"*Experimental ray gun - DO NOT FIRE IN A CLOSED SPACE. Waiting for Olwen to fix... whenever she's back...<br><b><u>*Dinner date is on <s>Tuesday</s>  <s>Fri.</s></s><br>
+<s>Thurs.</s><br><s>Sunday</s><br></u><br>???"}
+
+/obj/item/paper/shooting_range_note2
+	name = "secure safe note"
+	desc = "This note is creased and ripped and tattered. The writing on it is scribbled in near-indecipherable chickenscratch."
+	icon_state = "postit-writing"
+	info = {"-non-stable battery; keeps popping on use.<br>-design work (not final)<br>-battery capacity??? maybe?<br>Cheers,<br>O"}
+
+/obj/item/paper/bee_love_letter //For lesbeeans prefab
+	name = "bee love letter"
+	desc = "This smells as sweet as the prose on it."
+	icon_state = "paper_caution"
+	info = {"<i>You have no hope of deciphering the weird marks on this paper, nor are you entirely certain it's even actual writing, but the splotchy heart with prints of bee pretarsi at the bottom kindles a warmth deep within your heart.</i>"}
+
+/obj/item/paper/folded/ball/bee_farm_note //Idem, let's see if anyone thinks to unfold this
+	name = "wadded-up note"
+	desc = "A crumpled, chewed-on wad of paper. A bee appears to have tried eating this."
+	info = {"Janus, I can see why you're so fond of these two and spend so much time on them. It's adorable watching those two together at work, and I think we're seeing new and unique behaviour here!<br><br>
+But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
+That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
+
+/obj/item/paper/synd_lab_note
+	name = "scribbled note"
+	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
+	My colleague and I were asked to figure out a way to refine telecrystals into a version usable in our uplinks, but so far, no luck.
+	We were given this 'state of the art' facility to figure out how to make this work, when I keep saying that this fundamentally will not.
+	These damn crystals are a pain in the ass to refine normally, when we have a goddamn mining station built to do JUST that!<br>
+	And, we were hardly given proper lab equipment.<br>
+	We're stuck with only a few flasks, along with some shitty prototype chemi-something or other, which quite frankly we'd be better off with another pair of beakers, fuck, it can't even produce chemicals!
+	I'm trying anything at this point, even port, of all things.<br><br>
+	I'd better get back to it, I'm not being paid by the hour here."}
+
+/obj/item/paper/synd_lab_note2
+	name = "scribbled note"
+	info = {"I've been working on these faux, exploding 'telecrystals' for a while now, and I'm starting to think I got the better end of a rotten deal.<br><br>
+	I've been, as of yet, completely unable to emulate any of the teleporting aspects of regular telecrystals, which means these things can certainly feel fake if you give 'em enough testing.
+	Needless to say, I'm not a fan.<br>
+	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
+	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
+
+/obj/item/paper/recipe_tandoori
+	name = "stained recipe clipping"
+	desc = "It's creased and worn, and smells a little like dried blood."
+	icon_state = "paper_caution_bloody"
+	info = {"<i>In just nine seconds, treat your family to a meal that tastes like it took hours to roast!</i><br><h3>Tandoori Chicken</h3><br><h4>Ingredients:</h4><br> -chicken meat <br> -a heaping helping of curry powder <br> -a nice, hot chili pepper <br> -a head of garlic <br><br><i>Don't even waste your time slashing the meat or slathering it in spices! Just toss it all in your standard-issue industrial oven and set it to high. Your dinner guests can't even tell the difference!</i>"}
+
+/obj/item/paper/recipe_potatocurry
+	name = "tattered recipe clipping"
+	desc = "It's very old, and nearly falls apart in your hand."
+	icon_state = "paper_burned"
+	info = {"<i>Rich and full of vegetables, this hearty curry will satisfy any palate!</i><br><h3>Potato Curry</h3><br><h4>Ingredients:</h4><br> -plenty of curry powder <br> -a fresh potato <br> -chopped carrots <br> -a handful of peas <br><br><i>Simply toss the ingredients into a standard-issue industrial oven and let them simmer on low. Treat anyone to the flavor of a home-cooked stew in a fraction of the time!</i>"}
+
+/obj/item/paper/recipe_coconutcurry
+	name = "creased recipe clipping"
+	desc = "Irreperably creased from years of being folded-up. Luckily, you can still make out the text on it."
+	icon_state = "paper_caution_crumple"
+	info = {"<i>In the mood for something spicy yet mild? Have extra coconuts to burn? Asking yourself why you grew so many coconuts in the first place? dear god we need to do something with these things</i><br><h3>Coconut Curry</h3><br><h4>Ingredients:</h4><br> -as much curry powder as you need to make it not taste like 100% coconut <br> -coconut meat <br> -a carrot to add texture <br> -a bed of rice <br><br><i>Set the oven for 7 seconds, put the heat on low, add the ingredients, and hit start. Tell the botanists that they can go back to growing weed now. Beg them to, really.</i>"}
+
+/obj/item/paper/recipe_chickenpapplecurry
+	name = "worn recipe clipping"
+	desc = "An old recipe clipped from a lifestyle magazine for space station chefs. Aw, the color's faded from the layout..."
+	icon_state = "paper_caution"
+	info = {"<i>Facing threats from the crew for putting pineapple on your pizzas and letting your chicken corpses spill out into the hall? Turn those trials into smiles when you serve up this scrumptious dish!</i><br><h3>Chicken Pineapple Curry</h3><br><h4>Ingredients:</h4><br> -a bag of curry powder <br> -some fresh chicken meat <br> -a tasty ring of pineapple <br> -a nice spicy chili pepper <br><br><i>With your oven, you don't even have to mix! Just add everything, set the heat to low, and let it all cook for 7 seconds!</i>"}
+
+/obj/item/paper/reinforcement_info
+	name = "Reinforcement Disclaimer"
+	icon_state = "paper"
+	info = {"<b>Thank you for buying a Syndicate brand reinforcement!</b><br>To deploy the reinforcement, simply activate it somewhere on station, set it down, and wait. If a reinforcement is found, they'll be deployed within the minute. The nearby Listening Post should do you well, but it cannot be activated on the Cairngorm!<br><br><i>Disclaimer: Capability of reinforcement not guaranteed. The beacon may pose a choking hazard to those under 3 years old.<br>If no reinforcement is available, you may simply hit your uplink with the beacon to return it for a full refund.</i>"}
+
+/obj/item/paper/designator_info
+	name = "Laser Designator Pamphlet"
+	icon_state = "paper"
+	info = {"<b>So, you've purchased a Laser Designator!</b><br><br>The operation of one is simple, the first step is to ensure the Cairngorm has an in-tact, working gun. Once you've done this, you can just pull out the designator, hold shift and move if you want to do longer-range designation, and point at anywhere to designate a target, at which point the Cairngorm will fire the artillery weapon, and the designated area will shortly explode."}
+
+/obj/item/paper/deployment_info
+	name = "Deployment Remote Note"
+	icon_state = "paper"
+	info = {"<b>Congratulations for purchasing the Syndicate Rapid-Deployment Remote (SRDR)!</b><br><br>To use it, first of all, you need to either be onboard the Cairngorm or at the Listening Post. <br>Once you're there, activate the SRDR in-hand to choose a location, then once more to teleport everyone (along with any nuclear devices you possess) within 4 tiles of you to the forward assault pod, at which point it will begin head to the station, taking about one minute. During this time, Space Station 13's sensors will indicate the quickly-arriving pod, and will likely warn the crew.<br> Once the minute ends, everyone will be deployed to the specified area through personnel missiles."}
+
+/obj/item/paper/nukeop_uplink_purchases
+	name = "Shipping Manifest"
+	icon_state = "paper"
+
+	New()
+		. = ..()
+		if(!length(syndi_buylist_cache))
+			SPAWN_DBG(30 SECONDS) //This spawns empty on-map otherwise, 30s is a safe bet
+				build_paper()
+		else
+			build_paper()
+
+	proc/build_paper()
+		var/placeholder_info
+		placeholder_info += "<b>Syndicate Shipping Manifest</b><br>"
+		for(var/datum/syndicate_buylist/commander/commander_item in syndi_buylist_cache)
+			var/item_info = world.load_intra_round_value("NuclearCommander-[commander_item]-Purchased")
+			if(isnull(item_info))
+				item_info = 0
+			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
+		info = placeholder_info

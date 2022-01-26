@@ -348,7 +348,7 @@
 	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.")
 	for(var/area/A in world)
 		A.eject = 1
-		A.updateicon()
+		A.UpdateIcon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
 		shake_camera(N, 120, 8)
@@ -380,7 +380,7 @@
 	for(var/area/A in world)
 		LAGCHECK(LAG_LOW)
 		A.eject = 0
-		A.updateicon()
+		A.UpdateIcon()
 
 /mob/proc/spin()
 	set category = "Spells"
@@ -431,7 +431,7 @@
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -483,7 +483,7 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_nova"])
 			if (src.uses >= 1)

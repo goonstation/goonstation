@@ -71,7 +71,7 @@
 	},
 /area/station/engine/vesselpower)
 "aai" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "testchamber"
 	},
@@ -1564,7 +1564,7 @@
 "acM" = (
 /obj/machinery/power/terminal,
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "zeta"
 	},
 /turf/simulated/floor/circuit/red,
@@ -1719,7 +1719,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -2769,7 +2769,7 @@
 /obj/machinery/glass_recycler{
 	density = 1
 	},
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -3097,25 +3097,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
-"afB" = (
-/obj/table/auto,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/obj/item/storage/box/trackimp_kit2,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	tag = ""
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "afC" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -3151,7 +3132,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "afF" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -3250,31 +3231,6 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
-"afN" = (
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/item/device/radio/headset/multifreq,
-/obj/storage/crate{
-	desc = "Only distantly related to the Adventure Closet.";
-	name = "Adventure Crate"
-	},
-/obj/item/device/audio_log,
-/obj/item/camera_test,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/paper{
-	desc = "Aw dang, mooom";
-	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
-	name = "note from mom"
-	},
-/obj/item/paper/book/critter_compendium,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
 /area/station/science/teleporter)
 "afO" = (
 /turf/simulated/floor/white,
@@ -5558,7 +5514,7 @@
 /area/station/science/chemistry)
 "ajJ" = (
 /obj/table/auto,
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_y = 6
 	},
 /obj/item/device/multitool,
@@ -6229,11 +6185,11 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = -2;
 	pixel_y = 1
 	},
-/obj/item/paper/book/dwainedummies{
+/obj/item/paper/book/from_file/dwainedummies{
 	pixel_x = 3
 	},
 /turf/simulated/floor/carpet/grime,
@@ -6660,7 +6616,7 @@
 /turf/simulated/floor/green,
 /area/station/vesselbridge)
 "alC" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Vessel Power Grid Monitoring"
 	},
@@ -7005,7 +6961,7 @@
 /area/space)
 "amq" = (
 /obj/table/auto,
-/obj/item/paper/book/guardbot_guide{
+/obj/item/paper/book/from_file/guardbot_guide{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -7123,7 +7079,7 @@
 "amG" = (
 /obj/stool/bed,
 /obj/decal/cleanable/dirt,
-/obj/item/paper/book/the_trial,
+/obj/item/paper/book/from_file/the_trial,
 /obj/machinery/light/small{
 	icon_state = "bulb1";
 	dir = 1
@@ -7459,7 +7415,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "anv" = (
@@ -9027,7 +8983,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /obj/item/stamp,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/box/patchbox,
 /obj/item/clipboard,
 /obj/item/hand_labeler,
@@ -9182,11 +9138,11 @@
 	desc = "Wow! Crate may or may not still contain bottles.";
 	name = "Bottles in a Crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/grime,
 /area/station/hydroponics/lobby)
 "ari" = (
@@ -9917,7 +9873,7 @@
 	dir = 1;
 	name = "light fixture"
 	},
-/obj/item/paper/book/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/reagent_containers/glass/bottle/eyedrops,
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -11106,7 +11062,7 @@
 	dir = 1
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/book/cookbook,
+/obj/item/paper/book/from_file/cookbook,
 /obj/item/kitchen/food_box/donut_box,
 /obj/item/instrument/bikehorn/dramatic,
 /obj/machinery/disposal/small{
@@ -11139,7 +11095,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -11535,10 +11491,7 @@
 	req_access_txt = "28"
 	},
 /obj/machinery/cashreg,
-/obj/item/reagent_containers/food/snacks/cake/chocolate{
-	desc = "Holy shit! This cake probably costs more than the gross domestic product of Bulgaria!";
-	name = "Extravagant Chocolate Gateau"
-	},
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "avT" = (
@@ -14078,11 +14031,11 @@
 	desc = "Various supplies for the bar.";
 	name = "bartending crate"
 	},
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
-/obj/item/reagent_containers/food/drinks/bottle,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -16470,7 +16423,7 @@
 /area/station/security/detectives_office)
 "aGL" = (
 /obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/light{
 	icon_state = "tube1";
@@ -17083,7 +17036,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4;
 	id = "west"
 	},
@@ -17271,13 +17224,6 @@
 	name = "Detective"
 	},
 /obj/machinery/light_switch/south,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
-"aIw" = (
-/obj/table/wood/auto,
-/obj/item/storage/secure/sbriefcase,
-/obj/item/device/camera_viewer,
-/obj/item/camera_test,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aIx" = (
@@ -22848,16 +22794,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
-"aTo" = (
-/obj/storage/crate/rcd,
-/obj/machinery/light{
-	dir = 1;
-	name = "light fixture"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/engine/engineering/ce)
 "aTp" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -23291,7 +23227,7 @@
 "aTY" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
-/obj/item/paper/book/medical_guide,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/item/storage/box/patchbox,
 /obj/machinery/door/window/eastright{
 	name = "Medbay";
@@ -24136,7 +24072,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bottledwater,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "aVN" = (
@@ -27221,7 +27157,7 @@
 /obj/item/device/radio/electropack,
 /obj/item/device/radio/signaler,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
@@ -27679,7 +27615,7 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/orangeblack/side{
@@ -29752,7 +29688,7 @@
 /area/station/security/main)
 "bgx" = (
 /obj/table/auto,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /turf/simulated/floor/carpet,
@@ -31769,24 +31705,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"bkr" = (
-/obj/table/auto,
-/obj/item/storage/photo_album{
-	pixel_y = -10
-	},
-/obj/item/camera_test,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	layer = 3.5;
-	pixel_y = -24
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "bks" = (
 /obj/machinery/r_door_control{
 	id = "miningdock"
@@ -32024,7 +31942,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -32451,7 +32369,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -33061,7 +32979,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bnv" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -33783,7 +33701,7 @@
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
-	icon = 'icons/obj/64x96.dmi';
+	icon = 'icons/obj/large/64x96.dmi';
 	icon_state = "air_gizmo";
 	name = "damaged vaporator unit"
 	},
@@ -33973,7 +33891,7 @@
 /area/station/security/main)
 "bpz" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap)
+/area/shuttle/escape/station)
 "bpA" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/item/ammo/bullets/tranq_darts,
@@ -34121,7 +34039,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bpW" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	name = "Engine Output Monitoring"
 	},
@@ -34204,7 +34122,7 @@
 /area/station/engine/core)
 "bqi" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/materials,
+/obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
@@ -34244,7 +34162,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -34309,6 +34227,85 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"ijs" = (
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/item/device/radio/headset/multifreq,
+/obj/storage/crate{
+	desc = "Only distantly related to the Adventure Closet.";
+	name = "Adventure Crate"
+	},
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/snacks/sandwich/pb,
+/obj/item/paper{
+	desc = "Aw dang, mooom";
+	info = "Good luck on your adventure, sweetie! Love, Mom.<br> <i>Whose mom? Yours? Who knows.</i>";
+	name = "note from mom"
+	},
+/obj/item/paper/book/from_file/critter_compendium,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
+"juS" = (
+/obj/table/auto,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/audio_log,
+/obj/item/camera,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/storage/box/trackimp_kit2,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	tag = ""
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
+"rAI" = (
+/obj/storage/crate/rcd/CE,
+/obj/machinery/light{
+	dir = 1;
+	name = "light fixture"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/engineering/ce)
+"tPo" = (
+/obj/table/wood/auto,
+/obj/item/storage/secure/sbriefcase,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"vdr" = (
+/obj/table/auto,
+/obj/item/storage/photo_album{
+	pixel_y = -10
+	},
+/obj/item/camera,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 
 (1,1,1) = {"
 aaa
@@ -66818,7 +66815,7 @@ bhZ
 bhZ
 bjl
 bjO
-bkr
+vdr
 bll
 amE
 aaa
@@ -77971,7 +77968,7 @@ aQF
 aTc
 aSb
 aTD
-aTo
+rAI
 aUr
 aTD
 aWi
@@ -79467,7 +79464,7 @@ asS
 asS
 aGU
 aHH
-aIw
+tPo
 aLl
 aKs
 aMq
@@ -103565,8 +103562,8 @@ aeT
 bqe
 afn
 afn
-afB
-afN
+juS
+ijs
 agd
 afn
 afn

@@ -2,7 +2,7 @@
 /// The datum hosting the signal is automaticaly added as the first argument
 /// Returns a bitfield gathered from all registered procs
 /// Arguments given here are packaged in a list and given to _SendSignal
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target?.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
 #define GLOBAL_SIGNAL preMapLoad // guaranteed to exist and that's all that matters
 
@@ -17,6 +17,9 @@
 /// A wrapper for _AddComponent that allows us to pretend we're using normal named arguments
 #define AddComponent(arguments...) _AddComponent(list(##arguments))
 
+/// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
+#define LoadComponent(arguments...) _LoadComponent(list(##arguments))
+
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
 	*
@@ -28,6 +31,10 @@
 /// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
 #define COMPONENT_NOTRANSFER 2
 
+
+/// arginfo handling TODO: document
+#define ARG_INFO(name, type, desc, default...)\
+	list(name, type, desc, ##default)
 
 // How multiple components of the exact same type are handled in the same datum
 
@@ -45,6 +52,8 @@
 
 // ---- global signals ----
 #define COMSIG_GLOBAL_REBOOT "global_reboot"
+//When a drone dies. Y'know, the critter ones.
+#define COMSIG_GLOBAL_DRONE_DEATH "global_drone_death"
 
 //  ---- datum signals ----
 
@@ -61,7 +70,20 @@
 #define COMSIG_ATOM_DIR_CHANGED "atom_dir_changed"
 /// when an atom is collided by a projectile (/obj/projectile)
 #define COMSIG_ATOM_HITBY_PROJ "atom_hitby_proj"
-
+/// when an atom is hit by a thrown thing (thrown_atom, /datum/thrown_thing)
+#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
+/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
+#define COMSIG_ATOM_EXAMINE "atom_examine"
+/// when something happens that should trigger an icon update. Or something.
+#define COMSIG_UPDATE_ICON "atom_update_icon"
+/// when something triggers Crossed by entering this atom's turf (/atom/movable)
+#define COMSIG_ATOM_CROSSED "atom_crossed"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
+/// When something calls UpdateIcon
+#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
+/// When reagents change
+#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
 // ---- atom/movable signals ----
 
 /// when an AM moves (thing, previous_loc, direction)
@@ -70,6 +92,10 @@
 #define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 /// when an AM ends throw (thing, /datum/thrown_thing)
 #define COMSIG_MOVABLE_THROW_END "mov_throw_end"
+/// when an AM receives a packet (datum/signal/signal, receive_method, receive_param / range, connection_id)
+#define COMSIG_MOVABLE_RECEIVE_PACKET "mov_receive_packet"
+/// send this signal to send a radio packet (datum/signal/signal, receive_param / range, frequency), if frequency is null all registered frequencies are used
+#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 
 // ---- item signals ----
 
@@ -87,6 +113,10 @@
 #define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
 /// When an item is eaten
 #define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
+/// After an item's been eaten, but there's still some left
+#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
+/// After we've consumed an item
+#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 /// When an item is used to attack a mob before it actually hurts the mob
 #define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 /// When an item is used in-hand
@@ -95,6 +125,28 @@
 #define COMSIG_ITEM_SWAP_TO "itm_swap_to"
 /// When an item is swapped away from [does not include being picked up/taken out of bags/etc] (user)
 #define COMSIG_ITEM_SWAP_AWAY "itm_swap_away"
+/// After an item's itemspecial is used (user)
+#define COMSIG_ITEM_SPECIAL_POST "itm_special_post"
+/// When items process ticks on an item
+#define COMSIG_ITEM_PROCESS "itm_process"
+
+// ---- cloaking device signal ----
+/// Make cloaking devices turn off
+#define COMSIG_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
+
+// ---- disguiser device signal ----
+/// Make disguiser devices turn off
+#define COMSIG_DISGUISER_DEACTIVATE "disguiser_deactivate"
+
+// ---- drone beacon signal ----
+/// Triggers on destruction of a drone beacon
+#define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
+
+// ---- bomb assembly signals ----
+/// Triggers on the start of signalling the opening of an assembly bomb
+#define COMSIG_BOMB_SIGNAL_START "bomb_signal_start"
+/// Triggers when an assembly bomb's signalling is cancelled
+#define COMSIG_BOMB_SIGNAL_CANCEL "bomb_signal_cancel"
 
 // ---- implant signals ----
 /// When implanted
@@ -117,32 +169,60 @@
 #define COMSIG_UNARMED_BLOCK_BEGIN "unarmed_block_begin"
 /// When an item block is created
 #define COMSIG_UNARMED_BLOCK_END "unarmed_block_end"
-
+/// When a block blocks damage at all
+#define COMSIG_BLOCK_BLOCKED "blockblock"
 // ---- human signals ----
 
 // ---- mob signals ----
-
+/// When a client logs into a mob
+#define COMSIG_MOB_LOGIN "mob_login"
+/// When a client logs out of a mob
+#define COMSIG_MOB_LOGOUT "mob_logout"
 /// At the beginning of when an attackresults datum is being set up
 #define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 /// When a mob dies
 #define COMSIG_MOB_DEATH "mob_death"
 
+/// When a mob fakes death
+#define COMSIG_MOB_FAKE_DEATH "mob_fake_death"
+
 #define COMSIG_MOB_PICKUP "mob_pickup"
 
 #define COMSIG_MOB_DROPPED "mob_drop"
 
+/// sent when a mob throws something (target, params)
+#define COMSIG_MOB_THROW_ITEM "throw_item"
+
+/// sent when a mob throws something that lands nearby
+#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
+
+/// sent when a mob sets their a_intent var (mob, intent)
+#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
+
 /// sent when radiation status ticks on mob (stage)
 #define COMSIG_MOB_GEIGER_TICK "mob_geiger"
+
+/// When the mob vomits
+#define COMSIG_MOB_VOMIT "mob_vomit"
+
 /// on mouseup
 #define COMSIG_MOUSEUP "mouseup"
+
+/// sent when defibbed status is added to a mob
+#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 // ---- mob/living signals ----
 /// When a Life tick occurs
 #define COMSIG_LIVING_LIFE_TICK "human_life_tick"
+// ---- mob property signals ----
+/// When invisibility of a mob gets updated (old_value)
+#define COMSIG_MOB_PROP_INVISIBILITY "mob_prop_invis"
 
 // ---- attack_X signals ----
 
-/// Attacking wiht an item in-hand
+/// Attacking with an item in-hand (item, attacker)
 #define COMSIG_ATTACKBY "attackby"
+/// Attacking without an item in-hand (attacker)
+#define COMSIG_ATTACKHAND "attackhand"
 
 
 // ---- projectile signals ----
@@ -203,3 +283,37 @@
 // ---- fullauto UI thingy signals ----
 #define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 #define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
+#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
+
+// ---- small cell component signals ----
+///When the cell in a uses_cell component should be swapped out (cell, user)
+#define COMSIG_CELL_SWAP "cell_swap"
+///When a cell is attacked, try to initiate a cellswap on the attacking obj (cell, user)
+#define COMSIG_CELL_TRY_SWAP "cell_try_swap"
+/// If an item can be charged
+#define COMSIG_CELL_CAN_CHARGE "cell_can_charge"
+/// Charge a small-cell (amount)
+#define COMSIG_CELL_CHARGE "cell_charge"
+/// Use some charge from a small-cell (amount, bypass)
+#define COMSIG_CELL_USE "cell_use"
+/// Check if thing is a power cell
+#define COMSIG_CELL_IS_CELL "cell_is_cell"
+/// Get the current charge and max charge of a power cell (list(charge)), or check if charge is higher than an amount (charge), or just check if there is a cell at all (null)
+#define COMSIG_CELL_CHECK_CHARGE "cell_check_charge"
+/// Force an update to the cellholder's cell. Takes an atom/movable that is a powercell, a powercell component, or a list of args for the powercell to inherit
+#define COMSIG_CELL_FORCE_NEW_CELL "cell_force_new"
+
+#define CELL_CHARGEABLE 1
+#define CELL_UNCHARGEABLE 2
+#define CELL_INSUFFICIENT_CHARGE 4
+#define CELL_SUFFICIENT_CHARGE 8
+#define CELL_RETURNED_LIST 16
+#define CELL_FULL 32
+
+// ---- area signals ----
+/// area's active var set to true (when a client enters)
+#define COMSIG_AREA_ACTIVATED "area_activated"
+/// area's active var set to false (when all clients leave)
+#define COMSIG_AREA_DEACTIVATED "area_deactivated"
+
+#define COMSIG_SUSSY_PHRASE "sussy"

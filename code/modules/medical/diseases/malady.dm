@@ -32,7 +32,7 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = max(0,min(advance_prob,100))
+		advance_prob = clamp(advance_prob, 0, 100)
 
 		if (prob(advance_prob))
 			if (state == "Remissive")
@@ -194,10 +194,10 @@
 			if (prob(4))
 				boutput(affected_mob, "<span class='alert'>You feel like everything is wrong with your life!</span>")
 			if (prob(5))
-				affected_mob.changeStatus("slowed", rand(80,320))
+				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
 			if (prob(5))
-				affected_mob.changeStatus("weakened", 120)
+				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
 				affected_mob.emote("collapse")
@@ -205,13 +205,13 @@
 			if(prob(8))
 				affected_mob.contract_disease(/datum/ailment/malady/shock,null,null,1)
 			if(prob(12))
-				affected_mob.changeStatus("weakened", 120)
+				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
 				affected_mob.emote("collapse")
 			if (prob(12))
 				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
-				affected_mob.changeStatus("slowed", rand(80,320))
+				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 
 
 
@@ -225,7 +225,7 @@
 	reagentcure = list("heparin")
 	recureprob = 10
 	affected_species = list("Human","Monkey")
-	stage_prob = 0
+	stage_prob = 5
 
 /datum/ailment/malady/bloodclot/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	..()
@@ -236,7 +236,7 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		C.remove_stam_mod_regen("bloodclot")
+		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
 		C.remove_stam_mod_max("bloodclot")
 
 /datum/ailment/malady/bloodclot/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
@@ -282,7 +282,7 @@
 					return
 				if (prob(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					C.add_stam_mod_regen("bloodclot", -2)
+					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
 				if (prob(5))
 					affected_mob.losebreath ++
@@ -298,14 +298,14 @@
 					return
 				if (prob(5) && iscarbon(affected_mob))
 					var/mob/living/carbon/C = affected_mob
-					C.add_stam_mod_regen("bloodclot", -2)
+					APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot", -2)
 					C.add_stam_mod_max("bloodclot", -10)
 				if (prob(8))
 					affected_mob.take_brain_damage(10)
 				if (prob(5))
 					affected_mob.stuttering += 1
 				if (prob(2))
-					affected_mob.drowsyness += 1
+					affected_mob.changeStatus("drowsy", 5 SECONDS)
 				if (prob(5))
 					affected_mob.emote(pick("faint", "collapse", "twitch", "groan"))
 			else // a limb or whatever
@@ -330,7 +330,7 @@
 					D.affected_area = null
 					if (iscarbon(affected_mob))
 						var/mob/living/carbon/C = affected_mob
-						C.remove_stam_mod_regen("bloodclot")
+						REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "bloodclot")
 						C.remove_stam_mod_max("bloodclot")
 
 /* -------------------- Heart Disease -------------------- */
@@ -340,7 +340,7 @@
 	info = "The patient's arteries have narrowed."
 	max_stages = 2
 	cure = "Lifestyle Changes, Anticoagulants or Aspirin"
-	reagentcure = list("heparin"=1, "salicylic_acid"=2, "nitroglycerin"=5)
+	reagentcure = list("heparin"=1, "salicylic_acid"=2)
 	affected_species = list("Human","Monkey")
 	stage_prob = 1
 
@@ -348,14 +348,14 @@
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		C.add_stam_mod_regen("heartdisease", -2)
+		APPLY_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease", -2)
 		C.add_stam_mod_max("heartdisease", -10)
 
 /datum/ailment/malady/heartdisease/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
 	..()
 	if (iscarbon(affected_mob))
 		var/mob/living/carbon/C = affected_mob
-		C.remove_stam_mod_regen("heartdisease")
+		REMOVE_MOB_PROPERTY(C, PROP_STAMINA_REGEN_BONUS, "heartdisease")
 		C.remove_stam_mod_max("heartdisease")
 
 /datum/ailment/malady/heartdisease/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/malady/D)
@@ -392,7 +392,7 @@
 			affected_mob.cure_disease(D)
 			return
 		else if (cureprob > 10 && src.reagentcure["heparin"] < 2)
-			reagentcure = list("heparin"=2, "salicylic_acid"=4, "nitroglycerin"=10)
+			reagentcure = list("heparin"=2, "salicylic_acid"=4)
 
 		if (D.stage >= 1) // chest pain, heartburn, shortness of breath and a little bit of damage from heart not getting enough oxygen
 			if (prob(5))
@@ -422,7 +422,7 @@
 	info = "The patient is having a cardiac emergency."
 	max_stages = 3
 	cure = "Cardiac Stimulants"
-	reagentcure = list("atropine"=8,"epinephrine"=10,"heparin"=5,"nitroglycerin"=35)
+	reagentcure = list("atropine"=8,"epinephrine"=10,"heparin"=5)
 	recureprob = 10
 	affected_species = list("Human","Monkey")
 	stage_prob = 5

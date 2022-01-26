@@ -1,3 +1,10 @@
+/*
+
+	Unused, dead code, saved here for posterity
+
+*/
+
+#error DO NOT INCLUDE THIS FILE IT IS JUST FOR HISTORICAL PURPOSES IN CASE SOMEONE WANTS TO ADD IT thanks bye
 #define HOLDER_ROLE_UNUSED 0
 #define HOLDER_ROLE_CREATURE 1
 #define HOLDER_ROLE_EFFECT 2
@@ -92,7 +99,7 @@
 				if (phase == PHASE_DRAW)
 					var/obj/item/playing_cards/stack = holder.card
 					for (var/i = 1, i <= phase_arguments, i++)
-						if (!stack || !stack.cards.len)
+						if (!stack || !length(stack.cards))
 							boutput(M, "<span class='alert'>You lose.</span>")
 							// @todo
 							return
@@ -377,14 +384,14 @@
 		return answer
 
 	proc/locate_card(var/designation)
-		var/playerid = text2num(chs(designation, 1))
+		var/playerid = text2num_safe(chs(designation, 1))
 		if (!playerid)
 			return null
 		var/array = chs(designation, 2)
 		switch (array)
 			if ("C")
 				var/list/choice = mobs_card_holder[playerid]
-				var/cardid = text2num(chs(designation, 3))
+				var/cardid = text2num_safe(chs(designation, 3))
 				var/obj/griffening_card_holder/holder = choice[cardid]
 				if (!holder.card)
 					return null
@@ -393,7 +400,7 @@
 
 			if ("E")
 				var/list/choice = effects_card_holder[playerid]
-				var/cardid = text2num(chs(designation, 3))
+				var/cardid = text2num_safe(chs(designation, 3))
 				var/obj/griffening_card_holder/holder = choice[cardid]
 				if (!holder.card)
 					return null
@@ -411,7 +418,7 @@
 				var/obj/griffening_card_holder/holder = discard_holder[playerid]
 				if (holder.card)
 					return null
-				var/cardid = text2num(copytext(designation, 3))
+				var/cardid = text2num_safe(copytext(designation, 3))
 				var/obj/item/playing_cards/PC = holder.card
 				if (PC.cards.len <= cardid)
 					return PC.cards[cardid]
@@ -421,7 +428,7 @@
 				var/obj/griffening_card_holder/holder = gibbed_holder[playerid]
 				if (holder.card)
 					return null
-				var/cardid = text2num(copytext(designation, 3))
+				var/cardid = text2num_safe(copytext(designation, 3))
 				var/obj/item/playing_cards/PC = holder.card
 				if (PC.cards.len <= cardid)
 					return PC.cards[cardid]
@@ -431,7 +438,7 @@
 				var/obj/griffening_card_holder/holder = deck_holder[playerid]
 				if (holder.card)
 					return null
-				var/cardid = text2num(copytext(designation, 3))
+				var/cardid = text2num_safe(copytext(designation, 3))
 				var/obj/item/playing_cards/PC = holder.card
 				if (PC.cards.len <= cardid)
 					return PC.cards[cardid]
@@ -840,7 +847,7 @@ td, th {
 
 /obj/griffening_central
 	name = "Spacemen the Grifening duel arena"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	density = 0
 	opacity = 0
 	anchored = 1

@@ -13,7 +13,8 @@
 	onUpdate()
 		..()
 		if (ability && owner && state == ACTIONSTATE_RUNNING)
-			owner.invisibility = ability.inv_level
+			var/mob/M = owner
+			APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, ability, ability.inv_level)
 
 	onInterrupt(var/flag = 0)
 		..()
@@ -26,7 +27,8 @@
 		if (ability)
 			ability.fade_in()
 		else if (owner)
-			owner.invisibility = initial(owner.invisibility)
+			var/mob/M = owner
+			REMOVE_MOB_PROPERTY(M, PROP_INVISIBILITY, ability)
 		if (iicon)
 			del iicon
 		qdel(src)
@@ -56,7 +58,7 @@
 /datum/targetable/critter/fadeout
 	name = "Fade Out"
 	desc = "Become invisible until you move. Invisibility lingers for a few seconds after moving or acting."
-	var/inv_level = 16
+	var/inv_level = INVIS_SPOOKY
 	var/fade_out_icon_state = null
 	var/fade_in_icon_state = null
 	var/fade_anim_length = 3
@@ -82,7 +84,7 @@
 		else
 			animate(holder.owner, alpha=64, time=5)
 		SPAWN_DBG (wait)
-			holder.owner.invisibility = inv_level
+			APPLY_MOB_PROPERTY(holder.owner, PROP_INVISIBILITY, src, inv_level)
 			holder.owner.alpha = 64
 			actions.start(I, holder.owner)
 		return 0
@@ -93,7 +95,7 @@
 			disabled = 0
 			doCooldown()
 			SPAWN_DBG(linger_time)
-				holder.owner.invisibility = 0
+				REMOVE_MOB_PROPERTY(holder.owner, PROP_INVISIBILITY, src)
 				if (fade_in_icon_state)
 					flick(fade_in_icon_state, holder.owner)
 					holder.owner.alpha = 255

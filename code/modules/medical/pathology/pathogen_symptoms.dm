@@ -51,31 +51,33 @@ datum/pathogeneffects
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_cloud(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
 		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/pathogen_cloud/D = make_cleanable(/obj/decal/cleanable/pathogen_cloud,T)
+
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		var/datum/reagents/R = new /datum/reagents(amount)
+		D.reagents = new /datum/reagents(amount)
 		Q.volume = amount
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		R.reagent_list += "pathogen"
-		R.reagent_list["pathogen"] = Q
-		Q.holder = R
-		R.update_total()
-		T.fluid_react(R, amount, airborne = 1)
+		D.reagents.reagent_list += "pathogen"
+		D.reagents.reagent_list["pathogen"] = Q
+		Q.holder = D.reagents
+		D.reagents.update_total()
 
 	// creates an infective puddle
 	// this should give people better feedback about how be infected and how to avoid it
 	proc/infect_puddle(var/mob/M as mob, var/datum/pathogen/origin, var/amount = 5)
 		var/turf/T = get_turf(M)
+		var/obj/decal/cleanable/pathogen_sweat/D = make_cleanable(/obj/decal/cleanable/pathogen_sweat,T)
+
 		var/datum/reagent/blood/pathogen/Q = new /datum/reagent/blood/pathogen()
-		var/datum/reagents/R = new /datum/reagents(amount)
+		D.reagents = new /datum/reagents(amount)
 		Q.volume = amount
 		Q.pathogens += origin.pathogen_uid
 		Q.pathogens[origin.pathogen_uid] = origin
-		R.reagent_list += "pathogen"
-		R.reagent_list["pathogen"] = Q
-		Q.holder = R
-		R.update_total()
-		R.trans_to(T, amount)
+		D.reagents.reagent_list += "pathogen"
+		D.reagents.reagent_list["pathogen"] = Q
+		Q.holder = D.reagents
+		D.reagents.update_total()
 
 	// infect_direct(mob, datum/pathogen) : void
 	// This is the proc that handles direct transmission of the pathogen from one mob to another. This should be called in particular infection scenarios. For example, a sweating person
@@ -596,8 +598,8 @@ obj/hallucinated_item
 	New(myloc, myowner, var/obj/prototype)
 		..()
 		myowner = owner
-		name = prototype.name
-		desc = prototype.desc
+		name = prototype?.name || "something unknown"
+		desc = prototype?.desc
 
 	attack_hand(var/mob/M)
 		if (M == owner)
@@ -621,9 +623,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		var/what = pick("I am the traitor.", "I will kill you.", "You will die, [M].")
 		if (prob(50))
 			boutput(M, "<B>[O]</B> points at [M].")
-			var/point = new /obj/decal/point(get_turf(M))
-			SPAWN_DBG(3 SECONDS)
-				qdel(point)
+			make_point(get_turf(M))
 		boutput(M, "<B>[O]</B> [action], \"[what]\"")
 
 	proc/backpack(var/mob/M, var/mob/living/O)
@@ -1341,7 +1341,7 @@ datum/pathogeneffects/malevolent/liverdamage
 				if (prob(12) && M.reagents.has_reagent("ethanol"))
 					M.visible_message("[M] falls to the ground, clutching their chest!", "<span class='alert'>The pain overwhelms you!</span>", "<span class='alert'>You hear someone fall.</span>")
 					M.take_toxin_damage(5)
-					M.changeStatus("weakened", 400)
+					M.changeStatus("weakened", 40 SECONDS)
 
 	may_react_to()
 		return "The pathogen appears to be capable of processing certain beverages."
@@ -1543,10 +1543,10 @@ datum/pathogeneffects/malevolent/seriouschills
 	rarity = RARITY_RARE
 
 	proc/create_icing(var/mob/M)
-		var/obj/decal/icefloor/I = unpool(/obj/decal/icefloor)
+		var/obj/decal/icefloor/I = new /obj/decal/icefloor
 		I.set_loc(get_turf(M))
 		SPAWN_DBG(30 SECONDS)
-			pool(I)
+			qdel(I)
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -1658,7 +1658,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span class='alert'>You freeze completely!</span>")
 					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
-					M:become_ice_statue()
+					M.become_statue_ice()
 		if (M.bodytemperature < 0)
 			M.bodytemperature = 0
 
@@ -1730,7 +1730,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
 		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
 		gas.temperature = T20C
@@ -1759,7 +1759,7 @@ datum/pathogeneffects/malevolent/farts/co2
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
 		gas.carbon_dioxide = origin.stage * (voluntary ? 1.4 : 7) // only a fifth for voluntary farts
 		gas.temperature = T20C
@@ -1792,7 +1792,7 @@ datum/pathogeneffects/malevolent/farts/o2
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
 		gas.oxygen = origin.stage * (voluntary ? 20 : 2) // ten times as much for voluntary farts
 		gas.temperature = T20C
@@ -2017,17 +2017,17 @@ datum/pathogeneffects/malevolent/radiation
 					boutput(M,"<span class='alert'>You feel sick.</span>")
 			if (4)
 				if (prob(13))
-					M.changeStatus("radiation", 30)
+					M.changeStatus("radiation", 3 SECONDS)
 					boutput(M,"<span class='alert'>You feel very sick!</span>")
 				else if (prob(26))
 					M.changeStatus("radiation", 2 SECONDS)
 					boutput(M,"<span class='alert'>You feel sick.</span>")
 			if (5)
 				if (prob(15))
-					M.changeStatus("radiation", rand(20,40))
+					M.changeStatus("radiation", rand(2,4) SECONDS)
 					boutput(M,"<span class='alert'>You feel extremely sick!!</span>")
 				else if (prob(20))
-					M.changeStatus("radiation", 30)
+					M.changeStatus("radiation", 3 SECONDS)
 					boutput(M,"<span class='alert'>You feel very sick!</span>")
 				else if (prob(40))
 					M.changeStatus("radiation", 2 SECONDS)

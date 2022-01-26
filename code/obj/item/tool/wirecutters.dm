@@ -7,7 +7,7 @@
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_SNIPPING
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	force = 6.0
 	throw_speed = 2
@@ -18,7 +18,6 @@
 	stamina_damage = 15
 	stamina_cost = 10
 	stamina_crit_chance = 30
-	module_research = list("tools" = 4, "metals" = 1)
 	rand_pos = 1
 
 	New()

@@ -15,15 +15,13 @@
 	item_state = "brain"
 	flags = TABLEPASS
 	force = 1.0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 1.0
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	module_research = list("medicine" = 2) // why would you put this below the throw_impact() stuff
-	module_research_type = /obj/item/organ // were you born in a fuckin barn
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -55,18 +53,24 @@
 	var/emagged = 0
 	var/synthetic = 0
 	var/broken = 0
+	var/unusual = 0
 	var/failure_disease = null		//The organ failure disease associated with this organ. Not used for Heart atm.
 
 	var/MAX_DAMAGE = 100	//Max damage before organ "dies"
 	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
 
 	var/created_decal = /obj/decal/cleanable/blood // what kinda mess it makes.  mostly so cyberhearts can splat oil on the ground, but idk maybe you wanna make something that creates a broken balloon or something on impact vOv
-	var/decal_done = 0 // fuckers are tossing these around a lot so I guess they're only gunna make one, ever now
+	var/blood_color = null
+	var/blood_reagent = null
+	var/decal_done = FALSE // fuckers are tossing these around a lot so I guess they're only gunna make one, ever now
 	var/body_side = null // L_ORGAN/1 for left, R_ORGAN/2 for right
 	var/datum/bone/bones = null
 	rand_pos = 1
 
 	var/made_from = "flesh" //Material this organ will produce.
+
+	///if the organ is currently acting as an organ in a body
+	var/in_body = FALSE
 
 	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		if (!ismob(M))
@@ -100,11 +104,8 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(get_turf(src), "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
-			if (istype(src.loc, /turf) && !src.decal_done && ispath(src.created_decal))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-				make_cleanable(src.created_decal, get_turf(src))
-				src.decal_done = 1
+			playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
 			else
@@ -120,6 +121,7 @@
 			src.donor = nholder.donor
 		if (src.donor)
 			src.donor_original = src.donor
+			src.in_body = TRUE
 			if (src.donor.bioHolder)
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
@@ -129,6 +131,10 @@
 				src.donor_name = src.donor.name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
+			src.blood_DNA = src.donor_DNA
+			src.blood_type = src.donor.bioHolder?.bloodType
+			src.blood_color = src.donor.bioHolder?.bloodColor
+			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	disposing()
@@ -152,13 +158,25 @@
 		holder = null
 		..()
 
+	proc/splat(turf/T)
+		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
+			return FALSE
+		playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
+		cleanable.blood_DNA = src.blood_DNA
+		cleanable.blood_type = src.blood_type
+		if(istype(cleanable, /obj/decal/cleanable/blood))
+			var/obj/decal/cleanable/blood/blood = cleanable
+			blood.set_sample_reagent_custom(src.blood_reagent, 10)
+			if(!isnull(src.blood_color))
+				blood.color = src.blood_color
+		src.decal_done = TRUE
+		return cleanable
+
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
-		if (T && !src.decal_done && ispath(src.created_decal))
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-			make_cleanable(src.created_decal,T)
-			src.decal_done = 1
+		src.splat(T)
 		..() // call your goddamn parents
 
 	//Returns true if the organ is broken or damage is over max health.
@@ -200,7 +218,7 @@
 			if (!src.broken  && failure_disease)
 				src.donor.cure_disease(failure_disease)
 
-		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)
+		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))
 			var/datum/abilityHolder/organ/A = M.get_ability_holder(/datum/abilityHolder/organ)
 			if (!istype(A))
 				A = M.add_ability_holder(/datum/abilityHolder/organ)
@@ -213,6 +231,7 @@
 
 	//kyle-note come back
 	proc/on_removal()
+		SHOULD_CALL_PARENT(TRUE)
 		//all robotic organs have a stamina buff we must remove
 		if (src.donor)
 			if (failure_disease)
@@ -220,7 +239,11 @@
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
-		if (islist(src.organ_abilities) && src.organ_abilities.len)// && src.donor.abilityHolder)
+			src.blood_DNA = src.donor_DNA
+			src.blood_type = src.donor.bioHolder?.bloodType
+		src.blood_color = src.donor?.bioHolder?.bloodColor
+		src.blood_reagent = src.donor?.blood_id
+		if (islist(src.organ_abilities) && length(src.organ_abilities))// && src.donor.abilityHolder)
 			var/datum/abilityHolder/aholder
 			if (src.donor && src.donor.abilityHolder)
 				aholder = src.donor.abilityHolder
@@ -229,7 +252,7 @@
 			if (istype(aholder))
 				for (var/abil in src.organ_abilities)
 					src.remove_ability(aholder, abil)
-
+		src.donor = null
 
 		return
 
@@ -317,6 +340,9 @@
 		if (user.zone_sel.selecting != src.organ_holder_location)
 			return 0
 
+		if (!can_act(user))
+			return 0
+
 		if (!surgeryCheck(M, user))
 			return 0
 
@@ -353,24 +379,28 @@
 			return 0
 
 	proc/breakme()
-		if (!broken && islist(src.organ_abilities) && src.organ_abilities.len)// remove abilities when broken
-			var/datum/abilityHolder/aholder
-			if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
-			else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
-				aholder = src.holder.donor.abilityHolder
-			if (istype(aholder))
-				for (var/abil in src.organ_abilities)
-					src.remove_ability(aholder, abil)
-		src.broken = 1
+		if (!broken)
+			if (islist(src.organ_abilities) && length(src.organ_abilities))// remove abilities when broken
+				var/datum/abilityHolder/aholder
+				if (src.donor && src.donor.abilityHolder)
+					aholder = src.donor.abilityHolder
+				else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
+					aholder = src.holder.donor.abilityHolder
+				if (istype(aholder))
+					for (var/abil in src.organ_abilities)
+						src.remove_ability(aholder, abil)
+			src.broken = 1
+			return TRUE
 
 	proc/unbreakme()
-		if (broken && islist(src.organ_abilities) && src.organ_abilities.len) //put them back if fixed (somehow)
-			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
-			if (!istype(A))
-				A = donor?.add_ability_holder(/datum/abilityHolder/organ)
-			if (!A)
-				return
-			for (var/abil in src.organ_abilities)
-				src.add_ability(A, abil)
-		src.broken = 0
+		if (broken)
+			if (islist(src.organ_abilities) && length(src.organ_abilities)) //put them back if fixed (somehow)
+				var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
+				if (!istype(A))
+					A = donor?.add_ability_holder(/datum/abilityHolder/organ)
+				if (!A)
+					return
+				for (var/abil in src.organ_abilities)
+					src.add_ability(A, abil)
+			src.broken = 0
+			return TRUE

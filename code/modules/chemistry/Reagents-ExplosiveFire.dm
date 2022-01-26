@@ -35,21 +35,21 @@ datum
 				if (covered.len > 9)
 					volume = (volume/covered.len)
 
-				var/radius = min(max(0,volume/SD),8)
+				var/radius = clamp(volume/SD, 0, 8)
 				fireflash_sm(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
 					return
 				if(holder.total_temperature <= T0C - 50) return
 				var/MB = mob_burning
-				src = null
 				var/mob/living/L = M
 				if(istype(L))
 					L.update_burning(MB)
 				if (method == INGEST)
-					M.TakeDamage("All", 0, min(max(10, volume_passed * 2), 45), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp(volume_passed * 2, 10, 45), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
 					M.emote("scream")
 				return
@@ -92,58 +92,58 @@ datum
 			viscosity = 0.8
 			minimum_reaction_temperature = T0C + 100
 			var/temp_reacted = 0
+			penetrates_skin = 1
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!temp_reacted)
 					temp_reacted = 1
-					var/radius = min(max(0,volume*0.15),8)
+					var/radius = clamp(volume*0.15, 0, 8)
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
-						radius = min(max(0,(volume/covered.len)*0.15),8)
+						radius = clamp((volume/covered.len)*0.15, 0, 8)
 						fireflash_s(t, radius, rand(3000, 6000), 500)
-					if(holder)
-						holder.del_reagent(id)
+				holder?.del_reagent(id)
 				return
-
-			/*
-			reaction_obj(var/obj/O, var/volume)
-				src = null
-				return 1
-			*/
-
-			/*
-			reaction_turf(var/turf/T, var/volume)
-				src = null
-				if(!T.reagents) T.create_reagents(volume)
-				T.reagents.add_reagent("napalm_goo", volume, null)
-				return
-			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, 7 * burn.getStage(), 0, DAMAGE_BURN)
-						if(!M.stat)
+						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(3 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
+						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
 				var/mob/living/L = M
 				var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 				if(istype(L) && burn)
-					L.changeStatus("burning", 15 * src.volume)
-					burn.counter += 7 * src.volume
+					L.changeStatus("burning", 2 * src.volume SECONDS)
+					burn.counter += 10 * src.volume
 					holder?.del_reagent(src.id)
 				..()
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
+
+			syndicate
+				name = "syndicate napalm"
+				id = "syndicate_napalm"
+				description = "Extra sticky, extra burny"
+
+				reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+					. = ..()
+					if(method == TOUCH)
+						var/mob/living/L = M
+						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
+						L.changeStatus("slowed", 4 SECONDS, optional = 4)
+						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
+							L.changeStatus("burning", src.volume SECONDS)
+							burn.counter += 5 * src.volume
 
 		combustible/kerosene
 			name = "kerosene"
@@ -166,19 +166,18 @@ datum
 					qdel(O)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				var/radius = min(max(0,volume*0.15),8)
+				var/radius = clamp(volume*0.15, 0, 8)
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
 				for(var/turf/t in covered)
-					radius = min(max(0,(volume/covered.len)*0.15),8)
+					radius = clamp((volume/covered.len)*0.15, 0, 8)
 					affected += fireflash_sm(t, radius, rand(3000, 6000), 500)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
 						O.visible_message("<span class='alert'>[O] melts!</span>")
 						qdel(O)
-				if(holder)
-					holder.del_reagent(id)
+				holder?.del_reagent(id)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!holder)
@@ -209,27 +208,35 @@ datum
 					var/id = src.id
 					var/datum/reagents/holder = src.holder
 					var/volume
-					src = null
 					holder.del_reagent(id)
 					fireflash_sm(A, 0, rand(20000, 25000) + volume * 2500, 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 100)
+						L.changeStatus("burning", 10 SECONDS)
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(istype(T, /turf/simulated))
-					if(!T.reagents) T.create_reagents(volume)
+					var/list/covered = holder.covered_turf()
+					if(length(covered) > 9)
+						volume = volume/length(covered)
+					if (volume < 3)
+						return
+					if(!T.reagents)
+						T.create_reagents(volume)
+					else
+						T.reagents.maximum_volume = T.reagents.maximum_volume + volume
+
+					if(!T.reagents.has_reagent("thermite"))
+						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
+
 					T.reagents.add_reagent("thermite", volume, null)
-					T.overlays = null
-					T.overlays = image('icons/effects/effects.dmi',icon_state = "thermite")
 					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 10, 300)
+						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
 				return
 
 
@@ -245,20 +252,18 @@ datum
 			minimum_reaction_temperature = T0C+25
 			var/ignited = 0
 
-			pooled()
-				..()
-				ignited = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(!ignited)
+				var/datum/reagents/myholder = holder
+				if(!holder?.my_atom?.is_open_container() && !istype(holder, /datum/reagents/fluid_group))
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+				else if(!ignited)
 					ignited = 1
-					src=null
-					var/myid = id
-					var/datum/reagents/myholder = holder
 					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
 						myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-					myholder.del_reagent(myid)
+				myholder.del_reagent(id)
 
 		combustible/propellant
 			name = "aerosol propellant"
@@ -270,22 +275,20 @@ datum
 			fluid_b = 255
 			transparency = 230
 			minimum_reaction_temperature = T0C + 100
-			var/ignited = 0
-
-			pooled()
-				..()
-				ignited = 0
+			var/ignited = FALSE
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(!ignited)
-					ignited = 1
-					src=null
-					var/myid = id
-					var/datum/reagents/myholder = holder
+				var/datum/reagents/myholder = holder
+				if(!holder?.my_atom?.is_open_container())
+					if(holder.my_atom)
+						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
+							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
+				else if(!ignited)
+					ignited = TRUE
 					var/vol = volume
 					SPAWN_DBG(1 DECI SECOND)
 						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-					myholder.del_reagent(myid)
+				myholder.del_reagent(id)
 
 		combustible/sonicpowder
 			name = "hootingium"
@@ -301,52 +304,50 @@ datum
 			var/no_fluff = 0
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(reacting)
-					return
-
-				reacting = 1
-				var/list/covered = holder.covered_turf()
-				var/location = covered.len ? covered[1] : 0
-				var/hootmode = prob(5)
-
-				if (src.no_fluff == 0)
-					if (hootmode)
-						playsound(location, "sound/voice/animal/hoot.ogg", 100, 1)
-					else
-						playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-
-				for (var/mob/living/M in all_hearers(world.view, location))
-					if (issilicon(M) || isintangible(M))
-						continue
+				if(!reacting)
+					reacting = 1
+					var/list/covered = holder.covered_turf()
+					var/location = covered.len ? covered[1] : 0
+					var/hootmode = prob(5)
 
 					if (src.no_fluff == 0)
-						if (!M.ears_protected_from_sound())
-							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+						if (hootmode)
+							playsound(location, "sound/voice/animal/hoot.ogg", 100, 1)
 						else
+							playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+
+					for (var/mob/living/M in all_hearers(world.view, location))
+						if (issilicon(M) || isintangible(M))
 							continue
 
-					var/checkdist = get_dist(M, location)
-					var/weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
-					var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
-					var/ear_damage = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
-					var/ear_tempdeaf = max(0, holder.get_reagent_amount(id) * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-					var/stamina = clamp(holder.get_reagent_amount(id) * (5 + 1 * (7 - checkdist)), 0, 120)
+						if (src.no_fluff == 0)
+							if (!M.ears_protected_from_sound())
+								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+							else
+								continue
 
-					M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
+						var/checkdist = get_dist(M, location)
+						var/weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
+						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
+						var/ear_damage = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
+						var/ear_tempdeaf = max(0, holder.get_reagent_amount(id) * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+						var/stamina = clamp(holder.get_reagent_amount(id) * (5 + 1 * (7 - checkdist)), 0, 120)
 
-				for (var/mob/living/silicon/S in all_hearers(world.view, location))
-					if (src.no_fluff == 0)
-						if (!S.ears_protected_from_sound())
-							boutput(S, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-						else
-							continue
+						M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 
-					var/checkdist = get_dist(S, location)
-					var/C_weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
+					for (var/mob/living/silicon/S in all_hearers(world.view, location))
+						if (src.no_fluff == 0)
+							if (!S.ears_protected_from_sound())
+								boutput(S, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+							else
+								continue
 
-					S.apply_sonic_stun(C_weak, 0)
+						var/checkdist = get_dist(S, location)
+						var/C_weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
 
-				holder.del_reagent(id)
+						S.apply_sonic_stun(C_weak, 0)
+
+				holder?.del_reagent(id)
 
 			on_mob_life(var/mob/M, var/mult = 1) // fuck you jerk chemists (todo: a thing to self-harm borgs too, maybe ex_act(3) to the holder? I D K
 				if(!M) M = holder.my_atom
@@ -376,33 +377,12 @@ datum
 			minimum_reaction_temperature = T0C+100
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(reacting)
-					return // fix for a potential game crashing exploit with smokes
-
-				reacting = 1
-				var/list/covered = holder.covered_turf()
-				var/location = covered.len ? covered[1] : 0
-				elecflash(location)
-
-				for (var/mob/living/M in all_viewers(5, location))
-					if (issilicon(M) || isintangible(M))
-						continue
-
-					var/dist = get_dist(M, location)
-					var/stunned = max(0, holder.get_reagent_amount(id) * (3 - dist) * 0.1)
-					var/eye_damage = max(0, holder.get_reagent_amount(id) * (2 - dist) * 0.1)
-					var/eye_blurry = max(0, holder.get_reagent_amount(id) * (5 - dist) * 0.2)
-
-					M.apply_flash(60, 0, max(0, stunned), 0, max(0, eye_blurry), max(0, eye_damage))
-
-				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
-					var/C_weakened = max(0, holder.get_reagent_amount(id) * (3 - checkdist) * 0.1)
-					var/C_stunned = max(0, holder.get_reagent_amount(id) * (5 - checkdist) * 0.1)
-
-					M.apply_flash(30, max(0, C_weakened), max(0, C_stunned))
-
-				holder.del_reagent(id)
+				if(!reacting)
+					reacting = 1
+					var/list/covered = holder.covered_turf()
+					var/location = covered.len ? covered[1] : 0
+					flashpowder_reaction(location, holder.get_reagent_amount(id))
+				holder?.del_reagent(id)
 
 		combustible/infernite // COGWERKS CHEM REVISION PROJECT. this could be Chlorine Triflouride, a really mean thing
 			name = "chlorine triflouride"
@@ -422,7 +402,6 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
 				var/id = src.id
-				src = null
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
@@ -443,15 +422,15 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
-
-				src = null
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
+				var/list/covered = old_holder.covered_turf()
+				if(length(covered) > 9)
+					volume = volume/length(covered)
 				if (volume < 3)
 					return
 
 				var/fail = 0
-				var/list/covered = old_holder.covered_turf()
 				if (covered.len>4)
 					fail = 1
 					if (prob(volume+6))
@@ -462,7 +441,7 @@ datum
 					fireflash_sm(T, radius, 4500 + volume * 500, 350)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
 					if(istype(L))
@@ -471,7 +450,7 @@ datum
 						else
 							L.update_burning(50)
 				if (method == INGEST)
-					M.TakeDamage("All", 0, min(max(15, volume * 2.5), 90), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp(volume * 2.5, 15, 90), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
 					M.emote("scream")
 				return
@@ -480,7 +459,7 @@ datum
 
 				var/mob/living/L = M
 				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 100 * mult)
+					L.changeStatus("burning", 10 SECONDS * mult)
 				..()
 
 		combustible/foof // this doesn't work yet
@@ -497,10 +476,9 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				//if(!T.reagents) T.create_reagents(50)
 				//T.reagents.add_reagent("infernite", 5, null)
-				tfireflash(T, min(max(0,volume/10),8), 7000)
+				tfireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
 					SPAWN_DBG(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
@@ -514,13 +492,13 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
 					if(istype(L))
 						L.update_burning(90)
 				if (method == INGEST)
-					M.TakeDamage("All", 0, min(max(30, volume * 6), 90), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp(volume * 6, 30, 90), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
 					M.emote("scream")
 				return
@@ -548,7 +526,6 @@ datum
 				holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				if (O)
 					if(!O.reagents)
 						O.create_reagents(50)
@@ -556,7 +533,6 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if (T)
 					if(!T.reagents)
 						T.create_reagents(50)
@@ -581,15 +557,15 @@ datum
 				if(exposed_temperature < T0C)
 					if(holder)
 						var/list/covered = holder.covered_turf()
-						for(var/turf/t in covered)
-							explosion(t, t, 2, 3, 4, 1)
+						var/density = clamp(src.volume / length(covered), 0, 10)
+						for (var/turf/T in covered)//may need to further limit this
+							explosion_new(holder.my_atom, T, 62 * (density/10)**2, 1)
+
 						holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				return
 
 		combustible/sorium
@@ -606,21 +582,12 @@ datum
 			minimum_reaction_temperature = T0C + 200
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(src.reacting)
-					return
-
-				src.reacting = 1
-				var/list/covered = holder.covered_turf()
-				for(var/atom/source in covered)
-					new/obj/decal/shockwave(source)
-					playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
-					for(var/atom/movable/M in view(2 + (volume/covered.len > 30 ? 1:0), source))
-						if(M.anchored || M == source || M.throwing) continue
-						M.throw_at(get_edge_cheap(source, get_dir(source, M)), 20 + round(((volume/covered.len) * 2)), 1 + round((volume/covered.len) / 10))
-				holder.del_reagent(id)
+				if(!src.reacting)
+					src.reacting = sorium_reaction(holder, volume, id)
 
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/liquiddarkmatter
@@ -637,14 +604,12 @@ datum
 			minimum_reaction_temperature = T0C+200
 
 			reaction_temperature(exposed_temperature, exposed_volume)
-				if(src.reacting)
-					return
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 1 && (exposed_volume/covered.len) > 0.5)
-					return
+				if(!src.reacting)
+					var/list/covered = holder.covered_turf()
+					if (length(covered) > 1 && ((exposed_volume / length(covered)) > 0.5))
+						return
 
-				src.reacting = 1
-				ldmatter_reaction(holder, volume, id)
+					src.reacting = ldmatter_reaction(holder, volume, id)
 
 
 			//Comment this out if you notice a lot of crashes. (It's probably a really bad idea to have this in)
@@ -653,13 +618,13 @@ datum
 				if(prob(75)) return
 
 				var/datum/reagent/us = src
-				src = null
 				if(!T.reagents) T.create_reagents(50)
 				T.reagents.add_reagent(us.id, 5, null)
 				return
 			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
 				return
 
 		combustible/something
@@ -685,6 +650,8 @@ datum
 			transparency = 230
 			viscosity = 0.2
 			minimum_reaction_temperature = T0C + 200
+			depletion_rate = 0.6
+			heat_capacity = 5
 
 			var/max_radius = 7
 			var/min_radius = 0
@@ -707,69 +674,57 @@ datum
 					return
 
 				if (caused_fireflash)
-					return //Stop the fireflash from triggering reaction_temperature on myself (inf loop)
-				var/list/covered = holder.covered_turf()
-				if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
-					if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
-						caused_fireflash = 1
-					for(var/turf/turf in covered)
-						var/radius = min(max(min_radius, ((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier)), max_radius)
-						fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
-						if(holder && (volume/covered.len) >= explosion_threshold)
-							if(holder.my_atom)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
-								// Added log entries (Convair880).
-								message_admins("Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[holder.my_atom.fingerprintslast]" : "*null*"].")
-								logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Fuel tank explosion ([holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[holder.my_atom.fingerprintslast]" : "*null*"].")
-							else
-								turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
-								// Added log entries (Convair880).
-								message_admins("Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
-								logTheThing("bombing", null, null, "Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
+					return
+				else
+					var/list/covered = holder.covered_turf()
+					if (covered.len < 4 || (volume / holder.total_volume) > min_req_fluid)
+						if(covered.len > 0) //possible fix for bug where caused_fireflash was set to 1 without fireflash going off, allowing fuel to reach any temp without igniting
+							caused_fireflash = 1
+						for(var/turf/turf in covered)
+							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
+							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
+							if(holder && volume/length(covered) >= explosion_threshold)
+								if(holder.my_atom)
+									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									// Added log entries (Convair880).
+									message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+									logTheThing("bombing", holder.my_atom.fingerprintslast, null, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
+								else
+									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									// Added log entries (Convair880).
+									message_admins("Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
+									logTheThing("bombing", null, null, "Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
 
-							var/boomrange = min(max(min_explosion_radius, round((volume/covered.len) * volume_explosion_radius_multiplier + volume_explosion_radius_modifier)), max_explosion_radius)
-							explosion(holder.my_atom, turf, -1,-1,boomrange,1)
-					if (holder)
-						holder.del_reagent(id)
+								var/boomrange = clamp(round((volume/covered.len) * volume_explosion_radius_multiplier + volume_explosion_radius_modifier), min_explosion_radius, max_explosion_radius)
+								explosion(holder.my_atom, turf, -1,-1,boomrange,1)
+				if (caused_fireflash)
+					holder?.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				src = null
+				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", 300)
+						L.changeStatus("burning", 30 SECONDS)
 				return 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-
-				var/mob/living/L = M
-				if(istype(L) && L.getStatusDuration("burning"))
-					L.changeStatus("burning", 20 * mult)
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/) && M.getStatusDuration("burning"))
+					M.changeStatus("burning", 2 SECONDS * mult)
+				if((M.health > 20) && (prob(33)))
+					M.take_toxin_damage(1 * mult)
+				if(probmult(1))
+					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+					M.vomit()
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison", 1)
-
-			epichlorohydrin
-				name = "epichlorohydrin"
-				id = "epichlorohydrin"
-				description = "A highly reactive, flammable, mildly toxic compound."
-				reagent_state = LIQUID
-				fluid_r = 220
-				fluid_g = 220
-				fluid_b = 255
-				transparency = 128
-				max_radius = 4
-				min_radius = 0
-				minimum_reaction_temperature = T0C + 385
-				volume_radius_multiplier = 0.05
-				explosion_threshold = 1000
-				volume_explosion_radius_modifier = -4.5
-				volatility = 2.5
 
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 
@@ -795,7 +750,7 @@ datum
 				var/list/covered = holder.covered_turf()
 
 				for(var/turf/location in covered)
-					var/our_amt = holder.get_reagent_amount(src.id) / covered.len
+					var/our_amt = holder.get_reagent_amount(src.id) / length(covered)
 
 					if (our_amt < 10 && covered.len > 5)
 						if (prob(min(covered.len/3,85)))
@@ -847,11 +802,9 @@ datum
 									holder.del_reagent(id)
 
 			reaction_obj(var/obj/O, var/volume)
-				src = null
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space))
 					//if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/dirt) in T)
@@ -861,12 +814,18 @@ datum
 						if(!D.reagents) D.create_reagents(10)
 						D.reagents.add_reagent("blackpowder", 5, null)
 				return
+			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (ishuman(M) && volume >= 10)
+					M.gunshot_residue = 1
+				return
 
 		combustible/nitrogentriiodide
 			//This is the parent and should not be spawned
 			name = "Nitrogen Triiodide"
 			id = "nitrotri_parent"
 			description = "A chemical that is stable when in liquid form, but becomes extremely volatile when dry."
+			random_chem_blacklisted = 1
 			reagent_state = LIQUID
 			penetrates_skin = 1
 			volatility = 2
@@ -875,10 +834,6 @@ datum
 			fluid_b = 64
 			minimum_reaction_temperature = T0C+100
 			var/is_dry = 0
-
-			pooled()
-				..()
-				is_dry = 0
 
 			proc/bang()
 				if(holder?.my_atom)
@@ -899,7 +854,6 @@ datum
 
 					var/datum/reagents/H = holder
 					SPAWN_DBG(0)
-						src = null
 						H.del_reagent("nitrotri_wet")
 						H.del_reagent("nitrotri_dry")
 						H.del_reagent("nitrotri_parent")
@@ -911,14 +865,11 @@ datum
 				var/vol = volume
 				if(!H)
 					return
-
-				src = null
 				H.del_reagent(reagent="nitrotri_wet")
 				H.add_reagent(reagent="nitrotri_dry", amount=vol, donotreact=1)
 
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(!istype(T, /turf/space) && volume >= 5 && !locate(/obj/decal/cleanable/nitrotriiodide) in T)
 					return make_cleanable(/obj/decal/cleanable/nitrotriiodide,T)
 
@@ -927,6 +878,7 @@ datum
 
 		combustible/nitrogentriiodide/wet
 			id = "nitrotri_wet"
+			random_chem_blacklisted = 1
 			volatility = 2
 			viscosity = 0.3
 
@@ -935,16 +887,9 @@ datum
 				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
 					dry()
 
-
-			unpooled()
-				SPAWN_DBG(200 + rand(10, 600) * rand(1, 4)) //Random time until it becomes HIGHLY VOLATILE
-					dry()
-				..()
-
-
-
 		combustible/nitrogentriiodide/dry
 			id = "nitrotri_dry"
+			random_chem_blacklisted = 1
 			volatility = 2.5
 			description = "A chemical that is stable when in liquid form, but becomes extremely volatile when dry. This is dry. Uh oh."
 			is_dry = 1
@@ -955,12 +900,6 @@ datum
 				..()
 				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
 					bang()
-
-			unpooled()
-				is_dry = 1
-				SPAWN_DBG(10 * rand(11,600)) //At least 11 seconds, at most 10 minutes
-					bang()
-				..()
 
 			reaction_turf(var/turf/T, var/volume)
 				var/obj/decal/cleanable/nitrotriiodide/NT = ..()

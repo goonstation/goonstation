@@ -1,7 +1,7 @@
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/see_face = 1
 
@@ -18,7 +18,8 @@
 	var/magical = 0 // for wizard item spell power check
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 
-	var/list/compatible_species = list("human", "cow") // allow mutantraces to wear certain garments
+	/// allow mutantraces to wear certain garments, see [/datum/mutantrace/var/uses_human_clothes]
+	var/list/compatible_species = list("human", "cow")
 
 	var/fallen_offset_x = 1
 	var/fallen_offset_z = -6
@@ -51,13 +52,6 @@
 		..()
 
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
-		return
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 
@@ -66,15 +60,21 @@
 			return
 		if (!islist(src.stains))
 			src.stains = list()
-		else if (src.stains.Find(stn))
+		else if (stn in src.stains)
 			return
 		src.stains += stn
 		src.UpdateName()
 
 	proc/get_stains()
-		if (src.can_stain && islist(src.stains) && src.stains.len)
+		if (src.can_stain && islist(src.stains) && length(src.stains))
 			for (var/i in src.stains)
 				. += i + " "
+
+	proc/clean_stains()
+		if (islist(src.stains) && length(src.stains))
+			src.stains = list()
+			src.UpdateName()
+
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)

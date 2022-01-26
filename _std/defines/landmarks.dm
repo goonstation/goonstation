@@ -17,6 +17,10 @@
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
 
+// shuttle landmarks
+#define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
+#define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
+
 // nukies
 
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
@@ -26,8 +30,11 @@
 #define LANDMARK_SYNDICATE_GEAR_CLOSET "Syndicate-Gear-Closet"
 #define LANDMARK_SYNDICATE_BOMB "Syndicate-Bomb"
 #define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
 // misc and unused
+#define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
 
 /// Twitch Plays Shitty Bill respawn points
 #define LANDMARK_TWITCHY_BILL_RESPAWN "shitty_bill_respawn"
@@ -45,6 +52,11 @@
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
+#define LANDMARK_CRUISER_CENTER "cruiser_center"
+// loading screen maptext landmarks
+#define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
+#define LANDMARK_LOBBY_STATUS "lobby_status"
+#define LANDMARK_LOBBY_TIMER "lobby_timer"
 
 // VR networks
 
@@ -55,6 +67,7 @@
 
 // falling down holes
 
+#define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_MARJ "marjfall" // locations for people to fall if they enter the deep in the trench
