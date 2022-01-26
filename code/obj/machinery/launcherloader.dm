@@ -336,7 +336,7 @@
 		printing = TRUE
 		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
 		sleep(1.75 SECONDS)
-		for (var/i in 0 to src.print_amount)
+		for (var/i in 1 to src.print_amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
 			B.name = "Barcode Sticker ([destination])"
 			B.destination = destination
@@ -403,6 +403,7 @@
 				if (enterpin == I:pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
+					src.updateUsrDialog()
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null

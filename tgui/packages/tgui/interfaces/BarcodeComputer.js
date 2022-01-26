@@ -17,6 +17,8 @@ const BarcodeComputerSection = (props, context) => {
         } = destination;
         return (
           <Button
+            width="100%"
+            align="center"
             key={crate_tag}
             content={name ? name : crate_tag}
             onClick={() => act('print', { crate_tag })}
@@ -32,31 +34,17 @@ const IDCard = (props, context) => {
     return;
   }
   const {
-    card: {
-      name,
-      role,
-      icon,
-      balance,
-    },
+    card,
+    act,
   } = props;
   return (
-    <Stack align="center">
-      <img
-        src={icon}
-        style={{
-          'width': '64px',
-          'height': '64px',
-          '-ms-interpolation-mode': 'nearest-neighbor',
-        }}
-      />
-      <Box align="left">
-        {name}
-        <br />
-        {role}
-        <br />
-        {`$${balance ? balance : 0}`}
-      </Box>
-    </Stack>
+    <Button
+      icon="eject"
+      content={card.name + ` (${card.role})`}
+      tooltip="Clear scanned card"
+      tooltipPosition="bottom-end"
+      onClick={() => { act("reset_id"); }}
+    />
   );
 };
 
@@ -70,8 +58,8 @@ export const BarcodeComputer = (props, context) => {
   return (
     <Window
       title="Barcode computer"
-      width={500}
-      height={500}
+      width={600}
+      height={450}
     >
       <Window.Content scrollable>
         <Stack>
@@ -82,7 +70,7 @@ export const BarcodeComputer = (props, context) => {
                   value={amount}
                   minValue={1} maxValue={5}
                   stepPixelSize={15}
-                  unit="Barcodes"
+                  unit={"Barcodes"}
                   onChange={(e, value) => act('set_amount', { value })}
                 />
               </Box>
@@ -91,22 +79,22 @@ export const BarcodeComputer = (props, context) => {
           <Stack.Item grow={1}>
             <Section title="Scanned ID card" fill>
               <Box align="center">
-                <Button onClick={() => { act("reset_id"); }} color="grey">
-                  <IDCard align="right" card={card} />
-                </Button>
+                <IDCard card={card} act={act} />
+                <br />
+                {card ? `Account balance: $${card.balance}` : null}
               </Box>
             </Section>
           </Stack.Item>
         </Stack>
         <br />
-        <Stack vertical>
+        <Stack>
           {sections.map(section => {
             const {
               title,
               destinations,
             } = section;
             return (
-              <Stack.Item key={title}>
+              <Stack.Item key={title} width="33%">
                 <BarcodeComputerSection
                   title={title}
                   destinations={destinations}
