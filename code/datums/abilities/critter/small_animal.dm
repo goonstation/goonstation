@@ -234,7 +234,7 @@
 			boutput(holder.owner, __red("That is too far away to sting."))
 			return 1
 		var/mob/MT = target
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT] with its stinger!</b></span>",\
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT] with [his_or_her(holder.owner)] stinger!</b></span>",\
 		"<span class='combat'>You sting [MT]!</span>")
 		playsound(target, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		if (MT.reagents)
