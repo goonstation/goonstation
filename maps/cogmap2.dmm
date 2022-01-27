@@ -419,23 +419,12 @@
 	detector_id = "AI Core";
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aaZ" = (
@@ -495,22 +484,11 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abf" = (
@@ -1891,28 +1869,10 @@
 	},
 /area/station/turret_protected/ai_upload)
 "adY" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/secdetector{
-	area_access = 99;
-	detector_id = "AI Core";
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
-/area/station/turret_protected/ai)
+/area/station/chapel/sanctuary)
 "adZ" = (
 /obj/cable{
 	d1 = 4;
@@ -6630,8 +6590,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "apd" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "ape" = (
@@ -7048,11 +7007,10 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "aqj" = (
-/obj/grille/steel,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqk" = (
@@ -7461,8 +7419,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "arg" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -7496,8 +7453,7 @@
 	},
 /area/station/security/detectives_office)
 "arl" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -7927,8 +7883,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "ash" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -7967,8 +7922,7 @@
 	},
 /area/station/security/detectives_office)
 "asm" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -7982,15 +7936,9 @@
 "aso" = (
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/fitness)
-"asp" = (
-/obj/grille/steel,
-/obj/window/auto,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/fitness)
 "asq" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment/mail/vertical,
-/obj/window/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "asr" = (
@@ -8519,8 +8467,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "atC" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -8535,9 +8482,8 @@
 	},
 /area/station/security/detectives_office)
 "atE" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment/mail/vertical,
-/obj/window/auto,
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -8700,11 +8646,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/chapel/sanctuary)
-"atX" = (
-/obj/grille/steel,
-/obj/window/auto,
-/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "atY" = (
 /obj/table/reinforced/bar/auto,
@@ -11358,8 +11299,7 @@
 /area/station/chapel/sanctuary)
 "azY" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/window/auto,
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "azZ" = (
@@ -12082,8 +12022,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aBA" = (
-/obj/window/auto,
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aBB" = (
@@ -12263,11 +12202,10 @@
 /turf/simulated/floor/bot,
 /area/station/storage/emergency2)
 "aBP" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/window/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -12797,8 +12735,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
 "aDa" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -13668,8 +13605,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aEU" = (
-/obj/window/auto,
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aEV" = (
@@ -13782,8 +13718,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "aFl" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -15857,15 +15792,13 @@
 	name = "The Snip";
 	pixel_x = 16
 	},
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
 "aKE" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -15932,19 +15865,17 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "aKO" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aKP" = (
-/obj/grille/steel,
+/obj/wingrille_spawn/full,
 /obj/securearea{
 	desc = "Why not relax at the pool?";
 	icon_state = "pool";
 	name = "POOL";
 	pixel_y = -4
 	},
-/obj/window/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aKQ" = (
@@ -16353,8 +16284,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "aLV" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "aLW" = (
@@ -16447,8 +16377,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aMg" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "aMh" = (
@@ -16781,8 +16710,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "aMJ" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
 "aMK" = (
@@ -16830,8 +16758,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aMP" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
 "aMQ" = (
@@ -17906,8 +17833,7 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aPv" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -20644,8 +20570,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "aWj" = (
-/obj/grille/steel,
-/obj/window/auto,
+/obj/wingrille_spawn/full,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "aWk" = (
@@ -33636,7 +33561,6 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/delivery,
 /area/station/engine/gas)
 "bzm" = (
@@ -38044,6 +37968,7 @@
 	},
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit/off,
 /area/station/hangar/main)
 "bHN" = (
@@ -46835,20 +46760,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bYQ" = (
@@ -47367,18 +47279,6 @@
 /area/station/security/brig)
 "cab" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "cac" = (
@@ -47396,36 +47296,11 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cad" = (
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
 "cae" = (
@@ -48356,18 +48231,6 @@
 "ccr" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
 /obj/item/decoration/ashtray{
 	butts = 5;
 	name = "grubby old ashtray"
@@ -48393,20 +48256,7 @@
 	name = "Brig Visitor Lockdown";
 	opacity = 0
 	},
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4
-	},
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cct" = (
@@ -48417,18 +48267,6 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/auto,
-/obj/window/reinforced/west{
-	dir = 1;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
-/obj/window/reinforced/west{
-	dir = 2;
-	icon_state = "darkwindow";
-	layer = 3.1;
-	name = "divider window"
-	},
 /obj/item/device/radio/intercom/brig{
 	broadcasting = 1
 	},
@@ -77660,6 +77498,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"hAI" = (
+/obj/wingrille_spawn/full,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/east)
 "hFn" = (
 /turf/simulated/wall/auto/supernorn{
 	icon_state = "12"
@@ -79203,6 +79045,7 @@
 	},
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/circuit/off,
 /area/station/hallway/primary/west)
 "qja" = (
@@ -80056,6 +79899,11 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
+"vni" = (
+/obj/wingrille_spawn/full,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/east)
 "vrU" = (
 /obj/table/wood/auto,
 /obj/item/plantanalyzer,
@@ -116291,14 +116139,14 @@ ahW
 arl
 asm
 ahW
-asp
-asp
-asp
+aEU
+aEU
+aEU
 anN
-asp
-asp
-asp
-asp
+aEU
+aEU
+aEU
+aEU
 aGe
 aHT
 aJn
@@ -116600,7 +116448,7 @@ azI
 aBf
 aBf
 axZ
-asp
+aEU
 aGf
 aHT
 aJm
@@ -117195,7 +117043,7 @@ anN
 aoP
 apX
 arn
-asp
+aEU
 atH
 atG
 awx
@@ -117497,7 +117345,7 @@ anP
 aoQ
 apY
 arn
-asp
+aEU
 atI
 atG
 awy
@@ -117799,7 +117647,7 @@ anP
 aoR
 apZ
 arn
-asp
+aEU
 atJ
 atG
 awz
@@ -118101,7 +117949,7 @@ anN
 aoS
 aqa
 arn
-asp
+aEU
 atK
 atG
 atG
@@ -126860,7 +126708,7 @@ api
 aqr
 arx
 aqy
-atX
+aBA
 avw
 awM
 ayB
@@ -127162,7 +127010,7 @@ aph
 aqs
 ary
 aqz
-atX
+adY
 avx
 awN
 ayC
@@ -140132,7 +139980,7 @@ abq
 abq
 bbx
 abq
-adY
+ajy
 aaX
 aaB
 aaF
@@ -141116,9 +140964,9 @@ bWi
 bBo
 bBo
 bhR
-byv
+vni
 bnQ
-bkE
+hAI
 bhR
 bhR
 bhP
@@ -142324,9 +142172,9 @@ bhR
 bhR
 bhR
 bhR
-byv
+vni
 bxa
-bkE
+hAI
 bhR
 bhR
 bhP
