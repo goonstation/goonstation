@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
-#ifdef SUBMARINE_MAP
+#ifdef UNDERWATER_MAP
 	mantahole
 		required = 1
 		underwater = 1

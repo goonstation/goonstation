@@ -343,6 +343,20 @@
 /datum/overlayComposition/static_noise/sub
 	special_blend = BLEND_SUBTRACT
 
+
+// temporary blindness overlay until the other one is fixed
+/datum/overlayComposition/limited_sight
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/knockout2t.dmi'
+		dither.d_icon_state = "knockout2t"
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0 // fuck not being able to click on things, if we want blindness to have disadvantages then find something else
+		dither.d_screen_loc = "CENTER-7,CENTER-7"
+		definitions.Add(dither)
+
+		return ..()
+
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/blinded
 	New()

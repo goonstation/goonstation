@@ -1183,9 +1183,12 @@
 				for (var/obj/item/implant/I in target.implant)
 					if (istype(I,/obj/item/implant/projectile))
 						continue
-					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					I.on_remove(target)
 					target.implant.Remove(I)
+					if (istype(I,/obj/item/implant/cloner))
+						qdel(I)
+						continue
+					var/obj/item/implantcase/newcase = new /obj/item/implantcase(target.loc, usedimplant = I)
 					var/image/wadblood = image('icons/obj/surgery.dmi', icon_state = "implantpaper-blood")
 					wadblood.color = target.blood_color
 					newcase.UpdateOverlays(wadblood, "blood")

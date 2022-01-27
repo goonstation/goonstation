@@ -130,7 +130,7 @@ TOILET
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 	else
@@ -145,7 +145,7 @@ TOILET
 			head.visible_message("<span class='notice'>[head] emerges from [picked]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [him_or_her(O)]self. Thanks, [user].</span>",\
+				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
 				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
 				O.vomit()
 

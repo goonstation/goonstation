@@ -2705,6 +2705,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "East Hallway Security Checkpoint"
 /area/station/security/checkpoint/medical
 		name = "Medical Security Checkpoint"
+/area/station/security/checkpoint/research
+		name = "Research Security Checkpoint"
 
 /area/station/security/armory //what the fuck this is not the real armory???
 	name = "Armory" //ai_monitored/armory is, shitty ass code
@@ -3721,7 +3723,9 @@ ABSTRACT_TYPE(/area/mining)
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
 /area/update_icon()
-	if ((fire || eject) && power_environ)
+	if(irradiated) //From a radiation blowout event
+		icon_state = "blowout"
+	else if ((fire || eject) && power_environ)
 		if(fire && !eject)
 			icon_state = null
 		else if(!fire && eject)

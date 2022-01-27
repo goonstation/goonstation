@@ -36729,7 +36729,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "lNC" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/starboard)
 "lNG" = (

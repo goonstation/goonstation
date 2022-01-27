@@ -39,9 +39,11 @@ TYPEINFO(/datum/component/loctargeting/simple_light)
 /datum/component/loctargeting/simple_light/RegisterWithParent()
 	src.light_target = src.parent
 	src.update()
+	. = ..()
 
 /datum/component/loctargeting/simple_light/UnregisterFromParent()
 	src.update(0)
+	. = ..()
 
 /datum/component/loctargeting/simple_light/proc/set_color(var/r, var/g, var/b)
 	src.r = r
@@ -112,9 +114,11 @@ TYPEINFO(/datum/component/loctargeting/sm_light)
 /datum/component/loctargeting/sm_light/RegisterWithParent()
 	src.light_target = src.parent
 	src.update()
+	. = ..()
 
 /datum/component/loctargeting/sm_light/UnregisterFromParent()
 	src.update(0)
+	. = ..()
 
 /datum/component/loctargeting/sm_light/proc/set_color(var/r, var/g, var/b)
 	src.r = r
@@ -186,9 +190,11 @@ TYPEINFO(/datum/component/loctargeting/medium_directional_light)
 /datum/component/loctargeting/medium_directional_light/RegisterWithParent()
 	src.light_target = src.parent
 	src.update()
+	. = ..()
 
 /datum/component/loctargeting/medium_directional_light/UnregisterFromParent()
 	src.update(0)
+	. = ..()
 
 /datum/component/loctargeting/medium_directional_light/on_added(datum/source, old_loc)
 	. = ..()
