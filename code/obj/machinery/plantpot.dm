@@ -821,7 +821,7 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
-		if(!isliving(usr)) return // ghosts killing plants fix
+		if(!isliving(usr) || isintangible(usr)) return // ghosts killing plants fix
 		if(get_dist(src, usr) > 1)
 			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
 			return

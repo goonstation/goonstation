@@ -785,6 +785,7 @@ obj/trait/pilot
 	id = "hemophilia"
 	points = 1
 	isPositive = 0
+	category = list("hemophilia")
 
 //Flourish felt like this was bloating the traits so I've disabled it for now.
 ///obj/trait/color_shift
@@ -1136,7 +1137,7 @@ obj/trait/pilot
 	id = "cow"
 	points = -1
 	isPositive = 1
-	category = list("species")
+	category = list("species", "hemophilia")
 	mutantRace = /datum/mutantrace/cow
 
 /obj/trait/skeleton

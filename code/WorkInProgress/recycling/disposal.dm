@@ -115,8 +115,11 @@
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
+		other.merged(src)
 		qdel(other)
 
+	proc/merged(var/obj/disposalholder/host)
+		return
 
 	// called when player tries to move while in a pipe
 	relaymove(mob/user as mob)

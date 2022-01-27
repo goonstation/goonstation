@@ -47,10 +47,10 @@
 		A.ticks = ticker.round_elapsed_ticks
 
 	proc/generateEvents()
-		for (var/datum/stock/event/type in concrete_typesof(/datum/stock/event))
+		for (var/type in concrete_typesof(/datum/stock/event))
 			generateEvent(type)
 
-	proc/generateEvent(datum/stock/event/type)
+	proc/generateEvent(type)
 		var/datum/stock/event/E = new type(src)
 		addEvent(E)
 

@@ -45459,7 +45459,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "clV" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "clW" = (
