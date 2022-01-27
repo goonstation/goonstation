@@ -147,6 +147,8 @@
 	/obj/item/clothing/head/formal_turban,
 	/obj/item/clothing/head/turban,
 	/obj/item/clothing/shoes/black,
+	/obj/item/clothing/under/misc/chaplain/nun,
+	/obj/item/clothing/head/nunhood,
 	/obj/item/clothing/shoes/sandal)
 
 /obj/storage/closet/wardrobe/black/formalwear
