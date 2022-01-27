@@ -1,5 +1,9 @@
 
 (t)thu jan 27 22
+(u)AnguishedEnglish
+(p)7295
+(e)🎨|sprites
+(*)Added a Nun Robe and Nun Hood to the Chaplain's lockers.
 (u)112358sam
 (p)7308
 (e)|
