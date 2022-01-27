@@ -17548,7 +17548,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aUr" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -64532,7 +64535,7 @@
 /area/station/engine/elect)
 "xVK" = (
 /obj/machinery/launcher_loader/west{
-	door_delay = 4
+	door_delay = 5
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)

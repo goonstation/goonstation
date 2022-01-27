@@ -201,7 +201,7 @@
 		playsound(sound_turf, "sound/weapons/energy/howitzer_firing.ogg", 50, 1)
 		sleep(2.5 SECONDS)
 		var/area/designated_area = get_area(target_turf)
-		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert", "sound/machines/alarm_a.ogg")
+		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert")
 		flick("152mm_firing", src)
 		firing_turf = get_step(firing_turf, WEST)
 		firing_turf = get_step(firing_turf, WEST)
