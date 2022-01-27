@@ -22,6 +22,7 @@
 	use_bite_mask = 0
 
 	on_reagent_change()
+		..()
 		src.update_cone()
 		src.UpdateName()
 

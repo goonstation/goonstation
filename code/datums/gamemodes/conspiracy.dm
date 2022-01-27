@@ -23,7 +23,7 @@
 		if(player.ready)
 			numPlayers++
 
-	var/numConspirators = max(2, min(round(numPlayers / 5), maxConspirators)) // Selects number of conspirators
+	var/numConspirators = clamp(round(numPlayers / 5), 2, maxConspirators) // Selects number of conspirators
 
 	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators)
 	if (!potentialAntags.len)
@@ -81,7 +81,7 @@
 		. = rand(1352, 1439)
 	while (blacklisted.Find(.))
 
-/datum/game_mode/traitor/send_intercept()
+/datum/game_mode/conspiracy/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
 

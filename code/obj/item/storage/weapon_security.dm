@@ -30,9 +30,9 @@
 	desc = "Contains four morphine autoinjectors, for security use"
 	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
 
-/obj/item/storage/box/robustdonuts
-	name = "robust donuts box"
-	icon_state = "box"
+/obj/item/storage/lunchbox/robustdonuts
+	name = "robust donuts lunchbox"
+	icon_state = "lunchbox"
 	desc = "Contains two robust donuts and two robusted donuts, for security use"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
 
@@ -180,7 +180,7 @@
 /obj/item/storage/box/banana_grenade_kit
 	name = "banana grenade box"
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 // Detective luminol grenades
 /obj/item/storage/box/luminol_grenade_kit
@@ -214,7 +214,7 @@
 	name = "experimental biological grenade box"
 	desc = "A box of experimental biological grenades."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
 
 /obj/item/storage/box/crowdgrenades
 	name = "crowd dispersal grenades"

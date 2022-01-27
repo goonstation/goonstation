@@ -26,7 +26,7 @@
 		if(player.ready)
 			num_players++
 
-	var/num_wizards = max(1, min(round(num_players / 12), wizards_possible))
+	var/num_wizards = clamp(round(num_players / 12), 1, wizards_possible)
 
 	var/list/possible_wizards = get_possible_enemies(ROLE_WIZARD, num_wizards)
 
@@ -96,7 +96,7 @@
 				if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 				newname = strip_html(newname)
 				wizard.current.real_name = newname
-				wizard.current.name = newname
+				wizard.current.UpdateName()
 
 	SPAWN_DBG (rand(waittime_l, waittime_h))
 		send_intercept()

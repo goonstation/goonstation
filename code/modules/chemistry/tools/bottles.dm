@@ -22,6 +22,7 @@
 		..()
 
 	on_reagent_change()
+		..()
 		if (!(src.icon_state in list("bottle1", "bottle2", "bottle3", "bottle4")))
 			return
 		src.underlays = null
@@ -37,6 +38,15 @@
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
+/obj/item/reagent_containers/glass/bottle/plastic
+	name = "plastic bottle"
+	desc = "A small 3D-printed bottle."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
+
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "bottle (epinephrine)"
@@ -282,6 +292,15 @@
 	icon_state = "reagent_bottle"
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
+
+/obj/item/reagent_containers/glass/bottle/chemical/plastic
+	name = "plastic chemical bottle"
+	desc = "A 3D-printed reagent storage bottle."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
 
 /obj/item/reagent_containers/glass/bottle/oil
 	name = "oil bottle"

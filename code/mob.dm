@@ -79,7 +79,6 @@
 	var/timeofdeath = 0.0
 	var/fakeloss = 0
 	var/fakedead = 0
-	var/cpr_time = 0
 	var/health = 100
 	var/max_health = 100
 	var/bodytemperature = T0C + 37
@@ -160,7 +159,7 @@
 	var/speechverb_stammer = "stammers"
 	var/speechverb_gasp = "gasps"
 	var/speech_void = 0
-	var/now_pushing = null //temp. var used for Bump()
+	var/now_pushing = null //temp. var used for bump()
 	var/atom/movable/pushing = null //Keep track of something we may be pushing for speed reductions (GC Woes)
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
@@ -387,6 +386,9 @@
 		src.contextLayout.dispose()
 		src.contextLayout = null
 
+	if (src.buckled)
+		src.buckled.buckled_guy = null
+
 	mobs.Remove(src)
 	if (ai)
 		qdel(ai)
@@ -584,7 +586,7 @@
 /mob/proc/onMouseUp(object,location,control,params)
 	return
 
-/mob/Bump(atom/A)
+/mob/bump(atom/A)
 	if (src.now_pushing)
 		return
 
@@ -704,18 +706,26 @@
 							break
 						M.throw_at(source, 20, 3)
 						LAGCHECK(LAG_MED)
-					sleep(5 SECONDS)
-					src.now_pushing = 0
-
-					if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
-						tmob.now_pushing = 0
-
-					return
+					SPAWN_DBG(5 SECONDS)
+						src.now_pushing = 0
+						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
+							tmob.now_pushing = 0
 
 		if (!issilicon(AM))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
+				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
+					src.now_pushing = 0
+					return
+				for(var/atom/movable/obstacle in oldloc)
+					if(!ismob(obstacle) && !obstacle.Cross(tmob))
+						src.now_pushing = 0
+						return
+				for(var/atom/movable/obstacle in newloc)
+					if(!ismob(obstacle) && !obstacle.Cross(src))
+						src.now_pushing = 0
+						return
 
 				src.set_loc(newloc)
 				tmob.set_loc(oldloc)
@@ -758,7 +768,7 @@
 
 		step(src,t)
 		AM.OnMove(src)
-		//src.OnMove(src) //dont do this here - this Bump() is called from a process_move which sould be calling onmove for us already
+		//src.OnMove(src) //dont do this here - this bump() is called from a process_move which sould be calling onmove for us already
 		AM.glide_size = src.glide_size
 
 		//// MBC : I did this. this SUCKS. (pulling behavior is only applied in process_move... and step() doesn't trigger process_move nor is there anyway to override the step() behavior
@@ -871,6 +881,12 @@
 			return
 	src.set_cursor(null)
 
+/// used to set the a_intent var of a mob
+/mob/proc/set_a_intent(intent)
+	if (!intent) return
+	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent)
+	src.a_intent = intent
+
 // medals
 /mob/proc/revoke_medal(title, debug)
 	if (!debug && (!src.client || !src.key))
@@ -891,18 +907,18 @@
 		return
 
 	var/key = src.key
+	var/displayed_key = src.mind.displayed_key
 	SPAWN_DBG(0)
-		var/list/unlocks = list()
-		for(var/A in rewardDB)
-			var/datum/achievementReward/D = rewardDB[A]
-			if (D.required_medal == title)
-				unlocks.Add(D)
-
 		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
 
 		if (result == 1)
+			var/list/unlocks = list()
+			for(var/A in rewardDB)
+				var/datum/achievementReward/D = rewardDB[A]
+				if (D.required_medal == title)
+					unlocks.Add(D)
 			if (announce)
-				boutput(world, "<span class=\"medal\">[key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
 				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
 
@@ -1117,6 +1133,9 @@
 
 	if(src.pulling)
 		src.remove_pulling()
+
+	if(!can_reach(src, A))
+		return
 
 	pulling = A
 
@@ -2113,12 +2132,10 @@
 		qdel(src)
 
 /mob/proc/buttgib(give_medal)
-	if (isobserver(src)) return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
 	logTheThing("combat", src, null, "is butt-gibbed at [log_loc(src)].")
-	src.death(1)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
@@ -2148,11 +2165,22 @@
 	var/list/virus = src.ailments
 	var/list/ejectables = list_ejectables()
 
-	for(var/i = 0, i < 16, i++)
-		if(organHolder)
-			ejectables.Add(new /obj/item/clothing/head/butt(src.loc, organHolder))
+	for (var/i = 0, i < 16, i++)
+		var/obj/item/clothing/head/butt/the_butt
+		if (organHolder)
+			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
+		else if (istype(src, /mob/living/silicon))
+			the_butt = new /obj/item/clothing/head/butt/cyberbutt
+		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
+			the_butt = new /obj/item/clothing/head/butt
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
+		else if (istype(src, /mob/living/intangible/blob_overmind))
+			the_butt = new /obj/item/clothing/head/butt
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
 		else
-			ejectables.Add(new /obj/item/clothing/head/butt/synth)
+			the_butt = new /obj/item/clothing/head/butt/synth
+
+		ejectables += (the_butt)
 
 	if (bdna && btype)
 		gibs(src.loc, virus, ejectables, bdna, btype)
@@ -2166,6 +2194,7 @@
 		for(var/mob/living/L in range(src_turf, 6))
 			shake_camera(L, 10, 32)
 
+	src.death(1)
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
@@ -2558,7 +2587,7 @@
 		else
 			upper_cap = cap
 
-	src.eye_blurry = max(0, min(src.eye_blurry + amount, upper_cap))
+	src.eye_blurry = clamp(src.eye_blurry + amount, 0, upper_cap)
 	//DEBUG_MESSAGE("Amount is [amount], new eye blurry is [src.eye_blurry], cap is [upper_cap]")
 	return 1
 
@@ -2861,6 +2890,7 @@
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere
 /mob/proc/vomit(var/nutrition=0, var/specialType=null)
+	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
@@ -3019,7 +3049,7 @@
 	if(isnpc(src))
 		return 0
 	if(allow_overflow)
-		amount = max(1, min(src.mind.soul, amount)) // can't sell less than 1
+		amount = clamp(src.mind.soul, 1, amount) // can't sell less than 1
 	if (isdiabolical(src))
 		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
 		return 0

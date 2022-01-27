@@ -147,6 +147,8 @@
 	/obj/item/clothing/head/formal_turban,
 	/obj/item/clothing/head/turban,
 	/obj/item/clothing/shoes/black,
+	/obj/item/clothing/under/misc/chaplain/nun,
+	/obj/item/clothing/head/nunhood,
 	/obj/item/clothing/shoes/sandal)
 
 /obj/storage/closet/wardrobe/black/formalwear
@@ -170,7 +172,7 @@
 	spawn_contents = list(/obj/item/clothing/shoes/brown = 4,
 	/obj/item/clothing/under/color/red,
 	/obj/item/clothing/under/gimmick/police,
-	/obj/item/clothing/under/misc/head_of_security,
+	/obj/item/clothing/under/misc/dirty_vest,
 	/obj/item/clothing/under/misc/tourist,
 	/obj/item/clothing/under/misc/tourist/max_payne,
 	/obj/item/clothing/under/misc/serpico,

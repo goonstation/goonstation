@@ -84,7 +84,7 @@
 			qdel(src)
 		move_process()
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
@@ -116,7 +116,7 @@
 			qdel(src)
 		move_process()
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(15)
@@ -479,7 +479,7 @@
 		else
 			drive(direction, speed)
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		if(super && istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			if(!R.super)

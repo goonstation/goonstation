@@ -28,6 +28,7 @@
 #define ROLE_SLEEPER_AGENT "sleeper agent"
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDSLAVE "mindslave"
+#define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
 
 // gimmicks
 #define ROLE_BATTLER "battler"

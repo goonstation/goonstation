@@ -66,7 +66,7 @@
 				if (anticoag_amt)
 					final_bleed += round(clamp((anticoag_amt / 10), 0, 2), 1)
 				final_bleed *= mult
-				if (prob(max(0, min(final_bleed, 10)) * 5)) // up to 50% chance to make a big bloodsplatter
+				if (prob(clamp(final_bleed, 0, 10) * 5)) // up to 50% chance to make a big bloodsplatter
 					bleed(owner, final_bleed, 5)
 
 				else
@@ -97,7 +97,7 @@
 				if (prob(20))
 					critter_owner.blood_volume -= 1 * mult
 
-		// very low (90/60 or lower) (<375u)
+		// very low (70/50 or lower) (<300u)
 		// low (100/65) (<415u)
 		// normal (120/80) (500u)
 		// high (stage 1) (140/90 or higher) (>585u)
@@ -168,7 +168,7 @@
 				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypotension", -3)
 				owner.add_stam_mod_max("hypotension", -15)
 
-			if (1 to 374) // very low (90/60)
+			if (1 to 299) // very low (70/50)
 				owner.take_oxygen_deprivation(0.8 * mult)
 				owner.take_brain_damage(0.8 * mult)
 				owner.losebreath += (0.8 * mult)
@@ -187,7 +187,7 @@
 				APPLY_MOB_PROPERTY(owner, PROP_STAMINA_REGEN_BONUS, "hypotension", -2)
 				owner.add_stam_mod_max("hypotension", -10)
 
-			if (375 to 414) // low (100/65)
+			if (300 to 414) // low (100/65)
 				if (prob(2))
 					owner.emote(pick("pale", "shudder", "shiver"))
 				if (prob(5))

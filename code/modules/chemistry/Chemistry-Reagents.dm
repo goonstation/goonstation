@@ -129,31 +129,12 @@ datum
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-					/*var/addProb = addiction_prob
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.traitHolder.hasTrait("strongwilled"))
-							addProb = round(addProb / 2)
-					if(prob(addProb) && ishuman(M) && !AD)
-						// i would set up a proc for this but this is the only place that adds addictions
-						boutput(M, "<span class='alert'><B>You suddenly feel invigorated and guilty...</B></span>")
-						AD = new
-						AD.associated_reagent = src.name
-						AD.last_reagent_dose = world.timeofday
-						AD.name = "[src.name] addiction"
-						AD.affected_mob = M
-						AD.max_severity = src.max_addiction_severity
-						M.ailments += AD
-					else */if (AD)
+					if (AD)
 						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
-/*					if (ishuman(M) && thirst_value)
-						var/mob/living/carbon/human/H = M
-						if (H.sims)
-							H.sims.affectMotive("Thirst", volume * thirst_value)
-*/
+
 			M.material?.triggerChem(M, src, volume)
 			for(var/atom/A in M)
 				if(A.material) A.material.triggerChem(A, src, volume)
@@ -162,8 +143,6 @@ datum
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 								//if it can hold reagents. nope!
 			O.material?.triggerChem(O, src, volume)
-			//if(O.reagents)
-			//	O.reagents.add_reagent(id,volume/3)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
@@ -227,7 +206,6 @@ datum
 			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 
 			if(M && overdose > 0) check_overdose(M, mult)
-			//if(M && isdead(M) && src.id != "montaguone" && src.id != "montaguone_extra") M.reagents.del_reagent(src.id) // no more puking corpses and such
 			return
 
 		//when we entirely drained from sstem, do this

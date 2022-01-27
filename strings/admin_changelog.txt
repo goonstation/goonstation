@@ -1,3 +1,33 @@
+(t)tue jan 15 21
+(u)BatElite
+(*)Added the light switches debug overlay, which shows how many switches are physically present in an area and where to find them.
+(t)tue jan 4 21
+(u)aloe
+(*) Object spawning build modes now default to the currently selected path when changing the path, rather than always defaulting to '/obj/closet'. Yell at me if you don't like this.
+(t)sun dec 26 21
+(u)TTerc
+(*)Using Respawn As Self/Respawn As New Self while ghosting over crates/lockers now spawns you inside them.
+(t)fri dec 10 21
+(u)pali
+(*)The <code>spawn</code> input list menu (and other that use the same thing) now have several QoL features:<br><ul><li>Home and End jump to the beginning / end</li><li>Ctrl+F now opens the search bar</li><li>Tab switches between the search bar and the items</li><li>PageUp and PageDown work as you'd expect them to</li><li>Enter confirms, Escape cancels</li><li>Other misc fixes like search bar not autofocusing or arrow-key scrolling ignoring search filter etc.</li></ul>
+(t)sat nov 27 21
+(u)pali
+(*)Info-Overlay verb now autocompletes in the command bar. It also has some new options. The most interesting of which are: var display, nested var display. They let you display a chosen var for atoms on every turf.
+(t)thu nov 25 21
+(u)pali
+(*)Added del-half verb which is like del-all except it has a 50% chance of deleting each thing. You know, for when someone makes 600 killer tomatoes and you want to Thanos-snap them.
+(t)mon nov 22 21
+(u)Flourish
+(*)Added Observe Random Player/ORP command, which lets you observe random living logged-in players.
+(t)tue nov 16 21
+(u)TTerc
+(*)Stealth mode now disguises your ckey in roundend credits, miscreant list, antag list and crew objective list (as long as your stealth key isn't a single space)
+(t)tue nov 16 21
+(u)pali
+(*)remove-self now stores your mob, when you next use respawn-as-self the mob will be reused. If you explicitly want a new mob you can use the respawn-as-new-self verb.
+(t)sat nov 13 21
+(u)TTerc
+(*)You can now toggle admin alerts for Who/Adminwho in Admin Preferences and Self tab.
 (t)mon nov 08 21
 (u)Sovexe
 (*)Admin preferences have been converted to use clouddata instead of local server saves. You will need to re-set your preferences once and they will then persist.

@@ -573,7 +573,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					setangle = arctan(desired_y,desired_x)
 
 				P.setDirection(xchanged,ychanged, do_turn = rotate_proj, angle_override = setangle)
-				P.internal_speed = ( max(min_speed, min(max_speed, magnitude)) )
+				P.internal_speed = clamp(magnitude, min_speed, max_speed)
 
 		desired_x = 0
 		desired_y = 0

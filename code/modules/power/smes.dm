@@ -14,7 +14,7 @@
 
 /obj/machinery/power/smes
 	name = "power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for the station's electricitical grid, soaking up extra power or dishing it out."
 	icon_state = "smes"
 	density = 1
 	anchored = 1
@@ -80,11 +80,10 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/smes/proc/updateicon()
-
+/obj/machinery/power/smes/update_icon()
 	if (status & BROKEN)
 		ClearAllOverlays()
 		return
@@ -168,7 +167,7 @@
 
 	// only update icon if state changed
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		UpdateIcon()
 
 	src.updateDialog()
 
@@ -199,7 +198,7 @@
 	loaddemand = lastout - excess
 
 	if (clev != chargedisplay())
-		updateicon()
+		UpdateIcon()
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
@@ -246,11 +245,11 @@
 			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("toggle-output")
 			src.online = !src.online
-			src.updateicon()
+			src.UpdateIcon()
 			. = TRUE
 		if("set-input")
 			var/target = params["target"]
@@ -264,8 +263,8 @@
 			else if(adjust)
 				src.chargelevel = clamp((src.chargelevel + adjust), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
-			else if(text2num(target) != null) //set by drag
-				src.chargelevel = clamp(text2num(target), 0 , SMESMAXCHARGELEVEL)
+			else if(text2num_safe(target) != null) //set by drag
+				src.chargelevel = clamp(text2num_safe(target), 0 , SMESMAXCHARGELEVEL)
 				. = TRUE
 		if("set-output")
 			var/target = params["target"]
@@ -279,8 +278,8 @@
 			else if(adjust)
 				src.output = clamp((src.output + adjust), 0 , SMESMAXOUTPUT)
 				. = TRUE
-			else if(text2num(target) != null) //set by drag
-				src.output = clamp(text2num(target), 0 , SMESMAXOUTPUT)
+			else if(text2num_safe(target) != null) //set by drag
+				src.output = clamp(text2num_safe(target), 0 , SMESMAXOUTPUT)
 				. = TRUE
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)

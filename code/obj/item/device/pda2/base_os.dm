@@ -371,7 +371,7 @@
 				return
 
 			if(href_list["mode"])
-				var/newmode = text2num(href_list["mode"])
+				var/newmode = text2num_safe(href_list["mode"])
 				src.mode = max(newmode, 0)
 
 			if(href_list["delTone"])
@@ -721,7 +721,7 @@
 
 
 			else if(href_list["message_mode"])
-				var/newmode = text2num(href_list["message_mode"])
+				var/newmode = text2num_safe(href_list["message_mode"])
 				src.message_mode = max(newmode, 0)
 
 			src.master.add_fingerprint(usr)

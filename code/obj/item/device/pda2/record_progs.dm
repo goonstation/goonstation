@@ -71,7 +71,7 @@
 			return
 
 		if(href_list["mode"])
-			var/newmode = text2num(href_list["mode"])
+			var/newmode = text2num_safe(href_list["mode"])
 			src.mode = max(newmode, 0)
 
 		else if(href_list["select_rec"])
@@ -162,7 +162,7 @@
 			return
 
 		if(href_list["mode"])
-			var/newmode = text2num(href_list["mode"])
+			var/newmode = text2num_safe(href_list["mode"])
 			src.mode = max(newmode, 0)
 
 		else if(href_list["select_rec"])

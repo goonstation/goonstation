@@ -132,10 +132,8 @@
 
 
 	proc/update_status_effects()
-		for(var/atom/movable/screen/statusEffect/G in src.objects)
-			remove_screen(G)
-
 		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+			remove_screen(statusUiElements[S])
 			if(!master || !master.statusEffects || !(S in master.statusEffects))
 				qdel(statusUiElements[S])
 				src.statusUiElements.Remove(S)
@@ -312,7 +310,26 @@
 				if (I)
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
+					// you can write multiline macros with \, please god don't write 400 character macros on one line
+					#define autoequip_slot(slot, var_name)\
+						if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
+						{\
+							master.u_equip(I);\
+							var/obj/item/C = master.var_name;\
+							if (C)\
+							{\
+								/*master.u_equip(C);*/\
+								C.unequipped(master);\
+								src.remove_item(C);\
+								master.var_name = null;\
+								if(!master.put_in_hand(C))\
+								{\
+									master.drop_from_slot(C, get_turf(C))\
+								}\
+							}\
+							master.force_equip(I, master.slot);\
+							return\
+						}
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -416,17 +433,17 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						master.a_intent = INTENT_DISARM
+						master.set_a_intent(INTENT_DISARM)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_HARM
+						master.set_a_intent(INTENT_HARM)
 						master.check_for_intent_trigger()
 				else
 					if (icon_y > 16)
-						master.a_intent = INTENT_HELP
+						master.set_a_intent(INTENT_HELP)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_GRAB
+						master.set_a_intent(INTENT_GRAB)
 						master.check_for_intent_trigger()
 				src.update_intent()
 
@@ -441,8 +458,26 @@
 			if ("pull")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.remove_pulling()
-				src.update_pulling()
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && GET_DIST(master, to_pull) <= 1)
+						usr = master // gross
+						to_pull.pull()
 
 			if ("rest")
 				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return

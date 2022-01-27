@@ -10,7 +10,7 @@ GAUNTLET CARDS
 	name = "card"
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "id"
-	wear_image_icon = 'icons/mob/mob.dmi'
+	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
 	burn_type = 1
 	stamina_damage = 0
@@ -154,9 +154,16 @@ GAUNTLET CARDS
 	registered = "Captain"
 	assignment = "Captain"
 	keep_icon = TRUE
+	var/touched = FALSE
 	New()
 		access = get_access("Captain")
 		..()
+
+	pickup(mob/user)
+		. = ..()
+		if(!touched && user.job != "Captain")
+			touched = TRUE
+			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -365,21 +372,22 @@ GAUNTLET CARDS
 		if (!user)
 			registered = "???"
 			assignment = "unknown phantom entity (no.. mob? this is awkward)"
-		if (istype(user, /mob/living/carbon/human/virtual))
-			var/mob/living/LI = user:body
-			if (LI)
-				registered = LI.real_name
+		else
+			if (istype(user, /mob/living/carbon/human/virtual))
+				var/mob/living/LI = user:body
+				if (LI)
+					registered = LI.real_name
+				else
+					registered = user.real_name
 			else
 				registered = user.real_name
-		else
-			registered = user.real_name
 
-		if (!user.client)
-			assignment = "literal meat shield (no client)"
-		else
-			assignment = "loading arena matches..."
-			tag = "gauntlet-id-[user.client.key]"
-			queryGauntletMatches(1, user.client.key)
+			if (!user.client)
+				assignment = "literal meat shield (no client)"
+			else
+				assignment = "loading arena matches..."
+				tag = "gauntlet-id-[user.client.key]"
+				queryGauntletMatches(1, user.client.key)
 		name = "[registered]'s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)

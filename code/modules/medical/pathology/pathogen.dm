@@ -132,7 +132,7 @@ datum/controller/pathogen
 		var/th = locate(href_list["topic_holder"])
 		switch(href_list["action"])
 			if ("setstate")
-				cdc_state[key] = text2num(href_list["state"])
+				cdc_state[key] = text2num_safe(href_list["state"])
 			if ("strain_cure")
 				var/strain = href_list["strain"]
 				var/datum/pathogen_cdc/CDC = pathogen_trees[strain]
@@ -194,16 +194,16 @@ datum/controller/pathogen
 							P.effects -= EF
 
 					if ("advance_speed")
-						P.advance_speed = input("New advance speed?", "Advance speed", P.advance_speed) as num
+						P.advance_speed = text2num_safe(input("New advance speed?", "Advance speed", P.advance_speed) as num) || P.advance_speed
 					if ("suppression_threshold")
-						P.suppression_threshold = input("New suppression threshold?", "Suppression threshold", P.suppression_threshold) as num
+						P.suppression_threshold = text2num_safe(input("New suppression threshold?", "Suppression threshold", P.suppression_threshold) as num) || P.suppression_threshold
 					if ("spread")
-						P.spread = input("New spread?", "Spread", P.spread) as num
+						P.spread = text2num_safe(input("New spread?", "Spread", P.spread) as num) || P.spread
 					if ("symptomatic")
 						P.symptomatic = !P.symptomatic
 					if ("stages")
 						var/value = P.stages
-						var/newval = input("New stages (3-5)?", "Stages", value) as num
+						var/newval = text2num_safe(input("New stages (3-5)?", "Stages", value) as num) || value
 						if (newval >= 3 && newval <= 5)
 							P.stages = newval
 					if ("create")
@@ -229,7 +229,7 @@ datum/controller/pathogen
 				switch (href_list["data"])
 					if ("advance_speed")
 						var/value = reference.advance_speed
-						var/newval = input("New advance speed?", "Advance speed", value) as num
+						var/newval = text2num_safe(input("New advance speed?", "Advance speed", value) as num) || value
 						for (var/mob/living/carbon/human/H in CDC.infections)
 							if (CDC.uid in H.pathogens)
 								var/datum/pathogen/target = H.pathogens[CDC.uid]
@@ -239,7 +239,7 @@ datum/controller/pathogen
 						message_admins("[key_name(usr)] set the advance speed on pathogen strain mutation [name] to [newval].")
 					if ("suppression_threshold")
 						var/value = reference.suppression_threshold
-						var/newval = input("New suppression threshold?", "Suppression threshold", value) as num
+						var/newval = text2num_safe(input("New suppression threshold?", "Suppression threshold", value) as num) || value
 						for (var/mob/living/carbon/human/H in CDC.infections)
 							if (CDC.uid in H.pathogens)
 								var/datum/pathogen/target = H.pathogens[CDC.uid]
@@ -249,7 +249,7 @@ datum/controller/pathogen
 						message_admins("[key_name(usr)] set the suppression threshold on pathogen strain mutation [name] to [newval].")
 					if ("spread")
 						var/value = reference.spread
-						var/newval = input("New spread?", "Spread", value) as num
+						var/newval = text2num_safe(input("New spread?", "Spread", value) as num) || value
 						for (var/mob/living/carbon/human/H in CDC.infections)
 							if (CDC.uid in H.pathogens)
 								var/datum/pathogen/target = H.pathogens[CDC.uid]
@@ -269,7 +269,7 @@ datum/controller/pathogen
 						message_admins("[key_name(usr)] set the symptomaticity for pathogen strain mutation [name] to [newval ? "Yes" : "No"].")
 					if ("stages")
 						var/value = reference.stages
-						var/newval = input("New stages (3-5)?", "Stages", value) as num
+						var/newval = text2num_safe(input("New stages (3-5)?", "Stages", value) as num) || value
 						if (newval >= 3 && newval <= 5)
 							for (var/mob/living/carbon/human/H in CDC.infections)
 								if (CDC.uid in H.pathogens)
@@ -309,7 +309,7 @@ datum/controller/pathogen
 				var/datum/microbody/MB = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("stages")
-						var/new_stages = input("Stage cap for [MB] microbodies? (3-5)", "Stage cap", MB.stages) as num
+						var/new_stages = text2num_safe(input("Stage cap for [MB] microbodies? (3-5)", "Stage cap", MB.stages) as num) || MB.stages
 						if (new_stages >= 3 && new_stages <= 5)
 							MB.stages = new_stages
 							message_admins("[key_name(usr)] set the initial stage cap for pathogen microbody [MB.plural] to [new_stages].")
@@ -317,8 +317,8 @@ datum/controller/pathogen
 						MB.vaccination = !MB.vaccination
 						message_admins("[key_name(usr)] set the vaccinability for pathogen microbody [MB.plural] to [MB.vaccination ? "On" : "Off"].")
 					if ("activity")
-						var/stage = text2num(href_list["stage"])
-						var/new_act = input("New activity percentage for stage [stage] of [MB] (0-100)?", "Activity", MB.activity[stage]) as num
+						var/stage = text2num_safe(href_list["stage"])
+						var/new_act = text2num_safe(input("New activity percentage for stage [stage] of [MB] (0-100)?", "Activity", MB.activity[stage]) as num) || MB.activity[stage]
 						if (new_act >= 0 && new_act <= 100)
 							MB.activity[stage] = new_act
 							message_admins("[key_name(usr)] set the activity for pathogen microbody [MB.plural] on stage [stage] to [new_act].")
@@ -561,7 +561,7 @@ datum/controller/pathogen
 			P.name_base = pick(lalph) + pick(lnums) + pick(lalph)
 		while (P.name_base in pathogen_trees)
 		P.name = P.name_base + P.mutation
-		P.mutation = text2num(P.mutation)
+		P.mutation = text2num_safe(P.mutation)
 		P.base_mutation = 0
 		src.cdc_creator[key] = P
 
@@ -904,7 +904,7 @@ datum/pathogen
 			src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
 		while (src.name_base in pathogen_controller.pathogen_trees)
 		src.name = name_base + mutation
-		src.mutation = text2num(mutation)
+		src.mutation = text2num_safe(mutation)
 		src.base_mutation = 0
 
 		src.pathogen_uid = "p[pathogen_controller.next_uid]"

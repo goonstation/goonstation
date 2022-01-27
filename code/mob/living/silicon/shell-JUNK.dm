@@ -29,7 +29,7 @@
 	death(gibbed)
 	//	if (controller)
 	//		controller.leave_shell()
-		update_icon()
+		UpdateIcon()
 		set_density(0)
 		..()
 
@@ -39,7 +39,7 @@
 			return
 		..()
 
-	proc/update_icon()
+	UpdateIcon()
 		if (src.stat)
 			src.icon_state = "eyebot-dead"
 		else if (src.controller)
@@ -106,7 +106,7 @@
 			return null
 		return active_tools[active_tool]
 
-	Bump(atom/movable/AM as mob|obj)
+	bump(atom/movable/AM as mob|obj)
 		SPAWN_DBG( 0 )
 			if (src.now_pushing)
 				return

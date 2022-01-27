@@ -51,7 +51,6 @@
 								src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 								if (src.organHolder)//Damage the organ again for more.
 									src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
-							//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 			if (D_PIERCING)
 				if (armor_value_bullet > 1)
 					if (src.organHolder && prob(50))
@@ -84,7 +83,6 @@
 							src.TakeDamage("chest", 0, (damage/armor_value_bullet), 0, DAMAGE_BURN)
 							if (src.organHolder)//Damage the organ again for more burn.
 								src.organHolder.damage_organ(0, (damage/armor_value_bullet)*2, 0, target_organ)
-						//implanted.implanted(src, null, min(20, max(0, round(damage / 10) ) ))
 
 			if (D_SLASHING)
 				if (armor_value_bullet > 1)

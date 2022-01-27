@@ -46831,7 +46831,7 @@
 /area/derelict/evilreaver/medical)
 "bVj" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/fire)
 "bVk" = (
@@ -47028,7 +47028,7 @@
 /area/derelict/evilreaver/medical)
 "bVG" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/fire)
@@ -47077,7 +47077,7 @@
 "bVO" = (
 /obj/rack,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/emergency)
@@ -47441,7 +47441,7 @@
 /area/derelict/evilreaver/storage/emergency)
 "bWL" = (
 /obj/decal/cleanable/blood,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver/storage/emergency)
 "bWM" = (
@@ -49156,7 +49156,7 @@
 /obj/rack,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/glasses/meson,
-/obj/item/clothing/suit/fire/old,
+/obj/item/clothing/suit/fire,
 /turf/simulated/floor/grime,
 /area/derelict/evilreaver)
 "caJ" = (

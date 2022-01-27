@@ -191,9 +191,6 @@
 
 				if (6)
 					if (istype(W, /obj/item/tile))
-						if (W.name != "maintenance panel")
-							user.visible_message("[user] tries to use a common floor tile in place of the maintenance panel! How silly!", "<span class='alert'>That is a floor tile, not a maintenance panel! It doesn't even fit!</span>")
-							return
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))

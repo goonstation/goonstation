@@ -32,14 +32,15 @@
 
 			for (var/area/A in world)
 				LAGCHECK(LAG_LOW)
-				if (A.z != Z_LEVEL_STATION)
+				var/turf/a_turf = locate(/turf) in A
+				if (a_turf?.z != Z_LEVEL_STATION)
 					continue
 				if (A.do_not_irradiate)
 					continue
 				else
 					if (!A.irradiated)
 						A.irradiated = TRUE
-						A.icon_state = "blowout"
+						A.UpdateIcon()
 					for (var/turf/T in A)
 						if (rand(0,1000) < 5 && istype(T,/turf/simulated/floor))
 							Artifact_Spawn(T)
@@ -85,7 +86,7 @@
 					continue
 				if (!A.permarads)
 					A.irradiated = FALSE
-				A.icon_state = null
+				A.UpdateIcon()
 			blowout = FALSE
 
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear")

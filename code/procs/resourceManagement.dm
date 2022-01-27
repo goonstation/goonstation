@@ -156,7 +156,6 @@
 
 //#LongProcNames #yolo
 /client/proc/loadResourcesFromList(list/rscList)
-	set waitfor = FALSE
 	var/i = 1
 	for (var/r in rscList) //r is a file path
 		var/fileRef = file(r)

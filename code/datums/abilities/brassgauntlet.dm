@@ -237,7 +237,7 @@
 					else if(prob(20))
 						make_cleanable( /obj/decal/cleanable/blood/gibs,T)
 					else
-						make_cleanable( /obj/decal/cleanable/vomit,T) //Oh geez the janitor will not be happy
+						M.vomit() //Oh geez the janitor will not be happy
 		..()
 		return 1
 

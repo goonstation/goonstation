@@ -169,7 +169,7 @@ var/mutable_appearance/fluid_ma
 		amt = 0
 		avg_viscosity = initial(avg_viscosity)
 		movement_speed_mod = 0
-		group = 0
+		group = null
 		touched_other_group = 0
 		//float_anim = 0
 		step_sound = 0
@@ -356,7 +356,7 @@ var/mutable_appearance/fluid_ma
 						push_thing = thing
 
 					if (found)
-						if( thing.density )
+						if( thing.density || (thing.flags & FLUID_DENSE) )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))
@@ -552,7 +552,8 @@ var/mutable_appearance/fluid_ma
 						step_towards(M,F.loc)
 						break
 	*/
-	proc/update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
+	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
+
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
@@ -774,7 +775,7 @@ var/mutable_appearance/fluid_ma
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
 		if (length(reacted_ids))
-			src.update_icon()
+			src.UpdateIcon()
 		*/
 
 	..()
@@ -811,10 +812,13 @@ var/mutable_appearance/fluid_ma
 
 	var/do_reagent_reaction = 1
 
+	if(F.my_depth_level == 1 && src.shoes?.permeability_coefficient < 1) //sandals do not help
+		do_reagent_reaction = 0
+
 	if (F.my_depth_level == 2 || F.my_depth_level == 3)
 		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
 			do_reagent_reaction = 0
-	if (F.my_depth_level == 4)
+	if (F.my_depth_level >= 4)
 		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
 			do_reagent_reaction = 0
 

@@ -907,7 +907,7 @@
 			var/mob/living/carbon/user = AM
 			src.shock(user)
 
-	Bump(atom/movable/AM as mob)
+	bump(atom/movable/AM as mob)
 		if(iscarbon(AM))
 			var/mob/living/carbon/user = AM
 			src.shock(user)
@@ -1128,11 +1128,11 @@
 	New()
 		..()
 		if(jumpsuit)
-			overlays += image('icons/mob/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
+			overlays += image('icons/mob/clothing/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
 		if(oversuit)
-			overlays += image('icons/mob/overcoats/worn_suit.dmi', "[oversuit]")
+			overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', "[oversuit]")
 		if(overarmor)
-			overlays += image('icons/mob/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
+			overlays += image('icons/mob/clothing/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
 
 	process()
 		..()
@@ -1248,6 +1248,7 @@
 						else
 							T.ex_act(clamp(T_dist-2,1,3))
 							for (var/atom/A in T)
+								if(A.z != T.z) continue
 								A.ex_act(clamp(T_dist-2,1,3))
 
 						sleep(0.6 SECONDS)

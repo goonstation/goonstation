@@ -135,7 +135,7 @@
 /datum/bioEffect/rad_resist
 	name = "Radiation Resistance"
 	desc = "Shields the subject's cellular structure against ionizing radiation."
-	id = "food_rad_resist"
+	id = "rad_resist"
 	effectType = EFFECT_TYPE_POWER
 	blockCount = 2
 	secret = 1

@@ -242,7 +242,7 @@
 						return
 
 					if ("download")
-						var/msg_id = round(text2num(commandList["message"]))
+						var/msg_id = round(text2num_safe(commandList["message"]))
 
 						if(!msg_id || msg_id > src.messagetext.len)
 							return
@@ -297,7 +297,7 @@
 					if("download")
 						var/msg_id = 0
 						if(termlist.len)
-							msg_id = round(text2num(termlist[1]))
+							msg_id = round(text2num_safe(termlist[1]))
 
 						if(!msg_id || msg_id > src.messagetext.len)
 							return

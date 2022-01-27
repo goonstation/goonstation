@@ -169,7 +169,7 @@ CONTENTS:
 		overlays_list["r_dial_0"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-on")
 		overlays_list["r_dial_1"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-dial-R-jitter")
 
-		update_icons()
+		UpdateIcons()
 
 	attack_hand(mob/user)
 		..()
@@ -180,7 +180,7 @@ CONTENTS:
 		attack_hand(user)
 
 
-	proc/update_icons()
+	proc/UpdateIcons()
 		//src.overlays.Cut()
 
 		UpdateOverlays(overlays_list["cables"], "cables")
@@ -302,7 +302,7 @@ CONTENTS:
 
 			else if(href_list["refresh_mind_connection"])
 				src.updateUsrDialog() //lol cheats
-				update_icons()
+				UpdateIcons()
 
 			else if(href_list["execute_swap"])
 				do_swap()
@@ -319,16 +319,16 @@ CONTENTS:
 
 		sleep(boot_duration / 2)
 		activating = 2
-		update_icons()
+		UpdateIcons()
 
 		sleep(boot_duration / 4)
 		activating = 3
-		update_icons()
+		UpdateIcons()
 
 		sleep(boot_duration / 4)
 		active = 1
 		activating = 0
-		update_icons()
+		UpdateIcons()
 
 		remain_active = remain_active_max
 
@@ -358,7 +358,7 @@ CONTENTS:
 		sleep(2 SECONDS)
 		activating = 0
 		active = 0
-		update_icons()
+		UpdateIcons()
 
 		src.updateUsrDialog()
 
@@ -369,7 +369,7 @@ CONTENTS:
 
 		if(chair1 && !chair1.on) chair1.toggle_active()
 		if(chair2 && !chair2.on) chair2.toggle_active()
-		update_icons()
+		UpdateIcons()
 
 	proc/can_operate()
 		return chair1 && ishuman(chair1.buckled_guy) && !chair1.buckled_guy:on_chair && chair2 && ishuman(chair2.buckled_guy) && !chair2.buckled_guy:on_chair
@@ -385,7 +385,7 @@ CONTENTS:
 			update_chairs()
 			if(can_operate()) //We have what we need
 				remain_active += 200 //So it won't switch itself off on us
-				update_icons()
+				UpdateIcons()
 
 				//We're not going to allow you to unbuckle during the process
 				chair1.allow_unbuckle = 0
@@ -474,4 +474,4 @@ CONTENTS:
 
 		SPAWN_DBG(5 SECONDS)
 			operating = 0
-			update_icons()
+			UpdateIcons()

@@ -411,6 +411,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Lab Monkey Crate"
 	hidden = 1
 
+/datum/supply_packs/monkey_restock
+	name = "ValuChimp Restock cartridge"
+	desc = "Every chef's dream! Or a nightmare. Depends."
+	category = "Civilian Department"
+	contains = list(/obj/item/vending/restock_cartridge/monkey)
+	cost = 7500
+	containertype = /obj/storage/crate
+	containername = "ValuChimp restock crate"
+	hidden = 1
+
 /datum/supply_packs/bee
 	name = "Honey Production Kit"
 	desc = "For use with existing hydroponics bay."
@@ -1056,6 +1066,24 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "Red Event Table Crate"
 
+/datum/supply_packs/furniture_neon
+	name = "Neon Furnishings Crate"
+	desc = "A flat-packed set of tables and stools, each in eye-searing neon."
+	contains = list(/obj/item/furniture_parts/table/neon = 4,
+					/obj/item/furniture_parts/stool/neon = 4)
+	cost = 20000
+	containertype = /obj/storage/crate/wooden
+	containername = "Neon Furnishings Crate"
+
+/datum/supply_packs/furniture_scrap
+	name = "Scrap Furnishings Crate"
+	desc = "A flat-packed set of...trash and scrap parts. I guess you could make furniture out of it?"
+	contains = list(/obj/item/furniture_parts/table/scrap = 4,
+					/obj/item/furniture_parts/wood_chair/scrap = 4)
+	cost = 20000
+	containertype = /obj/storage/crate/wooden
+	containername = "Scrap Furnishings Crate"
+
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"
 	desc = "A set of very fancy flat-packed, regal furniture."
@@ -1161,7 +1189,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/vending/restock_cartridge/alcohol,
 					/obj/item/vending/restock_cartridge/cola,
 					/obj/item/vending/restock_cartridge/kitchen,
-					/obj/item/vending/restock_cartridge/monkey,
 					/obj/item/vending/restock_cartridge/standard,
 					/obj/item/vending/restock_cartridge/capsule)
 	cost = 3000
@@ -1450,6 +1477,18 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	hidden = 1
 	containertype = /obj/storage/crate
 	containername = "AI Kit"
+
+/datum/supply_packs/complex/status_display
+	name = "Disassembled Status Displays"
+	desc = "Contains four disassembled status display panels as they have not yet been installed on all NanoTrasen space objects."
+	category = "Engineering Department"
+	frames = list(/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display,
+		/obj/machinery/status_display)
+	cost = 6000
+	containertype = /obj/storage/crate
+	containername = "Status Display Kit"
 
 /datum/supply_packs/complex/eppd_kit
 	name = "Emergency Pressurzation Kit"

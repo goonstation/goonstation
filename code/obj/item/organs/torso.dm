@@ -27,14 +27,14 @@
 				if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
 					src.donor_appearance = new(src)
 					src.donor_appearance.CopyOther(src.donor.bioHolder.mobAppearance)
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		if (holder)
 			holder.chest = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.donor || !src.donor_appearance)
 			return // vOv
 

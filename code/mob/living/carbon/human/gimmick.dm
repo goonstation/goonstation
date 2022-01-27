@@ -80,7 +80,7 @@
 			src.real_name = "Satan"
 			src.name = "Satan"
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer/red/demonic, src.slot_w_uniform)
-			src.bioHolder.AddEffect("horns", 0, 0, 1)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
@@ -381,7 +381,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		..()
 		START_TRACKING_CAT(TR_CAT_SHITTYBILLS)
 		src.equip_new_if_possible(/obj/item/clothing/shoes/brown, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/head_of_security, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/dirty_vest, slot_w_uniform)
 		src.equip_new_if_possible(/obj/item/paper/postcard/owlery, slot_l_hand)
 		//src.equip_new_if_possible(/obj/item/device/radio/headset/civilian, slot_ears)
 		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
@@ -501,7 +501,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 						else
 							target.Attackhand(src)
 			else if(ai_aggressive)
-				a_intent = INTENT_HARM
+				set_a_intent(INTENT_HARM)
 				for(var/mob/M in oview(5, src))
 					if(M == src)
 						continue
@@ -678,7 +678,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM)
 			src.ai_set_active(1)
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
@@ -689,7 +689,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 					M.add_karma(-1)
 				J.target = M
 				J.ai_set_active(1)
-				J.a_intent = INTENT_HARM
+				J.set_a_intent(INTENT_HARM)
 
 
 /mob/living/carbon/human/biker/cow

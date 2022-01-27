@@ -8,10 +8,7 @@
 
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
-	var/obj/decal/cleanable/C = new type
-	C.name = initial(C.name) // ugh
-	C.setup(loc,viral_list)
-	.= C
+	return new type(loc, viral_list)
 
 /obj/decal/cleanable
 	density = 0
@@ -30,8 +27,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	var/last_color = null
 
 	var/can_fluid_absorb = 1
-	//var/turf/last_turf //unset 'messy' on my last turf after a move
-	//moved up to atom/movable
 
 	var/last_dry_start = 0
 	var/dry_time = 100
@@ -66,19 +61,23 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if(isturf(src.loc))
 				var/turf/T = src.loc
 				T.messy++
-				last_turf = T
 
 			if (istype(src.loc, /turf/simulated/floor))
 				var/turf/simulated/T = src.loc
 				T.cleanable_fluid_react()
 
+	set_loc(newloc)
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy = max(T.messy - 1, 0)
+		. = ..()
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy++
+
 	disposing()
 		if (can_dry)
 			processing_items.Remove(src)
-
-		if (istype(src.loc, /turf/simulated/floor))
-			var/turf/simulated/T = src.loc
-			T.messy = max(T.messy-1, 0)
 
 		var/area/Ar = get_area(src)
 		if (Ar)
@@ -96,14 +95,17 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			qdel(src)
 
 	Move(NewLoc, direct)
-		. = ..()
-		if (last_turf && istype(last_turf))
-			last_turf.messy = max(last_turf.messy-1, 0)
-		last_turf = src.loc
+		if(!is_cardinal(direct))
+			// will get translated to two cardinal step() calls in the parent
+			return ..()
 
-		if (isturf(src.loc))
-			var/turf/F = src.loc
-			F.messy++
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy = max(T.messy - 1, 0)
+		. = ..()
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			T.messy++
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
@@ -1073,7 +1075,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						if (prob(33) && ishuman(O) && !isdead(O))
 							O.show_message("<span class='alert'>You feel ill from watching that.</span>")
 							for (var/mob/V in viewers(O, null))
-								V.show_message("<span class='alert'>[O] pukes all over \himself. Thanks, [user].</span>", 1)
+								V.show_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>", 1)
 								O.vomit()
 
 				W.reagents.handle_reactions()
@@ -1249,12 +1251,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	New()
 		if (prob(5))
 			src.amount += rand(1,2)
-			src.update_icon()
+			src.UpdateIcon()
 		..()
 		return
 
-	proc/update_icon()
-		src.icon_state = "fungus[max(1,min(3, amount))]"
+	update_icon()
+		src.icon_state = "fungus[clamp(amount, 1, 3)]"
 
 	Sample(var/obj/item/W as obj, var/mob/user as mob)
 		if (!src.can_sample || !W.reagents)
@@ -1273,7 +1275,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				src.amount--
 				if (src.amount <= 0)
 					qdel(src)
-				src.update_icon()
+				src.UpdateIcon()
 				return 1
 
 
@@ -1437,14 +1439,14 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
 
 	setup()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		health = 30
 		var/turf/T = get_turf(src)
 		if (T)
@@ -1496,7 +1498,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
 		if (!src.loc)
 			return
 		var/dirs = 0
@@ -1522,7 +1524,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingSalt(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/saltpile/S in orange(1,T))
-		S.updateIcon()
+		S.UpdateIcon()
 
 /obj/decal/cleanable/magnesiumpile
 	name = "magnesium pile"
@@ -1537,12 +1539,12 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	New()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	setup()
 		..()
-		src.updateIcon()
+		src.UpdateIcon()
 		updateSurroundingMagnesium(get_turf(src))
 
 	disposing()
@@ -1554,7 +1556,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	proc/updateIcon()
+	update_icon()
 		var/dirs = 0
 		for (var/dir in cardinal)
 			var/turf/T = get_step(src, dir)
@@ -1629,7 +1631,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /proc/updateSurroundingMagnesium(var/turf/T)
 	if (!istype(T)) return
 	for (var/obj/decal/cleanable/magnesiumpile/S in orange(1,T))
-		S.updateIcon()
+		S.UpdateIcon()
 
 /obj/decal/cleanable/nitrotriiodide
 	name = "gooey mess"
@@ -1720,6 +1722,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
 /obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+	if(src.disposed)
+		return
 	if(isnull(get_turf(src)))
 		CRASH("Attempting to streak cleanable [src] which is in null.")
 

@@ -72,7 +72,9 @@
 	if (src.move_dir)
 		var/running = 0
 		var/mob/living/carbon/human/H = src
-		if ((keys & KEY_RUN) && H.get_stamina() > STAMINA_SPRINT && !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
+		if ((keys & KEY_RUN) && \
+		      ((H.get_stamina() > STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) ||  H.get_stamina() > STAMINA_SPRINT) && \
+			  !HAS_MOB_PROPERTY(src, PROP_CANTSPRINT))
 			running = 1
 		if (H.pushing && get_dir(H,H.pushing) != H.move_dir) //Stop pushing before calculating move_delay if we've changed direction
 			H.pushing = 0
@@ -82,6 +84,8 @@
 		if (move_dir & (move_dir-1))
 			delay *= DIAG_MOVE_DELAY_MULT // actual sqrt(2) unsurprisingly resulted in rounding errors
 		if (src.client && src.client.flying || (ismob(src) && HAS_MOB_PROPERTY(src, PROP_NOCLIP)))
+			if(isnull(get_step(src, move_dir)))
+				return
 			var/glide = 32 / (running ? 0.5 : 1.5) * world.tick_lag
 			if (!ticker || last_move_trigger + 10 <= ticker.round_elapsed_ticks)
 				last_move_trigger = ticker.round_elapsed_ticks
@@ -118,7 +122,7 @@
 				move_dir = angle2dir(move_angle)
 
 			if (src.buckled && !istype(src.buckled, /obj/stool/chair))
-				src.buckled.relaymove(move_dir)
+				src.buckled.relaymove(src, move_dir)
 			else if (isturf(src.loc))
 				if (src.buckled && istype(src.buckled, /obj/stool/chair))
 					var/obj/stool/chair/C = src.buckled
@@ -233,6 +237,17 @@
 							if (src.pulling)
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
+						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_MOB_PROPERTY(src, PROP_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
+							if (!src.client.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
+								//just fall over in place when in space (to prevent zooming)
+								var/turf/current_turf = get_turf(src)
+								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
+									src.throw_at(get_step(src, move_dir), 1, 1)
+								src.setStatus("resting", duration = INFINITE_STATUS)
+								src.force_laydown_standup()
+								src.emote("wheeze")
+								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
+
 						var/list/pulling = list()
 						if (src.pulling)
 							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
@@ -257,7 +272,7 @@
 							A.OnMove(src)
 			else
 				if (src.loc) //ZeWaka: Fix for null.relaymove
-					delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay
+					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)
 						delay = 0.5
 

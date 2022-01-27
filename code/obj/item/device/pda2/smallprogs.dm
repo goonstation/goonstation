@@ -62,12 +62,13 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/stored = ""
+		var/list/stored = list()
 		if(length(by_type[/obj/cryotron]))
 			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
 			for(var/L as anything in cryo_unit.stored_crew_names)
 				stored += "<i>- [L]<i><br>"
-		dat += "<b>In Cryogenic Storage:</b><hr>[stored]<br>"
+		if(length(stored))
+			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
 
 		return dat
 
@@ -227,11 +228,11 @@ Code:
 				return
 
 		else if (href_list["adj_freq"])
-			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			src.send_freq = sanitize_frequency(src.send_freq + text2num_safe(href_list["adj_freq"]))
 			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
-			src.send_code += text2num(href_list["adj_code"])
+			src.send_code += text2num_safe(href_list["adj_code"])
 			src.send_code = round(src.send_code)
 			src.send_code = min(100, src.send_code)
 			src.send_code = max(1, src.send_code)
@@ -308,7 +309,7 @@ Code:
 			return
 
 		if (href_list["adj_volume"])
-			var/adjust_num = text2num(href_list["adj_volume"])
+			var/adjust_num = text2num_safe(href_list["adj_volume"])
 			src.honk_volume += adjust_num
 			if(src.honk_volume < 1)
 				src.honk_volume = 1
@@ -379,7 +380,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"
@@ -762,7 +763,7 @@ Code:
 			return
 
 		if (href_list["alert"])
-			confirm_menu = text2num(href_list["alert"])
+			confirm_menu = text2num_safe(href_list["alert"])
 
 		else if (href_list["confirm"])
 			if (href_list["confirm"] == "y")
@@ -1062,7 +1063,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
 			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
-			if(!fine_amount) return
+			if(!isnum_safe(fine_amount)) return
 			fine_amount = min(fine_amount,1000)
 			fine_amount = max(fine_amount,1)
 

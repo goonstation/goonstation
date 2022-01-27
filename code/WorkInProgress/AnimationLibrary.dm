@@ -789,9 +789,9 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	if (!isnum(amount) || !isnum(x_severity) || !isnum(y_severity))
 		return
-	amount = max(1,min(amount,50))
-	x_severity = max(-32,min(x_severity,32))
-	y_severity = max(-32,min(y_severity,32))
+	amount = clamp(amount, 1, 50)
+	x_severity = clamp(x_severity, -32, 32)
+	y_severity = clamp(y_severity, -32, 32)
 
 	var/x_severity_inverse = 0 - x_severity
 	var/y_severity_inverse = 0 - y_severity
@@ -1192,7 +1192,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	sleep(1.5 SECONDS)
 
 /proc/heavenly_spawn(var/atom/movable/A)
-	var/obj/heavenly_light/lightbeam = new /obj/heavenly_light
+	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
@@ -1219,7 +1219,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, M.type)
 
-/obj/heavenly_light
+/obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
 	icon_state = "heavenlight"
 	layer = EFFECTS_LAYER
@@ -1277,10 +1277,11 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
 	anchored = TRUE
+	plane = PLANE_UNDERFLOOR
+	layer = -100
 
 	New()
 		. = ..()
-		src.plane = PLANE_UNDERFLOOR - 1
 		src.icon_state = pick("lava_floor", "lava_floor_bubbling", "lava_floor_bubbling2")
 
 	Crossed(atom/movable/AM)

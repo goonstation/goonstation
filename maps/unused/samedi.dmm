@@ -15713,11 +15713,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "aIB" = (
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "Dented Crate"
-	},
+/obj/storage/crate/bloody,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
@@ -18604,7 +18600,7 @@
 "aOR" = (
 /obj/machinery/espresso_machine,
 /obj/table/wood/auto,
-/obj/cup_rack{
+/obj/drink_rack/cup{
 	pixel_x = -6;
 	pixel_y = 28
 	},
@@ -28826,7 +28822,7 @@
 /area/station/hangar/escape)
 "bkX" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "bkY" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48628,11 +48624,7 @@
 /obj/item/chair/folded,
 /obj/item/chair/folded,
 /obj/item/storage/pill_bottle/cyberpunk,
-/obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
-	icon = 'icons/misc/halloween.dmi';
-	name = "dented crate"
-	},
+/obj/storage/crate/bloody,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

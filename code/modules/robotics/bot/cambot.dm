@@ -180,7 +180,7 @@
 		if (!src)
 			return
 
-		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 60)
+		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
 			if (!(src.target in src.targets_invalid))

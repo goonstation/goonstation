@@ -211,7 +211,7 @@
 
 			else
 				if(!src.setup_freq_locked)
-					var/new_freq = round(text2num(command))
+					var/new_freq = round(text2num_safe(command))
 					if(new_freq && (new_freq >= 1000 && new_freq <= 1500))
 						src.set_frequency(new_freq)
 
@@ -661,7 +661,7 @@
 					return "nocard"
 				var/new_access = 0
 				if(istype(rec))
-					new_access = text2num(rec.fields["access"])
+					new_access = text2num_safe(rec.fields["access"])
 
 				if(!new_access || (new_access in src.authid.access))
 					var/datum/computer/file/record/newrec = new
@@ -678,12 +678,12 @@
 					return "nocard"
 
 				//We need correct PIN numbers you jerks.
-				if(text2num(rec.fields["pin"]) != src.authid.pin)
+				if(text2num_safe(rec.fields["pin"]) != src.authid.pin)
 					SPAWN_DBG(0.4 SECONDS)
 						send_command("card_bad_pin")
 					return
 
-				var/charge_amount = text2num(rec.fields["amount"])
+				var/charge_amount = text2num_safe(rec.fields["amount"])
 				if(!charge_amount || (charge_amount <= 0) || charge_amount > src.authid.money)
 					SPAWN_DBG(0.4 SECONDS)
 						send_command("card_bad_charge")
@@ -697,7 +697,7 @@
 				if(!src.authid || !src.can_manage_access || !istype(rec))
 					return "nocard"
 
-				var/new_access = text2num(rec.fields["access"])
+				var/new_access = text2num_safe(rec.fields["access"])
 				if(!new_access || (new_access <= 0))
 					return
 
@@ -717,7 +717,7 @@
 				if(!src.authid || !src.can_manage_access || !istype(rec))
 					return "nocard"
 
-				var/rem_access = text2num(rec.fields["access"])
+				var/rem_access = text2num_safe(rec.fields["access"])
 				if(!rem_access || (rem_access <= 0))
 					return
 

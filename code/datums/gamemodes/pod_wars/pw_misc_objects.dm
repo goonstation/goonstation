@@ -206,7 +206,7 @@
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.dnr)
 				//prune puritan trait
 				mind.current?.traitHolder.removeTrait("puritan")
-				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.traits.Copy())
+				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy())
 				if (success && team)
 					SPAWN_DBG(1)
 						team.equip_player(src.occupant, FALSE)
@@ -234,6 +234,7 @@
 	team_num = 2
 	color = "#FF6666"
 
+ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 /obj/item/turret_deployer/pod_wars
 	name = "Turret Deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
@@ -241,22 +242,14 @@
 	w_class = 4
 	health = 125
 	quick_deploy_fuel = 2
-	var/turret_path = /obj/deployable_turret/pod_wars
-
-	//this is a band aid cause this is broke, delete this override when merged properly and fixed.
-	// attackby(obj/item/W, mob/user)
-	// 	user.lastattacked = src
-	// 	..()
+	associated_turret = /obj/deployable_turret/pod_wars
 
 	spawn_turret(var/direct)
-		var/obj/deployable_turret/pod_wars/turret = new turret_path(src.loc,direction=direct)
-		turret.health = src.health
+		var/obj/deployable_turret/pod_wars/turret = ..()
 		turret.reconstruction_time = 0		//can't reconstruct itself
-		//turret.emagged = src.emagged
-		turret.damage_words = src.damage_words
-		turret.quick_deploy_fuel = src.quick_deploy_fuel
 		return turret
 
+ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/deployable_turret/pod_wars
 	name = "Ship Defense Turret"
 	desc = "A ship defense turret."
@@ -268,19 +261,15 @@
 	fire_rate = 3 // rate of fire in shots per second
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
-	var/deployer_path = /obj/deployable_turret/pod_wars
+	associated_deployer = /obj/item/turret_deployer/pod_wars
 	var/destroyed = 0
 	var/reconstruction_time = 5 MINUTES
 
 	//Might be nice to allow players to "repair"  Dead turrets to speed up their timer, but not now. too lazy - kyle
-
-	New(var/direction)
-		..(direction=direction)
-
 	//just "deactivates"
 	die()
-		playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		if (!destroyed)
+			playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 			destroyed = 1
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
@@ -295,48 +284,6 @@
 			else
 				..()
 
-	spawn_deployer()
-		var/obj/item/turret_deployer/deployer = new deployer_path(src.loc)
-		deployer.health = src.health
-		//deployer.emagged = src.emagged
-		deployer.damage_words = src.damage_words
-		deployer.quick_deploy_fuel = src.quick_deploy_fuel
-		return deployer
-
-	seek_target()
-		src.target_list = list()
-		for (var/mob/living/C in mobs)
-			if(!src)
-				break
-
-			if (!isnull(C) && src.target_valid(C))
-				src.target_list += C
-				var/distance = get_dist(C.loc,src.loc)
-				src.target_list[C] = distance
-
-			else
-				continue
-
-		//VERY POSSIBLY UNNEEDED, -KYLE
-		// for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS])
-		// 	if (pod_target_valid(V))
-		// 		var/distance = get_dist(V.loc,src.loc)
-		// 		target_list[V] = distance
-
-		if (src.target_list.len>0)
-			var/min_dist = 99999
-
-			for (var/atom/T in src.target_list)
-				if (src.target_list[T] < min_dist)
-					src.target = T
-					min_dist = src.target_list[T]
-
-			src.icon_state = "[src.icon_tag]_active"
-
-			playsound(src.loc, "sound/vox/woofsound.ogg", 40, 1)
-
-		return src.target
-
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
 	// 	var/distance = get_dist(V.loc,src.loc)
@@ -350,12 +297,11 @@
 
 /obj/item/turret_deployer/pod_wars/nt
 	icon_tag = "nt"
-	turret_path = /obj/deployable_turret/pod_wars/nt
+	associated_turret = /obj/deployable_turret/pod_wars/nt
 
 /obj/deployable_turret/pod_wars/nt
-	deployer_path = /obj/deployable_turret/pod_wars/nt
+	associated_deployer = /obj/item/turret_deployer/pod_wars/nt
 	projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/turret
-	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/blue_NT/turret
 	icon_tag = "nt"
 
 	is_friend(var/mob/living/C)
@@ -369,6 +315,8 @@
 /obj/deployable_turret/pod_wars/nt/activated
 	anchored=1
 	active=1
+	deconstructable = FALSE
+
 	north
 		dir=NORTH
 	south
@@ -381,12 +329,11 @@
 
 /obj/item/turret_deployer/pod_wars/sy
 	icon_tag = "st"
-	turret_path = /obj/deployable_turret/pod_wars/sy
+	associated_turret = /obj/deployable_turret/pod_wars/sy
 
 /obj/deployable_turret/pod_wars/sy
-	deployer_path = /obj/deployable_turret/pod_wars/sy
+	associated_deployer = /obj/item/turret_deployer/pod_wars/sy
 	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY/turret
-	current_projectile = new/datum/projectile/laser/blaster/pod_pilot/red_SY/turret
 	icon_tag = "st"
 
 	is_friend(var/mob/living/C)
@@ -400,6 +347,7 @@
 /obj/deployable_turret/pod_wars/sy/activated
 	anchored=1
 	active=1
+	deconstructable = FALSE
 	north
 		dir=NORTH
 	south
@@ -730,7 +678,7 @@
 	density = 1
 	anchored = 1.0
 	flags = NOSPLASH
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 

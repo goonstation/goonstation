@@ -1021,11 +1021,11 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			src.particleColor = particleColor
 			src.particleSprite = particleSprite
 			src.target = target
-			Init()
+			InitPar()
 		else
 			Die()
 
-	proc/Init()
+	proc/InitPar()
 		sleepCounter = 1
 
 	proc/Run()
@@ -1065,7 +1065,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "elecpart_green", 15, "#00DD00")
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1090,7 +1090,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "sparkle", 10, "#ff0000")
 
-	Init()
+	InitPar()
 		sleepCounter = 3
 
 	Run()
@@ -1132,7 +1132,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "swoosh", 45, "#5C0E80")
 
-	Init()
+	InitPar()
 		sleepCounter = 30
 
 	Run()
@@ -1148,7 +1148,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "elecpart", 15, "#5577CC")
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1165,7 +1165,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location, var/atom/destination)
 		..(location, "fireSpray", 10, null, destination)
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1277,7 +1277,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "tpbeam", 28)
 
-	Init()
+	InitPar()
 		sleepCounter = 6
 
 	Run()
@@ -1294,7 +1294,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "tpbeamdown", 28)
 
-	Init()
+	InitPar()
 		sleepCounter = 6
 
 	Run()
@@ -1311,7 +1311,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "fireTest", 21)
 
-	Init()
+	InitPar()
 		sleepCounter = 1000
 
 	Run()
@@ -1337,7 +1337,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "radevent_warning", 50)
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1353,7 +1353,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "radevent_pulse", 7)
 
-	Init()
+	InitPar()
 		sleepCounter = 20
 
 	Run()
@@ -1369,7 +1369,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "bhole_warning", 108)
 
-	Init()
+	InitPar()
 		sleepCounter = 100
 
 	Run()
@@ -1385,7 +1385,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null)
 		..(location, "soundwave", 4)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(5,12)
 
 	Run()
@@ -1414,7 +1414,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/color)
 		..(location, "blob_attack", 70, color)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(2,5)
 
 	Run()
@@ -1430,7 +1430,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/color)
 		..(location, "blob_heal", 60, color)
 
-	Init()
+	InitPar()
 		sleepCounter = rand(3,4)
 
 	Run()
@@ -1520,7 +1520,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		source.copy_to(copied)
 		particleColor = copied.get_master_color(1)
 
-	Init()
+	InitPar()
 		sleepCounter = 2
 
 	Die()
@@ -1542,7 +1542,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location, var/atom/destination)
 		..(location, "mechpart", get_dist(location, destination) * 5,  "#00FF00", destination)
 
-	Init()
+	InitPar()
 		sleepCounter = 10
 
 	Run()
@@ -1558,7 +1558,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location, var/direction)
 		..(location, "gravaccel", 25, "#1155ff", get_step(location, direction))
 
-	Init()
+	InitPar()
 		sleepCounter = 30
 
 	Run()
@@ -1595,7 +1595,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		SpawnParticle()	//want this particle system to display asap - needs to show up at the same time as its flavor text, not after
 
 
-	Init()
+	InitPar()
 		sleepCounter = 2
 
 	Run()

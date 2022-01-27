@@ -102,14 +102,14 @@
 				SPAWN_DBG(0) inject()
 
 			if("set_volume_rate")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), air_contents.volume)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, air_contents.volume)
 
 				volume_rate = number
 
 		if(signal.data["tag"])
 			SPAWN_DBG(0.5 SECONDS) broadcast_status()
-		update_icon()
+		UpdateIcon()
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
 		if(node)

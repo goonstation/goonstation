@@ -196,8 +196,11 @@
 
 	New(loc,ownermob,cloak)
 		..()
-		src.owner = ownermob
-		src.owner.set_loc(src)
+
+		if(ownermob)
+			src.owner = ownermob
+			src.owner.set_loc(src)
+			src.owner.remove_stamina(5)
 
 		use_cloakofdarkness = cloak
 
@@ -211,7 +214,6 @@
 		//overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		//overlay_image.color = "#333333"
 
-		owner.remove_stamina(5)
 
 		if (use_cloakofdarkness)
 			processing_items |= src
@@ -268,7 +270,7 @@
 				//src.UpdateOverlays(null, "batpoof_cloak")
 
 	proc/dispel(var/forced = 0)
-		if (forced)
+		if (forced && owner)
 			owner.stamina = max(owner.stamina - 40, STAMINA_SPRINT)
 
 		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof

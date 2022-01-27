@@ -137,7 +137,8 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
 	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
 	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_advanced
+	O.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
+	O.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
 	//O.verbs += /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts
 	//O.verbs += /mob/living/silicon/ai/proc/ai_custom_arrival_alert
 //	O.verbs += /mob/living/silicon/ai/proc/hologramize
@@ -149,6 +150,7 @@
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
 	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
+	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.job = "AI"
 
 	SPAWN_DBG(0)
@@ -297,7 +299,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien.</B>")
 	dispose()
 	return
@@ -330,7 +332,7 @@
 	if (src.client)
 		src.client.mob = O
 	O.set_loc(src.loc)
-	O.a_intent = "harm"
+	O.set_a_intent("harm")
 	boutput(O, "<B>You are now an alien queen.</B>")
 	dispose()
 	return
@@ -420,6 +422,7 @@
 			W.mind.ckey = ckey
 			W.mind.key = key
 			W.mind.current = W
+		ticker.mode.Agimmicks += W.mind
 		qdel(src)
 
 /mob/proc/machoize(var/shitty = 0)
@@ -583,6 +586,10 @@
 /mob/dead/observer/verb/enter_ghostdrone_queue()
 	set name = "Enter Ghostdrone Queue"
 	set category = "Ghost"
+
+	if(master_mode == "battle_royale")
+		boutput(usr, "You can't respawn as a ghost drone during Battle Royale!")
+		return
 
 	if (!src.can_respawn_as_ghost_critter())
 		return
@@ -804,8 +811,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new()
-	src.client.preferences.copy_to(newbody,src,1)
+	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
 		src.mind.assigned_role = "Staff Assistant"
@@ -877,8 +883,7 @@ var/respawn_arena_enabled = 0
 		boutput(src, "Whoa whoa, you need to regenerate your ethereal essence to fight again, it'll take [time_to_text(ON_COOLDOWN(src?.client?.player, "ass day arena", 0))].")
 		return
 
-	var/mob/living/carbon/human/newbody = new()
-	src.client.preferences.copy_to(newbody,src,1)
+	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 
 

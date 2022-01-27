@@ -5,7 +5,7 @@
 
 /obj/projectile
 	name = "projectile"
-	flags = TABLEPASS
+	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
 	anchored = 1
 
@@ -316,7 +316,7 @@
 		curr_t = 0
 		src.was_setup = 1
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		src.collide(A)
 
 	Crossed(var/atom/movable/A)
@@ -606,7 +606,7 @@ datum/projectile/laser
 	impact_range = 16
 	ie_type = "E"
 
-datum/projectile/laser/pred
+datum/projectile/laser/plasma
 	impact_range = 2
 
 datum/projectile/laser/light

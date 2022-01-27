@@ -444,7 +444,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("shudders","clinks heavily","gasps","looks dazed")].")
 
-/mob/living/critter/aquatic/king_crab/Bump(atom/movable/AM)
+/mob/living/critter/aquatic/king_crab/bump(atom/movable/AM)
 	..()
 	if(isobj(AM))
 		if(istype(AM, /obj/window))

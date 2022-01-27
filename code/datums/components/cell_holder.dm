@@ -20,7 +20,7 @@ TYPEINFO(/datum/component/cell_holder)
 	if(SEND_SIGNAL(new_cell, COMSIG_CELL_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
 	can_be_recharged = chargable
 	max_cell_size = max_cell
 	swappable_cell = swappable
@@ -49,7 +49,7 @@ TYPEINFO(/datum/component/cell_holder)
 				qdel(src.cell)
 				src.cell = new_cell
 				src.cell.set_loc(parent)
-				RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
+				RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
 		else if(istype(new_cell, /datum/component/power_cell))
 			src.cell.AddComponent(new_cell)
 		else if(islist(new_cell))
@@ -91,7 +91,7 @@ TYPEINFO(/datum/component/cell_holder)
 			user.u_equip(P)
 			P.add_fingerprint(user)
 		src.cell = P
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
 		P.set_loc(src.parent)
 		SEND_SIGNAL(P, COMSIG_UPDATE_ICON)
 
@@ -134,7 +134,7 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/component/cell_holder/proc/check_charge(source, amount)
 	. = SEND_SIGNAL(src.cell, COMSIG_CELL_CHECK_CHARGE, amount)
 
-/datum/component/cell_holder/proc/update_icon()
+/datum/component/cell_holder/proc/UpdateIcon()
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 
 /datum/action/bar/icon/cellswap

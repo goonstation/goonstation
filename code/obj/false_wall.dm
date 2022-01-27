@@ -39,9 +39,9 @@
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
 			if (src.can_be_auto)
 				for (var/turf/simulated/wall/auto/W in orange(1,src))
-					W.update_icon()
+					W.UpdateIcon()
 				for (var/obj/grille/G in orange(1,src))
-					G.update_icon()
+					G.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)

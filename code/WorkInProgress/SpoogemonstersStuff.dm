@@ -8,7 +8,7 @@
 			removeChem(chem)
 
 		if(istext(amount))
-			amount = text2num(amount)
+			amount = text2num_safe(amount)
 
 		chems.Add(chem)
 		amounts[chem] = amount
@@ -18,7 +18,7 @@
 		amounts[chem] = 0
 
 	proc/setTemp(var/ttemp as text)
-		temp = text2num(ttemp)
+		temp = text2num_safe(ttemp)
 
 	proc/createBeaker(var/holder)
 		var/obj/item/reagent_containers/glass/B = new(holder)
@@ -125,14 +125,14 @@
 	Topic(href, href_list)
 		switch(href_list["action"])
 			if("add")
-				addChem(href_list["chem"], text2num(href_list["amount"]), text2num(href_list["beaker"]))
+				addChem(href_list["chem"], text2num_safe(href_list["amount"]), text2num_safe(href_list["beaker"]))
 
 				usr << output(href_list["chem"] + ";" + href_list["amount"], "cheminterface.browser:addCallback")
 			if("remove")
-				removeChem(href_list["chem"], text2num(href_list["beaker"]))
+				removeChem(href_list["chem"], text2num_safe(href_list["beaker"]))
 
 			if("temp")
-				setTemp(href_list["temp"], text2num(href_list["beaker"]))
+				setTemp(href_list["temp"], text2num_safe(href_list["beaker"]))
 
 			if("grenade")
 				grenade(href_list["name"])
@@ -158,7 +158,7 @@
 
 	proc/removeChem(var/chem as text, var/beaker=1)
 		if(istext(beaker))
-			beaker = text2num(beaker)
+			beaker = text2num_safe(beaker)
 
 		if(beaker > beakerSpecs.len || isnull(beakerSpecs[beaker]))
 			return

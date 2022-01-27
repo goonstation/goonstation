@@ -68,12 +68,14 @@
 			src.suicide_can_succumb = 0
 		logTheThing("combat", src, null, "commits suicide")
 		do_suicide() //                           <------ put mob unique behaviour here in an override!!!!
-		if (src.suicide_alert)
-			message_attack("[key_name(src)] commits suicide shortly after joining.")
-			src.suicide_alert = 0
-		SPAWN_DBG(20 SECONDS)
-			src.suiciding = 0
-		return
+		if (src.suiciding)
+			if (src.suicide_alert)
+				message_attack("[key_name(src)] commits suicide shortly after joining.")
+				src.suicide_alert = 0
+			SPAWN_DBG(20 SECONDS)
+				src.suiciding = 0
+		else
+			src.suicide_can_succumb = 0
 	else
 		src.suiciding = 0
 
@@ -91,9 +93,6 @@
 	force_suicide() // something else in the codebase calls this without going through the suicide checks, so shrug
 
 /mob/living/carbon/human/proc/force_suicide()
-	if (src.client) // fix for "Cannot modify null.suicide"
-		src.client.suicide = 1
-	src.suiciding = 1
 	src.unkillable = 0 //Get owned, nerd!
 
 	var/list/suicides = list("hold your breath")
@@ -125,44 +124,39 @@
 						continue
 				suicides += O
 
-	if (suicides.len)
-		var/obj/selection
-		if (suicides.len == 1)
-			selection = suicides[1]
-		else
-			selection = input(src, "Choose your death:", "Selection") as null|anything in suicides
-		if (isnull(selection))
-			if (src)
+	var/obj/selection
+	selection = input(src, "Choose your death:", "Selection") as null|anything in suicides
+	if (isnull(selection))
+		if (src)
+			src.suiciding = 0
+		return
+
+	src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
+
+	if (!isnull(src.on_chair) && selection == src.on_chair)
+		src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
+		src.TakeDamage("head", 200, 0)
+		SPAWN_DBG(50 SECONDS)
+			if (src && !isdead(src))
 				src.suiciding = 0
-			return
-
-		src.unlock_medal("Damned", 1) //You don't get the medal if you tried to wuss out!
-
-		if (!isnull(src.on_chair) && selection == src.on_chair)
-			src.visible_message("<span class='alert'><b>[src] jumps off of the chair straight onto [his_or_her(src)] head!</b></span>")
-			src.TakeDamage("head", 200, 0)
-			SPAWN_DBG(50 SECONDS)
-				if (src && !isdead(src))
-					src.suiciding = 0
-			src.pixel_y = 0
-			reset_anchored(src)
-			src.on_chair = 0
-			src.buckled = null
-			return
-		else if (istype(selection))
-			selection.suicide(src)
-			SPAWN_DBG(50 SECONDS)
-				if (src && !isdead(src))
-					src.suiciding = 0
-		else
-			//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
-			src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b></span>")
-			src.take_oxygen_deprivation(175)
-			SPAWN_DBG(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
-				if (src && !isdead(src))
-					src.suiciding = 0
-			return
-	return
+		src.pixel_y = 0
+		reset_anchored(src)
+		src.on_chair = 0
+		src.buckled = null
+		return
+	else if (istype(selection))
+		selection.suicide(src)
+		SPAWN_DBG(50 SECONDS)
+			if (src && !isdead(src))
+				src.suiciding = 0
+	else
+		//instead of killing them instantly, just put them at -175 health and let 'em gasp for a while
+		src.visible_message("<span class='alert'><b>[src] is holding [his_or_her(src)] breath. It looks like [hes_or_shes(src)] trying to commit suicide.</b></span>")
+		src.take_oxygen_deprivation(175)
+		SPAWN_DBG(20 SECONDS) //in case they get revived by cryo chamber or something stupid like that, let them suicide again in 20 seconds
+			if (src && !isdead(src))
+				src.suiciding = 0
+		return
 
 /mob/dead/aieye/do_suicide()
 	src.return_mainframe()

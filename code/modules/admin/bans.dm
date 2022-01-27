@@ -316,7 +316,7 @@ var/global/list/playersSeen = list()
 		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
 		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in \
-			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Until Appeal","Permanent","Custom")
+			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","Two Weeks","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
 			if("Half-hour")
@@ -331,6 +331,8 @@ var/global/list/playersSeen = list()
 				mins = 5040
 			if("One Week")
 				mins = 10080
+			if("Two Weeks")
+				mins = 20160
 			if("One Month")
 				mins = 43200
 			if("Until Appeal")
@@ -638,7 +640,6 @@ var/global/list/playersSeen = list()
 	bansHtml = replacetext(bansHtml, "null /* ref_src */", "'\ref[src]'")
 	bansHtml = replacetext(bansHtml, "null /* cminutes */", "[CMinutes]")
 	bansHtml = replacetext(bansHtml, "null /* api_data_params */", "'data_server=[serverKey]&data_id=[config.server_id]&data_version=[config.goonhub_api_version]'")
-	bansHtml = replacetext(bansHtml, regex(@"-[0-9]* Minutes"), "until appeal") // gross
 	if (centralConn)
 		bansHtml = replacetext(bansHtml, "null /* api_key */", "'[md5(config.goonhub_api_web_token)]'")
 	usr << browse(bansHtml,"window=[windowName];size=1080x500")

@@ -91,7 +91,7 @@ file_save - Save file to local disk."}
 					if (ckey(command_list[1]) == "all")
 						src.net_number = null
 					else
-						var/new_net_number = round( text2num(command_list[1]) )
+						var/new_net_number = round( text2num_safe(command_list[1]) )
 						if (new_net_number != null && new_net_number >= 0 && new_net_number <= 16)
 							src.net_number = new_net_number
 
@@ -387,7 +387,7 @@ file_save - Save file to local disk."}
 			var/target_tag = src.setup_string
 			var/maybe_netnum = findtext(target_tag, "|")
 			if (maybe_netnum)
-				src.net_number = text2num( copytext(target_tag, maybe_netnum+1) )
+				src.net_number = text2num_safe( copytext(target_tag, maybe_netnum+1) )
 				target_tag = copytext(target_tag, 1, maybe_netnum)
 				src.peripheral_command("subnet[src.net_number]", null, "\ref[src.netcard]")
 

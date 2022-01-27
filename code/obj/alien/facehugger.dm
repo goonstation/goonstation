@@ -123,7 +123,7 @@
 				var/turf/T = get_turf(src)
 				AM:set_loc(T)
 
-	Bump(atom/A)
+	bump(atom/A)
 		if(ismob(A) && (ishuman(A) || ismonkey(A)))
 			src.target = A
 			set_attack()

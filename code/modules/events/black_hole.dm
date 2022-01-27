@@ -56,7 +56,7 @@
 			playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,0.5)
 			animate(src, transform = matrix(4, MATRIX_SCALE), time = 300, loop = 0, easing = LINEAR_EASING)
 		if (random_events.announce_events)
-			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [src.loc.loc]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
+			command_alert("A severe gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It may collapse into a black hole if not stabilized. All personnel should feed mass to the anomaly until it stabilizes.", "Gravitational Anomaly")
 
 		sleep(lifespan)
 		if (!stable)

@@ -31,7 +31,7 @@
 		src.triggering_device:sense()
 	return
 
-/obj/item/assembly/chem_bomb/Bump(atom/O)
+/obj/item/assembly/chem_bomb/bump(atom/O)
 	if (!istype(src.triggering_device, /obj/item/device/prox_sensor))
 		return
 	SPAWN_DBG(0)
