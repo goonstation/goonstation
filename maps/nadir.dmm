@@ -243,6 +243,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/northeast)
+"afv" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_stirstir"
+	},
+/turf/simulated/floor/engine,
+/area/station/security/brig/genpop)
 "afy" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -2842,10 +2851,6 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/northeast)
 "byF" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -7553,6 +7558,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
+/obj/blind_switch/area/east,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -9708,6 +9714,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
+"fwY" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/lounge/starboard{
+	name = "Book Nook"
+	})
 "fxf" = (
 /obj/decal/tile_edge/check/red{
 	dir = 1;
@@ -9829,16 +9842,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/engineering/ce)
 "fAF" = (
-/obj/decal/tile_edge/check/red{
-	dir = 1;
-	icon_state = "check1"
-	},
-/obj/stool/bench/red/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/engine,
-/area/station/hallway/secondary/exit)
+/area/station/crew_quarters/lounge/starboard{
+	name = "Book Nook"
+	})
 "fAX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10039,6 +10048,9 @@
 /area/station/engine/elect)
 "fHL" = (
 /obj/cable,
+/obj/landmark/spawner{
+	name = "monkeyspawn_rathen"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation{
 	do_not_irradiate = 1;
@@ -10223,6 +10235,9 @@
 "fNH" = (
 /obj/machinery/light/small/floor/netural,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/spawner{
+	name = "monkeyspawn_mrsmuggles"
+	},
 /turf/simulated/floor/engine,
 /area/station/storage/warehouse)
 "fNN" = (
@@ -10757,6 +10772,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_albert"
+	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "gbL" = (
@@ -11138,6 +11156,10 @@
 "gli" = (
 /obj/machinery/disposal/mail/autoname/public/crew,
 /obj/disposalpipe/trunk/mail/south,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_west)
 "glR" = (
@@ -11814,6 +11836,7 @@
 /area/station/hallway/secondary/exit)
 "gDm" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
@@ -12125,6 +12148,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -13567,6 +13591,10 @@
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
+"hvE" = (
+/obj/stool/bench/red/auto,
+/turf/simulated/floor/engine,
+/area/station/hallway/secondary/exit)
 "hvP" = (
 /obj/decal/tile_edge/line/white{
 	dir = 9;
@@ -16253,7 +16281,9 @@
 	})
 "iOR" = (
 /obj/wingrille_spawn/auto/crystal,
-/obj/barber_pole,
+/obj/barber_pole{
+	layer = 3.1
+	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/barber_shop)
 "iPe" = (
@@ -16603,6 +16633,15 @@
 	},
 /turf/simulated/floor,
 /area/listeningpost)
+"iZL" = (
+/obj/decal/cleanable/dirt,
+/obj/landmark/spawner{
+	name = "monkeyspawn_horse"
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "iZO" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine,
@@ -19752,7 +19791,6 @@
 	dir = 5;
 	icon_state = "check2"
 	},
-/obj/stool/bench/red/auto,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -21310,6 +21348,15 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/arcade)
+"lxy" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_mrmuggles"
+	},
+/turf/simulated/floor/engine,
+/area/station/crew_quarters/cafeteria)
 "lxA" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/hydro,
@@ -26965,6 +27012,9 @@
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
+/obj/landmark/spawner{
+	name = "monkeyspawn_tanhony"
+	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "oHj" = (
@@ -28975,19 +29025,26 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/storage/box/mousetraps,
 /obj/item/sponge,
-/obj/item/spraybottle/cleaner,
-/obj/item/mop,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/chem_grenade/cleaner,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/storage/crate,
-/obj/item/chem_grenade/cleaner,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/chem_grenade/cleaner{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = 5;
+	pixel_y = -1
 	},
 /turf/simulated/floor/engine,
 /area/station/janitor/supply)
@@ -36919,7 +36976,6 @@
 	dir = 6;
 	icon_state = "check2"
 	},
-/obj/stool/bench/red/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -79457,7 +79513,7 @@ pYx
 iHN
 kfZ
 wzZ
-wzZ
+lxy
 wNk
 fRc
 uii
@@ -82192,7 +82248,7 @@ hzF
 evz
 xTq
 gJN
-gJN
+afv
 lbk
 yhV
 jvS
@@ -100274,7 +100330,7 @@ tGr
 pJf
 hXv
 hXv
-gDm
+fAF
 krU
 eeW
 car
@@ -100576,7 +100632,7 @@ tGr
 arE
 emx
 utm
-gDm
+fwY
 ksd
 eeW
 car
@@ -101524,7 +101580,7 @@ vqY
 sZL
 mNy
 kPa
-vCk
+iZL
 vCk
 ygS
 bBV
@@ -104807,7 +104863,7 @@ uSe
 vpL
 cTr
 eIi
-fbB
+hvE
 mbi
 nxE
 wXk
@@ -104835,7 +104891,7 @@ nxE
 wXk
 nxE
 hJZ
-fbB
+hvE
 gLw
 cTr
 fnR
@@ -105109,7 +105165,7 @@ uSe
 wwo
 nxE
 fxf
-fbB
+hvE
 mbi
 nxE
 wXk
@@ -105137,7 +105193,7 @@ nxE
 wXk
 nxE
 hJZ
-fbB
+hvE
 hpn
 nxE
 tHq
@@ -105411,7 +105467,7 @@ uSe
 wXk
 nxE
 fwT
-fbB
+hvE
 mbi
 nxE
 wXk
@@ -105439,7 +105495,7 @@ nxE
 wXk
 nxE
 hJZ
-fbB
+hvE
 mbi
 nxE
 wXk
@@ -106014,8 +106070,8 @@ bzS
 nxE
 wXk
 nxE
-fAF
-fbB
+fwT
+hvE
 mbi
 nxE
 wXk
@@ -106043,8 +106099,8 @@ nxE
 wXk
 nxE
 hJZ
-fbB
-udE
+hvE
+mbi
 nxE
 wXk
 nxE
@@ -106316,8 +106372,8 @@ bzS
 nxE
 wXk
 nxE
-fAF
-fbB
+fwT
+hvE
 hpn
 nxE
 wXk
@@ -106345,8 +106401,8 @@ nxE
 wXk
 nxE
 lhk
-fbB
-udE
+hvE
+mbi
 nxE
 wXk
 nxE
@@ -106618,8 +106674,8 @@ bzS
 nxE
 wXk
 nxE
-fAF
-fbB
+fwT
+hvE
 mbi
 nxE
 wXk
@@ -106647,8 +106703,8 @@ nxE
 wXk
 nxE
 hJZ
-fbB
-udE
+hvE
+mbi
 nxE
 wXk
 nxE
@@ -107222,7 +107278,7 @@ bzS
 fUM
 fbB
 aSj
-fAF
+fwT
 fbB
 mbi
 taA
@@ -107252,7 +107308,7 @@ fbB
 taA
 hJZ
 fbB
-udE
+mbi
 aSj
 fbB
 fUM
@@ -107524,7 +107580,7 @@ bzS
 evX
 rSA
 nxE
-fAF
+fwT
 kUk
 mbi
 nxE
@@ -107554,7 +107610,7 @@ rSA
 nxE
 hJZ
 kUk
-udE
+mbi
 nxE
 sEQ
 evX
