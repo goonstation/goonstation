@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, LabeledList, Box, Knob, Input } from '../components';
+import { Box, Button, Flex, Input, Knob, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {
@@ -7,7 +7,7 @@ type MusicInstrumentData = {
   notes: string[];
 };
 
-export const MusicInstrument = (props, context) => {
+export const MusicInstrument = (_props, context) => {
   const { act, data } = useBackend<MusicInstrumentData>(context);
   const { name, notes } = data;
 
@@ -38,7 +38,7 @@ export const MusicInstrument = (props, context) => {
   const playNote = (index: number) => {
     if (keyIndexWithinRange(index) && !activeKeys[index]) {
       act('play_note', { note: index + transpose + 1, volume: volume });
-      const newKeys = activeKeys;
+      const newKeys = [...activeKeys];
       newKeys[index] = true;
       setActiveKeys(newKeys);
     }
@@ -84,7 +84,7 @@ export const MusicInstrument = (props, context) => {
                   <Button
                     className="instrument__toggle-keyboard-button"
                     title="Toggle keyboard support (toggle with ctrl)"
-                    onClick={() => toggleKeybind()}
+                    onClick={toggleKeybind}
                     icon="keyboard"
                   />
                   <Box
@@ -116,7 +116,7 @@ export const MusicInstrument = (props, context) => {
                     stepPixelSize={1}
                     minValue={0}
                     maxValue={100}
-                    title={'Volume'}
+                    title="Volume"
                     value={volume}
                     onDrag={(e, v) => setVolume(v)}
                   />
@@ -128,7 +128,7 @@ export const MusicInstrument = (props, context) => {
                     stepPixelSize={6}
                     minValue={-12}
                     maxValue={12}
-                    title={'Transpose'}
+                    title="Transpose"
                     value={transpose}
                     onDrag={(e, v) => setTranspose(v)}
                   />

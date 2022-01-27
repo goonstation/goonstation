@@ -104,12 +104,14 @@
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui && use_new_interface == 1)
+		if(!ui && use_new_interface)
 			ui = new(user, src, "MusicInstrument")
 			ui.open()
 
 	ui_data(mob/user)
-		..()
+		. = ..()
+		if (.)
+			return
 		. = list(
 			"name" = src.name,
 			"notes" = src.notes,
