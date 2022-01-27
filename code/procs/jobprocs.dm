@@ -503,7 +503,9 @@
 
 			if (length(valid_beds) > 0)
 				src.set_loc(get_turf(pick(valid_beds)))
-
+				src.setStatus("resting", INFINITE_STATUS)
+				src.setStatus("paralysis", 10 SECONDS)
+				src.force_laydown_standup()
 
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
