@@ -1246,7 +1246,7 @@
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if(IN_RANGE(target_turf, my_turf, 1))
-				budgun.shoot_point_blank(target, my_turf)
+				budgun.shoot_point_blank(target, src)
 			else
 				budgun.shoot(target_turf, my_turf, src)
 			burst--
@@ -1907,7 +1907,7 @@
 
 			src.add_task(src.model_task.copy_file(),1)
 
-		if(src.task?.disposed || src.task.master != src)
+		if(src.task?.disposed || src.task?.master != src)
 			src.task = null
 		if(istype(src.task))
 			src.task.task_act()
