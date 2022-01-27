@@ -1,5 +1,7 @@
 
 (t)thu jan 27 22
+(u)aloe
+(+)New 0 point trait- Heavy Sleeper. You spawn in a random bed, asleep (for 10 seconds). Can't be taken with stowaway etc.
 (u)AnguishedEnglish
 (p)7295
 (e)🎨|sprites
