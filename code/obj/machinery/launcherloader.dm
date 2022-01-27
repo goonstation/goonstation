@@ -350,13 +350,17 @@
 			ui = new(user, src, "BarcodeComputer")
 			ui.open()
 
-	ui_data(mob/user)
+	ui_static_data(mob/user)
 		var/list/destination_list = new()
 		for (var/destination in destinations)
 			destination_list += list(list("crate_tag" = destination)) //goddamn byond += overloading making me do listlist
+		. = list()
+		.["sections"] = list(list("title" = "Station", "destinations" = destination_list))
+
+
+	ui_data(mob/user)
 		. = list(
 			"amount" = print_amount,
-			"sections" = list(list("title" = "Station", "destinations" = destination_list)),
 		)
 		if (scan)
 			//we have to do this mess because bicon returns the full img tag which tgui won't render
@@ -421,7 +425,7 @@
 	New()
 		..()
 
-	ui_data(mob/user)
+	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
 		for (var/datum/trader/T in shippingmarket.active_traders)
