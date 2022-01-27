@@ -673,31 +673,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
 
-// Phobias - Undetermined Border
-
-/obj/trait/phobia
-	name = "Phobias suck"
-	desc = "Wow, phobias are no fun! Report this to a coder please."
-	unselectable = TRUE
-
-/obj/trait/phobia/space
-	name = "Spacephobia (+1) \[Phobia\]"
-	cleanName = "Spacephobia"
-	desc = "Being in space scares you. A lot. While in space you might panic or faint."
-	id = "spacephobia"
-	points = 1
-
-	onLife(var/mob/owner)
-		if(!owner.stat && can_act(owner) && istype(owner.loc, /turf/space))
-			if(prob(2))
-				owner.emote("faint")
-				owner.changeStatus("paralysis", 8 SECONDS)
-			else if (prob(8))
-				owner.emote("scream")
-				owner.changeStatus("stunned", 2 SECONDS)
-
 // Stats - Undetermined Border
-
 /obj/trait/athletic
 	name = "Athletic (-2) \[Stats\]"
 	cleanName = "Athletic"
@@ -758,20 +734,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 	id = "hemophilia"
 	points = 1
 	category = list("hemophilia")
-
-Flourish felt like this was bloating the traits so I've disabled it for now.
-/obj/trait/color_shift
-	name = "Color Shift (0)"
-	cleanName = "Color Shift"
-	desc = "You are more depressing on the outside but more colorful on the inside."
-	id = "color_shift"
-	unselectable = TRUE
-	points = 0
-
-	onAdd(var/mob/owner)	Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
-		if(owner.bioHolder)
-			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
-			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
 
 /obj/trait/slowmetabolism
 	name = "Slow Metabolism (0)"
