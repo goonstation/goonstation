@@ -603,7 +603,7 @@
 	if (isghostcritter(src))
 		return
 
-	if (src.reagents && src.reagents.has_reagent("capulettium_plus") || !can_act(usr))
+	if ((src.reagents && src.reagents.has_reagent("capulettium_plus")) || !can_act(usr))
 		src.show_text("You are completely paralysed and can't point!", "red")
 		return
 
