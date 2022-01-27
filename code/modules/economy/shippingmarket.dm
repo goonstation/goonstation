@@ -522,8 +522,7 @@
 	//needs to be called whenever active_traders or req_contracts changes
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
-				computer.update_static_data(null, ui)
+			computer.update_static_data()
 
 
 // Debugging and admin verbs (mostly coder)
