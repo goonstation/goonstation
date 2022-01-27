@@ -766,7 +766,7 @@
 	points = 1
 	isPositive = 0
 
-obj/trait/pilot
+/obj/trait/pilot
 	name = "Pilot (0) \[Background\]"
 	cleanName = "Pilot"
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
@@ -775,6 +775,15 @@ obj/trait/pilot
 	category = list("background")
 	points = 0
 	isPositive = 0
+
+
+/obj/trait/sleepy
+	name = "Heavy Sleeper (0) \[Background\]"
+	cleanName = "Heavy Sleeper"
+	desc = "You always sleep through the start of the shift, and wake up in a random bed."
+	id = "sleepy"
+	category = list("background")
+	points = 0
 
 // NO CATEGORY - Grey Border
 

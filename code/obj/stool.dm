@@ -296,6 +296,10 @@
 		parts_type = /obj/item/furniture_parts/bed/roller
 		scoot_sounds = list( 'sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg' )
 
+	New()
+		..()
+		START_TRACKING
+
 	Move()
 		if(src.buckled_guy?.loc != src.loc)
 			src.unbuckle()
@@ -428,11 +432,9 @@
 				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
 				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
 				newSheet.layer = EFFECTS_LAYER_BASE-1
-				return
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> tucks [newSheet] into [src].</span>",\
 				"<span class='notice'>You tuck [newSheet] into [src].</span>")
-				return
 
 	proc/untuck_sheet(var/mob/user as mob)
 		if (!src.Sheet) // vOv
@@ -459,7 +461,6 @@
 			oldSheet.Bed = null
 		mutual_detach(src, oldSheet)
 		src.Sheet = null
-		return
 
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
 		if (get_dist(src, user) > 1 || A.loc != src.loc || user.restrained() || !isalive(user))
@@ -493,8 +494,8 @@
 		if (src.Sheet && src.Sheet.Bed == src)
 			src.Sheet.Bed = null
 			src.Sheet = null
+		STOP_TRACKING
 		..()
-		return
 
 	proc/sleep_in(var/mob/M)
 		if (!ishuman(M))
@@ -515,7 +516,6 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.hud.update_resting()
-		return
 
 /* ================================================ */
 /* -------------------- Chairs -------------------- */
