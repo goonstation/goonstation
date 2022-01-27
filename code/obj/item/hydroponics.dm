@@ -380,7 +380,7 @@
 	attack_self(var/mob/user as mob)
 		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
 		var/holder = src.loc
-		var/datum/plant/pick = input(usr, "Which seed do you want?", "Portable Seed Fabricator", null) in hydro_controls.vendable_plants
+		var/datum/plant/pick = tgui_input_list(usr, "Which seed do you want?", "Portable Seed Fabricator", hydro_controls.vendable_plants)
 		if (src.loc != holder)
 			return
 		src.selected = pick
