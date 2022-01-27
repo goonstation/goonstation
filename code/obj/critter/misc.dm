@@ -458,7 +458,7 @@
 	brutevuln = 1
 	angertext = "snips at"
 	butcherable = 0
-	flags = NOSPLASH | OPENCONTAINER
+	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
 	flying = 0
 
 	CritterDeath()
