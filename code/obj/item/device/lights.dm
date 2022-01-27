@@ -45,6 +45,7 @@
 	item_state = "flight"
 	icon_on = "flight1"
 	icon_off = "flight0"
+	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
 	m_amt = 50
@@ -58,7 +59,7 @@
 	light_type = null
 	brightness = 4.6
 
-	var/datum/component/loctargeting/simple_light/light_dir
+	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
 		col_r = R
@@ -108,8 +109,8 @@
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
-				icon_state = "flightbroken"
-				name = "broken flashlight"
+				icon_state = icon_broken
+				name = "broken [name]"
 				src.broken = 1
 			else
 				light_dir.update(1)

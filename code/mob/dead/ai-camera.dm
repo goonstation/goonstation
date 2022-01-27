@@ -33,6 +33,8 @@
 	var/y_edge = 0
 	var/turf/T = 0
 
+	var/outer_eye_atom = null
+
 	New()
 		src.cancel_camera()
 		last_loc = src.loc
@@ -133,6 +135,25 @@
 		else
 			last_loc = src.loc
 			..()
+
+	set_eye(atom/new_eye)
+		var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
+		if( !(T && isrestrictedz(T.z)) )
+			src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)
+		else
+			src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+
+		if(new_eye && new_eye != src)
+			var/atom/movable/temp = new_eye
+			while(!istype(temp.loc, /turf))
+				temp = temp.loc
+			UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+			outer_eye_atom = temp
+		else
+			UnregisterSignal(src.outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+		. = ..()
+
 
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
@@ -300,6 +321,18 @@
 		set name = "State All Laws"
 		if (mainframe)
 			mainframe.ai_state_laws_all()
+
+	verb/ai_set_laws_all()
+		set category = "AI Commands"
+		set name = "Set Fake Laws"
+		if (mainframe)
+			mainframe.ai_set_fake_laws()
+
+	verb/ai_state_laws_fake()
+		set category = "AI Commands"
+		set name = "State Fake Laws"
+		if (mainframe)
+			mainframe.ai_state_fake_laws()
 
 	verb/ai_statuschange()
 		set category = "AI Commands"
@@ -541,3 +574,17 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
 	world.updateCameraVisibility()
 
+/mob/dead/aieye/proc/check_eye_z(source)
+	var/atom/movable/temp = source
+	while(!istype(temp.loc, /turf))
+		temp = temp.loc
+	if(temp != source)
+		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
+		outer_eye_atom = temp
+
+	var/turf/T = get_turf(temp)
+	if(isrestrictedz(T?.z))
+		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
+	else
+		src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)

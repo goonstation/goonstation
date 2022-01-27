@@ -117,7 +117,7 @@
 				O.show_message("<span class='alert'><b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god.</span>", 1)
 				if (prob(66))
 					O.vomit()
-					O.visible_message("<span class='alert'>[O] pukes all over \himself!</span>", "<span class='alert'>You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
+					O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]!</span>", "<span class='alert'>You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
 
 		if (prob(40))
 			SPAWN_DBG(0) // linter demands this

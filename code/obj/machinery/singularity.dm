@@ -629,8 +629,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(state != UNWRENCHED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the field generator.", null)
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action, \
+						list(user), "[user] finishes using their [W.name] on the field generator.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
 			return
@@ -653,6 +654,18 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+
+/obj/machinery/field_generator/proc/get_welding_positions()
+	var/start
+	var/stop
+
+	start = list(-6,-15)
+	stop = list(6,-15)
+
+	if(state == WELDED)
+		. = list(stop,start)
+	else
+		. = list(start,stop)
 
 /obj/machinery/field_generator/proc/weld_action(mob/user)
 	if(state == WRENCHED)
@@ -1036,8 +1049,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		if(state != UNWRENCHED)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action,\
-			list(user), W.icon, W.icon_state, "[user] finishes using their [W.name] on the emitter.", null)
+			var/positions = src.get_welding_positions()
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action, \
+						list(user), "[user] finishes using their [W.name] on the emitter.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")
 			return
@@ -1062,6 +1076,22 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
 			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+
+/obj/machinery/emitter/proc/get_welding_positions()
+	var/start
+	var/stop
+	if(dir & (NORTH|SOUTH))
+		start = list(-10,-7)
+		stop = list(10,-7)
+	else
+		start = list(-10,-14)
+		stop = list(10,-14)
+
+	if(state == WELDED)
+		. = list(stop,start)
+	else
+		. = list(start,stop)
+
 
 /obj/machinery/emitter/proc/weld_action(mob/user)
 	if(state == WRENCHED)

@@ -17,11 +17,12 @@
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
 	metabolizes = 0
+	var/eye_light_icon = "mars_sec_bot_eye"
 
 	New()
 		. = ..()
 		APPLY_MOB_PROPERTY(src, PROP_THERMALVISION, src)
-		var/image/eye_light = image(icon, "mars_sec_bot_eye")
+		var/image/eye_light = image(icon, "[eye_light_icon]")
 		eye_light.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(eye_light, "eye_light")
 
@@ -133,3 +134,36 @@
 							if(prob(10)) user.show_text("Your hand hurts...", "red")
 					else
 						return ..()
+
+/mob/living/critter/gunbot/syndicate
+	name = "Syndicate robot"
+	real_name = "Syndicate robot"
+	desc = "A retrofitted Syndicate gunbot, it seems angry."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_nuke_bot"
+	eye_light_icon = "mars_nuke_bot_eye"
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/rifle
+		HH.name = "5.56 Rifle Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handrifle"
+		HH.limb_name = "5.56 Rifle Arm"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
+
+	setup_healths()
+		add_hh_robot(100, 1)
+		add_hh_robot_burn(100, 1)
+
+	get_melee_protection(zone, damage_type)
+		return 7
+
+	get_ranged_protection()
+		return 2.5

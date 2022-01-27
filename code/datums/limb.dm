@@ -338,6 +338,13 @@
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
 
+	rifle
+		proj = new/datum/projectile/bullet/assault_rifle
+		shots = 5
+		current_shots = 5
+		cooldown = 1 SECOND
+		reload_time = 20 SECONDS
+
 /datum/limb/mouth
 	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
 	var/dam_low = 3
@@ -1293,7 +1300,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/scalpel,\
 	/obj/item/circular_saw,\
 	/obj/machinery/emitter,\
-	/obj/machinery/field_generator,\
+	/obj/item/mechanics,\
 	/obj/item/staple_gun,\
 	/obj/item/scissors,\
 	/obj/item/razor_blade,\
@@ -1303,6 +1310,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	/obj/item/reagent_containers/food/snacks/einstein_loaf,\
 	/obj/reagent_dispensers,\
 	/obj/machinery/chem_dispenser,\
+	/obj/machinery/field_generator,\
 	/obj/machinery/portable_atmospherics/canister,\
 	/obj/machinery/networked/teleconsole,\
 	/obj/storage/crate, /obj/storage/closet,\

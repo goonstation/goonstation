@@ -70,7 +70,7 @@
 
 /obj/item/breaching_hammer/rock_sledge
 	name = "Orpheus electric guitar"
-	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Bonk-Tek."
+	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Funk-Tek."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
@@ -447,7 +447,7 @@
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
 			L.vomit()

@@ -1,5 +1,152 @@
 
+(t)tue jan 25 22
+(u)Flaborized
+(p)7293
+(e)🎨|sprites
+(*)Resprited the blob UI buttons.
+(u)zjdtmkhzt
+(p)7230
+(e)⚖|balance
+(+)Navbeacons are now mechanics scannable.
+(u)colossusqw
+(p)7244
+(e)🆕🎨|feature, sprites
+(*)Added scorpions to random pest events.
+(u)LeahTheTech
+(p)7261
+(e)🆕|feature
+(+)Added a button to AI shells to eject in place, no more scrolling across half the map to find your shell again.
+(u)Stonepillar
+(p)7297
+(e)🐛|bug
+(*)The space convention centers have re-opened. The stock market has events again. Go and gamble your money.
+(t)mon jan 24 22
+(u)BatElite
+(p)7285
+(e)🐛🗺|bug, mapping
+(+)Donut3's brig piping has been fixed.
+(u)Mr. Moriarty
+(p)7007
+(e)|
+(+)The Radio Show Host and the Communications Officer now have unique radio icons.
+(u)DimWhat
+(p)7035
+(e)⚖|balance
+(*)Made choking with sharp objects, like knives, deal much more bleed and a small amount of brute damage.
+(t)sun jan 23 22
+(u)adharainspace
+(p)7272
+(e)|
+(+)Changed bookshelf sprites.
+(u)DimWhat
+(p)7176
+(e)🎨|sprites
+(*)Added a new hat and apron for the Head Surgeon role.
+(u)Azrun
+(p)7246
+(e)🆕🎨⚖|feature, sprites, balance
+(+)Welding actionbars will only be seen by welder, but new animations for everyone to see!
+(t)sat jan 22 22
+(u)BatElite
+(p)7256
+(e)🐛|bug
+(*)AIs can also use normal radio prefixes now (though the :3 prefixes still work too)
+(u)Flaborized
+(p)7245
+(e)🎨|sprites
+(+)"Port-a" machines now have a teleporting animation.
+(u)Flaborized
+(p)7217
+(e)🎨|sprites
+(+)Added an animation for opening and closing zippo lighters.
+(t)fri jan 21 22
+(u)glowbold
+(p)7238
+(e)|
+(+)Fixed scanners breaking the dwarfism gene effect
+(u)TTerc & Azrun
+(p)7173
+(e)🆕⚖|feature, balance
+(*)Weedkiller (atrazine) can now affect kudzu tiles.
+(+)Atrazine will reduce the amount a tile of kudzu can spread and inhibit it from becoming more dense.
+(u)Zonespace
+(p)7241
+(e)🐛|bug
+(+)Syndicate Specialist ammobags now work with all nukeop guns again.
+(t)thu jan 20 22
+(u)zjdtmkhzt
+(p)7188
+(e)⚖|balance
+(+)Martian diplomats should now be able to use vocal translators.
+(u)Zonespace
+(p)7225
+(e)🗺🎨|mapping, sprites
+(+)There is now a manifest in the Cairngorm's storage room, containing stats on what's been purchased from the Nuclear Commander's uplink across rounds.
+(+)Nukeop Commander uplink has been resprited (thank you Dimwhat!)
+(t)wed jan 19 22
+(u)pali
+(*)The bug report button (in the top right corner) works again and has a new UI!
+(u)Flappybat and Flaborized and Virvatuli.
+(p)7130
+(e)🎨⚖|sprites, balance
+(*)Hunter laser rifle, spear and cloaking device self destruct on the hunter's death. These items have been renamed to make them stand out more.
+(*)Hunter's laser rifle and cloaking device have new sprites by Flaborized!
+(*)Laser rifles are renamed to plasma rifle to reflect their projectile and have a new sound by Virvatuli.
+(u)Flaborized
+(p)7209
+(e)🎨|sprites
+(+)Resprited and animated bullet casings.
+(u)Cogwerks
+(e)🗺🎨|mapping, sprites
+(+)Replaced my older drawn background assets with some fancier new 3D-rendered plasma giant, a couple moons, and stars
+(u)DimWhat
+(p)6997
+(e)🗺🎨|mapping, sprites
+(+)Added an ability button for some hooded clothing.
+(u)LeahTheTech
+(p)6805
+(e)🆕🎨|feature, sprites
+(+)The Inspector's report will now be displayed at the end of the round. The contents of that ominous clipboard are now much more important.
+(t)tue jan 18 22
+(u)Zonespace
+(p)6276
+(e)🆕🗺🎨⚖📄|feature, mapping, sprites, balance, tgui
+(*)Nuclear Operative Commanders now have a specialized uplink! More info in Minor Changes. Nuclear bomb remote has been moved to the uplink.
+(+)The commander's uplink uses "points" versus the traditional TC, and gains 1 point for every 20 people online (minimum of 2 points)
+(+)The uplink has 6 items, being the Nuclear bomb teleporter, reinforcement beacon, ammo bag, specialist ammo bag, laser designator, and rapid deployment remote, the new ones described in further changelog entries.
+(+)First is a reinforcement beacon for 2 points to summon a syndicate gunbot to assist the nuclear team.
+(+)Second is the Ammo Bag and its specialist version (2/3 points, respectively), which both allow the nuclear operatives to fabricate more ammunition for their guns.
+(+)Third is the laser designator for 3 points, which allows the commander to call in two high-explosive airstrikes from the Cairngorm to hit anywhere they designate!
+(+)Finally is the Rapid Deployment Remote, costing a whole 4 points, which allows the commander to send the nuclear team in through drop pods onto anywhere on station!
+(+)Thank you to Cogwerks for the 152mm gun sprites, Waffleoffle for the laser designator/ammobag sprites, and Dimwhat for the gunbot/drop pod sprites!
+(t)mon jan 17 22
+(u)DimWhat
+(p)7117
+(e)🎨|sprites
+(*)Added backpacks, belts, radio, and a couple special helmet sprites for monkeys!
+(u)CrystalClover
+(p)7162
+(e)🎨|sprites
+(*)Added Bald clown mask variants and the ability to swap to and from them
+(u)Flaborized
+(p)7153
+(e)|
+(+)Resprited stools.
+(u)Flaborized
+(p)7190
+(e)🎨|sprites
+(+)Resprited the Amusing Duck and the easter eggs it lays.
+(u)zjdtmkhzt
+(p)7026
+(e)|
+(+)Removed buggy "State Laws (Advanced)" verb from AIs and instead added the new "Set Fake Laws" and "State Fake Laws" verbs as replacements.
 (t)sun jan 16 22
+(u)TDHooligan
+(p)7101
+(e)🎨|sprites
+(+)Soda cans can now be printed in the CheMaster 3000, start a brand!
+(u)aloe
+(+)Sutures and bandages are now quite a bit faster, and are capped at 5 seconds. I'm reasonably sure the old behavior was a bug.
 (u)Nexusuxen
 (p)6871
 (e)🐛🆕|bug, feature
