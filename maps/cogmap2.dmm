@@ -1868,11 +1868,6 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
-"adY" = (
-/obj/wingrille_spawn/full,
-/obj/wingrille_spawn/full,
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "adZ" = (
 /obj/cable{
 	d1 = 4;
@@ -6590,7 +6585,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "apd" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "ape" = (
@@ -7010,7 +7006,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqk" = (
@@ -7419,10 +7416,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "arg" = (
-/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "arh" = (
@@ -7453,10 +7451,11 @@
 	},
 /area/station/security/detectives_office)
 "arl" = (
-/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "arm" = (
@@ -7883,10 +7882,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "ash" = (
-/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "asi" = (
@@ -7922,10 +7922,11 @@
 	},
 /area/station/security/detectives_office)
 "asm" = (
-/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "asn" = (
@@ -7937,8 +7938,9 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/crew_quarters/fitness)
 "asq" = (
-/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "asr" = (
@@ -8467,8 +8469,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "atC" = (
-/obj/wingrille_spawn/full,
 /obj/window_blinds/cog2,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "atD" = (
@@ -8482,9 +8485,10 @@
 	},
 /area/station/security/detectives_office)
 "atE" = (
-/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/window_blinds/cog2,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "atF" = (
@@ -11299,7 +11303,8 @@
 /area/station/chapel/sanctuary)
 "azY" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "azZ" = (
@@ -12022,7 +12027,8 @@
 	},
 /area/station/chapel/sanctuary)
 "aBA" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aBB" = (
@@ -12202,10 +12208,11 @@
 /turf/simulated/floor/bot,
 /area/station/storage/emergency2)
 "aBP" = (
-/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -12735,7 +12742,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
 "aDa" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -13605,7 +13613,8 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aEU" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aEV" = (
@@ -13718,7 +13727,8 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "aFl" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -15792,13 +15802,15 @@
 	name = "The Snip";
 	pixel_x = 16
 	},
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
 "aKE" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -15865,17 +15877,19 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "aKO" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aKP" = (
-/obj/wingrille_spawn/full,
 /obj/securearea{
 	desc = "Why not relax at the pool?";
 	icon_state = "pool";
 	name = "POOL";
 	pixel_y = -4
 	},
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aKQ" = (
@@ -16284,7 +16298,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "aLV" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "aLW" = (
@@ -16377,7 +16392,8 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aMg" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "aMh" = (
@@ -16710,7 +16726,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "aMJ" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
 "aMK" = (
@@ -16758,7 +16775,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aMP" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
 "aMQ" = (
@@ -17833,8 +17851,9 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "aPv" = (
-/obj/wingrille_spawn/full,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aPw" = (
@@ -20570,7 +20589,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "aWj" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "aWk" = (
@@ -77499,7 +77519,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "hAI" = (
-/obj/wingrille_spawn/full,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "hFn" = (
@@ -78304,6 +78325,9 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
+"lRj" = (
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/fitness)
 "lVF" = (
 /obj/machinery/power/pt_laser{
 	dir = 8
@@ -79900,8 +79924,9 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
 "vni" = (
-/obj/wingrille_spawn/full,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/window/auto,
+/obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "vrU" = (
@@ -116143,7 +116168,7 @@ aEU
 aEU
 aEU
 anN
-aEU
+lRj
 aEU
 aEU
 aEU
@@ -127010,7 +127035,7 @@ aph
 aqs
 ary
 aqz
-adY
+aBA
 avx
 awN
 ayC
