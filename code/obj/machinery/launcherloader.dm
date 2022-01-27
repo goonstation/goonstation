@@ -349,11 +349,6 @@
 		if(!ui)
 			ui = new(user, src, "BarcodeComputer")
 			ui.open()
-	//needs to be called whenever destinations, shippingmarket.active_traders or shippingmarket.req_contracts changes
-	static/proc/update_ui_data()
-		for_by_tcl(computer, /obj/machinery/computer/barcode)
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
-				computer.update_static_data(null, ui)
 
 	ui_static_data(mob/user)
 		var/list/destination_list = new()
