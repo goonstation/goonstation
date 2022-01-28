@@ -100,13 +100,15 @@
 			paper.name = book_info[1]
 			paper.info = book_info[2]
 			paper.fingerprintslast = book_info[3]
+			if(book_info.len >= 4) // Gotta love adding a line that will be useful exactly once on each server...
+				paper.color = book_info[4]
 	src.notices = length(src.contents)
 	src.UpdateIcon()
 
 /obj/noticeboard/persistent/proc/save_stuff()
 	src.data[src.persistent_id] = list()
 	for(var/obj/item/paper/paper in src)
-		src.data[src.persistent_id] += list(list(paper.name, paper.info, paper.fingerprintslast))
+		src.data[src.persistent_id] += list(list(paper.name, paper.info, paper.fingerprintslast, paper.color))
 
 proc/save_noticeboards()
 	var/obj/noticeboard/persistent/some_board = null
