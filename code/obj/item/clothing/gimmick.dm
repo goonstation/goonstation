@@ -360,7 +360,6 @@
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
 		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
-		user.job = "Cluwne"
 		src.cant_self_remove = 1
 		src.cant_other_remove = 1
 		if(src.infectious && user.reagents)

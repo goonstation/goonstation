@@ -20,6 +20,12 @@
 	cluwne
 		laugh_rate = 18
 
+/datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	..()
+	if (D)
+		src.oldname = affected_mob.real_name
+		src.oldjob = affected_mob.job
+
 /datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (..())
 		return
@@ -49,11 +55,11 @@
 
 		if(3)
 			if (affected_mob.job != "Cluwne")
-				//src.oldname = affected_mob.real_name
 				affected_mob.real_name = "cluwne"
 				affected_mob.stuttering = 120
-				//src.oldjob = affected_mob.job
 				affected_mob.job = "Cluwne"
+				affected_mob.UpdateName()
+				affected_mob.change_misstep_chance(60)
 
 			if(prob(10) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
@@ -191,20 +197,15 @@
 								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 
-/datum/ailment/disease/cluwneing_around/cluwne/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/cluwneing_around/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (affected_mob)
-		if (src.oldname && src.oldjob)
+		if (src.oldname)
 			affected_mob.real_name = src.oldname
+		if (src.oldjob)
 			affected_mob.job = src.oldjob
 		if(affected_mob.job == "Cluwne" )
 			affected_mob.job = "Cleansed Cluwne"
 		boutput(affected_mob, "<span class='notice'>You feel like yourself again.</span>")
-		for(var/obj/item/clothing/W in affected_mob)
-			if (W.cant_self_remove && W.cant_other_remove)//this might not be a great way to do this.
-				affected_mob.u_equip(W)
-				if (W)
-					W.set_loc(affected_mob.loc)
-					W.dropped(affected_mob)
-					W.layer = initial(W.layer)
+		affected_mob.UpdateName()
 		affected_mob = null
 	..()
