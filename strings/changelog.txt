@@ -1,4 +1,9 @@
 
+(t)fri jan 28 22
+(u)DisturbHerb
+(p)7283
+(e)|
+(+)Head Surgeons now have their own headset (Med, Command) and radio icon.
 (t)thu jan 27 22
 (u)aloe
 (+)New 0 point trait- Heavy Sleeper. You spawn in a random bed, asleep (for 10 seconds). Can't be taken with stowaway etc.
