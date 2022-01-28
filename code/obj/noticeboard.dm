@@ -37,7 +37,7 @@
 /obj/noticeboard/attack_hand(mob/user as mob)
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/paper/P in src)
-		dat += text("<A href='?src=\ref[];read=\ref[]'>[]</A> <A href='?src=\ref[];write=\ref[]'>Write</A> <A href='?src=\ref[];remove=\ref[]'>Remove</A><BR>", src, P, P.name, src, P, src, P)
+		dat += text("<A href='?src=\ref[];read=\ref[]'>[]</A> <A href='?src=\ref[];remove=\ref[]'>Remove</A><BR>", src, P, P.name, src, P)
 	user.Browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
 	onclose(user, "noticeboard")
 
@@ -62,30 +62,10 @@
 			src.UpdateIcon()
 			src.updateUsrDialog()
 
-	if(href_list["write"])
-		var/obj/item/P = locate(href_list["write"])
-
-		if((P && P.loc == src)) //if the paper's on the board
-			if (istype(usr.r_hand, /obj/item/pen)) //and you're holding a pen
-				src.add_fingerprint(usr)
-				P.Attackby(usr.r_hand, usr) //then do ittttt
-			else
-				if (istype(usr.l_hand, /obj/item/pen)) //check other hand for pen
-					src.add_fingerprint(usr)
-					P.Attackby(usr.l_hand, usr)
-				else
-					boutput(usr, "<span class='alert'>You'll need something to write with!</span>")
-
 	if (href_list["read"])
 		var/obj/item/paper/P = locate(href_list["read"])
 		if ((P && P.loc == src))
-			if (!( ishuman(usr) ))
-				usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, stars(P.info)), text("window=[]", P.name))
-				onclose(usr, "[P.name]")
-			else
-				usr.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", P.name, P.info), text("window=[]", P.name))
-				onclose(usr, "[P.name]")
-
+			P.ui_interact(usr)
 
 /obj/noticeboard/persistent
 	name = "persistent notice board"
