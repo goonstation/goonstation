@@ -21,10 +21,11 @@
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
 	var/speed_error = 0
+	var/throw_type
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,
-			bonus_throwforce=0, end_throw_callback=null)
+			bonus_throwforce=0, end_throw_callback=null, throw_type=1)
 		src.thing = thing
 		src.target = target
 		src.error = error
@@ -44,6 +45,7 @@
 		src.bonus_throwforce = bonus_throwforce
 		src.end_throw_callback = end_throw_callback
 		src.user = usr // ew
+		src.throw_type = throw_type
 		..()
 
 	proc/get_throw_travelled()

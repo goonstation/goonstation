@@ -97,7 +97,7 @@
 	src.throwforce += bonus_throwforce
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin == 1 && !(throwing & THROW_SLIP))
+	if (src.throw_spin == 1 && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
 		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
@@ -135,7 +135,8 @@
 		thrown_by = thrown_by,
 		return_target = usr, // gross
 		bonus_throwforce = bonus_throwforce,
-		end_throw_callback = end_throw_callback
+		end_throw_callback = end_throw_callback,
+		throw_type = throw_type
 	)
 
 	LAZYLISTADD(throwing_controller.thrown, thr)

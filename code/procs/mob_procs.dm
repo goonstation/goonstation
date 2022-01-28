@@ -112,7 +112,7 @@
 	return 1
 
 
-/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+/mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP)
 	.= 0
 
 	if (!src.can_slip())
@@ -140,13 +140,19 @@
 		else
 			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
 		src.remove_pulling()
-
-		var/turf/T = get_ranged_target_turf(src, src.last_move_dir, throw_range)
-		src.throw_at(T, intensity, 2, list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS)), src.loc, throw_type = THROW_SLIP)
+		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
+		var/list/params = null
+		var/throw_speed = 2
+		if(throw_type == THROW_PEEL_SLIP)
+			params = list("peel_stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+			throw_speed = 0.5
+		else
+			params = list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+		src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 		.= 1
 
-/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0)
-	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
+/mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay, throw_type)
 
 
 /mob/living/carbon/human/proc/skeletonize()
