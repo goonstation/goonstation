@@ -672,6 +672,8 @@
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
 	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/under/misc/chaplain/nun,\
+	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
 	/obj/item/storage/box/holywaterkit)
 

@@ -18,7 +18,7 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
-	var/round_limit = 45 MINUTES //see post_setup
+	var/round_limit = 35 MINUTES //see post_setup
 	var/endthisshit = 0
 	var/gibwave_started = FALSE
 	do_antag_random_spawns = 0

@@ -40680,7 +40680,10 @@
 	},
 /area/station/security/main)
 "bYE" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},

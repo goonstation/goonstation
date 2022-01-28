@@ -3,7 +3,6 @@
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
-	//inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi' // Gannets to make sweet inhand
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = 0
@@ -70,7 +69,7 @@
 
 /obj/item/breaching_hammer/rock_sledge
 	name = "Orpheus electric guitar"
-	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Bonk-Tek."
+	desc = "A bolt-on neck flying V electric guitar, finished in blood red. Manufactured by Funk-Tek."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "guitar"
 	item_state = "guitar"
@@ -215,7 +214,7 @@
 
 	shred
 		name = "Shred"
-		desc = "Lightbreaker Effect"
+		desc = "Sound so shrill it shatters lights."
 		icon_state = "shred"
 		cooldown = 2 MINUTES
 
@@ -239,7 +238,7 @@
 
 	infrasound
 		name = "Infrasound"
-		desc = "Play something so deep it hurts."
+		desc = "Play something so deep it hurts.  Causes headaches for those nearby and nausea to those that can hear it."
 		icon_state = "infrasound"
 		cooldown = 45 SECONDS
 
@@ -261,7 +260,7 @@
 
 	ultrasound
 		name = "Ultrasound"
-		desc = "Play something so high it hurts."
+		desc = "Play something so high it hurts. Penetrate organs and stuns!"
 		icon_state = "ultrasound"
 		cooldown = 45 SECONDS
 
@@ -306,7 +305,7 @@
 
 	heal
 		name = "Chill Beats to Murder To"
-		desc = "Gentle healing effect that allows you to do more."
+		desc = "Gentle healing effect that improves your stamina."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
 		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
@@ -320,14 +319,14 @@
 
 	perseverance
 		name = "Perseverance"
-		desc = "Health Boost and Minor Stamina Regeneration"
+		desc = "Boosts health and improves stamina regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
 		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
 
 	epic_climax
 		name = "EPIC CLIMAX"
-		desc = "Play a sound that drives the time into a murder rage! Taxing physically and emotionally."
+		desc = "Play a sound that drives the team into a murder rage! Taxing physically and emotionally."
 		icon_state = "epic_climax"
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
@@ -447,7 +446,7 @@
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
 			L.vomit()

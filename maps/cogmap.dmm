@@ -17548,7 +17548,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aUr" = (
-/obj/bookshelf/persistent,
+/obj/bookshelf/persistent{
+	density = 0;
+	pixel_y = 19
+	},
 /obj/cable{
 	icon_state = "2-8"
 	},

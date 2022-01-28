@@ -184,7 +184,7 @@
 
 /datum/blob_ability/plant_nucleus
 	name = "Deploy"
-	icon_state = "blob-nucleus"
+	icon_state = "blob-spawn"
 	desc = "This will place the first blob on your current tile. You can only do this once. Once placed, a small amount of blob tiles will spawn around it."
 	targeted = 0
 	cooldown_time = 10
@@ -282,7 +282,7 @@
 /datum/blob_ability/tutorial
 	name = "Interactive Tutorial"
 	desc = "Check out the interactive blob tutorial to get started with blobs."
-	icon_state = "blob-help0"
+	icon_state = "blob-tutorial"
 	targeted = 0
 
 	onUse()
@@ -1191,7 +1191,7 @@
 
 /datum/blob_upgrade/spread
 	name = "Passive: Spread Upgrade"
-	icon_state = "blob-spread"
+	icon_state = "blob-spread-upgrade"
 	desc = "When spreading, adds a cumulative 20% chance to spread off another, random tile on your screen. Every time your chance hits a multiple of 100%, the spread for that amount of tiles is guaranteed and a new chance is added for an extra tile. For example, at 120%, you have a 100% chance to spread twice; with a 20% chance to spread three times instead."
 	evo_point_cost = 1
 	scaling_cost_add = 1
@@ -1205,7 +1205,7 @@
 
 /datum/blob_upgrade/attack
 	name = "Passive: Attack Upgrade"
-	icon_state = "blob-attack"
+	icon_state = "blob-attack-upgrade"
 	desc = "Increases your attack damage and the chance of mob knockdown. Level 3+ of this upgrade will allow you to punch down girders. Can be repeated."
 	evo_point_cost = 1
 	scaling_cost_add = 1
@@ -1233,7 +1233,7 @@
 
 /datum/blob_upgrade/devour_item
 	name = "Ability: Devour Item"
-	icon_state = "blob-digest"
+	icon_state = "blob-digest-upgrade"
 	desc = "Unlocks the Devour Item ability, which can be used to near-instantly break down any item adjacent to any blob tile. In addition, a reagent deposit is created in the blob if the item contained any reagents. Reagent deposits can be used with various blob elements. Material bearing objects will break down into material deposits, which can be used to reinforce your blob."
 	evo_point_cost = 1
 	upgradename = "digest"
@@ -1248,7 +1248,7 @@
 
 /datum/blob_upgrade/reinforce
 	name = "Ability: Reinforce"
-	icon_state = "blob-reinforce"
+	icon_state = "blob-reinforce-upgrade"
 	desc = "Unlocks the Reinforce ability, which can be used to strengthen a single blob bit. Blob bits with reinforcements may be more durable or more heat resistant, or otherwise may bear special properties depending on the properties of the material. A single blob bit can be repeatedly reinforced to push its properties closer to that of the reinforcing material."
 	evo_point_cost = 1
 	initially_disabled = 1
@@ -1345,7 +1345,7 @@
 
 /datum/blob_upgrade/reclaimer
 	name = "Structure: Reclaimer"
-	icon_state = "blob-reclaimer"
+	icon_state = "blob-reclaimer-upgrade"
 	desc = "Unlocks the Reclaimer blob bit, which can be placed on reagent deposits. The reclaimer produces biopoints over time using reagents. Once the deposit depletes, the blob piece is transformed into a lipid."
 	evo_point_cost = 1
 	initially_disabled = 1
@@ -1358,7 +1358,7 @@
 
 /datum/blob_upgrade/replicator
 	name = "Structure: Replicator"
-	icon_state = "blob-replicator"
+	icon_state = "blob-replicator-upgrade"
 	desc = "Unlocks the Replicator blob bit, which can be placed on reagent deposits. The replicator replicates the highest volume reagent in the deposit using reagents from other deposits, at the cost of biopoints."
 	evo_point_cost = 2
 	initially_disabled = 1
@@ -1371,7 +1371,7 @@
 
 /datum/blob_upgrade/bridge
 	name = "Structure: Bridge"
-	icon_state = "blob-bridge"
+	icon_state = "blob-bridge-upgrade"
 	desc = "Unlocks the Bridge blob bit, which can be placed on space tiles. Bridges are floor tiles, you still need to spread onto them, and cannot spread from them."
 	evo_point_cost = 1
 	initially_disabled = 0
@@ -1384,7 +1384,7 @@
 
 /datum/blob_upgrade/launcher
 	name = "Structure: Slime Launcher"
-	icon_state = "blob-cannon"
+	icon_state = "blob-cannon-upgrade"
 	desc = "Unlocks the Slime Launcher blob bit, which fires at nearby mobs at the cost of biopoints. Slime inflicts a short stun and minimal damage."
 	upgradename = "launcher"
 
@@ -1397,7 +1397,7 @@
 
 /datum/blob_upgrade/plasmaphyll
 	name = "Structural: Plasmaphyll"
-	icon_state = "blob-plasmaphyll"
+	icon_state = "blob-plasmaphyll-upgrade"
 	desc = "Unlocks the plasmaphyll blob bit, which passively protects an area from plasma by converting it to biopoints."
 	evo_point_cost = 1
 	upgradename = "plasmaphyll"
@@ -1409,7 +1409,7 @@
 
 /datum/blob_upgrade/ectothermid
 	name = "Structural: Ectothermid"
-	icon_state = "blob-ectothermid"
+	icon_state = "blob-ectothermid-upgrade"
 	desc = "Unlocks the ectothermid blob bit, which passively an protects area from temperature. This protection consumes biopoints."
 	evo_point_cost = 2
 	upgradename = "ectothermid"
@@ -1421,7 +1421,7 @@
 
 /datum/blob_upgrade/reflective
 	name = "Structural: Reflective Membrane"
-	icon_state = "blob-reflective"
+	icon_state = "blob-reflective-upgrade"
 	desc = "Unlocks the reflective membrane, which is immune to energy projectiles."
 	evo_point_cost = 1
 	upgradename = "reflective"

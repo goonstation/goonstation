@@ -32,11 +32,11 @@
 	var/can_be_anchored=false
 	custom_suicide=true
 	New()
-		..()
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
 		processing_items |= src
+		..()
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)

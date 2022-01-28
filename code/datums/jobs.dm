@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/command/comm_officer)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_jump = list(/obj/item/clothing/under/rank/comm_officer)
 	slot_card = /obj/item/card/id/command
@@ -1117,7 +1117,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
 	slot_suit = list(/obj/item/clothing/suit/apron/surgeon)
 	slot_head = list(/obj/item/clothing/head/bouffant)
-	slot_ears = list(/obj/item/device/radio/headset/command/md)
+	slot_ears = list(/obj/item/device/radio/headset/command/hs)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
 
 	New()
