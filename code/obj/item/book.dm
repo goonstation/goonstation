@@ -149,7 +149,7 @@ Custom Books
 
 /obj/item/paper/book/from_file/bee_book  // By Keiya, bee-cause she felt like it
 	name = "Bee Exposition Extravaganza"
-	icon_state = "booktth"
+	icon_state = "bee_book"
 	desc = "Also called \"The BEE Book\" for short."
 	file_path = "strings/books/bee_book.txt"
 
