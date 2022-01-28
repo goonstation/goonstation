@@ -1222,7 +1222,7 @@
 				return
 
 			if (O.reagents.total_volume)
-				if ("fuel" in O.reagents.reagent_list)
+				if (O.reagents.has_reagent("fuel"))
 					O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"), 1, 1, O.reagents.reagent_list.Find("fuel"))
 					boutput(user, "<span class='notice'>[src] has been refueled.</span>")
 					playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
