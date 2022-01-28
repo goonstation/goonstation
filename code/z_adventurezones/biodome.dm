@@ -560,8 +560,8 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/shifting_wall/sneaky/cave
 	name = "strange wall"
 	desc = "This wall seems strangely out-of-place."
-	icon_state = "cave-dark"
-	icon = 'icons/turf/walls.dmi'
+	icon_state = "cave-0"
+	icon = 'icons/turf/walls_cave.dmi'
 
 	var/active = 0
 

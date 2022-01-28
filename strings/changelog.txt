@@ -1,4 +1,15 @@
 
+(t)thu jan 27 22
+(u)aloe
+(+)New 0 point trait- Heavy Sleeper. You spawn in a random bed, asleep (for 10 seconds). Can't be taken with stowaway etc.
+(u)AnguishedEnglish
+(p)7295
+(e)🎨|sprites
+(*)Added a Nun Robe and Nun Hood to the Chaplain's lockers.
+(u)112358sam
+(p)7308
+(e)|
+(+)Floorbots now yell at you if you have tiles or sheets they want.
 (t)tue jan 25 22
 (u)Flaborized
 (p)7293

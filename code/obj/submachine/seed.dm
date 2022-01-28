@@ -1161,16 +1161,8 @@
 		if (!src.can_vend)
 			dat+= "<u>Unit currently out of charge. Please wait.</u><br>"
 		dat += "<br>"
-		for(var/datum/plant/A in hydro_controls.plant_species)
-			if (!A.vending)
-				continue
-			if (A.vending > 1)
-				if (src.hacked)
-					if (!src.category || (src.category == A.category))
-						dat += "<b>[A.name]</b>: <A href='?src=\ref[src];disp=\ref[A]'>(VEND)</A><br>"
-				else
-					continue
-			else
+		for(var/datum/plant/A in hydro_controls.vendable_plants)
+			if (A.vending == 1 || src.hacked)
 				if (!src.category || (src.category == A.category))
 					dat += "<b>[A.name]</b>: <A href='?src=\ref[src];disp=\ref[A]'>(VEND)</A><br>"
 
