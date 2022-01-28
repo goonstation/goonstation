@@ -247,7 +247,7 @@
 	spawn_contents = list(/obj/item/clothing/head/helmet/men=2,/obj/item/clothing/suit/armor/douandtare=2,/obj/item/clothing/gloves/kote=2,/obj/item/shinai_bag=1)
 
 /obj/item/storage/box/kendo_box/hakama
-	name = "hakama box"
-	desc = "A box full of hakama!"
+	name = "uwagi and hakama box"
+	desc = "A box full of sets of uwagi and hakama!"
 	icon_state = "box"
 	spawn_contents = list(/obj/item/clothing/under/gimmick/hakama/random=7)
