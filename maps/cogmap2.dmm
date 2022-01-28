@@ -6487,6 +6487,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "apd" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "ape" = (
@@ -6906,6 +6908,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "aqk" = (
@@ -7317,6 +7321,8 @@
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "arh" = (
@@ -7350,6 +7356,8 @@
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "arm" = (
@@ -7779,6 +7787,8 @@
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "asi" = (
@@ -7817,6 +7827,8 @@
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "asn" = (
@@ -7829,6 +7841,8 @@
 /area/station/crew_quarters/fitness)
 "asq" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "asr" = (
@@ -8358,6 +8372,8 @@
 /area/station/crew_quarters/bar)
 "atC" = (
 /obj/window_blinds/cog2,
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "atD" = (
@@ -8373,6 +8389,8 @@
 "atE" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/window_blinds/cog2,
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "atF" = (
@@ -11187,6 +11205,8 @@
 /area/station/chapel/sanctuary)
 "azY" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "azZ" = (
@@ -12090,6 +12110,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -12619,6 +12641,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
 "aDa" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -13485,6 +13509,8 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aEU" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aEV" = (
@@ -13494,6 +13520,8 @@
 	name = "Barkley Ballin' Gym";
 	pixel_y = -2
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "aEW" = (
@@ -13594,6 +13622,8 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "aFl" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -15661,11 +15691,15 @@
 	name = "The Snip";
 	pixel_x = 16
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
 "aKE" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -15732,6 +15766,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
 "aKO" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aKP" = (
@@ -15741,6 +15777,8 @@
 	name = "POOL";
 	pixel_y = -4
 	},
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "aKQ" = (
@@ -16248,6 +16286,8 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "aMg" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/pool)
 "aMh" = (
@@ -16580,6 +16620,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
 "aMJ" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
 "aMK" = (
@@ -16627,6 +16669,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aMP" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
 "aMQ" = (
@@ -20432,6 +20476,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "aWj" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
 "aWk" = (
@@ -26501,6 +26547,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bkE" = (
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "bkF" = (
@@ -32929,6 +32977,8 @@
 /area/station/ai_monitored/storage/eva)
 "byv" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/window/auto,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "byw" = (
@@ -76399,6 +76449,11 @@
 /obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"dFI" = (
+/obj/window/auto,
+/obj/grille,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/barber_shop)
 "dHM" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -77631,6 +77686,11 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
+"lkI" = (
+/obj/window/auto,
+/obj/grille,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "lsh" = (
 /obj/cable{
 	d1 = 4;
@@ -78847,6 +78907,12 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"sHL" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/window/auto,
+/obj/grille,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "sHS" = (
 /obj/landmark/start{
 	name = "Cyborg"
@@ -111657,8 +111723,8 @@ aFX
 aHI
 aJm
 aKC
-aNn
-aNn
+dFI
+dFI
 aKC
 aPI
 aRi
@@ -125843,9 +125909,9 @@ avv
 awL
 ayA
 azY
-aBA
-aBA
-aBA
+lkI
+lkI
+lkI
 alM
 aGx
 aIl
@@ -126140,7 +126206,7 @@ api
 aqr
 arx
 aqy
-aBA
+lkI
 avw
 awM
 ayB
@@ -126442,7 +126508,7 @@ aph
 aqs
 ary
 aqz
-aBA
+lkI
 avx
 awN
 ayC
@@ -140953,7 +141019,7 @@ aKj
 aLB
 aMT
 aOi
-aOi
+sHL
 aOi
 aOi
 aOi
