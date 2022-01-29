@@ -49,7 +49,7 @@ var/global/list/bible_contents = list()
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around)
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
 					for(var/obj/item/clothing/W in H) //The Chaplain is able to cure the disease AND the curse. Science can only deal with the disease
-						if (W.cant_self_remove && W.cant_other_remove)//this might not be a great way to do this.
+						if(findtext("[W.name]","cursed") && W.cant_self_remove && W.cant_other_remove) //As of committing this only applies to cluwne gear
 							H.u_equip(W)
 							if (W)
 								W.set_loc(H.loc)
