@@ -2,6 +2,7 @@
 (t)sat jan 29 22
 (u)pali
 (*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
+(+)MechComp tesla coils now use up a bit of APC power.
 (u)NightmareChamillian
 (p)7258
 (e)🐛🗺|bug, mapping
