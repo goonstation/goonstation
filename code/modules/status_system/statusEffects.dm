@@ -271,6 +271,9 @@
 				C.dropped(M)
 				M.u_equip(C)
 			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			if (ismob(owner))
+				var/mob/fucko = owner
+				fucko.ghostize()
 			qdel(owner)
 
 	simplehot/stimulants

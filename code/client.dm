@@ -809,13 +809,16 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/new_bank_value = persistent_bank + amt
-	src.set_persistent_bank(new_bank_value)
+	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
+	cloud_put_bulk(json_encode(earnings))
+	persistent_bank += amt
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
+	player.cloud_fetch_data_only()
+	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
 		return 1

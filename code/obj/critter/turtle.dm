@@ -114,7 +114,11 @@
 
 			boutput(user, "You inject the solution into [src].")
 
-			if(S.reagents.has_reagent("plasma", 1))
+			if(!rigged && S.reagents.has_reagent("plasma", 1))
+				for (var/mob/living/M in mobs)
+					if (M.mind && M.mind.assigned_role == "Head of Security")
+						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
+
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
 				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
 				rigged = TRUE

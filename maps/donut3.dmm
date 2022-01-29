@@ -46913,7 +46913,6 @@
 	pixel_x = 1;
 	pixel_y = -26
 	},
-/obj/machinery/light_switch/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "nCP" = (
@@ -52085,7 +52084,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/west,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -58291,6 +58289,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "qMj" = (
@@ -58632,7 +58631,6 @@
 	broadcasting = 1;
 	dir = 4
 	},
-/obj/machinery/light_switch/west,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "qPX" = (
@@ -66978,6 +66976,7 @@
 /obj/machinery/optable,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/item/robodefibrillator,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "tou" = (
@@ -68372,6 +68371,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"tHG" = (
+/obj/machinery/light_switch/south,
+/turf/simulated/floor,
+/area/station/crew_quarters/courtroom)
 "tHH" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/grass/random,
@@ -116632,7 +116635,7 @@ bVo
 itv
 itv
 itv
-itv
+tHG
 hBL
 thj
 wam

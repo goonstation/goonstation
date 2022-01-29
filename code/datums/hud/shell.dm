@@ -4,6 +4,7 @@
 		tool2
 		tool3
 		charge
+		eyecam
 
 	var/list/last_tools = list()
 	var/list/atom/movable/screen/hud/tool_selector_bg = list()
@@ -29,6 +30,9 @@
 		create_screen("store", "Store", 'icons/mob/hud_robot.dmi', "store", "CENTER+1:16, SOUTH", HUD_LAYER+1)
 		create_screen("tools", "Tools", 'icons/mob/hud_robot.dmi', "tools", "CENTER+2:16, SOUTH", HUD_LAYER+1)
 
+		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
+		eyecam.underlays += "block"
+
 		update_active_tool()
 		update_tools()
 		update_tool_selector()
@@ -52,6 +56,8 @@
 				master.uneq_active()
 			if ("tools")
 				set_show_tool_selector(!show_tool_selector)
+			if ("eyecam")
+				master.become_eye()
 
 	proc
 		update_charge()

@@ -450,8 +450,8 @@
 					else //we must be a public door
 						continue
 				return FALSE
-		else if (A.density)
-			return FALSE // not a special case, so this is a blocking object
+		else if(!A.Cross(passer))
+			return FALSE
 
 #undef CAN_STEP
 #undef STEP_NOT_HERE_BUT_THERE
