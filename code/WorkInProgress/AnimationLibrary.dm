@@ -939,10 +939,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 		A.rest_mult = turn / 90
 
-	if(isliving(A) && !A.hasStatus("weakened"))
+	if(isliving(A))
 		var/mob/living/L = A
-		L.changeStatus("weakened", stun_duration)
-		L.force_laydown_standup()
+		if(!A.hasStatus("weakened"))
+			L.changeStatus("weakened", stun_duration)
+			L.force_laydown_standup()
+		if(!L.lying) // oh no, they didn't fall down actually, time to unflip them 😰
+			animate_rest(L, TRUE)
 
 /proc/animate_handspider_flipoff(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1)
 	if (!istype(A))
