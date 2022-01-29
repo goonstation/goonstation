@@ -155,8 +155,7 @@
 						return 1
 		else
 			params += list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
-		src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
-		.= 1
+		. = !!src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 
 /mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay, throw_type, params)
