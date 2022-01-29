@@ -25,7 +25,7 @@
 <h2 id="heisenbee">Heisenbee</h2>
 <p>The beloved pet of the Research Director of NanoTrasen Space Station 13. Tends to wear extremely stylish hats.</p>
 <h2 id="bombini">Bombini</h2>
-<p>This li'l guy deals in all sorts of Bee-related goods. Definitely someone you want to Bee-friend!</p>
+<p>This li'l gal deals in all sorts of Bee-related goods. She's definitely someone you want to Bee-friend!</p>
 <h2 id="the-overbee">THE OVERBEE</h2>
 <p>Said to be off in a hive somewhere in space. According to rumors, this Bee can bring honey into existence by shear force of will.</p>
 <h1 id="chapter-four-things-which-may-be-confused-for-bees">Chapter Four: Things which may be confused for Bees</h1>
