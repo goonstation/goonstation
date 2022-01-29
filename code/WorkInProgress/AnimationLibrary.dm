@@ -909,6 +909,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 /proc/animate_peel_slip(atom/A, dir=null, T=0.55 SECONDS, height=16, stun_duration = 2 SECONDS)
 	if(!A.rest_mult)
+		animate(A) // stop current animations, might be safe to remove later
 		var/matrix/M = A.transform
 		if(isnull(dir))
 			if(A.dir == EAST)
@@ -936,7 +937,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 
 		A.rest_mult = turn / 90
 
-	if(isliving(A))
+	if(isliving(A) && !A.hasStatus("weakened"))
 		var/mob/living/L = A
 		L.changeStatus("weakened", stun_duration)
 		L.force_laydown_standup()

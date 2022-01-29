@@ -123,7 +123,12 @@ var/global/datum/controller/throwing/throwing_controller = new
 					continue
 			if(!thing || thing.disposed)
 				continue
-			animate(thing)
+			if(!(thr.throw_type & THROW_PEEL_SLIP))
+				animate(thing)
+
+			if(isliving(thing) && (thr.throw_type & THROW_PEEL_SLIP))
+				var/mob/living/L = thing
+				REMOVE_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
 
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)
@@ -146,3 +151,12 @@ var/global/datum/controller/throwing/throwing_controller = new
 			if(thr.target != thr.return_target && thing.throw_return)
 				thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
 	return TRUE
+
+/datum/controller/throwing/proc/throws_of_atom(atom/movable/AM)
+	RETURN_TYPE(list/datum/thrown_thing)
+	. = list()
+	for(var/_thr in thrown)
+		var/datum/thrown_thing/thr = _thr
+		var/atom/movable/thing = thr.thing
+		if(thing == AM)
+			. += thr

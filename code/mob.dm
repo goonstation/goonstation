@@ -2430,9 +2430,8 @@
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
 	if (thr.throw_type & THROW_PEEL_SLIP)
-		if(hit == src.loc)
-			var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
-			animate_peel_slip(src, stun_duration=stun_duration)
+		var/stun_duration = ("peel_stun" in thr.params) ? thr.params["peel_stun"] : 3 SECONDS
+		animate_peel_slip(src, stun_duration=stun_duration)
 		if(!isturf(hit) || hit.density)
 			random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
 		return
