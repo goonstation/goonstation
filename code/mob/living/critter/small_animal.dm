@@ -1487,17 +1487,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "chitters"
 	health_brute = 30
 	health_burn = 30
+	density = 1
 	flags = TABLEPASS
 	fits_under_table = 1
 	add_abilities = list(/datum/targetable/critter/scorpion_sting)
+
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/pincers
 		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "handn"
-		HH.name = "Pincers"
+		HH.icon_state = "pincers"
+		HH.name = "pincers"
 		HH.limb_name = "pincers"
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
