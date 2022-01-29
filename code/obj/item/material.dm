@@ -746,7 +746,7 @@
 
 /obj/machinery/portable_reclaimer
 	name = "portable reclaimer"
-	desc = "A sophisticated piece of machinery that quickly processes minerals into bars."
+	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
 	anchored = 0
