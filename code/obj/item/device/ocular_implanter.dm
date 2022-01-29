@@ -60,7 +60,7 @@
 	proc/end_replace_eye(var/target, var/mob/living/carbon/human/H)
 		if(!H)
 			return
-		playsound(H.loc, "sound/items/ocular_implanter_end", 50, 0, -1)
+		playsound(H.loc, "sound/items/ocular_implanter_end.ogg", 50, 0, -1)
 		var/turf/T = H.loc
 		for(var/part_loc in parts_to_remove)
 			if (T)
