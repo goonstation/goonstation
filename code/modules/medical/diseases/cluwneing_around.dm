@@ -207,5 +207,6 @@
 			affected_mob.job = "Cleansed Cluwne"
 		boutput(affected_mob, "<span class='notice'>You feel like yourself again.</span>")
 		affected_mob.UpdateName()
+		affected_mob.change_misstep_chance(-INFINITY)
 		affected_mob = null
 	..()
