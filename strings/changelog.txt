@@ -1,4 +1,7 @@
 
+(t)sat jam 29 22
+(u)pali
+(*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
 (t)fri jan 28 22
 (u)pali
 (+)Head of Security now feels a disturbance in the force when Sylvester gets rigged with plasma.
