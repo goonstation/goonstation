@@ -907,7 +907,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	return
 
-/proc/animate_peel_slip(atom/A, dir=null, T=0.55 SECONDS, height=16, stun_duration = 2 SECONDS)
+/proc/animate_peel_slip(atom/A, dir=null, T=0.55 SECONDS, height=16, stun_duration = 2 SECONDS, n_flips=1)
 	if(!A.rest_mult)
 		animate(A) // stop current animations, might be safe to remove later
 		var/matrix/M = A.transform
@@ -923,11 +923,13 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (dir == "R")
 			turn = 90
 
-		animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T/5, flags = ANIMATION_PARALLEL)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T/5)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T/5)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T/5)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T/5)
+		var/flip_anim_step_time = T / (1 + 4 * n_flips)
+		animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
+		for(var/i in 1 to n_flips)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
 		var/matrix/M2 = A.transform
 		animate(transform = matrix(M, 1.2, 0.7, MATRIX_SCALE | MATRIX_MODIFY), time = T/8)
 		animate(transform = M2, time = T/8)
