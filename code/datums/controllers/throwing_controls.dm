@@ -153,7 +153,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 	return TRUE
 
 /datum/controller/throwing/proc/throws_of_atom(atom/movable/AM)
-	RETURN_TYPE(list/datum/thrown_thing)
+	RETURN_TYPE(/list/datum/thrown_thing)
 	. = list()
 	for(var/_thr in thrown)
 		var/datum/thrown_thing/thr = _thr
