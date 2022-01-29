@@ -1569,7 +1569,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			surgeon, "<span class='notice'>You begin cauterizing [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
 			patient, "<span class='notice'>[patient == surgeon ? "You begin" : "<b>[surgeon]</b> begins"] cauterizing your wounds closed with [src].</span>")
 
-			if (do_mob(patient, surgeon, max((patient.bleeding * 10) - (damage * 2), 0)))
+			if (do_mob(patient, surgeon, max((patient.bleeding * 20) - (damage * 2), 0)))
 				patient.tri_message("<span class='notice'><b>[surgeon]</b> cauterizes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds closed with [src].</span>",\
 				surgeon, "<span class='notice'>You cauterize [surgeon == patient ? "your" : "[patient]'s"] wounds closed with [src].</span>",\
 				patient, "<span class='notice'>[patient == surgeon ? "You cauterize" : "<b>[surgeon]</b> cauterizes"] your wounds closed with [src].</span>")
