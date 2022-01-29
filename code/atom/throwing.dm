@@ -60,12 +60,10 @@
 /atom/movable/bump(atom/O)
 	if(src.throwing)
 		var/found_any = FALSE
-		// can be optimized later by storing list on the atom itself if this ever becomes a problem (it won't)
-		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.thrown)
-			if(thr.thing == src)
-				src.throw_impact(O, thr)
-				found_any = TRUE
-				break // I'd like this to process all relevant datums but something is duplicating throws so it actually sometimes causes a ton of lag
+		for(var/datum/thrown_thing/thr as anything in global.throwing_controller.throws_of_atom(src))
+			src.throw_impact(O, thr)
+			found_any = TRUE
+			break // I'd like this to process all relevant datums but something is duplicating throws so it actually sometimes causes a ton of lag
 		if(!found_any)
 			src.throw_impact(O)
 		src.throwing = 0
