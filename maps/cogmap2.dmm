@@ -13674,6 +13674,7 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -14391,6 +14392,7 @@
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -15011,6 +15013,7 @@
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -76835,6 +76838,7 @@
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -77923,6 +77927,7 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -79573,6 +79578,7 @@
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
+/obj/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
