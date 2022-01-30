@@ -1293,7 +1293,7 @@ Returns:
 
 /obj/item/experimental/melee/spear
 	name = "Spear"
-	desc = "A primitive spear with a long reach."
+	desc = "An ancient solution to the ancient problem of wanting to stab somebody, but not wanting them to be able to stab you back."
 	force = 10
 	throwforce = 20
 	color = "#ffffff"

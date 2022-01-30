@@ -19668,7 +19668,7 @@
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
-	name = "wood floor";
+	name = "shrub";
 	tag = "null"
 	},
 /obj/machinery/light/incandescent/netural{
@@ -43012,11 +43012,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/treatment)
-"mtR" = (
-/obj/bookshelf,
-/obj/bookshelf,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "mua" = (
 /turf/simulated/wall/auto/reinforced/jen/blue{
 	icon_state = "R8"
@@ -57876,7 +57871,7 @@
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
-	name = "wood floor";
+	name = "shrub";
 	tag = "null"
 	},
 /obj/disposalpipe/segment/transport{
@@ -109923,7 +109918,7 @@ czv
 sGu
 quz
 quz
-mtR
+fJQ
 iEn
 fJQ
 quz
@@ -110225,7 +110220,7 @@ czv
 sGu
 vau
 quz
-mtR
+fJQ
 iEn
 fJQ
 quz
@@ -110527,7 +110522,7 @@ xjU
 mXZ
 cUw
 quz
-mtR
+fJQ
 iEn
 fJQ
 quz

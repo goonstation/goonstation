@@ -1,5 +1,24 @@
 
+(t)sun jan 30 22
+(u)Flaborized
+(p)7346
+(e)🎨|sprites
+(+)Added unique burning sprites for the changeling horror form.
+(u)Keiya
+(p)7323
+(e)🎨|sprites
+(*)New "Bee Exposition Extravaganza" book, now available at Books4U vendors system-wide! Your local apiculturist might have a copy, too.
+(t)sat jan 29 22
+(u)pali
+(*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
+(+)MechComp tesla coils now use up a bit of APC power.
+(u)NightmareChamillian
+(p)7258
+(e)🐛🗺|bug, mapping
+(+)After losing a lawsuit, NanoTrasen has now added adequate warning labels to some medicine bottles.
 (t)fri jan 28 22
+(u)pali
+(+)Head of Security now feels a disturbance in the force when Sylvester gets rigged with plasma.
 (u)Flaborized
 (p)7324
 (e)🎨|sprites

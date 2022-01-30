@@ -62,7 +62,7 @@
 	var/sound_snap = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	var/sound_fingersnap = 'sound/effects/fingersnap.ogg'
 	var/sound_gasp = 'sound/voice/gasps/gasp.ogg'
-	var/voice_type = 0
+	var/voice_type = "1"
 	var/last_voice_sound = 0
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null

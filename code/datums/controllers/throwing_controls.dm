@@ -21,10 +21,11 @@
 	var/hitAThing = FALSE
 	var/dist_travelled = 0
 	var/speed_error = 0
+	var/throw_type
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,
-			bonus_throwforce=0, end_throw_callback=null)
+			bonus_throwforce=0, end_throw_callback=null, throw_type=1)
 		src.thing = thing
 		src.target = target
 		src.error = error
@@ -44,6 +45,7 @@
 		src.bonus_throwforce = bonus_throwforce
 		src.end_throw_callback = end_throw_callback
 		src.user = usr // ew
+		src.throw_type = throw_type
 		..()
 
 	proc/get_throw_travelled()
@@ -121,7 +123,12 @@ var/global/datum/controller/throwing/throwing_controller = new
 					continue
 			if(!thing || thing.disposed)
 				continue
-			animate(thing)
+			if(!(thr.throw_type & THROW_PEEL_SLIP))
+				animate(thing)
+
+			if(isliving(thing) && (thr.throw_type & THROW_PEEL_SLIP))
+				var/mob/living/L = thing
+				REMOVE_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
 
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)
@@ -144,3 +151,12 @@ var/global/datum/controller/throwing/throwing_controller = new
 			if(thr.target != thr.return_target && thing.throw_return)
 				thing.throw_at(thr.return_target, thing.throw_range, thing.throw_speed)
 	return TRUE
+
+/datum/controller/throwing/proc/throws_of_atom(atom/movable/AM)
+	RETURN_TYPE(/list/datum/thrown_thing)
+	. = list()
+	for(var/_thr in thrown)
+		var/datum/thrown_thing/thr = _thr
+		var/atom/movable/thing = thr.thing
+		if(thing == AM)
+			. += thr
