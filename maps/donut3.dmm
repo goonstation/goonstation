@@ -11097,7 +11097,9 @@
 /area/station/hallway/primary/south)
 "cYe" = (
 /obj/bookshelf/persistent{
-	layer = 10
+	density = 0;
+	layer = 10;
+	pixel_y = 19
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/wood/six,
@@ -19666,7 +19668,7 @@
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
-	name = "wood floor";
+	name = "shrub";
 	tag = "null"
 	},
 /obj/machinery/light/incandescent/netural{
@@ -43010,11 +43012,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/treatment)
-"mtR" = (
-/obj/bookshelf,
-/obj/bookshelf,
-/turf/simulated/floor/wood/six,
-/area/station/library)
 "mua" = (
 /turf/simulated/wall/auto/reinforced/jen/blue{
 	icon_state = "R8"
@@ -46911,7 +46908,6 @@
 	pixel_x = 1;
 	pixel_y = -26
 	},
-/obj/machinery/light_switch/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "nCP" = (
@@ -52083,7 +52079,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/west,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -57876,7 +57871,7 @@
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
-	name = "wood floor";
+	name = "shrub";
 	tag = "null"
 	},
 /obj/disposalpipe/segment/transport{
@@ -58289,6 +58284,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "qMj" = (
@@ -58630,7 +58626,6 @@
 	broadcasting = 1;
 	dir = 4
 	},
-/obj/machinery/light_switch/west,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "qPX" = (
@@ -66976,6 +66971,7 @@
 /obj/machinery/optable,
 /obj/item/reagent_containers/iv_drip/blood,
 /obj/item/robodefibrillator,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "tou" = (
@@ -68370,6 +68366,10 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
+"tHG" = (
+/obj/machinery/light_switch/south,
+/turf/simulated/floor,
+/area/station/crew_quarters/courtroom)
 "tHH" = (
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/grass/random,
@@ -109918,7 +109918,7 @@ czv
 sGu
 quz
 quz
-mtR
+fJQ
 iEn
 fJQ
 quz
@@ -110220,7 +110220,7 @@ czv
 sGu
 vau
 quz
-mtR
+fJQ
 iEn
 fJQ
 quz
@@ -110522,7 +110522,7 @@ xjU
 mXZ
 cUw
 quz
-mtR
+fJQ
 iEn
 fJQ
 quz
@@ -116630,7 +116630,7 @@ bVo
 itv
 itv
 itv
-itv
+tHG
 hBL
 thj
 wam

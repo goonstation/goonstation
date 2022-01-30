@@ -26469,7 +26469,7 @@
 "bhY" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -27601,7 +27601,7 @@
 /area/station/mining/magnet)
 "bks" = (
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -28269,7 +28269,7 @@
 "blS" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -36066,7 +36066,7 @@
 	dir = 1
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},
@@ -53077,7 +53077,7 @@
 	pixel_y = 32
 	},
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},

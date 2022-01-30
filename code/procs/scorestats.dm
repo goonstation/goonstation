@@ -357,7 +357,7 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_inspector_report()
 		. = list()
-		for (var/obj/item/clipboard/with_pen/inspector/clipboard in by_type[/obj/item/clipboard/with_pen/inspector])
+		for_by_tcl(clipboard, /obj/item/clipboard/with_pen/inspector)
 			. += "<B>Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report</B><BR><HR>"
 			for(var/obj/item/paper/paper in clipboard.contents)
 				//ignore blank untitled pages

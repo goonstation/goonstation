@@ -32,11 +32,11 @@
 	var/can_be_anchored=false
 	custom_suicide=true
 	New()
-		..()
 		src.light = new /datum/light/point
 		src.light.attach(src)
 		src.light.set_color(1,0,1)
 		processing_items |= src
+		..()
 
 	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
 		for(var/obj/item/mechanics/miccomp/mic in src.contents)
@@ -1004,6 +1004,9 @@
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		var/area/AR = get_area(src)
+		if(!AR.powered(EQUIP) || AR.area_apc?.cell?.percent() < 35) return
+		AR.use_power(0.5 KILO WATTS, EQUIP)
 		LIGHT_UP_HOUSING
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 
@@ -1018,6 +1021,12 @@
 
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_zap"
+
+	get_desc()
+		. = ..()
+		var/area/AR = get_area(src)
+		if(!AR.powered(EQUIP) || AR.area_apc?.cell?.percent() < 35)
+			. += " It does not seem to ahve enough power from the APC."
 
 /obj/item/mechanics/pausecomp
 	name = "Delay Component"

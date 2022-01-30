@@ -2,7 +2,7 @@
 
 /obj/machinery/computer3
 	name = "computer"
-	desc = "A computer workstation."
+	desc = "A computer that uses the bleeding-edge command line OS ThinkDOS."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1

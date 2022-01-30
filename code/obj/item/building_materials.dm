@@ -134,6 +134,13 @@ MATERIAL
 		else
 			..(user)
 
+	split_stack(toRemove)
+		. = ..()
+		if(src.reinforcement)
+			var/obj/item/sheet/S = .
+			S.set_reinforcement(src.reinforcement)
+			. = S
+
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
