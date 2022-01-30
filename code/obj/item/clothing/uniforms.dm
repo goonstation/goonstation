@@ -774,6 +774,12 @@
 	icon_state = "atheist"
 	item_state = "atheist"
 
+/obj/item/clothing/under/misc/chaplain/nun
+	name = "nun robe"
+	desc = "A long, black robe, traditonally worn by nuns. Ruler not included."
+	icon_state = "nun_robe"
+	item_state = "nun_robe"
+
 // Athletic Gear
 
 /obj/item/clothing/under/shorts
@@ -1130,11 +1136,6 @@
 	purple
 		icon_state = "scrub-v"
 		item_state = "lightpurple"
-
-		New()
-			..()
-			if(prob(50))
-				src.icon_state = "scrub-pr"
 
 	orange
 		icon_state = "scrub-o"

@@ -14,6 +14,30 @@ obj/effects/tatara
 			SPAWN_DBG(1 SECONDS)
 				sparks.particles.spawning = 0
 
+obj/effects/welding
+	appearance_flags = RESET_COLOR | RESET_ALPHA
+	vis_flags = VIS_INHERIT_DIR
+	var/emitters = list(new/obj/spark_generator, new/obj/spark_generator/flame)
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "fire1"
+	New(var/atom/newloc, var/dirn)
+		..()
+		for(var/obj/E in emitters)
+			E.mouse_opacity = 0
+			vis_contents += E
+		src.add_simple_light("welding", list(0.94 * 255, 0.94 * 255, 0.94 * 255, 0.7 * 255))
+		animate(simple_light, alpha=(0.6*255), loop=-1, time=6)
+		animate(alpha=(0.3*255), time=3, easing=ELASTIC_EASING)
+		animate(alpha=(0.7*255), time=3, easing=CUBIC_EASING)
+		animate(time=7)
+		animate(alpha=(0.5*255), time=3, easing=ELASTIC_EASING)
+		animate(alpha=(0.7*255), time=3, easing=CUBIC_EASING)
+
+		if(dirn)
+			src.Turn(dir2angle(dirn))
+
+	directed
+		emitters = list(new/obj/spark_generator/directed, new/obj/spark_generator/flame)
 
 
 obj/spark_generator
@@ -48,6 +72,16 @@ particles/spark
 
 	directed
 		bound2 = list(40,5,10)
+		fadein = 6
+		position = generator("sphere", 1, 2)
+		icon = 'icons/effects/particles.dmi'
+		icon_state = list("streak"=5, ""=2)
+		rotation = generator("num", -45, 45)
+		spin = generator("num", -5, 5)
+		velocity = generator("box", list(-1,-1,0), list(1,1,0))
+		color = generator("color", "#ff5", "#f77")
+		drift = generator("sphere", 0, 1, SQUARE_RAND)
+
 
 	flame
 		lifespan = 5  // live for 60s max

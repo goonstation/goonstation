@@ -1074,7 +1074,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						O.show_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's all slimy and stringy. Oh god.</span>", 1)
 						if (prob(33) && ishuman(O) && !isdead(O))
 							O.show_message("<span class='alert'>You feel ill from watching that.</span>")
-							O.visible_message("<span class='alert'>[O] pukes all over \himself. Thanks, [user].</span>", 1)
+							O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>", 1)
 							O.vomit()
 
 				W.reagents.handle_reactions()

@@ -71,6 +71,16 @@ img.emoji {
 	border: 1px solid gray;
 	border-radius: 2px;
 }
+
+#messages.filter-Admin .admin,
+#messages.filter-Combat .combat,
+#messages.filter-Radios .radio,
+#messages.filter-Speech .say,
+#messages.filter-OOC .ooc,
+#messages.filter-Misc .misc {
+	display: none;
+}
+
 #newMessages {
 	position: fixed;
 	display: block;

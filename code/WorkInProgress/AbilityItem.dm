@@ -34,7 +34,7 @@
 				qdel(E)
 				return
 
-		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around \himself!</span>")
+		the_mob.visible_message("<span class='alert'>[the_mob] prepares to spray the contents of the extinguisher all around [himself_or_herself(the_mob)]!</span>")
 
 		E.special = 1
 		the_mob.transforming = 1
@@ -130,6 +130,15 @@
 			W.unbutton()
 		else
 			W.button()
+		..()
+
+/obj/ability_button/hood_toggle
+	name = "Toggle Hood"
+	icon_state = "hood_up"
+
+	execute_ability()
+		var/obj/item/clothing/suit/W = the_item
+		W.attack_self(the_mob)
 		..()
 
 /obj/ability_button/magboot_toggle

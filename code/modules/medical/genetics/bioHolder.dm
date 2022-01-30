@@ -143,7 +143,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	var/datum/pronouns/pronouns
 	var/screamsound = "male"
 	var/fartsound = "default"
-	var/voicetype = 0
+	var/voicetype = "1"
 	var/flavor_text = null
 
 	var/list/fartsounds = list("default" = 'sound/voice/farts/poo2.ogg', \

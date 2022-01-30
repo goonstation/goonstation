@@ -2968,6 +2968,10 @@
 			. = 1
 		else if (langname in mutantrace.understood_languages)
 			. = 1
+		else if (istype(src.wear_mask, /obj/item/clothing/mask/monkey_translator))
+			var/obj/item/clothing/mask/monkey_translator/translator = src.wear_mask
+			if (langname == translator.new_language)
+				. = 1
 		else
 			. = 0
 	else

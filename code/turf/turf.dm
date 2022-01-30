@@ -399,16 +399,20 @@ proc/generate_space_color()
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
 		if(OldLoc)
-			switch (warptarget_modifier)
-				if(LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
-					if (ismob(M))
-						var/mob/mob = M
-						if (!mob.client?.holder && mob.last_client)
-							M.set_loc(warptarget)
-						if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
-							M.set_loc(warptarget)
-				else
+			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
+				if (ismob(M))
+					var/mob/mob = M
+					if (!mob.client?.holder && mob.last_client)
+						M.set_loc(warptarget)
+					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
+						M.set_loc(warptarget)
+			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
+				// double set_loc is a fix for the warptarget gliding bug
+				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
+				SPAWN_DBG(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
 					M.set_loc(warptarget)
+			else
+				M.set_loc(warptarget)
 #endif
 
 // Ported from unstable r355
@@ -1025,14 +1029,11 @@ proc/generate_space_color()
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
-	A.z = zlevel
-	if (newx)
-		A.x = newx
-	if (newy)
-		A.y = newy
-	SPAWN_DBG(0)
-		if ((A?.loc))
-			A.loc.Entered(A)
+	var/target_x = newx || A.x
+	var/target_y = newy || A.y
+	var/turf/target_turf = locate(target_x, target_y, zlevel)
+	if(target_turf)
+		A.set_loc(target_turf)
 #endif
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)

@@ -907,6 +907,46 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = T, loop = looping)
 	return
 
+/proc/animate_peel_slip(atom/A, dir=null, T=0.55 SECONDS, height=16, stun_duration = 2 SECONDS, n_flips=1)
+	if(!A.rest_mult)
+		animate(A) // stop current animations, might be safe to remove later
+		var/matrix/M = A.transform
+		if(isnull(dir))
+			if(A.dir == EAST)
+				dir = "L"
+			else if(A.dir == WEST)
+				dir = "R"
+			else
+				dir = pick("L", "R")
+
+		var/turn = -90
+		if (dir == "R")
+			turn = 90
+
+		var/flip_anim_step_time = T / (1 + 4 * n_flips)
+		animate(A, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
+		for(var/i in 1 to n_flips)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+			animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
+		var/matrix/M2 = A.transform
+		animate(transform = matrix(M, 1.2, 0.7, MATRIX_SCALE | MATRIX_MODIFY), time = T/8)
+		animate(transform = M2, time = T/8)
+
+		animate(A, pixel_y=height, time=T/2, flags=ANIMATION_PARALLEL)
+		animate(pixel_y=-4, time=T/2)
+
+		A.rest_mult = turn / 90
+
+	if(isliving(A))
+		var/mob/living/L = A
+		if(!A.hasStatus("weakened"))
+			L.changeStatus("weakened", stun_duration)
+			L.force_laydown_standup()
+		if(!L.lying) // oh no, they didn't fall down actually, time to unflip them 😰
+			animate_rest(L, TRUE)
+
 /proc/animate_handspider_flipoff(var/atom/A, var/dir = "L", var/T = 1, var/looping = -1)
 	if (!istype(A))
 		return
@@ -1000,7 +1040,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(stand)
 		animate(A, pixel_x = 0, pixel_y = 0, transform = A.transform.Turn(A.rest_mult * -90), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = 0
-	else
+	else if(!A.rest_mult)
 		var/fall_left_or_right = pick(1, -1) //A multiplier of one makes the atom rotate to the right, negative makes them fall to the left.
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = fall_left_or_right

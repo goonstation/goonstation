@@ -18,6 +18,43 @@
 		return
 */
 
+/obj/trait/color_shift
+	name = "Color Shift (0)"
+	cleanName = "Color Shift"
+	desc = "You are more depressing on the outside but more colorful on the inside."
+	id = "color_shift"
+	unselectable = TRUE
+	points = 0
+
+	onAdd(var/mob/owner) //Not enforcing any of them with onLife because Hemochromia is a multi-mutation thing while Achromia would darken the skin color every tick until it's pitch black.
+		if(owner.bioHolder)
+			owner.bioHolder.AddEffect("achromia", 0, 0, 0, 1)
+			owner.bioHolder.AddEffect("hemochromia_unknown", 0, 0, 0, 1)
+
+// Phobias - Undetermined Border
+
+/obj/trait/phobia
+	name = "Phobias suck"
+	desc = "Wow, phobias are no fun! Report this to a coder please."
+	unselectable = TRUE
+
+/obj/trait/phobia/space
+	name = "Spacephobia (+1) \[Phobia\]"
+	cleanName = "Spacephobia"
+	desc = "Being in space scares you. A lot. While in space you might panic or faint."
+	id = "spacephobia"
+	points = 1
+
+	onLife(var/mob/owner)
+		if(!owner.stat && can_act(owner) && istype(owner.loc, /turf/space))
+			if(prob(2))
+				owner.emote("faint")
+				owner.changeStatus("paralysis", 8 SECONDS)
+			else if (prob(8))
+				owner.emote("scream")
+				owner.changeStatus("stunned", 2 SECONDS)
+
+
 // People use this to identify changelings and people wearing disguises and I can't be bothered
 // to rewrite a whole bunch of stuff for what is essentially something very specific and minor.
 /obj/trait/observant
@@ -26,7 +63,6 @@
 	desc = "Examining people will show you their traits."
 	id = "observant"
 	points = -1
-	isPositive = 1
 	unselectable = 1
 
 /obj/trait/roboears
@@ -36,7 +72,6 @@
 	id = "roboears"
 	category = "body"
 	points = -4
-	isPositive = 1
 	unselectable = 1
 
 	onAdd(var/mob/owner)
@@ -66,7 +101,6 @@
 	id = "deathwish"
 	category = "stats"
 	points = 8
-	isPositive = 0
 	unselectable = 1
 
 	onAdd(var/mob/owner)
@@ -89,7 +123,6 @@
 	id = "glasscannon"
 	category = "stats"
 	points = -2
-	isPositive = 1
 	unselectable = 1
 
 	onAdd(var/mob/owner)
@@ -104,7 +137,6 @@
 	desc = "When you die you explode into gibs and drop everything you were carrying."
 	id = "soggy"
 	points = -1
-	isPositive = 1
 	unselectable = 1
 
 /obj/trait/reversal
@@ -113,7 +145,6 @@
 	desc = "You are now healed by things that would otherwise cause brute, burn, toxin, or brain damage. On the flipside, you are harmed by medicines."
 	id = "reversal" //We can't have oxydamage in there, otherwise they'd immediately start suffocating.
 	points = -1
-	isPositive = 1
 	unselectable = 1
 
 /obj/trait/badgenes
@@ -122,7 +153,6 @@
 	desc = "You spawn with 2 random, permanent, bad mutations."
 	id = "badgenes"
 	points = 2
-	isPositive = 0
 	category = "genetics"
 	unselectable = 1
 
@@ -152,7 +182,6 @@
 	desc = "You spawn with 2 random good mutations."
 	id = "goodgenes"
 	points = -3
-	isPositive = 0
 	category = "genetics"
 	unselectable = 1
 

@@ -745,6 +745,11 @@ var/datum/action_controller/actions
 			border.icon = null
 			M.client?.images += bar.img
 			M.client?.images += border.img
+			if(place_to_put_bar)
+				target_bar.icon = null
+				target_border.icon = null
+				M.client?.images += target_bar.img
+				M.client?.images += target_border.img
 
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
@@ -755,6 +760,11 @@ var/datum/action_controller/actions
 			M.client?.images -= border.img
 			qdel(bar.img)
 			qdel(border.img)
+			if(place_to_put_bar)
+				M.client?.images -= target_bar.img
+				M.client?.images -= target_border.img
+				qdel(target_bar.img)
+				qdel(target_border.img)
 		..()
 
 /datum/action/bar/private/icon //Only visible to the owner and has a little icon on the bar.
@@ -1205,6 +1215,83 @@ var/datum/action_controller/actions
 				H.show_text("You successfully remove the shackles.", "blue")
 
 
+/datum/action/bar/private/welding
+	duration = 2 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "welding"
+	var/obj/effects/welding/E
+	var/list/start_offset
+	var/list/end_offset
+
+	id = null
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	/// set to the path of the proc that will be called if the action bar finishes
+	var/proc_path = null
+	/// what the target of the action is, if any
+	var/target = null
+	/// what string is broadcast once the action bar finishes
+	var/end_message = ""
+	/// what is the maximum range target and owner can be apart? need to modify before starting the action.
+	var/maximum_range = 1
+	/// a list of args for the proc thats called once the action bar finishes, if needed.
+	var/list/proc_args = null
+	bar_on_owner = FALSE
+
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+		..()
+		src.owner = owner
+		src.target = target
+		place_to_put_bar = target
+
+		if(duration)
+			src.duration = duration
+		src.proc_path = proc_path
+		src.proc_args = proc_args
+		src.end_message = end_message
+		src.start_offset = start
+		src.end_offset = stop
+
+	onStart()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+		if(!E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			E = new(M)
+			M.vis_contents += E
+			E.pixel_x = start_offset[1]
+			E.pixel_y = start_offset[2]
+			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
+
+	onDelete(var/flag)
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+		..()
+
+	onEnd()
+		..()
+		if (!src.owner)
+			interrupt(INTERRUPT_ALWAYS)
+		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
+			interrupt(INTERRUPT_ALWAYS)
+
+		if (end_message)
+			src.owner.visible_message("[src.end_message]")
+
+		if (src.target)
+			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
+		else
+			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
+
+		if(E && ismovable(src.target))
+			var/atom/movable/M = src.target
+			M.vis_contents -= E
+			qdel(E)
+
 //CLASSES & OBJS
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.
@@ -1453,7 +1540,7 @@ var/datum/action_controller/actions
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
-	icon_state = "cpr" //placeholder
+	icon_state = "cpr"
 	var/mob/living/target
 
 	New(target)
