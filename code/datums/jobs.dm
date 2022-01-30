@@ -760,8 +760,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	#ifdef UNDERWATER_MAP
 	slot_suit = list(/obj/item/clothing/suit/space/diving/engineering)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
-	items_in_backpack = list(/obj/item/crowbar,
-							/obj/item/paper/book/from_file/pocketguide/mining,
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/mining,
 							/obj/item/clothing/shoes/flippers,
 							/obj/item/item_box/glow_sticker)
 	#else
