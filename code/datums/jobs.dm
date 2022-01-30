@@ -786,7 +786,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
-	limit = 3
+	limit = 4
 	wages = PAY_DOCTORATE
 
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -942,7 +942,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/janitor
 	name = "Janitor"
-	limit = 2
+	limit = 3
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/janitor)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)

@@ -21,7 +21,7 @@
 	var/signal_enabled = FALSE
 
 TYPEINFO(/datum/component)
-	var/initialization_args = list() // empty list --no args
+	var/initialization_args = null // let the user select any initialization arguments
 
 /**
   * # Component
