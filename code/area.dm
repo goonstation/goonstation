@@ -535,7 +535,6 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	teleport_blocked = 1
 
 	Entered(atom/movable/O)
-		var/dest = null
 		..()
 		if (isobserver(O))
 			return
@@ -543,11 +542,10 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/jerk = O
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
 			if (isnull(found_areas))
-				player.current.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
+				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
 			else
-				player.current.set_loc(pick(found_areas))
-			jerk.set_loc(dest)
+				jerk.set_loc(pick(found_areas))
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
 			jerk.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
