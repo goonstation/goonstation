@@ -285,12 +285,15 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				if(src.mode == "active") boutput(user,"The siphon's lift mechanism can't be toggled while it's operational.")
 			return
 
-	attack_hand(mob/user)
+	attack_hand(mob/user,var/bot_input)
 		var/diditwork = src.toggle_operating()
 		if(diditwork)
-			boutput(user,"You touch the siphon's activation panel.")
+			boutput(user,"You [bot_input ? "interface with" : "touch"] the siphon's activation panel.")
 		else
-			boutput(user,"The siphon's activation panel doesn't respond to your touch.")
+			boutput(user,"The siphon's activation panel doesn't respond to your [bot_input ? "signal" : "touch"].")
+
+	attack_ai(mob/user)
+		return attack_hand(user,TRUE)
 
 	MouseDrop(over_object, src_location, over_location)
 		if(!isliving(usr))

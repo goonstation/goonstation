@@ -2870,7 +2870,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_west)
 "byH" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
+/obj/machinery/door/airlock/pyro/medical/morgue{
 	dir = 4
 	},
 /obj/access_spawn/morgue,
@@ -11880,14 +11880,12 @@
 /turf/simulated/floor/engine,
 /area/station/quartermaster/cargobay)
 "gAO" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/obj/access_spawn/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/access_spawn/medical,
 /turf/simulated/floor/black/grime,
 /area/station/medical/medbay/surgery)
 "gCc" = (
@@ -12198,7 +12196,16 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/west)
 "gIB" = (
-/obj/reagent_dispensers/foamtank,
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/clothing/suit/chemsuit,
+/obj/item/clothing/head/chemhood{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3
+	},
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -23179,7 +23186,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes{
-	charge = 1e+007;
+	charge = 500000;
 	chargelevel = 50000
 	},
 /turf/simulated/floor/plating,
@@ -27150,13 +27157,11 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/quarters_east)
 "oFt" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/obj/access_spawn/morgue,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/access_spawn/morgue,
 /turf/simulated/floor/black/grime,
 /area/station/medical/morgue)
 "oFy" = (
@@ -28469,7 +28474,7 @@
 "psV" = (
 /obj/cable,
 /obj/machinery/power/smes{
-	charge = 1e+007;
+	charge = 500000;
 	chargelevel = 50000
 	},
 /turf/simulated/floor/plating,
@@ -30958,11 +30963,11 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "qRS" = (
-/obj/machinery/door/airlock/pyro/medical/alt,
-/obj/access_spawn/morgue,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/medical/morgue,
+/obj/access_spawn/morgue,
 /turf/simulated/floor/engine,
 /area/station/medical/morgue)
 "qSd" = (
@@ -42902,11 +42907,11 @@
 /turf/simulated/floor/engine,
 /area/station/bridge/captain)
 "xVj" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/door/airlock/pyro/alt,
 /obj/access_spawn/rancher,
 /turf/simulated/floor/engine,
 /area/station/ranch)
@@ -70165,7 +70170,7 @@ ooT
 ylY
 srQ
 diT
-lgO
+srQ
 tEn
 tEn
 qPu
@@ -70467,7 +70472,7 @@ rSM
 jQa
 gbL
 fzq
-bbg
+gbL
 tEn
 tEn
 xYB
@@ -70769,7 +70774,7 @@ diT
 jQa
 srQ
 diT
-lgO
+srQ
 tEn
 tEn
 qPu

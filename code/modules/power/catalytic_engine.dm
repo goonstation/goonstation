@@ -50,7 +50,7 @@
 		src.cathode_unit = null
 		..()
 
-	attack_hand(mob/user)
+	attack_hand(mob/user,var/bot_operated)
 		if(!src.anode_unit || !src.cathode_unit)
 			boutput(user,"\The [src] doesn't seem to be operable.")
 			return
@@ -62,13 +62,16 @@
 		if(src.anode_unit.mode == UNIT_OPEN && src.cathode_unit.mode == UNIT_OPEN)
 			src.anode_unit.update_mode(UNIT_INACTIVE)
 			src.cathode_unit.update_mode(UNIT_INACTIVE)
-			boutput(user,"You press the front button on [src]. The catalytic rod units close for operation.")
+			boutput(user,"You [bot_operated ? "send a toggle signal to" : "press the front button on"] [src]. The catalytic rod units close for operation.")
 			return
 		else
 			src.anode_unit.update_mode(UNIT_OPEN)
 			src.cathode_unit.update_mode(UNIT_OPEN)
-			boutput(user,"You press the front button on [src]. The catalytic rod units open up.")
+			boutput(user,"You [bot_operated ? "send a toggle signal to" : "press the front button on"] [src]. The catalytic rod units open up.")
 			return
+
+	attack_ai(mob/user)
+		return attack_hand(user,TRUE)
 
 	update_icon()
 		src.defer_updateicon = TRUE
@@ -231,19 +234,26 @@
 		if(src.contained_rod) qdel(src.contained_rod)
 		..()
 
-	attack_hand(mob/user)
+	attack_hand(mob/user,var/ejected_by_bot)
 		if(src.mode == UNIT_OPEN)
 			if(src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You remove \the [contained_rod] from [src]'s retention clamp.</span>")
+				boutput(user, "<span class='notice'>You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp.</span>")
 				playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
-				user.put_in_hand_or_drop(src.contained_rod)
+				src.contained_rod.UpdateIcon()
+				if(ejected_by_bot)
+					src.contained_rod.loc = src.loc
+				else
+					user.put_in_hand_or_drop(src.contained_rod)
 				src.contained_rod = null
 				src.ovr_rod.icon_state = "nonvis"
 			else
 				boutput(user,"\The [src] is open. Its retention clamp seems to be missing a rod of some sort.")
 		else
 			boutput(user,"\The [src] doesn't seem to have any controls.")
+
+	attack_ai(mob/user)
+		return attack_hand(user,TRUE)
 
 	attackby(var/obj/item/I as obj, var/mob/user as mob)
 		if(src.mode == UNIT_OPEN && istype(I,/obj/item/catalytic_rod))
@@ -261,6 +271,35 @@
 				boutput(user,"\The [src] already has a rod installed.")
 		else
 			..()
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if(!isliving(user))
+			boutput(user, "<span class='alert'>Your tether to the mortal realm is insufficient for rod loading.</span>")
+			return
+
+		if(!can_act(user))
+			return
+
+		if (get_dist(src,user) > 1)
+			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
+			return
+
+		if (get_dist(src,O) > 1)
+			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
+			return
+
+		if (src.mode == UNIT_OPEN && istype(O,/obj/item/catalytic_rod) && isturf(O.loc))
+			if(!src.contained_rod)
+				if(src.toggling) return
+				boutput(user, "<span class='notice'>You insert \the [O] into [src]'s retention clamp.</span>")
+				playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+
+				O.set_loc(src)
+				src.contained_rod = O
+				src.rod_post_install()
+				return
+			else
+				boutput(user,"\The [src] already has a rod installed.")
 
 	proc/rod_post_install()
 		if(src.contained_rod)
@@ -460,7 +499,6 @@
 #undef GEN_ANODE
 #undef GEN_CATHODE
 
-#ifdef MAP_OVERRIDE_NADIR
 /datum/matfab_recipe/catarod
 	name = "Catalytic Generation Rod"
 	desc = "A rod with a form factor suitable for usage in a catalytic generator. Material composition affects its performance."
@@ -480,4 +518,3 @@
 			newObj.setupMaterial()
 			newObj.set_loc(getOutputLocation(owner))
 		return
-#endif
