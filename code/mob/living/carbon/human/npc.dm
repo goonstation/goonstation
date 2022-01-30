@@ -62,6 +62,11 @@
 		"[target_name] just fucking attacked me",\
 		"SOMEONE [prob(40) ? "FUCKING " : ""]ARREST [uppertext(target_name)]",\
 		"need help",\
+		"[uppertext(target_name)] IS [prob(50) ? "A TRAITOR" : "AN ANTAG"] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""]",\
+		"[prob(40) ? "please" : ""] I need help can someone [prob(50) ? "hear" : "help"] me",\
+		"[uppertext(target_name)] WON'T [prob(40) ? "FUCKING " : ""]LEAVE ME ALONE, HELP",\
+		"SOMEONE [prob(40) ? "PLEASE " : ""] [prob(40) ? "FUCKING" : ""] HELP [prob(40) ? "ME" : ""] [prob(40) ? "I SWEAR TO GOD" : ""]",\
+		"[prob(40) ? "FUCKING" : ""] GRIEFERES WON'T LEAVE ME ALONE",\
 		"[pick("HLEP","HELP")] ME [uppertext(target_name)] IS [prob(40) ? "FUCKING " : ""]KILLING ME")
 		if(prob(60))
 			complaint = uppertext(complaint)
