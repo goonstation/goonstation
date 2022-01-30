@@ -134,7 +134,7 @@
 	msgLose = "You feel more in control."
 	reclaim_fail = 15
 	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","BALLS","HECK","FRICK","JESUS")
 	icon_state  = "bad"
 
 	OnLife(var/mult)
