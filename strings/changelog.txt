@@ -1,5 +1,9 @@
 
 (t)sun jan 30 22
+(u)Flaborized
+(p)7346
+(e)🎨|sprites
+(+)Added unique burning sprites for the changeling horror form.
 (u)Keiya
 (p)7323
 (e)🎨|sprites
