@@ -244,6 +244,53 @@
 			MT.TakeDamageAccountArmor("All", rand(5,15), 0, 0, DAMAGE_STAB)
 		return 0
 
+/datum/targetable/critter/pincer_grab
+	name = "Grab"
+	desc = "Grab a mob with your pincers, imobilizing them for a bit"
+	cooldown = 200
+	targeted = 1
+	icon_state = "pincer_grab"
+	target_anything = 1
+
+	var/datum/projectile/slam/proj = new
+
+
+	cast(atom/target)
+		if (!holder)
+			return
+
+		var/mob/living/M = holder.owner
+
+		if (!M)
+			return
+
+		if (..())
+			return 1
+		if (isobj(target))
+			target = get_turf(target)
+		if (isturf(target))
+			target = locate(/mob/living) in target
+			if (!target)
+				boutput(holder.owner, __red("Nothing to grab there."))
+				return 1
+		if (target == holder.owner)
+			return 1
+		if (get_dist(holder.owner, target) > 1)
+			boutput(holder.owner, __red("That is too far away to grab."))
+			return 1
+		var/mob/MT = target
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] grabs [MT] with [his_or_her(holder.owner)] pincers!</b></span>",\
+		"<span class='combat'>You grab [MT]!</span>")
+		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+		playsound(target, "sound/items/Wirecutter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
+		MT.changeStatus("weakened", 6 SECONDS)
+		MT.force_laydown_standup()
+		APPLY_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
+		SPAWN_DBG(6 SECONDS)
+			REMOVE_MOB_PROPERTY(M, PROP_CANTMOVE, "pincergrab")
+		return 0
+
 /datum/targetable/critter/hootat
 	name = "Hoot seductively"
 	desc = "Hoot seductively . . ."
