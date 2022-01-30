@@ -11,6 +11,9 @@
 #define ALL_HAIR 4
 
 
+TYPEINFO(/datum/component/toggle_tool_use)
+	initialization_args = list()
+
 /datum/component/toggle_tool_use
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
@@ -53,6 +56,9 @@
 	UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
 	. = ..()
+
+TYPEINFO(/datum/component/barber)
+	initialization_args = list()
 
 /datum/component/barber
 /datum/component/barber/Initialize()

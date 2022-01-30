@@ -1,5 +1,8 @@
 /datum/component/gaseous_projectile
 
+TYPEINFO(/datum/component/gaseous_projectile)
+	initialization_args = list()
+
 /datum/component/gaseous_projectile/Initialize()
 	if(!istype(parent, /obj/projectile))
 		return COMPONENT_INCOMPATIBLE
