@@ -204,29 +204,13 @@ obj/critter/bear/care
 				targetLimb.delete()
 				return
 
-		//Old instakill code. Happens when there are no more limbs to chew.
+		//Instakill code. Happens when there are no more limbs to chew.
 		//I want to rework this so the yeti keeps the heads as a trophy and he drops them once dead
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> devours the rest of [M] in one bite!</span>")
 		logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 		playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
-		M.death(1)
-		var/atom/movable/overlay/animation = null
-		M.transforming = 1
-		M.canmove = 0
-		M.icon = null
-		APPLY_MOB_PROPERTY(M, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
-		if(ishuman(M))
-			animation = new(src.loc)
-			animation.icon_state = "blank"
-			animation.icon = 'icons/mob/mob.dmi'
-			animation.master = src
-		if (M.client)
-			var/mob/dead/observer/newmob
-			newmob = new/mob/dead/observer(M)
-			M.client.mob = newmob
-			M.mind.transfer_to(newmob)
-		qdel(M)
+		M.remove()
 		src.task = "thinking"
 		src.seek_target()
 		src.attacking = 0

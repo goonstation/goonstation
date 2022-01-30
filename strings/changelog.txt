@@ -1,5 +1,69 @@
 
+(t)sun jan 30 22
+(u)Flaborized
+(p)7346
+(e)🎨|sprites
+(+)Added unique burning sprites for the changeling horror form.
+(u)Keiya
+(p)7323
+(e)🎨|sprites
+(*)New "Bee Exposition Extravaganza" book, now available at Books4U vendors system-wide! Your local apiculturist might have a copy, too.
+(t)sat jan 29 22
+(u)pali
+(*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
+(+)MechComp tesla coils now use up a bit of APC power.
+(u)NightmareChamillian
+(p)7258
+(e)🐛🗺|bug, mapping
+(+)After losing a lawsuit, NanoTrasen has now added adequate warning labels to some medicine bottles.
+(t)fri jan 28 22
+(u)pali
+(+)Head of Security now feels a disturbance in the force when Sylvester gets rigged with plasma.
+(u)Flaborized
+(p)7324
+(e)🎨|sprites
+(+)Resprited katanas.
+(u)DisturbHerb
+(p)7283
+(e)|
+(+)Head Surgeons now have their own headset (Med, Command) and radio icon.
+(t)thu jan 27 22
+(u)aloe
+(+)New 0 point trait- Heavy Sleeper. You spawn in a random bed, asleep (for 10 seconds). Can't be taken with stowaway etc.
+(u)AnguishedEnglish
+(p)7295
+(e)🎨|sprites
+(*)Added a Nun Robe and Nun Hood to the Chaplain's lockers.
+(u)112358sam
+(p)7308
+(e)|
+(+)Floorbots now yell at you if you have tiles or sheets they want.
+(t)tue jan 25 22
+(u)Flaborized
+(p)7293
+(e)🎨|sprites
+(*)Resprited the blob UI buttons.
+(u)zjdtmkhzt
+(p)7230
+(e)⚖|balance
+(+)Navbeacons are now mechanics scannable.
+(u)colossusqw
+(p)7244
+(e)🆕🎨|feature, sprites
+(*)Added scorpions to random pest events.
+(u)LeahTheTech
+(p)7261
+(e)🆕|feature
+(+)Added a button to AI shells to eject in place, no more scrolling across half the map to find your shell again.
+(u)Stonepillar
+(p)7297
+(e)🐛|bug
+(*)The space convention centers have re-opened. The stock market has events again. Go and gamble your money.
 (t)mon jan 24 22
+(u)BatElite
+(p)7285
+(e)🐛🗺|bug, mapping
+(+)Donut3's brig piping has been fixed.
 (u)Mr. Moriarty
 (p)7007
 (e)|

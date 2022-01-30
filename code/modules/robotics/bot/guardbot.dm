@@ -1246,7 +1246,7 @@
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if(IN_RANGE(target_turf, my_turf, 1))
-				budgun.shoot_point_blank(target, my_turf)
+				budgun.shoot_point_blank(target, src)
 			else
 				budgun.shoot(target_turf, my_turf, src)
 			burst--
@@ -1907,7 +1907,7 @@
 
 			src.add_task(src.model_task.copy_file(),1)
 
-		if(src.task?.disposed || src.task.master != src)
+		if(src.task?.disposed || src.task?.master != src)
 			src.task = null
 		if(istype(src.task))
 			src.task.task_act()
@@ -2464,7 +2464,7 @@
 					master.navigate_to(src.target)
 			else
 				if(!master.last_comm || (world.time >= master.last_comm + 100) )
-					master.post_status("recharge","data","[master.cell.charge]")
+					master.post_status(null,"data","[master.cell.charge]","address_tag","recharge")
 					master.reply_wait = 2
 					if(!announced)
 						announced++
@@ -4304,7 +4304,7 @@
 		SPAWN_DBG(0.8 SECONDS)
 			if(!src.net_id)
 				src.net_id = generate_net_id(src)
-			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+			src.AddComponent(/datum/component/packet_connected/radio, null, frequency, net_id, "receive_signal", FALSE, "recharge", FALSE)
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -4598,7 +4598,7 @@
 
 			return
 		else
-			if( (signal.data["address_1"] == "recharge") && !src.current)
+			if( (signal.data["address_tag"] == "recharge") && !src.current)
 				var/turf/T = get_turf(src)
 				if(!T) return
 

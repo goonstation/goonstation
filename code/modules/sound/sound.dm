@@ -291,6 +291,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	LISTENER_ATTEN(atten_temp)
 
 	var/sound/S = generate_sound(source, soundin, ourvolume, vary, extrarange, pitch)
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\" with source [source].")
 	client.sound_playing[ S.channel ][1] = ourvolume
 	client.sound_playing[ S.channel ][2] = channel
 

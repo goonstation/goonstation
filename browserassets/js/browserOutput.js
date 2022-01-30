@@ -26,6 +26,7 @@ var opts = {
     'volume': 0.5,
     'lastMessage': '', //the last message sent to chat
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
+	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -182,63 +183,9 @@ function output(message, group, skipNonEssential, forceScroll) {
     }
 
 
-    //The behemoth of filter-code (for Admin message filters)
-    //Note: This is proooobably hella inefficient
-    var filteredOut = false;
-    if (opts.hasOwnProperty('showMessagesFilters') && !opts.showMessagesFilters['All'].show) {
-        //Get this filter type (defined by class on message)
-        var messageHtml = $.parseHTML(message),
-            messageClasses;
-        if (opts.hasOwnProperty('filterHideAll') && opts.filterHideAll) {
-            var internal = false;
-            messageClasses = (!!$(messageHtml).attr('class') ? $(messageHtml).attr('class').split(/\s+/) : false);
-            if (messageClasses) {
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    if (messageClasses[i] == 'internal') {
-                        internal = true;
-                        break;
-                    }
-                }
-            }
-            if (!internal) {
-                filteredOut = 'All';
-            }
-        } else {
-            //If the element or it's child have any classes
-            if (!!$(messageHtml).attr('class') || !!$(messageHtml).children().attr('class')) {
-                messageClasses = $(messageHtml).attr('class').split(/\s+/);
-                if (!!$(messageHtml).children().attr('class')) {
-                    messageClasses = messageClasses.concat($(messageHtml).children().attr('class').split(/\s+/));
-                }
-                var tempCount = 0;
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    var thisClass = messageClasses[i];
-                    $.each(opts.showMessagesFilters, function(key, val) { //Every filter
-                        if (key !== 'All' && val.show === false && typeof val.match != 'undefined') {
-                            for (var i = 0; i < val.match.length; i++) {
-                                var matchClass = val.match[i];
-                                if (matchClass == thisClass) {
-                                    filteredOut = key;
-                                    break;
-                                }
-                            }
-                        }
-                        if (filteredOut) return false;
-                    });
-                    if (filteredOut) break;
-                    tempCount++;
-                }
-            } else {
-                if (!opts.showMessagesFilters['Misc'].show) {
-                    filteredOut = 'Misc';
-                }
-            }
-        }
-    }
-
     //Stuff we do along with appending a message
     var atBottom = false;
-    if (!filteredOut && !skipNonEssential) {
+    if (!skipNonEssential) {
         var bodyHeight = $('body').height();
         var messagesHeight = $messages.outerHeight();
         var scrollPos = document.documentElement.scrollTop;
@@ -316,15 +263,24 @@ function output(message, group, skipNonEssential, forceScroll) {
             entry = document.createElement('div');
             entry.className = 'entry';
 
-            if (filteredOut) {
-                entry.className += ' hidden';
-                entry.setAttribute('data-filter', filteredOut);
-            }
-
             if (group) {
                 entry.className += ' hasGroup';
                 entry.setAttribute('data-group', group);
-            }
+			}
+
+			//get classes from messages, compare if its in messageclasses, and if so, add to entry
+			let addedClass = false;
+			let $message = $('<span>'+message+'</span>');
+			$.each(opts.messageClasses, function (key, value) {
+				if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
+					entry.className += ' ' + value;
+					addedClass = true;
+				}
+			});
+			// fallback, if no class found in the classlist
+			if (!addedClass) {
+				entry.className += ' misc';
+			}
 
             entry.innerHTML = message;
             $lastEntry = $($messages[0].appendChild(entry));
@@ -338,7 +294,7 @@ function output(message, group, skipNonEssential, forceScroll) {
     }
 
     //Actually do the snap
-    if (!filteredOut && atBottom && !skipNonEssential) {
+    if (atBottom && !skipNonEssential) {
         window.scrollTo(0, document.body.scrollHeight);
     }
 }

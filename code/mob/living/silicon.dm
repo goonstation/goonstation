@@ -57,6 +57,20 @@
 /mob/living/silicon/proc/show_laws()
 	return
 
+/mob/living/silicon/proc/return_mainframe()
+	if (mainframe)
+		mainframe.return_to(src)
+	else
+		boutput(src, "<span class='alert'>You lack a dedicated mainframe!</span>")
+		return
+
+/mob/living/silicon/proc/become_eye()
+	if (!mainframe)
+		return
+	src.return_mainframe()
+	mainframe.eye_view()
+	mainframe.eyecam.set_loc(src)
+
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
 #define SORT "* Sort alphabetically..."

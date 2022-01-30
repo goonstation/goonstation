@@ -1303,12 +1303,12 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "adt" = (
-/obj/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/turf/space,
+/turf/simulated/floor/plating,
 /area/station/security/checkpoint/research)
 "adv" = (
 /obj/overlay{
@@ -4513,7 +4513,7 @@
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
 	locked = 0;
-	setup_spawn_with_tape = 0
+	setup_drive_type = /obj/item/disk/data/tape/artifact_research
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 8

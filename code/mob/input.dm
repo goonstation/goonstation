@@ -122,7 +122,7 @@
 				move_dir = angle2dir(move_angle)
 
 			if (src.buckled && !istype(src.buckled, /obj/stool/chair))
-				src.buckled.relaymove(move_dir)
+				src.buckled.relaymove(src, move_dir)
 			else if (isturf(src.loc))
 				if (src.buckled && istype(src.buckled, /obj/stool/chair))
 					var/obj/stool/chair/C = src.buckled
@@ -272,7 +272,7 @@
 							A.OnMove(src)
 			else
 				if (src.loc) //ZeWaka: Fix for null.relaymove
-					delay = src.loc.relaymove(src, move_dir, delay) //relaymove returns 1 if we dont want to override delay
+					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)
 						delay = 0.5
 

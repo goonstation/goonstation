@@ -113,14 +113,14 @@
 
 /obj/river
 	name = "River"
-	desc = "Its a river."
+	desc = "Some flowing water."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "river"
 	anchored = 1
 
 /obj/stone
 	name = "Stone"
-	desc = "Its a stone."
+	desc = "Rock and stone, son. Rock and stone."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "stone"
 	anchored = 1
@@ -143,6 +143,7 @@
 
 /obj/shrub
 	name = "shrub"
+	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
 	anchored = 1
@@ -400,6 +401,7 @@
 
 /obj/potted_plant
 	name = "potted plant"
+	desc = "Considering the fact that plants communicate through their roots, you wonder if this one ever feels lonely."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ppot0"
 	anchored = 1
@@ -433,6 +435,7 @@
 
 /obj/window_blinds
 	name = "blinds"
+	desc = "Thin strips of plastic that can be angled to prevent light from passing through. There's probably a switch that controls them nearby."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "blindsH-o"
 	anchored = 1
