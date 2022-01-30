@@ -1,5 +1,9 @@
 
 (t)sun jan 30 22
+(u)CodeJester
+(p)7265
+(e)📄|tgui
+(*)The reagent extractor has a fancy new UI, with changes to allow for quick extraction and transference!
 (u)Flaborized
 (p)7346
 (e)🎨|sprites
