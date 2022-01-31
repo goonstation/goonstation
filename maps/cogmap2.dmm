@@ -513,6 +513,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abi" = (
@@ -525,6 +526,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abj" = (
@@ -535,6 +537,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abk" = (
@@ -561,6 +564,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abn" = (
@@ -569,6 +573,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abo" = (
@@ -577,6 +582,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abp" = (
@@ -588,6 +594,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abq" = (
@@ -787,6 +794,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "abJ" = (
@@ -1430,6 +1438,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "acX" = (
@@ -1543,6 +1552,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "adn" = (
@@ -1553,6 +1563,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ado" = (
@@ -1583,6 +1594,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "adr" = (
@@ -2132,6 +2144,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aeG" = (
@@ -3319,6 +3332,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ahB" = (
@@ -3362,6 +3376,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ahH" = (
@@ -3638,6 +3653,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "aiq" = (
@@ -3664,6 +3680,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ait" = (
@@ -4030,6 +4047,7 @@
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment/bent/north,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajp" = (
@@ -4042,6 +4060,7 @@
 	icon_state = "0-4"
 	},
 /obj/disposalpipe/segment/bent/south,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajq" = (
@@ -4136,6 +4155,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajx" = (
@@ -4148,6 +4168,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "ajy" = (
@@ -11970,6 +11991,7 @@
 /area/station/maintenance/north)
 "aBw" = (
 /obj/disposalpipe/segment/transport,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aBx" = (
@@ -12018,6 +12040,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aBA" = (
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aBB" = (
@@ -25109,6 +25132,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bgC" = (
+/obj/grille,
 /turf/simulated/floor/engine/vacuum,
 /area/station/maintenance/central)
 "bgD" = (
@@ -28534,12 +28558,14 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "boM" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "boN" = (
@@ -29266,10 +29292,12 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bqv" = (
 /obj/disposalpipe/segment,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bqw" = (
@@ -31806,6 +31834,7 @@
 /area/station/routing/security)
 "bvO" = (
 /obj/disposalpipe/segment/transport,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "bvP" = (
@@ -33642,6 +33671,7 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bzu" = (
@@ -33704,15 +33734,18 @@
 /area/station/routing/security)
 "bzD" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "bzE" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/transport,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "bzF" = (
 /obj/disposalpipe/segment/mail/bent/west,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "bzG" = (
@@ -35311,6 +35344,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bCN" = (
+/obj/grille,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "bCO" = (
@@ -36465,6 +36499,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/grille,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "bEM" = (
@@ -40718,6 +40753,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/grille,
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "bMb" = (
@@ -43070,6 +43106,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
 "bQI" = (
@@ -43129,6 +43166,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bQP" = (
@@ -46605,6 +46643,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/engine)
 "bYq" = (
+/obj/grille,
 /turf/simulated/floor/grime,
 /area/station/routing/engine)
 "bYr" = (
@@ -47251,12 +47290,14 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/grille,
 /turf/simulated/floor/plating/damaged3,
 /area/station/routing/depot)
 "bZM" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/grille,
 /turf/simulated/floor/plating/damaged3,
 /area/station/routing/depot)
 "bZN" = (
@@ -52899,14 +52940,17 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cno" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cnp" = (
 /obj/disposalpipe/segment/mail/bent/west,
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "cnq" = (
@@ -62657,6 +62701,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/grille,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "cJJ" = (
@@ -77354,6 +77399,11 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"fHm" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/grille,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "fJr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -77891,6 +77941,10 @@
 /obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"iVo" = (
+/obj/grille,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "iXX" = (
 /obj/machinery/computer/research_shuttle{
 	dir = 8;
@@ -77939,6 +77993,10 @@
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
+"jlw" = (
+/obj/grille,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "jqe" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -78419,6 +78477,10 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"mbj" = (
+/obj/grille,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "mcp" = (
 /obj/cable{
 	d1 = 4;
@@ -80273,6 +80335,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"xdi" = (
+/obj/grille,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "xef" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purple/side{
@@ -125112,9 +125178,9 @@ cFO
 cHf
 cIs
 cJI
-cNe
-cNe
-cNe
+jlw
+jlw
+jlw
 cIs
 cRi
 cSO
@@ -125716,7 +125782,7 @@ cFP
 cHc
 cIs
 cJK
-cNe
+cIu
 cIs
 cOn
 cIs
@@ -130750,7 +130816,7 @@ aah
 aah
 cha
 cYr
-chV
+mbj
 dap
 apo
 app
@@ -131052,7 +131118,7 @@ aaa
 aaa
 cha
 cYr
-chV
+mbj
 dap
 app
 app
@@ -131354,10 +131420,10 @@ aah
 aah
 cha
 cYr
-chV
+mbj
 dap
-chV
-chV
+mbj
+mbj
 cia
 cia
 alM
@@ -131435,14 +131501,14 @@ cfu
 cfu
 cfu
 cfu
-cgr
+iVo
 cGV
 clS
 cnA
-cpl
-cgr
-cgr
-cgr
+fHm
+iVo
+iVo
+iVo
 cvm
 cwW
 cyp
@@ -131766,9 +131832,9 @@ cRA
 cRC
 cpB
 crj
-cew
+xdi
 cWZ
-cew
+xdi
 cew
 cea
 aaa
@@ -131958,10 +132024,10 @@ aaa
 aaa
 ahq
 cYr
-chV
-chV
-chV
-chV
+mbj
+mbj
+mbj
+mbj
 cia
 cia
 asy
@@ -131970,7 +132036,7 @@ atV
 cia
 cia
 cia
-chV
+mbj
 ayP
 ayR
 aGN
@@ -132058,7 +132124,7 @@ cFY
 cHw
 cpu
 cpu
-cew
+xdi
 cpu
 cpu
 cMR
@@ -132067,7 +132133,7 @@ cOl
 ceC
 ceC
 ceC
-cew
+xdi
 cfi
 cWZ
 cfi
@@ -132372,7 +132438,7 @@ cpv
 cpv
 cpv
 cWZ
-cew
+xdi
 dgA
 dbp
 aaa
