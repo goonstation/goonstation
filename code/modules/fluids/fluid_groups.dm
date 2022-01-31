@@ -65,7 +65,8 @@
 				.= "very deep"
 
 	temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001, loud = 0)
-		exposed_volume = my_group.amt_per_tile
+		if (my_group)
+			exposed_volume = exposed_volume = my_group.amt_per_tile
 		..()
 		src.update_total()
 
