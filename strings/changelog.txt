@@ -1,5 +1,9 @@
 
 (t)sun jan 30 22
+(u)Keiya
+(p)7356
+(e)|
+(+)The apiculturist's suit now stops small bees. It still doesn't do shit against Space Bees.
 (u)Arborinus
 (p)7184
 (e)🎨|sprites
