@@ -368,7 +368,7 @@
 /obj/item/ammo/bullets/assault_rifle
 	sname = "5.56x45mm NATO"
 	name = "STENAG magazine" //heh
-	desc = "A magazine of 5.56 rounds, an intermediate rifle cartridges"
+	desc = "A magazine of 5.56 rounds, an intermediate rifle cartridge."
 	ammo_type = new/datum/projectile/bullet/assault_rifle
 	icon_state = "stenag_mag"
 	amount_left = 20.0
@@ -398,7 +398,7 @@
 /obj/item/ammo/bullets/ak47
 	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
 	name = "AK magazine"
-	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine"
+	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine."
 	ammo_type = new/datum/projectile/bullet/ak47
 	icon_state = "ak47"
 	amount_left = 30.0
@@ -409,7 +409,7 @@
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
-	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit"
+	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit."
 	ammo_type = new/datum/projectile/bullet/rifle_3006
 	icon_state = "rifle_clip"
 	amount_left = 4
@@ -459,7 +459,7 @@
 /obj/item/ammo/bullets/lmg
 	sname = "7.62×51mm NATO"
 	name = "LMG belt"
-	desc = "A belt of 7.62 LMG rounds. They have less gunpowder in them prevent overheating and cookoffs."
+	desc = "A belt of 7.62 LMG rounds. They have less gunpowder in them to prevent overheating and cookoffs."
 	ammo_type = new/datum/projectile/bullet/lmg
 	icon_state = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
@@ -471,7 +471,7 @@
 	weak
 		sname = "7.62×51mm NATO W"
 		name = "discount LMG belt"
-		desc = "A belt of really FISHY bullets"
+		desc = "A belt of really FISHY bullets."
 		ammo_type = new/datum/projectile/bullet/lmg/weak
 		amount_left = 25.0
 		max_amount = 25.0
@@ -480,7 +480,7 @@
 /obj/item/ammo/bullets/bullet_9mm
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
-	desc = "A handgun magazine full of an 9x19 rounds, an intermediate pistol cartridge"
+	desc = "A handgun magazine full of 9x19mm rounds, an intermediate pistol cartridge."
 	icon_state = "pistol_magazine"
 	amount_left = 15.0
 	max_amount = 15.0
@@ -492,7 +492,7 @@
 
 	smg
 		name = "9mm SMG magazine"
-		desc = "An extended 9mm magazine"
+		desc = "An extended 9mm magazine."
 		amount_left = 30.0
 		max_amount = 30.0
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
@@ -514,7 +514,7 @@
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
 	name = ".357 speedloader"
-	desc = "A speedloader of magnum revolver bullets."
+	desc = "A speedloader of .357 magnum revolver bullets."
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -537,7 +537,7 @@
 /obj/item/ammo/bullets/a38
 	sname = ".38 Spc"
 	name = ".38 speedloader"
-	desc = "A speedloader of .38 special, a popular police and detective cartridge"
+	desc = "A speedloader of .38 special, a popular police and detective cartridge."
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -563,7 +563,7 @@
 /obj/item/ammo/bullets/a38/stun
 	sname = ".38 Spc Stun"
 	name = ".38 Stun speedloader"
-	desc = "A speedloader of .38 stun bullets. "
+	desc = "A speedloader of .38 stun bullets."
 	icon_state = "38S-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -638,7 +638,7 @@
 /obj/item/ammo/bullets/c_45
 	sname = "Cold .45"
 	name = "Colt .45 speedloader"
-	desc = "A speedloader of 45 caliber revolver bullets."
+	desc = "A speedloader of .45 caliber revolver bullets."
 	icon_state = "38-7"
 	amount_left = 7.0
 	max_amount = 7.0
@@ -731,7 +731,7 @@
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
 	name = "12ga flares"
-	desc = "Some incindiary flares. Ironically enough, they don't burn long enough to be very good at illumination."
+	desc = "Some incendiary flares. Ironically enough, they don't burn long enough to be very good at illumination."
 	amount_left = 8
 	max_amount = 8
 	icon_state = "flare"
@@ -779,7 +779,7 @@
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
 	name = "40mm HE shells"
-	desc = "Some high explosive grenades, for use in 40MM weapons"
+	desc = "Some high explosive grenades, for use in 40MM weapons."
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mmR"
@@ -803,13 +803,13 @@
 	knocker
 		sname = "40mm HE Knocker"
 		name = "40mm HE airlock-breaching shells"
-		desc = "Some explosive breaching shells"
+		desc = "Some explosive breaching shells."
 		ammo_type = new/datum/projectile/bullet/autocannon/knocker
 
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm HEDP"
 	name = "40mm HEDP shells"
-	desc = "A box of general utility 40mm grenades"
+	desc = "A box of general utility 40mm grenades."
 	amount_left = 8
 	max_amount = 8
 	icon_state = "40mmR"
@@ -835,7 +835,7 @@
 /obj/item/ammo/bullets/smoke
 	sname = "40mm Smoke"
 	name = "40mm smoke shells"
-	desc = "Some smoke shells, for the 40mm platform"
+	desc = "Some smoke shells, for the 40mm platform."
 	amount_left = 5
 	max_amount = 5
 	icon_state = "40mmB"
@@ -853,7 +853,7 @@
 /obj/item/ammo/bullets/marker
 	sname = "40mm Paint Marker Rounds"
 	name = "40mm paint marker rounds"
-	desc = "An experimental 40mm round that causes whoever is hit with it to leave a trail behind them"
+	desc = "An experimental 40mm round that causes whoever is hit with it to leave a trail behind them."
 	ammo_type = new/datum/projectile/bullet/marker
 	amount_left = 5
 	max_amount = 5
@@ -956,7 +956,7 @@
 /obj/item/ammo/bullets/rpg
 	sname = "MPRT rocket"
 	name = "MPRT rocket"
-	desc = "A mean high-explosive rocket, gauaranteed to cause destruction in a 5x5 radius"
+	desc = "A mean high-explosive rocket, guaranteed to cause destruction in a 5x5 radius."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/projectiles.dmi'
