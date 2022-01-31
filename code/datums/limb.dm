@@ -1445,6 +1445,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 	stam_damage_mult = 1
 
 /datum/limb/small_critter/pincers
+	dmg_type = DAMAGE_STAB
 	max_wclass = 2
 	stam_damage_mult = 0.5
 	dam_low = 2

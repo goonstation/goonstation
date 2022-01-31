@@ -168,7 +168,7 @@
 /datum/targetable/critter/wasp_sting
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
-	cooldown = 50
+	cooldown = 5 SECONDS
 	targeted = 1
 	icon_state = "waspbee_sting"
 	target_anything = 1
@@ -197,6 +197,7 @@
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
 		"<span class='combat'>You sting [MT]!</span>")
+		playsound(target, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
@@ -204,45 +205,13 @@
 			MT.TakeDamageAccountArmor("All", rand(2,8), 0, 0, DAMAGE_STAB)
 		return 0
 
-/datum/targetable/critter/scorpion_sting
-	name = "Sting"
-	desc = "Sting a mob, injecting them with venom."
-	cooldown = 200
-	targeted = 1
-	icon_state = "scorpion_sting"
-	target_anything = 1
-	var/venom1 = "neurotoxin"
-	var/amt1 = 15
-	var/venom2 = "toxin"
-	var/amt2 = 6
-
-	var/datum/projectile/slam/proj = new
-
-	cast(atom/target)
-		if (..())
-			return 1
-		if (isobj(target))
-			target = get_turf(target)
-		if (isturf(target))
-			target = locate(/mob/living) in target
-			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
-				return 1
-		if (target == holder.owner)
-			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to sting."))
-			return 1
-		var/mob/MT = target
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT] with [his_or_her(holder.owner)] stinger!</b></span>",\
-		"<span class='combat'>You sting [MT]!</span>")
-		playsound(target, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
-		if (MT.reagents)
-			MT.reagents.add_reagent(venom1, amt1)
-			MT.reagents.add_reagent(venom2, amt2)
-		else // um idk??  do some damage w/e
-			MT.TakeDamageAccountArmor("All", rand(5,15), 0, 0, DAMAGE_STAB)
-		return 0
+	scorpion_sting
+		icon_state = "scorpion_sting"
+		cooldown = 20 SECONDS
+		venom1 = "neurotoxin"
+		amt1 = 15
+		venom2 = "toxin"
+		amt2 = 6
 
 /datum/targetable/critter/pincer_grab
 	name = "Grab"

@@ -501,10 +501,11 @@
 			random_brute_damage(M, rand(5,10),1)
 			M.visible_message("<span class='combat'><B>[src]</B> tries to grab [src.target] with its pincers!</span>")
 			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
-			M.changeStatus("stunned", 2 SECONDS)
+			M.changeStatus("weakened", 4 SECONDS)
+			M.force_laydown_standup()
 
 	CritterAttack(mob/M)
-		random_brute_damage(M, rand(3,6),1)
+		take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
 		M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
 		playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
 

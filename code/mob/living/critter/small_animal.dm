@@ -1490,7 +1490,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	density = 1
 	flags = TABLEPASS
 	fits_under_table = 1
-	add_abilities = list(/datum/targetable/critter/scorpion_sting,
+	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
 
 	setup_hands()
