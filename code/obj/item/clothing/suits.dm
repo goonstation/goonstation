@@ -1283,6 +1283,8 @@
 	item_state = "space-neon"
 
 /obj/item/clothing/suit/space/custom // Used for nanofabs
+	//icon_state=
+	//item_state=
 	name = "bespoke space suit"
 	desc = "A suit that protects against low pressure environments, custom-made just for you!"
 	onMaterialChanged()
