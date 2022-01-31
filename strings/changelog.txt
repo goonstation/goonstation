@@ -1,5 +1,9 @@
 
 (t)sun jan 30 22
+(u)Arborinus
+(p)7184
+(e)🎨|sprites
+(+)New sprites for certain burgers and burger-esque sandwiches.
 (u)CodeJester
 (p)7265
 (e)📄|tgui
