@@ -76329,6 +76329,7 @@
 /area/listeningpost)
 "dnT" = (
 /obj/storage/closet/syndicate/personal,
+/obj/window/east,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "green2"
@@ -76402,6 +76403,7 @@
 	},
 /area/listeningpost)
 "dob" = (
+/obj/window/east,
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
@@ -76854,6 +76856,9 @@
 	},
 /area/listeningpost/solars)
 "dpc" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
 /obj/cable,
 /obj/cable{
 	d2 = 4;
@@ -76862,9 +76867,6 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
-	},
-/obj/grille/catwalk{
-	dir = 4
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -76918,14 +76920,14 @@
 	},
 /area/listeningpost/solars)
 "dpf" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tracker/small_backup4,
-/obj/grille/catwalk{
-	dir = 5
-	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
@@ -79697,6 +79699,10 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/podbay)
+"tra" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "trh" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -160573,9 +160579,9 @@ aaa
 aaa
 aaa
 aaa
-aan
-aan
-aan
+tra
+tra
+tra
 dmD
 aab
 dmJ
@@ -160875,7 +160881,7 @@ aaa
 aaa
 aaa
 aaa
-aan
+tra
 dmk
 anh
 dmE
@@ -161177,9 +161183,9 @@ aaa
 aaa
 aaa
 aaa
-aan
-aan
-aan
+tra
+tra
+tra
 dmD
 aab
 dmJ
