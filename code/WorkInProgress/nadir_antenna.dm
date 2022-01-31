@@ -275,22 +275,21 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					if(O.anchored) continue
 					if(O == src) continue
 					if(istype(O,/mob)) //no mobs
-						if(istype(O,/mob/living/carbon/human) && prob(15))
+						if(istype(O,/mob/living/carbon/human) && prob(25))
 							oofed_nerds += O
 						continue
 					if(istype(O,/obj/storage/crate))
 						thing2send = O
 						break //only one thing at a time!
-
+				for(var/nerd in oofed_nerds)
+					telefrag(nerd) //did I mention NO MOBS
 				if(thing2send && transception_array.transceive(netnumber))
-					for(var/nerd in oofed_nerds)
-						telefrag(nerd) //did I mention NO MOBS
 					thing2send.loc = src
 					SPAWN_DBG(1 SECOND)
 						shippingmarket.sell_crate(thing2send)
 
-					showswirl(src.loc)
-					use_power(200) //most cost is at the array
+				showswirl(src.loc)
+				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
 
 		return
@@ -303,14 +302,14 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		SPAWN_DBG(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN_DBG(0.4 SECONDS)
+				for(var/atom/movable/O as mob in src.loc)
+					if(istype(O,/mob/living/carbon/human) && prob(25))
+						telefrag(O) //get out the way
 				if(transception_array.transceive(netnumber))
-					for(var/atom/movable/O as mob in src.loc)
-						if(istype(O,/mob/living/carbon/human) && prob(15))
-							telefrag(O) //get out the way
 					thing2get.loc = src.loc
 
-					showswirl(src.loc)
-					use_power(200) //most cost is at the array
+				showswirl(src.loc)
+				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
 
 		return

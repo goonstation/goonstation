@@ -421,6 +421,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "roditem-100"
 	item_state = "rods"
+	rand_pos = 1
 	///Rod condition: decays over time, combines with generation efficacy to yield a production rate
 	var/condition = 100
 	///Generation efficacy for anode use. Influenced by material properties, increases dramatically above standard parameters

@@ -1112,6 +1112,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 1;
+	locked = 0;
 	name = "N APC";
 	noalerts = 1;
 	pixel_y = 24
