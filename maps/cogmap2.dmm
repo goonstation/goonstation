@@ -77764,10 +77764,6 @@
 /turf/simulated/floor/engine,
 /area/station/hallway/primary/west)
 "hYM" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
 /obj/grille,
 /turf/space,
 /area/space)
@@ -79893,14 +79889,6 @@
 "tTd" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"tUO" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/grille,
-/turf/space,
-/area/space)
 "tWh" = (
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -80440,11 +80428,6 @@
 	},
 /turf/simulated/floor/airless/engine/caution/westeast,
 /area/station/hangar/science)
-"xrX" = (
-/obj/lattice,
-/obj/grille,
-/turf/space,
-/area/space)
 "xxj" = (
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
@@ -150831,11 +150814,11 @@ aaa
 abs
 aaa
 aaa
-aaa
 hYM
+aam
 bJK
-tUO
-aaa
+aaI
+hYM
 aaa
 aaa
 abs
@@ -151133,11 +151116,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-xrX
+hYM
+aaF
 bJL
-xrX
-aaa
+aaF
+hYM
 aaa
 aaa
 aaa
@@ -151435,11 +151418,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-xrX
-xrX
-xrX
-aaa
+hYM
+aaF
+aaF
+aaF
+hYM
 aaa
 aaa
 aaa
@@ -151737,11 +151720,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hYM
+hYM
+hYM
+hYM
+hYM
 aaa
 aaa
 aaa
