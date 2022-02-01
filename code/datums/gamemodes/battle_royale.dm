@@ -150,7 +150,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	else if(someone_died && living_battlers.len % 10 == 0)
 		command_alert("[living_battlers.len] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	if(living_battlers.len <= 1)
-		return 0
+		return 1
 	return 0
 
 
