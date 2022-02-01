@@ -1,4 +1,9 @@
 
+(t)mon jan 31 22
+(u)Keiya
+(p)7339
+(e)🆕📄|feature, tgui
+(+)Colorful paper should now work better, and maintain its colors on persistent noticeboards.
 (t)sun jan 30 22
 (u)Keiya
 (p)7356
