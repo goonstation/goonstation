@@ -126,72 +126,73 @@
 	item_state = "s_helmet"
 
 	icon = 'icons/obj/clothing/item_hats.dmi' // prep the world icon_state for building, pray it doesn't break
-	var/datum/material/shaft_material = null
-	var/datum/material/head_material = null
-	var/image/shaftImg = null // BODY
-	var/image/headImg = null // VISOR
+	var/datum/material/fabr_material = null
+	var/datum/material/visr_material = null
+	var/image/fabrImg = null // BODY
+	var/image/visrImg = null // VISOR
 
 	New()
 		..()
-		shaftImg = image(icon, "spacemat")
-		headImg = image(icon, "spacemat-vis")
-		overlays += shaftImg
-		overlays += headImg
+		fabrImg = image(icon, "spacemat")
+		visrImg = image(icon, "spacemat-vis")
+		overlays += fabrImg
+		overlays += visrImg
 
-	onMaterialChanged() // will have to make a proc that gives the fab material later :/
-		if(src.material) // deciding properties
-			if(material.hasProperty("thermal"))
-				var/prot = round((100 - material.getProperty("thermal")) / 2)
+	proc/setupVisorMat(var/datum/material/F, var/datum/material/C) // will have to make a proc that gives the fab material later :/
+		src.color = C.color
+		visr_material = copyMaterial(F)
+		if(F) // Decide protectiveness based off fabric, not visor
+			if(F.hasProperty("thermal"))
+				var/prot = round((100 - F.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)
 				setProperty("heatprot", 1+round(prot/2))
 			else
 				setProperty("coldprot", 10)
 				setProperty("heatprot", 2)
 
-			if(material.hasProperty("permeable"))
-				var/prot = 100 - material.getProperty("permeable")
+			if(F.hasProperty("permeable"))
+				var/prot = 100 - F.getProperty("permeable")
 				setProperty("viralprot", prot)
 			else
 				setProperty("viralprot", 40)
 
-			if(material.hasProperty("density"))
-				var/prot = round(material.getProperty("density") / 20)
+			if(F.hasProperty("density"))
+				var/prot = round(F.getProperty("density") / 20)
 				setProperty("meleeprot_head", 2+prot)
 			else
 				setProperty("meleeprot_head", 2)
 
-	proc/setHeadMaterial(var/datum/material/M) // basically all of this is shamelessly ripped from arrow code
-		head_material = copyMaterial(M)
-		overlays -= headImg
+	proc/setVisrMaterial(var/datum/material/M) // basically all of this is shamelessly ripped from arrow code
+		visr_material = copyMaterial(M)
+		overlays -= visrImg
 		if (M)
-			headImg.color = M.color
-			headImg.alpha = M.alpha
+			visrImg.color = M.color
+			visrImg.alpha = M.alpha
 		else
-			headImg.color = null
-			headImg.alpha = 255
-		overlays += headImg
+			visrImg.color = null
+			visrImg.alpha = 255
+		overlays += visrImg
 		setName()
 
-	proc/setShaftMaterial(var/datum/material/M)
-		shaft_material = copyMaterial(M)
-		src.setMaterial(shaft_material,copy = 0, appearance = 0, setname = 0)
-		overlays -= shaftImg
+	proc/setFabrMaterial(var/datum/material/M)// since already initalized in setup visor mat, only take alpha
+		fabr_material = copyMaterial(M)
+		src.setMaterial(fabr_material,copy = 0, appearance = 0, setname = 0)
+		overlays -= fabrImg
 		if (M)
-			shaftImg.color = M.color
-			shaftImg.alpha = M.alpha
+			fabrImg.alpha = M.alpha
 		else
-			shaftImg.color = null
-			shaftImg.alpha = 255
-		overlays += shaftImg
+			fabrImg.color = null
+			fabrImg.alpha = 255
+		overlays += fabrImg
 		setName()
 
 	proc/setName()
-		if (head_material && shaft_material)
-			name = "[head_material]-visored [shaft_material] helmet[amount > 1 ? "s":""]"
-		else if (head_material)
-			name = " [head_material]-visored arrow[amount > 1 ? "s":""]"
-		else if (shaft_material)
-			name = " steel-headed [shaft_material] arrow[amount > 1 ? "s":""]"
+		if (visr_material && fabr_material)
+			name = "[visr_material]-visored [fabr_material] helmet[amount > 1 ? "s":""]"
+		else if (visr_material)
+			name = " [visr_material]-visored arrow[amount > 1 ? "s":""]"
+		else if (fabr_material)
+			name = " steel-headed [fabr_material] arrow[amount > 1 ? "s":""]"
 		else
 			name = " steel-headed arrow[amount > 1 ? "s":""]"
 
