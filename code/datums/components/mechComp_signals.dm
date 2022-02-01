@@ -78,6 +78,9 @@
 
 	var/defaultSignal = "1"
 
+TYPEINFO(/datum/component/mechanics_holder)
+	initialization_args = list()
+
 /datum/component/mechanics_holder/Initialize()
 	src.connected_outgoing = list()
 	src.connected_incoming = list()

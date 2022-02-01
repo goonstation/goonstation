@@ -297,6 +297,30 @@
 				bp.roominfo.Add(tf)
 				bp.name = "Blueprint '[roomname]'"
 
+/verb/adminDeleteBlueprint()
+	set name = "Delete Blueprint"
+	set desc = "Allows deletion of blueprints of any user."
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+
+	var/list/bps = new/list()
+	var/savefile/save = new/savefile("data/blueprints.dat")
+	save.cd = "/"
+
+	for(var/currckey in save.dir)
+		save.cd = "/[currckey]"
+		for(var/currroom in save.dir)
+			save.cd = "/[currckey]/[currroom]"
+			bps.Add("[currckey]/[currroom]")
+
+	save.cd = "/"
+
+	var/input = input(usr,"Select save:","Blueprints") in bps
+	var/list/split = splittext(input, "/")
+	if(save.dir.Find("[split[1]]"))
+		save.cd = "/[split[1]]"
+		if(save.dir.Find("[split[2]]"))
+			save.dir.Remove("[split[2]]")
+			boutput(usr, "<span class='alert'>Blueprint [split[2]] deleted..</span>")
 
 /obj/item/blueprint
 	name = "Blueprint"
@@ -524,16 +548,19 @@
 			save["state"] << curr.icon_state
 
 			for(var/obj/o in curr)
-				for(var/p in blacklistedObjectTypes)
-					var/type = text2path(p)
-					if(istype(o, type))
-						break//no
 				var/permitted = 0
 				for(var/p in permittedObjectTypes)
 					var/type = text2path(p)
 					if(istype(o, type))
 						permitted = 1
 						break
+
+				for(var/p in blacklistedObjectTypes)
+					var/type = text2path(p)
+					if(istype(o, type))
+						permitted = 0
+						break//no
+
 				if(permitted || !applyWhitelist)
 					var/id = "\ref[o]"
 					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"

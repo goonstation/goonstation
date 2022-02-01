@@ -9,11 +9,8 @@
 /* 514 checklist
 	?[] experimentation perhaps
 	make some lib animate stuff better with spaces? (better rainbow anyone?)
-	enable TILE_MOVEMENT_MODE and see if break
 	particle abuse
 */
-
-// cat
 
 // Greek Adventurezone Thingy
 

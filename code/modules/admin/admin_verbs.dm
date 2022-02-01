@@ -297,6 +297,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/togglesoundwaiting,
 		/client/proc/debug_variables,
 		/verb/adminCreateBlueprint,
+		/verb/adminDeleteBlueprint,
 		/client/proc/toggle_text_mode,
 		/client/proc/cmd_mass_modify_object_variables,
 		/client/proc/cmd_debug_mutantrace,

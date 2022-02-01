@@ -14,6 +14,7 @@ var/global/list/hydro_controller_queue = list(
 	var/list/plant_species = list()
 	var/list/mutations = list()
 	var/list/strains = list()
+	var/list/vendable_plants = list()
 
 	var/image/pot_death_display = null
 	var/image/pot_health_display = null
@@ -51,6 +52,9 @@ var/global/list/hydro_controller_queue = list(
 					if (ispath(X))
 						P.commuts += HY_get_strain_from_path(X)
 						P.commuts -= X
+
+				if (P.vending)
+					vendable_plants += P
 
 			src.process_queue()
 

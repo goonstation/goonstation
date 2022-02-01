@@ -1,4 +1,60 @@
 
+(t)mon jan 31 22
+(u)Keiya
+(p)7339
+(e)🆕📄|feature, tgui
+(+)Colorful paper should now work better, and maintain its colors on persistent noticeboards.
+(t)sun jan 30 22
+(u)Keiya
+(p)7356
+(e)|
+(+)The apiculturist's suit now stops small bees. It still doesn't do shit against Space Bees.
+(u)Arborinus
+(p)7184
+(e)🎨|sprites
+(+)New sprites for certain burgers and burger-esque sandwiches.
+(u)CodeJester
+(p)7265
+(e)📄|tgui
+(*)The reagent extractor has a fancy new UI, with changes to allow for quick extraction and transference!
+(u)Flaborized
+(p)7346
+(e)🎨|sprites
+(+)Added unique burning sprites for the changeling horror form.
+(u)Keiya
+(p)7323
+(e)🎨|sprites
+(*)New "Bee Exposition Extravaganza" book, now available at Books4U vendors system-wide! Your local apiculturist might have a copy, too.
+(t)sat jan 29 22
+(u)pali
+(*)Slipping on banana peels has been changed a bit and it now has fancy comedic animation
+(+)MechComp tesla coils now use up a bit of APC power.
+(u)NightmareChamillian
+(p)7258
+(e)🐛🗺|bug, mapping
+(+)After losing a lawsuit, NanoTrasen has now added adequate warning labels to some medicine bottles.
+(t)fri jan 28 22
+(u)pali
+(+)Head of Security now feels a disturbance in the force when Sylvester gets rigged with plasma.
+(u)Flaborized
+(p)7324
+(e)🎨|sprites
+(+)Resprited katanas.
+(u)DisturbHerb
+(p)7283
+(e)|
+(+)Head Surgeons now have their own headset (Med, Command) and radio icon.
+(t)thu jan 27 22
+(u)aloe
+(+)New 0 point trait- Heavy Sleeper. You spawn in a random bed, asleep (for 10 seconds). Can't be taken with stowaway etc.
+(u)AnguishedEnglish
+(p)7295
+(e)🎨|sprites
+(*)Added a Nun Robe and Nun Hood to the Chaplain's lockers.
+(u)112358sam
+(p)7308
+(e)|
+(+)Floorbots now yell at you if you have tiles or sheets they want.
 (t)tue jan 25 22
 (u)Flaborized
 (p)7293

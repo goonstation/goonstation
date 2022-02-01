@@ -2,6 +2,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/old_invis = null
 
+TYPEINFO(/datum/component/loc_invisibility)
+	initialization_args = list()
+
 /datum/component/loc_invisibility/Initialize()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE

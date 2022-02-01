@@ -1367,7 +1367,8 @@
 		icon_state = glass.icon_state
 
 	proc/checkContinue()
-		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass))
+		if (glass.reagents.total_volume <= 0 || !isalive(glassholder) || !glassholder.find_in_hand(glass) || \
+				glassholder.reagents.total_volume >= glassholder.reagents.maximum_volume - CHEM_EPSILON)
 			return FALSE
 		return TRUE
 
