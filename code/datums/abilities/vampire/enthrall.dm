@@ -145,3 +145,39 @@
 	onInterrupt()
 		..()
 		boutput(owner, __red("Your attempt to enthrall the target was interrupted!"))
+
+/datum/targetable/vampire/alert_thrall
+	name = "Alert Thralls"
+	desc = "Beckons your thralls to your current location."
+	icon_state = "thrallalert"
+	targeted = 0
+	target_nodamage_check = 1
+	max_range = 1
+	cooldown = 100
+	pointCost = 0
+	when_stunned = 1
+	not_when_handcuffed = 0
+	restricted_area_check = 0
+	unlock_message = "You have gained 'Alert Thralls'. Using this sends a call to your thralls for aid."
+
+	incapacitation_check(stunned_only_is_okay)
+		. = 1
+
+	cast(mob/target)
+		if(!holder)
+			return 1
+
+		var/mob/living/M = holder.owner
+		var/datum/abilityHolder/vampire/H = holder
+
+		if(!M || !length(H.thralls))
+			return 1
+
+		var/area/A = get_area(M)
+		for(var/mob/thrall in H.thralls)
+			boutput(thrall, "<b><span class='alert'>Master requests aid at [A ? A.name : "nowhere"]!</span></b>")
+			thrall.playsound_local(thrall.loc, 'sound/effects/ghost2.ogg', 50, 1)
+
+		boutput(M, __blue("You alert your thralls."))
+		M.playsound_local(M.loc, 'sound/effects/ghost2.ogg', 50, 1)
+		return 0

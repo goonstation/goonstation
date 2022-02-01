@@ -198,7 +198,7 @@
 
 	// Note: please use mob.get_vampire_blood() & mob.change_vampire_blood() instead of changing the numbers directly.
 
-	// At the time of writing, sight (thermal, x-ray) and chapel checks can be found in human.dm.
+	// At the time of writing this, location checks (chapel, space) are located in disability.dm.
 	var/has_thermal = 0
 	var/has_xray = 0
 	var/has_fullpower = 0
@@ -215,6 +215,8 @@
 
 	var/list/thralls = list()
 	var/turf/coffin_turf = 0
+	var/crit_triggered = 0
+	var/death_triggered = 0
 
 	//contains the reference to the coffin if we're currently travelling to it, otherwise null
 	var/obj/storage/closet/coffin/vampire/the_coffin = null
@@ -239,6 +241,21 @@
 				owner.full_heal()
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
+		// kill thralls when dead and not in coffin
+		else if(isdead(owner) && !death_triggered)
+			death_triggered = 1
+			kill_thralls()
+		if(!isdead(owner) && death_triggered)
+			death_triggered = 0
+		// alert thralls when in crit
+		if(owner.health < 0 && !crit_triggered)
+			crit_triggered = 1
+			var/area/A = get_area(owner)
+			for(var/mob/thrall in thralls)
+				boutput(thrall, "<b><span class='alert'>You feel your master's life fading in [A ? A.name : "nowhere"]!</span></b>")
+				thrall.playsound_local(thrall.loc, 'sound/effects/ghost2.ogg', 50, 1)
+		if(owner.health >= 0 && crit_triggered)
+			crit_triggered = 0
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
@@ -276,6 +293,7 @@
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
 			src.addAbility(/datum/targetable/vampire/enthrall)
 			src.addAbility(/datum/targetable/vampire/speak_thrall)
+			src.addAbility(/datum/targetable/vampire/alert_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
 			src.last_power = 2
@@ -413,7 +431,11 @@
 			boutput(owner, __blue("[M] has been revived as your thrall."))
 			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
-
+	proc/kill_thralls()
+		for(var/mob/thrall in src.thralls)
+			boutput(thrall, __red("<b>Your master has been slain! The power sustaining your life fades away...</b>"))
+			SPAWN_DBG(rand(1, 5) SECONDS)
+				thrall.death()
 
 ///////////////////////////////////////////// Vampire spell parent //////////////////////////////////////////////////
 

@@ -12,7 +12,7 @@
 
 		V.addAbility(/datum/targetable/vampiric_thrall/speak)
 		V.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
-
+		V.addAbility(/datum/targetable/vampiric_thrall/track_master)
 
 		V.transferOwnership(src)
 
