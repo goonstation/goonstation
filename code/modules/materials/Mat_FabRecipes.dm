@@ -75,10 +75,12 @@
 			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
 			suit.set_loc(getOutputLocation(owner))
 			helmet.set_loc(getOutputLocation(owner))
-			var/obj/item/fab = getObjectByPartName("Fabric")
+			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/vis = getObjectByPartName("Visor")
-			suit.setMaterial(fab.material)
-			helmet.setMaterial(vis.material)
+			if(fabr?.material && vis?.material)
+				helmet.setHeadMaterial(vis.material) //head = visor, keeping things verbatim from arrow code
+				helmet.setShaftMaterial(fabr.material) //shaft = fabric
+
 		return
 
 /datum/matfab_recipe/mining_mod_conc

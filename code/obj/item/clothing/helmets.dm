@@ -116,10 +116,28 @@
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
+
+
 	name = "bespoke space helmet"
 	desc = "Helps protect against vacuum, and is custom-made just for you!"
-	onMaterialChanged()
-		if(src.material)
+	item_state = "s_helmet"
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	var/datum/material/shaft_material = null
+	var/datum/material/head_material = null
+	var/image/shaftImg = null // BODY
+	var/image/headImg = null // VISOR
+
+	New()
+		..()
+		shaftImg = image(icon, "spacemat")
+		headImg = image(icon, "spacemat-vis")
+		overlays += shaftImg
+		overlays += headImg
+
+	onMaterialChanged() // will have to make a proc that gives the fab material later :/
+		if(src.material) // deciding properties
 			if(material.hasProperty("thermal"))
 				var/prot = round((100 - material.getProperty("thermal")) / 2)
 				setProperty("coldprot", 10+prot)
@@ -139,6 +157,105 @@
 				setProperty("meleeprot_head", 2+prot)
 			else
 				setProperty("meleeprot_head", 2)
+
+	proc/setHeadMaterial(var/datum/material/M) // basically all of this is shamelessly ripped from arrow code
+		head_material = copyMaterial(M)
+		overlays -= headImg
+		if (M)
+			headImg.color = M.color
+			headImg.alpha = M.alpha
+		else
+			headImg.color = null
+			headImg.alpha = 255
+		overlays += headImg
+		setName()
+
+	proc/setShaftMaterial(var/datum/material/M)
+		shaft_material = copyMaterial(M)
+		src.setMaterial(shaft_material,copy = 0, appearance = 0, setname = 0)
+		overlays -= shaftImg
+		if (M)
+			shaftImg.color = M.color
+			shaftImg.alpha = M.alpha
+		else
+			shaftImg.color = null
+			shaftImg.alpha = 255
+		overlays += shaftImg
+		setName()
+
+	proc/setName()
+		if (head_material && shaft_material)
+			name = "[head_material]-visored [shaft_material] helmet[amount > 1 ? "s":""]"
+		else if (head_material)
+			name = " [head_material]-visored arrow[amount > 1 ? "s":""]"
+		else if (shaft_material)
+			name = " steel-headed [shaft_material] arrow[amount > 1 ? "s":""]"
+		else
+			name = " steel-headed arrow[amount > 1 ? "s":""]"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* fuck all of the stuff below we're starting again
+	proc/setBodyMaterial(var/datum/material/M) //headpiece color
+		fab = M //fabric/body is used interchangably here
+		setMaterial(M, setname = 0)
+		if(fab)
+			src.color = fab.color
+			src.alpha = fab.alpha
+		return
+
+	proc/setVisorMaterial(var/datum/material/M) // visor code-from arrows
+		vis_material = copyMaterial(M)
+		overlays -= visImg
+		if (M)
+			fabImg.color = M.color
+			fabImg.alpha = M.alpha
+		else
+			fabImg.color = null
+			fabImg.alpha = 255
+		overlays += fabImg
+		setName()
+
+	proc/(var/datum/material/M) // visor code- from spears
+		vis = M
+		if(vis)
+			src.color = vis.color
+			src.alpha = vis.alpha
+		return
+
+	proc/buildOverlays()// construct the picture
+		overlays.Cut()
+		if(fab)
+			var/image/imgHead = image('icons/obj/clothing/item_hats.dmi',icon_state = "spacemat")
+			fabImg.color = fab.color
+			fabImg.alpha = fab.alpha
+			fabImg.appearance_flags = RESET_ALPHA | RESET_COLOR
+			overlays += imgHead
+			fabImg = imgHead
+		if(vis)
+			var/image/visImg = image('icons/obj/clothing/item_hats.dmi',icon_state = "spacemat-vis")
+			visImg.color = vis.color
+			visImg.alpha = vis.alpha
+			visImg.appearance_flags = RESET_ALPHA | RESET_COLOR
+			overlays += visImg
+			visImg = visImg
+		return
+*/
+
 
 // Sealab helmets
 
