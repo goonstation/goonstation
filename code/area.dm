@@ -1977,6 +1977,10 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Shuttle Bay"
 	icon_state = "shuttle3"
 
+/area/station/hallway/secondary/researchshuttle
+	name = "Research Transport Dock"
+	icon_state = "shuttle3"
+
 /area/station/mailroom
 	name = "Mailroom"
 	icon_state = "mail"
