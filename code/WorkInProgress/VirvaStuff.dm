@@ -137,7 +137,6 @@ obj/item/ammo/bullets/flechette_mag
 	hit_type = DAMAGE_STAB
 	shot_number = 2
 	shot_delay = 0.7
-	caliber = 0.065
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56

@@ -149,7 +149,6 @@
 	shot_delay = 0.4
 	shot_sound = 'sound/weapons/gunshot.ogg'
 	shot_volume = 66
-	caliber = 0.185
 	dissipation_delay = 10
 	dissipation_rate = 5
 	icon_turf_hit = "bhole-small"
@@ -263,7 +262,6 @@
 	dissipation_rate = 0
 	power = 10
 	precalculated = 0
-	caliber = 0.512
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
@@ -330,7 +328,6 @@
 	dissipation_rate = 5
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_50
-	caliber = 0.50
 	icon_turf_hit = "bhole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'

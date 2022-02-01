@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			explosion(src, T,-1,-1,1,2)
 			qdel(src)
 			return
-		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
+		if(ammo?.amount_left && current_projectile.power)
 			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
@@ -990,8 +990,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	shoot()
-		if(ammo?.amount_left && current_projectile?.caliber && current_projectile.power)
-			failure_chance = clamp(round(current_projectile.caliber * (current_projectile.power/2)), 10, 33)
+		if(ammo?.amount_left && current_projectile.power)
+			failure_chance = clamp(round(current_projectile.power/2), 10, 33)
 		if(canshoot() && prob(failure_chance))
 			var/turf/T = get_turf(src)
 			boutput(T, "<span class='alert'>[src] blows up!</span>")
