@@ -498,9 +498,9 @@
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
 /obj/item/ammo/bullets/nine_mm_NATO
-	sname = "9mm nonlethal" // the naming on this is so fucking stupid
-	name = "9mm magazine"
-	desc = "Some 9mm bullets, made of rubber with foam tips. Despite being nonlethal, they can still hurt."
+	sname = "9mm polymer" 
+	name = "9mm polymer magazine"
+	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
 	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 18.0
 	max_amount = 18.0
@@ -718,7 +718,7 @@
 /obj/item/ammo/bullets/abg
 	sname = "12ga Rubber Slug"
 	name = "12ga rubber slugs"
-	desc = "A box of rubber slugs. Despite being nonlethal, these things can still seriously maim."
+	desc = "A box of rubber slugs. Despite being nonlethal, they still pack a punch."
 	ammo_type = new/datum/projectile/bullet/abg
 	icon_state = "bg"
 	amount_left = 8.0
@@ -970,7 +970,7 @@
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
 	name = "Singularity buster rocket"
-	desc = "An experimental rocket containing an energy payload designed to collapse singularities."
+	desc = "An experimental rocket containing an energy payload designed to collapse singularities. It's made mostly of electronics and seems pretty fragile."
 	amount_left = 1
 	max_amount = 1
 	icon = 'icons/obj/items/ammo.dmi'
