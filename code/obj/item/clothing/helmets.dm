@@ -120,10 +120,12 @@
 
 	name = "bespoke space helmet"
 	desc = "Helps protect against vacuum, and is custom-made just for you!"
-	item_state = "s_helmet"
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
+	icon_state = "spacemat"
 
-	icon = 'icons/obj/clothing/item_hats.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
+	item_state = "s_helmet"
+
+	icon = 'icons/obj/clothing/item_hats.dmi' // prep the world icon_state for building, pray it doesn't break
 	var/datum/material/shaft_material = null
 	var/datum/material/head_material = null
 	var/image/shaftImg = null // BODY

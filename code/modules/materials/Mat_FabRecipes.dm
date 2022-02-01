@@ -77,7 +77,8 @@
 			helmet.set_loc(getOutputLocation(owner))
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/vis = getObjectByPartName("Visor")
-			helmet.setMaterial(fabr)
+			helmet.setMaterial(vis.material)
+			suit.setMaterial(fab.material)
 			if(fabr?.material && vis?.material)
 				helmet.setHeadMaterial(vis.material) //head = visor, keeping things verbatim from arrow code
 				helmet.setShaftMaterial(fabr.material) //shaft = fabric
