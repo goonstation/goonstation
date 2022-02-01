@@ -1,5 +1,9 @@
 
 (t)tue feb 01 22
+(u)Nexusuxen
+(p)6844
+(e)🆕🎨|feature, sprites
+(*)AIs will now produce flying text above intercoms when speaking through them, provided they're not tuned to 145.9.
 (u)Mr. Moriarty
 (p)7180
 (e)🆕📄|feature, tgui
