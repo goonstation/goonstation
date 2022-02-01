@@ -651,7 +651,7 @@ Contains:
 /obj/item/assembly/anal_ignite //lol
 	name = "Health-Analyzer/Igniter Assembly"
 	desc = "A health-analyzer igniter assembly."
-	icon_state = "timer-igniter0"
+	icon_state = "health-igniter"
 	var/obj/item/device/analyzer/healthanalyzer/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	status = null
