@@ -1103,7 +1103,7 @@ TYPEINFO(/datum/mutantrace)
 			blood_points -= blood_decay * mob.bleeding
 
 		var/prev_blood = blood_points
-		blood_points -= (blood_decay * decay_cycles) * mult
+		blood_points -= blood_decay + (blood_decay * decay_cycles) * mult
 		blood_points = max(0,blood_points)
 		cleanable_tally += (prev_blood - blood_points)
 		if (cleanable_tally > 20)
