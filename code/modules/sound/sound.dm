@@ -32,6 +32,8 @@
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
 #define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
 
+#define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
+
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
@@ -131,7 +133,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (isnull(source_turf))
 		return
 
-	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [istype(soundin, /sound) ? soundin:file : soundin]"
+	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
@@ -260,7 +262,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (CLIENT_IGNORES_SOUND(src.client))
 		return
 
-	var/play_id = "\ref[src] [istype(soundin, /sound) ? soundin:file : soundin]"
+	var/play_id = "\ref[src] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
@@ -326,7 +328,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound))
 		return
 
-	var/play_id = "global [istype(soundin, /sound) ? soundin:file : soundin]"
+	var/play_id = "global [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
@@ -675,3 +677,5 @@ sound
 		environment = initial(environment)
 		echo = initial(echo)
 */
+
+#undef SOUNDIN_ID
