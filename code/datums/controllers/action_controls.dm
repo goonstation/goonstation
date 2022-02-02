@@ -1497,7 +1497,7 @@ var/datum/action_controller/actions
 					qdel(found_imp)
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					target.visible_message("<span class='notice'>The Anti-Revolutionary implant inside [target] shatters into one million pieces!</span>")
+					target.visible_message("<span class='notice'>The anti-revolutionary implant inside [target] shatters into one million pieces!</span>")
 
 				flash.flash_mob(target, owner)
 
