@@ -1289,6 +1289,10 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "park"
 	force_fullbright = 1
 
+/area/prefab/crashed_hop_shuttle
+	name = "HoP Shuttle"
+	icon_state = "purple"
+
 /area/prefab/silverglass
 	name = "Silverglass Platform"
 	icon_state = "orange"
