@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/datum/generatorPrefab)
 
 	customs_shuttle // Carsontheking's Crashed Customs shuttle
 		maxNum = 1
-		probability = 100
+		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_customs_shuttle.dmm"
 		prefabSizeX = 27
 		prefabSizeY = 16
