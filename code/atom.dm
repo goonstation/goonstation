@@ -642,7 +642,8 @@
 		if (!hasPDA)
 			. += "<br>*No PDA detected!*"
 
-/atom/proc/MouseDrop_T()
+/atom/proc/MouseDrop_T(dropped, user)
+	SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user)
 	return
 
 /atom/proc/Attackhand(mob/user as mob)
@@ -763,7 +764,7 @@
 
 	return null
 
-/atom/MouseDrop(atom/over_object as mob|obj|turf)
+/atom/MouseDrop(atom/over_object as mob|obj|turf, src_location, over_location)
 	SPAWN( 0 )
 		if (istype(over_object, /atom))
 			if (isalive(usr))
@@ -785,6 +786,7 @@
 					var/obj/machinery/M = over_object
 					if (M.allow_stunned_dragndrop == 1)
 						M.MouseDrop_T(src, usr)
+		SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location)
 		return
 	..()
 	return
