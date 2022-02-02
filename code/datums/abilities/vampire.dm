@@ -244,7 +244,7 @@
 		// kill thralls when dead and not in coffin
 		else if(isdead(owner) && !death_triggered)
 			death_triggered = 1
-			kill_thralls()
+			warn_thralls()
 		if(!isdead(owner) && death_triggered)
 			death_triggered = 0
 		// alert thralls when in crit
@@ -345,6 +345,7 @@
 		src.removeAbility(/datum/targetable/vampire/coffin_escape)
 		src.removeAbility(/datum/targetable/vampire/enthrall)
 		src.removeAbility(/datum/targetable/vampire/speak_thrall)
+		src.removeAbility(/datum/targetable/vampire/alert_thrall)
 		src.removeAbility(/datum/targetable/vampire/call_bats)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream)
 		src.removeAbility(/datum/targetable/vampire/vampire_scream/mk2)
@@ -435,12 +436,10 @@
 			boutput(owner, __blue("[M] has been revived as your thrall."))
 			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
-	proc/kill_thralls()
+	proc/warn_thralls()
 		for(var/mob/thrall in src.thralls)
-			boutput(thrall, __red("<b>Your master has been slain! The power sustaining your life begins to fade away...</b>"))
-			SPAWN_DBG(prob(20) ? rand(3,10) SECONDS : rand(1,3) MINUTES)
-				if(isdead(owner))
-					thrall.death()
+			boutput(thrall, __red("<b>Your master has been slain! The power sustaining your life begins to drain away...</b>"))
+
 
 ///////////////////////////////////////////// Vampire spell parent //////////////////////////////////////////////////
 
