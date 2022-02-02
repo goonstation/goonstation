@@ -187,6 +187,14 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
+"jK" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
 "jS" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor,
@@ -1145,7 +1153,7 @@ OE
 yI
 sA
 Dc
-VT
+jK
 tD
 fd
 zB
