@@ -245,7 +245,6 @@
 		return*/
 
 /atom/movable/screen/ability/topBar/revenant
-
 	update_cooldown_cost()
 		var/newcolor = null
 		var/on_cooldown = round((owner.last_cast - world.time) / 10)
