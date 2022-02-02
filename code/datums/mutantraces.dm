@@ -1071,6 +1071,7 @@ TYPEINFO(/datum/mutantrace)
 	var/const/blood_decay = 0.5
 	var/cleanable_tally = 0
 	var/const/blood_to_health_scalar = 0.5 //200 blood = 100 health
+	var/decay_cycles = 0 // for when master is dead
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1091,11 +1092,18 @@ TYPEINFO(/datum/mutantrace)
 	onLife(var/mult = 1)
 		..()
 
+		var/datum/abilityHolder/vampiric_thrall/A = mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+		if(!A || !A.master || !isdead(A.master.owner))
+			if(decay_cycles)
+				decay_cycles = 0
+		else
+			decay_cycles++
+
 		if (mob.bleeding)
 			blood_points -= blood_decay * mob.bleeding
 
 		var/prev_blood = blood_points
-		blood_points -= blood_decay * mult
+		blood_points -= (blood_decay * decay_cycles) * mult
 		blood_points = max(0,blood_points)
 		cleanable_tally += (prev_blood - blood_points)
 		if (cleanable_tally > 20)
@@ -1103,7 +1111,7 @@ TYPEINFO(/datum/mutantrace)
 			cleanable_tally = 0
 
 		mob.max_health = blood_points * blood_to_health_scalar
-		mob.max_health = (max(20,mob.max_health))
+		mob.max_health = (max(decay_cycles ? 0 : 20,mob.max_health))
 
 	emote(var/act)
 		var/message = null
