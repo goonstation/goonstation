@@ -1,4 +1,7 @@
 
+(t)wed feb 02 22
+(u)pali
+(+)The prompt to change your ring message on a PDA now has pre-typed traitor code for your convenience (if you are the owner of the uplink in the PDA).
 (t)tue feb 01 22
 (u)tarmunora
 (+)chainsaw no fall apart
